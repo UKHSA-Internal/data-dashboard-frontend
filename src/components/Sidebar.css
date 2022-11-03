@@ -1,0 +1,10 @@
+.dashboard-menu {
+    position: -webkit-sticky;
+    position: sticky;
+    top: 4px;
+    flex: 0 0 auto;
+    align-self: flex-start;
+    width: 200px;
+    display: block;
+    background: white;
+}
