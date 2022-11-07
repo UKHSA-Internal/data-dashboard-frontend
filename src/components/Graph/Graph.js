@@ -26,7 +26,7 @@ class Graph extends React.Component {
 
                 ]}
 
-                layout={{ width: 320, height: 240, title: "Graph Example" }}
+                layout={{ width: 500, height: 440, title: "Graph Example" }}
 
             />);
     }
