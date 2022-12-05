@@ -10,7 +10,7 @@ class Graph extends React.Component {
     }
 
     componentDidMount() {
-        fetch("/testdata/")
+        fetch("http://wp-lb-api-311373237.eu-west-2.elb.amazonaws.com/testdata/")
             .then(res => res.json())
             .then(
                 (result) => {
