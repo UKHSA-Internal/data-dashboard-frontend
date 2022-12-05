@@ -14,7 +14,8 @@
     "react-plotly.js": "^2.6.0",
     "react-scripts": "5.0.1",
     "styled-components": "^5.3.6",
-    "web-vitals": "^2.1.4"
+    "web-vitals": "^2.1.4",
+    "plotly.js-cartesian-dist": "2.16.3"
   },
   "proxy": "http://wp-lb-api-311373237.eu-west-2.elb.amazonaws.com",
   "scripts": {
