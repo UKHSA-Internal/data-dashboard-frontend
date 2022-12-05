@@ -16,6 +16,7 @@
     "styled-components": "^5.3.6",
     "web-vitals": "^2.1.4"
   },
+  "proxy": "http://wp-lb-api-311373237.eu-west-2.elb.amazonaws.com",
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
