@@ -1,0 +1,20 @@
+@import "node_modules/govuk-frontend/govuk/all";
+@import "node_modules/@ministryofjustice/frontend/moj/all";
+
+.dashboard-menu {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 4px;
+  flex: 0 0 auto;
+  align-self: flex-start;
+  width: 200px;
+  display: block;
+  background: white;
+}
+
+.main {
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 100%;
+  min-height: 50vh;
+}
