@@ -18,7 +18,7 @@ jobs:
       - name: Configure AWS credentials
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: arn:aws:iam::574290571051:role/devops_github_actions_wp_frontend
+          role-to-assume: arn:aws:iam::518944279943:role/devops_github_actions_wp_frontend
           role-session-name: testsession
           aws-region: ${{ env.AWS_REGION }}
 
@@ -34,3 +34,4 @@ jobs:
         run: |
           docker build -f Dockerfile.prod -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+
