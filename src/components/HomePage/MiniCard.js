@@ -3,7 +3,17 @@ import LineGraph from "./LineGraph";
 import "./MiniCard.css";
 
 class MiniCard extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      data: this.props.data,
+      hi: this.props.hi,
+    }
+
+  }
   render() {
+    const { data, hi } = this.state;
+
     return (
       <li
         className="mini-card"
@@ -81,21 +91,8 @@ class MiniCard extends React.Component {
             </li>
           </ul>
         </div>
-        {/* <a
-          href="/#"
-          aria-hidden="true"
-          className="govuk-link govuk-link--no-visited-state bottom-aligned"
-        >
-          <figure className="graph mini-card-figure">
-            <img
-              src="https://coronavirus.data.gov.uk/downloads/homepage/2022-12-01/thumbnail_newCasesBySpecimenDate.svg"
-              alt="Graph of 7-day rolling average of cases over the last 6 months - click for more details"
-              loading="lazy"
-            />
-          </figure>
-        </a> */}
         <div>
-          <LineGraph></LineGraph>
+          <LineGraph data={data}></LineGraph>
         </div>
         <hr className="govuk-section-break govuk-section-break--visible bottom-aligned" />
         <div className="additional-info bottom-aligned">
