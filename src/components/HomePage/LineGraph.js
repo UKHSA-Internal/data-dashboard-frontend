@@ -38,8 +38,9 @@ class LineGraph extends React.Component {
     var sampleData = {
       x: [1, 2, 3, 4],
       y: [16, 5, 11, 9],
-      mode: "line",
-      displayModeBar: false,
+      mode: "lines",
+      type: "scatter",
+      line: { color: "rgb(0, 0, 0)", width: 2 },
     };
     return (
       <Plot
