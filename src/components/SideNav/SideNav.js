@@ -16,17 +16,16 @@ const SideNave = () => {
       >
         <ul className="moj-side-navigation__list">
           <li className="moj-side-navigation__item moj-side-navigation__item--active">
-            {/* <a
+            <a
               href="/"
               aria-current="page"
               className="govuk-link govuk-link--no-visited-state"
             >
               Summary
-            </a> */}
-            <NavLink to="/">Summary</NavLink>
+            </a>
           </li>
 
-          <li className="moj-side-navigation__item moj-side-navigation__item--active">
+          <li className="">
             <a
               href="/influenza"
               aria-current="page"
