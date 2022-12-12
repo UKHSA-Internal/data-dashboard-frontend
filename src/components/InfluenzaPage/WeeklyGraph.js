@@ -1,24 +1,34 @@
 import Plotly from "plotly.js-cartesian-dist";
 import React from "react";
 import createPlotlyComponent from "react-plotly.js/factory";
-import "./LineGraph.css";
 
 const Plot = createPlotlyComponent(Plotly);
 
-class LineGraph extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      data: this.props.data,
-    };
-  }
-
+class WeeklyGraph extends React.Component {
+  //   constructor(props) {
+  //     super(props);
+  //     this.state = {
+  //       data: this.props.data,
+  //     };
+  //   }
   render() {
-    const { data } = this.state;
-
     return (
       <Plot
-        data={data}
+        data={[
+          {
+            x: [1, 2, 3],
+
+            y: [2, 6, 3],
+
+            type: "scatter",
+
+            mode: "lines+markers",
+
+            marker: { color: "red" },
+          },
+
+          { type: "bar", x: [1, 2, 3], y: [2, 5, 3] },
+        ]}
         layout={{
           xaxis: {
             showgrid: false,
@@ -27,7 +37,7 @@ class LineGraph extends React.Component {
             showticklabels: false,
           },
           yaxis: {
-            showgrid: false,
+            showgrid: true,
             zeroline: false,
             showline: false,
             showticklabels: false,
@@ -39,9 +49,9 @@ class LineGraph extends React.Component {
         useResizeHandler={true}
         style={{ width: "100%", height: "100%" }}
         config={{ displayModeBar: false }}
-      />
+      ></Plot>
     );
   }
 }
 
-export default LineGraph;
+export default WeeklyGraph;

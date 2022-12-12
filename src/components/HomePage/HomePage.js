@@ -1,25 +1,24 @@
 import React from "react";
-import { Simulate } from "react-dom/test-utils";
 import MiniCard from "./MiniCard";
 
 class HomePage extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
       items: [],
-      dataLoaded: false
+      dataLoaded: false,
     };
   }
 
   componentDidMount() {
     fetch("http://wp-lb-api-1448457284.eu-west-2.elb.amazonaws.com/testdata/")
-      .then(res => res.json())
+      .then((res) => res.json())
       .then(
         (result) => {
           this.setState({
             items: result,
-            dataLoaded: true
-          })
+            dataLoaded: true,
+          });
         },
         (error) => {
           //TODO: handle ajax error gracefully
@@ -28,9 +27,7 @@ class HomePage extends React.Component {
       );
   }
 
-
   render() {
-
     if (!this.state.dataLoaded) {
       return null;
     }
@@ -38,12 +35,16 @@ class HomePage extends React.Component {
     items.forEach((element) => {
       element.mode = "lines";
       element.type = "scatter";
+      element.line = { color: "rgb(0, 0, 0)", width: 2 };
     });
 
-    const a = items[0];
-    const b = items[1];
-    const c = items[2];
-    const d = items[1];
+    const influenza = items[0];
+    const rsv = items[1];
+    const rhinovirus = items[2];
+    const parainfluenza = items[3];
+    const hMPV = items[4];
+    const adenovirus = items[5];
+    const sarsCov2 = items[6];
 
     return (
       <>
@@ -56,38 +57,24 @@ class HomePage extends React.Component {
               England Summary
             </h1>
             <p className="govuk-body-m govuk-!-margin-bottom-1 govuk-!-margin-top-3">
-              The official UK government website for data and insights on winter
-              illnesses.
+              Weekly surveillance of Influenza, COVID-19 and other respiratory
+              viruses in England.
             </p>
           </div>
         </div>
-        <div>
-          <p className="govuk-body-m govuk-!-margin-bottom-3 govuk-!-margin-top-2">
-            See the{" "}
-            <a
-              className="govuk-link govuk-link--no-visited-state"
-              href="/easy_read"
-            >
-              simple summary
-            </a>{" "}
-            for England.
-          </p>
-        </div>
-
         <article>
           <ul className="govuk-list card-container">
-            <MiniCard title="Influenza A in England" data-source="influenza_a" data={[a]} />
-            <MiniCard title="Adenovirus in England" data-source="adenovirus" data={[b]} />
-            <MiniCard
-              title="Parainfluenza in England"
-              data-source="parainfluenza"
-              data={[c]}
-            />
-            <MiniCard title="Streptococcus A in England" data-source="strep_a" data={[d]} />
+            <MiniCard data={influenza} />
+            <MiniCard data={rsv} />
+            <MiniCard data={sarsCov2} />
+            <MiniCard data={adenovirus} />
+            <MiniCard data={parainfluenza} />
+            <MiniCard data={rhinovirus} />
+            <MiniCard data={hMPV} />
           </ul>
         </article>
       </>
     );
-  };
+  }
 }
 export default HomePage;
