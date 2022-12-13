@@ -3,8 +3,40 @@ import WeeklyGraph from "./WeeklyGraph";
 import "./InfluenzaPage.css";
 
 class InfluenzaPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      dataLoaded: false,
+    };
+  }
+
+  componentDidMount() {
+    fetch("http://localhost:5100/influenza/")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            items: result,
+            dataLoaded: true,
+          });
+        },
+        (error) => {
+          //TODO: handle ajax error gracefully
+          console.log(error.toString());
+        }
+      );
+  }
+
   render() {
-    const testdata = [];
+    if (!this.state.dataLoaded) {
+      return null;
+    }
+
+    const { items } = this.state;
+
+    console.log(items);
+
     return (
       <>
         <div className="govuk-grid-row">
@@ -23,13 +55,15 @@ class InfluenzaPage extends React.Component {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <div className="graph-holder">
-              <WeeklyGraph></WeeklyGraph>
+              <WeeklyGraph data={items}></WeeklyGraph>
             </div>
           </div>
         </div>
       </>
     );
   }
+
+
 }
 
 export default InfluenzaPage;
