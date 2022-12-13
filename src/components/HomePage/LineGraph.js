@@ -35,6 +35,13 @@ class LineGraph extends React.Component {
           plot_bgcolor: "rgba(0,0,0,0)",
           paper_bgcolor: "rgba(0,0,0,0)",
           autosize: true,
+          margin: {
+            l: 0,
+            r: 0,
+            b: 40,
+            t: 0,
+            pad: 4
+          }
         }}
         useResizeHandler={true}
         style={{ width: "100%", height: "100%" }}
