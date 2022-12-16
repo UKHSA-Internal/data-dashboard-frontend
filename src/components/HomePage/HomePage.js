@@ -11,7 +11,8 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5100/items/")
+    const API = process.env.REACT_APP_API
+    fetch(API + "items/")
       .then((res) => res.json())
       .then(
         (result) => {

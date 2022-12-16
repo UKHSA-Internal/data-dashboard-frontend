@@ -12,7 +12,8 @@ class InfluenzaPage extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://localhost:5100/influenza/")
+    const API = process.env.REACT_APP_API
+    fetch(API + "influenza/")
       .then((res) => res.json())
       .then(
         (result) => {
