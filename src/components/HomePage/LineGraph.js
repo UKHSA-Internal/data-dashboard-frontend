@@ -23,8 +23,8 @@ class LineGraph extends React.Component {
           xaxis: {
             showgrid: false,
             zeroline: false,
-            showline: false,
-            showticklabels: false,
+            showline: true,
+            showticklabels: true,
           },
           yaxis: {
             showgrid: false,

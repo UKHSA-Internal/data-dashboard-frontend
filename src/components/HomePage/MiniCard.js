@@ -11,7 +11,6 @@ class MiniCard extends React.Component {
   }
   render() {
     const { data } = this.state;
-    console.log();
     return (
       <li
         className="mini-card"

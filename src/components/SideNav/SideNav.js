@@ -25,7 +25,7 @@ const SideNave = () => {
             </a>
           </li>
 
-          <li className="">
+          <li className="moj-side-navigation__item">
             <a
               href="/influenza"
               aria-current="page"
