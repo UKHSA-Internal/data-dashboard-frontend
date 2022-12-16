@@ -11,8 +11,8 @@ class InfluenzaPage extends React.Component {
     };
   }
   componentDidMount() {
-    // fetch("http://wp-lb-api-1448457284.eu-west-2.elb.amazonaws.com/testdata/")
-    fetch("http://localhost:5100/influenza/")
+    const API = process.env.REACT_APP_API
+    fetch(API + "influenza/")
       .then((res) => res.json())
       .then(
         (result) => {
