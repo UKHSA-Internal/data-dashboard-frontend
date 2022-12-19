@@ -28,20 +28,6 @@ function App() {
         </div>
       </div>
       <Footer />
-      {/* <Header></Header>
-      <div className="govuk-width-container">
-        <div className="govuk-main-wrapper">
-          <div className="dashboard-container">
-            <SideNav></SideNav>
-            <main className="main">
-              <div className="main-inner">
-                <HomePage></HomePage>
-              </div>
-            </main>
-          </div>
-        </div>
-      </div>
-      <Footer /> */}
     </>
   );
 }

@@ -3,8 +3,40 @@ import WeeklyGraph from "./WeeklyGraph";
 import "./InfluenzaPage.css";
 
 class InfluenzaPage extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      items: [],
+      dataLoaded: false,
+    };
+  }
+  componentDidMount() {
+    const API = process.env.REACT_APP_API
+    fetch(API + "influenza/")
+      .then((res) => res.json())
+      .then(
+        (result) => {
+          this.setState({
+            items: result,
+            dataLoaded: true,
+          });
+        },
+        (error) => {
+          //TODO: handle ajax error gracefully
+          console.log(error.toString());
+        }
+      );
+  }
+
   render() {
-    const testdata = [];
+    if (!this.state.dataLoaded) {
+      return null;
+    }
+
+    const d1 = this.getData("influenza_2019_2020");
+    const d2 = this.getData("influenza_2020_2021");
+    const d3 = this.getData("influenza_2021_2022");
+
     return (
       <>
         <div className="govuk-grid-row">
@@ -23,12 +55,25 @@ class InfluenzaPage extends React.Component {
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-full">
             <div className="graph-holder">
-              <WeeklyGraph></WeeklyGraph>
+              <p>Weekly positivity (%) for Influenza in England</p>
+              <WeeklyGraph data={[d1, d2, d3]} />
             </div>
           </div>
         </div>
       </>
     );
+  }
+
+  getData(virusName) {
+    const { items } = this.state;
+    return {
+      x: items["week"],
+      y: items[virusName],
+      mode: "lines",
+      type: "scatter",
+      line: { width: 3 },
+      name: virusName
+    };
   }
 }
 
