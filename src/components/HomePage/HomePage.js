@@ -11,7 +11,8 @@ class HomePage extends React.Component {
   }
 
   componentDidMount() {
-    fetch("http://wp-lb-api-1448457284.eu-west-2.elb.amazonaws.com/testdata/")
+    const API = process.env.REACT_APP_API
+    fetch(API + "items/")
       .then((res) => res.json())
       .then(
         (result) => {
@@ -31,20 +32,6 @@ class HomePage extends React.Component {
     if (!this.state.dataLoaded) {
       return null;
     }
-    const { items } = this.state;
-    items.forEach((element) => {
-      element.mode = "lines";
-      element.type = "scatter";
-      element.line = { color: "rgb(0, 0, 0)", width: 2 };
-    });
-
-    const influenza = items[0];
-    const rsv = items[1];
-    const rhinovirus = items[2];
-    const parainfluenza = items[3];
-    const hMPV = items[4];
-    const adenovirus = items[5];
-    const sarsCov2 = items[6];
 
     return (
       <>
@@ -64,17 +51,30 @@ class HomePage extends React.Component {
         </div>
         <article>
           <ul className="govuk-list card-container">
-            <MiniCard data={influenza} />
-            <MiniCard data={rsv} />
-            <MiniCard data={sarsCov2} />
-            <MiniCard data={adenovirus} />
-            <MiniCard data={parainfluenza} />
-            <MiniCard data={rhinovirus} />
-            <MiniCard data={hMPV} />
+            <MiniCard data={this.getData("Influenza")} />
+            <MiniCard data={this.getData("RSV")} />
+            <MiniCard data={this.getData("SARS-CoV-2")} />
+            <MiniCard data={this.getData("Adenovirus")} />
+            <MiniCard data={this.getData("Parainfluenza")} />
+            <MiniCard data={this.getData("Rhinovirus")} />
+            <MiniCard data={this.getData("hMPV")} />
           </ul>
         </article>
       </>
     );
+  }
+
+
+  getData(virusName) {
+    const { items } = this.state;
+    return {
+      x: items["dates"],
+      y: items[virusName],
+      mode: "lines",
+      type: "scatter",
+      line: { color: "rgb(0, 0, 0)", width: 2 },
+      name: virusName
+    };
   }
 }
 export default HomePage;

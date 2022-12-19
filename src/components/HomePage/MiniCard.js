@@ -11,7 +11,6 @@ class MiniCard extends React.Component {
   }
   render() {
     const { data } = this.state;
-    console.log();
     return (
       <li
         className="mini-card"
@@ -38,14 +37,6 @@ class MiniCard extends React.Component {
           <div className="govuk-grid-column-full">
             <LineGraph data={[data]}></LineGraph>
           </div>
-        </div>
-        <hr className="govuk-section-break govuk-section-break--visible bottom-aligned" />
-        <div className="additional-info bottom-aligned">
-          <p className="govuk-!-margin-bottom-0 govuk-!-margin-top-0 govuk-!-font-size-16">
-            <a className="govuk-link govuk-link--no-visited-state" href="/#">
-              <strong>All cases data in England</strong>
-            </a>
-          </p>
         </div>
       </li>
     );
