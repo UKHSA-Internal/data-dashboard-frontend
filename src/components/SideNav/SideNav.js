@@ -8,7 +8,7 @@ const SideNave = () => {
         document.body.className + ' js-enabled' : 'js-enabled');
       </script>
       <div
-        className="moj-side-navigation govuk-!-padding-right-4 govuk-!-padding-top-2 dashboard-menu"
+        className="moj-side-navigation govuk-!-padding-right-6 govuk-!-padding-top-2 dashboard-menu"
         role="navigation"
         aria-label="Website navigation"
         itemType="http://schema.org/SiteNavigationElement"
@@ -16,24 +16,38 @@ const SideNave = () => {
       >
         <ul className="moj-side-navigation__list">
           <li className="moj-side-navigation__item moj-side-navigation__item--active">
-            <a
-              href="/"
-              aria-current="page"
-              className="govuk-link govuk-link--no-visited-state"
-            >
-              Summary
-            </a>
+            <a href="/" aria-current="page" className="govuk-link govuk-link--no-visited-state">Summary</a>
           </li>
 
           <li className="moj-side-navigation__item">
-            <a
-              href="/influenza"
-              aria-current="page"
-              className="govuk-link govuk-link--no-visited-state"
-            >
-              Influenza
-            </a>
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">Influenza</a>
           </li>
+
+          <li className="moj-side-navigation__item">
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">RSV</a>
+          </li>
+
+          <li className="moj-side-navigation__item">
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">SARS-Cov-2</a>
+          </li>
+
+          <li className="moj-side-navigation__item">
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">Adenovirus</a>
+          </li>
+
+          <li className="moj-side-navigation__item">
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">Parainfluenza</a>
+          </li>
+
+          <li className="moj-side-navigation__item">
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">Rhinovirus</a>
+          </li>
+
+          <li className="moj-side-navigation__item">
+            <a href="/influenza" aria-current="page" className="govuk-link govuk-link--no-visited-state">hMPV</a>
+          </li>
+
+
         </ul>
         <hr className="govuk-section-break govuk-section-break--m govuk-!-margin-top-3 govuk-!-margin-bottom-3 govuk-section-break--visible" />
       </div>

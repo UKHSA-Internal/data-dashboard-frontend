@@ -23,8 +23,8 @@ class LineGraph extends React.Component {
           xaxis: {
             showgrid: false,
             zeroline: false,
-            showline: true,
-            showticklabels: true,
+            showline: false,
+            showticklabels: false,
           },
           yaxis: {
             showgrid: false,
@@ -38,13 +38,13 @@ class LineGraph extends React.Component {
           margin: {
             l: 0,
             r: 0,
-            b: 40,
+            b: 10,
             t: 0,
-            pad: 4
+            pad: 0
           }
         }}
         useResizeHandler={true}
-        style={{ width: "100%", height: "100%" }}
+        style={{ width: "100%", height: "150px" }}
         config={{ displayModeBar: false, responsive: true }}
       />
     );

@@ -1,0 +1,122 @@
+{% extends "layouts/main.html" %} {% block pageTitle %} Home – {{serviceName}} –
+GOV.UK Prototype Kit {% endblock %} {% block content %}
+<div class="govuk-width-container">
+  <main
+    class="govuk-main-wrapper govuk-main-wrapper--l"
+    id="main-content"
+    role="main"
+  >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <nav class="dashboard-menu">
+          <div
+            class="moj-side-navigation govuk-!-padding-right-4 govuk-!-padding-top-2"
+            role="navigation"
+            aria-label="Website navigation"
+            itemtype="http://schema.org/SiteNavigationElement"
+            itemscope=""
+          ></div>
+          <div class="tertiary-menu govuk-!-margin-left-3">
+            <ul class="govuk-list">
+              <li class="govuk-!-padding-bottom-1">
+                <a href="index" class="govuk-link govuk-link--no-visited-state"
+                  >Summary</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="influenza"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Influenza</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="rsv"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >RSV</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="sars-cov-2"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >SARS-CoV-2</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="adenovirus"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Adenovirus</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="parainfluenza"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Parainfluenza</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="rhinovirus"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Rhinovirus</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="hmpv"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >hMPV</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="metrics-documentation"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Metrics documentation</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="download-data"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Download data</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="whats-new"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >What's new</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="developers-guide"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Developer's guide</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a href="about" class="govuk-link govuk-link--no-visited-state"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-grid-row">
+          <h1 class="govuk-heading-l">hMPV</h1>
+          <p class="govuk-body">Weekly surveillance of hMPV in England.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+{% endblock %}

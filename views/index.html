@@ -1,0 +1,1082 @@
+{% extends "layouts/main.html" %} {% block pageTitle %} Home – {{serviceName}} –
+GOV.UK Prototype Kit {% endblock %} {% block content %}
+<div class="govuk-width-container">
+  <div class="govuk-grid-row hero-container">
+    <div class="govuk-width-container">
+      <div class="govuk-phase-banner">
+        <p class="govuk-phase-banner__content">
+          <strong class="govuk-tag govuk-phase-banner__content__tag">
+            alpha
+          </strong>
+          <span class="govuk-phase-banner__text">
+            This is a new service – your
+            <a
+              class="govuk-link phase-banner-link"
+              href="mailto:jason.deakin@ukhsa.gov.uk"
+              >feedback</a
+            >
+            will help us to improve it.
+          </span>
+        </p>
+      </div>
+      <a href="#" class="govuk-back-link"></a>
+      <main class="govuk-main-wrapper">
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-two-thirds">
+            <h1 class="govuk-heading-xl hero-title">
+              Winter pressures dashboard
+            </h1>
+            <p class="govuk-bod hero-body">
+              The Winter pressures dashboard is the official UK government
+              website for data and insights on Winter pressures.
+            </p>
+          </div>
+        </div>
+      </main>
+    </div>
+  </div>
+  <main
+    class="govuk-main-wrapper govuk-main-wrapper--l"
+    id="main-content"
+    role="main"
+  >
+    <div class="govuk-grid-row">
+      <div class="govuk-grid-column-one-third">
+        <nav class="dashboard-menu">
+          <div
+            class="moj-side-navigation govuk-!-padding-right-4 govuk-!-padding-top-2"
+            role="navigation"
+            aria-label="Website navigation"
+            itemtype="http://schema.org/SiteNavigationElement"
+            itemscope=""
+          ></div>
+          <div class="tertiary-menu govuk-!-margin-left-3">
+            <ul class="govuk-list">
+              <li class="govuk-!-padding-bottom-1">
+                <a href="index" class="govuk-link govuk-link--no-visited-state"
+                  >Summary</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="influenza"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Influenza</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a href="rsv" class="govuk-link govuk-link--no-visited-state"
+                  >RSV</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="sars-cov-2"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >SARS-CoV-2</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="adenovirus"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Adenovirus</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="parainfluenza"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Parainfluenza</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="rhinovirus"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Rhinovirus</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a href="hmpv" class="govuk-link govuk-link--no-visited-state"
+                  >hMPV</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="metrics-documentation"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Metrics documentation</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="whats-new"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >What's new</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a
+                  href="developers-guide"
+                  class="govuk-link govuk-link--no-visited-state"
+                  >Developer's guide</a
+                >
+              </li>
+              <li class="govuk-!-padding-bottom-1">
+                <a href="about" class="govuk-link govuk-link--no-visited-state"
+                  >About</a
+                >
+              </li>
+            </ul>
+          </div>
+        </nav>
+        <div>
+          <h2 class="govuk-heading-l related-links">Related Links</h2>
+          <ul class="govuk-list">
+            <li class="govuk-!-padding-bottom-1">
+              <a
+                href="https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season"
+                class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold"
+                >National flu and COVID-19 surveillance reports: 2022 to 2023
+                season</a
+              >
+              <p class="govuk-body">
+                National influenza and COVID-19 report, monitoring COVID-19
+                activity, seasonal flu and other seasonal respiratory illnesses.
+              </p>
+            </li>
+            <li class="govuk-!-padding-bottom-1">
+              <a
+                href="https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis"
+                class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold"
+                >Respiratory syncytial virus (RSV): guidance, data and
+                analysis</a
+              >
+              <p>
+                These documents provide advice on the symptoms, diagnosis,
+                treatment, management and epidemiology of respiratory syncytial
+                virus.
+              </p>
+            </li>
+            <li class="govuk-!-padding-bottom-1">
+              <a
+                href="https://www.gov.uk/government/statistics/national-norovirus-and-rotavirus-surveillance-reports-2022-to-2023-season/national-norovirus-and-rotavirus-report-week-1-report-data-up-to-week-51-25-december-2022"
+                class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold"
+                >National norovirus and rotavirus report, week 1 report: data up
+                to week 51 (25 December 2022)</a
+              >
+              <p>
+                This weekly report covers the 2-week period between 12 and 25
+                December 2022. Data reported here provide a summary of norovirus
+                and rotavirus activity (including enteric virus (EV) outbreaks)
+                in England up to reporting week 51 of the 2022/2023 season.
+              </p>
+            </li>
+            <li class="govuk-!-padding-bottom-1">
+              <a
+                href="https://www.gov.uk/government/news/hepatitis-liver-inflammation-cases-in-children-latest-updates"
+                class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold"
+                >Hepatitis (liver inflammation) cases in children – latest
+                updatess</a
+              >
+              <p>
+                Regular UKHSA updates on the ongoing investigation into higher
+                than usual rates of liver inflammation (hepatitis) in children
+                across the UK.
+              </p>
+            </li>
+            <li class="govuk-!-padding-bottom-1">
+              <a
+                href="https://www.gov.uk/government/collections/human-parainfluenza-viruses-guidance-and-data"
+                class="govuk-link govuk-link--no-visited-state govuk-!-font-weight-bold"
+                >Human parainfluenza viruses: guidance and data</a
+              >
+              <p>
+                The symptoms, diagnosis, management and epidemiology of human
+                parainfluenza viruses (HPIVs).
+              </p>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="govuk-grid-column-two-thirds">
+        <div class="govuk-grid-row">
+          <h1 class="govuk-heading-xl">Winter pressures in England</h1>
+          <p class="govuk-body">
+            Weekly surveillance of Influenza, COVID-19 and other respiratory
+            viruses in England showing the proportion of positive samples. Last updated on Thursday 5 January 2023 at
+            6:10pm
+          </p>
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">
+            <div class="flex">
+              <a href="influenza" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >Influenza</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly Influenza cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <div class="flex">
+              <a href="rsv" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >RSV</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly RSV cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <div class="flex">
+              <a href="sars-cov-2" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >SARS-CoV-2</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly SARS-CoV-2 cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+          <div class="govuk-grid-column-one-half">            
+            <div class="flex">
+              <a href="adenovirus" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >Adenovirus</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly Adenovirus cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <div class="flex">
+              <a href="parainfluenza" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >Parainfluenza</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly Parainfluenza cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+          <div class="govuk-grid-column-one-half">
+            <div class="flex">
+              <a href="rhinovirus" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >Rhinovirus</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly Rhinovirus cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+        </div>
+        <div class="govuk-grid-row">
+          <div class="govuk-grid-column-one-half">            
+            <div class="flex">
+              <a href="hMPV" class="govuk-heading-m govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-0"
+                  >hMPV</a
+                >
+              <strong class="govuk-tag tag-padding-top">nation</strong>
+            </div>
+            <div>
+              <svg
+                id="chart"
+                width="100%"
+                viewBox="0 0 1000 500"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134,L 1000 500,L 0 500Z"
+                  fill="#0000001a"
+                />
+                <path
+                  d="M 0,494.712664265345 C 18.200000000000003,487.26896223765505 54.6,469.5057419206751 91,457.4941541268953 C 127.4,445.48256633311547 145.6,441.49527246250807 182,434.654725296446 C 218.4,427.8141781303839 236.6,441.69057367099833 273,423.29141829658477 C 309.4,404.8922629221712 327.6,353.40931803806046 364,342.6589484243782 C 400.4,331.90857881069593 418.6,372.1461276681532 455,369.5395702281735 C 491.4,366.93301278819376 509.6,349.87979668062843 546,329.6261612244797 C 582.4,309.37252576833095 600.6,294.2786202417447 637,268.2713929474297 C 673.4,242.26416565311476 691.6,208.69470409092742 728,199.59002475290492 C 764.4,190.48534541488243 782.6,251.5063323162636 819,222.7479962573172 C 855.4,193.9896601983708 873.6,62.817283589593714 910,55.79834445817295 C 946.4,48.77940532675219 982.8,161.28230937180533 1001,187.6533006002134"
+                  fill="none"
+                  stroke="#000"
+                  stroke-width="4px"
+                />
+                <g>
+                  <circle cx="0" cy="494.712664265345" r="8" fill="#000" />
+                  ,
+                  <circle cx="91" cy="457.4941541268953" r="8" fill="#000" />
+                  ,
+                  <circle cx="182" cy="434.654725296446" r="8" fill="#000" />
+                  ,
+                  <circle cx="273" cy="423.29141829658477" r="8" fill="#000" />
+                  ,
+                  <circle cx="364" cy="342.6589484243782" r="8" fill="#000" />
+                  ,
+                  <circle cx="455" cy="369.5395702281735" r="8" fill="#000" />
+                  ,
+                  <circle cx="546" cy="329.6261612244797" r="8" fill="#000" />
+                  ,
+                  <circle cx="637" cy="268.2713929474297" r="8" fill="#000" />
+                  ,
+                  <circle cx="728" cy="199.59002475290492" r="8" fill="#000" />
+                  ,
+                  <circle cx="819" cy="222.7479962573172" r="8" fill="#000" />
+                  ,
+                  <circle cx="910" cy="55.79834445817295" r="8" fill="#000" />
+                  ,
+                  <circle cx="1001" cy="187.6533006002134" r="8" fill="#000" />
+                </g>
+              </svg>
+            </div>
+            <details class="govuk-details" data-module="govuk-details">
+              <summary class="govuk-details__summary">
+                <span class="govuk-details__summary-text">
+                  View data in a tabular format
+                </span>
+              </summary>
+              <div class="govuk-details__text">
+                <table class="govuk-table">
+                  <caption class="govuk-table__caption govuk-table__caption--m">
+                    Monthly hMPV cases
+                  </caption>
+                  <thead class="govuk-table__head">
+                    <tr class="govuk-table__row">
+                      <th scope="col" class="govuk-table__header">Month</th>
+                      <th scope="col" class="govuk-table__header">Amount</th>
+                    </tr>
+                  </thead>
+                  <tbody class="govuk-table__body">
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">January</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">February</th>
+                      <td class="govuk-table__cell">59</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">March</th>
+                      <td class="govuk-table__cell">25</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">April</th>
+                      <td class="govuk-table__cell">72</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">May</th>
+                      <td class="govuk-table__cell">21</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">June</th>
+                      <td class="govuk-table__cell">34</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">July</th>
+                      <td class="govuk-table__cell">87</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">August</th>
+                      <td class="govuk-table__cell">43</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">September</th>
+                      <td class="govuk-table__cell">23</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">October</th>
+                      <td class="govuk-table__cell">31</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">November</th>
+                      <td class="govuk-table__cell">54</td>
+                    </tr>
+                    <tr class="govuk-table__row">
+                      <th scope="row" class="govuk-table__header">December</th>
+                      <td class="govuk-table__cell">66</td>
+                    </tr>
+                  </tbody>
+                </table>
+                <a class="govuk-link">Download this data</a>
+              </div>
+            </details>
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+</div>
+
+{% endblock %}

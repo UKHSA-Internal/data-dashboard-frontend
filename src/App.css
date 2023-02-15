@@ -1,6 +1,7 @@
 .dashboard-container {
     display: flex;
     flex-direction: row;
+    margin-top: 20px;
 }
 
 /* .govuk-main-wrapper {
@@ -10,7 +11,7 @@
     width: 100%;
     padding-top: 0 !important;
 } */
-
+/*
 .govuk-width-container {
     max-width: 1920px;
     margin-right: 15px;
@@ -52,6 +53,8 @@
     }
 }
 
+*/
+
 .govuk-header {
     border-color: #1d70b8;
 }
@@ -62,10 +65,11 @@
     top: 4px;
     flex: 0 0 auto;
     align-self: flex-start;
-    width: 200px;
+    width: 260px;
     display: block;
     overflow: clip;
-    margin-right: 10px;
+    margin-right: 40px;
+    margin-left: 0px;
 }
 
 .govuk-main-wrapper {
@@ -74,4 +78,45 @@
     padding-bottom: 40px;
     width: 100%;
     padding-top: 0 !important;
+}
+
+main {
+    margin-top: 2px;
+}
+
+.illness-hd {
+    text-decoration: none !important;
+    color: black !important;
+    padding-bottom: 12px;
+}
+
+.winter-pressure-menu-list {
+    list-style-type: none;
+    text-align: center;
+    align-items: center;
+    padding-left: 0px;
+}
+
+.winter-pressure-menu-link {
+    padding: 0 15px;
+    display: flex;
+    justify-content: center;
+}
+
+.flex {
+    display: flex;
+}
+
+
+.govuk-grid-column-one-half {
+    padding-left: 0px;
+}
+
+.govuk-tag {
+    margin-top: 6px;
+    margin-bottom: 14px;
+}
+
+.govuk-heading-xl {
+    margin-bottom: 20px
 }

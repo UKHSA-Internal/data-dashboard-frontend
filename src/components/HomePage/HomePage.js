@@ -35,31 +35,39 @@ class HomePage extends React.Component {
 
     return (
       <>
-        <div className="govuk-grid-row">
-          <div className="govuk-grid-column-full">
-            <h1
-              className="govuk-heading-l govuk-!-margin-bottom-2 govuk-!-margin-top-2"
-              data-nosnippet="true"
-            >
-              England Summary
-            </h1>
-            <p className="govuk-body-m govuk-!-margin-bottom-1 govuk-!-margin-top-3">
+        <div className="govuk-grid-column">
+          <div className="govuk-grid-row">
+            <h1 className="govuk-heading-xl">Winter Pressures in England</h1>
+            <p className="govuk-body">
               Weekly surveillance of Influenza, COVID-19 and other respiratory
-              viruses in England.
+              viruses in England showing the proportion of positive samples. Last updated on Thursday 5 January 2023 at
+              6:10pm
             </p>
           </div>
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("COVID-19")} />
+            </div>
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("Influenza")} />
+            </div>
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("Parainfluenza")} />
+            </div>
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("Rhinovirus")} />
+            </div>
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("RSV")} />
+            </div>
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("Adenovirus")} />
+            </div>
+            <div className="govuk-grid-column-one-half">
+              <MiniCard data={this.getData("Acute Respiratory Infections")} />
+            </div>
+          </div>
         </div>
-        <article>
-          <ul className="govuk-list card-container">
-            <MiniCard data={this.getData("Influenza")} />
-            <MiniCard data={this.getData("RSV")} />
-            <MiniCard data={this.getData("SARS-CoV-2")} />
-            <MiniCard data={this.getData("Adenovirus")} />
-            <MiniCard data={this.getData("Parainfluenza")} />
-            <MiniCard data={this.getData("Rhinovirus")} />
-            <MiniCard data={this.getData("hMPV")} />
-          </ul>
-        </article>
       </>
     );
   }
@@ -72,7 +80,9 @@ class HomePage extends React.Component {
       y: items[virusName],
       mode: "lines",
       type: "scatter",
-      line: { color: "rgb(0, 0, 0)", width: 2 },
+      line: { color: "rgb(0, 0, 0)", width: 1 },
+      fill: 'tozeroy',
+      fillcolor: "rgb(220, 220, 220)",
       name: virusName
     };
   }
