@@ -86,7 +86,7 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Start app
-        run: npm run start
+        run: npm run start &
       - uses: ./.github/actions/run-cypress-tests
         with:
           browser: chrome
