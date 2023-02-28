@@ -5,3 +5,5 @@ describe('Example', () => {
     cy.findByText('Respiratory viruses in England')
   })
 })
+
+export {}
