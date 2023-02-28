@@ -7,6 +7,7 @@ on:
 
 env:
   AWS_REGION: 'eu-west-2'
+  CYPRESS_CACHE_FOLDER: cypress/cache
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -84,8 +85,12 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
-      - name: Cypress tests
-        run: npm run test:e2e:ci
+      - name: Start app
+        run: npm run start
+      - uses: ./.github/actions/run-cypress-tests
+        with:
+          browser: chrome
+          github-token: ${{ secrets.GITHUB_TOKEN }}
 
   ###############################################################################
   # Deploy
@@ -93,7 +98,7 @@ jobs:
 
   deploy:
     name: ECR Image Push
-    needs: [cypress-tests]
+    needs: [quality-checks, unit-tests, cypress-tests]
     runs-on: ubuntu-latest
 
     steps:
