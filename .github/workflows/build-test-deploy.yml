@@ -38,7 +38,7 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
-        run: npx turbo run build
+        run: npm run build
 
   ###############################################################################
   # Code quality checks
@@ -61,7 +61,7 @@ jobs:
   ##############################################################################
 
   unit-tests:
-    name: Unit test
+    name: Unit tests
     needs: [build]
     runs-on: ubuntu-latest
     steps:
