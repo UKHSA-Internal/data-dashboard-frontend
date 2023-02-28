@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-node lint-staged.config.js
-# npm run lint-staged && npm test
+node lint-staged.config.js && npm run test:ci
