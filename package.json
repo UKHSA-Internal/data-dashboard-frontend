@@ -10,7 +10,7 @@
     "test": "jest --watch",
     "test:ci": "jest --ci",
     "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
-    "test:e2e:ci": "start-server-and-test dev http://localhost:3000 \"cypress run --e2e\"",
+    "test:e2e:ci": "start-server-and-test start http://localhost:3000 \"cypress run --e2e\"",
     "prepare": "husky install"
   },
   "dependencies": {
