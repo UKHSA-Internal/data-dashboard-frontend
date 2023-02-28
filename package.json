@@ -9,8 +9,8 @@
     "lint": "next lint",
     "test": "jest --watch",
     "test:ci": "jest --ci",
-    "test:e2e": "start-server-and-test dev http://localhost:3000 \"cypress open --e2e\"",
-    "test:e2e:ci": "start-server-and-test start http://localhost:3000 \"cypress run --e2e\"",
+    "test:e2e": "cypress open --e2e",
+    "test:e2e:ci": "cypress run --e2e",
     "prepare": "husky install"
   },
   "dependencies": {
@@ -43,7 +43,6 @@
     "jsdom": "^21.1.0",
     "lint-staged": "^13.1.2",
     "prettier": "^2.8.4",
-    "start-server-and-test": "^2.0.0",
     "typescript": "^4.9.5"
   }
 }
