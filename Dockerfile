@@ -6,7 +6,7 @@ RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
 # Install dependencies based on the preferred package manager
-COPY package.json yarn.lock* package-lock.json* pnpm-lock.yaml* ./
+COPY package.json package-lock.json ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
@@ -51,18 +51,3 @@ EXPOSE 3000
 ENV PORT 3000
 
 CMD ["node", "server.js"]
-
-# WORKDIR /app
-# COPY package.json ./
-# COPY package-lock.json ./
-# RUN npm ci
-# COPY . .
-# RUN npm run build
-
-# FROM nginx
-# COPY --from=build /app/out /usr/share/nginx/html
-# RUN rm /etc/nginx/conf.d/default.conf
-# COPY nginx.conf /etc/nginx/conf.d
-# EXPOSE 80
-# CMD ["nginx", "-g", "daemon off;"]
-
