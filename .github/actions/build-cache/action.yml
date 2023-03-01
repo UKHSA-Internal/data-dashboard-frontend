@@ -11,7 +11,6 @@ runs:
       with:
         path: |
           ~/.npm
-          ${{ github.workspace }}/out
           ${{ github.workspace }}/.next
         # Generate a new cache whenever packages or source files change.
         key: ${{ runner.os }}-nextjs-${{ hashFiles('**/package-lock.json') }}-${{ hashFiles('**.[jt]s', '**.[jt]sx') }}
