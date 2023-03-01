@@ -1,11 +1,8 @@
-version: "3.9"
-
+version: '3.9'
 services:
-  react-app:
-    build:
-      context: .
-      dockerfile: dockerfile.dev
+  nextjs:
+    build: ./
+  nginx:
+    build: ./nginx
     ports:
-      - "3000:3000"
-    volumes:
-      - ./src:/app/src
+      - 80:80

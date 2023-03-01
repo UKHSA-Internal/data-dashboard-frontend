@@ -1,0 +1,23 @@
+name: 'Run Cypress tests'
+
+description: 'Run Cypress tests'
+
+inputs:
+  browser:
+    required: true
+  github-token:
+    required: true
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cypress tests
+      uses: cypress-io/github-action@v5
+      with:
+        browser: ${{ inputs.browser }}
+        install: false
+        quiet: true
+        command: npm run test:e2e:ci
+      env:
+        GITHUB_TOKEN: ${{ inputs.github-token }}
+        CYPRESS_CACHE_FOLDER: cypress/cache
