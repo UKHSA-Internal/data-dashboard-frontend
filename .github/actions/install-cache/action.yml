@@ -1,0 +1,15 @@
+name: 'Install Cache'
+
+description: 'Read / write install cache'
+
+runs:
+  using: 'composite'
+  steps:
+    - name: Cache dependencies
+      uses: actions/cache@v3
+      id: cache-dependencies
+      with:
+        path: |
+          cypress/cache
+          node_modules
+        key: dependencies-${{ hashFiles('package-lock.json') }}
