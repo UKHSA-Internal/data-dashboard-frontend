@@ -4,7 +4,7 @@ type RelatedLink = {
   link: string
 }
 
-type RelatedLinksResponse = RelatedLink[]
+export type RelatedLinksResponse = RelatedLink[]
 
 export const data: RelatedLinksResponse = [
   {
