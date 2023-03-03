@@ -52,6 +52,11 @@ ENV PORT 3000
 
 CMD ["node", "server.js"]
 
+
+#####################################################################
+# Should split these into multiple images and run with docker-compose
+#####################################################################
+
 # Base on offical NGINX Alpine image
 FROM nginx:alpine
 
