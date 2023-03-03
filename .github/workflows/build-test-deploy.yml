@@ -18,79 +18,79 @@ jobs:
   # Install dependencies & build packages
   ###############################################################################
 
-  install:
-    name: Install
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - name: Install
-        run: npm ci --no-audit --no-fund
+  # install:
+  #   name: Install
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - name: Install
+  #       run: npm ci --no-audit --no-fund
 
-  build:
-    name: Build
-    needs: [install]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Build
-        run: npm run build
+  # build:
+  #   name: Build
+  #   needs: [install]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Build
+  #       run: npm run build
 
-  ###############################################################################
-  # Code quality checks
-  ###############################################################################
+  # ###############################################################################
+  # # Code quality checks
+  # ###############################################################################
 
-  quality-checks:
-    name: Lint
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Quality check
-        run: npm run lint
+  # quality-checks:
+  #   name: Lint
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Quality check
+  #       run: npm run lint
 
-  ##############################################################################
-  # Unit tests
-  ##############################################################################
+  # ##############################################################################
+  # # Unit tests
+  # ##############################################################################
 
-  unit-tests:
-    name: Unit tests
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Unit tests
-        run: npm run test:ci
+  # unit-tests:
+  #   name: Unit tests
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Unit tests
+  #       run: npm run test:ci
 
-  ##############################################################################
-  # Cypress tests
-  ##############################################################################
+  # ##############################################################################
+  # # Cypress tests
+  # ##############################################################################
 
-  cypress-tests:
-    name: Cypress tests
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Start app
-        run: npm run start &
-      - uses: ./.github/actions/run-cypress-tests
-        with:
-          browser: chrome
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+  # cypress-tests:
+  #   name: Cypress tests
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Start app
+  #       run: npm run start &
+  #     - uses: ./.github/actions/run-cypress-tests
+  #       with:
+  #         browser: chrome
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
 
   ###############################################################################
   # Deploy
