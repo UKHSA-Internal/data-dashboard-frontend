@@ -1,3 +1,6 @@
+import { getRelatedLinks } from '@/api/getRelatedLinks'
+import { getVirusesSummary } from '@/api/getVirusesSummary'
+import Search from '@/components/Search/Search'
 import { initMocks } from '@/mocks'
 import { RelatedLinksResponse } from '@/mocks/api/related-links'
 import { VirusesResponse } from '@/mocks/api/viruses'
@@ -13,18 +16,21 @@ import {
   RelatedItems,
   UnorderedList,
 } from 'govuk-react'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
 import RouterLink from 'next/link'
 
-type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
+type HomeProps = InferGetServerSidePropsType<typeof getServerSideProps>
 
 export default function Home({
   viruses: { viruses },
   relatedLinks,
+  searchTerm,
 }: HomeProps) {
   return (
     <>
       <H1>Respiratory viruses in England</H1>
+
+      <Search defaultValue={searchTerm} />
 
       <GridRow>
         {viruses.map(({ name, description }) => {
@@ -56,29 +62,32 @@ export default function Home({
   )
 }
 
-export const getStaticProps: GetStaticProps<{
+type DashboardQueryParams = {
+  searchTerm: string | undefined
+}
+
+export const getServerSideProps: GetServerSideProps<{
   viruses: VirusesResponse
   relatedLinks: RelatedLinksResponse
-}> = async () => {
+  searchTerm: string | undefined
+}> = async (context) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const [virusesResponse, relatedLinksResponse] = await Promise.all([
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/viruses`),
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/related-links`),
-  ])
+  const queryParams = context.query as DashboardQueryParams
+  const searchTerm = queryParams.searchTerm ?? ''
 
   const [viruses, relatedLinks] = await Promise.all([
-    await virusesResponse.json(),
-    await relatedLinksResponse.json(),
+    await getVirusesSummary({ searchTerm }),
+    await getRelatedLinks(),
   ])
 
   return {
     props: {
       viruses,
       relatedLinks,
+      searchTerm,
     },
-    revalidate: 10,
   }
 }
