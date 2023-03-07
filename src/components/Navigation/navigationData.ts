@@ -12,15 +12,15 @@ export const primaryLinksData: NavigationLink[] = [
   },
   {
     title: 'Coronavirus',
-    url: '/coronavirus',
+    url: '/viruses/coronavirus',
   },
   {
     title: 'Influenza',
-    url: '/influenza',
+    url: '/viruses/influenza',
   },
   {
     title: 'Other respiratory viruses',
-    url: '/other-respiratory-viruses',
+    url: '/viruses/other-respiratory-viruses',
   },
 ]
 
