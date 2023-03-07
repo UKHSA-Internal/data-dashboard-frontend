@@ -9,11 +9,11 @@ type NavigationProps = {
 }
 
 const renderPrimaryLink = (props: NavigationLink) => (
-  <NavigationLink {...props} type="primary" />
+  <NavigationLink key={props.url} type="primary" {...props} />
 )
 
 const renderSecondaryLink = (props: NavigationLink) => (
-  <NavigationLink {...props} type="secondary" />
+  <NavigationLink key={props.url} type="secondary" {...props} />
 )
 
 export const Navigation = ({

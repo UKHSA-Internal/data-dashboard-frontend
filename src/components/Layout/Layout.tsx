@@ -8,17 +8,20 @@ export default function Layout({ children }: PropsWithChildren) {
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="alpha">
+            <PhaseBanner level="alpha" data-testid="ukhsa-banner">
               This is a new service – your feedback will help us to improve it.
             </PhaseBanner>
             <Navigation />
           </>
         }
-        header={<TopNav serviceTitle={'UKHSA Dashboard'} />}
+        header={
+          <TopNav serviceTitle={'UKHSA Dashboard'} data-testid="ukhsa-header" />
+        }
       >
         <Main>{children}</Main>
       </Page>
       <Footer
+        data-testid="ukhsa-footer"
         copyright={{
           image: {
             height: 102,
