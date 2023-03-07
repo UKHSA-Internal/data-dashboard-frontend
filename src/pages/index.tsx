@@ -23,22 +23,23 @@ export default function Home({
   viruses: { viruses },
   relatedLinks,
 }: HomeProps) {
+
+  console.log("Index", viruses);
   return (
     <>
       <H1>Respiratory viruses in England</H1>
 
       <GridRow>
-        {viruses.map(({ name, description }) => {
+        {viruses.map(({ name, description, points }) => {
           return (
             <GridCol key={name}>
-              <RouterLink href={`viruses/${name.toLowerCase()}`} passHref>
-                <VirusSummary virus={name} />
-              </RouterLink>
-              <Paragraph>{description}</Paragraph>
+              <VirusSummary virus={name} descrpition={description} points={points} />
             </GridCol>
           )
         })}
       </GridRow>
+
+      <br />
 
       <RelatedItems>
         <H2>Related Links</H2>

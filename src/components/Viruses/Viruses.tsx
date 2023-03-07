@@ -12,9 +12,9 @@ const Container = styled.div`
 const Viruses: FC = () => {
     return (
         <Container>
-            <VirusSummary virus='Influenza' />
+            {/* <VirusSummary virus='Influenza' />
             <VirusSummary virus='SARS-Cov-2' />
-            <VirusSummary virus='RSV' />
+            <VirusSummary virus='RSV' /> */}
         </Container>
     )
 };
