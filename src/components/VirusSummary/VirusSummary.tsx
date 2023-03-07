@@ -51,7 +51,7 @@ const Download = styled.button`
     }
 `;
 
-const SummaryText = styled.span`
+const SummaryText = styled.div`
     margin: 16px 0;
     width: 100%;
     font-weight: 700;
