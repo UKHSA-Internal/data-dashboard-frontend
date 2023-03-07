@@ -43,3 +43,8 @@ test('Displays page content within the layout', () => {
 
   expect(screen.getByRole('heading', { name: 'Burendo!' }))
 })
+
+test('Adds a class to the body so that we know if js is enabled', () => {
+  render(<Layout />)
+  expect(document.body.classList.contains('js-enabled')).toBeTruthy()
+})
