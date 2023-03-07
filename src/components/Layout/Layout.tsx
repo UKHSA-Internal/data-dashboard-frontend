@@ -1,20 +1,27 @@
 import { Footer, Main, Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren } from 'react'
+import { Navigation } from '../Navigation/Navigation'
 
 export default function Layout({ children }: PropsWithChildren) {
   return (
     <>
       <Page
         beforeChildren={
-          <PhaseBanner level="alpha">
-            This is a new service – your feedback will help us to improve it.
-          </PhaseBanner>
+          <>
+            <PhaseBanner level="alpha" data-testid="ukhsa-banner">
+              This is a new service – your feedback will help us to improve it.
+            </PhaseBanner>
+            <Navigation />
+          </>
         }
-        header={<TopNav serviceTitle={'UKHSA Dashboard'} />}
+        header={
+          <TopNav serviceTitle={'UKHSA Dashboard'} data-testid="ukhsa-header" />
+        }
       >
         <Main>{children}</Main>
       </Page>
       <Footer
+        data-testid="ukhsa-footer"
         copyright={{
           image: {
             height: 102,
