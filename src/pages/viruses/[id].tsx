@@ -1,11 +1,9 @@
 import { data as mockVirusesData, VirusesResponse } from '@/mocks/api/viruses'
+import { H1 } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps } from 'next'
-import { useRouter } from 'next/router'
 
 export default function Virus() {
-  const router = useRouter()
-  const { id } = router.query
-  return <p>Virus: {id}</p>
+  return <H1>Virus detail page (wip)</H1>
 }
 
 export const getStaticProps: GetStaticProps<{
