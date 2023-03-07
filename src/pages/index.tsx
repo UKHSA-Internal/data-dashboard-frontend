@@ -1,3 +1,5 @@
+import { getRelatedLinks } from '@/api/getRelatedLinks'
+import { getVirusesSummary } from '@/api/getVirusesSummary'
 import { initMocks } from '@/mocks'
 import { RelatedLinksResponse } from '@/mocks/api/related-links'
 import { VirusesResponse } from '@/mocks/api/viruses'
@@ -64,14 +66,9 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  const [virusesResponse, relatedLinksResponse] = await Promise.all([
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/viruses`),
-    await fetch(`${process.env.NEXT_PUBLIC_API_URL}/related-links`),
-  ])
-
   const [viruses, relatedLinks] = await Promise.all([
-    await virusesResponse.json(),
-    await relatedLinksResponse.json(),
+    await getVirusesSummary({ searchTerm: '' }),
+    await getRelatedLinks(),
   ])
 
   return {
@@ -79,6 +76,5 @@ export const getStaticProps: GetStaticProps<{
       viruses,
       relatedLinks,
     },
-    revalidate: 10,
   }
 }
