@@ -1,6 +1,5 @@
 import { getRelatedLinks } from '@/api/getRelatedLinks'
 import { getVirusesSummary } from '@/api/getVirusesSummary'
-import Search from '@/components/Search/Search'
 import { initMocks } from '@/mocks'
 import { RelatedLinksResponse } from '@/mocks/api/related-links'
 import { VirusesResponse } from '@/mocks/api/viruses'
@@ -16,21 +15,18 @@ import {
   RelatedItems,
   UnorderedList,
 } from 'govuk-react'
-import { GetServerSideProps, InferGetServerSidePropsType } from 'next'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import RouterLink from 'next/link'
 
-type HomeProps = InferGetServerSidePropsType<typeof getServerSideProps>
+type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function Home({
   viruses: { viruses },
   relatedLinks,
-  searchTerm,
 }: HomeProps) {
   return (
     <>
       <H1>Respiratory viruses in England</H1>
-
-      <Search defaultValue={searchTerm} />
 
       <GridRow>
         {viruses.map(({ name, description }) => {
@@ -62,24 +58,16 @@ export default function Home({
   )
 }
 
-type DashboardQueryParams = {
-  searchTerm: string | undefined
-}
-
-export const getServerSideProps: GetServerSideProps<{
+export const getStaticProps: GetStaticProps<{
   viruses: VirusesResponse
   relatedLinks: RelatedLinksResponse
-  searchTerm: string | undefined
-}> = async (context) => {
+}> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const queryParams = context.query as DashboardQueryParams
-  const searchTerm = queryParams.searchTerm ?? ''
-
   const [viruses, relatedLinks] = await Promise.all([
-    await getVirusesSummary({ searchTerm }),
+    await getVirusesSummary({ searchTerm: '' }),
     await getRelatedLinks(),
   ])
 
@@ -87,7 +75,6 @@ export const getServerSideProps: GetServerSideProps<{
     props: {
       viruses,
       relatedLinks,
-      searchTerm,
     },
   }
 }

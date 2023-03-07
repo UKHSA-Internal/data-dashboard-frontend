@@ -14,7 +14,6 @@ export const getVirusesSummary = async ({
   const req = await fetch(
     `${process.env.NEXT_PUBLIC_API_URL}/viruses?${searchParams.toString()}`
   )
-
   const res = await req.json()
 
   return res
