@@ -83,6 +83,8 @@ export const AccordionItemPanel = styled(ReactAccordion.AccordionItemPanel)`
   ${typography.font({ size: BODY_SIZES.MEDIUM })}
 
   .js-enabled & {
+    padding-top: 15px;
+
     &[hidden] {
       display: none;
     }

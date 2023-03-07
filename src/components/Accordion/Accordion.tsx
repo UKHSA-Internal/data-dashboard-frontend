@@ -21,14 +21,14 @@ export const Accordion = ({ children }: AccordionProps) => (
 )
 
 export const AccordionItemButton = ({ children }: AccordionItemButtonProps) => (
-  <Styled.AccordionItemButton>
-    <Styled.AccordionItemButtonText>
-      <Styled.AccordionItemButtonFocus>
-        {children}
-      </Styled.AccordionItemButtonFocus>
-    </Styled.AccordionItemButtonText>
-    <AccordionItemState>
-      {({ expanded }) => (
+  <AccordionItemState>
+    {({ expanded }) => (
+      <Styled.AccordionItemButton>
+        <Styled.AccordionItemButtonText>
+          <Styled.AccordionItemButtonFocus>
+            {children}
+          </Styled.AccordionItemButtonFocus>
+        </Styled.AccordionItemButtonText>
         <Styled.AccordionItemToggle expanded={!!expanded}>
           <Styled.AccordionItemToggleFocus>
             <Styled.AccordionItemToggleChevron />
@@ -37,9 +37,9 @@ export const AccordionItemButton = ({ children }: AccordionItemButtonProps) => (
             </Styled.AccordionItemToggleText>
           </Styled.AccordionItemToggleFocus>
         </Styled.AccordionItemToggle>
-      )}
-    </AccordionItemState>
-  </Styled.AccordionItemButton>
+      </Styled.AccordionItemButton>
+    )}
+  </AccordionItemState>
 )
 
 export const AccordionItemHeading = ({
