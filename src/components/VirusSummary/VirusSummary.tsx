@@ -13,10 +13,10 @@ interface IProps {
 const VirusSummary: FC<IProps> = ({ virus, descrpition, points }) => {
     return (
         <Container>
-            <Title href={`/viruses/${virus}`}>{virus}</Title>
-            <Button buttonColour='#F3F2F1' buttonTextColour='#000000'>Download</Button>
+            <Title href={`/viruses/${virus}`} data-testid="ukhsa-title">{virus}</Title>
+            <Button buttonColour='#F3F2F1' buttonTextColour='#000000' data-testid="ukhsa-downloadButton">Download</Button>
             <LabelContainer>
-                <Paragraph>{`**${descrpition}**`}</Paragraph>
+                <Paragraph data-testid="ukhsa-description">{`**${descrpition}**`}</Paragraph>
             </LabelContainer>
             <ChartContainer>
                 <ResponsiveContainer width="99%">
