@@ -1,36 +1,8 @@
 import { FC } from 'react';
-import styled from 'styled-components';
 import { AreaChart, Area, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { Button, Details, Heading, Paragraph } from 'govuk-react';
+import { Button,  Heading, Paragraph } from 'govuk-react';
 import VirusSummaryTable from './VirusSummaryTable';
-
-const Container = styled.div`
-    background: #F8F8F8;
-    display: flex;
-    padding: 10px;
-    flex-wrap: wrap;
-    justify-content: space-between;
-`;
-
-const Title = styled.a`
-    font-size: 1.5rem;
-    font-weight: 700;
-    color: #1d70b8;
-`;
-
-const LabelContainer = styled.div`
-    margin-left: 75px;
-`;
-
-const ChartContainer = styled.div`
-    width: 100%;
-    height: 220px;
-    margin-bottom: 30px;
-`;
-
-const DataTableDropDown = styled(Details)`
-    width: 100%;
-`;
+import { ChartContainer, Container, DataTableDropDown, LabelContainer, Title } from './VirusSummary.styles';
 
 interface IProps {
     virus: string;
@@ -39,9 +11,6 @@ interface IProps {
 }
 
 const VirusSummary: FC<IProps> = ({ virus, descrpition, points }) => {
-    console.log("points", points);
-    // debugger;
-
     return (
         <Container>
             <Title href={`/viruses/${virus}`}>{virus}</Title>
