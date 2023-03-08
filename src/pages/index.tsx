@@ -8,7 +8,6 @@ import {
   GridRow,
   H1,
   H2,
-  H3,
   Link as ExternalLink,
   ListItem,
   Paragraph,
@@ -16,7 +15,6 @@ import {
   UnorderedList,
 } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import RouterLink from 'next/link'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
