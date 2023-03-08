@@ -5,7 +5,7 @@ module.exports = {
   // Lint & Prettify TS and JS files
   '**/*.(ts|tsx|js)': (filenames) => [
     `next lint --fix --file ${filenames.join(' ')}`,
-    // `npm run prettier --write ${filenames.join(' ')}`,
+    `npx prettier --write ${filenames.join(' ')}`,
   ],
 
   // Prettify only Markdown and JSON files
