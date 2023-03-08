@@ -1,11 +1,10 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 import { AreaChart, Area, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { Button, Paragraph } from 'govuk-react';
+import { Button, Details, Heading, Paragraph } from 'govuk-react';
+import VirusSummaryTable from './VirusSummaryTable';
 
 const Container = styled.div`
-    /* width: 100%; */
-    height: 450px;
     background: #F8F8F8;
     display: flex;
     padding: 10px;
@@ -20,18 +19,23 @@ const Title = styled.a`
 `;
 
 const LabelContainer = styled.div`
-    margin-left: 85px;
+    margin-left: 75px;
 `;
 
 const ChartContainer = styled.div`
     width: 100%;
-    height: 300px;
+    height: 220px;
+    margin-bottom: 30px;
+`;
+
+const DataTableDropDown = styled(Details)`
+    width: 100%;
 `;
 
 interface IProps {
     virus: string;
     descrpition: string;
-    points: Array<{ value: number }>;
+    points: Array<{ date: string, value: number }>;
 }
 
 const VirusSummary: FC<IProps> = ({ virus, descrpition, points }) => {
@@ -46,15 +50,19 @@ const VirusSummary: FC<IProps> = ({ virus, descrpition, points }) => {
                 <Paragraph>{`**${descrpition}**`}</Paragraph>
             </LabelContainer>
             <ChartContainer>
-                <ResponsiveContainer>
+                <ResponsiveContainer width="99%">
                     <AreaChart data={points}>
                         <Tooltip />
                         <Area type="monotone" dataKey="value" stroke="#000" fill="#DFDFDF" dot={{fill: '#000', fillOpacity: 1}} />
-                        <YAxis label={{ value: "Incidence rate per 100,000 population", angle: -90  }} tick={false} axisLine={false} />
-                        <XAxis label={{ value: "Week Number" }} tick={false} axisLine={false} />
+                        <XAxis dataKey={"date"} label={{ value: "Week Number" }} tick={false} axisLine={false} />
+                        <YAxis dataKey={"value"} label={{ value: "Incidence rate per 100,000 population", angle: -90  }} tick={false} axisLine={false} />
                     </AreaChart>
                 </ResponsiveContainer>
             </ChartContainer>
+            <DataTableDropDown summary="View data in a tabular format">
+                <Heading size="M">Montly {virus} cases</Heading>
+                <VirusSummaryTable data={points} />
+            </DataTableDropDown>
         </Container>
     );
 }
