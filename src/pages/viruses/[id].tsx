@@ -90,8 +90,8 @@ export default function Virus() {
             </Paragraph>
             <Paragraph>
               Do not take paracetamol and flu remedies that contain paracetamol
-              at the same time as it's easy to take more than the recommended
-              dose.
+              at the same time as it&apos;s easy to take more than the
+              recommended dose.
             </Paragraph>
             <Paragraph>
               GPs do not recommend antibiotics for flu because they will not
@@ -103,10 +103,11 @@ export default function Virus() {
             <Paragraph>You or your child have symptoms of flu and:</Paragraph>
             <UnorderedList>
               <ListItem>
-                you're worried about your baby's or child's symptoms
+                you&apos;re worried about your baby&apos;s or child&apos;s
+                symptoms
               </ListItem>
-              <ListItem>you're 65 or over</ListItem>
-              <ListItem>you're pregnant</ListItem>
+              <ListItem>you&apos;re 65 or over</ListItem>
+              <ListItem>you&apos;re pregnant</ListItem>
               <ListItem>
                 you have a long-term medical condition – for example, diabetes
                 or a condition that affects your heart, lungs, kidneys, brain or
@@ -135,8 +136,8 @@ export default function Virus() {
           <AccordionItemPanel>
             <Paragraph>How to avoid spreading the flu:</Paragraph>
             <Paragraph>
-              Flu is very infectious and easily spread to other people. You're
-              more likely to give it to others in the first 5 days.
+              Flu is very infectious and easily spread to other people.
+              You&apos;re more likely to give it to others in the first 5 days.
             </Paragraph>
             <Paragraph>
               Flu is spread by germs from coughs and sneezes, which can live on
