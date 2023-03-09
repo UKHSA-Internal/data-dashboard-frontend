@@ -15,10 +15,12 @@ export const AccordionItem = styled(ReactAccordion.AccordionItem)`
 `
 
 export const AccordionItemExpander = styled.button`
+  display: none;
   padding-top: 15px;
   outline: none;
 
   .js-enabled & {
+    display: block;
     padding: 10px 0 0 0;
     border: 0;
     color: #0b0c0c;
@@ -44,6 +46,12 @@ export const AccordionItemExpander = styled.button`
 export const AccordionItemButton = styled(ReactAccordion.AccordionItemButton)`
   padding-top: 15px;
   outline: none;
+  background: none;
+  border: none;
+  padding-left: 0;
+  ${typography.font({ size: BODY_SIZES.LARGE })}
+  font-weight: ${FONT_WEIGHTS.bold};
+  appearance: none;
 
   .js-enabled & {
     width: 100%;
@@ -55,10 +63,6 @@ export const AccordionItemButton = styled(ReactAccordion.AccordionItemButton)`
     background: none;
     text-align: left;
     cursor: pointer;
-    -webkit-appearance: none;
-
-    ${typography.font({ size: BODY_SIZES.LARGE })}
-    font-weight: ${FONT_WEIGHTS.bold};
 
     @media (min-width: 40.0625em) {
       padding-bottom: 10px;
