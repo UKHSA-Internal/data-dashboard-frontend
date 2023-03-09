@@ -9,6 +9,7 @@ import {
 import { AccordionItemState } from 'react-accessible-accordion'
 import * as Styled from './Accordion.styles'
 import { AccordionProvider, useAccordion } from './AccordionContext'
+import { Accordion as ReactAccordion } from 'react-accessible-accordion'
 
 /**
  * Gov.uk React component library does not yet support the GDS Accordion component
@@ -24,9 +25,9 @@ interface AccordionProps {
 
 export const Accordion = ({ children }: AccordionProps) => (
   <AccordionProvider>
-    <Styled.Accordion allowMultipleExpanded allowZeroExpanded>
+    <ReactAccordion allowMultipleExpanded allowZeroExpanded>
       <AccordionItems>{children}</AccordionItems>
-    </Styled.Accordion>
+    </ReactAccordion>
   </AccordionProvider>
 )
 
