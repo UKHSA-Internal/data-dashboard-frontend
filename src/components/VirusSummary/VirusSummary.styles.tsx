@@ -1,4 +1,4 @@
-import { Details } from "govuk-react";
+import { Details, Link } from "govuk-react";
 import styled from "styled-components";
 
 export const Container = styled.div`
@@ -9,7 +9,7 @@ export const Container = styled.div`
     justify-content: space-between;
 `;
 
-export const Title = styled.a`
+export const Title = styled(Link)`
     font-size: 1.5rem;
     font-weight: 700;
     color: #1d70b8;

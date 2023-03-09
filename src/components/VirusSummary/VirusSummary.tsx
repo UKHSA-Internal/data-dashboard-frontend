@@ -2,6 +2,7 @@
 import { Button,  Heading, Paragraph } from 'govuk-react';
 import VirusSummaryTable from './VirusSummaryTable';
 import { ChartContainer, Container, DataTableDropDown, LabelContainer, Title } from './VirusSummary.styles';
+import RouterLink from 'next/link'
 
 interface VirusSummaryProps {
     virus: string;
@@ -12,7 +13,9 @@ interface VirusSummaryProps {
 const VirusSummary = ({ virus, description, points }: VirusSummaryProps) => {
     return (
         <Container>
-            <Title href={`/viruses/${virus}`} data-testid="ukhsa-title">{virus}</Title>
+            <RouterLink href={`/viruses/${virus}`} passHref legacyBehavior>
+                <Title>{virus}</Title>
+            </RouterLink>
             <Button buttonColour='#F3F2F1' buttonTextColour='#000000' data-testid="ukhsa-downloadButton">Download</Button>
             <LabelContainer data-testid="ukhsa-description">
                 <Paragraph>{`**${description}**`}</Paragraph>
