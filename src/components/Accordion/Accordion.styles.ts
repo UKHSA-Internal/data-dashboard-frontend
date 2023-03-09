@@ -14,6 +14,33 @@ export const AccordionItem = styled(ReactAccordion.AccordionItem)`
   }
 `
 
+export const AccordionItemExpander = styled.button`
+  padding-top: 15px;
+  outline: none;
+
+  .js-enabled & {
+    padding: 10px 0 0 0;
+    border: 0;
+    color: #0b0c0c;
+    background: none;
+    text-align: left;
+    cursor: pointer;
+    -webkit-appearance: none;
+
+    ${typography.font({ size: BODY_SIZES.LARGE })}
+    font-weight: ${FONT_WEIGHTS.bold};
+
+    @media (min-width: 48.0625em) {
+      margin-bottom: 14px;
+    }
+
+    &:hover {
+      color: #0b0c0c;
+      background: #f3f2f1;
+    }
+  }
+`
+
 export const AccordionItemButton = styled(ReactAccordion.AccordionItemButton)`
   padding-top: 15px;
   outline: none;
@@ -47,7 +74,7 @@ export const AccordionItemButton = styled(ReactAccordion.AccordionItemButton)`
 export const AccordionItemButtonFocus = styled.span`
   display: inline;
 
-  [role='button']:focus & {
+  button:focus & {
     padding-bottom: 3px;
     outline: 3px solid rgba(0, 0, 0, 0);
     color: #0b0c0c;
@@ -95,7 +122,7 @@ export const AccordionItemPanel = styled(ReactAccordion.AccordionItemPanel)`
   }
 `
 
-export const AccordionItemToggle = styled.span<{ expanded: boolean }>`
+export const AccordionItemToggle = styled.span`
   display: none;
 
   .js-enabled & {
@@ -108,7 +135,7 @@ export const AccordionItemToggle = styled.span<{ expanded: boolean }>`
 export const AccordionItemToggleFocus = styled.span`
   display: inline;
 
-  [role='button']:focus & {
+  button:focus & {
     padding-bottom: 3px;
     outline: 3px solid rgba(0, 0, 0, 0);
     color: #0b0c0c;
@@ -120,12 +147,12 @@ export const AccordionItemToggleFocus = styled.span`
 `
 
 export const AccordionItemToggleChevron = styled.span`
-  div[aria-expanded='false'] & {
+  [aria-expanded='false'] & {
     transform: rotate(180deg);
   }
 
-  [role='button']:hover &,
-  [role='button']:focus & {
+  button:hover &,
+  button:focus & {
     color: #0b0c0c;
     background: #0b0c0c;
 
@@ -160,8 +187,8 @@ export const AccordionItemToggleChevron = styled.span`
   }
 `
 export const AccordionItemToggleText = styled.span`
-  [role='button']:hover &,
-  [role='button']:focus & {
+  button:hover &,
+  button:focus & {
     color: #0b0c0c;
   }
 

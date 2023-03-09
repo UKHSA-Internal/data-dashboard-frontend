@@ -61,3 +61,18 @@ test('Supports multiple panels being open', async () => {
   expect(screen.getByText('And here is the content')).toBeVisible()
   expect(screen.getByText('More content')).toBeVisible()
 })
+
+test('Toggles all panels expanded when clicking the Show all sections button', async () => {
+  const user = userEvent.setup()
+  render(getComponent())
+
+  await user.click(screen.getByRole('button', { name: /Show all sections/ }))
+
+  expect(screen.getByText('And here is the content')).toBeVisible()
+  expect(screen.getByText('More content')).toBeVisible()
+
+  await user.click(screen.getByRole('button', { name: /Hide all sections/ }))
+
+  expect(screen.getByText('And here is the content')).not.toBeVisible()
+  expect(screen.getByText('More content')).not.toBeVisible()
+})
