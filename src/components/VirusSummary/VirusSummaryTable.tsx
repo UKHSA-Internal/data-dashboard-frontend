@@ -1,11 +1,10 @@
 import { Table } from 'govuk-react';
-import { FC } from 'react';
 
-interface IProps {
+interface VirusSummaryTableProps {
     data: Array<{ date: string, value: number }>;
 }
 
-const VirusSummaryTable: FC<IProps> = ({ data }) => {
+const VirusSummaryTable = ({ data }: VirusSummaryTableProps) => {
     return (
         <Table>
             <Table.Row>

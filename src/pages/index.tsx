@@ -24,7 +24,6 @@ export default function Home({
   relatedLinks,
 }: HomeProps) {
 
-  console.log("Index", viruses);
   return (
     <>
       <H1>Respiratory viruses in England</H1>
@@ -33,7 +32,7 @@ export default function Home({
         {viruses.map(({ name, description, points }) => {
           return (
             <GridCol key={name}>
-              <VirusSummary virus={name} descrpition={description} points={points} />
+              <VirusSummary virus={name} description={description} points={points} />
             </GridCol>
           )
         })}

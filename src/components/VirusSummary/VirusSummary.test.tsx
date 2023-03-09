@@ -5,16 +5,17 @@ jest.mock('next/router', () => require('next-router-mock'))
 
 test('Basic content check', () => {
     const mockData = {
-        virus: "Test virus",
+        virus: "TestVirus",
         description: "description for test virus",
         points: [],
     };
 
-    render(<VirusSummary virus={mockData.virus} descrpition={mockData.description} points={mockData.points} />)
+    render(<VirusSummary virus={mockData.virus} description={mockData.description} points={mockData.points} />)
 
     // Title
     const title = screen.getByTestId("ukhsa-title")
-    expect(within(title).getByText("Test virus")).toBeInTheDocument();
+    expect(within(title).getByText("TestVirus")).toBeInTheDocument();
+    expect(title).toHaveAttribute('href', '/viruses/TestVirus');
 
     // Download button
     const downloadButton = screen.getByTestId("ukhsa-downloadButton")
