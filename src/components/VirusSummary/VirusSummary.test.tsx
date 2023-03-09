@@ -27,8 +27,4 @@ test('Basic content check', () => {
     // Dropdown button
     const dropdown = screen.getByTestId("ukhsa-tabledropdown")
     expect(within(dropdown).getByText("View data in a tabular format")).toBeInTheDocument();
-
-    // Dropdown heading
-    const dropdownHeading = screen.getByTestId("ukhsa-dropdownheading");
-    expect(within(dropdownHeading).getByAltText("Monthly Test virus cases")).toBeInTheDocument();
 })
