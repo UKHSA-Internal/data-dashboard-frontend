@@ -9,20 +9,22 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 const getComponent = () => (
-  <Accordion>
-    <AccordionItem>
-      <AccordionItemHeading>
-        <AccordionItemButton>Here is a title</AccordionItemButton>
-      </AccordionItemHeading>
-      <AccordionItemPanel>And here is the content</AccordionItemPanel>
-    </AccordionItem>
-    <AccordionItem>
-      <AccordionItemHeading>
-        <AccordionItemButton>Second title</AccordionItemButton>
-      </AccordionItemHeading>
-      <AccordionItemPanel>More content</AccordionItemPanel>
-    </AccordionItem>
-  </Accordion>
+  <div className="js-enabled">
+    <Accordion>
+      <AccordionItem>
+        <AccordionItemHeading>
+          <AccordionItemButton>Here is a title</AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel>And here is the content</AccordionItemPanel>
+      </AccordionItem>
+      <AccordionItem>
+        <AccordionItemHeading>
+          <AccordionItemButton>Second title</AccordionItemButton>
+        </AccordionItemHeading>
+        <AccordionItemPanel>More content</AccordionItemPanel>
+      </AccordionItem>
+    </Accordion>
+  </div>
 )
 
 test('Displays the accordion headings and hides all content by default', () => {
