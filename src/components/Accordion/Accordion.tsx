@@ -32,8 +32,8 @@ export const Accordion = ({ children }: AccordionProps) => (
 
 /**
  * AccordionItems
- * Custom wrapper that adds a controlled uuid per panel. This allows us the panels to
- * communciate with the context provider with their id when interacted with
+ * Custom wrapper that adds a controlled uuid per panel. This allows the panels to
+ * communicate with the context provider with their id when interacted with
  */
 interface AccordionItemsProps {
   children: ReactNode
