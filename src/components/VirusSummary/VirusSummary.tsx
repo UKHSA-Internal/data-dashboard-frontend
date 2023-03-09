@@ -1,22 +1,21 @@
-import { FC } from 'react';
 // import { AreaChart, Area, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { Button,  Heading, Paragraph } from 'govuk-react';
 import VirusSummaryTable from './VirusSummaryTable';
 import { ChartContainer, Container, DataTableDropDown, LabelContainer, Title } from './VirusSummary.styles';
 
-interface IProps {
+interface VirusSummaryProps {
     virus: string;
-    descrpition: string;
+    description: string;
     points: Array<{ date: string, value: number }>;
 }
 
-const VirusSummary: FC<IProps> = ({ virus, descrpition, points }) => {
+const VirusSummary = ({ virus, description, points }: VirusSummaryProps) => {
     return (
         <Container>
             <Title href={`/viruses/${virus}`} data-testid="ukhsa-title">{virus}</Title>
             <Button buttonColour='#F3F2F1' buttonTextColour='#000000' data-testid="ukhsa-downloadButton">Download</Button>
             <LabelContainer data-testid="ukhsa-description">
-                <Paragraph>{`**${descrpition}**`}</Paragraph>
+                <Paragraph>{`**${description}**`}</Paragraph>
             </LabelContainer>
             <ChartContainer>
                 {/* <ResponsiveContainer width="99%">
