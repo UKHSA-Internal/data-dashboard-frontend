@@ -1,10 +1,9 @@
 import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
+import { BLACK, BLUE, GREY_3, FOCUS_COLOUR } from 'govuk-colours'
 
 import * as ReactAccordion from 'react-accessible-accordion'
 import styled from 'styled-components'
-
-export const Accordion = styled(ReactAccordion.Accordion)``
 
 export const AccordionItem = styled(ReactAccordion.AccordionItem)`
   padding-top: 15px;
@@ -23,7 +22,7 @@ export const AccordionItemExpander = styled.button`
     display: block;
     padding: 10px 0 0 0;
     border: 0;
-    color: #0b0c0c;
+    color: ${BLACK};
     background: none;
     text-align: left;
     cursor: pointer;
@@ -37,8 +36,8 @@ export const AccordionItemExpander = styled.button`
     }
 
     &:hover {
-      color: #0b0c0c;
-      background: #f3f2f1;
+      color: ${BLACK};
+      background: ${GREY_3};
     }
   }
 `
@@ -59,7 +58,7 @@ export const AccordionItemButton = styled(ReactAccordion.AccordionItemButton)`
     border: 0;
     border-top: 1px solid #b1b4b6;
     border-bottom: 10px solid rgba(0, 0, 0, 0);
-    color: #0b0c0c;
+    color: ${BLACK};
     background: none;
     text-align: left;
     cursor: pointer;
@@ -69,7 +68,7 @@ export const AccordionItemButton = styled(ReactAccordion.AccordionItemButton)`
     }
 
     &:hover {
-      color: #0b0c0c;
+      color: ${BLACK};
       background: #f3f2f1;
     }
   }
@@ -81,9 +80,9 @@ export const AccordionItemButtonFocus = styled.span`
   button:focus & {
     padding-bottom: 3px;
     outline: 3px solid rgba(0, 0, 0, 0);
-    color: #0b0c0c;
+    color: ${BLACK};
     background-color: #fd0;
-    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+    box-shadow: 0 -2px #fd0, 0 4px ${BLACK};
     text-decoration: none;
     box-decoration-break: clone;
   }
@@ -133,7 +132,7 @@ export const AccordionItemToggle = styled.span`
     display: block;
     margin-bottom: 13px;
     ${typography.font({ size: BODY_SIZES.MEDIUM })}
-    color: #1d70b8;
+    color: ${BLUE};
   }
 `
 export const AccordionItemToggleFocus = styled.span`
@@ -142,9 +141,9 @@ export const AccordionItemToggleFocus = styled.span`
   button:focus & {
     padding-bottom: 3px;
     outline: 3px solid rgba(0, 0, 0, 0);
-    color: #0b0c0c;
-    background-color: #fd0;
-    box-shadow: 0 -2px #fd0, 0 4px #0b0c0c;
+    color: ${BLACK};
+    background-color: ${FOCUS_COLOUR};
+    box-shadow: 0 -2px #fd0, 0 4px ${BLACK};
     text-decoration: none;
     box-decoration-break: clone;
   }
@@ -157,11 +156,11 @@ export const AccordionItemToggleChevron = styled.span`
 
   button:hover &,
   button:focus & {
-    color: #0b0c0c;
-    background: #0b0c0c;
+    color: ${BLACK};
+    background: ${BLACK};
 
     &:after {
-      color: #f3f2f1;
+      color: ${GREY_3};
     }
   }
 
@@ -193,7 +192,7 @@ export const AccordionItemToggleChevron = styled.span`
 export const AccordionItemToggleText = styled.span`
   button:hover &,
   button:focus & {
-    color: #0b0c0c;
+    color: ${BLACK};
   }
 
   .js-enabled & {
