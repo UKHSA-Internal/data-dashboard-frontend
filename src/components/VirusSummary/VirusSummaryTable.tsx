@@ -11,8 +11,8 @@ const VirusSummaryTable = ({ data }: VirusSummaryTableProps) => {
                 <Table.CellHeader>Month</Table.CellHeader>
                 <Table.CellHeader>Amount</Table.CellHeader>
             </Table.Row>
-            {data.map((point) => (
-                <Table.Row>
+            {data.map((point, key) => (
+                <Table.Row key={key}>
                     <Table.CellHeader>{point.date}</Table.CellHeader>
                     <Table.Cell>{point.value}</Table.Cell>
                 </Table.Row>
