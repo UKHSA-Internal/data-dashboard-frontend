@@ -48,8 +48,11 @@ test('Shows the content when clicking the heading', async () => {
   render(getComponent())
 
   const heading = screen.getByRole('button', { name: /Here is a title/ })
+  expect(heading).toHaveAttribute('aria-expanded', 'false')
+
   await user.click(heading)
 
+  expect(heading).toHaveAttribute('aria-expanded', 'true')
   expect(screen.getByText('And here is the content')).toBeVisible()
 })
 

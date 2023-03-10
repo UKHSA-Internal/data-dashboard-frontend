@@ -1,8 +1,8 @@
 import { Footer, Main, Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren, useEffect } from 'react'
-import { Navigation } from '../Navigation/Navigation'
+import { Navigation } from '../Navigation'
 
-export default function Layout({ children }: PropsWithChildren) {
+export const Layout = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     document.body.classList.add('js-enabled')
   }, [])
