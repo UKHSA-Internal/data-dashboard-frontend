@@ -1,6 +1,8 @@
 import { Footer, Main, Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren, useEffect } from 'react'
 import { Navigation } from '../Navigation'
+import RouterLink from 'next/link'
+import { TopNavLink } from './Layout.styles'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   useEffect(() => {
@@ -12,20 +14,25 @@ export const Layout = ({ children }: PropsWithChildren) => {
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="alpha" data-testid="ukhsa-banner">
+            <PhaseBanner level="alpha">
               This is a new service – your feedback will help us to improve it.
             </PhaseBanner>
             <Navigation />
           </>
         }
         header={
-          <TopNav serviceTitle={'UKHSA Dashboard'} data-testid="ukhsa-header" />
+          <TopNav
+            serviceTitle={
+              <RouterLink href="/" passHref legacyBehavior>
+                <TopNavLink>UKHSA Dashboard</TopNavLink>
+              </RouterLink>
+            }
+          />
         }
       >
         <Main>{children}</Main>
       </Page>
       <Footer
-        data-testid="ukhsa-footer"
         copyright={{
           image: {
             height: 102,
