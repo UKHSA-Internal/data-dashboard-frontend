@@ -1,4 +1,4 @@
-import { cms, relatedLinks, viruses } from './api'
+import { cms, relatedLinks, viruses } from '../mocks'
 
 export const handlers = [
   ...cms.handlers,

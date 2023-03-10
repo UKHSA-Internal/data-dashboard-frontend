@@ -1,4 +1,14 @@
-import { VirusesResponse } from '@/mocks/api/viruses'
+type Virus = {
+  name: string
+  description: string
+  points: Array<{ date: string; value: number }>
+}
+
+type Viruses = Virus[]
+
+export type VirusesResponse = {
+  viruses: Viruses
+}
 
 type GetVirusesSummaryParams = {
   searchTerm: string | undefined
