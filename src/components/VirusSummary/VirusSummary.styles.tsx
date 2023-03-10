@@ -23,6 +23,7 @@ export const LabelContainer = styled.div`
 `
 
 export const ChartContainer = styled.div`
+  position: relative;
   width: 100%;
   height: 220px;
   margin-bottom: 30px;

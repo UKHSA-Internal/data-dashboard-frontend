@@ -3,8 +3,7 @@ import { typography } from '@govuk-react/lib'
 import { Link } from 'govuk-react'
 import { BLUE } from 'govuk-colours'
 import styled from 'styled-components'
-
-const BLUE_DARK = '#003078'
+import { COLOURS } from '@/styles/Theme'
 
 export const NavItem = styled('li')({
   listStyleType: 'none',
@@ -17,7 +16,7 @@ export const NavLink = styled(Link)(
     padding: '12px 16px',
     ...typography.font({ size: BODY_SIZES.SMALL }),
     '&:hover': {
-      color: BLUE_DARK,
+      color: COLOURS.BLUE_DARK,
       textDecoration: 'underline',
     },
     '&:visited:not(:hover)': {
@@ -31,9 +30,9 @@ export const NavLink = styled(Link)(
     }),
     ...(ariaCurrent === 'page' && {
       textDecoration: 'underline',
-      color: BLUE_DARK,
+      color: COLOURS.BLUE_DARK,
       '&:visited:not(:hover)': {
-        color: BLUE_DARK,
+        color: COLOURS.BLUE_DARK,
       },
     }),
   })
