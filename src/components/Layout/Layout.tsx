@@ -14,7 +14,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="alpha" data-testid="ukhsa-banner">
+            <PhaseBanner level="alpha">
               This is a new service – your feedback will help us to improve it.
             </PhaseBanner>
             <Navigation />
@@ -27,14 +27,12 @@ export const Layout = ({ children }: PropsWithChildren) => {
                 <TopNavLink>UKHSA Dashboard</TopNavLink>
               </RouterLink>
             }
-            data-testid="ukhsa-header"
           />
         }
       >
         <Main>{children}</Main>
       </Page>
       <Footer
-        data-testid="ukhsa-footer"
         copyright={{
           image: {
             height: 102,

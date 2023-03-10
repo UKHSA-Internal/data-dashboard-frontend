@@ -11,13 +11,11 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   render(<Layout />)
 
   // Header
-  const header = screen.getByTestId('ukhsa-header')
-  expect(within(header).getByText('UKHSA Dashboard')).toBeInTheDocument()
+  expect(screen.getByText('UKHSA Dashboard')).toHaveAttribute('href', '/')
 
   // Phrase Banner
-  const banner = screen.getByTestId('ukhsa-banner')
   expect(
-    within(banner).getByText(
+    screen.getByText(
       'This is a new service – your feedback will help us to improve it.'
     )
   ).toBeInTheDocument()
@@ -26,8 +24,7 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   expect(screen.getByRole('navigation', { name: 'Menu' })).toBeInTheDocument()
 
   // Footer
-  const footer = screen.getByTestId('ukhsa-footer')
-  const copyright = within(footer).getByText(/© Crown copyright/)
+  const copyright = screen.getByText(/© Crown copyright/)
   expect(copyright).toHaveAttribute(
     'href',
     'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'
