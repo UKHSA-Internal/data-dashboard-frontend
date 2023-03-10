@@ -23,24 +23,25 @@ export default function Home({
   viruses: { viruses },
   relatedLinks,
 }: HomeProps) {
-
   return (
     <>
       <H1>Respiratory viruses in England</H1>
-
       <GridRow>
         {viruses.map(({ name, description, points }) => {
           return (
             <GridCol key={name}>
-              <VirusSummary virus={name} description={description} points={points} />
+              <VirusSummary
+                virus={name}
+                description={description}
+                points={points}
+              />
             </GridCol>
           )
         })}
       </GridRow>
 
-      <br />
-
-      <RelatedItems>
+      {/* Hidden until #CDD-522 is worked on */}
+      <RelatedItems style={{ display: 'none' }}>
         <H2>Related Links</H2>
         <UnorderedList listStyleType="none">
           {relatedLinks.map(({ title, link, description }) => (
