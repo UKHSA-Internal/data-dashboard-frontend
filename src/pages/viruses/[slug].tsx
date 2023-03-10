@@ -5,14 +5,23 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { data as mockVirusesData, VirusesResponse } from '@/mocks/api/viruses'
 import { H1, ListItem, Paragraph, UnorderedList } from 'govuk-react'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { initMocks } from '@/mocks'
+import { getPages } from '@/api/cms/getPages'
+import { getPage, PageResponse } from '@/api/cms/getPage'
 
-export default function Virus() {
+type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
+
+export const VirusPage = ({ page }: VirusPageProps) => {
+  if (!page) return <>Error page (can we error/redirect earlier than this?)</>
+
+  const { title, content } = page
+
   return (
     <>
-      <H1>Virus detail page (wip)</H1>
+      <H1>{title}</H1>
+      <Paragraph>{content}</Paragraph>
       <Accordion>
         <AccordionItem>
           <AccordionItemHeading>
@@ -190,27 +199,96 @@ export default function Virus() {
   )
 }
 
-export const getStaticProps: GetStaticProps<{
-  viruses: VirusesResponse
-}> = async () => {
-  // Here we will make an API request to retrieve a list of viruses to pre-generate the pages
-  // For now, we can use mocked json data
+export default VirusPage
+
+// TODO Move to helpers
+type TopicPageContent = {
+  id: number
+  title: string
+  slug: string
+  content: string
+  publishedDate: string
+  accordion: {
+    symptoms: string
+    transmission: string
+    treatment: string
+    prevention: string
+    surveillance_and_reporting: string
+  }
+}
+
+const parseCmsTopicPageResponse = (page: PageResponse): TopicPageContent => {
   return {
-    props: {
-      viruses: mockVirusesData,
+    id: page.id,
+    title: page.title,
+    slug: page.meta.slug,
+    content: page.introduction,
+    publishedDate: page.meta.first_published_at,
+    accordion: {
+      symptoms: page.symptoms,
+      transmission: page.transmission,
+      treatment: page.treatment,
+      prevention: page.prevention,
+      surveillance_and_reporting: page.surveillance_and_reporting,
     },
-    revalidate: 10,
+  }
+}
+
+export const getStaticProps: GetStaticProps<{
+  page: TopicPageContent | null
+}> = async (req) => {
+  const revalidate = 10
+
+  try {
+    const params = req.params
+
+    // Check the slug exists in the url
+    if (params && params.slug) {
+      // Fetch all of the pages from the CMS
+      const pages = await getPages()
+
+      // Find the CMS page within the list that matches the current slug
+      const matchedPage = pages.items.find(
+        ({ meta: { slug } }) => slug === params.slug
+      )
+
+      if (matchedPage) {
+        // Once we have a match, use the id to fetch the single page
+        const page = await getPage(matchedPage.id)
+
+        // Parse the cms response and pick out only relevant data for the ui
+        return {
+          props: {
+            page: parseCmsTopicPageResponse(page),
+            revalidate,
+          },
+        }
+      }
+
+      throw new Error('Could not find page matching current slug')
+    }
+
+    throw new Error('URL does not contain a slug')
+  } catch (error) {
+    return {
+      props: {
+        page: null,
+      },
+      revalidate,
+    }
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Here we will make an API request to retrieve a list of viruses to pre-generate the pages
-  // For now, we can use mocked json data
-  const { viruses } = mockVirusesData
+  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+    await initMocks()
+  }
 
-  // Get the paths we want to pre-render based on viruses
-  const paths = viruses.map(({ name }) => ({
-    params: { id: name.toLowerCase() },
+  const { items } = await getPages('topic.TopicPage')
+
+  // Get the paths we want to pre-render based on the list of topics
+  const paths = items.map(({ meta: { slug } }) => ({
+    params: { slug },
   }))
 
   // We'll pre-render only these paths at build time.

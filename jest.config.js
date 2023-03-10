@@ -13,6 +13,7 @@ const customJestConfig = {
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@/mocks/(.*)$': '<rootDir>/src/mocks/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   modulePathIgnorePatterns: ['cypress'],
