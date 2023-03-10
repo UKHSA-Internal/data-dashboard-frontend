@@ -25,8 +25,7 @@
 }
 
 a:focus,
-summary:focus,
-button:focus:not(:active):not(:hover) {
+summary:focus {
   outline: 3px solid transparent !important;
   color: #0b0c0c !important;
   background-color: #ffdd00 !important;
