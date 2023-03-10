@@ -1,6 +1,8 @@
 import styled from 'styled-components'
 
-export const Nav = styled.nav``
+export const Nav = styled.nav`
+  margin-top: 16px;
+`
 
 export const NavList = styled.ul`
   display: flex;
@@ -12,6 +14,6 @@ export const NavList = styled.ul`
   }
 
   &:not(:last-child) {
-    padding-bottom: 20px;
+    padding-bottom: 12px;
   }
 `
