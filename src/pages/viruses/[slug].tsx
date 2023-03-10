@@ -7,9 +7,9 @@ import {
 } from '@/components/Accordion/Accordion'
 import { H1, ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
-import { initMocks } from '@/mocks'
-import { getPages } from '@/api/cms/getPages'
-import { getPage, PageResponse } from '@/api/cms/getPage'
+import { initMocks } from '@/api/msw'
+import { getPages } from '@/api/requests/cms/getPages'
+import { getPage, PageResponse } from '@/api/requests/cms/getPage'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 

@@ -1,12 +1,12 @@
-import { PageResponse } from '@/api/cms/getPage'
+import { PageResponse } from '@/api/requests/cms/getPage'
 
-export const covidPageMock: PageResponse = {
-  id: 6,
+export const influenzaPageMock: PageResponse = {
+  id: 5,
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/v2/pages/5/',
-    html_url: 'http://localhost/current-viruses-in-circulation/sars-cov-2/',
-    slug: 'sars-cov-2',
+    html_url: 'http://localhost/current-viruses-in-circulation/influenza/',
+    slug: 'influenza',
     show_in_menus: false,
     seo_title: '',
     search_description: '',
@@ -22,10 +22,10 @@ export const covidPageMock: PageResponse = {
       title: 'Viruses',
     },
   },
-  title: 'SARS-CoV-2',
+  title: 'Influenza',
   date_posted: '2023-03-10',
   introduction:
-    'SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.',
+    'Influenza (commonly known) as flu is an infection of the nose, throat and lungs.',
   symptoms: 'Runny nose',
   transmission: 'Airborne',
   treatment: 'Rest',

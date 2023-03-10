@@ -1,14 +1,4 @@
-type Virus = {
-  name: string
-  description: string
-  points: Array<{ date: string; value: number }>
-}
-
-type Viruses = Virus[]
-
-export type VirusesResponse = {
-  viruses: Viruses
-}
+import type { VirusesResponse } from '@/api/requests/getVirusesSummary'
 
 export const data: VirusesResponse = {
   viruses: [

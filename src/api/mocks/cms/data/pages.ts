@@ -1,4 +1,4 @@
-import { PagesResponse } from '@/api/cms/getPages'
+import { PagesResponse } from '@/api/requests/cms/getPages'
 
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {

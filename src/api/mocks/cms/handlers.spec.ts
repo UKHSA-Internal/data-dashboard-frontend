@@ -1,4 +1,4 @@
-import { server } from '@/mocks/server'
+import { server } from '@/api/msw/server'
 import 'whatwg-fetch'
 import { influenzaPageMock } from './data/page/influenza'
 import { covidPageMock } from './data/page/sars-cov-2'
