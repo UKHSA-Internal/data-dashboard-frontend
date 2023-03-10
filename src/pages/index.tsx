@@ -8,7 +8,6 @@ import {
   GridRow,
   H1,
   H2,
-  H3,
   Link as ExternalLink,
   ListItem,
   Paragraph,
@@ -16,7 +15,7 @@ import {
   UnorderedList,
 } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import RouterLink from 'next/link'
+import VirusSummary from '@/components/VirusSummary/VirusSummary'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -24,22 +23,22 @@ export default function Home({
   viruses: { viruses },
   relatedLinks,
 }: HomeProps) {
+
   return (
     <>
       <H1>Respiratory viruses in England</H1>
 
       <GridRow>
-        {viruses.map(({ name, description }) => {
+        {viruses.map(({ name, description, points }) => {
           return (
             <GridCol key={name}>
-              <RouterLink href={`viruses/${name.toLowerCase()}`} passHref>
-                <H3>{name}</H3>
-              </RouterLink>
-              <Paragraph>{description}</Paragraph>
+              <VirusSummary virus={name} description={description} points={points} />
             </GridCol>
           )
         })}
       </GridRow>
+
+      <br />
 
       <RelatedItems>
         <H2>Related Links</H2>
