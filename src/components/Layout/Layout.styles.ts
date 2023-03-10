@@ -1,9 +1,10 @@
 import { Link } from 'govuk-react'
 import { FONT_WEIGHTS } from '@govuk-react/constants'
 import styled from 'styled-components'
+import { COLOURS } from '@/styles/Theme'
 
 export const TopNavLink = styled(Link)({
-  color: '#ffffff',
+  color: COLOURS.WHITE,
   fontWeight: FONT_WEIGHTS.bold,
   textDecoration: 'none',
   marginTop: 3,
@@ -12,6 +13,6 @@ export const TopNavLink = styled(Link)({
     textDecoration: 'underline',
   },
   '&:hover, &:visited': {
-    color: '#ffffff',
+    color: COLOURS.WHITE,
   },
 })
