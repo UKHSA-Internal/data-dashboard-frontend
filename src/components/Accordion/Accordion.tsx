@@ -116,7 +116,7 @@ interface AccordionItemButtonProps {
 export const AccordionItemButton = ({ children }: AccordionItemButtonProps) => (
   <AccordionItemState>
     {({ expanded }) => (
-      <Styled.AccordionItemButton as={'button'}>
+      <Styled.AccordionItemButton as={'button'} aria-expanded={expanded}>
         <Styled.AccordionItemButtonText>
           <Styled.AccordionItemButtonFocus>
             {children}

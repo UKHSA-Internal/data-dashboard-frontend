@@ -27,7 +27,6 @@ export default function Home({
   return (
     <>
       <H1>Respiratory viruses in England</H1>
-
       <GridRow>
         {viruses.map(({ name, description }) => {
           return (
@@ -41,7 +40,8 @@ export default function Home({
         })}
       </GridRow>
 
-      <RelatedItems>
+      {/* Hidden until #CDD-522 is worked on */}
+      <RelatedItems style={{ display: 'none' }}>
         <H2>Related Links</H2>
         <UnorderedList listStyleType="none">
           {relatedLinks.map(({ title, link, description }) => (
