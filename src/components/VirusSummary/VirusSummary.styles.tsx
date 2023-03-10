@@ -3,8 +3,11 @@ import styled from 'styled-components'
 
 export const Container = styled.div`
   background: #f8f8f8;
-  display: flex;
   padding: 10px;
+`
+
+export const Header = styled.div`
+  display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
 `
