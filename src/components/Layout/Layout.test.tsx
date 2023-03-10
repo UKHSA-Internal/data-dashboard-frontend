@@ -1,4 +1,4 @@
-import { render, screen, within } from '@testing-library/react'
+import { render, screen } from '@testing-library/react'
 import { Layout } from './Layout'
 
 jest.mock('next/router', () => require('next-router-mock'))

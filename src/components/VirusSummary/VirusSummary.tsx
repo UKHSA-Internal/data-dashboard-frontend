@@ -1,5 +1,4 @@
-// import { AreaChart, Area, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { Button, Heading, Paragraph } from 'govuk-react'
+import { Button, Paragraph } from 'govuk-react'
 import VirusSummaryTable from './VirusSummaryTable'
 import {
   ChartContainer,
