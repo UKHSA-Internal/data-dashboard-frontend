@@ -23,3 +23,14 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+a:focus,
+summary:focus {
+  outline: 3px solid transparent !important;
+  color: #0b0c0c !important;
+  background-color: #ffdd00 !important;
+  box-shadow: 0 -2px #ffdd00, 0 4px #0b0c0c !important;
+  text-decoration: none;
+  -webkit-box-decoration-break: clone;
+  box-decoration-break: clone;
+}

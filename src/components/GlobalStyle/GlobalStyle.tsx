@@ -21,7 +21,6 @@ const GDSTransport = localFont({
  */
 
 export const GlobalStyle = createGlobalStyle`
-
   :root {
     --gds-transport-font: ${GDSTransport.style.fontFamily};
   }

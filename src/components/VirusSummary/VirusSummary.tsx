@@ -1,4 +1,3 @@
-// import { AreaChart, Area, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
 import { Button, Paragraph } from 'govuk-react'
 import VirusSummaryTable from './VirusSummaryTable'
 import {
@@ -10,6 +9,7 @@ import {
   Header,
 } from './VirusSummary.styles'
 import RouterLink from 'next/link'
+import Image from 'next/image'
 
 interface VirusSummaryProps {
   virus: string
@@ -35,7 +35,9 @@ const VirusSummary = ({ virus, description, points }: VirusSummaryProps) => {
       <LabelContainer data-testid="ukhsa-description">
         <Paragraph>{`**${description}**`}</Paragraph>
       </LabelContainer>
-      <ChartContainer></ChartContainer>
+      <ChartContainer>
+        <Image alt="Temp chart" fill sizes="100vw" src="/temp-chart.png" />
+      </ChartContainer>
       <DataTableDropDown
         summary="View data in a tabular format"
         data-testid="ukhsa-tabledropdown"
