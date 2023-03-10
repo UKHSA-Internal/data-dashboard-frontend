@@ -1,5 +1,5 @@
 // import { AreaChart, Area, Tooltip, XAxis, YAxis, ResponsiveContainer } from "recharts";
-import { Button, Heading, Paragraph } from 'govuk-react'
+import { Button, Paragraph } from 'govuk-react'
 import VirusSummaryTable from './VirusSummaryTable'
 import {
   ChartContainer,
@@ -7,6 +7,7 @@ import {
   DataTableDropDown,
   LabelContainer,
   Title,
+  Header,
 } from './VirusSummary.styles'
 import RouterLink from 'next/link'
 
@@ -19,16 +20,18 @@ interface VirusSummaryProps {
 const VirusSummary = ({ virus, description, points }: VirusSummaryProps) => {
   return (
     <Container>
-      <RouterLink href={`/viruses/${virus}`} passHref legacyBehavior>
-        <Title>{virus}</Title>
-      </RouterLink>
-      <Button
-        buttonColour="#F3F2F1"
-        buttonTextColour="#000000"
-        data-testid="ukhsa-downloadButton"
-      >
-        Download
-      </Button>
+      <Header>
+        <RouterLink href={`/viruses/${virus}`} passHref legacyBehavior>
+          <Title>{virus}</Title>
+        </RouterLink>
+        <Button
+          buttonColour="#F3F2F1"
+          buttonTextColour="#000000"
+          data-testid="ukhsa-downloadButton"
+        >
+          Download
+        </Button>
+      </Header>
       <LabelContainer data-testid="ukhsa-description">
         <Paragraph>{`**${description}**`}</Paragraph>
       </LabelContainer>
