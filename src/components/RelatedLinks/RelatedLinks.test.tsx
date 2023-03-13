@@ -3,7 +3,7 @@ import RelatedLinks from './RelatedLinks'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
-const testData = [
+const testData: RelatedLinksResponse = [
   {
     title:
       'National flu and COVID-19 surveillance reports: 2022 to 2023 season',
