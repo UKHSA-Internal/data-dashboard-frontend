@@ -1,3 +1,8 @@
+import { getCmsApiPath } from '../helpers'
+
+/**
+ * Response types for the CMS REST endpoint
+ */
 export type PagesResponse = {
   meta: PagesMeta
   items: Item[]
@@ -21,14 +26,15 @@ type PagesMeta = {
   total_count: number
 }
 
+/**
+ * These are associated with page types within the CMS
+ */
 type PagesType = 'topic.TopicPage' | 'topic.TopicIndexPage'
 
 export const getPages = async (
   type: PagesType = 'topic.TopicPage'
 ): Promise<PagesResponse> => {
-  const req = await fetch(
-    `${process.env.NEXT_PUBLIC_API_URL}/v2/pages/?type=${type}`
-  )
+  const req = await fetch(`${getCmsApiPath()}/pages/?type=${type}`)
   const res = await req.json()
   return res
 }
