@@ -1,3 +1,8 @@
+import { getCmsApiPath } from '../helpers'
+
+/**
+ * Response types for the CMS REST endpoint
+ */
 export type PageResponse = {
   id: number
   meta: PageMeta
@@ -37,7 +42,7 @@ type ParentMeta = {
 }
 
 export const getPage = async (id: number): Promise<PageResponse> => {
-  const req = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/v2/pages/${id}`)
+  const req = await fetch(`${getCmsApiPath()}/pages/${id}`)
   const res = await req.json()
   return res
 }
