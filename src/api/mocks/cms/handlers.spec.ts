@@ -1,4 +1,5 @@
 import { server } from '@/api/msw/server'
+import { getCmsApiPath } from '@/api/requests/helpers'
 import 'whatwg-fetch'
 import { influenzaPageMock } from './data/page/influenza'
 import { covidPageMock } from './data/page/sars-cov-2'
@@ -8,7 +9,7 @@ beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/v2`
+const baseUrl = getCmsApiPath()
 
 test('GET /pages?type=topic.TopicPage returns a list of pages with a topic type', async () => {
   const res = await fetch(`${baseUrl}/pages?type=topic.TopicPage`)

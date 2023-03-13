@@ -1,8 +1,9 @@
 import { rest } from 'msw'
 import { pagesWithTopicTypeMock } from './data/pages'
 import { influenzaPageMock, covidPageMock } from './data/page'
+import { getCmsApiPath } from '@/api/requests/helpers'
 
-const baseUrl = `${process.env.NEXT_PUBLIC_API_URL}/v2`
+const baseUrl = getCmsApiPath()
 
 export const handlers = [
   rest.get(`${baseUrl}/pages`, (req, res, ctx) => {
