@@ -2,8 +2,6 @@ import { RelatedLinksResponse } from '@/api/requests/getRelatedLinks'
 import { render, screen, within } from '@testing-library/react'
 import RelatedLinks from './RelatedLinks'
 
-jest.mock('next/router', () => require('next-router-mock'))
-
 const testData: RelatedLinksResponse = [
   {
     title:
