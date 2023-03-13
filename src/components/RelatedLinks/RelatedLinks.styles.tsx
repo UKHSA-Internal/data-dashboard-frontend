@@ -1,12 +1,13 @@
 import { RelatedItems } from 'govuk-react'
 import styled from 'styled-components'
 import { Link } from 'govuk-react'
+import { SPACING } from '@govuk-react/constants'
 
-export const Container = styled(RelatedItems)`
-  padding: 10px 15px;
-  border-top: 2px solid #1d70b8;
-  margin-top: 10px;
-`
+export const Container = styled(RelatedItems)({
+  marginTop: SPACING.SCALE_2,
+  padding: SPACING.SCALE_3,
+  paddingTop: SPACING.SCALE_2,
+})
 
 export const BoldExternalLink = styled(Link)`
   font-weight: bolder;
