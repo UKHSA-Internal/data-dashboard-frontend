@@ -17,24 +17,18 @@ const testData = [
       'These documents provide advice on the symptoms, diagnosis, treatment, management and epidemiology of respiratory syncytial virus.',
     link: 'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis',
   },
-  {
-    title:
-      'National norovirus and rotavirus report, week 1 report: data up to week 51 (25 December 2022)',
-    description:
-      'Data reported here provide a summary of norovirus and rotavirus activity (including enteric virus (EV) outbreaks) in England up to reporting week 51 of the 2022/2023 season.',
-    link: 'https://www.gov.uk/government/statistics/national-norovirus-and-rotavirus-surveillance-reports-2022-to-2023-season/national-norovirus-and-rotavirus-report-week-1-report-data-up-to-week-51-25-december-2022',
-  },
 ]
 
 test('Displays the Related links header, checks only 3 items in list, and associated content correct', () => {
   render(<RelatedLinks data={testData} />)
 
-  expect(screen.getByText('Related Links')).toBeInTheDocument()
+  expect(
+    screen.getByRole('heading', { name: 'Related Links', level: 2 })
+  ).toBeInTheDocument()
 
-  const listItems = screen.getAllByRole('listitem', {
-    name: 'ukhsa-related-link',
-  })
-  expect(listItems).toHaveLength(3)
+  const listItems = screen.getAllByRole('listitem')
+
+  expect(listItems).toHaveLength(2)
 
   expect(
     within(listItems[0]).getByText(

@@ -12,7 +12,7 @@ const RelatedLinks = ({ data }: RelatedLinksProps) => {
       <H2>Related Links</H2>
       <UnorderedList listStyleType="none">
         {data.map(({ title, link, description }) => (
-          <ListItem key={link} aria-label="ukhsa-related-link">
+          <ListItem key={link}>
             <BoldExternalLink href={link} rel="external">
               {title}
             </BoldExternalLink>
