@@ -1,10 +1,4 @@
-type RelatedLink = {
-  title: string
-  description: string
-  link: string
-}
-
-export type RelatedLinksResponse = RelatedLink[]
+import type { RelatedLinksResponse } from '@/api/requests/getRelatedLinks'
 
 export const data: RelatedLinksResponse = [
   {
