@@ -2,6 +2,7 @@ import { getCmsApiPath } from '../helpers'
 
 /**
  * Response types for the CMS REST endpoint
+ * TODO: Add url to endpoint in docs
  */
 export type PagesResponse = {
   meta: PagesMeta

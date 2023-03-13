@@ -9,15 +9,12 @@ import { H1, ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages } from '@/api/requests/cms/getPages'
-import { getPage, PageResponse } from '@/api/requests/cms/getPage'
+import { getPage } from '@/api/requests/cms/getPage'
+import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ page }: VirusPageProps) => {
-  if (!page) return <>Error page (can we error/redirect earlier than this?)</>
-
-  const { title, content } = page
-
+export const VirusPage = ({ page: { title, content } }: VirusPageProps) => {
   return (
     <>
       <H1>{title}</H1>
@@ -201,41 +198,8 @@ export const VirusPage = ({ page }: VirusPageProps) => {
 
 export default VirusPage
 
-// TODO Move to helpers
-type TopicPageContent = {
-  id: number
-  title: string
-  slug: string
-  content: string
-  publishedDate: string
-  accordion: {
-    symptoms: string
-    transmission: string
-    treatment: string
-    prevention: string
-    surveillance_and_reporting: string
-  }
-}
-
-const parseCmsTopicPageResponse = (page: PageResponse): TopicPageContent => {
-  return {
-    id: page.id,
-    title: page.title,
-    slug: page.meta.slug,
-    content: page.introduction,
-    publishedDate: page.meta.first_published_at,
-    accordion: {
-      symptoms: page.symptoms,
-      transmission: page.transmission,
-      treatment: page.treatment,
-      prevention: page.prevention,
-      surveillance_and_reporting: page.surveillance_and_reporting,
-    },
-  }
-}
-
 export const getStaticProps: GetStaticProps<{
-  page: TopicPageContent | null
+  page: ReturnType<typeof formatCmsPageTopicResponse>
 }> = async (req) => {
   const revalidate = 10
 
@@ -259,7 +223,7 @@ export const getStaticProps: GetStaticProps<{
         // Parse the cms response and pick out only relevant data for the ui
         return {
           props: {
-            page: parseCmsTopicPageResponse(page),
+            page: formatCmsPageTopicResponse(page),
             revalidate,
           },
         }
@@ -270,12 +234,7 @@ export const getStaticProps: GetStaticProps<{
 
     throw new Error('URL does not contain a slug')
   } catch (error) {
-    return {
-      props: {
-        page: null,
-      },
-      revalidate,
-    }
+    return { notFound: true }
   }
 }
 
@@ -284,9 +243,10 @@ export const getStaticPaths: GetStaticPaths = async () => {
     await initMocks()
   }
 
+  // Fetch the CMS pages with a topic type
   const { items } = await getPages('topic.TopicPage')
 
-  // Get the paths we want to pre-render based on the list of topics
+  // Get the paths we want to pre-render based on the list of topic pages
   const paths = items.map(({ meta: { slug } }) => ({
     params: { slug },
   }))

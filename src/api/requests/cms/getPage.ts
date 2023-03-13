@@ -1,7 +1,8 @@
 import { getCmsApiPath } from '../helpers'
 
 /**
- * Response types for the CMS REST endpoint
+ * Response types for the CMS endpoint
+ * TODO: Add url to endpoint in docs
  */
 export type PageResponse = {
   id: number
