@@ -100,6 +100,7 @@ jobs:
     name: ECR Image Push
     needs: [quality-checks, unit-tests, cypress-tests]
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Check out code
@@ -115,7 +116,6 @@ jobs:
       - name: Login to Amazon ECR
         id: login-ecr
         uses: aws-actions/amazon-ecr-login@v1
-        if: ${{ github.ref == 'refs/heads/main' }}
 
       - name: Build, tag, and push image to Amazon ECR
         env:

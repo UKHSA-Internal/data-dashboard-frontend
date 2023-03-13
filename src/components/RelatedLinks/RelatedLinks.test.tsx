@@ -1,3 +1,4 @@
+import { RelatedLinksResponse } from '@/api/requests/getRelatedLinks'
 import { render, screen, within } from '@testing-library/react'
 import RelatedLinks from './RelatedLinks'
 

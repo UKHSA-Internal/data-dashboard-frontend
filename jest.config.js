@@ -7,12 +7,14 @@ const createJestConfig = nextJest({
 })
 
 const customJestConfig = {
-  setupFilesAfterEnv: ['<rootDir>/jest.setup.js'],
+  setupFiles: ['<rootDir>/config/jest/jest.env.js'],
+  setupFilesAfterEnv: ['<rootDir>/config/jest/jest.setup.js'],
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
     '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
+    '^@/api/(.*)$': '<rootDir>/src/api/$1',
   },
   testEnvironment: 'jest-environment-jsdom',
   modulePathIgnorePatterns: ['cypress'],

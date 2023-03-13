@@ -1,4 +1,4 @@
-import { RelatedLinksResponse } from '@/mocks/api/related-links'
+import { RelatedLinksResponse } from '@/api/requests/getRelatedLinks'
 import { H2, ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { BoldExternalLink, Container } from './RelatedLinks.styles'
 

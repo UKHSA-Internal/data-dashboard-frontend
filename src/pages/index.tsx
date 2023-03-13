@@ -1,8 +1,12 @@
-import { getRelatedLinks } from '@/api/getRelatedLinks'
-import { getVirusesSummary } from '@/api/getVirusesSummary'
-import { initMocks } from '@/mocks'
-import { RelatedLinksResponse } from '@/mocks/api/related-links'
-import { VirusesResponse } from '@/mocks/api/viruses'
+import {
+  getRelatedLinks,
+  RelatedLinksResponse,
+} from '@/api/requests/getRelatedLinks'
+import {
+  getVirusesSummary,
+  VirusesResponse,
+} from '@/api/requests/getVirusesSummary'
+import { initMocks } from '@/api/msw'
 import { GridCol, GridRow, H1 } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
