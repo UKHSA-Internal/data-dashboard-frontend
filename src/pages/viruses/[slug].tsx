@@ -5,14 +5,20 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { data as mockVirusesData, VirusesResponse } from '@/mocks/api/viruses'
 import { H1, ListItem, Paragraph, UnorderedList } from 'govuk-react'
-import { GetStaticPaths, GetStaticProps } from 'next'
+import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { initMocks } from '@/api/msw'
+import { getPages } from '@/api/requests/cms/getPages'
+import { getPage } from '@/api/requests/cms/getPage'
+import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 
-export default function Virus() {
+type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
+
+export const VirusPage = ({ page: { title, content } }: VirusPageProps) => {
   return (
     <>
-      <H1>Virus detail page (wip)</H1>
+      <H1>{title}</H1>
+      <Paragraph>{content}</Paragraph>
       <Accordion>
         <AccordionItem>
           <AccordionItemHeading>
@@ -190,27 +196,59 @@ export default function Virus() {
   )
 }
 
+export default VirusPage
+
 export const getStaticProps: GetStaticProps<{
-  viruses: VirusesResponse
-}> = async () => {
-  // Here we will make an API request to retrieve a list of viruses to pre-generate the pages
-  // For now, we can use mocked json data
-  return {
-    props: {
-      viruses: mockVirusesData,
-    },
-    revalidate: 10,
+  page: ReturnType<typeof formatCmsPageTopicResponse>
+}> = async (req) => {
+  const revalidate = 10
+
+  try {
+    const params = req.params
+
+    // Check the slug exists in the url
+    if (params && params.slug) {
+      // Fetch all of the pages from the CMS
+      const pages = await getPages()
+
+      // Find the CMS page within the list that matches the current slug
+      const matchedPage = pages.items.find(
+        ({ meta: { slug } }) => slug === params.slug
+      )
+
+      if (matchedPage) {
+        // Once we have a match, use the id to fetch the single page
+        const page = await getPage(matchedPage.id)
+
+        // Parse the cms response and pick out only relevant data for the ui
+        return {
+          props: {
+            page: formatCmsPageTopicResponse(page),
+            revalidate,
+          },
+        }
+      }
+
+      throw new Error('Could not find page matching current slug')
+    }
+
+    throw new Error('URL does not contain a slug')
+  } catch (error) {
+    return { notFound: true }
   }
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  // Here we will make an API request to retrieve a list of viruses to pre-generate the pages
-  // For now, we can use mocked json data
-  const { viruses } = mockVirusesData
+  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+    await initMocks()
+  }
 
-  // Get the paths we want to pre-render based on viruses
-  const paths = viruses.map(({ name }) => ({
-    params: { id: name.toLowerCase() },
+  // Fetch the CMS pages with a topic type
+  const { items } = await getPages('topic.TopicPage')
+
+  // Get the paths we want to pre-render based on the list of topic pages
+  const paths = items.map(({ meta: { slug } }) => ({
+    params: { slug },
   }))
 
   // We'll pre-render only these paths at build time.
