@@ -24,6 +24,17 @@ describe('Navigation', () => {
         cy.findByText('Coronavirus').click()
       })
       .url()
-      .should('include', '/viruses/coronavirus')
+      .should('include', '/viruses/sars-cov-2')
+
+    cy.findByRole('heading', { name: 'SARS-CoV-2' })
+
+    cy.findByRole('navigation', { name: 'Menu' })
+      .within(() => {
+        cy.findByText('Influenza').click()
+      })
+      .url()
+      .should('include', '/viruses/influenza')
+
+    cy.findByRole('heading', { name: 'Influenza' })
   })
 })
