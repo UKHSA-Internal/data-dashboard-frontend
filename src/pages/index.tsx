@@ -7,10 +7,11 @@ import {
   VirusesResponse,
 } from '@/api/requests/getVirusesSummary'
 import { initMocks } from '@/api/msw'
-import { GridCol, GridRow, H1 } from 'govuk-react'
+import { GridCol, GridRow, H1, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { Contents, ContentsItem } from '@/components/Contents'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -20,7 +21,25 @@ export default function Home({
 }: HomeProps) {
   return (
     <>
-      <H1>Respiratory viruses in England</H1>
+      <H1>Respiratory viruses</H1>
+
+      <Paragraph>
+        Data and insights from the UKHSA on respiratory viruses.
+      </Paragraph>
+
+      <Contents label="Respiratory viruses in this dashboard">
+        <ContentsItem heading="Coronavirus">
+          <Paragraph>
+            The UKHSA dashboard for data and insights on Coronavirus.
+          </Paragraph>
+        </ContentsItem>
+        <ContentsItem heading="Influenza">
+          <Paragraph>
+            The UKHSA dashboard for data and insights on Influenza.
+          </Paragraph>
+        </ContentsItem>
+      </Contents>
+
       <GridRow>
         {viruses.map(({ name, description, points }) => {
           return (
