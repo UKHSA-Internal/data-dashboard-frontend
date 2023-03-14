@@ -7,19 +7,10 @@ import {
   VirusesResponse,
 } from '@/api/requests/getVirusesSummary'
 import { initMocks } from '@/api/msw'
-import {
-  GridCol,
-  GridRow,
-  H1,
-  H2,
-  Link as ExternalLink,
-  ListItem,
-  Paragraph,
-  RelatedItems,
-  UnorderedList,
-} from 'govuk-react'
+import { GridCol, GridRow, H1 } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
+import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -44,20 +35,7 @@ export default function Home({
         })}
       </GridRow>
 
-      {/* Hidden until #CDD-522 is worked on */}
-      <RelatedItems style={{ display: 'none' }}>
-        <H2>Related Links</H2>
-        <UnorderedList listStyleType="none">
-          {relatedLinks.map(({ title, link, description }) => (
-            <ListItem key={link}>
-              <ExternalLink href={link} rel="external">
-                <strong>{title}</strong>
-              </ExternalLink>
-              <Paragraph>{description}</Paragraph>
-            </ListItem>
-          ))}
-        </UnorderedList>
-      </RelatedItems>
+      <RelatedLinks data={relatedLinks} />
     </>
   )
 }
