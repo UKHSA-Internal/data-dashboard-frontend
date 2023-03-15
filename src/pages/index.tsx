@@ -1,26 +1,29 @@
 import {
-  getRelatedLinks,
-  RelatedLinksResponse,
-} from '@/api/requests/getRelatedLinks'
-import {
   getVirusesSummary,
   VirusesResponse,
 } from '@/api/requests/getVirusesSummary'
-import { initMocks } from '@/api/msw'
-import { GridCol, GridRow, H1 } from 'govuk-react'
+import { GridCol, GridRow, H1, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import {
+  DashboardPage,
+  getPage,
+  PageResponse,
+} from '@/api/requests/cms/getPage'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function Home({
+  title,
+  body,
   viruses: { viruses },
   relatedLinks,
 }: HomeProps) {
   return (
     <>
-      <H1>Respiratory viruses in England</H1>
+      <H1>{title}</H1>
+      <Paragraph>{body}</Paragraph>
       <GridRow>
         {viruses.map(({ name, description, points }) => {
           return (
@@ -41,20 +44,25 @@ export default function Home({
 }
 
 export const getStaticProps: GetStaticProps<{
+  title: PageResponse<DashboardPage>['title']
+  body: PageResponse<DashboardPage>['body']
   viruses: VirusesResponse
-  relatedLinks: RelatedLinksResponse
+  relatedLinks: PageResponse<DashboardPage>['related_links']
 }> = async () => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
-  const [viruses, relatedLinks] = await Promise.all([
+  const [viruses] = await Promise.all([
     await getVirusesSummary({ searchTerm: '' }),
-    await getRelatedLinks(),
   ])
+
+  const {
+    title,
+    body,
+    related_links: relatedLinks,
+  } = await getPage<DashboardPage>(1)
 
   return {
     props: {
+      title,
+      body,
       viruses,
       relatedLinks,
     },

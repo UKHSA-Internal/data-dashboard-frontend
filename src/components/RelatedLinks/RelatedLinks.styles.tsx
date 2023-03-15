@@ -7,6 +7,7 @@ export const Container = styled(RelatedItems)({
   marginTop: SPACING.SCALE_2,
   padding: SPACING.SCALE_3,
   paddingTop: SPACING.SCALE_2,
+  boxSizing: 'border-box',
 })
 
 export const BoldExternalLink = styled(Link)({
