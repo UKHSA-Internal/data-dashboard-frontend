@@ -6,7 +6,7 @@ export const DashboardPageMock: PageResponse<DashboardPage> = {
     type: 'Dashboard',
     detail_url: '',
     html_url: '',
-    slug: '/',
+    slug: '',
     show_in_menus: false,
     seo_title: '',
     search_description: '',

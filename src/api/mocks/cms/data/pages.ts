@@ -8,10 +8,10 @@ export const pagesWithTopicTypeMock: PagesResponse = {
     {
       id: 1,
       meta: {
-        type: 'Dashoard',
+        type: 'Dashboard',
         detail_url: '',
         html_url: '',
-        slug: '/',
+        slug: '',
         first_published_at: '2023-03-10T10:57:35.324472Z',
       },
       title: 'Respiratory viruses',
