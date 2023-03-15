@@ -1,6 +1,6 @@
-import { PageResponse } from '@/api/requests/cms/getPage'
+import { PageResponse, TopicPage } from '@/api/requests/cms/getPage'
 
-export const covidPageMock: PageResponse = {
+export const covidPageMock: PageResponse<TopicPage> = {
   id: 6,
   meta: {
     type: 'topic.TopicPage',
@@ -23,9 +23,8 @@ export const covidPageMock: PageResponse = {
     },
   },
   title: 'SARS-CoV-2',
+  body: 'SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.',
   date_posted: '2023-03-10',
-  introduction:
-    'SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.',
   symptoms: 'Runny nose',
   transmission: 'Airborne',
   treatment: 'Rest',
