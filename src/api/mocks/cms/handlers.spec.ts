@@ -1,6 +1,7 @@
 import { server } from '@/api/msw/server'
 import { getCmsApiPath } from '@/api/requests/helpers'
 import 'whatwg-fetch'
+import { DashboardPageMock } from './data/page/dashboard'
 import { influenzaPageMock } from './data/page/influenza'
 import { covidPageMock } from './data/page/sars-cov-2'
 import { pagesWithTopicTypeMock } from './data/pages'
@@ -17,6 +18,14 @@ test('GET /pages?type=topic.TopicPage returns a list of pages with a topic type'
 
   expect(res.status).toEqual(200)
   expect(json).toEqual(pagesWithTopicTypeMock)
+})
+
+test('GET /pages/1 returns a dashboard page object', async () => {
+  const res = await fetch(`${baseUrl}/pages/1`)
+  const json = await res.json()
+
+  expect(res.status).toEqual(200)
+  expect(json).toEqual(DashboardPageMock)
 })
 
 test('GET /pages/5 returns an influenza page object', async () => {
