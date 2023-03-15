@@ -6,6 +6,7 @@ import {
   SetionHeadingLink,
   ListItem,
   Nav,
+  Article,
 } from './Contents.styles'
 
 interface ContentsProps {
@@ -62,8 +63,8 @@ interface ContentsItemProps {
 
 export const ContentsItem = ({ children, id, heading }: ContentsItemProps) => {
   return (
-    <article id={id} aria-label={heading}>
+    <Article id={id} aria-label={heading}>
       {children}
-    </article>
+    </Article>
   )
 }
