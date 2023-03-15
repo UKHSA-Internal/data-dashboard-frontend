@@ -1,11 +1,11 @@
-import { PageResponse } from '@/api/requests/cms/getPage'
+import { PageResponse, TopicPage } from '@/api/requests/cms/getPage'
 
-export const influenzaPageMock: PageResponse = {
+export const influenzaPageMock: PageResponse<TopicPage> = {
   id: 5,
   meta: {
     type: 'topic.TopicPage',
-    detail_url: 'http://localhost/api/v2/pages/5/',
-    html_url: 'http://localhost/current-viruses-in-circulation/influenza/',
+    detail_url: 'http://localhost/api/v2/pages/1/',
+    html_url: 'http://localhost/',
     slug: 'influenza',
     show_in_menus: false,
     seo_title: '',
@@ -23,9 +23,8 @@ export const influenzaPageMock: PageResponse = {
     },
   },
   title: 'Influenza',
+  body: 'Influenza (commonly known) as flu is an infection of the nose, throat and lungs.',
   date_posted: '2023-03-10',
-  introduction:
-    'Influenza (commonly known) as flu is an infection of the nose, throat and lungs.',
   symptoms: 'Runny nose',
   transmission: 'Airborne',
   treatment: 'Rest',
