@@ -1,12 +1,7 @@
 import {
-  getRelatedLinks,
-  RelatedLinksResponse,
-} from '@/api/requests/getRelatedLinks'
-import {
   getVirusesSummary,
   VirusesResponse,
 } from '@/api/requests/getVirusesSummary'
-import { initMocks } from '@/api/msw'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Topic from '@/components/Topic/Topic'
@@ -15,15 +10,19 @@ import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
 import { Statistic } from '@/components/Statistic'
 import { Page } from '@/components/Page'
+import {
+  DashboardPage,
+  getPage,
+  PageResponse,
+} from '@/api/requests/cms/getPage'
+import { initMocks } from '@/api/msw'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export default function Home({ relatedLinks }: HomeProps) {
+export default function Home({ title, body, relatedLinks }: HomeProps) {
   return (
-    <Page heading="Respiratory viruses">
-      <Paragraph>
-        Data and insights from the UKHSA on respiratory viruses.
-      </Paragraph>
+    <Page heading={title}>
+      <Paragraph>{body}</Paragraph>
       <Contents label="Respiratory viruses in this dashboard">
         <ContentsItem heading="Coronavirus">
           <Paragraph>
@@ -171,20 +170,29 @@ export default function Home({ relatedLinks }: HomeProps) {
 }
 
 export const getStaticProps: GetStaticProps<{
+  title: PageResponse<DashboardPage>['title']
+  body: PageResponse<DashboardPage>['body']
   viruses: VirusesResponse
-  relatedLinks: RelatedLinksResponse
+  relatedLinks: PageResponse<DashboardPage>['related_links']
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const [viruses, relatedLinks] = await Promise.all([
+  const [viruses] = await Promise.all([
     await getVirusesSummary({ searchTerm: '' }),
-    await getRelatedLinks(),
   ])
+
+  const {
+    title,
+    body,
+    related_links: relatedLinks,
+  } = await getPage<DashboardPage>(1)
 
   return {
     props: {
+      title,
+      body,
       viruses,
       relatedLinks,
     },

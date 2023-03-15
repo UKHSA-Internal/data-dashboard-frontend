@@ -5,20 +5,20 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { H1, ListItem, Paragraph, UnorderedList } from 'govuk-react'
+import { ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages } from '@/api/requests/cms/getPages'
-import { getPage } from '@/api/requests/cms/getPage'
+import { getPage, TopicPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ page: { title, content } }: VirusPageProps) => {
+export const VirusPage = ({ page: { title, body } }: VirusPageProps) => {
   return (
     <Page heading={title}>
-      <Paragraph>{content}</Paragraph>
+      <Paragraph>{body}</Paragraph>
       <Accordion>
         <AccordionItem>
           <AccordionItemHeading>
@@ -218,7 +218,7 @@ export const getStaticProps: GetStaticProps<{
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
-        const page = await getPage(matchedPage.id)
+        const page = await getPage<TopicPage>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
         return {
