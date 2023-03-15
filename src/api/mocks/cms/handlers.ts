@@ -1,6 +1,10 @@
 import { rest } from 'msw'
 import { pagesWithTopicTypeMock } from './data/pages'
-import { influenzaPageMock, covidPageMock } from './data/page'
+import {
+  influenzaPageMock,
+  covidPageMock,
+  DashboardPageMock,
+} from './data/page'
 import { getCmsApiPath } from '@/api/requests/helpers'
 
 const baseUrl = getCmsApiPath()
@@ -18,6 +22,10 @@ export const handlers = [
   }),
   rest.get(`${baseUrl}/pages/:id`, (req, res, ctx) => {
     const pageId = req.params.id
+
+    if (Number(pageId) === 1) {
+      return res(ctx.status(200), ctx.json(DashboardPageMock))
+    }
 
     if (Number(pageId) === 5) {
       return res(ctx.status(200), ctx.json(influenzaPageMock))
