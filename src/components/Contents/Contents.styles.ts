@@ -34,6 +34,9 @@ export const SetionHeadingLink = styled(Link)({
 export const SectionHeading = styled(H2)({
   marginBottom: 0,
   color: BLUE,
+  '&:not(:first-of-type)': {
+    marginTop: SPACING.SCALE_3,
+  },
   'a:focus &': {
     color: BLACK,
   },
@@ -45,4 +48,8 @@ export const ListItem = styled(GovUKListItem)({
   listStyleType: 'none',
   background: `url("data:image/svg+xml,%3Csvg class='nhsuk-icon nhsuk-icon__emdash' xmlns='http://www.w3.org/2000/svg' fill='%23aeb7bd' width='19' height='1' aria-hidden='true'%3E%3Cpath d='M0 0h19v1H0z'%3E%3C/path%3E%3C/svg%3E") left .75rem no-repeat;`,
   ...typography.font({ size: BODY_SIZES.MEDIUM }),
+})
+
+export const Article = styled.article({
+  marginBottom: SPACING.SCALE_6,
 })

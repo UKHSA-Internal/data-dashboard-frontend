@@ -12,6 +12,8 @@ import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { Contents, ContentsItem } from '@/components/Contents'
+// import { Card, CardColumn } from '@/components/Card'
+// import { Statistic } from '@/components/Statistic'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -32,6 +34,46 @@ export default function Home({
           <Paragraph>
             The UKHSA dashboard for data and insights on Coronavirus.
           </Paragraph>
+
+          {/* TODO as part of CDD-564 */}
+          {/* <Card>
+            <CardColumn heading="Cases">
+              <Statistic heading="Weekly" value="20,629,892" />
+              <Statistic heading="Last 7 days">tbc</Statistic>
+            </CardColumn>
+            <CardColumn heading="Deaths">
+              <Statistic heading="Weekly" value="393" />
+              <Statistic heading="Last 7 days">tbc</Statistic>
+            </CardColumn>
+            <CardColumn heading="Healthcare">
+              <Statistic heading="Patients admitted" value="981,596" />
+              <Statistic heading="Last 7 days">tbc</Statistic>
+            </CardColumn>
+            <CardColumn heading="Vaccines">
+              <Statistic heading="Spring booster" value="45,410,567" />
+              <Statistic heading="Summer booster" value="42,939,917" />
+            </CardColumn>
+            <CardColumn heading="Testing">
+              <Statistic heading="Virus tests positivity (%)" value="10.9%" />
+              <Statistic heading="Last 7 days">tbc</Statistic>
+            </CardColumn>
+          </Card>
+          <GridRow>
+            <GridCol setWidth="one-half">
+              <Card>
+                <CardColumn heading="Cases">
+                  <Statistic heading="People tested positive in England" />
+                </CardColumn>
+              </Card>
+            </GridCol>
+            <GridCol setWidth="one-half">
+              <Card>
+                <CardColumn heading="Deaths">
+                  <Statistic heading="Deaths with COVID-19 on the death certificate in England" />
+                </CardColumn>
+              </Card>
+            </GridCol>
+          </GridRow> */}
         </ContentsItem>
         <ContentsItem heading="Influenza">
           <Paragraph>
