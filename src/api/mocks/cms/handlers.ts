@@ -13,13 +13,10 @@ export const handlers = [
   rest.get(`${baseUrl}/pages`, (req, res, ctx) => {
     const searchParams = req.url.searchParams
 
-    if (!searchParams.has('type')) return
-
-    if (searchParams.get('type') === 'dashboard') {
-      return res(ctx.status(200), ctx.json(DashboardPageMock))
-    }
-
-    if (searchParams.get('type') === 'topic.TopicPage') {
+    if (
+      searchParams.has('type') &&
+      searchParams.get('type') === 'topic.TopicPage'
+    ) {
       return res(ctx.status(200), ctx.json(pagesWithTopicTypeMock))
     }
   }),
