@@ -31,6 +31,6 @@ export const data: RelatedLinksResponse = [
     title: 'Human parainfluenza viruses: guidance and data',
     description:
       'The symptoms, diagnosis, management and epidemiology of human parainfluenza viruses (HPIVs).',
-    link: 'Human parainfluenza viruses: guidance and data',
+    link: 'https://www.gov.uk/government/collections/human-parainfluenza-viruses-guidance-and-data',
   },
 ]

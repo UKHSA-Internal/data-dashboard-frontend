@@ -53,7 +53,7 @@ export default function Home({ relatedLinks }: HomeProps) {
           </Card>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card>
+              <Card label="Coronavirus cases">
                 <CardColumn heading="Cases">
                   <Statistic heading="People tested positive in England">
                     <Paragraph supportingText>
@@ -62,7 +62,7 @@ export default function Home({ relatedLinks }: HomeProps) {
                   </Statistic>
                   <GridRow>
                     <GridCol setWidth="columnOneThird">
-                      <Statistic heading="Last 7 days">24,568</Statistic>
+                      <Statistic heading="Last 7 days" value="24,568" />
                     </GridCol>
                     <GridCol>trend tbc</GridCol>
                   </GridRow>
@@ -75,7 +75,7 @@ export default function Home({ relatedLinks }: HomeProps) {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card>
+              <Card label="Coronavirus deaths">
                 <CardColumn heading="Deaths">
                   <Statistic heading="Deaths with COVID-19 on the death certificate in England">
                     <Paragraph supportingText>
@@ -84,7 +84,7 @@ export default function Home({ relatedLinks }: HomeProps) {
                   </Statistic>
                   <GridRow>
                     <GridCol setWidth="columnOneThird">
-                      <Statistic heading="Last 7 days">393</Statistic>
+                      <Statistic heading="Last 7 days" value="393" />
                     </GridCol>
                     <GridCol>trend tbc</GridCol>
                   </GridRow>
@@ -100,7 +100,7 @@ export default function Home({ relatedLinks }: HomeProps) {
         </ContentsItem>
         <ContentsItem heading="Influenza">
           <Paragraph>
-            The UKHSA dashboard for data and insights on Coronavirus.
+            The UKHSA dashboard for data and insights on Influenza.
           </Paragraph>
           <Card label="Influenza summary">
             <CardColumn heading="Healthcare">
@@ -118,7 +118,7 @@ export default function Home({ relatedLinks }: HomeProps) {
           </Card>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card>
+              <Card label="Influenza healthcare">
                 <CardColumn heading="Healthcare">
                   <Statistic heading="Weekly hospital admission rates for Influenza">
                     <Paragraph supportingText>
@@ -127,7 +127,7 @@ export default function Home({ relatedLinks }: HomeProps) {
                   </Statistic>
                   <GridRow>
                     <GridCol setWidth="columnOneThird">
-                      <Statistic heading="Last 7 days">24,568</Statistic>
+                      <Statistic heading="Last 7 days" value="24,568" />
                     </GridCol>
                     <GridCol>trend tbc</GridCol>
                   </GridRow>
@@ -140,7 +140,7 @@ export default function Home({ relatedLinks }: HomeProps) {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card>
+              <Card label="Influenza testing">
                 <CardColumn heading="Testing">
                   <Statistic heading="Weekly positivity by age">
                     <Paragraph supportingText>
@@ -149,7 +149,7 @@ export default function Home({ relatedLinks }: HomeProps) {
                   </Statistic>
                   <GridRow>
                     <GridCol setWidth="columnOneThird">
-                      <Statistic heading="Last 7 days">393</Statistic>
+                      <Statistic heading="Last 7 days" value="393" />
                     </GridCol>
                     <GridCol>trend tbc</GridCol>
                   </GridRow>
