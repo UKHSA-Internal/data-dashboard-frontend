@@ -210,14 +210,10 @@ export const getStaticProps: GetStaticProps<{
   try {
     const params = req.params
 
-    console.log('PARAMS', params?.slug)
-
     // Check the slug exists in the url
     if (params && params.slug) {
       // Fetch all of the pages from the CMS
       const pages = await getPages()
-
-      console.log('pages', pages)
 
       // Find the CMS page within the list that matches the current slug
       const matchedPage = pages.items.find(
