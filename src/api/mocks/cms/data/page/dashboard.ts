@@ -1,6 +1,6 @@
 import { DashboardPage, PageResponse } from '@/api/requests/cms/getPage'
 
-export const DashboardPageMock: PageResponse<DashboardPage> = {
+export const dashboardPageMock: PageResponse<DashboardPage> = {
   id: 1,
   meta: {
     type: 'Dashboard',
