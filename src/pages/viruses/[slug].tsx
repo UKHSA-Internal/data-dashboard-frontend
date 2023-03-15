@@ -11,13 +11,13 @@ import { initMocks } from '@/api/msw'
 import { getPages } from '@/api/requests/cms/getPages'
 import { getPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
+import { Page } from '@/components/Page'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const VirusPage = ({ page: { title, content } }: VirusPageProps) => {
   return (
-    <>
-      <H1>{title}</H1>
+    <Page heading={title}>
       <Paragraph>{content}</Paragraph>
       <Accordion>
         <AccordionItem>
@@ -192,7 +192,7 @@ export const VirusPage = ({ page: { title, content } }: VirusPageProps) => {
           </AccordionItemPanel>
         </AccordionItem>
       </Accordion>
-    </>
+    </Page>
   )
 }
 
