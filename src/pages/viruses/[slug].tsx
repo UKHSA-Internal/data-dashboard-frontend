@@ -201,15 +201,23 @@ export default VirusPage
 export const getStaticProps: GetStaticProps<{
   page: ReturnType<typeof formatCmsPageTopicResponse>
 }> = async (req) => {
+  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+    await initMocks()
+  }
+
   const revalidate = 10
 
   try {
     const params = req.params
 
+    console.log('PARAMS', params?.slug)
+
     // Check the slug exists in the url
     if (params && params.slug) {
       // Fetch all of the pages from the CMS
       const pages = await getPages()
+
+      console.log('pages', pages)
 
       // Find the CMS page within the list that matches the current slug
       const matchedPage = pages.items.find(
