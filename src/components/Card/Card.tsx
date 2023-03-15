@@ -2,11 +2,16 @@ import { ReactNode } from 'react'
 import { Container, CardColumnHeading, CardColumnGridCol } from './Card.styles'
 
 interface CardProps {
+  label?: string
   children: ReactNode
 }
 
-export const Card = ({ children }: CardProps) => {
-  return <Container>{children}</Container>
+export const Card = ({ children, label }: CardProps) => {
+  return (
+    <Container as="article" aria-label={label}>
+      {children}
+    </Container>
+  )
 }
 
 interface CardColumnProps {
