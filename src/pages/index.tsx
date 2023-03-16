@@ -17,6 +17,7 @@ import {
 } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
+import Trend from '@/components/Trend/Trend'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -32,15 +33,21 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
           <Card label="Coronavirus summary">
             <CardColumn heading="Cases">
               <Statistic heading="Weekly" value="20,629,892" />
-              <Statistic heading="Last 7 days">tbc</Statistic>
+              <Statistic heading="Last 7 days">
+                <Trend positive value={'24,568 (-0.1%)'} />
+              </Statistic>
             </CardColumn>
             <CardColumn heading="Deaths">
               <Statistic heading="Weekly" value="393" />
-              <Statistic heading="Last 7 days">tbc</Statistic>
+              <Statistic heading="Last 7 days">
+                <Trend positive value={'185,707 (-1.9%)'} />
+              </Statistic>
             </CardColumn>
             <CardColumn heading="Healthcare">
               <Statistic heading="Patients admitted" value="981,596" />
-              <Statistic heading="Last 7 days">tbc</Statistic>
+              <Statistic heading="Last 7 days">
+                <Trend positive={false} value={'5,911 (0.3%)'} />
+              </Statistic>
             </CardColumn>
             <CardColumn heading="Vaccines">
               <Statistic heading="Spring booster" value="45,410,567" />
@@ -48,7 +55,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
             </CardColumn>
             <CardColumn heading="Testing">
               <Statistic heading="Virus tests positivity (%)" value="10.9%" />
-              <Statistic heading="Last 7 days">tbc</Statistic>
+              <Statistic heading="Last 7 days">
+                <Trend positive={false} value={'5,911 (0.3%)'} />
+              </Statistic>
             </CardColumn>
           </Card>
           <GridRow>
@@ -69,7 +78,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
                     <GridCol setWidth="columnOneThird">
                       <Statistic heading="Last 7 days" value="24,568" />
                     </GridCol>
-                    <GridCol>trend tbc</GridCol>
+                    <GridCol>
+                      <Trend positive value={'-1,600 (-6.1%)'} />
+                    </GridCol>
                   </GridRow>
                   <Topic
                     name="Coronavirus"
@@ -96,7 +107,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
                     <GridCol setWidth="columnOneThird">
                       <Statistic heading="Last 7 days" value="393" />
                     </GridCol>
-                    <GridCol>trend tbc</GridCol>
+                    <GridCol>
+                      <Trend positive value={'-31 (-7.3%)'} />
+                    </GridCol>
                   </GridRow>
                   <Topic
                     name="Coronavirus"
@@ -115,7 +128,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
           <Card label="Influenza summary">
             <CardColumn heading="Healthcare">
               <Statistic heading="Patients admitted" value="981,596" />
-              <Statistic heading="Last 7 days">tbc</Statistic>
+              <Statistic heading="Last 7 days">
+                <Trend positive value={'5,911 (0.3%)'} />
+              </Statistic>
             </CardColumn>
             <CardColumn heading="Vaccines">
               <Statistic heading="Spring booster" value="45,410,567" />
@@ -123,7 +138,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
             </CardColumn>
             <CardColumn heading="Testing">
               <Statistic heading="Virus tests positivity (%)" value="10.9%" />
-              <Statistic heading="Last 7 days">tbc</Statistic>
+              <Statistic heading="Last 7 days">
+                <Trend positive={false} value={'5,911 (2.3%)'} />
+              </Statistic>
             </CardColumn>
           </Card>
           <GridRow>
@@ -144,7 +161,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
                     <GridCol setWidth="columnOneThird">
                       <Statistic heading="Last 7 days" value="24,568" />
                     </GridCol>
-                    <GridCol>trend tbc</GridCol>
+                    <GridCol>
+                      <Trend positive value={'-1,600 (-6.1%)'} />
+                    </GridCol>
                   </GridRow>
                   <Topic
                     name="Influenza"
@@ -171,7 +190,9 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
                     <GridCol setWidth="columnOneThird">
                       <Statistic heading="Last 7 days" value="393" />
                     </GridCol>
-                    <GridCol>trend tbc</GridCol>
+                    <GridCol>
+                      <Trend positive value={'-31 (-7.3%)'} />
+                    </GridCol>
                   </GridRow>
                   <Topic
                     name="Influenza"
