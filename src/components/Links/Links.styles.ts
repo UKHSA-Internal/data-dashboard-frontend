@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { Link as GovUKLink } from 'govuk-react'
 import { BLACK } from 'govuk-colours'
 import { typography } from '@govuk-react/lib'
-import { BODY_SIZES, SPACING } from '@govuk-react/constants'
+import { BODY_SIZES, SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
 export const Link = styled(GovUKLink)({
   display: 'flex',
@@ -10,7 +10,9 @@ export const Link = styled(GovUKLink)({
   justifyContent: 'center',
   marginBottom: 0,
   height: 29,
-  minWidth: 122,
+  [MEDIA_QUERIES.TABLET]: {
+    width: 122,
+  },
   ...typography.font({ size: BODY_SIZES.SMALL }),
   '&:link, &:visited, &:hover': {
     color: BLACK,
