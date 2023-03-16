@@ -1,11 +1,11 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import VirusSummary from './VirusSummary'
+import Topic from './Topic'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
 const mockData = {
-  virus: 'TestVirus',
+  name: 'TestVirus',
   description: 'description for test virus',
   points: [
     {
@@ -19,25 +19,17 @@ const mockData = {
   ],
 }
 
-test('Displays the title, description, shows a download button, and table dropdown button ', () => {
+test('Displays the chart image and tabular data button', () => {
   render(
-    <VirusSummary
-      virus={mockData.virus}
+    <Topic
+      name={mockData.name}
       description={mockData.description}
       points={mockData.points}
     />
   )
 
-  // Title
-  const title = screen.getByText('TestVirus')
-  expect(title).toBeInTheDocument()
-  expect(title).toHaveAttribute('href', '/viruses/TestVirus')
-
-  // Download button
-  expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument()
-
-  // Description
-  expect(screen.getByText('description for test virus')).toBeInTheDocument()
+  // Chart
+  expect(screen.getByAltText(mockData.description)).toBeInTheDocument()
 
   // Dropdown button
   expect(screen.getByText('View data in a tabular format')).toBeInTheDocument()
@@ -47,8 +39,8 @@ test('Clicking the "View data in a tabular format" button, shows the graph in a 
   const user = userEvent.setup()
 
   render(
-    <VirusSummary
-      virus={mockData.virus}
+    <Topic
+      name={mockData.name}
       description={mockData.description}
       points={mockData.points}
     />

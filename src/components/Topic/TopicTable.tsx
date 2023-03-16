@@ -1,11 +1,11 @@
-import { Table } from './VirusSummaryTable.styles'
+import { Table } from './TopicTable.styles'
 
-interface VirusSummaryTableProps {
+interface TopicTableProps {
   caption: string
   data: Array<{ date: string; value: number }>
 }
 
-const VirusSummaryTable = ({ caption, data }: VirusSummaryTableProps) => {
+const TopicTable = ({ caption, data }: TopicTableProps) => {
   return (
     <Table caption={caption}>
       <Table.Row>
@@ -22,4 +22,4 @@ const VirusSummaryTable = ({ caption, data }: VirusSummaryTableProps) => {
   )
 }
 
-export default VirusSummaryTable
+export default TopicTable

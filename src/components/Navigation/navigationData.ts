@@ -38,15 +38,7 @@ export const secondaryLinksData: NavigationLink[] = [
     url: '/maps',
   },
   {
-    title: 'Metrics documentation',
-    url: '/metrics-documentation',
-  },
-  {
-    title: 'Download data',
-    url: '/download-data',
-  },
-  {
-    title: "Developer's guide",
-    url: '/developer-guide',
+    title: 'How to use this data',
+    url: '/how-to-use-this-data',
   },
 ]

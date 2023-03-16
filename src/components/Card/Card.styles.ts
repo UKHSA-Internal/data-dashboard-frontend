@@ -15,8 +15,15 @@ export const Container = styled(GridRow)({
   backgroundColor: GREY_3,
   paddingTop: SPACING.SCALE_3,
   paddingBottom: SPACING.SCALE_3,
-  marginBottom: SPACING.SCALE_5,
+  marginTop: SPACING.SCALE_5,
   ...typography.font({ size: BODY_SIZES.MEDIUM }),
+})
+
+export const CardColumnHeadingContainer = styled.div({
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 })
 
 export const CardColumnHeading = styled(H3)({

@@ -14,7 +14,7 @@ export const NavLink = styled(Link)(
     display: 'block',
     textDecoration: 'none',
     padding: '12px 16px',
-    ...typography.font({ size: BODY_SIZES.SMALL }),
+    ...typography.font({ size: BODY_SIZES.MEDIUM }),
     '&:hover': {
       color: COLOURS.BLUE_DARK,
       textDecoration: 'underline',
@@ -25,7 +25,6 @@ export const NavLink = styled(Link)(
   },
   ({ type, 'aria-current': ariaCurrent }) => ({
     ...(type === 'primary' && {
-      ...typography.font({ size: BODY_SIZES.MEDIUM }),
       fontWeight: FONT_WEIGHTS.bold,
     }),
     ...(ariaCurrent === 'page' && {
