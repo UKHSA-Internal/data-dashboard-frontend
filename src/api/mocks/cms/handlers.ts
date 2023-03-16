@@ -1,38 +1,58 @@
 import { rest } from 'msw'
-import { pagesWithTopicTypeMock } from './data/pages'
+import {
+  pagesWithCommonTypeMock,
+  pagesWithHomeTypeMock,
+  pagesWithTopicTypeMock,
+} from './data/pages'
 import {
   influenzaPageMock,
   covidPageMock,
   dashboardPageMock,
+  aboutPageMock,
+  whatsNewPageMock,
+  mapsPageMock,
+  howToUseThisDataPageMock,
 } from './data/page'
 import { getCmsApiPath } from '@/api/requests/helpers'
+import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
+import { PageResponse } from '@/api/requests/cms/getPage'
 
 const baseUrl = getCmsApiPath()
+
+// Contains the `/pages` mocks for the different page types
+const mockedPagesMap: Record<PageType, PagesResponse> = {
+  [PageType.Home]: pagesWithHomeTypeMock,
+  [PageType.Topic]: pagesWithTopicTypeMock,
+  [PageType.Common]: pagesWithCommonTypeMock,
+}
+
+// Contains the individual `/pages/{id}` mocks
+const mockedPageMap: Record<number, PageResponse<unknown>> = {
+  [dashboardPageMock.id]: dashboardPageMock,
+  [aboutPageMock.id]: aboutPageMock,
+  [whatsNewPageMock.id]: whatsNewPageMock,
+  [mapsPageMock.id]: mapsPageMock,
+  [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
+  [aboutPageMock.id]: aboutPageMock,
+  [influenzaPageMock.id]: influenzaPageMock,
+  [covidPageMock.id]: covidPageMock,
+}
 
 export const handlers = [
   rest.get(`${baseUrl}/pages`, (req, res, ctx) => {
     const searchParams = req.url.searchParams
 
-    if (
-      searchParams.has('type') &&
-      searchParams.get('type') === 'topic.TopicPage'
-    ) {
-      return res(ctx.status(200), ctx.json(pagesWithTopicTypeMock))
-    }
+    if (!searchParams.has('type')) return
+
+    const pageType = searchParams.get('type') as PageType
+
+    return res(ctx.status(200), ctx.json(mockedPagesMap[pageType]))
   }),
   rest.get(`${baseUrl}/pages/:id`, (req, res, ctx) => {
-    const pageId = req.params.id
+    const pageId = Number(req.params.id)
 
-    if (Number(pageId) === 1) {
-      return res(ctx.status(200), ctx.json(dashboardPageMock))
-    }
-
-    if (Number(pageId) === 5) {
-      return res(ctx.status(200), ctx.json(influenzaPageMock))
-    }
-
-    if (Number(pageId) === 6) {
-      return res(ctx.status(200), ctx.json(covidPageMock))
+    if (mockedPageMap[pageId]) {
+      return res(ctx.status(200), ctx.json(mockedPageMap[pageId]))
     }
   }),
 ]
