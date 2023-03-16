@@ -2,7 +2,6 @@ import {
   getVirusesSummary,
   VirusesResponse,
 } from '@/api/requests/getVirusesSummary'
-import { initMocks } from '@/api/msw'
 import { GridCol, GridRow, H1, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import VirusSummary from '@/components/VirusSummary/VirusSummary'
@@ -13,6 +12,7 @@ import {
   getPage,
   PageResponse,
 } from '@/api/requests/cms/getPage'
+import Trend from '@/components/Trend/Trend'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -25,8 +25,10 @@ export default function Home({
   return (
     <>
       <H1>{title}</H1>
-
       <Paragraph>{body}</Paragraph>
+
+      <Trend positive value="5,900 (0.3%)" />
+      <Trend positive={false} value="185,300 (6.1%)" />
 
       <Contents label="Respiratory viruses in this dashboard">
         <ContentsItem heading="Coronavirus">
