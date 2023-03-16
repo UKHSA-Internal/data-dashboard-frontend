@@ -4,13 +4,17 @@ import { getCmsApiPath } from '../helpers'
  * Response types for the CMS endpoint
  * TODO: Add url to endpoint in docs
  */
-export type PageResponse<T> = {
+export type PageResponse<T = Record<string, unknown>> = {
   id: number
   meta: PageMeta
   title: string
   body: string
   date_posted: string
 } & T
+
+export type DashboardPage = {
+  related_links: Array<RelatedLink>
+}
 
 export type TopicPage = {
   symptoms: string
@@ -20,8 +24,8 @@ export type TopicPage = {
   surveillance_and_reporting: string
 }
 
-export type DashboardPage = {
-  related_links: Array<RelatedLink>
+export type CommonPage = {
+  date_posted: string
 }
 
 type RelatedLink = {
@@ -55,7 +59,7 @@ type ParentMeta = {
   html_url: string
 }
 
-export const getPage = async <T = TopicPage | DashboardPage>(
+export const getPage = async <T = DashboardPage | TopicPage | CommonPage>(
   id: number
 ): Promise<PageResponse<T>> => {
   const req = await fetch(`${getCmsApiPath()}/pages/${id}`)
