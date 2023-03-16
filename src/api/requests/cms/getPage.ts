@@ -4,7 +4,7 @@ import { getCmsApiPath } from '../helpers'
  * Response types for the CMS endpoint
  * TODO: Add url to endpoint in docs
  */
-export type PageResponse<T = Record<string, unknown>> = {
+export type PageResponse<T = DashboardPage | TopicPage | CommonPage> = {
   id: number
   meta: PageMeta
   title: string
