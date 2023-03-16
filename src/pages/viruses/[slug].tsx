@@ -5,19 +5,19 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { H1, ListItem, Paragraph, UnorderedList } from 'govuk-react'
+import { ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages } from '@/api/requests/cms/getPages'
 import { getPage, TopicPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
+import { Page } from '@/components/Page'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const VirusPage = ({ page: { title, body } }: VirusPageProps) => {
   return (
-    <>
-      <H1>{title}</H1>
+    <Page heading={title}>
       <Paragraph>{body}</Paragraph>
       <Accordion>
         <AccordionItem>
@@ -192,7 +192,7 @@ export const VirusPage = ({ page: { title, body } }: VirusPageProps) => {
           </AccordionItemPanel>
         </AccordionItem>
       </Accordion>
-    </>
+    </Page>
   )
 }
 
@@ -201,6 +201,10 @@ export default VirusPage
 export const getStaticProps: GetStaticProps<{
   page: ReturnType<typeof formatCmsPageTopicResponse>
 }> = async (req) => {
+  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+    await initMocks()
+  }
+
   const revalidate = 10
 
   try {
