@@ -20,8 +20,10 @@ export const Container = styled(GridRow)({
 })
 
 export const CardColumnHeadingContainer = styled.div({
-  display: 'flex',
-  justifyContent: 'space-between',
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
 })
 
 export const CardColumnHeading = styled(H3)({
