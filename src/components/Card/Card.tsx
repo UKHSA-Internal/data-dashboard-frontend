@@ -1,23 +1,41 @@
 import { ReactNode } from 'react'
-import { Container, CardColumnHeading, CardColumnGridCol } from './Card.styles'
+import {
+  Container,
+  CardColumnHeading,
+  CardColumnHeadingContainer,
+  CardColumnGridCol,
+} from './Card.styles'
 
 interface CardProps {
+  label?: string
   children: ReactNode
 }
 
-export const Card = ({ children }: CardProps) => {
-  return <Container>{children}</Container>
+export const Card = ({ children, label }: CardProps) => {
+  return (
+    <Container as="article" aria-label={label}>
+      {children}
+    </Container>
+  )
 }
 
 interface CardColumnProps {
   children: ReactNode
   heading: string
+  sideContent?: ReactNode
 }
 
-export const CardColumn = ({ children, heading }: CardColumnProps) => {
+export const CardColumn = ({
+  children,
+  heading,
+  sideContent,
+}: CardColumnProps) => {
   return (
     <CardColumnGridCol>
-      <CardColumnHeading>{heading}</CardColumnHeading>
+      <CardColumnHeadingContainer>
+        <CardColumnHeading>{heading}</CardColumnHeading>
+        {sideContent}
+      </CardColumnHeadingContainer>
       {children}
     </CardColumnGridCol>
   )
