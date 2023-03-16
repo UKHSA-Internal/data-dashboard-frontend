@@ -1,5 +1,10 @@
 import { ReactNode } from 'react'
-import { Container, CardColumnHeading, CardColumnGridCol } from './Card.styles'
+import {
+  Container,
+  CardColumnHeading,
+  CardColumnHeadingContainer,
+  CardColumnGridCol,
+} from './Card.styles'
 
 interface CardProps {
   label?: string
@@ -17,12 +22,20 @@ export const Card = ({ children, label }: CardProps) => {
 interface CardColumnProps {
   children: ReactNode
   heading: string
+  sideContent?: ReactNode
 }
 
-export const CardColumn = ({ children, heading }: CardColumnProps) => {
+export const CardColumn = ({
+  children,
+  heading,
+  sideContent,
+}: CardColumnProps) => {
   return (
     <CardColumnGridCol>
-      <CardColumnHeading>{heading}</CardColumnHeading>
+      <CardColumnHeadingContainer>
+        <CardColumnHeading>{heading}</CardColumnHeading>
+        {sideContent}
+      </CardColumnHeadingContainer>
       {children}
     </CardColumnGridCol>
   )
