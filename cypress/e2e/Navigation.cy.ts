@@ -10,9 +10,7 @@ describe('Navigation', () => {
       cy.findByText('About')
       cy.findByText("What's new")
       cy.findByText('Maps')
-      cy.findByText('Metrics documentation')
-      cy.findByText('Download data')
-      cy.findByText("Developer's guide")
+      cy.findByText('How to use this data')
     })
   })
 

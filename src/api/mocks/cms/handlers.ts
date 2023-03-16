@@ -3,7 +3,7 @@ import { pagesWithTopicTypeMock } from './data/pages'
 import {
   influenzaPageMock,
   covidPageMock,
-  DashboardPageMock,
+  dashboardPageMock,
 } from './data/page'
 import { getCmsApiPath } from '@/api/requests/helpers'
 
@@ -24,7 +24,7 @@ export const handlers = [
     const pageId = req.params.id
 
     if (Number(pageId) === 1) {
-      return res(ctx.status(200), ctx.json(DashboardPageMock))
+      return res(ctx.status(200), ctx.json(dashboardPageMock))
     }
 
     if (Number(pageId) === 5) {
