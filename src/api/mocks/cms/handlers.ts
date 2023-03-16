@@ -20,14 +20,14 @@ import { PageResponse } from '@/api/requests/cms/getPage'
 const baseUrl = getCmsApiPath()
 
 // Contains the `/pages` mocks for the different page types
-const mockedPagesMap: Record<PageType, PagesResponse> = {
+export const mockedPagesMap: Record<PageType, PagesResponse> = {
   [PageType.Home]: pagesWithHomeTypeMock,
   [PageType.Topic]: pagesWithTopicTypeMock,
   [PageType.Common]: pagesWithCommonTypeMock,
 }
 
 // Contains the individual `/pages/{id}` mocks
-const mockedPageMap: Record<number, PageResponse<unknown>> = {
+export const mockedPageMap: Record<number, PageResponse<unknown>> = {
   [dashboardPageMock.id]: dashboardPageMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,
