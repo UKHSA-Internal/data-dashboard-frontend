@@ -1,3 +1,5 @@
+import path from 'path'
+
 describe('Dashboard', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -62,6 +64,7 @@ describe('Dashboard', () => {
     }).as('cases-section')
 
     cy.get('@cases-section').within(() => {
+      cy.findByRole('link', { name: 'Download' })
       cy.findByText('People tested positive in England')
       cy.findByText('Up to and including 25th February 2023')
       cy.findByText('24,568').siblings().findByText('Last 7 days')
@@ -77,6 +80,7 @@ describe('Dashboard', () => {
     }).as('deaths-section')
 
     cy.get('@deaths-section').within(() => {
+      cy.findByRole('link', { name: 'Download' })
       cy.findByText('Deaths with COVID-19 on the death certificate in England')
       cy.findByText('Up to and including 3rd February 2023')
       cy.findByText('393').siblings().findByText('Last 7 days')
@@ -131,6 +135,7 @@ describe('Dashboard', () => {
     }).as('cases-section')
 
     cy.get('@cases-section').within(() => {
+      cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly hospital admission rates for Influenza')
       cy.findByText('Up to and including 25th February 2023')
       cy.findByText('24,568').siblings().findByText('Last 7 days')
@@ -146,6 +151,7 @@ describe('Dashboard', () => {
     }).as('deaths-section')
 
     cy.get('@deaths-section').within(() => {
+      cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly positivity by age')
       cy.findByText('Up to and including 3rd February 2023')
       cy.findByText('393').siblings().findByText('Last 7 days')
@@ -211,5 +217,39 @@ describe('Dashboard', () => {
     cy.findByText(
       'The symptoms, diagnosis, management and epidemiology of human parainfluenza viruses (HPIVs).'
     )
+  })
+
+  it('downloads a csv when clicking a download link', () => {
+    const downloadsFolder = Cypress.config('downloadsFolder')
+
+    const articles = [
+      'Coronavirus cases',
+      'Coronavirus deaths',
+      'Influenza healthcare',
+      'Influenza testing',
+    ]
+
+    articles.forEach((name) => {
+      cy.findByRole('article', {
+        name,
+      }).within(() => {
+        cy.window()
+          .document()
+          .then(function (doc) {
+            doc.addEventListener('click', () => {
+              setTimeout(function () {
+                doc.location.reload()
+              }, 1000)
+            })
+            cy.findByRole('link', { name: 'Download' }).click()
+
+            cy.readFile(path.join(downloadsFolder, 'download.csv')).should(
+              'exist'
+            )
+
+            cy.task('deleteFolder', downloadsFolder)
+          })
+      })
+    })
   })
 })

@@ -16,6 +16,7 @@ import {
   PageResponse,
 } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
+import { DownloadLink } from '@/components/Links'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -53,7 +54,12 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
           <GridRow>
             <GridCol setWidth="one-half">
               <Card label="Coronavirus cases">
-                <CardColumn heading="Cases">
+                <CardColumn
+                  heading="Cases"
+                  sideContent={
+                    <DownloadLink href="/api/download">Download</DownloadLink>
+                  }
+                >
                   <Statistic heading="People tested positive in England">
                     <Paragraph supportingText>
                       Up to and including 25th February 2023
@@ -75,7 +81,12 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
             </GridCol>
             <GridCol setWidth="one-half">
               <Card label="Coronavirus deaths">
-                <CardColumn heading="Deaths">
+                <CardColumn
+                  heading="Deaths"
+                  sideContent={
+                    <DownloadLink href="/api/download">Download</DownloadLink>
+                  }
+                >
                   <Statistic heading="Deaths with COVID-19 on the death certificate in England">
                     <Paragraph supportingText>
                       Up to and including 3rd February 2023
@@ -118,7 +129,12 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
           <GridRow>
             <GridCol setWidth="one-half">
               <Card label="Influenza healthcare">
-                <CardColumn heading="Healthcare">
+                <CardColumn
+                  heading="Healthcare"
+                  sideContent={
+                    <DownloadLink href="/api/download">Download</DownloadLink>
+                  }
+                >
                   <Statistic heading="Weekly hospital admission rates for Influenza">
                     <Paragraph supportingText>
                       Up to and including 25th February 2023
@@ -140,7 +156,12 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
             </GridCol>
             <GridCol setWidth="one-half">
               <Card label="Influenza testing">
-                <CardColumn heading="Testing">
+                <CardColumn
+                  heading="Testing"
+                  sideContent={
+                    <DownloadLink href="/api/download">Download</DownloadLink>
+                  }
+                >
                   <Statistic heading="Weekly positivity by age">
                     <Paragraph supportingText>
                       Up to and including 3rd February 2023

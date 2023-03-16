@@ -19,6 +19,13 @@ export const Container = styled(GridRow)({
   ...typography.font({ size: BODY_SIZES.MEDIUM }),
 })
 
+export const CardColumnHeadingContainer = styled.div({
+  [MEDIA_QUERIES.TABLET]: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+})
+
 export const CardColumnHeading = styled(H3)({
   ...typography.font({ size: BODY_SIZES.MEDIUM }),
   fontWeight: FONT_WEIGHTS.regular,
