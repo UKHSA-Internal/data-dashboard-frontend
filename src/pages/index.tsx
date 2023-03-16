@@ -16,6 +16,7 @@ import {
   PageResponse,
 } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
+import { DownloadLink } from '@/components/Links'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -53,7 +54,10 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
           <GridRow>
             <GridCol setWidth="one-half">
               <Card label="Coronavirus cases">
-                <CardColumn heading="Cases">
+                <CardColumn
+                  heading="Cases"
+                  sideContent={<DownloadLink href="#">Download</DownloadLink>}
+                >
                   <Statistic heading="People tested positive in England">
                     <Paragraph supportingText>
                       Up to and including 25th February 2023
