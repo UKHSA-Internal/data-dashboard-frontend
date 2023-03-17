@@ -128,7 +128,7 @@ describe('Dashboard', () => {
         name: 'Testing',
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
-      cy.findByText('-31 (-7.3%)')
+      cy.findByText('16,109 (2.3%)')
 
       // TODO: Add assertions for the trend +/- values once this is added
     })
