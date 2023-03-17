@@ -1,3 +1,7 @@
+export * from './about'
+export * from './whats-new'
+export * from './maps'
+export * from './how-to-use-this-data'
 export * from './influenza'
 export * from './sars-cov-2'
 export * from './dashboard'
