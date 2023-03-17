@@ -10,7 +10,7 @@ test("Positive trend displays the value provided and an icon", () => {
   )
 })
 
-test("Test trend for value, and that it's negative", () => {
+test("Negative trend displays a value and an icon", () => {
   render(<Trend positive={false} value="185,300 (6.1%)" />)
 
   expect(screen.getByText('185,300 (6.1%)')).toBeInTheDocument()
