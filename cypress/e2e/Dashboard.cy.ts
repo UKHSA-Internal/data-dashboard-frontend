@@ -162,7 +162,7 @@ describe('Dashboard', () => {
     })
   })
 
-  it.only('displays related links', () => {
+  it('displays related links', () => {
     cy.checkRelatedLinksExist()
   })
 
