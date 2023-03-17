@@ -33,16 +33,19 @@ describe('Dashboard', () => {
         name: 'Cases',
       })
       cy.findByText('20,629,892').siblings().findByText('Weekly')
+      cy.findByText('24,568 (-0.1%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Deaths',
       })
       cy.findByText('393').siblings().findByText('Weekly')
+      cy.findByText('185,707 (-1.9%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Deaths',
       })
       cy.findByText('981,596').siblings().findByText('Patients admitted')
+      cy.findByText('4,807 (0.2%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Vaccines',
@@ -54,6 +57,7 @@ describe('Dashboard', () => {
         name: 'Testing',
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
+      cy.findByText('5,425 (0.4%)').siblings().findByText('Last 7 days')
 
       // TODO: Add assertions for the trend +/- values once this is added
     })
@@ -68,10 +72,9 @@ describe('Dashboard', () => {
       cy.findByText('People tested positive in England')
       cy.findByText('Up to and including 25th February 2023')
       cy.findByText('24,568').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'People tested positive in England up to and including 25th February 2023'
-      )
+      cy.findByAltText('People tested positive in England up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-1,600 (-6.1%)')
     })
 
     // Deaths column
@@ -84,10 +87,9 @@ describe('Dashboard', () => {
       cy.findByText('Deaths with COVID-19 on the death certificate in England')
       cy.findByText('Up to and including 3rd February 2023')
       cy.findByText('393').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023'
-      )
+      cy.findByAltText('Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-31 (-7.3%)')
     })
   })
 
@@ -114,6 +116,7 @@ describe('Dashboard', () => {
         name: 'Healthcare',
       })
       cy.findByText('981,596').siblings().findByText('Patients admitted')
+      cy.findByText('5,788 (0.3%)')
 
       cy.findByRole('heading', {
         name: 'Vaccines',
@@ -125,6 +128,7 @@ describe('Dashboard', () => {
         name: 'Testing',
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
+      cy.findByText('-31 (-7.3%)')
 
       // TODO: Add assertions for the trend +/- values once this is added
     })
@@ -139,10 +143,9 @@ describe('Dashboard', () => {
       cy.findByText('Weekly hospital admission rates for Influenza')
       cy.findByText('Up to and including 25th February 2023')
       cy.findByText('24,568').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'Weekly hospital admission rates for Influenza up to and including 25th February 2023'
-      )
+      cy.findByAltText('Weekly hospital admission rates for Influenza up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-1,600 (-6.1%)')
     })
 
     // Testing column
@@ -155,19 +158,16 @@ describe('Dashboard', () => {
       cy.findByText('Weekly positivity by age')
       cy.findByText('Up to and including 3rd February 2023')
       cy.findByText('393').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'Weekly positivity by age up to and including 3rd February 2023'
-      )
+      cy.findByAltText('Weekly positivity by age up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-31 (-7.3%)')
     })
   })
 
   it('displays related links', () => {
     cy.findByRole('heading', { name: 'Related Links', level: 2 })
 
-    cy.findByText(
-      'National flu and COVID-19 surveillance reports: 2022 to 2023 season'
-    ).should(
+    cy.findByText('National flu and COVID-19 surveillance reports: 2022 to 2023 season').should(
       'have.attr',
       'href',
       'https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season'
@@ -176,9 +176,7 @@ describe('Dashboard', () => {
       'National influenza and COVID-19 report, monitoring COVID-19 activity, seasonal flu and other seasonal respiratory illnesses.'
     )
 
-    cy.findByText(
-      'Respiratory syncytial virus (RSV): guidance, data and analysis'
-    ).should(
+    cy.findByText('Respiratory syncytial virus (RSV): guidance, data and analysis').should(
       'have.attr',
       'href',
       'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis'
@@ -198,9 +196,7 @@ describe('Dashboard', () => {
       'Data reported here provide a summary of norovirus and rotavirus activity (including enteric virus (EV) outbreaks) in England up to reporting week 51 of the 2022/2023 season.'
     )
 
-    cy.findByText(
-      'Hepatitis (liver inflammation) cases in children – latest updates'
-    ).should(
+    cy.findByText('Hepatitis (liver inflammation) cases in children – latest updates').should(
       'have.attr',
       'href',
       'https://www.gov.uk/government/news/hepatitis-liver-inflammation-cases-in-children-latest-updates'
@@ -214,20 +210,13 @@ describe('Dashboard', () => {
       'href',
       'https://www.gov.uk/government/collections/human-parainfluenza-viruses-guidance-and-data'
     )
-    cy.findByText(
-      'The symptoms, diagnosis, management and epidemiology of human parainfluenza viruses (HPIVs).'
-    )
+    cy.findByText('The symptoms, diagnosis, management and epidemiology of human parainfluenza viruses (HPIVs).')
   })
 
   it('downloads a csv when clicking a download link', () => {
     const downloadsFolder = Cypress.config('downloadsFolder')
 
-    const articles = [
-      'Coronavirus cases',
-      'Coronavirus deaths',
-      'Influenza healthcare',
-      'Influenza testing',
-    ]
+    const articles = ['Coronavirus cases', 'Coronavirus deaths', 'Influenza healthcare', 'Influenza testing']
 
     articles.forEach((name) => {
       cy.findByRole('article', {
@@ -243,9 +232,7 @@ describe('Dashboard', () => {
             })
             cy.findByRole('link', { name: 'Download' }).click()
 
-            cy.readFile(path.join(downloadsFolder, 'download.csv')).should(
-              'exist'
-            )
+            cy.readFile(path.join(downloadsFolder, 'download.csv')).should('exist')
 
             cy.task('deleteFolder', downloadsFolder)
           })
