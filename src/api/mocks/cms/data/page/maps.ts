@@ -1,0 +1,28 @@
+import { CommonPage, PageResponse } from '@/api/requests/cms/getPage'
+
+export const mapsPageMock: PageResponse<CommonPage> = {
+  id: 9,
+  meta: {
+    type: 'common.CommonPage',
+    detail_url: 'http://localhost/api/v2/pages/9/',
+    html_url: 'http://localhost/home-page/maps/',
+    slug: 'maps',
+    show_in_menus: false,
+    seo_title: '',
+    search_description: '',
+    first_published_at: '2023-03-16T09:26:32.597358Z',
+    alias_of: null,
+    parent: {
+      id: 4,
+      meta: {
+        type: 'home.HomePage',
+        detail_url: 'http://localhost/api/v2/pages/4/',
+        html_url: 'http://localhost/home-page/',
+      },
+      title: 'Home page',
+    },
+  },
+  title: 'Maps',
+  date_posted: '2023-03-16',
+  body: '<p>Maps CMS page content!</p>',
+}

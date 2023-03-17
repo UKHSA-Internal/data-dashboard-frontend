@@ -30,11 +30,13 @@ type PagesMeta = {
 /**
  * These are associated with page types within the CMS
  */
-type PagesType = 'topic.TopicPage' | 'topic.TopicIndexPage'
+export enum PageType {
+  Home = 'home.HomePage',
+  Common = 'common.CommonPage',
+  Topic = 'topic.TopicPage',
+}
 
-export const getPages = async (
-  type: PagesType = 'topic.TopicPage'
-): Promise<PagesResponse> => {
+export const getPages = async (type: PageType): Promise<PagesResponse> => {
   const req = await fetch(`${getCmsApiPath()}/pages/?type=${type}`)
   const res = await req.json()
   return res
