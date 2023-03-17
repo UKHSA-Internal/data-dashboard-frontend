@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import Trend from './Trend'
 
-test("Test trend for value, and that it's positive", () => {
+test("Positive trend displays the value provided and an icon", () => {
   render(<Trend positive value="5,900 (0.3%)" />)
 
   expect(screen.getByText('5,900 (0.3%)')).toBeInTheDocument()
@@ -10,7 +10,7 @@ test("Test trend for value, and that it's positive", () => {
   )
 })
 
-test("Test trend for value, and that it's negative", () => {
+test("Negative trend displays a value and an icon", () => {
   render(<Trend positive={false} value="185,300 (6.1%)" />)
 
   expect(screen.getByText('185,300 (6.1%)')).toBeInTheDocument()
