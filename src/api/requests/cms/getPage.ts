@@ -22,10 +22,11 @@ export type TopicPage = {
   treatment: string
   prevention: string
   surveillance_and_reporting: string
+  related_links: Array<RelatedLink>
 }
 
 export type CommonPage = {
-  date_posted: string
+  related_links: Array<RelatedLink>
 }
 
 export type RelatedLink = {
