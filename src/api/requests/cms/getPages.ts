@@ -33,7 +33,7 @@ type PagesMeta = {
 export enum PageType {
   Home = 'home.HomePage',
   Common = 'common.CommonPage',
-  Topic = 'topic.TopicIndexPage',
+  Topic = 'topic.TopicPage',
 }
 
 export const getPages = async (type: PageType): Promise<PagesResponse> => {
