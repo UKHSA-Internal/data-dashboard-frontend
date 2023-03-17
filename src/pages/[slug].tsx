@@ -7,13 +7,14 @@ import {
   PageResponse,
 } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
+import { CMSContent } from './[slug].styles'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body }: CommonPageProps) => {
   return (
     <Page heading={title}>
-      <div dangerouslySetInnerHTML={{ __html: body }} />
+      <CMSContent dangerouslySetInnerHTML={{ __html: body }} />
     </Page>
   )
 }
