@@ -28,10 +28,14 @@ export type CommonPage = {
   date_posted: string
 }
 
-type RelatedLink = {
+export type RelatedLink = {
+  id: number
+  meta: {
+    type: string
+  }
   title: string
-  description: string
-  link: string
+  body: string
+  url: string
 }
 
 type PageMeta = {
