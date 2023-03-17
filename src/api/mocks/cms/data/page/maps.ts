@@ -1,4 +1,5 @@
 import { CommonPage, PageResponse } from '@/api/requests/cms/getPage'
+import { relatedLinksMock } from '../elements'
 
 export const mapsPageMock: PageResponse<CommonPage> = {
   id: 9,
@@ -25,4 +26,5 @@ export const mapsPageMock: PageResponse<CommonPage> = {
   title: 'Maps',
   date_posted: '2023-03-16',
   body: '<p>Maps CMS page content!</p>',
+  related_links: relatedLinksMock,
 }

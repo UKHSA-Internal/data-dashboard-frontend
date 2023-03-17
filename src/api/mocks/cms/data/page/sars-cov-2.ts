@@ -1,4 +1,5 @@
 import { PageResponse, TopicPage } from '@/api/requests/cms/getPage'
+import { relatedLinksMock } from '../elements'
 
 export const covidPageMock: PageResponse<TopicPage> = {
   id: 6,
@@ -30,4 +31,5 @@ export const covidPageMock: PageResponse<TopicPage> = {
   treatment: 'Rest',
   prevention: 'Vaccines',
   surveillance_and_reporting: 'Hospitalizations only',
+  related_links: relatedLinksMock,
 }

@@ -9,13 +9,14 @@ import { ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { getPage, TopicPage } from '@/api/requests/cms/getPage'
+import { getPage, PageResponse, TopicPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
+import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ page: { title, body } }: VirusPageProps) => {
+export const VirusPage = ({ title, body, relatedLinks }: VirusPageProps) => {
   return (
     <Page heading={title}>
       <Paragraph>{body}</Paragraph>
@@ -192,6 +193,8 @@ export const VirusPage = ({ page: { title, body } }: VirusPageProps) => {
           </AccordionItemPanel>
         </AccordionItem>
       </Accordion>
+
+      <RelatedLinks links={relatedLinks} />
     </Page>
   )
 }
@@ -199,7 +202,9 @@ export const VirusPage = ({ page: { title, body } }: VirusPageProps) => {
 export default VirusPage
 
 export const getStaticProps: GetStaticProps<{
-  page: ReturnType<typeof formatCmsPageTopicResponse>
+  title: PageResponse<TopicPage>['title']
+  body: PageResponse<TopicPage>['body']
+  relatedLinks: PageResponse<TopicPage>['related_links']
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -225,9 +230,13 @@ export const getStaticProps: GetStaticProps<{
         const page = await getPage<TopicPage>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
+        const { title, body, relatedLinks } = formatCmsPageTopicResponse(page)
+
         return {
           props: {
-            page: formatCmsPageTopicResponse(page),
+            title,
+            body,
+            relatedLinks,
             revalidate,
           },
         }
