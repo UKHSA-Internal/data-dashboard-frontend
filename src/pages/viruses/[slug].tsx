@@ -8,7 +8,7 @@ import {
 import { ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
-import { getPages } from '@/api/requests/cms/getPages'
+import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPage, TopicPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
@@ -213,7 +213,7 @@ export const getStaticProps: GetStaticProps<{
     // Check the slug exists in the url
     if (params && params.slug) {
       // Fetch all of the pages from the CMS
-      const pages = await getPages()
+      const pages = await getPages(PageType.Topic)
 
       // Find the CMS page within the list that matches the current slug
       const matchedPage = pages.items.find(
@@ -248,7 +248,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   // Fetch the CMS pages with a topic type
-  const { items } = await getPages('topic.TopicPage')
+  const { items } = await getPages(PageType.Topic)
 
   // Get the paths we want to pre-render based on the list of topic pages
   const paths = items.map(({ meta: { slug } }) => ({
