@@ -1,8 +1,12 @@
 version: '3.9'
 services:
   nextjs:
+    # 1.Repository URI for our app image
+    image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG   
     build: ./
   nginx:
+    # 2.Repository URI for our web image
+    image: $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG   
     build: ./nginx
     ports:
       - 80:80
