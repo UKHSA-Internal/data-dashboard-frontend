@@ -126,6 +126,6 @@ jobs:
           #docker-compose up -d $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           #docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           #docker compose tag --template “$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG” --push
-          docker-compose build -d $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
-          docker-compose push -d $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker-compose build -f docker-compose.yml -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker-compose push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2
