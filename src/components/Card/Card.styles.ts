@@ -30,7 +30,7 @@ export const CardColumnHeading = styled(H3)({
   ...typography.font({ size: BODY_SIZES.MEDIUM }),
   fontWeight: FONT_WEIGHTS.regular,
   color: GREY_1,
-  marginBottom: SPACING.SCALE_2,
+  marginBottom: 0,
 })
 
 export const CardColumnGridCol = styled(GridCol)({

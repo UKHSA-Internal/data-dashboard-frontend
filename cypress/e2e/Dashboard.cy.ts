@@ -163,60 +163,7 @@ describe('Dashboard', () => {
   })
 
   it('displays related links', () => {
-    cy.findByRole('heading', { name: 'Related Links', level: 2 })
-
-    cy.findByText(
-      'National flu and COVID-19 surveillance reports: 2022 to 2023 season'
-    ).should(
-      'have.attr',
-      'href',
-      'https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season'
-    )
-    cy.findByText(
-      'National influenza and COVID-19 report, monitoring COVID-19 activity, seasonal flu and other seasonal respiratory illnesses.'
-    )
-
-    cy.findByText(
-      'Respiratory syncytial virus (RSV): guidance, data and analysis'
-    ).should(
-      'have.attr',
-      'href',
-      'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis'
-    )
-    cy.findByText(
-      'These documents provide advice on the symptoms, diagnosis, treatment, management and epidemiology of respiratory syncytial virus.'
-    )
-
-    cy.findByText(
-      'National norovirus and rotavirus report, week 1 report: data up to week 51 (25 December 2022)'
-    ).should(
-      'have.attr',
-      'href',
-      'https://www.gov.uk/government/statistics/national-norovirus-and-rotavirus-surveillance-reports-2022-to-2023-season/national-norovirus-and-rotavirus-report-week-1-report-data-up-to-week-51-25-december-2022'
-    )
-    cy.findByText(
-      'Data reported here provide a summary of norovirus and rotavirus activity (including enteric virus (EV) outbreaks) in England up to reporting week 51 of the 2022/2023 season.'
-    )
-
-    cy.findByText(
-      'Hepatitis (liver inflammation) cases in children – latest updates'
-    ).should(
-      'have.attr',
-      'href',
-      'https://www.gov.uk/government/news/hepatitis-liver-inflammation-cases-in-children-latest-updates'
-    )
-    cy.findByText(
-      'Regular UKHSA updates on the ongoing investigation into higher than usual rates of liver inflammation (hepatitis) in children across the UK.'
-    )
-
-    cy.findByText('Human parainfluenza viruses: guidance and data').should(
-      'have.attr',
-      'href',
-      'https://www.gov.uk/government/collections/human-parainfluenza-viruses-guidance-and-data'
-    )
-    cy.findByText(
-      'The symptoms, diagnosis, management and epidemiology of human parainfluenza viruses (HPIVs).'
-    )
+    cy.checkRelatedLinksExist()
   })
 
   it('downloads a csv when clicking a download link', () => {

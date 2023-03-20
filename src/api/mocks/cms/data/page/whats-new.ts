@@ -1,4 +1,5 @@
 import { CommonPage, PageResponse } from '@/api/requests/cms/getPage'
+import { relatedLinksMock } from '../elements'
 
 export const whatsNewPageMock: PageResponse<CommonPage> = {
   id: 8,
@@ -25,4 +26,5 @@ export const whatsNewPageMock: PageResponse<CommonPage> = {
   title: "What's new",
   date_posted: '2023-03-16',
   body: "<p>What's new CMS page content!</p>",
+  related_links: relatedLinksMock,
 }
