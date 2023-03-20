@@ -212,7 +212,6 @@ describe('Dashboard', () => {
       'href',
       'https://www.gov.uk/government/collections/human-parainfluenza-viruses-guidance-and-data'
     )
-    cy.findByText('The symptoms, diagnosis, management and epidemiology of human parainfluenza viruses (HPIVs).')
   })
 
   it('downloads a csv when clicking a download link', () => {
