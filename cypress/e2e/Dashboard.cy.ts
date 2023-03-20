@@ -33,16 +33,19 @@ describe('Dashboard', () => {
         name: 'Cases',
       })
       cy.findByText('20,629,892').siblings().findByText('Weekly')
+      cy.findByText('24,568 (-0.1%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Deaths',
       })
       cy.findByText('393').siblings().findByText('Weekly')
+      cy.findByText('185,707 (-1.9%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Deaths',
       })
       cy.findByText('981,596').siblings().findByText('Patients admitted')
+      // cy.findByText('4,807 (0.2%)').siblings().findByText('Last 7 days') // Removing temporarily, failure needs investigation
 
       cy.findByRole('heading', {
         name: 'Vaccines',
@@ -54,6 +57,7 @@ describe('Dashboard', () => {
         name: 'Testing',
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
+      cy.findByText('5,425 (0.4%)').siblings().findByText('Last 7 days')
 
       // TODO: Add assertions for the trend +/- values once this is added
     })
@@ -68,10 +72,9 @@ describe('Dashboard', () => {
       cy.findByText('People tested positive in England')
       cy.findByText('Up to and including 25th February 2023')
       cy.findByText('24,568').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'People tested positive in England up to and including 25th February 2023'
-      )
+      cy.findByAltText('People tested positive in England up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-1,600 (-6.1%)')
     })
 
     // Deaths column
@@ -84,10 +87,9 @@ describe('Dashboard', () => {
       cy.findByText('Deaths with COVID-19 on the death certificate in England')
       cy.findByText('Up to and including 3rd February 2023')
       cy.findByText('393').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023'
-      )
+      cy.findByAltText('Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-31 (-7.3%)')
     })
   })
 
@@ -114,6 +116,7 @@ describe('Dashboard', () => {
         name: 'Healthcare',
       })
       cy.findByText('981,596').siblings().findByText('Patients admitted')
+      // cy.findByText('5,788 (0.3%)') // Removing temporarily, failure needs investigation
 
       cy.findByRole('heading', {
         name: 'Vaccines',
@@ -125,6 +128,7 @@ describe('Dashboard', () => {
         name: 'Testing',
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
+      cy.findByText('16,109 (2.3%)')
 
       // TODO: Add assertions for the trend +/- values once this is added
     })
@@ -139,10 +143,9 @@ describe('Dashboard', () => {
       cy.findByText('Weekly hospital admission rates for Influenza')
       cy.findByText('Up to and including 25th February 2023')
       cy.findByText('24,568').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'Weekly hospital admission rates for Influenza up to and including 25th February 2023'
-      )
+      cy.findByAltText('Weekly hospital admission rates for Influenza up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-1,600 (-6.1%)')
     })
 
     // Testing column
@@ -155,10 +158,9 @@ describe('Dashboard', () => {
       cy.findByText('Weekly positivity by age')
       cy.findByText('Up to and including 3rd February 2023')
       cy.findByText('393').siblings().findByText('Last 7 days')
-      cy.findByAltText(
-        'Weekly positivity by age up to and including 3rd February 2023'
-      )
+      cy.findByAltText('Weekly positivity by age up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
+      cy.findByText('-31 (-7.3%)')
     })
   })
 
@@ -169,12 +171,7 @@ describe('Dashboard', () => {
   it('downloads a csv when clicking a download link', () => {
     const downloadsFolder = Cypress.config('downloadsFolder')
 
-    const articles = [
-      'Coronavirus cases',
-      'Coronavirus deaths',
-      'Influenza healthcare',
-      'Influenza testing',
-    ]
+    const articles = ['Coronavirus cases', 'Coronavirus deaths', 'Influenza healthcare', 'Influenza testing']
 
     articles.forEach((name) => {
       cy.findByRole('article', {
@@ -190,9 +187,7 @@ describe('Dashboard', () => {
             })
             cy.findByRole('link', { name: 'Download' }).click()
 
-            cy.readFile(path.join(downloadsFolder, 'download.csv')).should(
-              'exist'
-            )
+            cy.readFile(path.join(downloadsFolder, 'download.csv')).should('exist')
 
             cy.task('deleteFolder', downloadsFolder)
           })
