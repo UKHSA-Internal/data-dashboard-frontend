@@ -108,6 +108,10 @@ jobs:
       - name: Start app
         run: npm run start &
       - uses: ./.github/actions/run-cypress-tests
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
+          cache-folder: cypress/cache
 
   ###############################################################################
   # Deploy
