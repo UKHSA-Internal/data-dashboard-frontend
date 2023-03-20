@@ -46,24 +46,8 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 
 USER nextjs
 
-EXPOSE 3000
-
-ENV PORT 3000
-
-CMD ["node", "server.js"]
-
-# Base on offical NGINX Alpine image
-FROM nginx:alpine
-
-# Remove any existing config files
-RUN rm /etc/nginx/conf.d/*
-
-# Copy config files
-# *.conf files in conf.d/ dir get included in main config
-COPY ./nginx/default.conf /etc/nginx/conf.d/
-
-# Expose the listening port
 EXPOSE 80
 
-# Launch NGINX
-CMD [ "nginx", "-g", "daemon off;" ]
+ENV PORT 80
+
+CMD ["node", "server.js"]
