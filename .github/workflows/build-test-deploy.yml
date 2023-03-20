@@ -76,22 +76,6 @@ jobs:
   # Cypress tests
   ##############################################################################
 
-  # cypress-tests:
-  #   name: Cypress tests
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
-  #     - name: Start app
-  #       run: npm run start &
-  #     - uses: ./.github/actions/run-cypress-tests
-  #       with:
-  #         browser: chrome
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
-
   cypress-tests:
     name: Cypress tests
     needs: [build]
