@@ -1,22 +1,22 @@
-import { RelatedLinksResponse } from '@/api/requests/getRelatedLinks'
+import { RelatedLink } from '@/api/requests/cms/getPage'
 import { H2, ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import { BoldExternalLink, Container } from './RelatedLinks.styles'
 
 interface RelatedLinksProps {
-  data: RelatedLinksResponse
+  links: Array<RelatedLink>
 }
 
-const RelatedLinks = ({ data }: RelatedLinksProps) => {
+const RelatedLinks = ({ links }: RelatedLinksProps) => {
   return (
     <Container>
       <H2>Related Links</H2>
       <UnorderedList listStyleType="none">
-        {data.map(({ title, link, description }) => (
-          <ListItem key={link}>
-            <BoldExternalLink href={link} rel="external">
+        {links.map(({ id, title, url, body }) => (
+          <ListItem key={id}>
+            <BoldExternalLink href={url} rel="external">
               {title}
             </BoldExternalLink>
-            <Paragraph>{description}</Paragraph>
+            <div dangerouslySetInnerHTML={{ __html: body }} />
           </ListItem>
         ))}
       </UnorderedList>
