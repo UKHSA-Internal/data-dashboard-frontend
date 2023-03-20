@@ -22,16 +22,21 @@ export type TopicPage = {
   treatment: string
   prevention: string
   surveillance_and_reporting: string
+  related_links: Array<RelatedLink>
 }
 
 export type CommonPage = {
-  date_posted: string
+  related_links: Array<RelatedLink>
 }
 
-type RelatedLink = {
+export type RelatedLink = {
+  id: number
+  meta: {
+    type: string
+  }
   title: string
-  description: string
-  link: string
+  body: string
+  url: string
 }
 
 type PageMeta = {
@@ -59,9 +64,7 @@ type ParentMeta = {
   html_url: string
 }
 
-export const getPage = async <T = DashboardPage | TopicPage | CommonPage>(
-  id: number
-): Promise<PageResponse<T>> => {
+export const getPage = async <T = DashboardPage | TopicPage | CommonPage>(id: number): Promise<PageResponse<T>> => {
   const req = await fetch(`${getCmsApiPath()}/pages/${id}`)
   const res = await req.json()
   return res

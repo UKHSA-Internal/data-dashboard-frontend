@@ -1,4 +1,5 @@
 import { CommonPage, PageResponse } from '@/api/requests/cms/getPage'
+import { relatedLinksMock } from '../elements'
 
 export const howToUseThisDataPageMock: PageResponse<CommonPage> = {
   id: 10,
@@ -25,4 +26,5 @@ export const howToUseThisDataPageMock: PageResponse<CommonPage> = {
   title: 'How to use this data',
   date_posted: '2023-03-16',
   body: '<p>How to use this data CMS page content!</p>',
+  related_links: relatedLinksMock,
 }

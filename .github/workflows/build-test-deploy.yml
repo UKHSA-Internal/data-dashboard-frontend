@@ -80,6 +80,10 @@ jobs:
     name: Cypress tests
     needs: [build]
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -89,8 +93,16 @@ jobs:
         run: npm run start &
       - uses: ./.github/actions/run-cypress-tests
         with:
-          browser: chrome
           github-token: ${{ secrets.GITHUB_TOKEN }}
+          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
+          cache-folder: cypress/cache
+
+  cypress-tests-success:
+    name: Cypress tests check
+    needs: [cypress-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'All Cypress tests passed ✅'
 
   ###############################################################################
   # Deploy
