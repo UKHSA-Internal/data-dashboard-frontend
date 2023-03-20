@@ -102,7 +102,7 @@ jobs:
     needs: [cypress-tests]
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'All Integration tests passed ✅'
+      - run: echo 'All Cypress tests passed ✅'
 
   ###############################################################################
   # Deploy
