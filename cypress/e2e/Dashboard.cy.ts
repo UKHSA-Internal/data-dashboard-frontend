@@ -167,6 +167,8 @@ describe('Dashboard', () => {
   it('displays related links', () => {
     cy.findByRole('heading', { name: 'Related Links', level: 2 })
 
+    cy.checkRelatedLinksExist()
+
     cy.findByText('National flu and COVID-19 surveillance reports: 2022 to 2023 season').should(
       'have.attr',
       'href',

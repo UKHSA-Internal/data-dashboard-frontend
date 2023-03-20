@@ -170,7 +170,7 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
         </ContentsItem>
       </Contents>
 
-      <RelatedLinks data={relatedLinks} />
+      <RelatedLinks links={relatedLinks} />
     </Page>
   )
 }
