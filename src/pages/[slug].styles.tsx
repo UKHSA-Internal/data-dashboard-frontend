@@ -1,15 +1,20 @@
+import { H1, H2, Link, Paragraph } from 'govuk-react'
 import styled from 'styled-components'
+
+const Heading2 = styled(H2)``
+const Par = styled(Paragraph)``
 
 export const CMSContent = styled.div`
   && {
-    h1 {
-      font-size: 48px;
-      line-height: 1.0416;
-      font-weight: 700;
-      display: block;
-      margin-top: 0;
+    p {
+      ${Par}
     }
 
+    h2 {
+      ${Heading2}
+    }
+
+    /* 
     h2 {
       margin-bottom: 30px;
       font-size: 36px;
@@ -17,7 +22,7 @@ export const CMSContent = styled.div`
       font-weight: 700;
       display: block;
       margin-top: 0;
-    }
+    } */
 
     h3 {
       margin-bottom: 20px;
@@ -32,10 +37,14 @@ export const CMSContent = styled.div`
       margin: 0;
     }
 
+    a {
+      ${Link}
+    }
+    /* 
     a:hover,
     a:active {
       color: #2b8cc4;
-    }
+    } */
 
     ul {
       margin-bottom: 20px;

@@ -7,14 +7,38 @@ import {
   PageResponse,
 } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
-import { CMSContent } from './[slug].styles'
+import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
+import {
+  H1,
+  H2,
+  H3,
+  Link,
+  ListItem,
+  Paragraph,
+  UnorderedList,
+} from 'govuk-react'
+import rehypeRaw from 'rehype-raw'
+// import { CMSContent } from './[slug].styles'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body }: CommonPageProps) => {
   return (
     <Page heading={title}>
-      <CMSContent dangerouslySetInnerHTML={{ __html: body }} />
+      <ReactMarkdown
+        rehypePlugins={[rehypeRaw]}
+        components={{
+          h1: ({ ...props }) => <H1 {...props} />,
+          h2: ({ ...props }) => <H2 {...props} />,
+          h3: ({ ...props }) => <H3 {...props} />,
+          // p: ({ ...props }) => <Paragraph {...props} />,
+          a: ({ ...props }) => <Link {...props} />,
+          ul: ({ ...props }) => <UnorderedList {...props} />,
+          li: ({ ...props }) => <ListItem {...props} />,
+        }}
+      >
+        {body}
+      </ReactMarkdown>
     </Page>
   )
 }
