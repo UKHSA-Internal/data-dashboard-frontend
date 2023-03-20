@@ -1,11 +1,6 @@
 import styled from 'styled-components'
 import { GREY_3, GREY_1 } from 'govuk-colours'
-import {
-  SPACING,
-  BODY_SIZES,
-  FONT_WEIGHTS,
-  MEDIA_QUERIES,
-} from '@govuk-react/constants'
+import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { GridCol, GridRow, H3 } from 'govuk-react'
 

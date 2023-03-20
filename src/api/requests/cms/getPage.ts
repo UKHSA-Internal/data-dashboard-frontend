@@ -64,9 +64,7 @@ type ParentMeta = {
   html_url: string
 }
 
-export const getPage = async <T = DashboardPage | TopicPage | CommonPage>(
-  id: number
-): Promise<PageResponse<T>> => {
+export const getPage = async <T = DashboardPage | TopicPage | CommonPage>(id: number): Promise<PageResponse<T>> => {
   const req = await fetch(`${getCmsApiPath()}/pages/${id}`)
   const res = await req.json()
   return res

@@ -57,15 +57,9 @@ describe('About', () => {
 
     cy.findByRole('heading', { name: 'Deaths', level: 3 })
     cy.findByText('We report on deaths related to COVID-19, including:')
-    cy.findByText(
-      'Deaths with 28 days of a positive COVID-19 test - deaths with COVID.'
-    )
-    cy.findByText(
-      'Deaths with COVID-19 on the death certificate - deaths from COVID.'
-    )
-    cy.findByText(
-      'We also report on the excess deaths caused by respiratory viruses.'
-    )
+    cy.findByText('Deaths with 28 days of a positive COVID-19 test - deaths with COVID.')
+    cy.findByText('Deaths with COVID-19 on the death certificate - deaths from COVID.')
+    cy.findByText('We also report on the excess deaths caused by respiratory viruses.')
 
     // Related links
     cy.checkRelatedLinksExist()

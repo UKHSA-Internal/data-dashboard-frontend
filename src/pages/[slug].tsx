@@ -1,11 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import {
-  CommonPage as CommonPageType,
-  getPage,
-  PageResponse,
-} from '@/api/requests/cms/getPage'
+import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
@@ -42,17 +38,11 @@ export const getStaticProps: GetStaticProps<{
       const pages = await getPages(PageType.Common)
 
       // Find the CMS page within the list that matches the current page
-      const matchedPage = pages.items.find(
-        ({ meta: { slug } }) => slug === params.slug
-      )
+      const matchedPage = pages.items.find(({ meta: { slug } }) => slug === params.slug)
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
-        const {
-          title,
-          body,
-          related_links: relatedLinks,
-        } = await getPage<CommonPageType>(matchedPage.id)
+        const { title, body, related_links: relatedLinks } = await getPage<CommonPageType>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
         return {

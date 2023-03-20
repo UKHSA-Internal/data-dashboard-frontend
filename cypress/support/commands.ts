@@ -8,11 +8,7 @@ Cypress.Commands.add('checkRelatedLinksExist', () => {
   cy.findByRole('heading', { name: 'Related Links', level: 2 })
 
   cy.wrap(relatedLinksMock).each((_, index) => {
-    cy.findByText(relatedLinksMock[index].title).should(
-      'have.attr',
-      'href',
-      relatedLinksMock[index].url
-    )
+    cy.findByText(relatedLinksMock[index].title).should('have.attr', 'href', relatedLinksMock[index].url)
 
     // Because the related link body property is an html string we cannot assert that an html string exists
     // This hack creates a fake element, sets the innerHtml of the element to our related link body and

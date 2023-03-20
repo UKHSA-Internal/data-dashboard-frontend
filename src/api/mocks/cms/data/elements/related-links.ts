@@ -4,8 +4,7 @@ export const relatedLinksMock = [
     meta: {
       type: 'topic.TopicPageRelatedLink',
     },
-    title:
-      'National flu and COVID-19 surveillance reports: 2022 to 2023 season',
+    title: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season',
     body: '<p>National influenza and COVID-19 report, monitoring COVID-19 activity, seasonal flu and other seasonal respiratory illnesses.</p>',
     url: 'https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season',
   },
@@ -23,8 +22,7 @@ export const relatedLinksMock = [
     meta: {
       type: 'topic.TopicPageRelatedLink',
     },
-    title:
-      'National norovirus and rotavirus report, week 1 report: data up to week 51 (25 December 2022)',
+    title: 'National norovirus and rotavirus report, week 1 report: data up to week 51 (25 December 2022)',
     body: '<p>Data reported here provide a summary of norovirus and rotavirus activity (including enteric virus (EV) outbreaks) in England up to reporting week 51 of the 2022/2023 season.</p>',
     url: 'https://www.gov.uk/government/statistics/national-norovirus-and-rotavirus-surveillance-reports-2022-to-2023-season/national-norovirus-and-rotavirus-report-week-1-report-data-up-to-week-51-25-december-2022',
   },

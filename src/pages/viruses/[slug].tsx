@@ -16,12 +16,7 @@ import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({
-  title,
-  body,
-  relatedLinks,
-  accordion,
-}: VirusPageProps) => {
+export const VirusPage = ({ title, body, relatedLinks, accordion }: VirusPageProps) => {
   return (
     <Page heading={title}>
       <Paragraph>{body}</Paragraph>
@@ -52,13 +47,9 @@ export const VirusPage = ({
         </AccordionItem>
         <AccordionItem>
           <AccordionItemHeading>
-            <AccordionItemButton>
-              Surveillance and reporting
-            </AccordionItemButton>
+            <AccordionItemButton>Surveillance and reporting</AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>
-            {accordion.surveillance_and_reporting}
-          </AccordionItemPanel>
+          <AccordionItemPanel>{accordion.surveillance_and_reporting}</AccordionItemPanel>
         </AccordionItem>
       </Accordion>
 
@@ -92,17 +83,14 @@ export const getStaticProps: GetStaticProps<{
       const pages = await getPages(PageType.Topic)
 
       // Find the CMS page within the list that matches the current slug
-      const matchedPage = pages.items.find(
-        ({ meta: { slug } }) => slug === params.slug
-      )
+      const matchedPage = pages.items.find(({ meta: { slug } }) => slug === params.slug)
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
         const page = await getPage<TopicPage>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
-        const { title, body, relatedLinks, accordion } =
-          formatCmsPageTopicResponse(page)
+        const { title, body, relatedLinks, accordion } = formatCmsPageTopicResponse(page)
 
         return {
           props: {

@@ -6,9 +6,7 @@ describe('Coronavirus detail page', () => {
     cy.findByRole('heading', { name: 'SARS-CoV-2', level: 1 })
 
     // Body
-    cy.findByText(
-      'SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.'
-    )
+    cy.findByText('SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.')
 
     // Related links
     cy.checkRelatedLinksExist()
