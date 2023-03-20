@@ -76,21 +76,44 @@ jobs:
   # Cypress tests
   ##############################################################################
 
+  # cypress-tests:
+  #   name: Cypress tests
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Start app
+  #       run: npm run start &
+  #     - uses: ./.github/actions/run-cypress-tests
+  #       with:
+  #         browser: chrome
+  #         github-token: ${{ secrets.GITHUB_TOKEN }}
+
   cypress-tests:
     name: Cypress tests
     needs: [build]
+        runs-on: ubuntu-latest
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
     steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Start app
-        run: npm run start &
-      - uses: ./.github/actions/run-cypress-tests
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Cypress run
+        uses: cypress-io/github-action@v4
         with:
-          browser: chrome
-          github-token: ${{ secrets.GITHUB_TOKEN }}
+          start: npm start
+          wait-on: 'http://localhost:3000' # Waits for above
+          record: true
+          parallel: true # Runs test in parallel using settings above
+        env:
+          CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   ###############################################################################
   # Deploy
