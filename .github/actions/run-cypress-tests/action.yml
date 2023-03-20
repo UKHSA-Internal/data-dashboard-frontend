@@ -2,22 +2,20 @@ name: 'Run Cypress tests'
 
 description: 'Run Cypress tests'
 
-inputs:
-  browser:
-    required: true
-  github-token:
-    required: true
-
 runs:
   using: 'composite'
   steps:
     - name: Cypress tests
       uses: cypress-io/github-action@v5
       with:
-        browser: ${{ inputs.browser }}
+        start: npm start
+        wait-on: 'http://localhost:3000' # Waits for above
+        record: true
+        parallel: true # Runs test in parallel using settings above
         install: false
         quiet: true
         command: npm run test:e2e:ci
       env:
-        GITHUB_TOKEN: ${{ inputs.github-token }}
+        CYPRESS_RECORD_KEY: ${{ secrets.CYPRESS_RECORD_KEY }}
         CYPRESS_CACHE_FOLDER: cypress/cache
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
