@@ -1,28 +1,17 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import {
-  CommonPage as CommonPageType,
-  getPage,
-  PageResponse,
-} from '@/api/requests/cms/getPage'
+import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import { ReactMarkdown } from 'react-markdown/lib/react-markdown'
-import {
-  H1,
-  H2,
-  H3,
-  Link,
-  ListItem,
-  Paragraph,
-  UnorderedList,
-} from 'govuk-react'
+import { H1, H2, H3, Link, ListItem, Paragraph, UnorderedList } from 'govuk-react'
 import rehypeRaw from 'rehype-raw'
 // import { CMSContent } from './[slug].styles'
+import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const CommonPage = ({ title, body }: CommonPageProps) => {
+export const CommonPage = ({ title, body, relatedLinks }: CommonPageProps) => {
   return (
     <Page heading={title}>
       <ReactMarkdown
@@ -39,6 +28,7 @@ export const CommonPage = ({ title, body }: CommonPageProps) => {
       >
         {body}
       </ReactMarkdown>
+      <RelatedLinks links={relatedLinks} />
     </Page>
   )
 }
@@ -48,6 +38,7 @@ export default CommonPage
 export const getStaticProps: GetStaticProps<{
   title: PageResponse['title']
   body: PageResponse['body']
+  relatedLinks: PageResponse['related_links']
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -64,19 +55,18 @@ export const getStaticProps: GetStaticProps<{
       const pages = await getPages(PageType.Common)
 
       // Find the CMS page within the list that matches the current page
-      const matchedPage = pages.items.find(
-        ({ meta: { slug } }) => slug === params.slug
-      )
+      const matchedPage = pages.items.find(({ meta: { slug } }) => slug === params.slug)
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
-        const { title, body } = await getPage<CommonPageType>(matchedPage.id)
+        const { title, body, related_links: relatedLinks } = await getPage<CommonPageType>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
         return {
           props: {
             title,
             body,
+            relatedLinks,
             revalidate,
           },
         }
