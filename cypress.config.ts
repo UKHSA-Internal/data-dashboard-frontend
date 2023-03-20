@@ -2,6 +2,7 @@ import { defineConfig } from 'cypress'
 import { rmdir } from 'fs'
 
 export default defineConfig({
+  projectId: '4ijdq4',
   e2e: {
     baseUrl: 'http://localhost:3000',
     video: false,
