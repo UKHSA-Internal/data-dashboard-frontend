@@ -20,7 +20,7 @@ runs:
         parallel: true
         install: false
         quiet: true
-        command: npm run test:e2e:ci
+        command: npm run test:e2e:ci -- --record --parallel
       env:
         CYPRESS_RECORD_KEY: ${{ inputs.record-key }}
         CYPRESS_CACHE_FOLDER: ${{ inputs.cache-folder }}
