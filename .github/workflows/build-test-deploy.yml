@@ -113,6 +113,13 @@ jobs:
           record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
           cache-folder: cypress/cache
 
+  cypress-tests-success:
+    name: Cypress tests check
+    needs: [cypress-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'All Integration tests passed ✅'
+
   ###############################################################################
   # Deploy
   ###############################################################################
