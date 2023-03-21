@@ -10,5 +10,12 @@ export const CMSContent = styled(ReactMarkdown)`
     h3 {
       margin-top: 20px;
     }
+
+    p {
+      margin: 0;
+      margin-bottom: 20px;
+      font-size: 19px;
+      line-height: 21px;
+    }
   }
 `
