@@ -10,6 +10,9 @@ import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
+// p: ({ children }) => <Paragraph>{children.toString()}</Paragraph>,
+// p: ({ children }) => console.log(children),
+
 export const CommonPage = ({ title, body, relatedLinks }: CommonPageProps) => {
   return (
     <Page heading={title}>
@@ -19,7 +22,6 @@ export const CommonPage = ({ title, body, relatedLinks }: CommonPageProps) => {
           h1: ({ ...props }) => <H1 {...props} />,
           h2: ({ ...props }) => <H2 {...props} />,
           h3: ({ ...props }) => <H3 {...props} />,
-          // p: ({ ...props }) => <Paragraph {...props} />,
           a: ({ ...props }) => <Link {...props} />,
           ul: ({ ...props }) => <UnorderedList {...props} />,
           li: ({ ...props }) => <ListItem {...props} />,
