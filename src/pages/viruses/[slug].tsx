@@ -16,9 +16,9 @@ import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ title, body, relatedLinks, accordion }: VirusPageProps) => {
+export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }: VirusPageProps) => {
   return (
-    <Page heading={title}>
+    <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
       <Accordion>
         <AccordionItem>
@@ -62,12 +62,7 @@ export default VirusPage
 
 type FormattedResponse = ReturnType<typeof formatCmsPageTopicResponse>
 
-export const getStaticProps: GetStaticProps<{
-  title: FormattedResponse['title']
-  body: FormattedResponse['body']
-  relatedLinks: FormattedResponse['relatedLinks']
-  accordion: FormattedResponse['accordion']
-}> = async (req) => {
+export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -90,14 +85,9 @@ export const getStaticProps: GetStaticProps<{
         const page = await getPage<TopicPage>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
-        const { title, body, relatedLinks, accordion } = formatCmsPageTopicResponse(page)
-
         return {
           props: {
-            title,
-            body,
-            relatedLinks,
-            accordion,
+            ...formatCmsPageTopicResponse(page),
             revalidate,
           },
         }

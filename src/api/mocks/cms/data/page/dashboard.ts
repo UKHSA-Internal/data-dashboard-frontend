@@ -27,4 +27,5 @@ export const dashboardPageMock: PageResponse<DashboardPage> = {
   title: 'Respiratory viruses',
   body: 'Data and insights from the UKHSA on respiratory viruses.',
   related_links: relatedLinksMock,
+  latest_revision_created_at: '2023-03-21T10:25:34.452098Z',
 }
