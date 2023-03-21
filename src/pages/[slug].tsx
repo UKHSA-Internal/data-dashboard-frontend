@@ -3,15 +3,12 @@ import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
-import { H1, H2, H3, Link, ListItem, Paragraph, UnorderedList } from 'govuk-react'
+import { H1, H2, H3, Link, ListItem, UnorderedList } from 'govuk-react'
 import rehypeRaw from 'rehype-raw'
 import { CMSContent } from './[slug].styles'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
-
-// p: ({ children }) => <Paragraph>{children.toString()}</Paragraph>,
-// p: ({ children }) => console.log(children),
 
 export const CommonPage = ({ title, body, relatedLinks }: CommonPageProps) => {
   return (
