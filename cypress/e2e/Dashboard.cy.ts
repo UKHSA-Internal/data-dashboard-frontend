@@ -5,8 +5,9 @@ describe('Dashboard', () => {
     cy.visit('/')
   })
 
-  it('displays a title and body', () => {
+  it('displays a title, last updated date and body', () => {
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
+    cy.findByText('Last updated on March 21st 2023 at 10:25am')
     cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
   })
 

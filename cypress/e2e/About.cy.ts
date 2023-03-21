@@ -1,9 +1,12 @@
 describe('About', () => {
-  it('displays a title, body and related links', () => {
+  it('displays correctly', () => {
     cy.visit('/about')
 
     // Title
     cy.findByRole('heading', { name: 'About', level: 1 })
+
+    // Last updated
+    cy.findByText('Last updated on March 18th 2023 at 10:25am')
 
     // Body
     cy.findByRole('heading', { name: 'About the UKHSA dashboard', level: 2 })
