@@ -10,6 +10,7 @@ export type PageResponse<T = DashboardPage | TopicPage | CommonPage> = {
   title: string
   body: string
   date_posted: string
+  latest_revision_created_at: string
 } & T
 
 export type DashboardPage = {

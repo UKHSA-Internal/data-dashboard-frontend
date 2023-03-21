@@ -27,4 +27,5 @@ export const howToUseThisDataPageMock: PageResponse<CommonPage> = {
   date_posted: '2023-03-16',
   body: '<p>How to use this data CMS page content!</p>',
   related_links: relatedLinksMock,
+  latest_revision_created_at: '2023-01-15T10:25:34.452098Z',
 }
