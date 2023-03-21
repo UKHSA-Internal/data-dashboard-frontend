@@ -14,9 +14,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="alpha">
-              This is a new service – your feedback will help us to improve it.
-            </PhaseBanner>
+            <PhaseBanner level="alpha">This is a new service – your feedback will help us to improve it.</PhaseBanner>
             <Navigation />
           </>
         }
@@ -29,6 +27,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
             }
           />
         }
+        main={'main'}
       >
         <Main>{children}</Main>
       </Page>
