@@ -1,5 +1,5 @@
 import { RelatedLink } from '@/api/requests/cms/getPage'
-import { H2, ListItem, Paragraph, UnorderedList } from 'govuk-react'
+import { H2, ListItem, UnorderedList } from 'govuk-react'
 import { FormattedContent } from '../FormattedContent'
 import { BoldExternalLink, Container } from './RelatedLinks.styles'
 
