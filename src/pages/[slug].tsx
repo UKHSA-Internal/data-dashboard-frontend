@@ -3,29 +3,15 @@ import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
-import { H1, H2, H3, Link, ListItem, UnorderedList } from 'govuk-react'
-import rehypeRaw from 'rehype-raw'
-import { CMSContent } from './[slug].styles'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body, relatedLinks }: CommonPageProps) => {
   return (
     <Page heading={title}>
-      <CMSContent
-        rehypePlugins={[rehypeRaw]}
-        components={{
-          h1: ({ ...props }) => <H1 {...props} />,
-          h2: ({ ...props }) => <H2 {...props} />,
-          h3: ({ ...props }) => <H3 {...props} />,
-          a: ({ ...props }) => <Link {...props} />,
-          ul: ({ ...props }) => <UnorderedList {...props} />,
-          li: ({ ...props }) => <ListItem {...props} />,
-        }}
-      >
-        {body}
-      </CMSContent>
+      <FormattedContent body={body} />
       <RelatedLinks links={relatedLinks} />
     </Page>
   )
