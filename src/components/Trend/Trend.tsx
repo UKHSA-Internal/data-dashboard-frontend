@@ -1,4 +1,4 @@
-import { Container } from './Trend.styles'
+import { Tag } from './Trend.styles'
 
 interface TrendProps {
   positive: boolean
@@ -6,7 +6,7 @@ interface TrendProps {
 }
 
 const Trend = ({ positive, value }: TrendProps) => {
-  return <Container positive={positive}>{value}</Container>
+  return <Tag tint={positive ? 'GREEN' : 'RED'}>{value}</Tag>
 }
 
 export default Trend
