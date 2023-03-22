@@ -1,5 +1,6 @@
 import { RelatedLink } from '@/api/requests/cms/getPage'
 import { H2, ListItem, Paragraph, UnorderedList } from 'govuk-react'
+import { FormattedContent } from '../FormattedContent'
 import { BoldExternalLink, Container } from './RelatedLinks.styles'
 
 interface RelatedLinksProps {
@@ -16,7 +17,7 @@ const RelatedLinks = ({ links }: RelatedLinksProps) => {
             <BoldExternalLink href={url} rel="external">
               {title}
             </BoldExternalLink>
-            <div dangerouslySetInnerHTML={{ __html: body }} />
+            <FormattedContent body={body} />
           </ListItem>
         ))}
       </UnorderedList>
