@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { Tag as GovUKTag } from 'govuk-react'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { typography } from '@govuk-react/lib'
+import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 
 export const Tag = styled(GovUKTag)`
     background-image: 
@@ -11,5 +12,6 @@ export const Tag = styled(GovUKTag)`
     background-repeat: no-repeat;
     padding-left: 26px;
     background-position: 6px center;
-    font-weight: ${FONT_WEIGHTS.regular};
+    ${typography.font({ size: BODY_SIZES.XSMALL })}
+    font-weight: ${FONT_WEIGHTS.bold};
 `
