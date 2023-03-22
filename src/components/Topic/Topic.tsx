@@ -1,7 +1,6 @@
 import TopicTable from './TopicTable'
-import { ChartContainer, Container } from './Topic.styles'
+import { ChartContainer, Container, TabularData } from './Topic.styles'
 import Image from 'next/image'
-import { Details } from 'govuk-react'
 
 interface TopicProps {
   name: string
@@ -15,9 +14,9 @@ const Topic = ({ name, description, points }: TopicProps) => {
       <ChartContainer>
         <Image alt={description} fill sizes="100vw" src="/temp-chart.png" />
       </ChartContainer>
-      <Details summary="View data in a tabular format">
+      <TabularData summary="View data in a tabular format">
         <TopicTable caption={`Monthly ${name} cases`} data={points} />
-      </Details>
+      </TabularData>
     </Container>
   )
 }
