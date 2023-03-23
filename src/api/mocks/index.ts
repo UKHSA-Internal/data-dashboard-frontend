@@ -1,2 +1,2 @@
 export * as cms from './cms'
-export * as viruses from './viruses'
+export * as stats from './stats'
