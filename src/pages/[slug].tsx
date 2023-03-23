@@ -4,13 +4,14 @@ import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      <div dangerouslySetInnerHTML={{ __html: body }} />
+      <FormattedContent>{body}</FormattedContent>
       <RelatedLinks links={relatedLinks} />
     </Page>
   )

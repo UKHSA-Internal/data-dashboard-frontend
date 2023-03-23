@@ -20,7 +20,7 @@ const getLastUpdatedText = (datetime: Date) => {
 export const Page = ({ children, heading, lastUpdated }: PageProps) => {
   return (
     <Container>
-      <LastUpdated supportingText>{getLastUpdatedText(new Date(lastUpdated))}</LastUpdated>
+      <LastUpdated>{getLastUpdatedText(new Date(lastUpdated))}</LastUpdated>
       <Heading>{heading}</Heading>
       {children}
     </Container>
