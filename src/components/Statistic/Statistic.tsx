@@ -19,7 +19,11 @@ export const Statistic = ({ heading, value, children }: StatisticProps) => {
   return (
     <Container>
       <Heading>{heading}</Heading>
-      {value ? <Value>{value}</Value> : children}
+      {value ? (
+        <Value>{Number(value).toLocaleString(undefined, { maximumFractionDigits: 0, minimumFractionDigits: 0 })}</Value>
+      ) : (
+        children
+      )}
     </Container>
   )
 }
