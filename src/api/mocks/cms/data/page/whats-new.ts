@@ -27,4 +27,5 @@ export const whatsNewPageMock: PageResponse<CommonPage> = {
   date_posted: '2023-03-16',
   body: "<p>What's new CMS page content!</p>",
   related_links: relatedLinksMock,
+  latest_revision_created_at: '2023-03-03T11:15:34.452098Z',
 }

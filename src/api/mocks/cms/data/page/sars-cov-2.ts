@@ -32,4 +32,5 @@ export const covidPageMock: PageResponse<TopicPage> = {
   prevention: 'Vaccines',
   surveillance_and_reporting: 'Hospitalizations only',
   related_links: relatedLinksMock,
+  latest_revision_created_at: '2023-03-21T10:25:34.452098Z',
 }

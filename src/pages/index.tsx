@@ -1,4 +1,3 @@
-import { getVirusesSummary, VirusesResponse } from '@/api/requests/getVirusesSummary'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Topic from '@/components/Topic/Topic'
@@ -14,9 +13,9 @@ import Trend from '@/components/Trend/Trend'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export default function Home({ title, body, relatedLinks }: HomeProps) {
+export default function Home({ title, body, relatedLinks, lastUpdated }: HomeProps) {
   return (
-    <Page heading={title}>
+    <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
       <Contents label="Respiratory viruses in this dashboard">
         <ContentsItem heading="Coronavirus">
@@ -178,23 +177,26 @@ export default function Home({ title, body, relatedLinks }: HomeProps) {
 export const getStaticProps: GetStaticProps<{
   title: PageResponse<DashboardPage>['title']
   body: PageResponse<DashboardPage>['body']
-  viruses: VirusesResponse
+  lastUpdated: PageResponse<DashboardPage>['latest_revision_created_at']
   relatedLinks: PageResponse<DashboardPage>['related_links']
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const [viruses] = await Promise.all([await getVirusesSummary({ searchTerm: '' })])
-
-  const { title, body, related_links: relatedLinks } = await getPage<DashboardPage>(1)
+  const {
+    title,
+    body,
+    related_links: relatedLinks,
+    latest_revision_created_at: lastUpdated,
+  } = await getPage<DashboardPage>(1)
 
   return {
     props: {
       title,
       body,
-      viruses,
       relatedLinks,
+      lastUpdated,
     },
   }
 }

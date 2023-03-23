@@ -5,8 +5,9 @@ describe('Dashboard', () => {
     cy.visit('/')
   })
 
-  it('displays a title and body', () => {
+  it('displays a title, last updated date and body', () => {
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
+    cy.findByText('Last updated on March 21st 2023 at 10:25am')
     cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
   })
 
@@ -45,7 +46,7 @@ describe('Dashboard', () => {
         name: 'Deaths',
       })
       cy.findByText('981,596').siblings().findByText('Patients admitted')
-      // cy.findByText('4,807 (0.2%)').siblings().findByText('Last 7 days') // Removing temporarily, failure needs investigation
+      cy.findByText('4,807 (0.2%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Vaccines',
@@ -58,8 +59,6 @@ describe('Dashboard', () => {
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
       cy.findByText('5,425 (0.4%)').siblings().findByText('Last 7 days')
-
-      // TODO: Add assertions for the trend +/- values once this is added
     })
 
     // Cases column
@@ -116,7 +115,7 @@ describe('Dashboard', () => {
         name: 'Healthcare',
       })
       cy.findByText('981,596').siblings().findByText('Patients admitted')
-      // cy.findByText('5,788 (0.3%)') // Removing temporarily, failure needs investigation
+      cy.findByText('5,788 (0.3%)')
 
       cy.findByRole('heading', {
         name: 'Vaccines',
@@ -129,8 +128,6 @@ describe('Dashboard', () => {
       })
       cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
       cy.findByText('16,109 (2.3%)')
-
-      // TODO: Add assertions for the trend +/- values once this is added
     })
 
     // Healthcare column
