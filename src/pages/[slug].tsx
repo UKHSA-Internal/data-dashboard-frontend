@@ -8,9 +8,9 @@ import { FormattedContent } from '@/components/FormattedContent/FormattedContent
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const CommonPage = ({ title, body, relatedLinks }: CommonPageProps) => {
+export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
   return (
-    <Page heading={title}>
+    <Page heading={title} lastUpdated={lastUpdated}>
       <FormattedContent>{body}</FormattedContent>
       <RelatedLinks links={relatedLinks} />
     </Page>
@@ -22,6 +22,7 @@ export default CommonPage
 export const getStaticProps: GetStaticProps<{
   title: PageResponse['title']
   body: PageResponse['body']
+  lastUpdated: PageResponse['latest_revision_created_at']
   relatedLinks: PageResponse['related_links']
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -43,13 +44,19 @@ export const getStaticProps: GetStaticProps<{
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
-        const { title, body, related_links: relatedLinks } = await getPage<CommonPageType>(matchedPage.id)
+        const {
+          title,
+          body,
+          latest_revision_created_at: lastUpdated,
+          related_links: relatedLinks,
+        } = await getPage<CommonPageType>(matchedPage.id)
 
         // Parse the cms response and pick out only relevant data for the ui
         return {
           props: {
             title,
             body,
+            lastUpdated,
             relatedLinks,
             revalidate,
           },

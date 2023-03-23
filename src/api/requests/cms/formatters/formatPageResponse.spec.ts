@@ -2,7 +2,7 @@ import { covidPageMock, dashboardPageMock } from '@/api/mocks/cms/data/page'
 import { formatCmsPageTopicResponse } from './formatPageResponse'
 
 test('Formats the CMS Page API response into a format usable within the ui', () => {
-  expect(formatCmsPageTopicResponse(covidPageMock)).toEqual({
+  expect(formatCmsPageTopicResponse(covidPageMock)).toEqual<ReturnType<typeof formatCmsPageTopicResponse>>({
     title: 'SARS-CoV-2',
     body: 'SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.',
     accordion: {
@@ -13,5 +13,6 @@ test('Formats the CMS Page API response into a format usable within the ui', () 
       treatment: 'Rest',
     },
     relatedLinks: dashboardPageMock.related_links,
+    lastUpdated: dashboardPageMock.latest_revision_created_at,
   })
 })
