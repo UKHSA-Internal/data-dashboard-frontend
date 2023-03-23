@@ -10,10 +10,12 @@ import { DashboardPage, getPage, PageResponse } from '@/api/requests/cms/getPage
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
+import { getStats, Statistics } from '@/api/requests/stats/getStats'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export default function Home({ title, body, relatedLinks, lastUpdated }: HomeProps) {
+export default function Home({ title, body, relatedLinks, lastUpdated, summary: { coronavirus } }: HomeProps) {
+  console.log('coroa', coronavirus)
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
@@ -22,13 +24,13 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
           <Paragraph>The UKHSA dashboard for data and insights on Coronavirus.</Paragraph>
           <Card label="Coronavirus summary">
             <CardColumn heading="Cases">
-              <Statistic heading="Weekly" value="20,629,892" />
+              <Statistic heading="Weekly" value={coronavirus.cases.value} />
               <Statistic heading="Last 7 days">
                 <Trend positive value={'24,568 (-0.1%)'} />
               </Statistic>
             </CardColumn>
             <CardColumn heading="Deaths">
-              <Statistic heading="Weekly" value="393" />
+              <Statistic heading="Weekly" value={coronavirus.deaths.value} />
               <Statistic heading="Last 7 days">
                 <Trend positive value={'185,707 (-1.9%)'} />
               </Statistic>
@@ -174,11 +176,51 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
   )
 }
 
+type TopicName = 'coronavirus' | 'influenza'
+type MetricName = 'new_cases_7days_sum' | 'new_deaths_7days_sum'
+type MetricNameId = 'cases' | 'deaths'
+
+const MetricMappings: Record<MetricName, MetricNameId> = {
+  new_cases_7days_sum: 'cases',
+  new_deaths_7days_sum: 'deaths',
+} as const
+
+type MetricMappedKeys = keyof typeof MetricMappings
+type MetricMappedValues = (typeof MetricMappings)[MetricMappedKeys]
+
+type DashboardSummary = Record<MetricMappedValues, { value: string }>
+
+const getDashboardSummary = (statisticsResponse: Statistics, metrics: MetricName[]) => {
+  return metrics.reduce<DashboardSummary>(
+    (acc, metricName) => {
+      const foundStatistic = statisticsResponse.find((statistic) => statistic.metric_name === metricName)
+      console.log('foundStatistic', foundStatistic)
+
+      if (foundStatistic) {
+        acc[MetricMappings[metricName]] = { value: foundStatistic.metric_value }
+      } else {
+        acc[MetricMappings[metricName]] = { value: '' }
+      }
+
+      return acc
+    },
+    {
+      cases: {
+        value: '',
+      },
+      deaths: {
+        value: '',
+      },
+    }
+  )
+}
+
 export const getStaticProps: GetStaticProps<{
   title: PageResponse<DashboardPage>['title']
   body: PageResponse<DashboardPage>['body']
   lastUpdated: PageResponse<DashboardPage>['latest_revision_created_at']
   relatedLinks: PageResponse<DashboardPage>['related_links']
+  summary: Record<TopicName, DashboardSummary>
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -191,12 +233,22 @@ export const getStaticProps: GetStaticProps<{
     latest_revision_created_at: lastUpdated,
   } = await getPage<DashboardPage>(1)
 
+  const [covidStats, fluStats] = await Promise.all([await getStats('coronavirus'), await getStats('influenza')])
+
+  const summary: Record<TopicName, DashboardSummary> = {
+    coronavirus: getDashboardSummary(covidStats, ['new_cases_7days_sum', 'new_deaths_7days_sum']),
+    influenza: getDashboardSummary(fluStats, ['new_deaths_7days_sum']),
+  }
+
+  console.log('summary', summary)
+
   return {
     props: {
       title,
       body,
       relatedLinks,
       lastUpdated,
+      summary,
     },
   }
 }

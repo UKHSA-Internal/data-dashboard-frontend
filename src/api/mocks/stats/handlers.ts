@@ -11,5 +11,9 @@ export const handlers = [
     if (topicName === 'coronavirus') {
       return res(ctx.status(200), ctx.json(coronavirusStatsMock))
     }
+
+    if (topicName === 'influenza') {
+      return res(ctx.status(200), ctx.json(coronavirusStatsMock))
+    }
   }),
 ]
