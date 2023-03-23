@@ -3,10 +3,10 @@ import rehypeRaw from 'rehype-raw'
 import { Container } from './FormattedContent.styles'
 
 interface FormattedContentProps {
-  body: string
+  children: string
 }
 
-export const FormattedContent = ({ body }: FormattedContentProps) => {
+export const FormattedContent = ({ children }: FormattedContentProps) => {
   return (
     <Container
       rehypePlugins={[rehypeRaw]}
@@ -19,7 +19,7 @@ export const FormattedContent = ({ body }: FormattedContentProps) => {
         li: ({ ...props }) => <ListItem {...props} />,
       }}
     >
-      {body}
+      {children}
     </Container>
   )
 }
