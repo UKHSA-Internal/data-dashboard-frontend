@@ -17,7 +17,7 @@ const RelatedLinks = ({ links }: RelatedLinksProps) => {
             <BoldExternalLink href={url} rel="external">
               {title}
             </BoldExternalLink>
-            <FormattedContent body={body} />
+            <FormattedContent>{body}</FormattedContent>
           </ListItem>
         ))}
       </UnorderedList>
