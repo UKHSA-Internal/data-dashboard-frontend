@@ -12,7 +12,7 @@ const getComponent = () => (
 test('Automatically generates a table of contents usings the headings of each item', () => {
   render(getComponent())
 
-  const nav = screen.getByRole('navigation', { name: 'Viruses' })
+  const nav = screen.getByRole('navigation')
   const listitems = within(nav).getAllByRole('listitem')
 
   expect(listitems).toHaveLength(3)
