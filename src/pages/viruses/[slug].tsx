@@ -13,6 +13,7 @@ import { getPage, TopicPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { Contents, ContentsItem } from '@/components/Contents'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -20,6 +21,16 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
+
+      <Contents label="Topic information">
+        <ContentsItem heading="Cases">Cases content</ContentsItem>
+        <ContentsItem heading="Deaths">Deaths content</ContentsItem>
+        <ContentsItem heading="Healthcare">Healthcare content</ContentsItem>
+        <ContentsItem heading="Vaccines">Vaccines content</ContentsItem>
+        <ContentsItem heading="Testing">Testing content</ContentsItem>
+        <ContentsItem heading="About">About content</ContentsItem>
+      </Contents>
+
       <Accordion>
         <AccordionItem>
           <AccordionItemHeading>
