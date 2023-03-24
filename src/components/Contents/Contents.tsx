@@ -66,7 +66,11 @@ const renderContentsSection = (child: ReactNode) => {
 
 /**
  * Contents
- * Renders a navigation list and related linkable sections
+ * Automatically renders a navigation list and related linkable sections in a composable style
+ * <Contents>
+ *    <ContentsItem>1st section</ContentsItem>
+ *    <ContentsItem>2nd section</ContentsItem>
+ * </Contents>
  */
 interface ContentsProps {
   children: ReactNode
