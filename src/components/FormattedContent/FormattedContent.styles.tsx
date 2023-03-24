@@ -1,22 +1,36 @@
-import { SPACING, LINE_HEIGHT, FONT_SIZE } from '@govuk-react/constants'
+import { SPACING } from '@govuk-react/constants'
 import ReactMarkdown from 'react-markdown'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
+import { typography } from '@govuk-react/lib'
+import { BODY_SIZES } from '@govuk-react/constants'
 
-export const Container = styled(ReactMarkdown)({
-  '&&': {
-    h2: {
-      marginTop: SPACING.SCALE_5,
-    },
+export const Container = styled(ReactMarkdown)<{ hasLinkedHeadings: boolean }>`
+  && {
+    ${(props) =>
+      props.hasLinkedHeadings &&
+      css`
+        a:has(h2) {
+          margin-top: ${SPACING.SCALE_5};
+          margin-bottom: ${SPACING.SCALE_4};
+        }
+      `}
 
-    h3: {
-      marginTop: SPACING.SCALE_4,
-    },
+    ${(props) =>
+      !props.hasLinkedHeadings &&
+      css`
+        h2 {
+          margin-top: ${SPACING.SCALE_5};
+        }
 
-    p: {
-      margin: 0,
-      marginBottom: SPACING.SCALE_4,
-      fontSize: FONT_SIZE.SIZE_19,
-      lineHeight: LINE_HEIGHT.SIZE_19,
-    },
-  },
-})
+        h3 {
+          margin-top: ${SPACING.SCALE_4};
+        }
+      `}
+
+    p {
+      margin: 0;
+      margin-bottom: ${SPACING.SCALE_4};
+      ${typography.font({ size: BODY_SIZES.MEDIUM })}
+    }
+  }
+`

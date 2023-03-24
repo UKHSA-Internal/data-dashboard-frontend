@@ -11,7 +11,7 @@ type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      <FormattedContent>{body}</FormattedContent>
+      <FormattedContent hasLinkedHeadings>{body}</FormattedContent>
       <RelatedLinks links={relatedLinks} />
     </Page>
   )

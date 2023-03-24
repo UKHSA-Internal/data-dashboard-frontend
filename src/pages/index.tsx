@@ -17,7 +17,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
-      <Contents label="Respiratory viruses in this dashboard">
+      <Contents>
         <ContentsItem heading="Coronavirus">
           <Paragraph>The UKHSA dashboard for data and insights on Coronavirus.</Paragraph>
           <Card label="Coronavirus summary">
