@@ -9,7 +9,7 @@ export const formatCmsPageTopicResponse = (page: PageResponse<TopicPage>) => {
     title: page.title,
     body: page.body,
     relatedLinks: page.related_links,
-    lastUpdated: page.latest_revision_created_at,
+    lastUpdated: page.last_published_at,
     accordion: {
       symptoms: page.symptoms,
       transmission: page.transmission,
