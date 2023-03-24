@@ -4,7 +4,6 @@ import dayjs from 'dayjs'
 import advancedFormat from 'dayjs/plugin/advancedFormat'
 
 dayjs().format()
-dayjs.extend(advancedFormat)
 
 interface PageProps {
   heading: string
@@ -14,7 +13,7 @@ interface PageProps {
 
 const getLastUpdatedText = (datetime: Date) => {
   const date = dayjs(datetime)
-  return `Last updated on ${date.format('MMMM Do YYYY')} at ${date.format('hh:mma')}`
+  return `Last updated on ${date.format('dddd, D MMMM YYYY')} at ${date.format('hh:mma')}`
 }
 
 export const Page = ({ children, heading, lastUpdated }: PageProps) => {
