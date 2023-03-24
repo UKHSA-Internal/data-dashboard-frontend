@@ -1,7 +1,6 @@
 import { ReactNode } from 'react'
 import { Container, Heading, LastUpdated } from './Page.styles'
 import dayjs from 'dayjs'
-import advancedFormat from 'dayjs/plugin/advancedFormat'
 
 dayjs().format()
 
