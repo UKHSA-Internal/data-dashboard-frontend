@@ -14,7 +14,7 @@ interface NavigationProps {
 
 const Navigation = ({ children }: NavigationProps) => {
   return (
-    <Styled.Nav role="navigation">
+    <Styled.Nav role="navigation" aria-label="Contents">
       <Styled.NavHeading>Contents</Styled.NavHeading>
       {children}
     </Styled.Nav>

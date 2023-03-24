@@ -35,7 +35,7 @@ const linkedHeadingsComponents: Components = {
     if (props.className?.includes('toc')) {
       return <Contents.Nav>{props.children}</Contents.Nav>
     }
-    return <ListItem>{props.children}</ListItem>
+    return <nav>{props.children}</nav>
   },
   li: ({ ...props }) => {
     if (props.className?.includes('toc')) {

@@ -13,7 +13,7 @@ describe('Dashboard', () => {
 
   it('displays coronavirus statistics', () => {
     cy.findByRole('navigation', {
-      name: 'Respiratory viruses in this dashboard',
+      name: 'Contents',
     }).as('contents')
 
     cy.get('@contents').findByText('Coronavirus').click()
@@ -94,7 +94,7 @@ describe('Dashboard', () => {
 
   it('displays influenza statistics', () => {
     cy.findByRole('navigation', {
-      name: 'Respiratory viruses in this dashboard',
+      name: 'Contents',
     }).as('contents')
 
     cy.get('@contents').findByText('Influenza').click()
