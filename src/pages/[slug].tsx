@@ -22,7 +22,7 @@ export default CommonPage
 export const getStaticProps: GetStaticProps<{
   title: PageResponse['title']
   body: PageResponse['body']
-  lastUpdated: PageResponse['latest_revision_created_at']
+  lastUpdated: PageResponse['last_published_at']
   relatedLinks: PageResponse['related_links']
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -47,7 +47,7 @@ export const getStaticProps: GetStaticProps<{
         const {
           title,
           body,
-          latest_revision_created_at: lastUpdated,
+          last_published_at: lastUpdated,
           related_links: relatedLinks,
         } = await getPage<CommonPageType>(matchedPage.id)
 
