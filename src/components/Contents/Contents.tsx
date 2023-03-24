@@ -1,60 +1,92 @@
 import { Link, OrderedList } from 'govuk-react'
 import { Children, cloneElement, isValidElement, ReactNode } from 'react'
-import {
-  NavHeading,
-  SectionHeading,
-  SetionHeadingLink,
-  ListItem,
-  Nav,
-  Article,
-} from './Contents.styles'
+import * as Styled from './Contents.styles'
 
-interface ContentsProps {
+export const getIdFromHeading = (heading: string) => heading.toLowerCase().replaceAll(' ', '-')
+
+/**
+ * Navigation
+ * Wrapper component for the links that allow the user to jump to particular sections
+ */
+interface NavigationProps {
   children: ReactNode
-  label: string
 }
 
-const getIdFromHeading = (heading: string) =>
-  heading.toLowerCase().replace(' ', '-')
+const Navigation = ({ children }: NavigationProps) => {
+  return (
+    <Styled.Nav role="navigation">
+      <Styled.NavHeading>Contents</Styled.NavHeading>
+      {children}
+    </Styled.Nav>
+  )
+}
 
-export const Contents = ({ children, label }: ContentsProps) => {
+/**
+ * SectionHeading
+ * Renders a linkable heading for each contents section
+ */
+interface SectionHeadingProps {
+  children: ReactNode
+  id: string
+}
+
+export const SectionHeading = ({ id, children }: SectionHeadingProps) => {
+  return (
+    <Styled.SetionHeadingLink href={`#${id}`} id={id}>
+      <Styled.SectionHeading>{children}</Styled.SectionHeading>
+    </Styled.SetionHeadingLink>
+  )
+}
+
+/**
+ * Renders an individual link within the <Nav>
+ */
+const renderNavigationLink = (child: ReactNode) => {
+  return isValidElement(child) ? (
+    <Styled.ListItem>
+      <Link href={`#${getIdFromHeading(child.props.heading)}`}>{child.props.heading}</Link>
+    </Styled.ListItem>
+  ) : null
+}
+
+/**
+ * Renders a contents heading and it's corresponding children
+ */
+const renderContentsSection = (child: ReactNode) => {
+  return isValidElement(child) ? (
+    <>
+      <SectionHeading id={getIdFromHeading(child.props.heading)}>{child.props.heading}</SectionHeading>
+      {cloneElement(child, {
+        ...child.props,
+        heading: child.props.heading,
+      })}
+    </>
+  ) : null
+}
+
+/**
+ * Contents
+ * Renders a navigation list and related linkable sections
+ */
+interface ContentsProps {
+  children: ReactNode
+}
+
+export const Contents = ({ children }: ContentsProps) => {
   return (
     <>
-      <NavHeading>Contents</NavHeading>
-      <Nav role="navigation" aria-label={label}>
-        <OrderedList>
-          {Children.map(children, (child) => {
-            return isValidElement(child) ? (
-              <ListItem>
-                <Link href={`#${getIdFromHeading(child.props.heading)}`}>
-                  {child.props.heading}
-                </Link>
-              </ListItem>
-            ) : null
-          })}
-        </OrderedList>
-      </Nav>
-
-      {Children.map(children, (child) => {
-        return isValidElement(child) ? (
-          <>
-            <SetionHeadingLink
-              href={`#${getIdFromHeading(child.props.heading)}`}
-              id={getIdFromHeading(child.props.heading)}
-            >
-              <SectionHeading>{child.props.heading}</SectionHeading>
-            </SetionHeadingLink>
-            {cloneElement(child, {
-              ...child.props,
-              heading: child.props.heading,
-            })}
-          </>
-        ) : null
-      })}
+      <Navigation>
+        <OrderedList>{Children.map(children, renderNavigationLink)}</OrderedList>
+      </Navigation>
+      {Children.map(children, renderContentsSection)}
     </>
   )
 }
 
+/**
+ * ContentsItem
+ * Renders the individual contents section
+ */
 interface ContentsItemProps {
   children: ReactNode
   heading: string
@@ -63,8 +95,18 @@ interface ContentsItemProps {
 
 export const ContentsItem = ({ children, id, heading }: ContentsItemProps) => {
   return (
-    <Article id={id} aria-label={heading}>
+    <Styled.Article id={id} aria-label={heading}>
       {children}
-    </Article>
+    </Styled.Article>
   )
 }
+
+/**
+ * Export our granular components as compound components for usage in other areas
+ * For example, In the html->react mappings from the CMS
+ */
+Contents.Nav = Navigation
+Contents.NavHeading = Styled.NavHeading
+Contents.NavList = OrderedList
+Contents.NavListItem = Styled.ListItem
+Contents.SectionHeading = SectionHeading
