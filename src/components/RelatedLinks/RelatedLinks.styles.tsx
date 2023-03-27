@@ -1,6 +1,5 @@
-import { RelatedItems } from 'govuk-react'
+import { RelatedItems, Link } from 'govuk-react'
 import styled from 'styled-components'
-import { Link } from 'govuk-react'
 import { SPACING, FONT_WEIGHTS } from '@govuk-react/constants'
 
 export const Container = styled(RelatedItems)({
