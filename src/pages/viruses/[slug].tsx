@@ -13,6 +13,7 @@ import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/format
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { FormattedContent } from '@/components/FormattedContent'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -25,31 +26,41 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
           <AccordionItemHeading>
             <AccordionItemButton>Symptoms</AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>{accordion.symptoms}</AccordionItemPanel>
+          <AccordionItemPanel>
+            <FormattedContent>{accordion.symptoms}</FormattedContent>
+          </AccordionItemPanel>
         </AccordionItem>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>Transmission</AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>{accordion.transmission}</AccordionItemPanel>
+          <AccordionItemPanel>
+            <FormattedContent>{accordion.transmission}</FormattedContent>
+          </AccordionItemPanel>
         </AccordionItem>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>Treatment</AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>{accordion.treatment}</AccordionItemPanel>
+          <AccordionItemPanel>
+            <FormattedContent>{accordion.treatment}</FormattedContent>
+          </AccordionItemPanel>
         </AccordionItem>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>Prevention</AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>{accordion.prevention}</AccordionItemPanel>
+          <AccordionItemPanel>
+            <FormattedContent>{accordion.prevention}</FormattedContent>
+          </AccordionItemPanel>
         </AccordionItem>
         <AccordionItem>
           <AccordionItemHeading>
             <AccordionItemButton>Surveillance and reporting</AccordionItemButton>
           </AccordionItemHeading>
-          <AccordionItemPanel>{accordion.surveillance_and_reporting}</AccordionItemPanel>
+          <AccordionItemPanel>
+            <FormattedContent>{accordion.surveillance_and_reporting}</FormattedContent>
+          </AccordionItemPanel>
         </AccordionItem>
       </Accordion>
 
