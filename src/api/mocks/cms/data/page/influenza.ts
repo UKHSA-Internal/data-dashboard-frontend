@@ -1,7 +1,8 @@
-import { PageResponse, TopicPage } from '@/api/requests/cms/getPage'
+import { PageResponse } from '@/api/requests/cms/getPage'
+import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
-export const influenzaPageMock: PageResponse<TopicPage> = {
+export const influenzaPageMock: PageResponse<PageType.Topic> = {
   id: 5,
   meta: {
     type: 'topic.TopicPage',

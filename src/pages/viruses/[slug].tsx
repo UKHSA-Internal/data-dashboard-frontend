@@ -9,10 +9,10 @@ import { Paragraph } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { getPage, TopicPage } from '@/api/requests/cms/getPage'
 import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -66,37 +66,21 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
-
-  const revalidate = 10
-
   try {
     const params = req.params
 
     // Check the slug exists in the url
     if (params && params.slug) {
-      // Fetch all of the pages from the CMS
-      const pages = await getPages(PageType.Topic)
+      const page = await getPageBySlug(String(params.slug), PageType.Topic)
 
-      // Find the CMS page within the list that matches the current slug
-      const matchedPage = pages.items.find(({ meta: { slug } }) => slug === params.slug)
-
-      if (matchedPage) {
-        // Once we have a match, use the id to fetch the single page
-        const page = await getPage<TopicPage>(matchedPage.id)
-
-        // Parse the cms response and pick out only relevant data for the ui
-        return {
-          props: {
-            ...formatCmsPageTopicResponse(page),
-            revalidate,
-          },
-        }
+      // Parse the cms response and pick out only relevant data for the ui
+      return {
+        props: formatCmsPageTopicResponse(page),
+        revalidate: 60,
       }
-
-      throw new Error('Could not find page matching current slug')
     }
 
-    throw new Error('URL does not contain a slug')
+    throw new Error('No slug found')
   } catch (error) {
     return { notFound: true }
   }
