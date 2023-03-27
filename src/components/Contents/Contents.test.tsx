@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import { Contents, ContentsItem } from './Contents'
 
 const getComponent = () => (
-  <Contents label="Viruses">
+  <Contents>
     <ContentsItem heading="Covid">covid stuff</ContentsItem>
     <ContentsItem heading="Man Flu">flu stuff</ContentsItem>
     <ContentsItem heading="Influenza">influenza stuff</ContentsItem>
@@ -12,22 +12,13 @@ const getComponent = () => (
 test('Automatically generates a table of contents usings the headings of each item', () => {
   render(getComponent())
 
-  const nav = screen.getByRole('navigation', { name: 'Viruses' })
+  const nav = screen.getByRole('navigation')
   const listitems = within(nav).getAllByRole('listitem')
 
   expect(listitems).toHaveLength(3)
-  expect(within(listitems[0]).getByText('Covid')).toHaveAttribute(
-    'href',
-    '#covid'
-  )
-  expect(within(listitems[1]).getByText('Man Flu')).toHaveAttribute(
-    'href',
-    '#man-flu'
-  )
-  expect(within(listitems[2]).getByText('Influenza')).toHaveAttribute(
-    'href',
-    '#influenza'
-  )
+  expect(within(listitems[0]).getByText('Covid')).toHaveAttribute('href', '#covid')
+  expect(within(listitems[1]).getByText('Man Flu')).toHaveAttribute('href', '#man-flu')
+  expect(within(listitems[2]).getByText('Influenza')).toHaveAttribute('href', '#influenza')
 })
 
 test('Displays a heading and content for each contents item', () => {
