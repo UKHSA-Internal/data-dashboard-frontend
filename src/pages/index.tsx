@@ -17,7 +17,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
-      <Contents label="Respiratory viruses in this dashboard">
+      <Contents>
         <ContentsItem heading="Coronavirus">
           <Paragraph>The UKHSA dashboard for data and insights on Coronavirus.</Paragraph>
           <Card label="Coronavirus summary" theme={'primary'}>
@@ -177,19 +177,14 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
 export const getStaticProps: GetStaticProps<{
   title: PageResponse<DashboardPage>['title']
   body: PageResponse<DashboardPage>['body']
-  lastUpdated: PageResponse<DashboardPage>['latest_revision_created_at']
+  lastUpdated: PageResponse<DashboardPage>['last_published_at']
   relatedLinks: PageResponse<DashboardPage>['related_links']
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const {
-    title,
-    body,
-    related_links: relatedLinks,
-    latest_revision_created_at: lastUpdated,
-  } = await getPage<DashboardPage>(1)
+  const { title, body, related_links: relatedLinks, last_published_at: lastUpdated } = await getPage<DashboardPage>(1)
 
   return {
     props: {

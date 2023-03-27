@@ -13,6 +13,6 @@ test('Formats the CMS Page API response into a format usable within the ui', () 
       treatment: 'Rest',
     },
     relatedLinks: dashboardPageMock.related_links,
-    lastUpdated: dashboardPageMock.latest_revision_created_at,
+    lastUpdated: dashboardPageMock.last_published_at,
   })
 })
