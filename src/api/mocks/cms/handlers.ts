@@ -1,9 +1,5 @@
 import { rest } from 'msw'
-import {
-  pagesWithCommonTypeMock,
-  pagesWithHomeTypeMock,
-  pagesWithTopicTypeMock,
-} from './data/pages'
+import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './data/pages'
 import {
   influenzaPageMock,
   covidPageMock,
@@ -27,7 +23,7 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
 }
 
 // Contains the individual `/pages/{id}` mocks
-export const mockedPageMap: Record<number, PageResponse<unknown>> = {
+export const mockedPageMap: Record<number, PageResponse<PageType.Common>> = {
   [dashboardPageMock.id]: dashboardPageMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,
