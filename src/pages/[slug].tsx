@@ -1,7 +1,7 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { CommonPage as CommonPageType, getPage, PageResponse, RelatedLink } from '@/api/requests/cms/getPage'
+import { RelatedLink } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
