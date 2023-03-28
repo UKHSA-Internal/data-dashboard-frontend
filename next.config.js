@@ -3,7 +3,9 @@ const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
   compiler: {
-    styledComponents: true,
+    styledComponents: {
+      ssr: true,
+    },
   },
 }
 

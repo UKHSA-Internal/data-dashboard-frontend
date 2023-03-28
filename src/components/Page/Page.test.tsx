@@ -8,6 +8,6 @@ test('Page displays a heading, last updated date and content', () => {
     </Page>
   )
   expect(screen.getByRole('heading', { name: 'Page heading', level: 1 })).toBeInTheDocument()
-  expect(screen.getByText('Last updated on March 21st 2023 at 10:25am')).toBeInTheDocument()
+  expect(screen.getByText('Last updated on Tuesday, 21 March 2023 at 10:25am')).toBeInTheDocument()
   expect(screen.getByText('Content')).toBeInTheDocument()
 })
