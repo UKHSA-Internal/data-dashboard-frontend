@@ -184,20 +184,11 @@ export const getStaticProps: GetStaticProps<{
   lastUpdated: string
   relatedLinks: Array<RelatedLink>
 }> = async () => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
+  // if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+  //   await initMocks()
+  // }
 
-  if (process.env.CI === 'true')
-    return {
-      props: {
-        title: '',
-        body: '',
-        lastUpdated: '',
-        relatedLinks: [],
-      },
-      revalidate: 10,
-    }
+  console.log('INSIDE GET STATIC PROPS')
 
   try {
     const {
@@ -207,6 +198,8 @@ export const getStaticProps: GetStaticProps<{
       related_links: relatedLinks = [],
     } = await getPageBySlug('respiratory-viruses', PageType.Home)
 
+    console.log('REQ:', title)
+
     return {
       props: {
         title,
@@ -214,9 +207,10 @@ export const getStaticProps: GetStaticProps<{
         lastUpdated,
         relatedLinks,
       },
-      revalidate: 60,
+      revalidate: 10,
     }
   } catch (error) {
-    return { notFound: true }
+    console.log(error)
+    return { notFound: true, revalidate: 10 }
   }
 }

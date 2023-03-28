@@ -80,24 +80,6 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
     await initMocks()
   }
 
-  if (process.env.CI === 'true')
-    return {
-      props: {
-        title: '',
-        body: '',
-        lastUpdated: '',
-        relatedLinks: [],
-        accordion: {
-          symptoms: '',
-          transmission: '',
-          treatment: '',
-          prevention: '',
-          surveillance_and_reporting: '',
-        },
-      },
-      revalidate: 10,
-    }
-
   try {
     const params = req.params
 
@@ -114,7 +96,8 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
 
     throw new Error('No slug found')
   } catch (error) {
-    return { notFound: true }
+    console.log(error)
+    return { notFound: true, revalidate: 10 }
   }
 }
 
