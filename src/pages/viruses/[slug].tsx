@@ -79,6 +79,25 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
+
+  if (process.env.CI)
+    return {
+      props: {
+        title: '',
+        body: '',
+        lastUpdated: '',
+        relatedLinks: [],
+        accordion: {
+          symptoms: '',
+          transmission: '',
+          treatment: '',
+          prevention: '',
+          surveillance_and_reporting: '',
+        },
+      },
+      revalidate: 10,
+    }
+
   try {
     const params = req.params
 

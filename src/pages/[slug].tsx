@@ -32,6 +32,17 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
+  if (process.env.CI)
+    return {
+      props: {
+        title: '',
+        body: '',
+        lastUpdated: '',
+        relatedLinks: [],
+      },
+      revalidate: 10,
+    }
+
   try {
     const params = req.params
 
