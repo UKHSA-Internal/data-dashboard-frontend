@@ -22,6 +22,7 @@ COPY . .
 
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV CI true
 
 RUN npm run build
 
