@@ -32,17 +32,6 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  if (process.env.CI === 'true')
-    return {
-      props: {
-        title: '',
-        body: '',
-        lastUpdated: '',
-        relatedLinks: [],
-      },
-      revalidate: 10,
-    }
-
   try {
     const params = req.params
 
@@ -69,7 +58,8 @@ export const getStaticProps: GetStaticProps<{
 
     throw new Error('No slug found')
   } catch (error) {
-    return { notFound: true }
+    console.log(error)
+    return { notFound: true, revalidate: 10 }
   }
 }
 
