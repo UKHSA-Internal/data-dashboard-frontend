@@ -10,12 +10,13 @@ import { DashboardPage, getPage, PageResponse } from '@/api/requests/cms/getPage
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
-import { getStats, Statistics } from '@/api/requests/stats/getStats'
+import { getStats } from '@/api/requests/stats/getStats'
+import { Fragment } from 'react'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export default function Home({ title, body, relatedLinks, lastUpdated, summary: { coronavirus } }: HomeProps) {
-  console.log('coroa', coronavirus)
+export default function Home({ title, body, relatedLinks, lastUpdated, statistics }: HomeProps) {
+  console.log('summary', statistics.coronavirus.tiles)
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
@@ -23,37 +24,70 @@ export default function Home({ title, body, relatedLinks, lastUpdated, summary: 
         <ContentsItem heading="Coronavirus">
           <Paragraph>The UKHSA dashboard for data and insights on Coronavirus.</Paragraph>
           <Card label="Coronavirus summary">
-            <CardColumn heading="Cases">
-              <Statistic heading="Weekly" value={coronavirus.cases.value} />
-              <Statistic heading="Last 7 days">
-                <Trend positive value={'24,568 (-0.1%)'} />
-              </Statistic>
-            </CardColumn>
-            <CardColumn heading="Deaths">
-              <Statistic heading="Weekly" value={coronavirus.deaths.value} />
-              <Statistic heading="Last 7 days">
-                <Trend positive value={'185,707 (-1.9%)'} />
-              </Statistic>
-            </CardColumn>
-            <CardColumn heading="Healthcare">
-              <Statistic heading="Patients admitted" value="981,596" />
-              <Statistic heading="Last 7 days">
-                <Trend positive={false} value={'4,807 (0.2%)'} />
-              </Statistic>
-            </CardColumn>
-            <CardColumn heading="Vaccines">
-              <Statistic heading="Spring booster" value="45,410,567" />
-              <Statistic heading="Summer booster" value="42,939,917" />
-            </CardColumn>
-            <CardColumn heading="Testing">
-              <Statistic heading="Virus tests positivity (%)" value="10.9%" />
-              <Statistic heading="Last 7 days">
-                <Trend positive={false} value={'5,425 (0.4%)'} />
-              </Statistic>
-            </CardColumn>
+            {statistics.coronavirus.summary.map(({ container, content }) => {
+              return (
+                <CardColumn heading={container} key={container}>
+                  {content.map((item) => {
+                    return (
+                      <>
+                        {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
+                        {item.type === 'trend' && (
+                          <Statistic heading={item.heading}>
+                            <Trend positive={item.colour === 'green'} value={`${item.change} ${item.percentage}`} />
+                          </Statistic>
+                        )}
+                      </>
+                    )
+                  })}
+                </CardColumn>
+              )
+            })}
           </Card>
           <GridRow>
-            <GridCol setWidth="one-half">
+            {statistics.coronavirus.tiles.map(({ container, content }) => {
+              return (
+                <GridCol setWidth="one-half" key={container}>
+                  <Card label={`Coronavirus cases`}>
+                    <CardColumn
+                      heading={container}
+                      sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}
+                    >
+                      {content.map((item) => {
+                        return (
+                          <Fragment key={item.heading}>
+                            {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
+                            {item.type === 'trend' && (
+                              <Statistic heading={item.heading}>
+                                <Trend positive={item.colour === 'green'} value={`${item.change} ${item.percentage}`} />
+                              </Statistic>
+                            )}
+                            {/*                             
+                            <Statistic heading="People tested positive in England">
+                              <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
+                            </Statistic>
+                            <GridRow>
+                              <GridCol setWidth="columnOneThird">
+                                <Statistic heading="Last 7 days" value="24,568" />
+                              </GridCol>
+                              <GridCol>
+                                <Trend positive value={'-1,600 (-6.1%)'} />
+                              </GridCol>
+                            </GridRow> */}
+                          </Fragment>
+                        )
+                      })}
+                      <Topic
+                        name="Coronavirus"
+                        description="People tested positive in England up to and including 25th February 2023"
+                        points={[]}
+                      />
+                    </CardColumn>
+                  </Card>
+                </GridCol>
+              )
+            })}
+
+            {/* <GridCol setWidth="one-half">
               <Card label="Coronavirus cases">
                 <CardColumn heading="Cases" sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}>
                   <Statistic heading="People tested positive in England">
@@ -96,7 +130,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, summary: 
                   />
                 </CardColumn>
               </Card>
-            </GridCol>
+            </GridCol> */}
           </GridRow>
         </ContentsItem>
         <ContentsItem heading="Influenza">
@@ -176,51 +210,14 @@ export default function Home({ title, body, relatedLinks, lastUpdated, summary: 
   )
 }
 
-type TopicName = 'coronavirus' | 'influenza'
-type MetricName = 'new_cases_7days_sum' | 'new_deaths_7days_sum'
-type MetricNameId = 'cases' | 'deaths'
-
-const MetricMappings: Record<MetricName, MetricNameId> = {
-  new_cases_7days_sum: 'cases',
-  new_deaths_7days_sum: 'deaths',
-} as const
-
-type MetricMappedKeys = keyof typeof MetricMappings
-type MetricMappedValues = (typeof MetricMappings)[MetricMappedKeys]
-
-type DashboardSummary = Record<MetricMappedValues, { value: string }>
-
-const getDashboardSummary = (statisticsResponse: Statistics, metrics: MetricName[]) => {
-  return metrics.reduce<DashboardSummary>(
-    (acc, metricName) => {
-      const foundStatistic = statisticsResponse.find((statistic) => statistic.metric_name === metricName)
-      console.log('foundStatistic', foundStatistic)
-
-      if (foundStatistic) {
-        acc[MetricMappings[metricName]] = { value: foundStatistic.metric_value }
-      } else {
-        acc[MetricMappings[metricName]] = { value: '' }
-      }
-
-      return acc
-    },
-    {
-      cases: {
-        value: '',
-      },
-      deaths: {
-        value: '',
-      },
-    }
-  )
-}
+type StatisticsProps = Record<'coronavirus', Awaited<ReturnType<typeof getStats>>>
 
 export const getStaticProps: GetStaticProps<{
   title: PageResponse<DashboardPage>['title']
   body: PageResponse<DashboardPage>['body']
   lastUpdated: PageResponse<DashboardPage>['last_published_at']
   relatedLinks: PageResponse<DashboardPage>['related_links']
-  summary: Record<TopicName, DashboardSummary>
+  statistics: StatisticsProps
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -228,14 +225,11 @@ export const getStaticProps: GetStaticProps<{
 
   const { title, body, related_links: relatedLinks, last_published_at: lastUpdated } = await getPage<DashboardPage>(1)
 
-  const [covidStats, fluStats] = await Promise.all([await getStats('coronavirus'), await getStats('influenza')])
+  const coronavirus = await getStats('coronavirus')
 
-  const summary: Record<TopicName, DashboardSummary> = {
-    coronavirus: getDashboardSummary(covidStats, ['new_cases_7days_sum', 'new_deaths_7days_sum']),
-    influenza: getDashboardSummary(fluStats, ['new_deaths_7days_sum']),
+  const statistics: StatisticsProps = {
+    coronavirus,
   }
-
-  console.log('summary', summary)
 
   return {
     props: {
@@ -243,7 +237,7 @@ export const getStaticProps: GetStaticProps<{
       body,
       relatedLinks,
       lastUpdated,
-      summary,
+      statistics,
     },
   }
 }
