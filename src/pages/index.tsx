@@ -16,6 +16,8 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function Home({ title, body, relatedLinks, lastUpdated }: HomeProps) {
+  if (!title) return null
+
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
