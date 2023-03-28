@@ -32,7 +32,7 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  if (process.env.CI)
+  if (process.env.CI === 'true')
     return {
       props: {
         title: '',
@@ -77,6 +77,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
+
+  if (process.env.CI === 'true')
+    return {
+      paths: [],
+      fallback: true,
+    }
 
   // Fetch the CMS pages with a topic type
   const { items } = await getPages(PageType.Common)

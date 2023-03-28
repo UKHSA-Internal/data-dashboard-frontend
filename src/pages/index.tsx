@@ -188,7 +188,7 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  if (process.env.CI)
+  if (process.env.CI === 'true')
     return {
       props: {
         title: '',
