@@ -191,11 +191,10 @@ export const getStaticProps: GetStaticProps<{
 
   console.log('INSIDE GET STATIC PROPS')
 
+  const ip = await fetch('https://api.ipify.org/?format=json')
+  const json = await ip.json()
+  console.log('IP: ', json)
 
-  const networkInterfaces = os.networkInterfaces();
-
-console.log(networkInterfaces);
-  
   try {
     const {
       title,
