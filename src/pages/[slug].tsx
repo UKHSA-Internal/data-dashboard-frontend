@@ -4,13 +4,14 @@ import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      <div dangerouslySetInnerHTML={{ __html: body }} />
+      <FormattedContent hasLinkedHeadings>{body}</FormattedContent>
       <RelatedLinks links={relatedLinks} />
     </Page>
   )
@@ -21,7 +22,7 @@ export default CommonPage
 export const getStaticProps: GetStaticProps<{
   title: PageResponse['title']
   body: PageResponse['body']
-  lastUpdated: PageResponse['latest_revision_created_at']
+  lastUpdated: PageResponse['last_published_at']
   relatedLinks: PageResponse['related_links']
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
@@ -46,7 +47,7 @@ export const getStaticProps: GetStaticProps<{
         const {
           title,
           body,
-          latest_revision_created_at: lastUpdated,
+          last_published_at: lastUpdated,
           related_links: relatedLinks,
         } = await getPage<CommonPageType>(matchedPage.id)
 

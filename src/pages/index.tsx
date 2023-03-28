@@ -19,7 +19,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, summary: 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
-      <Contents label="Respiratory viruses in this dashboard">
+      <Contents>
         <ContentsItem heading="Coronavirus">
           <Paragraph>The UKHSA dashboard for data and insights on Coronavirus.</Paragraph>
           <Card label="Coronavirus summary">
@@ -218,7 +218,7 @@ const getDashboardSummary = (statisticsResponse: Statistics, metrics: MetricName
 export const getStaticProps: GetStaticProps<{
   title: PageResponse<DashboardPage>['title']
   body: PageResponse<DashboardPage>['body']
-  lastUpdated: PageResponse<DashboardPage>['latest_revision_created_at']
+  lastUpdated: PageResponse<DashboardPage>['last_published_at']
   relatedLinks: PageResponse<DashboardPage>['related_links']
   summary: Record<TopicName, DashboardSummary>
 }> = async () => {
@@ -226,12 +226,7 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  const {
-    title,
-    body,
-    related_links: relatedLinks,
-    latest_revision_created_at: lastUpdated,
-  } = await getPage<DashboardPage>(1)
+  const { title, body, related_links: relatedLinks, last_published_at: lastUpdated } = await getPage<DashboardPage>(1)
 
   const [covidStats, fluStats] = await Promise.all([await getStats('coronavirus'), await getStats('influenza')])
 
