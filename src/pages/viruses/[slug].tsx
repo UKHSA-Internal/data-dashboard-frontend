@@ -18,6 +18,8 @@ import { FormattedContent } from '@/components/FormattedContent'
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }: VirusPageProps) => {
+  if (!title) return null
+
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
@@ -113,5 +115,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: 'blocking' } will server-render pages
   // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' }
+  return { paths, fallback: true }
 }

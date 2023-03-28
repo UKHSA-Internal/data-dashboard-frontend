@@ -10,6 +10,8 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
+  if (!title) return null
+
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <FormattedContent hasLinkedHeadings>{body}</FormattedContent>
@@ -76,5 +78,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: 'blocking' } will server-render pages
   // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' }
+  return { paths, fallback: true }
 }
