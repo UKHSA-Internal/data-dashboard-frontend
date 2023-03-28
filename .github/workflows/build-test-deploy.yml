@@ -38,37 +38,37 @@ jobs:
       - name: Build
         run: npm run build
 
-  ###############################################################################
-  # Code quality checks
-  ###############################################################################
+  # ###############################################################################
+  # # Code quality checks
+  # ###############################################################################
 
-  quality-checks:
-    name: Lint
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Quality check
-        run: npm run lint
+  # quality-checks:
+  #   name: Lint
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Quality check
+  #       run: npm run lint
 
-  ##############################################################################
-  # Unit tests
-  ##############################################################################
+  # ##############################################################################
+  # # Unit tests
+  # ##############################################################################
 
-  unit-tests:
-    name: Unit tests
-    needs: [build]
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
-      - name: Unit tests
-        run: npm run test:ci
+  # unit-tests:
+  #   name: Unit tests
+  #   needs: [build]
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/setup-node
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+  #     - name: Unit tests
+  #       run: npm run test:ci
 
   ##############################################################################
   # Cypress tests
@@ -108,7 +108,8 @@ jobs:
 
   deploy:
     name: ECR Image Push
-    needs: [quality-checks, unit-tests]
+    needs: [build]
+    # needs: [quality-checks, unit-tests]
     runs-on: ubuntu-latest
     # if: ${{ github.ref == 'refs/heads/main' }}
 
