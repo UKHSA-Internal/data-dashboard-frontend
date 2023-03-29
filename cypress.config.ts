@@ -1,8 +1,12 @@
 import { defineConfig } from 'cypress'
 import { rmdir } from 'fs'
+import { loadEnvConfig } from '@next/env'
+
+const { combinedEnv } = loadEnvConfig(process.cwd())
 
 export default defineConfig({
   projectId: '4ijdq4',
+  env: combinedEnv,
   e2e: {
     baseUrl: 'http://localhost:3000',
     video: false,

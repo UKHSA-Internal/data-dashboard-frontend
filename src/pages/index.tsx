@@ -6,16 +6,20 @@ import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
 import { Statistic } from '@/components/Statistic'
 import { Page } from '@/components/Page'
-import { DashboardPage, getPage, PageResponse } from '@/api/requests/cms/getPage'
+import { RelatedLink } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
 import { getStats } from '@/api/requests/stats/getStats'
 import { Fragment } from 'react'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { PageType } from '@/api/requests/cms/getPages'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function Home({ title, body, relatedLinks, lastUpdated, statistics }: HomeProps) {
+  if (!title) return null
+
   console.log('summary', statistics.coronavirus.tiles)
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
@@ -213,31 +217,42 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
 type StatisticsProps = Record<'coronavirus', Awaited<ReturnType<typeof getStats>>>
 
 export const getStaticProps: GetStaticProps<{
-  title: PageResponse<DashboardPage>['title']
-  body: PageResponse<DashboardPage>['body']
-  lastUpdated: PageResponse<DashboardPage>['last_published_at']
-  relatedLinks: PageResponse<DashboardPage>['related_links']
+  title: string
+  body: string
+  lastUpdated: string
+  relatedLinks: Array<RelatedLink>
   statistics: StatisticsProps
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const { title, body, related_links: relatedLinks, last_published_at: lastUpdated } = await getPage<DashboardPage>(1)
-
-  const coronavirus = await getStats('coronavirus')
-
-  const statistics: StatisticsProps = {
-    coronavirus,
-  }
-
-  return {
-    props: {
+  try {
+    const {
       title,
       body,
-      relatedLinks,
-      lastUpdated,
-      statistics,
-    },
+      last_published_at: lastUpdated,
+      related_links: relatedLinks = [],
+    } = await getPageBySlug('respiratory-viruses', PageType.Home)
+
+    const coronavirus = await getStats('coronavirus')
+
+    const statistics: StatisticsProps = {
+      coronavirus,
+    }
+
+    return {
+      props: {
+        title,
+        body,
+        lastUpdated,
+        relatedLinks,
+        statistics,
+      },
+      revalidate: 10,
+    }
+  } catch (error) {
+    console.log(error)
+    return { notFound: true, revalidate: 10 }
   }
 }

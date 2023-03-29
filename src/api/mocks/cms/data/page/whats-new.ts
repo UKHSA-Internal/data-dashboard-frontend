@@ -1,7 +1,8 @@
-import { CommonPage, PageResponse } from '@/api/requests/cms/getPage'
+import { PageResponse } from '@/api/requests/cms/getPage'
+import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
-export const whatsNewPageMock: PageResponse<CommonPage> = {
+export const whatsNewPageMock: PageResponse<PageType.Common> = {
   id: 8,
   meta: {
     type: 'common.CommonPage',
