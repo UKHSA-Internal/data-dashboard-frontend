@@ -12,6 +12,7 @@ import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import os from 'os'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -187,6 +188,10 @@ export const getStaticProps: GetStaticProps<{
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
+
+  const ip = await fetch('https://api.ipify.org/?format=json')
+  const json = await ip.json()
+  console.log('IP: ', json)
 
   try {
     const {
