@@ -1,13 +1,17 @@
+const path = require('path')
+
+const buildEslintCommand = (filenames) =>
+  `next lint --fix --file ${filenames.map((f) => path.relative(process.cwd(), f)).join(' --file ')}`
+
+const buildPrettierCommand = (filenames) =>
+  `npx prettier --write ${filenames.map((f) => path.relative(process.cwd(), f)).join(' ')}`
+
 module.exports = {
   // Type check TypeScript files
   '**/*.(ts|tsx)': () => 'npx tsc --noEmit',
 
-  // Lint & Prettify TS and JS files
-  '**/*.(ts|tsx|js)': (filenames) => [
-    `npx prettier --write ${filenames.join(' ')}`,
-  ],
+  '*.{js,jsx,ts,tsx}': [buildEslintCommand, buildPrettierCommand],
 
   // Prettify only Markdown and JSON files
-  '**/*.(md|json)': (filenames) =>
-    `npx prettier --write ${filenames.join(' ')}`,
+  '**/*.(md|json)': [buildPrettierCommand],
 }

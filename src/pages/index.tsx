@@ -6,14 +6,19 @@ import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
 import { Statistic } from '@/components/Statistic'
 import { Page } from '@/components/Page'
-import { DashboardPage, getPage, PageResponse } from '@/api/requests/cms/getPage'
+import { RelatedLink } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import os from 'os'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export default function Home({ title, body, relatedLinks, lastUpdated }: HomeProps) {
+  if (!title) return null
+
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
@@ -175,23 +180,34 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
 }
 
 export const getStaticProps: GetStaticProps<{
-  title: PageResponse<DashboardPage>['title']
-  body: PageResponse<DashboardPage>['body']
-  lastUpdated: PageResponse<DashboardPage>['last_published_at']
-  relatedLinks: PageResponse<DashboardPage>['related_links']
+  title: string
+  body: string
+  lastUpdated: string
+  relatedLinks: Array<RelatedLink>
 }> = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
-  const { title, body, related_links: relatedLinks, last_published_at: lastUpdated } = await getPage<DashboardPage>(1)
-
-  return {
-    props: {
+  try {
+    const {
       title,
       body,
-      relatedLinks,
-      lastUpdated,
-    },
+      last_published_at: lastUpdated,
+      related_links: relatedLinks = [],
+    } = await getPageBySlug('respiratory-viruses', PageType.Home)
+
+    return {
+      props: {
+        title,
+        body,
+        lastUpdated,
+        relatedLinks,
+      },
+      revalidate: 10,
+    }
+  } catch (error) {
+    console.log(error)
+    return { notFound: true, revalidate: 10 }
   }
 }

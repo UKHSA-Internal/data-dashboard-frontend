@@ -7,7 +7,7 @@ dayjs().format()
 interface PageProps {
   heading: string
   children: ReactNode
-  lastUpdated: string
+  lastUpdated?: string
 }
 
 const getLastUpdatedText = (datetime: Date) => {
@@ -18,7 +18,7 @@ const getLastUpdatedText = (datetime: Date) => {
 export const Page = ({ children, heading, lastUpdated }: PageProps) => {
   return (
     <Container>
-      <LastUpdated>{getLastUpdatedText(new Date(lastUpdated))}</LastUpdated>
+      {lastUpdated && <LastUpdated>{getLastUpdatedText(new Date(lastUpdated))}</LastUpdated>}
       <Heading>{heading}</Heading>
       {children}
     </Container>
