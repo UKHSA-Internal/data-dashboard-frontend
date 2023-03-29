@@ -36,68 +36,68 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
-        run: npm run build
+        run: NODE_ENV=test npm run build
 
-  # ###############################################################################
-  # # Code quality checks
-  # ###############################################################################
+  ###############################################################################
+  # Code quality checks
+  ###############################################################################
 
-  # quality-checks:
-  #   name: Lint
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
-  #     - name: Quality check
-  #       run: npm run lint
+  quality-checks:
+    name: Lint
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Quality check
+        run: npm run lint
 
-  # ##############################################################################
-  # # Unit tests
-  # ##############################################################################
+  ##############################################################################
+  # Unit tests
+  ##############################################################################
 
-  # unit-tests:
-  #   name: Unit tests
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
-  #     - name: Unit tests
-  #       run: npm run test:ci
+  unit-tests:
+    name: Unit tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Unit tests
+        run: npm run test:ci
 
   ##############################################################################
   # Cypress tests
   ##############################################################################
 
-  # cypress-tests:
-  #   name: Cypress tests
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-  #     matrix:
-  #       containers: [1, 2] # Uses 2 parallel instances
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
-  #     - name: Start app
-  #       run: npm run start &
-  #     - uses: ./.github/actions/run-cypress-tests
-  #       with:
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
-  #         record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
-  #         cache-folder: cypress/cache
+  cypress-tests:
+    name: Cypress tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Start app
+        run: NODE_ENV=test npm run start &
+      - uses: ./.github/actions/run-cypress-tests
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
+          cache-folder: cypress/cache
 
   cypress-tests-success:
     name: Cypress tests check
-    # needs: [cypress-tests]
+    needs: [cypress-tests]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All Cypress tests passed ✅'
@@ -108,10 +108,9 @@ jobs:
 
   deploy:
     name: ECR Image Push
-    needs: [build]
-    # needs: [quality-checks, unit-tests]
+    needs: [quality-checks, unit-tests, cypress-tests-success]
     runs-on: ubuntu-latest
-    # if: ${{ github.ref == 'refs/heads/main' }}
+    if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Check out code
