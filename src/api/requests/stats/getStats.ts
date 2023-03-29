@@ -45,7 +45,7 @@ type TrendContentType = {
   colour: string
 }
 
-type ContentTypes = TextContentType | TrendContentType
+export type ContentTypes = TextContentType | TrendContentType
 type ContentTypeContainer = Array<{ container: string; content: Array<ContentTypes> }>
 
 const transformResponse = (stats: GetStatisticsResponse) => {
