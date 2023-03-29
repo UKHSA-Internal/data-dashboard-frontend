@@ -53,13 +53,13 @@ export const influenzaStatsMock: GetStatisticsResponse = [
     panel: 'Headline',
     main_container: 'Testing',
     secondary_container: 'colour',
-    metric_value: 'red',
+    metric_value: 'neutral',
   },
   {
     panel: 'Headline',
     main_container: 'Testing',
     secondary_container: 'arrow',
-    metric_value: 'up',
+    metric_value: 'neutral',
   },
   {
     panel: 'Tile',

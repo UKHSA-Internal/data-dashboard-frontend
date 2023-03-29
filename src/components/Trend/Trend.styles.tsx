@@ -33,8 +33,19 @@ export const Tag = styled(GovUKTag)<{ direction: string; colour: string }>`
         background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='14' fill='none'%3E%3Cpath stroke='%23005A30' stroke-width='2' d='M8 0v12M7.793 12.657l6.364-6.364M7.657 12.071 1.293 5.707'/%3E%3Cpath stroke='%23005A30' stroke-width='1.02' d='m8.379 13.483-2.121-2.122'/%3E%3C/svg%3E");
       `}
 
+    ${(props) =>
+      props.colour !== 'neutral' &&
+      css`
+        padding-left: 26px;
+      `}
+
+    ${(props) =>
+      props.colour === 'neutral' &&
+      css`
+        background-image: none;
+      `}
+
     background-repeat: no-repeat;
-    padding-left: 26px;
     background-position: 6px center;
     ${typography.font({ size: BODY_SIZES.XSMALL })}
     font-weight: ${FONT_WEIGHTS.bold};
