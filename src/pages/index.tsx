@@ -20,7 +20,7 @@ type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 export default function Home({ title, body, relatedLinks, lastUpdated, statistics }: HomeProps) {
   if (!title) return null
 
-  console.log('summary', statistics.coronavirus.tiles)
+  console.log('summary', statistics)
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
@@ -37,7 +37,11 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                         {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
                         {item.type === 'trend' && (
                           <Statistic heading={item.heading}>
-                            <Trend positive={item.colour === 'green'} value={`${item.change} ${item.percentage}`} />
+                            <Trend
+                              direction={item.direction}
+                              colour={item.colour}
+                              value={`${item.change} ${item.percentage}`}
+                            />
                           </Statistic>
                         )}
                       </>
@@ -62,7 +66,11 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                             {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
                             {item.type === 'trend' && (
                               <Statistic heading={item.heading}>
-                                <Trend positive={item.colour === 'green'} value={`${item.change} ${item.percentage}`} />
+                                <Trend
+                                  direction={item.direction}
+                                  colour={item.colour}
+                                  value={`${item.change} ${item.percentage}`}
+                                />
                               </Statistic>
                             )}
                             {/*                             
@@ -139,8 +147,32 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
         </ContentsItem>
         <ContentsItem heading="Influenza">
           <Paragraph>The UKHSA dashboard for data and insights on Influenza.</Paragraph>
+
           <Card label="Influenza summary">
-            <CardColumn heading="Healthcare">
+            {statistics.influenza.summary.map(({ container, content }) => {
+              return (
+                <CardColumn heading={container} key={container}>
+                  {content.map((item) => {
+                    return (
+                      <Fragment key={item.heading}>
+                        {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
+                        {item.type === 'trend' && (
+                          <Statistic heading={item.heading}>
+                            <Trend
+                              direction={item.direction}
+                              colour={item.colour}
+                              value={`${item.change} ${item.percentage}`}
+                            />
+                          </Statistic>
+                        )}
+                      </Fragment>
+                    )
+                  })}
+                </CardColumn>
+              )
+            })}
+
+            {/* <CardColumn heading="Healthcare">
               <Statistic heading="Patients admitted" value="981,596" />
               <Statistic heading="Last 7 days">
                 <Trend positive value={'5,788 (0.3%)'} />
@@ -155,10 +187,57 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
               <Statistic heading="Last 7 days">
                 <Trend positive={false} value={'16,109 (2.3%)'} />
               </Statistic>
-            </CardColumn>
+            </CardColumn> */}
           </Card>
           <GridRow>
-            <GridCol setWidth="one-half">
+            {statistics.influenza.tiles.map(({ container, content }) => {
+              return (
+                <GridCol setWidth="one-half" key={container}>
+                  <Card label={`Coronavirus cases`}>
+                    <CardColumn
+                      heading={container}
+                      sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}
+                    >
+                      {content.map((item) => {
+                        return (
+                          <Fragment key={item.heading}>
+                            {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
+                            {item.type === 'trend' && (
+                              <Statistic heading={item.heading}>
+                                <Trend
+                                  direction={item.direction}
+                                  colour={item.colour}
+                                  value={`${item.change} ${item.percentage}`}
+                                />
+                              </Statistic>
+                            )}
+                            {/*                             
+                            <Statistic heading="People tested positive in England">
+                              <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
+                            </Statistic>
+                            <GridRow>
+                              <GridCol setWidth="columnOneThird">
+                                <Statistic heading="Last 7 days" value="24,568" />
+                              </GridCol>
+                              <GridCol>
+                                <Trend positive value={'-1,600 (-6.1%)'} />
+                              </GridCol>
+                            </GridRow> */}
+                          </Fragment>
+                        )
+                      })}
+                      <Topic
+                        name="Influenza"
+                        description="Weekly hospital admission rates for Influenza up to and including 25th February 2023"
+                        points={[]}
+                      />
+                    </CardColumn>
+                  </Card>
+                </GridCol>
+              )
+            })}
+
+            {/* <GridCol setWidth="one-half">
               <Card label="Influenza healthcare">
                 <CardColumn
                   heading="Healthcare"
@@ -204,7 +283,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                   />
                 </CardColumn>
               </Card>
-            </GridCol>
+            </GridCol> */}
           </GridRow>
         </ContentsItem>
       </Contents>
@@ -214,7 +293,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
   )
 }
 
-type StatisticsProps = Record<'coronavirus', Awaited<ReturnType<typeof getStats>>>
+type StatisticsProps = Record<'coronavirus' | 'influenza', Awaited<ReturnType<typeof getStats>>>
 
 export const getStaticProps: GetStaticProps<{
   title: string
@@ -236,9 +315,11 @@ export const getStaticProps: GetStaticProps<{
     } = await getPageBySlug('respiratory-viruses', PageType.Home)
 
     const coronavirus = await getStats('coronavirus')
+    const influenza = await getStats('influenza')
 
     const statistics: StatisticsProps = {
       coronavirus,
+      influenza,
     }
 
     return {

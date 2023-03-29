@@ -21,6 +21,9 @@ export interface Statistic {
     | 'Virus tests positivity (%)'
     | 'People tested positive in England'
     | 'Deaths with COVID-19 on the death Certificate in England'
+    | 'Virus tests reported'
+    | 'Weekly hospital admission rates for Influenza'
+    | 'Weekly positivity by age'
   metric_value?: string | 'green' | 'red' | 'up' | 'down' | 'no_value'
 }
 
@@ -78,6 +81,7 @@ const transformResponse = (stats: GetStatisticsResponse) => {
         'Virus tests positivity (%)',
         'People tested positive in England',
         'Deaths with COVID-19 on the death Certificate in England',
+        'Virus tests reported',
       ],
       trend: ['Last 7 days', 'percentage_change', 'change', 'colour', 'arrow'],
     },
@@ -91,6 +95,8 @@ const transformResponse = (stats: GetStatisticsResponse) => {
         'People tested positive in England',
         'Deaths with COVID-19 on the death Certificate in England',
         'Last 7 days',
+        'Weekly hospital admission rates for Influenza',
+        'Weekly positivity by age',
       ],
       trend: ['percentage_change', 'change', 'colour', 'arrow'],
     },

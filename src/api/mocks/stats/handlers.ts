@@ -1,5 +1,6 @@
 import { rest } from 'msw'
 import { coronavirusStatsMock } from './data/topics/coronavirus'
+import { influenzaStatsMock } from './data/topics/influenza'
 import { getStatsApiPath } from '@/api/requests/helpers'
 
 const baseUrl = getStatsApiPath()
@@ -13,7 +14,7 @@ export const handlers = [
     }
 
     if (topicName === 'influenza') {
-      return res(ctx.status(200), ctx.json(coronavirusStatsMock))
+      return res(ctx.status(200), ctx.json(influenzaStatsMock))
     }
   }),
 ]
