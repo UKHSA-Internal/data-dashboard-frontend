@@ -9,7 +9,6 @@ interface CardProps {
 }
 
 export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
-  console.log('Card: ', label, theme)
   return (
     <Container as="article" aria-label={label} theme={theme}>
       {children}

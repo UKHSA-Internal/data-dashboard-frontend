@@ -9,11 +9,11 @@ export const handlers = [
   rest.get(`${baseUrl}/:topic`, (req, res, ctx) => {
     const topicName = String(req.params.topic)
 
-    if (topicName === 'coronavirus') {
+    if (topicName === 'COVID-19') {
       return res(ctx.status(200), ctx.json(coronavirusStatsMock))
     }
 
-    if (topicName === 'influenza') {
+    if (topicName === 'Influenza') {
       return res(ctx.status(200), ctx.json(influenzaStatsMock))
     }
   }),

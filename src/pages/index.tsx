@@ -98,8 +98,8 @@ export const getStaticProps: GetStaticProps<{
       related_links: relatedLinks = [],
     } = await getPageBySlug('respiratory-viruses', PageType.Home)
 
-    const coronavirusData = await getStats('coronavirus')
-    const influenzaData = await getStats('influenza')
+    const coronavirusData = await getStats('COVID-19')
+    const influenzaData = await getStats('Influenza')
 
     const statistics: StatisticsProps = [
       {
