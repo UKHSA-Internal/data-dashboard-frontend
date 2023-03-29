@@ -12,7 +12,6 @@ import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import os from 'os'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
