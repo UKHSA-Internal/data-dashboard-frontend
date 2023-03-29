@@ -4,10 +4,10 @@ import { Container, CardColumnHeading, CardColumnHeadingContainer, CardColumnGri
 interface CardProps {
   label?: string
   children: ReactNode
-  theme: 'primary' | 'secondary'
+  theme?: 'primary' | 'secondary'
 }
 
-export const Card = ({ children, label, theme }: CardProps) => {
+export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
   console.log('Card: ', label, theme)
   return (
     <Container as="article" aria-label={label} theme={theme}>
@@ -20,13 +20,14 @@ interface CardColumnProps {
   children: ReactNode
   heading: string
   sideContent?: ReactNode
+  theme?: 'primary' | 'secondary'
 }
 
-export const CardColumn = ({ children, heading, sideContent }: CardColumnProps) => {
+export const CardColumn = ({ children, heading, sideContent, theme }: CardColumnProps) => {
   return (
     <CardColumnGridCol>
       <CardColumnHeadingContainer>
-        <CardColumnHeading>{heading}</CardColumnHeading>
+        <CardColumnHeading theme={theme}>{heading}</CardColumnHeading>
         {sideContent}
       </CardColumnHeadingContainer>
       {children}
