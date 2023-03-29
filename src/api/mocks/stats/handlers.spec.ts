@@ -10,16 +10,16 @@ afterEach(() => server.resetHandlers())
 
 const baseUrl = getStatsApiPath()
 
-test('GET /stats/coronavirus returns the correct stats mock', async () => {
-  const res = await fetch(`${baseUrl}/coronavirus`)
+test('GET /stats/COVID-19 returns the correct stats mock', async () => {
+  const res = await fetch(`${baseUrl}/COVID-19`)
   const json = await res.json()
 
   expect(res.status).toEqual(200)
   expect(json).toEqual(coronavirusStatsMock)
 })
 
-test('GET /stats/influenza returns the correct stats mock', async () => {
-  const res = await fetch(`${baseUrl}/influenza`)
+test('GET /stats/Influenza returns the correct stats mock', async () => {
+  const res = await fetch(`${baseUrl}/Influenza`)
   const json = await res.json()
 
   expect(res.status).toEqual(200)
