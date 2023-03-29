@@ -13,18 +13,19 @@ import Trend from '@/components/Trend/Trend'
 import { ContentTypes, getStats } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
+import { Fragment } from 'react'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 const renderContentTypes = (item: ContentTypes) => (
-  <>
+  <Fragment key={item.heading}>
     {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
     {item.type === 'trend' && (
       <Statistic heading={item.heading}>
         <Trend direction={item.direction} colour={item.colour} value={`${item.change} ${item.percentage}`} />
       </Statistic>
     )}
-  </>
+  </Fragment>
 )
 
 export default function Home({ title, body, relatedLinks, lastUpdated, statistics }: HomeProps) {
@@ -37,7 +38,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
         {statistics.map(({ name, summary, tiles }) => (
           <ContentsItem heading={name} key={`content-item-${name}`}>
             <p>The UKHSA dashboard for data and insights on {name}.</p>
-            <Card label={`${name} summary`}>
+            <Card label={`${name} Summary`}>
               {summary.map(({ container, content }) => {
                 return (
                   <CardColumn heading={container} key={container}>
@@ -50,7 +51,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
               {tiles.map(({ container, content }) => {
                 return (
                   <GridCol setWidth="one-half" key={container}>
-                    <Card label={`Coronavirus cases`}>
+                    <Card label={`${name} ${container}`}>
                       <CardColumn
                         heading={container}
                         sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}

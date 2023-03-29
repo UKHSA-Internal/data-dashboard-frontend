@@ -35,7 +35,7 @@ export const influenzaStatsMock: GetStatisticsResponse = [
     panel: 'Headline',
     main_container: 'Testing',
     secondary_container: 'Virus tests reported',
-    metric_value: '2',
+    metric_value: '3',
   },
   {
     panel: 'Headline',
