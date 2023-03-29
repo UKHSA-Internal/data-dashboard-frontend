@@ -25,7 +25,7 @@ export const CardColumnHeadingContainer = styled.div`
   }
 `
 
-export const CardColumnHeading = styled(H3)`
+export const CardColumnHeading = styled(H3)<ContainerProps>`
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
   font-weight: ${(p: ContainerProps) => (p.theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
   color: ${(p: ContainerProps) => (p.theme == 'secondary' ? BLACK : GREY_1)};

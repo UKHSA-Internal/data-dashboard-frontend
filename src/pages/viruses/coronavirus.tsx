@@ -9,7 +9,7 @@ import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Statistic } from '@/components/Statistic'
 import Topic from '@/components/Topic/Topic'
-import { GridCol, GridRow, Paragraph } from 'govuk-react'
+import { GridCol, GridRow, H3, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
@@ -101,8 +101,14 @@ export const Coronavirus = () => {
             <GridCol setWidth="one-half">
               <Card label="Change from previous 7 days" theme={'secondary'}>
                 <CardColumn heading="Change from previous 7 days">
-                  <Statistic heading="Number" value="-31" />
-                  <Statistic heading="Percentage" value="-7" />
+                  <GridRow style={{ marginTop: '20px' }}>
+                    <GridCol setWidth="one-half">
+                      <Statistic heading="Number" value="-31" />
+                    </GridCol>
+                    <GridCol setWidth="one-half">
+                      <Statistic heading="Percentage" value="-7" />
+                    </GridCol>
+                  </GridRow>
                 </CardColumn>
               </Card>
             </GridCol>
@@ -136,8 +142,14 @@ export const Coronavirus = () => {
             <GridCol setWidth="one-half">
               <Card label="Change from previous 7 days" theme={'secondary'}>
                 <CardColumn heading="Change from previous 7 days">
-                  <Statistic heading="Number" value="-397" />
-                  <Statistic heading="Percentage" value="-6" />
+                  <GridRow style={{ marginTop: '20px' }}>
+                    <GridCol setWidth="one-half">
+                      <Statistic heading="Number" value="-397" />
+                    </GridCol>
+                    <GridCol setWidth="one-half">
+                      <Statistic heading="Percentage" value="-6" />
+                    </GridCol>
+                  </GridRow>
                 </CardColumn>
               </Card>
             </GridCol>
