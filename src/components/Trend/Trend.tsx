@@ -1,12 +1,17 @@
 import { Tag } from './Trend.styles'
 
 interface TrendProps {
-  positive: boolean
+  colour: string
+  direction: string
   value: string
 }
 
-const Trend = ({ positive, value }: TrendProps) => {
-  return <Tag tint={positive ? 'GREEN' : 'RED'}>{value}</Tag>
+const Trend = ({ colour, direction, value }: TrendProps) => {
+  return (
+    <Tag tint={colour === 'green' ? 'GREEN' : 'RED'} direction={direction} colour={colour}>
+      {value}
+    </Tag>
+  )
 }
 
 export default Trend
