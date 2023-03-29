@@ -1,15 +1,8 @@
 import { H2 } from 'govuk-react'
-import {
-  Children,
-  cloneElement,
-  isValidElement,
-  ReactNode,
-  useMemo,
-} from 'react'
-import { AccordionItemState } from 'react-accessible-accordion'
+import { Children, cloneElement, isValidElement, ReactNode, useMemo } from 'react'
+import { AccordionItemState, Accordion as ReactAccordion } from 'react-accessible-accordion'
 import * as Styled from './Accordion.styles'
 import { AccordionProvider, useAccordion } from './AccordionContext'
-import { Accordion as ReactAccordion } from 'react-accessible-accordion'
 
 /**
  * Gov.uk React component library does not yet support the GDS Accordion component
@@ -52,9 +45,7 @@ const AccordionItems = ({ children }: AccordionItemsProps) => {
       <AccordionExpander allItems={items} />
 
       {Children.map(children, (child, idx) => {
-        return isValidElement(child)
-          ? cloneElement(child, { ...child.props, uuid: `panel-${idx}` })
-          : null
+        return isValidElement(child) ? cloneElement(child, { ...child.props, uuid: `panel-${idx}` }) : null
       })}
     </>
   )
@@ -70,11 +61,7 @@ interface AccordionExpanderProps {
   showLabel?: string
 }
 
-const AccordionExpander = ({
-  allItems,
-  hideLabel = 'Hide',
-  showLabel = 'Show',
-}: AccordionExpanderProps) => {
+const AccordionExpander = ({ allItems, hideLabel = 'Hide', showLabel = 'Show' }: AccordionExpanderProps) => {
   const { expanded, setExpanded } = useAccordion()
 
   const allShown = allItems.length === expanded.size
@@ -87,18 +74,11 @@ const AccordionExpander = ({
   const label = `${allShown ? hideLabel : showLabel} all sections`
 
   return (
-    <Styled.AccordionItemExpander
-      aria-label={label}
-      role="button"
-      onClick={handleClick}
-      aria-expanded={allShown}
-    >
+    <Styled.AccordionItemExpander aria-label={label} role="button" onClick={handleClick} aria-expanded={allShown}>
       <Styled.AccordionItemToggle>
         <Styled.AccordionItemToggleFocus>
           <Styled.AccordionItemToggleChevron />
-          <Styled.AccordionItemToggleText>
-            {label}
-          </Styled.AccordionItemToggleText>
+          <Styled.AccordionItemToggleText>{label}</Styled.AccordionItemToggleText>
         </Styled.AccordionItemToggleFocus>
       </Styled.AccordionItemToggle>
     </Styled.AccordionItemExpander>
@@ -118,16 +98,12 @@ export const AccordionItemButton = ({ children }: AccordionItemButtonProps) => (
     {({ expanded }) => (
       <Styled.AccordionItemButton as={'button'} aria-expanded={expanded}>
         <Styled.AccordionItemButtonText>
-          <Styled.AccordionItemButtonFocus>
-            {children}
-          </Styled.AccordionItemButtonFocus>
+          <Styled.AccordionItemButtonFocus>{children}</Styled.AccordionItemButtonFocus>
         </Styled.AccordionItemButtonText>
         <Styled.AccordionItemToggle>
           <Styled.AccordionItemToggleFocus>
             <Styled.AccordionItemToggleChevron />
-            <Styled.AccordionItemToggleText>
-              {expanded ? 'Hide' : 'Show'}
-            </Styled.AccordionItemToggleText>
+            <Styled.AccordionItemToggleText>{expanded ? 'Hide' : 'Show'}</Styled.AccordionItemToggleText>
           </Styled.AccordionItemToggleFocus>
         </Styled.AccordionItemToggle>
       </Styled.AccordionItemButton>
@@ -143,9 +119,7 @@ interface AccordionItemHeadingProps {
   children: ReactNode
 }
 
-export const AccordionItemHeading = ({
-  children,
-}: AccordionItemHeadingProps) => (
+export const AccordionItemHeading = ({ children }: AccordionItemHeadingProps) => (
   <Styled.AccordionItemHeading as={H2}>{children}</Styled.AccordionItemHeading>
 )
 
@@ -174,11 +148,7 @@ export const AccordionItem = ({ uuid = '', children }: AccordionItemProps) => {
   }
 
   return (
-    <Styled.AccordionItem
-      uuid={uuid}
-      dangerouslySetExpanded={isActive}
-      onClick={handleClick}
-    >
+    <Styled.AccordionItem uuid={uuid} dangerouslySetExpanded={isActive} onClick={handleClick}>
       {children}
     </Styled.AccordionItem>
   )
