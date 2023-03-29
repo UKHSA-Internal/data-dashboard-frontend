@@ -1,10 +1,6 @@
-import { ReactNode } from 'react'
-import {
-  Container,
-  CardColumnHeading,
-  CardColumnHeadingContainer,
-  CardColumnGridCol,
-} from './Card.styles'
+import { GridCol } from 'govuk-react'
+import { ComponentProps, ReactNode } from 'react'
+import { Container, CardColumnHeading, CardColumnHeadingContainer, CardColumnGridCol } from './Card.styles'
 
 interface CardProps {
   label?: string
@@ -19,19 +15,15 @@ export const Card = ({ children, label }: CardProps) => {
   )
 }
 
-interface CardColumnProps {
+interface CardColumnProps extends ComponentProps<typeof GridCol> {
   children: ReactNode
   heading: string
   sideContent?: ReactNode
 }
 
-export const CardColumn = ({
-  children,
-  heading,
-  sideContent,
-}: CardColumnProps) => {
+export const CardColumn = ({ children, heading, sideContent, ...props }: CardColumnProps) => {
   return (
-    <CardColumnGridCol>
+    <CardColumnGridCol {...props}>
       <CardColumnHeadingContainer>
         <CardColumnHeading>{heading}</CardColumnHeading>
         {sideContent}
