@@ -3,7 +3,7 @@ describe('About', () => {
     cy.visit('/about')
 
     // Last updated
-    cy.findByText('Last updated on March 18th 2023 at 10:25am')
+    cy.findByText('Last updated on Saturday, 18 March 2023 at 10:25am')
 
     // Title
     cy.findByRole('heading', { name: 'About', level: 1 })

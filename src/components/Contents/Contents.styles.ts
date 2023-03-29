@@ -1,8 +1,7 @@
 import { H2, ListItem as GovUKListItem, Link } from 'govuk-react'
 import styled from 'styled-components'
-import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
+import { BODY_SIZES, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
-import { SPACING } from '@govuk-react/constants'
 import { COLOURS } from '@/styles/Theme'
 import { BLUE, BLACK } from 'govuk-colours'
 
