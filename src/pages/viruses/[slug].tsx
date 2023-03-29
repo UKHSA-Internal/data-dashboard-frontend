@@ -106,11 +106,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
     await initMocks()
   }
 
-  if (process.env.CI === 'true')
+  // Skip SSG during CI workflow due to No AWS Access
+  // The site will be built once deployed instead
+  if (process.env.CI === 'true') {
     return {
       paths: [],
       fallback: true,
     }
+  }
 
   // Fetch the CMS pages with a topic type
   const { items } = await getPages(PageType.Topic)
