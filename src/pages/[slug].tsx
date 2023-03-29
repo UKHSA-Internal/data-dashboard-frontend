@@ -68,6 +68,8 @@ export const getStaticPaths: GetStaticPaths = async () => {
     await initMocks()
   }
 
+  // Skip SSG during CI workflow due to No AWS Access
+  // The site will be built once deployed instead
   if (process.env.CI === 'true')
     return {
       paths: [],
