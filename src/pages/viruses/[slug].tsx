@@ -26,7 +26,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
 
-      <Contents label="Topic information">
+      <Contents>
         <ContentsItem heading="Cases">
           <p>Coronavirus cases text</p>
           <GridRow>
