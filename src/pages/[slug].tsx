@@ -1,14 +1,17 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { CommonPage as CommonPageType, getPage, PageResponse } from '@/api/requests/cms/getPage'
+import { RelatedLink } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
 export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
+  if (!title) return null
+
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <FormattedContent hasLinkedHeadings>{body}</FormattedContent>
@@ -20,55 +23,43 @@ export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPag
 export default CommonPage
 
 export const getStaticProps: GetStaticProps<{
-  title: PageResponse['title']
-  body: PageResponse['body']
-  lastUpdated: PageResponse['last_published_at']
-  relatedLinks: PageResponse['related_links']
+  title: string
+  body: string
+  lastUpdated: string
+  relatedLinks: Array<RelatedLink>
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
-
-  const revalidate = 10
 
   try {
     const params = req.params
 
     // Check the slug exists in the url
     if (params && params.slug) {
-      // Fetch all of the common pages from the CMS
-      const pages = await getPages(PageType.Common)
+      const {
+        title,
+        body,
+        last_published_at: lastUpdated,
+        related_links: relatedLinks = [],
+      } = await getPageBySlug(String(params.slug), PageType.Common)
 
-      // Find the CMS page within the list that matches the current page
-      const matchedPage = pages.items.find(({ meta: { slug } }) => slug === params.slug)
-
-      if (matchedPage) {
-        // Once we have a match, use the id to fetch the single page
-        const {
+      // Parse the cms response and pick out only relevant data for the ui
+      return {
+        props: {
           title,
           body,
-          last_published_at: lastUpdated,
-          related_links: relatedLinks,
-        } = await getPage<CommonPageType>(matchedPage.id)
-
-        // Parse the cms response and pick out only relevant data for the ui
-        return {
-          props: {
-            title,
-            body,
-            lastUpdated,
-            relatedLinks,
-            revalidate,
-          },
-        }
+          lastUpdated,
+          relatedLinks,
+        },
+        revalidate: 60,
       }
-
-      throw new Error('Could not find page matching current slug')
     }
 
-    throw new Error('URL does not contain a slug')
+    throw new Error('No slug found')
   } catch (error) {
-    return { notFound: true }
+    console.log(error)
+    return { notFound: true, revalidate: 10 }
   }
 }
 
@@ -76,6 +67,14 @@ export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
+
+  // Skip SSG during CI workflow due to No AWS Access
+  // The site will be built once deployed instead
+  if (process.env.CI === 'true')
+    return {
+      paths: [],
+      fallback: true,
+    }
 
   // Fetch the CMS pages with a topic type
   const { items } = await getPages(PageType.Common)
@@ -88,5 +87,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // We'll pre-render only these paths at build time.
   // { fallback: 'blocking' } will server-render pages
   // on-demand if the path doesn't exist.
-  return { paths, fallback: 'blocking' }
+  return { paths, fallback: true }
 }

@@ -1,7 +1,8 @@
-import { DashboardPage, PageResponse } from '@/api/requests/cms/getPage'
+import { PageResponse } from '@/api/requests/cms/getPage'
+import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
-export const dashboardPageMock: PageResponse<DashboardPage> = {
+export const dashboardPageMock: PageResponse<PageType.Home> = {
   id: 1,
   meta: {
     type: 'Dashboard',
