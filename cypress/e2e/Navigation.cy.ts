@@ -22,7 +22,7 @@ describe('Navigation', () => {
         cy.findByText('Coronavirus').click()
       })
       .url()
-      .should('include', '/viruses/sars-cov-2')
+      .should('include', '/viruses/coronavirus')
 
     cy.findByRole('heading', { name: 'SARS-CoV-2' })
 

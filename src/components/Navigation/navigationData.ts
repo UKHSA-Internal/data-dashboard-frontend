@@ -12,7 +12,7 @@ export const primaryLinksData: NavigationLink[] = [
   },
   {
     title: 'Coronavirus',
-    url: '/viruses/sars-cov-2',
+    url: '/viruses/coronavirus',
   },
   {
     title: 'Influenza',
