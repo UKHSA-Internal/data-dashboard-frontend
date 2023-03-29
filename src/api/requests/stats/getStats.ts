@@ -5,9 +5,10 @@ import { getStatsApiPath } from '../helpers'
  */
 export type GetStatisticsResponse = Statistic[]
 
+type Container = 'Cases' | 'Deaths' | 'Healthcare' | 'Testing' | 'Vaccinations'
 export interface Statistic {
   panel: 'Headline' | 'Tile'
-  main_container: 'Cases' | 'Deaths' | 'Healthcare' | 'Testing' | 'Vaccinations'
+  main_container: Container
   secondary_container:
     | 'arrow'
     | 'colour'
@@ -46,11 +47,24 @@ type TrendContentType = {
 }
 
 export type ContentTypes = TextContentType | TrendContentType
-type ContentTypeContainer = Array<{ container: string; content: Array<ContentTypes> }>
 
+type ContentTypeContainer = Array<{ container: Container; content: Array<ContentTypes> }>
+
+/**
+ *
+ * This transformer reconstructs the stats API response into a format that is usable within our UI.
+ * Using the headings provided in the response (found in the secondary_key property) we can map relevant items
+ * into their distinctive UI sections i.e. summary or tiles. Based on the secondary_key we can also determine
+ * which UI content type is to be displayed (either a textual heading/value pair or a trend component)
+ *
+ * The idea is to turn the flat list structure the API gives us into an object:
+ *  {
+ *    summary: [{ container: 'Cases', content: [{ type: 'text', heading: 'Weekly', value: '24,298' }] }],
+ *    tiles: [{ container: 'Cases', content: [...] }, { container: 'Deaths', content: [...] }]
+ *  }
+ */
 const transformResponse = (stats: GetStatisticsResponse) => {
   const summary: ContentTypeContainer = []
-
   const tiles: ContentTypeContainer = []
 
   /**
@@ -241,7 +255,5 @@ const transformResponse = (stats: GetStatisticsResponse) => {
 export const getStats = async (topic: 'coronavirus' | 'influenza'): Promise<ReturnType<typeof transformResponse>> => {
   const req = await fetch(`${getStatsApiPath()}/${topic}`)
   const res = await req.json()
-  const formattedData = transformResponse(res)
-  console.log('FORMATTED: ', formattedData)
-  return formattedData
+  return transformResponse(res)
 }
