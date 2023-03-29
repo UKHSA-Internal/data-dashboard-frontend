@@ -11,6 +11,8 @@ import { Statistic } from '@/components/Statistic'
 import Topic from '@/components/Topic/Topic'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
+import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
 
 export const Influenza = () => {
   return (
@@ -147,6 +149,8 @@ export const Influenza = () => {
           </Accordion>
         </ContentsItem>
       </Contents>
+
+      <RelatedLinks links={relatedLinksMock} />
     </Page>
   )
 }
