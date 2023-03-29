@@ -189,10 +189,6 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  const ip = await fetch('https://api.ipify.org/?format=json')
-  const json = await ip.json()
-  console.log('IP: ', json)
-
   try {
     const {
       title,
