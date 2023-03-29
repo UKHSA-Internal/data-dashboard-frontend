@@ -25,7 +25,7 @@ export interface Statistic {
     | 'Virus tests reported'
     | 'Weekly hospital admission rates for Influenza'
     | 'Weekly positivity by age'
-  metric_value?: string | 'green' | 'red' | 'up' | 'down' | 'no_value'
+  metric_value?: string | 'green' | 'red' | 'up' | 'down' | 'no_value' | 'neutral'
 }
 
 /**
