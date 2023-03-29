@@ -11,7 +11,7 @@ export const pagesWithHomeTypeMock: PagesResponse = {
         type: 'home.HomePage',
         detail_url: 'http://localhost/api/v2/pages/1/',
         html_url: 'http://localhost/home-page/',
-        slug: 'about',
+        slug: 'respiratory-viruses',
         first_published_at: '2023-03-10T10:57:35.324472Z',
       },
       title: 'Respiratory viruses',

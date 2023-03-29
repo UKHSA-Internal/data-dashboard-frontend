@@ -1,10 +1,11 @@
-import type { PageResponse, TopicPage } from '../getPage'
+import type { PageResponse } from '../getPage'
+import { PageType } from '../getPages'
 
 /**
  * This formatter takes the full `/page` response from the CMS API
  * and transforms it into a trimmed object usable within our UI
  */
-export const formatCmsPageTopicResponse = (page: PageResponse<TopicPage>) => {
+export const formatCmsPageTopicResponse = (page: PageResponse<PageType.Topic>) => {
   return {
     title: page.title,
     body: page.body,

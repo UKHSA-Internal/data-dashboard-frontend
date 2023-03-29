@@ -6,7 +6,7 @@ describe('Influenza detail page', () => {
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
 
     // Last updated
-    cy.findByText('Last updated on March 21st 2023 at 10:25am')
+    cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
 
     // Body
     cy.findByText('Influenza (commonly known) as flu is an infection of the nose, throat and lungs.')
