@@ -12,7 +12,6 @@ import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import os from 'os'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -25,7 +24,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
       <Contents>
         <ContentsItem heading="Coronavirus">
           <Paragraph>The UKHSA dashboard for data and insights on Coronavirus.</Paragraph>
-          <Card label="Coronavirus summary">
+          <Card label="Coronavirus summary" theme={'primary'}>
             <CardColumn heading="Cases">
               <Statistic heading="Weekly" value="20,629,892" />
               <Statistic heading="Last 7 days">
@@ -57,7 +56,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
           </Card>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Coronavirus cases">
+              <Card label="Coronavirus cases" theme={'primary'}>
                 <CardColumn heading="Cases" sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}>
                   <Statistic heading="People tested positive in England">
                     <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
@@ -79,7 +78,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Coronavirus deaths">
+              <Card label="Coronavirus deaths" theme={'primary'}>
                 <CardColumn heading="Deaths" sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}>
                   <Statistic heading="Deaths with COVID-19 on the death certificate in England">
                     <Paragraph supportingText>Up to and including 3rd February 2023</Paragraph>
@@ -104,7 +103,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
         </ContentsItem>
         <ContentsItem heading="Influenza">
           <Paragraph>The UKHSA dashboard for data and insights on Influenza.</Paragraph>
-          <Card label="Influenza summary">
+          <Card label="Influenza summary" theme={'primary'}>
             <CardColumn heading="Healthcare">
               <Statistic heading="Patients admitted" value="981,596" />
               <Statistic heading="Last 7 days">
@@ -124,7 +123,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
           </Card>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Influenza healthcare">
+              <Card label="Influenza healthcare" theme={'primary'}>
                 <CardColumn
                   heading="Healthcare"
                   sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}
@@ -149,7 +148,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Influenza testing">
+              <Card label="Influenza testing" theme={'primary'}>
                 <CardColumn heading="Testing" sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}>
                   <Statistic heading="Weekly positivity by age">
                     <Paragraph supportingText>Up to and including 3rd February 2023</Paragraph>
