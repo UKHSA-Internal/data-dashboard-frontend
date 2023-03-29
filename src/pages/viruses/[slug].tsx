@@ -5,7 +5,7 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { Paragraph } from 'govuk-react'
+import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
@@ -14,6 +14,11 @@ import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { FormattedContent } from '@/components/FormattedContent'
+import { Contents, ContentsItem } from '@/components/Contents'
+import { Card, CardColumn } from '@/components/Card'
+import { Statistic } from '@/components/Statistic'
+import Trend from '@/components/Trend/Trend'
+import Topic from '@/components/Topic/Topic'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -23,6 +28,43 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
+
+      <Contents>
+        <ContentsItem heading="Cases">
+          <p>Coronavirus cases text</p>
+          <GridRow>
+            <GridCol setWidth="one-half">
+              <Card label="Coronavirus cases" theme={'secondary'}>
+                <CardColumn heading="Cases">
+                  <Statistic heading="People tested positive in England">
+                    <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
+                  </Statistic>
+                  <GridRow>
+                    <GridCol setWidth="columnOneThird">
+                      <Statistic heading="Last 7 days" value="24,568" />
+                    </GridCol>
+                    <GridCol>
+                      <Trend direction="down" colour="green" value={'-1,600 (-6.1%)'} />
+                    </GridCol>
+                  </GridRow>
+                  <Topic
+                    name="Coronavirus"
+                    description="People tested positive in England up to and including 25th February 2023"
+                    points={[]}
+                  />
+                </CardColumn>
+              </Card>
+            </GridCol>
+            <GridCol setWidth="one-half"></GridCol>
+          </GridRow>
+        </ContentsItem>
+        <ContentsItem heading="Deaths">Deaths content</ContentsItem>
+        <ContentsItem heading="Healthcare">Healthcare content</ContentsItem>
+        <ContentsItem heading="Vaccines">Vaccines content</ContentsItem>
+        <ContentsItem heading="Testing">Testing content</ContentsItem>
+        <ContentsItem heading="About">About content</ContentsItem>
+      </Contents>
+
       <Accordion>
         <AccordionItem>
           <AccordionItemHeading>

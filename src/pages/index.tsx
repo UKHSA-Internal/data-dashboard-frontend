@@ -1,3 +1,4 @@
+import { Fragment } from 'react'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import Topic from '@/components/Topic/Topic'
@@ -13,7 +14,6 @@ import Trend from '@/components/Trend/Trend'
 import { ContentTypes, getStats } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
-import { Fragment } from 'react'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 

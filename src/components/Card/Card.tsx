@@ -5,11 +5,13 @@ import { Container, CardColumnHeading, CardColumnHeadingContainer, CardColumnGri
 interface CardProps {
   label?: string
   children: ReactNode
+  theme?: 'primary' | 'secondary'
 }
 
-export const Card = ({ children, label }: CardProps) => {
+export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
+  console.log('Card: ', label, theme)
   return (
-    <Container as="article" aria-label={label}>
+    <Container as="article" aria-label={label} theme={theme}>
       {children}
     </Container>
   )
@@ -19,13 +21,14 @@ interface CardColumnProps extends ComponentProps<typeof GridCol> {
   children: ReactNode
   heading: string
   sideContent?: ReactNode
+  theme?: 'primary' | 'secondary'
 }
 
-export const CardColumn = ({ children, heading, sideContent, ...props }: CardColumnProps) => {
+export const CardColumn = ({ children, heading, sideContent, theme, ...props }: CardColumnProps) => {
   return (
     <CardColumnGridCol {...props}>
       <CardColumnHeadingContainer>
-        <CardColumnHeading>{heading}</CardColumnHeading>
+        <CardColumnHeading theme={theme}>{heading}</CardColumnHeading>
         {sideContent}
       </CardColumnHeadingContainer>
       {children}
