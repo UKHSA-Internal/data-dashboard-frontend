@@ -1,6 +1,6 @@
 describe('Coronavirus detail page', () => {
   it('displays correctly', () => {
-    cy.visit('/viruses/sars-cov-2')
+    cy.visit('/viruses/coronavirus')
 
     // Title
     cy.findByRole('heading', { name: 'SARS-CoV-2', level: 1 })
