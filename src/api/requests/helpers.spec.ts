@@ -8,5 +8,5 @@ test('Get the CMS API path', () => {
 })
 
 test('Get the Chart API path', () => {
-  expect(getChartApiPath()).toEqual('http://backend.com/api/chart')
+  expect(getChartApiPath()).toEqual('http://backend.com/charts')
 })
