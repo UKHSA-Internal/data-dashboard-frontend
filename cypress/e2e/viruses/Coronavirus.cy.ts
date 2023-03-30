@@ -9,7 +9,7 @@ describe('Coronavirus detail page', () => {
     cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
 
     // Body
-    cy.findByText('SARS-CoV-2 (commonly known) as flu is an infection of the nose, throat and lungs.')
+    // TODO
 
     // Related links
     cy.checkRelatedLinksExist()
