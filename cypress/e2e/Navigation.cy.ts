@@ -24,7 +24,7 @@ describe('Navigation', () => {
       .url()
       .should('include', '/viruses/coronavirus')
 
-    cy.findByRole('heading', { name: 'SARS-CoV-2' })
+    cy.findByRole('heading', { name: 'Coronavirus' })
 
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
