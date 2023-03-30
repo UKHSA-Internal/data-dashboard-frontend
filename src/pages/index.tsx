@@ -41,7 +41,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
             <Card label={`${name} Summary`}>
               {summary.map(({ container, content }) => {
                 return (
-                  <CardColumn heading={container} key={container}>
+                  <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>
                     {content.map(renderContentTypes)}
                   </CardColumn>
                 )
@@ -55,6 +55,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                       <CardColumn
                         heading={container}
                         sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}
+                        data-testid={`column-${container.toLowerCase()}`}
                       >
                         {content.map(renderContentTypes)}
                         <Topic
