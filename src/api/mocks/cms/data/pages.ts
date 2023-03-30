@@ -96,7 +96,7 @@ export const pagesWithTopicTypeMock: PagesResponse = {
         slug: 'coronavirus',
         first_published_at: '2023-02-10T10:57:35.324472Z',
       },
-      title: 'SARS-CoV-2',
+      title: 'Coronavirus',
     },
   ],
 }

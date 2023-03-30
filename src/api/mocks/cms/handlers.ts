@@ -35,7 +35,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType.Common>> = {
 }
 
 export const handlers = [
-  rest.get(`${baseUrl}/pages`, (req, res, ctx) => {
+  rest.get(`${baseUrl}`, (req, res, ctx) => {
     const searchParams = req.url.searchParams
 
     if (!searchParams.has('type')) return
@@ -44,7 +44,7 @@ export const handlers = [
 
     return res(ctx.status(200), ctx.json(mockedPagesMap[pageType]))
   }),
-  rest.get(`${baseUrl}/pages/:id`, (req, res, ctx) => {
+  rest.get(`${baseUrl}/:id`, (req, res, ctx) => {
     const pageId = Number(req.params.id)
 
     if (mockedPageMap[pageId]) {
