@@ -9,23 +9,8 @@ type Container = 'Cases' | 'Deaths' | 'Healthcare' | 'Testing' | 'Vaccinations'
 export interface Statistic {
   panel: 'Headline' | 'Tile'
   main_container: Container
-  secondary_container:
-    | 'arrow'
-    | 'colour'
-    | 'percentage_change'
-    | 'change'
-    | 'Weekly'
-    | 'Last 7 days'
-    | 'Patients admitted'
-    | 'Spring Booster'
-    | 'Summer Booster'
-    | 'Virus tests positivity (%)'
-    | 'People tested positive in England'
-    | 'Deaths with COVID-19 on the death Certificate in England'
-    | 'Virus tests reported'
-    | 'Weekly hospital admission rates for Influenza'
-    | 'Weekly positivity by age'
-  metric_value?: string | 'green' | 'red' | 'up' | 'down' | 'no_value' | 'neutral'
+  secondary_container: string
+  metric_value?: string
 }
 
 /**
@@ -91,7 +76,7 @@ const transformResponse = (stats: GetStatisticsResponse) => {
         'Weekly',
         'Patients admitted',
         'Spring Booster',
-        'Summer Booster',
+        'Autumn Booster',
         'Virus tests positivity (%)',
         'People tested positive in England',
         'Deaths with COVID-19 on the death Certificate in England',
@@ -104,9 +89,10 @@ const transformResponse = (stats: GetStatisticsResponse) => {
         'Weekly',
         'Patients Admitted',
         'Spring Booster',
-        'Summer Booster',
+        'Autumn Booster',
         'Virus tests positivity (%)',
         'People tested positive in England',
+        'Up to and including',
         'Deaths with COVID-19 on the death Certificate in England',
         'Last 7 days',
         'Weekly hospital admission rates for Influenza',
@@ -140,7 +126,7 @@ const transformResponse = (stats: GetStatisticsResponse) => {
       (stat) =>
         stat.panel === 'Headline' &&
         stat.main_container === container &&
-        contentTypeIds.summary.trend.includes(stat.secondary_container)
+        (contentTypeIds.summary.trend.includes(stat.secondary_container) || !stat.metric_value)
     )
 
     if (trendItems.length) {
@@ -188,7 +174,7 @@ const transformResponse = (stats: GetStatisticsResponse) => {
       (stat) =>
         stat.panel === 'Tile' &&
         stat.main_container === container &&
-        contentTypeIds.tiles.text.includes(stat.secondary_container)
+        (contentTypeIds.tiles.text.includes(stat.secondary_container) || !stat.metric_value)
     )
 
     if (textItems.length) {

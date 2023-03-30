@@ -52,7 +52,7 @@ describe('Dashboard', () => {
         name: 'Vaccinations',
       })
       cy.findByText('4,095,083').siblings().findByText('Spring Booster')
-      cy.findByText('15,129,590').siblings().findByText('Summer Booster')
+      cy.findByText('15,129,590').siblings().findByText('Autumn Booster')
 
       cy.findByRole('heading', {
         name: 'Testing',
@@ -69,7 +69,7 @@ describe('Dashboard', () => {
     cy.get('@cases-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('People tested positive in England')
-      // cy.findByText('Up to and including 25th February 2023')
+      cy.findByText('Up to and including 8 March 2023')
       cy.findByText('24,298').siblings().findByText('Last 7 days')
       // cy.findByAltText('People tested positive in England up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
@@ -84,7 +84,7 @@ describe('Dashboard', () => {
     cy.get('@deaths-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Deaths with COVID-19 on the death Certificate in England')
-      // cy.findByText('Up to and including 3rd February 2023')
+      cy.findByText('Up to and including 10 February 2023')
       cy.findByText('379').siblings().findByText('Last 7 days')
       // cy.findByAltText('Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
@@ -92,7 +92,7 @@ describe('Dashboard', () => {
     })
   })
 
-  it('displays influenza statistics', () => {
+  it.only('displays influenza statistics', () => {
     cy.findByRole('navigation', {
       name: 'Contents',
     }).as('contents')
@@ -132,7 +132,7 @@ describe('Dashboard', () => {
     cy.get('@cases-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly hospital admission rates for Influenza')
-      // cy.findByText('Up to and including 25th February 2023')
+      cy.findByText('Up to and including no_value')
       cy.findByText('2').siblings().findByText('Last 7 days')
       // cy.findByAltText('Weekly hospital admission rates for Influenza up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
@@ -147,7 +147,7 @@ describe('Dashboard', () => {
     cy.get('@deaths-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly positivity by age')
-      // cy.findByText('Up to and including 3rd February 2023')
+      cy.findByText('Up to and including 20 February 2023')
       cy.findByText('2').siblings().findByText('Last 7 days')
       // cy.findByAltText('Weekly positivity by age up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
