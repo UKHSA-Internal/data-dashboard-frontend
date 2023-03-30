@@ -31,7 +31,7 @@ export const Coronavirus = () => {
                   <Topic
                     name="Coronavirus"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-covid1.png"
+                    image="/img/temp-covid1.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -46,7 +46,7 @@ export const Coronavirus = () => {
                   <Topic
                     name="Coronavirus"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-covid2.png"
+                    image="/img/temp-covid2.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -63,7 +63,7 @@ export const Coronavirus = () => {
                   <Topic
                     name="Coronavirus"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-covid3.png"
+                    image="/img/temp-covid3.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -79,7 +79,7 @@ export const Coronavirus = () => {
                   <Topic
                     name="Coronavirus"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-covid4.png"
+                    image="/img/temp-covid4.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -162,7 +162,7 @@ export const Coronavirus = () => {
                 all 3 nations, and numbers for Wales are updated weekly. Figures are not comparable as Wales incvlues
                 suspected COVID-19 patients while the other nations include only confirmed cases.
               </Paragraph>
-              <Topic name="Deaths" description="" image="/temp-covid-healthcare.png" points={[]} />
+              <Topic name="Deaths" description="" image="/img/temp-covid-healthcare.png" points={[]} />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -178,7 +178,7 @@ export const Coronavirus = () => {
                 caution. England local area uptake is also not comparable to England national uptake by report date as
                 that uses a different denominator - see the About tab for more information.
               </Paragraph>
-              <Topic name="Deaths" description="" image="/temp-covid-vaccinations.png" points={[]} />
+              <Topic name="Deaths" description="" image="/img/temp-covid-vaccinations.png" points={[]} />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -194,7 +194,7 @@ export const Coronavirus = () => {
                 caution. England local area uptake is also not comparable to England national uptake by report date as
                 that uses a different denominator - see the About tab for more information.
               </Paragraph>
-              <Topic name="Deaths" description="" image="/temp-covid-testing.png" points={[]} />
+              <Topic name="Deaths" description="" image="/img/temp-covid-testing.png" points={[]} />
             </CardColumn>
           </GridRow>
         </ContentsItem>
