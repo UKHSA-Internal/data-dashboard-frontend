@@ -70,8 +70,10 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
                     </GridCol>
                   </GridRow>
                   <Topic
-                    name="Coronavirus"
                     description="People tested positive in England up to and including 25th February 2023"
+                    topic="COVID-19"
+                    category="cases"
+                    name="Coronavirus"
                     points={[]}
                   />
                 </CardColumn>
@@ -92,8 +94,10 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
                     </GridCol>
                   </GridRow>
                   <Topic
+                    description="People tested positive in England up to and including 25th February 2023"
+                    topic="COVID-19"
+                    category="deaths"
                     name="Coronavirus"
-                    description="Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023"
                     points={[]}
                   />
                 </CardColumn>
@@ -140,8 +144,10 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
                     </GridCol>
                   </GridRow>
                   <Topic
-                    name="Influenza"
                     description="Weekly hospital admission rates for Influenza up to and including 25th February 2023"
+                    topic="Influenza"
+                    category="healthcare"
+                    name="Influenza"
                     points={[]}
                   />
                 </CardColumn>
@@ -162,8 +168,10 @@ export default function Home({ title, body, relatedLinks, lastUpdated }: HomePro
                     </GridCol>
                   </GridRow>
                   <Topic
-                    name="Influenza"
                     description="Weekly positivity by age up to and including 3rd February 2023"
+                    topic="Influenza"
+                    category="testing"
+                    name="Influenza"
                     points={[]}
                   />
                 </CardColumn>
