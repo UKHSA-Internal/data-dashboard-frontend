@@ -114,14 +114,19 @@ describe('Dashboard', () => {
       cy.findByRole('heading', {
         name: 'Healthcare',
       })
-      cy.findByText('2').siblings().findByText('Patients admitted')
-      cy.findByText('1 (127.2%)')
 
-      cy.findByRole('heading', {
-        name: 'Testing',
+      cy.findByTestId('column-healthcare').within(() => {
+        cy.findByText('2').siblings().findByText('Patients admitted')
+        cy.findByText('1 (127.2%)').siblings().findByText('Last 7 days')
       })
-      cy.findByText('3').siblings().findByText('Virus tests reported')
-      cy.findByText('0 (17.8%)')
+
+      cy.findByTestId('column-testing').within(() => {
+        cy.findByRole('heading', {
+          name: 'Testing',
+        })
+        cy.findByText('2').siblings().findByText('Virus tests reported')
+        cy.findByText('0 (17.8%)').siblings().findByText('Last 7 days')
+      })
     })
 
     // Healthcare column
