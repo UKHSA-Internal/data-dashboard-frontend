@@ -37,7 +37,7 @@ export enum PageType {
 }
 
 export const getPages = async (type: PageType): Promise<PagesResponse> => {
-  const req = await fetch(`${getCmsApiPath()}/pages/?type=${type}`)
+  const req = await fetch(`${getCmsApiPath()}/?type=${type}`)
   const res = await req.json()
   return res
 }

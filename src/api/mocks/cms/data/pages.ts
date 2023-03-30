@@ -93,10 +93,10 @@ export const pagesWithTopicTypeMock: PagesResponse = {
         type: 'topic.TopicPage',
         detail_url: 'http://localhost/api/v2/pages/5/',
         html_url: 'http://localhost/current-viruses-in-circulation/covid-19/',
-        slug: 'sars-cov-2',
+        slug: 'coronavirus',
         first_published_at: '2023-02-10T10:57:35.324472Z',
       },
-      title: 'SARS-CoV-2',
+      title: 'Coronavirus',
     },
   ],
 }

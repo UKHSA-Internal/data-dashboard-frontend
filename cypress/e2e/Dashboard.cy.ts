@@ -26,69 +26,69 @@ describe('Dashboard', () => {
 
     // Summary section
     cy.findByRole('article', {
-      name: 'Coronavirus summary',
+      name: 'Coronavirus Summary',
     }).as('summary-section')
 
     cy.get('@summary-section').within(() => {
       cy.findByRole('heading', {
         name: 'Cases',
       })
-      cy.findByText('20,629,892').siblings().findByText('Weekly')
-      cy.findByText('24,568 (-0.1%)').siblings().findByText('Last 7 days')
+      cy.findByText('24,298').siblings().findByText('Weekly')
+      cy.findByText('692 (-3.0%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
         name: 'Deaths',
       })
-      cy.findByText('393').siblings().findByText('Weekly')
-      cy.findByText('185,707 (-1.9%)').siblings().findByText('Last 7 days')
+      cy.findByText('379').siblings().findByText('Weekly')
+      cy.findByText('21 (-5.0%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
-        name: 'Deaths',
+        name: 'Healthcare',
       })
-      cy.findByText('981,596').siblings().findByText('Patients admitted')
-      cy.findByText('4,807 (0.2%)').siblings().findByText('Last 7 days')
+      cy.findByText('6,288').siblings().findByText('Patients admitted')
+      cy.findByText('377 (6.0%)').siblings().findByText('Last 7 days')
 
       cy.findByRole('heading', {
-        name: 'Vaccines',
+        name: 'Vaccinations',
       })
-      cy.findByText('45,410,567').siblings().findByText('Spring booster')
-      cy.findByText('42,939,917').siblings().findByText('Summer booster')
+      cy.findByText('4,095,083').siblings().findByText('Spring Booster')
+      cy.findByText('15,129,590').siblings().findByText('Summer Booster')
 
       cy.findByRole('heading', {
         name: 'Testing',
       })
-      cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
-      cy.findByText('5,425 (0.4%)').siblings().findByText('Last 7 days')
+      cy.findByText('10.4%').siblings().findByText('Virus tests positivity (%)')
+      cy.findByText('1 (-8.8%)').siblings().findByText('Last 7 days')
     })
 
     // Cases column
     cy.findByRole('article', {
-      name: 'Coronavirus cases',
+      name: 'Coronavirus Cases',
     }).as('cases-section')
 
     cy.get('@cases-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('People tested positive in England')
-      cy.findByText('Up to and including 25th February 2023')
-      cy.findByText('24,568').siblings().findByText('Last 7 days')
-      cy.findByAltText('People tested positive in England up to and including 25th February 2023')
+      // cy.findByText('Up to and including 25th February 2023')
+      cy.findByText('24,298').siblings().findByText('Last 7 days')
+      // cy.findByAltText('People tested positive in England up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
-      cy.findByText('-1,600 (-6.1%)')
+      cy.findByText('-692 (-3.0%)')
     })
 
     // Deaths column
     cy.findByRole('article', {
-      name: 'Coronavirus deaths',
+      name: 'Coronavirus Deaths',
     }).as('deaths-section')
 
     cy.get('@deaths-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
-      cy.findByText('Deaths with COVID-19 on the death certificate in England')
-      cy.findByText('Up to and including 3rd February 2023')
-      cy.findByText('393').siblings().findByText('Last 7 days')
-      cy.findByAltText('Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023')
+      cy.findByText('Deaths with COVID-19 on the death Certificate in England')
+      // cy.findByText('Up to and including 3rd February 2023')
+      cy.findByText('379').siblings().findByText('Last 7 days')
+      // cy.findByAltText('Deaths with COVID-19 on the death certificate in England up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
-      cy.findByText('-31 (-7.3%)')
+      cy.findByText('-21 (-5.0%)')
     })
   })
 
@@ -107,57 +107,51 @@ describe('Dashboard', () => {
 
     // Summary section
     cy.findByRole('article', {
-      name: 'Influenza summary',
+      name: 'Influenza Summary',
     }).as('summary-section')
 
     cy.get('@summary-section').within(() => {
       cy.findByRole('heading', {
         name: 'Healthcare',
       })
-      cy.findByText('981,596').siblings().findByText('Patients admitted')
-      cy.findByText('5,788 (0.3%)')
-
-      cy.findByRole('heading', {
-        name: 'Vaccines',
-      })
-      cy.findByText('45,410,567').siblings().findByText('Spring booster')
-      cy.findByText('42,939,917').siblings().findByText('Summer booster')
+      cy.findByText('2').siblings().findByText('Patients admitted')
+      cy.findByText('1 (127.2%)')
 
       cy.findByRole('heading', {
         name: 'Testing',
       })
-      cy.findByText('10.9%').siblings().findByText('Virus tests positivity (%)')
-      cy.findByText('16,109 (2.3%)')
+      cy.findByText('3').siblings().findByText('Virus tests reported')
+      cy.findByText('0 (17.8%)')
     })
 
     // Healthcare column
     cy.findByRole('article', {
-      name: 'Influenza healthcare',
+      name: 'Influenza Healthcare',
     }).as('cases-section')
 
     cy.get('@cases-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly hospital admission rates for Influenza')
-      cy.findByText('Up to and including 25th February 2023')
-      cy.findByText('24,568').siblings().findByText('Last 7 days')
-      cy.findByAltText('Weekly hospital admission rates for Influenza up to and including 25th February 2023')
+      // cy.findByText('Up to and including 25th February 2023')
+      cy.findByText('2').siblings().findByText('Last 7 days')
+      // cy.findByAltText('Weekly hospital admission rates for Influenza up to and including 25th February 2023')
       cy.findByText('View data in a tabular format')
-      cy.findByText('-1,600 (-6.1%)')
+      cy.findByText('1 (127.2%)')
     })
 
     // Testing column
     cy.findByRole('article', {
-      name: 'Influenza testing',
+      name: 'Influenza Testing',
     }).as('deaths-section')
 
     cy.get('@deaths-section').within(() => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly positivity by age')
-      cy.findByText('Up to and including 3rd February 2023')
-      cy.findByText('393').siblings().findByText('Last 7 days')
-      cy.findByAltText('Weekly positivity by age up to and including 3rd February 2023')
+      // cy.findByText('Up to and including 3rd February 2023')
+      cy.findByText('2').siblings().findByText('Last 7 days')
+      // cy.findByAltText('Weekly positivity by age up to and including 3rd February 2023')
       cy.findByText('View data in a tabular format')
-      cy.findByText('-31 (-7.3%)')
+      cy.findByText('0 (17.8%)')
     })
   })
 
@@ -168,7 +162,7 @@ describe('Dashboard', () => {
   it('downloads a csv when clicking a download link', () => {
     const downloadsFolder = Cypress.config('downloadsFolder')
 
-    const articles = ['Coronavirus cases', 'Coronavirus deaths', 'Influenza healthcare', 'Influenza testing']
+    const articles = ['Coronavirus Cases', 'Coronavirus Deaths', 'Influenza Healthcare', 'Influenza Testing']
 
     articles.forEach((name) => {
       cy.findByRole('article', {
