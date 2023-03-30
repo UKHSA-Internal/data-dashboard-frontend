@@ -1,4 +1,5 @@
-import { ReactNode } from 'react'
+import { GridCol } from 'govuk-react'
+import { ComponentProps, ReactNode } from 'react'
 import { Container, CardColumnHeading, CardColumnHeadingContainer, CardColumnGridCol } from './Card.styles'
 
 interface CardProps {
@@ -8,7 +9,6 @@ interface CardProps {
 }
 
 export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
-  console.log('Card: ', label, theme)
   return (
     <Container as="article" aria-label={label} theme={theme}>
       {children}
@@ -16,16 +16,16 @@ export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
   )
 }
 
-interface CardColumnProps {
+interface CardColumnProps extends ComponentProps<typeof GridCol> {
   children: ReactNode
   heading: string
   sideContent?: ReactNode
   theme?: 'primary' | 'secondary'
 }
 
-export const CardColumn = ({ children, heading, sideContent, theme }: CardColumnProps) => {
+export const CardColumn = ({ children, heading, sideContent, theme, ...props }: CardColumnProps) => {
   return (
-    <CardColumnGridCol>
+    <CardColumnGridCol {...props}>
       <CardColumnHeadingContainer>
         <CardColumnHeading theme={theme}>{heading}</CardColumnHeading>
         {sideContent}

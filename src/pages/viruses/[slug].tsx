@@ -44,7 +44,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
                       <Statistic heading="Last 7 days" value="24,568" />
                     </GridCol>
                     <GridCol>
-                      <Trend positive value={'-1,600 (-6.1%)'} />
+                      <Trend direction="down" colour="green" value={'-1,600 (-6.1%)'} />
                     </GridCol>
                   </GridRow>
                   <Topic

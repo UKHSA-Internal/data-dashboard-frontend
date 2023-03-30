@@ -75,7 +75,7 @@ type ParentMeta = {
 }
 
 export const getPage = async <T extends PageType>(id: number): Promise<PageResponse<T>> => {
-  const req = await fetch(`${getCmsApiPath()}/pages/${id}`)
+  const req = await fetch(`${getCmsApiPath()}/${id}`)
   const res = await req.json()
   return res
 }
