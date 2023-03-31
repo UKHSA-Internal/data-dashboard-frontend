@@ -1,0 +1,129 @@
+<svg class="main-svg" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="700" height="350" style="" viewBox="0 0 700 350">
+  <rect x="0" y="0" width="700" height="350" style="fill: rgb(0, 0, 0); fill-opacity: 0;"/>
+  <defs id="defs-fabb82">
+    <g class="clips">
+      <clipPath id="clipfabb82xyplot" class="plotclip">
+        <rect width="700" height="316"/>
+      </clipPath>
+      <clipPath class="axesclip" id="clipfabb82x">
+        <rect x="0" y="0" width="700" height="350"/>
+      </clipPath>
+      <clipPath class="axesclip" id="clipfabb82y">
+        <rect x="0" y="0" width="700" height="316"/>
+      </clipPath>
+      <clipPath class="axesclip" id="clipfabb82xy">
+        <rect x="0" y="0" width="700" height="316"/>
+      </clipPath>
+    </g>
+    <g class="gradients"/>
+    <g class="patterns"/>
+  </defs>
+  <g class="bglayer">
+    <rect class="bg" x="0" y="0" width="700" height="316" style="fill: rgb(0, 0, 0); fill-opacity: 0; stroke-width: 0;"/>
+  </g>
+  <g class="layer-below">
+    <g class="imagelayer"/>
+    <g class="shapelayer"/>
+  </g>
+  <g class="cartesianlayer">
+    <g class="subplot xy">
+      <g class="layer-subplot">
+        <g class="shapelayer"/>
+        <g class="imagelayer"/>
+      </g>
+      <g class="minor-gridlayer">
+        <g class="x"/>
+        <g class="y"/>
+      </g>
+      <g class="gridlayer">
+        <g class="x"/>
+        <g class="y"/>
+      </g>
+      <g class="zerolinelayer">
+        <path class="yzl zl crisp" transform="translate(0,316)" d="M0,0h700" style="stroke: rgb(255, 255, 255); stroke-opacity: 1; stroke-width: 2px;"/>
+      </g>
+      <path class="xlines-below"/>
+      <path class="ylines-below"/>
+      <g class="overlines-below"/>
+      <g class="xaxislayer-below"/>
+      <g class="yaxislayer-below"/>
+      <g class="overaxes-below"/>
+      <g class="plot" transform="" clip-path="url(#clipfabb82xyplot)">
+        <g class="scatterlayer mlayer">
+          <g class="trace scatter tracec64529" style="stroke-miterlimit: 2; opacity: 1;">
+            <g class="fills"/>
+            <g class="errorbars"/>
+            <g class="lines">
+              <path class="js-line" d="M0,294.29Q19.39,285.29 29.17,284.85C38.83,284.41 48.61,291.46 58.33,291.46C68.05,291.46 77.88,287.79 87.5,284.85C97.34,281.84 106.97,277.44 116.67,273.52C126.42,269.58 135.92,263.92 145.83,261.25C155.38,258.67 165.47,260.18 175,257.47C184.94,254.64 194.28,247.57 204.17,244.25C213.73,241.04 223.67,240.3 233.33,237.65C243.11,234.97 252.7,230.74 262.5,228.21C272.15,225.72 282.54,227.11 291.67,222.54C302.18,217.28 311.71,206.66 320.83,196.11C331.35,183.95 340.76,168.56 350,152.68C360.33,134.92 369.51,113.85 379.17,94.15C388.95,74.2 396.34,47.01 408.33,33.74C416.9,24.26 428.43,14.2 437.5,15.8C448.12,17.67 458.35,35.71 466.67,52.62C480,79.72 485.04,134.83 495.83,169.68C504.81,198.69 513.35,227.67 525,248.03C533.66,263.17 543.05,278.38 554.17,283.9C563.01,288.28 573.64,283.91 583.33,284.85C593.08,285.79 602.81,287.69 612.5,289.57C622.25,291.46 631.91,295.72 641.67,296.18Q651.35,296.63 670.83,292.4" style="vector-effect: none; fill: none; stroke: rgb(56, 63, 67); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"/>
+            </g>
+            <g class="points"/>
+            <g class="text"/>
+          </g>
+          <g class="trace scatter trace682154" style="stroke-miterlimit: 2;">
+            <g class="fills">
+              <g>
+                <path class="js-fill" d="M700,316L670.83,316L670.83,292.4L700,293.34" style="fill: rgb(246, 215, 210); fill-opacity: 1; stroke-width: 0;"/>
+              </g>
+            </g>
+            <g class="errorbars"/>
+            <g class="lines">
+              <path class="js-line" d="M670.83,292.4L700,293.34" style="vector-effect: none; fill: none; stroke: rgb(148, 37, 20); stroke-opacity: 1; stroke-width: 2px; opacity: 1;"/>
+            </g>
+            <g class="points"/>
+            <g class="text"/>
+          </g>
+        </g>
+      </g>
+      <g class="overplot"/>
+      <path class="xlines-above crisp" d="" style="fill: none; stroke-width: 1px; stroke: rgb(0, 0, 0); stroke-opacity: 0;"/>
+      <path class="ylines-above crisp" d="M0,0" style="fill: none;"/>
+      <g class="overlines-above"/>
+      <g class="xaxislayer-above">
+        <path class="xtick ticks crisp" d="M0,317v5" transform="translate(108.33,0)" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"/>
+        <path class="xtick ticks crisp" d="M0,317v5" transform="translate(237.5,0)" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"/>
+        <path class="xtick ticks crisp" d="M0,317v5" transform="translate(362.5,0)" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"/>
+        <path class="xtick ticks crisp" d="M0,317v5" transform="translate(491.67,0)" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"/>
+        <path class="xtick ticks crisp" d="M0,317v5" transform="translate(620.83,0)" style="stroke: rgb(68, 68, 68); stroke-opacity: 1; stroke-width: 1px;"/>
+        <g class="xtick">
+          <text text-anchor="middle" x="0" y="346" transform="translate(108.33,0)" style="font-family: 'GDS Transport', Arial, sans-serif; font-size: 20px; fill: rgb(107, 114, 118); fill-opacity: 1; white-space: pre; opacity: 1;">Oct</text>
+        </g>
+        <g class="xtick">
+          <text text-anchor="middle" x="0" y="346" style="font-family: 'GDS Transport', Arial, sans-serif; font-size: 20px; fill: rgb(107, 114, 118); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(237.5,0)">Nov</text>
+        </g>
+        <g class="xtick">
+          <text text-anchor="middle" x="0" y="346" style="font-family: 'GDS Transport', Arial, sans-serif; font-size: 20px; fill: rgb(107, 114, 118); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(362.5,0)">Dec</text>
+        </g>
+        <g class="xtick">
+          <text text-anchor="middle" x="0" y="346" style="font-family: 'GDS Transport', Arial, sans-serif; font-size: 20px; fill: rgb(107, 114, 118); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(491.67,0)">Jan</text>
+        </g>
+        <g class="xtick">
+          <text text-anchor="middle" x="0" y="346" style="font-family: 'GDS Transport', Arial, sans-serif; font-size: 20px; fill: rgb(107, 114, 118); fill-opacity: 1; white-space: pre; opacity: 1;" transform="translate(620.83,0)">Feb</text>
+        </g>
+      </g>
+      <g class="yaxislayer-above"/>
+      <g class="overaxes-above"/>
+    </g>
+  </g>
+  <g class="polarlayer"/>
+  <g class="smithlayer"/>
+  <g class="ternarylayer"/>
+  <g class="geolayer"/>
+  <g class="funnelarealayer"/>
+  <g class="pielayer"/>
+  <g class="iciclelayer"/>
+  <g class="treemaplayer"/>
+  <g class="sunburstlayer"/>
+  <g class="glimages"/>
+  <defs id="topdefs-fabb82">
+    <g class="clips"/>
+  </defs>
+  <g class="layer-above">
+    <g class="imagelayer"/>
+    <g class="shapelayer"/>
+  </g>
+  <g class="infolayer">
+    <g class="g-gtitle"/>
+    <g class="g-xtitle"/>
+    <g class="g-ytitle"/>
+  </g>
+</svg>
