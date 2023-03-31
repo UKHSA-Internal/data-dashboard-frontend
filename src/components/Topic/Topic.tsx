@@ -1,7 +1,6 @@
 import TopicTable from './TopicTable'
 import { ChartContainer, Container, TabularData } from './Topic.styles'
 import Image from 'next/image'
-import { getChartApiPath } from '@/api/requests/helpers'
 import { TopicName } from '@/api/requests/stats/getStats'
 
 interface TopicProps {
