@@ -68,14 +68,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
     await initMocks()
   }
 
-  // Skip SSG during CI workflow due to No AWS Access
-  // The site will be built once deployed instead
-  if (process.env.CI === 'true')
-    return {
-      paths: [],
-      fallback: true,
-    }
-
   // Fetch the CMS pages with a topic type
   const { items } = await getPages(PageType.Common)
 
@@ -84,8 +76,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { slug },
   }))
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: 'blocking' } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: true }
+  return { paths, fallback: 'blocking' }
 }
