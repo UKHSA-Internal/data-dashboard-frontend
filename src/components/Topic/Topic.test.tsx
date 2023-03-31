@@ -1,6 +1,7 @@
+import { TopicName } from '@/api/requests/stats/getStats'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Topic, { TopicName } from './Topic'
+import Topic from './Topic'
 
 jest.mock('next/router', () => require('next-router-mock'))
 

@@ -8,7 +8,7 @@ export const covidPageMock: PageResponse<PageType.Topic> = {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/v2/pages/5/',
     html_url: 'http://localhost/current-viruses-in-circulation/sars-cov-2/',
-    slug: 'sars-cov-2',
+    slug: 'coronavirus',
     show_in_menus: false,
     seo_title: '',
     search_description: '',
