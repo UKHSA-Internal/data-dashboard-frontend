@@ -1,7 +1,7 @@
 import { getCmsApiPath, getChartApiPath, getStatsApiPath, requestOptions } from './helpers'
 
 /**
- * The process.env mocks powering these tests live inside <rootDir>/config/jest/jest.env.js
+ * The process.env mocks powering these tests live inside <rootDir>/config/vitest/vitest.env.js
  */
 test('Get the CMS API path', () => {
   expect(getCmsApiPath()).toEqual('http://backend.com/api/pages')

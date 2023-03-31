@@ -2,7 +2,7 @@ import { render, screen } from '@testing-library/react'
 import mockRouter from 'next-router-mock'
 import { NavigationLink } from './NavigationLink'
 
-jest.mock('next/router', () => require('next-router-mock'))
+vi.mock('next/router', () => require('next-router-mock'))
 
 test('Nav link', () => {
   render(<NavigationLink title="Covid" url="/covid" type="primary" />)

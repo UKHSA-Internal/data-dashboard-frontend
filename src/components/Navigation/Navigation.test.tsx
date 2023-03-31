@@ -2,7 +2,7 @@ import { render, screen, within } from '@testing-library/react'
 import mockRouter from 'next-router-mock'
 import { Navigation } from './Navigation'
 
-jest.mock('next/router', () => require('next-router-mock'))
+vi.mock('next/router', () => require('next-router-mock'))
 
 test('Displays primary and secondary links', () => {
   render(
@@ -23,18 +23,13 @@ test('Displays primary and secondary links', () => {
   expect(within(nav).getByText('Home')).toHaveAttribute('href', '/')
   expect(within(nav).getByText('Covid')).toHaveAttribute('href', '/covid')
   expect(within(nav).getByText('About')).toHaveAttribute('href', '/about')
-  expect(within(nav).getByText('Dev guide')).toHaveAttribute(
-    'href',
-    '/dev-guide'
-  )
+  expect(within(nav).getByText('Dev guide')).toHaveAttribute('href', '/dev-guide')
 })
 
 test('Supports a custom aria-label', () => {
   mockRouter.push('/flu')
 
-  render(
-    <Navigation label="Awesome nav!" primaryLinks={[]} secondaryLinks={[]} />
-  )
+  render(<Navigation label="Awesome nav!" primaryLinks={[]} secondaryLinks={[]} />)
 
   expect(screen.getByRole('navigation', { name: 'Awesome nav!' }))
 })
