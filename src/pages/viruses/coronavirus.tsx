@@ -30,7 +30,7 @@ export const Coronavirus = () => {
                   </Paragraph>
                   <Topic
                     description="People tested positive in England up to and including 25th February 2023"
-                    topic="COVID-19"
+                    topic="Coronavirus"
                     category=""
                     name="Coronavirus"
                     image="/img/temp-covid1.png"
@@ -47,7 +47,7 @@ export const Coronavirus = () => {
                   </Paragraph>
                   <Topic
                     description="People tested positive in England up to and including 25th February 2023"
-                    topic="COVID-19"
+                    topic="Coronavirus"
                     category=""
                     name="Coronavirus"
                     image="/img/temp-covid2.png"
@@ -66,7 +66,7 @@ export const Coronavirus = () => {
                   </Paragraph>
                   <Topic
                     description="People tested positive in England up to and including 25th February 2023"
-                    topic="COVID-19"
+                    topic="Coronavirus"
                     category=""
                     name="Coronavirus"
                     image="/img/temp-covid3.png"
@@ -84,7 +84,7 @@ export const Coronavirus = () => {
                   </Paragraph>
                   <Topic
                     description="People tested positive in England up to and including 25th February 2023"
-                    topic="COVID-19"
+                    topic="Coronavirus"
                     category=""
                     name="Coronavirus"
                     image="/img/temp-covid4.png"
@@ -134,7 +134,7 @@ export const Coronavirus = () => {
               </Paragraph>
               <Topic
                 description=""
-                topic="COVID-19"
+                topic="Coronavirus"
                 category=""
                 name="Deaths"
                 image="/img/temp-covid-deaths.png"
@@ -179,7 +179,7 @@ export const Coronavirus = () => {
               </Paragraph>
               <Topic
                 description=""
-                topic="COVID-19"
+                topic="Coronavirus"
                 category=""
                 name="Deaths"
                 image="/img/temp-covid-healthcare.png"
@@ -202,7 +202,7 @@ export const Coronavirus = () => {
               </Paragraph>
               <Topic
                 description=""
-                topic="COVID-19"
+                topic="Coronavirus"
                 category=""
                 name="Deaths"
                 image="/img/temp-covid-vaccinations.png"
@@ -225,7 +225,7 @@ export const Coronavirus = () => {
               </Paragraph>
               <Topic
                 description=""
-                topic="COVID-19"
+                topic="Coronavirus"
                 category=""
                 name="Deaths"
                 image="/img/temp-covid-testing.png"

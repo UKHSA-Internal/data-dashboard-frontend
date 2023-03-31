@@ -49,7 +49,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
                   </GridRow>
                   <Topic
                     description="People tested positive in England up to and including 25th February 2023"
-                    topic="COVID-19"
+                    topic="Coronavirus"
                     category=""
                     name="Coronavirus"
                     points={[]}
