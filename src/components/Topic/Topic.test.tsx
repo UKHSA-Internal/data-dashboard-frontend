@@ -5,7 +5,7 @@ import Topic from './Topic'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
-const mockTopic: TopicName = 'COVID-19'
+const mockTopic: TopicName = 'Coronavirus'
 
 const mockData = {
   name: 'TestVirus',
