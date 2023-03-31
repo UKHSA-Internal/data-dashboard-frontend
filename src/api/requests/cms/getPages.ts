@@ -1,4 +1,4 @@
-import { getCmsApiPath } from '../helpers'
+import { getCmsApiPath, requestOptions } from '../helpers'
 
 /**
  * Response types for the CMS REST endpoint
@@ -37,7 +37,8 @@ export enum PageType {
 }
 
 export const getPages = async (type: PageType): Promise<PagesResponse> => {
-  const req = await fetch(`${getCmsApiPath()}/?type=${type}`)
+  const req = await fetch(`${getCmsApiPath()}/?type=${type}`, requestOptions)
   const res = await req.json()
+  if (!req.ok) throw new Error(res.detail)
   return res
 }

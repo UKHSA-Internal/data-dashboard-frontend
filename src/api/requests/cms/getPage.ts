@@ -1,4 +1,4 @@
-import { getCmsApiPath } from '../helpers'
+import { getCmsApiPath, requestOptions } from '../helpers'
 import { PageType } from './getPages'
 
 /**
@@ -75,7 +75,8 @@ type ParentMeta = {
 }
 
 export const getPage = async <T extends PageType>(id: number): Promise<PageResponse<T>> => {
-  const req = await fetch(`${getCmsApiPath()}/${id}`)
+  const req = await fetch(`${getCmsApiPath()}/${id}`, requestOptions)
   const res = await req.json()
+  if (!req.ok) throw new Error(res.detail)
   return res
 }
