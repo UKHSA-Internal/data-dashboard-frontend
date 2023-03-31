@@ -18,7 +18,7 @@ const getImageSrc = (topic: TopicName, category: string): string => {
     return `/img/${topic}_${category}.svg`
   }
 
-  return `${getChartApiPath()}/${topic}/${category}`
+  return `/charts/${topic}/${category}`
 }
 
 const Topic = ({ description, topic, category, name, points, image }: TopicProps) => {
