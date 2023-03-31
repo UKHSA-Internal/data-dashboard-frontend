@@ -36,6 +36,10 @@ export const mockedPageMap: Record<number, PageResponse<PageType.Common>> = {
 
 export const handlers = [
   rest.get(`${baseUrl}`, (req, res, ctx) => {
+    if (req.headers.get('X-Api-Key') !== process.env.API_KEY) {
+      return res(ctx.status(403), ctx.json({ detail: 'You do not have permission to perform this action' }))
+    }
+
     const searchParams = req.url.searchParams
 
     if (!searchParams.has('type')) return
@@ -45,6 +49,10 @@ export const handlers = [
     return res(ctx.status(200), ctx.json(mockedPagesMap[pageType]))
   }),
   rest.get(`${baseUrl}/:id`, (req, res, ctx) => {
+    if (req.headers.get('X-Api-Key') !== process.env.API_KEY) {
+      return res(ctx.status(403), ctx.json({ detail: 'You do not have permission to perform this action' }))
+    }
+
     const pageId = Number(req.params.id)
 
     if (mockedPageMap[pageId]) {

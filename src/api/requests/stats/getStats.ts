@@ -1,4 +1,4 @@
-import { getStatsApiPath } from '../helpers'
+import { getStatsApiPath, requestOptions } from '../helpers'
 
 /**
  * API Response Types
@@ -257,7 +257,7 @@ export type TopicName = 'COVID-19' | 'Influenza'
 export const getStats = async (
   topic: TopicName
 ): Promise<{ topic: TopicName } & ReturnType<typeof transformResponse>> => {
-  const req = await fetch(`${getStatsApiPath()}/${topic}`)
+  const req = await fetch(`${getStatsApiPath()}/${topic}`, requestOptions)
   const res = await req.json()
 
   if (!req.ok) throw new Error(res.detail)
