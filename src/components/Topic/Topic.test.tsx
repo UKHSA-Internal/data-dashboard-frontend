@@ -1,11 +1,16 @@
+import { TopicName } from '@/api/requests/stats/getStats'
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Topic from './Topic'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
+const mockTopic: TopicName = 'Coronavirus'
+
 const mockData = {
   name: 'TestVirus',
+  topic: mockTopic,
+  category: 'cases',
   description: 'description for test virus',
   points: [
     {
@@ -24,6 +29,8 @@ test('Displays the chart image and tabular data button', () => {
     <Topic
       name={mockData.name}
       description={mockData.description}
+      topic={mockData.topic}
+      category={mockData.category}
       points={mockData.points}
     />
   )
@@ -42,6 +49,8 @@ test('Clicking the "View data in a tabular format" button, shows the graph in a 
     <Topic
       name={mockData.name}
       description={mockData.description}
+      topic={mockData.topic}
+      category={mockData.category}
       points={mockData.points}
     />
   )
