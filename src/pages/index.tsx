@@ -90,10 +90,6 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  const req = await fetch('https://api.ipify.org?format=json')
-  const json = await req.json()
-  console.log(json)
-
   try {
     const {
       title,
