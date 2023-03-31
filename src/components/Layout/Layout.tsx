@@ -8,7 +8,6 @@ export const Layout = ({ children }: PropsWithChildren) => {
   useEffect(() => {
     document.body.classList.add('js-enabled')
   }, [])
-  console.log('test 3')
 
   return (
     <>
