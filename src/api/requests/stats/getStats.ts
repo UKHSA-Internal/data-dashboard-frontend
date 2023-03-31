@@ -238,11 +238,24 @@ const transformResponse = (stats: GetStatisticsResponse) => {
   }
 }
 
-export const getStats = async (topic: 'COVID-19' | 'Influenza'): Promise<ReturnType<typeof transformResponse>> => {
+export type GetStatsRequestParams = 'COVID-19' | 'Influenza'
+
+export type TopicName = 'Coronavirus' | 'Influenza'
+
+export const getStats = async (
+  topic: GetStatsRequestParams
+): Promise<{ topic: TopicName } & ReturnType<typeof transformResponse>> => {
   const req = await fetch(`${getStatsApiPath()}/${topic}`, requestOptions)
   const res = await req.json()
 
   if (!req.ok) throw new Error(res.detail)
 
-  return transformResponse(res)
+  const data = transformResponse(res)
+
+  const topicName: TopicName = topic === 'COVID-19' ? 'Coronavirus' : topic
+
+  return {
+    topic: topicName,
+    ...data,
+  }
 }

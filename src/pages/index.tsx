@@ -11,7 +11,7 @@ import { RelatedLink } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
 import Trend from '@/components/Trend/Trend'
-import { ContentTypes, getStats } from '@/api/requests/stats/getStats'
+import { ContentTypes, getStats, TopicName } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
 
@@ -35,10 +35,10 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
       <Contents>
-        {statistics.map(({ name, summary, tiles }) => (
-          <ContentsItem heading={name} key={`content-item-${name}`}>
-            <p>The UKHSA dashboard for data and insights on {name}.</p>
-            <Card label={`${name} Summary`}>
+        {statistics.map(({ topic, summary, tiles }) => (
+          <ContentsItem heading={topic} key={`content-item-${topic}`}>
+            <p>The UKHSA dashboard for data and insights on {topic}.</p>
+            <Card label={`${topic} Summary`}>
               {summary.map(({ container, content }) => {
                 return (
                   <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>
@@ -51,7 +51,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
               {tiles.map(({ container, content }) => {
                 return (
                   <GridCol setWidth="one-half" key={container}>
-                    <Card label={`${name} ${container}`}>
+                    <Card label={`${topic} ${container}`}>
                       <CardColumn
                         heading={container}
                         sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}
@@ -59,8 +59,10 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                       >
                         {content.map(renderContentTypes)}
                         <Topic
-                          name={name}
                           description="People tested positive in England up to and including 25th February 2023"
+                          topic={topic}
+                          category={container}
+                          name={topic}
                           points={[]}
                         />
                       </CardColumn>
@@ -78,7 +80,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
   )
 }
 
-type StatisticsProps = Array<{ name: string } & Awaited<ReturnType<typeof getStats>>>
+type StatisticsProps = Array<{ topic: TopicName } & Awaited<ReturnType<typeof getStats>>>
 
 export const getStaticProps: GetStaticProps<{
   title: string
@@ -102,16 +104,7 @@ export const getStaticProps: GetStaticProps<{
     const coronavirusData = await getStats('COVID-19')
     const influenzaData = await getStats('Influenza')
 
-    const statistics: StatisticsProps = [
-      {
-        name: 'Coronavirus',
-        ...coronavirusData,
-      },
-      {
-        name: 'Influenza',
-        ...influenzaData,
-      },
-    ]
+    const statistics: StatisticsProps = [coronavirusData, influenzaData]
 
     return {
       props: {
