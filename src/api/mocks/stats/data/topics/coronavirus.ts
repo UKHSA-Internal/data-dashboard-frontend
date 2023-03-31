@@ -100,7 +100,7 @@ export const coronavirusStatsMock: GetStatisticsResponse = [
   {
     panel: 'Headline',
     main_container: 'Vaccinations',
-    secondary_container: 'Summer Booster',
+    secondary_container: 'Autumn Booster',
     metric_value: '15,129,590',
   },
   {
@@ -141,6 +141,11 @@ export const coronavirusStatsMock: GetStatisticsResponse = [
   {
     panel: 'Tile',
     main_container: 'Cases',
+    secondary_container: 'Up to and including 8 March 2023',
+  },
+  {
+    panel: 'Tile',
+    main_container: 'Cases',
     secondary_container: 'Last 7 days',
     metric_value: '24,298',
   },
@@ -172,6 +177,11 @@ export const coronavirusStatsMock: GetStatisticsResponse = [
     panel: 'Tile',
     main_container: 'Deaths',
     secondary_container: 'Deaths with COVID-19 on the death Certificate in England',
+  },
+  {
+    panel: 'Tile',
+    main_container: 'Deaths',
+    secondary_container: 'Up to and including 10 February 2023',
   },
   {
     panel: 'Tile',
