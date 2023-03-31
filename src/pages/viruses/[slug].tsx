@@ -152,9 +152,12 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { items } = await getPages(PageType.Topic)
 
   // Get the paths we want to pre-render based on the list of topic pages
-  const paths = items.map(({ meta: { slug } }) => ({
-    params: { slug },
-  }))
+  // NOTE: Temporarily filter out covid/influenza pages whilst these are hardcoded locally into the project
+  const paths = items
+    .filter((item) => item.meta.slug === 'Coronavirus' || item.meta.slug === 'Influenza')
+    .map(({ meta: { slug } }) => ({
+      params: { slug },
+    }))
 
   return { paths, fallback: 'blocking' }
 }
