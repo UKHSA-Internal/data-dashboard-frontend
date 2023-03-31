@@ -27,9 +27,11 @@ export const Influenza = () => {
                   theme="secondary"
                 >
                   <Topic
-                    name="Influenza"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-influenza1.png"
+                    topic="Influenza"
+                    category=""
+                    name="Influenza"
+                    image="/img/temp-influenza1.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -42,9 +44,11 @@ export const Influenza = () => {
                   theme="secondary"
                 >
                   <Topic
-                    name="Influenza"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-influenza2.png"
+                    topic="Influenza"
+                    category=""
+                    name="Influenza"
+                    image="/img/temp-influenza2.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -59,9 +63,11 @@ export const Influenza = () => {
                   theme="secondary"
                 >
                   <Topic
-                    name="Influenza"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-influenza3.png"
+                    topic="Influenza"
+                    category=""
+                    name="Influenza"
+                    image="/img/temp-influenza3.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -74,9 +80,11 @@ export const Influenza = () => {
                   theme="secondary"
                 >
                   <Topic
-                    name="Influenza"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-influenza4.png"
+                    topic="Influenza"
+                    category=""
+                    name="Influenza"
+                    image="/img/temp-influenza4.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -91,9 +99,11 @@ export const Influenza = () => {
                   theme="secondary"
                 >
                   <Topic
-                    name="Influenza"
                     description="People tested positive in England up to and including 25th February 2023"
-                    image="/temp-influenza5.png"
+                    topic="Influenza"
+                    category=""
+                    name="Influenza"
+                    image="/img/temp-influenza5.png"
                     points={[]}
                   />
                 </CardColumn>
@@ -108,7 +118,14 @@ export const Influenza = () => {
               heading="Respiratory DataMart weeklyu positive (%) for influenza by age, England"
               theme="secondary"
             >
-              <Topic name="Deaths" description="" image="/temp-influenza-testing.png" points={[]} />
+              <Topic
+                description=""
+                topic="Influenza"
+                category=""
+                name="Deaths"
+                image="/img/temp-influenza-testing.png"
+                points={[]}
+              />
             </CardColumn>
           </GridRow>
         </ContentsItem>
