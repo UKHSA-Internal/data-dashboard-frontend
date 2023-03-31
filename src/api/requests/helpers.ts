@@ -14,3 +14,9 @@ export const getChartApiPath = () => {
 export const getStatsApiPath = () => {
   return `${baseUrl}${statsPath}`
 }
+
+export const requestOptions: RequestInit = {
+  headers: {
+    'X-Api-Key': process.env.API_KEY ?? '',
+  },
+}
