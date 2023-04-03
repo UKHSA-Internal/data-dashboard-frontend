@@ -37,6 +37,7 @@ export enum PageType {
 }
 
 export const getPages = async (type: PageType): Promise<PagesResponse> => {
+  console.log('get pages: ', requestOptions)
   const req = await fetch(`${getCmsApiPath()}/?type=${type}`, requestOptions)
   const res = await req.json()
   if (!req.ok) throw new Error(res.detail)
