@@ -36,7 +36,10 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
-        run: NODE_ENV=test npm run build
+        run: |
+          touch .env.local
+          echo API_KEY=${{ secrets.API_KEY }} >> .env.local
+          npm run build
 
   ###############################################################################
   # Code quality checks
