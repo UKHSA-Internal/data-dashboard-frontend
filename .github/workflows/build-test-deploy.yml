@@ -113,7 +113,7 @@ jobs:
     name: ECR Image Push
     needs: [quality-checks, unit-tests, cypress-tests-success]
     runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
+    # if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Check out code
@@ -136,6 +136,8 @@ jobs:
           ECR_REPOSITORY: wp-frontend
           IMAGE_TAG: latest
         run: |
+          touch .env.local
+          echo API_KEY=${{ secrets.API_KEY }} >> .env.local
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2
