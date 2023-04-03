@@ -17,6 +17,6 @@ export const getStatsApiPath = () => {
 
 export const requestOptions: RequestInit = {
   headers: {
-    'X-Api-Key': process.env.API_KEY ?? '',
+    Authorization: process.env.API_KEY ?? '',
   },
 }
