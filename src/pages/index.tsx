@@ -93,6 +93,8 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
+  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
+
   try {
     const {
       title,
@@ -114,10 +116,10 @@ export const getStaticProps: GetStaticProps<{
         relatedLinks,
         statistics,
       },
-      revalidate: 10,
+      revalidate,
     }
   } catch (error) {
     console.log(error)
-    return { notFound: true, revalidate: 10 }
+    return { notFound: true, revalidate }
   }
 }
