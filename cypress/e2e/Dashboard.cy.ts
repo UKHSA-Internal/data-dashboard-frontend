@@ -1,9 +1,15 @@
 import path from 'path'
+import 'cypress-axe'
 
 describe('Dashboard', () => {
   beforeEach(() => {
     cy.visit('/')
+    cy.injectAxe()
   })
+
+  // it('Has no detectable a11y violations', () => {
+  //   cy.checkA11y()
+  // })
 
   it('displays a title, last updated date and body', () => {
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
@@ -92,7 +98,7 @@ describe('Dashboard', () => {
     })
   })
 
-  it.only('displays influenza statistics', () => {
+  it('displays influenza statistics', () => {
     cy.findByRole('navigation', {
       name: 'Contents',
     }).as('contents')

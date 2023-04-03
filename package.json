@@ -17,6 +17,7 @@
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
     "cross-env": "^7.0.3",
+    "cypress-axe": "^1.4.0",
     "dayjs": "^1.11.7",
     "govuk-react": "^0.10.5",
     "next": "^13.2.4",

@@ -1,7 +1,16 @@
-describe('About', () => {
-  it('displays correctly', () => {
-    cy.visit('/about')
+import 'cypress-axe'
 
+describe('About', () => {
+  beforeEach(() => {
+    cy.visit('/about')
+    cy.injectAxe()
+  })
+
+  // it('Has no detectable a11y violations', () => {
+  //   cy.checkA11y()
+  // })
+
+  it('displays correctly', () => {
     // Last updated
     cy.findByText('Last updated on Saturday, 18 March 2023 at 10:25am')
 
@@ -70,8 +79,6 @@ describe('About', () => {
   })
 
   it('Anchors to the section when clicking the associated contents link', () => {
-    cy.visit('/about')
-
     // Contents
     cy.findByRole('navigation', { name: 'Contents' }).within(() => {
       cy.findByRole('link', { name: 'Cases' }).click()
