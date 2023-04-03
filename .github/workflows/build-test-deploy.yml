@@ -40,7 +40,7 @@ jobs:
           touch .env.local
           echo API_KEY=${{ secrets.API_KEY }} >> .env.local
           echo NEXT_REVALIDATE_API_KEY=${{ secrets.NEXT_REVALIDATE_API_KEY }} >> .env.local
-          npm run build
+          NODE_ENV=test npm run build
 
   ###############################################################################
   # Code quality checks
