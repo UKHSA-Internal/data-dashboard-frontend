@@ -19,7 +19,7 @@ test.each(Object.keys(mockedPagesMap))('GET /pages?type=%s returns the correct p
 })
 
 test.each(Object.keys(mockedPagesMap))('GET /pages?type=%s returns 403 with invalid api key', async (pageType) => {
-  const res = await fetch(`${baseUrl}?type=${pageType}`, { headers: { 'X-Api-Key': 'not-valid' } })
+  const res = await fetch(`${baseUrl}?type=${pageType}`, { headers: { Authorization: 'not-valid' } })
   const json = await res.json()
 
   expect(res.status).toEqual(403)
@@ -35,7 +35,7 @@ test.each(Object.keys(mockedPageMap))('GET /pages/%i returns the correct page ob
 })
 
 test.each(Object.keys(mockedPageMap))('GET /pages/%i returns 403 with invalid api key', async (pageId) => {
-  const res = await fetch(`${baseUrl}/${pageId}`, { headers: { 'X-Api-Key': 'not-valid' } })
+  const res = await fetch(`${baseUrl}/${pageId}`, { headers: { Authorization: 'not-valid' } })
   const json = await res.json()
 
   expect(res.status).toEqual(403)
