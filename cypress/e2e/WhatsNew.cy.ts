@@ -1,4 +1,11 @@
+import 'cypress-axe'
+
 describe("What's new", () => {
+  // it('Has no detectable a11y violations', () => {
+  //   cy.injectAxe()
+  //   cy.checkA11y()
+  // })
+
   it('displays correctly', () => {
     cy.visit('/whats-new')
 
