@@ -124,6 +124,8 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
     await initMocks()
   }
 
+  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
+
   try {
     const params = req.params
 
@@ -134,14 +136,14 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
       // Parse the cms response and pick out only relevant data for the ui
       return {
         props: formatCmsPageTopicResponse(page),
-        revalidate: 60,
+        revalidate,
       }
     }
 
     throw new Error('No slug found')
   } catch (error) {
     console.log(error)
-    return { notFound: true, revalidate: 10 }
+    return { notFound: true, revalidate }
   }
 }
 
