@@ -124,6 +124,8 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
     await initMocks()
   }
 
+  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
+
   try {
     const params = req.params
 
@@ -134,14 +136,14 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
       // Parse the cms response and pick out only relevant data for the ui
       return {
         props: formatCmsPageTopicResponse(page),
-        revalidate: 60,
+        revalidate,
       }
     }
 
     throw new Error('No slug found')
   } catch (error) {
     console.log(error)
-    return { notFound: true, revalidate: 10 }
+    return { notFound: true, revalidate }
   }
 }
 
@@ -150,25 +152,16 @@ export const getStaticPaths: GetStaticPaths = async () => {
     await initMocks()
   }
 
-  // Skip SSG during CI workflow due to No AWS Access
-  // The site will be built once deployed instead
-  if (process.env.CI === 'true') {
-    return {
-      paths: [],
-      fallback: true,
-    }
-  }
-
   // Fetch the CMS pages with a topic type
   const { items } = await getPages(PageType.Topic)
 
   // Get the paths we want to pre-render based on the list of topic pages
-  const paths = items.map(({ meta: { slug } }) => ({
-    params: { slug },
-  }))
+  // NOTE: Temporarily filter out covid/influenza pages whilst these are hardcoded locally into the project
+  const paths = items
+    .filter((item) => item.meta.slug === 'Coronavirus' || item.meta.slug === 'Influenza')
+    .map(({ meta: { slug } }) => ({
+      params: { slug },
+    }))
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: 'blocking' } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: true }
+  return { paths, fallback: 'blocking' }
 }
