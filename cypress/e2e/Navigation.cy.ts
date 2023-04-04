@@ -28,25 +28,25 @@ describe('Navigation', () => {
     })
   })
 
-  // it('loads the new page clicking a link', () => {
-  //   cy.visit('/')
+  it('loads the new page clicking a link', () => {
+    cy.visit('/')
 
-  //   cy.findByRole('navigation', { name: 'Menu' })
-  //     .within(() => {
-  //       cy.findByText('Coronavirus').click()
-  //     })
-  //     .url()
-  //     .should('include', '/viruses/coronavirus')
+    cy.findByRole('navigation', { name: 'Menu' })
+      .within(() => {
+        cy.findByText('Coronavirus').click()
+      })
+      .url()
+      .should('include', '/viruses/coronavirus')
 
-  //   cy.findByRole('heading', { name: 'Coronavirus' })
+    cy.findByRole('heading', { name: 'Coronavirus' })
 
-  //   cy.findByRole('navigation', { name: 'Menu' })
-  //     .within(() => {
-  //       cy.findByText('Influenza').click()
-  //     })
-  //     .url()
-  //     .should('include', '/viruses/influenza')
+    cy.findByRole('navigation', { name: 'Menu' })
+      .within(() => {
+        cy.findByText('Influenza').click()
+      })
+      .url()
+      .should('include', '/viruses/influenza')
 
-  //   cy.findByRole('heading', { name: 'Influenza' })
-  // })
+    cy.findByRole('heading', { name: 'Influenza' })
+  })
 })
