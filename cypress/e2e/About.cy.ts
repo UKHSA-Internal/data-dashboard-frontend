@@ -6,9 +6,17 @@ describe('About', () => {
     cy.injectAxe()
   })
 
-  // it('Has no detectable a11y violations', () => {
-  //   cy.checkA11y()
-  // })
+  it('Has no detectable a11y violations', () => {
+    cy.injectAxe()
+    cy.checkA11y('html', {
+      rules: {
+        'document-title': { enabled: false },
+        'html-has-lang': { enabled: false },
+        'landmark-unique': { enabled: false },
+        region: { enabled: false },
+      },
+    })
+  })
 
   it('displays correctly', () => {
     // Last updated

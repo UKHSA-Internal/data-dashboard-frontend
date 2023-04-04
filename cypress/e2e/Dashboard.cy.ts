@@ -7,9 +7,15 @@ describe('Dashboard', () => {
     cy.injectAxe()
   })
 
-  // it('Has no detectable a11y violations', () => {
-  //   cy.checkA11y()
-  // })
+  it('Has no detectable a11y violations', () => {
+    cy.checkA11y('html', {
+      rules: {
+        'document-title': { enabled: false },
+        'html-has-lang': { enabled: false },
+        region: { enabled: false },
+      },
+    })
+  })
 
   it('displays a title, last updated date and body', () => {
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
