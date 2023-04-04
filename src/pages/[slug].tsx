@@ -32,6 +32,8 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
+  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
+
   try {
     const params = req.params
 
@@ -52,14 +54,14 @@ export const getStaticProps: GetStaticProps<{
           lastUpdated,
           relatedLinks,
         },
-        revalidate: 60,
+        revalidate,
       }
     }
 
     throw new Error('No slug found')
   } catch (error) {
     console.log(error)
-    return { notFound: true, revalidate: 10 }
+    return { notFound: true, revalidate }
   }
 }
 
@@ -67,14 +69,6 @@ export const getStaticPaths: GetStaticPaths = async () => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
-
-  // Skip SSG during CI workflow due to No AWS Access
-  // The site will be built once deployed instead
-  if (process.env.CI === 'true')
-    return {
-      paths: [],
-      fallback: true,
-    }
 
   // Fetch the CMS pages with a topic type
   const { items } = await getPages(PageType.Common)
@@ -84,8 +78,5 @@ export const getStaticPaths: GetStaticPaths = async () => {
     params: { slug },
   }))
 
-  // We'll pre-render only these paths at build time.
-  // { fallback: 'blocking' } will server-render pages
-  // on-demand if the path doesn't exist.
-  return { paths, fallback: true }
+  return { paths, fallback: 'blocking' }
 }
