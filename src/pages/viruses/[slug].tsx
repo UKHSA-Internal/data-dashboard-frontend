@@ -19,6 +19,7 @@ import { Card, CardColumn } from '@/components/Card'
 import { Statistic } from '@/components/Statistic'
 import Trend from '@/components/Trend/Trend'
 import Topic from '@/components/Topic/Topic'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -135,7 +136,10 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
 
       // Parse the cms response and pick out only relevant data for the ui
       return {
-        props: formatCmsPageTopicResponse(page),
+        props: {
+          ...formatCmsPageTopicResponse(page),
+          ...(await serverSideTranslations(req.locale as string, ['common'])),
+        },
         revalidate,
       }
     }
