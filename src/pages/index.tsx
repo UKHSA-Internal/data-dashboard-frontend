@@ -1,6 +1,7 @@
 import { Fragment } from 'react'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import Topic from '@/components/Topic/Topic'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { Contents, ContentsItem } from '@/components/Contents'
@@ -14,6 +15,7 @@ import Trend from '@/components/Trend/Trend'
 import { ContentTypes, getStats, TopicName } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
+import { useTranslation } from 'next-i18next'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -29,12 +31,14 @@ const renderContentTypes = (item: ContentTypes) => (
 )
 
 export default function Home({ title, body, relatedLinks, lastUpdated, statistics }: HomeProps) {
+  const { t } = useTranslation()
+
   if (!title) return null
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Paragraph>{body}</Paragraph>
-      <Contents>
+      <Contents heading={t<string>('contentsHeading')}>
         {statistics.map(({ topic, summary, tiles }) => (
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
             <p>The UKHSA dashboard for data and insights on {topic}.</p>
@@ -54,7 +58,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                     <Card label={`${topic} ${container}`}>
                       <CardColumn
                         heading={container}
-                        sideContent={<DownloadLink href="/api/download">Download</DownloadLink>}
+                        sideContent={<DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}
                         data-testid={`column-${container.toLowerCase()}`}
                       >
                         {content.map(renderContentTypes)}
@@ -88,7 +92,7 @@ export const getStaticProps: GetStaticProps<{
   lastUpdated: string
   relatedLinks: Array<RelatedLink>
   statistics: StatisticsProps
-}> = async () => {
+}> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -115,6 +119,7 @@ export const getStaticProps: GetStaticProps<{
         lastUpdated,
         relatedLinks,
         statistics,
+        ...(await serverSideTranslations(req.locale as string, ['common'])),
       },
       revalidate,
     }
