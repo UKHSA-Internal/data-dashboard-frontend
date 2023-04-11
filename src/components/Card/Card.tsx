@@ -3,14 +3,15 @@ import { ComponentProps, ReactNode } from 'react'
 import { Container, CardColumnHeading, CardColumnHeadingContainer, CardColumnGridCol } from './Card.styles'
 
 interface CardProps {
-  label?: string
   children: ReactNode
+  label?: string
   theme?: 'primary' | 'secondary'
+  columnLimit?: boolean
 }
 
-export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
+export const Card = ({ children, label, theme = 'primary', columnLimit = false }: CardProps) => {
   return (
-    <Container as="article" aria-label={label} theme={theme}>
+    <Container as="article" aria-label={label} theme={theme} columnLimit={columnLimit}>
       {children}
     </Container>
   )

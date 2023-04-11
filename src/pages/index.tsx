@@ -38,7 +38,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
         {statistics.map(({ topic, summary, tiles }) => (
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
             <p>The UKHSA dashboard for data and insights on {topic}.</p>
-            <Card label={`${topic} Summary`}>
+            <Card label={`${topic} Summary`} columnLimit={topic === 'Coronavirus'}>
               {summary.map(({ container, content }) => {
                 return (
                   <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>

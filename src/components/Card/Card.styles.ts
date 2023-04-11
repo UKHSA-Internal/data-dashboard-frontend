@@ -1,10 +1,15 @@
 import styled from 'styled-components'
 import { GREY_3, BLACK, GREY_1 } from 'govuk-colours'
-import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
+import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES, BREAKPOINTS } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { GridCol, GridRow, H3 } from 'govuk-react'
 
 type ContainerProps = {
+  theme?: 'primary' | 'secondary'
+  columnLimit: boolean
+}
+
+type ColumnHeadingProps = {
   theme?: 'primary' | 'secondary'
 }
 
@@ -16,6 +21,14 @@ export const Container = styled(GridRow)`
   padding-bottom: ${SPACING.SCALE_3};
   margin-top: ${SPACING.SCALE_5};
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
+  display: grid;
+  grid-row-gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+
+  @media (max-width: ${BREAKPOINTS.DESKTOP}) and (min-width: 440px) {
+    grid-template-columns: ${(p: ContainerProps) =>
+      p.columnLimit ? 'repeat(3, 1fr)' : 'repeat(auto-fit, minmax(100px, 1fr))'};
+  }
 `
 
 export const CardColumnHeadingContainer = styled.div`
@@ -25,11 +38,11 @@ export const CardColumnHeadingContainer = styled.div`
   }
 `
 
-export const CardColumnHeading = styled(H3)<ContainerProps>`
+export const CardColumnHeading = styled(H3)<ColumnHeadingProps>`
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
-  font-weight: ${(p: ContainerProps) => (p.theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
-  color: ${(p: ContainerProps) => (p.theme == 'secondary' ? BLACK : GREY_1)};
-  margin-bottom: ${(p: ContainerProps) => (p.theme == 'secondary' ? '10px' : 0)};
+  font-weight: ${(p: ColumnHeadingProps) => (p.theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
+  color: ${(p: ColumnHeadingProps) => (p.theme == 'secondary' ? BLACK : GREY_1)};
+  margin-bottom: ${(p: ColumnHeadingProps) => (p.theme == 'secondary' ? '10px' : 0)};
 `
 
 export const CardColumnGridCol = styled(GridCol)`

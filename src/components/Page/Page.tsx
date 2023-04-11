@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Container, Heading, LastUpdated } from './Page.styles'
+import { Heading, LastUpdated } from './Page.styles'
 import dayjs from 'dayjs'
 
 dayjs().format()
@@ -17,10 +17,10 @@ const getLastUpdatedText = (datetime: Date) => {
 
 export const Page = ({ children, heading, lastUpdated }: PageProps) => {
   return (
-    <Container>
+    <>
       {lastUpdated && <LastUpdated>{getLastUpdatedText(new Date(lastUpdated))}</LastUpdated>}
       <Heading>{heading}</Heading>
       {children}
-    </Container>
+    </>
   )
 }
