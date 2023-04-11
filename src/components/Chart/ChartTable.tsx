@@ -1,4 +1,4 @@
-import { Table } from './TopicTable.styles'
+import { Table } from './ChartTable.styles'
 
 interface TopicTableProps {
   caption: string
