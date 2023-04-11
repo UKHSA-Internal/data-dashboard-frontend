@@ -1,4 +1,4 @@
-import { Footer, Main, Page, PhaseBanner, TopNav } from 'govuk-react'
+import { Footer, Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren, useEffect } from 'react'
 import { Navigation } from '../Navigation'
 import RouterLink from 'next/link'
@@ -29,7 +29,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
         }
         main={'main'}
       >
-        <Main>{children}</Main>
+        {children}
       </Page>
       <Footer
         copyright={{
