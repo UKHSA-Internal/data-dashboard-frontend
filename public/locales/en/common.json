@@ -1,0 +1,8 @@
+{
+  "serviceTitle": "UKHSA Dashboard",
+  "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
+  "feedbackBanner": "This is a new service – your feedback will help us to improve it.",
+  "downloadBtn": "Download",
+  "contentsHeading": "Contents",
+  "relatedLinksHeading": "Related Links"
+}
