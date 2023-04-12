@@ -1,6 +1,5 @@
 import styled from 'styled-components'
-import { Link as GovUKLink, Button } from 'govuk-react'
-import { BLACK } from 'govuk-colours'
+import { Link as GovUKLink } from 'govuk-react'
 import { typography } from '@govuk-react/lib'
 import { BODY_SIZES, SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
 
