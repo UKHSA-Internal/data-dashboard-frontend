@@ -2,15 +2,17 @@ import { RelatedLink } from '@/api/requests/cms/getPage'
 import { H2, ListItem, UnorderedList } from 'govuk-react'
 import { FormattedContent } from '../FormattedContent'
 import { BoldExternalLink, Container } from './RelatedLinks.styles'
+import { useTranslation } from 'next-i18next'
 
 interface RelatedLinksProps {
   links: Array<RelatedLink>
 }
 
 const RelatedLinks = ({ links }: RelatedLinksProps) => {
+  const { t } = useTranslation('common')
   return (
     <Container>
-      <H2>Related Links</H2>
+      <H2>{t('relatedLinksHeading')}</H2>
       <UnorderedList listStyleType="none">
         {links.map(({ id, title, url, body }) => (
           <ListItem key={id}>
