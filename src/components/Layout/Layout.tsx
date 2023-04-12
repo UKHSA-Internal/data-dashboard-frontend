@@ -3,8 +3,11 @@ import { PropsWithChildren, useEffect } from 'react'
 import { Navigation } from '../Navigation'
 import RouterLink from 'next/link'
 import { TopNavLink } from './Layout.styles'
+import { useTranslation } from 'next-i18next'
 
 export const Layout = ({ children }: PropsWithChildren) => {
+  const { t } = useTranslation('common')
+
   useEffect(() => {
     document.body.classList.add('js-enabled')
   }, [])
@@ -14,7 +17,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="alpha">This is a new service – your feedback will help us to improve it.</PhaseBanner>
+            <PhaseBanner level="beta">{t('feedbackBanner')}</PhaseBanner>
             <Navigation />
           </>
         }
@@ -22,7 +25,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
           <TopNav
             serviceTitle={
               <RouterLink href="/" passHref legacyBehavior>
-                <TopNavLink>UKHSA Dashboard</TopNavLink>
+                <TopNavLink>{t('serviceTitle')}</TopNavLink>
               </RouterLink>
             }
           />
