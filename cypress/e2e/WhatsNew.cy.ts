@@ -1,4 +1,19 @@
+import 'cypress-axe'
+
 describe("What's new", () => {
+  it('Has no detectable a11y violations', () => {
+    cy.visit('/whats-new')
+    cy.injectAxe()
+    cy.checkA11y('html', {
+      rules: {
+        'document-title': { enabled: false },
+        'html-has-lang': { enabled: false },
+        'landmark-unique': { enabled: false },
+        region: { enabled: false },
+      },
+    })
+  })
+
   it('displays correctly', () => {
     cy.visit('/whats-new')
 
