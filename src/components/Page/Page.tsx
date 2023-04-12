@@ -1,8 +1,6 @@
 import { ReactNode } from 'react'
 import { Container, Heading, LastUpdated } from './Page.styles'
-import dayjs from 'dayjs'
-
-dayjs().format()
+import { useTranslation } from 'next-i18next'
 
 interface PageProps {
   heading: string
@@ -10,15 +8,11 @@ interface PageProps {
   lastUpdated?: string
 }
 
-const getLastUpdatedText = (datetime: Date) => {
-  const date = dayjs(datetime)
-  return `Last updated on ${date.format('dddd, D MMMM YYYY')} at ${date.format('hh:mma')}`
-}
-
 export const Page = ({ children, heading, lastUpdated }: PageProps) => {
+  const { t } = useTranslation('common')
   return (
     <Container>
-      {lastUpdated && <LastUpdated>{getLastUpdatedText(new Date(lastUpdated))}</LastUpdated>}
+      {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
       <Heading>{heading}</Heading>
       {children}
     </Container>
