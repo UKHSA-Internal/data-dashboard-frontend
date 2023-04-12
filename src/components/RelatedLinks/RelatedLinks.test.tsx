@@ -1,5 +1,5 @@
 import { RelatedLink } from '@/api/requests/cms/getPage'
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, within } from '@/config/test-utils'
 import RelatedLinks from './RelatedLinks'
 
 const testData: Array<RelatedLink> = [

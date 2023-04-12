@@ -13,6 +13,8 @@ import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 export const Coronavirus = () => {
   return (
@@ -220,3 +222,11 @@ export const Coronavirus = () => {
 }
 
 export default Coronavirus
+
+export const getStaticProps: GetStaticProps = async (req) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(req.locale as string, ['common'])),
+    },
+  }
+}
