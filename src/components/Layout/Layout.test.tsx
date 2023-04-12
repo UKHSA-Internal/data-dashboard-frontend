@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/config/test-utils'
 import { Layout } from './Layout'
 
 jest.mock('next/router', () => require('next-router-mock'))
@@ -14,11 +14,7 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   expect(screen.getByText('UKHSA Dashboard')).toHaveAttribute('href', '/')
 
   // Phrase Banner
-  expect(
-    screen.getByText(
-      'This is a new service – your feedback will help us to improve it.'
-    )
-  ).toBeInTheDocument()
+  expect(screen.getByText('This is a new service – your feedback will help us to improve it.')).toBeInTheDocument()
 
   // Navigation
   expect(screen.getByRole('navigation', { name: 'Menu' })).toBeInTheDocument()
