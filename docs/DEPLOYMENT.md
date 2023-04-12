@@ -34,8 +34,12 @@ The UKHSA Dashboard is generated statically during deployment, with all data fet
 
 ### 1) Automatic Revalidation
 
-Our NextJS app has a 24-hour forced revalidate period. Any changes made to the CMS or data ingestion during this period will be reflected in the dashboard within 24 hours.
+The NextJS application is configured with a stale-while-revalidate cache, enforced with a one-minute revalidation period. This means that any updates or modifications made to the content management system (CMS) or data ingestion process will be reflected in the application's dashboard within a minute of their occurrence.
 
 ### 2) On-Demand Revalidation
 
 If immediate updates are required, an HTTP GET request can be sent to an API route that we have exposed: `/api/revalidate?token=<secret>&page=<page>`. This method allows for per-page revalidation, and will be triggered automatically upon any CMS edits.
+
+```
+Note: This feature is presently inactive as a result of the UKHSA front-end infrastructure. The load balancer initiates invalidations on an individual container, leading to potential discrepancies in content delivery. While some requests may receive updated content, others may receive outdated content.
+```
