@@ -7,7 +7,7 @@ import {
 } from '@/components/Accordion'
 import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
-import Topic from '@/components/Topic/Topic'
+import { Chart } from '@/components/Chart'
 import { GridCol, GridRow } from 'govuk-react'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
@@ -28,14 +28,7 @@ export const Influenza = () => {
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
                 >
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Influenza"
-                    category=""
-                    name="Influenza"
-                    image="/img/temp-influenza1.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-influenza1.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -45,14 +38,7 @@ export const Influenza = () => {
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
                 >
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Influenza"
-                    category=""
-                    name="Influenza"
-                    image="/img/temp-influenza2.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-influenza2.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -64,14 +50,7 @@ export const Influenza = () => {
                   heading="Weekly overall ICU or HDU admission rates for new influenza positive cases per 100,000 population reporteed through SARI Watch"
                   theme="secondary"
                 >
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Influenza"
-                    category=""
-                    name="Influenza"
-                    image="/img/temp-influenza3.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-influenza3.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -81,14 +60,7 @@ export const Influenza = () => {
                   heading="Weekly overall influenza ICU or HDU admission rates per 100,000 trust catchment population with MEM threasholds, SARI Watch, England"
                   theme="secondary"
                 >
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Influenza"
-                    category=""
-                    name="Influenza"
-                    image="/img/temp-influenza4.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-influenza4.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -100,14 +72,7 @@ export const Influenza = () => {
                   heading="Weekly overall ICU or HDU admission rates for new influenza positive cases per 100,000 population reporteed through SARI Watch"
                   theme="secondary"
                 >
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Influenza"
-                    category=""
-                    name="Influenza"
-                    image="/img/temp-influenza5.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-influenza5.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -120,14 +85,7 @@ export const Influenza = () => {
               heading="Respiratory DataMart weeklyu positive (%) for influenza by age, England"
               theme="secondary"
             >
-              <Topic
-                description=""
-                topic="Influenza"
-                category=""
-                name="Deaths"
-                image="/img/temp-influenza-testing.png"
-                points={[]}
-              />
+              <Chart src="" fallback="/img/temp-influenza-testing.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>

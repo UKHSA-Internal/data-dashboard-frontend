@@ -1,8 +1,8 @@
 import { Fragment } from 'react'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
+import { Chart } from '@/components/Chart'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import Topic from '@/components/Topic/Topic'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
@@ -15,6 +15,7 @@ import Trend from '@/components/Trend/Trend'
 import { ContentTypes, getStats, TopicName } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
+import { getAllDashboardCharts } from '@/api/requests/charts/getAllDashboardCharts'
 import { useTranslation } from 'next-i18next'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
@@ -30,7 +31,7 @@ const renderContentTypes = (item: ContentTypes) => (
   </Fragment>
 )
 
-export default function Home({ title, body, relatedLinks, lastUpdated, statistics }: HomeProps) {
+export default function Home({ title, body, relatedLinks, lastUpdated, statistics, charts }: HomeProps) {
   const { t } = useTranslation()
 
   if (!title) return null
@@ -62,12 +63,9 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                         data-testid={`column-${container.toLowerCase()}`}
                       >
                         {content.map(renderContentTypes)}
-                        <Topic
-                          description="People tested positive in England up to and including 25th February 2023"
-                          topic={topic}
-                          category={container}
-                          name={topic}
-                          points={[]}
+                        <Chart
+                          src={`data:image/svg+xml;utf8,${encodeURIComponent(charts[topic][container])}`}
+                          fallback={`/img/${topic}_${container}.svg`}
                         />
                       </CardColumn>
                     </Card>
@@ -85,6 +83,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
 }
 
 type StatisticsProps = Array<{ topic: TopicName } & Awaited<ReturnType<typeof getStats>>>
+type ChartsProps = Record<TopicName, Record<string, string>>
 
 export const getStaticProps: GetStaticProps<{
   title: string
@@ -92,6 +91,7 @@ export const getStaticProps: GetStaticProps<{
   lastUpdated: string
   relatedLinks: Array<RelatedLink>
   statistics: StatisticsProps
+  charts: ChartsProps
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -109,8 +109,9 @@ export const getStaticProps: GetStaticProps<{
 
     const coronavirusData = await getStats('COVID-19')
     const influenzaData = await getStats('Influenza')
-
     const statistics: StatisticsProps = [coronavirusData, influenzaData]
+
+    const charts = await getAllDashboardCharts()
 
     return {
       props: {
@@ -119,6 +120,7 @@ export const getStaticProps: GetStaticProps<{
         lastUpdated,
         relatedLinks,
         statistics,
+        charts,
         ...(await serverSideTranslations(req.locale as string, ['common'])),
       },
       revalidate,

@@ -18,7 +18,7 @@ import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
 import { Statistic } from '@/components/Statistic'
 import Trend from '@/components/Trend/Trend'
-import Topic from '@/components/Topic/Topic'
+import { Chart } from '@/components/Chart'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
@@ -48,13 +48,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
                       <Trend direction="down" colour="green" value={'-1,600 (-6.1%)'} />
                     </GridCol>
                   </GridRow>
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Coronavirus"
-                    category=""
-                    name="Coronavirus"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="" />
                 </CardColumn>
               </Card>
             </GridCol>
