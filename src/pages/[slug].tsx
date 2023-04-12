@@ -1,4 +1,5 @@
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { RelatedLink } from '@/api/requests/cms/getPage'
@@ -53,6 +54,7 @@ export const getStaticProps: GetStaticProps<{
           body,
           lastUpdated,
           relatedLinks,
+          ...(await serverSideTranslations(req.locale as string, ['common'])),
         },
         revalidate,
       }

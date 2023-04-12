@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/config/test-utils'
 import { Page } from './Page'
 
 test('Page displays a heading, last updated date and content', () => {

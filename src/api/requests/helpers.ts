@@ -7,7 +7,7 @@ export const getCmsApiPath = () => {
   return `${baseUrl}${cmsPath}`
 }
 
-export const getChartApiPath = () => {
+export const getChartsApiPath = () => {
   return `${baseUrl}${chartPath}`
 }
 

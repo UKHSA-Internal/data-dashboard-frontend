@@ -2,5 +2,17 @@ declare namespace NodeJS {
   interface ProcessEnv {
     NEXT_REVALIDATE_API_KEY: string
     NEXT_REVALIDATE_TIME: string
+
+    NEXT_PUBLIC_API_MOCKING: string
+    NEXT_PUBLIC_API_URL: string
+    NEXT_PUBLIC_USE_CHART_MOCKS: string
+
+    NEXT_REVALIDATE_API_KEY: string
+    NEXT_REVALIDATE_TIME: string
+
+    API_KEY: string
+    NEXT_PUBLIC_API_PATH_CHART: string
+    API_PATH_CMS: string
+    API_PATH_STATS: string
   }
 }
