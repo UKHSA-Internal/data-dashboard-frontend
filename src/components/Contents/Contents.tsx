@@ -10,12 +10,13 @@ export const getIdFromHeading = (heading: string) => heading.toLowerCase().repla
  */
 interface NavigationProps {
   children: ReactNode
+  heading?: string
 }
 
-const Navigation = ({ children }: NavigationProps) => {
+const Navigation = ({ children, heading = 'Contents' }: NavigationProps) => {
   return (
     <Styled.Nav role="navigation" aria-label="Contents">
-      <Styled.NavHeading>Contents</Styled.NavHeading>
+      <Styled.NavHeading>{heading}</Styled.NavHeading>
       {children}
     </Styled.Nav>
   )
@@ -74,12 +75,13 @@ const renderContentsSection = (child: ReactNode) => {
  */
 interface ContentsProps {
   children: ReactNode
+  heading?: string
 }
 
-export const Contents = ({ children }: ContentsProps) => {
+export const Contents = ({ children, heading = 'Contents' }: ContentsProps) => {
   return (
     <>
-      <Navigation>
+      <Navigation heading={heading}>
         <OrderedList>{Children.map(children, renderNavigationLink)}</OrderedList>
       </Navigation>
       {Children.map(children, renderContentsSection)}

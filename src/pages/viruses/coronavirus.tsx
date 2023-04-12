@@ -8,11 +8,13 @@ import {
 import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Statistic } from '@/components/Statistic'
-import Topic from '@/components/Topic/Topic'
+import { Chart } from '@/components/Chart'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { GetStaticProps } from 'next'
 
 export const Coronavirus = () => {
   return (
@@ -28,14 +30,7 @@ export const Coronavirus = () => {
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown
                   </Paragraph>
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Coronavirus"
-                    category=""
-                    name="Coronavirus"
-                    image="/img/temp-covid1.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-covid1.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -45,14 +40,7 @@ export const Coronavirus = () => {
                   <Paragraph supportingText>
                     Number of cases by specimin date. Data for the last 5 days, highlighted in grey, are incomplete.
                   </Paragraph>
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Coronavirus"
-                    category=""
-                    name="Coronavirus"
-                    image="/img/temp-covid2.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-covid2.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -64,14 +52,7 @@ export const Coronavirus = () => {
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown, by age.
                   </Paragraph>
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Coronavirus"
-                    category=""
-                    name="Coronavirus"
-                    image="/img/temp-covid3.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-covid3.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -82,14 +63,7 @@ export const Coronavirus = () => {
                     Rates per 100,000 people of the total number of cases since the start of the pandemic, by age and
                     sex.
                   </Paragraph>
-                  <Topic
-                    description="People tested positive in England up to and including 25th February 2023"
-                    topic="Coronavirus"
-                    category=""
-                    name="Coronavirus"
-                    image="/img/temp-covid4.png"
-                    points={[]}
-                  />
+                  <Chart src="" fallback="/img/temp-covid4.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -132,14 +106,7 @@ export const Coronavirus = () => {
                 of at least 11 days, and daa are not shown for the 14 days before the most recent reported date as they
                 are consideredx incomplete. Data are shown by date of death.
               </Paragraph>
-              <Topic
-                description=""
-                topic="Coronavirus"
-                category=""
-                name="Deaths"
-                image="/img/temp-covid-deaths.png"
-                points={[]}
-              />
+              <Chart src="" fallback="/img/temp-covid-deaths.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -177,14 +144,7 @@ export const Coronavirus = () => {
                 all 3 nations, and numbers for Wales are updated weekly. Figures are not comparable as Wales incvlues
                 suspected COVID-19 patients while the other nations include only confirmed cases.
               </Paragraph>
-              <Topic
-                description=""
-                topic="Coronavirus"
-                category=""
-                name="Deaths"
-                image="/img/temp-covid-healthcare.png"
-                points={[]}
-              />
+              <Chart src="" fallback="/img/temp-covid-healthcare.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -200,14 +160,7 @@ export const Coronavirus = () => {
                 caution. England local area uptake is also not comparable to England national uptake by report date as
                 that uses a different denominator - see the About tab for more information.
               </Paragraph>
-              <Topic
-                description=""
-                topic="Coronavirus"
-                category=""
-                name="Deaths"
-                image="/img/temp-covid-vaccinations.png"
-                points={[]}
-              />
+              <Chart src="" fallback="/img/temp-covid-vaccinations.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -223,14 +176,7 @@ export const Coronavirus = () => {
                 caution. England local area uptake is also not comparable to England national uptake by report date as
                 that uses a different denominator - see the About tab for more information.
               </Paragraph>
-              <Topic
-                description=""
-                topic="Coronavirus"
-                category=""
-                name="Deaths"
-                image="/img/temp-covid-testing.png"
-                points={[]}
-              />
+              <Chart src="" fallback="/img/temp-covid-testing.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -276,3 +222,11 @@ export const Coronavirus = () => {
 }
 
 export default Coronavirus
+
+export const getStaticProps: GetStaticProps = async (req) => {
+  return {
+    props: {
+      ...(await serverSideTranslations(req.locale as string, ['common'])),
+    },
+  }
+}
