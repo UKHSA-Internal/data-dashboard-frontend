@@ -8,6 +8,13 @@ export default defineConfig({
     globals: true,
     environment: 'jsdom',
     setupFiles: ['./config/vitest/vitest.setup.js', './config/vitest/vitest.env.js'],
+    coverage: {
+      reporter: ['text', 'json', 'html'],
+      lines: 99,
+      functions: 97,
+      branches: 92,
+      statements: 99,
+    },
   },
   resolve: {
     alias: [{ find: '@', replacement: resolve(__dirname, 'src') }],
