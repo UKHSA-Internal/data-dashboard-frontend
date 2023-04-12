@@ -9,7 +9,7 @@ export default defineConfig({
     environment: 'jsdom',
     setupFiles: ['./config/vitest/vitest.setup.js', './config/vitest/vitest.env.js'],
     coverage: {
-      reporter: ['text', 'json', 'html'],
+      reporter: ['json-summary', 'text', 'lcov'],
       lines: 99,
       functions: 97,
       branches: 92,
