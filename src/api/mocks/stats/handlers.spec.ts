@@ -19,7 +19,7 @@ test('GET /stats/COVID-19 returns the correct stats mock', async () => {
 })
 
 test('GET /stats/COVID-19 returns a 403 when the api key is invalid', async () => {
-  const res = await fetch(`${baseUrl}/COVID-19`, { headers: { 'X-Api-Key': 'not-valid' } })
+  const res = await fetch(`${baseUrl}/COVID-19`, { headers: { Authorization: 'not-valid' } })
   const json = await res.json()
 
   expect(res.status).toEqual(403)
@@ -35,7 +35,7 @@ test('GET /stats/Influenza returns the correct stats mock', async () => {
 })
 
 test('GET /stats/Influenza returns a 403 when the api key is invalid', async () => {
-  const res = await fetch(`${baseUrl}/Influenza`, { headers: { 'X-Api-Key': 'not-valid' } })
+  const res = await fetch(`${baseUrl}/Influenza`, { headers: { Authorization: 'not-valid' } })
   const json = await res.json()
 
   expect(res.status).toEqual(403)

@@ -1,14 +1,10 @@
 import styled from 'styled-components'
-import { GREY_3, BLACK, GREY_1 } from 'govuk-colours'
+import { GREY_3 } from 'govuk-colours'
 import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { GridCol, GridRow, H3 } from 'govuk-react'
 
 type ContainerProps = {
-  theme?: 'primary' | 'secondary'
-}
-
-type ColumnHeadingProps = {
   theme?: 'primary' | 'secondary'
 }
 
@@ -32,11 +28,11 @@ export const CardColumnHeadingContainer = styled.div`
   }
 `
 
-export const CardColumnHeading = styled(H3)<ColumnHeadingProps>`
+export const CardColumnHeading = styled(H3)<ContainerProps>`
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
-  font-weight: ${(p: ColumnHeadingProps) => (p.theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
-  color: ${(p: ColumnHeadingProps) => (p.theme == 'secondary' ? BLACK : GREY_1)};
-  margin-bottom: ${(p: ColumnHeadingProps) => (p.theme == 'secondary' ? '10px' : 0)};
+  font-weight: ${(p: ContainerProps) => (p.theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
+  color: BLACK;
+  margin-bottom: ${(p: ContainerProps) => (p.theme == 'secondary' ? '10px' : 0)};
 `
 
 export const CardColumnGridCol = styled(GridCol)`

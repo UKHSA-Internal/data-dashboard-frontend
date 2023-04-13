@@ -18,7 +18,7 @@ test('Get the Stats API path', () => {
 test('Fetch request options', () => {
   expect(requestOptions).toEqual<RequestInit>({
     headers: {
-      'X-Api-Key': 'fake-api-key',
+      Authorization: 'fake-api-key',
     },
   })
 })
