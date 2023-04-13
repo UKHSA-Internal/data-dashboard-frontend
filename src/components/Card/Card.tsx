@@ -1,19 +1,18 @@
 import { GridCol } from 'govuk-react'
 import { ComponentProps, ReactNode } from 'react'
-import { Container, CardColumnHeading, CardColumnHeadingContainer, CardColumnGridCol } from './Card.styles'
+import { CardContainer, CardColumnHeading, CardColumnHeadingContainer, CardColumnGridCol } from './Card.styles'
 
 interface CardProps {
   children: ReactNode
   label?: string
   theme?: 'primary' | 'secondary'
-  columnLimit?: boolean
 }
 
-export const Card = ({ children, label, theme = 'primary', columnLimit = false }: CardProps) => {
+export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
   return (
-    <Container as="article" aria-label={label} theme={theme} columnLimit={columnLimit}>
+    <CardContainer as="article" aria-label={label} theme={theme}>
       {children}
-    </Container>
+    </CardContainer>
   )
 }
 
