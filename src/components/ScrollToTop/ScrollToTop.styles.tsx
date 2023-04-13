@@ -1,5 +1,8 @@
 import { Link } from 'govuk-react'
 import styled from 'styled-components'
+import { BODY_SIZES, SPACING } from '@govuk-react/constants'
+import { typography } from '@govuk-react/lib'
+import { BLUE } from 'govuk-colours'
 
 type ButtonProps = {
   isVisible: boolean
@@ -8,12 +11,12 @@ type ButtonProps = {
 export const Button = styled(Link)<ButtonProps>`
   display: ${(p) => (p.isVisible ? 'flex' : 'none')};
   position: fixed;
-  bottom: 20px;
-  left: 20px;
-  font-size: 16px;
-  padding: 10px 20px;
+  bottom: ${SPACING.SCALE_4};
+  left: ${SPACING.SCALE_4};
+  ${typography.font({ size: BODY_SIZES.SMALL })}
+  padding: ${SPACING.SCALE_2} ${SPACING.SCALE_4};
   background-color: transparent;
-  color: #1d70b8;
+  color: ${BLUE};
   border: none;
   border-radius: 4px;
   cursor: pointer;
