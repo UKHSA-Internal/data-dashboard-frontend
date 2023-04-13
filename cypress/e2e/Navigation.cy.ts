@@ -1,4 +1,18 @@
+import 'cypress-axe'
+
 describe('Navigation', () => {
+  it('Has no detectable a11y violations', () => {
+    cy.visit('/')
+    cy.injectAxe()
+    cy.checkA11y('html', {
+      rules: {
+        'document-title': { enabled: false },
+        'html-has-lang': { enabled: false },
+        region: { enabled: false },
+      },
+    })
+  })
+
   it('displays links', () => {
     cy.visit('/')
 

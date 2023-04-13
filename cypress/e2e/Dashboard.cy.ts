@@ -1,11 +1,24 @@
 import path from 'path'
+import 'cypress-axe'
 
 describe('Dashboard', () => {
   beforeEach(() => {
     cy.visit('/')
+    cy.injectAxe()
+  })
+
+  it('Has no detectable a11y violations', () => {
+    cy.checkA11y('html', {
+      rules: {
+        'document-title': { enabled: false },
+        'html-has-lang': { enabled: false },
+        region: { enabled: false },
+      },
+    })
   })
 
   it('displays a title, last updated date and body', () => {
+    cy.title().should('eq', 'Respiratory viruses')
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
     cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
     cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
@@ -92,7 +105,7 @@ describe('Dashboard', () => {
     })
   })
 
-  it.only('displays influenza statistics', () => {
+  it('displays influenza statistics', () => {
     cy.findByRole('navigation', {
       name: 'Contents',
     }).as('contents')
