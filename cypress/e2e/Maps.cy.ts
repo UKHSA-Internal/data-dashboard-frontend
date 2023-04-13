@@ -17,6 +17,9 @@ describe('Maps', () => {
   it('displays correctly', () => {
     cy.visit('/maps')
 
+    // Document title
+    cy.title().should('eq', 'Maps')
+
     // Title
     cy.findByRole('heading', { name: 'Maps', level: 1 })
 
