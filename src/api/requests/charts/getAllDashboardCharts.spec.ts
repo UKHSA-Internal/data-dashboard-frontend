@@ -19,12 +19,12 @@ test('Fetches the real-world charts when mocks are disabled', async () => {
   const charts = await getAllDashboardCharts()
   expect(charts).toEqual({
     Coronavirus: {
-      Cases: '<svg>http://backend.com/charts/COVID-19/Cases</svg>',
-      Deaths: '<svg>http://backend.com/charts/COVID-19/Deaths</svg>',
+      Cases: '<svg>http://fake-backend.gov.uk/charts/COVID-19/Cases</svg>',
+      Deaths: '<svg>http://fake-backend.gov.uk/charts/COVID-19/Deaths</svg>',
     },
     Influenza: {
-      Healthcare: '<svg>http://backend.com/charts/Influenza/Healthcare</svg>',
-      Testing: '<svg>http://backend.com/charts/Influenza/Testing</svg>',
+      Healthcare: '<svg>http://fake-backend.gov.uk/charts/Influenza/Healthcare</svg>',
+      Testing: '<svg>http://fake-backend.gov.uk/charts/Influenza/Testing</svg>',
     },
   })
 })
