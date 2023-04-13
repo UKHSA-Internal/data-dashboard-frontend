@@ -1,19 +1,18 @@
 import styled from 'styled-components'
 import { GREY_3, BLACK, GREY_1 } from 'govuk-colours'
-import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES, BREAKPOINTS } from '@govuk-react/constants'
+import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { GridCol, GridRow, H3 } from 'govuk-react'
 
 type ContainerProps = {
   theme?: 'primary' | 'secondary'
-  columnLimit: boolean
 }
 
 type ColumnHeadingProps = {
   theme?: 'primary' | 'secondary'
 }
 
-export const Container = styled(GridRow)`
+export const CardContainer = styled(GridRow)`
   width: 100%;
   margin: 0 auto;
   background-color: ${(p: ContainerProps) => (p.theme == 'secondary' ? 'transparent' : GREY_3)};
@@ -24,11 +23,6 @@ export const Container = styled(GridRow)`
   display: grid;
   grid-row-gap: 25px;
   grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
-
-  @media (max-width: ${BREAKPOINTS.DESKTOP}) and (min-width: 440px) {
-    grid-template-columns: ${(p: ContainerProps) =>
-      p.columnLimit ? 'repeat(3, 1fr)' : 'repeat(auto-fit, minmax(100px, 1fr))'};
-  }
 `
 
 export const CardColumnHeadingContainer = styled.div`
