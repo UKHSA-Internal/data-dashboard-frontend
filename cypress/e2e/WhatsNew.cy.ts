@@ -17,6 +17,9 @@ describe("What's new", () => {
   it('displays correctly', () => {
     cy.visit('/whats-new')
 
+    // Document title
+    cy.title().should('eq', "What's new")
+
     // Title
     cy.findByRole('heading', { name: "What's new", level: 1 })
 
