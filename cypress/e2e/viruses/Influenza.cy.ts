@@ -2,6 +2,9 @@ describe('Influenza detail page', () => {
   it('displays correctly', () => {
     cy.visit('/viruses/influenza')
 
+    // Document title
+    cy.title().should('eq', 'Influenza')
+
     // Title
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
 
