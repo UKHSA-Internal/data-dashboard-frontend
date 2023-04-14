@@ -25,15 +25,15 @@ test('Displays a heading and content for each contents item', () => {
   render(getComponent())
 
   // Check the headings are correctly associated with the article element
-  expect(screen.getByRole('article', { name: 'Covid' }))
-  expect(screen.getByRole('article', { name: 'Man Flu' }))
-  expect(screen.getByRole('article', { name: 'Influenza' }))
+  expect(screen.getByRole('region', { name: 'Covid' }))
+  expect(screen.getByRole('region', { name: 'Man Flu' }))
+  expect(screen.getByRole('region', { name: 'Influenza' }))
 
-  const articles = screen.getAllByRole('article')
+  const sections = screen.getAllByRole('region')
 
-  // Check the order of the articles are correct & the content appears
-  expect(articles).toHaveLength(3)
-  expect(within(articles[0]).getByText('covid stuff'))
-  expect(within(articles[1]).getByText('flu stuff'))
-  expect(within(articles[2]).getByText('influenza stuff'))
+  // Check the order of the sections are correct & the content appears
+  expect(sections).toHaveLength(3)
+  expect(within(sections[0]).getByText('covid stuff'))
+  expect(within(sections[1]).getByText('flu stuff'))
+  expect(within(sections[2]).getByText('influenza stuff'))
 })
