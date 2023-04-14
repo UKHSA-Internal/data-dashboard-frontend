@@ -17,6 +17,9 @@ describe('How to use this data', () => {
   it('displays correctly', () => {
     cy.visit('/how-to-use-this-data')
 
+    // Document title
+    cy.title().should('eq', 'How to use this data')
+
     // Title
     cy.findByRole('heading', { name: 'How to use this data', level: 1 })
 

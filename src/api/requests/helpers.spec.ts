@@ -4,15 +4,15 @@ import { getCmsApiPath, getChartsApiPath, getStatsApiPath, requestOptions } from
  * The process.env mocks powering these tests live inside <rootDir>/config/jest/jest.env.js
  */
 test('Get the CMS API path', () => {
-  expect(getCmsApiPath()).toEqual('http://backend.com/api/pages')
+  expect(getCmsApiPath()).toEqual('http://fake-backend.gov.uk/api/pages')
 })
 
 test('Get the Chart API path', () => {
-  expect(getChartsApiPath()).toEqual('http://backend.com/charts')
+  expect(getChartsApiPath()).toEqual('http://fake-backend.gov.uk/charts')
 })
 
 test('Get the Stats API path', () => {
-  expect(getStatsApiPath()).toEqual('http://backend.com/stats')
+  expect(getStatsApiPath()).toEqual('http://fake-backend.gov.uk/stats')
 })
 
 test('Fetch request options', () => {

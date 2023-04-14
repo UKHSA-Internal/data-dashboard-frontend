@@ -18,6 +18,9 @@ describe('About', () => {
   })
 
   it('displays correctly', () => {
+    // Document title
+    cy.title().should('eq', 'About')
+
     // Last updated
     cy.findByText('Last updated on Saturday, 18 March 2023 at 10:25am')
 
