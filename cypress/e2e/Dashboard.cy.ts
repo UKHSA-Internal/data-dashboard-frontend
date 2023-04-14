@@ -38,7 +38,7 @@ describe('Dashboard', () => {
     cy.findByText('The UKHSA dashboard for data and insights on Coronavirus.')
 
     // Summary section
-    cy.findByRole('article', {
+    cy.findByRole('region', {
       name: 'Coronavirus Summary',
     }).as('summary-section')
 
@@ -75,7 +75,7 @@ describe('Dashboard', () => {
     })
 
     // Cases column
-    cy.findByRole('article', {
+    cy.findByRole('region', {
       name: 'Coronavirus Cases',
     }).as('cases-section')
 
@@ -90,7 +90,7 @@ describe('Dashboard', () => {
     })
 
     // Deaths column
-    cy.findByRole('article', {
+    cy.findByRole('region', {
       name: 'Coronavirus Deaths',
     }).as('deaths-section')
 
@@ -119,7 +119,7 @@ describe('Dashboard', () => {
     cy.findByText('The UKHSA dashboard for data and insights on Influenza.')
 
     // Summary section
-    cy.findByRole('article', {
+    cy.findByRole('region', {
       name: 'Influenza Summary',
     }).as('summary-section')
 
@@ -143,7 +143,7 @@ describe('Dashboard', () => {
     })
 
     // Healthcare column
-    cy.findByRole('article', {
+    cy.findByRole('region', {
       name: 'Influenza Healthcare',
     }).as('cases-section')
 
@@ -158,7 +158,7 @@ describe('Dashboard', () => {
     })
 
     // Testing column
-    cy.findByRole('article', {
+    cy.findByRole('region', {
       name: 'Influenza Testing',
     }).as('deaths-section')
 
@@ -180,10 +180,10 @@ describe('Dashboard', () => {
   it('downloads a csv when clicking a download link', () => {
     const downloadsFolder = Cypress.config('downloadsFolder')
 
-    const articles = ['Coronavirus Cases', 'Coronavirus Deaths', 'Influenza Healthcare', 'Influenza Testing']
+    const sections = ['Coronavirus Cases', 'Coronavirus Deaths', 'Influenza Healthcare', 'Influenza Testing']
 
-    articles.forEach((name) => {
-      cy.findByRole('article', {
+    sections.forEach((name) => {
+      cy.findByRole('region', {
         name,
       }).within(() => {
         cy.window()

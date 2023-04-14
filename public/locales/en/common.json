@@ -10,5 +10,12 @@
   "feedbackBanner": "This is a new service – your feedback will help us to improve it.",
   "downloadBtn": "Download",
   "contentsHeading": "Contents",
-  "relatedLinksHeading": "Related Links"
+  "relatedLinksHeading": "Related Links",
+  "metrics": {
+    "headlineValueScreenReaderText": "{{heading}}: {{value}}",
+    "headlineTrendScreenReaderText_green_up": "{{heading}}: {{value}}, upward positive trend",
+    "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
+    "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
+    "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
+  }
 }

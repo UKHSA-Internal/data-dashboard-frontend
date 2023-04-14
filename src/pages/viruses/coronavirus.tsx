@@ -25,7 +25,7 @@ export const Coronavirus = () => {
           <p>Coronavirus cases text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="7-day case rates" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="7-day case rates by specimin date" theme="secondary">
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown
@@ -35,7 +35,7 @@ export const Coronavirus = () => {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Cases by specimin date" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Cases by specimin date" theme="secondary">
                   <Paragraph supportingText>
                     Number of cases by specimin date. Data for the last 5 days, highlighted in grey, are incomplete.
@@ -47,7 +47,7 @@ export const Coronavirus = () => {
           </GridRow>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Cases by specimin date age" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Case rates by specimin date age demographics" theme="secondary">
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown, by age.
@@ -57,7 +57,7 @@ export const Coronavirus = () => {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Case rates by age and sex" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Rates by age and sex" theme="secondary">
                   <Paragraph supportingText>
                     Rates per 100,000 people of the total number of cases since the start of the pandemic, by age and
@@ -74,14 +74,14 @@ export const Coronavirus = () => {
           <p>Coronavirus deaths text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Deaths with COVID-19 on the death certificate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Deaths with COVID-19 on the death certificate">
                   <Statistic heading="Weekly" value="393" />
                 </CardColumn>
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Change from previous 7 days" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Change from previous 7 days">
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
@@ -115,14 +115,14 @@ export const Coronavirus = () => {
           <p>Coronavirus healthcare text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Patients admitted" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Patients admitted">
                   <Statistic heading="Latest 7 days" value="5,911" />
                 </CardColumn>
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Change from previous 7 days" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Change from previous 7 days">
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">

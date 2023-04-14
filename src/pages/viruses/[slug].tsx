@@ -35,7 +35,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
           <p>Coronavirus cases text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Coronavirus cases" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Cases">
                   <Statistic heading="People tested positive in England">
                     <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
