@@ -7,6 +7,13 @@
     "prettier"
   ],
   "rules": {
-    "import/no-anonymous-default-export": "off"
+    "import/no-anonymous-default-export": "off",
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "react-i18next",
+        "message": "Please import from the next-i18next package instead."
+      }
+    ]
   }
 }
