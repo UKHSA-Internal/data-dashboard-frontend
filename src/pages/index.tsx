@@ -16,6 +16,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getAllDashboardCharts } from '@/api/requests/charts/getAllDashboardCharts'
 import { useTranslation } from 'next-i18next'
 import { HeadlineTrend, HeadlineValue, Metric } from '@/components/Metrics'
+import { GridLimiter } from '@/components/GridLimiter'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -52,13 +53,15 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
             <p>The UKHSA dashboard for data and insights on {topic}.</p>
             <Card data-testid="summary-section">
-              {summary.map(({ container, content }) => {
-                return (
-                  <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>
-                    {content.map(renderContentTypes)}
-                  </CardColumn>
-                )
-              })}
+              <GridLimiter>
+                {summary.map(({ container, content }) => {
+                  return (
+                    <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>
+                      {content.map(renderContentTypes)}
+                    </CardColumn>
+                  )
+                })}
+              </GridLimiter>
             </Card>
             <GridRow>
               {tiles.map(({ container, content }) => {
