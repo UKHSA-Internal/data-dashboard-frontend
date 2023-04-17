@@ -49,4 +49,13 @@ describe('Navigation', () => {
 
     cy.findByRole('heading', { name: 'Influenza' })
   })
+
+  it('Returns to the top of the page', () => {
+    cy.visit('/')
+
+    cy.scrollTo(0, 500)
+    cy.findByText('Back to top').click()
+
+    cy.findByRole('heading', { level: 1, name: 'Respiratory viruses' }).should('be.visible')
+  })
 })

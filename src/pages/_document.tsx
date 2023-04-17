@@ -8,7 +8,7 @@ export default class MyDocument extends Document {
         <Head>
           <link rel="shortcut icon" href="/favicon.ico" />
         </Head>
-        <body>
+        <body id="top">
           <Main />
           <NextScript />
         </body>
