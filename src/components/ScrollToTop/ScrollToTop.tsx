@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react'
 import { ArrowIcon, Button } from './ScrollToTop.styles'
 import { useTranslation } from 'next-i18next'
 
-const ScrollToTop = () => {
+export const ScrollToTop = () => {
   const [isVisible, setIsVisible] = useState(true)
   const { t } = useTranslation('common')
 
@@ -29,11 +29,9 @@ const ScrollToTop = () => {
   }
 
   return (
-    <Button href="#top" isVisible={isVisible} onClick={handleClick}>
+    <Button href="#content" $isVisible={isVisible} onClick={handleClick}>
       <ArrowIcon />
       {t('backToTop')}
     </Button>
   )
 }
-
-export default ScrollToTop
