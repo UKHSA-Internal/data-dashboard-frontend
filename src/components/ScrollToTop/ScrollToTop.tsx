@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react'
 import { ArrowIcon, Button } from './ScrollToTop.styles'
+import { useTranslation } from 'next-i18next'
 
 const ScrollToTop = () => {
-  const [isVisible, setIsVisible] = useState(false)
+  const [isVisible, setIsVisible] = useState(true)
+  const { t } = useTranslation('common')
 
   useEffect(() => {
     const handleScroll = () => {
       setIsVisible(window.pageYOffset > 300)
     }
+    handleScroll()
 
     window.addEventListener('scroll', handleScroll)
 
@@ -16,7 +19,9 @@ const ScrollToTop = () => {
     }
   }, [])
 
-  const handleClick = () => {
+  const handleClick = (e: React.MouseEvent<HTMLElement>) => {
+    e.preventDefault()
+
     window.scrollTo({
       top: 0,
       behavior: 'smooth',
@@ -24,9 +29,9 @@ const ScrollToTop = () => {
   }
 
   return (
-    <Button isVisible={isVisible} onClick={handleClick}>
+    <Button href="#top" isVisible={isVisible} onClick={handleClick}>
       <ArrowIcon />
-      Back to top
+      {t('backToTop')}
     </Button>
   )
 }
