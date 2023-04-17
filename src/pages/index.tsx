@@ -51,7 +51,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
         {statistics.map(({ topic, summary, tiles }) => (
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
             <p>The UKHSA dashboard for data and insights on {topic}.</p>
-            <Card>
+            <Card data-testid="summary-section">
               {summary.map(({ container, content }) => {
                 return (
                   <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>
@@ -64,7 +64,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
               {tiles.map(({ container, content }) => {
                 return (
                   <GridCol setWidth="one-half" key={container}>
-                    <Card>
+                    <Card data-testid={`${container.toLowerCase()}-section`}>
                       <CardColumn
                         heading={container}
                         sideContent={<DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}

@@ -7,8 +7,12 @@ interface CardProps {
   theme?: 'primary' | 'secondary'
 }
 
-export const Card = ({ children, theme = 'primary' }: CardProps) => {
-  return <Container theme={theme}>{children}</Container>
+export const Card = ({ children, theme = 'primary', ...props }: CardProps) => {
+  return (
+    <Container theme={theme} {...props}>
+      {children}
+    </Container>
+  )
 }
 
 interface CardColumnProps extends ComponentProps<typeof GridCol> {

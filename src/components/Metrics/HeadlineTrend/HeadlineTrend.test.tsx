@@ -24,4 +24,8 @@ test('Shows screen reader specifc text to convey sentiment', () => {
   // Negative decrease trend
   rerender(<HeadlineTrend heading="Last 7 days" direction="down" colour="red" value="692 (-3.0%)" />)
   expect(screen.getByText('Last 7 days: 692 (-3.0%), downward negative trend')).toBeInTheDocument()
+
+  // Neutral
+  rerender(<HeadlineTrend heading="Last 7 days" direction="neutral" colour="neutral" value="692 (-3.0%)" />)
+  expect(screen.getByText('Last 7 days: 692 (-3.0%), no change compared to the previous 7 days')).toBeInTheDocument()
 })
