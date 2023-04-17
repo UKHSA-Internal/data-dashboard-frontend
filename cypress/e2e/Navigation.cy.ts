@@ -52,7 +52,7 @@ describe('Navigation', () => {
 
   it('Returns to the top of the page', () => {
     cy.visit('/')
-    cy.findByRole('heading', { level: 1, name: 'Respiratory viruses' }).should('not.be.visible')
+    cy.findByText('Back to top').should('not.be.visible')
 
     cy.scrollTo(0, 500)
     cy.findByText('Back to top').click()
