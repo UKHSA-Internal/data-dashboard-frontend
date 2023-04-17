@@ -7,7 +7,6 @@ import {
 } from '@/components/Accordion'
 import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
-import { Statistic } from '@/components/Statistic'
 import { Chart } from '@/components/Chart'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
@@ -15,6 +14,7 @@ import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import { HeadlineValue, Metric } from '@/components/Metrics'
 
 export const Coronavirus = () => {
   return (
@@ -76,7 +76,9 @@ export const Coronavirus = () => {
             <GridCol setWidth="one-half">
               <Card theme={'secondary'}>
                 <CardColumn heading="Deaths with COVID-19 on the death certificate">
-                  <Statistic heading="Weekly" value="393" />
+                  <Metric>
+                    <HeadlineValue heading="Weekly" value="393" />
+                  </Metric>
                 </CardColumn>
               </Card>
             </GridCol>
@@ -85,10 +87,14 @@ export const Coronavirus = () => {
                 <CardColumn heading="Change from previous 7 days">
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Number" value="-31" />
+                      <Metric>
+                        <HeadlineValue heading="Number" value="-31" />
+                      </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Percentage" value="-7" />
+                      <Metric>
+                        <HeadlineValue heading="Percentage" value="-7" />
+                      </Metric>
                     </GridCol>
                   </GridRow>
                 </CardColumn>
@@ -117,7 +123,9 @@ export const Coronavirus = () => {
             <GridCol setWidth="one-half">
               <Card theme={'secondary'}>
                 <CardColumn heading="Patients admitted">
-                  <Statistic heading="Latest 7 days" value="5,911" />
+                  <Metric>
+                    <HeadlineValue heading="Latest 7 days" value="5,911" />
+                  </Metric>
                 </CardColumn>
               </Card>
             </GridCol>
@@ -126,10 +134,14 @@ export const Coronavirus = () => {
                 <CardColumn heading="Change from previous 7 days">
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Number" value="-397" />
+                      <Metric>
+                        <HeadlineValue heading="Number" value="-397" />
+                      </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Percentage" value="-6" />
+                      <Metric>
+                        <HeadlineValue heading="Percentage" value="-6" />
+                      </Metric>
                     </GridCol>
                   </GridRow>
                 </CardColumn>

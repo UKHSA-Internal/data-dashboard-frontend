@@ -16,10 +16,10 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { FormattedContent } from '@/components/FormattedContent'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
-import { Statistic } from '@/components/Statistic'
 import Trend from '@/components/Trend/Trend'
 import { Chart } from '@/components/Chart'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { HeadlineValue, Metric } from '@/components/Metrics'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -37,12 +37,15 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
             <GridCol setWidth="one-half">
               <Card theme={'secondary'}>
                 <CardColumn heading="Cases">
-                  <Statistic heading="People tested positive in England">
-                    <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
-                  </Statistic>
+                  <Metric>
+                    <HeadlineValue heading="People tested positive in England" value="" />
+                  </Metric>
+                  <Paragraph supportingText>Up to and including 25th February 2023</Paragraph>
                   <GridRow>
                     <GridCol setWidth="columnOneThird">
-                      <Statistic heading="Last 7 days" value="24,568" />
+                      <Metric>
+                        <HeadlineValue heading="Last 7 days" value="24,568" />
+                      </Metric>
                     </GridCol>
                     <GridCol>
                       <Trend direction="down" colour="green" value={'-1,600 (-6.1%)'} />
