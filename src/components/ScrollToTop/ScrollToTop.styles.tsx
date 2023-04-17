@@ -5,11 +5,11 @@ import { typography } from '@govuk-react/lib'
 import { BLUE } from 'govuk-colours'
 
 type ButtonProps = {
-  isVisible: boolean
+  $isVisible: boolean
 }
 
 export const Button = styled(Link)<ButtonProps>`
-  display: ${(p) => (p.isVisible ? 'flex' : 'none')};
+  display: ${(p) => (p.$isVisible ? 'flex' : 'none')};
   position: fixed;
   bottom: ${SPACING.SCALE_4};
   left: ${SPACING.SCALE_4};
