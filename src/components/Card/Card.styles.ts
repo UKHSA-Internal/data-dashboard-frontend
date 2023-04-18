@@ -5,13 +5,13 @@ import { typography } from '@govuk-react/lib'
 import { GridCol, GridRow, H3 } from 'govuk-react'
 
 type ContainerProps = {
-  theme?: 'primary' | 'secondary'
+  $theme?: 'primary' | 'secondary'
 }
 
 export const CardContainer = styled(GridRow)`
   width: 100%;
   margin: 0 auto;
-  background-color: ${(p: ContainerProps) => (p.theme == 'secondary' ? 'transparent' : GREY_3)};
+  background-color: ${(p: ContainerProps) => (p.$theme == 'secondary' ? 'transparent' : GREY_3)};
   padding-top: ${SPACING.SCALE_3};
   padding-bottom: ${SPACING.SCALE_3};
   margin-top: ${SPACING.SCALE_5};
@@ -30,9 +30,9 @@ export const CardColumnHeadingContainer = styled.div`
 
 export const CardColumnHeading = styled(H3)<ContainerProps>`
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
-  font-weight: ${(p: ContainerProps) => (p.theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
+  font-weight: ${(p: ContainerProps) => (p.$theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
   color: BLACK;
-  margin-bottom: ${(p: ContainerProps) => (p.theme == 'secondary' ? '10px' : 0)};
+  margin-bottom: ${(p: ContainerProps) => (p.$theme == 'secondary' ? '10px' : 0)};
 `
 
 export const CardColumnGridCol = styled(GridCol)`

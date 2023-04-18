@@ -3,7 +3,7 @@ import { BREAKPOINTS } from '@govuk-react/constants'
 import { CardContainer } from '../Card/Card.styles'
 
 type ContainerProps = {
-  columnLimit: number
+  $columnLimit: number
 }
 
 export const LimitContainer = styled(CardContainer)`
@@ -11,6 +11,6 @@ export const LimitContainer = styled(CardContainer)`
   margin: 0;
 
   @media (max-width: ${BREAKPOINTS.DESKTOP}) and (min-width: 440px) {
-    grid-template-columns: ${(p: ContainerProps) => `repeat(${p.columnLimit}, 1fr)`};
+    grid-template-columns: ${(p: ContainerProps) => `repeat(${p.$columnLimit}, 1fr)`};
   }
 `

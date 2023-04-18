@@ -25,9 +25,9 @@ interface CardColumnProps extends ComponentProps<typeof GridCol> {
 
 export const CardColumn = ({ children, heading, sideContent, theme, ...props }: CardColumnProps) => {
   return (
-    <CardColumnGridCol {...props}>
+    <CardColumnGridCol $theme={theme} {...props}>
       <CardColumnHeadingContainer>
-        <CardColumnHeading theme={theme}>{heading}</CardColumnHeading>
+        <CardColumnHeading $theme={theme}>{heading}</CardColumnHeading>
         {sideContent}
       </CardColumnHeadingContainer>
       {children}
