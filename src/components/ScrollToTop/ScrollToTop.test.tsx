@@ -14,5 +14,8 @@ test('Displays the button, checks the content', async () => {
 
   await user.click(screen.getByText('Back to top'))
 
-  expect(scrollToMock).toHaveBeenCalledTimes(1)
+  expect(scrollToMock).toHaveBeenCalledWith({
+    top: 0,
+    behavior: 'smooth',
+  })
 })
