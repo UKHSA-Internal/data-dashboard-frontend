@@ -5,8 +5,6 @@ interface GridLimiterProps {
   children: ReactNode
 }
 
-const GridLimiter = ({ children }: GridLimiterProps) => {
+export const GridLimiter = ({ children }: GridLimiterProps) => {
   return <LimitContainer columnLimit={3}>{children}</LimitContainer>
 }
-
-export default GridLimiter

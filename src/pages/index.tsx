@@ -6,28 +6,36 @@ import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
-import { Statistic } from '@/components/Statistic'
 import { Page } from '@/components/Page'
 import { RelatedLink } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/Links'
-import Trend from '@/components/Trend/Trend'
 import { ContentTypes, getStats, TopicName } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getAllDashboardCharts } from '@/api/requests/charts/getAllDashboardCharts'
 import { useTranslation } from 'next-i18next'
-import GridLimiter from '@/components/GridLimiter/GridLimiter'
+import { HeadlineTrend, HeadlineValue, Metric } from '@/components/Metrics'
+import { GridLimiter } from '@/components/GridLimiter'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
 const renderContentTypes = (item: ContentTypes) => (
   <Fragment key={item.heading}>
-    {item.type === 'text' && <Statistic heading={item.heading} value={item.value} />}
+    {item.type === 'text' && (
+      <Metric>
+        <HeadlineValue heading={item.heading} value={item.value} />
+      </Metric>
+    )}
     {item.type === 'trend' && (
-      <Statistic heading={item.heading}>
-        <Trend direction={item.direction} colour={item.colour} value={`${item.change} ${item.percentage}`} />
-      </Statistic>
+      <Metric>
+        <HeadlineTrend
+          heading={item.heading}
+          direction={item.direction}
+          colour={item.colour}
+          value={`${item.change} ${item.percentage}`}
+        />
+      </Metric>
     )}
   </Fragment>
 )
@@ -44,7 +52,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
         {statistics.map(({ topic, summary, tiles }) => (
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
             <p>The UKHSA dashboard for data and insights on {topic}.</p>
-            <Card label={`${topic} Summary`}>
+            <Card data-testid="summary-section">
               <GridLimiter>
                 {summary.map(({ container, content }) => {
                   return (
@@ -59,7 +67,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
               {tiles.map(({ container, content }) => {
                 return (
                   <GridCol setWidth="one-half" key={container}>
-                    <Card label={`${topic} ${container}`}>
+                    <Card data-testid={`${container.toLowerCase()}-section`}>
                       <CardColumn
                         heading={container}
                         sideContent={<DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}
