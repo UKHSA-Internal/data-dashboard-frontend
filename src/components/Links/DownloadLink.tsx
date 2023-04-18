@@ -1,8 +1,8 @@
-import { Button } from 'govuk-react'
 import { ReactNode } from 'react'
 import { Link, TextWrapper } from './Links.styles'
 import { BLACK } from 'govuk-colours'
 import { COLOURS } from '@/styles/Theme'
+import { Button } from 'govuk-react'
 
 interface DownloadLinkProps {
   href: string
@@ -17,6 +17,7 @@ export const DownloadLink = ({ href, children }: DownloadLinkProps) => {
       buttonColour={COLOURS.BUTTON_GREY}
       buttonTextColour={BLACK}
       buttonShadowColour={BLACK}
+      style={{ maxWidth: '105px' }}
     >
       <TextWrapper>{children}</TextWrapper>
     </Button>
