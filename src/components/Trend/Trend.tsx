@@ -20,7 +20,7 @@ const neutralProps: Record<string, string> = {
   color: BLACK,
 }
 
-const Trend = ({ colour, direction, value }: TrendProps) => {
+export const Trend = ({ colour, direction, value }: TrendProps) => {
   const isNeutral = colour === 'neutral'
 
   return (
@@ -34,5 +34,3 @@ const Trend = ({ colour, direction, value }: TrendProps) => {
     </Tag>
   )
 }
-
-export default Trend

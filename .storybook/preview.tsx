@@ -1,6 +1,9 @@
+/* eslint-disable no-restricted-imports */
 import React from 'react'
 import { initialize, mswDecorator } from 'msw-storybook-addon'
+import { I18nextProvider } from 'react-i18next'
 import { handlers } from '../src/api/msw/handlers'
+import i18n from '../config/i18n/i18nForTests'
 
 import '../src/styles/globals.css'
 
@@ -35,9 +38,9 @@ const preview = {
     decorators: [
       (Story) => {
         return (
-          <div>
+          <I18nextProvider i18n={i18n}>
             <Story />
-          </div>
+          </I18nextProvider>
         )
       },
     ],
