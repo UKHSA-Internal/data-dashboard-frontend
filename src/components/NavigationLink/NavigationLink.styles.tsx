@@ -5,34 +5,39 @@ import { BLUE } from 'govuk-colours'
 import styled from 'styled-components'
 import { COLOURS } from '@/styles/Theme'
 
-export const NavItem = styled('li')({
-  listStyleType: 'none',
-})
+export const NavItem = styled('li')`
+  list-style-type: none;
+`
 
-export const NavLink = styled(Link)(
-  {
-    display: 'block',
-    textDecoration: 'none',
-    padding: '12px 16px',
-    ...typography.font({ size: BODY_SIZES.MEDIUM }),
-    '&:hover': {
-      color: COLOURS.BLUE_DARK,
-      textDecoration: 'underline',
-    },
-    '&:visited:not(:hover)': {
-      color: BLUE,
-    },
-  },
-  ({ type, 'aria-current': ariaCurrent }) => ({
-    ...(type === 'primary' && {
-      fontWeight: FONT_WEIGHTS.bold,
-    }),
-    ...(ariaCurrent === 'page' && {
-      textDecoration: 'underline',
-      color: COLOURS.BLUE_DARK,
-      '&:visited:not(:hover)': {
-        color: COLOURS.BLUE_DARK,
-      },
-    }),
-  })
-)
+type NavLinkProps = {
+  type: 'primary' | 'secondary'
+  'aria-current': string | undefined
+}
+
+export const NavLink = styled(Link)<NavLinkProps>`
+  display: block;
+  text-decoration: none;
+  padding: 12px 16px;
+  ${typography.font({ size: BODY_SIZES.MEDIUM })}
+
+  &:hover {
+    color: ${COLOURS.BLUE_DARK};
+    text-decoration: underline;
+  }
+  &:visited:not(:hover) {
+    color: ${BLUE};
+  }
+
+  ${(p: NavLinkProps) => (p.type == 'primary' ? `font-weight: ${FONT_WEIGHTS.bold};` : '')}
+
+  ${(p: NavLinkProps) =>
+    p['aria-current'] == 'page'
+      ? `
+        text-decoration: underline;
+        color: ${COLOURS.BLUE_DARK};
+        &:visited:not(:hover) {
+          color: ${COLOURS.BLUE_DARK};
+        }
+      `
+      : ''}
+`
