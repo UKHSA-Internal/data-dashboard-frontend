@@ -11,6 +11,7 @@
   "downloadBtn": "Download",
   "contentsHeading": "Contents",
   "relatedLinksHeading": "Related Links",
+  "backToTop": "Back to top",
   "metrics": {
     "headlineValueScreenReaderText": "{{heading}}: {{value}}",
     "headlineTrendScreenReaderText": "{{heading}}: {{value}}, no change compared to the previous 7 days",

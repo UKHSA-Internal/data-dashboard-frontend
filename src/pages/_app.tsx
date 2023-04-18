@@ -4,6 +4,7 @@ import { Layout } from '@/components/Layout'
 import type { AppProps } from 'next/app'
 import { initMocks } from '@/api/msw'
 import nextI18NextConfig from '../../next-i18next.config'
+import { ScrollToTop } from '@/components/ScrollToTop'
 
 import '../styles/globals.css'
 
@@ -17,6 +18,7 @@ const App = ({ Component, pageProps }: AppProps) => {
       <GlobalStyle />
       <Layout>
         <Component {...pageProps} />
+        <ScrollToTop />
       </Layout>
     </>
   )
