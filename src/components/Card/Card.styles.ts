@@ -8,7 +8,7 @@ type ContainerProps = {
   theme?: 'primary' | 'secondary'
 }
 
-export const Container = styled(GridRow)`
+export const CardContainer = styled(GridRow)`
   width: 100%;
   margin: 0 auto;
   background-color: ${(p: ContainerProps) => (p.theme == 'secondary' ? 'transparent' : GREY_3)};
@@ -16,6 +16,9 @@ export const Container = styled(GridRow)`
   padding-bottom: ${SPACING.SCALE_3};
   margin-top: ${SPACING.SCALE_5};
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
+  display: grid;
+  grid-row-gap: 25px;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
 `
 
 export const CardColumnHeadingContainer = styled.div`
