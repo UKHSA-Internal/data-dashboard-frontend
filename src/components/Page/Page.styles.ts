@@ -7,6 +7,7 @@ export const Container = styled.div``
 
 export const LastUpdated = styled.div`
   margin-bottom: ${SPACING.SCALE_5};
+  margin-top: ${SPACING.SCALE_4};
   ${typography.font({ size: BODY_SIZES.SMALL })}
 `
 
