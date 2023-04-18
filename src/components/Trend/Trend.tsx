@@ -27,7 +27,7 @@ const Trend = ({ colour, direction, value }: TrendProps) => {
     <Tag
       {...(isNeutral && neutralProps)}
       {...(!isNeutral && { tint: tints[colour] })}
-      direction={direction}
+      $direction={direction}
       colour={colour}
     >
       {value}
