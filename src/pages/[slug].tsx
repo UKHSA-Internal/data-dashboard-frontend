@@ -4,7 +4,7 @@ import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { RelatedLink } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
-import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
+import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
