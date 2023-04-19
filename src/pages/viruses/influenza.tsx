@@ -23,7 +23,7 @@ export const Influenza = () => {
           <p>Influenza healthcare text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Weekly hospital admission rate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
@@ -33,7 +33,7 @@ export const Influenza = () => {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Weekly hospital admission rate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
@@ -45,7 +45,7 @@ export const Influenza = () => {
           </GridRow>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Weekly hospital admission rate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn
                   heading="Weekly overall ICU or HDU admission rates for new influenza positive cases per 100,000 population reporteed through SARI Watch"
                   theme="secondary"
@@ -55,7 +55,7 @@ export const Influenza = () => {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Weekly hospital admission rate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn
                   heading="Weekly overall influenza ICU or HDU admission rates per 100,000 trust catchment population with MEM threasholds, SARI Watch, England"
                   theme="secondary"
@@ -67,7 +67,7 @@ export const Influenza = () => {
           </GridRow>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Weekly hospital admission rate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn
                   heading="Weekly overall ICU or HDU admission rates for new influenza positive cases per 100,000 population reporteed through SARI Watch"
                   theme="secondary"

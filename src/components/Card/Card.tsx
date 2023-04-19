@@ -8,9 +8,9 @@ interface CardProps {
   theme?: 'primary' | 'secondary'
 }
 
-export const Card = ({ children, label, theme = 'primary' }: CardProps) => {
+export const Card = ({ children, theme = 'primary', ...props }: CardProps) => {
   return (
-    <CardContainer as="article" aria-label={label} theme={theme}>
+    <CardContainer theme={theme} {...props}>
       {children}
     </CardContainer>
   )

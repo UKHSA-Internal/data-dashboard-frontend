@@ -7,7 +7,6 @@ import {
 } from '@/components/Accordion'
 import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
-import { Statistic } from '@/components/Statistic'
 import { Chart } from '@/components/Chart'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
@@ -15,6 +14,7 @@ import RelatedLinks from '@/components/RelatedLinks/RelatedLinks'
 import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
+import { HeadlineValue, Metric } from '@/components/Metrics'
 
 export const Coronavirus = () => {
   return (
@@ -25,7 +25,7 @@ export const Coronavirus = () => {
           <p>Coronavirus cases text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="7-day case rates" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="7-day case rates by specimin date" theme="secondary">
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown
@@ -35,7 +35,7 @@ export const Coronavirus = () => {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Cases by specimin date" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Cases by specimin date" theme="secondary">
                   <Paragraph supportingText>
                     Number of cases by specimin date. Data for the last 5 days, highlighted in grey, are incomplete.
@@ -47,7 +47,7 @@ export const Coronavirus = () => {
           </GridRow>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Cases by specimin date age" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Case rates by specimin date age demographics" theme="secondary">
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown, by age.
@@ -57,7 +57,7 @@ export const Coronavirus = () => {
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Case rates by age and sex" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Rates by age and sex" theme="secondary">
                   <Paragraph supportingText>
                     Rates per 100,000 people of the total number of cases since the start of the pandemic, by age and
@@ -74,21 +74,27 @@ export const Coronavirus = () => {
           <p>Coronavirus deaths text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Deaths with COVID-19 on the death certificate" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Deaths with COVID-19 on the death certificate">
-                  <Statistic heading="Weekly" value="393" />
+                  <Metric>
+                    <HeadlineValue heading="Weekly" value="393" />
+                  </Metric>
                 </CardColumn>
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Change from previous 7 days" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Change from previous 7 days">
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Number" value="-31" />
+                      <Metric>
+                        <HeadlineValue heading="Number" value="-31" />
+                      </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Percentage" value="-7" />
+                      <Metric>
+                        <HeadlineValue heading="Percentage" value="-7" />
+                      </Metric>
                     </GridCol>
                   </GridRow>
                 </CardColumn>
@@ -115,21 +121,27 @@ export const Coronavirus = () => {
           <p>Coronavirus healthcare text</p>
           <GridRow>
             <GridCol setWidth="one-half">
-              <Card label="Patients admitted" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Patients admitted">
-                  <Statistic heading="Latest 7 days" value="5,911" />
+                  <Metric>
+                    <HeadlineValue heading="Latest 7 days" value="5,911" />
+                  </Metric>
                 </CardColumn>
               </Card>
             </GridCol>
             <GridCol setWidth="one-half">
-              <Card label="Change from previous 7 days" theme={'secondary'}>
+              <Card theme={'secondary'}>
                 <CardColumn heading="Change from previous 7 days">
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Number" value="-397" />
+                      <Metric>
+                        <HeadlineValue heading="Number" value="-397" />
+                      </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
-                      <Statistic heading="Percentage" value="-6" />
+                      <Metric>
+                        <HeadlineValue heading="Percentage" value="-6" />
+                      </Metric>
                     </GridCol>
                   </GridRow>
                 </CardColumn>
