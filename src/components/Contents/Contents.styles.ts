@@ -54,5 +54,5 @@ export const ListItem = styled(GovUKListItem)`
 `
 
 export const Article = styled.article`
-  margin-top: ${SPACING.SCALE_6};
+  margin-bottom: ${SPACING.SCALE_6};
 `
