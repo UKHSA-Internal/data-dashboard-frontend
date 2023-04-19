@@ -1,0 +1,64 @@
+# Deploys preview Storybook's to GitHub Pages
+# Leaves a comment on the pull request with a link to the preview
+
+name: Storybook
+
+concurrency: preview-${{ github.ref }}
+
+on:
+  pull_request:
+    branches:
+      - '*'
+
+env:
+  build-directory: 'storybook-static'
+  preview-directory: 'storybook'
+  pull-request-id: ${{ github.event.number }}
+  pages-branch: 'gh-pages'
+
+jobs:
+  deploy-preview:
+    name: Preview
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v3
+
+      - name: Install and Build 🔧
+        run: |
+          npm ci
+          npm run build-storybook -w packages/ui
+
+      - name: Store Environment Variables 💾
+        run: |
+          url=$(echo "$GITHUB_REPOSITORY" | sed 's/\//.github.io\//')
+          echo "pages-url=$url" >> $GITHUB_ENV
+
+      - name: Deploy Preview 🚀
+        uses: JamesIves/github-pages-deploy-action@v4
+        with:
+          branch: ${{ env.pages-branch }}
+          folder: ${{ env.build-directory }}
+          target-folder: ${{ env.preview-directory }}/${{ env.pull-request-id }}
+          commit-message: Deploy preview for PR ${{ env.pull-request-id }} 🛫
+
+      - name: Find Comment 🔎
+        uses: peter-evans/find-comment@v2.0.1
+        id: fc
+        with:
+          issue-number: ${{ env.pull-request-id }}
+          comment-author: 'github-actions[bot]'
+          body-includes: Storybook deployed to
+
+      - name: Create Comment 💬
+        uses: peter-evans/create-or-update-comment@v2.1.0
+        with:
+          comment-id: ${{ steps.fc.outputs.comment-id }}
+          issue-number: ${{ env.pull-request-id }}
+          edit-mode: 'replace'
+          reactions: 'rocket'
+          body: |
+            Storybook deployed to:
+            https://${{ env.pages-url }}/${{ env.preview-directory }}/${{ env.pull-request-id }}
+
+            (if this is the first deployment, it might take a couple minutes to show up)
