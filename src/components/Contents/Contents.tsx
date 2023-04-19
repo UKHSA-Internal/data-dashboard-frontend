@@ -100,10 +100,10 @@ interface ContentsItemProps {
 
 export const ContentsItem = ({ children, id, heading }: ContentsItemProps) => {
   return (
-    <Styled.Article id={id} aria-labelledby={getIdFromHeading(heading)}>
+    <Styled.Section id={id} aria-labelledby={getIdFromHeading(heading)}>
       <SectionHeading id={getIdFromHeading(heading)}>{heading}</SectionHeading>
       {children}
-    </Styled.Article>
+    </Styled.Section>
   )
 }
 

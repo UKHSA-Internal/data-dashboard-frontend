@@ -53,6 +53,6 @@ export const ListItem = styled(GovUKListItem)`
   ${typography.font({ size: BODY_SIZES.MEDIUM })}
 `
 
-export const Article = styled.article`
+export const Section = styled.section`
   margin-bottom: ${SPACING.SCALE_6};
 `
