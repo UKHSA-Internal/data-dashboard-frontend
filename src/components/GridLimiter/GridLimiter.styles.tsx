@@ -11,6 +11,6 @@ export const LimitContainer = styled(CardContainer)`
   margin: 0;
 
   @media (max-width: ${BREAKPOINTS.DESKTOP}) and (min-width: 440px) {
-    grid-template-columns: ${(p: ContainerProps) => `repeat(${p.$columnLimit}, 1fr)`};
+    grid-template-columns: ${(props: ContainerProps) => `repeat(${props.$columnLimit}, 1fr)`};
   }
 `

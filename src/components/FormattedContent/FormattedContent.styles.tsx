@@ -9,8 +9,8 @@ type ContainerProps = {
 
 export const Container = styled(ReactMarkdown)<ContainerProps>`
   && {
-    ${(p) =>
-      p.$hasLinkedHeadings &&
+    ${(props: ContainerProps) =>
+      props.$hasLinkedHeadings &&
       css`
         a:has(h2) {
           margin-top: ${SPACING.SCALE_5};
@@ -18,8 +18,8 @@ export const Container = styled(ReactMarkdown)<ContainerProps>`
         }
       `}
 
-    ${(p) =>
-      !p.$hasLinkedHeadings &&
+    ${(props: ContainerProps) =>
+      !props.$hasLinkedHeadings &&
       css`
         h2 {
           margin-top: ${SPACING.SCALE_5};

@@ -2,7 +2,7 @@ import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { Link } from 'govuk-react'
 import { BLUE } from 'govuk-colours'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 import { COLOURS } from '@/styles/Theme'
 
 export const NavItem = styled('li')`
@@ -28,16 +28,16 @@ export const NavLink = styled(Link)<NavLinkProps>`
     color: ${BLUE};
   }
 
-  ${(p: NavLinkProps) => (p.type == 'primary' ? `font-weight: ${FONT_WEIGHTS.bold};` : '')}
+  ${(props: NavLinkProps) => (props.type == 'primary' ? `font-weight: ${FONT_WEIGHTS.bold};` : '')}
 
-  ${(p: NavLinkProps) =>
-    p['aria-current'] == 'page'
-      ? `
-        text-decoration: underline;
-        color: ${COLOURS.BLUE_DARK};
-        &:visited:not(:hover) {
+  ${(props: NavLinkProps) =>
+    props['aria-current'] == 'page'
+      ? css`
+          text-decoration: underline;
           color: ${COLOURS.BLUE_DARK};
-        }
-      `
+          &:visited:not(:hover) {
+            color: ${COLOURS.BLUE_DARK};
+          }
+        `
       : ''}
 `

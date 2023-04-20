@@ -9,7 +9,7 @@ type ButtonProps = {
 }
 
 export const Button = styled(Link)<ButtonProps>`
-  display: ${(p) => (p.$isVisible ? 'flex' : 'none')};
+  display: ${(props) => (props.$isVisible ? 'flex' : 'none')};
   position: fixed;
   bottom: ${SPACING.SCALE_4};
   left: ${SPACING.SCALE_4};
