@@ -8,7 +8,7 @@ interface RelatedLinksProps {
   links: Array<RelatedLink>
 }
 
-const RelatedLinks = ({ links }: RelatedLinksProps) => {
+export const RelatedLinks = ({ links }: RelatedLinksProps) => {
   const { t } = useTranslation('common')
   return (
     <Container>
@@ -26,5 +26,3 @@ const RelatedLinks = ({ links }: RelatedLinksProps) => {
     </Container>
   )
 }
-
-export default RelatedLinks

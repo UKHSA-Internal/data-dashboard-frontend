@@ -1,5 +1,5 @@
 import { render, screen } from '@testing-library/react'
-import Trend from './Trend'
+import { Trend } from './Trend'
 
 test('Positive trend with an up direction', () => {
   render(<Trend colour="green" direction="up" value="5,900 (0.3%)" />)
