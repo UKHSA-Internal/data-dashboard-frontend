@@ -1,5 +1,9 @@
-import { createMocks } from 'node-mocks-http'
+import { createMocks, createRequest, createResponse } from 'node-mocks-http'
 import revalidate from '../../../pages/api/revalidate'
+import { NextApiRequest, NextApiResponse } from 'next'
+
+type ApiRequest = NextApiRequest & ReturnType<typeof createRequest>
+type APiResponse = NextApiResponse & ReturnType<typeof createResponse>
 
 describe('/api/revalidate', () => {
   beforeEach(() => {
@@ -11,7 +15,7 @@ describe('/api/revalidate', () => {
     const secret = process.env.NEXT_REVALIDATE_API_KEY
     const revalidateMock = jest.fn()
 
-    const { req, res } = createMocks({
+    const { req, res } = createMocks<ApiRequest, APiResponse>({
       method: 'GET',
       query: {
         secret,
@@ -37,7 +41,7 @@ describe('/api/revalidate', () => {
     const secret = 'invalid-secret'
     const revalidateMock = jest.fn()
 
-    const { req, res } = createMocks({
+    const { req, res } = createMocks<ApiRequest, APiResponse>({
       method: 'GET',
       query: {
         secret,
@@ -62,7 +66,7 @@ describe('/api/revalidate', () => {
     const secret = process.env.NEXT_REVALIDATE_API_KEY
     const revalidateMock = jest.fn()
 
-    const { req, res } = createMocks({
+    const { req, res } = createMocks<ApiRequest, APiResponse>({
       method: 'GET',
       query: {
         secret,

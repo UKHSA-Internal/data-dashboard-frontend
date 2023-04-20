@@ -4,7 +4,6 @@ import { CardContainer, CardColumnHeading, CardColumnHeadingContainer, CardColum
 
 interface CardProps {
   children: ReactNode
-  label?: string
   theme?: 'primary' | 'secondary'
 }
 
