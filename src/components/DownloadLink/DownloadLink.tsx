@@ -1,5 +1,5 @@
 import { ReactNode } from 'react'
-import { Link, TextWrapper } from './Links.styles'
+import { Link, TextWrapper } from './DownloadLink.styles'
 import { BLACK } from 'govuk-colours'
 import { COLOURS } from '@/styles/Theme'
 import { Button } from 'govuk-react'

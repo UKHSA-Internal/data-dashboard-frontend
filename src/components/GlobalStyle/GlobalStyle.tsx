@@ -24,6 +24,14 @@ export const GlobalStyle = createGlobalStyle`
   :root {
     --gds-transport-font: ${GDSTransport.style.fontFamily};
   }
+
+  * {
+    padding: 0;
+    margin: 0;
+    font-family: var(--gds-transport-font) !important;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 `
 
 GlobalStyle.displayName = 'GlobalStyle'

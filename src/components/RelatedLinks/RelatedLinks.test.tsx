@@ -1,6 +1,6 @@
 import { RelatedLink } from '@/api/requests/cms/getPage'
 import { render, screen, within } from '@/config/test-utils'
-import RelatedLinks from './RelatedLinks'
+import { RelatedLinks } from './RelatedLinks'
 
 const testData: Array<RelatedLink> = [
   {
