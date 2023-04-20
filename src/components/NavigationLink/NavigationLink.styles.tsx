@@ -28,16 +28,16 @@ export const NavLink = styled(Link)<NavLinkProps>`
     color: ${BLUE};
   }
 
-  ${(props: NavLinkProps) => (props.type == 'primary' ? `font-weight: ${FONT_WEIGHTS.bold};` : '')}
+  ${(props: NavLinkProps) => props.type === 'primary' && `font-weight: ${FONT_WEIGHTS.bold};`}
 
   ${(props: NavLinkProps) =>
-    props['aria-current'] == 'page'
-      ? css`
-          text-decoration: underline;
-          color: ${COLOURS.BLUE_DARK};
-          &:visited:not(:hover) {
-            color: ${COLOURS.BLUE_DARK};
-          }
-        `
-      : ''}
+    props['aria-current'] === 'page' &&
+    css`
+      text-decoration: underline;
+      color: ${COLOURS.BLUE_DARK};
+
+      &:visited:not(:hover) {
+        color: ${COLOURS.BLUE_DARK};
+      }
+    `}
 `

@@ -11,7 +11,7 @@ type ContainerProps = {
 export const CardContainer = styled(GridRow)`
   width: 100%;
   margin: 0 auto;
-  background-color: ${(props: ContainerProps) => (props.$theme == 'secondary' ? 'transparent' : GREY_3)};
+  background-color: ${(props: ContainerProps) => (props.$theme === 'secondary' ? 'transparent' : GREY_3)};
   padding-top: ${SPACING.SCALE_3};
   padding-bottom: ${SPACING.SCALE_3};
   margin-top: ${SPACING.SCALE_5};
@@ -30,9 +30,9 @@ export const CardColumnHeadingContainer = styled.div`
 
 export const CardColumnHeading = styled(H3)<ContainerProps>`
   ${typography.font({ size: BODY_SIZES.MEDIUM })};
-  font-weight: ${(props: ContainerProps) => (props.$theme == 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
+  font-weight: ${(props: ContainerProps) => (props.$theme === 'secondary' ? FONT_WEIGHTS.bold : FONT_WEIGHTS.regular)};
   color: BLACK;
-  margin-bottom: ${(props: ContainerProps) => (props.$theme == 'secondary' ? '10px' : 0)};
+  margin-bottom: ${(props: ContainerProps) => (props.$theme === 'secondary' ? '10px' : 0)};
 `
 
 export const CardColumnGridCol = styled(GridCol)`
