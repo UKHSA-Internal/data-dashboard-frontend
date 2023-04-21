@@ -1,7 +1,7 @@
-import { Metrics, PercentageMetrics, Topics } from '@/api/models'
-import { responseSchema } from '@/api/requests/trends/getTrends'
 import { z } from 'zod'
 import { createFixture } from 'zod-fixture'
+import { PercentageMetrics, Topics } from '@/api/models'
+import { responseSchema } from '@/api/requests/trends/getTrends'
 
 /**
  * Generates an object containing fixtures for all topics and metrics
