@@ -17,7 +17,7 @@ export const responseSchema = z.object({
 type RequestParams = z.infer<typeof requestSchema>
 
 export const getHeadlines = async (params: RequestParams) => {
-  const searchParams = new URLSearchParams(params).toString()
+  const searchParams = new URLSearchParams(params)
   const res = await api.get(`${getApiBaseUrl()}/headlines`, { searchParams }).json()
   return responseSchema.safeParse(res)
 }

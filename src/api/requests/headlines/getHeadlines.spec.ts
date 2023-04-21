@@ -13,7 +13,7 @@ afterEach(() => server.resetHandlers())
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
-test.only('Returns a headline value', async () => {
+test('Returns a headline value', async () => {
   const result = await getHeadlines({
     topic: 'COVID-19',
     geography: 'England',

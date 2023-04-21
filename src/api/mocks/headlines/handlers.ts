@@ -1,6 +1,6 @@
 import { rest } from 'msw'
 import { getApiBaseUrl } from '@/api/requests/helpers'
-import { requestSchema, responseSchema } from '@/api/requests/headlines/getHeadlines'
+import { requestSchema } from '@/api/requests/headlines/getHeadlines'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 import { z } from 'zod'
 import { fixtures } from './fixtures'
@@ -10,7 +10,7 @@ const paths: Record<string, string> = {
 }
 
 export const handlers = [
-  rest.get<z.infer<typeof responseSchema>, z.infer<typeof requestSchema>>(
+  rest.get(
     paths.getHeadlines,
     apiResolver((req, res, ctx) => {
       // Extract query parameters
