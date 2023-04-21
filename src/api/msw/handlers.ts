@@ -1,3 +1,3 @@
-import { cms, stats, headlines } from '../mocks'
+import { cms, stats, headlines, trends } from '../mocks'
 
-export const handlers = [...cms.handlers, ...stats.handlers, ...headlines.handlers]
+export const handlers = [...cms.handlers, ...stats.handlers, ...headlines.handlers, ...trends.handlers]

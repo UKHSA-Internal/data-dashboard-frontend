@@ -1,6 +1,7 @@
+import { z } from 'zod'
+import { createFixture } from 'zod-fixture'
 import { Metrics, Topics } from '@/api/models'
 import { responseSchema } from '@/api/requests/headlines/getHeadlines'
-import { createFixture } from 'zod-fixture'
 
 /**
  * Generates an object containing fixtures for all topics and metrics
@@ -32,20 +33,20 @@ type TopicKey = (typeof Topics)[number]
 type TopicValue = Map<MetricKey, MetricValue>
 
 type MetricKey = (typeof Metrics)[number]
-type MetricValue = string
+type MetricValue = z.infer<typeof responseSchema>['value']
 
 const mockedValues: MockedValues = {
   'COVID-19': new Map<MetricKey, MetricValue>([
-    ['new_cases_7days_sum', '24,298'],
-    ['new_deaths_7days_sum', '379'],
-    ['new_admissions_7days', '6,288'],
-    ['latest_total_vaccinations_autumn22', '4,095,083'],
-    ['latest_vaccinations_uptake_autumn22', '64.5'],
-    ['positivity_7days_latest', '10.4'],
+    ['new_cases_7days_sum', 24298],
+    ['new_deaths_7days_sum', 379],
+    ['new_admissions_7days', 6288],
+    ['latest_total_vaccinations_autumn22', 4095083],
+    ['latest_vaccinations_uptake_autumn22', 64.5],
+    ['positivity_7days_latest', 10.4],
   ]),
   Influenza: new Map<MetricKey, MetricValue>([
-    ['weekly_hospital_admissions_rate_latest', '981,596'],
-    ['weekly_positivity_latest', '12.2'],
+    ['weekly_hospital_admissions_rate_latest', 981596],
+    ['weekly_positivity_latest', 12.2],
   ]),
 }
 
