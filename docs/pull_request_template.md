@@ -21,12 +21,13 @@ Please describe the tests that you ran to verify your changes. Provide instructi
 - [ ] Cypress tests
 - [ ] Mobile responsiveness
 - [ ] Accessibility (i.e. Lighthouse audit)
-- [ ] Disabled JavaScript 
+- [ ] Disabled JavaScript
 
 # Checklist:
 
 - [ ] I have performed a self-review of my own code
 - [ ] I have commented my code, particularly in hard-to-understand areas
+- [ ] Any styles in this change follow the 'STYLES.md' guide
 - [ ] My changes are progressively enhanced with graceful degredagation for older browsers and non-JavaScript users
 - [ ] I have made corresponding changes to the documentation
 - [ ] My changes generate no new warnings
