@@ -7,12 +7,12 @@ export const Link = styled(GovUKLink)`
   display: flex;
   align-items: center;
   justify-content: center;
-  margin-bottom: 0;
-  height: 29;
+  margin-bottom: 0px;
+  height: 29px;
   ${typography.font({ size: BODY_SIZES.SMALL })}
 
   ${MEDIA_QUERIES.TABLET} {
-    width: 122;
+    width: 122px;
   }
 
   &:link,
