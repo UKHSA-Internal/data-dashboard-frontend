@@ -63,3 +63,15 @@ export const Metrics = [
   'weekly_hospital_admissions_rate_by_geography',
   'weekly_icu_admissions_rate_by_region',
 ] as const
+
+export const PercentageMetrics = [
+  'new_cases_7days_change_percentage',
+  'new_deaths_7days_change_percentage',
+  'new_admissions_7days_change_percentage',
+  'positivity_7days_change_percentage',
+  'new_tests_7days_change_percentage',
+  'vaccinations_percentage',
+  'vaccinations_percentage',
+  'weekly_hospital_admissions_rate_change_percentage',
+  'weekly_icu_admissions_rate_change_percentage',
+] as const
