@@ -23,7 +23,7 @@ test('Returns a COVID-19 headline value', async () => {
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
-      value: '24,298',
+      value: 24298,
     },
   })
 })
@@ -39,7 +39,7 @@ test('Returns an Influenza headline value', async () => {
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
-      value: '12.2',
+      value: 12.2,
     },
   })
 })
@@ -47,7 +47,7 @@ test('Returns an Influenza headline value', async () => {
 test('Handles invalid json received from the api', async () => {
   server.use(
     rest.get(`${getApiBaseUrl()}/headlines/v2`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json({ value: 123 }))
+      return res(ctx.status(200), ctx.json({}))
     })
   )
 
@@ -63,10 +63,10 @@ test('Handles invalid json received from the api', async () => {
     error: new z.ZodError([
       {
         code: 'invalid_type',
-        expected: 'string',
-        received: 'number',
+        expected: 'number',
+        received: 'nan',
         path: ['value'],
-        message: 'Expected string, received number',
+        message: 'Expected number, received nan',
       },
     ]),
   })

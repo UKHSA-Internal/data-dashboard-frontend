@@ -11,7 +11,7 @@ export const requestSchema = z.object({
 })
 
 export const responseSchema = z.object({
-  value: z.string(),
+  value: z.coerce.number(),
 })
 
 type RequestParams = z.infer<typeof requestSchema>
