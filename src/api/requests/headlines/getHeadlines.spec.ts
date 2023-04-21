@@ -4,7 +4,6 @@ import { rest } from 'msw'
 import { server } from '@/api/msw/server'
 import { getHeadlines, responseSchema } from './getHeadlines'
 import { getApiBaseUrl } from '../helpers'
-import { fixtures } from '@/api/mocks/headlines/fixtures'
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())
@@ -13,7 +12,7 @@ afterEach(() => server.resetHandlers())
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
-test('Returns a headline value', async () => {
+test('Returns a COVID-19 headline value', async () => {
   const result = await getHeadlines({
     topic: 'COVID-19',
     geography: 'England',
@@ -23,7 +22,25 @@ test('Returns a headline value', async () => {
 
   expect(result).toEqual<SuccessResponse>({
     success: true,
-    data: fixtures['new_cases_7days_sum'],
+    data: {
+      value: '24,298',
+    },
+  })
+})
+
+test('Returns an Influenza headline value', async () => {
+  const result = await getHeadlines({
+    topic: 'Influenza',
+    geography: 'England',
+    geography_type: 'Nation',
+    metric: 'weekly_positivity_latest',
+  })
+
+  expect(result).toEqual<SuccessResponse>({
+    success: true,
+    data: {
+      value: '12.2',
+    },
   })
 })
 

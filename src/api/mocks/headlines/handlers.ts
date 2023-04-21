@@ -2,7 +2,6 @@ import { rest } from 'msw'
 import { getApiBaseUrl } from '@/api/requests/helpers'
 import { requestSchema } from '@/api/requests/headlines/getHeadlines'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
-import { z } from 'zod'
 import { fixtures } from './fixtures'
 
 const paths: Record<string, string> = {
@@ -26,11 +25,11 @@ export const handlers = [
 
       // Pick out the metric query parameter
       const {
-        data: { metric },
+        data: { metric, topic },
       } = parsedQueryParams
 
-      // Return a json fixture identified metric provided
-      return res(ctx.json(fixtures[metric]))
+      // Return a json fixture identified by the topic & metric provided
+      return res(ctx.json(fixtures[topic][metric]))
     })
   ),
 ]
