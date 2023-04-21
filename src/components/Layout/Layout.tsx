@@ -2,8 +2,8 @@ import { Footer, Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren, useEffect } from 'react'
 import { Navigation } from '../Navigation'
 import RouterLink from 'next/link'
-import { TopNavLink } from './Layout.styles'
 import { useTranslation } from 'next-i18next'
+import { TopNavLink, Main } from './Layout.styles'
 
 export const Layout = ({ children }: PropsWithChildren) => {
   const { t } = useTranslation('common')
@@ -30,7 +30,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
             }
           />
         }
-        main={'main'}
+        main={Main}
       >
         {children}
       </Page>

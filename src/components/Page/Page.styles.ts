@@ -6,11 +6,9 @@ import { typography } from '@govuk-react/lib'
 export const Container = styled.div``
 
 export const LastUpdated = styled.div`
-  margin-bottom: ${SPACING.SCALE_5};
-  margin-top: ${SPACING.SCALE_4};
   ${typography.font({ size: BODY_SIZES.SMALL })}
 `
 
 export const Heading = styled(H1)`
-  margin-bottom: ${SPACING.SCALE_3};
+  margin: ${SPACING.SCALE_4} 0;
 `
