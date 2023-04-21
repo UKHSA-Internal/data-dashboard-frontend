@@ -18,6 +18,6 @@ type RequestParams = z.infer<typeof requestSchema>
 
 export const getHeadlines = async (params: RequestParams) => {
   const searchParams = new URLSearchParams(params)
-  const res = await api.get(`${getApiBaseUrl()}/headlines`, { searchParams }).json()
+  const res = await api.get(`${getApiBaseUrl()}/headlines/v2`, { searchParams }).json()
   return responseSchema.safeParse(res)
 }
