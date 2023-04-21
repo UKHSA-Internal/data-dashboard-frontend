@@ -46,7 +46,7 @@ test('Returns an Influenza headline value', async () => {
 
 test('Handles invalid json received from the api', async () => {
   server.use(
-    rest.get(`${getApiBaseUrl()}/headlines`, (req, res, ctx) => {
+    rest.get(`${getApiBaseUrl()}/headlines/v2`, (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({ value: 123 }))
     })
   )
@@ -74,7 +74,7 @@ test('Handles invalid json received from the api', async () => {
 
 test('Handles generic http error statuses (404, 500)', async () => {
   server.use(
-    rest.get(`${getApiBaseUrl()}/headlines`, (req, res, ctx) => {
+    rest.get(`${getApiBaseUrl()}/headlines/v2`, (req, res, ctx) => {
       return res(ctx.status(404), ctx.json({}))
     })
   )
@@ -89,7 +89,7 @@ test('Handles generic http error statuses (404, 500)', async () => {
   ).rejects.toThrow('Request failed with status code 404 Not Found')
 
   server.use(
-    rest.get(`${getApiBaseUrl()}/headlines`, (req, res, ctx) => {
+    rest.get(`${getApiBaseUrl()}/headlines/v2`, (req, res, ctx) => {
       return res(ctx.status(500), ctx.json({}))
     })
   )

@@ -5,7 +5,7 @@ import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 import { fixtures } from './fixtures'
 
 const paths: Record<string, string> = {
-  getHeadlines: `${getApiBaseUrl()}/headlines`,
+  getHeadlines: `${getApiBaseUrl()}/headlines/v2`,
 }
 
 export const handlers = [
