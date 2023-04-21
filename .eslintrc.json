@@ -16,6 +16,6 @@
         "message": "Please import from the next-i18next package instead."
       }
     ],
-    "id-length": [2, { "exceptions": ["i", "j", "_", "e"], "properties": "never" }]
+    "id-length": [2, { "exceptions": ["i", "j", "_", "e", "z"], "properties": "never" }]
   }
 }
