@@ -1,30 +1,28 @@
+import 'whatwg-fetch'
+import fs from 'fs'
+import path from 'path'
+import { server } from '@/api/msw/server'
 import { getAllDashboardCharts } from './getAllDashboardCharts'
 
-test('Skips fetch calls to the real-world api when chart mocks are enabled', async () => {
-  process.env.NEXT_PUBLIC_USE_CHART_MOCKS = 'enabled'
-  const charts = await getAllDashboardCharts()
-  expect(charts).toEqual({ Coronavirus: { Cases: '', Deaths: '' }, Influenza: { Healthcare: '', Testing: '' } })
-})
+beforeAll(() => server.listen())
+afterAll(() => server.close())
+afterEach(() => server.resetHandlers())
+
+const getFixture = (file: string) =>
+  fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${file}`), {
+    encoding: 'utf8',
+  })
 
 test('Fetches the real-world charts when mocks are disabled', async () => {
-  process.env.NEXT_PUBLIC_USE_CHART_MOCKS = 'disabled'
-
-  global.fetch = jest.fn((url) => {
-    return Promise.resolve({
-      ok: true,
-      text: () => `<svg>${url}</svg>`,
-    })
-  }) as jest.Mock
-
   const charts = await getAllDashboardCharts()
   expect(charts).toEqual({
     Coronavirus: {
-      Cases: '<svg>http://fake-backend.gov.uk/charts/COVID-19/Cases</svg>',
-      Deaths: '<svg>http://fake-backend.gov.uk/charts/COVID-19/Deaths</svg>',
+      Cases: getFixture('COVID-19/new_cases_daily.svg'),
+      Deaths: getFixture('COVID-19/new_deaths_daily.svg'),
     },
     Influenza: {
-      Healthcare: '<svg>http://fake-backend.gov.uk/charts/Influenza/Healthcare</svg>',
-      Testing: '<svg>http://fake-backend.gov.uk/charts/Influenza/Testing</svg>',
+      Healthcare: getFixture('Influenza/weekly_hospital_admissions_rate.svg'),
+      Testing: getFixture('Influenza/weekly_positivity.svg'),
     },
   })
 })

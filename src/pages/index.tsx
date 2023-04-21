@@ -74,10 +74,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
                         data-testid={`column-${container.toLowerCase()}`}
                       >
                         {content.map(renderContentTypes)}
-                        <Chart
-                          src={`data:image/svg+xml;utf8,${encodeURIComponent(charts[topic][container])}`}
-                          fallback={`/img/${topic}_${container}.svg`}
-                        />
+                        <Chart src={`data:image/svg+xml;utf8,${encodeURIComponent(charts[topic][container])}`} />
                       </CardColumn>
                     </Card>
                   </GridCol>

@@ -28,7 +28,7 @@ export const Influenza = () => {
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
                 >
-                  <Chart src="" fallback="/img/temp-influenza1.png" />
+                  <Chart src="/img/temp-influenza1.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -38,7 +38,7 @@ export const Influenza = () => {
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
                 >
-                  <Chart src="" fallback="/img/temp-influenza2.png" />
+                  <Chart src="/img/temp-influenza2.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -50,7 +50,7 @@ export const Influenza = () => {
                   heading="Weekly overall ICU or HDU admission rates for new influenza positive cases per 100,000 population reporteed through SARI Watch"
                   theme="secondary"
                 >
-                  <Chart src="" fallback="/img/temp-influenza3.png" />
+                  <Chart src="/img/temp-influenza3.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -60,7 +60,7 @@ export const Influenza = () => {
                   heading="Weekly overall influenza ICU or HDU admission rates per 100,000 trust catchment population with MEM threasholds, SARI Watch, England"
                   theme="secondary"
                 >
-                  <Chart src="" fallback="/img/temp-influenza4.png" />
+                  <Chart src="/img/temp-influenza4.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -72,7 +72,7 @@ export const Influenza = () => {
                   heading="Weekly overall ICU or HDU admission rates for new influenza positive cases per 100,000 population reporteed through SARI Watch"
                   theme="secondary"
                 >
-                  <Chart src="" fallback="/img/temp-influenza5.png" />
+                  <Chart src="/img/temp-influenza5.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -85,7 +85,7 @@ export const Influenza = () => {
               heading="Respiratory DataMart weeklyu positive (%) for influenza by age, England"
               theme="secondary"
             >
-              <Chart src="" fallback="/img/temp-influenza-testing.png" />
+              <Chart src="/img/temp-influenza-testing.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
