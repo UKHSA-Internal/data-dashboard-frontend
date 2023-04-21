@@ -1,5 +1,5 @@
 import { Link } from 'govuk-react'
-import { FONT_WEIGHTS } from '@govuk-react/constants'
+import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { COLOURS } from '@/styles/Theme'
 
@@ -20,4 +20,8 @@ export const TopNavLink = styled(Link)`
       color: ${COLOURS.WHITE};
     }
   }
+`
+
+export const Main = styled.main`
+  margin-top: ${SPACING.SCALE_4};
 `
