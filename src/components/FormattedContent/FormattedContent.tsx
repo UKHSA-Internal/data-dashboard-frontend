@@ -61,7 +61,7 @@ export const FormattedContent = ({ children, hasLinkedHeadings = false }: Format
 
   return (
     <>
-      <Container hasLinkedHeadings={hasLinkedHeadings} rehypePlugins={rehypePlugins} components={components}>
+      <Container $hasLinkedHeadings={hasLinkedHeadings} rehypePlugins={rehypePlugins} components={components}>
         {children}
       </Container>
     </>

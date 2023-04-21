@@ -6,5 +6,5 @@ interface GridLimiterProps {
 }
 
 export const GridLimiter = ({ children }: GridLimiterProps) => {
-  return <LimitContainer columnLimit={3}>{children}</LimitContainer>
+  return <LimitContainer $columnLimit={3}>{children}</LimitContainer>
 }
