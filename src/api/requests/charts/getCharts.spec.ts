@@ -5,7 +5,7 @@ import 'whatwg-fetch'
 import { rest } from 'msw'
 import { server } from '@/api/msw/server'
 import { getCharts, requestSchema } from './getCharts'
-import { getApiBaseUrl } from '../../helpers'
+import { getApiBaseUrl } from '../helpers'
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())

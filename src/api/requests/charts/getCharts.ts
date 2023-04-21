@@ -1,6 +1,6 @@
 import { z } from 'zod'
 import { api } from '@/api/api-utils'
-import { getApiBaseUrl } from '../../helpers'
+import { getApiBaseUrl } from '../helpers'
 import { Topics, Metrics, ChartTypes, FileFormats } from '@/api/models'
 
 export const requestSchema = z.object({

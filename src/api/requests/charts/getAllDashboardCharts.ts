@@ -1,5 +1,5 @@
 import { TopicName } from '../stats/getStats'
-import { getCharts } from './v2/getCharts'
+import { getCharts } from './getCharts'
 
 /**
  * This function orchestrates together the various chart API calls required to display

@@ -1,6 +1,6 @@
 import { rest } from 'msw'
 import { getApiBaseUrl } from '@/api/requests/helpers'
-import { requestSchema } from '@/api/requests/charts/v2/getCharts'
+import { requestSchema } from '@/api/requests/charts/getCharts'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 import fs from 'fs'
 import path from 'path'
@@ -12,15 +12,15 @@ export const handlers = [
       // Extract request body
       const requestBody = await req.json()
 
-      // Validate query parameters
+      // Validate request body
       const parsedRequestBody = requestSchema.safeParse(requestBody)
 
-      // Return a 500 if the query parameters provided aren't valid
+      // Return a 500 if the request body provided aren't valid
       if (!parsedRequestBody.success) {
         return res(ctx.status(500))
       }
 
-      // Pick out the metric query parameter
+      // Pick out the metric & topic values
       const {
         data: { topic, metric },
       } = parsedRequestBody
