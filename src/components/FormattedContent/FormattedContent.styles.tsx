@@ -3,10 +3,14 @@ import ReactMarkdown from 'react-markdown'
 import styled, { css } from 'styled-components'
 import { typography } from '@govuk-react/lib'
 
-export const Container = styled(ReactMarkdown)<{ hasLinkedHeadings: boolean }>`
+type ContainerProps = {
+  $hasLinkedHeadings: boolean
+}
+
+export const Container = styled(ReactMarkdown)<ContainerProps>`
   && {
-    ${(props) =>
-      props.hasLinkedHeadings &&
+    ${(props: ContainerProps) =>
+      props.$hasLinkedHeadings &&
       css`
         a:has(h2) {
           margin-top: ${SPACING.SCALE_5};
@@ -14,8 +18,8 @@ export const Container = styled(ReactMarkdown)<{ hasLinkedHeadings: boolean }>`
         }
       `}
 
-    ${(props) =>
-      !props.hasLinkedHeadings &&
+    ${(props: ContainerProps) =>
+      !props.$hasLinkedHeadings &&
       css`
         h2 {
           margin-top: ${SPACING.SCALE_5};

@@ -1,7 +1,6 @@
 import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { BLACK, BLUE, GREY_3, FOCUS_COLOUR } from 'govuk-colours'
-
 import * as ReactAccordion from 'react-accessible-accordion'
 import styled from 'styled-components'
 
@@ -26,6 +25,7 @@ export const AccordionItemExpander = styled.button`
     background: none;
     text-align: left;
     cursor: pointer;
+    appearance: none;
     -webkit-appearance: none;
 
     ${typography.font({ size: BODY_SIZES.LARGE })}
