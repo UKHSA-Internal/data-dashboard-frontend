@@ -4,23 +4,16 @@ import { Chart } from './Chart'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
-test('Displays the chart via the provided src in when chart mocks flag is disabled', () => {
-  process.env.NEXT_PUBLIC_USE_CHART_MOCKS = 'disabled'
-  render(<Chart src="/svg/data/uri" fallback="/path/to/fallback" />)
+test('Displays the chart via the provided src', () => {
+  render(<Chart src="/svg/data/uri" />)
   expect(screen.getByAltText('')).toHaveAttribute('src', '/svg/data/uri')
-})
-
-test('Displays the fallback chart image with chart mocks flag is enabled', () => {
-  process.env.NEXT_PUBLIC_USE_CHART_MOCKS = 'enabled'
-  render(<Chart src="" fallback="/path/to/fallback" />)
-  expect(screen.getByAltText('')).toHaveAttribute('src', '/path/to/fallback')
 })
 
 // Skipped until this is re-implemented in JIRA: CDD-534
 test.skip('Clicking the "View data in a tabular format" button, shows the graph in a tabular format', async () => {
   const user = userEvent.setup()
 
-  render(<Chart src="" fallback="" />)
+  render(<Chart src="" />)
 
   // Table is not visible by default
   expect(screen.getByText('Monthly TestVirus cases')).not.toBeVisible()
