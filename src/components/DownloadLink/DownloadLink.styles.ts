@@ -12,7 +12,7 @@ export const Link = styled(GovUKLink)`
   ${typography.font({ size: BODY_SIZES.SMALL })}
 
   ${MEDIA_QUERIES.TABLET} {
-    width: 122;
+    width: 122px;
   }
 
   &:link,

@@ -4,12 +4,8 @@ import { BODY_SIZES, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { BLUE } from 'govuk-colours'
 
-type ButtonProps = {
-  $isVisible: boolean
-}
-
-export const Button = styled(Link)<ButtonProps>`
-  display: ${(props) => (props.$isVisible ? 'inline-flex' : 'none')};
+export const Button = styled(Link)`
+  display: inline-flex;
   margin: 0 ${SPACING.SCALE_3} ${SPACING.SCALE_5};
   ${typography.font({ size: BODY_SIZES.SMALL })}
   background-color: transparent;
