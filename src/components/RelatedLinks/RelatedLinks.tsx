@@ -1,11 +1,11 @@
-import { RelatedLink } from '@/api/requests/cms/getPage'
 import { H2, ListItem, UnorderedList } from 'govuk-react'
 import { FormattedContent } from '../FormattedContent'
 import { BoldExternalLink, Container } from './RelatedLinks.styles'
 import { useTranslation } from 'next-i18next'
+import type { RelatedLinks as Links } from '@/api/models/cms/Page'
 
 interface RelatedLinksProps {
-  links: Array<RelatedLink>
+  links: Links
 }
 
 export const RelatedLinks = ({ links }: RelatedLinksProps) => {

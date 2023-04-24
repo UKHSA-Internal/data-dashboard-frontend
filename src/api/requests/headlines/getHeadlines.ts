@@ -4,10 +4,10 @@ import { getApiBaseUrl } from '../helpers'
 import { Topics, Metrics, Geography, GeographyType } from '@/api/models'
 
 export const requestSchema = z.object({
-  topic: z.enum(Topics),
-  metric: z.enum(Metrics),
-  geography_type: z.enum(GeographyType),
-  geography: z.enum(Geography),
+  topic: Topics,
+  metric: Metrics,
+  geography_type: GeographyType,
+  geography: Geography,
 })
 
 export const responseSchema = z.object({

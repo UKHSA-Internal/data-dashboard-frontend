@@ -1,8 +1,8 @@
-import { RelatedLink } from '@/api/requests/cms/getPage'
 import { render, screen, within } from '@/config/test-utils'
 import { RelatedLinks } from './RelatedLinks'
+import type { RelatedLinks as Links } from '@/api/models/cms/Page'
 
-const testData: Array<RelatedLink> = [
+const testData: Links = [
   {
     id: 1,
     meta: {

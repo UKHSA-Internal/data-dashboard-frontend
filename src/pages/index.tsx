@@ -7,7 +7,6 @@ import { RelatedLinks } from '@/components/RelatedLinks'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
 import { Page } from '@/components/Page'
-import { RelatedLink } from '@/api/requests/cms/getPage'
 import { initMocks } from '@/api/msw'
 import { DownloadLink } from '@/components/DownloadLink'
 import { ContentTypes, getStats, TopicName } from '@/api/requests/stats/getStats'
@@ -17,6 +16,7 @@ import { getAllDashboardCharts } from '@/api/requests/charts/getAllDashboardChar
 import { useTranslation } from 'next-i18next'
 import { HeadlineTrend, HeadlineValue, Metric } from '@/components/Metrics'
 import { GridLimiter } from '@/components/GridLimiter'
+import type { RelatedLinks as Links, PageBody } from '@/api/models/cms/Page'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -47,7 +47,7 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      <Paragraph>{body}</Paragraph>
+      {/* <Paragraph>{body}</Paragraph> */}
       <Contents heading={t<string>('contentsHeading')}>
         {statistics.map(({ topic, summary, tiles }) => (
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
@@ -93,11 +93,14 @@ export default function Home({ title, body, relatedLinks, lastUpdated, statistic
 type StatisticsProps = Array<{ topic: TopicName } & Awaited<ReturnType<typeof getStats>>>
 type ChartsProps = Record<TopicName, Record<string, string>>
 
+// This will be transformed into a new type with the actual data piped in
+type Body = PageBody[]
+
 export const getStaticProps: GetStaticProps<{
   title: string
-  body: string
+  body: Body
   lastUpdated: string
-  relatedLinks: Array<RelatedLink>
+  relatedLinks: Links
   statistics: StatisticsProps
   charts: ChartsProps
 }> = async (req) => {

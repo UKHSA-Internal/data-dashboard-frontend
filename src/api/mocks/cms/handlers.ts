@@ -23,7 +23,7 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
 }
 
 // Contains the individual `/pages/{id}` mocks
-export const mockedPageMap: Record<number, PageResponse<PageType.Common>> = {
+export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [dashboardPageMock.id]: dashboardPageMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,

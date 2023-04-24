@@ -26,7 +26,6 @@ export const covidPageMock: PageResponse<PageType.Topic> = {
   },
   title: 'Coronavirus',
   body: 'SARS-CoV-2 (commonly known as Coronavirus) is an infection of the nose, throat and lungs.',
-  date_posted: '2023-03-10',
   symptoms: 'Runny nose',
   transmission: 'Airborne',
   treatment: 'Rest',

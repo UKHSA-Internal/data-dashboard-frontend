@@ -4,9 +4,9 @@ import { getApiBaseUrl } from '../helpers'
 import { Topics, Metrics, PercentageMetrics } from '@/api/models'
 
 export const requestSchema = z.object({
-  topic: z.enum(Topics),
-  metric: z.enum(Metrics),
-  percentage_metric: z.enum(PercentageMetrics),
+  topic: Topics,
+  metric: Metrics,
+  percentage_metric: PercentageMetrics,
 })
 
 export const responseSchema = z.object({
