@@ -5,7 +5,7 @@ import { NextApiRequest, NextApiResponse } from 'next'
 type ApiRequest = NextApiRequest & ReturnType<typeof createRequest>
 type APiResponse = NextApiResponse & ReturnType<typeof createResponse>
 
-describe('/api/revalidate', () => {
+describe('GET /api/revalidate', () => {
   beforeEach(() => {
     console.log = jest.fn()
   })

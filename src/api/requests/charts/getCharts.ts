@@ -4,11 +4,11 @@ import { getApiBaseUrl } from '../helpers'
 import { Topics, Metrics, ChartTypes, FileFormats } from '@/api/models'
 
 export const requestSchema = z.object({
-  chart_type: z.enum(ChartTypes),
-  metric: z.enum(Metrics),
-  topic: z.enum(Topics),
+  chart_type: ChartTypes,
+  metric: Metrics,
+  topic: Topics,
   date_from: z.optional(z.string().datetime()),
-  file_format: z.optional(z.enum(FileFormats)),
+  file_format: z.optional(FileFormats),
 })
 
 type RequestParams = z.infer<typeof requestSchema>

@@ -37,10 +37,10 @@ import { responseSchema } from '@/api/requests/trends/getTrends'
 
 type MockedValues = Record<TopicKey, TopicValue>
 
-type TopicKey = (typeof Topics)[number]
+type TopicKey = z.infer<typeof Topics>
 type TopicValue = Map<MetricKey, MetricValue>
 
-type MetricKey = (typeof PercentageMetrics)[number]
+type MetricKey = z.infer<typeof PercentageMetrics>
 type MetricValue = z.infer<typeof responseSchema>
 
 const mockedValues: MockedValues = {
@@ -58,10 +58,10 @@ const mockedValues: MockedValues = {
 }
 
 export const fixtures = Object.fromEntries(
-  Topics.map((topic) => [
+  Topics.options.map((topic) => [
     topic,
     Object.fromEntries(
-      PercentageMetrics.map((metric) => [
+      PercentageMetrics.options.map((metric) => [
         metric,
         createFixture(responseSchema, {
           customizations: [
