@@ -51,7 +51,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
                       <Trend direction="down" colour="green" value={'-1,600 (-6.1%)'} />
                     </GridCol>
                   </GridRow>
-                  <Chart src="" fallback="" />
+                  <Chart src="" />
                 </CardColumn>
               </Card>
             </GridCol>

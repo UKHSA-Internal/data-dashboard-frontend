@@ -1,4 +1,5 @@
 import { setupWorker } from 'msw'
-import { handlers } from './handlers'
 
-export const worker = setupWorker(...handlers)
+// Currently we do not have any browser handlers setup as
+// all of our MSW handlers are interacted with server side.
+export const worker = setupWorker(...[])
