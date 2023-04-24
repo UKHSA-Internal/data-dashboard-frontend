@@ -1,3 +1,5 @@
+export * from './ChartTypes'
+export * from './FileFormats'
 export * from './Geography'
 export * from './GeographyType'
 export * from './Metrics'
