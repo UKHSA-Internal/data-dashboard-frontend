@@ -2,8 +2,8 @@ import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
-export const dashboardPageMock: PageResponse<PageType.Home> = {
-  id: 4,
+export const homePageMock: PageResponse<PageType.Home> = {
+  id: 1,
   meta: {
     type: 'home.HomePage',
     detail_url: 'http://localhost/api/pages/4/',
