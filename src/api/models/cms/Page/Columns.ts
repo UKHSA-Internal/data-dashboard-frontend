@@ -4,7 +4,7 @@ import type { ColumnType } from './ColumnType'
 
 /**
  * Column Types
- * Variations of each object that can returned by the columns array
+ * Variations of each object that can be returned by the columns array
  */
 
 export type Columns = Array<
