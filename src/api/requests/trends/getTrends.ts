@@ -10,8 +10,10 @@ export const requestSchema = z.object({
 })
 
 export const responseSchema = z.object({
-  value: z.coerce.number(),
-  percentage_value: z.coerce.number(),
+  metric_name: Metrics,
+  metric_value: z.coerce.number(),
+  percentage_metric_name: PercentageMetrics,
+  percentage_metric_value: z.coerce.number(),
   direction: z.enum(['up', 'down', 'neutral']),
   colour: z.enum(['green', 'red', 'neutral']),
 })
