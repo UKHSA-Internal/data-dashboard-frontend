@@ -22,10 +22,16 @@ export const handlers = [
 
       // Pick out the metric & topic values
       const {
-        data: { topic, metric },
+        data: { plots },
       } = parsedRequestBody
 
+      if (plots.length > 1) {
+        console.log('Unhandled msw handler for chart with multiple plots')
+        return res(ctx.status(500))
+      }
+
       // Read the image from the file system
+      const { topic, metric } = plots[0]
       const imageBuffer = fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${topic}/${metric}.svg`))
 
       return res(

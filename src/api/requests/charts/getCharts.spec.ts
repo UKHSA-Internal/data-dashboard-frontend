@@ -4,15 +4,16 @@ import path from 'path'
 import 'whatwg-fetch'
 import { rest } from 'msw'
 import { server } from '@/api/msw/server'
-import { getCharts, requestSchema } from './getCharts'
+import { getCharts } from './getCharts'
 import { getApiBaseUrl } from '../helpers'
+import { Metrics, Topics } from '@/api/models'
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
-type Topic = z.infer<typeof requestSchema>['topic']
-type Metric = z.infer<typeof requestSchema>['metric']
+type Topic = z.infer<typeof Topics>
+type Metric = z.infer<typeof Metrics>
 
 const charts: Array<[Topic, Metric]> = [
   ['COVID-19', 'new_cases_daily'],
@@ -23,9 +24,13 @@ const charts: Array<[Topic, Metric]> = [
 
 test.each(charts)('Returns a chart for the %s topic and %s metric', async (topic, metric) => {
   const result = await getCharts({
-    topic,
-    metric,
-    chart_type: 'line_with_shaded_section',
+    plots: [
+      {
+        topic,
+        metric,
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
   })
 
   const fixture = fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${topic}/${metric}.svg`), {
@@ -44,9 +49,13 @@ test('Handles generic http error statuses (404, 500)', async () => {
 
   await expect(
     getCharts({
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      chart_type: 'line_with_shaded_section',
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          chart_type: 'line_with_shaded_section',
+        },
+      ],
     })
   ).rejects.toThrow('Request failed with status code 404 Not Found')
 
@@ -58,9 +67,13 @@ test('Handles generic http error statuses (404, 500)', async () => {
 
   await expect(
     getCharts({
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      chart_type: 'line_with_shaded_section',
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          chart_type: 'line_with_shaded_section',
+        },
+      ],
     })
   ).rejects.toThrow('Request failed with status code 500 Internal Server Error')
 })
