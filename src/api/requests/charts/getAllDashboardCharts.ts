@@ -37,7 +37,7 @@ export const getAllDashboardCharts = async () => {
     getCharts({
       plots: [
         {
-          metric: 'weekly_positivity',
+          metric: 'weekly_positivity_latest',
           topic: 'Influenza',
           chart_type: 'line_with_shaded_section',
         },

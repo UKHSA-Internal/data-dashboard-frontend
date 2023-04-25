@@ -1,4 +1,5 @@
 import type { Topics } from '../../Topics'
+import type { Metrics, PercentageMetrics } from '../../Metrics'
 import type { ColumnType } from './ColumnType'
 
 /**
@@ -49,13 +50,13 @@ type Column<T extends ColumnType> = T extends 'headline_and_trend_component'
 
 export type HeadlineWithNumber = {
   topic: Topics
-  metric: string
+  metric: Metrics
   body: string
 }
 
 export type HeadlineWithTrend = {
   topic: Topics
-  metric: string
+  metric: Metrics
   body: string
-  percentage_metric: string
+  percentage_metric: PercentageMetrics
 }

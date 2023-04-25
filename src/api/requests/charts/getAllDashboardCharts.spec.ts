@@ -22,7 +22,7 @@ test('Fetches the real-world charts when mocks are disabled', async () => {
     },
     Influenza: {
       Healthcare: getFixture('Influenza/weekly_hospital_admissions_rate.svg'),
-      Testing: getFixture('Influenza/weekly_positivity.svg'),
+      Testing: getFixture('Influenza/weekly_positivity_latest.svg'),
     },
   })
 })

@@ -13,7 +13,8 @@ export const requestSchema = z.object({
       geography: z.optional(Geography),
       geography_type: z.optional(GeographyType),
       chart_type: ChartTypes,
-      date_from: z.optional(z.string().datetime()),
+      date_from: z.optional(z.nullable(z.string().datetime())),
+      date_to: z.optional(z.nullable(z.string().datetime())),
     })
   ),
 })

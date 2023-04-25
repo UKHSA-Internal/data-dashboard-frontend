@@ -40,14 +40,13 @@ const renderContentTypes = (item: ContentTypes) => (
   </Fragment>
 )
 
-export default function Home({ title, body, relatedLinks, lastUpdated, statistics, charts }: HomeProps) {
+export default function Home({ title, relatedLinks, lastUpdated, statistics, charts }: HomeProps) {
   const { t } = useTranslation()
 
   if (!title) return null
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      {/* <Paragraph>{body}</Paragraph> */}
       <Contents heading={t<string>('contentsHeading')}>
         {statistics.map(({ topic, summary, tiles }) => (
           <ContentsItem heading={topic} key={`content-item-${topic}`}>
