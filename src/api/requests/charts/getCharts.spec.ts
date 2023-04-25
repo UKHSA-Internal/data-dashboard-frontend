@@ -19,7 +19,7 @@ const charts: Array<[Topic, Metric]> = [
   ['COVID-19', 'new_cases_daily'],
   ['COVID-19', 'new_deaths_daily'],
   ['Influenza', 'weekly_hospital_admissions_rate'],
-  ['Influenza', 'weekly_positivity'],
+  ['Influenza', 'weekly_positivity_latest'],
 ]
 
 test.each(charts)('Returns a chart for the %s topic and %s metric', async (topic, metric) => {
