@@ -6,8 +6,8 @@ import { Topics, Metrics, Geography, GeographyType } from '@/api/models'
 export const requestSchema = z.object({
   topic: Topics,
   metric: Metrics,
-  geography_type: GeographyType,
-  geography: Geography,
+  geography_type: z.optional(GeographyType),
+  geography: z.optional(Geography),
 })
 
 export const responseSchema = z.object({
@@ -17,7 +17,7 @@ export const responseSchema = z.object({
 type RequestParams = z.infer<typeof requestSchema>
 
 export const getHeadlines = async (params: RequestParams) => {
-  const searchParams = new URLSearchParams(params)
+  const searchParams = new URLSearchParams({ ...params, geography: 'England', geography_type: 'Nation' })
   const res = await api.get(`${getApiBaseUrl()}/headlines/v2`, { searchParams }).json()
   return responseSchema.safeParse(res)
 }
