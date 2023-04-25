@@ -31,9 +31,18 @@ export const handlers = [
       }
 
       // Read the image from the file system
-      const { topic, metric } = plots[0]
-      const imageBuffer = fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${topic}/${metric}.svg`))
+      const fixturePath = `./src/api/mocks/charts/fixtures/${plots[0].topic}/${plots[0].metric}.svg`
 
+      // Check file exists
+      if (!fs.existsSync(fixturePath)) {
+        console.log('charts msw handler fixture not found for path: ', fixturePath)
+        return res(ctx.status(500))
+      }
+
+      // Load file
+      const imageBuffer = fs.readFileSync(path.resolve(fixturePath))
+
+      // Return response
       return res(
         ctx.set('Content-Length', imageBuffer.byteLength.toString()),
         ctx.set('Content-Type', 'image/svg'),

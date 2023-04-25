@@ -15,14 +15,14 @@ type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 test('Returns a COVID-19 trend', async () => {
   const result = await getTrends({
     topic: 'COVID-19',
-    metric: 'new_cases_7days_sum',
+    metric: 'new_cases_7days_change',
     percentage_metric: 'new_cases_7days_change_percentage',
   })
 
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
-      metric_name: 'new_cases_7days_sum',
+      metric_name: 'new_cases_7days_change',
       metric_value: -592,
       percentage_metric_name: 'new_cases_7days_change_percentage',
       percentage_metric_value: -3,

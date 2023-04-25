@@ -52,7 +52,7 @@ const mockedValues: MockedValues = {
     [
       'new_cases_7days_change_percentage',
       {
-        metric_name: 'new_cases_7days_sum',
+        metric_name: 'new_cases_7days_change',
         metric_value: -592,
         percentage_metric_name: 'new_cases_7days_change_percentage',
         percentage_metric_value: -3.0,
@@ -78,6 +78,17 @@ const mockedValues: MockedValues = {
         metric_value: 377,
         percentage_metric_name: 'new_admissions_7days_change_percentage',
         percentage_metric_value: 6.0,
+        colour: 'red',
+        direction: 'up',
+      },
+    ],
+    [
+      'weekly_hospital_admissions_rate_change_percentage',
+      {
+        metric_name: 'weekly_hospital_admissions_rate_change',
+        metric_value: 272,
+        percentage_metric_name: 'weekly_hospital_admissions_rate_change_percentage',
+        percentage_metric_value: 100,
         colour: 'red',
         direction: 'up',
       },

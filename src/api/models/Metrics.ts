@@ -66,6 +66,8 @@ export const Metrics = z.enum([
   'weekly_icu_admissions_rate_by_region',
 ])
 
+export type Metrics = z.infer<typeof Metrics>
+
 export const PercentageMetrics = z.enum([
   'new_cases_7days_change_percentage',
   'new_deaths_7days_change_percentage',
@@ -77,3 +79,5 @@ export const PercentageMetrics = z.enum([
   'weekly_hospital_admissions_rate_change_percentage',
   'weekly_icu_admissions_rate_change_percentage',
 ])
+
+export type PercentageMetrics = z.infer<typeof PercentageMetrics>
