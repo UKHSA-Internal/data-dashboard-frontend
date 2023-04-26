@@ -1,6 +1,6 @@
 import { getCmsApiPath, requestOptions } from '../helpers'
 import type { PageType } from './getPages'
-import type { Meta, PageBody, RelatedLinks } from '@/api/models/cms/Page'
+import type { Meta, Body, RelatedLinks } from '@/api/models/cms/Page'
 
 /**
  * CMS Page endpoint
@@ -22,7 +22,7 @@ type SharedPageData<T extends WithHomeData | WithTopicData | WithCommonData> = {
 } & T
 
 type WithHomeData = {
-  body: Array<PageBody>
+  body: Array<Body>
 }
 
 type WithTopicData = {

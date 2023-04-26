@@ -19,6 +19,8 @@ export const requestSchema = z.object({
   ),
 })
 
+export const responseSchema = z.string()
+
 type RequestParams = z.infer<typeof requestSchema>
 
 export const getCharts = async (json: RequestParams) => {
