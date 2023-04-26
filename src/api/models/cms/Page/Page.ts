@@ -1,12 +1,15 @@
-import type { RelatedLinks } from './RelatedLinks'
-import type { PageBody } from './Body'
-import type { Meta } from './Meta'
+import { z } from 'zod'
+import { RelatedLink } from './RelatedLinks'
+import { Body } from './Body'
+import { Meta } from './Meta'
 
-export type Page = {
-  id: number
-  meta: Meta
-  title: string
-  body: PageBody[]
-  related_links: RelatedLinks
-  last_published_at: string
-}
+export const Page = z.object({
+  id: z.number(),
+  meta: Meta,
+  title: z.string(),
+  body: z.array(Body),
+  related_links: z.array(RelatedLink),
+  last_published_at: z.string().datetime(),
+})
+
+export type Page = z.infer<typeof Page>

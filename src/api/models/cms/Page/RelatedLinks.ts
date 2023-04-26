@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-const RelatedLink = z.object({
+export const RelatedLink = z.object({
   id: z.number(),
   meta: z.object({
     type: z.string(),

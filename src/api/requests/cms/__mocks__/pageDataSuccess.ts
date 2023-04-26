@@ -11,21 +11,9 @@ const getChartFixture = (file: string) =>
  * All requests resolves successfully
  */
 export const pageDataMockSuccess = [
+  ['72a1b90c-5f73-4a67-a6bc-9385b3746ce0-headlines', { success: true, data: { value: 24298 } }],
   [
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      body: 'Weekly',
-    },
-    { success: true, data: { value: 24298 } },
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_change',
-      body: 'Last 7 days',
-      percentage_metric: 'new_cases_7days_change_percentage',
-    },
+    '72a1b90c-5f73-4a67-a6bc-9385b3746ce0-trends',
     {
       success: true,
       data: {
@@ -38,21 +26,9 @@ export const pageDataMockSuccess = [
       },
     },
   ],
+  ['19639378-5280-4c28-95d8-17390618367c-headlines', { success: true, data: { value: 379 } }],
   [
-    {
-      topic: 'COVID-19',
-      metric: 'new_deaths_7days_sum',
-      body: 'Weekly',
-    },
-    { success: true, data: { value: 379 } },
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_deaths_7days_change',
-      body: 'Last 7 days',
-      percentage_metric: 'new_deaths_7days_change_percentage',
-    },
+    '19639378-5280-4c28-95d8-17390618367c-trends',
     {
       success: true,
       data: {
@@ -65,21 +41,9 @@ export const pageDataMockSuccess = [
       },
     },
   ],
+  ['c124e3ba-f12d-418b-8db9-066274b92fc2-headlines', { success: true, data: { value: 6288 } }],
   [
-    {
-      topic: 'COVID-19',
-      metric: 'new_admissions_7days',
-      body: 'Patients admitted',
-    },
-    { success: true, data: { value: 6288 } },
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_admissions_7days_change',
-      body: 'Last 7 days',
-      percentage_metric: 'new_admissions_7days_change_percentage',
-    },
+    'c124e3ba-f12d-418b-8db9-066274b92fc2-trends',
     {
       success: true,
       data: {
@@ -92,40 +56,10 @@ export const pageDataMockSuccess = [
       },
     },
   ],
+  ['36418bc1-35fe-46e2-b38f-ebe9a9582f43-charts', getChartFixture('COVID-19/new_cases_daily.svg')],
+  ['5d63adc9-f0b9-4b8b-8380-ee863daa533a-headlines', { success: true, data: { value: 6288 } }],
   [
-    [
-      {
-        type: 'plot',
-        value: {
-          topic: 'COVID-19',
-          metric: 'new_cases_daily',
-          chart_type: 'line_with_shaded_section',
-          date_from: null,
-          date_to: null,
-          stratum: '',
-          geography: '',
-          geography_type: '',
-        },
-        id: '74c93e38-e73f-4110-9a28-ef2ab8bcb52f',
-      },
-    ],
-    getChartFixture('COVID-19/new_cases_daily.svg'),
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_admissions_7days',
-      body: 'Last 7 days',
-    },
-    { success: true, data: { value: 6288 } },
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_admissions_7days_change',
-      body: '',
-      percentage_metric: 'new_admissions_7days_change_percentage',
-    },
+    '18406a2d-52fb-48a1-a9ee-5420dffb238a-trends',
     {
       success: true,
       data: {
@@ -138,40 +72,10 @@ export const pageDataMockSuccess = [
       },
     },
   ],
+  ['b3bebde7-538d-4ba1-a568-c28ac1c33a63-charts', getChartFixture('COVID-19/new_deaths_daily.svg')],
+  ['4f28c86d-9f72-44bb-900b-c14c5d6bc396-headlines', { success: true, data: { value: 379 } }],
   [
-    [
-      {
-        type: 'plot',
-        value: {
-          topic: 'COVID-19',
-          metric: 'new_deaths_daily',
-          chart_type: 'line_with_shaded_section',
-          date_from: null,
-          date_to: null,
-          stratum: '',
-          geography: '',
-          geography_type: '',
-        },
-        id: '76482012-851e-44f0-b2f6-9af017b68968',
-      },
-    ],
-    getChartFixture('COVID-19/new_deaths_daily.svg'),
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_deaths_7days_sum',
-      body: 'Last 7 days',
-    },
-    { success: true, data: { value: 379 } },
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'new_deaths_7days_change',
-      body: '',
-      percentage_metric: 'new_deaths_7days_change_percentage',
-    },
+    '4a44ea30-d778-4ed4-bba0-fb506f5dc1dd-trends',
     {
       success: true,
       data: {
@@ -184,21 +88,9 @@ export const pageDataMockSuccess = [
       },
     },
   ],
+  ['cdde1370-9c46-4604-91b4-3dd58932bc2c-headlines', { success: true, data: { value: 981596 } }],
   [
-    {
-      topic: 'Influenza',
-      metric: 'weekly_hospital_admissions_rate_latest',
-      body: 'Hospital admission rate (per 100,000)',
-    },
-    { success: true, data: { value: 981596 } },
-  ],
-  [
-    {
-      topic: 'COVID-19',
-      metric: 'weekly_hospital_admissions_rate_change',
-      body: 'Last 7 days',
-      percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
-    },
+    'cdde1370-9c46-4604-91b4-3dd58932bc2c-trends',
     {
       success: true,
       data: {
@@ -211,40 +103,10 @@ export const pageDataMockSuccess = [
       },
     },
   ],
+  ['4c08dee0-6a37-4602-9c54-990efe347e49-charts', getChartFixture('Influenza/weekly_hospital_admissions_rate.svg')],
+  ['1c7e2b15-40e6-4630-9eb8-cefa5732cfc7-headlines', { success: true, data: { value: 981596 } }],
   [
-    [
-      {
-        type: 'plot',
-        value: {
-          topic: 'Influenza',
-          metric: 'weekly_hospital_admissions_rate',
-          chart_type: 'line_with_shaded_section',
-          date_from: null,
-          date_to: null,
-          stratum: '',
-          geography: '',
-          geography_type: '',
-        },
-        id: 'dfaa61af-4e54-4d46-8d02-babedfcf4176',
-      },
-    ],
-    getChartFixture('Influenza/weekly_hospital_admissions_rate.svg'),
-  ],
-  [
-    {
-      topic: 'Influenza',
-      metric: 'weekly_hospital_admissions_rate_latest',
-      body: 'Last 7 days',
-    },
-    { success: true, data: { value: 981596 } },
-  ],
-  [
-    {
-      topic: 'Influenza',
-      metric: 'weekly_hospital_admissions_rate_change',
-      body: '',
-      percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
-    },
+    '601053ba-9dd1-4111-8e15-17a7335c6279-trends',
     {
       success: true,
       data: {
@@ -257,23 +119,5 @@ export const pageDataMockSuccess = [
       },
     },
   ],
-  [
-    [
-      {
-        type: 'plot',
-        value: {
-          topic: 'Influenza',
-          metric: 'weekly_positivity_latest',
-          chart_type: 'line_with_shaded_section',
-          date_from: null,
-          date_to: null,
-          stratum: '',
-          geography: '',
-          geography_type: '',
-        },
-        id: 'ad5dc74a-a6b1-48e2-bafb-f07253695cc4',
-      },
-    ],
-    getChartFixture('Influenza/weekly_positivity_latest.svg'),
-  ],
+  ['0b7a6152-dbd3-4b77-82e1-cc98cf273ba4-charts', getChartFixture('Influenza/weekly_positivity_latest.svg')],
 ]

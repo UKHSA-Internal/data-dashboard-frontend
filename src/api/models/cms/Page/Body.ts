@@ -1,50 +1,104 @@
-import type { BodyType } from './BodyType'
-import type { Chart } from './Chart'
-import type { Columns, HeadlineWithNumber, HeadlineWithTrend } from './Columns'
+import { z } from 'zod'
+import { HeadlineWithTrend, HeadlineWithNumber } from './BodyValues'
+import { Topics } from '../../Topics'
+import { Metrics } from '../../Metrics'
+import { ChartTypes } from '../../ChartTypes'
+import { Geography } from '../../Geography'
+import { GeographyType } from '../../GeographyType'
 
 /**
- * Body Types
- * Variations of each object that can returned in the top-level body array
+ * Body Discriminated Union Types
+ * Variations of each object that can returned in the top-level body associated by the type key
  */
-export type PageBody = Body<'text'> | Body<'headline_numbers_row_card'> | Body<'chart_with_headline_and_trend_card'>
 
-type WithText = {
-  body: string
-}
+const WithText = z.object({
+  body: z.string(),
+})
 
-type WithHeadlineNumbersRowCard = {
-  columns: Columns
-}
+const WithHeadlineNumbersRowCard = z.object({
+  columns: z.array(
+    z.discriminatedUnion('type', [
+      z.object({
+        id: z.string(),
+        type: z.literal('headline_and_trend_component'),
+        value: z.object({
+          title: z.string(),
+          headline_number: HeadlineWithNumber,
+          trend_number: HeadlineWithTrend,
+        }),
+      }),
+      z.object({
+        id: z.string(),
+        type: z.literal('dual_headline_component'),
+        value: z.object({
+          title: z.string(),
+          top_headline_number: HeadlineWithNumber,
+          bottom_headline_number: HeadlineWithNumber,
+        }),
+      }),
+      z.object({
+        id: z.string(),
+        type: z.literal('single_headline_component'),
+        value: z.object({
+          title: z.string(),
+          headline_number: HeadlineWithNumber,
+        }),
+      }),
+    ])
+  ),
+})
 
-type WithHeadlineAndTrendCard = {
-  title: string
-  body: string
-  chart: Chart[]
-  headline_number_columns: Array<
-    | {
-        id: string
-        type: 'headline_number'
-        value: HeadlineWithNumber
-      }
-    | {
-        id: string
-        type: 'trend_number'
-        value: HeadlineWithTrend
-      }
-  >
-}
+const WithHeadlineAndTrendCard = z.object({
+  title: z.string(),
+  body: z.string(),
+  chart: z.array(
+    z.object({
+      type: z.literal('plot'),
+      id: z.string(),
+      value: z.object({
+        topic: Topics,
+        metric: Metrics,
+        chart_type: ChartTypes,
+        date_from: z.nullable(z.string().datetime()),
+        date_to: z.nullable(z.string().datetime()),
+        stratum: z.string(),
+        geography: Geography,
+        geography_type: GeographyType,
+      }),
+    })
+  ),
+  headline_number_columns: z.array(
+    z.discriminatedUnion('type', [
+      z.object({
+        id: z.string(),
+        type: z.literal('headline_number'),
+        value: HeadlineWithNumber,
+      }),
+      z.object({
+        id: z.string(),
+        type: z.literal('trend_number'),
+        value: HeadlineWithTrend,
+      }),
+    ])
+  ),
+})
 
-// Conditional type to select the associated body type
-type BodyValue<T extends BodyType> = T extends 'text'
-  ? WithText
-  : T extends 'headline_numbers_row_card'
-  ? WithHeadlineNumbersRowCard
-  : T extends 'chart_with_headline_and_trend_card'
-  ? WithHeadlineAndTrendCard
-  : never
+export const Body = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('text'),
+    value: WithText,
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('headline_numbers_row_card'),
+    value: WithHeadlineNumbersRowCard,
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('chart_with_headline_and_trend_card'),
+    value: WithHeadlineAndTrendCard,
+    id: z.string(),
+  }),
+])
 
-export type Body<T extends BodyType> = {
-  type: T
-  value: BodyValue<T>
-  id: string
-}
+export type Body = z.infer<typeof Body>
