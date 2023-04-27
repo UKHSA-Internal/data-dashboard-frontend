@@ -25,5 +25,5 @@ type RequestParams = z.infer<typeof requestSchema>
 
 export const getCharts = async (json: RequestParams) => {
   const res = await api.post(`${getApiBaseUrl()}/charts/v2`, { json }).text()
-  return res
+  return responseSchema.safeParse(res)
 }

@@ -16,7 +16,7 @@ import { getAllDashboardCharts } from '@/api/requests/charts/getAllDashboardChar
 import { useTranslation } from 'next-i18next'
 import { HeadlineTrend, HeadlineValue, Metric } from '@/components/Metrics'
 import { GridLimiter } from '@/components/GridLimiter'
-import type { RelatedLinks as Links, PageBody } from '@/api/models/cms/Page'
+import type { RelatedLinks as Links, Body } from '@/api/models/cms/Page'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -92,12 +92,9 @@ export default function Home({ title, relatedLinks, lastUpdated, statistics, cha
 type StatisticsProps = Array<{ topic: TopicName } & Awaited<ReturnType<typeof getStats>>>
 type ChartsProps = Record<TopicName, Record<string, string>>
 
-// This will be transformed into a new type with the actual data piped in
-type Body = PageBody[]
-
 export const getStaticProps: GetStaticProps<{
   title: string
-  body: Body
+  body: Body[]
   lastUpdated: string
   relatedLinks: Links
   statistics: StatisticsProps

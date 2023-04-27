@@ -1,103 +1,104 @@
-import { z } from 'zod'
-import { Chart, HeadlineWithNumber, HeadlineWithTrend, PageBody } from '@/api/models/cms/Page'
-import { getTrends, responseSchema as trendsResponseSchema } from '@/api/requests/trends/getTrends'
-import { getHeadlines, responseSchema as headlinesResponseSchema } from '@/api/requests/headlines/getHeadlines'
+import { Body } from '@/api/models/cms/Page'
+import { getTrends } from '@/api/requests/trends/getTrends'
+import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
 import { getCharts } from '../charts/getCharts'
 import { isFulfilled } from '@/api/api-utils'
-
-type ChartsResponse = Awaited<ReturnType<typeof getCharts>>
-
-type HeadlinesResponse =
-  | z.SafeParseSuccess<z.infer<typeof headlinesResponseSchema>>
-  | z.SafeParseError<z.infer<typeof headlinesResponseSchema>>
-
-type TrendsResponse =
-  | z.SafeParseSuccess<z.infer<typeof trendsResponseSchema>>
-  | z.SafeParseError<z.infer<typeof trendsResponseSchema>>
-
-type RequestKey = Chart[] | HeadlineWithNumber | HeadlineWithTrend
-type ResponseValue = Promise<ChartsResponse | HeadlinesResponse | TrendsResponse>
-
-// We use the entire object of parameters as a unique, identifable key
-// This key then maps to the resolved api response
-type ResponseMap = Array<[RequestKey, ResponseValue]>
 
 /**
  * Specific CMS page types (Home, Topics) are modelled to return parameters allowing the consumer to fetch
  * various types of data from external services (trends, headlines, charts etc)
  *
- * This function parses the CMS page, finds all relevant request parameters and initiates the requests
- * before finally returning all resolved data in the form of Zod success or error states.
- *
+ * This function parses the CMS page, finds all relevant request parameters and asyncronously initiates the requests
  */
-export const extractAndFetchPageData = async (body: PageBody[]) => {
-  try {
-    // Store requests ready to be asyncronously called later
-    const requestsMap: ResponseMap = []
+type Trends = Array<[string, ReturnType<typeof getTrends>]>
+type Headlines = Array<[string, ReturnType<typeof getHeadlines>]>
+type Charts = Array<[string, ReturnType<typeof getCharts>]>
 
-    // Extract all requests from the CMS page model
-    for (const section of body) {
-      if (section.type === 'chart_with_headline_and_trend_card') {
-        const { chart, headline_number_columns: columns } = section.value
+export const extractAndFetchPageData = async (body: Body[]) => {
+  // Store requests as a tuple containing an id and request object
+  const trends: Trends = []
+  const headlines: Headlines = []
+  const charts: Charts = []
 
-        // Pick out charts
-        requestsMap.push([
-          chart,
-          getCharts({
-            plots: chart.map((plots) => plots.value),
-          }),
-        ])
+  // Extract all requests from the CMS page model
+  for (const section of body) {
+    if (section.type === 'chart_with_headline_and_trend_card') {
+      const { chart, headline_number_columns: columns } = section.value
 
-        for (const column of columns) {
-          // Pick out headlines
-          if (column.type === 'headline_number') {
-            const { topic, metric } = column.value
-            requestsMap.push([column.value, getHeadlines({ topic, metric })])
-          }
+      // Pick out charts
+      charts.push([
+        `${section.id}-charts`,
+        getCharts({
+          plots: chart.map((plots) => plots.value),
+        }),
+      ])
 
-          // Pick out trends
-          if (column.type === 'trend_number') {
-            const { topic, metric, percentage_metric } = column.value
-            requestsMap.push([column.value, getTrends({ topic, metric, percentage_metric })])
-          }
+      for (const column of columns) {
+        // Pick out headlines
+        if (column.type === 'headline_number') {
+          const { topic, metric } = column.value
+          headlines.push([`${column.id}-headlines`, getHeadlines({ topic, metric })])
         }
-      }
 
-      if (section.type === 'headline_numbers_row_card') {
-        const { columns } = section.value
-        for (const column of columns) {
-          // Pick out headlines and trends from the row card
-          if (column.type === 'headline_and_trend_component') {
-            const { headline_number, trend_number } = column.value
-            requestsMap.push([headline_number, getHeadlines(headline_number)])
-            requestsMap.push([trend_number, getTrends(trend_number)])
-          }
+        // Pick out trends
+        if (column.type === 'trend_number') {
+          const { topic, metric, percentage_metric } = column.value
+          trends.push([`${column.id}-trends`, getTrends({ topic, metric, percentage_metric })])
         }
       }
     }
 
-    // Resolve all requests
-    const results = await Promise.allSettled(requestsMap.map(([, request]) => request)).catch((err) => {
-      console.log(err)
-    })
-
-    if (!Array.isArray(results)) return []
-
-    // Merge the successful responses back into the stored requests
-    const mergedResults = requestsMap.map(([key], idx) => {
-      const result = results[idx]
-
-      if (isFulfilled(result)) {
-        return [key, result.value]
+    if (section.type === 'headline_numbers_row_card') {
+      const { columns } = section.value
+      for (const column of columns) {
+        // Pick out headlines and trends from the row card
+        if (column.type === 'headline_and_trend_component') {
+          const { headline_number, trend_number } = column.value
+          headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
+          trends.push([`${column.id}-trends`, getTrends(trend_number)])
+        }
+        if (column.type === 'dual_headline_component') {
+          // TODO HANDLE
+        }
+        if (column.type === 'single_headline_component') {
+          // TODO HANDLE
+        }
       }
-
-      // If any responses haven't resolved, then return an unsuccessful state
-      return [key, { success: false }]
-    })
-
-    return mergedResults
-  } catch (error) {
-    return []
-    console.log(error)
+    }
   }
+
+  const pageData: Record<string, Awaited<ReturnType<typeof resolveRequests>>> = {
+    trends: await resolveRequests(trends),
+    headlines: await resolveRequests(headlines),
+    charts: await resolveRequests(charts),
+  }
+
+  return pageData
+}
+
+/**
+ * Utility function to fire multiple async requests, check if they've settled as
+ * fulfilled or rejected, and then form an appropriate response for the UI
+ */
+type ResolvedResponse<T> = Record<string, T | { success: false }>
+
+async function resolveRequests<T>(requestMaps: Array<[string, Promise<T>]>) {
+  // Pick out the requests from the tuple & invoke asyncronously
+  const results = await Promise.allSettled(requestMaps.map((requestMap) => requestMap[1]))
+
+  // Build & return an object with the key being the identifier and the value being the response
+  return requestMaps.reduce((accumulator, [requestId], index) => {
+    const result = results[index]
+
+    // Promise settled as fulfilled, return a success state
+    if (isFulfilled(result)) {
+      accumulator[requestId] = result.value
+      return accumulator
+    }
+
+    // Promise settled rejected, return a failed state
+    accumulator[requestId] = { success: false }
+
+    return accumulator
+  }, {} as ResolvedResponse<T>)
 }
