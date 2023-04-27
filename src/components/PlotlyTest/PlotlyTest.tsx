@@ -46,7 +46,7 @@ const PlotlyTest = ({ show, displayHandler }: PlotlyTestProps) => {
         config={config}
         onAfterPlot={displayHandler}
         useResizeHandler={true}
-        style={{ width: '100%', height: '100%' }}
+        style={{ width: '100%', height: '220px' }}
       />
     </Container>
   )
