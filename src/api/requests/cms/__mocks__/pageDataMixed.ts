@@ -39,9 +39,12 @@ export const pageDataMockMixed: Awaited<ReturnType<typeof extractAndFetchPageDat
     '72a1b90c-5f73-4a67-a6bc-9385b3746ce0-headlines': { success: true, data: { value: 24298 } },
     '19639378-5280-4c28-95d8-17390618367c-headlines': { success: true, data: { value: 379 } },
     'c124e3ba-f12d-418b-8db9-066274b92fc2-headlines': { success: true, data: { value: 6288 } },
+    'aea30c9d-5ddd-417a-81e5-04f5048956c9-headlines': { success: true, data: { value: 64.5 } },
+    'd38fd53c-3513-4420-8d52-5bcd5c828443-headlines': { success: true, data: { value: 10.4 } },
     '5d63adc9-f0b9-4b8b-8380-ee863daa533a-headlines': { success: true, data: { value: 6288 } },
     '4f28c86d-9f72-44bb-900b-c14c5d6bc396-headlines': { success: true, data: { value: 379 } },
     'cdde1370-9c46-4604-91b4-3dd58932bc2c-headlines': { success: true, data: { value: 981596 } },
+    '2f824c50-52a1-4827-818f-761e0ceb086c-headlines': { success: true, data: { value: 12.2 } },
     '1c7e2b15-40e6-4630-9eb8-cefa5732cfc7-headlines': { success: true, data: { value: 981596 } },
   },
   charts: {

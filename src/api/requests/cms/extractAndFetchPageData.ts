@@ -58,10 +58,13 @@ export const extractAndFetchPageData = async (body: Body[]) => {
           trends.push([`${column.id}-trends`, getTrends(trend_number)])
         }
         if (column.type === 'dual_headline_component') {
-          // TODO HANDLE
+          const { top_headline_number, bottom_headline_number } = column.value
+          headlines.push([`${column.id}-headlines`, getHeadlines(top_headline_number)])
+          headlines.push([`${column.id}-headlines`, getHeadlines(bottom_headline_number)])
         }
         if (column.type === 'single_headline_component') {
-          // TODO HANDLE
+          const { headline_number } = column.value
+          headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
         }
       }
     }
