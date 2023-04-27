@@ -6,7 +6,7 @@ import { getCharts } from './getCharts'
  * the relevant charts on the dashboard home page.
  */
 export const getAllDashboardCharts = async () => {
-  const [Cases, Deaths, Healthcare, Testing] = await Promise.all([
+  const [cases, deaths, healthcare, testing] = await Promise.all([
     getCharts({
       plots: [
         {
@@ -47,12 +47,12 @@ export const getAllDashboardCharts = async () => {
 
   const charts: Record<TopicName, Record<string, string>> = {
     Coronavirus: {
-      Cases,
-      Deaths,
+      Cases: cases.success ? cases.data : '',
+      Deaths: deaths.success ? deaths.data : '',
     },
     Influenza: {
-      Healthcare,
-      Testing,
+      Healthcare: healthcare.success ? healthcare.data : '',
+      Testing: testing.success ? testing.data : '',
     },
   }
 

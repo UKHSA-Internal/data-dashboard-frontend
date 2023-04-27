@@ -37,7 +37,7 @@ test.each(charts)('Returns a chart for the %s topic and %s metric', async (topic
     encoding: 'utf8',
   })
 
-  expect(result).toEqual(fixture)
+  expect(result).toEqual({ success: true, data: fixture })
 })
 
 test('Handles generic http error statuses (404, 500)', async () => {

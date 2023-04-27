@@ -5,6 +5,7 @@ import { Metrics } from '../../Metrics'
 import { ChartTypes } from '../../ChartTypes'
 import { Geography } from '../../Geography'
 import { GeographyType } from '../../GeographyType'
+import { DualHeadline, HeadlineAndTrend, SingleHeadline } from './Columns'
 
 /**
  * Body Discriminated Union Types
@@ -16,39 +17,10 @@ const WithText = z.object({
 })
 
 const WithHeadlineNumbersRowCard = z.object({
-  columns: z.array(
-    z.discriminatedUnion('type', [
-      z.object({
-        id: z.string(),
-        type: z.literal('headline_and_trend_component'),
-        value: z.object({
-          title: z.string(),
-          headline_number: HeadlineWithNumber,
-          trend_number: HeadlineWithTrend,
-        }),
-      }),
-      z.object({
-        id: z.string(),
-        type: z.literal('dual_headline_component'),
-        value: z.object({
-          title: z.string(),
-          top_headline_number: HeadlineWithNumber,
-          bottom_headline_number: HeadlineWithNumber,
-        }),
-      }),
-      z.object({
-        id: z.string(),
-        type: z.literal('single_headline_component'),
-        value: z.object({
-          title: z.string(),
-          headline_number: HeadlineWithNumber,
-        }),
-      }),
-    ])
-  ),
+  columns: z.array(z.discriminatedUnion('type', [HeadlineAndTrend, DualHeadline, SingleHeadline])),
 })
 
-const WithHeadlineAndTrendCard = z.object({
+const WithChartHeadlineAndTrendCard = z.object({
   title: z.string(),
   body: z.string(),
   chart: z.array(
@@ -96,7 +68,7 @@ export const Body = z.discriminatedUnion('type', [
   }),
   z.object({
     type: z.literal('chart_with_headline_and_trend_card'),
-    value: WithHeadlineAndTrendCard,
+    value: WithChartHeadlineAndTrendCard,
     id: z.string(),
   }),
 ])
