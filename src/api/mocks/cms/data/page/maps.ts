@@ -25,7 +25,6 @@ export const mapsPageMock: PageResponse<PageType.Common> = {
     },
   },
   title: 'Maps',
-  date_posted: '2023-03-16',
   body: '<p>Maps CMS page content!</p>',
   related_links: relatedLinksMock,
   last_published_at: '2023-03-21T10:25:34.452098Z',

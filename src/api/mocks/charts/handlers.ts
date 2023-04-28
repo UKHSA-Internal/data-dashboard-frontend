@@ -22,12 +22,27 @@ export const handlers = [
 
       // Pick out the metric & topic values
       const {
-        data: { topic, metric },
+        data: { plots },
       } = parsedRequestBody
 
-      // Read the image from the file system
-      const imageBuffer = fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${topic}/${metric}.svg`))
+      if (plots.length > 1) {
+        console.log('Unhandled msw handler for chart with multiple plots')
+        return res(ctx.status(500))
+      }
 
+      // Read the image from the file system
+      const fixturePath = `./src/api/mocks/charts/fixtures/${plots[0].topic}/${plots[0].metric}.svg`
+
+      // Check file exists
+      if (!fs.existsSync(fixturePath)) {
+        console.log('charts msw handler fixture not found for path: ', fixturePath)
+        return res(ctx.status(500))
+      }
+
+      // Load file
+      const imageBuffer = fs.readFileSync(path.resolve(fixturePath))
+
+      // Return response
       return res(
         ctx.set('Content-Length', imageBuffer.byteLength.toString()),
         ctx.set('Content-Type', 'image/svg'),

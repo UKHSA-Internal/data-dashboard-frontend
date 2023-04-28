@@ -15,15 +15,17 @@ type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 test('Returns a COVID-19 trend', async () => {
   const result = await getTrends({
     topic: 'COVID-19',
-    metric: 'new_cases_7days_sum',
+    metric: 'new_cases_7days_change',
     percentage_metric: 'new_cases_7days_change_percentage',
   })
 
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
-      value: -592,
-      percentage_value: -3,
+      metric_name: 'new_cases_7days_change',
+      metric_value: -592,
+      percentage_metric_name: 'new_cases_7days_change_percentage',
+      percentage_metric_value: -3,
       direction: 'down',
       colour: 'green',
     },
@@ -40,8 +42,10 @@ test('Returns an Influenza headline value', async () => {
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
-      value: 5911,
-      percentage_value: 0.3,
+      metric_name: 'weekly_hospital_admissions_rate_change',
+      metric_value: 5911,
+      percentage_metric_name: 'weekly_hospital_admissions_rate_change_percentage',
+      percentage_metric_value: 0.3,
       direction: 'down',
       colour: 'green',
     },
@@ -54,9 +58,12 @@ test('Handles invalid json received from the api', async () => {
       return res(
         ctx.status(200),
         ctx.json({
-          value: 5911,
+          metric_name: 'new_cases_7days_sum',
+          metric_value: '-592', // <--- Wrong type (should get coerced automatically by Zod)
+          percentage_metric_name: 'does_not_exist', // <--- Invalid percentage_metric
+          percentage_metric_value: -3.0,
+          colour: '', // <--- Missing colour
           direction: 'down',
-          colour: 'yellow',
         })
       )
     })
@@ -72,18 +79,29 @@ test('Handles invalid json received from the api', async () => {
     success: false,
     error: new z.ZodError([
       {
-        code: 'invalid_type',
-        expected: 'number',
-        received: 'nan',
-        path: ['percentage_value'],
-        message: 'Expected number, received nan',
+        received: 'does_not_exist',
+        code: 'invalid_enum_value',
+        options: [
+          'new_cases_7days_change_percentage',
+          'new_deaths_7days_change_percentage',
+          'new_admissions_7days_change_percentage',
+          'positivity_7days_change_percentage',
+          'new_tests_7days_change_percentage',
+          'vaccinations_percentage',
+          'vaccinations_percentage',
+          'weekly_hospital_admissions_rate_change_percentage',
+          'weekly_icu_admissions_rate_change_percentage',
+        ],
+        path: ['percentage_metric_name'],
+        message:
+          "Invalid enum value. Expected 'new_cases_7days_change_percentage' | 'new_deaths_7days_change_percentage' | 'new_admissions_7days_change_percentage' | 'positivity_7days_change_percentage' | 'new_tests_7days_change_percentage' | 'vaccinations_percentage' | 'vaccinations_percentage' | 'weekly_hospital_admissions_rate_change_percentage' | 'weekly_icu_admissions_rate_change_percentage', received 'does_not_exist'",
       },
       {
-        received: 'yellow',
+        received: '',
         code: 'invalid_enum_value',
         options: ['green', 'red', 'neutral'],
         path: ['colour'],
-        message: "Invalid enum value. Expected 'green' | 'red' | 'neutral', received 'yellow'",
+        message: "Invalid enum value. Expected 'green' | 'red' | 'neutral', received ''",
       },
     ]),
   })

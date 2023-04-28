@@ -2,11 +2,11 @@ import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { RelatedLink } from '@/api/requests/cms/getPage'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import type { RelatedLinks as Links } from '@/api/models/cms/Page'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -27,7 +27,7 @@ export const getStaticProps: GetStaticProps<{
   title: string
   body: string
   lastUpdated: string
-  relatedLinks: Array<RelatedLink>
+  relatedLinks: Links
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()

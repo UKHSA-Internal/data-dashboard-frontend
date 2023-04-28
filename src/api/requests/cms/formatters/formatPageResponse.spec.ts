@@ -1,4 +1,4 @@
-import { covidPageMock, dashboardPageMock } from '@/api/mocks/cms/data/page'
+import { covidPageMock, homePageMock } from '@/api/mocks/cms/data/page'
 import { formatCmsPageTopicResponse } from './formatPageResponse'
 
 test('Formats the CMS Page API response into a format usable within the ui', () => {
@@ -12,7 +12,7 @@ test('Formats the CMS Page API response into a format usable within the ui', () 
       transmission: 'Airborne',
       treatment: 'Rest',
     },
-    relatedLinks: dashboardPageMock.related_links,
-    lastUpdated: dashboardPageMock.last_published_at,
+    relatedLinks: homePageMock.related_links,
+    lastUpdated: homePageMock.last_published_at,
   })
 })

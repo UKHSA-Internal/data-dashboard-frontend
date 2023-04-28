@@ -1,77 +1,41 @@
 import { getCmsApiPath, requestOptions } from '../helpers'
-import { PageType } from './getPages'
+import type { PageType } from './getPages'
+import type { Meta, Body, RelatedLinks } from '@/api/models/cms/Page'
 
 /**
- * Response types for the CMS endpoint
- * TODO: Add url to endpoint in docs
+ * CMS Page endpoint
  */
 export type PageResponse<T> = T extends PageType.Home
-  ? SharedPageData<HomePage>
-  : T extends PageType.Common
-  ? SharedPageData<CommonPage>
+  ? SharedPageData<WithHomeData>
   : T extends PageType.Topic
-  ? SharedPageData<TopicPage>
+  ? SharedPageData<WithTopicData>
+  : T extends PageType.Common
+  ? SharedPageData<WithCommonData>
   : never
 
-type SharedPageData<T> = {
+type SharedPageData<T extends WithHomeData | WithTopicData | WithCommonData> = {
   id: number
-  meta: PageMeta
+  meta: Meta
   title: string
-  body: string
-  date_posted: string
   last_published_at: string
+  related_links: RelatedLinks
 } & T
 
-export type HomePage = {
-  related_links: Array<RelatedLink>
+type WithHomeData = {
+  body: Array<Body>
 }
 
-export type TopicPage = {
+type WithTopicData = {
+  body: string
   symptoms: string
   transmission: string
   treatment: string
   prevention: string
   surveillance_and_reporting: string
-  related_links: Array<RelatedLink>
 }
 
-export type CommonPage = {
-  related_links: Array<RelatedLink>
-}
-
-export type RelatedLink = {
-  id: number
-  meta: {
-    type: string
-  }
-  title: string
+type WithCommonData = {
   body: string
-  url: string
-}
-
-type PageMeta = {
-  type: string
-  detail_url: string
-  html_url: string
-  slug: string
-  show_in_menus: boolean
-  seo_title: string
-  search_description: string
-  first_published_at: string
-  alias_of: null
-  parent: Parent
-}
-
-type Parent = {
-  id: number
-  meta: ParentMeta
-  title: string
-}
-
-type ParentMeta = {
-  type: string
-  detail_url: string
-  html_url: string
 }
 
 export const getPage = async <T extends PageType>(id: number): Promise<PageResponse<T>> => {

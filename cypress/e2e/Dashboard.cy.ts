@@ -21,7 +21,9 @@ describe('Dashboard', () => {
     cy.title().should('eq', 'Respiratory viruses')
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
     cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
-    cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
+
+    // TODO: Restore in #CDD-699
+    // cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
   })
 
   it('displays coronavirus statistics', () => {

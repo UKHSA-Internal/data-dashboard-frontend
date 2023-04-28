@@ -29,10 +29,10 @@ import { responseSchema } from '@/api/requests/headlines/getHeadlines'
 
 type MockedValues = Record<TopicKey, TopicValue>
 
-type TopicKey = (typeof Topics)[number]
+type TopicKey = z.infer<typeof Topics>
 type TopicValue = Map<MetricKey, MetricValue>
 
-type MetricKey = (typeof Metrics)[number]
+type MetricKey = z.infer<typeof Metrics>
 type MetricValue = z.infer<typeof responseSchema>['value']
 
 const mockedValues: MockedValues = {
@@ -51,10 +51,10 @@ const mockedValues: MockedValues = {
 }
 
 export const fixtures = Object.fromEntries(
-  Topics.map((topic) => [
+  Topics.options.map((topic) => [
     topic,
     Object.fromEntries(
-      Metrics.map((metric) => [
+      Metrics.options.map((metric) => [
         metric,
         createFixture(responseSchema, {
           customizations: [
