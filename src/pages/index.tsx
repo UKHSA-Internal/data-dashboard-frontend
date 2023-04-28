@@ -59,8 +59,8 @@ const getCmsRenderUtils = ({
 
       return (
         <CardColumn heading={title} key={id}>
-          <Headline heading={topHeading} headlineData={headlines[`${id}-headline-top`]} />
-          <Headline heading={bottomHeading} headlineData={headlines[`${id}-headline-bottom`]} />
+          <Headline heading={topHeading} headlineData={headlines[`${id}-headlines-top`]} />
+          <Headline heading={bottomHeading} headlineData={headlines[`${id}-headlines-bottom`]} />
         </CardColumn>
       )
     }
