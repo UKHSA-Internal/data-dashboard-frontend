@@ -12,15 +12,15 @@ import { DualHeadline, HeadlineAndTrend, SingleHeadline } from './Columns'
  * Variations of each object that can returned in the top-level body associated by the type key
  */
 
-const WithText = z.object({
+export const WithText = z.object({
   body: z.string(),
 })
 
-const WithHeadlineNumbersRowCard = z.object({
+export const WithHeadlineNumbersRowCard = z.object({
   columns: z.array(z.discriminatedUnion('type', [HeadlineAndTrend, DualHeadline, SingleHeadline])),
 })
 
-const WithChartHeadlineAndTrendCard = z.object({
+export const WithChartHeadlineAndTrendCard = z.object({
   title: z.string(),
   body: z.string(),
   chart: z.array(

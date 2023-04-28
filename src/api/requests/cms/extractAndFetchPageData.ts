@@ -59,8 +59,8 @@ export const extractAndFetchPageData = async (body: Body[]) => {
         }
         if (column.type === 'dual_headline_component') {
           const { top_headline_number, bottom_headline_number } = column.value
-          headlines.push([`${column.id}-headlines`, getHeadlines(top_headline_number)])
-          headlines.push([`${column.id}-headlines`, getHeadlines(bottom_headline_number)])
+          headlines.push([`${column.id}-headline-top`, getHeadlines(top_headline_number)])
+          headlines.push([`${column.id}-headline-bottom`, getHeadlines(bottom_headline_number)])
         }
         if (column.type === 'single_headline_component') {
           const { headline_number } = column.value
@@ -70,7 +70,7 @@ export const extractAndFetchPageData = async (body: Body[]) => {
     }
   }
 
-  const pageData: Record<string, Awaited<ReturnType<typeof resolveRequests>>> = {
+  const pageData = {
     trends: await resolveRequests(trends),
     headlines: await resolveRequests(headlines),
     charts: await resolveRequests(charts),
