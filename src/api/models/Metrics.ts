@@ -1,4 +1,6 @@
-export const Metrics = [
+import { z } from 'zod'
+
+export const Metrics = z.enum([
   'new_cases_daily',
   'new_cases_7day_avg',
   'new_cases_7days_change',
@@ -62,9 +64,11 @@ export const Metrics = [
   'weekly_icu_admissions_rate_change_percentage',
   'weekly_hospital_admissions_rate_by_geography',
   'weekly_icu_admissions_rate_by_region',
-] as const
+])
 
-export const PercentageMetrics = [
+export type Metrics = z.infer<typeof Metrics>
+
+export const PercentageMetrics = z.enum([
   'new_cases_7days_change_percentage',
   'new_deaths_7days_change_percentage',
   'new_admissions_7days_change_percentage',
@@ -74,4 +78,6 @@ export const PercentageMetrics = [
   'vaccinations_percentage',
   'weekly_hospital_admissions_rate_change_percentage',
   'weekly_icu_admissions_rate_change_percentage',
-] as const
+])
+
+export type PercentageMetrics = z.infer<typeof PercentageMetrics>

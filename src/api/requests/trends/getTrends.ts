@@ -4,14 +4,16 @@ import { getApiBaseUrl } from '../helpers'
 import { Topics, Metrics, PercentageMetrics } from '@/api/models'
 
 export const requestSchema = z.object({
-  topic: z.enum(Topics),
-  metric: z.enum(Metrics),
-  percentage_metric: z.enum(PercentageMetrics),
+  topic: Topics,
+  metric: Metrics,
+  percentage_metric: PercentageMetrics,
 })
 
 export const responseSchema = z.object({
-  value: z.coerce.number(),
-  percentage_value: z.coerce.number(),
+  metric_name: Metrics,
+  metric_value: z.coerce.number(),
+  percentage_metric_name: PercentageMetrics,
+  percentage_metric_value: z.coerce.number(),
   direction: z.enum(['up', 'down', 'neutral']),
   colour: z.enum(['green', 'red', 'neutral']),
 })

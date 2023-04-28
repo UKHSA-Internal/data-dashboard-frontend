@@ -3,7 +3,7 @@ import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock 
 import {
   influenzaPageMock,
   covidPageMock,
-  dashboardPageMock,
+  homePageMock,
   aboutPageMock,
   whatsNewPageMock,
   mapsPageMock,
@@ -23,8 +23,8 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
 }
 
 // Contains the individual `/pages/{id}` mocks
-export const mockedPageMap: Record<number, PageResponse<PageType.Common>> = {
-  [dashboardPageMock.id]: dashboardPageMock,
+export const mockedPageMap: Record<number, PageResponse<PageType>> = {
+  [homePageMock.id]: homePageMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,
   [mapsPageMock.id]: mapsPageMock,

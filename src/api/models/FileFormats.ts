@@ -1,1 +1,3 @@
-export const FileFormats = ['svg', 'png', 'jpg'] as const
+import { z } from 'zod'
+
+export const FileFormats = z.enum(['svg', 'png', 'jpg'])
