@@ -14,7 +14,7 @@ export const Headline = ({ heading, id, position }: HeadlineProps) => {
     const { value } = headline
     return (
       <Metric>
-        <HeadlineValue heading={heading} value={String(value)} />
+        <HeadlineValue heading={heading} value={value} />
       </Metric>
     )
   }
