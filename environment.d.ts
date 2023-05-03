@@ -15,5 +15,6 @@ declare namespace NodeJS {
     NEXT_PUBLIC_API_PATH_CHART: string
     API_PATH_CMS: string
     API_PATH_STATS: string
+    API_PATH_TABULAR: string
   }
 }

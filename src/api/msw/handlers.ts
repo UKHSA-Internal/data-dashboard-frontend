@@ -1,4 +1,4 @@
-import { cms, stats, headlines, trends, charts } from '../mocks'
+import { cms, stats, headlines, trends, charts, tabular } from '../mocks'
 
 export const handlers = [
   ...cms.handlers,
@@ -6,4 +6,5 @@ export const handlers = [
   ...headlines.handlers,
   ...trends.handlers,
   ...charts.handlers,
+  ...tabular.handlers,
 ]
