@@ -15,7 +15,8 @@ type Story = StoryObj<typeof HeadlineTrend>
 export const PositiveTrendUp: Story = {
   args: {
     heading: 'Last 7 days',
-    value: '692 (3.0%)',
+    change: 692,
+    percentage: -3.0,
     direction: 'up',
     colour: 'green',
   },
@@ -24,7 +25,8 @@ export const PositiveTrendUp: Story = {
 export const PositiveTrendDown: Story = {
   args: {
     heading: 'Last 7 days',
-    value: '692 (-3.0%)',
+    change: 692,
+    percentage: -3.0,
     direction: 'down',
     colour: 'green',
   },
@@ -33,7 +35,8 @@ export const PositiveTrendDown: Story = {
 export const NegativeTrendUp: Story = {
   args: {
     heading: 'Last 7 days',
-    value: '692 (3.0%)',
+    change: 692,
+    percentage: -3.0,
     direction: 'up',
     colour: 'red',
   },
@@ -42,7 +45,8 @@ export const NegativeTrendUp: Story = {
 export const NegativeTrendDown: Story = {
   args: {
     heading: 'Last 7 days',
-    value: '692 (-3.0%)',
+    change: 692,
+    percentage: -3.0,
     direction: 'down',
     colour: 'red',
   },
@@ -51,7 +55,8 @@ export const NegativeTrendDown: Story = {
 export const NeutralTrend: Story = {
   args: {
     heading: 'Last 7 days',
-    value: '1 (127.2%)',
+    change: 1,
+    percentage: 127.2,
     direction: 'neutral',
     colour: 'neutral',
   },

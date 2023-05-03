@@ -77,7 +77,7 @@ export const Coronavirus = () => {
               <Card theme={'secondary'}>
                 <CardColumn heading="Deaths with COVID-19 on the death certificate">
                   <Metric>
-                    <HeadlineValue heading="Weekly" value="393" />
+                    <HeadlineValue heading="Weekly" value={393} />
                   </Metric>
                 </CardColumn>
               </Card>
@@ -88,12 +88,12 @@ export const Coronavirus = () => {
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Number" value="-31" />
+                        <HeadlineValue heading="Number" value={-31} />
                       </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Percentage" value="-7" />
+                        <HeadlineValue heading="Percentage" value={-7} />
                       </Metric>
                     </GridCol>
                   </GridRow>
@@ -124,7 +124,7 @@ export const Coronavirus = () => {
               <Card theme={'secondary'}>
                 <CardColumn heading="Patients admitted">
                   <Metric>
-                    <HeadlineValue heading="Latest 7 days" value="5,911" />
+                    <HeadlineValue heading="Latest 7 days" value={5911} />
                   </Metric>
                 </CardColumn>
               </Card>
@@ -135,12 +135,12 @@ export const Coronavirus = () => {
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Number" value="-397" />
+                        <HeadlineValue heading="Number" value={-397} />
                       </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Percentage" value="-6" />
+                        <HeadlineValue heading="Percentage" value={-6} />
                       </Metric>
                     </GridCol>
                   </GridRow>

@@ -10,10 +10,16 @@ export const Trend = ({ heading, id }: TrendProps) => {
   const trend = useTrend(id)
 
   if (trend) {
-    const { direction, colour, metric_value: value, percentage_metric_value: percentage } = trend
+    const { direction, colour, metric_value: change, percentage_metric_value: percentage } = trend
     return (
       <Metric>
-        <HeadlineTrend heading={heading} direction={direction} colour={colour} value={`${value} ${percentage}`} />
+        <HeadlineTrend
+          heading={heading}
+          direction={direction}
+          colour={colour}
+          change={change}
+          percentage={percentage}
+        />
       </Metric>
     )
   }
