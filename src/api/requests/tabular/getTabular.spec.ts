@@ -22,7 +22,7 @@ test('Check new_cases_daily tabular data', async () => {
   })
 })
 
-// test('Handles invalid jason recieved from the API',async () => {
+// test('Handles invalid json recieved from the API',async () => {
 //     const result = await getTabular({
 //         topic: 'COVID-19',
 //         metric: 'new_cases_daily',

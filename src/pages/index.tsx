@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
-import { GridCol, GridRow, Paragraph } from 'govuk-react'
+import { GridCol, GridRow } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { Chart } from '@/components/Chart'
+// import { Chart } from '@/components/Chart'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { RelatedLinks } from '@/components/RelatedLinks'
 import { Contents, ContentsItem } from '@/components/Contents'
@@ -40,7 +40,7 @@ const renderContentTypes = (item: ContentTypes) => (
   </Fragment>
 )
 
-export default function Home({ title, relatedLinks, lastUpdated, statistics, charts }: HomeProps) {
+export default function Home({ title, relatedLinks, lastUpdated, statistics }: HomeProps) {
   const { t } = useTranslation()
 
   if (!title) return null
@@ -73,7 +73,7 @@ export default function Home({ title, relatedLinks, lastUpdated, statistics, cha
                         data-testid={`column-${container.toLowerCase()}`}
                       >
                         {content.map(renderContentTypes)}
-                        <Chart src={`data:image/svg+xml;utf8,${encodeURIComponent(charts[topic][container])}`} />
+                        {/* <Chart src={`data:image/svg+xml;utf8,${encodeURIComponent(charts[topic][container])}`} /> */}
                       </CardColumn>
                     </Card>
                   </GridCol>
