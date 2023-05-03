@@ -39,7 +39,8 @@
     "rehype-slug": "^5.1.0",
     "styled-components": "^5.3.8",
     "whatwg-fetch": "^3.6.2",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "zustand": "^4.3.7"
   },
   "devDependencies": {
     "@storybook/addon-essentials": "^7.0.5",
