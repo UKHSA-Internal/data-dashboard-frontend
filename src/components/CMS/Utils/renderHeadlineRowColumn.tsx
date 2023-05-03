@@ -17,7 +17,7 @@ export const renderHeadlineRowColumn = (column: z.infer<typeof WithHeadlineNumbe
     } = value
 
     return (
-      <CardColumn heading={title} key={id}>
+      <CardColumn heading={title} key={id} data-testid={`column-${title.toLowerCase()}`}>
         <Blocks.Headline heading={headlineHeading} id={id} />
         <Blocks.Trend heading={trendHeading} id={id} />
       </CardColumn>
@@ -32,7 +32,7 @@ export const renderHeadlineRowColumn = (column: z.infer<typeof WithHeadlineNumbe
     } = value
 
     return (
-      <CardColumn heading={title} key={id}>
+      <CardColumn heading={title} key={id} data-testid={`column-${title.toLowerCase()}`}>
         <Blocks.Headline heading={topHeading} id={id} position="top" />
         <Blocks.Headline heading={bottomHeading} id={id} position="bottom" />
       </CardColumn>
@@ -46,7 +46,7 @@ export const renderHeadlineRowColumn = (column: z.infer<typeof WithHeadlineNumbe
     } = value
 
     return (
-      <CardColumn heading={title} key={id}>
+      <CardColumn heading={title} key={id} data-testid={`column-${title.toLowerCase()}`}>
         <Blocks.Headline heading={heading} id={id} />
       </CardColumn>
     )

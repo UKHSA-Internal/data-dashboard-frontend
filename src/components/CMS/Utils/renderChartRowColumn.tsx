@@ -12,7 +12,13 @@ export const renderChartRowColumn = (column: z.infer<typeof WithChartHeadlineAnd
     value: { title, body, headline_number_columns: blocks },
   } = column
   return (
-    <Cards.ChartColumn key={id} heading={title} description={body} chart={<Blocks.Chart id={id} />}>
+    <Cards.ChartColumn
+      key={id}
+      heading={title}
+      description={body}
+      chart={<Blocks.Chart id={id} />}
+      cardProps={{ 'data-testid': `${title.toLowerCase()}-section` }}
+    >
       <GridRow>
         {blocks.map((block) => {
           const {
