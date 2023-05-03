@@ -6,5 +6,9 @@ interface TextProps {
 }
 
 export const Text = ({ children, cardProps }: TextProps) => {
-  return <FormattedContent {...cardProps}>{children}</FormattedContent>
+  return (
+    <div {...cardProps}>
+      <FormattedContent>{children}</FormattedContent>
+    </div>
+  )
 }

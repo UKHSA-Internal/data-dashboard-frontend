@@ -7,13 +7,13 @@ import { DownloadLink } from '@/components/DownloadLink'
 interface ChartColumnProps {
   heading: string
   description: string
-  children: ReactNode
+  children?: ReactNode
   chart: ReactNode
   cardProps?: Record<string, unknown>
 }
 
 export const ChartColumn = ({ heading, description, children, chart, cardProps }: ChartColumnProps) => {
-  const { t } = useTranslation()
+  const { t } = useTranslation('common')
   return (
     <Card {...cardProps}>
       <CardColumn
