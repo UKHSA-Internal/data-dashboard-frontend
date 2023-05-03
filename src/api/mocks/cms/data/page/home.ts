@@ -99,7 +99,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                 {
                   type: 'dual_headline_component',
                   value: {
-                    title: 'Testing',
+                    title: 'Vaccinations',
                     top_headline_number: {
                       topic: 'COVID-19',
                       metric: 'latest_total_vaccinations_autumn22',
