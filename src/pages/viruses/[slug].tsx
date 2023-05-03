@@ -17,7 +17,7 @@ import { FormattedContent } from '@/components/FormattedContent'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { Card, CardColumn } from '@/components/Card'
 import { Trend } from '@/components/Trend/Trend'
-import { Chart } from '@/components/Chart'
+// import { Chart } from '@/components/Chart'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { HeadlineValue, Metric } from '@/components/Metrics'
 
@@ -51,7 +51,7 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
                       <Trend direction="down" colour="green" value={'-1,600 (-6.1%)'} />
                     </GridCol>
                   </GridRow>
-                  <Chart src="" />
+                  {/* <Chart src="" /> */}
                 </CardColumn>
               </Card>
             </GridCol>
