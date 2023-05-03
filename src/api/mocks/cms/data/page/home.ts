@@ -27,314 +27,341 @@ export const homePageMock: PageResponse<PageType.Home> = {
   title: 'Respiratory viruses',
   body: [
     {
-      type: 'text',
+      type: 'section',
       value: {
-        body: '<p data-block-key="cl294">Data and insights from the UKHSA on respiratory viruses. See the <a href="https://duckduckgo.com/?t=ffab&amp;q=puppies&amp;atb=v348-1&amp;iax=images&amp;ia=images">simple summary for England (opens in new tab)</a></p>',
+        heading: 'Coronavirus',
+        content: [
+          {
+            type: 'text_card',
+            value: {
+              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on Coronavirus.</p>',
+            },
+            id: '6a399089-6e24-4010-a484-a12745d38872',
+          },
+          {
+            type: 'headline_numbers_row_card',
+            value: {
+              columns: [
+                {
+                  type: 'headline_and_trend_component',
+                  value: {
+                    title: 'Cases',
+                    headline_number: {
+                      topic: 'COVID-19',
+                      metric: 'new_cases_7days_sum',
+                      body: 'Weekly',
+                    },
+                    trend_number: {
+                      topic: 'COVID-19',
+                      metric: 'new_cases_7days_change',
+                      body: 'Last 7 days',
+                      percentage_metric: 'new_cases_7days_change_percentage',
+                    },
+                  },
+                  id: 'e64cc7ea-4551-47f0-b964-941d59cae1bb',
+                },
+                {
+                  type: 'headline_and_trend_component',
+                  value: {
+                    title: 'Deaths',
+                    headline_number: {
+                      topic: 'COVID-19',
+                      metric: 'new_deaths_7days_sum',
+                      body: 'Weekly',
+                    },
+                    trend_number: {
+                      topic: 'COVID-19',
+                      metric: 'new_deaths_7days_change',
+                      body: 'Last 7 days',
+                      percentage_metric: 'new_deaths_7days_change_percentage',
+                    },
+                  },
+                  id: 'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5',
+                },
+                {
+                  type: 'headline_and_trend_component',
+                  value: {
+                    title: 'Healthcare',
+                    headline_number: {
+                      topic: 'COVID-19',
+                      metric: 'new_admissions_7days',
+                      body: 'Patients admitted',
+                    },
+                    trend_number: {
+                      topic: 'COVID-19',
+                      metric: 'new_admissions_7days_change',
+                      body: 'Last 7 days',
+                      percentage_metric: 'new_admissions_7days_change_percentage',
+                    },
+                  },
+                  id: '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f',
+                },
+                {
+                  type: 'dual_headline_component',
+                  value: {
+                    title: 'Testing',
+                    top_headline_number: {
+                      topic: 'COVID-19',
+                      metric: 'latest_total_vaccinations_autumn22',
+                      body: 'Autumn booster',
+                    },
+                    bottom_headline_number: {
+                      topic: 'COVID-19',
+                      metric: 'latest_vaccinations_uptake_autumn22',
+                      body: 'Percentage uptake (%)',
+                    },
+                  },
+                  id: 'bb8a9a19-ff0e-4e99-b570-b058e9cdb5a1',
+                },
+                {
+                  type: 'single_headline_component',
+                  value: {
+                    title: 'Testing',
+                    headline_number: {
+                      topic: 'COVID-19',
+                      metric: 'positivity_7days_latest',
+                      body: 'Virus tests positivity (%)',
+                    },
+                  },
+                  id: '4e9d5ead-5394-42cb-b370-e0d0f028140d',
+                },
+              ],
+            },
+            id: 'e285caf4-ae79-4c76-bcb7-426d6e66cb8a',
+          },
+          {
+            type: 'chart_row_card',
+            value: {
+              columns: [
+                {
+                  type: 'chart_with_headline_and_trend_card',
+                  value: {
+                    title: 'Cases',
+                    body: 'Positive tests reported in England',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_cases_daily',
+                          chart_type: 'line_with_shaded_section',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                        },
+                        id: 'b0ead98b-4102-48f6-b94e-ff7bcffe1dc4',
+                      },
+                    ],
+                    headline_number_columns: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_cases_7days_sum',
+                          body: 'Last 7 days',
+                        },
+                        id: '95b24a05-a015-42ed-b258-51c7ccaedbcd',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_deaths_7days_change',
+                          body: '',
+                          percentage_metric: 'new_cases_7days_change_percentage',
+                        },
+                        id: '8c42a86e-f675-41d0-a65a-633c20ac98e3',
+                      },
+                    ],
+                  },
+                  id: 'd9b86415-9734-46be-952a-56182f0c40be',
+                },
+                {
+                  type: 'chart_with_headline_and_trend_card',
+                  value: {
+                    title: 'Deaths',
+                    body: 'Deaths with COVID-19 on the death certificate in England',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_deaths_daily',
+                          chart_type: 'line_with_shaded_section',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                        },
+                        id: 'd3b521d8-a6bb-4960-9db9-864c3d362976',
+                      },
+                    ],
+                    headline_number_columns: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_deaths_7days_sum',
+                          body: 'Last 7 days',
+                        },
+                        id: '10c92d4c-bdb1-4bcc-a8a5-d0063dcee095',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_deaths_7days_change',
+                          body: '',
+                          percentage_metric: 'new_deaths_7days_change_percentage',
+                        },
+                        id: '41ce6c59-99fe-486a-8225-341a306cc395',
+                      },
+                    ],
+                  },
+                  id: 'c18703a1-9b01-417f-8fd8-3e4db35865e5',
+                },
+              ],
+            },
+            id: 'a5acbd6c-f9b7-4d36-86f4-005c2d46debc',
+          },
+        ],
       },
-      id: 'cc2d5c0c-97a3-45a0-83cc-d21b1ba7e06c',
+      id: '1f53f495-e8d1-45a3-bd34-5d27878c20fc',
     },
     {
-      type: 'text',
+      type: 'section',
       value: {
-        body: '<h2 data-block-key="cl294">Coronavirus</h2><p data-block-key="bf348">The UKHSA dashboard for data and insights on coronavirus.</p>',
-      },
-      id: 'b1f3d7ab-3c43-492c-8dab-c65a76a7a867',
-    },
-    {
-      type: 'headline_numbers_row_card',
-      value: {
-        columns: [
+        heading: 'Influenza',
+        content: [
           {
-            type: 'headline_and_trend_component',
+            type: 'text_card',
             value: {
-              title: 'Cases',
-              headline_number: {
-                topic: 'COVID-19',
-                metric: 'new_cases_7days_sum',
-                body: 'Weekly',
-              },
-              trend_number: {
-                topic: 'COVID-19',
-                metric: 'new_cases_7days_change',
-                body: 'Last 7 days',
-                percentage_metric: 'new_cases_7days_change_percentage',
-              },
+              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on Influenza.</p>',
             },
-            id: '72a1b90c-5f73-4a67-a6bc-9385b3746ce0',
+            id: '53fcc358-f10d-411d-9bd0-9acb3c4d3aae',
           },
           {
-            type: 'headline_and_trend_component',
+            type: 'headline_numbers_row_card',
             value: {
-              title: 'Deaths',
-              headline_number: {
-                topic: 'COVID-19',
-                metric: 'new_deaths_7days_sum',
-                body: 'Weekly',
-              },
-              trend_number: {
-                topic: 'COVID-19',
-                metric: 'new_deaths_7days_change',
-                body: 'Last 7 days',
-                percentage_metric: 'new_deaths_7days_change_percentage',
-              },
+              columns: [
+                {
+                  type: 'headline_and_trend_component',
+                  value: {
+                    title: 'Healthcare',
+                    headline_number: {
+                      topic: 'Influenza',
+                      metric: 'weekly_hospital_admissions_rate_latest',
+                      body: 'Hospital admission rate (per 100,000)',
+                    },
+                    trend_number: {
+                      topic: 'Influenza',
+                      metric: 'weekly_hospital_admissions_rate_change',
+                      body: 'Last 7 days',
+                      percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
+                    },
+                  },
+                  id: '1eb03393-1b30-46a8-8c19-8b86aa056b34',
+                },
+                {
+                  type: 'single_headline_component',
+                  value: {
+                    title: 'Testing',
+                    headline_number: {
+                      topic: 'Influenza',
+                      metric: 'weekly_positivity_latest',
+                      body: 'Virus tests positivity (%)',
+                    },
+                  },
+                  id: '8d79205b-df67-4dc1-91ae-8198dfb2155f',
+                },
+              ],
             },
-            id: '19639378-5280-4c28-95d8-17390618367c',
+            id: '06e1f087-dc2c-42ea-873f-0b1fb1f1b12e',
           },
           {
-            type: 'headline_and_trend_component',
+            type: 'chart_row_card',
             value: {
-              title: 'Healthcare',
-              headline_number: {
-                topic: 'COVID-19',
-                metric: 'new_admissions_7days',
-                body: 'Patients admitted',
-              },
-              trend_number: {
-                topic: 'COVID-19',
-                metric: 'new_admissions_7days_change',
-                body: 'Last 7 days',
-                percentage_metric: 'new_admissions_7days_change_percentage',
-              },
+              columns: [
+                {
+                  type: 'chart_with_headline_and_trend_card',
+                  value: {
+                    title: 'Healthcare',
+                    body: 'Weekly hospital admission rates for Influenza',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_hospital_admissions_rate',
+                          chart_type: 'bar',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                        },
+                        id: 'c7340640-85c6-4b2e-b3b3-2695576f0355',
+                      },
+                    ],
+                    headline_number_columns: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_hospital_admissions_rate_latest',
+                          body: 'Last 7 days',
+                        },
+                        id: 'a93d4317-3814-41ab-b6f6-a6f0769770a7',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_hospital_admissions_rate_change',
+                          body: '',
+                          percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
+                        },
+                        id: '7b860dc9-26d1-4d95-924a-c23f866a7eae',
+                      },
+                    ],
+                  },
+                  id: '60984a8a-9c76-4e86-94bc-b2a2234b6d53',
+                },
+                {
+                  type: 'chart_with_headline_and_trend_card',
+                  value: {
+                    title: 'Testing',
+                    body: 'Weekly positivity',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_positivity_latest',
+                          chart_type: 'bar',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                        },
+                        id: 'f1a643ba-ff7e-4118-a0a8-366288468cb0',
+                      },
+                    ],
+                    headline_number_columns: [],
+                  },
+                  id: '809fc976-3332-4e6c-b902-20a5d39a7f99',
+                },
+              ],
             },
-            id: 'c124e3ba-f12d-418b-8db9-066274b92fc2',
-          },
-          {
-            type: 'dual_headline_component',
-            value: {
-              title: 'Vaccines',
-              top_headline_number: {
-                topic: 'COVID-19',
-                metric: 'latest_total_vaccinations_autumn22',
-                body: 'Autumn booster',
-              },
-              bottom_headline_number: {
-                topic: 'COVID-19',
-                metric: 'latest_vaccinations_uptake_autumn22',
-                body: 'Percentage uptake (%)',
-              },
-            },
-            id: 'aea30c9d-5ddd-417a-81e5-04f5048956c9',
-          },
-          {
-            type: 'single_headline_component',
-            value: {
-              title: 'Testing',
-              headline_number: {
-                topic: 'COVID-19',
-                metric: 'positivity_7days_latest',
-                body: 'Virus tests positivity (%)',
-              },
-            },
-            id: 'd38fd53c-3513-4420-8d52-5bcd5c828443',
-          },
-        ],
-      },
-      id: '85218cfd-b975-40dc-bcaf-5f79d8f6f60f',
-    },
-    {
-      type: 'chart_with_headline_and_trend_card',
-      value: {
-        title: 'Cases',
-        body: 'Positive tests reported in England',
-        chart: [
-          {
-            type: 'plot',
-            value: {
-              topic: 'COVID-19',
-              metric: 'new_cases_daily',
-              chart_type: 'line_with_shaded_section',
-              date_from: null,
-              date_to: null,
-              stratum: '',
-              geography: '',
-              geography_type: '',
-            },
-            id: '74c93e38-e73f-4110-9a28-ef2ab8bcb52f',
-          },
-        ],
-        headline_number_columns: [
-          {
-            type: 'headline_number',
-            value: {
-              topic: 'COVID-19',
-              metric: 'new_admissions_7days',
-              body: 'Last 7 days',
-            },
-            id: '5d63adc9-f0b9-4b8b-8380-ee863daa533a',
-          },
-          {
-            type: 'trend_number',
-            value: {
-              topic: 'COVID-19',
-              metric: 'new_admissions_7days_change',
-              body: '',
-              percentage_metric: 'new_admissions_7days_change_percentage',
-            },
-            id: '18406a2d-52fb-48a1-a9ee-5420dffb238a',
+            id: 'b921e063-5b9e-4fd1-9cf3-764b24a8ae2b',
           },
         ],
       },
-      id: '36418bc1-35fe-46e2-b38f-ebe9a9582f43',
-    },
-    {
-      type: 'chart_with_headline_and_trend_card',
-      value: {
-        title: 'Deaths',
-        body: 'Deaths with COVID-19 on the death certificate in England',
-        chart: [
-          {
-            type: 'plot',
-            value: {
-              topic: 'COVID-19',
-              metric: 'new_deaths_daily',
-              chart_type: 'line_with_shaded_section',
-              date_from: null,
-              date_to: null,
-              stratum: '',
-              geography: '',
-              geography_type: '',
-            },
-            id: '76482012-851e-44f0-b2f6-9af017b68968',
-          },
-        ],
-        headline_number_columns: [
-          {
-            type: 'headline_number',
-            value: {
-              topic: 'COVID-19',
-              metric: 'new_deaths_7days_sum',
-              body: 'Last 7 days',
-            },
-            id: '4f28c86d-9f72-44bb-900b-c14c5d6bc396',
-          },
-          {
-            type: 'trend_number',
-            value: {
-              topic: 'COVID-19',
-              metric: 'new_deaths_7days_change',
-              body: '',
-              percentage_metric: 'new_deaths_7days_change_percentage',
-            },
-            id: '4a44ea30-d778-4ed4-bba0-fb506f5dc1dd',
-          },
-        ],
-      },
-      id: 'b3bebde7-538d-4ba1-a568-c28ac1c33a63',
-    },
-    {
-      type: 'text',
-      value: {
-        body: '<h2 data-block-key="aie95">Influenza</h2><p data-block-key="19u5">The UKHSA dashboard for data and insights on influenza.</p>',
-      },
-      id: '34e6806e-eb04-49e9-8db2-0733b8203397',
-    },
-    {
-      type: 'headline_numbers_row_card',
-      value: {
-        columns: [
-          {
-            type: 'headline_and_trend_component',
-            value: {
-              title: 'Healthcare',
-              headline_number: {
-                topic: 'Influenza',
-                metric: 'weekly_hospital_admissions_rate_latest',
-                body: 'Hospital admission rate (per 100,000)',
-              },
-              trend_number: {
-                topic: 'COVID-19',
-                metric: 'weekly_hospital_admissions_rate_change',
-                body: 'Last 7 days',
-                percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
-              },
-            },
-            id: 'cdde1370-9c46-4604-91b4-3dd58932bc2c',
-          },
-          {
-            type: 'single_headline_component',
-            value: {
-              title: 'Testing',
-              headline_number: {
-                topic: 'Influenza',
-                metric: 'weekly_positivity_latest',
-                body: 'Virus tests positivity (%)',
-              },
-            },
-            id: '2f824c50-52a1-4827-818f-761e0ceb086c',
-          },
-        ],
-      },
-      id: 'd90051ed-a9ad-4c33-867b-44b8447cdf3c',
-    },
-    {
-      type: 'chart_with_headline_and_trend_card',
-      value: {
-        title: 'Healthcare',
-        body: 'Weekly hospital admission rates for Influenza',
-        chart: [
-          {
-            type: 'plot',
-            value: {
-              topic: 'Influenza',
-              metric: 'weekly_hospital_admissions_rate',
-              chart_type: 'line_with_shaded_section',
-              date_from: null,
-              date_to: null,
-              stratum: '',
-              geography: '',
-              geography_type: '',
-            },
-            id: 'dfaa61af-4e54-4d46-8d02-babedfcf4176',
-          },
-        ],
-        headline_number_columns: [
-          {
-            type: 'headline_number',
-            value: {
-              topic: 'Influenza',
-              metric: 'weekly_hospital_admissions_rate_latest',
-              body: 'Last 7 days',
-            },
-            id: '1c7e2b15-40e6-4630-9eb8-cefa5732cfc7',
-          },
-          {
-            type: 'trend_number',
-            value: {
-              topic: 'Influenza',
-              metric: 'weekly_hospital_admissions_rate_change',
-              body: '',
-              percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
-            },
-            id: '601053ba-9dd1-4111-8e15-17a7335c6279',
-          },
-        ],
-      },
-      id: '4c08dee0-6a37-4602-9c54-990efe347e49',
-    },
-    {
-      type: 'chart_with_headline_and_trend_card',
-      value: {
-        title: 'Testing',
-        body: 'Weekly positivity',
-        chart: [
-          {
-            type: 'plot',
-            value: {
-              topic: 'Influenza',
-              metric: 'weekly_positivity_latest',
-              chart_type: 'line_with_shaded_section',
-              date_from: null,
-              date_to: null,
-              stratum: '',
-              geography: '',
-              geography_type: '',
-            },
-            id: 'ad5dc74a-a6b1-48e2-bafb-f07253695cc4',
-          },
-        ],
-        headline_number_columns: [],
-      },
-      id: '0b7a6152-dbd3-4b77-82e1-cc98cf273ba4',
+      id: '4c03dd17-a62b-4102-a938-557c60d38d9a',
     },
   ],
   related_links: relatedLinksMock,

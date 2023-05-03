@@ -8,63 +8,69 @@ import { isFulfilled } from '@/api/api-utils'
  * Specific CMS page types (Home, Topics) are modelled to return parameters allowing the consumer to fetch
  * various types of data from external services (trends, headlines, charts etc)
  *
- * This function parses the CMS page, finds all relevant request parameters and asyncronously initiates the requests
+ * This function parses the CMS page, finds all relevant request parameters and asynchronously initiates the requests
  */
 type Trends = Array<[string, ReturnType<typeof getTrends>]>
 type Headlines = Array<[string, ReturnType<typeof getHeadlines>]>
 type Charts = Array<[string, ReturnType<typeof getCharts>]>
 
-export const extractAndFetchPageData = async (body: Body[]) => {
+export const extractAndFetchPageData = async (body: Body) => {
   // Store requests as a tuple containing an id and request object
   const trends: Trends = []
   const headlines: Headlines = []
   const charts: Charts = []
 
-  // Extract all requests from the CMS page model
+  // Extract all request data from the CMS content types for each topic
   for (const section of body) {
-    if (section.type === 'chart_with_headline_and_trend_card') {
-      const { chart, headline_number_columns: columns } = section.value
+    for (const content of section.value.content) {
+      if (content.type === 'chart_row_card') {
+        for (const column of content.value.columns) {
+          if (column.type === 'chart_with_headline_and_trend_card') {
+            const { chart, headline_number_columns: headlineColumns } = column.value
 
-      // Pick out charts
-      charts.push([
-        `${section.id}-charts`,
-        getCharts({
-          plots: chart.map((plots) => plots.value),
-        }),
-      ])
+            // Pick out charts
+            charts.push([
+              `${column.id}-charts`,
+              getCharts({
+                plots: chart.map((plots) => plots.value),
+              }),
+            ])
 
-      for (const column of columns) {
-        // Pick out headlines
-        if (column.type === 'headline_number') {
-          const { topic, metric } = column.value
-          headlines.push([`${column.id}-headlines`, getHeadlines({ topic, metric })])
-        }
+            for (const headline of headlineColumns) {
+              // Pick out headlines
+              if (headline.type === 'headline_number') {
+                const { topic, metric } = headline.value
+                headlines.push([`${headline.id}-headlines`, getHeadlines({ topic, metric })])
+              }
 
-        // Pick out trends
-        if (column.type === 'trend_number') {
-          const { topic, metric, percentage_metric } = column.value
-          trends.push([`${column.id}-trends`, getTrends({ topic, metric, percentage_metric })])
+              // Pick out trends
+              if (headline.type === 'trend_number') {
+                const { topic, metric, percentage_metric } = headline.value
+                trends.push([`${headline.id}-trends`, getTrends({ topic, metric, percentage_metric })])
+              }
+            }
+          }
         }
       }
-    }
 
-    if (section.type === 'headline_numbers_row_card') {
-      const { columns } = section.value
-      for (const column of columns) {
-        // Pick out headlines and trends from the row card
-        if (column.type === 'headline_and_trend_component') {
-          const { headline_number, trend_number } = column.value
-          headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
-          trends.push([`${column.id}-trends`, getTrends(trend_number)])
-        }
-        if (column.type === 'dual_headline_component') {
-          const { top_headline_number, bottom_headline_number } = column.value
-          headlines.push([`${column.id}-headlines-top`, getHeadlines(top_headline_number)])
-          headlines.push([`${column.id}-headlines-bottom`, getHeadlines(bottom_headline_number)])
-        }
-        if (column.type === 'single_headline_component') {
-          const { headline_number } = column.value
-          headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
+      if (content.type === 'headline_numbers_row_card') {
+        const { columns } = content.value
+        for (const column of columns) {
+          // Pick out headlines and trends from the row card
+          if (column.type === 'headline_and_trend_component') {
+            const { headline_number, trend_number } = column.value
+            headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
+            trends.push([`${column.id}-trends`, getTrends(trend_number)])
+          }
+          if (column.type === 'dual_headline_component') {
+            const { top_headline_number, bottom_headline_number } = column.value
+            headlines.push([`${column.id}-headlines-top`, getHeadlines(top_headline_number)])
+            headlines.push([`${column.id}-headlines-bottom`, getHeadlines(bottom_headline_number)])
+          }
+          if (column.type === 'single_headline_component') {
+            const { headline_number } = column.value
+            headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
+          }
         }
       }
     }

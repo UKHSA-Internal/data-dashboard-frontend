@@ -22,7 +22,7 @@ type SharedPageData<T extends WithHomeData | WithTopicData | WithCommonData> = {
 } & T
 
 type WithHomeData = {
-  body: Array<Body>
+  body: Body
 }
 
 type WithTopicData = {
