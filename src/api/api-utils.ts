@@ -5,6 +5,7 @@ import ky from 'ky-universal'
  * The Authorization headers and any other common configuration can be set below.
  */
 export const api = ky.extend({
+  timeout: 60000,
   hooks: {
     beforeRequest: [
       (request) => {
