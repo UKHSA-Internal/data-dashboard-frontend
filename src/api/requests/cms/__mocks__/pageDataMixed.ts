@@ -13,54 +13,55 @@ const getChartFixture = (file: string) =>
  */
 export const pageDataMockMixed: Awaited<ReturnType<typeof extractAndFetchPageData>> = {
   trends: {
-    '72a1b90c-5f73-4a67-a6bc-9385b3746ce0-trends': {
+    'e64cc7ea-4551-47f0-b964-941d59cae1bb-trends': {
       success: false,
     },
-    '19639378-5280-4c28-95d8-17390618367c-trends': {
+    'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5-trends': {
       success: false,
     },
-    'c124e3ba-f12d-418b-8db9-066274b92fc2-trends': {
+    '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f-trends': {
       success: false,
     },
-    '18406a2d-52fb-48a1-a9ee-5420dffb238a-trends': {
+    '8c42a86e-f675-41d0-a65a-633c20ac98e3-trends': {
       success: false,
     },
-    '4a44ea30-d778-4ed4-bba0-fb506f5dc1dd-trends': {
+    '41ce6c59-99fe-486a-8225-341a306cc395-trends': {
       success: false,
     },
-    'cdde1370-9c46-4604-91b4-3dd58932bc2c-trends': {
+    '1eb03393-1b30-46a8-8c19-8b86aa056b34-trends': {
       success: false,
     },
-    '601053ba-9dd1-4111-8e15-17a7335c6279-trends': {
+    '7b860dc9-26d1-4d95-924a-c23f866a7eae-trends': {
       success: false,
     },
   },
   headlines: {
-    '72a1b90c-5f73-4a67-a6bc-9385b3746ce0-headlines': { success: true, data: { value: 24298 } },
-    '19639378-5280-4c28-95d8-17390618367c-headlines': { success: true, data: { value: 379 } },
-    'c124e3ba-f12d-418b-8db9-066274b92fc2-headlines': { success: true, data: { value: 6288 } },
-    'aea30c9d-5ddd-417a-81e5-04f5048956c9-headlines': { success: true, data: { value: 64.5 } },
-    'd38fd53c-3513-4420-8d52-5bcd5c828443-headlines': { success: true, data: { value: 10.4 } },
-    '5d63adc9-f0b9-4b8b-8380-ee863daa533a-headlines': { success: true, data: { value: 6288 } },
-    '4f28c86d-9f72-44bb-900b-c14c5d6bc396-headlines': { success: true, data: { value: 379 } },
-    'cdde1370-9c46-4604-91b4-3dd58932bc2c-headlines': { success: true, data: { value: 981596 } },
-    '2f824c50-52a1-4827-818f-761e0ceb086c-headlines': { success: true, data: { value: 12.2 } },
-    '1c7e2b15-40e6-4630-9eb8-cefa5732cfc7-headlines': { success: true, data: { value: 981596 } },
+    'e64cc7ea-4551-47f0-b964-941d59cae1bb-headlines': { success: true, data: { value: 24298 } },
+    'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5-headlines': { success: true, data: { value: 379 } },
+    '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f-headlines': { success: true, data: { value: 6288 } },
+    'bb8a9a19-ff0e-4e99-b570-b058e9cdb5a1-headlines-top': { success: true, data: { value: 4095083 } },
+    'bb8a9a19-ff0e-4e99-b570-b058e9cdb5a1-headlines-bottom': { success: true, data: { value: 64.5 } },
+    '4e9d5ead-5394-42cb-b370-e0d0f028140d-headlines': { success: true, data: { value: 10.4 } },
+    '95b24a05-a015-42ed-b258-51c7ccaedbcd-headlines': { success: true, data: { value: 24298 } },
+    '10c92d4c-bdb1-4bcc-a8a5-d0063dcee095-headlines': { success: true, data: { value: 379 } },
+    '1eb03393-1b30-46a8-8c19-8b86aa056b34-headlines': { success: true, data: { value: 981596 } },
+    '8d79205b-df67-4dc1-91ae-8198dfb2155f-headlines': { success: true, data: { value: 12.2 } },
+    'a93d4317-3814-41ab-b6f6-a6f0769770a7-headlines': { success: true, data: { value: 981596 } },
   },
   charts: {
-    '36418bc1-35fe-46e2-b38f-ebe9a9582f43-charts': {
+    'd9b86415-9734-46be-952a-56182f0c40be-charts': {
       success: true,
       data: getChartFixture('COVID-19/new_cases_daily.svg'),
     },
-    'b3bebde7-538d-4ba1-a568-c28ac1c33a63-charts': {
+    'c18703a1-9b01-417f-8fd8-3e4db35865e5-charts': {
       success: true,
       data: getChartFixture('COVID-19/new_deaths_daily.svg'),
     },
-    '4c08dee0-6a37-4602-9c54-990efe347e49-charts': {
+    '60984a8a-9c76-4e86-94bc-b2a2234b6d53-charts': {
       success: true,
       data: getChartFixture('Influenza/weekly_hospital_admissions_rate.svg'),
     },
-    '0b7a6152-dbd3-4b77-82e1-cc98cf273ba4-charts': {
+    '809fc976-3332-4e6c-b902-20a5d39a7f99-charts': {
       success: true,
       data: getChartFixture('Influenza/weekly_positivity_latest.svg'),
     },
