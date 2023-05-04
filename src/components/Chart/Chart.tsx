@@ -5,7 +5,7 @@ interface ChartProps {
   src: string
 }
 
-export const Chart = async ({ src }: ChartProps) => {
+export const Chart = ({ src }: ChartProps) => {
   return (
     <Container>
       <ChartContainer>

@@ -7,7 +7,6 @@ import {
 } from '@/components/Accordion'
 import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
-// import { Chart } from '@/components/Chart'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
@@ -15,6 +14,7 @@ import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import { HeadlineValue, Metric } from '@/components/Metrics'
+import { Chart } from '@/components/Chart'
 
 export const Coronavirus = () => {
   return (
@@ -30,7 +30,7 @@ export const Coronavirus = () => {
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown
                   </Paragraph>
-                  {/* <Chart src="/img/temp-covid1.png" /> */}
+                  <Chart src="/img/temp-covid1.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -40,7 +40,7 @@ export const Coronavirus = () => {
                   <Paragraph supportingText>
                     Number of cases by specimin date. Data for the last 5 days, highlighted in grey, are incomplete.
                   </Paragraph>
-                  {/* <Chart src="/img/temp-covid2.png" /> */}
+                  <Chart src="/img/temp-covid2.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -52,7 +52,7 @@ export const Coronavirus = () => {
                   <Paragraph supportingText>
                     Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown, by age.
                   </Paragraph>
-                  {/* <Chart src="/img/temp-covid3.png" /> */}
+                  <Chart src="/img/temp-covid3.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -63,7 +63,7 @@ export const Coronavirus = () => {
                     Rates per 100,000 people of the total number of cases since the start of the pandemic, by age and
                     sex.
                   </Paragraph>
-                  {/* <Chart src="/img/temp-covid4.png" /> */}
+                  <Chart src="/img/temp-covid4.png" />
                 </CardColumn>
               </Card>
             </GridCol>
@@ -77,7 +77,7 @@ export const Coronavirus = () => {
               <Card theme={'secondary'}>
                 <CardColumn heading="Deaths with COVID-19 on the death certificate">
                   <Metric>
-                    <HeadlineValue heading="Weekly" value="393" />
+                    <HeadlineValue heading="Weekly" value={393} />
                   </Metric>
                 </CardColumn>
               </Card>
@@ -88,12 +88,12 @@ export const Coronavirus = () => {
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Number" value="-31" />
+                        <HeadlineValue heading="Number" value={-31} />
                       </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Percentage" value="-7" />
+                        <HeadlineValue heading="Percentage" value={-7} />
                       </Metric>
                     </GridCol>
                   </GridRow>
@@ -112,7 +112,7 @@ export const Coronavirus = () => {
                 of at least 11 days, and daa are not shown for the 14 days before the most recent reported date as they
                 are consideredx incomplete. Data are shown by date of death.
               </Paragraph>
-              {/* <Chart src="/img/temp-covid-deaths.png" /> */}
+              <Chart src="/img/temp-covid-deaths.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -124,7 +124,7 @@ export const Coronavirus = () => {
               <Card theme={'secondary'}>
                 <CardColumn heading="Patients admitted">
                   <Metric>
-                    <HeadlineValue heading="Latest 7 days" value="5,911" />
+                    <HeadlineValue heading="Latest 7 days" value={5911} />
                   </Metric>
                 </CardColumn>
               </Card>
@@ -135,12 +135,12 @@ export const Coronavirus = () => {
                   <GridRow style={{ marginTop: '20px' }}>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Number" value="-397" />
+                        <HeadlineValue heading="Number" value={-397} />
                       </Metric>
                     </GridCol>
                     <GridCol setWidth="one-half">
                       <Metric>
-                        <HeadlineValue heading="Percentage" value="-6" />
+                        <HeadlineValue heading="Percentage" value={-6} />
                       </Metric>
                     </GridCol>
                   </GridRow>
@@ -156,7 +156,7 @@ export const Coronavirus = () => {
                 all 3 nations, and numbers for Wales are updated weekly. Figures are not comparable as Wales incvlues
                 suspected COVID-19 patients while the other nations include only confirmed cases.
               </Paragraph>
-              {/* <Chart src="/img/temp-covid-healthcare.png" /> */}
+              <Chart src="/img/temp-covid-healthcare.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -172,7 +172,7 @@ export const Coronavirus = () => {
                 caution. England local area uptake is also not comparable to England national uptake by report date as
                 that uses a different denominator - see the About tab for more information.
               </Paragraph>
-              {/* <Chart src="/img/temp-covid-vaccinations.png" /> */}
+              <Chart src="/img/temp-covid-vaccinations.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>
@@ -188,7 +188,7 @@ export const Coronavirus = () => {
                 caution. England local area uptake is also not comparable to England national uptake by report date as
                 that uses a different denominator - see the About tab for more information.
               </Paragraph>
-              {/* <Chart src="/img/temp-covid-testing.png" /> */}
+              <Chart src="/img/temp-covid-testing.png" />
             </CardColumn>
           </GridRow>
         </ContentsItem>

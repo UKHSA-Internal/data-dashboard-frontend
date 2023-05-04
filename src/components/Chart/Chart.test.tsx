@@ -1,11 +1,11 @@
-import { screen, within } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-// import { Chart } from './Chart'
+import Chart from './Chart'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
 test('Displays the chart via the provided src', () => {
-  // render(<Chart src="/svg/data/uri" />)
+  render(<Chart src="/svg/data/uri" />)
   expect(screen.getByAltText('')).toHaveAttribute('src', '/svg/data/uri')
 })
 
@@ -13,7 +13,7 @@ test('Displays the chart via the provided src', () => {
 test.skip('Clicking the "View data in a tabular format" button, shows the graph in a tabular format', async () => {
   const user = userEvent.setup()
 
-  // render(<Chart src="" />)
+  render(<Chart src="" />)
 
   // Table is not visible by default
   expect(screen.getByText('Monthly TestVirus cases')).not.toBeVisible()

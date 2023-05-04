@@ -1,46 +1,57 @@
-import { getCmsApiPath, requestOptions } from '../helpers'
+import { z } from 'zod'
+import { api } from '@/api/api-utils'
+import { getCmsApiPath } from '../helpers'
 import type { PageType } from './getPages'
-import type { Meta, Body, RelatedLinks } from '@/api/models/cms/Page'
+import { Meta, Body, RelatedLinks } from '@/api/models/cms/Page'
 
 /**
  * CMS Page endpoint
  */
+
 export type PageResponse<T> = T extends PageType.Home
-  ? SharedPageData<WithHomeData>
+  ? z.infer<typeof WithHomeData>
   : T extends PageType.Topic
-  ? SharedPageData<WithTopicData>
+  ? z.infer<typeof WithTopicData>
   : T extends PageType.Common
-  ? SharedPageData<WithCommonData>
+  ? z.infer<typeof WithCommonData>
   : never
 
-type SharedPageData<T extends WithHomeData | WithTopicData | WithCommonData> = {
-  id: number
-  meta: Meta
-  title: string
-  last_published_at: string
-  related_links: RelatedLinks
-} & T
+const SharedPageData = z.object({
+  id: z.number(),
+  title: z.string(),
+  last_published_at: z.string(),
+  related_links: RelatedLinks,
+})
 
-type WithHomeData = {
-  body: Array<Body>
-}
+const WithHomeData = SharedPageData.extend({
+  body: Body,
+  meta: Meta.extend({
+    type: z.literal('home.HomePage'),
+  }),
+})
 
-type WithTopicData = {
-  body: string
-  symptoms: string
-  transmission: string
-  treatment: string
-  prevention: string
-  surveillance_and_reporting: string
-}
+const WithTopicData = SharedPageData.extend({
+  body: z.string(),
+  meta: Meta.extend({
+    type: z.literal('topic.TopicPage'),
+  }),
+  symptoms: z.string(),
+  transmission: z.string(),
+  treatment: z.string(),
+  prevention: z.string(),
+  surveillance_and_reporting: z.string(),
+})
 
-type WithCommonData = {
-  body: string
-}
+const WithCommonData = SharedPageData.extend({
+  body: z.string(),
+  meta: Meta.extend({
+    type: z.literal('common.CommonPage'),
+  }),
+})
 
-export const getPage = async <T extends PageType>(id: number): Promise<PageResponse<T>> => {
-  const req = await fetch(`${getCmsApiPath()}/${id}`, requestOptions)
-  const res = await req.json()
-  if (!req.ok) throw new Error(res.detail)
-  return res
+const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonData])
+
+export const getPage = async <T extends PageType>(id: number) => {
+  const res = await api.get(`${getCmsApiPath()}/${id}`).json<PageResponse<T>>()
+  return responseSchema.safeParse(res)
 }

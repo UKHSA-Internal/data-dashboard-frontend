@@ -1,85 +1,28 @@
-import { Fragment } from 'react'
-import { GridCol, GridRow } from 'govuk-react'
 import { GetStaticProps, InferGetStaticPropsType } from 'next'
-// import { Chart } from '@/components/Chart'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { RelatedLinks } from '@/components/RelatedLinks'
-import { Contents, ContentsItem } from '@/components/Contents'
-import { Card, CardColumn } from '@/components/Card'
 import { Page } from '@/components/Page'
 import { initMocks } from '@/api/msw'
-import { DownloadLink } from '@/components/DownloadLink'
-import { ContentTypes, getStats, TopicName } from '@/api/requests/stats/getStats'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { PageType } from '@/api/requests/cms/getPages'
-import { getAllDashboardCharts } from '@/api/requests/charts/getAllDashboardCharts'
 import { useTranslation } from 'next-i18next'
-import { HeadlineTrend, HeadlineValue, Metric } from '@/components/Metrics'
-import { GridLimiter } from '@/components/GridLimiter'
 import type { RelatedLinks as Links, Body } from '@/api/models/cms/Page'
+import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
+import { Utils } from '@/components/CMS'
+import { Contents, ContentsItem } from '@/components/Contents'
+import { StoreState, initializeStore } from '@/lib/store'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-const renderContentTypes = (item: ContentTypes) => (
-  <Fragment key={item.heading}>
-    {item.type === 'text' && (
-      <Metric>
-        <HeadlineValue heading={item.heading} value={item.value} />
-      </Metric>
-    )}
-    {item.type === 'trend' && (
-      <Metric>
-        <HeadlineTrend
-          heading={item.heading}
-          direction={item.direction}
-          colour={item.colour}
-          value={`${item.change} ${item.percentage}`}
-        />
-      </Metric>
-    )}
-  </Fragment>
-)
-
-export default function Home({ title, relatedLinks, lastUpdated, statistics }: HomeProps) {
+export default function Home({ title, relatedLinks, lastUpdated, body }: HomeProps) {
   const { t } = useTranslation()
-
-  if (!title) return null
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
       <Contents heading={t<string>('contentsHeading')}>
-        {statistics.map(({ topic, summary, tiles }) => (
-          <ContentsItem heading={topic} key={`content-item-${topic}`}>
-            <p>The UKHSA dashboard for data and insights on {topic}.</p>
-            <Card data-testid="summary-section">
-              <GridLimiter>
-                {summary.map(({ container, content }) => {
-                  return (
-                    <CardColumn heading={container} key={container} data-testid={`column-${container.toLowerCase()}`}>
-                      {content.map(renderContentTypes)}
-                    </CardColumn>
-                  )
-                })}
-              </GridLimiter>
-            </Card>
-            <GridRow>
-              {tiles.map(({ container, content }) => {
-                return (
-                  <GridCol setWidth="one-half" key={container}>
-                    <Card data-testid={`${container.toLowerCase()}-section`}>
-                      <CardColumn
-                        heading={container}
-                        sideContent={<DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}
-                        data-testid={`column-${container.toLowerCase()}`}
-                      >
-                        {content.map(renderContentTypes)}
-                        {/* <Chart src={`data:image/svg+xml;utf8,${encodeURIComponent(charts[topic][container])}`} /> */}
-                      </CardColumn>
-                    </Card>
-                  </GridCol>
-                )
-              })}
-            </GridRow>
+        {body.map(({ id, value }) => (
+          <ContentsItem key={id} heading={value.heading}>
+            {value.content.map(Utils.renderCard)}
           </ContentsItem>
         ))}
       </Contents>
@@ -89,16 +32,12 @@ export default function Home({ title, relatedLinks, lastUpdated, statistics }: H
   )
 }
 
-type StatisticsProps = Array<{ topic: TopicName } & Awaited<ReturnType<typeof getStats>>>
-type ChartsProps = Record<TopicName, Record<string, string>>
-
 export const getStaticProps: GetStaticProps<{
   title: string
-  body: Body[]
+  body: Body
   lastUpdated: string
   relatedLinks: Links
-  statistics: StatisticsProps
-  charts: ChartsProps
+  initialZustandState: StoreState
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -114,11 +53,9 @@ export const getStaticProps: GetStaticProps<{
       related_links: relatedLinks = [],
     } = await getPageBySlug('respiratory-viruses', PageType.Home)
 
-    const coronavirusData = await getStats('COVID-19')
-    const influenzaData = await getStats('Influenza')
-    const statistics: StatisticsProps = [coronavirusData, influenzaData]
+    const { charts, headlines, trends } = await extractAndFetchPageData(body)
 
-    const charts = await getAllDashboardCharts()
+    const store = initializeStore({ trends, headlines, charts })
 
     return {
       props: {
@@ -126,8 +63,7 @@ export const getStaticProps: GetStaticProps<{
         body,
         lastUpdated,
         relatedLinks,
-        statistics,
-        charts,
+        initialZustandState: JSON.parse(JSON.stringify(store.getState())),
         ...(await serverSideTranslations(req.locale as string, ['common'])),
       },
       revalidate,
