@@ -1,9 +1,9 @@
-type TabularDataResponse = Array<{
-  date: string
-  value: string
-}>
+import { z } from 'zod'
+import { responseSchema } from '@/api/requests/tabular/getTabular'
 
-export const newCasesDailyMock: TabularDataResponse = [
+type MockedValues = z.infer<typeof responseSchema>
+
+export const newDeathsDailyValues: MockedValues = [
   {
     date: '2022-10-31',
     value: '4630.0',
