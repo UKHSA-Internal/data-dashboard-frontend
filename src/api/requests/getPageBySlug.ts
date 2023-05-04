@@ -1,7 +1,7 @@
 import { getPage, PageResponse } from './cms/getPage'
 import { getPages, PageType } from './cms/getPages'
 
-export const getPageBySlug = async <T extends PageType>(slug: string, type: T): Promise<PageResponse<T>> => {
+export const getPageBySlug = async <T extends PageType>(slug: string, type: T) => {
   if (!type) {
     throw new Error('No Page Type provided')
   }
@@ -21,10 +21,16 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T): 
 
   if (matchedPage) {
     // Once we have a match, use the id to fetch the single page
-    return await getPage<T>(matchedPage.id).catch((err) => {
+    const page = await getPage<T>(matchedPage.id).catch((err) => {
       console.log(err)
       throw new Error(`Failed to get page with slug: ${slug}`)
     })
+
+    if (page.success) {
+      return page.data as PageResponse<T>
+    }
+
+    throw new Error(`CMS page with id ${matchedPage.id} does not match expected response schema`)
   }
 
   throw new Error('No page found')
