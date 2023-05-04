@@ -5,6 +5,7 @@ import type { AppProps } from 'next/app'
 import { initMocks } from '@/api/msw'
 import nextI18NextConfig from '../../next-i18next.config'
 import { ScrollToTop } from '@/components/ScrollToTop'
+import StoreProvider from '@/lib/StoreProvider'
 
 import '../styles/globals.css'
 
@@ -14,13 +15,13 @@ if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
 
 const App = ({ Component, pageProps }: AppProps) => {
   return (
-    <>
+    <StoreProvider {...pageProps.initialZustandState}>
       <GlobalStyle />
       <Layout>
         <Component {...pageProps} />
         <ScrollToTop />
       </Layout>
-    </>
+    </StoreProvider>
   )
 }
 
