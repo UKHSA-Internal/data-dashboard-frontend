@@ -15,6 +15,6 @@ type Story = StoryObj<typeof HeadlineValue>
 export const Primary: Story = {
   args: {
     heading: 'Patients admitted',
-    value: '6,288',
+    value: 6288,
   },
 }
