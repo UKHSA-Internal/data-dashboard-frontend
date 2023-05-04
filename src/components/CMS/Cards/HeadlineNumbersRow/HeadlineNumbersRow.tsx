@@ -1,6 +1,6 @@
 import { Card } from '@/components/Card'
-import { GridCol, GridRow } from 'govuk-react'
-import { ReactNode } from 'react'
+import { GridLimiter } from '@/components/GridLimiter'
+import { Fragment, ReactNode } from 'react'
 
 interface HeadlineNumbersRowProps {
   columns: Array<ReactNode>
@@ -10,11 +10,11 @@ interface HeadlineNumbersRowProps {
 export const HeadlineNumbersRow = ({ columns, cardProps }: HeadlineNumbersRowProps) => {
   return (
     <Card {...cardProps}>
-      <GridRow>
+      <GridLimiter>
         {columns.map((column, key) => (
-          <GridCol key={key}>{column}</GridCol>
+          <Fragment key={key}>{column}</Fragment>
         ))}
-      </GridRow>
+      </GridLimiter>
     </Card>
   )
 }

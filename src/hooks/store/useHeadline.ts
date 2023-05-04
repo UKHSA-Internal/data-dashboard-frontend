@@ -21,7 +21,7 @@ export const useHeadline = (id: string, position?: 'top' | 'bottom') => {
 
   // Return the headline data when a match is found
   if (headlineData.success) {
-    return headlineData.data
+    return headlineData.data.value
   }
 
   // Otherwise, return null for error handling
