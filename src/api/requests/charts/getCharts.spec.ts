@@ -68,9 +68,9 @@ test('Handles generic http errors', async () => {
       {
         code: 'invalid_type',
         expected: 'string',
-        received: 'null',
+        received: 'object',
         path: [],
-        message: 'Expected string, received null',
+        message: 'Expected string, received object',
       },
     ]),
   })
