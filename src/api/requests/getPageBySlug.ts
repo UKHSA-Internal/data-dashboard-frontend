@@ -30,7 +30,7 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
       return page.data as PageResponse<T>
     }
 
-    throw new Error(`CMS page with id ${matchedPage.id} does not match expected response schema`)
+    throw new Error(`CMS page with slug ${slug} and id ${matchedPage.id} does not match expected response schema`)
   }
 
   throw new Error('No page found')
