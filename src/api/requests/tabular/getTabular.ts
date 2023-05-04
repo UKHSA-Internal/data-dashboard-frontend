@@ -20,5 +20,8 @@ type RequestParams = z.infer<typeof requestSchema>
 export const getTabular = async (params: RequestParams) => {
   const searchParams = new URLSearchParams(params)
   const res = await api.get(`${getApiBaseUrl()}/tabular`, { searchParams }).json()
+
+  console.log('Response: ', res)
+
   return responseSchema.safeParse(res)
 }
