@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import Chart from './Chart'
+import { Chart } from './Chart'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
