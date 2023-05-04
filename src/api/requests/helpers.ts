@@ -1,7 +1,8 @@
 const baseUrl = process.env.NEXT_PUBLIC_API_URL
 const cmsPath = process.env.API_PATH_CMS
 
-export const getApiBaseUrl = () => `${baseUrl}/api`
+// Non-CMS endpoints don't have an `/api` prefix at the moment
+export const getApiBaseUrl = () => baseUrl
 
 export const getCmsApiPath = () => {
   return `${baseUrl}${cmsPath}`
