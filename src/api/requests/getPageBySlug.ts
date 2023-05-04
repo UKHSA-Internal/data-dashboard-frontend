@@ -12,7 +12,7 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
 
   // Fetch all of pages by type from the CMS
   const pages = await getPages(type).catch((err) => {
-    console.log(err)
+    console.log(JSON.stringify(err))
     throw new Error(`Could not get pages with type ${type}`)
   })
 
@@ -22,7 +22,7 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
   if (matchedPage) {
     // Once we have a match, use the id to fetch the single page
     const page = await getPage<T>(matchedPage.id).catch((err) => {
-      console.log(err)
+      console.log(JSON.stringify(err))
       throw new Error(`Failed to get page with slug: ${slug}`)
     })
 
