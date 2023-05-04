@@ -64,6 +64,7 @@ jobs:
 
   unit-tests:
     name: Unit tests
+    permissions: write-all
     needs: [build]
     runs-on: ubuntu-latest
     steps:
