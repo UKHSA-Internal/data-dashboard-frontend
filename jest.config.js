@@ -23,6 +23,16 @@ const customJestConfig = {
   },
   testEnvironment: 'jest-environment-jsdom',
   modulePathIgnorePatterns: ['cypress'],
+  coverageReporters: ['json-summary', 'text', 'lcov'],
+  coverageThreshold: {
+    global: {
+      reporter: ['json-summary', 'text', 'lcov'],
+      lines: 97,
+      functions: 96,
+      branches: 77,
+      statements: 96,
+    },
+  },
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
