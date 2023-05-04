@@ -2,7 +2,6 @@
 import React from 'react'
 import { Preview } from '@storybook/react'
 import { I18nextProvider } from 'react-i18next'
-import { handlers } from '../src/api/msw/handlers'
 import i18n from '../config/i18n/i18nForTests'
 
 import '../src/styles/globals.css'
@@ -28,9 +27,6 @@ const preview: Preview = {
         color: /(background|color)$/i,
         date: /Date$/,
       },
-    },
-    msw: {
-      handlers,
     },
     decorators: [
       (Story) => (

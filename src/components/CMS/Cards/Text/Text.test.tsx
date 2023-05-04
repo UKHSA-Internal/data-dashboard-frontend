@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/config/test-utils'
 import { Text } from './Text'
 
 test('Displays content', () => {

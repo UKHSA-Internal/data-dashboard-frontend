@@ -8,10 +8,9 @@ interface HeadlineProps {
 }
 
 export const Headline = ({ heading, id, position }: HeadlineProps) => {
-  const headline = useHeadline(id, position)
+  const value = useHeadline(id, position)
 
-  if (headline) {
-    const { value } = headline
+  if (value) {
     return (
       <Metric>
         <HeadlineValue heading={heading} value={value} />
