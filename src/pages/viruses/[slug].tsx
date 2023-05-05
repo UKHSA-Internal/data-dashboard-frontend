@@ -5,7 +5,6 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { Paragraph } from 'govuk-react'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
@@ -19,7 +18,7 @@ import { logger } from '@/lib/logger'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }: VirusPageProps) => {
+export const VirusPage = ({ title, relatedLinks, accordion, lastUpdated }: VirusPageProps) => {
   if (!title) return null
 
   return (
