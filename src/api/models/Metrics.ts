@@ -64,6 +64,7 @@ export const Metrics = z.enum([
   'weekly_icu_admissions_rate_change_percentage',
   'weekly_hospital_admissions_rate_by_geography',
   'weekly_icu_admissions_rate_by_region',
+  'new_pcr_tests_daily',
 ])
 
 export type Metrics = z.infer<typeof Metrics>

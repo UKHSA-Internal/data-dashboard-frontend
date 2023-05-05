@@ -24,7 +24,8 @@ export const VirusPage = ({ title, body, relatedLinks, accordion, lastUpdated }:
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      <Paragraph>{body}</Paragraph>
+      {/* TODO: In implementation ticket */}
+      {/* {body} */}
 
       {/* TODO: Topic detail integration */}
 
