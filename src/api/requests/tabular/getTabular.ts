@@ -2,6 +2,7 @@ import { api } from '@/api/api-utils'
 import { Metrics, Topics } from '@/api/models'
 import { z } from 'zod'
 import { getApiBaseUrl } from '../helpers'
+import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
   topic: Topics,
@@ -19,7 +20,12 @@ type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
 export const getTabular = async (params: RequestParams) => {
-  const searchParams = new URLSearchParams(params)
-  const res = await api.get(`${getApiBaseUrl()}/tabular`, { searchParams }).json()
-  return responseSchema.safeParse(res)
+  try {
+    const searchParams = new URLSearchParams(params)
+    const res = await api.get(`${getApiBaseUrl()}/tabular`, { searchParams }).json()
+    return responseSchema.safeParse(res)
+  } catch (error) {
+    logger.error(error)
+    return responseSchema.safeParse(error)
+  }
 }

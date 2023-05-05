@@ -10,12 +10,16 @@ import {
 import { Metrics, Topics } from '@/api/models'
 import { rest } from 'msw'
 import { getApiBaseUrl } from '../helpers'
+import { logger } from '@/lib/logger'
+
+jest.mock('@/lib/logger')
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
+type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 type Topic = z.infer<typeof Topics>
 type Metric = z.infer<typeof Metrics>
@@ -34,28 +38,56 @@ test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', a
   expect(result).toEqual<SuccessResponse>({ success: true, data })
 })
 
-test('Handles generic http error statuses (404, 500)', async () => {
+test('Handles invalid json received from the api', async () => {
+  server.use(
+    rest.get(`${getApiBaseUrl()}/tabular`, (req, res, ctx) => {
+      return res(ctx.status(200), ctx.json({}))
+    })
+  )
+
+  const result = await getTabular({
+    topic: 'COVID-19',
+    metric: 'new_cases_daily',
+  })
+
+  expect(result).toEqual<ErrorResponse>({
+    success: false,
+    error: new z.ZodError([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'object',
+        path: [],
+        message: 'Expected array, received object',
+      },
+    ]),
+  })
+})
+
+test('Handles generic http error', async () => {
   server.use(
     rest.get(`${getApiBaseUrl()}/tabular`, (req, res, ctx) => {
       return res(ctx.status(404))
     })
   )
-  await expect(
-    getTabular({
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-    })
-  ).rejects.toThrow('Request failed with status code 404 Not Found')
 
-  server.use(
-    rest.get(`${getApiBaseUrl()}/tabular`, (req, res, ctx) => {
-      return res(ctx.status(500))
-    })
-  )
-  await expect(
-    getTabular({
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-    })
-  ).rejects.toThrow('Request failed with status code 500 Internal Server Error')
+  const result = await getTabular({
+    topic: 'COVID-19',
+    metric: 'new_cases_daily',
+  })
+
+  expect(logger.error).toHaveBeenCalledTimes(1)
+
+  expect(result).toEqual<ErrorResponse>({
+    success: false,
+    error: new z.ZodError([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'object',
+        path: [],
+        message: 'Expected array, received object',
+      },
+    ]),
+  })
 })
