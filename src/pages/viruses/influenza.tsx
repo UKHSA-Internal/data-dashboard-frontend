@@ -38,7 +38,7 @@ export const Influenza = () => {
                   heading="Weekly hospital admission rate by UKHSA centre for new influenza reported through SARI Watch"
                   theme="secondary"
                 >
-                  <Chart src="/img/temp-influenza2.png" />
+                  <Chart src="/img/temp-/influenza2.png" />
                 </CardColumn>
               </Card>
             </GridCol>
