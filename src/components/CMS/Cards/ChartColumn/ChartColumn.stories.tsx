@@ -11,9 +11,12 @@ const meta = {
   title: 'CMS Components/Chart',
   component: ChartColumn,
   tags: ['autodocs'],
+  parameters: {
+    layout: 'centered',
+  },
   decorators: [
     (Story) => (
-      <div style={{ maxWidth: 1024 }}>
+      <div style={{ width: 1024 }}>
         <GridRow>
           <GridCol setDesktopWidth={'one-half'}>
             <Story />

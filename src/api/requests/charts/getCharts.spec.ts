@@ -1,4 +1,4 @@
-import z, { TypeOf } from 'zod'
+import z from 'zod'
 import fs from 'fs'
 import path from 'path'
 import 'whatwg-fetch'
