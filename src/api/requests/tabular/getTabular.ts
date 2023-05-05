@@ -16,6 +16,7 @@ export const responseSchema = z.array(
 )
 
 type RequestParams = z.infer<typeof requestSchema>
+export type Response = z.infer<typeof responseSchema>
 
 export const getTabular = async (params: RequestParams) => {
   const searchParams = new URLSearchParams(params)
