@@ -16,6 +16,7 @@ const customJestConfig = {
     '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@/api/(.*)$': '<rootDir>/src/api/$1',
     '^@/config/(.*)$': '<rootDir>/src/config/$1',
+    '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
     // Needed to get react markdown & dependencies to work with react-raw, see:
     // https://stackoverflow.com/questions/70916761/next-js-and-jest-syntaxerror-cannot-use-import-statement-outside-a-module
     'react-markdown': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',

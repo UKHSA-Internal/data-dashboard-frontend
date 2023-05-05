@@ -4,6 +4,9 @@ import { rest } from 'msw'
 import { server } from '@/api/msw/server'
 import { getTrends, responseSchema } from './getTrends'
 import { getApiBaseUrl } from '../helpers'
+import { logger } from '@/lib/logger'
+
+jest.mock('@/lib/logger')
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())
@@ -107,32 +110,22 @@ test('Handles invalid json received from the api', async () => {
   })
 })
 
-test('Handles generic http error statuses (404, 500)', async () => {
+test('Handles generic http errors', async () => {
   server.use(
     rest.get(`${getApiBaseUrl()}/trends/v2`, (req, res, ctx) => {
-      return res(ctx.status(404), ctx.json({}))
+      return res(ctx.status(404))
     })
   )
 
-  await expect(
-    getTrends({
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      percentage_metric: 'new_cases_7days_change_percentage',
-    })
-  ).rejects.toThrow('Request failed with status code 404 Not Found')
+  const result = await getTrends({
+    topic: 'COVID-19',
+    metric: 'new_cases_7days_sum',
+    percentage_metric: 'new_cases_7days_change_percentage',
+  })
 
-  server.use(
-    rest.get(`${getApiBaseUrl()}/trends/v2`, (req, res, ctx) => {
-      return res(ctx.status(500), ctx.json({}))
-    })
-  )
+  expect(logger.error).toHaveBeenCalledTimes(1)
 
-  await expect(
-    getTrends({
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      percentage_metric: 'new_cases_7days_change_percentage',
-    })
-  ).rejects.toThrow('Request failed with status code 500 Internal Server Error')
+  expect(result).toMatchObject({
+    success: false,
+  })
 })
