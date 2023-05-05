@@ -11,6 +11,7 @@ import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageD
 import { Utils } from '@/components/CMS'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { StoreState, initializeStore } from '@/lib/store'
+import { logger } from '@/lib/logger'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -69,7 +70,7 @@ export const getStaticProps: GetStaticProps<{
       revalidate,
     }
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     return { notFound: true, revalidate }
   }
 }

@@ -6,6 +6,8 @@ import { extractAndFetchPageData } from './extractAndFetchPageData'
 import { pageDataMockSuccess } from './__mocks__/pageDataSuccess'
 import { pageDataMockMixed } from './__mocks__/pageDataMixed'
 
+jest.mock('@/lib/logger')
+
 beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
