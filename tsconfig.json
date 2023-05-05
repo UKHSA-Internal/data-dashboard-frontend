@@ -18,8 +18,13 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["jest", "node", "@types/testing-library__jest-dom", "cypress-axe"]
+    "types": ["jest", "node", "@types/testing-library__jest-dom", "cypress-axe"],
+    "plugins": [
+      {
+        "name": "next"
+      }
+    ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "./cypress.config.ts", "cypress"]
 }
