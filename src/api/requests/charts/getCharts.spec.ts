@@ -7,6 +7,9 @@ import { server } from '@/api/msw/server'
 import { getCharts } from './getCharts'
 import { getApiBaseUrl } from '../helpers'
 import { Metrics, Topics } from '@/api/models'
+import { logger } from '@/lib/logger'
+
+jest.mock('@/lib/logger')
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())
@@ -40,40 +43,35 @@ test.each(charts)('Returns a chart for the %s topic and %s metric', async (topic
   expect(result).toEqual({ success: true, data: fixture })
 })
 
-test('Handles generic http error statuses (404, 500)', async () => {
+test('Handles generic http errors', async () => {
   server.use(
     rest.post(`${getApiBaseUrl()}/charts/v2`, (req, res, ctx) => {
       return res(ctx.status(404))
     })
   )
 
-  await expect(
-    getCharts({
-      plots: [
-        {
-          topic: 'COVID-19',
-          metric: 'new_cases_7days_sum',
-          chart_type: 'line_with_shaded_section',
-        },
-      ],
-    })
-  ).rejects.toThrow('Request failed with status code 404 Not Found')
+  const result = await getCharts({
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
 
-  server.use(
-    rest.post(`${getApiBaseUrl()}/charts/v2`, (req, res, ctx) => {
-      return res(ctx.status(500))
-    })
-  )
+  expect(logger.error).toHaveBeenCalledTimes(1)
 
-  await expect(
-    getCharts({
-      plots: [
-        {
-          topic: 'COVID-19',
-          metric: 'new_cases_7days_sum',
-          chart_type: 'line_with_shaded_section',
-        },
-      ],
-    })
-  ).rejects.toThrow('Request failed with status code 500 Internal Server Error')
+  expect(result).toEqual({
+    success: false,
+    error: new z.ZodError([
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'object',
+        path: [],
+        message: 'Expected string, received object',
+      },
+    ]),
+  })
 })
