@@ -25,7 +25,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
     },
   },
   title: 'Influenza',
-  body: 'Influenza (commonly known) as flu is an infection of the nose, throat and lungs.',
+  body: [],
   symptoms: 'Runny nose',
   transmission: 'Airborne',
   treatment: 'Rest',
