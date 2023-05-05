@@ -76,6 +76,9 @@ jobs:
         run: npm run test:ci
       - name: Test coverage comment
         uses: ukhsa-internal/jest-coverage-comment-action@v1
+        with:
+          coverage-summary-path: ./coverage/coverage-summary.json
+          title: Unit Test Coverage
 
   ##############################################################################
   # Cypress tests

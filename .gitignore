@@ -9,6 +9,7 @@
 /coverage
 cypress/screenshots
 cypress/downloads
+junit.xml
 
 # next.js
 /.next/
