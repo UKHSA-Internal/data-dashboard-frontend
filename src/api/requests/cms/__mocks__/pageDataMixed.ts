@@ -15,24 +15,31 @@ export const pageDataMockMixed: Awaited<ReturnType<typeof extractAndFetchPageDat
   trends: {
     'e64cc7ea-4551-47f0-b964-941d59cae1bb-trends': {
       success: false,
+      error: expect.any(Object),
     },
     'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5-trends': {
       success: false,
+      error: expect.any(Object),
     },
     '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f-trends': {
       success: false,
+      error: expect.any(Object),
     },
     '8c42a86e-f675-41d0-a65a-633c20ac98e3-trends': {
       success: false,
+      error: expect.any(Object),
     },
     '41ce6c59-99fe-486a-8225-341a306cc395-trends': {
       success: false,
+      error: expect.any(Object),
     },
     '1eb03393-1b30-46a8-8c19-8b86aa056b34-trends': {
       success: false,
+      error: expect.any(Object),
     },
     '7b860dc9-26d1-4d95-924a-c23f866a7eae-trends': {
       success: false,
+      error: expect.any(Object),
     },
   },
   headlines: {

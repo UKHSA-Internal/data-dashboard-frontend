@@ -15,6 +15,7 @@ import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { FormattedContent } from '@/components/FormattedContent'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { logger } from '@/lib/logger'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -105,7 +106,7 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
 
     throw new Error('No slug found')
   } catch (error) {
-    console.log(error)
+    logger.error(error)
     return { notFound: true, revalidate }
   }
 }

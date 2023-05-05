@@ -2,6 +2,7 @@ import { z } from 'zod'
 import { api } from '@/api/api-utils'
 import { getApiBaseUrl } from '../helpers'
 import { Topics, Metrics, ChartTypes, FileFormats, Geography, GeographyType } from '@/api/models'
+import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
   file_format: z.optional(FileFormats),
@@ -24,6 +25,11 @@ export const responseSchema = z.string()
 type RequestParams = z.infer<typeof requestSchema>
 
 export const getCharts = async (json: RequestParams) => {
-  const res = await api.post(`${getApiBaseUrl()}/charts/v2`, { json }).text()
-  return responseSchema.safeParse(res)
+  try {
+    const res = await api.post(`${getApiBaseUrl()}/charts/v2`, { json }).text()
+    return responseSchema.safeParse(res)
+  } catch (error) {
+    logger.error(error)
+    return responseSchema.safeParse(error)
+  }
 }
