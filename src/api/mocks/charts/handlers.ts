@@ -26,12 +26,13 @@ export const handlers = [
       } = parsedRequestBody
 
       if (plots.length > 1) {
-        console.log('Unhandled msw handler for chart with multiple plots')
-        return res(ctx.status(500))
+        // TODO: Handle msw multiple plots
+        console.log('Warning: Unhandled msw handler for chart with multiple plots')
+        // return res(ctx.status(500))
       }
 
       // Read the image from the file system
-      const fixturePath = `./src/api/mocks/charts/fixtures/${plots[0].topic}/${plots[0].metric}.svg`
+      const fixturePath = `./src/api/mocks/charts/fixtures/${plots[0].topic}/${plots[0].metric}/${plots[0].chart_type}.svg`
 
       // Check file exists
       if (!fs.existsSync(fixturePath)) {

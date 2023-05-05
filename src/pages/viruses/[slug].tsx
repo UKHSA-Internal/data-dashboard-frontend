@@ -1,33 +1,40 @@
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemButton,
-  AccordionItemHeading,
-  AccordionItemPanel,
-} from '@/components/Accordion/Accordion'
+// import {
+//   Accordion,
+//   AccordionItem,
+//   AccordionItemButton,
+//   AccordionItemHeading,
+//   AccordionItemPanel,
+// } from '@/components/Accordion/Accordion'
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { FormattedContent } from '@/components/FormattedContent'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { logger } from '@/lib/logger'
+import { RelatedLinks as Links, Body } from '@/api/models/cms/Page'
+import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
+import { initializeStore } from '@/lib/store'
+import { Contents, ContentsItem } from '@/components/Contents'
+import { Utils } from '@/components/CMS'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ title, relatedLinks, accordion, lastUpdated }: VirusPageProps) => {
+export const VirusPage = ({ title, body, lastUpdated, relatedLinks }: VirusPageProps) => {
   if (!title) return null
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      {/* TODO: In implementation ticket */}
-      {/* {body} */}
-
+      <Contents>
+        {body.map(({ id, value }) => (
+          <ContentsItem key={id} heading={value.heading}>
+            {value.content.map(Utils.renderCard)}
+          </ContentsItem>
+        ))}
+      </Contents>
       {/* TODO: Topic detail integration */}
-
+      {/* 
       <Accordion>
         <AccordionItem>
           <AccordionItemHeading>
@@ -69,7 +76,7 @@ export const VirusPage = ({ title, relatedLinks, accordion, lastUpdated }: Virus
             <FormattedContent>{accordion.surveillance_and_reporting}</FormattedContent>
           </AccordionItemPanel>
         </AccordionItem>
-      </Accordion>
+      </Accordion> */}
 
       <RelatedLinks links={relatedLinks} />
     </Page>
@@ -78,9 +85,12 @@ export const VirusPage = ({ title, relatedLinks, accordion, lastUpdated }: Virus
 
 export default VirusPage
 
-type FormattedResponse = ReturnType<typeof formatCmsPageTopicResponse>
-
-export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => {
+export const getStaticProps: GetStaticProps<{
+  title: string
+  body: Body
+  lastUpdated: string
+  relatedLinks: Links
+}> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -92,12 +102,25 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
 
     // Check the slug exists in the url
     if (params && params.slug) {
-      const page = await getPageBySlug(String(params.slug), PageType.Topic)
+      const {
+        title,
+        body,
+        last_published_at: lastUpdated,
+        related_links: relatedLinks = [],
+      } = await getPageBySlug(String(params.slug), PageType.Topic)
+
+      const { charts } = await extractAndFetchPageData(body)
+
+      const store = initializeStore({ charts })
 
       // Parse the cms response and pick out only relevant data for the ui
       return {
         props: {
-          ...formatCmsPageTopicResponse(page),
+          title,
+          body,
+          lastUpdated,
+          relatedLinks,
+          initialZustandState: JSON.parse(JSON.stringify(store.getState())),
           ...(await serverSideTranslations(req.locale as string, ['common'])),
         },
         revalidate,

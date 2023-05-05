@@ -3,7 +3,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
 export const coronavirusPageMock: PageResponse<PageType.Topic> = {
-  id: 8,
+  id: 6,
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/8/',

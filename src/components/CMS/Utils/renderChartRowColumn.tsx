@@ -24,6 +24,7 @@ export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[num
         heading={title}
         description={body}
         chart={<Blocks.Chart id={id} />}
+        download
         cardProps={{ 'data-testid': `${title.toLowerCase()}-section` }}
       >
         <GridRow>
@@ -50,6 +51,18 @@ export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[num
           })}
         </GridRow>
       </Cards.ChartColumn>
+    )
+  }
+
+  if (type === 'chart_card') {
+    return (
+      <Cards.ChartColumn
+        key={id}
+        heading={title}
+        description={body}
+        chart={<Blocks.Chart id={id} />}
+        cardProps={{ 'data-testid': `${title.toLocaleLowerCase()}-section` }}
+      />
     )
   }
 }

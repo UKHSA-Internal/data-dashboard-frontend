@@ -22,7 +22,7 @@ test('Displays the chart card', () => {
   expect(screen.getByText('Nice chart!')).toBeInTheDocument()
 
   // Download link
-  expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/api/download')
+  expect(screen.queryByRole('link', { name: 'Download' })).not.toBeInTheDocument()
 
   // Custom content
   expect(screen.getByText('Custom content inside')).toBeInTheDocument()
@@ -39,4 +39,15 @@ test('Supports custom props (e.g. test attributes)', () => {
     <ChartColumn heading="Howdy" description="Nice chart!" chart={null} cardProps={{ 'data-testid': 'content' }} />
   )
   expect(screen.getByTestId('content')).toBeInTheDocument()
+})
+
+test('Supports showing a download link', () => {
+  render(
+    <ChartColumn heading="Howdy" description="Nice chart!" download chart={<div>mock chart image</div>}>
+      Custom content inside
+    </ChartColumn>
+  )
+
+  // Download link
+  expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/api/download')
 })

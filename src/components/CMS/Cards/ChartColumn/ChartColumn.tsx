@@ -9,16 +9,17 @@ interface ChartColumnProps {
   description: string
   children?: ReactNode
   chart: ReactNode
+  download?: boolean
   cardProps?: Record<string, unknown>
 }
 
-export const ChartColumn = ({ heading, description, children, chart, cardProps }: ChartColumnProps) => {
+export const ChartColumn = ({ heading, description, children, chart, download, cardProps }: ChartColumnProps) => {
   const { t } = useTranslation('common')
   return (
     <Card {...cardProps}>
       <CardColumn
         heading={heading}
-        sideContent={<DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}
+        sideContent={download && <DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}
         data-testid={`column-${heading.toLowerCase()}`}
       >
         <Paragraph supportingText>{description}</Paragraph>
