@@ -11,9 +11,17 @@ export const Chart = ({ src }: ChartProps) => {
       <ChartContainer>
         <Image priority unoptimized alt="" fill sizes="100vw" src={src} />
       </ChartContainer>
-      {/* TODO: Commented out the below until this is re-implemented JIRA: CDD-534 */}
+
       {/* <TabularData summary="View data in a tabular format">
-        <TopicTable caption={`Monthly ${name} cases`} data={points} />
+        <TopicTable
+          caption={`Monthly cases`}
+          data={[
+            {
+              date: 'Jan 23',
+              value: 12,
+            },
+          ]}
+        />
       </TabularData> */}
     </Container>
   )
