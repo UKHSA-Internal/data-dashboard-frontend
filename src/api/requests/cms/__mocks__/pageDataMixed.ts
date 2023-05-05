@@ -58,19 +58,19 @@ export const pageDataMockMixed: Awaited<ReturnType<typeof extractAndFetchPageDat
   charts: {
     'd9b86415-9734-46be-952a-56182f0c40be-charts': {
       success: true,
-      data: getChartFixture('COVID-19/new_cases_daily.svg'),
+      data: getChartFixture('COVID-19/new_cases_daily/line_with_shaded_section.svg'),
     },
     'c18703a1-9b01-417f-8fd8-3e4db35865e5-charts': {
       success: true,
-      data: getChartFixture('COVID-19/new_deaths_daily.svg'),
+      data: getChartFixture('COVID-19/new_deaths_daily/line_with_shaded_section.svg'),
     },
     '60984a8a-9c76-4e86-94bc-b2a2234b6d53-charts': {
       success: true,
-      data: getChartFixture('Influenza/weekly_hospital_admissions_rate.svg'),
+      data: getChartFixture('Influenza/weekly_hospital_admissions_rate/bar.svg'),
     },
     '809fc976-3332-4e6c-b902-20a5d39a7f99-charts': {
       success: true,
-      data: getChartFixture('Influenza/weekly_positivity_latest.svg'),
+      data: getChartFixture('Influenza/weekly_positivity_latest/bar.svg'),
     },
   },
 }

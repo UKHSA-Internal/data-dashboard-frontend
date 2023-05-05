@@ -25,8 +25,8 @@ export const extractAndFetchPageData = async (body: Body) => {
     for (const content of section.value.content) {
       if (content.type === 'chart_row_card') {
         for (const column of content.value.columns) {
-          if (column.type === 'chart_with_headline_and_trend_card') {
-            const { chart, headline_number_columns: headlineColumns } = column.value
+          if (column.type === 'chart_with_headline_and_trend_card' || column.type === 'chart_card') {
+            const { chart } = column.value
 
             // Pick out charts
             charts.push([
@@ -35,6 +35,10 @@ export const extractAndFetchPageData = async (body: Body) => {
                 plots: chart.map((plots) => plots.value),
               }),
             ])
+          }
+
+          if (column.type === 'chart_with_headline_and_trend_card') {
+            const { headline_number_columns: headlineColumns } = column.value
 
             for (const headline of headlineColumns) {
               // Pick out headlines
