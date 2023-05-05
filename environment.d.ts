@@ -1,5 +1,7 @@
 declare namespace NodeJS {
   interface ProcessEnv {
+    TZ: string
+
     NEXT_PUBLIC_BASE_URL: string
 
     NEXT_REVALIDATE_API_KEY: string
