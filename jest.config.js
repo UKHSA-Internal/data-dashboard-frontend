@@ -24,10 +24,10 @@ const customJestConfig = {
   },
   testEnvironment: 'jest-environment-jsdom',
   modulePathIgnorePatterns: ['cypress'],
-  coverageReporters: ['json-summary', 'text', 'lcov'],
+  reporters: ['jest-junit'],
+  coverageReporters: ['json-summary', 'text'],
   coverageThreshold: {
     global: {
-      reporter: ['json-summary', 'text', 'lcov'],
       lines: 97,
       functions: 96,
       branches: 77,
