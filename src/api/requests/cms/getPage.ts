@@ -31,7 +31,7 @@ const WithHomeData = SharedPageData.extend({
 })
 
 const WithTopicData = SharedPageData.extend({
-  body: z.string(),
+  body: Body,
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
