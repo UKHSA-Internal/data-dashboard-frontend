@@ -1,9 +1,6 @@
-import { z } from 'zod'
-import { responseSchema } from '@/api/requests/tabular/getTabular'
+import { Response } from '@/api/requests/tabular/getTabular'
 
-type MockedValues = z.infer<typeof responseSchema>
-
-export const newDeathsDailyValues: MockedValues = [
+export const newDeathsDailyValues: Response = [
   {
     date: '2022-10-31',
     value: '4630.0',
