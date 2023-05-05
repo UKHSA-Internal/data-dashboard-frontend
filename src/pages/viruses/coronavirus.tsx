@@ -7,7 +7,6 @@ import {
 } from '@/components/Accordion'
 import { Card, CardColumn } from '@/components/Card'
 import { Contents, ContentsItem } from '@/components/Contents'
-import { Chart } from '@/components/Chart'
 import { GridCol, GridRow, Paragraph } from 'govuk-react'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
@@ -15,6 +14,7 @@ import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { GetStaticProps } from 'next'
 import { HeadlineValue, Metric } from '@/components/Metrics'
+import { Chart } from '@/components/Chart'
 
 export const Coronavirus = () => {
   return (
