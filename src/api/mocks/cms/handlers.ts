@@ -2,7 +2,7 @@ import { rest } from 'msw'
 import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './data/pages'
 import {
   influenzaPageMock,
-  covidPageMock,
+  coronavirusPageMock,
   homePageMock,
   aboutPageMock,
   whatsNewPageMock,
@@ -31,7 +31,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
   [aboutPageMock.id]: aboutPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
-  [covidPageMock.id]: covidPageMock,
+  [coronavirusPageMock.id]: coronavirusPageMock,
 }
 
 export const handlers = [

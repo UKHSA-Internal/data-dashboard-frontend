@@ -21,47 +21,70 @@ export const WithHeadlineNumbersRowCard = z.object({
 })
 
 export const WithChartHeadlineAndTrendCard = z.object({
-  columns: z.array(
-    z.object({
-      type: z.literal('chart_with_headline_and_trend_card'),
-      id: z.string(),
-      value: z.object({
-        title: z.string(),
-        body: z.string(),
-        chart: z.array(
-          z.object({
-            type: z.literal('plot'),
-            id: z.string(),
-            value: z.object({
-              topic: Topics,
-              metric: Metrics,
-              chart_type: ChartTypes,
-              date_from: z.nullable(z.string().datetime()),
-              date_to: z.nullable(z.string().datetime()),
-              stratum: z.string(),
-              geography: Geography,
-              geography_type: GeographyType,
-            }),
-          })
-        ),
-        headline_number_columns: z.array(
-          z.discriminatedUnion('type', [
-            z.object({
-              id: z.string(),
-              type: z.literal('headline_number'),
-              value: HeadlineWithNumber,
-            }),
-            z.object({
-              id: z.string(),
-              type: z.literal('trend_number'),
-              value: HeadlineWithTrend,
-            }),
-          ])
-        ),
-      }),
-    })
-  ),
+  type: z.literal('chart_with_headline_and_trend_card'),
+  id: z.string(),
+  value: z.object({
+    title: z.string(),
+    body: z.string(),
+    chart: z.array(
+      z.object({
+        type: z.literal('plot'),
+        id: z.string(),
+        value: z.object({
+          topic: Topics,
+          metric: Metrics,
+          chart_type: ChartTypes,
+          date_from: z.nullable(z.string().datetime()),
+          date_to: z.nullable(z.string().datetime()),
+          stratum: z.string(),
+          geography: Geography,
+          geography_type: GeographyType,
+        }),
+      })
+    ),
+    headline_number_columns: z.array(
+      z.discriminatedUnion('type', [
+        z.object({
+          id: z.string(),
+          type: z.literal('headline_number'),
+          value: HeadlineWithNumber,
+        }),
+        z.object({
+          id: z.string(),
+          type: z.literal('trend_number'),
+          value: HeadlineWithTrend,
+        }),
+      ])
+    ),
+  }),
 })
+
+export const WithChartCard = z.object({
+  id: z.string(),
+  type: z.literal('chart_card'),
+  value: z.object({
+    title: z.string(),
+    body: z.string(),
+    chart: z.array(
+      z.object({
+        type: z.literal('plot'),
+        id: z.string(),
+        value: z.object({
+          topic: Topics,
+          metric: Metrics,
+          chart_type: ChartTypes,
+          date_from: z.nullable(z.string().datetime()),
+          date_to: z.nullable(z.string().datetime()),
+          stratum: z.string(),
+          geography: Geography,
+          geography_type: GeographyType,
+        }),
+      })
+    ),
+  }),
+})
+
+export const ChartRowColumns = z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard]))
 
 export const ContentTypes = z.discriminatedUnion('type', [
   z.object({
@@ -76,7 +99,9 @@ export const ContentTypes = z.discriminatedUnion('type', [
   }),
   z.object({
     type: z.literal('chart_row_card'),
-    value: WithChartHeadlineAndTrendCard,
+    value: z.object({
+      columns: ChartRowColumns,
+    }),
     id: z.string(),
   }),
 ])
