@@ -3,7 +3,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
 export const aboutPageMock: PageResponse<PageType.Common> = {
-  id: 7,
+  id: 9,
   meta: {
     type: 'common.CommonPage',
     detail_url: 'http://localhost/api/v2/pages/6/',
