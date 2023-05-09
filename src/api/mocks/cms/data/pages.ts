@@ -25,7 +25,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
   },
   items: [
     {
-      id: 7,
+      id: 9,
       meta: {
         type: 'common.CommonPage',
         detail_url: 'http://localhost/api/v2/pages/7/',
@@ -36,7 +36,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       title: 'About',
     },
     {
-      id: 8,
+      id: 10,
       meta: {
         type: 'common.CommonPage',
         detail_url: 'http://localhost/api/v2/pages/8/',
@@ -47,7 +47,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       title: "What's new",
     },
     {
-      id: 9,
+      id: 11,
       meta: {
         type: 'common.CommonPage',
         detail_url: 'http://localhost/api/v2/pages/9/',
@@ -58,7 +58,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       title: 'Maps',
     },
     {
-      id: 10,
+      id: 12,
       meta: {
         type: 'common.CommonPage',
         detail_url: 'http://localhost/api/v2/pages/10/',
