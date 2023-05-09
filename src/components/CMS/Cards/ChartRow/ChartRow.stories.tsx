@@ -10,13 +10,7 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  decorators: [
-    (Story) => (
-      <div style={{ width: 920 }}>
-        <Story />
-      </div>
-    ),
-  ],
+  decorators: [(Story) => <Story />],
 } satisfies Meta<typeof ChartRow>
 
 export default meta
