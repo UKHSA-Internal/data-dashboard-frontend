@@ -6,6 +6,9 @@ const nextConfig = {
   i18n,
   output: 'standalone',
   reactStrictMode: true,
+  experimental: {
+    largePageDataBytes: 128 * 100000,
+  },
   compiler: {
     styledComponents: {
       ssr: true,
