@@ -16,9 +16,9 @@ const meta = {
   },
   decorators: [
     (Story) => (
-      <div style={{ width: 1024 }}>
+      <div style={{ width: 465 }}>
         <GridRow>
-          <GridCol setDesktopWidth={'one-half'}>
+          <GridCol>
             <Story />
           </GridCol>
         </GridRow>
