@@ -24,7 +24,7 @@ const customJestConfig = {
   },
   testEnvironment: 'jest-environment-jsdom',
   modulePathIgnorePatterns: ['cypress'],
-  reporters: ['jest-junit'],
+  reporters: ['default', 'jest-junit'],
   coverageReporters: ['json-summary', 'text'],
   coverageThreshold: {
     global: {
