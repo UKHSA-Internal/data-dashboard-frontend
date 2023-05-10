@@ -10,7 +10,6 @@ const meta = {
   parameters: {
     layout: 'centered',
   },
-  decorators: [(Story) => <Story />],
 } satisfies Meta<typeof ChartRow>
 
 export default meta
