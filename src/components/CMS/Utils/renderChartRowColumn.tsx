@@ -2,7 +2,7 @@ import { z } from 'zod'
 import { ChartRowColumns } from '@/api/models/cms/Page'
 import { Cards, Blocks } from '@/components/CMS'
 import { GridCol, GridRow } from 'govuk-react'
-import { kebabCase } from 'lodash-es'
+import kebabCase from 'lodash/kebabCase'
 
 /**
  * This map utility handles rendering individual chart cards within each column for the chart row card.
