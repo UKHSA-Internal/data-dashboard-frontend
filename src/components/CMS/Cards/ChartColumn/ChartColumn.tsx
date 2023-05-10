@@ -3,7 +3,7 @@ import { Paragraph } from 'govuk-react'
 import { useTranslation } from 'next-i18next'
 import { Card, CardColumn } from '@/components/Card'
 import { DownloadLink } from '@/components/DownloadLink'
-import { kebabCase } from 'lodash-es'
+import kebabCase from 'lodash/kebabCase'
 
 interface ChartColumnProps {
   heading: string

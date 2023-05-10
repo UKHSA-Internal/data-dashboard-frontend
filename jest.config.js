@@ -21,7 +21,6 @@ const customJestConfig = {
     // https://stackoverflow.com/questions/70916761/next-js-and-jest-syntaxerror-cannot-use-import-statement-outside-a-module
     'react-markdown': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
     'parse5/lib/parser/index.js': '<rootDir>/node_modules/hast-util-raw/node_modules/parse5/lib/parser/index.js',
-    '^lodash-es$': 'lodash',
   },
   testEnvironment: 'jest-environment-jsdom',
   modulePathIgnorePatterns: ['cypress'],
