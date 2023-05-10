@@ -14,11 +14,12 @@ import { AccordionProvider, useAccordion } from './AccordionContext'
 
 interface AccordionProps {
   children: ReactNode
+  containerProps?: Record<string, string>
 }
 
-export const Accordion = ({ children }: AccordionProps) => (
+export const Accordion = ({ children, containerProps }: AccordionProps) => (
   <AccordionProvider>
-    <ReactAccordion allowMultipleExpanded allowZeroExpanded>
+    <ReactAccordion allowMultipleExpanded allowZeroExpanded {...containerProps}>
       <AccordionItems>{children}</AccordionItems>
     </ReactAccordion>
   </AccordionProvider>

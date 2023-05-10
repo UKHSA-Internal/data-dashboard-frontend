@@ -38,7 +38,7 @@ export const VirusPage = ({ title, body, accordion, lastUpdated, relatedLinks }:
         ))}
       </Contents>
 
-      <Accordion>
+      <Accordion containerProps={{ 'data-testid': 'virus-accordion' }}>
         {accordion.map(({ id, body }) => (
           <AccordionItem key={id}>
             <AccordionItemHeading>

@@ -3,6 +3,7 @@ import { Paragraph } from 'govuk-react'
 import { useTranslation } from 'next-i18next'
 import { Card, CardColumn } from '@/components/Card'
 import { DownloadLink } from '@/components/DownloadLink'
+import { kebabCase } from 'lodash-es'
 
 interface ChartColumnProps {
   heading: string
@@ -20,7 +21,7 @@ export const ChartColumn = ({ heading, description, children, chart, download, c
       <CardColumn
         heading={heading}
         sideContent={download && <DownloadLink href="/api/download">{t('downloadBtn')}</DownloadLink>}
-        data-testid={`column-${heading.toLowerCase()}`}
+        data-testid={`column-${kebabCase(heading)}`}
       >
         <Paragraph supportingText>{description}</Paragraph>
         {children}
