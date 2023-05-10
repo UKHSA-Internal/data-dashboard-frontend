@@ -14,7 +14,7 @@
     "test:e2e": "cypress open --e2e",
     "test:e2e:ci": "cypress run --e2e",
     "prepare": "husky install",
-    "storybook": "storybook dev -p 6006",
+    "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"
   },
   "dependencies": {
@@ -26,6 +26,7 @@
     "i18next": "^22.4.14",
     "ky": "^0.33.3",
     "ky-universal": "^0.11.0",
+    "lodash": "^4.17.21",
     "next": "^13.2.4",
     "next-i18next": "^13.2.2",
     "next-seo": "^6.0.0",
