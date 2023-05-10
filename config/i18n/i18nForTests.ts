@@ -4,6 +4,7 @@ import { initReactI18next } from 'react-i18next'
 
 import formatters from './formatters'
 import common from '../../public/locales/en/common.json'
+import topic from '../../public/locales/en/topic.json'
 import errors from '../../public/locales/en/errors.json'
 
 i18n.use(initReactI18next).init({
@@ -11,6 +12,7 @@ i18n.use(initReactI18next).init({
   resources: {
     en: {
       common,
+      topic,
       errors,
     },
   },

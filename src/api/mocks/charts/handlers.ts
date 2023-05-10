@@ -2,8 +2,8 @@ import { rest } from 'msw'
 import { getApiBaseUrl } from '@/api/requests/helpers'
 import { requestSchema } from '@/api/requests/charts/getCharts'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
-import fs from 'fs'
-import path from 'path'
+import * as path from 'path'
+import * as fs from 'fs'
 
 export const handlers = [
   rest.post(
@@ -26,21 +26,23 @@ export const handlers = [
       } = parsedRequestBody
 
       if (plots.length > 1) {
-        console.log('Unhandled msw handler for chart with multiple plots')
-        return res(ctx.status(500))
+        // TODO: Handle msw multiple plots
+        console.log('Warning: Unhandled msw handler for chart with multiple plots')
+        // return res(ctx.status(500))
       }
 
-      // Read the image from the file system
-      const fixturePath = `./src/api/mocks/charts/fixtures/${plots[0].topic}/${plots[0].metric}.svg`
+      const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
 
-      // Check file exists
-      if (!fs.existsSync(fixturePath)) {
-        console.log('charts msw handler fixture not found for path: ', fixturePath)
+      const filePath = path.join(fixturesDirectory, `${plots[0].topic}/${plots[0].metric}/${plots[0].chart_type}.svg`)
+
+      // Read file
+      if (!fs.existsSync(filePath)) {
+        console.log('charts msw handler fixture not found for path: ', filePath)
         return res(ctx.status(500))
       }
 
       // Load file
-      const imageBuffer = fs.readFileSync(path.resolve(fixturePath))
+      const imageBuffer = fs.readFileSync(filePath)
 
       // Return response
       return res(

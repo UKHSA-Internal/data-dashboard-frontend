@@ -8,67 +8,47 @@ import {
 import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
-import { formatCmsPageTopicResponse } from '@/api/requests/cms/formatters/formatPageResponse'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { FormattedContent } from '@/components/FormattedContent'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { logger } from '@/lib/logger'
+import { RelatedLinks as Links, Body } from '@/api/models/cms/Page'
+import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
+import { initializeStore } from '@/lib/store'
+import { Contents, ContentsItem } from '@/components/Contents'
+import { Utils } from '@/components/CMS'
+import { FormattedContent } from '@/components/FormattedContent'
+import { useTranslation } from 'next-i18next'
 
 type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ title, relatedLinks, accordion, lastUpdated }: VirusPageProps) => {
+export const VirusPage = ({ title, body, accordion, lastUpdated, relatedLinks }: VirusPageProps) => {
+  const { t } = useTranslation('topic')
+
   if (!title) return null
 
   return (
     <Page heading={title} lastUpdated={lastUpdated}>
-      {/* TODO: In implementation ticket */}
-      {/* {body} */}
+      <Contents>
+        {body.map(({ id, value }) => (
+          <ContentsItem key={id} heading={value.heading}>
+            {value.content.map(Utils.renderCard)}
+          </ContentsItem>
+        ))}
+      </Contents>
 
-      {/* TODO: Topic detail integration */}
-
-      <Accordion>
-        <AccordionItem>
-          <AccordionItemHeading>
-            <AccordionItemButton>Symptoms</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <FormattedContent>{accordion.symptoms}</FormattedContent>
-          </AccordionItemPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <AccordionItemHeading>
-            <AccordionItemButton>Transmission</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <FormattedContent>{accordion.transmission}</FormattedContent>
-          </AccordionItemPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <AccordionItemHeading>
-            <AccordionItemButton>Treatment</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <FormattedContent>{accordion.treatment}</FormattedContent>
-          </AccordionItemPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <AccordionItemHeading>
-            <AccordionItemButton>Prevention</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <FormattedContent>{accordion.prevention}</FormattedContent>
-          </AccordionItemPanel>
-        </AccordionItem>
-        <AccordionItem>
-          <AccordionItemHeading>
-            <AccordionItemButton>Surveillance and reporting</AccordionItemButton>
-          </AccordionItemHeading>
-          <AccordionItemPanel>
-            <FormattedContent>{accordion.surveillance_and_reporting}</FormattedContent>
-          </AccordionItemPanel>
-        </AccordionItem>
+      <Accordion containerProps={{ 'data-testid': 'virus-accordion' }}>
+        {accordion.map(({ id, body }) => (
+          <AccordionItem key={id}>
+            <AccordionItemHeading>
+              <AccordionItemButton>{t('accordion.heading', { context: id })}</AccordionItemButton>
+            </AccordionItemHeading>
+            <AccordionItemPanel>
+              <FormattedContent>{body}</FormattedContent>
+            </AccordionItemPanel>
+          </AccordionItem>
+        ))}
       </Accordion>
 
       <RelatedLinks links={relatedLinks} />
@@ -78,9 +58,13 @@ export const VirusPage = ({ title, relatedLinks, accordion, lastUpdated }: Virus
 
 export default VirusPage
 
-type FormattedResponse = ReturnType<typeof formatCmsPageTopicResponse>
-
-export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => {
+export const getStaticProps: GetStaticProps<{
+  title: string
+  body: Body
+  accordion: Array<{ id: string; body: string }>
+  lastUpdated: string
+  relatedLinks: Links
+}> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -92,13 +76,51 @@ export const getStaticProps: GetStaticProps<FormattedResponse> = async (req) => 
 
     // Check the slug exists in the url
     if (params && params.slug) {
-      const page = await getPageBySlug(String(params.slug), PageType.Topic)
+      const {
+        title,
+        body,
+        last_published_at: lastUpdated,
+        related_links: relatedLinks = [],
+        ...rest
+      } = await getPageBySlug(String(params.slug), PageType.Topic)
+
+      const { charts } = await extractAndFetchPageData(body)
+
+      const store = initializeStore({ charts })
+
+      const accordion = [
+        {
+          id: 'symptoms',
+          body: rest.symptoms,
+        },
+        {
+          id: 'transmission',
+          body: rest.transmission,
+        },
+        {
+          id: 'treatment',
+          body: rest.treatment,
+        },
+        {
+          id: 'prevention',
+          body: rest.prevention,
+        },
+        {
+          id: 'surveillance_and_reporting',
+          body: rest.surveillance_and_reporting,
+        },
+      ]
 
       // Parse the cms response and pick out only relevant data for the ui
       return {
         props: {
-          ...formatCmsPageTopicResponse(page),
-          ...(await serverSideTranslations(req.locale as string, ['common'])),
+          title,
+          body,
+          accordion,
+          lastUpdated,
+          relatedLinks,
+          initialZustandState: JSON.parse(JSON.stringify(store.getState())),
+          ...(await serverSideTranslations(req.locale as string, ['common', 'topic'])),
         },
         revalidate,
       }
@@ -122,7 +144,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   // Get the paths we want to pre-render based on the list of topic pages
   // NOTE: Temporarily filter out covid/influenza pages whilst these are hardcoded locally into the project
   const paths = items
-    .filter((item) => item.meta.slug === 'Coronavirus' || item.meta.slug === 'Influenza')
+    .filter((item) => item.meta.slug === 'Influenza')
     .map(({ meta: { slug } }) => ({
       params: { slug },
     }))

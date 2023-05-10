@@ -10,7 +10,7 @@ import userEvent from '@testing-library/user-event'
 
 const getComponent = () => (
   <div className="js-enabled">
-    <Accordion>
+    <Accordion containerProps={{ 'data-testid': 'test-accordion' }}>
       <AccordionItem>
         <AccordionItemHeading>
           <AccordionItemButton>Here is a title</AccordionItemButton>
@@ -30,12 +30,8 @@ const getComponent = () => (
 test('Displays the accordion headings and hides all content by default', () => {
   render(getComponent())
 
-  expect(
-    screen.getByRole('button', { name: /Here is a title/ })
-  ).toBeInTheDocument()
-  expect(
-    screen.getByRole('button', { name: /Second title/ })
-  ).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /Here is a title/ })).toBeInTheDocument()
+  expect(screen.getByRole('button', { name: /Second title/ })).toBeInTheDocument()
 
   expect(screen.getAllByText('Show')).toHaveLength(2)
 
@@ -80,4 +76,9 @@ test('Toggles all panels expanded when clicking the Show all sections button', a
 
   expect(screen.getByText('And here is the content')).not.toBeVisible()
   expect(screen.getByText('More content')).not.toBeVisible()
+})
+
+test('Supports custom props (e.g. test attributes)', () => {
+  render(getComponent())
+  expect(screen.getByTestId('test-accordion')).toBeInTheDocument()
 })
