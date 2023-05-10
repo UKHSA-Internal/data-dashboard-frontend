@@ -412,5 +412,5 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
   prevention: '<p data-block-key="6m4r2">Prevention text here</p>',
   surveillance_and_reporting: '<p data-block-key="zn81b">Surveillance and reporting text here</p>',
   related_links: relatedLinksMock,
-  last_published_at: '2023-03-21T15:37:54.452098Z',
+  last_published_at: '2023-03-21T10:25:34.452098Z',
 }

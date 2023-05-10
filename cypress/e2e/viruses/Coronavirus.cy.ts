@@ -32,7 +32,7 @@ describe('Coronavirus topic page', () => {
     cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
 
     // Last updated
-    cy.findByText('Last updated on Thursday, 4 May 2023 at 03:37pm')
+    cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
 
     // Contents
     cy.findByRole('navigation', {
