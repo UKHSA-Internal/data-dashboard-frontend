@@ -1,21 +1,24 @@
+import { useTranslation } from 'next-i18next'
 import { Table } from './ChartTable.styles'
 
 interface TopicTableProps {
   caption: string
-  data: Array<{ date: string; value: number }>
+  rows: Array<{ date: string; value: number }>
 }
 
-const TopicTable = ({ caption, data }: TopicTableProps) => {
+const TopicTable = ({ caption, rows }: TopicTableProps) => {
+  const { t } = useTranslation('topic')
+
   return (
     <Table caption={caption}>
       <Table.Row>
-        <Table.CellHeader>Month</Table.CellHeader>
-        <Table.CellHeader>Amount</Table.CellHeader>
+        <Table.CellHeader>{t('tabular.dateHeading')}</Table.CellHeader>
+        <Table.CellHeader>{t('tabular.valueHeading')}</Table.CellHeader>
       </Table.Row>
-      {data.map((point, key) => (
-        <Table.Row key={key}>
-          <Table.CellHeader>{point.date}</Table.CellHeader>
-          <Table.Cell>{point.value}</Table.Cell>
+      {rows.map(({ date, value }) => (
+        <Table.Row key={date}>
+          <Table.CellHeader>{t('tabular.date', { value: date })}</Table.CellHeader>
+          <Table.Cell>{value}</Table.Cell>
         </Table.Row>
       ))}
     </Table>

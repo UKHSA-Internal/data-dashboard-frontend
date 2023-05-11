@@ -2,7 +2,12 @@ import styled from 'styled-components'
 import { SPACING, BREAKPOINTS } from '@govuk-react/constants'
 import { Details } from 'govuk-react'
 
-export const Container = styled.div``
+export const Container = styled.div`
+  + details {
+    margin-top: ${SPACING.SCALE_5};
+    margin-bottom: 0;
+  }
+`
 
 export const ChartContainer = styled.div`
   min-width: ${BREAKPOINTS.MOBILE};

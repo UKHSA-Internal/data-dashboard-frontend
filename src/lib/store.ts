@@ -8,12 +8,14 @@ export interface StoreState {
   trends: PageData['trends']
   headlines: PageData['headlines']
   charts: PageData['charts']
+  tabular: PageData['tabular']
 }
 
 const getDefaultInitialState = () => ({
   trends: {},
   headlines: {},
   charts: {},
+  tabular: {},
 })
 
 export type StoreType = ReturnType<typeof initializeStore>

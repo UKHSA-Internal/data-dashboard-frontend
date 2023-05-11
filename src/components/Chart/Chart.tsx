@@ -11,18 +11,6 @@ export const Chart = ({ src }: ChartProps) => {
       <ChartContainer>
         <Image priority unoptimized alt="" fill sizes="100vw" src={src} />
       </ChartContainer>
-
-      {/* <TabularData summary="View data in a tabular format">
-        <TopicTable
-          caption={`Monthly cases`}
-          data={[
-            {
-              date: 'Jan 23',
-              value: 12,
-            },
-          ]}
-        />
-      </TabularData> */}
     </Container>
   )
 }

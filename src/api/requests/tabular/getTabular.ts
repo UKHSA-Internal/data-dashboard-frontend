@@ -12,7 +12,7 @@ export const requestSchema = z.object({
 export const responseSchema = z.array(
   z.object({
     date: z.string(),
-    value: z.string(),
+    value: z.coerce.number(),
   })
 )
 
