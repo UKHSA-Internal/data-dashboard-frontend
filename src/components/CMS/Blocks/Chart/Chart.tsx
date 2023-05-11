@@ -14,19 +14,16 @@ export const Chart = ({ id }: ChartProps) => {
   const chart = useChart(id)
   const tabular = useTabular(id)
 
-  if (chart) {
-    return (
-      <>
-        <ChartComponent src={`data:image/svg+xml;utf8,${encodeURIComponent(chart)}`} />
-        {tabular && (
-          <Details summary={t('viewTabularFormat')}>
-            <TopicTable caption="" rows={tabular} />
-          </Details>
-        )}
-      </>
-    )
-  }
+  return (
+    <>
+      {chart && <ChartComponent src={`data:image/svg+xml;utf8,${encodeURIComponent(chart)}`} />}
+      {tabular && (
+        <Details summary={t('viewTabularFormat')} aria-label={t('viewTabularFormat')}>
+          <TopicTable caption="" rows={tabular} />
+        </Details>
+      )}
+    </>
+  )
 
-  // TODO - Handle error state
   return null
 }
