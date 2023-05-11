@@ -7,7 +7,7 @@ describe('Home page', () => {
     cy.injectAxe()
   })
 
-  it('Has no detectable a11y violations', () => {
+  it('has no detectable a11y violations', () => {
     cy.checkA11y('html', {
       rules: {
         'document-title': { enabled: false },
@@ -82,9 +82,9 @@ describe('Home page', () => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Positive tests reported in England')
       cy.findByText('Last 7 days: 24,298')
-      // cy.findByText('View data in a tabular format')
       cy.findByText(': -592 (-3%), downward positive trend')
       cy.findByAltText('')
+      cy.findByText('View data in a tabular format')
     })
 
     // Deaths column
@@ -94,9 +94,9 @@ describe('Home page', () => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Deaths with COVID-19 on the death certificate in England')
       cy.findByText('Last 7 days: 379')
-      // cy.findByText('View data in a tabular format')
       cy.findByText(': 21 (-5%), downward positive trend')
       cy.findByAltText('')
+      cy.findByText('View data in a tabular format')
     })
   })
 
@@ -145,9 +145,9 @@ describe('Home page', () => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly hospital admission rates for Influenza')
       cy.findByText('Last 7 days: 981,596')
-      // cy.findByText('View data in a tabular format')
       cy.findByText(': 5,911 (0.3%), downward positive trend')
       cy.findByAltText('')
+      cy.findByText('View data in a tabular format')
     })
 
     // Testing column
@@ -159,7 +159,52 @@ describe('Home page', () => {
       cy.findByRole('link', { name: 'Download' })
       cy.findByText('Weekly positivity')
       cy.findByAltText('')
-      // cy.findByText('View data in a tabular format')
+      cy.findByText('View data in a tabular format')
+    })
+  })
+
+  it('displays a tabular version for each chart', () => {
+    const headers = ['Month', 'Amount']
+    const months = ['October', 'November', 'December', 'January', 'February', 'March']
+
+    cy.findByTestId('cases-section').within(() => {
+      const values = ['12630', '9360', '10886', '7268', '11408', '5234']
+      cy.findByText('View data in a tabular format').click()
+      cy.findByRole('table').within(() => {
+        cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
+        cy.wrap(months).each((_, index) => cy.findByText(months[index]))
+        cy.wrap(values).each((_, index) => cy.findByText(values[index]))
+      })
+    })
+
+    cy.findByTestId('deaths-section').within(() => {
+      const values = ['4630', '3608', '3886', '3268', '4087', '2364']
+      cy.findByText('View data in a tabular format').click()
+      cy.findByRole('table').within(() => {
+        cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
+        cy.wrap(months).each((_, index) => cy.findByText(months[index]))
+        cy.wrap(values).each((_, index) => cy.findByText(values[index]))
+      })
+    })
+
+    cy.findByTestId('healthcare-section').within(() => {
+      const values = ['560', '368', '426', '228', '307', '534']
+      cy.findByText('View data in a tabular format').click()
+      cy.findByRole('table').within(() => {
+        cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
+        cy.wrap(months).each((_, index) => cy.findByText(months[index]))
+        cy.wrap(values).each((_, index) => cy.findByText(values[index]))
+      })
+    })
+
+    cy.findByTestId('testing-section').within(() => {
+      const values = ['28630', '19608', '23886', '12268', '24087', '32364']
+      cy.findByText('View data in a tabular format').click()
+      cy.findByRole('table').within(() => {
+        cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
+        cy.wrap(months).each((_, index) => cy.findByText(months[index]))
+        cy.wrap(values).each((_, index) => cy.findByText(values[index]))
+      })
     })
   })
 
