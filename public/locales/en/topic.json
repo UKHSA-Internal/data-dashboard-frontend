@@ -1,8 +1,9 @@
 {
   "tabular": {
+    "toggle": "View data in a tabular format",
     "date": "{{value, month}}",
     "dateHeading": "Month",
-    "valueHeading": "Value"
+    "valueHeading": "Amount"
   },
   "accordion": {
     "heading_symptoms": "Symptoms",
