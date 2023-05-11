@@ -84,9 +84,9 @@ export const getStaticProps: GetStaticProps<{
         ...rest
       } = await getPageBySlug(String(params.slug), PageType.Topic)
 
-      const { charts } = await extractAndFetchPageData(body)
+      const { charts, tabular } = await extractAndFetchPageData(body)
 
-      const store = initializeStore({ charts })
+      const store = initializeStore({ charts, tabular })
 
       const accordion = [
         {

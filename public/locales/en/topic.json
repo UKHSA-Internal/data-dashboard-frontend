@@ -1,4 +1,9 @@
 {
+  "tabular": {
+    "date": "{{value, month}}",
+    "dateHeading": "Month",
+    "valueHeading": "Value"
+  },
   "accordion": {
     "heading_symptoms": "Symptoms",
     "heading_transmission": "Transmission",

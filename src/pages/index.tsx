@@ -54,9 +54,9 @@ export const getStaticProps: GetStaticProps<{
       related_links: relatedLinks = [],
     } = await getPageBySlug('respiratory-viruses', PageType.Home)
 
-    const { charts, headlines, trends } = await extractAndFetchPageData(body)
+    const { charts, headlines, trends, tabular } = await extractAndFetchPageData(body)
 
-    const store = initializeStore({ trends, headlines, charts })
+    const store = initializeStore({ trends, headlines, charts, tabular })
 
     return {
       props: {
@@ -65,7 +65,7 @@ export const getStaticProps: GetStaticProps<{
         lastUpdated,
         relatedLinks,
         initialZustandState: JSON.parse(JSON.stringify(store.getState())),
-        ...(await serverSideTranslations(req.locale as string, ['common'])),
+        ...(await serverSideTranslations(req.locale as string, ['common', 'topic'])),
       },
       revalidate,
     }

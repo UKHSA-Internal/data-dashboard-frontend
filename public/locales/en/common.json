@@ -20,5 +20,6 @@
     "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
     "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
     "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
-  }
+  },
+  "viewTabularFormat": "View data in a tabular format"
 }
