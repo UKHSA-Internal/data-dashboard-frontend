@@ -3,21 +3,33 @@ import { Chart } from './Chart'
 import StoreProvider from '@/lib/StoreProvider'
 import { StoreState } from '@/lib/store'
 
-test('Displays a chart from the store that was successfully fetched', () => {
+test('Displays a chart & related tabular data from the store that was successfully fetched', () => {
   const charts: StoreState['charts'] = {
     'mocked-charts': {
       success: true,
       data: 'mocked-svg-data',
     },
   }
+  const tabular: StoreState['tabular'] = {
+    'mocked-tabular': {
+      success: true,
+      data: [
+        {
+          date: '123',
+          value: 456,
+        },
+      ],
+    },
+  }
 
   render(
-    <StoreProvider {...{ charts }}>
+    <StoreProvider {...{ charts, tabular }}>
       <Chart id="mocked" />
     </StoreProvider>
   )
 
   expect(screen.getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mocked-svg-data')
+  expect(screen.getByRole('group', { name: 'View data in a tabular format' })).toBeInTheDocument()
 })
 
 test('Handles a chart from the store that failed to fetch', () => {
@@ -26,11 +38,45 @@ test('Handles a chart from the store that failed to fetch', () => {
       success: false,
     },
   }
+  const tabular: StoreState['tabular'] = {
+    'mocked-tabular': {
+      success: true,
+      data: [
+        {
+          date: '123',
+          value: 456,
+        },
+      ],
+    },
+  }
   render(
-    <StoreProvider {...{ charts }}>
+    <StoreProvider {...{ charts, tabular }}>
       <Chart id="mocked" />
     </StoreProvider>
   )
 
   expect(screen.queryByAltText('')).not.toBeInTheDocument()
+  expect(screen.getByRole('group', { name: 'View data in a tabular format' })).toBeInTheDocument()
+})
+
+test('Displays a chart despite the tabular data not being available', () => {
+  const charts: StoreState['charts'] = {
+    'mocked-charts': {
+      success: true,
+      data: 'mocked-svg-data',
+    },
+  }
+  const tabular: StoreState['tabular'] = {
+    'mocked-tabular': {
+      success: false,
+    },
+  }
+  render(
+    <StoreProvider {...{ charts, tabular }}>
+      <Chart id="mocked" />
+    </StoreProvider>
+  )
+
+  expect(screen.getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mocked-svg-data')
+  expect(screen.queryByRole('group', { name: 'View data in a tabular format' })).not.toBeInTheDocument()
 })
