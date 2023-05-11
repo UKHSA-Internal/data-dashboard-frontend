@@ -7,7 +7,7 @@ describe('Home page', () => {
     cy.injectAxe()
   })
 
-  it('Has no detectable a11y violations', () => {
+  it('has no detectable a11y violations', () => {
     cy.checkA11y('html', {
       rules: {
         'document-title': { enabled: false },
