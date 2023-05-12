@@ -19,10 +19,9 @@ export const responseSchema = z.array(
 type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
-export const getTabular = async (params: RequestParams) => {
+export const getTabular = async ({ topic, metric }: RequestParams) => {
   try {
-    const searchParams = new URLSearchParams(params)
-    const res = await api.get(`${getApiBaseUrl()}/tabular`, { searchParams }).json()
+    const res = await api.get(`${getApiBaseUrl()}/tabular/${topic}/${metric}`).json()
     return responseSchema.safeParse(res)
   } catch (error) {
     logger.error(error)
