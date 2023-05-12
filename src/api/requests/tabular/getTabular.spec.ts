@@ -7,7 +7,7 @@ import {
   newCasesDailyValues,
   newDeathsDailyValues,
 } from '@/api/mocks/tabular/fixtures'
-import { Metrics, Topics } from '@/api/models'
+import type { Metrics, Topics } from '@/api/models'
 import { rest } from 'msw'
 import { getApiBaseUrl } from '../helpers'
 import { logger } from '@/lib/logger'
@@ -18,14 +18,11 @@ beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
-type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
-type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
+type Response = z.infer<typeof responseSchema>
+type SuccessResponse = z.SafeParseSuccess<Response>
+type ErrorResponse = z.SafeParseError<Response>
 
-type Topic = z.infer<typeof Topics>
-type Metric = z.infer<typeof Metrics>
-type Mock = z.infer<typeof responseSchema>
-
-const tabularMocks: Array<[Topic, Metric, Mock]> = [
+const tabularMocks: Array<[Topics, Metrics, Response]> = [
   ['COVID-19', 'new_cases_daily', newCasesDailyValues],
   ['COVID-19', 'new_deaths_daily', newDeathsDailyValues],
   ['Influenza', 'weekly_hospital_admissions_rate', weeklyHospitalAdmissionsRateValues],

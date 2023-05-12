@@ -1,11 +1,7 @@
 import { z } from 'zod'
 import { HeadlineWithTrend, HeadlineWithNumber } from './BodyValues'
-import { Topics } from '../../Topics'
-import { Metrics } from '../../Metrics'
-import { ChartTypes } from '../../ChartTypes'
-import { Geography } from '../../Geography'
-import { GeographyType } from '../../GeographyType'
 import { DualHeadline, HeadlineAndTrend, SingleHeadline } from './Columns'
+import { Chart } from './Chart'
 
 /**
  * Body Discriminated Union Types
@@ -26,22 +22,7 @@ export const WithChartHeadlineAndTrendCard = z.object({
   value: z.object({
     title: z.string(),
     body: z.string(),
-    chart: z.array(
-      z.object({
-        type: z.literal('plot'),
-        id: z.string(),
-        value: z.object({
-          topic: Topics,
-          metric: Metrics,
-          chart_type: ChartTypes,
-          date_from: z.nullable(z.string().datetime()),
-          date_to: z.nullable(z.string().datetime()),
-          stratum: z.string(),
-          geography: Geography,
-          geography_type: GeographyType,
-        }),
-      })
-    ),
+    chart: Chart,
     headline_number_columns: z.array(
       z.discriminatedUnion('type', [
         z.object({
@@ -65,22 +46,7 @@ export const WithChartCard = z.object({
   value: z.object({
     title: z.string(),
     body: z.string(),
-    chart: z.array(
-      z.object({
-        type: z.literal('plot'),
-        id: z.string(),
-        value: z.object({
-          topic: Topics,
-          metric: Metrics,
-          chart_type: ChartTypes,
-          date_from: z.nullable(z.string().datetime()),
-          date_to: z.nullable(z.string().datetime()),
-          stratum: z.string(),
-          geography: Geography,
-          geography_type: GeographyType,
-        }),
-      })
-    ),
+    chart: Chart,
   }),
 })
 

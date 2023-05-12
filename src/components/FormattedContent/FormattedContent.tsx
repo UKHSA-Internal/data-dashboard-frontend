@@ -19,7 +19,11 @@ const coreComponents: Components = {
   h1: ({ children }) => <H1>{children}</H1>,
   h2: ({ children }) => <H2>{children}</H2>,
   h3: ({ children }) => <H3>{children}</H3>,
-  a: ({ children, href }) => <Link href={href}>{children}</Link>,
+  a: ({ children, href }) => (
+    <Link href={href} target="_blank">
+      {children}
+    </Link>
+  ),
   ul: ({ children }) => <UnorderedList>{children}</UnorderedList>,
   li: ({ children }) => <ListItem>{children}</ListItem>,
 }

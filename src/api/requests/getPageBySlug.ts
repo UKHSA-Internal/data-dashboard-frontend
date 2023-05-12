@@ -18,20 +18,27 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
   })
 
   // Find the CMS page within the list that matches the provided slug
-  const matchedPage = pages.items.find(({ meta }) => meta.slug === slug)
+  if (pages.success) {
+    const { items } = pages.data
 
-  if (matchedPage) {
-    // Once we have a match, use the id to fetch the single page
-    const page = await getPage<T>(matchedPage.id).catch((err) => {
-      throw new Error(err)
-    })
+    const matchedPage = items.find(({ meta }) => meta.slug === slug)
 
-    if (page.success) {
-      return page.data as PageResponse<T>
+    if (matchedPage) {
+      // Once we have a match, use the id to fetch the single page
+      const page = await getPage<T>(matchedPage.id).catch((err) => {
+        throw new Error(err)
+      })
+
+      if (page.success) {
+        return page.data as PageResponse<T>
+      }
+      logger.error(page.error)
+      throw new Error(`CMS page with slug ${slug} and id ${matchedPage.id} does not match expected response schema`)
     }
 
-    throw new Error(`CMS page with slug ${slug} and id ${matchedPage.id} does not match expected response schema`)
+    throw new Error('No page found')
   }
 
-  throw new Error('No page found')
+  logger.error(pages.error)
+  throw new Error(`CMS Pages with type ${type} did not match expected response schema`)
 }
