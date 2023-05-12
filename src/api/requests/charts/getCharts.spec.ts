@@ -6,7 +6,7 @@ import { rest } from 'msw'
 import { server } from '@/api/msw/server'
 import { getCharts } from './getCharts'
 import { getApiBaseUrl } from '../helpers'
-import { ChartTypes, Metrics, Topics } from '@/api/models'
+import type { ChartTypes, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
 
 jest.mock('@/lib/logger')
@@ -15,11 +15,7 @@ beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
-type Topic = z.infer<typeof Topics>
-type Metric = z.infer<typeof Metrics>
-type ChartType = z.infer<typeof ChartTypes>
-
-const charts: Array<[Topic, Metric, ChartType]> = [
+const charts: Array<[Topics, Metrics, ChartTypes]> = [
   ['COVID-19', 'new_cases_daily', 'line_with_shaded_section'],
   ['COVID-19', 'new_deaths_daily', 'line_with_shaded_section'],
   ['Influenza', 'weekly_hospital_admissions_rate', 'bar'],

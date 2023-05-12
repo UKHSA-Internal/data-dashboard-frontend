@@ -25,6 +25,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
     },
   },
   title: 'Influenza',
+  page_description:
+    '<p data-block-key="sud2w">Data and insights from the UKHSA on Influenza. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
   body: [],
   symptoms: 'Runny nose',
   transmission: 'Airborne',

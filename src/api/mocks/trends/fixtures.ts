@@ -118,8 +118,8 @@ export const fixtures = Object.fromEntries(
         createFixture(responseSchema, {
           customizations: [
             {
-              condition: () => mockedValues[topic].has(metric),
-              generator: () => mockedValues[topic].get(metric),
+              condition: () => mockedValues[topic].has(String(metric)),
+              generator: () => mockedValues[topic].get(String(metric)),
             },
           ],
         }),
