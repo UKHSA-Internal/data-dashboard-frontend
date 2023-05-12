@@ -1,6 +1,7 @@
 import { Body } from '@/api/models/cms/Page'
 import { getTrends } from '@/api/requests/trends/getTrends'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
+import { getTabular } from '@/api/requests/tabular/getTabular'
 import { getCharts } from '../charts/getCharts'
 import { isFulfilled } from '@/api/api-utils'
 
@@ -13,12 +14,14 @@ import { isFulfilled } from '@/api/api-utils'
 type Trends = Array<[string, ReturnType<typeof getTrends>]>
 type Headlines = Array<[string, ReturnType<typeof getHeadlines>]>
 type Charts = Array<[string, ReturnType<typeof getCharts>]>
+type Tabular = Array<[string, ReturnType<typeof getTabular>]>
 
 export const extractAndFetchPageData = async (body: Body) => {
   // Store requests as a tuple containing an id and request object
   const trends: Trends = []
   const headlines: Headlines = []
   const charts: Charts = []
+  const tabular: Tabular = []
 
   // Extract all request data from the CMS content types for each topic
   for (const section of body) {
@@ -28,11 +31,20 @@ export const extractAndFetchPageData = async (body: Body) => {
           if (column.type === 'chart_with_headline_and_trend_card' || column.type === 'chart_card') {
             const { chart } = column.value
 
-            // Pick out charts
+            // Pick out chart data for the chart and tabular data requests
             charts.push([
               `${column.id}-charts`,
               getCharts({
                 plots: chart.map((plots) => plots.value),
+              }),
+            ])
+
+            // Currently, the BE only supports showing single chart plots in tabular form
+            tabular.push([
+              `${column.id}-tabular`,
+              getTabular({
+                metric: chart[0].value.metric,
+                topic: chart[0].value.topic,
               }),
             ])
           }
@@ -84,6 +96,7 @@ export const extractAndFetchPageData = async (body: Body) => {
     trends: await resolveRequests(trends),
     headlines: await resolveRequests(headlines),
     charts: await resolveRequests(charts),
+    tabular: await resolveRequests(tabular),
   }
 
   return pageData

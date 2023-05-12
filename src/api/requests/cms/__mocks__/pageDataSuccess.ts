@@ -1,6 +1,12 @@
 import fs from 'fs'
 import path from 'path'
 import { extractAndFetchPageData } from '../extractAndFetchPageData'
+import {
+  newCasesDailyValues,
+  newDeathsDailyValues,
+  weeklyHospitalAdmissionsRateValues,
+  weeklyPositivityLatestValues,
+} from '@/api/mocks/tabular/fixtures'
 
 const getChartFixture = (file: string) =>
   fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${file}`), {
@@ -121,6 +127,24 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
     '809fc976-3332-4e6c-b902-20a5d39a7f99-charts': {
       success: true,
       data: getChartFixture('Influenza/weekly_positivity_latest/bar.svg'),
+    },
+  },
+  tabular: {
+    'd9b86415-9734-46be-952a-56182f0c40be-tabular': {
+      success: true,
+      data: newCasesDailyValues,
+    },
+    'c18703a1-9b01-417f-8fd8-3e4db35865e5-tabular': {
+      success: true,
+      data: newDeathsDailyValues,
+    },
+    '60984a8a-9c76-4e86-94bc-b2a2234b6d53-tabular': {
+      success: true,
+      data: weeklyHospitalAdmissionsRateValues,
+    },
+    '809fc976-3332-4e6c-b902-20a5d39a7f99-tabular': {
+      success: true,
+      data: weeklyPositivityLatestValues,
     },
   },
 }
