@@ -1,4 +1,3 @@
-import RouterLink from 'next/link'
 import { useRouter } from 'next/router'
 import { NavItem, NavLink } from './NavigationLink.styles'
 
@@ -15,11 +14,9 @@ export const NavigationLink = ({ title, url, type }: NavigationLinkProps) => {
 
   return (
     <NavItem key={url}>
-      <RouterLink href={url} passHref legacyBehavior>
-        <NavLink type={type} aria-current={isActive ? 'page' : undefined}>
-          {title}
-        </NavLink>
-      </RouterLink>
+      <NavLink href={url} type={type} aria-current={isActive ? 'page' : undefined}>
+        {title}
+      </NavLink>
     </NavItem>
   )
 }

@@ -65,6 +65,7 @@ describe('Coronavirus topic page', () => {
           'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
 
       // 7-day case rates by specimen date
@@ -72,6 +73,7 @@ describe('Coronavirus topic page', () => {
         cy.findByRole('heading', { name: '7-day case rates by specimen date', level: 3 })
         cy.findByText('Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown.')
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
     })
 
@@ -87,6 +89,7 @@ describe('Coronavirus topic page', () => {
           'Daily numbers of deaths of people whose death certificate mentioned COVID-19 as one of the causes, and 7-day rolling average. Because of the time it takes for deaths to be registered, there is a lag in reporting of at least 11 days, and data are not shown for the 14 days before the most recent reported date as they are considered incomplete. Data are shown by date of death.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
     })
 
@@ -104,6 +107,7 @@ describe('Coronavirus topic page', () => {
           'Daily and total numbers of COVID-19 patients admitted to hospital. The overlaying line shows the 7-day average.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
 
       // Patients in hospital
@@ -113,6 +117,7 @@ describe('Coronavirus topic page', () => {
           'Daily count of confirmed COVID-19 patients in hospital at 8am. The overlaying line shows the 7-day average.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
     })
 
@@ -128,6 +133,7 @@ describe('Coronavirus topic page', () => {
           'The daily number of new polymerase chain reaction (PCR) tests reported. Data is shown by specimen date (the date the sample was collected from the person).'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
 
       // Weekly positivity of people receiving a PCR test
@@ -137,6 +143,7 @@ describe('Coronavirus topic page', () => {
           'The percentage positivity of people who received a polymerase chain reaction (PCR) and had at least one positive COVID-19 PCR test result in the same 7 days. Data is shown by specimen date (the date the sample was collected). People tested more than once in the period are only counted once in the denominator. People with more than one positive result in the period are only included once in the numerator.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
     })
 
@@ -154,6 +161,7 @@ describe('Coronavirus topic page', () => {
           'The number of people aged 50 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
 
       // Autumn booster vaccination uptake (50+), by vaccination date
@@ -166,6 +174,7 @@ describe('Coronavirus topic page', () => {
           'The percentage of people aged 50 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 50 and over on the National Immunisation Management Service (NIMS) database.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
 
       // People aged 75 and over who have received autumn booster vaccinations, by vaccination date
@@ -180,6 +189,7 @@ describe('Coronavirus topic page', () => {
           'The number of people aged 75 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
 
       // Autumn booster vaccination uptake (75+), by vaccination date
@@ -192,6 +202,7 @@ describe('Coronavirus topic page', () => {
           'The percentage of people aged 75 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.'
         )
         cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
       })
     })
   })
