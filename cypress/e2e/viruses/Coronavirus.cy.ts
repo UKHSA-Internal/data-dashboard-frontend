@@ -24,16 +24,17 @@ describe('Coronavirus topic page', () => {
     cy.checkRelatedLinksExist()
   })
 
-  it('displays all sections correctly', () => {
-    // Document title
+  it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Coronavirus')
-
-    // Title
     cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
-
-    // Last updated
     cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
+    cy.findByText('Data and insights from the UKHSA on Coronavirus.')
+    cy.findByRole('link', { name: 'See the simple summary for England (opens in a new tab).' })
+      .should('have.attr', 'target', '_blank')
+      .should('have.attr', 'href', 'https://www.gov.uk/government/organisations/uk-health-security-agency')
+  })
 
+  it('displays all sections correctly', () => {
     // Contents
     cy.findByRole('navigation', {
       name: 'Contents',

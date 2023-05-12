@@ -21,15 +21,15 @@ import { Utils } from '@/components/CMS'
 import { FormattedContent } from '@/components/FormattedContent'
 import { useTranslation } from 'next-i18next'
 
-type VirusPageProps = InferGetStaticPropsType<typeof getStaticProps>
+type TopicPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const VirusPage = ({ title, body, accordion, lastUpdated, relatedLinks }: VirusPageProps) => {
+const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLinks }: TopicPageProps) => {
   const { t } = useTranslation('topic')
 
   if (!title) return null
 
   return (
-    <Page heading={title} lastUpdated={lastUpdated}>
+    <Page heading={title} description={description} lastUpdated={lastUpdated}>
       <Contents>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
@@ -56,11 +56,12 @@ export const VirusPage = ({ title, body, accordion, lastUpdated, relatedLinks }:
   )
 }
 
-export default VirusPage
+export default TopicPage
 
 export const getStaticProps: GetStaticProps<{
   title: string
   body: Body
+  description: string
   accordion: Array<{ id: string; body: string }>
   lastUpdated: string
   relatedLinks: Links
@@ -79,6 +80,7 @@ export const getStaticProps: GetStaticProps<{
       const {
         title,
         body,
+        page_description: description,
         last_published_at: lastUpdated,
         related_links: relatedLinks = [],
         ...rest
@@ -116,6 +118,7 @@ export const getStaticProps: GetStaticProps<{
         props: {
           title,
           body,
+          description,
           accordion,
           lastUpdated,
           relatedLinks,
@@ -142,9 +145,9 @@ export const getStaticPaths: GetStaticPaths = async () => {
   const { items } = await getPages(PageType.Topic)
 
   // Get the paths we want to pre-render based on the list of topic pages
-  // NOTE: Temporarily filter out covid/influenza pages whilst these are hardcoded locally into the project
+  // NOTE: Temporarily filter out non-covid pages whilst these are hardcoded locally into the project
   const paths = items
-    .filter((item) => item.meta.slug === 'Influenza')
+    .filter((item) => item.meta.slug === 'coronavirus')
     .map(({ meta: { slug } }) => ({
       params: { slug },
     }))

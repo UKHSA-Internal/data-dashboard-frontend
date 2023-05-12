@@ -25,6 +25,7 @@ const SharedPageData = z.object({
 
 const WithHomeData = SharedPageData.extend({
   body: Body,
+  page_description: z.string(),
   meta: Meta.extend({
     type: z.literal('home.HomePage'),
   }),
@@ -32,6 +33,7 @@ const WithHomeData = SharedPageData.extend({
 
 const WithTopicData = SharedPageData.extend({
   body: Body,
+  page_description: z.string(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
