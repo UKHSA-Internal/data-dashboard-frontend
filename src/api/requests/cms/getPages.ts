@@ -1,44 +1,45 @@
-import { getCmsApiPath, requestOptions } from '../helpers'
+import { z } from 'zod'
+import { api } from '@/api/api-utils'
+import { getCmsApiPath } from '../helpers'
+import { logger } from '@/lib/logger'
 
 /**
- * Response types for the CMS REST endpoint
- * TODO: Add url to endpoint in docs
+ * CMS Pages endpoint
  */
-export type PagesResponse = {
-  meta: PagesMeta
-  items: Item[]
-}
 
-type Item = {
-  id: number
-  meta: ItemMeta
-  title: string
-}
-
-type ItemMeta = {
-  type: string
-  detail_url: string
-  html_url: string | null
-  slug: string
-  first_published_at: string
-}
-
-type PagesMeta = {
-  total_count: number
-}
-
-/**
- * These are associated with page types within the CMS
- */
 export enum PageType {
   Home = 'home.HomePage',
   Common = 'common.CommonPage',
   Topic = 'topic.TopicPage',
 }
 
-export const getPages = async (type: PageType): Promise<PagesResponse> => {
-  const req = await fetch(`${getCmsApiPath()}/?type=${type}`, requestOptions)
-  const res = await req.json()
-  if (!req.ok) throw new Error(res.detail)
-  return res
+export type PagesResponse = z.infer<typeof responseSchema>
+
+export const responseSchema = z.object({
+  items: z.array(
+    z.object({
+      id: z.number(),
+      title: z.string(),
+      meta: z.object({
+        type: z.string(),
+        detail_url: z.string(),
+        html_url: z.string().nullable(),
+        slug: z.string(),
+        first_published_at: z.string(),
+      }),
+    })
+  ),
+  meta: z.object({
+    total_count: z.number(),
+  }),
+})
+
+export const getPages = async (type: PageType) => {
+  try {
+    const res = await api.get(`${getCmsApiPath()}/?type=${type}`).json<PagesResponse>()
+    return responseSchema.safeParse(res)
+  } catch (error) {
+    logger.error(error)
+    return responseSchema.safeParse(error)
+  }
 }

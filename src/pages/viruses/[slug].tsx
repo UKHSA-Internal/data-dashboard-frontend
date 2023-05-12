@@ -142,15 +142,21 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   // Fetch the CMS pages with a topic type
-  const { items } = await getPages(PageType.Topic)
+  const pages = await getPages(PageType.Common)
 
-  // Get the paths we want to pre-render based on the list of topic pages
-  // NOTE: Temporarily filter out non-covid pages whilst these are hardcoded locally into the project
-  const paths = items
-    .filter((item) => item.meta.slug === 'coronavirus')
-    .map(({ meta: { slug } }) => ({
-      params: { slug },
-    }))
+  if (pages.success) {
+    const { items } = pages.data
 
-  return { paths, fallback: 'blocking' }
+    // Get the paths we want to pre-render based on the list of topic pages
+    // NOTE: Temporarily filter out non-covid pages whilst these are hardcoded locally into the project
+    const paths = items
+      .filter((item) => item.meta.slug === 'coronavirus')
+      .map(({ meta: { slug } }) => ({
+        params: { slug },
+      }))
+
+    return { paths, fallback: 'blocking' }
+  }
+
+  return { paths: [], fallback: true }
 }
