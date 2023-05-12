@@ -14,6 +14,5 @@ declare namespace NodeJS {
     NEXT_REVALIDATE_TIME: string
 
     API_KEY: string
-    API_PATH_CMS: string
   }
 }
