@@ -150,7 +150,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
     // Get the paths we want to pre-render based on the list of topic pages
     // NOTE: Temporarily filter out non-covid pages whilst these are hardcoded locally into the project
     const paths = items
-      .filter((item) => item.meta.slug === 'coronavirus')
+      .filter((item) => item.meta.slug === 'coronavirus' || item.meta.slug === 'influenza')
       .map(({ meta: { slug } }) => ({
         params: { slug },
       }))
