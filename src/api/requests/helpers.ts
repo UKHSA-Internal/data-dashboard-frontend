@@ -1,4 +1,4 @@
-const baseUrl = process.env.NEXT_PUBLIC_API_URL
+const baseUrl = process.env.API_URL
 const cmsPath = process.env.API_PATH_CMS
 
 // Non-CMS endpoints don't have an `/api` prefix at the moment
