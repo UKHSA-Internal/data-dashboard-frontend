@@ -1,8 +1,8 @@
 import { z } from 'zod'
 
 /**
- * The metrics list is prone to change so we must accept any string as well as an enum of metrics.
- * As a result, we lose TypeScript autocomplete if consuming this const (i.e. in tests/fixtures)
+ * The metrics list is prone to change so we must accept any string in the response schema and zod validation
+ * As a result, we cannot use this enum in the response schema but can use it elsewhere i.e. tests/fixtures
  */
 export const MetricsEnum = z.enum([
   'new_cases_daily',
