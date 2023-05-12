@@ -26,12 +26,13 @@ const customJestConfig = {
   modulePathIgnorePatterns: ['cypress'],
   reporters: ['default', 'jest-junit'],
   coverageReporters: ['json-summary', 'text'],
+  coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/models'],
   coverageThreshold: {
     global: {
-      lines: 97,
+      lines: 98,
       functions: 96,
-      branches: 77,
-      statements: 96,
+      branches: 80,
+      statements: 97,
     },
   },
 }
