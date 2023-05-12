@@ -1,4 +1,4 @@
-import { Metrics, Topics } from '@/api/models'
+import { MetricsEnum, Topics } from '@/api/models'
 import { createFixture } from 'zod-fixture'
 
 import {
@@ -27,7 +27,9 @@ import { responseSchema } from '@/api/requests/tabular/getTabular'
  */
 
 // Create randomised automatic response fixtures for every metric
-const automaticFixtures = Object.fromEntries(Metrics.options.map((metric) => [metric, createFixture(responseSchema)]))
+const automaticFixtures = Object.fromEntries(
+  MetricsEnum.options.map((metric) => [metric, createFixture(responseSchema)])
+)
 
 // Manual fixtures (Ensures non-random data - usable in tests/e2es)
 const manualFixtures = {
