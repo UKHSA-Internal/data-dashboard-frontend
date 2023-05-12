@@ -3,6 +3,7 @@ import { api } from '@/api/api-utils'
 import { getCmsApiPath } from '../helpers'
 import type { PageType } from './getPages'
 import { Meta, Body, RelatedLinks } from '@/api/models/cms/Page'
+import { logger } from '@/lib/logger'
 
 /**
  * CMS Page endpoint
@@ -25,6 +26,7 @@ const SharedPageData = z.object({
 
 const WithHomeData = SharedPageData.extend({
   body: Body,
+  page_description: z.string(),
   meta: Meta.extend({
     type: z.literal('home.HomePage'),
   }),
@@ -32,6 +34,7 @@ const WithHomeData = SharedPageData.extend({
 
 const WithTopicData = SharedPageData.extend({
   body: Body,
+  page_description: z.string(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -49,9 +52,14 @@ const WithCommonData = SharedPageData.extend({
   }),
 })
 
-const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonData])
+export const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonData])
 
 export const getPage = async <T extends PageType>(id: number) => {
-  const res = await api.get(`${getCmsApiPath()}/${id}`).json<PageResponse<T>>()
-  return responseSchema.safeParse(res)
+  try {
+    const res = await api.get(`${getCmsApiPath()}/${id}`).json<PageResponse<T>>()
+    return responseSchema.safeParse(res)
+  } catch (error) {
+    logger.error(error)
+    return responseSchema.safeParse(error)
+  }
 }

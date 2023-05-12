@@ -1,4 +1,5 @@
 export * from './Body'
+export * from './Chart'
 export * from './Columns'
 export * from './Meta'
 export * from './Page'

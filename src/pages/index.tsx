@@ -15,11 +15,11 @@ import { logger } from '@/lib/logger'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export default function Home({ title, relatedLinks, lastUpdated, body }: HomeProps) {
+export default function Home({ title, description, relatedLinks, lastUpdated, body }: HomeProps) {
   const { t } = useTranslation()
 
   return (
-    <Page heading={title} lastUpdated={lastUpdated}>
+    <Page heading={title} description={description} lastUpdated={lastUpdated}>
       <Contents heading={t<string>('contentsHeading')}>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
@@ -36,6 +36,7 @@ export default function Home({ title, relatedLinks, lastUpdated, body }: HomePro
 export const getStaticProps: GetStaticProps<{
   title: string
   body: Body
+  description: string
   lastUpdated: string
   relatedLinks: Links
   initialZustandState: StoreState
@@ -50,6 +51,7 @@ export const getStaticProps: GetStaticProps<{
     const {
       title,
       body,
+      page_description: description,
       last_published_at: lastUpdated,
       related_links: relatedLinks = [],
     } = await getPageBySlug('respiratory-viruses', PageType.Home)
@@ -62,6 +64,7 @@ export const getStaticProps: GetStaticProps<{
       props: {
         title,
         body,
+        description,
         lastUpdated,
         relatedLinks,
         initialZustandState: JSON.parse(JSON.stringify(store.getState())),

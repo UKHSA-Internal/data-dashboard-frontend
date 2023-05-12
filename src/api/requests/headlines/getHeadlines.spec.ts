@@ -91,7 +91,7 @@ test('Handles generic http errors', async () => {
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 
-  expect(result).toEqual({
+  expect(result).toEqual<ErrorResponse>({
     success: false,
     error: new z.ZodError([
       {

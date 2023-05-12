@@ -73,12 +73,18 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   // Fetch the CMS pages with a topic type
-  const { items } = await getPages(PageType.Common)
+  const pages = await getPages(PageType.Common)
 
-  // Get the paths we want to pre-render based on the list of topic pages
-  const paths = items.map(({ meta: { slug } }) => ({
-    params: { slug },
-  }))
+  if (pages.success) {
+    const { items } = pages.data
 
-  return { paths, fallback: 'blocking' }
+    // Get the paths we want to pre-render based on the list of topic pages
+    const paths = items.map(({ meta: { slug } }) => ({
+      params: { slug },
+    }))
+
+    return { paths, fallback: 'blocking' }
+  }
+
+  return { paths: [], fallback: true }
 }

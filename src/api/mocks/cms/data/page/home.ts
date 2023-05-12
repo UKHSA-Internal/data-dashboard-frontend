@@ -25,6 +25,8 @@ export const homePageMock: PageResponse<PageType.Home> = {
     },
   },
   title: 'Respiratory viruses',
+  page_description:
+    '<p data-block-key="sud2w">Data and insights from the UKHSA on respiratory viruses. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
   body: [
     {
       type: 'section',
@@ -150,6 +152,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          label: null,
                         },
                         id: 'b0ead98b-4102-48f6-b94e-ff7bcffe1dc4',
                       },
@@ -195,6 +198,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          label: null,
                         },
                         id: 'd3b521d8-a6bb-4960-9db9-864c3d362976',
                       },
@@ -302,6 +306,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          label: null,
                         },
                         id: 'c7340640-85c6-4b2e-b3b3-2695576f0355',
                       },
@@ -347,6 +352,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          label: null,
                         },
                         id: 'f1a643ba-ff7e-4118-a0a8-366288468cb0',
                       },

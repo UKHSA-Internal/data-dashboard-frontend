@@ -1,12 +1,17 @@
 import { z } from 'zod'
 
-export const Metrics = z.enum([
+/**
+ * The metrics list is prone to change so we must accept any string in the response schema and zod validation
+ * As a result, we cannot use this enum in the response schema but can use it elsewhere i.e. tests/fixtures
+ */
+export const MetricsEnum = z.enum([
   'new_cases_daily',
   'new_cases_7day_avg',
   'new_cases_7days_change',
   'new_cases_7days_change_percentage',
   'new_cases_7days_sum',
   'new_cases_by_age',
+  'new_cases_rolling_rate',
   'new_cases_rolling_rate_by_age',
   'cases_rate_age_sex',
   'cases_age_sex',
@@ -67,9 +72,10 @@ export const Metrics = z.enum([
   'new_pcr_tests_daily',
 ])
 
+export const Metrics = z.string()
 export type Metrics = z.infer<typeof Metrics>
 
-export const PercentageMetrics = z.enum([
+export const PercentageMetricsEnum = z.enum([
   'new_cases_7days_change_percentage',
   'new_deaths_7days_change_percentage',
   'new_admissions_7days_change_percentage',
@@ -81,4 +87,5 @@ export const PercentageMetrics = z.enum([
   'weekly_icu_admissions_rate_change_percentage',
 ])
 
+export const PercentageMetrics = z.string()
 export type PercentageMetrics = z.infer<typeof PercentageMetrics>
