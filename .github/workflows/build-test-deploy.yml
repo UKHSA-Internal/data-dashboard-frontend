@@ -150,8 +150,6 @@ jobs:
           IMAGE_TAG: latest
         run: |
           touch .env.local
-          echo API_KEY=${{ secrets.API_KEY }} >> .env.local
-          echo NEXT_REVALIDATE_API_KEY=${{ secrets.NEXT_REVALIDATE_API_KEY }} >> .env.local
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+          docker build --build-arg API_URL=${{ env.API_URL }} API_KEY=${{ secrets.API_KEY }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2
