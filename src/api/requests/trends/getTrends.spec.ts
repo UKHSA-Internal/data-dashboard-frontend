@@ -61,9 +61,9 @@ test('Handles invalid json received from the api', async () => {
       return res(
         ctx.status(200),
         ctx.json({
-          metric_name: 'new_cases_7days_sum',
+          metric_name: null,
           metric_value: '-592', // <--- Wrong type (should get coerced automatically by Zod)
-          percentage_metric_name: 'does_not_exist', // <--- Invalid percentage_metric
+          percentage_metric_name: 'new_cases_7days_change_percentage',
           percentage_metric_value: -3.0,
           colour: '', // <--- Missing colour
           direction: 'down',
@@ -82,22 +82,11 @@ test('Handles invalid json received from the api', async () => {
     success: false,
     error: new z.ZodError([
       {
-        received: 'does_not_exist',
-        code: 'invalid_enum_value',
-        options: [
-          'new_cases_7days_change_percentage',
-          'new_deaths_7days_change_percentage',
-          'new_admissions_7days_change_percentage',
-          'positivity_7days_change_percentage',
-          'new_tests_7days_change_percentage',
-          'vaccinations_percentage',
-          'vaccinations_percentage',
-          'weekly_hospital_admissions_rate_change_percentage',
-          'weekly_icu_admissions_rate_change_percentage',
-        ],
-        path: ['percentage_metric_name'],
-        message:
-          "Invalid enum value. Expected 'new_cases_7days_change_percentage' | 'new_deaths_7days_change_percentage' | 'new_admissions_7days_change_percentage' | 'positivity_7days_change_percentage' | 'new_tests_7days_change_percentage' | 'vaccinations_percentage' | 'vaccinations_percentage' | 'weekly_hospital_admissions_rate_change_percentage' | 'weekly_icu_admissions_rate_change_percentage', received 'does_not_exist'",
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'null',
+        path: ['metric_name'],
+        message: 'Expected string, received null',
       },
       {
         received: '',
