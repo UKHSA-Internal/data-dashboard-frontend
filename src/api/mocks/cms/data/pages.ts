@@ -98,5 +98,16 @@ export const pagesWithTopicTypeMock: PagesResponse = {
       },
       title: 'Coronavirus',
     },
+    {
+      id: 7,
+      meta: {
+        type: 'topic.TopicPage',
+        detail_url: 'http://localhost/api/pages/10/',
+        html_url: null,
+        slug: 'other-respiratory-viruses',
+        first_published_at: '2023-05-10T17:13:59.119040+01:00',
+      },
+      title: 'Other respiratory viruses',
+    },
   ],
 }

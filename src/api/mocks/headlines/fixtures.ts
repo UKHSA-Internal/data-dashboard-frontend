@@ -37,4 +37,9 @@ export const fixtures: Fixtures = {
     weekly_hospital_admissions_rate_latest: { value: 981596 },
     weekly_positivity_latest: { value: 12.2 },
   },
+  Adenovirus: {},
+  Rhinovirus: {},
+  RSV: {},
+  Parainfluenza: {},
+  hMPV: {},
 }

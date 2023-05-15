@@ -1,13 +1,15 @@
-import { MetricsEnum, Topics } from '@/api/models'
-import { createFixture } from 'zod-fixture'
+import { z } from 'zod'
+import { Topics } from '@/api/models'
+import { responseSchema } from '@/api/requests/tabular/getTabular'
 
 import {
   weeklyHospitalAdmissionsRateValues,
   weeklyPositivityLatestValues,
   newCasesDailyValues,
   newDeathsDailyValues,
+  weeklyPositivityValues,
+  weeklyPositivityByAgeValues,
 } from '.'
-import { responseSchema } from '@/api/requests/tabular/getTabular'
 
 /**
  * Generates an object containing fixtures for all topics and 4 selected metrics
@@ -26,25 +28,35 @@ import { responseSchema } from '@/api/requests/tabular/getTabular'
  *
  */
 
-// Create randomised automatic response fixtures for every metric
-const automaticFixtures = Object.fromEntries(
-  MetricsEnum.options.map((metric) => [metric, createFixture(responseSchema)])
-)
+type Fixtures = Record<Topics, Record<string, z.infer<typeof responseSchema>>>
 
-// Manual fixtures (Ensures non-random data - usable in tests/e2es)
-const manualFixtures = {
-  new_cases_daily: newCasesDailyValues,
-  new_deaths_daily: newDeathsDailyValues,
-  weekly_hospital_admissions_rate: weeklyHospitalAdmissionsRateValues,
-  weekly_positivity_latest: weeklyPositivityLatestValues,
+export const fixtures: Fixtures = {
+  'COVID-19': {
+    new_cases_daily: newCasesDailyValues,
+    new_deaths_daily: newDeathsDailyValues,
+  },
+  Influenza: {
+    weekly_hospital_admissions_rate: weeklyHospitalAdmissionsRateValues,
+    weekly_positivity_latest: weeklyPositivityLatestValues,
+  },
+  Adenovirus: {
+    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity_by_age: weeklyPositivityByAgeValues,
+  },
+  Rhinovirus: {
+    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity_by_age: weeklyPositivityByAgeValues,
+  },
+  RSV: {
+    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity_by_age: weeklyPositivityByAgeValues,
+  },
+  Parainfluenza: {
+    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity_by_age: weeklyPositivityByAgeValues,
+  },
+  hMPV: {
+    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity_by_age: weeklyPositivityByAgeValues,
+  },
 }
-
-export const fixtures = Object.fromEntries(
-  Topics.options.map((topic) => [
-    topic,
-    {
-      ...automaticFixtures,
-      ...manualFixtures,
-    },
-  ])
-)

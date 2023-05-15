@@ -3,6 +3,7 @@ import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock 
 import {
   influenzaPageMock,
   coronavirusPageMock,
+  otherRespiratoryVirusesPageMock,
   homePageMock,
   aboutPageMock,
   whatsNewPageMock,
@@ -12,6 +13,7 @@ import {
 import { getCmsApiPath } from '@/api/requests/helpers'
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { PageResponse } from '@/api/requests/cms/getPage'
+import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 
 const baseUrl = getCmsApiPath()
 
@@ -32,31 +34,30 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [aboutPageMock.id]: aboutPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [coronavirusPageMock.id]: coronavirusPageMock,
+  [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,
 }
 
 export const handlers = [
-  rest.get(`${baseUrl}`, (req, res, ctx) => {
-    if (req.headers.get('Authorization') !== process.env.API_KEY) {
-      return res(ctx.status(403), ctx.json({ detail: 'You do not have permission to perform this action' }))
-    }
+  rest.get(
+    `${baseUrl}`,
+    apiResolver((req, res, ctx) => {
+      const searchParams = req.url.searchParams
 
-    const searchParams = req.url.searchParams
+      if (!searchParams.has('type')) return
 
-    if (!searchParams.has('type')) return
+      const pageType = searchParams.get('type') as PageType
 
-    const pageType = searchParams.get('type') as PageType
+      return res(ctx.status(200), ctx.json(mockedPagesMap[pageType]))
+    })
+  ),
+  rest.get(
+    `${baseUrl}/:id`,
+    apiResolver((req, res, ctx) => {
+      const pageId = Number(req.params.id)
 
-    return res(ctx.status(200), ctx.json(mockedPagesMap[pageType]))
-  }),
-  rest.get(`${baseUrl}/:id`, (req, res, ctx) => {
-    if (req.headers.get('Authorization') !== process.env.API_KEY) {
-      return res(ctx.status(403), ctx.json({ detail: 'You do not have permission to perform this action' }))
-    }
-
-    const pageId = Number(req.params.id)
-
-    if (mockedPageMap[pageId]) {
-      return res(ctx.status(200), ctx.json(mockedPageMap[pageId]))
-    }
-  }),
+      if (mockedPageMap[pageId]) {
+        return res(ctx.status(200), ctx.json(mockedPageMap[pageId]))
+      }
+    })
+  ),
 ]
