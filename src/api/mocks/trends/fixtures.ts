@@ -81,4 +81,9 @@ export const fixtures: Fixtures = {
       direction: 'down',
     },
   },
+  Adenovirus: {},
+  Rhinovirus: {},
+  RSV: {},
+  Parainfluenza: {},
+  hMPV: {},
 }
