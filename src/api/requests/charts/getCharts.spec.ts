@@ -4,10 +4,11 @@ import path from 'path'
 import 'whatwg-fetch'
 import { rest } from 'msw'
 import { server } from '@/api/msw/server'
-import { getCharts } from './getCharts'
+import { getCharts, RequestParams } from './getCharts'
 import { getApiBaseUrl } from '../helpers'
 import type { ChartTypes, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
+import { chartSizes } from '@/styles/Theme'
 
 jest.mock('@/lib/logger')
 
@@ -23,21 +24,49 @@ const charts: Array<[Topics, Metrics, ChartTypes]> = [
 ]
 
 test.each(charts)('Returns a chart for the %s topic and %s metric', async (topic, metric, chartType) => {
-  const result = await getCharts({
-    plots: [
-      {
-        topic,
-        metric,
-        chart_type: chartType,
-      },
-    ],
-  })
+  const result = await getCharts([
+    {
+      topic,
+      metric,
+      chart_type: chartType,
+    },
+  ])
 
   const fixture = fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${topic}/${metric}/${chartType}.svg`), {
     encoding: 'utf8',
   })
 
   expect(result).toEqual({ success: true, data: fixture })
+})
+
+test('Supports a narrow and wide chart size', async () => {
+  server.use(
+    rest.post(`${getApiBaseUrl()}/charts/v2`, async (req, res, ctx) => {
+      const body = await req.json()
+
+      if (body.chart_height === chartSizes.narrow.height && body.chart_width === chartSizes.narrow.width) {
+        return res(ctx.text('mocked-narrow'))
+      }
+
+      if (body.chart_height === chartSizes.wide.height && body.chart_width === chartSizes.wide.width) {
+        return res(ctx.text('mocked-wide'))
+      }
+    })
+  )
+
+  const plots: RequestParams['plots'] = [
+    {
+      topic: 'COVID-19',
+      metric: 'new_cases_7days_sum',
+      chart_type: 'line_with_shaded_section',
+    },
+  ]
+
+  const narrowResponse = await getCharts(plots, 'narrow')
+  expect(narrowResponse).toEqual({ data: 'mocked-narrow', success: true })
+
+  const wideResponse = await getCharts(plots, 'wide')
+  expect(wideResponse).toEqual({ data: 'mocked-wide', success: true })
 })
 
 test('Handles generic http errors', async () => {
@@ -47,15 +76,13 @@ test('Handles generic http errors', async () => {
     })
   )
 
-  const result = await getCharts({
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: 'new_cases_7days_sum',
-        chart_type: 'line_with_shaded_section',
-      },
-    ],
-  })
+  const result = await getCharts([
+    {
+      topic: 'COVID-19',
+      metric: 'new_cases_7days_sum',
+      chart_type: 'line_with_shaded_section',
+    },
+  ])
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 

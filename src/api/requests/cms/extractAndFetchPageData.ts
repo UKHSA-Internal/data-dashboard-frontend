@@ -31,12 +31,16 @@ export const extractAndFetchPageData = async (body: Body) => {
           if (column.type === 'chart_with_headline_and_trend_card' || column.type === 'chart_card') {
             const { chart } = column.value
 
+            // Calculate the chart size based on the number of columns (max num of 2)
+            const chartSize = content.value.columns.length === 1 ? 'wide' : 'narrow'
+
             // Pick out chart data for the chart and tabular data requests
             charts.push([
               `${column.id}-charts`,
-              getCharts({
-                plots: chart.map((plots) => plots.value),
-              }),
+              getCharts(
+                chart.map((plots) => plots.value),
+                chartSize
+              ),
             ])
 
             // Currently, the BE only supports showing single chart plots in tabular form
