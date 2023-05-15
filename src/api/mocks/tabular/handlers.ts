@@ -6,13 +6,10 @@ import { requestSchema } from '@/api/requests/tabular/getTabular'
 
 export const handlers = [
   rest.get(
-    `${getApiBaseUrl()}/tabular`,
+    `${getApiBaseUrl()}/tabular/:topic/:metric`,
     apiResolver((req, res, ctx) => {
-      // Extract query parameters
-      const queryParams = req.url.searchParams
-
       // Validate query parameters
-      const parsedQueryParams = requestSchema.safeParse(Object.fromEntries(queryParams))
+      const parsedQueryParams = requestSchema.safeParse(req.params)
 
       // Return a 500 if the query parameters provided aren't valid
       if (!parsedQueryParams.success) {
