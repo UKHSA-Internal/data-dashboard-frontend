@@ -1,6 +1,6 @@
 import { Response } from '@/api/requests/tabular/getTabular'
 
-export const weeklyPositivityLatestValues: Response = [
+export const weeklyPositivityValues: Response = [
   {
     date: '2022-10-31',
     value: 28630.0,
