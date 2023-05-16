@@ -119,6 +119,16 @@ describe('Coronavirus topic page', () => {
         cy.findByAltText('')
         cy.findByText('View data in a tabular format')
       })
+
+      // Patients in mechanical ventilation beds
+      cy.findByTestId('patients-in-mechanical-ventilation-beds-section').within(() => {
+        cy.findByRole('heading', { name: 'Patients in mechanical ventilation beds', level: 3 })
+        cy.findByText(
+          'Daily count of COVID-19 patients in mechanical ventilation beds, and 7-day rolling average. Data are not updated every day.'
+        )
+        cy.findByAltText('')
+        cy.findByText('View data in a tabular format')
+      })
     })
 
     // Testing
@@ -177,29 +187,29 @@ describe('Coronavirus topic page', () => {
         cy.findByText('View data in a tabular format')
       })
 
-      // People aged 75 and over who have received autumn booster vaccinations, by vaccination date
+      // People aged 75 and over who have received spring booster vaccinations, by vaccination date
       cy.findByTestId(
-        'column-people-aged-75-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date'
+        'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date-section'
       ).within(() => {
         cy.findByRole('heading', {
-          name: 'People aged 75 and over who have received autumn booster vaccinations, by vaccination date',
+          name: 'People aged 75 and over who have received spring booster vaccinations, by vaccination date',
           level: 3,
         })
         cy.findByText(
-          'The number of people aged 75 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.'
+          'The number of people aged 75 and over who have received a spring booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.'
         )
         cy.findByAltText('')
         cy.findByText('View data in a tabular format')
       })
 
-      // Autumn booster vaccination uptake (75+), by vaccination date
-      cy.findByTestId('column-autumn-booster-vaccination-uptake-75-by-vaccination-date').within(() => {
+      // Spring booster vaccination uptake (75+), by vaccination date
+      cy.findByTestId('spring-booster-vaccination-uptake-75-by-vaccination-date-section').within(() => {
         cy.findByRole('heading', {
-          name: 'Autumn booster vaccination uptake (75+), by vaccination date',
+          name: 'Spring booster vaccination uptake (75+), by vaccination date',
           level: 3,
         })
         cy.findByText(
-          'The percentage of people aged 75 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.'
+          'The percentage of people aged 75 and over who have received a spring booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.'
         )
         cy.findByAltText('')
         cy.findByText('View data in a tabular format')

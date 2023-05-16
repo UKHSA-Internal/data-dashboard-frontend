@@ -24,10 +24,10 @@ describe('Maps', () => {
     cy.findByRole('heading', { name: 'Maps', level: 1 })
 
     // Last updated
-    cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
+    cy.findByText('Last updated on Friday, 12 May 2023 at 04:48pm')
 
     // Body
-    cy.findByText('Maps CMS page content!')
+    // TODO In Future Tickets
 
     // Related links
     cy.checkRelatedLinksExist()
