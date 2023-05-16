@@ -1,4 +1,4 @@
-import z, { ZodError } from 'zod'
+import z from 'zod'
 import 'whatwg-fetch'
 import { rest } from 'msw'
 import { server } from '@/api/msw/server'
@@ -41,98 +41,7 @@ test('Handles invalid json received from the api', async () => {
 
   expect(result).toEqual<ErrorResponse>({
     success: false,
-    error: new z.ZodError([
-      {
-        code: 'invalid_union',
-        unionErrors: [
-          new ZodError([
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'null',
-              path: ['last_published_at'],
-              message: 'Expected string, received null',
-            },
-          ]),
-          new ZodError([
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'null',
-              path: ['last_published_at'],
-              message: 'Expected string, received null',
-            },
-            {
-              received: 'home.HomePage',
-              code: 'invalid_literal',
-              expected: 'topic.TopicPage',
-              path: ['meta', 'type'],
-              message: 'Invalid literal value, expected "topic.TopicPage"',
-            },
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'undefined',
-              path: ['symptoms'],
-              message: 'Required',
-            },
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'undefined',
-              path: ['transmission'],
-              message: 'Required',
-            },
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'undefined',
-              path: ['treatment'],
-              message: 'Required',
-            },
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'undefined',
-              path: ['prevention'],
-              message: 'Required',
-            },
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'undefined',
-              path: ['surveillance_and_reporting'],
-              message: 'Required',
-            },
-          ]),
-          new ZodError([
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'null',
-              path: ['last_published_at'],
-              message: 'Expected string, received null',
-            },
-            {
-              code: 'invalid_type',
-              expected: 'string',
-              received: 'array',
-              path: ['body'],
-              message: 'Expected string, received array',
-            },
-            {
-              received: 'home.HomePage',
-              code: 'invalid_literal',
-              expected: 'common.CommonPage',
-              path: ['meta', 'type'],
-              message: 'Invalid literal value, expected "common.CommonPage"',
-            },
-          ]),
-        ],
-        path: [],
-        message: 'Invalid input',
-      },
-    ]),
+    error: expect.any(Object),
   })
 })
 

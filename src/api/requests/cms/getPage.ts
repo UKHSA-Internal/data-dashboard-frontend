@@ -22,6 +22,7 @@ const SharedPageData = z.object({
   title: z.string(),
   last_published_at: z.string(),
   related_links: RelatedLinks,
+  meta: Meta,
 })
 
 const WithHomeData = SharedPageData.extend({
@@ -50,6 +51,7 @@ const WithCommonData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('common.CommonPage'),
   }),
+  date_posted: z.string(),
 })
 
 export const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonData])
