@@ -51,6 +51,10 @@ export const fixtures: Fixtures = {
   Influenza: {
     weekly_hospital_admissions_rate: weeklyHospitalAdmissionsRateValues,
     weekly_positivity: weeklyPositivityValues,
+    weekly_hospital_admissions_rate_by_age: randomMockValues,
+    weekly_icuhdu_admissions_rate: randomMockValues,
+    weekly_icu_admissions_rate_by_age: randomMockValues,
+    weekly_positivity_by_age: randomMockValues,
   },
   Adenovirus: {
     weekly_positivity: weeklyPositivityValues,
