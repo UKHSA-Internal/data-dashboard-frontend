@@ -20,7 +20,7 @@ describe('Home page', () => {
   it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Respiratory viruses')
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
-    cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
+    cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
     cy.findByRole('link', { name: 'See the simple summary for England (opens in a new tab).' })
       .should('have.attr', 'target', '_blank')
@@ -67,7 +67,7 @@ describe('Home page', () => {
       cy.findByText('Last 7 days: 377 (6%), upward negative trend')
 
       cy.findByRole('heading', {
-        name: 'Vaccinations',
+        name: 'Vaccines',
       })
       cy.findByText('Autumn booster: 4,095,083')
       cy.findByText('Percentage uptake (%): 64.5')

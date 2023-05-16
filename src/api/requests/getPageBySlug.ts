@@ -39,6 +39,6 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
     throw new Error('No page found')
   }
 
-  logger.error(pages.error)
+  logger.info(pages.error.message)
   throw new Error(`CMS Pages with type ${type} did not match expected response schema`)
 }

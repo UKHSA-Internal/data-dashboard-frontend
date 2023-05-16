@@ -25,7 +25,7 @@ export const handlers = [
         | 'new_cases_daily'
         | 'new_deaths_daily'
         | 'weekly_hospital_admissions_rate'
-        | 'weekly_positivity_latest'
+        | 'weekly_positivity'
 
       // Return a json fixture identified by the topic & metric provided
       return res(ctx.json(fixtures[topic][mockedMetric]))

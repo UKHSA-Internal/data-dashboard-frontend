@@ -3,16 +3,16 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
 export const homePageMock: PageResponse<PageType.Home> = {
-  id: 1,
+  id: 6,
   meta: {
     type: 'home.HomePage',
-    detail_url: 'http://localhost/api/pages/4/',
+    detail_url: 'http://localhost/api/pages/6/',
     html_url: null,
     slug: 'respiratory-viruses',
     show_in_menus: false,
     seo_title: '',
     search_description: '',
-    first_published_at: '2023-04-21T15:27:01.338017Z',
+    first_published_at: '2023-04-26T12:39:38.064114+01:00',
     alias_of: null,
     parent: {
       id: 2,
@@ -101,7 +101,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                 {
                   type: 'dual_headline_component',
                   value: {
-                    title: 'Vaccinations',
+                    title: 'Vaccines',
                     top_headline_number: {
                       topic: 'COVID-19',
                       metric: 'latest_total_vaccinations_autumn22',
@@ -152,7 +152,9 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
-                          label: null,
+                          label: '',
+                          line_colour: null,
+                          line_type: null,
                         },
                         id: 'b0ead98b-4102-48f6-b94e-ff7bcffe1dc4',
                       },
@@ -171,7 +173,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                         type: 'trend_number',
                         value: {
                           topic: 'COVID-19',
-                          metric: 'new_deaths_7days_change',
+                          metric: 'new_cases_7days_change',
                           body: '',
                           percentage_metric: 'new_cases_7days_change_percentage',
                         },
@@ -198,7 +200,9 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
-                          label: null,
+                          label: '',
+                          line_colour: null,
+                          line_type: null,
                         },
                         id: 'd3b521d8-a6bb-4960-9db9-864c3d362976',
                       },
@@ -306,7 +310,9 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
-                          label: null,
+                          label: '',
+                          line_colour: null,
+                          line_type: null,
                         },
                         id: 'c7340640-85c6-4b2e-b3b3-2695576f0355',
                       },
@@ -345,14 +351,16 @@ export const homePageMock: PageResponse<PageType.Home> = {
                         type: 'plot',
                         value: {
                           topic: 'Influenza',
-                          metric: 'weekly_positivity_latest',
+                          metric: 'weekly_positivity',
                           chart_type: 'bar',
                           date_from: null,
                           date_to: null,
                           stratum: '',
                           geography: '',
                           geography_type: '',
-                          label: null,
+                          label: '',
+                          line_colour: null,
+                          line_type: null,
                         },
                         id: 'f1a643ba-ff7e-4118-a0a8-366288468cb0',
                       },
@@ -371,5 +379,5 @@ export const homePageMock: PageResponse<PageType.Home> = {
     },
   ],
   related_links: relatedLinksMock,
-  last_published_at: '2023-03-21T10:25:34.452098Z',
+  last_published_at: '2023-05-10T15:18:06.939535+01:00',
 }

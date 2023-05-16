@@ -3,29 +3,30 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
 export const howToUseThisDataPageMock: PageResponse<PageType.Common> = {
-  id: 12,
+  id: 152,
   meta: {
     type: 'common.CommonPage',
-    detail_url: 'http://localhost/api/v2/pages/10/',
-    html_url: 'http://localhost/home-page/how-to-use-this-data/',
+    detail_url: 'http://localhost/api/pages/152/',
+    html_url: null,
     slug: 'how-to-use-this-data',
     show_in_menus: false,
     seo_title: '',
     search_description: '',
-    first_published_at: '2023-03-16T09:26:32.597358Z',
+    first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
     parent: {
-      id: 4,
+      id: 145,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/v2/pages/4/',
-        html_url: 'http://localhost/home-page/',
+        detail_url: 'http://localhost/api/pages/145/',
+        html_url: null,
       },
-      title: 'Home page',
+      title: 'Respiratory viruses',
     },
   },
   title: 'How to use this data',
-  body: '<p>How to use this data CMS page content!</p>',
+  date_posted: '2023-05-12',
+  body: '<p data-block-key="4elgr">-</p>',
+  last_published_at: '2023-05-12T16:53:51.464146+01:00',
   related_links: relatedLinksMock,
-  last_published_at: '2023-01-15T10:25:34.452098Z',
 }
