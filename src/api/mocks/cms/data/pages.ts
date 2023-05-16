@@ -1,4 +1,12 @@
 import { PagesResponse } from '@/api/requests/cms/getPages'
+import { homePageMock } from './page/home'
+import { aboutPageMock } from './page/about'
+import { whatsNewPageMock } from './page/whats-new'
+import { mapsPageMock } from './page/maps'
+import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
+import { influenzaPageMock } from './page/influenza'
+import { coronavirusPageMock } from './page/coronavirus'
+import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -6,15 +14,15 @@ export const pagesWithHomeTypeMock: PagesResponse = {
   },
   items: [
     {
-      id: 1,
+      id: homePageMock.id,
       meta: {
-        type: 'home.HomePage',
-        detail_url: 'http://localhost/api/v2/pages/1/',
-        html_url: 'http://localhost/home-page/',
-        slug: 'respiratory-viruses',
-        first_published_at: '2023-03-10T10:57:35.324472Z',
+        type: homePageMock.meta.type,
+        detail_url: homePageMock.meta.detail_url,
+        html_url: homePageMock.meta.html_url,
+        slug: homePageMock.meta.slug,
+        first_published_at: homePageMock.meta.first_published_at,
       },
-      title: 'Respiratory viruses',
+      title: homePageMock.title,
     },
   ],
 }
@@ -25,78 +33,89 @@ export const pagesWithCommonTypeMock: PagesResponse = {
   },
   items: [
     {
-      id: 9,
+      id: aboutPageMock.id,
       meta: {
-        type: 'common.CommonPage',
-        detail_url: 'http://localhost/api/v2/pages/7/',
-        html_url: 'http://localhost/home-page/about/',
-        slug: 'about',
-        first_published_at: '2023-03-10T10:57:35.324472Z',
+        type: aboutPageMock.meta.type,
+        detail_url: aboutPageMock.meta.detail_url,
+        html_url: aboutPageMock.meta.html_url,
+        slug: aboutPageMock.meta.slug,
+        first_published_at: aboutPageMock.meta.first_published_at,
       },
-      title: 'About',
+      title: aboutPageMock.title,
     },
     {
-      id: 10,
+      id: whatsNewPageMock.id,
       meta: {
-        type: 'common.CommonPage',
-        detail_url: 'http://localhost/api/v2/pages/8/',
-        html_url: 'http://localhost/home-page/whats-new/',
-        slug: 'whats-new',
-        first_published_at: '2023-03-10T10:57:35.324472Z',
+        type: whatsNewPageMock.meta.type,
+        detail_url: whatsNewPageMock.meta.detail_url,
+        html_url: whatsNewPageMock.meta.html_url,
+        slug: whatsNewPageMock.meta.slug,
+        first_published_at: whatsNewPageMock.meta.first_published_at,
       },
-      title: "What's new",
+      title: whatsNewPageMock.title,
     },
     {
-      id: 11,
+      id: mapsPageMock.id,
       meta: {
-        type: 'common.CommonPage',
-        detail_url: 'http://localhost/api/v2/pages/9/',
-        html_url: 'http://localhost/home-page/maps/',
-        slug: 'maps',
-        first_published_at: '2023-03-10T10:57:35.324472Z',
+        type: mapsPageMock.meta.type,
+        detail_url: mapsPageMock.meta.detail_url,
+        html_url: mapsPageMock.meta.html_url,
+        slug: mapsPageMock.meta.slug,
+        first_published_at: mapsPageMock.meta.first_published_at,
       },
-      title: 'Maps',
+      title: mapsPageMock.title,
     },
     {
-      id: 12,
+      id: howToUseThisDataPageMock.id,
       meta: {
-        type: 'common.CommonPage',
-        detail_url: 'http://localhost/api/v2/pages/10/',
-        html_url: 'http://localhost/home-page/how-to-use-this-data/',
-        slug: 'how-to-use-this-data',
-        first_published_at: '2023-03-10T10:57:35.324472Z',
+        type: howToUseThisDataPageMock.meta.type,
+        detail_url: howToUseThisDataPageMock.meta.detail_url,
+        html_url: howToUseThisDataPageMock.meta.html_url,
+        slug: howToUseThisDataPageMock.meta.slug,
+        first_published_at: howToUseThisDataPageMock.meta.first_published_at,
       },
-      title: 'How to use this data',
+      title: howToUseThisDataPageMock.title,
     },
   ],
 }
 
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {
-    total_count: 2,
+    total_count: 3,
   },
   items: [
     {
-      id: 5,
+      id: influenzaPageMock.id,
       meta: {
-        type: 'topic.TopicPage',
-        detail_url: 'http://localhost/api/v2/pages/5/',
-        html_url: 'http://localhost/current-viruses-in-circulation/influenza/',
-        slug: 'influenza',
-        first_published_at: '2023-03-10T10:57:35.324472Z',
+        type: influenzaPageMock.meta.type,
+        detail_url: influenzaPageMock.meta.detail_url,
+        html_url: influenzaPageMock.meta.html_url,
+        slug: influenzaPageMock.meta.slug,
+        first_published_at: influenzaPageMock.meta.first_published_at,
       },
-      title: 'Influenza',
+      title: influenzaPageMock.title,
     },
     {
-      id: 6,
+      id: coronavirusPageMock.id,
       meta: {
-        type: 'topic.TopicPage',
-        detail_url: 'http://localhost/api/v2/pages/5/',
-        html_url: 'http://localhost/current-viruses-in-circulation/covid-19/',
-        slug: 'coronavirus',
-        first_published_at: '2023-02-10T10:57:35.324472Z',
+        type: coronavirusPageMock.meta.type,
+        detail_url: coronavirusPageMock.meta.detail_url,
+        html_url: coronavirusPageMock.meta.html_url,
+        slug: coronavirusPageMock.meta.slug,
+        first_published_at: coronavirusPageMock.meta.first_published_at,
       },
-      title: 'Coronavirus',
+      title: coronavirusPageMock.title,
+    },
+    {
+      id: otherRespiratoryVirusesPageMock.id,
+      meta: {
+        type: otherRespiratoryVirusesPageMock.meta.type,
+        detail_url: otherRespiratoryVirusesPageMock.meta.detail_url,
+        html_url: otherRespiratoryVirusesPageMock.meta.html_url,
+        slug: otherRespiratoryVirusesPageMock.meta.slug,
+        first_published_at: otherRespiratoryVirusesPageMock.meta.first_published_at,
+      },
+      title: otherRespiratoryVirusesPageMock.title,
     },
   ],
 }
