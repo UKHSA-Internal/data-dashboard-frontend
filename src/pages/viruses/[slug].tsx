@@ -142,7 +142,7 @@ export const getStaticPaths: GetStaticPaths = async () => {
   }
 
   // Fetch the CMS pages with a topic type
-  const pages = await getPages(PageType.Common)
+  const pages = await getPages(PageType.Topic)
 
   if (pages.success) {
     const { items } = pages.data
