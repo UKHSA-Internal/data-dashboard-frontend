@@ -1,4 +1,3 @@
-import { useTranslation } from 'next-i18next'
 import { Chart as ChartComponent } from '@/components/Chart'
 import { useChart } from '@/hooks/store/useChart'
 import { useTabular } from '@/hooks/store/useTabular'
@@ -9,7 +8,6 @@ interface ChartProps {
 }
 
 export const Chart = ({ id }: ChartProps) => {
-  const { t } = useTranslation('common')
   const chart = useChart(id)
   const tabular = useTabular(id)
 
