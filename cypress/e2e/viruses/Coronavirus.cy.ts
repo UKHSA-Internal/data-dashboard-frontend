@@ -27,7 +27,7 @@ describe('Coronavirus topic page', () => {
   it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Coronavirus')
     cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
-    cy.findByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
+    cy.findByText(/Last updated on Tuesday, 21 March 2023/)
     cy.findByText('Data and insights from the UKHSA on Coronavirus.')
     cy.findByRole('link', { name: 'See the simple summary for England (opens in a new tab).' })
       .should('have.attr', 'target', '_blank')

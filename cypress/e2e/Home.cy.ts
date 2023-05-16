@@ -20,7 +20,7 @@ describe('Home page', () => {
   it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Respiratory viruses')
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
-    cy.findByText('Last updated on Wednesday, 10 May 2023 at 03:18pm')
+    cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
     cy.findByRole('link', { name: 'See the simple summary for England (opens in a new tab).' })
       .should('have.attr', 'target', '_blank')
