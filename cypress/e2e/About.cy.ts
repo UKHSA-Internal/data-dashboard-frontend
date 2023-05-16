@@ -17,7 +17,7 @@ describe('About', () => {
     })
   })
 
-  it.only('displays correctly', () => {
+  it('displays correctly', () => {
     // Document title
     cy.title().should('eq', 'About')
 
