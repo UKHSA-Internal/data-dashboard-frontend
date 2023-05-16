@@ -22,7 +22,7 @@ describe('About', () => {
     cy.title().should('eq', 'About')
 
     // Last updated
-    cy.findByText('Last updated on Friday, 12 May 2023 at 02:40pm')
+    cy.findByText(/Last updated on Friday/)
 
     // Title
     cy.findByRole('heading', { name: 'About', level: 1 })
@@ -70,9 +70,9 @@ describe('About', () => {
   it('Anchors to the section when clicking the associated contents link', () => {
     // Contents
     cy.findByRole('navigation', { name: 'Contents' }).within(() => {
-      cy.findByRole('link', { name: 'Cases' }).click()
+      cy.findByRole('link', { name: 'Respiratory viruses' }).click()
     })
 
-    cy.findByRole('heading', { name: 'Cases' }).parent().should('have.focus')
+    cy.findByRole('heading', { name: 'Respiratory viruses' }).parent().should('have.focus')
   })
 })

@@ -24,7 +24,7 @@ describe('Maps', () => {
     cy.findByRole('heading', { name: 'Maps', level: 1 })
 
     // Last updated
-    cy.findByText('Last updated on Friday, 12 May 2023 at 04:48pm')
+    cy.findByText(/Last updated on Friday, 12 May 2023 at 04:48pm/)
 
     // Body
     // TODO In Future Tickets
