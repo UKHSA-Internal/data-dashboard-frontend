@@ -56,6 +56,13 @@ COPY --from=builder /app/.env.production ./
 
 USER nextjs
 
+# Custom environment variables for the project used at run time only
+ARG API_URL
+ENV API_URL $API_URL
+
+ARG API_KEY
+ENV API_KEY $API_KEY
+
 EXPOSE 3000
 
 ENV PORT 3000
