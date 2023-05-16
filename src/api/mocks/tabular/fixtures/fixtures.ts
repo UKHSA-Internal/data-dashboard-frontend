@@ -4,10 +4,9 @@ import { responseSchema } from '@/api/requests/tabular/getTabular'
 
 import {
   weeklyHospitalAdmissionsRateValues,
-  weeklyPositivityLatestValues,
+  weeklyPositivityValues,
   newCasesDailyValues,
   newDeathsDailyValues,
-  weeklyPositivityValues,
   weeklyPositivityByAgeValues,
 } from '.'
 
@@ -37,7 +36,7 @@ export const fixtures: Fixtures = {
   },
   Influenza: {
     weekly_hospital_admissions_rate: weeklyHospitalAdmissionsRateValues,
-    weekly_positivity_latest: weeklyPositivityLatestValues,
+    weekly_positivity: weeklyPositivityValues,
   },
   Adenovirus: {
     weekly_positivity: weeklyPositivityValues,

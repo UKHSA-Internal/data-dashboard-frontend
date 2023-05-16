@@ -6,6 +6,10 @@ import { chartSizes } from '@/styles/Theme'
 import * as path from 'path'
 import * as fs from 'fs'
 
+const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
+const narrowFixture = fs.readFileSync(path.join(fixturesDirectory, `narrow.svg`))
+const wideFixture = fs.readFileSync(path.join(fixturesDirectory, `wide.svg`))
+
 export const handlers = [
   rest.post(
     `${getApiBaseUrl()}/charts/v2`,
@@ -25,27 +29,19 @@ export const handlers = [
         data: { chart_height, chart_width },
       } = parsedRequestBody
 
-      const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
-
-      const narrowFixture = path.join(fixturesDirectory, `narrow.svg`)
-
       if (chart_height === chartSizes.narrow.height && chart_width === chartSizes.narrow.width) {
-        const imageBuffer = fs.readFileSync(narrowFixture)
         return res(
-          ctx.set('Content-Length', imageBuffer.byteLength.toString()),
+          ctx.set('Content-Length', narrowFixture.byteLength.toString()),
           ctx.set('Content-Type', 'image/svg'),
-          ctx.body(fs.readFileSync(narrowFixture))
+          ctx.body(narrowFixture)
         )
       }
 
-      const wideFixture = path.join(fixturesDirectory, `wide.svg`)
-
       if (chart_height === chartSizes.wide.height && chart_width === chartSizes.wide.width) {
-        const imageBuffer = fs.readFileSync(wideFixture)
         return res(
-          ctx.set('Content-Length', imageBuffer.byteLength.toString()),
+          ctx.set('Content-Length', wideFixture.byteLength.toString()),
           ctx.set('Content-Type', 'image/svg'),
-          ctx.body(fs.readFileSync(wideFixture))
+          ctx.body(wideFixture)
         )
       }
     })
