@@ -3,7 +3,7 @@ import { getTabular, responseSchema } from './getTabular'
 import { z } from 'zod'
 import {
   weeklyHospitalAdmissionsRateValues,
-  weeklyPositivityLatestValues,
+  weeklyPositivityValues,
   newCasesDailyValues,
   newDeathsDailyValues,
 } from '@/api/mocks/tabular/fixtures'
@@ -26,7 +26,7 @@ const tabularMocks: Array<[Topics, Metrics, Response]> = [
   ['COVID-19', 'new_cases_daily', newCasesDailyValues],
   ['COVID-19', 'new_deaths_daily', newDeathsDailyValues],
   ['Influenza', 'weekly_hospital_admissions_rate', weeklyHospitalAdmissionsRateValues],
-  ['Influenza', 'weekly_positivity_latest', weeklyPositivityLatestValues],
+  ['Influenza', 'weekly_positivity', weeklyPositivityValues],
 ]
 
 test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', async (topic, metric, data) => {

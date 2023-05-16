@@ -12,7 +12,7 @@ export function middleware(request: NextRequest) {
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('Authorization', process.env.API_KEY ?? '')
 
-  request.nextUrl.href = `${process.env.NEXT_PUBLIC_API_URL}${request.nextUrl.pathname}`
+  request.nextUrl.href = `${process.env.API_URL}${request.nextUrl.pathname}`
 
   return NextResponse.rewrite(request.nextUrl, {
     request: {

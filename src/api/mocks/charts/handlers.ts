@@ -2,8 +2,13 @@ import { rest } from 'msw'
 import { getApiBaseUrl } from '@/api/requests/helpers'
 import { requestSchema } from '@/api/requests/charts/getCharts'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+import { chartSizes } from '@/styles/Theme'
 import * as path from 'path'
 import * as fs from 'fs'
+
+const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
+const narrowFixture = fs.readFileSync(path.join(fixturesDirectory, `narrow.svg`))
+const wideFixture = fs.readFileSync(path.join(fixturesDirectory, `wide.svg`))
 
 export const handlers = [
   rest.post(
@@ -20,36 +25,25 @@ export const handlers = [
         return res(ctx.status(500))
       }
 
-      // Pick out the metric & topic values
       const {
-        data: { plots },
+        data: { chart_height, chart_width },
       } = parsedRequestBody
 
-      if (plots.length > 1) {
-        // TODO: Handle msw multiple plots
-        console.log('Warning: Unhandled msw handler for chart with multiple plots')
-        // return res(ctx.status(500))
+      if (chart_height === chartSizes.narrow.height && chart_width === chartSizes.narrow.width) {
+        return res(
+          ctx.set('Content-Length', narrowFixture.byteLength.toString()),
+          ctx.set('Content-Type', 'image/svg'),
+          ctx.body(narrowFixture)
+        )
       }
 
-      const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
-
-      const filePath = path.join(fixturesDirectory, `${plots[0].topic}/${plots[0].metric}/${plots[0].chart_type}.svg`)
-
-      // Read file
-      if (!fs.existsSync(filePath)) {
-        console.log('charts msw handler fixture not found for path: ', filePath)
-        return res(ctx.status(500))
+      if (chart_height === chartSizes.wide.height && chart_width === chartSizes.wide.width) {
+        return res(
+          ctx.set('Content-Length', wideFixture.byteLength.toString()),
+          ctx.set('Content-Type', 'image/svg'),
+          ctx.body(wideFixture)
+        )
       }
-
-      // Load file
-      const imageBuffer = fs.readFileSync(filePath)
-
-      // Return response
-      return res(
-        ctx.set('Content-Length', imageBuffer.byteLength.toString()),
-        ctx.set('Content-Type', 'image/svg'),
-        ctx.body(imageBuffer)
-      )
     })
   ),
 ]

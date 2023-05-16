@@ -14,10 +14,6 @@ const nextConfig = {
       ssr: true,
     },
   },
-  images: {
-    dangerouslyAllowSVG: true,
-    domains: [process.env.NEXT_PUBLIC_API_URL],
-  },
 }
 
 module.exports = nextConfig
