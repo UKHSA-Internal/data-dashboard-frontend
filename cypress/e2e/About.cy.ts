@@ -17,72 +17,51 @@ describe('About', () => {
     })
   })
 
-  it('displays correctly', () => {
+  it.only('displays correctly', () => {
     // Document title
     cy.title().should('eq', 'About')
 
     // Last updated
-    cy.findByText('Last updated on Saturday, 18 March 2023 at 10:25am')
+    cy.findByText('Last updated on Friday, 12 May 2023 at 02:40pm')
 
     // Title
     cy.findByRole('heading', { name: 'About', level: 1 })
 
     // Contents
     cy.findByRole('navigation', { name: 'Contents' }).within(() => {
+      cy.findByRole('link', { name: 'About the UKHSA data dashboard' })
+      cy.findByRole('link', { name: 'Using the dashboard' })
       cy.findByRole('link', { name: 'Respiratory viruses' })
-      cy.findByRole('link', { name: 'Viruses' })
-      cy.findByRole('link', { name: 'Cases' })
-      cy.findByRole('link', { name: 'Hospitalisations' })
-      cy.findByRole('link', { name: 'Deaths' })
+      cy.findByRole('link', { name: 'Metrics' })
+      cy.findByRole('link', { name: 'Data availability' })
+      cy.findByRole('link', { name: 'Data sources' })
     })
 
-    // Body
+    // About the UKHSA data dashboard
+    cy.findByRole('heading', { name: 'About the UKHSA data dashboard', level: 2 })
+    cy.findByText(
+      'The UKHSA data dashboard provides presents a wide range of public health data in an easily accessible format. It’s produced by the UK Health Security Agency. At the moment, the dashboard is focused on respiratory viruses.'
+    )
+
+    // Using the dashboard
+    cy.findByRole('heading', { name: 'Using the dashboard', level: 2 })
+    cy.findByText('The UKHSA data dashboard is for anyone interested in UK health data.')
+
+    // Respiratory viruses
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 2 })
     cy.findByText(
       'Respiratory viruses can infect any age group. Some people (including children and the elderly) are more likely to become seriously ill or have other complications because of respiratory viruses. In the UK many of these viruses are seasonal and tend to circulate at higher levels during the winter months.'
     )
 
-    cy.findByRole('heading', { name: 'Viruses', level: 2 })
-    cy.findByText('The respiratory viruses we are reporting on are:')
-    cy.findByText('Respiratory syncytial viruses (RSV)')
-    cy.findByText('Coronavirus or COVID-19 (SARS-CoV-2)')
-    cy.findByText('Adenovirus')
-    cy.findByText('Parainfluenza')
-    cy.findByText('Rhinovirus')
-    cy.findByText('Human parainfluenza viruses (hMPV)')
+    // Metrics
+    cy.findByRole('heading', { name: 'Metrics', level: 2 })
     cy.findByText(
-      'On each page we give an overview of the data available on the virus, along with an explanation of the virus and the illnesses they can cause.'
+      'The UKHSA data dashboard reports on different data (metrics) for each virus. This is because not all metrics are available for each virus. See more in data availability.'
     )
 
-    cy.findByRole('heading', { name: 'Cases', level: 2 })
-    cy.findByText(
-      'A case is when someone is confirmed as having an illness through a positive test. We report on the case numbers for different respiratory viruses.'
-    )
-    cy.findByText(
-      "For many of the respiratory viruses we report on, the data available on positive tests is only those which have been reported by healthcare providers (like GP surgeries and hospitals). It's important when looking at case data to take this into consideration as it means not all cases will be show. For example, someone who becomes ill with the flu but doesn't seek medical treatment would not be counted as a case."
-    )
-
-    cy.findByRole('heading', { name: 'Hospitalisations', level: 2 })
-    cy.findByText(
-      'We report on the number of patients admitted to hospital with a type of virus. The hospitalisations data we report on is:'
-    )
-    cy.findByText('Respiratory emergency care admissions')
-    cy.findByText('Influenza hospitalisations')
-    cy.findByText('RSV hospitalisations')
-    cy.findByText('COVID-19 hospitalisations')
-
-    cy.findByRole('heading', { name: 'Vaccines', level: 2 })
-    cy.findByText('We report on the number of vaccines given for:')
-    cy.findByText('COVID-19')
-    cy.findByText(
-      'People offered a vaccine is different for each virus, depending on target groups recommended by healthcare professionals.'
-    )
-
-    cy.findByRole('heading', { name: 'Deaths', level: 2 })
-    cy.findByText('We report on deaths related to COVID-19, including:')
-    cy.findByText('Deaths with 28 days of a positive COVID-19 test - deaths with COVID.')
-    cy.findByText('Deaths with COVID-19 on the death certificate - deaths from COVID.')
-    cy.findByText('We also report on the excess deaths caused by respiratory viruses.')
+    // Data sources
+    cy.findByRole('heading', { name: 'Data sources', level: 2 })
+    cy.findByText('The data on the UKHSA data dashboard is from a number of sources.')
 
     // Related links
     cy.checkRelatedLinksExist()

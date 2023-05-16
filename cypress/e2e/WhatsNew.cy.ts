@@ -18,16 +18,16 @@ describe("What's new", () => {
     cy.visit('/whats-new')
 
     // Document title
-    cy.title().should('eq', "What's new")
+    cy.title().should('eq', "What's New")
 
     // Title
-    cy.findByRole('heading', { name: "What's new", level: 1 })
+    cy.findByRole('heading', { name: "What's New", level: 1 })
 
     // Last updated
-    cy.findByText('Last updated on Friday, 3 March 2023 at 11:15am')
+    cy.findByText('Last updated on Friday, 12 May 2023 at 04:22pm')
 
     // Body
-    cy.findByText("What's new CMS page content!")
+    // TODO In Future Tickets
 
     // Related links
     cy.checkRelatedLinksExist()

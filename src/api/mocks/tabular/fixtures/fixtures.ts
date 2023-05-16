@@ -1,6 +1,7 @@
 import { z } from 'zod'
 import { Topics } from '@/api/models'
 import { responseSchema } from '@/api/requests/tabular/getTabular'
+import { createFixture } from 'zod-fixture'
 
 import {
   weeklyHospitalAdmissionsRateValues,
@@ -8,6 +9,7 @@ import {
   newCasesDailyValues,
   newDeathsDailyValues,
   weeklyPositivityByAgeValues,
+  newCasesRollingRateValues,
 } from '.'
 
 /**
@@ -29,10 +31,22 @@ import {
 
 type Fixtures = Record<Topics, Record<string, z.infer<typeof responseSchema>>>
 
+const randomMockValues = createFixture(responseSchema)
+
 export const fixtures: Fixtures = {
   'COVID-19': {
     new_cases_daily: newCasesDailyValues,
+    new_cases_rolling_rate: newCasesRollingRateValues,
     new_deaths_daily: newDeathsDailyValues,
+    new_admissions_daily: randomMockValues,
+    covid_occupied_beds: randomMockValues,
+    covid_occupied_MV_beds: randomMockValues,
+    new_pcr_tests_daily: randomMockValues,
+    positivity_PCR_rolling_sum: randomMockValues,
+    new_vaccinations_autumn22: randomMockValues,
+    vaccinations_percentage_uptake_autumn22: randomMockValues,
+    new_vaccinations_spring22: randomMockValues,
+    vaccinations_percentage_uptake_spring22: randomMockValues,
   },
   Influenza: {
     weekly_hospital_admissions_rate: weeklyHospitalAdmissionsRateValues,
