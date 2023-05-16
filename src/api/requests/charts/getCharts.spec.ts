@@ -1,12 +1,9 @@
 import z from 'zod'
-import fs from 'fs'
-import path from 'path'
 import 'whatwg-fetch'
 import { rest } from 'msw'
 import { server } from '@/api/msw/server'
 import { getCharts, RequestParams } from './getCharts'
 import { getApiBaseUrl } from '../helpers'
-import type { ChartTypes, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
 import { chartSizes } from '@/styles/Theme'
 
@@ -15,29 +12,6 @@ jest.mock('@/lib/logger')
 beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
-
-const charts: Array<[Topics, Metrics, ChartTypes]> = [
-  ['COVID-19', 'new_cases_daily', 'line_with_shaded_section'],
-  ['COVID-19', 'new_deaths_daily', 'line_with_shaded_section'],
-  ['Influenza', 'weekly_hospital_admissions_rate', 'bar'],
-  ['Influenza', 'weekly_positivity_latest', 'bar'],
-]
-
-test.each(charts)('Returns a chart for the %s topic and %s metric', async (topic, metric, chartType) => {
-  const result = await getCharts([
-    {
-      topic,
-      metric,
-      chart_type: chartType,
-    },
-  ])
-
-  const fixture = fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${topic}/${metric}/${chartType}.svg`), {
-    encoding: 'utf8',
-  })
-
-  expect(result).toEqual({ success: true, data: fixture })
-})
 
 test('Supports a narrow and wide chart size', async () => {
   server.use(

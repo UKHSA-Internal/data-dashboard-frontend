@@ -23,11 +23,11 @@ test('Returns a list of cms pages by type', async () => {
     data: {
       items: [
         {
-          id: 1,
+          id: 6,
           meta: {
-            detail_url: 'http://localhost/api/v2/pages/1/',
-            first_published_at: '2023-03-10T10:57:35.324472Z',
-            html_url: 'http://localhost/home-page/',
+            detail_url: 'http://localhost/api/pages/6/',
+            first_published_at: '2023-04-26T12:39:38.064114+01:00',
+            html_url: null,
             slug: 'respiratory-viruses',
             type: 'home.HomePage',
           },
