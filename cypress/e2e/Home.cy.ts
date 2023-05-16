@@ -67,7 +67,7 @@ describe('Home page', () => {
       cy.findByText('Last 7 days: 377 (6%), upward negative trend')
 
       cy.findByRole('heading', {
-        name: 'Vaccinations',
+        name: 'Vaccines',
       })
       cy.findByText('Autumn booster: 4,095,083')
       cy.findByText('Percentage uptake (%): 64.5')
