@@ -25,7 +25,7 @@ export const responseSchema = z.object({
         detail_url: z.string(),
         html_url: z.string().nullable(),
         slug: z.string(),
-        first_published_at: z.string(),
+        first_published_at: z.string().nullable(),
       }),
     })
   ),

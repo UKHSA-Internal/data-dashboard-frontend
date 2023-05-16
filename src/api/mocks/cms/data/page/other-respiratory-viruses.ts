@@ -3,7 +3,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements'
 
 export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
-  id: 7,
+  id: 10,
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/10/',
@@ -12,7 +12,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
     show_in_menus: false,
     seo_title: '',
     search_description: '',
-    first_published_at: '2023-05-10T17:13:59.119040+01:00',
+    first_published_at: '2023-05-12T16:58:42.332020+01:00',
     alias_of: null,
     parent: {
       id: 6,
@@ -28,6 +28,113 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
   page_description:
     '<p data-block-key="rjyu9">Data and insights from the UKHSA on other respiratory viruses. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency\\">See the simple summary for England (opens in a new tab)</a>.</p>',
   body: [
+    {
+      type: 'section',
+      value: {
+        heading: 'Healthcare',
+        content: [
+          {
+            type: 'chart_row_card',
+            value: {
+              columns: [
+                {
+                  type: 'chart_card',
+                  value: {
+                    title:
+                      'Line chart comparing RSV hospital (ICU or HDU) admission rates of positive cases per 100,000 population reported through SARI Watch, England',
+                    body: 'RSV SARI Watch surveillance has run from week 40 to week 20. In the 2022 to 2023 season onwards this was extended to run throughout the year, to allow for surveillance of out-of-season trends.',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_overall_hospital_admissions_rate',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                          label: '',
+                          line_colour: 'BLUE',
+                          line_type: 'SOLID',
+                        },
+                        id: 'b594dbf2-1455-4c08-ae52-6f63cf42f5da',
+                      },
+                    ],
+                  },
+                  id: '3bde7164-dba6-4758-acf2-6922c09b449d',
+                },
+              ],
+            },
+            id: 'c5fcf54c-1b0f-4a4e-9011-157e8c654454',
+          },
+          {
+            type: 'chart_row_card',
+            value: {
+              columns: [
+                {
+                  type: 'chart_card',
+                  value: {
+                    title: 'Bar chart comparing RSV hospital admissions count by week',
+                    body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_hospital_admissions',
+                          chart_type: 'bar',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                          label: '',
+                          line_colour: '',
+                          line_type: '',
+                        },
+                        id: '1aaf26a0-4a87-491f-9359-e9a944a630f1',
+                      },
+                    ],
+                  },
+                  id: '95375882-5cb9-4e6b-8086-e333426ade6b',
+                },
+                {
+                  type: 'chart_card',
+                  value: {
+                    title: 'Bar chart comparing weekly RSV ICU/HDU admissions count by week',
+                    body: 'Weekly admission rates of patients admitted to ICU/HDU with RSV as a weekly time series.',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_icuhdu_admissions',
+                          chart_type: 'bar',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                          label: '',
+                          line_colour: '',
+                          line_type: '',
+                        },
+                        id: 'ea2a0886-cd39-4ead-a3b8-74e827deb3c8',
+                      },
+                    ],
+                  },
+                  id: 'a7ff6a90-91ce-48d9-bedf-883638f118cc',
+                },
+              ],
+            },
+            id: 'aeca81ff-351f-4cf2-a677-71c38536ab8b',
+          },
+        ],
+      },
+      id: '6b9f501d-ca05-486d-b94b-346b8247fd19',
+    },
     {
       type: 'section',
       value: {
