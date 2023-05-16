@@ -23,6 +23,13 @@ COPY . .
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
+# Custom environment variables for the project used at build time only
+ARG API_URL
+ENV API_URL $API_URL
+
+ARG API_KEY
+ENV API_KEY $API_KEY
+
 RUN npm run build
 
 # Production image, copy all the files and run next
