@@ -12,6 +12,7 @@ import { Utils } from '@/components/CMS'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { StoreState, initializeStore } from '@/lib/store'
 import { logger } from '@/lib/logger'
+import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -45,8 +46,6 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
-
   try {
     const {
       title,
@@ -70,10 +69,10 @@ export const getStaticProps: GetStaticProps<{
         initialZustandState: JSON.parse(JSON.stringify(store.getState())),
         ...(await serverSideTranslations(req.locale as string, ['common', 'topic'])),
       },
-      revalidate,
+      revalidate: getStaticPropsRevalidateValue(),
     }
   } catch (error) {
     logger.error(error)
-    return { notFound: true, revalidate }
+    return { notFound: true, revalidate: getStaticPropsRevalidateValue() }
   }
 }
