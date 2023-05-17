@@ -7,6 +7,7 @@ import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import type { RelatedLinks as Links } from '@/api/models/cms/Page'
+import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -33,8 +34,6 @@ export const getStaticProps: GetStaticProps<{
     await initMocks()
   }
 
-  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
-
   try {
     const params = req.params
 
@@ -56,14 +55,14 @@ export const getStaticProps: GetStaticProps<{
           relatedLinks,
           ...(await serverSideTranslations(req.locale as string, ['common'])),
         },
-        revalidate,
+        revalidate: getStaticPropsRevalidateValue(),
       }
     }
 
     throw new Error('No slug found')
   } catch (error) {
     console.log(error)
-    return { notFound: true, revalidate }
+    return { notFound: true, revalidate: getStaticPropsRevalidateValue() }
   }
 }
 
