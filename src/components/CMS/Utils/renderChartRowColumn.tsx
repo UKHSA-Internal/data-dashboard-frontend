@@ -1,8 +1,9 @@
 import { z } from 'zod'
-import { ChartRowColumns } from '@/api/models/cms/Page'
+import type { ChartRowColumns } from '@/api/models/cms/Page'
 import { Cards, Blocks } from '@/components/CMS'
 import { GridCol, GridRow } from 'govuk-react'
 import kebabCase from 'lodash/kebabCase'
+import { ChartDownload } from '@/components/ChartDownload'
 
 /**
  * This map utility handles rendering individual chart cards within each column for the chart row card.
@@ -11,7 +12,7 @@ export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[num
   const {
     id,
     type,
-    value: { title, body },
+    value: { title, body, chart },
   } = column
 
   if (type === 'chart_with_headline_and_trend_card') {
@@ -25,7 +26,7 @@ export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[num
         heading={title}
         description={body}
         chart={<Blocks.Chart id={id} />}
-        download
+        download={<ChartDownload chart={chart} />}
         cardProps={{ 'data-testid': `${kebabCase(title)}-section` }}
       >
         <GridRow>

@@ -41,13 +41,18 @@ test('Supports custom props (e.g. test attributes)', () => {
   expect(screen.getByTestId('content')).toBeInTheDocument()
 })
 
-test('Supports showing a download link', () => {
+test('Supports showing a download button', () => {
   render(
-    <ChartColumn heading="Howdy" description="Nice chart!" download chart={<div>mock chart image</div>}>
+    <ChartColumn
+      heading="Howdy"
+      description="Nice chart!"
+      download={<button>Download</button>}
+      chart={<div>mock chart image</div>}
+    >
       Custom content inside
     </ChartColumn>
   )
 
-  // Download link
-  expect(screen.getByRole('link', { name: 'Download' })).toHaveAttribute('href', '/api/download')
+  // Download button
+  expect(screen.getByRole('button', { name: 'Download' })).toBeInTheDocument()
 })
