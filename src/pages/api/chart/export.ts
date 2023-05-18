@@ -4,8 +4,8 @@ import { logger } from '@/lib/logger'
 import { initMocks } from '@/api/msw'
 
 /**
- * This is a temporary API route to simulate the download functionality that will
- * eventually come from the backend service
+ * NextJS API Route that proxies request from the frontend to the backend API endpoint
+ * Proxying allows us modify the response headers to allow the file to be downloaded to the users file system
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
