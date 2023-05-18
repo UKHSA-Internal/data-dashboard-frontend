@@ -17,48 +17,43 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405)
   }
 
-  try {
-    const plots = Array.isArray(req.body.plots) ? req.body.plots : [JSON.parse(req.body.plots)]
+  const plots = Array.isArray(req.body.plots) ? req.body.plots : [JSON.parse(req.body.plots)]
 
-    const params = requestSchema.safeParse({
-      file_format: req.body.format,
-      plots,
-    })
+  const params = requestSchema.safeParse({
+    file_format: req.body.format,
+    plots,
+  })
 
-    if (params.success) {
-      const { plots, file_format: fileFormat } = params.data
+  if (params.success) {
+    const { plots, file_format: fileFormat } = params.data
 
-      const response = await getDownloads(plots, fileFormat)
+    const response = await getDownloads(plots, fileFormat)
 
-      if (!response) {
-        logger.error('Proxied request to /api/downloads/v2 failed')
-        return res.status(500)
-      }
-
-      if (params.data.file_format === 'csv') {
-        logger.info('successful csv download')
-        return res
-          .status(200)
-          .setHeader('Content-Type', 'text/csv')
-          .setHeader('Content-Disposition', `attachment; filename=data.csv`)
-          .send(response)
-      }
-
-      if (params.data.file_format === 'json') {
-        logger.info('successful json download')
-        return res
-          .status(200)
-          .setHeader('Content-Type', 'text/json')
-          .setHeader('Content-Disposition', `attachment; filename=data.json`)
-          .send(response)
-      }
-    } else {
-      logger.error(params.error)
+    if (!response) {
+      logger.error('Proxied request to /api/downloads/v2 failed')
+      return res.status(500)
     }
 
-    return res.status(500)
-  } catch (error) {
-    logger.error(error)
-    res.status(500)
+    if (params.data.file_format === 'csv') {
+      logger.info('successful csv download')
+      return res
+        .status(200)
+        .setHeader('Content-Type', 'text/csv')
+        .setHeader('Content-Disposition', `attachment; filename=data.csv`)
+        .send(response)
+    }
+
+    if (params.data.file_format === 'json') {
+      logger.info('successful json download')
+      return res
+        .status(200)
+        .setHeader('Content-Type', 'text/json')
+        .setHeader('Content-Disposition', `attachment; filename=data.json`)
+        .send(response)
+    }
+  } else {
+    logger.error(params.error)
   }
+
+  return res.status(500)
 }
