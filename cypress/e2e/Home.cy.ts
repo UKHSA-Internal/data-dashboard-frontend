@@ -1,5 +1,6 @@
 import path from 'path'
 import 'cypress-axe'
+import { downloadsCsvFixture } from '@/api/mocks/downloads/fixtures/downloads-csv'
 
 describe('Home page', () => {
   beforeEach(() => {
@@ -215,7 +216,7 @@ describe('Home page', () => {
     cy.checkRelatedLinksExist()
   })
 
-  it('downloads a csv when clicking a download link', () => {
+  it('downloads a csv when clicking download', () => {
     const downloadsFolder = Cypress.config('downloadsFolder')
 
     const sections = ['cases-section', 'deaths-section', 'healthcare-section', 'testing-section']
@@ -230,9 +231,9 @@ describe('Home page', () => {
                 doc.location.reload()
               }, 1000)
             })
-            cy.findByRole('link', { name: 'Download' }).click()
+            cy.findByRole('button', { name: 'Download' }).click()
 
-            cy.readFile(path.join(downloadsFolder, 'download.csv')).should('exist')
+            cy.readFile(path.join(downloadsFolder, 'data.csv')).should('eql', downloadsCsvFixture)
 
             cy.task('deleteFolder', downloadsFolder)
           })
