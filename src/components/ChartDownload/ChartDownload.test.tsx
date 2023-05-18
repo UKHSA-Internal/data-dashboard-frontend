@@ -29,7 +29,7 @@ test('Displays a form and hidden input fields containing the POST data', async (
   expect(form).toHaveAttribute('action', chartExportApiRoutePath)
 
   // File format to request from export endpoint
-  expect(screen.getByTestId('download-form-format')).toHaveValue('json')
+  expect(screen.getByTestId('download-form-format')).toHaveValue('csv')
 
   // Only a subset of data is required from the Chart object to give to the export endpoint
   const { topic, metric, stratum, geography, geography_type, date_from, date_to } = chart[0].value
