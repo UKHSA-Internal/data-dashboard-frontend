@@ -20,6 +20,7 @@ import { Contents, ContentsItem } from '@/components/Contents'
 import { Utils } from '@/components/CMS'
 import { FormattedContent } from '@/components/FormattedContent'
 import { useTranslation } from 'next-i18next'
+import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
 type TopicPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -69,8 +70,6 @@ export const getStaticProps: GetStaticProps<{
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
-
-  const revalidate = Number(process.env.NEXT_REVALIDATE_TIME)
 
   try {
     const params = req.params
@@ -125,14 +124,14 @@ export const getStaticProps: GetStaticProps<{
           initialZustandState: JSON.parse(JSON.stringify(store.getState())),
           ...(await serverSideTranslations(req.locale as string, ['common', 'topic'])),
         },
-        revalidate,
+        revalidate: getStaticPropsRevalidateValue(),
       }
     }
 
     throw new Error('No slug found')
   } catch (error) {
     logger.error(error)
-    return { notFound: true, revalidate }
+    return { notFound: true, revalidate: getStaticPropsRevalidateValue() }
   }
 }
 
