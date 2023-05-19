@@ -83,7 +83,7 @@ describe('Home page', () => {
     cy.findByTestId('cases-section').as('cases-section')
 
     cy.get('@cases-section').within(() => {
-      cy.findByRole('link', { name: 'Download' })
+      cy.findByRole('button', { name: 'Download' })
       cy.findByText('Positive tests reported in England')
       cy.findByText('Last 7 days: 24,298')
       cy.findByText(': -592 (-3%), downward positive trend')
@@ -95,7 +95,7 @@ describe('Home page', () => {
     cy.findByTestId('deaths-section').as('deaths-section')
 
     cy.get('@deaths-section').within(() => {
-      cy.findByRole('link', { name: 'Download' })
+      cy.findByRole('button', { name: 'Download' })
       cy.findByText('Deaths with COVID-19 on the death certificate in England')
       cy.findByText('Last 7 days: 379')
       cy.findByText(': 21 (-5%), downward positive trend')
@@ -146,7 +146,7 @@ describe('Home page', () => {
     })
 
     cy.get('@healthcare-section').within(() => {
-      cy.findByRole('link', { name: 'Download' })
+      cy.findByRole('button', { name: 'Download' })
       cy.findByText('Weekly hospital admission rates for Influenza')
       cy.findByText('Last 7 days: 981,596')
       cy.findByText(': 5,911 (0.3%), downward positive trend')
@@ -160,7 +160,7 @@ describe('Home page', () => {
     })
 
     cy.get('@testing-section').within(() => {
-      cy.findByRole('link', { name: 'Download' })
+      cy.findByRole('button', { name: 'Download' })
       cy.findByText('Weekly positivity')
       cy.findByAltText('')
       cy.findByText('View data in a tabular format')
