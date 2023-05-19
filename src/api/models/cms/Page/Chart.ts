@@ -30,3 +30,5 @@ const Plot = z.object({
 })
 
 export const Chart = z.array(Plot)
+
+export type Chart = z.infer<typeof Chart>
