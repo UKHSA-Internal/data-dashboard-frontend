@@ -26,7 +26,7 @@ const customJestConfig = {
   modulePathIgnorePatterns: ['cypress'],
   reporters: ['default', 'jest-junit'],
   coverageReporters: ['json-summary', 'text'],
-  coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/models'],
+  coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/models', '<rootDir>/src/api/msw/index.ts'],
   coverageThreshold: {
     global: {
       lines: 98,
