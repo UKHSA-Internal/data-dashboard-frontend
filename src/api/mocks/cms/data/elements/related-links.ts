@@ -4,7 +4,7 @@ export const relatedLinksMock = [
     meta: {
       type: 'topic.TopicPageRelatedLink',
     },
-    title: 'National flu and COVID-19 surveillance and reports: 2022 to 2023 season',
+    title: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season',
     body: '<p>National influenza and COVID-19 report, monitoring COVID-19 activity, seasonal flu and other seasonal respiratory illnesses.</p>',
     url: 'https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season',
   },
