@@ -16,13 +16,13 @@ describe('Other respiratory viruses topic page', () => {
     })
   })
 
-  // it('displays an accordion with additional virus information', () => {
-  //   cy.checkAccordionExists()
-  // })
+  it('displays an accordion with additional virus information', () => {
+    cy.checkAccordionExists()
+  })
 
-  // it('displays related links', () => {
-  //   cy.checkRelatedLinksExist()
-  // })
+  it('displays related links', () => {
+    cy.checkRelatedLinksExist()
+  })
 
   it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Other respiratory viruses')
