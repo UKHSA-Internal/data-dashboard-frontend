@@ -1,7 +1,9 @@
 import { Paragraph } from 'govuk-react'
 import styled from 'styled-components'
+import { SPACING } from '@govuk-react/constants'
+import { buttonOffset } from '@/styles/Theme'
 
 export const SecondaryText = styled(Paragraph)`
-  margin-top: 8px;
-  max-width: calc(100% - 105px);
+  margin-top: ${SPACING.SCALE_2};
+  max-width: calc(100% - ${buttonOffset});
 `
