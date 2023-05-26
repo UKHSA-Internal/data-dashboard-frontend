@@ -11,11 +11,11 @@ test('Clicking the "View data in a tabular format" button, shows the graph in a 
       rows={[
         {
           date: '2022-10-31',
-          value: 560.0,
+          value: 1560.0,
         },
         {
           date: '2022-11-30',
-          value: 368.0,
+          value: 12368.0,
         },
         {
           date: '2022-12-31',
@@ -44,10 +44,10 @@ test('Clicking the "View data in a tabular format" button, shows the graph in a 
   expect(rows).toHaveLength(4) // 1 header row, 2 body rows
 
   expect(within(rows[1]).getByText('October'))
-  expect(within(rows[1]).getByText('560'))
+  expect(within(rows[1]).getByText('1,560'))
 
   expect(within(rows[2]).getByText('November'))
-  expect(within(rows[2]).getByText('368'))
+  expect(within(rows[2]).getByText('12,368'))
 
   expect(within(rows[3]).getByText('December'))
   expect(within(rows[3]).getByText('426'))
