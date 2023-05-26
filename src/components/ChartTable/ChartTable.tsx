@@ -20,7 +20,7 @@ export const ChartTable = ({ caption, rows }: ChartTableProps) => {
         {rows.map(({ date, value }) => (
           <Table.Row key={date}>
             <Table.CellHeader>{t('tabular.date', { value: date })}</Table.CellHeader>
-            <Table.Cell>{t('tabular.data', { value: value })}</Table.Cell>
+            <Table.Cell>{t('tabular.data', { value })}</Table.Cell>
           </Table.Row>
         ))}
       </Table>
