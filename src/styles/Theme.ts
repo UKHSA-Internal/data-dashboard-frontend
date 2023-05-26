@@ -19,3 +19,5 @@ export const chartSizes = {
 } as const
 
 export const chartFormat = 'svg' as const
+
+export const buttonOffset = '122px'
