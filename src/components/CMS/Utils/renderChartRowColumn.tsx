@@ -8,12 +8,16 @@ import { ChartDownload } from '@/components/ChartDownload'
 /**
  * This map utility handles rendering individual chart cards within each column for the chart row card.
  */
-export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[number]) => {
+type Column = z.infer<typeof ChartRowColumns>[number]
+
+export const renderChartRowColumn = (column: Column, _: number, columns: Array<Column>) => {
   const {
     id,
     type,
     value: { title, body, chart },
   } = column
+
+  const chartSize = columns.length === 1 ? 'wide' : 'narrow'
 
   if (type === 'chart_with_headline_and_trend_card') {
     const {
@@ -25,7 +29,7 @@ export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[num
         key={id}
         heading={title}
         description={body}
-        chart={<Blocks.Chart id={id} />}
+        chart={<Blocks.Chart id={id} size={chartSize} />}
         download={<ChartDownload chart={chart} />}
         cardProps={{ 'data-testid': `${kebabCase(title)}-section` }}
       >
@@ -62,7 +66,7 @@ export const renderChartRowColumn = (column: z.infer<typeof ChartRowColumns>[num
         key={id}
         heading={title}
         description={body}
-        chart={<Blocks.Chart id={id} />}
+        chart={<Blocks.Chart id={id} size={chartSize} />}
         cardProps={{ 'data-testid': `${kebabCase(title)}-section` }}
       />
     )
