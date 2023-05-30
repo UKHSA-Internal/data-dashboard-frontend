@@ -60,15 +60,16 @@ export const parseChartTableData = (
 ) => {
   if (!response) return []
 
+  const maxColumnsExcludingDate = maxColumns - 1
   const numColumns = response[0].values.length
-  const numTables = Math.ceil(numColumns / maxColumns)
+  const numTables = Math.ceil(numColumns / maxColumnsExcludingDate)
 
   const tables: Response[] = Array(numTables)
     .fill(null)
     .map((_, index) =>
       response.map((data) => ({
         ...data,
-        values: chunk(data.values, maxColumns)[index],
+        values: chunk(data.values, maxColumnsExcludingDate)[index],
       }))
     )
 

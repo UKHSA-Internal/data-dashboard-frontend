@@ -13,5 +13,5 @@ export const chartExportFormat: 'csv' | 'json' = 'csv'
  */
 export const chartTableMaxColumns = {
   narrow: 2,
-  wide: 4,
+  wide: 3,
 } as const
