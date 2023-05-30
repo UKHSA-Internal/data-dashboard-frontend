@@ -2,8 +2,8 @@
   "table": {
     "toggle": "View data in a tabular format",
     "header_date": "Month",
-    "header_plot_one": "Amount",
-    "header_plot_other": "{{value}}",
+    "header_plot_single": "Amount",
+    "header_plot_multi": "{{value}}",
     "row_date": "{{value, monthAndYear}}",
     "row_plot": "{{value, number}}"
   },
