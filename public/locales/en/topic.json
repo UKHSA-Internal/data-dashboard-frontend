@@ -2,6 +2,7 @@
   "tabular": {
     "toggle": "View data in a tabular format",
     "date": "{{value, month}}",
+    "data": "{{value, number}}",
     "dateHeading": "Month",
     "valueHeading": "Amount"
   },
