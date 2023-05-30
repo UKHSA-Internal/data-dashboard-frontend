@@ -1,6 +1,7 @@
 import styled from 'styled-components'
 import { typography } from '@govuk-react/lib'
 import { BODY_SIZES, SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
+import { chartDownloadButtonWidth } from '@/styles/Theme'
 
 export const DownloadButton = styled.button`
   display: flex;
@@ -11,7 +12,7 @@ export const DownloadButton = styled.button`
   ${typography.font({ size: BODY_SIZES.SMALL })}
 
   ${MEDIA_QUERIES.TABLET} {
-    width: 122px;
+    width: ${chartDownloadButtonWidth};
   }
 
   &:link,

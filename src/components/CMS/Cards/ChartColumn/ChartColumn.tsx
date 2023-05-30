@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
-import { Paragraph } from 'govuk-react'
 import { Card, CardColumn } from '@/components/Card'
 import kebabCase from 'lodash/kebabCase'
+import { SecondaryText } from './ChartColumn.styles'
 
 interface ChartColumnProps {
   heading: string
@@ -16,7 +16,7 @@ export const ChartColumn = ({ heading, description, children, chart, download, c
   return (
     <Card {...cardProps}>
       <CardColumn heading={heading} sideContent={download} data-testid={`column-${kebabCase(heading)}`}>
-        <Paragraph supportingText>{description}</Paragraph>
+        <SecondaryText supportingText>{description}</SecondaryText>
         {children}
         {chart}
       </CardColumn>
