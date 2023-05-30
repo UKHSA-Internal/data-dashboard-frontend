@@ -1,4 +1,4 @@
-import { render, screen, within } from '@/config/test-utils'
+import { render, screen } from '@/config/test-utils'
 import userEvent from '@testing-library/user-event'
 import { Chart } from './Chart'
 import StoreProvider from '@/lib/StoreProvider'
