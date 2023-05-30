@@ -9,8 +9,8 @@ import {
   newDeathsDailyValues,
   weeklyPositivityByAgeValues,
   newCasesRollingRateValues,
+  covidOccupiedMVBeds,
 } from '.'
-import { covidOccupiedMVBeds } from './COVID-19/covid_occupied_MV_beds'
 
 /**
  * Generates an object containing fixtures for all topics and 4 selected metrics
