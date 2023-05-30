@@ -10,6 +10,7 @@ import {
   weeklyPositivityByAgeValues,
   newCasesRollingRateValues,
 } from '.'
+import { covidOccupiedMVBeds } from './COVID-19/covid_occupied_MV_beds'
 
 /**
  * Generates an object containing fixtures for all topics and 4 selected metrics
@@ -45,7 +46,7 @@ export const fixtures: Fixtures = {
     new_deaths_daily: newDeathsDailyValues,
     new_admissions_daily: nonUniqueMockedValues,
     covid_occupied_beds: nonUniqueMockedValues,
-    covid_occupied_MV_beds: nonUniqueMockedValues,
+    covid_occupied_MV_beds: covidOccupiedMVBeds,
     new_pcr_tests_daily: nonUniqueMockedValues,
     positivity_PCR_rolling_sum: nonUniqueMockedValues,
     new_vaccinations_autumn22: nonUniqueMockedValues,
