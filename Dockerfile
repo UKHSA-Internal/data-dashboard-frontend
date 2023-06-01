@@ -38,7 +38,7 @@ WORKDIR /app
 
 ENV NODE_ENV production
 
-# Disable telemetry during runtimee
+# Disable telemetry during runtimeee
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN addgroup --system --gid 1001 nodejs
