@@ -1,29 +1,44 @@
 import { useTranslation } from 'next-i18next'
-import { Details } from 'govuk-react'
 import { Table } from './ChartTable.styles'
+import { Column, Data } from '../CMS/Blocks/Chart/utils/parseChartTableData'
 
 interface ChartTableProps {
   caption: string
-  rows: Array<{ date: string; value: number }>
+  columns: Array<Column>
+  data: Array<Data>
 }
 
-export const ChartTable = ({ caption, rows }: ChartTableProps) => {
+export const ChartTable = ({ caption, data, columns }: ChartTableProps) => {
   const { t } = useTranslation('topic')
 
   return (
-    <Details summary={t('tabular.toggle')} aria-label={t('tabular.toggle')}>
-      <Table caption={caption}>
-        <Table.Row>
-          <Table.CellHeader>{t('tabular.dateHeading')}</Table.CellHeader>
-          <Table.CellHeader>{t('tabular.valueHeading')}</Table.CellHeader>
-        </Table.Row>
-        {rows.map(({ date, value }) => (
-          <Table.Row key={date}>
-            <Table.CellHeader>{t('tabular.date', { value: date })}</Table.CellHeader>
-            <Table.Cell>{t('tabular.data', { value })}</Table.Cell>
+    <Table caption={caption}>
+      <Table.Row>
+        {columns.map((column, key) => {
+          return (
+            <Table.CellHeader key={key}>
+              {t('table.header', {
+                context: key === 0 ? 'date' : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
+                value: column.header,
+              })}
+            </Table.CellHeader>
+          )
+        })}
+      </Table.Row>
+
+      {data.map((item, key) => {
+        return (
+          <Table.Row key={key}>
+            {columns.map((column, key) => {
+              return (
+                <Table.Cell key={key}>
+                  {t('table.row', { context: key === 0 ? 'date' : 'plot', value: item[column.accessorKey] })}
+                </Table.Cell>
+              )
+            })}
           </Table.Row>
-        ))}
-      </Table>
-    </Details>
+        )
+      })}
+    </Table>
   )
 }

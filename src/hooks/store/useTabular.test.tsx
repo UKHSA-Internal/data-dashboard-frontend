@@ -15,7 +15,12 @@ test('picks out tabular data from the store using the provided id', () => {
       data: [
         {
           date: '123',
-          value: 456,
+          values: [
+            {
+              label: 'Plot1',
+              value: 456,
+            },
+          ],
         },
       ],
     },
@@ -28,7 +33,12 @@ test('picks out tabular data from the store using the provided id', () => {
   expect(result.current).toEqual([
     {
       date: '123',
-      value: 456,
+      values: [
+        {
+          label: 'Plot1',
+          value: 456,
+        },
+      ],
     },
   ])
 })
