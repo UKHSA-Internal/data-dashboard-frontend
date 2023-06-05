@@ -8,7 +8,7 @@ export default function PageNotFound() {
   const { t } = useTranslation('errors')
   return (
     <Page heading={t('pageNotFound.heading')}>
-      <Paragraph>{t<string>('pageNotFound.body')}</Paragraph>
+      <Paragraph>{t('pageNotFound.body')}</Paragraph>
     </Page>
   )
 }

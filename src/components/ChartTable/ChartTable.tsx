@@ -20,6 +20,7 @@ export const ChartTable = ({ caption, data, columns }: ChartTableProps) => {
               {t('table.header', {
                 context: key === 0 ? 'date' : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
                 value: column.header,
+                defaultValue: '',
               })}
             </Table.CellHeader>
           )
@@ -32,7 +33,11 @@ export const ChartTable = ({ caption, data, columns }: ChartTableProps) => {
             {columns.map((column, key) => {
               return (
                 <Table.Cell key={key}>
-                  {t('table.row', { context: key === 0 ? 'date' : 'plot', value: item[column.accessorKey] })}
+                  {t('table.row', {
+                    context: key === 0 ? 'date' : 'plot',
+                    value: item[column.accessorKey],
+                    defaultValue: '',
+                  })}
                 </Table.Cell>
               )
             })}
