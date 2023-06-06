@@ -6,7 +6,7 @@ import { BLUE } from 'govuk-colours'
 
 export const Button = styled(Link)`
   display: inline-flex;
-  margin: 0 ${SPACING.SCALE_3} ${SPACING.SCALE_5};
+  margin: ${SPACING.SCALE_3} ${SPACING.SCALE_3} ${SPACING.SCALE_5} 0;
   ${typography.font({ size: BODY_SIZES.SMALL })}
   background-color: transparent;
   color: ${BLUE};
