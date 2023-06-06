@@ -38,10 +38,6 @@ export const SectionHeading = styled(H2)`
   &:not(:first-of-type) {
     margin-top: ${SPACING.SCALE_3};
   }
-
-  &:focus {
-    color: ${BLACK};
-  }
 `
 
 export const ListItem = styled(GovUKListItem)`

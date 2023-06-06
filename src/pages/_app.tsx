@@ -7,7 +7,7 @@ import nextI18NextConfig from '../../next-i18next.config'
 import { ScrollToTop } from '@/components/ScrollToTop'
 import StoreProvider from '@/lib/StoreProvider'
 
-import '../styles/globals.css'
+import '../styles/globals.scss'
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   initMocks()
