@@ -1,4 +1,4 @@
-import { Link } from 'govuk-react'
+import { Link, Footer as GDSFooter } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { COLOURS } from '@/styles/Theme'
@@ -24,4 +24,8 @@ export const TopNavLink = styled(Link)`
 
 export const Main = styled.main`
   margin-top: ${SPACING.SCALE_4};
+`
+
+export const Footer = styled(GDSFooter)`
+  margin-top: ${SPACING.SCALE_6};
 `
