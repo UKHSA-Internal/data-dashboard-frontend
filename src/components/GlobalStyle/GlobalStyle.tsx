@@ -4,11 +4,11 @@ import localFont from 'next/font/local'
 const GDSTransport = localFont({
   src: [
     {
-      path: '../../../public/fonts/light-94a07e06a1-v2.woff2',
+      path: '../../../public/assets/fonts/light-94a07e06a1-v2.woff2',
       weight: '400',
     },
     {
-      path: '../../../public/fonts/bold-b542beb274-v2.woff2',
+      path: '../../../public/assets/fonts/bold-b542beb274-v2.woff2',
       weight: '700',
     },
   ],
@@ -28,6 +28,7 @@ export const GlobalStyle = createGlobalStyle`
   * {
     padding: 0;
     margin: 0;
+    // The below overrides are for the govuk-react library font (which cannot be modified)
     font-family: var(--gds-transport-font) !important;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
