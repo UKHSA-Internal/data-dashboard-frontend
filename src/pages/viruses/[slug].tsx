@@ -43,7 +43,7 @@ const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLi
         {accordion.map(({ id, body }) => (
           <AccordionItem key={id}>
             <AccordionItemHeading>
-              <AccordionItemButton>{t('accordion.heading', { context: id })}</AccordionItemButton>
+              <AccordionItemButton>{t('accordion.heading', { context: id, defaultValue: '' })}</AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
               <FormattedContent>{body}</FormattedContent>
@@ -92,23 +92,23 @@ export const getStaticProps: GetStaticProps<{
       const accordion = [
         {
           id: 'symptoms',
-          body: rest.symptoms,
+          body: rest.symptoms ?? '',
         },
         {
           id: 'transmission',
-          body: rest.transmission,
+          body: rest.transmission ?? '',
         },
         {
           id: 'treatment',
-          body: rest.treatment,
+          body: rest.treatment ?? '',
         },
         {
           id: 'prevention',
-          body: rest.prevention,
+          body: rest.prevention ?? '',
         },
         {
           id: 'surveillance_and_reporting',
-          body: rest.surveillance_and_reporting,
+          body: rest.surveillance_and_reporting ?? '',
         },
       ]
 
