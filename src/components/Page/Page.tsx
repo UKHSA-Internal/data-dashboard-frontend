@@ -3,6 +3,7 @@ import { Container, Heading, LastUpdated } from './Page.styles'
 import { useTranslation } from 'next-i18next'
 import { Meta } from '../Meta'
 import { FormattedContent } from '../FormattedContent'
+import { GridCol, GridRow } from 'govuk-react'
 
 interface PageProps {
   heading: string
@@ -17,9 +18,13 @@ export const Page = ({ children, heading, description, lastUpdated }: PageProps)
     <>
       <Meta title={heading} />
       <Container>
-        {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
-        <Heading>{heading}</Heading>
-        {description && <FormattedContent>{description}</FormattedContent>}
+        <GridRow>
+          <GridCol setDesktopWidth="two-thirds">
+            {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
+            <Heading>{heading}</Heading>
+            {description && <FormattedContent>{description}</FormattedContent>}
+          </GridCol>
+        </GridRow>
         {children}
       </Container>
     </>

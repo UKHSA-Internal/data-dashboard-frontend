@@ -43,7 +43,7 @@ const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLi
         {accordion.map(({ id, body }) => (
           <AccordionItem key={id}>
             <AccordionItemHeading>
-              <AccordionItemButton>{t('accordion.heading', { context: id })}</AccordionItemButton>
+              <AccordionItemButton>{t('accordion.heading', { context: id, defaultValue: '' })}</AccordionItemButton>
             </AccordionItemHeading>
             <AccordionItemPanel>
               <FormattedContent>{body}</FormattedContent>
