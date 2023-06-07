@@ -4,8 +4,9 @@ import { Navigation } from '../Navigation'
 import RouterLink from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { ScrollToTop } from '../ScrollToTop'
+import { Footer } from '../Footer'
 
-import { TopNavLink, Main, Footer } from './Layout.styles'
+import { TopNavLink, Main } from './Layout.styles'
 
 export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollToTop?: boolean }) => {
   const { t } = useTranslation('common')
@@ -37,17 +38,7 @@ export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollTo
         {children}
         {scrollToTop && <ScrollToTop />}
       </Page>
-      <Footer
-        copyright={{
-          image: {
-            height: 102,
-            src: 'govuk-crest-2x.png',
-            width: 125,
-          },
-          link: 'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/',
-          text: 'Crown copyright',
-        }}
-      />
+      <Footer />
     </>
   )
 }
