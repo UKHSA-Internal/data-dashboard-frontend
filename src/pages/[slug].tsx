@@ -6,16 +6,16 @@ import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import type { RelatedLinks as Links } from '@/api/models/cms/Page'
+import type { RelatedLinks as Links, Meta } from '@/api/models/cms/Page'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-export const CommonPage = ({ title, body, relatedLinks, lastUpdated }: CommonPageProps) => {
+export const CommonPage = ({ title, body, relatedLinks, lastUpdated, meta }: CommonPageProps) => {
   if (!title) return null
 
   return (
-    <Page heading={title} lastUpdated={lastUpdated}>
+    <Page heading={title} lastUpdated={lastUpdated} seoTitle={meta.seo_title} seoDescription={meta.search_description}>
       <FormattedContent hasLinkedHeadings>{body}</FormattedContent>
       <RelatedLinks links={relatedLinks} />
     </Page>
@@ -29,6 +29,7 @@ export const getStaticProps: GetStaticProps<{
   body: string
   lastUpdated: string
   relatedLinks: Links
+  meta: Meta
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -44,6 +45,7 @@ export const getStaticProps: GetStaticProps<{
         body,
         last_published_at: lastUpdated,
         related_links: relatedLinks = [],
+        meta,
       } = await getPageBySlug(String(params.slug), PageType.Common)
 
       // Parse the cms response and pick out only relevant data for the ui
@@ -53,6 +55,7 @@ export const getStaticProps: GetStaticProps<{
           body,
           lastUpdated,
           relatedLinks,
+          meta,
           ...(await serverSideTranslations(req.locale as string, ['common'])),
         },
         revalidate: getStaticPropsRevalidateValue(),
