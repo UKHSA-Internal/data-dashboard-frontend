@@ -169,10 +169,10 @@ describe('Home page', () => {
 
   it('displays a tabular version for each chart', () => {
     const headers = ['Month', 'Amount']
-    const months = ['October', 'November', 'December', 'January', 'February', 'March']
+    const months = ['Oct 2022', 'Nov 2022', 'Dec 2022', 'Jan 2023', 'Feb 2023', 'Mar 2023']
 
     cy.findByTestId('cases-section').within(() => {
-      const values = ['12630', '9360', '10886', '7268', '11408', '5234']
+      const values = ['12,630', '9,360', '10,886', '7,268', '11,408', '5,234']
       cy.findByText('View data in a tabular format').click()
       cy.findByRole('table').within(() => {
         cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
@@ -182,7 +182,7 @@ describe('Home page', () => {
     })
 
     cy.findByTestId('deaths-section').within(() => {
-      const values = ['4630', '3608', '3886', '3268', '4087', '2364']
+      const values = ['4,630', '3,608', '3,886', '3,268', '4,087', '2,364']
       cy.findByText('View data in a tabular format').click()
       cy.findByRole('table').within(() => {
         cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
@@ -202,7 +202,7 @@ describe('Home page', () => {
     })
 
     cy.findByTestId('testing-section').within(() => {
-      const values = ['28630', '19608', '23886', '12268', '24087', '32364']
+      const values = ['28,630', '19,608', '23,886', '12,268', '24,087', '32,364']
       cy.findByText('View data in a tabular format').click()
       cy.findByRole('table').within(() => {
         cy.wrap(headers).each((_, index) => cy.findByText(headers[index]))
