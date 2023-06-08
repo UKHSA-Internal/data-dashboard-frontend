@@ -9,16 +9,14 @@ import { Layout } from '@/components/Layout'
 export default function PageNotFound() {
   const { t } = useTranslation('errors')
   return (
-    <Page heading={t('pageNotFound.heading')}>
+    <Page heading={t('serviceProblem.heading')}>
       <GridRow>
         <GridCol setDesktopWidth="two-thirds">
-          <Trans t={t} i18nKey="pageNotFound.body">
-            <p>If you typed the web address, check it is correct.</p>
-            <p>If you pasted the web address, check you copied the entire address.</p>
+          <Trans t={t} i18nKey="serviceProblem.body">
+            <p>Try again later.</p>
             <p>
-              <span>If the web address is correct or you selected a link or button, </span>
               <a href="https://www.gov.uk/government/collections/contacts-public-health-england-regions-local-centres-and-emergency">
-                contact the UK Health Security Agency (UKHSA)
+                Contact the UK Health Security Agency (UKHSA)
               </a>
               <span>if you need to speak to someone.</span>
             </p>

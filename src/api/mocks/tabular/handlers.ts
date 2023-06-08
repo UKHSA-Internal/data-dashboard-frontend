@@ -5,20 +5,24 @@ import { fixtures } from './fixtures/fixtures'
 import { requestSchema } from '@/api/requests/tabular/getTabular'
 
 export const handlers = [
-  rest.get(
-    `${getApiBaseUrl()}/tabular/:topic/:metric`,
-    apiResolver((req, res, ctx) => {
+  rest.post(
+    `${getApiBaseUrl()}/tables/v2`,
+    apiResolver(async (req, res, ctx) => {
+      // Extract request body
+      const requestBody = await req.json()
+
       // Validate query parameters
-      const parsedQueryParams = requestSchema.safeParse(req.params)
+      const parsedQueryParams = requestSchema.safeParse(requestBody)
 
       // Return a 500 if the query parameters provided aren't valid
       if (!parsedQueryParams.success) {
         return res(ctx.status(500))
       }
 
-      // Pick out the metric query parameter
       const {
-        data: { metric, topic },
+        data: {
+          plots: [{ metric, topic }],
+        },
       } = parsedQueryParams
 
       const mockedMetric = metric as

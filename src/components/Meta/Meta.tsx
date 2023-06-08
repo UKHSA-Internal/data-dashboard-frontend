@@ -11,8 +11,8 @@ export const Meta = ({ title }: MetaProps) => {
 
   return (
     <NextSeo
-      title={t<string>('meta.title', { title })}
-      description={t<string>('meta.description')}
+      title={t('meta.title', { title })}
+      description={t('meta.description')}
       openGraph={{
         type: 'website',
         locale: 'en_GB',
@@ -27,12 +27,12 @@ export const Meta = ({ title }: MetaProps) => {
         url: process.env.NEXT_PUBLIC_BASE_URL,
       }}
       twitter={{
-        site: t<string>('meta.twitterId'),
+        site: t('meta.twitterId'),
         cardType: 'summary_large_image',
       }}
       themeColor={BLACK}
       additionalMetaTags={[
-        { name: 'copyrightNotice', content: t<string>('meta.copyright') },
+        { name: 'copyrightNotice', content: t('meta.copyright') },
         { name: 'logo', content: '/assets/summary/icon/favicon.png' },
       ]}
       additionalLinkTags={[
