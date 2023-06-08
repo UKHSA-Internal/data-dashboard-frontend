@@ -20,6 +20,11 @@ describe('Home page', () => {
 
   it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Respiratory viruses')
+    cy.get('head meta[name="description"]').should(
+      'have.attr',
+      'content',
+      'Data and insights from the UKHSA on respiratory viruses.'
+    )
     cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
     cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
