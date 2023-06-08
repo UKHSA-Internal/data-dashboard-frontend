@@ -10,7 +10,7 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
     html_url: null,
     slug: 'coronavirus',
     show_in_menus: false,
-    seo_title: '',
+    seo_title: 'Coronavirus',
     search_description: '',
     first_published_at: '2023-05-15T17:23:02.306556+01:00',
     alias_of: null,

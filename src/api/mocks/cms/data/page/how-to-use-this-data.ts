@@ -10,7 +10,7 @@ export const howToUseThisDataPageMock: PageResponse<PageType.Common> = {
     html_url: null,
     slug: 'how-to-use-this-data',
     show_in_menus: false,
-    seo_title: '',
+    seo_title: 'How to use this data',
     search_description: '',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
