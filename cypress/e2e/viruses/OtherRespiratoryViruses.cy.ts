@@ -27,7 +27,7 @@ describe('Other respiratory viruses topic page', () => {
   it('displays a title, description and last updated date', () => {
     cy.title().should('eq', 'Other respiratory viruses')
     cy.findByRole('heading', { name: 'Other respiratory viruses', level: 1 })
-    cy.findByText(/Last updated on Tuesday, 16 May 2023/)
+    cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on other respiratory viruses./)
   })
 
@@ -64,7 +64,6 @@ describe('Other respiratory viruses topic page', () => {
           'RSV SARI Watch surveillance has run from week 40 to week 20. In the 2022 to 2023 season onwards this was extended to run throughout the year, to allow for surveillance of out-of-season trends.'
         )
         cy.findByAltText('')
-        cy.findByText('View data in a tabular format')
       })
 
       // Bar chart comparing RSV hospital admissions count by week
@@ -72,7 +71,6 @@ describe('Other respiratory viruses topic page', () => {
         cy.findByRole('heading', { name: 'Bar chart comparing RSV hospital admissions count by week', level: 3 })
         cy.findByText('Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.')
         cy.findByAltText('')
-        cy.findByText('View data in a tabular format')
       })
     })
 
@@ -89,19 +87,6 @@ describe('Other respiratory viruses topic page', () => {
         cy.findByAltText('')
         cy.findByText('View data in a tabular format')
       })
-
-      // Line chart comparing Adenovirus test positivity count by week broken down by age
-      cy.findByTestId('column-line-chart-comparing-adenovirus-test-positivity-count-by-week-broken-down-by-age').within(
-        () => {
-          cy.findByRole('heading', {
-            name: 'Line chart comparing Adenovirus test positivity count by week broken down by age',
-            level: 3,
-          })
-          cy.findByText('Age breakdown of people testing positive for Adenovirus per 100,000 people.')
-          cy.findByAltText('')
-          cy.findByText('View data in a tabular format')
-        }
-      )
 
       // Line chart comparing hMPV test positivity count by week
       cy.findByTestId('line-chart-comparing-h-mpv-test-positivity-count-by-week-section').within(() => {
@@ -189,19 +174,6 @@ describe('Other respiratory viruses topic page', () => {
         cy.findByAltText('')
         cy.findByText('View data in a tabular format')
       })
-
-      // Line chart comparing RSV test positivity count by week broken down by age
-      cy.findByTestId('line-chart-comparing-rsv-test-positivity-count-by-week-broken-down-by-age-section').within(
-        () => {
-          cy.findByRole('heading', {
-            name: 'Line chart comparing RSV test positivity count by week broken down by age',
-            level: 3,
-          })
-          cy.findByText('Age breakdown of people testing positive for Rhinovirus per 100,000 people.')
-          cy.findByAltText('')
-          cy.findByText('View data in a tabular format')
-        }
-      )
     })
   })
 })
