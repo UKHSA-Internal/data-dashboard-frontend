@@ -10,8 +10,8 @@ export const homePageMock: PageResponse<PageType.Home> = {
     html_url: null,
     slug: 'respiratory-viruses',
     show_in_menus: false,
-    seo_title: '',
-    search_description: '',
+    seo_title: 'Respiratory viruses',
+    search_description: 'Data and insights from the UKHSA on respiratory viruses.',
     first_published_at: '2023-04-26T12:39:38.064114+01:00',
     alias_of: null,
     parent: {
