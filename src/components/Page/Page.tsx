@@ -10,13 +10,15 @@ interface PageProps {
   description?: string
   children: ReactNode
   lastUpdated?: string
+  seoTitle: string
+  seoDescription: string
 }
 
-export const Page = ({ children, heading, description, lastUpdated }: PageProps) => {
+export const Page = ({ children, heading, description, lastUpdated, seoTitle, seoDescription }: PageProps) => {
   const { t } = useTranslation('common')
   return (
     <>
-      <Meta title={heading} />
+      <Meta title={seoTitle} description={seoDescription} />
       <Container>
         <GridRow>
           <GridCol setDesktopWidth="two-thirds">
