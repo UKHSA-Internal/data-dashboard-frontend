@@ -10,7 +10,7 @@ export const aboutPageMock: PageResponse<PageType.Common> = {
     html_url: null,
     slug: 'about',
     show_in_menus: false,
-    seo_title: '',
+    seo_title: 'About',
     search_description: '',
     first_published_at: '2023-05-12T08:39:57.331697+01:00',
     alias_of: null,
