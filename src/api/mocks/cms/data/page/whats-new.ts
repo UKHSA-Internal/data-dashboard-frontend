@@ -10,7 +10,7 @@ export const whatsNewPageMock: PageResponse<PageType.Common> = {
     html_url: null,
     slug: 'whats-new',
     show_in_menus: false,
-    seo_title: '',
+    seo_title: "What's New",
     search_description: '',
     first_published_at: '2023-05-12T14:51:37.489405+01:00',
     alias_of: null,
