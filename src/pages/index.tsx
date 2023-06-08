@@ -21,7 +21,7 @@ export default function Home({ title, description, relatedLinks, lastUpdated, bo
 
   return (
     <Page heading={title} description={description} lastUpdated={lastUpdated}>
-      <Contents heading={t<string>('contentsHeading')}>
+      <Contents heading={t('contentsHeading')}>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
             {value.content.map(Utils.renderCard)}

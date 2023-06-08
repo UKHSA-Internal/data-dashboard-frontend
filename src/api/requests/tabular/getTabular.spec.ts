@@ -30,22 +30,24 @@ const tabularMocks: Array<[Topics, Metrics, Response]> = [
 ]
 
 test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', async (topic, metric, data) => {
-  const result = await getTabular({ topic, metric })
+  const result = await getTabular([{ topic, metric }])
 
   expect(result).toEqual<SuccessResponse>({ success: true, data })
 })
 
 test('Handles invalid json received from the api', async () => {
   server.use(
-    rest.get(`${getApiBaseUrl()}/tabular/COVID-19/new_cases_daily`, (req, res, ctx) => {
+    rest.post(`${getApiBaseUrl()}/tables/v2`, (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({}))
     })
   )
 
-  const result = await getTabular({
-    topic: 'COVID-19',
-    metric: 'new_cases_daily',
-  })
+  const result = await getTabular([
+    {
+      topic: 'COVID-19',
+      metric: 'new_cases_daily',
+    },
+  ])
 
   expect(result).toEqual<ErrorResponse>({
     success: false,
@@ -63,15 +65,17 @@ test('Handles invalid json received from the api', async () => {
 
 test('Handles generic http error', async () => {
   server.use(
-    rest.get(`${getApiBaseUrl()}/tabular/COVID-19/new_cases_daily`, (req, res, ctx) => {
+    rest.post(`${getApiBaseUrl()}/tables/v2`, (req, res, ctx) => {
       return res(ctx.status(404))
     })
   )
 
-  const result = await getTabular({
-    topic: 'COVID-19',
-    metric: 'new_cases_daily',
-  })
+  const result = await getTabular([
+    {
+      topic: 'COVID-19',
+      metric: 'new_cases_daily',
+    },
+  ])
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 

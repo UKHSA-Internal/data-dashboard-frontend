@@ -7,15 +7,20 @@ import common from '../../public/locales/en/common.json'
 import topic from '../../public/locales/en/topic.json'
 import errors from '../../public/locales/en/errors.json'
 
+export const defaultNS = 'common'
+export const resources = {
+  en: {
+    common,
+    topic,
+    errors,
+  },
+} as const
+
 i18n.use(initReactI18next).init({
   lng: 'en',
-  resources: {
-    en: {
-      common,
-      topic,
-      errors,
-    },
-  },
+  ns: ['common', 'topic', 'errors'],
+  resources,
+  defaultNS,
   interpolation: {
     format: formatters,
   },

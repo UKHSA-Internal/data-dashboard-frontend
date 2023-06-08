@@ -1,11 +1,13 @@
-import { Footer, Page, PhaseBanner, TopNav } from 'govuk-react'
+import { Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren, useEffect } from 'react'
 import { Navigation } from '../Navigation'
 import RouterLink from 'next/link'
 import { useTranslation } from 'next-i18next'
-import { TopNavLink, Main } from './Layout.styles'
+import { ScrollToTop } from '../ScrollToTop'
 
-export const Layout = ({ children }: PropsWithChildren) => {
+import { TopNavLink, Main, Footer } from './Layout.styles'
+
+export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollToTop?: boolean }) => {
   const { t } = useTranslation('common')
 
   useEffect(() => {
@@ -33,6 +35,7 @@ export const Layout = ({ children }: PropsWithChildren) => {
         main={Main}
       >
         {children}
+        {scrollToTop && <ScrollToTop />}
       </Page>
       <Footer
         copyright={{

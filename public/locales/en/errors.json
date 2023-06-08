@@ -1,6 +1,10 @@
 {
   "pageNotFound": {
     "heading": "Page not found",
-    "body": "Please try again later"
+    "body": "<0>If you typed the web address, check it is correct.</0><1>If you pasted the web address, check you copied the entire address.</1><2><0>If the web address is correct or you selected a link or button, </0><1>contact the UK Health Security Agency (UKHSA)</1><2> if you need to speak to someone.</2></2>"
+  },
+  "serviceProblem": {
+    "heading": "Sorry, there is a problem with the service",
+    "body": "<0>Try again later.</0><1><0>Contact the UK Health Security Agency (UKHSA)</0><1> if you need to speak to someone.</1></1>"
   }
 }

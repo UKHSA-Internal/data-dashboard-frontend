@@ -1,10 +1,11 @@
 {
-  "tabular": {
+  "table": {
     "toggle": "View data in a tabular format",
-    "date": "{{value, month}}",
-    "data": "{{value, number}}",
-    "dateHeading": "Month",
-    "valueHeading": "Amount"
+    "header_date": "Month",
+    "header_plot_single": "Amount",
+    "header_plot_multi": "{{value}}",
+    "row_date": "{{value, monthAndYear}}",
+    "row_plot": "{{value, number}}"
   },
   "accordion": {
     "heading_symptoms": "Symptoms",
