@@ -14,6 +14,7 @@ import { getCmsApiPath } from '@/api/requests/helpers'
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+import { logger } from '@/lib/logger'
 
 const baseUrl = getCmsApiPath()
 
@@ -43,7 +44,10 @@ export const handlers = [
     apiResolver((req, res, ctx) => {
       const searchParams = req.url.searchParams
 
-      if (!searchParams.has('type')) return
+      if (!searchParams.has('type')) {
+        logger.error('Missing type searchParam')
+        return res(ctx.status(500))
+      }
 
       const pageType = searchParams.get('type') as PageType
 
