@@ -4,15 +4,16 @@ import { BLACK } from 'govuk-colours'
 
 interface MetaProps {
   title: string
+  description: string
 }
 
-export const Meta = ({ title }: MetaProps) => {
+export const Meta = ({ title, description }: MetaProps) => {
   const { t } = useTranslation('common')
 
   return (
     <NextSeo
       title={t('meta.title', { title })}
-      description={t('meta.description')}
+      description={t('meta.description', { description })}
       openGraph={{
         type: 'website',
         locale: 'en_GB',

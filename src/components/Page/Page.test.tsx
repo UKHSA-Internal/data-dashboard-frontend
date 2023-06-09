@@ -3,7 +3,13 @@ import { Page } from './Page'
 import { ComponentProps } from 'react'
 
 const getComponent = (props?: Partial<ComponentProps<typeof Page>>) => (
-  <Page {...props} heading="Page heading" lastUpdated="2023-03-21T10:25:34.452098Z">
+  <Page
+    {...props}
+    heading="Page heading"
+    lastUpdated="2023-03-21T10:25:34.452098Z"
+    seoTitle="Meta title"
+    seoDescription="Meta description"
+  >
     Content
   </Page>
 )

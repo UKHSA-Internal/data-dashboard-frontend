@@ -10,7 +10,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
     html_url: null,
     slug: 'influenza',
     show_in_menus: false,
-    seo_title: '',
+    seo_title: 'Influenza',
     search_description: '',
     first_published_at: '2023-05-12T16:58:42.299211+01:00',
     alias_of: null,

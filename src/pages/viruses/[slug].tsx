@@ -13,7 +13,7 @@ import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { logger } from '@/lib/logger'
-import { RelatedLinks as Links, Body } from '@/api/models/cms/Page'
+import { RelatedLinks as Links, Body, Meta } from '@/api/models/cms/Page'
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
 import { initializeStore } from '@/lib/store'
 import { Contents, ContentsItem } from '@/components/Contents'
@@ -24,13 +24,19 @@ import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
 type TopicPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
-const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLinks }: TopicPageProps) => {
+const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLinks, meta }: TopicPageProps) => {
   const { t } = useTranslation('topic')
 
   if (!title) return null
 
   return (
-    <Page heading={title} description={description} lastUpdated={lastUpdated}>
+    <Page
+      heading={title}
+      description={description}
+      lastUpdated={lastUpdated}
+      seoTitle={meta.seo_title}
+      seoDescription={meta.search_description}
+    >
       <Contents>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
@@ -66,6 +72,7 @@ export const getStaticProps: GetStaticProps<{
   accordion: Array<{ id: string; body: string }>
   lastUpdated: string
   relatedLinks: Links
+  meta: Meta
 }> = async (req) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
@@ -82,6 +89,7 @@ export const getStaticProps: GetStaticProps<{
         page_description: description,
         last_published_at: lastUpdated,
         related_links: relatedLinks = [],
+        meta,
         ...rest
       } = await getPageBySlug(String(params.slug), PageType.Topic)
 
@@ -121,6 +129,7 @@ export const getStaticProps: GetStaticProps<{
           accordion,
           lastUpdated,
           relatedLinks,
+          meta,
           initialZustandState: JSON.parse(JSON.stringify(store.getState())),
           ...(await serverSideTranslations(req.locale as string, ['common', 'topic'])),
         },
