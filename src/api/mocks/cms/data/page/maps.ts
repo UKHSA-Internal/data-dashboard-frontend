@@ -10,7 +10,7 @@ export const mapsPageMock: PageResponse<PageType.Common> = {
     html_url: null,
     slug: 'maps',
     show_in_menus: false,
-    seo_title: '',
+    seo_title: 'Maps',
     search_description: '',
     first_published_at: '2023-05-12T16:33:40.460981+01:00',
     alias_of: null,

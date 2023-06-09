@@ -9,7 +9,7 @@ import { Layout } from '@/components/Layout'
 export default function PageNotFound() {
   const { t } = useTranslation('errors')
   return (
-    <Page heading={t('pageNotFound.heading')}>
+    <Page heading={t('pageNotFound.heading')} seoTitle={t('pageNotFound.heading')} seoDescription="">
       <GridRow>
         <GridCol setDesktopWidth="two-thirds">
           <Trans t={t} i18nKey="pageNotFound.body">
