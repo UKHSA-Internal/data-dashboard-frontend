@@ -1,8 +1,8 @@
-import Styled from './Footer.styles'
+import { Container } from './Footer.styles'
 
 export const Footer = () => {
   return (
-    <Styled.Footer className="govuk-footer" role="contentinfo">
+    <Container className="govuk-footer" role="contentinfo">
       <div className="govuk-width-container">
         <div className="govuk-footer__meta">
           <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
@@ -42,6 +42,6 @@ export const Footer = () => {
           </div>
         </div>
       </div>
-    </Styled.Footer>
+    </Container>
   )
 }
