@@ -148,11 +148,17 @@ describe('Influenza Page', () => {
   })
 
   it('Displays accordion, and accordion functionality works', () => {
-    cy.checkAccordionExists()
+    cy.findByTestId('virus-accordion').as('accordion')
+
+    cy.get('@accordion').within(() => {
+      cy.findByRole('button', { name: 'Show all sections' })
+    })
   })
 
   it('displays related links', () => {
-    cy.checkRelatedLinksExist()
+    cy.findByRole('heading', { name: 'Related Links', level: 2 })
+
+    cy.findByRole('anchor').should('have.attr', 'href')
   })
 })
 
@@ -163,13 +169,5 @@ describe('Other respiratory viruses page', () => {
 
   it('Displays heading', () => {
     cy.findByRole('heading', { name: 'Other Respiratory Viruses' })
-  })
-
-  it('Displays accordion, and accordion functionality works', () => {
-    cy.checkAccordionExists()
-  })
-
-  it('displays related links', () => {
-    cy.checkRelatedLinksExist()
   })
 })

@@ -13,7 +13,7 @@
     "test:ci": "jest --ci --coverage",
     "test:e2e": "cypress open --e2e",
     "test:e2e:ci": "cypress run --e2e",
-    "test:smoke": "cypress run --spec \"cypress/smoke/*\"",
+    "test:e2e:smoke": "cypress run --spec \"cypress/smoke/*\"",
     "prepare": "husky install",
     "storybook": "storybook dev -p 6006 --no-open",
     "build-storybook": "storybook build"

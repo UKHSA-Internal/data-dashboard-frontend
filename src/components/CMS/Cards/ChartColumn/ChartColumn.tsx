@@ -16,7 +16,9 @@ export const ChartColumn = ({ heading, description, children, chart, download, c
   return (
     <Card {...cardProps}>
       <CardColumn heading={heading} sideContent={download} data-testid={`column-${kebabCase(heading)}`}>
-        <SecondaryText supportingText>{description}</SecondaryText>
+        <SecondaryText supportingText fullWidth={!download}>
+          {description}
+        </SecondaryText>
         {children}
         {chart}
       </CardColumn>
