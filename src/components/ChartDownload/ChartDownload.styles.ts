@@ -1,10 +1,10 @@
 import { BODY_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
-import styled, { css } from 'styled-components'
 
 import { chartDownloadButtonWidth } from '@/styles/Theme'
+import styled from 'styled-components'
 import { typography } from '@govuk-react/lib'
 
-export const DownloadButton = styled.button<{ $downloading: boolean }>`
+export const DownloadButton = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
@@ -12,13 +12,11 @@ export const DownloadButton = styled.button<{ $downloading: boolean }>`
   height: 29px;
   ${typography.font({ size: BODY_SIZES.SMALL })}
 
-  ${(props) =>
-    props.$downloading &&
-    css`
-      ${MEDIA_QUERIES.TABLET} {
-        width: ${chartDownloadButtonWidth};
-      }
-    `}
+  &:not([data-loading='true']) {
+    ${MEDIA_QUERIES.TABLET} {
+      width: ${chartDownloadButtonWidth};
+    }
+  }
 
   &:link,
   &:visited,
