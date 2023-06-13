@@ -1,7 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloads'
-import { logger } from '@/lib/logger'
+
 import { initMocks } from '@/api/msw'
+import { logger } from '@/lib/logger'
 
 /**
  * NextJS API Route that proxies request from the frontend to the backend API endpoint
