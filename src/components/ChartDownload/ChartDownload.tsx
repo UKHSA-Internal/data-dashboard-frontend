@@ -74,11 +74,11 @@ export const ChartDownload = ({ chart }: ChartDownloadProps) => {
 
       <Button
         type="submit"
-        $downloading={downloading}
         as={DownloadButton}
         buttonColour={COLOURS.BUTTON_GREY}
         buttonTextColour={BLACK}
         buttonShadowColour={BLACK}
+        data-loading={downloading}
       >
         <IconWrapper>{downloading ? t('downloadingBtn') : t('downloadBtn')}</IconWrapper>
       </Button>
