@@ -13,6 +13,7 @@ import { Contents, ContentsItem } from '@/components/Contents'
 import { StoreState, initializeStore } from '@/lib/store'
 import { logger } from '@/lib/logger'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
+import OpenStreetMap from '@/components/Maps/openStreetMap'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -27,13 +28,15 @@ export default function Home({ title, description, relatedLinks, lastUpdated, bo
       seoTitle={meta.seo_title}
       seoDescription={meta.search_description}
     >
-      <Contents heading={t('contentsHeading')}>
-        {body.map(({ id, value }) => (
+      <OpenStreetMap />
+      {/* <Contents heading={t('contentsHeading')}> */}
+
+      {/* {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
             {value.content.map(Utils.renderCard)}
           </ContentsItem>
-        ))}
-      </Contents>
+        ))} */}
+      {/* </Contents> */}
 
       <RelatedLinks links={relatedLinks} />
     </Page>
