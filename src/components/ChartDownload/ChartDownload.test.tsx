@@ -1,7 +1,22 @@
-import { render, screen } from '@/config/test-utils'
-import { ChartDownload } from './ChartDownload'
+import { render, screen, waitFor } from '@/config/test-utils'
+
 import type { Chart } from '@/api/models/cms/Page'
+import { ChartDownload } from './ChartDownload'
 import { chartExportApiRoutePath } from '@/config/constants'
+import { downloadFile } from '@/utils/downloadFile'
+import { logger } from '@/lib/logger'
+import mockRouter from 'next-router-mock'
+import { rest } from 'msw'
+import { server } from '@/api/msw/server'
+import userEvent from '@testing-library/user-event'
+
+jest.mock('next/router', () => require('next-router-mock'))
+jest.mock('@/lib/logger')
+jest.mock('@/utils/downloadFile')
+
+beforeAll(() => server.listen())
+afterAll(() => server.close())
+afterEach(() => server.resetHandlers())
 
 const chart: Chart = [
   {
@@ -92,4 +107,52 @@ test('Displays the download button correctly', async () => {
 
   const button = screen.getByRole('button', { name: 'Download' })
   expect(button).toHaveAttribute('type', 'submit')
+})
+
+test('Downloading the chart', async () => {
+  server.use(
+    rest.post(chartExportApiRoutePath, async (req, res, ctx) => {
+      return res(ctx.delay(100), ctx.status(200))
+    })
+  )
+
+  const user = userEvent.setup()
+
+  render(<ChartDownload chart={chart} />)
+
+  const button = screen.getByRole('button', { name: 'Download' })
+
+  await user.click(button)
+
+  await screen.findByRole('button', { name: 'Downloading...' })
+
+  await waitFor(() => {
+    expect(downloadFile).toHaveBeenCalledWith('data.csv', new Blob())
+  })
+
+  await screen.findByRole('button', { name: 'Download' })
+})
+
+test('Redirects to the 500 page if the download fails', async () => {
+  server.use(
+    rest.post(chartExportApiRoutePath, async (req, res, ctx) => {
+      return res(ctx.delay(100), ctx.status(500))
+    })
+  )
+
+  const user = userEvent.setup()
+
+  render(<ChartDownload chart={chart} />)
+
+  const button = screen.getByRole('button', { name: 'Download' })
+
+  await user.click(button)
+
+  await screen.findByRole('button', { name: 'Downloading...' })
+
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/500')
+  })
+
+  expect(logger.error).toHaveBeenCalled()
 })
