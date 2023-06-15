@@ -126,7 +126,9 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
             doc.location.reload()
           }, 1000)
         })
-        cy.findByRole('button', { name: 'Download' }).click()
+        cy.get('@cases-section').within(() => {
+          cy.findByRole('button', { name: 'Download' }).click()
+        })
 
         cy.readFile(path.join(downloadsFolder, 'data.csv')).should('eql', downloadsCsvFixture)
 
