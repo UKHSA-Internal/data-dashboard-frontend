@@ -45,87 +45,133 @@ export const homePageMock: PageResponse<PageType.Home> = {
             value: {
               columns: [
                 {
-                  type: 'headline_and_trend_component',
+                  type: 'column',
                   value: {
                     title: 'Cases',
-                    headline_number: {
-                      topic: 'COVID-19',
-                      metric: 'new_cases_7days_sum',
-                      body: 'Weekly',
-                    },
-                    trend_number: {
-                      topic: 'COVID-19',
-                      metric: 'new_cases_7days_change',
-                      body: 'Last 7 days',
-                      percentage_metric: 'new_cases_7days_change_percentage',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_cases_7days_sum',
+                          body: 'Weekly',
+                        },
+                        id: 'eff08341-7bfa-4a3b-b013-527e7b954ce8',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_cases_7days_change',
+                          body: 'Last 7 days',
+                          percentage_metric: 'new_cases_7days_change_percentage',
+                        },
+                        id: 'a57a4ad5-6b52-45a6-acfd-2fe208cb5617',
+                      },
+                    ],
                   },
-                  id: 'e64cc7ea-4551-47f0-b964-941d59cae1bb',
+                  id: 'ff081d2a-e235-4bc2-9b09-220f8fe20494',
                 },
                 {
-                  type: 'headline_and_trend_component',
+                  type: 'column',
                   value: {
                     title: 'Deaths',
-                    headline_number: {
-                      topic: 'COVID-19',
-                      metric: 'new_deaths_7days_sum',
-                      body: 'Weekly',
-                    },
-                    trend_number: {
-                      topic: 'COVID-19',
-                      metric: 'new_deaths_7days_change',
-                      body: 'Last 7 days',
-                      percentage_metric: 'new_deaths_7days_change_percentage',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_deaths_7days_sum',
+                          body: 'Weekly',
+                        },
+                        id: '2e403485-030c-4122-86be-5827a095f30d',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_deaths_7days_change',
+                          body: 'Last 7 days',
+                          percentage_metric: 'new_deaths_7days_change_percentage',
+                        },
+                        id: 'ea8603ca-7b4d-4ef5-a8b1-f27a565938b5',
+                      },
+                    ],
                   },
-                  id: 'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5',
+                  id: '530cf367-092c-40d1-9129-c2274c7836b9',
                 },
                 {
-                  type: 'headline_and_trend_component',
+                  type: 'column',
                   value: {
                     title: 'Healthcare',
-                    headline_number: {
-                      topic: 'COVID-19',
-                      metric: 'new_admissions_7days',
-                      body: 'Patients admitted',
-                    },
-                    trend_number: {
-                      topic: 'COVID-19',
-                      metric: 'new_admissions_7days_change',
-                      body: 'Last 7 days',
-                      percentage_metric: 'new_admissions_7days_change_percentage',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_admissions_7days',
+                          body: 'Patients admitted',
+                        },
+                        id: '2f49a215-02e7-4ded-94b1-1a0c2933708b',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'new_admissions_7days_change',
+                          body: 'Last 7 days',
+                          percentage_metric: 'new_admissions_7days_change_percentage',
+                        },
+                        id: '6c09d01e-82c5-425f-aa07-1bdd22d1eaa8',
+                      },
+                    ],
                   },
-                  id: '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f',
+                  id: 'fad2e89a-8a65-44a8-b962-9df59169c0af',
                 },
                 {
-                  type: 'dual_headline_component',
+                  type: 'column',
                   value: {
                     title: 'Vaccines',
-                    top_headline_number: {
-                      topic: 'COVID-19',
-                      metric: 'latest_total_vaccinations_autumn22',
-                      body: 'Autumn booster',
-                    },
-                    bottom_headline_number: {
-                      topic: 'COVID-19',
-                      metric: 'latest_vaccinations_uptake_autumn22',
-                      body: 'Percentage uptake (%)',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'latest_total_vaccinations_autumn22',
+                          body: 'Autumn booster',
+                        },
+                        id: 'ae3344f7-5b23-4977-bea9-2e1ccd84eb50',
+                      },
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'latest_vaccinations_uptake_autumn22',
+                          body: 'Percentage uptake (%)',
+                        },
+                        id: '65f00bd6-d027-4e9f-8b15-8c15e1992ba6',
+                      },
+                    ],
                   },
-                  id: 'bb8a9a19-ff0e-4e99-b570-b058e9cdb5a1',
+                  id: '93b6367b-fbb3-47e8-96db-f724d947fa00',
                 },
                 {
-                  type: 'single_headline_component',
+                  type: 'column',
                   value: {
                     title: 'Testing',
-                    headline_number: {
-                      topic: 'COVID-19',
-                      metric: 'positivity_7days_latest',
-                      body: 'Virus tests positivity (%)',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'positivity_7days_latest',
+                          body: 'Virus tests positivity (%)',
+                        },
+                        id: '7d1523f9-9732-43be-8c81-094c66efed3f',
+                      },
+                    ],
                   },
-                  id: '4e9d5ead-5394-42cb-b370-e0d0f028140d',
+                  id: '1e3bf214-88e4-4cf4-9b78-3ad7eabb2eaa',
                 },
               ],
             },
@@ -256,34 +302,50 @@ export const homePageMock: PageResponse<PageType.Home> = {
             value: {
               columns: [
                 {
-                  type: 'headline_and_trend_component',
+                  type: 'column',
                   value: {
                     title: 'Healthcare',
-                    headline_number: {
-                      topic: 'Influenza',
-                      metric: 'weekly_hospital_admissions_rate_latest',
-                      body: 'Hospital admission rate (per 100,000)',
-                    },
-                    trend_number: {
-                      topic: 'Influenza',
-                      metric: 'weekly_hospital_admissions_rate_change',
-                      body: 'Last 7 days',
-                      percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_hospital_admissions_rate_latest',
+                          body: 'Hospital admission rate (per 100,000)',
+                        },
+                        id: '0520e9d6-794f-4616-b217-f5ec884a86d8',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_hospital_admissions_rate_change',
+                          body: 'Last 7 days',
+                          percentage_metric: 'weekly_hospital_admissions_rate_change_percentage',
+                        },
+                        id: '3849d44d-025a-464e-a171-34b5750ca725',
+                      },
+                    ],
                   },
-                  id: '1eb03393-1b30-46a8-8c19-8b86aa056b34',
+                  id: '0da002a7-d985-417c-b75c-9a4c8a77fa8e',
                 },
                 {
-                  type: 'single_headline_component',
+                  type: 'column',
                   value: {
                     title: 'Testing',
-                    headline_number: {
-                      topic: 'Influenza',
-                      metric: 'weekly_positivity_latest',
-                      body: 'Virus tests positivity (%)',
-                    },
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'weekly_positivity_latest',
+                          body: 'Virus tests positivity (%)',
+                        },
+                        id: '879a0bbd-83fd-4685-b674-37372356c4f6',
+                      },
+                    ],
                   },
-                  id: '8d79205b-df67-4dc1-91ae-8198dfb2155f',
+                  id: 'e57ed33f-658a-40be-bfdb-6fa12ee62512',
                 },
               ],
             },

@@ -1,12 +1,13 @@
-import fs from 'fs'
-import path from 'path'
-import { extractAndFetchPageData } from '../extractAndFetchPageData'
 import {
   newCasesDailyValues,
   newDeathsDailyValues,
   weeklyHospitalAdmissionsRateValues,
   weeklyPositivityValues,
 } from '@/api/mocks/tabular/fixtures'
+
+import { extractAndFetchPageData } from '../extractAndFetchPageData'
+import fs from 'fs'
+import path from 'path'
 
 const getChartFixture = (file: string) =>
   fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${file}`), {
@@ -20,7 +21,7 @@ const getChartFixture = (file: string) =>
 
 export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageData>> = {
   trends: {
-    'e64cc7ea-4551-47f0-b964-941d59cae1bb-trends': {
+    'a57a4ad5-6b52-45a6-acfd-2fe208cb5617-trends': {
       success: true,
       data: {
         metric_name: 'new_cases_7days_change',
@@ -31,7 +32,7 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
         colour: 'green',
       },
     },
-    'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5-trends': {
+    'ea8603ca-7b4d-4ef5-a8b1-f27a565938b5-trends': {
       success: true,
       data: {
         metric_name: 'new_deaths_7days_sum',
@@ -40,17 +41,6 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
         percentage_metric_value: -5,
         direction: 'down',
         colour: 'green',
-      },
-    },
-    '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f-trends': {
-      success: true,
-      data: {
-        metric_name: 'new_admissions_7day_avg',
-        metric_value: 377,
-        percentage_metric_name: 'new_admissions_7days_change_percentage',
-        percentage_metric_value: 6,
-        direction: 'up',
-        colour: 'red',
       },
     },
     '8c42a86e-f675-41d0-a65a-633c20ac98e3-trends': {
@@ -75,7 +65,7 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
         colour: 'green',
       },
     },
-    '1eb03393-1b30-46a8-8c19-8b86aa056b34-trends': {
+    '3849d44d-025a-464e-a171-34b5750ca725-trends': {
       success: true,
       data: {
         metric_name: 'weekly_hospital_admissions_rate_change',
@@ -84,6 +74,17 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
         percentage_metric_value: 0.3,
         direction: 'down',
         colour: 'green',
+      },
+    },
+    '6c09d01e-82c5-425f-aa07-1bdd22d1eaa8-trends': {
+      success: true,
+      data: {
+        metric_name: 'new_admissions_7day_avg',
+        metric_value: 377,
+        percentage_metric_name: 'new_admissions_7days_change_percentage',
+        percentage_metric_value: 6,
+        direction: 'up',
+        colour: 'red',
       },
     },
     '7b860dc9-26d1-4d95-924a-c23f866a7eae-trends': {
@@ -99,17 +100,17 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
     },
   },
   headlines: {
-    'e64cc7ea-4551-47f0-b964-941d59cae1bb-headlines': { success: true, data: { value: 24298 } },
-    'fcfcf83f-f2a6-407c-a1f4-6c5978b472f5-headlines': { success: true, data: { value: 379 } },
-    '0a351331-a1ca-4c16-8c6e-5d8a0b38fd3f-headlines': { success: true, data: { value: 6288 } },
-    'bb8a9a19-ff0e-4e99-b570-b058e9cdb5a1-headlines-top': { success: true, data: { value: 4095083 } },
-    'bb8a9a19-ff0e-4e99-b570-b058e9cdb5a1-headlines-bottom': { success: true, data: { value: 64.5 } },
-    '4e9d5ead-5394-42cb-b370-e0d0f028140d-headlines': { success: true, data: { value: 10.4 } },
-    '95b24a05-a015-42ed-b258-51c7ccaedbcd-headlines': { success: true, data: { value: 24298 } },
-    '10c92d4c-bdb1-4bcc-a8a5-d0063dcee095-headlines': { success: true, data: { value: 379 } },
-    '1eb03393-1b30-46a8-8c19-8b86aa056b34-headlines': { success: true, data: { value: 981596 } },
-    '8d79205b-df67-4dc1-91ae-8198dfb2155f-headlines': { success: true, data: { value: 12.2 } },
+    'ae3344f7-5b23-4977-bea9-2e1ccd84eb50-headlines': { success: true, data: { value: 4095083 } },
+    'eff08341-7bfa-4a3b-b013-527e7b954ce8-headlines': { success: true, data: { value: 24298 } },
+    '0520e9d6-794f-4616-b217-f5ec884a86d8-headlines': { success: true, data: { value: 981596 } },
     'a93d4317-3814-41ab-b6f6-a6f0769770a7-headlines': { success: true, data: { value: 981596 } },
+    '95b24a05-a015-42ed-b258-51c7ccaedbcd-headlines': { success: true, data: { value: 24298 } },
+    '2f49a215-02e7-4ded-94b1-1a0c2933708b-headlines': { success: true, data: { value: 6288 } },
+    '7d1523f9-9732-43be-8c81-094c66efed3f-headlines': { success: true, data: { value: 10.4 } },
+    '10c92d4c-bdb1-4bcc-a8a5-d0063dcee095-headlines': { success: true, data: { value: 379 } },
+    '2e403485-030c-4122-86be-5827a095f30d-headlines': { success: true, data: { value: 379 } },
+    '65f00bd6-d027-4e9f-8b15-8c15e1992ba6-headlines': { success: true, data: { value: 64.5 } },
+    '879a0bbd-83fd-4685-b674-37372356c4f6-headlines': { success: true, data: { value: 12.2 } },
   },
   charts: {
     'd9b86415-9734-46be-952a-56182f0c40be-charts': {
