@@ -20,7 +20,7 @@ jobs:
           node-version: 18
        - name: install dependencies
          run: npm i
-       - name: create hosting script
+       - name: create frontend hosting script
          run: |
             touch hosting.sh
             echo "npm run dev" >> hosting.sh
@@ -29,8 +29,13 @@ jobs:
          run: nohup ./hosting.sh &
        - name: Pulling Docker Image
          run: docker pull owasp/zap2docker-stable
-       - name: Launching the app
-         run: docker run -p 8080:3000 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080
+       - name: create zap hosting script
+         run: |
+            touch zaphosting.sh
+            echo "docker run -p 8080:3000 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080" >> zaphosting.sh
+            chmod u+x zaphosting.sh
+       - name: start hosting zap
+         run: nohup ./zaphosting.sh &
          # -p 8090:8090 means that port 8090 on the host machine is mapped to port 8090 inside the container. 
          # This allows you to access the service running inside the container on port 8090 from your host machine.
        - name: OWASP ZAP
