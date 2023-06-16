@@ -22,6 +22,8 @@ jobs:
          run: | 
              npm i
               npm run dev & 
+       - name: Step 2 (Wait for 1 minute)
+         run: sleep 5m
        - name: Pulling Docker Image
          run: docker pull owasp/zap2docker-stable
        - name: Launching the app
