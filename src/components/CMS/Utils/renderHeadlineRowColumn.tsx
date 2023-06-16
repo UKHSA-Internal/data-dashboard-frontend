@@ -21,6 +21,9 @@ export const renderHeadlineRowColumn = (column: z.infer<typeof WithHeadlineNumbe
         if (type === 'trend_number') {
           return <Blocks.Trend key={id} heading={body} id={id} />
         }
+        if (type === 'percentage_number') {
+          return <Blocks.Percentage key={id} heading={body} id={id} />
+        }
         return null
       })}
     </CardColumn>

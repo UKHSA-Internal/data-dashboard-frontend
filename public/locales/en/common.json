@@ -15,6 +15,7 @@
   "backToTop": "Back to top",
   "metrics": {
     "headlineValueScreenReaderText": "{{heading}}: {{value}}",
+    "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",
     "headlineTrendValue": "{{change, number}} ({{percentage}}%)",
     "headlineTrendScreenReaderText": "{{heading}}: {{value}}, no change compared to the previous 7 days",
     "headlineTrendScreenReaderText_green_up": "{{heading}}: {{value}}, upward positive trend",
