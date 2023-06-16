@@ -21,9 +21,7 @@ jobs:
        - name: install dependencies & run
          run: | 
              npm i
-              npm run dev & 
-       - name: Step 2 (Wait for 1 minute)
-         run: sleep 5m
+              npm run dev & npx wait-on https://localhost:3000
        - name: Pulling Docker Image
          run: docker pull owasp/zap2docker-stable
        - name: Launching the app
