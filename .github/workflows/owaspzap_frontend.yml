@@ -18,10 +18,14 @@ jobs:
          uses: actions/setup-node@v3
          with:
           node-version: 18
-       - name: install dependencies & run
+       - name: install dependencies
          run: npm i
+       - name: create hosting script
+         run: |
+            touch hosting.sh
+            "npm run dev" > hosting.sh
        - name: start hosting frontend
-         run: npm run dev & npx wait-on https://127.0.0.1:3000
+         run: nohup ./hosting.sh &
        - name: Pulling Docker Image
          run: docker pull owasp/zap2docker-stable
        - name: Launching the app
