@@ -1,8 +1,8 @@
 import { Body } from '@/api/models/cms/Page'
-import { getTrends } from '@/api/requests/trends/getTrends'
+import { getCharts } from '../charts/getCharts'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
 import { getTabular } from '@/api/requests/tabular/getTabular'
-import { getCharts } from '../charts/getCharts'
+import { getTrends } from '@/api/requests/trends/getTrends'
 import { isFulfilled } from '@/api/api-utils'
 
 /**
@@ -46,13 +46,10 @@ export const extractAndFetchPageData = async (body: Body) => {
             const { headline_number_columns: headlineColumns } = column.value
 
             for (const headline of headlineColumns) {
-              // Pick out headlines
               if (headline.type === 'headline_number') {
                 const { topic, metric } = headline.value
                 headlines.push([`${headline.id}-headlines`, getHeadlines({ topic, metric })])
               }
-
-              // Pick out trends
               if (headline.type === 'trend_number') {
                 const { topic, metric, percentage_metric } = headline.value
                 trends.push([`${headline.id}-trends`, getTrends({ topic, metric, percentage_metric })])
@@ -65,20 +62,13 @@ export const extractAndFetchPageData = async (body: Body) => {
       if (content.type === 'headline_numbers_row_card') {
         const { columns } = content.value
         for (const column of columns) {
-          // Pick out headlines and trends from the row card
-          if (column.type === 'headline_and_trend_component') {
-            const { headline_number, trend_number } = column.value
-            headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
-            trends.push([`${column.id}-trends`, getTrends(trend_number)])
-          }
-          if (column.type === 'dual_headline_component') {
-            const { top_headline_number, bottom_headline_number } = column.value
-            headlines.push([`${column.id}-headlines-top`, getHeadlines(top_headline_number)])
-            headlines.push([`${column.id}-headlines-bottom`, getHeadlines(bottom_headline_number)])
-          }
-          if (column.type === 'single_headline_component') {
-            const { headline_number } = column.value
-            headlines.push([`${column.id}-headlines`, getHeadlines(headline_number)])
+          for (const row of column.value.rows) {
+            if (row.type === 'headline_number') {
+              headlines.push([`${row.id}-headlines`, getHeadlines(row.value)])
+            }
+            if (row.type === 'trend_number') {
+              trends.push([`${row.id}-trends`, getTrends(row.value)])
+            }
           }
         }
       }
