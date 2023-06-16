@@ -22,21 +22,16 @@ jobs:
        - run: npm run dev
            
        - name: Pulling Docker Image
-         run: docker run -v $(pwd):/zap/wrk/:rw -t ubuntu:20.04 touch /zap/wrk/test.txt
-       - name: Check Permissions
-         run: |
-          echo $(ls -l /usr/bin/docker)
-          echo $(ls -l /zap/wrk/zap.yaml)
-          sudo chmod a+w /zap/wrk
+         run: docker pull owasp/zap2docker-stable
         
        - name: Launching the app
-         run: docker run -v $(pwd):/zap/wrk/:rw -t owasp/zap2docker-stable zap.sh -cmd -autorun /zap/wrk/zap.yml
-         # docker run --rm -d -p 8080:8080 owasp/zap2docker-stable
+         run: docker run -p 3000:8080 -i owasp/zap2docker-stable zap.sh
+         # -p 8090:8090 means that port 8090 on the host machine is mapped to port 8090 inside the container. 
+         # This allows you to access the service running inside the container on port 8090 from your host machine.
          
-     
        - name: OWASP ZAP
          uses: zaproxy/action-baseline@v0.7.0
          with:
-           target: "https://www.ukhsa.gov.uk"
+           target: "https://localhost:3000"
            fail_action: false
-           # 14/6/23 - want to add to this .yml to extract info from the report to push to DefectDojo
+           # 16/6/23 - Add to .yml to extract info from the report to push to DefectDojo
