@@ -21,7 +21,7 @@ jobs:
        - name: install dependencies & run
          run: | 
              npm i
-              npm run dev & npx wait-on https://localhost:3000
+             npm run dev & npx wait-on https://localhost:3000
        - name: Pulling Docker Image
          run: docker pull owasp/zap2docker-stable
        - name: Launching the app
