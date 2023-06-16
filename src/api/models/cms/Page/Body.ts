@@ -1,7 +1,7 @@
-import { z } from 'zod'
-import { HeadlineWithTrend, HeadlineWithNumber } from './BodyValues'
-import { DualHeadline, HeadlineAndTrend, SingleHeadline } from './Columns'
+import { HeadlineNumber, TrendNumber } from './BodyValues'
+
 import { Chart } from './Chart'
+import { z } from 'zod'
 
 /**
  * Body Discriminated Union Types
@@ -13,7 +13,16 @@ export const WithText = z.object({
 })
 
 export const WithHeadlineNumbersRowCard = z.object({
-  columns: z.array(z.discriminatedUnion('type', [HeadlineAndTrend, DualHeadline, SingleHeadline])),
+  columns: z.array(
+    z.object({
+      id: z.string(),
+      type: z.literal('column'),
+      value: z.object({
+        title: z.string(),
+        rows: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber])),
+      }),
+    })
+  ),
 })
 
 export const WithChartHeadlineAndTrendCard = z.object({
@@ -23,20 +32,7 @@ export const WithChartHeadlineAndTrendCard = z.object({
     title: z.string(),
     body: z.string(),
     chart: Chart,
-    headline_number_columns: z.array(
-      z.discriminatedUnion('type', [
-        z.object({
-          id: z.string(),
-          type: z.literal('headline_number'),
-          value: HeadlineWithNumber,
-        }),
-        z.object({
-          id: z.string(),
-          type: z.literal('trend_number'),
-          value: HeadlineWithTrend,
-        }),
-      ])
-    ),
+    headline_number_columns: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber])),
   }),
 })
 
