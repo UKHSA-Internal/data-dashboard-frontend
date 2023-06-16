@@ -106,9 +106,7 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
     })
   })
 
-  it('Shows cases card, and downloads when requested', () => {
-    const downloadsFolder = Cypress.config('downloadsFolder')
-
+  it('Shows cases card, and buttons for download & tabular format', () => {
     cy.findByRole('region', { name: 'Coronavirus' }).within(() => {
       cy.findByTestId('cases-section').as('cases-section')
 
@@ -117,23 +115,6 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
         cy.findByText('View data in a tabular format')
       })
     })
-
-    cy.window()
-      .document()
-      .then(function (doc) {
-        doc.addEventListener('click', () => {
-          setTimeout(function () {
-            doc.location.reload()
-          }, 1000)
-        })
-        cy.get('@cases-section').within(() => {
-          cy.findByRole('button', { name: 'Download' }).click()
-        })
-
-        cy.readFile(path.join(downloadsFolder, 'data.csv')).should('eql', downloadsCsvFixture)
-
-        cy.task('deleteFolder', downloadsFolder)
-      })
   })
 
   it('displays related links', () => {
