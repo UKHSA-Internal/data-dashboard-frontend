@@ -34,7 +34,7 @@ describe('Home page', () => {
       .should('have.attr', 'href', 'https://www.gov.uk/government/organisations/uk-health-security-agency')
   })
 
-  it.only('displays coronavirus statistics', () => {
+  it('displays coronavirus statistics', () => {
     cy.findByRole('navigation', {
       name: 'Contents',
     }).as('contents')
