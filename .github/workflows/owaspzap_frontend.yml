@@ -22,6 +22,9 @@ jobs:
          run: | 
              npm i
               npm run dev & npx wait-on https://localhost:3000
+       - name: Find listening port
+         id: find-port
+         run: echo "::set-output name=port::$(lsof -i :3000 | awk 'NR==2{print $9}' | cut -d ':' -f 2)"       
        - name: Pulling Docker Image
          run: docker pull owasp/zap2docker-stable
        - name: Launching the app
@@ -31,6 +34,6 @@ jobs:
        - name: OWASP ZAP
          uses: zaproxy/action-baseline@v0.7.0
          with:
-           target: "https://localhost:3000"
+           target: "${{ steps.find-port.outputs.port }}"
            fail_action: false
            # 16/6/23 - Add to .yml to extract info from the report to push to DefectDojo
