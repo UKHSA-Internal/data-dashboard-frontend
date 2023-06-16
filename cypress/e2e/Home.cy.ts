@@ -142,7 +142,7 @@ describe('Home page', () => {
         cy.findByRole('heading', {
           name: 'Testing',
         })
-        cy.findByText('Virus tests positivity (%): 12.2')
+        cy.findByText('Virus tests positivity: 12.2%')
       })
     })
 
