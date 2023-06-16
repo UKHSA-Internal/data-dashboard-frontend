@@ -12,11 +12,15 @@ jobs:
  
     steps:
        - name: Installing node.js
-     
-       - name: Code scan
-       - uses: actions/checkout@v2
+       - uses: actions/checkout@v3
          with:
           ref: suyash-kumar2-patch-1
+       - uses: actions/setup-node@v3
+         with:
+          node-version: 18
+       - run: npm i
+       - run: npm run dev
+           
        - name: Pulling Docker Image
          run: docker run -v $(pwd):/zap/wrk/:rw -t ubuntu:20.04 touch /zap/wrk/test.txt
        - name: Check Permissions
