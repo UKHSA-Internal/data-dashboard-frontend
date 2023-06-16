@@ -56,11 +56,11 @@ export const pageDataMockMixed: Awaited<ReturnType<typeof extractAndFetchPageDat
     'a93d4317-3814-41ab-b6f6-a6f0769770a7-headlines': { success: true, data: { value: 981596 } },
     '95b24a05-a015-42ed-b258-51c7ccaedbcd-headlines': { success: true, data: { value: 24298 } },
     '2f49a215-02e7-4ded-94b1-1a0c2933708b-headlines': { success: true, data: { value: 6288 } },
-    '7d1523f9-9732-43be-8c81-094c66efed3f-headlines': { success: true, data: { value: 10.4 } },
+    '369587e1-5a30-4152-94d6-e6b43b812d76-percentages': { success: true, data: { value: 64.5 } },
     '10c92d4c-bdb1-4bcc-a8a5-d0063dcee095-headlines': { success: true, data: { value: 379 } },
     '2e403485-030c-4122-86be-5827a095f30d-headlines': { success: true, data: { value: 379 } },
-    '65f00bd6-d027-4e9f-8b15-8c15e1992ba6-headlines': { success: true, data: { value: 64.5 } },
-    '879a0bbd-83fd-4685-b674-37372356c4f6-headlines': { success: true, data: { value: 12.2 } },
+    '36746bcd-1dce-4e5e-81f8-60c8b9994540-percentages': { success: true, data: { value: 10.4 } },
+    '36ec8822-56e2-4513-ac8f-969e84f0d5e8-percentages': { success: true, data: { value: 12.2 } },
   },
   charts: {
     'd9b86415-9734-46be-952a-56182f0c40be-charts': {
