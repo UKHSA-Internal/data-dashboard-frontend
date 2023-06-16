@@ -20,17 +20,14 @@ jobs:
           node-version: 18
        - run: npm i
        - run: npm run dev
-           
        - name: Pulling Docker Image
-         run: docker pull owasp/zap2docker-stable
-        
+       - run: docker pull owasp/zap2docker-stable
        - name: Launching the app
-         run: docker run -p 3000:8080 -i owasp/zap2docker-stable zap.sh
+       - run: docker run -p 3000:8080 -i owasp/zap2docker-stable zap.sh
          # -p 8090:8090 means that port 8090 on the host machine is mapped to port 8090 inside the container. 
          # This allows you to access the service running inside the container on port 8090 from your host machine.
-         
        - name: OWASP ZAP
-         uses: zaproxy/action-baseline@v0.7.0
+       - uses: zaproxy/action-baseline@v0.7.0
          with:
            target: "https://localhost:3000"
            fail_action: false
