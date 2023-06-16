@@ -24,6 +24,7 @@ jobs:
          run: |
             touch hosting.sh
             echo "npm run dev" >> hosting.sh
+            chmod u+x hosting.sh
        - name: start hosting frontend
          run: nohup ./hosting.sh &
        - name: Pulling Docker Image
