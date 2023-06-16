@@ -54,6 +54,10 @@ export const extractAndFetchPageData = async (body: Body) => {
                 const { topic, metric, percentage_metric } = headline.value
                 trends.push([`${headline.id}-trends`, getTrends({ topic, metric, percentage_metric })])
               }
+              if (headline.type === 'percentage_number') {
+                const { topic, metric } = headline.value
+                headlines.push([`${headline.id}-percentages`, getHeadlines({ topic, metric })])
+              }
             }
           }
         }
@@ -68,6 +72,9 @@ export const extractAndFetchPageData = async (body: Body) => {
             }
             if (row.type === 'trend_number') {
               trends.push([`${row.id}-trends`, getTrends(row.value)])
+            }
+            if (row.type === 'percentage_number') {
+              headlines.push([`${row.id}-percentages`, getHeadlines(row.value)])
             }
           }
         }

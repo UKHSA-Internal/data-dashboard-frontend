@@ -143,13 +143,13 @@ export const homePageMock: PageResponse<PageType.Home> = {
                         id: 'ae3344f7-5b23-4977-bea9-2e1ccd84eb50',
                       },
                       {
-                        type: 'headline_number',
+                        type: 'percentage_number',
                         value: {
                           topic: 'COVID-19',
                           metric: 'latest_vaccinations_uptake_autumn22',
-                          body: 'Percentage uptake (%)',
+                          body: 'Percentage uptake',
                         },
-                        id: '65f00bd6-d027-4e9f-8b15-8c15e1992ba6',
+                        id: '369587e1-5a30-4152-94d6-e6b43b812d76',
                       },
                     ],
                   },
@@ -161,13 +161,13 @@ export const homePageMock: PageResponse<PageType.Home> = {
                     title: 'Testing',
                     rows: [
                       {
-                        type: 'headline_number',
+                        type: 'percentage_number',
                         value: {
                           topic: 'COVID-19',
                           metric: 'positivity_7days_latest',
-                          body: 'Virus tests positivity (%)',
+                          body: 'Virus tests positivity',
                         },
-                        id: '7d1523f9-9732-43be-8c81-094c66efed3f',
+                        id: '36746bcd-1dce-4e5e-81f8-60c8b9994540',
                       },
                     ],
                   },
@@ -186,6 +186,8 @@ export const homePageMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Cases',
                     body: 'Positive tests reported in England',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -234,6 +236,8 @@ export const homePageMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Deaths',
                     body: 'Deaths with COVID-19 on the death certificate in England',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -335,13 +339,13 @@ export const homePageMock: PageResponse<PageType.Home> = {
                     title: 'Testing',
                     rows: [
                       {
-                        type: 'headline_number',
+                        type: 'percentage_number',
                         value: {
                           topic: 'Influenza',
                           metric: 'weekly_positivity_latest',
-                          body: 'Virus tests positivity (%)',
+                          body: 'Virus tests positivity',
                         },
-                        id: '879a0bbd-83fd-4685-b674-37372356c4f6',
+                        id: '36ec8822-56e2-4513-ac8f-969e84f0d5e8',
                       },
                     ],
                   },
@@ -360,6 +364,8 @@ export const homePageMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Healthcare',
                     body: 'Weekly hospital admission rates for Influenza',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -408,6 +414,8 @@ export const homePageMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Testing',
                     body: 'Weekly positivity',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
