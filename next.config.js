@@ -7,7 +7,12 @@ const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
   experimental: {
+    appDir: true,
     largePageDataBytes: 128 * 100000,
+  },
+  webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true }
+    return config
   },
   compiler: {
     styledComponents: {
