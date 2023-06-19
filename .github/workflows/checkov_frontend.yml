@@ -1,0 +1,32 @@
+name: IaC Scan
+
+on:
+  push:
+    branches:
+      - suyash-kumar2-patch-1
+
+jobs:
+  scan_iac:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: suyash-kumar2-patch-1
+
+      - name: Pull Docker Image
+        run: docker pull bridgecrew/checkov
+
+      - name: Run Checkov Scan
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/tf \
+            bridgecrew/checkov:latest \
+            checkov -d /tf --format xml -o /tf/checkov_report.xml
+
+      - name: Upload Checkov Report
+        uses: actions/upload-artifact@v2
+        with:
+          name: checkov-report
+          path: checkov_report.xml
