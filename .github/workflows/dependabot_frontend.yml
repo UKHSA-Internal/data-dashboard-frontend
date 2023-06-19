@@ -16,7 +16,7 @@ jobs:
           ref: suyash-kumar2-patch-1
 
       - name: Pull Docker Image
-        run: docker pull dependabot/dependabot-script
+        run: docker pull dependabot-gitlab/dependabot
 
       - name: Run Dependency Scan
         run: |
@@ -24,7 +24,7 @@ jobs:
             -v ${{ github.workspace }}:/tmp/repo \
             -e "DEPENDABOT_CONFIG_FILE=/tmp/repo/.github/dependabot.yml" \
             -e "DEPENDABOT_OUTPUT_FORMAT=xml" \
-            dependabot/dependabot-script
+           dependabot-gitlab/dependabot
 
       - name: Create Directory and Generate File
         run: |
