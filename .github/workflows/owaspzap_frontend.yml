@@ -43,4 +43,4 @@ jobs:
          with:
            target: "http://localhost:3000"
            fail_action: false
-           # 16/6/23 - Add to .yml to extract info from the report to push to DefectDojo
+           # OWASP scan outputs .HTML and .json format reports
