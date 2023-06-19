@@ -16,7 +16,7 @@ jobs:
           ref: suyash-kumar2-patch-1
 
       - name: Pull Docker Image
-        run: docker pull dependabot-gitlab/dependabot
+        run: docker pull andrcuns/dependabot-gitlab
 
       - name: Run Dependency Scan
         run: |
