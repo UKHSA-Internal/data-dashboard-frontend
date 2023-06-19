@@ -24,7 +24,7 @@ jobs:
             -v ${{ github.workspace }}:/tmp/repo \
             -e "DEPENDABOT_CONFIG_FILE=/tmp/repo/.github/dependabot.yml" \
             -e "DEPENDABOT_OUTPUT_FORMAT=xml" \
-           dependabot-gitlab/dependabot
+           andrcuns/dependabot-gitlab
 
       - name: Create Directory and Generate File
         run: |
