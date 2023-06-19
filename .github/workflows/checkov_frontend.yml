@@ -25,8 +25,10 @@ jobs:
             bridgecrew/checkov:latest \
             checkov -d /tf --format xml -o /tf/checkov_report.xml
           
-      - name: Create Directory
-        run: mkdir -p ./.github/workflows/artifacts
+      - name: Create Directory and Generate File
+        run: |
+          mkdir -p ./.github/workflows/artifacts
+          echo "This is the Checkov report." > ./.github/workflows/artifacts/checkov_report.xml
         
       - name: Upload Checkov Report
         uses: actions/upload-artifact@v3
