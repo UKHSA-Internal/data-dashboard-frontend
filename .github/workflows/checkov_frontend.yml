@@ -29,4 +29,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: checkov-report
-          path: output/test/checkov_report.xml
+          path: ./.github/workflows/artifacts/checkov_report.xml
