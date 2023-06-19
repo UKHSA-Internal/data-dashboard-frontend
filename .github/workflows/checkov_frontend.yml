@@ -21,17 +21,17 @@ jobs:
       - name: Run Checkov Scan
         run: |
           docker run --rm --volume /user/tf:/tf --workdir /tf bridgecrew/checkov --directory /tf \
-            -v ${{ github.workspace }}:/tf \
-            bridgecrew/checkov \
-          # checkov -d /tf --format xml -o /tf/checkov_report.xml
+           # -v ${{ github.workspace }}:/tf \
+           # bridgecrew/checkov \
+            checkov -d /tf --format xml -o /tf/checkov_report.xml
           
-     # - name: Create Directory and Generate File
-      #  run: |
-       #   mkdir -p ./.github/workflows/artifacts
-        #  echo "This is the Checkov report." > ./.github/workflows/artifacts/checkov_report.xml
+      - name: Create Directory and Generate File
+        run: |
+          mkdir -p ./.github/workflows/artifacts
+          echo "This is the Checkov report." > ./.github/workflows/artifacts/checkov_report.xml
         
-     # - name: Upload Checkov Report
-      #  uses: actions/upload-artifact@v3
-       # with:
-        #  name: checkov-report
-         # path: ./.github/workflows/artifacts/checkov_report.xml
+      - name: Upload Checkov Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: checkov-report
+          path: ./.github/workflows/artifacts/checkov_report.xml
