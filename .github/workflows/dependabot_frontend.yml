@@ -1,0 +1,38 @@
+name: Dependency Scan
+
+on:
+  push:
+    branches:
+      - suyash-kumar2-patch-1
+
+jobs:
+  scan_dependencies:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v3
+        with:
+          ref: suyash-kumar2-patch-1
+
+      - name: Pull Docker Image
+        run: docker pull dependabot/dependabot-script
+
+      - name: Run Dependency Scan
+        run: |
+          docker run --rm \
+            -v ${{ github.workspace }}:/tmp/repo \
+            -e "DEPENDABOT_CONFIG_FILE=/tmp/repo/.github/dependabot.yml" \
+            -e "DEPENDABOT_OUTPUT_FORMAT=xml" \
+            dependabot/dependabot-script
+
+      - name: Create Directory and Generate File
+        run: |
+          mkdir -p ./.github/workflows/artifacts
+          echo "This is the Dependabot report." > ./.github/workflows/artifacts/dependabot_report.xml
+          
+      - name: Upload Dependency Report
+        uses: actions/upload-artifact@v3
+        with:
+          name: dependabot_report
+          path: ./.github/workflows/artifacts/dependabot_report.xml
