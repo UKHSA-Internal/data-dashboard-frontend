@@ -20,11 +20,12 @@ jobs:
 
       - name: Run Checkov Scan
         run: |
-          docker run --rm \
+          docker run --rm --volume /user/tf:/tf --workdir /tf bridgecrew/checkov --directory /tf \
             -v ${{ github.workspace }}:/tf \
             bridgecrew/checkov:latest \
             checkov -d /tf --format xml -o /tf/checkov_report.xml
-
+          # docker run --tty --rm --volume /user/tf:/tf --workdir /tf bridgecrew/checkov --directory /tf \
+          
       - name: Upload Checkov Report
         uses: actions/upload-artifact@v2
         with:
