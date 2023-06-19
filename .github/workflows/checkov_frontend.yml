@@ -3,7 +3,7 @@ name: IaC Scan
 on:
   push:
     branches:
-      - main
+      - suyash-kumar2-patch-1
 
 jobs:
   scan_iac:
@@ -13,7 +13,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
         with:
-          ref: main
+          ref: suyash-kumar2-patch-1
 
       - name: Pull Docker Image
         run: docker pull bridgecrew/checkov
