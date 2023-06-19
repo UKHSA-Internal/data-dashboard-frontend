@@ -27,7 +27,7 @@ jobs:
           # docker run --tty --rm --volume /user/tf:/tf --workdir /tf bridgecrew/checkov --directory /tf \
           
       - name: Upload Checkov Report
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: checkov-report
-          path: checkov_report.xml
+          path: output/test/checkov_report.xml
