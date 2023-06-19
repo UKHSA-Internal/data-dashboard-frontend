@@ -27,3 +27,13 @@ export const TrendNumber = z.object({
   }),
   id: z.string(),
 })
+
+export const PercentageNumber = z.object({
+  type: z.literal('percentage_number'),
+  value: z.object({
+    topic: Topics,
+    metric: Metrics,
+    body: z.string(),
+  }),
+  id: z.string(),
+})
