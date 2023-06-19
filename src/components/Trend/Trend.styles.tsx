@@ -1,7 +1,8 @@
+import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 import styled, { css } from 'styled-components'
+
 import { Tag as GovUKTag } from 'govuk-react'
 import { typography } from '@govuk-react/lib'
-import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 
 type TagProps = {
   $direction: string
@@ -54,5 +55,6 @@ export const Tag = styled(GovUKTag)<TagProps>`
     background-position: 6px center;
     ${typography.font({ size: BODY_SIZES.XSMALL })}
     font-weight: ${FONT_WEIGHTS.bold};
+    white-space: nowrap;
   }
 `
