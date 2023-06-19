@@ -21,9 +21,7 @@ jobs:
       - name: Run Dependency Scan
         run: |
           docker run --rm \
-            -v ${{ github.workspace }}:/tmp/repo \
-            -e "DEPENDABOT_CONFIG_FILE=/tmp/repo/.github/dependabot.yml" \
-            -e "DEPENDABOT_OUTPUT_FORMAT=xml" \
+            -v ${{ github.workspace }}:/app \
            andrcuns/dependabot-gitlab
 
       - name: Create Directory and Generate File
