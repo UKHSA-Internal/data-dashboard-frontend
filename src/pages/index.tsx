@@ -1,19 +1,20 @@
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { RelatedLinks } from '@/components/RelatedLinks'
-import { Page } from '@/components/Page'
-import { initMocks } from '@/api/msw'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { PageType } from '@/api/requests/cms/getPages'
-import { useTranslation } from 'next-i18next'
-import type { RelatedLinks as Links, Body, Meta } from '@/api/models/cms/Page'
-import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
-import { Utils } from '@/components/CMS'
+import type { Body, RelatedLinks as Links, Meta } from '@/api/models/cms/Page'
 import { Contents, ContentsItem } from '@/components/Contents'
+import { GetStaticProps, InferGetStaticPropsType } from 'next'
 import { StoreState, initializeStore } from '@/lib/store'
-import { logger } from '@/lib/logger'
+
+import { Page } from '@/components/Page'
+import { PageType } from '@/api/requests/cms/getPages'
+import { RelatedLinks } from '@/components/RelatedLinks'
+import { Utils } from '@/components/CMS'
+import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import OpenStreetMap from '@/components/Maps/openStreetMap'
+import { initMocks } from '@/api/msw'
+import { logger } from '@/lib/logger'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { useTranslation } from 'next-i18next'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -28,15 +29,13 @@ export default function Home({ title, description, relatedLinks, lastUpdated, bo
       seoTitle={meta.seo_title}
       seoDescription={meta.search_description}
     >
-      <OpenStreetMap />
-      {/* <Contents heading={t('contentsHeading')}> */}
-
-      {/* {body.map(({ id, value }) => (
+      <Contents heading={t('contentsHeading')}>
+        {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
             {value.content.map(Utils.renderCard)}
           </ContentsItem>
-        ))} */}
-      {/* </Contents> */}
+        ))}
+      </Contents>
 
       <RelatedLinks links={relatedLinks} />
     </Page>

@@ -1,7 +1,8 @@
+import { BODY_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+
+import { chartDownloadButtonWidth } from '@/styles/Theme'
 import styled from 'styled-components'
 import { typography } from '@govuk-react/lib'
-import { BODY_SIZES, SPACING, MEDIA_QUERIES } from '@govuk-react/constants'
-import { chartDownloadButtonWidth } from '@/styles/Theme'
 
 export const DownloadButton = styled.button`
   display: flex;
@@ -11,8 +12,10 @@ export const DownloadButton = styled.button`
   height: 29px;
   ${typography.font({ size: BODY_SIZES.SMALL })}
 
-  ${MEDIA_QUERIES.TABLET} {
-    width: ${chartDownloadButtonWidth};
+  &:not([data-loading='true']) {
+    ${MEDIA_QUERIES.TABLET} {
+      width: ${chartDownloadButtonWidth};
+    }
   }
 
   &:link,

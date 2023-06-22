@@ -9,11 +9,13 @@
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "This is a new service – your feedback will help us to improve it.",
   "downloadBtn": "Download",
+  "downloadingBtn": "Downloading...",
   "contentsHeading": "Contents",
   "relatedLinksHeading": "Related Links",
   "backToTop": "Back to top",
   "metrics": {
     "headlineValueScreenReaderText": "{{heading}}: {{value}}",
+    "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",
     "headlineTrendValue": "{{change, number}} ({{percentage}}%)",
     "headlineTrendScreenReaderText": "{{heading}}: {{value}}, no change compared to the previous 7 days",
     "headlineTrendScreenReaderText_green_up": "{{heading}}: {{value}}, upward positive trend",

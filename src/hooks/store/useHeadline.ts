@@ -1,13 +1,10 @@
 import { useStore } from '@/lib/store'
 
-export const useHeadline = (id: string, position?: 'top' | 'bottom') => {
+export const useHeadline = (id: string) => {
   // Pick out the headlines from the store
   const headlines = useStore((store) => store.headlines)
 
-  // When pre-generating the headlines, the CMS doesn't provide unique IDs per block
-  // so we append the block parent id with the type instead. In some cases, a position
-  // is also need for some blocks that share both a parent id and type.
-  const headlineId = position ? `${id}-headlines-${position}` : `${id}-headlines`
+  const headlineId = `${id}-headlines`
 
   // Find the headline
   const headlineData = headlines[headlineId]

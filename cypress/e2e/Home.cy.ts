@@ -1,6 +1,7 @@
-import path from 'path'
 import 'cypress-axe'
+
 import { downloadsCsvFixture } from '@/api/mocks/downloads/fixtures/downloads-csv'
+import path from 'path'
 
 describe('Home page', () => {
   beforeEach(() => {
@@ -76,12 +77,12 @@ describe('Home page', () => {
         name: 'Vaccines',
       })
       cy.findByText('Autumn booster: 4,095,083')
-      cy.findByText('Percentage uptake (%): 64.5')
+      cy.findByText('Percentage uptake: 64.5%')
 
       cy.findByRole('heading', {
         name: 'Testing',
       })
-      cy.findByText('Virus tests positivity (%): 10.4')
+      cy.findByText('Virus tests positivity: 10.4%')
     })
 
     // Cases column
@@ -141,7 +142,7 @@ describe('Home page', () => {
         cy.findByRole('heading', {
           name: 'Testing',
         })
-        cy.findByText('Virus tests positivity (%): 12.2')
+        cy.findByText('Virus tests positivity: 12.2%')
       })
     })
 

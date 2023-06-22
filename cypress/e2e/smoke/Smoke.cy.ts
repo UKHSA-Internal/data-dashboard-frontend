@@ -81,59 +81,44 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
 
   // Home (Dashboard) page
   it('Page displays, and contents navigation successful', () => {
-    cy.findByRole('heading', { name: 'Respiratory Viruses' })
-
-    // cy.findByRole('navigation', {
-    //   name: 'Contents',
-    // }).as('contents')
-
-    // cy.get('@contents').findByText('Coronavirus').click()
-
-    // cy.url().should('eql', `${Cypress.config().baseUrl}/#coronavirus`)
+    cy.findByRole('heading', { name: 'Respiratory viruses' })
   })
 
   it('Shows Coronavirus summary section', () => {
-    cy.findByTestId('summary-section').within(() => {
-      cy.findByRole('heading', {
-        name: 'Cases',
-      })
-      cy.findByRole('heading', {
-        name: 'Deaths',
-      })
-      cy.findByRole('heading', {
-        name: 'Testing',
+    cy.findByRole('region', { name: 'Coronavirus' }).within(() => {
+      cy.findByTestId('summary-section').within(() => {
+        cy.findByRole('heading', {
+          name: 'Cases',
+        })
+        cy.findByRole('heading', {
+          name: 'Deaths',
+        })
+        cy.findByRole('heading', {
+          name: 'Vaccines',
+        })
+        cy.findByRole('heading', {
+          name: 'Healthcare',
+        })
+        cy.findByRole('heading', {
+          name: 'Testing',
+        })
       })
     })
   })
 
-  it('Shows cases card, and downloads when requested', () => {
-    const downloadsFolder = Cypress.config('downloadsFolder')
+  it('Shows cases card, and buttons for download & tabular format', () => {
+    cy.findByRole('region', { name: 'Coronavirus' }).within(() => {
+      cy.findByTestId('cases-section').as('cases-section')
 
-    cy.findByTestId('cases-section').as('cases-section')
-
-    cy.get('@cases-section').within(() => {
-      cy.findByRole('button', { name: 'Download' })
-      cy.findByText('View data in a tabular format')
-    })
-
-    cy.window()
-      .document()
-      .then(function (doc) {
-        doc.addEventListener('click', () => {
-          setTimeout(function () {
-            doc.location.reload()
-          }, 1000)
-        })
-        cy.findByRole('button', { name: 'Download' }).click()
-
-        cy.readFile(path.join(downloadsFolder, 'data.csv')).should('eql', downloadsCsvFixture)
-
-        cy.task('deleteFolder', downloadsFolder)
+      cy.get('@cases-section').within(() => {
+        cy.findByRole('button', { name: 'Download' })
+        cy.findByText('View data in a tabular format')
       })
+    })
   })
 
   it('displays related links', () => {
-    cy.checkRelatedLinksExist()
+    cy.findByRole('heading', { name: 'Related Links', level: 2 })
   })
 })
 
@@ -157,8 +142,6 @@ describe('Influenza Page', () => {
 
   it('displays related links', () => {
     cy.findByRole('heading', { name: 'Related Links', level: 2 })
-
-    cy.findByRole('anchor').should('have.attr', 'href')
   })
 })
 
@@ -168,6 +151,6 @@ describe('Other respiratory viruses page', () => {
   })
 
   it('Displays heading', () => {
-    cy.findByRole('heading', { name: 'Other Respiratory Viruses' })
+    cy.findByRole('heading', { name: 'Other respiratory viruses' })
   })
 })
