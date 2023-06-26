@@ -1,0 +1,55 @@
+{
+  "Common": {
+    "meta": {
+      "title": "{{- title}}",
+      "description": "{{description}}",
+      "copyright": "All content is available under the Open Government Licence v3.0; except where otherwise stated.",
+      "twitterId": "@UKHSA"
+    },
+    "serviceTitle": "UKHSA Dashboard",
+    "lastUpdated": "Last updated on {date} at {time}",
+    "feedbackBanner": "This is a new service – your feedback will help us to improve it.",
+    "downloadBtn": "Download",
+    "downloadingBtn": "Downloading...",
+    "contentsHeading": "Contents",
+    "relatedLinksHeading": "Related Links",
+    "backToTop": "Back to top",
+    "metrics": {
+      "headlineValueScreenReaderText": "{{heading}}: {{value}}",
+      "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",
+      "headlineTrendValue": "{{change, number}} ({{percentage}}%)",
+      "headlineTrendScreenReaderText": "{{heading}}: {{value}}, no change compared to the previous 7 days",
+      "headlineTrendScreenReaderText_green_up": "{{heading}}: {{value}}, upward positive trend",
+      "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
+      "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
+      "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
+    }
+  },
+  "Topic": {
+    "table": {
+      "toggle": "View data in a tabular format",
+      "header_date": "Month",
+      "header_plot_single": "Amount",
+      "header_plot_multi": "{{value}}",
+      "row_date": "{{value, monthAndYear}}",
+      "row_plot": "{{value, number}}"
+    },
+    "accordion": {
+      "heading_symptoms": "Symptoms",
+      "heading_transmission": "Transmission",
+      "heading_treatment": "Treatment",
+      "heading_prevention": "Prevention",
+      "heading_surveillance_and_reporting": "Surveillance and reporting"
+    }
+  },
+  "Errors": {
+    "pageNotFound": {
+      "heading": "Page not found",
+      "body": "<0>If you typed the web address, check it is correct.</0><1>If you pasted the web address, check you copied the entire address.</1><2><0>If the web address is correct or you selected a link or button, </0><1>contact the UK Health Security Agency (UKHSA)</1><2> if you need to speak to someone.</2></2>"
+    },
+    "serviceProblem": {
+      "heading": "Sorry, there is a problem with the service",
+      "body": "<0>Try again later.</0><1><0>Contact the UK Health Security Agency (UKHSA)</0><1> if you need to speak to someone.</1></1>"
+    }
+  }
+}
