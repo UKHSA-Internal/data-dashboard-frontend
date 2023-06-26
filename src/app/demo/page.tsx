@@ -5,6 +5,7 @@ import { Headline } from '../components/Blocks/Headline/Headline'
 import { Percentage } from '../components/Blocks/Percentage/Percentage'
 import { Trend } from '../components/Blocks/Trend/Trend'
 import { Chart } from '../components/Blocks/Chart/Chart'
+import { useTranslation } from '../i18n'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
@@ -37,6 +38,8 @@ async function getPage() {
 }
 
 export default async function Page() {
+  const { t } = await useTranslation('common')
+
   const page = await getPage()
 
   if (!page) return 'error!'
@@ -47,7 +50,7 @@ export default async function Page() {
     <>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
-          <p className="mb-4 govuk-body-s">{lastUpdated}</p>
+          <p className="mb-4 govuk-body-s">{t('lastUpdated', { value: lastUpdated })}</p>
           <h1 className="govuk-heading-xl mb-4">{title}</h1>
           <div dangerouslySetInnerHTML={{ __html: description }} />
         </div>
