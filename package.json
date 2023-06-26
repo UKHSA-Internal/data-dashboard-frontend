@@ -20,7 +20,9 @@
   },
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
+    "@types/geojson": "^7946.0.10",
     "@types/leaflet": "^1.9.3",
+    "@types/mapbox-gl": "^2.7.11",
     "cross-env": "^7.0.3",
     "cypress-axe": "^1.4.0",
     "dayjs": "^1.11.7",
@@ -31,6 +33,7 @@
     "ky-universal": "^0.11.0",
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
+    "mapbox-gl": "^2.15.0",
     "next": "^13.2.4",
     "next-i18next": "^13.2.2",
     "next-seo": "^6.0.0",
