@@ -5,11 +5,8 @@ const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'sw
 import './globals.scss'
 import Script from 'next/script'
 import Link from 'next/link'
-import { useTranslation } from './i18n'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { t } = await useTranslation('common')
-
   return (
     <html lang="en" className={`govuk-template ${roboto.variable} font-sans`}>
       <Script

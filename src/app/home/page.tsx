@@ -1,7 +1,7 @@
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Metadata } from 'next'
-import { useTranslation } from '../i18n'
+import { Wrapper } from '../components/ui/ukhsa'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
@@ -34,23 +34,13 @@ async function getPage() {
 }
 
 export default async function Page() {
-  const { t } = await useTranslation('common')
-
   const page = await getPage()
 
   const { title, description, lastUpdated } = page
 
   return (
-    <>
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-two-thirds">
-          <p className="mb-4 govuk-body-s">{t('lastUpdated', { value: lastUpdated })}</p>
-          <h1 className="govuk-heading-xl mb-4">{title}</h1>
-          <div dangerouslySetInnerHTML={{ __html: description }} />
-        </div>
-      </div>
-
+    <Wrapper heading={title} description={description} lastUpdated={lastUpdated}>
       <div>WIP</div>
-    </>
+    </Wrapper>
   )
 }

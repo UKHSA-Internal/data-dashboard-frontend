@@ -1,22 +1,14 @@
-import { NextResponse } from 'next/server'
-import type { NextRequest } from 'next/server'
+import createMiddleware from 'next-intl/middleware'
+
+export default createMiddleware({
+  // A list of all locales that are supported
+  locales: ['en'],
+
+  // If this locale is matched, pathnames work without a prefix (e.g. `/about`)
+  defaultLocale: 'en',
+})
 
 export const config = {
-  matcher: '/charts/:path*',
-}
-
-/**
- * Middleware to proxy chart requests to the backend along with the secret token header
- */
-export function middleware(request: NextRequest) {
-  const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('Authorization', process.env.API_KEY ?? '')
-
-  request.nextUrl.href = `${process.env.API_URL}${request.nextUrl.pathname}`
-
-  return NextResponse.rewrite(request.nextUrl, {
-    request: {
-      headers: requestHeaders,
-    },
-  })
+  // Skip all paths that should not be internationalized
+  matcher: ['/((?!api|_next|.*\\..*).*)'],
 }
