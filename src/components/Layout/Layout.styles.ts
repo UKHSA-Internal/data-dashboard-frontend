@@ -2,6 +2,7 @@ import { Link } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import styled from 'styled-components'
 import { COLOURS } from '@/styles/Theme'
+import { BLACK } from 'govuk-colours'
 
 export const TopNavLink = styled(Link)`
   && {
@@ -13,6 +14,12 @@ export const TopNavLink = styled(Link)`
 
     &:hover {
       text-decoration: underline;
+    }
+
+    &:focus,
+    &:active {
+      color: ${BLACK};
+      text-decoration: none;
     }
 
     &:hover,
