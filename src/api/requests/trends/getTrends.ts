@@ -1,8 +1,10 @@
 import { z } from 'zod'
+
 import { api } from '@/api/api-utils'
-import { getApiBaseUrl } from '../helpers'
-import { Topics, Metrics, PercentageMetrics } from '@/api/models'
+import { Metrics, PercentageMetrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
+
+import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   topic: Topics,

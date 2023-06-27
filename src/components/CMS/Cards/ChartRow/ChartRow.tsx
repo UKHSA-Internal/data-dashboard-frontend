@@ -1,5 +1,5 @@
-import { ReactNode } from 'react'
 import { GridCol, GridRow } from 'govuk-react'
+import { ReactNode } from 'react'
 
 interface ChartRowProps {
   columns: Array<ReactNode>

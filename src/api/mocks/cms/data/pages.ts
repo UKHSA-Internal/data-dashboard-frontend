@@ -1,12 +1,13 @@
 import { PagesResponse } from '@/api/requests/cms/getPages'
-import { homePageMock } from './page/home'
+
 import { aboutPageMock } from './page/about'
-import { whatsNewPageMock } from './page/whats-new'
-import { mapsPageMock } from './page/maps'
+import { coronavirusPageMock } from './page/coronavirus'
+import { homePageMock } from './page/home'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
-import { coronavirusPageMock } from './page/coronavirus'
+import { mapsPageMock } from './page/maps'
 import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
+import { whatsNewPageMock } from './page/whats-new'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {

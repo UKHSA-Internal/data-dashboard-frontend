@@ -1,8 +1,7 @@
 import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
-import styled, { css } from 'styled-components'
-
-import { Tag as GovUKTag } from 'govuk-react'
 import { typography } from '@govuk-react/lib'
+import { Tag as GovUKTag } from 'govuk-react'
+import styled, { css } from 'styled-components'
 
 type TagProps = {
   $direction: string

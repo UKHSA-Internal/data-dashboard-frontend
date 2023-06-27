@@ -1,10 +1,13 @@
-import z from 'zod'
 import 'whatwg-fetch'
+
 import { rest } from 'msw'
+import z from 'zod'
+
 import { server } from '@/api/msw/server'
-import { getTrends, responseSchema } from './getTrends'
-import { getApiBaseUrl } from '../helpers'
 import { logger } from '@/lib/logger'
+
+import { getApiBaseUrl } from '../helpers'
+import { getTrends, responseSchema } from './getTrends'
 
 jest.mock('@/lib/logger')
 

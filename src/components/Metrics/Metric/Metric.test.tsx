@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { Metric } from './Metric'
 
 test('Wraps individual metrics to apply consistent styling', () => {

@@ -1,7 +1,9 @@
 import { rest } from 'msw'
+
+import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 import { getApiBaseUrl } from '@/api/requests/helpers'
 import { requestSchema } from '@/api/requests/trends/getTrends'
-import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+
 import { fixtures } from './fixtures'
 
 export const handlers = [

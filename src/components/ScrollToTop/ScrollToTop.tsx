@@ -1,6 +1,7 @@
-import React from 'react'
-import { ArrowIcon, Button } from './ScrollToTop.styles'
 import { useTranslation } from 'next-i18next'
+import React from 'react'
+
+import { ArrowIcon, Button } from './ScrollToTop.styles'
 
 export const ScrollToTop = () => {
   const { t } = useTranslation('common')

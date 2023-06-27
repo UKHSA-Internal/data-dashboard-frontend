@@ -1,8 +1,9 @@
 import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
-import { Link } from 'govuk-react'
 import { BLUE } from 'govuk-colours'
+import { Link } from 'govuk-react'
 import styled, { css } from 'styled-components'
+
 import { COLOURS } from '@/styles/Theme'
 
 export const NavItem = styled('li')`

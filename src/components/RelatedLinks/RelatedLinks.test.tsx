@@ -1,6 +1,7 @@
-import { render, screen, within } from '@/config/test-utils'
-import { RelatedLinks } from './RelatedLinks'
 import type { RelatedLinks as Links } from '@/api/models/cms/Page'
+import { render, screen, within } from '@/config/test-utils'
+
+import { RelatedLinks } from './RelatedLinks'
 
 const testData: Links = [
   {

@@ -1,5 +1,6 @@
-import { ChartContainer, Container } from './Chart.styles'
 import Image from 'next/image'
+
+import { ChartContainer, Container } from './Chart.styles'
 
 interface ChartProps {
   src: string

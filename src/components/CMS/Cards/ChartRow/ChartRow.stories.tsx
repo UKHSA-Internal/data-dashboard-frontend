@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
-import { ChartRow } from './ChartRow'
-import Cards from '..'
+
 import { Chart } from '@/components/Chart'
+
+import Cards from '..'
+import { ChartRow } from './ChartRow'
 
 const meta = {
   title: 'CMS Components/Chart Row',

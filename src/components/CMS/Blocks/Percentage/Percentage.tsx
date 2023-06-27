@@ -1,5 +1,4 @@
 import { HeadlineValue, Metric } from '@/components/Metrics'
-
 import { usePercentage } from '@/hooks/store/usePercentage'
 
 interface PercentageProps {
