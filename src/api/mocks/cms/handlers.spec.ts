@@ -1,8 +1,10 @@
+import 'whatwg-fetch'
+
 import { server } from '@/api/msw/server'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getCmsApiPath, requestOptions } from '@/api/requests/helpers'
-import 'whatwg-fetch'
-import { mockedPagesMap, mockedPageMap } from './handlers'
+
+import { mockedPageMap, mockedPagesMap } from './handlers'
 
 beforeAll(() => server.listen())
 afterAll(() => server.close())

@@ -1,8 +1,10 @@
-import { ReactNode } from 'react'
 import { renderHook } from '@testing-library/react'
-import { useTrend } from './useTrend'
-import StoreProvider from '@/lib/StoreProvider'
+import { ReactNode } from 'react'
+
 import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
+
+import { useTrend } from './useTrend'
 
 beforeEach(() => {
   console.error = jest.fn()

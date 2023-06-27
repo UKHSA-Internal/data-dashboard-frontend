@@ -1,10 +1,12 @@
-import { useTranslation } from 'next-i18next'
 import { Details } from 'govuk-react'
+import { useTranslation } from 'next-i18next'
+
 import { Chart as ChartComponent } from '@/components/Chart'
-import { useChart } from '@/hooks/store/useChart'
-import { useTabular } from '@/hooks/store/useTabular'
 import { ChartTable } from '@/components/ChartTable'
 import { chartTableMaxColumns } from '@/config/constants'
+import { useChart } from '@/hooks/store/useChart'
+import { useTabular } from '@/hooks/store/useTabular'
+
 import { parseChartTableData } from './utils/parseChartTableData'
 
 interface ChartProps {

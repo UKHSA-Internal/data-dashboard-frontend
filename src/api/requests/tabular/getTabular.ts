@@ -1,8 +1,10 @@
-import { api } from '@/api/api-utils'
 import { z } from 'zod'
-import { getApiBaseUrl } from '../helpers'
-import { logger } from '@/lib/logger'
+
+import { api } from '@/api/api-utils'
 import { ChartTypes, Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { logger } from '@/lib/logger'
+
+import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   plots: z.array(

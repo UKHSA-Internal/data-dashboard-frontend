@@ -1,11 +1,12 @@
 import { z } from 'zod'
-import { Topics } from '../../Topics'
-import { Metrics } from '../../Metrics'
+
+import { ChartLineColours } from '../../ChartLineColours'
+import { ChartLineTypes } from '../../ChartLineTypes'
 import { ChartTypes } from '../../ChartTypes'
 import { Geography } from '../../Geography'
 import { GeographyType } from '../../GeographyType'
-import { ChartLineColours } from '../../ChartLineColours'
-import { ChartLineTypes } from '../../ChartLineTypes'
+import { Metrics } from '../../Metrics'
+import { Topics } from '../../Topics'
 
 /**
  * Chart type

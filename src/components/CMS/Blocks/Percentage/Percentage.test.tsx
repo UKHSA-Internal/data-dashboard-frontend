@@ -1,8 +1,8 @@
 import { render, screen } from '@/config/test-utils'
+import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
 
 import { Percentage } from './Percentage'
-import StoreProvider from '@/lib/StoreProvider'
-import { StoreState } from '@/lib/store'
 
 test('Displays a percentage from the store that was successfully fetched', () => {
   const headlines: StoreState['headlines'] = {

@@ -1,8 +1,8 @@
-import styled from 'styled-components'
-import { GREY_3 } from 'govuk-colours'
-import { SPACING, BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES } from '@govuk-react/constants'
+import { BODY_SIZES, FONT_WEIGHTS, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
+import { GREY_3 } from 'govuk-colours'
 import { GridCol, GridRow, H3 } from 'govuk-react'
+import styled from 'styled-components'
 
 type ContainerProps = {
   $theme?: 'primary' | 'secondary'

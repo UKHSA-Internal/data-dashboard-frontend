@@ -1,7 +1,9 @@
 import { rest } from 'msw'
-import { getApiBaseUrl } from '@/api/requests/helpers'
-import { requestSchema } from '@/api/requests/headlines/getHeadlines'
+
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+import { requestSchema } from '@/api/requests/headlines/getHeadlines'
+import { getApiBaseUrl } from '@/api/requests/helpers'
+
 import { fixtures } from './fixtures'
 
 const paths: Record<string, string> = {

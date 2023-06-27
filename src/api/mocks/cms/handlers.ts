@@ -1,20 +1,22 @@
 import { rest } from 'msw'
-import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './data/pages'
-import {
-  influenzaPageMock,
-  coronavirusPageMock,
-  otherRespiratoryVirusesPageMock,
-  homePageMock,
-  aboutPageMock,
-  whatsNewPageMock,
-  mapsPageMock,
-  howToUseThisDataPageMock,
-} from './data/page'
-import { getCmsApiPath } from '@/api/requests/helpers'
-import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
-import { PageResponse } from '@/api/requests/cms/getPage'
+
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+import { PageResponse } from '@/api/requests/cms/getPage'
+import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
+import { getCmsApiPath } from '@/api/requests/helpers'
 import { logger } from '@/lib/logger'
+
+import {
+  aboutPageMock,
+  coronavirusPageMock,
+  homePageMock,
+  howToUseThisDataPageMock,
+  influenzaPageMock,
+  mapsPageMock,
+  otherRespiratoryVirusesPageMock,
+  whatsNewPageMock,
+} from './data/page'
+import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './data/pages'
 
 const baseUrl = getCmsApiPath()
 

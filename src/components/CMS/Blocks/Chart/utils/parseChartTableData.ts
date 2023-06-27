@@ -1,6 +1,7 @@
+import chunk from 'lodash/chunk'
+
 import { Response } from '@/api/requests/tabular/getTabular'
 import { chartTableMaxColumns } from '@/config/constants'
-import chunk from 'lodash/chunk'
 
 export type Column = {
   header: string

@@ -1,18 +1,18 @@
-import { Contents, ContentsItem } from '@/components/Contents'
 import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
-import { initializeStore } from '@/lib/store'
-
-import { Page } from '@/components/Page'
-import { PageType } from '@/api/requests/cms/getPages'
-import { RelatedLinks } from '@/components/RelatedLinks'
-import { Utils } from '@/components/CMS'
-import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { getStaticPropsRevalidateValue } from '@/config/app-utils'
-import { initMocks } from '@/api/msw'
-import { logger } from '@/lib/logger'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+import { initMocks } from '@/api/msw'
+import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { Utils } from '@/components/CMS'
+import { Contents, ContentsItem } from '@/components/Contents'
+import { Page } from '@/components/Page'
+import { RelatedLinks } from '@/components/RelatedLinks'
+import { getStaticPropsRevalidateValue } from '@/config/app-utils'
+import { logger } from '@/lib/logger'
+import { initializeStore } from '@/lib/store'
 
 type HomeProps = InferGetStaticPropsType<typeof getStaticProps>
 

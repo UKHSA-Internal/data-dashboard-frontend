@@ -1,11 +1,12 @@
-import { H1, H2, H3, Link, ListItem, UnorderedList } from 'govuk-react'
-import rehypeRaw from 'rehype-raw'
 import rehypeToc from '@jsdevtools/rehype-toc'
-import rehypeSlug from 'rehype-slug'
-import type ReactMarkdown from 'react-markdown'
-import { Container } from './FormattedContent.styles'
-import { Contents } from '../Contents'
+import { H1, H2, H3, Link, ListItem, UnorderedList } from 'govuk-react'
 import { ComponentProps } from 'react'
+import type ReactMarkdown from 'react-markdown'
+import rehypeRaw from 'rehype-raw'
+import rehypeSlug from 'rehype-slug'
+
+import { Contents } from '../Contents'
+import { Container } from './FormattedContent.styles'
 
 type ReactMarkdownProps = ComponentProps<typeof ReactMarkdown>
 type Plugins = ReactMarkdownProps['rehypePlugins']

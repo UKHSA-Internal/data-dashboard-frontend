@@ -1,9 +1,10 @@
-import { H2, ListItem as GovUKListItem, Link } from 'govuk-react'
-import styled from 'styled-components'
 import { BODY_SIZES, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
-import { COLOURS } from '@/styles/Theme'
 import { BLUE } from 'govuk-colours'
+import { H2, Link, ListItem as GovUKListItem } from 'govuk-react'
+import styled from 'styled-components'
+
+import { COLOURS } from '@/styles/Theme'
 
 export const Nav = styled.nav`
   margin-bottom: ${SPACING.SCALE_5};

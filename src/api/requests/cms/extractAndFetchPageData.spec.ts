@@ -1,10 +1,12 @@
-import { extractAndFetchPageData } from './extractAndFetchPageData'
-import { getApiBaseUrl } from '../helpers'
+import { rest } from 'msw'
+
 import { homePageMock } from '@/api/mocks/cms/data/page'
+import { server } from '@/api/msw/server'
+
+import { getApiBaseUrl } from '../helpers'
 import { pageDataMockMixed } from './__mocks__/pageDataMixed'
 import { pageDataMockSuccess } from './__mocks__/pageDataSuccess'
-import { rest } from 'msw'
-import { server } from '@/api/msw/server'
+import { extractAndFetchPageData } from './extractAndFetchPageData'
 
 jest.mock('@/lib/logger')
 

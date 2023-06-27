@@ -7,6 +7,7 @@
     "prettier",
     "plugin:storybook/recommended"
   ],
+  "plugins": ["simple-import-sort", "unused-imports"],
   "rules": {
     "import/no-anonymous-default-export": "off",
     "no-restricted-imports": [
@@ -16,6 +17,9 @@
         "message": "Please import from the next-i18next package instead."
       }
     ],
-    "id-length": [2, { "exceptions": ["i", "j", "_", "e", "z"], "properties": "never" }]
+    "id-length": [2, { "exceptions": ["i", "j", "_", "e", "z"], "properties": "never" }],
+    "simple-import-sort/imports": "error",
+    "simple-import-sort/exports": "error",
+    "unused-imports/no-unused-imports": "error"
   }
 }

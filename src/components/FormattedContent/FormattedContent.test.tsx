@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+
 import { FormattedContent } from './FormattedContent'
 
 const mockData =

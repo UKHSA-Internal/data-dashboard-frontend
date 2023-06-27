@@ -1,8 +1,10 @@
 import { z } from 'zod'
+
 import { api } from '@/api/api-utils'
-import { getApiBaseUrl } from '../helpers'
-import { Topics, Metrics, Geography, GeographyType } from '@/api/models'
+import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
+
+import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   file_format: z.enum(['json', 'csv']),

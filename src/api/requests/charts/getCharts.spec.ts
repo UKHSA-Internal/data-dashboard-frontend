@@ -1,11 +1,14 @@
-import z from 'zod'
 import 'whatwg-fetch'
+
 import { rest } from 'msw'
+import z from 'zod'
+
 import { server } from '@/api/msw/server'
-import { getCharts, RequestParams } from './getCharts'
-import { getApiBaseUrl } from '../helpers'
 import { logger } from '@/lib/logger'
 import { chartSizes } from '@/styles/Theme'
+
+import { getApiBaseUrl } from '../helpers'
+import { getCharts, RequestParams } from './getCharts'
 
 jest.mock('@/lib/logger')
 

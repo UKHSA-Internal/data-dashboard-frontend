@@ -1,5 +1,4 @@
 import { HeadlineValue, Metric } from '@/components/Metrics'
-
 import { useHeadline } from '@/hooks/store/useHeadline'
 
 interface HeadlineProps {

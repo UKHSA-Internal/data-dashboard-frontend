@@ -1,8 +1,10 @@
-import { render, screen } from '@/config/test-utils'
 import userEvent from '@testing-library/user-event'
-import { Chart } from './Chart'
-import StoreProvider from '@/lib/StoreProvider'
+
+import { render, screen } from '@/config/test-utils'
 import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
+
+import { Chart } from './Chart'
 
 test('Displays a chart & related tabular data from the store that was successfully fetched', async () => {
   const user = userEvent.setup()

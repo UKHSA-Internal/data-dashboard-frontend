@@ -1,14 +1,16 @@
+import '../styles/globals.scss'
+
 import { NextPage } from 'next'
-import { ComponentType, ReactElement, ReactNode } from 'react'
+import type { AppProps } from 'next/app'
 import { appWithTranslation } from 'next-i18next'
+import { ComponentType, ReactElement, ReactNode } from 'react'
+
+import { initMocks } from '@/api/msw'
 import { GlobalStyle } from '@/components/GlobalStyle'
 import { Layout } from '@/components/Layout'
-import type { AppProps } from 'next/app'
-import { initMocks } from '@/api/msw'
-import nextI18NextConfig from '../../next-i18next.config'
 import StoreProvider from '@/lib/StoreProvider'
 
-import '../styles/globals.scss'
+import nextI18NextConfig from '../../next-i18next.config'
 
 if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
   initMocks()
