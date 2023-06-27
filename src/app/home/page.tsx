@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 
+import { initMocks } from '@/api/msw'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
@@ -36,6 +37,10 @@ async function getPage() {
 }
 
 export default async function Page() {
+  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
+    initMocks()
+  }
+
   const page = await getPage()
 
   const { title, description, lastUpdated } = page
