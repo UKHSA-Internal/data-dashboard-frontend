@@ -1,7 +1,8 @@
+import { covidOccupiedMVBeds, newCasesDailyValues } from '@/api/mocks/tabular/fixtures'
 import { render, screen, within } from '@/config/test-utils'
-import { ChartTable } from './ChartTable'
+
 import { parseChartTableData } from '../CMS/Blocks/Chart/utils/parseChartTableData'
-import { newCasesDailyValues, covidOccupiedMVBeds } from '@/api/mocks/tabular/fixtures'
+import { ChartTable } from './ChartTable'
 
 test('Displays a single plot chart in a tabular format', () => {
   const [{ data, columns }] = parseChartTableData(newCasesDailyValues)

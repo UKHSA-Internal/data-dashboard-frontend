@@ -1,7 +1,8 @@
 import { render, screen } from '@/config/test-utils'
-import { Trend } from './Trend'
-import StoreProvider from '@/lib/StoreProvider'
 import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
+
+import { Trend } from './Trend'
 
 test('Displays a trend from the store that was successfully fetched', () => {
   const trends: StoreState['trends'] = {

@@ -1,7 +1,8 @@
 import { z } from 'zod'
-import { RelatedLink } from './RelatedLinks'
+
 import { Body } from './Body'
 import { Meta } from './Meta'
+import { RelatedLink } from './RelatedLinks'
 
 export const Page = z.object({
   id: z.number(),

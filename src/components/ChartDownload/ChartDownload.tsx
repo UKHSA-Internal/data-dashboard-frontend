@@ -1,16 +1,17 @@
-import { DownloadButton, IconWrapper } from './ChartDownload.styles'
-import { FormEvent, useState } from 'react'
-import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
-
 import { BLACK } from 'govuk-colours'
 import { Button } from 'govuk-react'
-import { COLOURS } from '@/styles/Theme'
-import type { Chart } from '@/api/models/cms/Page'
-import { downloadFile } from '@/utils/downloadFile'
 import ky from 'ky-universal'
-import { logger } from '@/lib/logger'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
+import { FormEvent, useState } from 'react'
+
+import type { Chart } from '@/api/models/cms/Page'
+import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
+import { logger } from '@/lib/logger'
+import { COLOURS } from '@/styles/Theme'
+import { downloadFile } from '@/utils/downloadFile'
+
+import { DownloadButton, IconWrapper } from './ChartDownload.styles'
 
 /**
  * Progressively enhanced download component that submits a POST request via an HTML form

@@ -1,7 +1,7 @@
-import { SPACING, BODY_SIZES } from '@govuk-react/constants'
+import { BODY_SIZES, SPACING } from '@govuk-react/constants'
+import { typography } from '@govuk-react/lib'
 import ReactMarkdown from 'react-markdown'
 import styled, { css } from 'styled-components'
-import { typography } from '@govuk-react/lib'
 
 type ContainerProps = {
   $hasLinkedHeadings: boolean

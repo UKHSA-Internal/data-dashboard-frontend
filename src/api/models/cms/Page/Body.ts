@@ -1,7 +1,7 @@
-import { HeadlineNumber, PercentageNumber, TrendNumber } from './BodyValues'
-
-import { Chart } from './Chart'
 import { z } from 'zod'
+
+import { HeadlineNumber, PercentageNumber, TrendNumber } from './BodyValues'
+import { Chart } from './Chart'
 
 /**
  * Body Discriminated Union Types

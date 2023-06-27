@@ -1,7 +1,8 @@
-import { Blocks } from '@/components/CMS'
-import { CardColumn } from '@/components/Card'
-import { WithHeadlineNumbersRowCard } from '@/api/models/cms/Page'
 import { z } from 'zod'
+
+import { WithHeadlineNumbersRowCard } from '@/api/models/cms/Page'
+import { CardColumn } from '@/components/Card'
+import { Blocks } from '@/components/CMS'
 
 /**
  * This map utility handles rendering individual columns within the headline row card.

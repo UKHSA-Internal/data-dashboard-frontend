@@ -1,6 +1,8 @@
 import { renderHook } from '@testing-library/react'
-import { parseChartTableData } from './parseChartTableData'
+
 import { chartTableMaxColumns } from '@/config/constants'
+
+import { parseChartTableData } from './parseChartTableData'
 
 beforeEach(() => {
   console.error = jest.fn()

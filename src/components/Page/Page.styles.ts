@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import { SPACING, BODY_SIZES } from '@govuk-react/constants'
-import { H1 } from 'govuk-react'
+import { BODY_SIZES, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
+import { H1 } from 'govuk-react'
+import styled from 'styled-components'
 
 export const Container = styled.div``
 

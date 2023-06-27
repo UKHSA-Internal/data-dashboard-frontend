@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+
 import { Chart } from './Chart'
 
 test('Displays the chart via the provided src', () => {
