@@ -1,6 +1,10 @@
 import { render, screen } from '@/config/test-utils'
 import { Wrapper } from './Wrapper'
 
+/**
+ * Jest does not support RSC yet so we must await the component as a function
+ */
+
 test('displays a heading, last updated date and content', async () => {
   render(await Wrapper({ heading: 'Wrapper heading', lastUpdated: '2023-03-21T10:25:34.452098Z', children: 'Content' }))
 
