@@ -1,7 +1,6 @@
-import type { Body, RelatedLinks as Links, Meta } from '@/api/models/cms/Page'
 import { Contents, ContentsItem } from '@/components/Contents'
-import { GetStaticProps, InferGetStaticPropsType } from 'next'
-import { StoreState, initializeStore } from '@/lib/store'
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import { initializeStore } from '@/lib/store'
 
 import { Page } from '@/components/Page'
 import { PageType } from '@/api/requests/cms/getPages'
@@ -41,15 +40,7 @@ export default function Home({ title, description, relatedLinks, lastUpdated, bo
   )
 }
 
-export const getStaticProps: GetStaticProps<{
-  title: string
-  body: Body
-  description: string
-  lastUpdated: string
-  relatedLinks: Links
-  initialZustandState: StoreState
-  meta: Meta
-}> = async (req) => {
+export const getStaticProps = async (req: GetStaticPropsContext) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -83,6 +74,5 @@ export const getStaticProps: GetStaticProps<{
     }
   } catch (error) {
     logger.error(error)
-    return { notFound: true, revalidate: getStaticPropsRevalidateValue() }
   }
 }
