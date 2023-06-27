@@ -29,10 +29,8 @@ export const getDownloads = async (plots: RequestParams['plots'], format: Reques
       plots,
       file_format: format,
     }
-    const res = await api.post(`${getApiBaseUrl()}/downloads/v2`, { json })
-
-    if (format === 'csv') return res.text()
-    if (format === 'json') return res.json()
+    const { data } = await api.post<string>(`${getApiBaseUrl()}/downloads/v2`, json)
+    return data
   } catch (error) {
     logger.error(error)
   }

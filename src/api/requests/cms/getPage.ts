@@ -60,8 +60,8 @@ export const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonDa
 
 export const getPage = async <T extends PageType>(id: number) => {
   try {
-    const res = await api.get(`${getCmsApiPath()}/${id}`).json<PageResponse<T>>()
-    return responseSchema.safeParse(res)
+    const { data } = await api.get<PageResponse<T>>(`${getCmsApiPath()}/${id}`)
+    return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
