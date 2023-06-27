@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 import { Container, Heading, LastUpdated } from './Page.styles'
 import { useTranslation } from 'next-i18next'
 import { Meta } from '../Meta'
-import { FormattedContent } from '../FormattedContent'
 import { GridCol, GridRow } from 'govuk-react'
 
 interface PageProps {
@@ -24,7 +23,7 @@ export const Page = ({ children, heading, description, lastUpdated, seoTitle, se
           <GridCol setDesktopWidth="two-thirds">
             {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
             <Heading>{heading}</Heading>
-            {description && <FormattedContent>{description}</FormattedContent>}
+            {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
           </GridCol>
         </GridRow>
         {children}
