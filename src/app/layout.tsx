@@ -3,8 +3,9 @@ import { Roboto } from 'next/font/google'
 const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-roboto' })
 
 import './globals.scss'
-import Script from 'next/script'
+
 import Link from 'next/link'
+import Script from 'next/script'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
