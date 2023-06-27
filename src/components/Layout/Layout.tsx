@@ -1,7 +1,6 @@
 import { Page, PhaseBanner, TopNav } from 'govuk-react'
 import { PropsWithChildren, useEffect } from 'react'
 import { Navigation } from '../Navigation'
-import RouterLink from 'next/link'
 import { useTranslation } from 'next-i18next'
 import { ScrollToTop } from '../ScrollToTop'
 import { Footer } from '../Footer'
@@ -24,15 +23,7 @@ export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollTo
             <Navigation />
           </>
         }
-        header={
-          <TopNav
-            serviceTitle={
-              <RouterLink href="/" passHref legacyBehavior>
-                <TopNavLink>{t('serviceTitle')}</TopNavLink>
-              </RouterLink>
-            }
-          />
-        }
+        header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}
         main={Main}
       >
         {children}

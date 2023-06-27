@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { BODY_SIZES, FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { COLOURS } from '@/styles/Theme'
-import { BLUE, BLACK } from 'govuk-colours'
+import { BLUE } from 'govuk-colours'
 
 export const Nav = styled.nav`
   margin-bottom: ${SPACING.SCALE_5};
