@@ -1,6 +1,7 @@
+import { Fragment, ReactNode } from 'react'
+
 import { Card } from '@/components/Card'
 import { GridLimiter } from '@/components/GridLimiter'
-import { Fragment, ReactNode } from 'react'
 
 interface HeadlineNumbersRowProps {
   columns: Array<ReactNode>

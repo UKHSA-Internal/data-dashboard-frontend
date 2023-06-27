@@ -1,7 +1,8 @@
 import { render, screen } from '@/config/test-utils'
-import { Headline } from './Headline'
-import StoreProvider from '@/lib/StoreProvider'
 import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
+
+import { Headline } from './Headline'
 
 test('Displays a headline from the store that was successfully fetched', () => {
   const headlines: StoreState['headlines'] = {

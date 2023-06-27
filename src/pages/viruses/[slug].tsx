@@ -1,3 +1,11 @@
+import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import { useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
+import { initMocks } from '@/api/msw'
+import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
+import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import {
   Accordion,
   AccordionItem,
@@ -5,21 +13,14 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
-import { initMocks } from '@/api/msw'
-import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { Utils } from '@/components/CMS'
+import { Contents, ContentsItem } from '@/components/Contents'
+import { FormattedContent } from '@/components/FormattedContent'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { logger } from '@/lib/logger'
-import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
-import { initializeStore } from '@/lib/store'
-import { Contents, ContentsItem } from '@/components/Contents'
-import { Utils } from '@/components/CMS'
-import { FormattedContent } from '@/components/FormattedContent'
-import { useTranslation } from 'next-i18next'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
+import { logger } from '@/lib/logger'
+import { initializeStore } from '@/lib/store'
 
 type TopicPageProps = InferGetStaticPropsType<typeof getStaticProps>
 

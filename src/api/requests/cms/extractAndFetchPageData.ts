@@ -1,9 +1,10 @@
+import { isFulfilled } from '@/api/api-utils'
 import { Body } from '@/api/models/cms/Page'
-import { getCharts } from '../charts/getCharts'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
 import { getTabular } from '@/api/requests/tabular/getTabular'
 import { getTrends } from '@/api/requests/trends/getTrends'
-import { isFulfilled } from '@/api/api-utils'
+
+import { getCharts } from '../charts/getCharts'
 
 /**
  * Specific CMS page types (Home, Topics) are modelled to return parameters allowing the consumer to fetch

@@ -1,7 +1,7 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
-import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloads'
 
 import { initMocks } from '@/api/msw'
+import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 
 /**

@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { Layout } from './Layout'
 
 jest.mock('next/router', () => require('next-router-mock'))

@@ -1,9 +1,11 @@
 import { z } from 'zod'
+
 import { api } from '@/api/api-utils'
-import { getApiBaseUrl } from '../helpers'
-import { Topics, Metrics, ChartTypes, FileFormats, Geography, GeographyType } from '@/api/models'
+import { ChartTypes, FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
-import { chartSizes, chartFormat } from '@/styles/Theme'
+import { chartFormat, chartSizes } from '@/styles/Theme'
+
+import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   file_format: z.optional(FileFormats),

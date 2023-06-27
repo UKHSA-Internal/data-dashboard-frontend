@@ -1,4 +1,5 @@
 import { useRouter } from 'next/router'
+
 import { NavItem, NavLink } from './NavigationLink.styles'
 
 export type NavigationLink = { title: string; url: string }

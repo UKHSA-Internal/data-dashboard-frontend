@@ -1,5 +1,5 @@
-import styled from 'styled-components'
 import { MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import styled from 'styled-components'
 
 export const Nav = styled('nav')`
   margin-top: ${SPACING.SCALE_3};

@@ -1,6 +1,7 @@
-import { Heading } from './HeadlineValue.styles'
 import { VisuallyHidden } from 'govuk-react'
 import { useTranslation } from 'next-i18next'
+
+import { Heading } from './HeadlineValue.styles'
 
 interface HeadlineValueProps {
   heading: string

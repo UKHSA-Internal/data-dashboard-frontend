@@ -1,6 +1,8 @@
-import { Tag } from './Trend.styles'
-import { COLOURS } from '@/styles/Theme'
 import { BLACK } from 'govuk-colours'
+
+import { COLOURS } from '@/styles/Theme'
+
+import { Tag } from './Trend.styles'
 
 interface TrendProps {
   colour: string

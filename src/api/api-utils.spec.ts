@@ -1,4 +1,4 @@
-import { isRejected, isFulfilled } from './api-utils'
+import { isFulfilled, isRejected } from './api-utils'
 
 test('isRejected type guard', async () => {
   const [resolvedPromise, rejectedPromise] = await Promise.allSettled([Promise.resolve(null), Promise.reject(null)])

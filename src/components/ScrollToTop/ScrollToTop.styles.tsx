@@ -1,8 +1,8 @@
-import { Link } from 'govuk-react'
-import styled from 'styled-components'
 import { BODY_SIZES, SPACING } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
 import { BLUE } from 'govuk-colours'
+import { Link } from 'govuk-react'
+import styled from 'styled-components'
 
 export const Button = styled(Link)`
   display: inline-flex;

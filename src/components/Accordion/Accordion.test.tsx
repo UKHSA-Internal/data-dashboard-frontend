@@ -1,3 +1,6 @@
+import { render, screen } from '@testing-library/react'
+import userEvent from '@testing-library/user-event'
+
 import {
   Accordion,
   AccordionItem,
@@ -5,8 +8,6 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
 
 const getComponent = () => (
   <div className="js-enabled">

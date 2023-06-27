@@ -1,6 +1,6 @@
-import { RelatedItems, Link } from 'govuk-react'
+import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
+import { Link, RelatedItems } from 'govuk-react'
 import styled from 'styled-components'
-import { SPACING, FONT_WEIGHTS } from '@govuk-react/constants'
 
 export const Container = styled(RelatedItems)`
   margin-top: ${SPACING.SCALE_2};

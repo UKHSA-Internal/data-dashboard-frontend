@@ -1,7 +1,8 @@
 import { rest } from 'msw'
-import { getApiBaseUrl } from '@/api/requests/helpers'
-import { requestSchema } from '@/api/requests/downloads/getDownloads'
+
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+import { requestSchema } from '@/api/requests/downloads/getDownloads'
+import { getApiBaseUrl } from '@/api/requests/helpers'
 
 import { downloadsCsvFixture } from './fixtures/downloads-csv'
 import { downloadsJsonFixture } from './fixtures/downloads-json'

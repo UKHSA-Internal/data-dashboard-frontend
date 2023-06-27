@@ -1,7 +1,7 @@
-import styled from 'styled-components'
-import { BLACK } from 'govuk-colours'
 import { BODY_SIZES, FONT_WEIGHTS } from '@govuk-react/constants'
 import { typography } from '@govuk-react/lib'
+import { BLACK } from 'govuk-colours'
+import styled from 'styled-components'
 
 export const Heading = styled.span`
   display: block;

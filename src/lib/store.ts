@@ -1,5 +1,6 @@
 import { createContext, useContext } from 'react'
 import { createStore, useStore as useZustandStore } from 'zustand'
+
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
 
 type PageData = Awaited<ReturnType<typeof extractAndFetchPageData>>

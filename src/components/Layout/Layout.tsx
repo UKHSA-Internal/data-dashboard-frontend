@@ -1,11 +1,11 @@
 import { Page, PhaseBanner, TopNav } from 'govuk-react'
-import { PropsWithChildren, useEffect } from 'react'
-import { Navigation } from '../Navigation'
 import { useTranslation } from 'next-i18next'
-import { ScrollToTop } from '../ScrollToTop'
-import { Footer } from '../Footer'
+import { PropsWithChildren, useEffect } from 'react'
 
-import { TopNavLink, Main } from './Layout.styles'
+import { Footer } from '../Footer'
+import { Navigation } from '../Navigation'
+import { ScrollToTop } from '../ScrollToTop'
+import { Main, TopNavLink } from './Layout.styles'
 
 export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollToTop?: boolean }) => {
   const { t } = useTranslation('common')

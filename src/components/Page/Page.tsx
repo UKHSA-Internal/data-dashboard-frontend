@@ -1,8 +1,9 @@
-import { ReactNode } from 'react'
-import { Container, Heading, LastUpdated } from './Page.styles'
-import { useTranslation } from 'next-i18next'
-import { Meta } from '../Meta'
 import { GridCol, GridRow } from 'govuk-react'
+import { useTranslation } from 'next-i18next'
+import { ReactNode } from 'react'
+
+import { Meta } from '../Meta'
+import { Container, Heading, LastUpdated } from './Page.styles'
 
 interface PageProps {
   heading: string
