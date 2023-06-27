@@ -5,7 +5,7 @@ import {
   AccordionItemHeading,
   AccordionItemPanel,
 } from '@/components/Accordion/Accordion'
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { Page } from '@/components/Page'
@@ -13,7 +13,6 @@ import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { logger } from '@/lib/logger'
-import { RelatedLinks as Links, Body, Meta } from '@/api/models/cms/Page'
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
 import { initializeStore } from '@/lib/store'
 import { Contents, ContentsItem } from '@/components/Contents'
@@ -65,15 +64,7 @@ const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLi
 
 export default TopicPage
 
-export const getStaticProps: GetStaticProps<{
-  title: string
-  body: Body
-  description: string
-  accordion: Array<{ id: string; body: string }>
-  lastUpdated: string
-  relatedLinks: Links
-  meta: Meta
-}> = async (req) => {
+export const getStaticProps = async (req: GetStaticPropsContext) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -140,7 +131,6 @@ export const getStaticProps: GetStaticProps<{
     throw new Error('No slug found')
   } catch (error) {
     logger.error(error)
-    return { notFound: true, revalidate: getStaticPropsRevalidateValue() }
   }
 }
 
