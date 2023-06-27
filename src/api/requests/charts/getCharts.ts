@@ -25,7 +25,12 @@ export const requestSchema = z.object({
   ),
 })
 
-export const responseSchema = z.string()
+export const responseSchema = z.object({
+  chart: z.string(),
+  last_updated: z.string(),
+})
+
+type Response = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
@@ -38,8 +43,8 @@ export const getCharts = async (plots: RequestParams['plots'], size: 'narrow' | 
   }
 
   try {
-    const res = await api.post(`${getApiBaseUrl()}/charts/v2`, { json }).text()
-    return responseSchema.safeParse(res)
+    const { data } = await api.post<Response>(`${getApiBaseUrl()}/charts/v3`, json, { responseType: 'json' })
+    return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

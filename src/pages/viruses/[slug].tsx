@@ -132,6 +132,7 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
     throw new Error('No slug found')
   } catch (error) {
     logger.error(error)
+    throw new Error(`Failed to fetch topic page: ${error}`)
   }
 }
 
