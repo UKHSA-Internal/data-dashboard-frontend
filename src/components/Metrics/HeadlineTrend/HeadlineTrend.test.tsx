@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { HeadlineTrend } from './HeadlineTrend'
 
 test('Shows a heading text and trend component', () => {

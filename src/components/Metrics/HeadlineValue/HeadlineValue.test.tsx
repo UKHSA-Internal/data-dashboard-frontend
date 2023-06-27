@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { HeadlineValue } from './HeadlineValue'
 
 test('Shows a heading and value text', () => {

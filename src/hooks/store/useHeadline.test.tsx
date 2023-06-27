@@ -1,8 +1,10 @@
-import { ReactNode } from 'react'
 import { renderHook } from '@testing-library/react'
-import { useHeadline } from './useHeadline'
-import StoreProvider from '@/lib/StoreProvider'
+import { ReactNode } from 'react'
+
 import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
+
+import { useHeadline } from './useHeadline'
 
 beforeEach(() => {
   console.error = jest.fn()

@@ -1,7 +1,9 @@
 import { z } from 'zod'
+
 import { api } from '@/api/api-utils'
-import { getCmsApiPath } from '../helpers'
 import { logger } from '@/lib/logger'
+
+import { getCmsApiPath } from '../helpers'
 
 /**
  * CMS Pages endpoint

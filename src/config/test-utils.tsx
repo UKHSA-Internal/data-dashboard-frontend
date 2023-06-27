@@ -1,6 +1,6 @@
 /* eslint-disable import/export,no-restricted-imports */
-import React, { ReactElement } from 'react'
 import { render, RenderOptions } from '@testing-library/react'
+import React, { ReactElement } from 'react'
 // eslint-disable-next-line no-restricted-imports
 import { I18nextProvider } from 'react-i18next'
 

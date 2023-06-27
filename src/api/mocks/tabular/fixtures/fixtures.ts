@@ -1,15 +1,16 @@
 import { z } from 'zod'
+
 import { Topics } from '@/api/models'
 import { responseSchema } from '@/api/requests/tabular/getTabular'
 
 import {
-  weeklyHospitalAdmissionsRateValues,
-  weeklyPositivityValues,
-  newCasesDailyValues,
-  newDeathsDailyValues,
-  weeklyPositivityByAgeValues,
-  newCasesRollingRateValues,
   covidOccupiedMVBeds,
+  newCasesDailyValues,
+  newCasesRollingRateValues,
+  newDeathsDailyValues,
+  weeklyHospitalAdmissionsRateValues,
+  weeklyPositivityByAgeValues,
+  weeklyPositivityValues,
 } from '.'
 
 /**

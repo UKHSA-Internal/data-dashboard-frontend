@@ -1,14 +1,15 @@
-import { render, screen, waitFor } from '@/config/test-utils'
+import userEvent from '@testing-library/user-event'
+import { rest } from 'msw'
+import mockRouter from 'next-router-mock'
 
 import type { Chart } from '@/api/models/cms/Page'
-import { ChartDownload } from './ChartDownload'
-import { chartExportApiRoutePath } from '@/config/constants'
-import { downloadFile } from '@/utils/downloadFile'
-import { logger } from '@/lib/logger'
-import mockRouter from 'next-router-mock'
-import { rest } from 'msw'
 import { server } from '@/api/msw/server'
-import userEvent from '@testing-library/user-event'
+import { chartExportApiRoutePath } from '@/config/constants'
+import { render, screen, waitFor } from '@/config/test-utils'
+import { logger } from '@/lib/logger'
+import { downloadFile } from '@/utils/downloadFile'
+
+import { ChartDownload } from './ChartDownload'
 
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('@/lib/logger')

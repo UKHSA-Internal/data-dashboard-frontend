@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { HeadlineNumbersRow } from './HeadlineNumbersRow'
 
 test('Displays provided columns', () => {

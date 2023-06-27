@@ -1,8 +1,10 @@
 import { rest } from 'msw'
-import { getApiBaseUrl } from '@/api/requests/helpers'
+
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
-import { fixtures } from './fixtures/fixtures'
+import { getApiBaseUrl } from '@/api/requests/helpers'
 import { requestSchema } from '@/api/requests/tabular/getTabular'
+
+import { fixtures } from './fixtures/fixtures'
 
 export const handlers = [
   rest.post(

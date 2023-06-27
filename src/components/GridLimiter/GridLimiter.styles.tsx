@@ -1,5 +1,6 @@
-import styled from 'styled-components'
 import { BREAKPOINTS } from '@govuk-react/constants'
+import styled from 'styled-components'
+
 import { CardContainer } from '../Card/Card.styles'
 
 type ContainerProps = {

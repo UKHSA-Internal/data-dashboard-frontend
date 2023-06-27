@@ -1,6 +1,8 @@
-import { render, screen } from '@/config/test-utils'
-import { Page } from './Page'
 import { ComponentProps } from 'react'
+
+import { render, screen } from '@/config/test-utils'
+
+import { Page } from './Page'
 
 const getComponent = (props?: Partial<ComponentProps<typeof Page>>) => (
   <Page

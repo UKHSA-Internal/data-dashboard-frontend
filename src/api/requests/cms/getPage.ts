@@ -1,9 +1,11 @@
 import { z } from 'zod'
+
 import { api } from '@/api/api-utils'
+import { Body, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { logger } from '@/lib/logger'
+
 import { getCmsApiPath } from '../helpers'
 import type { PageType } from './getPages'
-import { Meta, Body, RelatedLinks } from '@/api/models/cms/Page'
-import { logger } from '@/lib/logger'
 
 /**
  * CMS Page endpoint

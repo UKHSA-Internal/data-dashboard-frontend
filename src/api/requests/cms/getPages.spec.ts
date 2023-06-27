@@ -1,9 +1,12 @@
-import z from 'zod'
 import 'whatwg-fetch'
+
 import { rest } from 'msw'
+import z from 'zod'
+
 import { server } from '@/api/msw/server'
-import { getCmsApiPath } from '../helpers'
 import { logger } from '@/lib/logger'
+
+import { getCmsApiPath } from '../helpers'
 import { getPages, PageType, responseSchema } from './getPages'
 
 jest.mock('@/lib/logger')

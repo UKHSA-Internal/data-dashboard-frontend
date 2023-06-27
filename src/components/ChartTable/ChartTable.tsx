@@ -1,6 +1,7 @@
 import { useTranslation } from 'next-i18next'
-import { Table } from './ChartTable.styles'
+
 import { Column, Data } from '../CMS/Blocks/Chart/utils/parseChartTableData'
+import { Table } from './ChartTable.styles'
 
 interface ChartTableProps {
   caption: string

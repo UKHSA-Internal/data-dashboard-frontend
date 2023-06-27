@@ -1,6 +1,7 @@
+import { SPACING } from '@govuk-react/constants'
 import { Paragraph } from 'govuk-react'
 import styled from 'styled-components'
-import { SPACING } from '@govuk-react/constants'
+
 import { chartDownloadButtonWidth } from '@/styles/Theme'
 
 interface SecondaryTextProps {

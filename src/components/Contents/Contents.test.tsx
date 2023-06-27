@@ -1,4 +1,5 @@
 import { render, screen, within } from '@testing-library/react'
+
 import { Contents, ContentsItem } from './Contents'
 
 const getComponent = () => (

@@ -1,7 +1,9 @@
-import { ReactNode } from 'react'
-import StoreProvider from '@/lib/StoreProvider'
-import { StoreState } from '@/lib/store'
 import { renderHook } from '@testing-library/react'
+import { ReactNode } from 'react'
+
+import { StoreState } from '@/lib/store'
+import StoreProvider from '@/lib/StoreProvider'
+
 import { usePercentage } from './usePercentage'
 
 beforeEach(() => {

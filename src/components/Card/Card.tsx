@@ -1,6 +1,7 @@
 import { GridCol } from 'govuk-react'
 import { ComponentProps, ReactNode } from 'react'
-import { CardContainer, CardColumnHeading, CardColumnHeadingContainer, CardColumnGridCol } from './Card.styles'
+
+import { CardColumnGridCol, CardColumnHeading, CardColumnHeadingContainer, CardContainer } from './Card.styles'
 
 interface CardProps {
   children: ReactNode

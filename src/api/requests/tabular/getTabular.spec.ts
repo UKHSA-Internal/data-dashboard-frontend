@@ -1,16 +1,18 @@
-import { server } from '@/api/msw/server'
-import { getTabular, responseSchema } from './getTabular'
+import { rest } from 'msw'
 import { z } from 'zod'
+
 import {
-  weeklyHospitalAdmissionsRateValues,
-  weeklyPositivityValues,
   newCasesDailyValues,
   newDeathsDailyValues,
+  weeklyHospitalAdmissionsRateValues,
+  weeklyPositivityValues,
 } from '@/api/mocks/tabular/fixtures'
 import type { Metrics, Topics } from '@/api/models'
-import { rest } from 'msw'
-import { getApiBaseUrl } from '../helpers'
+import { server } from '@/api/msw/server'
 import { logger } from '@/lib/logger'
+
+import { getApiBaseUrl } from '../helpers'
+import { getTabular, responseSchema } from './getTabular'
 
 jest.mock('@/lib/logger')
 
