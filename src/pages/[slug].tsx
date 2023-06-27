@@ -1,4 +1,4 @@
-import { GetStaticPaths, GetStaticProps, InferGetStaticPropsType } from 'next'
+import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
@@ -6,8 +6,8 @@ import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import type { RelatedLinks as Links, Meta } from '@/api/models/cms/Page'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
+import { logger } from '@/lib/logger'
 
 type CommonPageProps = InferGetStaticPropsType<typeof getStaticProps>
 
@@ -24,13 +24,7 @@ export const CommonPage = ({ title, body, relatedLinks, lastUpdated, meta }: Com
 
 export default CommonPage
 
-export const getStaticProps: GetStaticProps<{
-  title: string
-  body: string
-  lastUpdated: string
-  relatedLinks: Links
-  meta: Meta
-}> = async (req) => {
+export const getStaticProps = async (req: GetStaticPropsContext) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
@@ -64,8 +58,7 @@ export const getStaticProps: GetStaticProps<{
 
     throw new Error('No slug found')
   } catch (error) {
-    console.log(error)
-    return { notFound: true, revalidate: getStaticPropsRevalidateValue() }
+    logger.error(error)
   }
 }
 
