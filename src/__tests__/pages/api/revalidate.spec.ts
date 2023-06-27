@@ -1,6 +1,7 @@
-import { createMocks, createRequest, createResponse } from 'node-mocks-http'
-import revalidate from '../../../pages/api/revalidate'
 import { NextApiRequest, NextApiResponse } from 'next'
+import { createMocks, createRequest, createResponse } from 'node-mocks-http'
+
+import revalidate from '../../../pages/api/revalidate'
 
 type ApiRequest = NextApiRequest & ReturnType<typeof createRequest>
 type APiResponse = NextApiResponse & ReturnType<typeof createResponse>

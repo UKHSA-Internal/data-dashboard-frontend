@@ -1,10 +1,10 @@
-import { Blocks, Cards } from '@/components/CMS'
 import { GridCol, GridRow } from 'govuk-react'
-
-import { ChartDownload } from '@/components/ChartDownload'
-import type { ChartRowColumns } from '@/api/models/cms/Page'
 import kebabCase from 'lodash/kebabCase'
 import { z } from 'zod'
+
+import type { ChartRowColumns } from '@/api/models/cms/Page'
+import { ChartDownload } from '@/components/ChartDownload'
+import { Blocks, Cards } from '@/components/CMS'
 
 /**
  * This map utility handles rendering individual chart cards within each column for the chart row card.

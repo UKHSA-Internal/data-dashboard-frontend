@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { ChartRow } from './ChartRow'
 
 test('Displays provided columns', () => {

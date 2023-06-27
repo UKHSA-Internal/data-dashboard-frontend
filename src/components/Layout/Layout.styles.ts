@@ -1,8 +1,9 @@
-import { Link } from 'govuk-react'
 import { FONT_WEIGHTS, SPACING } from '@govuk-react/constants'
-import styled from 'styled-components'
-import { COLOURS } from '@/styles/Theme'
 import { BLACK } from 'govuk-colours'
+import { Link } from 'govuk-react'
+import styled from 'styled-components'
+
+import { COLOURS } from '@/styles/Theme'
 
 export const TopNavLink = styled(Link)`
   && {

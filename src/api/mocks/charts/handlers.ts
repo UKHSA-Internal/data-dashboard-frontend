@@ -1,10 +1,11 @@
-import { rest } from 'msw'
-import { getApiBaseUrl } from '@/api/requests/helpers'
-import { requestSchema } from '@/api/requests/charts/getCharts'
-import { apiResolver } from '@/api/msw/resolvers/api-resolver'
-import { chartSizes } from '@/styles/Theme'
-import * as path from 'path'
 import * as fs from 'fs'
+import { rest } from 'msw'
+import * as path from 'path'
+
+import { apiResolver } from '@/api/msw/resolvers/api-resolver'
+import { requestSchema } from '@/api/requests/charts/getCharts'
+import { getApiBaseUrl } from '@/api/requests/helpers'
+import { chartSizes } from '@/styles/Theme'
 
 const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
 const narrowFixture = fs.readFileSync(path.join(fixturesDirectory, `narrow.svg`))

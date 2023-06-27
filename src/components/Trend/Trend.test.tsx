@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+
 import { Trend } from './Trend'
 
 test('Positive trend with an up direction', () => {

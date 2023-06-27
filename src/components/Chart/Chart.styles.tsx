@@ -1,6 +1,6 @@
-import styled from 'styled-components'
-import { SPACING, BREAKPOINTS } from '@govuk-react/constants'
+import { BREAKPOINTS, SPACING } from '@govuk-react/constants'
 import { Details } from 'govuk-react'
+import styled from 'styled-components'
 
 export const Container = styled.div`
   + details {

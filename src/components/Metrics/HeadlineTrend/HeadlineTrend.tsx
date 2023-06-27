@@ -1,8 +1,10 @@
 import { VisuallyHidden } from 'govuk-react'
-import { Heading } from './HeadlineTrend.styles'
-import { Trend } from '@/components/Trend/Trend'
 import { useTranslation } from 'next-i18next'
 import { ComponentProps } from 'react'
+
+import { Trend } from '@/components/Trend/Trend'
+
+import { Heading } from './HeadlineTrend.styles'
 
 interface HeadlineTrendProps {
   heading: string

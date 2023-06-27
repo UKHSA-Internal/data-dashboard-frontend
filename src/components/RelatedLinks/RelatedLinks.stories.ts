@@ -1,7 +1,8 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { RelatedLinks } from './RelatedLinks'
 import { relatedLinksMock } from '@/api/mocks/cms/data/elements'
+
+import { RelatedLinks } from './RelatedLinks'
 
 const meta = {
   title: 'Components/RelatedLinks',

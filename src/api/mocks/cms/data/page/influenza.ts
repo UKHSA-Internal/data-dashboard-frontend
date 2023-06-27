@@ -1,5 +1,6 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
+
 import { relatedLinksMock } from '../elements'
 
 export const influenzaPageMock: PageResponse<PageType.Topic> = {

@@ -1,11 +1,14 @@
 import 'whatwg-fetch'
+
 import { rest } from 'msw'
-import { server } from '@/api/msw/server'
-import { getDownloads } from './getDownloads'
-import { getApiBaseUrl } from '../helpers'
-import { logger } from '@/lib/logger'
-import { downloadsJsonFixture } from '@/api/mocks/downloads/fixtures/downloads-json'
+
 import { downloadsCsvFixture } from '@/api/mocks/downloads/fixtures/downloads-csv'
+import { downloadsJsonFixture } from '@/api/mocks/downloads/fixtures/downloads-json'
+import { server } from '@/api/msw/server'
+import { logger } from '@/lib/logger'
+
+import { getApiBaseUrl } from '../helpers'
+import { getDownloads } from './getDownloads'
 
 jest.mock('@/lib/logger')
 

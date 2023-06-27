@@ -1,7 +1,7 @@
-import { Metrics, PercentageMetrics } from '../../Metrics'
-
-import { Topics } from '../../Topics'
 import { z } from 'zod'
+
+import { Metrics, PercentageMetrics } from '../../Metrics'
+import { Topics } from '../../Topics'
 
 /**
  * Headline and Trend data types

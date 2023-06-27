@@ -1,8 +1,9 @@
 import type { Meta, StoryObj } from '@storybook/react'
 
-import { HeadlineNumbersRow } from './HeadlineNumbersRow'
 import { CardColumn } from '@/components/Card'
 import { HeadlineTrend, HeadlineValue, Metric } from '@/components/Metrics'
+
+import { HeadlineNumbersRow } from './HeadlineNumbersRow'
 
 const meta = {
   title: 'CMS Components/Headline Numbers Row',

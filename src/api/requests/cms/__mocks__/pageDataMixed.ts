@@ -1,3 +1,6 @@
+import fs from 'fs'
+import path from 'path'
+
 import {
   newCasesDailyValues,
   newDeathsDailyValues,
@@ -6,8 +9,6 @@ import {
 } from '@/api/mocks/tabular/fixtures'
 
 import { extractAndFetchPageData } from '../extractAndFetchPageData'
-import fs from 'fs'
-import path from 'path'
 
 const getChartFixture = (file: string) =>
   fs.readFileSync(path.resolve(`./src/api/mocks/charts/fixtures/${file}`), {

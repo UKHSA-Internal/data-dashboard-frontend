@@ -1,6 +1,8 @@
-import { ReactNode } from 'react'
-import { Card, CardColumn } from '@/components/Card'
 import kebabCase from 'lodash/kebabCase'
+import { ReactNode } from 'react'
+
+import { Card, CardColumn } from '@/components/Card'
+
 import { SecondaryText } from './ChartColumn.styles'
 
 interface ChartColumnProps {

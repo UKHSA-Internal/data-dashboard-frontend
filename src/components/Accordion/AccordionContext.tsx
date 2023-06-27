@@ -1,12 +1,4 @@
-import {
-  createContext,
-  useState,
-  ReactNode,
-  useMemo,
-  useContext,
-  Dispatch,
-  SetStateAction,
-} from 'react'
+import { createContext, Dispatch, ReactNode, SetStateAction, useContext, useMemo, useState } from 'react'
 
 interface AccordionContext {
   expanded: Set<string>
@@ -22,16 +14,9 @@ interface AccordionProviderProps {
 function AccordionProvider({ children }: AccordionProviderProps) {
   const [expanded, setExpanded] = useState<Set<string>>(new Set())
 
-  const value = useMemo(
-    () => ({ expanded, setExpanded }),
-    [expanded, setExpanded]
-  )
+  const value = useMemo(() => ({ expanded, setExpanded }), [expanded, setExpanded])
 
-  return (
-    <AccordionContext.Provider value={value}>
-      {children}
-    </AccordionContext.Provider>
-  )
+  return <AccordionContext.Provider value={value}>{children}</AccordionContext.Provider>
 }
 
 function useAccordion() {

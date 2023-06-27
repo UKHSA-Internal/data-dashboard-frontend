@@ -1,4 +1,5 @@
 import { render, screen } from '@testing-library/react'
+
 import { Card, CardColumn } from './Card'
 
 test('Card displays content', () => {

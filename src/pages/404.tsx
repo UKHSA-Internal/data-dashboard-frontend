@@ -1,10 +1,11 @@
-import { ReactElement } from 'react'
-import { Page } from '@/components/Page'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
-import { GetStaticProps } from 'next'
-import { useTranslation, Trans } from 'next-i18next'
 import { GridCol, GridRow } from 'govuk-react'
+import { GetStaticProps } from 'next'
+import { Trans, useTranslation } from 'next-i18next'
+import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { ReactElement } from 'react'
+
 import { Layout } from '@/components/Layout'
+import { Page } from '@/components/Page'
 
 export default function PageNotFound() {
   const { t } = useTranslation('errors')

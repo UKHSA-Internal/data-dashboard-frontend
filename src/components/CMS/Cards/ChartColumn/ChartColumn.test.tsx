@@ -1,4 +1,5 @@
 import { render, screen } from '@/config/test-utils'
+
 import { ChartColumn } from './ChartColumn'
 
 // The Govuk Paragraph component is using dependency with deprecated features

@@ -1,6 +1,7 @@
 import { H2 } from 'govuk-react'
 import { Children, cloneElement, isValidElement, ReactNode, useMemo } from 'react'
-import { AccordionItemState, Accordion as ReactAccordion } from 'react-accessible-accordion'
+import { Accordion as ReactAccordion, AccordionItemState } from 'react-accessible-accordion'
+
 import * as Styled from './Accordion.styles'
 import { AccordionProvider, useAccordion } from './AccordionContext'
 

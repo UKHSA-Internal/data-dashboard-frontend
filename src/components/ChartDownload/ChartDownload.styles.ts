@@ -1,8 +1,8 @@
 import { BODY_SIZES, MEDIA_QUERIES, SPACING } from '@govuk-react/constants'
+import { typography } from '@govuk-react/lib'
+import styled from 'styled-components'
 
 import { chartDownloadButtonWidth } from '@/styles/Theme'
-import styled from 'styled-components'
-import { typography } from '@govuk-react/lib'
 
 export const DownloadButton = styled.button`
   display: flex;

@@ -1,6 +1,8 @@
-import { render, screen } from '@/config/test-utils'
-import { ScrollToTop } from './ScrollToTop'
 import userEvent from '@testing-library/user-event'
+
+import { render, screen } from '@/config/test-utils'
+
+import { ScrollToTop } from './ScrollToTop'
 
 test('Displays the button, checks the content', async () => {
   render(<ScrollToTop />)

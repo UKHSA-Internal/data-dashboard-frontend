@@ -1,11 +1,12 @@
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+
 import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
-import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 
