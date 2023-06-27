@@ -1,6 +1,8 @@
+import { Metadata } from 'next'
+
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { Metadata } from 'next'
+
 import { Wrapper } from '../components/ui/ukhsa'
 
 export async function generateMetadata(): Promise<Metadata> {
