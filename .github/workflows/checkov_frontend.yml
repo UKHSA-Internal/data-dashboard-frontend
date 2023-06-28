@@ -28,4 +28,4 @@ jobs:
         uses: actions/upload-artifact@v3
         with:
           name: checkov-report
-          path: ${{ github.workspace }}checkov_report.json
+          path: ${{ github.workspace }}/checkov_report.json
