@@ -21,21 +21,19 @@ jobs:
           pip install defectdojo_api
           pip install requests
 
-      - name: Upload OWASP ZAP Scan Report
+      - name: download zap_scan
+        uses: actions/download-artifact@v2
+        with:
+          name: zap_scan
+          path: zap_scan
+
+      - name: OWASP Report Upload
         run: |
-          python upload_scan_report.py --scanner owasp_zap --report-path /path/to/zap_report.xml
+          python upload_scan_report.py --scanner owasp_zap --report-path ${{ github.workspace }}/zap_scan/report_html.html
 
       - name: Upload Checkov Scan Report
         run: |
-          python upload_scan_report.py --scanner checkov --report-path /path/to/checkov_report.json
-
-      - name: Upload Dependabot Scan Report
-        run: |
-          python upload_scan_report.py --scanner dependabot --report-path /path/to/dependabot_report.json
-
-      - name: Upload SonarCloud Scan Report
-        run: |
-          python upload_scan_report.py --scanner sonarcloud --report-path /path/to/sonarcloud_report.xml
+          python upload_scan_report.py --scanner checkov --${{ github.workspace }}/checkov-report/checkov_report.xml
 
       - name: Set up DefectDojo credentials
         env:
