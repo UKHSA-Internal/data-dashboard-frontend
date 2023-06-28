@@ -15,10 +15,10 @@ jobs:
       id: import-scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
-        token: ${{ secrets.DEFECTOJO_TOKEN }}
+        token: ${{ secrets.DEFECTDOJO_TOKEN }}
         defectdojo_url: https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com
-        file: reports/trivy-scan-report.json
-        scan_type: Trivy Scan
+        file: zap_scan/report_json.json
+        scan_type: ZAP Scan
         engagement: 1
       
     - name: Show response
