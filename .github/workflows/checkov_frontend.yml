@@ -20,12 +20,12 @@ jobs:
         
       - name: Run Checkov Scan
         run: |
-         mkdir -p /artifacts
-         touch /artifacts/checkov_report.json 
-         docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path /artifacts/checkov_report.json
+         mkdir -p /home/runner/work/artifacts
+         touch /home/runner/work/artifacts/checkov_report.json 
+         docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path /home/runner/work/artifacts/checkov_report.json
           
       - name: Upload Checkov Report
         uses: actions/upload-artifact@v3
         with:
           name: checkov-report
-          path: /artifacts/checkov_report.json
+          path: /home/runner/work/artifacts/checkov_report.json
