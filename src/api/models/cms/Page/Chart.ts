@@ -24,9 +24,12 @@ const Plot = z.object({
     stratum: z.optional(z.string()),
     geography: z.optional(Geography),
     geography_type: z.optional(GeographyType),
+    sex: z.optional(z.string()),
     label: z.optional(z.nullable(z.string())),
     line_colour: z.optional(z.nullable(ChartLineColours)),
     line_type: z.optional(z.nullable(ChartLineTypes)),
+    x_axis: z.optional(z.string()),
+    y_axis: z.optional(z.string()),
   }),
 })
 
