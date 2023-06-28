@@ -38,7 +38,7 @@ jobs:
       - name: Set up DefectDojo credentials
         env:
           DEFECTDOJO_API_KEY: ${{ secrets.DEFECTDOJO_API_KEY }}
-          DEFECTDOJO_URL: https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com/dashboard
+          DEFECTDOJO_URL: https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com
         run: |
           echo "DEFECTDOJO_API_KEY=${DEFECTDOJO_API_KEY}" >> $GITHUB_ENV
           echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}" >> $GITHUB_ENV
