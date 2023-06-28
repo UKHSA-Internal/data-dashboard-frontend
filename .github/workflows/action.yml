@@ -8,47 +8,20 @@ jobs:
   upload-reports:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: '3.x'
-
-      - name: Install required dependencies
-        run: |
-          pip install defectdojo_api
-          pip install requests
-          
-      - name: Download and extract 'zap_scan' artifact
-        uses: actions/download-artifact@v2
-        with:
-         name: zap_scan
-         path: zap_scan
-         
-      - name: Download and extract 'checkov-report' artifact
-        uses: actions/download-artifact@v2
-        with:
-         name: checkov-report
-         path: checkov-report
-         
-      - name: Upload Checkov Scan Report
-        run: |
-          python upload_scan_report.py --scanner owasp_zap --report-path ./.github/workflows/artifacts/checkov-report/checkov_report.xml
-
-      - name: Upload OWASP Scan Report
-        run: |
-          python upload_scan_report.py --scanner checkov --report-path ./.github/workflows/artifacts/zap_scan/report_html.html
-
-      - name: Set up DefectDojo credentials
-        env:
-          DEFECTDOJO_API_KEY: ${{ secrets.DEFECTDOJO_API_KEY }}
-          DEFECTDOJO_URL: https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com
-        run: |
-          echo "DEFECTDOJO_API_KEY=${DEFECTDOJO_API_KEY}" >> $GITHUB_ENV
-          echo "DEFECTDOJO_URL=${DEFECTDOJO_URL}" >> $GITHUB_ENV
-
-      - name: Upload reports to DefectDojo
-        run: |
-          python upload_reports.py
+    - name: Clone code repository
+      uses: actions/checkout@v2
+    
+    - name: Publish report
+      id: import-scan
+      uses: ivanamat/defectdojo-import-scan@v1
+      with:
+        token: ${{ secrets.DEFECTOJO_TOKEN }}
+        defectdojo_url: https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com
+        file: reports/trivy-scan-report.json
+        scan_type: Trivy Scan
+        engagement: 1
+      
+    - name: Show response
+      run: |
+       set -e
+       printf '%s\n' '${{ steps.import-scan.outputs.response }}' 
