@@ -21,7 +21,7 @@ jobs:
       - name: Run Checkov Scan
         run: |
          #mkdir -p .github/workflows/artifacts
-         touch checkov_report.json 
+         touch .github/workflows/artifacts/checkov_report.json 
           docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path .github/workflows/artifacts/checkov_report.json
           
       - name: Upload Checkov Report
