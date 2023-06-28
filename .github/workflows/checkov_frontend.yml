@@ -17,19 +17,15 @@ jobs:
 
       - name: Pull Docker Image
         run: docker pull bridgecrew/checkov
-       
-      - name: Create Directory and Generate File
-        run: |
-         #mkdir -p .github/workflows/artifacts
-         touch checkov_report.json 
-         #echo "This is the Checkov report." > .github/workflows/artifacts/checkov_report.json 
         
       - name: Run Checkov Scan
         run: |
-          docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path checkov_report.json
+         #mkdir -p .github/workflows/artifacts
+         touch checkov_report.json 
+          docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path .github/workflows/artifacts/checkov_report.json
           
       - name: Upload Checkov Report
         uses: actions/upload-artifact@v3
         with:
           name: checkov-report
-          path: checkov_report.json
+          path: .github/workflows/artifacts/checkov_report.json
