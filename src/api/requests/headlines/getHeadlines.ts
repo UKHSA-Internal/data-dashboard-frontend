@@ -22,8 +22,8 @@ type RequestParams = z.infer<typeof requestSchema>
 export const getHeadlines = async (params: RequestParams) => {
   try {
     const searchParams = new URLSearchParams({ ...params, geography: 'England', geography_type: 'Nation' })
-    const res = await api.get(`${getApiBaseUrl()}/headlines/v2`, { searchParams }).json()
-    return responseSchema.safeParse(res)
+    const { data } = await api.get(`${getApiBaseUrl()}/headlines/v2`, { params: searchParams })
+    return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

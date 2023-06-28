@@ -12,7 +12,10 @@ test('Displays a chart & related tabular data from the store that was successful
   const charts: StoreState['charts'] = {
     'mocked-charts': {
       success: true,
-      data: 'mocked-svg-data',
+      data: {
+        chart: 'mocked-svg-data',
+        last_updated: '123',
+      },
     },
   }
   const tabular: StoreState['tabular'] = {
@@ -96,7 +99,10 @@ test('Displays a chart despite the tabular data not being available', () => {
   const charts: StoreState['charts'] = {
     'mocked-charts': {
       success: true,
-      data: 'mocked-svg-data',
+      data: {
+        chart: 'mocked-svg-data',
+        last_updated: '123',
+      },
     },
   }
   const tabular: StoreState['tabular'] = {
