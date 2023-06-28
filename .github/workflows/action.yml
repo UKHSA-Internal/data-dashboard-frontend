@@ -20,7 +20,19 @@ jobs:
         run: |
           pip install defectdojo_api
           pip install requests
-
+          
+      - name: Download and extract 'zap_scan' artifact
+        uses: actions/download-artifact@v2
+        with:
+         name: zap_scan
+         path: zap_scan
+         
+      - name: Download and extract 'checkov-report' artifact
+        uses: actions/download-artifact@v2
+        with:
+         name: checkov-report
+         path: checkov-report
+         
       - name: Upload Checkov Scan Report
         run: |
           python upload_scan_report.py --scanner owasp_zap --report-path ./.github/workflows/artifacts/checkov-report/checkov_report.xml
