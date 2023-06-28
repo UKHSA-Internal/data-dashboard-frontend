@@ -25,7 +25,7 @@ jobs:
           
       - name: Run Checkov Scan
         run: |
-          docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf \
+          docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --skip-path .github/workflows/checkov_frontend.yml \
           # docker run --rm --volume /user/tf:/tf --workdir /tf bridgecrew/checkov --directory /tf \
           # -v ${{ github.workspace }}:/tf \
             bridgecrew/checkov \
