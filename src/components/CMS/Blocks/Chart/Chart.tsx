@@ -25,7 +25,7 @@ export const Chart = ({ id, size }: ChartProps) => {
 
   return (
     <>
-      {chart && <ChartComponent src={`data:image/svg+xml;utf8,${encodeURIComponent(chart)}`} />}
+      {chart && <ChartComponent src={`data:image/svg+xml;utf8,${encodeURIComponent(chart.chart)}`} />}
       {tabular && (
         <Details summary={t('table.toggle')} aria-label={t('table.toggle')}>
           {tables.map(({ columns, data }, key) => (
