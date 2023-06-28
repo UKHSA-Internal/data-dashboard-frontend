@@ -22,7 +22,7 @@ jobs:
         run: |
          mkdir -p /artifacts
          touch /artifacts/checkov_report.json 
-          docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path /artifacts/checkov_report.json
+         docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path /artifacts/checkov_report.json
           
       - name: Upload Checkov Report
         uses: actions/upload-artifact@v3
