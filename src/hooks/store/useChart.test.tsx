@@ -14,7 +14,10 @@ test('picks out a chart from the store using the provided id', () => {
   const charts: StoreState['charts'] = {
     'mocked-charts': {
       success: true,
-      data: 'mocked-svg-data',
+      data: {
+        chart: 'mocked-svg-data',
+        last_updated: '123',
+      },
     },
   }
 
@@ -22,7 +25,7 @@ test('picks out a chart from the store using the provided id', () => {
 
   const { result } = renderHook(() => useChart('mocked'), { wrapper })
 
-  expect(result.current).toEqual('mocked-svg-data')
+  expect(result.current).toEqual({ chart: 'mocked-svg-data', last_updated: '123' })
 })
 
 test('throws an error if the provided id does not exist within the store', () => {
