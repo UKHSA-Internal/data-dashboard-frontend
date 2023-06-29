@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Other respiratory viruses topic page', () => {
   beforeEach(() => {
-    cy.visit('/viruses/other-respiratory-viruses')
+    cy.visit('/choose-topic/other-respiratory-viruses')
     cy.injectAxe()
   })
 
@@ -29,6 +29,7 @@ describe('Other respiratory viruses topic page', () => {
     cy.findByRole('heading', { name: 'Other respiratory viruses', level: 1 })
     cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on other respiratory viruses./)
+    cy.findByRole('link', { name: 'Back' }).should('have.attr', 'href', '/choose-topic')
   })
 
   it('displays all sections correctly', () => {

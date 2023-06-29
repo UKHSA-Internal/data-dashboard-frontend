@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Coronavirus topic page', () => {
   beforeEach(() => {
-    cy.visit('/viruses/coronavirus')
+    cy.visit('/choose-topic/coronavirus')
     cy.injectAxe()
   })
 
@@ -32,6 +32,7 @@ describe('Coronavirus topic page', () => {
     cy.findByRole('link', { name: 'See the simple summary for England (opens in a new tab).' })
       .should('have.attr', 'target', '_blank')
       .should('have.attr', 'href', 'https://www.gov.uk/government/organisations/uk-health-security-agency')
+    cy.findByRole('link', { name: 'Back' }).should('have.attr', 'href', '/choose-topic')
   })
 
   it('displays all sections correctly', () => {

@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Influenza topic page', () => {
   beforeEach(() => {
-    cy.visit('/viruses/influenza')
+    cy.visit('/choose-topic/influenza')
     cy.injectAxe()
   })
 
@@ -29,6 +29,7 @@ describe('Influenza topic page', () => {
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
     cy.findByText(/Last updated on Monday, 15 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on Influenza/)
+    cy.findByRole('link', { name: 'Back' }).should('have.attr', 'href', '/choose-topic')
   })
 
   it('displays all sections correctly', () => {
