@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
+    "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
     "cypress-axe": "^1.4.0",
     "dayjs": "^1.11.7",

@@ -7,7 +7,7 @@ import { Meta } from '../Meta'
 import { Container, Heading, LastUpdated } from './Page.styles'
 
 interface PageProps {
-  heading: string
+  heading?: string
   description?: string
   children: ReactNode
   lastUpdated?: string
@@ -24,7 +24,7 @@ export const Page = ({ children, heading, description, lastUpdated, seoTitle, se
         <GridRow>
           <GridCol setDesktopWidth="two-thirds">
             {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
-            <Heading>{heading}</Heading>
+            {heading && <Heading>{heading}</Heading>}
             {description && <FormattedContent>{description}</FormattedContent>}
           </GridCol>
         </GridRow>
