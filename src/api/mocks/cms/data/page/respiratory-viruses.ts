@@ -3,7 +3,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 
 import { relatedLinksMock } from '../elements'
 
-export const homePageMock: PageResponse<PageType.Home> = {
+export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
   id: 6,
   meta: {
     type: 'home.HomePage',
@@ -201,6 +201,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: null,
                           line_type: null,
@@ -251,6 +252,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: null,
                           line_type: null,
@@ -379,6 +381,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: null,
                           line_type: null,
@@ -429,6 +432,7 @@ export const homePageMock: PageResponse<PageType.Home> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: null,
                           line_type: null,

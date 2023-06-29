@@ -45,6 +45,8 @@ export const WithChartCard = z.object({
     title: z.string(),
     body: z.string(),
     chart: Chart,
+    x_axis: z.string().nullable(),
+    y_axis: z.string().nullable(),
   }),
 })
 
