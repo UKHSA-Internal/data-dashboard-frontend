@@ -1,6 +1,6 @@
 import { rest } from 'msw'
 
-import { homePageMock } from '@/api/mocks/cms/data/page'
+import { respiratoryVirusesMock } from '@/api/mocks/cms/data/page'
 import { server } from '@/api/msw/server'
 
 import { getApiBaseUrl } from '../helpers'
@@ -15,7 +15,7 @@ afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
 test('Parses the cms page, fetches data from found sources and returns an orchestrated response', async () => {
-  const result = await extractAndFetchPageData(homePageMock.body)
+  const result = await extractAndFetchPageData(respiratoryVirusesMock.body)
   expect(result).toStrictEqual(pageDataMockSuccess)
 })
 
@@ -27,7 +27,7 @@ test('Handles errors individually per request', async () => {
     })
   )
 
-  const result = await extractAndFetchPageData(homePageMock.body)
+  const result = await extractAndFetchPageData(respiratoryVirusesMock.body)
 
   expect(result).toStrictEqual(pageDataMockMixed)
 })
