@@ -7,6 +7,7 @@ import axios from 'axios'
 export const api = axios.create({
   headers: { Authorization: process.env.API_KEY },
   responseType: 'json',
+  timeout: 180000,
 })
 
 /**
