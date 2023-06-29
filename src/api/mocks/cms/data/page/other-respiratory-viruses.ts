@@ -44,6 +44,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title:
                       'Line chart comparing RSV hospital (ICU or HDU) admission rates of positive cases per 100,000 population reported through SARI Watch, England',
                     body: 'RSV SARI Watch surveillance has run from week 40 to week 20. In the 2022 to 2023 season onwards this was extended to run throughout the year, to allow for surveillance of out-of-season trends.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -56,6 +58,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: 'BLUE',
                           line_type: 'SOLID',
@@ -79,6 +82,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Bar chart comparing RSV hospital admissions count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -91,6 +96,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -106,6 +112,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Bar chart comparing weekly RSV ICU/HDU admissions count by week',
                     body: 'Weekly admission rates of patients admitted to ICU/HDU with RSV as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -118,6 +126,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -150,6 +159,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing Adenovirus test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with Adenovirus as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -162,6 +173,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -177,6 +189,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing Adenovirus test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Adenovirus per 100,000 people.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -189,6 +203,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '0_4',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '0 to 4 years',
                           line_colour: 'ORANGE',
                           line_type: 'SOLID',
@@ -206,6 +221,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '5_14',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '5 to 14 years',
                           line_colour: 'ORANGE',
                           line_type: 'DASH',
@@ -223,6 +239,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '15_44',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '15 to 44 years',
                           line_colour: 'GREEN',
                           line_type: 'SOLID',
@@ -240,6 +257,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '45_64',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '45 to 64 years',
                           line_colour: 'PURPLE',
                           line_type: 'DASH',
@@ -257,6 +275,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '65+',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '65 years and over',
                           line_colour: 'DARK_BLUE',
                           line_type: 'SOLID',
@@ -280,6 +299,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing hMPV test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with hMPV as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -292,6 +313,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -307,6 +329,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing hMPV test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for hMPV per 100,000 people.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -319,6 +343,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '0_4',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '0 to 4 years',
                           line_colour: 'ORANGE',
                           line_type: 'SOLID',
@@ -336,6 +361,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '5_14',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '5 to 14 years',
                           line_colour: 'ORANGE',
                           line_type: 'DASH',
@@ -353,6 +379,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '15_44',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '15 to 44 years',
                           line_colour: 'GREEN',
                           line_type: 'SOLID',
@@ -370,6 +397,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '45_64',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '45 to 64 years',
                           line_colour: 'PURPLE',
                           line_type: 'DASH',
@@ -387,6 +415,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '65+',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '65 years and over',
                           line_colour: 'DARK_BLUE',
                           line_type: 'SOLID',
@@ -410,6 +439,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing Parainfluenza test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with Parainfluenza as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -422,6 +453,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -437,6 +469,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing Parainfluenza test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Parainfluenza per 100,000 people.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -449,6 +483,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '0_4',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '0 to 4 years',
                           line_colour: 'ORANGE',
                           line_type: 'SOLID',
@@ -466,6 +501,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '5_14',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '5 to 14 years',
                           line_colour: 'ORANGE',
                           line_type: 'DASH',
@@ -483,6 +519,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '15_44',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '15 to 44 years',
                           line_colour: 'GREEN',
                           line_type: 'SOLID',
@@ -500,6 +537,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '45_64',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '45 to 64 years',
                           line_colour: 'PURPLE',
                           line_type: 'DASH',
@@ -517,6 +555,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '65+',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '65 years and over',
                           line_colour: 'DARK_BLUE',
                           line_type: 'SOLID',
@@ -540,6 +579,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing Rhinovirus test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with Rhinovirus as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -552,6 +593,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -567,6 +609,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing Rhinovirus test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Rhinovirus per 100,000 people.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -579,6 +623,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '0_4',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '0 to 4 years',
                           line_colour: 'ORANGE',
                           line_type: 'SOLID',
@@ -596,6 +641,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '5_14',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '5 to 14 years',
                           line_colour: 'ORANGE',
                           line_type: 'DASH',
@@ -613,6 +659,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '15_44',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '15 to 44 years',
                           line_colour: 'GREEN',
                           line_type: 'SOLID',
@@ -630,6 +677,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '45_64',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '45 to 64 years',
                           line_colour: 'PURPLE',
                           line_type: 'DASH',
@@ -647,6 +695,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '65+',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '65 years and over',
                           line_colour: 'DARK_BLUE',
                           line_type: 'SOLID',
@@ -670,6 +719,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Line chart comparing RSV test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -682,6 +733,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          sex: null,
                           label: '',
                           line_colour: '',
                           line_type: '',
@@ -691,6 +743,108 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     ],
                   },
                   id: '1fe5aaf7-ebfe-44ad-9438-51bc6c2b1f8c',
+                },
+                {
+                  type: 'chart_card',
+                  value: {
+                    title: 'Line chart comparing RSV test positivity count by week broken down by age',
+                    body: 'Age breakdown of people testing positive for Rhinovirus per 100,000 people.',
+                    x_axis: null,
+                    y_axis: null,
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_positivity_by_age',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '0_4',
+                          geography: '',
+                          geography_type: '',
+                          sex: null,
+                          label: '0 to 4 years',
+                          line_colour: 'ORANGE',
+                          line_type: 'SOLID',
+                        },
+                        id: 'd7bed88e-5ba6-4125-a461-5e68abdc5ccb',
+                      },
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_positivity_by_age',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '5_14',
+                          geography: '',
+                          geography_type: '',
+                          sex: null,
+                          label: '5 to 14 years',
+                          line_colour: 'ORANGE',
+                          line_type: 'DASH',
+                        },
+                        id: '98f42d97-136f-420a-b8ed-3cf1ac440815',
+                      },
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_positivity_by_age',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '15_44',
+                          geography: '',
+                          geography_type: '',
+                          sex: null,
+                          label: '15 to 44 years',
+                          line_colour: 'GREEN',
+                          line_type: 'SOLID',
+                        },
+                        id: 'f542375d-1291-48cb-b22c-504439aa53f1',
+                      },
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_positivity_by_age',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '45_64',
+                          geography: '',
+                          geography_type: '',
+                          sex: null,
+                          label: '45 to 64 years',
+                          line_colour: 'PURPLE',
+                          line_type: 'DASH',
+                        },
+                        id: '4813d13d-2326-498c-bc9f-be21d28a63af',
+                      },
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'RSV',
+                          metric: 'weekly_positivity_by_age',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '65+',
+                          geography: '',
+                          geography_type: '',
+                          sex: null,
+                          label: '65 years and over',
+                          line_colour: 'DARK_BLUE',
+                          line_type: 'SOLID',
+                        },
+                        id: '490f11a0-e40b-4124-b70b-c4729dcb30b8',
+                      },
+                    ],
+                  },
+                  id: '88c235e7-e2a9-496b-821d-ec4032db26d3',
                 },
               ],
             },
