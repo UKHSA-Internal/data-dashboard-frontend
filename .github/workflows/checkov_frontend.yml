@@ -1,4 +1,4 @@
-name: IaC Scan
+name: IaC Checkov Scan
 
 on:
   push:
