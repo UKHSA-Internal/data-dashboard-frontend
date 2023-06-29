@@ -24,11 +24,20 @@ const FieldResult = styled.span`
   font-weight: 800;
 `
 
-const SearchButton = styled.input`
+const SearchInput = styled.input`
   border: 2px solid #000;
   margin-bottom: 20px;
   padding: 6px;
   font-size: 18px;
+`
+
+const SearchButton = styled.button`
+  height: 38px;
+  padding: 10px;
+  margin-left: 5px;
+  border: 2px solid black;
+  background: transparent;
+  font-weight: 800;
 `
 
 const Maps = () => {
@@ -39,8 +48,8 @@ const Maps = () => {
   return (
     <>
       <form onSubmit={handleSubmit}>
-        <SearchButton type="text" placeholder="POSTCODE" />
-        <button type="submit">Search</button>
+        <SearchInput type="text" placeholder="POSTCODE" />
+        <SearchButton type="submit">Search</SearchButton>
       </form>
 
       <ResultContainer>

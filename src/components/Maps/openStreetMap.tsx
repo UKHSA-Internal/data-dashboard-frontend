@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-// import { counties } from './uk-counties'
+import { counties } from './uk-counties'
 import { MapContainer, TileLayer, GeoJSON } from 'react-leaflet'
 import 'leaflet/dist/leaflet.css'
 
@@ -29,7 +29,7 @@ const OpenStreetMap = () => {
           url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           attribution="© OpenStreetMap contributors"
         />
-        {/* <GeoJSON data={counties} style={countyStyle} /> */}
+        <GeoJSON data={counties} style={countyStyle} />
       </MapContainer>
     </Container>
   )
