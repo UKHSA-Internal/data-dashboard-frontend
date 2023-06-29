@@ -14,6 +14,8 @@ interface ChartProps {
   size: 'narrow' | 'wide'
 }
 
+const getChartSvg = (encodedSvg: string) => encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
+
 export const Chart = ({ id, size }: ChartProps) => {
   const { t } = useTranslation('topic')
   const chart = useChart(id)
@@ -25,7 +27,7 @@ export const Chart = ({ id, size }: ChartProps) => {
 
   return (
     <>
-      {chart && <ChartComponent src={`data:image/svg+xml;utf8,${encodeURIComponent(chart.chart)}`} />}
+      {chart && <ChartComponent src={`data:image/svg+xml;utf8,${getChartSvg(chart.chart)}`} />}
       {tabular && (
         <Details summary={t('table.toggle')} aria-label={t('table.toggle')}>
           {tables.map(({ columns, data }, key) => (
