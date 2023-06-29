@@ -18,11 +18,11 @@ export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
     parent: {
       id: 2,
       meta: {
-        type: 'wagtailcore.Page',
+        type: 'home.HomePage',
         detail_url: 'http://localhost/api/pages/2/',
         html_url: null,
       },
-      title: 'Welcome to your new Wagtail site!',
+      title: 'UKHSA Dashboard Root',
     },
   },
   title: 'Respiratory viruses',
