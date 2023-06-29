@@ -38,8 +38,8 @@ export const responseSchema = z.object({
 
 export const getPages = async (type: PageType) => {
   try {
-    const res = await api.get(`${getCmsApiPath()}/?type=${type}`).json<PagesResponse>()
-    return responseSchema.safeParse(res)
+    const { data } = await api.get<PagesResponse>(`${getCmsApiPath()}/?type=${type}`)
+    return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

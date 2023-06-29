@@ -13,7 +13,7 @@ const wideFixture = fs.readFileSync(path.join(fixturesDirectory, `wide.svg`))
 
 export const handlers = [
   rest.post(
-    `${getApiBaseUrl()}/charts/v2`,
+    `${getApiBaseUrl()}/charts/v3`,
     apiResolver(async (req, res, ctx) => {
       // Extract request body
       const requestBody = await req.json()
@@ -32,17 +32,19 @@ export const handlers = [
 
       if (chart_height === chartSizes.narrow.height && chart_width === chartSizes.narrow.width) {
         return res(
-          ctx.set('Content-Length', narrowFixture.byteLength.toString()),
-          ctx.set('Content-Type', 'image/svg'),
-          ctx.body(narrowFixture)
+          ctx.json({
+            chart: narrowFixture.toString(),
+            last_updated: '2023-05-10T15:18:06.939535+01:00',
+          })
         )
       }
 
       if (chart_height === chartSizes.wide.height && chart_width === chartSizes.wide.width) {
         return res(
-          ctx.set('Content-Length', wideFixture.byteLength.toString()),
-          ctx.set('Content-Type', 'image/svg'),
-          ctx.body(wideFixture)
+          ctx.json({
+            chart: wideFixture.toString(),
+            last_updated: '2023-05-10T15:18:06.939535+01:00',
+          })
         )
       }
     })

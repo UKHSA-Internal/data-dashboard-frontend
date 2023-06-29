@@ -39,8 +39,8 @@ export type Response = z.infer<typeof responseSchema>
 export const getTabular = async (plots: RequestParams['plots']) => {
   try {
     const json: RequestParams = { plots }
-    const res = await api.post(`${getApiBaseUrl()}/tables/v2`, { json }).json()
-    return responseSchema.safeParse(res)
+    const { data } = await api.post<Response>(`${getApiBaseUrl()}/tables/v2`, json, { responseType: 'json' })
+    return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
