@@ -2,6 +2,7 @@ import { Body } from '@/api/models/cms/Page'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
 import { getTabular } from '@/api/requests/tabular/getTabular'
 import { getTrends } from '@/api/requests/trends/getTrends'
+import { chartSizes } from '@/config/constants'
 
 import { getCharts } from '../charts/getCharts'
 
@@ -30,16 +31,25 @@ export const extractAndFetchPageData = async (body: Body) => {
       if (content.type === 'chart_row_card') {
         for (const column of content.value.columns) {
           if (column.type === 'chart_with_headline_and_trend_card' || column.type === 'chart_card') {
-            const { chart } = column.value
+            const { chart, x_axis, y_axis } = column.value
 
             // Calculate the chart size based on the number of columns (max num of 2)
-            const chartSize = content.value.columns.length === 1 ? 'wide' : 'narrow'
+            const size = content.value.columns.length === 1 ? 'wide' : 'narrow'
 
             // Pick out plots
-            const plots = chart.map((plots) => plots.value)
+            const plots = chart.map((plot) => plot.value)
 
             // Extract the charts & tabular requests
-            charts.push([`${column.id}-charts`, await getCharts(plots, chartSize)])
+            charts.push([
+              `${column.id}-charts`,
+              await getCharts({
+                plots,
+                x_axis,
+                y_axis,
+                chart_width: chartSizes[size].width,
+                chart_height: chartSizes[size].height,
+              }),
+            ])
             tabular.push([`${column.id}-tabular`, await getTabular(plots)])
           }
 

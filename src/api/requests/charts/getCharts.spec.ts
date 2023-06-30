@@ -4,11 +4,11 @@ import { rest } from 'msw'
 import z from 'zod'
 
 import { server } from '@/api/msw/server'
+import { chartSizes } from '@/config/constants'
 import { logger } from '@/lib/logger'
-import { chartSizes } from '@/styles/Theme'
 
 import { getApiBaseUrl } from '../helpers'
-import { getCharts, RequestParams } from './getCharts'
+import { getCharts } from './getCharts'
 
 jest.mock('@/lib/logger')
 
@@ -16,7 +16,7 @@ beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
-test('Supports a narrow and wide chart size', async () => {
+test.only('Supports a narrow and wide chart size', async () => {
   server.use(
     rest.post(`${getApiBaseUrl()}/charts/v3`, async (req, res, ctx) => {
       const body = await req.json()
@@ -41,15 +41,19 @@ test('Supports a narrow and wide chart size', async () => {
     })
   )
 
-  const plots: RequestParams['plots'] = [
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      chart_type: 'line_with_shaded_section',
-    },
-  ]
-
-  const narrowResponse = await getCharts(plots, 'narrow')
+  const narrowResponse = await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
   expect(narrowResponse).toEqual({
     data: {
       chart: 'mocked-narrow',
@@ -58,7 +62,19 @@ test('Supports a narrow and wide chart size', async () => {
     success: true,
   })
 
-  const wideResponse = await getCharts(plots, 'wide')
+  const wideResponse = await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.wide.height,
+    chart_width: chartSizes.wide.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
   expect(wideResponse).toEqual({
     data: {
       chart: 'mocked-wide',
@@ -75,13 +91,19 @@ test('Handles generic http errors', async () => {
     })
   )
 
-  const result = await getCharts([
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_7days_sum',
-      chart_type: 'line_with_shaded_section',
-    },
-  ])
+  const result = await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.wide.height,
+    chart_width: chartSizes.wide.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 

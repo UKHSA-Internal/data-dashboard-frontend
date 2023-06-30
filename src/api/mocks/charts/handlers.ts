@@ -5,7 +5,7 @@ import * as path from 'path'
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 import { requestSchema } from '@/api/requests/charts/getCharts'
 import { getApiBaseUrl } from '@/api/requests/helpers'
-import { chartSizes } from '@/styles/Theme'
+import { chartSizes } from '@/config/constants'
 
 const fixturesDirectory = path.resolve(process.cwd(), 'src/api/mocks/charts/fixtures')
 const narrowFixture = fs.readFileSync(path.join(fixturesDirectory, `narrow.svg`))
