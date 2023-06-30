@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event'
+import { ZodError } from 'zod'
 
 import { render, screen } from '@/config/test-utils'
 import { StoreState } from '@/lib/store'
@@ -67,6 +68,15 @@ test('Does not display a chart from the store that failed to fetch', () => {
   const charts: StoreState['charts'] = {
     'mocked-charts': {
       success: false,
+      error: new ZodError([
+        {
+          received: 'mock',
+          code: 'invalid_enum_value',
+          options: [],
+          path: ['mock'],
+          message: 'Invalid',
+        },
+      ]),
     },
   }
   const tabular: StoreState['tabular'] = {
@@ -108,6 +118,15 @@ test('Displays a chart despite the tabular data not being available', () => {
   const tabular: StoreState['tabular'] = {
     'mocked-tabular': {
       success: false,
+      error: new ZodError([
+        {
+          received: 'mock',
+          code: 'invalid_enum_value',
+          options: [],
+          path: ['mock'],
+          message: 'Invalid',
+        },
+      ]),
     },
   }
   render(

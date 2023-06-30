@@ -1,4 +1,5 @@
 import axios from 'axios'
+import axiosRetry from 'axios-retry'
 
 /**
  * This is the API instance which all requests should be initiated from.
@@ -7,8 +8,10 @@ import axios from 'axios'
 export const api = axios.create({
   headers: { Authorization: process.env.API_KEY },
   responseType: 'json',
-  timeout: 180000,
+  timeout: 90000,
 })
+
+axiosRetry(api, { retries: 3 })
 
 /**
  * Type guards to check the status of individual requests and narrow the type
