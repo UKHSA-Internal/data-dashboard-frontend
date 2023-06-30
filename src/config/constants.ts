@@ -15,3 +15,22 @@ export const chartTableMaxColumns = {
   narrow: 2,
   wide: 3,
 } as const
+
+/**
+ * Chart size variants
+ */
+export const chartSizes = {
+  narrow: {
+    width: 435,
+    height: 220,
+  },
+  wide: {
+    width: 930,
+    height: 220,
+  },
+} as const
+
+/**
+ * The default file format in which charts are displayed as
+ */
+export const chartFormat = 'svg'
