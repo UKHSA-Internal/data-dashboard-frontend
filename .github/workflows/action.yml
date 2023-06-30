@@ -19,4 +19,4 @@ jobs:
         defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
         token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
         scan_type: 'ZAP Scan'
-        file: '${{ github.workspace }}/zap-reports:/zap/wrk/zap_scan/report_json.json'
+        file: '/zap-reports:/zap/wrk/zap_scan/report_json.json'
