@@ -16,7 +16,7 @@ beforeAll(() => server.listen())
 afterAll(() => server.close())
 afterEach(() => server.resetHandlers())
 
-test.only('Supports a narrow and wide chart size', async () => {
+test('Supports a narrow and wide chart size', async () => {
   server.use(
     rest.post(`${getApiBaseUrl()}/charts/v3`, async (req, res, ctx) => {
       const body = await req.json()
