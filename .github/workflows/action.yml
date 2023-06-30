@@ -16,7 +16,7 @@ jobs:
     - name: Import Scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
-        defectdojo_base_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
-        defectdojo_api_key: '8a5949ed4351bae231680ab5193e80de0aa3babb'
+        defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
+        token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
         scan_type: 'ZAP Scan'
-        scan_file: '${{ github.workspace }}/zap-reports:/zap/wrk/zap_scan/report_json.json'
+        file: '${{ github.workspace }}/zap-reports:/zap/wrk/zap_scan/report_json.json'
