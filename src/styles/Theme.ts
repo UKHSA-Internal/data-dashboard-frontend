@@ -7,17 +7,4 @@ export const COLOURS = {
   BUTTON_GREY: '#D9D9D9',
 } as const
 
-export const chartSizes = {
-  narrow: {
-    width: 435,
-    height: 220,
-  },
-  wide: {
-    width: 930,
-    height: 220,
-  },
-} as const
-
-export const chartFormat = 'svg' as const
-
 export const chartDownloadButtonWidth = '122px'
