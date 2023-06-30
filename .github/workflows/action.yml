@@ -1,28 +1,22 @@
-name: Upload Scan Reports to DefectDojo
+name: Import OWASP ZAP Scan Report
+
 on:
   push:
     branches:
       - suyash-kumar2-patch-1
 
 jobs:
-  upload-reports:
+  import_scan:
     runs-on: ubuntu-latest
+
     steps:
-    - name: Clone code repository
+    - name: Checkout Repository
       uses: actions/checkout@v2
-    
-    - name: Publish report
-      id: import-scan
+
+    - name: Import Scan
       uses: ivanamat/defectdojo-import-scan@v1
       with:
-        token: "8a5949ed4351bae231680ab5193e80de0aa3babb"
-        defectdojo_url: "https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com"
-        file: zap_scan/report_json.json
-        scan_type: ZAP Scan
-        engagement: 1
-      # test
-      
-    - name: Show response
-      run: |
-       set -e
-       printf '%s\n' '${{ steps.import-scan.outputs.response }}' 
+        defectdojo_base_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
+        defectdojo_api_key: '8a5949ed4351bae231680ab5193e80de0aa3babb'
+        scan_type: 'ZAP Scan'
+        scan_file: '${{ github.workspace }}/zap-reports:/zap/wrk/zap_scan/report_json.json'
