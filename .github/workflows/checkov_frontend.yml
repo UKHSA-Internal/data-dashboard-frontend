@@ -26,9 +26,6 @@ jobs:
     - name: Run Checkov Scan
       run: checkov --directory . --soft-fail --output json --output-file-path checkov_report.json
 
-   # - name: Generate Report
-      #run: checkov -d . --output junitxml > checkov-report.xml
-
     - name: Upload Checkov Report
       uses: actions/upload-artifact@v3
       with:
