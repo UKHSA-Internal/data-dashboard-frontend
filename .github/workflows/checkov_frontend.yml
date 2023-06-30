@@ -20,8 +20,9 @@ jobs:
         
       - name: Run Checkov Scan
         run: |
-         echo $(ls -l bridgecrew/checkov)
-         docker run --rm --volume /home/runner/work/winter-pressures-frontend/winter-pressures-frontend:/tf/:rw bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path checkov_report.json
+         #echo $(ls -l bridgecrew/checkov)
+         #docker run --
+         docker run --volume /home/runner/work/winter-pressures-frontend/winter-pressures-frontend:/tf/:rw bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path checkov_report.json
          echo ${{ github.workspace }}
          echo $(ls -a ${{ github.workspace }}/ | grep "checkov")
          # echo $(find /home/runner/work/ -iname 'checkov_report.json')
