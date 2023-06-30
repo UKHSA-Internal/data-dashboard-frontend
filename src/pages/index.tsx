@@ -116,5 +116,6 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
     }
   } catch (error) {
     logger.error(error)
+    throw new Error(`Failed to fetch homepage: ${error}`)
   }
 }

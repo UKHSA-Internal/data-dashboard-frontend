@@ -1,3 +1,5 @@
+import { ZodError } from 'zod'
+
 import { render, screen } from '@/config/test-utils'
 import { StoreState } from '@/lib/store'
 import StoreProvider from '@/lib/StoreProvider'
@@ -27,6 +29,15 @@ test('Handles a headline from the store that failed to fetch', () => {
   const headlines: StoreState['headlines'] = {
     'mocked-percentages': {
       success: false,
+      error: new ZodError([
+        {
+          received: 'mock',
+          code: 'invalid_enum_value',
+          options: [],
+          path: ['mock'],
+          message: 'Invalid',
+        },
+      ]),
     },
   }
   const { container } = render(
