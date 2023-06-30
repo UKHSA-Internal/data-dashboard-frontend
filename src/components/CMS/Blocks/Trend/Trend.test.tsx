@@ -1,3 +1,5 @@
+import { ZodError } from 'zod'
+
 import { render, screen } from '@/config/test-utils'
 import { StoreState } from '@/lib/store'
 import StoreProvider from '@/lib/StoreProvider'
@@ -32,6 +34,15 @@ test('Handles a trend from the store that failed to fetch', () => {
   const trends: StoreState['trends'] = {
     'mocked-trends': {
       success: false,
+      error: new ZodError([
+        {
+          received: 'mock',
+          code: 'invalid_enum_value',
+          options: [],
+          path: ['mock'],
+          message: 'Invalid',
+        },
+      ]),
     },
   }
   const { container } = render(
