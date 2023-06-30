@@ -1,9 +1,14 @@
 import { render, screen } from '@testing-library/react'
+import { GetStaticPropsContext } from 'next'
 
-import Feedback from '.'
+import Feedback, { getStaticProps } from '.'
 
-test('Questions showing correctly', () => {
-  render(<Feedback />)
+test('Questions showing correctly', async () => {
+  const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
+    props: Record<string, never>
+  }
+
+  render(Feedback.getLayout(<Feedback {...props} />))
 
   expect(screen.getByText('UKHSA Dashboard Feedback')).toBeInTheDocument()
   expect(screen.getByText('What was your reason for visiting the dashboard today?')).toBeInTheDocument()
