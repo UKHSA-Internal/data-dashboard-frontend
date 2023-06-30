@@ -6,6 +6,7 @@ const nextConfig = {
   i18n,
   output: 'standalone',
   reactStrictMode: true,
+  staticPageGenerationTimeout: 300,
   experimental: {
     appDir: true,
     largePageDataBytes: 128 * 100000,
