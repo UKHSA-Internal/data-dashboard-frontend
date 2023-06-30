@@ -18,15 +18,25 @@ afterEach(() => server.resetHandlers())
 
 test('Supports a narrow and wide chart size', async () => {
   server.use(
-    rest.post(`${getApiBaseUrl()}/charts/v2`, async (req, res, ctx) => {
+    rest.post(`${getApiBaseUrl()}/charts/v3`, async (req, res, ctx) => {
       const body = await req.json()
 
       if (body.chart_height === chartSizes.narrow.height && body.chart_width === chartSizes.narrow.width) {
-        return res(ctx.text('mocked-narrow'))
+        return res(
+          ctx.json({
+            chart: 'mocked-narrow',
+            last_updated: '123',
+          })
+        )
       }
 
       if (body.chart_height === chartSizes.wide.height && body.chart_width === chartSizes.wide.width) {
-        return res(ctx.text('mocked-wide'))
+        return res(
+          ctx.json({
+            chart: 'mocked-wide',
+            last_updated: '123',
+          })
+        )
       }
     })
   )
@@ -40,15 +50,27 @@ test('Supports a narrow and wide chart size', async () => {
   ]
 
   const narrowResponse = await getCharts(plots, 'narrow')
-  expect(narrowResponse).toEqual({ data: 'mocked-narrow', success: true })
+  expect(narrowResponse).toEqual({
+    data: {
+      chart: 'mocked-narrow',
+      last_updated: '123',
+    },
+    success: true,
+  })
 
   const wideResponse = await getCharts(plots, 'wide')
-  expect(wideResponse).toEqual({ data: 'mocked-wide', success: true })
+  expect(wideResponse).toEqual({
+    data: {
+      chart: 'mocked-wide',
+      last_updated: '123',
+    },
+    success: true,
+  })
 })
 
 test('Handles generic http errors', async () => {
   server.use(
-    rest.post(`${getApiBaseUrl()}/charts/v2`, (req, res, ctx) => {
+    rest.post(`${getApiBaseUrl()}/charts/v3`, (req, res, ctx) => {
       return res(ctx.status(404))
     })
   )
@@ -69,9 +91,16 @@ test('Handles generic http errors', async () => {
       {
         code: 'invalid_type',
         expected: 'string',
-        received: 'object',
-        path: [],
-        message: 'Expected string, received object',
+        received: 'undefined',
+        path: ['chart'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['last_updated'],
+        message: 'Required',
       },
     ]),
   })

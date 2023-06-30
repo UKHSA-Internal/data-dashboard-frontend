@@ -1,4 +1,3 @@
-import { isFulfilled } from '@/api/api-utils'
 import { Body } from '@/api/models/cms/Page'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
 import { getTabular } from '@/api/requests/tabular/getTabular'
@@ -10,12 +9,13 @@ import { getCharts } from '../charts/getCharts'
  * Specific CMS page types (Home, Topics) are modelled to return parameters allowing the consumer to fetch
  * various types of data from external services (trends, headlines, charts etc)
  *
- * This function parses the CMS page, finds all relevant request parameters and asynchronously initiates the requests
+ * This function parses the CMS page, finds all relevant request parameters and synchronously initiates the requests
+ * Due to low AWS resources, batching the requests asyncronously will cause HTTP 504 timeouts
  */
-type Trends = Array<[string, ReturnType<typeof getTrends>]>
-type Headlines = Array<[string, ReturnType<typeof getHeadlines>]>
-type Charts = Array<[string, ReturnType<typeof getCharts>]>
-type Tabular = Array<[string, ReturnType<typeof getTabular>]>
+type Trends = Array<[string, Awaited<ReturnType<typeof getTrends>>]>
+type Headlines = Array<[string, Awaited<ReturnType<typeof getHeadlines>>]>
+type Charts = Array<[string, Awaited<ReturnType<typeof getCharts>>]>
+type Tabular = Array<[string, Awaited<ReturnType<typeof getTabular>>]>
 
 export const extractAndFetchPageData = async (body: Body) => {
   // Store requests as a tuple containing an id and request object
@@ -39,8 +39,8 @@ export const extractAndFetchPageData = async (body: Body) => {
             const plots = chart.map((plots) => plots.value)
 
             // Extract the charts & tabular requests
-            charts.push([`${column.id}-charts`, getCharts(plots, chartSize)])
-            tabular.push([`${column.id}-tabular`, getTabular(plots)])
+            charts.push([`${column.id}-charts`, await getCharts(plots, chartSize)])
+            tabular.push([`${column.id}-tabular`, await getTabular(plots)])
           }
 
           if (column.type === 'chart_with_headline_and_trend_card') {
@@ -49,15 +49,15 @@ export const extractAndFetchPageData = async (body: Body) => {
             for (const headline of headlineColumns) {
               if (headline.type === 'headline_number') {
                 const { topic, metric } = headline.value
-                headlines.push([`${headline.id}-headlines`, getHeadlines({ topic, metric })])
+                headlines.push([`${headline.id}-headlines`, await getHeadlines({ topic, metric })])
               }
               if (headline.type === 'trend_number') {
                 const { topic, metric, percentage_metric } = headline.value
-                trends.push([`${headline.id}-trends`, getTrends({ topic, metric, percentage_metric })])
+                trends.push([`${headline.id}-trends`, await getTrends({ topic, metric, percentage_metric })])
               }
               if (headline.type === 'percentage_number') {
                 const { topic, metric } = headline.value
-                headlines.push([`${headline.id}-percentages`, getHeadlines({ topic, metric })])
+                headlines.push([`${headline.id}-percentages`, await getHeadlines({ topic, metric })])
               }
             }
           }
@@ -69,13 +69,13 @@ export const extractAndFetchPageData = async (body: Body) => {
         for (const column of columns) {
           for (const row of column.value.rows) {
             if (row.type === 'headline_number') {
-              headlines.push([`${row.id}-headlines`, getHeadlines(row.value)])
+              headlines.push([`${row.id}-headlines`, await getHeadlines(row.value)])
             }
             if (row.type === 'trend_number') {
-              trends.push([`${row.id}-trends`, getTrends(row.value)])
+              trends.push([`${row.id}-trends`, await getTrends(row.value)])
             }
             if (row.type === 'percentage_number') {
-              headlines.push([`${row.id}-percentages`, getHeadlines(row.value)])
+              headlines.push([`${row.id}-percentages`, await getHeadlines(row.value)])
             }
           }
         }
@@ -84,38 +84,21 @@ export const extractAndFetchPageData = async (body: Body) => {
   }
 
   const pageData = {
-    trends: await resolveRequests(trends),
-    headlines: await resolveRequests(headlines),
-    charts: await resolveRequests(charts),
-    tabular: await resolveRequests(tabular),
+    trends: formatResponseToObject(trends),
+    headlines: formatResponseToObject(headlines),
+    charts: formatResponseToObject(charts),
+    tabular: formatResponseToObject(tabular),
   }
 
   return pageData
 }
 
 /**
- * Utility function to fire multiple async requests, check if they've settled as
- * fulfilled or rejected, and then form an appropriate response for the UI
+ * Utility function to build & return an object with the key being the identifier and the value being the response
  */
-type ResolvedResponse<T> = Record<string, T | { success: false }>
-
-async function resolveRequests<T>(requestMaps: Array<[string, Promise<T>]>) {
-  // Pick out the requests from the tuple & invoke asyncronously
-  const results = await Promise.allSettled(requestMaps.map((requestMap) => requestMap[1]))
-
-  // Build & return an object with the key being the identifier and the value being the response
-  return requestMaps.reduce((accumulator, [requestId], index) => {
-    const result = results[index]
-
-    // Promise settled as fulfilled, return a success state
-    if (isFulfilled(result)) {
-      accumulator[requestId] = result.value
-      return accumulator
-    }
-
-    // Promise settled rejected, return a failed state
-    accumulator[requestId] = { success: false }
-
+function formatResponseToObject<T>(requestMaps: Array<[string, T]>) {
+  return requestMaps.reduce((accumulator, [requestId, response]) => {
+    accumulator[requestId] = response
     return accumulator
-  }, {} as ResolvedResponse<T>)
+  }, {} as Record<string, T>)
 }
