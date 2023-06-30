@@ -20,7 +20,7 @@ jobs:
         
       - name: Run Checkov Scan
         run: |
-         docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path checkov_report.json
+         docker run --rm --volume ${{ github.workspace }}:/tf/:rw bridgecrew/checkov --directory /tf --soft-fail --output json --output-file-path checkov_report.json
          echo $(find /tf -iname 'checkov_report.json')
           # 28/6/23 - ''docker run --rm --volume ${{ github.workspace }}:/tf bridgecrew/checkov'' is running checkov in a container, ''output'' is saving file
           # in the same container; just need to figure out where it is - a filepath issue! Then we can figure out a way to upload that
