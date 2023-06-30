@@ -3,6 +3,8 @@ import { GetStaticPropsContext } from 'next'
 
 import FeedbackConfirmation, { getStaticProps } from './confirmation'
 
+jest.mock('next/router', () => require('next-router-mock'))
+
 test('Shows confirmation panel', async () => {
   const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
     props: Record<string, never>

@@ -3,6 +3,8 @@ import { GetStaticPropsContext } from 'next'
 
 import Feedback, { getStaticProps } from '.'
 
+jest.mock('next/router', () => require('next-router-mock'))
+
 test('Questions showing correctly', async () => {
   const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
     props: Record<string, never>
