@@ -44,14 +44,3 @@ jobs:
            target: "http://localhost:3000"
            fail_action: false
            # OWASP scan outputs .HTML and .json format reports
-           
-       - name: Checkout Repository for ZAP Report to DefectDojo
-         uses: actions/checkout@v2
-
-       - name: Import Scan
-         uses: ivanamat/defectdojo-import-scan@v1
-         with:
-           defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
-           token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
-           scan_type: 'ZAP Scan'
-           file: 'baseline_reports/zap_scan/report_json.json'
