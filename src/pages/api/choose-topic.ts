@@ -8,19 +8,18 @@ import { logger } from '@/lib/logger'
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   try {
     if (req.method !== 'POST') {
-      logger.error(`Unsupported request method ${req.method} sent to export endpoint`)
+      logger.error(`Unsupported request method ${req.method}`)
       return res.status(405)
     }
 
     const topic = req.body.topic
 
-    if (!topic) {
+    if (typeof topic !== 'string') {
       throw new Error('Missing topic')
     }
-
     return res.redirect(302, `/choose-topic/${topic}`)
   } catch (error) {
     logger.error(error)
-    return res.status(500).redirect('/500')
+    return res.status(302).redirect('/500')
   }
 }
