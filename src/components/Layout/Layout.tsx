@@ -1,6 +1,6 @@
 import { Page, PhaseBanner, TopNav } from 'govuk-react'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, useEffect } from 'react'
 
 import { Footer } from '../Footer'
@@ -21,7 +21,11 @@ export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollTo
         beforeChildren={
           <>
             <PhaseBanner level="beta" data-testid="phase-banner-content">
-              This is a new service - your <Link href="/feedback">feedback</Link> will help us to improve it.
+              <Trans t={t} i18nKey="feedbackBanner">
+                <span>
+                  <Link href="/feedback"></Link>
+                </span>
+              </Trans>
             </PhaseBanner>
             <Navigation />
           </>
