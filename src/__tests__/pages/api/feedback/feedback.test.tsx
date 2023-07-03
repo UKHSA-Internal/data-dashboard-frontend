@@ -1,22 +1,20 @@
-import { render, screen } from '@testing-library/react'
-import { GetStaticPropsContext } from 'next'
+import { NextApiRequest, NextApiResponse } from 'next'
+import { createMocks, createRequest, createResponse } from 'node-mocks-http'
 
-import Feedback, { getStaticProps } from '@/pages/feedback'
+import feedback from '@/pages/api/feedback'
 
-jest.mock('next/router', () => require('next-router-mock'))
+type ApiRequest = NextApiRequest & ReturnType<typeof createRequest>
+type APiResponse = NextApiResponse & ReturnType<typeof createResponse>
 
-test('Questions showing correctly', async () => {
-  const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
-    props: Record<string, never>
-  }
+jest.mock('@/lib/logger')
 
-  render(Feedback.getLayout(<Feedback {...props} />))
+test('POST /api/feedback', async () => {
+  const { req, res } = createMocks<ApiRequest, APiResponse>({
+    method: 'POST',
+  })
 
-  expect(screen.getByText('UKHSA Dashboard Feedback')).toBeInTheDocument()
-  expect(screen.getByText('What was your reason for visiting the dashboard today?')).toBeInTheDocument()
-  expect(screen.getByText('Did you find everything you were looking for?')).toBeInTheDocument()
-  expect(screen.getByText('How could we improve your experience with the dashboard?')).toBeInTheDocument()
-  expect(screen.getByText('What would you like to see on the dashboard in the future?')).toBeInTheDocument()
+  await feedback(req, res)
 
-  expect(screen.getByText('Return to home page')).toHaveAttribute('href', '/')
+  expect(res._getStatusCode()).toBe(302)
+  expect(res._getRedirectUrl()).toBe('/feedback/confirmation')
 })
