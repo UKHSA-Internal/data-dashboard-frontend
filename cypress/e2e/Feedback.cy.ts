@@ -23,7 +23,7 @@ describe('', () => {
     cy.findByRole('heading', { name: 'UKHSA Dashboard Feedback', level: 1 })
 
     cy.findByLabelText('What was your reason for visiting the dashboard today?').type('Test input')
-    cy.findByLabelText('Did you find everything you were looking for?').first().check()
+    cy.get('[type="radio"]').first().check()
     cy.findByLabelText('How could we improve your experience with the dashboard?').type('Test input')
     cy.findByLabelText('What would you like to see on the dashboard in the future?').type('Test input')
 
