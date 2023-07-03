@@ -3,8 +3,7 @@ describe('Smoke tests - layout', () => {
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByRole('link', { name: 'Dashboard' })
-      cy.findByRole('link', { name: 'Maps' })
+      cy.findByRole('link', { name: 'Home' })
       cy.findByRole('link', { name: 'API' })
       cy.findByRole('link', { name: 'About' })
       cy.findByRole('link', { name: "What's new" })
@@ -37,7 +36,7 @@ describe('Smoke tests - choosing a topic user journey', () => {
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
   })
 
-  it.only('Navigates to the Other Respiratory Viruses topic page', () => {
+  it('Navigates to the Other Respiratory Viruses topic page', () => {
     cy.findByRole('button', { name: 'Start now' }).click()
     cy.url().should('include', '/choose-topic')
     cy.findByRole('heading', { name: 'Which topic are you interested in?' })
@@ -73,27 +72,5 @@ describe('Smoke tests - non-topic pages', () => {
       .should('include', '/whats-new')
 
     cy.findByRole('heading', { name: "What's New" })
-  })
-
-  it('Loads the maps page', () => {
-    cy.findByRole('navigation', { name: 'Menu' })
-      .within(() => {
-        cy.findByText('Maps').click()
-      })
-      .url()
-      .should('include', '/maps')
-
-    cy.findByRole('heading', { name: 'Maps' })
-  })
-
-  it('Loads the API page', () => {
-    cy.findByRole('navigation', { name: 'Menu' })
-      .within(() => {
-        cy.findByText('API').click()
-      })
-      .url()
-      .should('include', '/how-to-use-this-data')
-
-    cy.findByRole('heading', { name: 'How to use this data' })
   })
 })

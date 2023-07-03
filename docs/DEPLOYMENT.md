@@ -1,4 +1,4 @@
-# Deployment of UKHSA Dashboard
+# Deployment of UKHSA data dashboard
 
 ![Pipeline](https://github.com/publichealthengland/winter-pressures-frontend/actions/workflows/build-test-deploy.yml/badge.svg)
 
@@ -30,7 +30,7 @@ Currently not available.
 
 ## Static Cache Revalidation
 
-The UKHSA Dashboard is generated statically during deployment, with all data fetched and rendered at that time. The site relies on two data sources: the CMS API endpoints and the statistic/chart API endpoints. As the frequency of data updates from these sources is unknown, we have implemented two methods of cache revalidation.
+The UKHSA data dashboard is generated statically during deployment, with all data fetched and rendered at that time. The site relies on two data sources: the CMS API endpoints and the statistic/chart API endpoints. As the frequency of data updates from these sources is unknown, we have implemented two methods of cache revalidation.
 
 ### 1) Automatic Revalidation
 

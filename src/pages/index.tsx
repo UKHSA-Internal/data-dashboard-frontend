@@ -1,4 +1,4 @@
-import { GetStaticPropsContext } from 'next'
+import { GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import Link from 'next/link'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactNode } from 'react'
@@ -40,7 +40,9 @@ const StartNowBtn = () => (
   </Link>
 )
 
-export default function Home() {
+type HomePageProps = InferGetStaticPropsType<typeof getStaticProps>
+
+export default function Home({ apiDocsUrl }: HomePageProps) {
   return (
     <Page
       heading="UKHSA data dashboard"
@@ -63,9 +65,9 @@ export default function Home() {
 
           <StartNowBtn />
 
-          <ContentBlock heading="Explore location based data" link={<Link href="/maps">Go to maps</Link>}>
+          {/* <ContentBlock heading="Explore location based data" link={<Link href="/maps">Go to maps</Link>}>
             <p>The UKHSA data dashboard shows data collected across different geographical regions.</p>
-          </ContentBlock>
+          </ContentBlock> */}
 
           {/* <ContentBlock heading="Understand the data" link={<Link href="/maps">Search metrics</Link>}>
             <p>
@@ -73,7 +75,7 @@ export default function Home() {
             </p>
           </ContentBlock> */}
 
-          <ContentBlock heading="Use the API" link={<Link href="/how-to-use-this-data">Go to API</Link>}>
+          <ContentBlock heading="Use the API" link={<a href={`${apiDocsUrl}/api/public/timeseries`}>Go to API</a>}>
             <p>Search and download data by using the UKHSA data dashboard&apos;s API.</p>
           </ContentBlock>
 
@@ -111,6 +113,7 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
   try {
     return {
       props: {
+        apiDocsUrl: process.env.API_URL,
         ...(await serverSideTranslations(req.locale as string, ['common'])),
       },
     }

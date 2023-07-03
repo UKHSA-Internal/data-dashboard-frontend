@@ -17,8 +17,7 @@ describe('Navigation', () => {
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText('Dashboard')
-      cy.findByText('Maps')
+      cy.findByText('Home')
       cy.findByText('API')
       cy.findByText('About')
       cy.findByText("What's new")
@@ -30,21 +29,12 @@ describe('Navigation', () => {
 
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
-        cy.findByText('Maps').click()
+        cy.findByText('About').click()
       })
       .url()
-      .should('include', '/maps')
+      .should('include', '/about')
 
-    cy.findByRole('heading', { name: 'Maps' })
-
-    cy.findByRole('navigation', { name: 'Menu' })
-      .within(() => {
-        cy.findByText('API').click()
-      })
-      .url()
-      .should('include', '/how-to-use-this-data')
-
-    cy.findByRole('heading', { name: 'How to use this data' })
+    cy.findByRole('heading', { name: 'About' })
   })
 
   it('returns to the top of the page', () => {
