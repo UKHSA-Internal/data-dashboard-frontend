@@ -10,11 +10,7 @@ const Feedback = () => {
     <div className="govuk-grid-row">
       <form className="govuk-grid-column-two-thirds" action={'/api/feedback'} method="POST">
         <div className="govuk-form-group govuk-!-margin-bottom-9">
-          <h1 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--l" htmlFor="govuk_reason">
-              UKHSA Dashboard Feedback
-            </label>
-          </h1>
+          <h1 className="govuk-label-wrapper">UKHSA Dashboard Feedback</h1>
           <h2 className="govuk-label-wrapper">
             <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
               What was your reason for visiting the dashboard today?
@@ -47,7 +43,7 @@ const Feedback = () => {
               <input
                 className="govuk-radios__input"
                 id="did-you-find-everything-2"
-                name="did-you-find-everything-2"
+                name="did-you-find-everything"
                 type="radio"
                 value="no"
               />
@@ -60,20 +56,20 @@ const Feedback = () => {
 
         <div className="govuk-form-group govuk-!-margin-bottom-9">
           <h2 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
+            <label className="govuk-label govuk-label--m" htmlFor="improve_experience">
               How could we improve your experience with the dashboard?
             </label>
           </h2>
-          <textarea className="govuk-textarea" id="govuk_reason" rows={5} />
+          <textarea className="govuk-textarea" id="improve_experience" rows={5} />
         </div>
 
         <div className="govuk-form-group govuk-!-margin-bottom-9">
           <h2 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
+            <label className="govuk-label govuk-label--m" htmlFor="like_to_see">
               What would you like to see on the dashboard in the future?
             </label>
           </h2>
-          <textarea className="govuk-textarea" id="govuk_reason" rows={5} />
+          <textarea className="govuk-textarea" id="like_to_see" rows={5} />
         </div>
 
         <button className="govuk-grid-column-one-half govuk-button" type="submit">
