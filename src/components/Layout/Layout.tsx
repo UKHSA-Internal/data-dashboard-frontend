@@ -8,7 +8,11 @@ import { Navigation } from '../Navigation'
 import { ScrollToTop } from '../ScrollToTop'
 import { Main, TopNavLink } from './Layout.styles'
 
-export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollToTop?: boolean }) => {
+export const Layout = ({
+  children,
+  scrollToTop,
+  backLink,
+}: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
   const { t } = useTranslation('common')
 
   useEffect(() => {
@@ -27,6 +31,11 @@ export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollTo
                 </span>
               </Trans>
             </PhaseBanner>
+            {backLink && (
+              <Link href={backLink} className="govuk-back-link govuk-!-margin-bottom-1">
+                Back
+              </Link>
+            )}
             <Navigation />
           </>
         }

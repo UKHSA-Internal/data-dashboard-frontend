@@ -7,7 +7,7 @@ import { ReactElement } from 'react'
 import { Layout } from '@/components/Layout'
 import { Page } from '@/components/Page'
 
-export default function PageNotFound() {
+export default function ServiceUnavailable() {
   const { t } = useTranslation('errors')
   return (
     <Page heading={t('serviceProblem.heading')} seoTitle={t('serviceProblem.heading')} seoDescription="">
@@ -28,7 +28,7 @@ export default function PageNotFound() {
   )
 }
 
-PageNotFound.getLayout = function getLayout(page: ReactElement) {
+ServiceUnavailable.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
 }
 
