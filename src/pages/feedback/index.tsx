@@ -15,11 +15,11 @@ const Feedback = () => {
               UKHSA Dashboard Feedback
             </label>
           </h1>
-          <h1 className="govuk-label-wrapper">
+          <h2 className="govuk-label-wrapper">
             <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
               What was your reason for visiting the dashboard today?
             </label>
-          </h1>
+          </h2>
           <div id="more-detail-hint" className="govuk-hint">
             Do not include personal information like your name, contact information or credit card details.
           </div>
@@ -27,7 +27,7 @@ const Feedback = () => {
         </div>
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 className="govuk-fieldset__heading">Did you find everything you were looking for?</h1>
+            <h2 className="govuk-fieldset__heading">Did you find everything you were looking for?</h2>
           </legend>
           <div className="govuk-radios" data-module="govuk-radios">
             <div className="govuk-radios__item">
@@ -59,20 +59,20 @@ const Feedback = () => {
         </fieldset>
 
         <div className="govuk-form-group govuk-!-margin-bottom-9">
-          <h1 className="govuk-label-wrapper">
+          <h2 className="govuk-label-wrapper">
             <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
               How could we improve your experience with the dashboard?
             </label>
-          </h1>
+          </h2>
           <textarea className="govuk-textarea" id="govuk_reason" rows={5} />
         </div>
 
         <div className="govuk-form-group govuk-!-margin-bottom-9">
-          <h1 className="govuk-label-wrapper">
+          <h2 className="govuk-label-wrapper">
             <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
               What would you like to see on the dashboard in the future?
             </label>
-          </h1>
+          </h2>
           <textarea className="govuk-textarea" id="govuk_reason" rows={5} />
         </div>
 
