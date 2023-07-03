@@ -1,7 +1,6 @@
-import clsx from 'clsx'
 import { Page, PhaseBanner, TopNav } from 'govuk-react'
 import Link from 'next/link'
-import { useTranslation } from 'next-i18next'
+import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, useEffect } from 'react'
 
 import { Footer } from '../Footer'
@@ -25,17 +24,19 @@ export const Layout = ({
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="beta">{t('feedbackBanner')}</PhaseBanner>
+            <PhaseBanner level="beta" data-testid="phase-banner-content">
+              <Trans t={t} i18nKey="feedbackBanner">
+                <span>
+                  <Link href="/feedback"></Link>
+                </span>
+              </Trans>
+            </PhaseBanner>
             {backLink && (
               <Link href={backLink} className="govuk-back-link govuk-!-margin-bottom-1">
                 Back
               </Link>
             )}
-            <Navigation
-              className={clsx({
-                'govuk-!-margin-top-7': !backLink,
-              })}
-            />
+            <Navigation />
           </>
         }
         header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}
