@@ -20,7 +20,7 @@ describe('', () => {
   })
 
   it('Allows you to fill fields, and successfully submit', () => {
-    cy.findByRole('heading', { name: 'UKHSA Dashboard Feedback', level: 1 })
+    cy.findByRole('heading', { name: 'UKHSA data dashboard feedback', level: 1 })
 
     cy.findByLabelText('What was your reason for visiting the dashboard today?').type('Test input')
     cy.findByLabelText('Yes').check()
