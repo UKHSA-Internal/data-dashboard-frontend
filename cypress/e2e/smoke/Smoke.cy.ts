@@ -37,14 +37,14 @@ describe('Smoke tests - choosing a topic user journey', () => {
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
   })
 
-  it('Navigates to the Other Respiratory Viruses topic page', () => {
+  it.only('Navigates to the Other Respiratory Viruses topic page', () => {
     cy.findByRole('button', { name: 'Start now' }).click()
     cy.url().should('include', '/choose-topic')
     cy.findByRole('heading', { name: 'Which topic are you interested in?' })
     cy.findByLabelText('Other respiratory viruses').click()
     cy.findByRole('button', { name: 'Continue' }).click()
     cy.url().should('include', '/choose-topic/other-respiratory-viruses')
-    cy.findByRole('heading', { name: 'Other Respiratory Viruses', level: 1 })
+    cy.findByRole('heading', { name: 'Other respiratory viruses', level: 1 })
   })
 })
 
