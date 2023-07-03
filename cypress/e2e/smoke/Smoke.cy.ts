@@ -1,34 +1,58 @@
-describe('Respiratory Viruses Dashboard (Home)', () => {
+describe('Smoke tests - layout', () => {
+  it('Displays navigation links', () => {
+    cy.visit('/')
+
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
+      cy.findByRole('link', { name: 'Dashboard' })
+      cy.findByRole('link', { name: 'Maps' })
+      cy.findByRole('link', { name: 'API' })
+      cy.findByRole('link', { name: 'About' })
+      cy.findByRole('link', { name: "What's new" })
+    })
+  })
+})
+
+describe('Smoke tests - choosing a topic user journey', () => {
   beforeEach(() => {
     cy.visit('/')
   })
 
-  it('Displays navigation links', () => {
-    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText('Home')
-      cy.findByText('Coronavirus')
-      cy.findByText('Influenza')
-      cy.findByText('Other respiratory viruses')
-      cy.findByText('About')
-      cy.findByText("What's new")
-      cy.findByText('Maps')
-      cy.findByText('How to use this data')
-    })
+  it('Navigates to the Coronavirus topic page', () => {
+    cy.findByRole('button', { name: 'Start now' }).click()
+    cy.url().should('include', '/choose-topic')
+    cy.findByRole('heading', { name: 'Which topic are you interested in?' })
+    cy.findByLabelText('Coronavirus').click()
+    cy.findByRole('button', { name: 'Continue' }).click()
+    cy.url().should('include', '/choose-topic/coronavirus')
+    cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
   })
 
-  // Coronavirus
-  it('Loads the coronavirus page', () => {
-    cy.findByRole('navigation', { name: 'Menu' })
-      .within(() => {
-        cy.findByText('Coronavirus').click()
-      })
-      .url()
-      .should('include', '/choose-topic/coronavirus')
-
-    cy.findByRole('heading', { name: 'Coronavirus' })
+  it('Navigates to the Influenza topic page', () => {
+    cy.findByRole('button', { name: 'Start now' }).click()
+    cy.url().should('include', '/choose-topic')
+    cy.findByRole('heading', { name: 'Which topic are you interested in?' })
+    cy.findByLabelText('Influenza').click()
+    cy.findByRole('button', { name: 'Continue' }).click()
+    cy.url().should('include', '/choose-topic/influenza')
+    cy.findByRole('heading', { name: 'Influenza', level: 1 })
   })
 
-  // About
+  it('Navigates to the Other Respiratory Viruses topic page', () => {
+    cy.findByRole('button', { name: 'Start now' }).click()
+    cy.url().should('include', '/choose-topic')
+    cy.findByRole('heading', { name: 'Which topic are you interested in?' })
+    cy.findByLabelText('Other respiratory viruses').click()
+    cy.findByRole('button', { name: 'Continue' }).click()
+    cy.url().should('include', '/choose-topic/other-respiratory-viruses')
+    cy.findByRole('heading', { name: 'Other Respiratory Viruses', level: 1 })
+  })
+})
+
+describe('Smoke tests - non-topic pages', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
   it('Loads the About page', () => {
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
@@ -40,7 +64,6 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
     cy.findByRole('heading', { name: 'About' })
   })
 
-  // What's new
   it("Loads the What's New page", () => {
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
@@ -52,7 +75,6 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
     cy.findByRole('heading', { name: "What's New" })
   })
 
-  // Maps
   it('Loads the maps page', () => {
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
@@ -64,90 +86,14 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
     cy.findByRole('heading', { name: 'Maps' })
   })
 
-  // How to use this data
-  it("Loads the 'How to use this data' page", () => {
+  it('Loads the API page', () => {
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
-        cy.findByText('How to use this data').click()
+        cy.findByText('API').click()
       })
       .url()
       .should('include', '/how-to-use-this-data')
 
     cy.findByRole('heading', { name: 'How to use this data' })
-  })
-
-  // Home (Dashboard) page
-  it('Page displays, and contents navigation successful', () => {
-    cy.findByRole('heading', { name: 'Respiratory viruses' })
-  })
-
-  it('Shows Coronavirus summary section', () => {
-    cy.findByRole('region', { name: 'Coronavirus' }).within(() => {
-      cy.findByTestId('summary-section').within(() => {
-        cy.findByRole('heading', {
-          name: 'Cases',
-        })
-        cy.findByRole('heading', {
-          name: 'Deaths',
-        })
-        cy.findByRole('heading', {
-          name: 'Vaccines',
-        })
-        cy.findByRole('heading', {
-          name: 'Healthcare',
-        })
-        cy.findByRole('heading', {
-          name: 'Testing',
-        })
-      })
-    })
-  })
-
-  it('Shows cases card, and buttons for download & tabular format', () => {
-    cy.findByRole('region', { name: 'Coronavirus' }).within(() => {
-      cy.findByTestId('cases-section').as('cases-section')
-
-      cy.get('@cases-section').within(() => {
-        cy.findByRole('button', { name: 'Download' })
-        cy.findByText('View data in a tabular format')
-      })
-    })
-  })
-
-  it('displays related links', () => {
-    cy.findByRole('heading', { name: 'Related Links', level: 2 })
-  })
-})
-
-// Influenza page
-describe('Influenza Page', () => {
-  beforeEach(() => {
-    cy.visit('/choose-topic/influenza')
-  })
-
-  it('Displays heading', () => {
-    cy.findByRole('heading', { name: 'Influenza' })
-  })
-
-  it('Displays accordion, and accordion functionality works', () => {
-    cy.findByTestId('virus-accordion').as('accordion')
-
-    cy.get('@accordion').within(() => {
-      cy.findByRole('button', { name: 'Show all sections' })
-    })
-  })
-
-  it('displays related links', () => {
-    cy.findByRole('heading', { name: 'Related Links', level: 2 })
-  })
-})
-
-describe('Other respiratory viruses page', () => {
-  beforeEach(() => {
-    cy.visit('/choose-topic/other-respiratory-viruses')
-  })
-
-  it('Displays heading', () => {
-    cy.findByRole('heading', { name: 'Other respiratory viruses' })
   })
 })
