@@ -15,6 +15,9 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   expect(screen.getByText('UKHSA Dashboard')).toHaveAttribute('href', '/')
 
   // Phrase Banner
+  expect(screen.getByTestId('phase-banner-content')).toHaveTextContent(
+    'This is a new service - your feedback will help us to improve it.'
+  )
   expect(screen.getByText('feedback')).toHaveAttribute('href', '/feedback')
 
   // Navigation

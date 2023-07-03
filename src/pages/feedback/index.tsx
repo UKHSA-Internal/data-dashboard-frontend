@@ -72,13 +72,15 @@ const Feedback = () => {
           <textarea className="govuk-textarea" id="like_to_see" rows={5} />
         </div>
 
-        <button className="govuk-grid-column-one-half govuk-button" type="submit">
-          Submit
-        </button>
+        <div className="govuk-button-group">
+          <button className="govuk-button" type="submit">
+            Submit
+          </button>
+          <Link className="govuk-link" href="/">
+            Return to home page
+          </Link>
+        </div>
       </form>
-      <Link className="govuk-grid-column-one-half" href="/">
-        Return to home page
-      </Link>
     </div>
   )
 }

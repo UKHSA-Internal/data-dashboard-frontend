@@ -12,8 +12,8 @@ test('Shows confirmation panel', async () => {
 
   render(FeedbackConfirmation.getLayout(<FeedbackConfirmation {...props} />))
 
-  expect(screen.getByText('Form submitted')).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Form submitted', level: 1 })).toBeInTheDocument()
   expect(screen.getByText('Thank you for your feedback')).toBeInTheDocument()
 
-  expect(screen.getByText('Return to home page')).toHaveAttribute('href', '/')
+  expect(screen.getByRole('link', { name: 'Return to home page' })).toHaveAttribute('href', '/')
 })

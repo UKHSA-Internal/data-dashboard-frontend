@@ -20,7 +20,7 @@ export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollTo
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="beta">
+            <PhaseBanner level="beta" data-testid="phase-banner-content">
               This is a new service - your <Link href="/feedback">feedback</Link> will help us to improve it.
             </PhaseBanner>
             <Navigation />
