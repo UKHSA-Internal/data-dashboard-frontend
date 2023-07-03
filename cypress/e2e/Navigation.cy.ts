@@ -17,14 +17,11 @@ describe('Navigation', () => {
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText('Home')
-      cy.findByText('Coronavirus')
-      cy.findByText('Influenza')
-      cy.findByText('Other respiratory viruses')
+      cy.findByText('Dashboard')
+      cy.findByText('Maps')
+      cy.findByText('API')
       cy.findByText('About')
       cy.findByText("What's new")
-      cy.findByText('Maps')
-      cy.findByText('How to use this data')
     })
   })
 
@@ -33,29 +30,29 @@ describe('Navigation', () => {
 
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
-        cy.findByText('Coronavirus').click()
+        cy.findByText('Maps').click()
       })
       .url()
-      .should('include', '/viruses/coronavirus')
+      .should('include', '/maps')
 
-    cy.findByRole('heading', { name: 'Coronavirus' })
+    cy.findByRole('heading', { name: 'Maps' })
 
     cy.findByRole('navigation', { name: 'Menu' })
       .within(() => {
-        cy.findByText('Influenza').click()
+        cy.findByText('API').click()
       })
       .url()
-      .should('include', '/viruses/influenza')
+      .should('include', '/how-to-use-this-data')
 
-    cy.findByRole('heading', { name: 'Influenza' })
+    cy.findByRole('heading', { name: 'How to use this data' })
   })
 
-  it('Returns to the top of the page', () => {
+  it('returns to the top of the page', () => {
     cy.visit('/')
 
     cy.scrollTo('bottom')
     cy.findByText('Back to top').click()
 
-    cy.findByRole('heading', { level: 1, name: 'Respiratory viruses' }).should('be.visible')
+    cy.findByRole('heading', { level: 1, name: 'UKHSA data dashboard' }).should('be.visible')
   })
 })
