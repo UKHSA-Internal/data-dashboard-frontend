@@ -24,7 +24,7 @@ export const Layout = ({
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="beta" data-testid="phase-banner-content">
+            <PhaseBanner level="alpha" data-testid="phase-banner-content">
               <Trans t={t} i18nKey="feedbackBanner">
                 <span>
                   <Link href="/feedback"></Link>

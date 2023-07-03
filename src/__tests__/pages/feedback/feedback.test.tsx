@@ -12,7 +12,7 @@ test('Questions showing correctly', async () => {
 
   render(Feedback.getLayout(<Feedback {...props} />))
 
-  expect(screen.getByRole('heading', { name: 'UKHSA Dashboard Feedback', level: 1 })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'UKHSA data dashboard feedback', level: 1 })).toBeInTheDocument()
   expect(
     screen.getByRole('heading', { name: 'What was your reason for visiting the dashboard today?', level: 2 })
   ).toBeInTheDocument()

@@ -12,7 +12,7 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   render(<Layout />)
 
   // Header
-  expect(screen.getByText('UKHSA Dashboard')).toHaveAttribute('href', '/')
+  expect(screen.getByText('UKHSA data dashboard')).toHaveAttribute('href', '/')
 
   // Phrase Banner
   expect(screen.getByTestId('phase-banner-content')).toHaveTextContent(
