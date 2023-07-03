@@ -33,7 +33,8 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
       if (page.success) {
         return page.data as PageResponse<T>
       }
-      logger.error(page.error.toString())
+
+      logger.error(page.error)
       throw new Error(`CMS page with slug ${slug} and id ${matchedPage.id} does not match expected response schema`)
     }
 

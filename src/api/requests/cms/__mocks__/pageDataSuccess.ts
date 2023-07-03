@@ -116,19 +116,31 @@ export const pageDataMockSuccess: Awaited<ReturnType<typeof extractAndFetchPageD
   charts: {
     'd9b86415-9734-46be-952a-56182f0c40be-charts': {
       success: true,
-      data: getChartFixture('narrow.svg'),
+      data: {
+        chart: getChartFixture('narrow.svg'),
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+      },
     },
     'c18703a1-9b01-417f-8fd8-3e4db35865e5-charts': {
       success: true,
-      data: getChartFixture('narrow.svg'),
+      data: {
+        chart: getChartFixture('narrow.svg'),
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+      },
     },
     '60984a8a-9c76-4e86-94bc-b2a2234b6d53-charts': {
       success: true,
-      data: getChartFixture('narrow.svg'),
+      data: {
+        chart: getChartFixture('narrow.svg'),
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+      },
     },
     '809fc976-3332-4e6c-b902-20a5d39a7f99-charts': {
       success: true,
-      data: getChartFixture('narrow.svg'),
+      data: {
+        chart: getChartFixture('narrow.svg'),
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+      },
     },
   },
   tabular: {

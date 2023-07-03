@@ -1,10 +1,10 @@
 import { BLACK } from 'govuk-colours'
 import { Button } from 'govuk-react'
-import ky from 'ky-universal'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { FormEvent, useState } from 'react'
 
+import { api } from '@/api/api-utils'
 import type { Chart } from '@/api/models/cms/Page'
 import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
@@ -33,14 +33,14 @@ export const ChartDownload = ({ chart }: ChartDownloadProps) => {
     setDownloading(true)
 
     try {
-      const res = await ky.post(chartExportApiRoutePath, {
-        json: {
+      const { data } = await api.post<Blob>(
+        chartExportApiRoutePath,
+        {
           format: chartExportFormat,
           plots: chart.map((plot) => plot.value),
         },
-      })
-
-      const data = await res.blob()
+        { responseType: 'blob' }
+      )
 
       downloadFile(`data.${chartExportFormat}`, data)
 

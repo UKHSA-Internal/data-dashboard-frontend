@@ -1,19 +1,17 @@
-import ky from 'ky-universal'
+import axios from 'axios'
+import axiosRetry from 'axios-retry'
 
 /**
  * This is the API instance which all requests should be initiated from.
  * The Authorization headers and any other common configuration can be set below.
  */
-export const api = ky.extend({
-  timeout: 60000,
-  hooks: {
-    beforeRequest: [
-      (request) => {
-        request.headers.set('Authorization', process.env.API_KEY)
-      },
-    ],
-  },
+export const api = axios.create({
+  headers: { Authorization: process.env.API_KEY },
+  responseType: 'json',
+  timeout: 90000,
 })
+
+axiosRetry(api, { retries: 3 })
 
 /**
  * Type guards to check the status of individual requests and narrow the type
