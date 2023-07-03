@@ -1,6 +1,7 @@
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
+import { ReactElement } from 'react'
 
 import { initMocks } from '@/api/msw'
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
@@ -16,6 +17,7 @@ import {
 import { Utils } from '@/components/CMS'
 import { Contents, ContentsItem } from '@/components/Contents'
 import { FormattedContent } from '@/components/FormattedContent'
+import { Layout } from '@/components/Layout'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
@@ -64,6 +66,10 @@ const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLi
 }
 
 export default TopicPage
+
+TopicPage.getLayout = function getLayout(page: ReactElement) {
+  return <Layout backLink="/choose-topic">{page}</Layout>
+}
 
 export const getStaticProps = async (req: GetStaticPropsContext) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
