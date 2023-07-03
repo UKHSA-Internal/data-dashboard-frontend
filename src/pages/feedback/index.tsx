@@ -76,7 +76,7 @@ const Feedback = () => {
         </div>
 
         <div className="govuk-button-group">
-          <button className="govuk-button" type="submit">
+          <button className="govuk-button" data-testid="feedback-submit-button" type="submit">
             Submit
           </button>
           <Link className="govuk-link" href="/">
