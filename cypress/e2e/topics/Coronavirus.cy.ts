@@ -55,7 +55,7 @@ describe('Coronavirus topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Cases', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/viruses/coronavirus#cases`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/choose-topic/coronavirus#cases`)
 
     // Cases
     cy.findByRole('region', { name: 'Cases' }).within(() => {

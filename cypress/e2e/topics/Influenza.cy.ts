@@ -49,7 +49,7 @@ describe('Influenza topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Healthcare', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/viruses/influenza#healthcare`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/choose-topic/influenza#healthcare`)
 
     // Heathcare
     cy.findByRole('region', { name: 'Healthcare' }).within(() => {
