@@ -1,11 +1,14 @@
 import { GetStaticProps } from 'next'
 import Link from 'next/link'
+import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactElement } from 'react'
 
 import { Layout } from '@/components/Layout'
 
 const Feedback = () => {
+  const { t } = useTranslation('common')
+
   return (
     <div className="govuk-grid-row">
       <form className="govuk-grid-column-two-thirds" action={'/api/feedback'} method="POST">
@@ -77,7 +80,7 @@ const Feedback = () => {
             Submit
           </button>
           <Link className="govuk-link" href="/">
-            Return to home page
+            {t('returnToHomeBtn')}
           </Link>
         </div>
       </form>
