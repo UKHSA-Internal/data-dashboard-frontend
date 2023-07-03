@@ -49,7 +49,7 @@ describe('Other respiratory viruses topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Healthcare', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/viruses/other-respiratory-viruses#healthcare`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/choose-topic/other-respiratory-viruses#healthcare`)
 
     // Heathcare
     cy.findByRole('region', { name: 'Healthcare' }).within(() => {

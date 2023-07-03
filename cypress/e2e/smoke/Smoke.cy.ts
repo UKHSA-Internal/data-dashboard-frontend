@@ -1,6 +1,3 @@
-import path from 'path'
-import { downloadsCsvFixture } from '@/api/mocks/downloads/fixtures/downloads-csv'
-
 describe('Respiratory Viruses Dashboard (Home)', () => {
   beforeEach(() => {
     cy.visit('/')
@@ -26,7 +23,7 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
         cy.findByText('Coronavirus').click()
       })
       .url()
-      .should('include', '/viruses/coronavirus')
+      .should('include', '/choose-topic/coronavirus')
 
     cy.findByRole('heading', { name: 'Coronavirus' })
   })
@@ -125,7 +122,7 @@ describe('Respiratory Viruses Dashboard (Home)', () => {
 // Influenza page
 describe('Influenza Page', () => {
   beforeEach(() => {
-    cy.visit('/viruses/influenza')
+    cy.visit('/choose-topic/influenza')
   })
 
   it('Displays heading', () => {
@@ -147,7 +144,7 @@ describe('Influenza Page', () => {
 
 describe('Other respiratory viruses page', () => {
   beforeEach(() => {
-    cy.visit('/viruses/other-respiratory-viruses')
+    cy.visit('/choose-topic/other-respiratory-viruses')
   })
 
   it('Displays heading', () => {
