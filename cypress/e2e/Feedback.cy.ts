@@ -22,11 +22,11 @@ describe('', () => {
   it('Allows you to fill fields, and successfully submit', () => {
     cy.findByRole('heading', { name: 'UKHSA Dashboard Feedback', level: 1 })
 
-    cy.get('#govuk_reason').type('Test input')
-    cy.get('[type="radio"]').first().check()
-    cy.get('#improve_experience').type('Test input')
-    cy.get('#like_to_see').type('Test input')
+    cy.findByLabelText('What was your reason for visiting the dashboard today?').type('Test input')
+    cy.findByLabelText('Did you find everything you were looking for?').first().check()
+    cy.findByLabelText('How could we improve your experience with the dashboard?').type('Test input')
+    cy.findByLabelText('What would you like to see on the dashboard in the future?').type('Test input')
 
-    cy.findByTestId('feedback-submit-button').click().url().should('include', '/feedback/confirmation')
+    cy.findByRole('button', { name: 'Submit' }).click().url().should('include', '/feedback/confirmation')
   })
 })
