@@ -1,6 +1,6 @@
-import { render, screen } from '@testing-library/react'
 import { GetStaticPropsContext } from 'next'
 
+import { render, screen } from '@/config/test-utils'
 import FeedbackConfirmation, { getStaticProps } from '@/pages/feedback/confirmation'
 
 jest.mock('next/router', () => require('next-router-mock'))
@@ -15,5 +15,5 @@ test('Shows confirmation panel', async () => {
   expect(screen.getByRole('heading', { name: 'Form submitted', level: 1 })).toBeInTheDocument()
   expect(screen.getByText('Thank you for your feedback')).toBeInTheDocument()
 
-  expect(screen.getByRole('link', { name: 'Return to home page' })).toHaveAttribute('href', '/')
+  expect(screen.getByText('Return to home page')).toHaveAttribute('href', '/')
 })
