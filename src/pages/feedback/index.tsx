@@ -13,7 +13,7 @@ const Feedback = () => {
     <div className="govuk-grid-row">
       <form className="govuk-grid-column-two-thirds" action={'/api/feedback'} method="POST">
         <div className="govuk-form-group govuk-!-margin-bottom-9">
-          <h1 className="govuk-label-wrapper">UKHSA Dashboard Feedback</h1>
+          <h1 className="govuk-heading-xl">UKHSA data dashboard feedback</h1>
           <h2 className="govuk-label-wrapper">
             <label className="govuk-label govuk-label--m" htmlFor="govuk_reason">
               What was your reason for visiting the dashboard today?
