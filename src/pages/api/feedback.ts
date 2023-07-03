@@ -4,7 +4,7 @@ import { logger } from '@/lib/logger'
 
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
   if (req.method !== 'POST') {
-    logger.error(`Unsupported request method ${req.method} sent to export endpoint`)
+    logger.error(`Unsupported request method ${req.method}`)
     return res.status(405)
   }
 
