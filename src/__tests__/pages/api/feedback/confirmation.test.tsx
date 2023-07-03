@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { GetStaticPropsContext } from 'next'
 
-import FeedbackConfirmation, { getStaticProps } from './confirmation'
+import FeedbackConfirmation, { getStaticProps } from '@/pages/feedback/confirmation'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
