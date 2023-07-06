@@ -53,12 +53,7 @@ jobs:
            target: "http://localhost:3000"
            fail_action: false
            cmd_options: '-x report_xml'
-       
-       - name: Upload Artifact
-         uses: actions/upload-artifact@v3
-         with:
-           name: zap_scan
-   
+    
    
   checkov-scan:
     name: Checkov Scan
