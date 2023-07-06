@@ -52,6 +52,7 @@ jobs:
          with:
            target: "http://localhost:3000"
            fail_action: false
+           command_options: '-x report_xml.xml'
            # By default outputs a .zip of the scan as an Artifact attached directly to the current run
    
    
