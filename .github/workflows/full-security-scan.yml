@@ -55,7 +55,7 @@ jobs:
          with:
            target: "http://localhost:3000"
            fail_action: false
-           cmd_options: "-x report_as_xml"
+           cmd_options: "-x report_xml.xml"
     
    
   checkov-scan:
