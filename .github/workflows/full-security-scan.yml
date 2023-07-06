@@ -8,7 +8,7 @@ on:
       
 jobs:
   owasp-zap-scan:
-    name: OWASP ZAP SCANS
+    name: OWASP ZAP Scan
     runs-on: ubuntu-latest
  
     steps:
@@ -52,8 +52,14 @@ jobs:
          with:
            target: "http://localhost:3000"
            fail_action: false
-           cmd_options: '-x report_xml.xml'
+           cmd_options: '-x report_xml'
            # By default outputs a .zip of the scan as an Artifact attached directly to the current run
+       
+       - name: Upload Artifact
+         uses: actions/upload-artifact@v3
+         with:
+           name: zap_scan
+           path: report_xml.xml
    
    
   checkov-scan:
