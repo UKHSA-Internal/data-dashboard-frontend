@@ -50,6 +50,11 @@ jobs:
          # -p 8090:8090 means that port 8090 on the host machine is mapped to port 8090 inside the container. 
          # This allows you to access the service running inside the container on port 8090 from your host machine.
        
+       - name: Create XML placeholder file
+         run: |
+          touch report_xml.xml
+          chmod a+w report_xml.xml
+       
        - name: OWASP ZAP
          uses: zaproxy/action-baseline@v0.7.0
          with:
