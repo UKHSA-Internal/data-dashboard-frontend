@@ -33,8 +33,8 @@ jobs:
        - name: Start hosting frontend
          run: nohup ./hosting.sh &
          
-       - name: Run ZAP Baseline
-         run: docker run -v $(pwd)/zap:/zap/wrk/ -p 8080:3000 -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:3000 -x report_xml
+#        - name: Run ZAP Baseline
+#          run: docker run -v $(pwd)/zap:/zap/wrk/ -p 8080:3000 -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:3000 -x report_xml
        
 #        - name: Pulling Docker Image
 #          run: docker pull owasp/zap2docker-stable
@@ -50,12 +50,12 @@ jobs:
          # -p 8090:8090 means that port 8090 on the host machine is mapped to port 8090 inside the container. 
          # This allows you to access the service running inside the container on port 8090 from your host machine.
        
-#        - name: OWASP ZAP
-#          uses: zaproxy/action-baseline@v0.7.0
-#          with:
-#            target: "http://localhost:3000"
-#            fail_action: false
-#            cmd_options: "-x report_as_xml"
+       - name: OWASP ZAP
+         uses: zaproxy/action-baseline@v0.7.0
+         with:
+           target: "http://localhost:3000"
+           fail_action: false
+           cmd_options: "-x report_as_xml"
     
    
   checkov-scan:
