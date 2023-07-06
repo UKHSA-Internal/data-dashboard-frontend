@@ -61,8 +61,14 @@ jobs:
            target: "http://localhost:3000"
            fail_action: false
            cmd_options: "-x report_xml.xml"
-    
-   
+           
+       - name: Upload ZAP XML Report as Artifact
+         uses: actions/upload-artifact@v3
+         with:
+           name: zap_scan_xml
+           path: report_xml.xml
+ 
+ 
   checkov-scan:
     name: Checkov Scan
     runs-on: ubuntu-latest
