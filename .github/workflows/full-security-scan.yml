@@ -51,7 +51,8 @@ jobs:
          with:
            target: "http://localhost:3000"
            fail_action: false
-           # OWASP scan outputs .HTML and .json format reports
+           cmd_options: '-J reports/zap_scan.json' # will write the json to separate file in container
+           # By default outputs a .zip of the scan as an Artifact attached directly to the current run
        
        ####################################################################
        ## Checkov Scan
@@ -82,4 +83,4 @@ jobs:
            defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
            token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
            scan_type: 'ZAP Scan'
-           file: 'zap_scan.json'
+           file: 'reports/zap_scan.json'
