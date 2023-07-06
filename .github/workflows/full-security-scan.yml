@@ -88,9 +88,10 @@ jobs:
         uses: actions/download-artifact@v3
         with:
           name: zap_scan
+          path: /zap_scan
           
       - name: Extract zap_scan files
-        run: 7z e zap_scan.zip -o/zap_scan_files
+        run: 7z e zap_scan.zip -o/zap_scan/files
           
       - name: Import Scan to DefectDojo
         uses: ivanamat/defectdojo-import-scan@v1
@@ -98,4 +99,4 @@ jobs:
           defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
           token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
           scan_type: 'ZAP Scan'
-          file: '/zap_scan_files/zap_scan.json'
+          file: '/zap_scan/files/report_json.json'
