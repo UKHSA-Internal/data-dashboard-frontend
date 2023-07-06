@@ -1,6 +1,7 @@
 name: Full Security Scan
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - suyash-kumar2-patch-1
