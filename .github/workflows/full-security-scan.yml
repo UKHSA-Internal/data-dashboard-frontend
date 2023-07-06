@@ -33,6 +33,9 @@ jobs:
        - name: Start hosting frontend
          run: nohup ./hosting.sh &
          
+       - name: print pwd
+         run: pwd
+         
        - name: Run ZAP Baseline
          run: docker run -v $(pwd):/zap/wrk/:rw -p 8080:3000 -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:3000 -x report_xml
        
