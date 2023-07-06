@@ -39,7 +39,7 @@ jobs:
        - name: Create ZAP hosting script
          run: |
             touch zaphosting.sh
-            echo "docker run -p 8080:3000 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080" >> zaphosting.sh
+            echo "docker run -p 8080:3000 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080 -v /home/zap:/zap/wrk" >> zaphosting.sh
             chmod u+x zaphosting.sh
        
        - name: start hosting zap
