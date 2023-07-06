@@ -91,9 +91,13 @@ jobs:
           path: /home/runner/work/winter-pressures-frontend/winter-pressures-frontend/zap_scan_files
           
       - name: Import Scan to DefectDojo
-        uses: ivanamat/defectdojo-import-scan@v1
-        with:
-          defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
-          token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
-          scan_type: 'ZAP Scan'
-          file: 'zap_scan_files/report_json.json' # relative path
+        run: curl -v -X POST "https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com/api/v2/import-scan" -H "Authorization: Token 8a5949ed4351bae231680ab5193e80de0aa3babb" -H "accept: application/json" -H  "Content-Type: multipart/form-data" -F 'zap_scan_files/report_json.json' -k # -k ignores ssl errors
+          
+          # Cannot use this as the PoC endpoint has no SSL cert
+#       - name: Import Scan to DefectDojo
+#         uses: ivanamat/defectdojo-import-scan@v1
+#         with:
+#           defectdojo_url: 'https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com'
+#           token: '8a5949ed4351bae231680ab5193e80de0aa3babb'
+#           scan_type: 'ZAP Scan'
+#           file: 'zap_scan_files/report_json.json' # relative path
