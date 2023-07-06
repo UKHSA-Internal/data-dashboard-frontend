@@ -32,24 +32,8 @@ jobs:
        
        - name: Start hosting frontend
          run: nohup ./hosting.sh &
-         
-#        - name: Run ZAP Baseline
-#          run: docker run -v $(pwd)/zap:/zap/wrk/ -p 8080:3000 -t owasp/zap2docker-stable zap-baseline.py -t http://localhost:3000 -x report_xml
        
-#        - name: Pulling Docker Image
-#          run: docker pull owasp/zap2docker-stable
-       
-#        - name: Create ZAP hosting script
-#          run: |
-#             touch zaphosting.sh
-#             echo "docker run -p 8080:3000 -i owasp/zap2docker-stable zap.sh -daemon -host 0.0.0.0 -port 8080" >> zaphosting.sh
-#             chmod u+x zaphosting.sh
-       
-#        - name: start hosting zap
-#          run: nohup ./zaphosting.sh &
-         # -p 8090:8090 means that port 8090 on the host machine is mapped to port 8090 inside the container. 
-         # This allows you to access the service running inside the container on port 8090 from your host machine.
-       
+       # the action-baseline does not do this (issue raised with creators)
        - name: Create XML placeholder file
          run: |
           touch report_xml.xml
@@ -61,7 +45,8 @@ jobs:
            target: "http://localhost:3000"
            fail_action: false
            cmd_options: "-x report_xml.xml"
-           
+       
+       # uploading xml report as an artifact due to previous limitation
        - name: Upload ZAP XML Report as Artifact
          uses: actions/upload-artifact@v3
          with:
@@ -102,14 +87,14 @@ jobs:
       - name: Download ZAP artifact
         uses: actions/download-artifact@v3
         with:
-          name: zap_scan
+          name: zap_scan_xml
           path: /home/runner/work/winter-pressures-frontend/winter-pressures-frontend/zap_scan_files
           
       - name: Import Scan to DefectDojo
         run: |
           curl -v -X POST "https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com/api/v2/import-scan/" \
             -H "Authorization: Token 8a5949ed4351bae231680ab5193e80de0aa3babb" -H "accept: application/json" -H  "Content-Type: multipart/form-data" \
-            -F 'file=@zap_scan_files/report_json.json' \
+            -F 'file=@zap_scan_files/report_xml.xml' \
             -F 'scan_type=ZAP Scan' \
             -F 'product_name=Winter Pressures Frontend' \
             -F 'engagement_name=Winter Pressures Security PoC' \
