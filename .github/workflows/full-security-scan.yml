@@ -96,6 +96,7 @@ jobs:
             -H "Authorization: Token 8a5949ed4351bae231680ab5193e80de0aa3babb" -H "accept: application/json" -H  "Content-Type: multipart/form-data" \
             -F 'file=@zap_scan_files/report_json.json' \
             -F 'scan_type=ZAP Scan' \
+            -F 'product_name=Winter Pressures Frontend' \ # required parameter
             -k # ignore SSL errors (endpoint does not have valid SSL cert)
           
           # Cannot use this as the PoC endpoint has no SSL cert
