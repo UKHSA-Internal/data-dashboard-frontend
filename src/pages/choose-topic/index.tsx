@@ -20,7 +20,14 @@ export default function Topics() {
             </legend>
             <div className="govuk-radios" data-module="govuk-radios">
               <div className="govuk-radios__item">
-                <input className="govuk-radios__input" name="topic" type="radio" id="coronavirus" value="coronavirus" />
+                <input
+                  className="govuk-radios__input"
+                  name="topic"
+                  type="radio"
+                  id="coronavirus"
+                  value="coronavirus"
+                  defaultChecked
+                />
                 <label className="govuk-label govuk-radios__label" htmlFor="coronavirus">
                   Coronavirus
                 </label>
