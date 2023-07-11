@@ -1,10 +1,10 @@
 const baseUrl = process.env.API_URL
 
 // Non-CMS endpoints don't have an `/api` prefix at the moment
-export const getApiBaseUrl = () => baseUrl
+export const getApiBaseUrl = () => `${baseUrl}/api`
 
 export const getCmsApiPath = () => {
-  return `${baseUrl}/api/pages`
+  return `${getApiBaseUrl()}/pages`
 }
 
 export const requestOptions: RequestInit = {
