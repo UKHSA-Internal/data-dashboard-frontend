@@ -3,7 +3,6 @@ import kebabCase from 'lodash/kebabCase'
 import { z } from 'zod'
 
 import type { ChartRowColumns } from '@/api/models/cms/Page'
-import { ChartDownload } from '@/components/ChartDownload'
 import { Blocks, Cards } from '@/components/CMS'
 
 /**
@@ -31,7 +30,7 @@ export const renderChartRowColumn = (column: Column, _: number, columns: Array<C
         heading={title}
         description={body}
         chart={<Blocks.Chart id={id} size={chartSize} />}
-        download={<ChartDownload chart={chart} />}
+        // download={<ChartDownload chart={chart} />}
         cardProps={{ 'data-testid': `${kebabCase(title)}-section` }}
       >
         <GridRow>

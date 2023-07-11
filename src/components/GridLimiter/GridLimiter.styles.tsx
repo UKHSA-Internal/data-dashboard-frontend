@@ -8,9 +8,6 @@ type ContainerProps = {
 }
 
 export const LimitContainer = styled(CardContainer)`
-  padding: 0;
-  margin: 0;
-
   @media (max-width: ${BREAKPOINTS.DESKTOP}) and (min-width: 440px) {
     grid-template-columns: ${(props: ContainerProps) => `repeat(${props.$columnLimit}, 1fr)`};
   }

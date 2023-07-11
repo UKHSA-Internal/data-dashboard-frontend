@@ -3,6 +3,10 @@ $govuk-font-family: var(--roboto-font), arial, sans-serif;
 
 @import '../../node_modules/govuk-frontend/govuk/all.scss';
 
+.app-width-container--wide {
+  @include govuk-width-container(1920px);
+}
+
 a:focus,
 summary:focus {
   outline: 3px solid transparent !important;

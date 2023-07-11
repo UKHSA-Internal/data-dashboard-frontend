@@ -35,13 +35,6 @@ export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
         heading: 'Coronavirus',
         content: [
           {
-            type: 'text_card',
-            value: {
-              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on Coronavirus.</p>',
-            },
-            id: '6a399089-6e24-4010-a484-a12745d38872',
-          },
-          {
             type: 'headline_numbers_row_card',
             value: {
               columns: [
@@ -297,13 +290,6 @@ export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
       value: {
         heading: 'Influenza',
         content: [
-          {
-            type: 'text_card',
-            value: {
-              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on Influenza.</p>',
-            },
-            id: '53fcc358-f10d-411d-9bd0-9acb3c4d3aae',
-          },
           {
             type: 'headline_numbers_row_card',
             value: {

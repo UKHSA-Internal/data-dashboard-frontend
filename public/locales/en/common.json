@@ -5,7 +5,7 @@
     "copyright": "All content is available under the Open Government Licence v3.0; except where otherwise stated.",
     "twitterId": "@UKHSA"
   },
-  "serviceTitle": "UKHSA data dashboard",
+  "serviceTitle": "UKHSA Data Dashboard",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
   "feedbackConfirmationTitle": "Form submitted",

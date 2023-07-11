@@ -7,16 +7,7 @@ import { initMocks } from '@/api/msw'
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import {
-  Accordion,
-  AccordionItem,
-  AccordionItemButton,
-  AccordionItemHeading,
-  AccordionItemPanel,
-} from '@/components/Accordion/Accordion'
 import { Utils } from '@/components/CMS'
-import { Contents, ContentsItem } from '@/components/Contents'
-import { FormattedContent } from '@/components/FormattedContent'
 import { Layout } from '@/components/Layout'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
@@ -39,15 +30,15 @@ const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLi
       seoTitle={meta.seo_title}
       seoDescription={meta.search_description}
     >
-      <Contents>
-        {body.map(({ id, value }) => (
-          <ContentsItem key={id} heading={value.heading}>
-            {value.content.map(Utils.renderCard)}
-          </ContentsItem>
-        ))}
-      </Contents>
+      {/* <Contents> */}
+      {body.map(({ id, value }) => (
+        // <ContentsItem key={id} heading={value.heading}>
+        <>{value.content.map(Utils.renderCard)}</>
+        // </ContentsItem>
+      ))}
+      {/* </Contents> */}
 
-      <Accordion containerProps={{ 'data-testid': 'virus-accordion' }}>
+      {/* <Accordion containerProps={{ 'data-testid': 'virus-accordion' }}>
         {accordion.map(({ id, body }) => (
           <AccordionItem key={id}>
             <AccordionItemHeading>
@@ -58,7 +49,7 @@ const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLi
             </AccordionItemPanel>
           </AccordionItem>
         ))}
-      </Accordion>
+      </Accordion> */}
 
       <RelatedLinks links={relatedLinks} />
     </Page>

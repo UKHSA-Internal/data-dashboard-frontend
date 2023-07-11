@@ -53,7 +53,8 @@ export const Tag = styled(GovUKTag)<TagProps>`
     background-repeat: no-repeat;
     background-position: 6px center;
     ${typography.font({ size: BODY_SIZES.XSMALL })}
-    font-weight: ${FONT_WEIGHTS.bold};
+    font-weight: ${FONT_WEIGHTS.regular};
     white-space: nowrap;
+    font-size: 16px !important;
   }
 `

@@ -6,6 +6,6 @@ import styled from 'styled-components'
 export const Heading = styled.span`
   display: block;
   ${typography.font({ size: BODY_SIZES.SMALL })}
-  font-weight: ${FONT_WEIGHTS.bold};
+  font-weight: ${FONT_WEIGHTS.regular};
   color: ${BLACK};
 `

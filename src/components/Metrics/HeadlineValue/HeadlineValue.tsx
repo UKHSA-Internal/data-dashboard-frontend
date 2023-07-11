@@ -25,7 +25,7 @@ export const HeadlineValue = ({ heading, value, percent }: HeadlineValueProps) =
       </VisuallyHidden>
       <div aria-hidden>
         <Heading>{heading}</Heading>
-        {formattedValue}
+        <span className="govuk-body-l">{formattedValue}</span>
         {percent && '%'}
       </div>
     </>

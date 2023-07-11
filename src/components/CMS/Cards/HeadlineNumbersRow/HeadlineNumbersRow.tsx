@@ -1,6 +1,5 @@
 import { Fragment, ReactNode } from 'react'
 
-import { Card } from '@/components/Card'
 import { GridLimiter } from '@/components/GridLimiter'
 
 interface HeadlineNumbersRowProps {
@@ -10,12 +9,12 @@ interface HeadlineNumbersRowProps {
 
 export const HeadlineNumbersRow = ({ columns, cardProps }: HeadlineNumbersRowProps) => {
   return (
-    <Card {...cardProps}>
+    <div {...cardProps}>
       <GridLimiter>
         {columns.map((column, key) => (
           <Fragment key={key}>{column}</Fragment>
         ))}
       </GridLimiter>
-    </Card>
+    </div>
   )
 }

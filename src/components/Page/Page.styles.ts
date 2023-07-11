@@ -11,4 +11,5 @@ export const LastUpdated = styled.div`
 
 export const Heading = styled(H1)`
   margin: ${SPACING.SCALE_4} 0;
+  display: inline-block;
 `
