@@ -1,6 +1,7 @@
 import { GetStaticPropsContext } from 'next'
+import mockRouter from 'next-router-mock'
 
-import { render, screen } from '@/config/test-utils'
+import { render, screen, within } from '@/config/test-utils'
 import Feedback, { getStaticProps } from '@/pages/feedback'
 
 jest.mock('next/router', () => require('next-router-mock'))
@@ -27,4 +28,21 @@ test('Questions showing correctly', async () => {
   ).toBeInTheDocument()
 
   expect(screen.getByRole('link', { name: 'Return to home page' })).toHaveAttribute('href', '/')
+})
+
+test('Shows an error after the api redirects with a generic server error', async () => {
+  mockRouter.push('feedback/?error=1')
+
+  const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
+    props: Record<string, never>
+  }
+
+  const { getByRole } = render(Feedback.getLayout(<Feedback {...props} />))
+
+  const alert = getByRole('alert')
+  expect(alert).toBeInTheDocument()
+  expect(within(alert).getByRole('heading', { name: 'There is a problem', level: 2 })).toBeInTheDocument()
+  expect(
+    within(alert).getByText('There was a problem processing the request. Please try again later.')
+  ).toBeInTheDocument()
 })
