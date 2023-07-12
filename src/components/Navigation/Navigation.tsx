@@ -1,30 +1,19 @@
 import { NavigationLink } from '../NavigationLink/NavigationLink'
 import { Nav, NavList } from './Navigation.styles'
-import { primaryLinksData, secondaryLinksData } from './navigationData'
+import { primaryLinksData } from './navigationData'
 
 type NavigationProps = {
   label?: string
-  primaryLinks?: NavigationLink[]
-  secondaryLinks?: NavigationLink[]
+  links?: NavigationLink[]
+  className?: string
 }
 
-const renderPrimaryLink = (props: NavigationLink) => (
-  <NavigationLink key={props.url} type="primary" {...props} />
-)
+const renderPrimaryLink = (props: NavigationLink) => <NavigationLink key={props.url} type="primary" {...props} />
 
-const renderSecondaryLink = (props: NavigationLink) => (
-  <NavigationLink key={props.url} type="secondary" {...props} />
-)
-
-export const Navigation = ({
-  label = 'Menu',
-  primaryLinks = primaryLinksData,
-  secondaryLinks = secondaryLinksData,
-}: NavigationProps) => {
+export const Navigation = ({ label = 'Menu', links = primaryLinksData, className }: NavigationProps) => {
   return (
-    <Nav aria-label={label}>
-      <NavList>{primaryLinks.map(renderPrimaryLink)}</NavList>
-      <NavList>{secondaryLinks.map(renderSecondaryLink)}</NavList>
+    <Nav aria-label={label} className={className}>
+      <NavList>{links.map(renderPrimaryLink)}</NavList>
     </Nav>
   )
 }

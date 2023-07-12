@@ -4,7 +4,7 @@ import { getApiBaseUrl, getCmsApiPath, requestOptions } from './helpers'
  * The process.env mocks powering these tests live inside <rootDir>/config/jest/jest.env.js
  */
 test('Get the API url', () => {
-  expect(getApiBaseUrl()).toEqual('http://fake-backend.gov.uk')
+  expect(getApiBaseUrl()).toEqual('http://fake-backend.gov.uk/api')
 })
 
 test('Get the CMS API path', () => {
