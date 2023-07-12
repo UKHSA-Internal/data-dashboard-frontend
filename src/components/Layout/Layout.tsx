@@ -1,5 +1,6 @@
 import { Page, PhaseBanner, TopNav } from 'govuk-react'
-import { useTranslation } from 'next-i18next'
+import Link from 'next/link'
+import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, useEffect } from 'react'
 
 import { Footer } from '../Footer'
@@ -7,7 +8,11 @@ import { Navigation } from '../Navigation'
 import { ScrollToTop } from '../ScrollToTop'
 import { Main, TopNavLink } from './Layout.styles'
 
-export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollToTop?: boolean }) => {
+export const Layout = ({
+  children,
+  scrollToTop,
+  backLink,
+}: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
   const { t } = useTranslation('common')
 
   useEffect(() => {
@@ -19,7 +24,18 @@ export const Layout = ({ children, scrollToTop }: PropsWithChildren & { scrollTo
       <Page
         beforeChildren={
           <>
-            <PhaseBanner level="beta">{t('feedbackBanner')}</PhaseBanner>
+            <PhaseBanner level="alpha" data-testid="phase-banner-content">
+              <Trans t={t} i18nKey="feedbackBanner">
+                <span>
+                  <Link href="/feedback"></Link>
+                </span>
+              </Trans>
+            </PhaseBanner>
+            {backLink && (
+              <Link href={backLink} className="govuk-back-link govuk-!-margin-bottom-1">
+                Back
+              </Link>
+            )}
             <Navigation />
           </>
         }

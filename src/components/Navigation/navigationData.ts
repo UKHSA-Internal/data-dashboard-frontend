@@ -1,6 +1,5 @@
 /**
  * Navigation links & page hierarchy are hard-coded into the app for the MVP
- * Eventually, these may get served from the CMS
  */
 
 import type { NavigationLink } from '../NavigationLink/NavigationLink'
@@ -11,20 +10,9 @@ export const primaryLinksData: NavigationLink[] = [
     url: '/',
   },
   {
-    title: 'Coronavirus',
-    url: '/viruses/coronavirus',
+    title: 'API',
+    url: `${process.env.API_URL}/api/public/timeseries`,
   },
-  {
-    title: 'Influenza',
-    url: '/viruses/influenza',
-  },
-  {
-    title: 'Other respiratory viruses',
-    url: '/viruses/other-respiratory-viruses',
-  },
-]
-
-export const secondaryLinksData: NavigationLink[] = [
   {
     title: 'About',
     url: '/about',
@@ -32,13 +20,5 @@ export const secondaryLinksData: NavigationLink[] = [
   {
     title: "What's new",
     url: '/whats-new',
-  },
-  {
-    title: 'Maps',
-    url: '/maps',
-  },
-  {
-    title: 'How to use this data',
-    url: '/how-to-use-this-data',
   },
 ]
