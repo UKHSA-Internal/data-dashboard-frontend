@@ -1,11 +1,11 @@
-import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
+import { GetServerSidePropsContext, InferGetServerSidePropsType } from 'next'
 import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactElement } from 'react'
 
 import { initMocks } from '@/api/msw'
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
-import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import {
   Accordion,
@@ -20,11 +20,10 @@ import { FormattedContent } from '@/components/FormattedContent'
 import { Layout } from '@/components/Layout'
 import { Page } from '@/components/Page'
 import { RelatedLinks } from '@/components/RelatedLinks/RelatedLinks'
-import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 import { initializeStore } from '@/lib/store'
 
-type TopicPageProps = InferGetStaticPropsType<typeof getStaticProps>
+type TopicPageProps = InferGetServerSidePropsType<typeof getServerSideProps>
 
 const TopicPage = ({ title, body, description, accordion, lastUpdated, relatedLinks, meta }: TopicPageProps) => {
   const { t } = useTranslation('topic')
@@ -71,13 +70,13 @@ TopicPage.getLayout = function getLayout(page: ReactElement) {
   return <Layout backLink="/choose-topic">{page}</Layout>
 }
 
-export const getStaticProps = async (req: GetStaticPropsContext) => {
+export const getServerSideProps = async (ctx: GetServerSidePropsContext) => {
   if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
     await initMocks()
   }
 
   try {
-    const params = req.params
+    const params = ctx.params
 
     // Check the slug exists in the url
     if (params && params.slug) {
@@ -129,9 +128,8 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
           relatedLinks,
           meta,
           initialZustandState: JSON.parse(JSON.stringify(store.getState())),
-          ...(await serverSideTranslations(req.locale as string, ['common', 'topic'])),
+          ...(await serverSideTranslations(ctx.locale as string, ['common', 'topic'])),
         },
-        revalidate: getStaticPropsRevalidateValue(),
       }
     }
 
@@ -140,26 +138,4 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
     logger.error(error)
     throw new Error(`Failed to fetch topic page: ${error}`)
   }
-}
-
-export const getStaticPaths: GetStaticPaths = async () => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
-  // Fetch the CMS pages with a topic type
-  const pages = await getPages(PageType.Topic)
-
-  if (pages.success) {
-    const { items } = pages.data
-
-    // Get the paths we want to pre-render based on the list of topic pages
-    const paths = items.map(({ meta: { slug } }) => ({
-      params: { slug },
-    }))
-
-    return { paths, fallback: 'blocking' }
-  }
-
-  return { paths: [], fallback: true }
 }
