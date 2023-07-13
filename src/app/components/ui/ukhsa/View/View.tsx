@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { useTranslation } from '../../../i18n'
+import { useTranslation } from '../../../../i18n'
 
 interface PageProps {
   heading: string
@@ -9,7 +9,7 @@ interface PageProps {
   lastUpdated?: string
 }
 
-export async function Wrapper({ heading, children, description, lastUpdated }: PageProps) {
+export async function View({ heading, children, description, lastUpdated }: PageProps) {
   const { t } = await useTranslation('common')
 
   return (

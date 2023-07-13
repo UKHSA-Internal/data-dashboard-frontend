@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
-import { Wrapper } from '../components/ui/ukhsa'
+import { View } from '../components/ui/ukhsa'
 
 const ContentBlock = ({ heading, children, link }: { heading: string; children: ReactNode; link: ReactNode }) => {
   return (
@@ -39,7 +39,7 @@ const StartNowBtn = () => (
 
 export default async function HomePage() {
   return (
-    <Wrapper heading="UKHSA data dashboard">
+    <View heading="UKHSA data dashboard">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds-from-desktop">
           <p>
@@ -92,6 +92,6 @@ export default async function HomePage() {
           </ContentBlock>
         </div>
       </div>
-    </Wrapper>
+    </View>
   )
 }

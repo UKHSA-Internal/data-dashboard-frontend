@@ -1,9 +1,9 @@
-import { Wrapper } from '@/app/components/ui/ukhsa'
+import { View } from '@/app/components/ui/ukhsa'
 
 export default async function TopicPage() {
   return (
-    <Wrapper heading={'heading'} description={'description'} lastUpdated={'lastUpdated'}>
+    <View heading={'heading'} description={'description'} lastUpdated={'lastUpdated'}>
       topic
-    </Wrapper>
+    </View>
   )
 }
