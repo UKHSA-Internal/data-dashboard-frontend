@@ -39,14 +39,16 @@ const StartNowBtn = () => (
 
 export default async function HomePage() {
   return (
-    <Wrapper heading={'title'} description={'description'} lastUpdated={'lastUpdated'}>
+    <Wrapper heading="UKHSA data dashboard">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds-from-desktop">
           <p>
             The UKHSA data dashboard is for anyone interested in UK health data. Currently, the dashboard reports data
             for respiratory viruses.
           </p>
+
           <p>You can use this service to:</p>
+
           <ul className="govuk-body govuk-!-padding-left-7 govuk-!-margin-bottom-6">
             <li>get an overall summary of a public health threat</li>
             <li>see trends and patterns in health data</li>
@@ -59,12 +61,6 @@ export default async function HomePage() {
           <ContentBlock heading="Explore location based data" link={<Link href="/maps">Go to maps</Link>}>
             <p>The UKHSA data dashboard shows data collected across different geographical regions.</p>
           </ContentBlock>
-
-          {/* <ContentBlock heading="Understand the data" link={<Link href="/maps">Search metrics</Link>}>
-            <p>
-              Find information on the rationale, methodology, data source and more for metrics across the dashboard.
-            </p>
-          </ContentBlock> */}
 
           <ContentBlock heading="Use the API" link={<Link href="/how-to-use-this-data">Go to API</Link>}>
             <p>Search and download data by using the UKHSA data dashboard&apos;s API.</p>
