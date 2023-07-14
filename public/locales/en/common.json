@@ -25,5 +25,31 @@
     "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
     "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
     "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
+  },
+  "cms": {
+    "blocks": {
+      "headline": {
+        "heading": "{{heading}}",
+        "value": "{{value, number}}"
+      },
+      "percentage": {
+        "heading": "{{heading}}",
+        "value": "{{value}}%"
+      },
+      "trend": {
+        "heading": "{{heading}}",
+        "value": {
+          "percentage": "({{percentage}}%)",
+          "change": "{{change}}"
+        },
+        "alt_green_up": "There has been an increase of {{change}} ({{percentage}}%) compared to the previous 7 days.",
+        "alt_green_down": "There has been a decrease of {{change}} ({{percentage}}%) compared to the previous 7 days.",
+        "alt_red_up": "There has been an increase of {{change}} ({{percentage}}%) compared to the previous 7 days.",
+        "alt_red_down": "There has been an decrease of {{change}} ({{percentage}}%) compared to the previous 7 days."
+      },
+      "timestamp": {
+        "value": "Up to and including {{value, dateShort}}"
+      }
+    }
   }
 }

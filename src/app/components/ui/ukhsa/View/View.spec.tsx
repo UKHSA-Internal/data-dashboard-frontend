@@ -1,4 +1,4 @@
-import { render, screen } from '@/config/test-utils'
+import { render } from '@/config/test-utils'
 
 import { View } from './View'
 
@@ -6,23 +6,36 @@ import { View } from './View'
  * Jest does not support RSC yet so we must await the component as a function
  */
 
-test('displays a heading, last updated date and content', async () => {
-  render(await View({ heading: 'View heading', lastUpdated: '2023-03-21T10:25:34.452098Z', children: 'Content' }))
-
-  expect(screen.getByRole('heading', { name: 'View heading', level: 1 })).toBeInTheDocument()
-  expect(screen.getByText('Last updated on Tuesday, 21 March 2023 at 10:25am')).toBeInTheDocument()
-  expect(screen.getByText('Content')).toBeInTheDocument()
+test('renders the heading correctly', async () => {
+  const heading = 'Test Heading'
+  const { getByText } = render(await View({ heading, children: null }))
+  const headingElement = getByText(heading)
+  expect(headingElement).toBeInTheDocument()
 })
 
-test('displays an optional description', async () => {
-  render(
-    await View({
-      description: 'Data and insights on Coronavirus',
-      heading: 'Wrapper heading',
-      lastUpdated: '2023-03-21T10:25:34.452098Z',
-      children: 'Content',
-    })
-  )
+test('renders the lastUpdated text if provided', async () => {
+  const lastUpdated = '2023-03-21T10:25:34.452098Z'
+  const { getByText } = render(await View({ heading: 'Test Heading', children: null, lastUpdated }))
+  const lastUpdatedElement = getByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
+  expect(lastUpdatedElement).toBeInTheDocument()
+})
 
-  expect(screen.getByText('Data and insights on Coronavirus')).toBeInTheDocument()
+test('renders the showWelcome text if provided', async () => {
+  const { getByText } = render(await View({ heading: 'Test Heading', children: null, showWelcome: true }))
+  const welcomeElement = getByText('Welcome')
+  expect(welcomeElement).toBeInTheDocument()
+})
+
+test('renders the description correctly', async () => {
+  const description = '<p>This is a test description.</p>'
+  const { getByText } = render(await View({ heading: 'Test Heading', children: null, description }))
+  const descriptionElement = getByText('This is a test description.')
+  expect(descriptionElement).toBeInTheDocument()
+})
+
+test('renders the children correctly', async () => {
+  const children = <div>Test Children</div>
+  const { getByText } = render(await View({ heading: 'Test Heading', children }))
+  const childrenElement = getByText('Test Children')
+  expect(childrenElement).toBeInTheDocument()
 })

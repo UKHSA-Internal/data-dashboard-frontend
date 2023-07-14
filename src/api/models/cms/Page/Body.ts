@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { HeadlineNumber, PercentageNumber, TrendNumber } from './BodyValues'
+import { Blocks } from './Blocks'
 import { Chart } from './Chart'
 
 /**
@@ -19,7 +19,7 @@ export const WithHeadlineNumbersRowCard = z.object({
       type: z.literal('column'),
       value: z.object({
         title: z.string(),
-        rows: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber, PercentageNumber])),
+        rows: Blocks,
       }),
     })
   ),
@@ -34,7 +34,7 @@ export const WithChartHeadlineAndTrendCard = z.object({
     chart: Chart,
     x_axis: z.string().nullable(),
     y_axis: z.string().nullable(),
-    headline_number_columns: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber, PercentageNumber])),
+    headline_number_columns: Blocks,
   }),
 })
 
