@@ -63,6 +63,7 @@ export const parseChartTableData = (
 
   const maxColumnsExcludingDate = maxColumns - 1
   const numColumns = response[0].values.length
+
   const numTables = Math.ceil(numColumns / maxColumnsExcludingDate)
 
   const tables: Response[] = Array(numTables)

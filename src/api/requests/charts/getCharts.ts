@@ -56,7 +56,6 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const { data } = await api.post<Response>(`${getApiBaseUrl()}/charts/v3`, json, { responseType: 'json' })
-
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

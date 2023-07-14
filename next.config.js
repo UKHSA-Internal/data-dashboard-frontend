@@ -1,4 +1,4 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
+/* eslint-disable @typescript-eslint/no-var-requires */
 const { i18n } = require('./next-i18next.config')
 
 /** @type {import('next').NextConfig} */
@@ -8,7 +8,12 @@ const nextConfig = {
   reactStrictMode: true,
   staticPageGenerationTimeout: 300,
   experimental: {
+    appDir: true,
     largePageDataBytes: 128 * 100000,
+  },
+  webpack(config) {
+    config.experiments = { ...config.experiments, topLevelAwait: true }
+    return config
   },
   compiler: {
     styledComponents: {
