@@ -1,12 +1,17 @@
-import Image from 'next/image'
 import { z } from 'zod'
 
 import { WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
-interface ChartProps {
+import { useTranslation } from '../../../i18n'
+
+/**
+ * NOTE: The timestamp is currently only returned by the charts endpoint.
+ * This server component must perform the same request as the chart component in order
+ * to make use of request deduping
+ */
+interface TimestampProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof WithChartHeadlineAndTrendCard>['value']
 
@@ -14,7 +19,9 @@ interface ChartProps {
   size: 'narrow' | 'wide'
 }
 
-export async function Chart({ data, size }: ChartProps) {
+export async function Timestamp({ data, size }: TimestampProps) {
+  const { t } = await useTranslation('common')
+
   const { chart, x_axis, y_axis } = data
 
   const plots = chart.map((plot) => plot.value)
@@ -29,12 +36,14 @@ export async function Chart({ data, size }: ChartProps) {
 
   if (res.success) {
     const {
-      data: { chart },
+      data: { last_updated: lastUpdated },
     } = res
 
     return (
-      <div className="govuk-!-margin-top-4 govuk-!-margin-bottom-2 relative h-[220px] w-full md:min-w-[320px]">
-        <Image priority unoptimized alt="" fill sizes="100vw" src={`data:image/svg+xml;utf8,${getChartSvg(chart)}`} />
+      <div>
+        <div className="govuk-body-s govuk-!-margin-bottom-0 text-dark-grey">
+          {t('cms.blocks.timestamp.value', { value: lastUpdated })}
+        </div>
       </div>
     )
   }
