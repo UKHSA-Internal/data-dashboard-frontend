@@ -7,6 +7,8 @@ import './globals.scss'
 import Link from 'next/link'
 import Script from 'next/script'
 
+import { BackToTop } from './components/ui/ukhsa'
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -58,9 +60,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <strong className="govuk-tag govuk-phase-banner__content__tag">Alpha</strong>
               <span className="govuk-phase-banner__text">
                 This is a new service – your{' '}
-                <a className="govuk-link" href="#">
+                <Link className="govuk-link" href="/feedback">
                   feedback
-                </a>{' '}
+                </Link>{' '}
                 will help us to improve it.
               </span>
             </p>
@@ -69,6 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="govuk-width-container">
           <main className="govuk-main-wrapper" id="main-content" role="main">
             {children}
+            <BackToTop />
           </main>
         </div>
         <footer className="govuk-footer" role="contentinfo">
