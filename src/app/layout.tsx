@@ -1,6 +1,6 @@
 import { Roboto } from 'next/font/google'
 
-const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-roboto' })
+const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-primary' })
 
 import './globals.scss'
 
@@ -9,7 +9,7 @@ import Script from 'next/script'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`govuk-template ${roboto.variable} font-sans`}>
+    <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
       <Script
         id="js-enabled"
         dangerouslySetInnerHTML={{
