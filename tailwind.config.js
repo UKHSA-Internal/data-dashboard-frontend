@@ -4,7 +4,7 @@ module.exports = {
   content: ['./src/**/*.{js,ts,jsx,tsx,mdx}'],
   theme: {
     fontFamily: {
-      sans: ['var(--font-roboto)'],
+      sans: ['var(--font-primary)'],
     },
     fontSize: {
       // Note: Use govuk classes for font sizes
