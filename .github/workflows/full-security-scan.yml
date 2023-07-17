@@ -103,7 +103,7 @@ jobs:
   import-Checkov-scan-to-defectDojo:
     name: Import Checkov Scan to DefectDojo
     runs-on: ubuntu-latest
-    needs: owasp-zap-scan
+    needs: checkov-scan
        
     steps:
       - name: Download Checkov artifact
