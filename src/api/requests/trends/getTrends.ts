@@ -1,10 +1,8 @@
 import { z } from 'zod'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import { Metrics, PercentageMetrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
-
-import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   topic: Topics,
@@ -26,7 +24,7 @@ type RequestParams = z.infer<typeof requestSchema>
 export const getTrends = async (params: RequestParams) => {
   try {
     const searchParams = new URLSearchParams(params)
-    const { data } = await api.get(`${getApiBaseUrl()}/trends/v2`, { params: searchParams })
+    const data = await client<z.infer<typeof responseSchema>>(`trends/v2?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

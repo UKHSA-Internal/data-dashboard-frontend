@@ -1,9 +1,7 @@
 import { z } from 'zod'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import { logger } from '@/lib/logger'
-
-import { getCmsApiPath } from '../helpers'
 
 /**
  * CMS Pages endpoint
@@ -38,7 +36,7 @@ export const responseSchema = z.object({
 
 export const getPages = async (type: PageType) => {
   try {
-    const { data } = await api.get<PagesResponse>(`${getCmsApiPath()}/?type=${type}`)
+    const data = await client<PagesResponse>(`pages/?type=${type}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

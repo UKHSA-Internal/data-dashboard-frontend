@@ -14,6 +14,7 @@ dayjs.tz.setDefault('Europe/London')
  */
 module.exports = (value, format) => {
   if (format === 'date') return dayjs(value).format('dddd, D MMMM YYYY')
+  if (format === 'dateShort') return dayjs(value).format('D MMMM YYYY')
   if (format === 'monthAndYear') return dayjs(value).format('MMM YYYY')
   if (format === 'time') return dayjs(value).format('hh:mma')
   if (format === 'number') return value.toLocaleString('en-GB')

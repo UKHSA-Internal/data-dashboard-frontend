@@ -37,3 +37,5 @@ export const PercentageNumber = z.object({
   }),
   id: z.string(),
 })
+
+export const Blocks = z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber, PercentageNumber]))
