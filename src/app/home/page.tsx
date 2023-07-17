@@ -9,7 +9,7 @@ import { renderSection } from '../utils/cms.utils'
 export const revalidate = 3600 // revalidate every hour
 
 export async function generateMetadata(): Promise<Metadata> {
-  if (process.env.CI) return {}
+  if (typeof process.env.CI !== 'undefined') return {}
 
   const {
     meta: { seo_title, search_description },
@@ -21,7 +21,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  if (process.env.CI) return null
+  if (typeof process.env.CI !== 'undefined') return null
 
   const { title, body, page_description: description } = await getPageBySlug('respiratory-viruses', PageType.Home)
 

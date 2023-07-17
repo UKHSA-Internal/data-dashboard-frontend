@@ -1,10 +1,8 @@
 import { z } from 'zod'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import { ChartTypes, Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
-
-import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   plots: z.array(
@@ -38,8 +36,8 @@ export type Response = z.infer<typeof responseSchema>
 
 export const getTabular = async (plots: RequestParams['plots']) => {
   try {
-    const json: RequestParams = { plots }
-    const { data } = await api.post<Response>(`${getApiBaseUrl()}/tables/v2`, json, { responseType: 'json' })
+    const body: RequestParams = { plots }
+    const data = await client<Response>('tables/v2', { body })
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
