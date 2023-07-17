@@ -7,7 +7,6 @@ import { render } from '@/config/test-utils'
 import { Chart } from './Chart'
 
 jest.mock('@/api/requests/charts/getCharts')
-
 const getChartsMock = jest.mocked(getCharts)
 
 test('renders the chart correctly when successful', async () => {

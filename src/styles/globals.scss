@@ -1,7 +1,9 @@
 $govuk-global-styles: true;
 $govuk-font-family: var(--roboto-font), arial, sans-serif;
+$govuk-new-link-styles: true;
+// $govuk-page-width: 1200px;
 
-@import '../../node_modules/govuk-frontend/govuk/all.scss';
+@import '~node_modules/govuk-frontend/govuk/all.scss';
 
 a:focus,
 summary:focus {

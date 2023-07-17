@@ -29,7 +29,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   <svg
                     aria-hidden="true"
                     focusable="false"
-                    className="govuk-header__logotype-crown inline-block mr-1"
+                    className="govuk-header__logotype-crown mr-1 inline-block"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 132 97"
                     height="30"
@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
             <div className="govuk-header__content">
               <Link href="/test" className="govuk-header__link govuk-header__service-name">
-                UKHSA Dashboard
+                UKHSA data dashboard
               </Link>
             </div>
           </div>
