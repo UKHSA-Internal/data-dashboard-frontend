@@ -3,8 +3,8 @@ import { Metadata } from 'next'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
-import { View } from '../components/ui/ukhsa'
-import { renderSection } from '../utils/cms.utils'
+import { View } from './components/ui/ukhsa'
+import { renderSection } from './utils/cms.utils'
 
 export const revalidate = 3600 // revalidate every hour
 

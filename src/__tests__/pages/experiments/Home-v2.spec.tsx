@@ -1,9 +1,9 @@
 import { GetStaticPropsContext } from 'next'
 
 import { render, screen } from '@/config/test-utils'
-import Home, { getStaticProps } from '@/pages'
+import Home, { getStaticProps } from '@/pages/experiments/home-v2'
 
-test('Home page', async () => {
+test('Home page v2 experiment', async () => {
   const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
     props: {
       apiDocsUrl: string
