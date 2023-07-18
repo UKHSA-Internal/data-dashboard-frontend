@@ -5,16 +5,11 @@ import type { AppProps } from 'next/app'
 import { appWithTranslation } from 'next-i18next'
 import { ComponentType, ReactElement, ReactNode } from 'react'
 
-import { initMocks } from '@/api/msw'
 import { GlobalStyle } from '@/components/GlobalStyle'
 import { Layout } from '@/components/Layout'
 import StoreProvider from '@/lib/StoreProvider'
 
 import nextI18NextConfig from '../../next-i18next.config'
-
-if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-  initMocks()
-}
 
 export type NextPageWithLayout<P = Record<string, unknown>, IP = P> = NextPage<P, IP> & {
   getLayout?: (page: ReactElement) => ReactNode
