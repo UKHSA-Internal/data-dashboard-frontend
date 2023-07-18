@@ -1,3 +1,15 @@
+import 'module-alias/register'
+
+import { addAliases } from 'module-alias'
+
+// Import path aliases used in the NextJs project need to be maintained
+// here as well so that they're resolved correctly by ts-node
+addAliases({
+  '@/config': `${process.cwd()}/src/config`,
+  '@/lib': `${process.cwd()}/src/lib`,
+  '@/api': `${process.cwd()}/src/api`,
+})
+
 import express from 'express'
 
 import charts from './handlers/charts/v3'

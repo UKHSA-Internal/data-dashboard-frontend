@@ -1,18 +1,30 @@
 import { Request, Response } from 'express'
 
-import { Topics } from '../../../api/models'
+import { requestSchema } from '@/api/requests/tabular/getTabular'
+import { logger } from '@/lib/logger'
+
 import { fixtures } from './fixtures/fixtures'
 
 export default async function handler(req: Request, res: Response) {
   try {
     if (req.method !== 'POST') {
-      console.error(`Unsupported request method ${req.method}`)
+      logger.error(`Unsupported request method ${req.method}`)
       return res.status(405)
     }
 
+    // Validate query parameters
+    const parsedQueryParams = requestSchema.safeParse(req.body)
+
+    // Return a 500 if the query parameters provided aren't valid
+    if (!parsedQueryParams.success) {
+      return res.status(500)
+    }
+
     const {
-      plots: [{ metric, topic }],
-    } = req.body
+      data: {
+        plots: [{ metric, topic }],
+      },
+    } = parsedQueryParams
 
     const mockedMetric = metric as
       | 'new_cases_daily'
@@ -21,9 +33,9 @@ export default async function handler(req: Request, res: Response) {
       | 'weekly_positivity'
 
     // Return a json fixture identified by the topic & metric provided
-    return res.json(fixtures[topic as Topics][mockedMetric])
+    return res.json(fixtures[topic][mockedMetric])
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return res.status(500)
   }
 }

@@ -1,5 +1,9 @@
 import { Request, Response } from 'express'
 
+import { PageResponse } from '@/api/requests/cms/getPage'
+import { PageType } from '@/api/requests/cms/getPages'
+import { logger } from '@/lib/logger'
+
 import {
   aboutPageMock,
   coronavirusPageMock,
@@ -12,7 +16,7 @@ import {
 } from './fixtures/page'
 
 // Contains the individual `/pages/{id}` mocks
-export const mockedPageMap: Record<number, unknown> = {
+export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [respiratoryVirusesMock.id]: respiratoryVirusesMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,
@@ -27,12 +31,12 @@ export const mockedPageMap: Record<number, unknown> = {
 export default async function handler(req: Request, res: Response) {
   try {
     if (req.method !== 'GET') {
-      console.error(`Unsupported request method ${req.method}`)
+      logger.error(`Unsupported request method ${req.method}`)
       return res.status(405)
     }
 
     if (!req.params['id']) {
-      console.error('Missing id searchParam')
+      logger.error('Missing id searchParam')
       return res.status(500)
     }
 
@@ -42,7 +46,7 @@ export default async function handler(req: Request, res: Response) {
       return res.json(mockedPageMap[pageId])
     }
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return res.status(500)
   }
 }
