@@ -36,7 +36,7 @@ export const responseSchema = z.object({
 
 export const getPages = async (type: PageType) => {
   try {
-    const data = await client<PagesResponse>(`pages/?type=${type}`)
+    const { data } = await client<PagesResponse>(`pages/?type=${type}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
