@@ -4,8 +4,8 @@ import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, useEffect } from 'react'
 
 import { Footer } from '../Footer'
-import { Navigation } from '../Navigation'
 import { ScrollToTop } from '../ScrollToTop'
+import { SideNav } from '../SideNav/SideNav'
 import { Main, TopNavLink } from './Layout.styles'
 
 export const Layout = ({
@@ -36,14 +36,29 @@ export const Layout = ({
                 Back
               </Link>
             )}
-            <Navigation />
+            {/* <Navigation /> */}
           </>
         }
         header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}
         main={Main}
       >
-        {children}
-        {scrollToTop && <ScrollToTop />}
+        <div className="govuk-grid-row">
+          <div className="govuk-grid-column-one-quarter ukhsa-sidebar">
+            <SideNav
+              links={[
+                { name: 'Dashboard', href: '/' },
+                { name: 'API', href: '/api' },
+                { name: 'Maps', href: '/maps' },
+                { name: 'About', href: '/about' },
+                { name: "What's new", href: '/whats-new' },
+              ]}
+            />
+          </div>
+          <div className="govuk-grid-column-three-quarters">
+            {children}
+            {scrollToTop && <ScrollToTop />}
+          </div>
+        </div>
       </Page>
       <Footer />
     </>

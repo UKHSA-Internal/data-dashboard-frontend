@@ -12,7 +12,7 @@ export default function PageNotFound() {
   return (
     <Page heading={t('pageNotFound.heading')} seoTitle={t('pageNotFound.heading')} seoDescription="">
       <GridRow>
-        <GridCol setDesktopWidth="two-thirds">
+        <GridCol>
           <Trans t={t} i18nKey="pageNotFound.body">
             <p>If you typed the web address, check it is correct.</p>
             <p>If you pasted the web address, check you copied the entire address.</p>

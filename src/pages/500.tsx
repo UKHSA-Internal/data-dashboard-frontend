@@ -12,7 +12,7 @@ export default function ServiceUnavailable() {
   return (
     <Page heading={t('serviceProblem.heading')} seoTitle={t('serviceProblem.heading')} seoDescription="">
       <GridRow>
-        <GridCol setDesktopWidth="two-thirds">
+        <GridCol>
           <Trans t={t} i18nKey="serviceProblem.body">
             <p>Try again later.</p>
             <p>
