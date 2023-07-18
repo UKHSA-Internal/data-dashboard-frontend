@@ -3,7 +3,6 @@ import { useTranslation } from 'next-i18next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactElement } from 'react'
 
-import { initMocks } from '@/api/msw'
 import { extractAndFetchPageData } from '@/api/requests/cms/extractAndFetchPageData'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
@@ -72,10 +71,6 @@ TopicPage.getLayout = function getLayout(page: ReactElement) {
 }
 
 export const getStaticProps = async (req: GetStaticPropsContext) => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
   try {
     const params = req.params
 
@@ -143,10 +138,6 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
   // Fetch the CMS pages with a topic type
   const pages = await getPages(PageType.Topic)
 
