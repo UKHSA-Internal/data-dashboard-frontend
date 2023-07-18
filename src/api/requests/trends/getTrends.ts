@@ -24,7 +24,7 @@ type RequestParams = z.infer<typeof requestSchema>
 export const getTrends = async (params: RequestParams) => {
   try {
     const searchParams = new URLSearchParams(params)
-    const data = await client<z.infer<typeof responseSchema>>(`trends/v2?${searchParams.toString()}`)
+    const { data } = await client<z.infer<typeof responseSchema>>(`trends/v2?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

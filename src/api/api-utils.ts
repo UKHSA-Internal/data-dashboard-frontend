@@ -23,7 +23,10 @@ axiosRetry(api, { retries: 3 })
  */
 type Options = { body?: unknown; headers?: Record<string, string> }
 
-export function client<T>(endpoint: string, { body, ...customConfig }: Options = {}): Promise<T> {
+export function client<T>(
+  endpoint: string,
+  { body, ...customConfig }: Options = {}
+): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   return global
@@ -37,11 +40,18 @@ export function client<T>(endpoint: string, { body, ...customConfig }: Options =
       },
     })
     .then(async (response) => {
-      if (response.ok) {
-        return await response.json()
+      const { status, ok } = response
+
+      if (ok) {
+        try {
+          const data = await response.json()
+          return { data, status }
+        } catch (error) {
+          return { data: null, status }
+        }
       } else {
         const errorMessage = await response.text()
-        return Promise.reject(new Error(errorMessage))
+        return Promise.reject({ data: null, status, error: new Error(errorMessage) })
       }
     })
 }
