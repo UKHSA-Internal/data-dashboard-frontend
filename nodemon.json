@@ -1,0 +1,6 @@
+{
+  "watch": "./src/mock-server/**/*.ts",
+  "execMap": {
+    "ts": "ts-node"
+  }
+}
