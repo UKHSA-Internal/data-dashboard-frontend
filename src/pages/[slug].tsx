@@ -1,7 +1,6 @@
 import { GetStaticPaths, GetStaticPropsContext, InferGetStaticPropsType } from 'next'
 import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 
-import { initMocks } from '@/api/msw'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { FormattedContent } from '@/components/FormattedContent/FormattedContent'
@@ -26,10 +25,6 @@ export const CommonPage = ({ title, body, relatedLinks, lastUpdated, meta }: Com
 export default CommonPage
 
 export const getStaticProps = async (req: GetStaticPropsContext) => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
   try {
     const params = req.params
 
@@ -65,10 +60,6 @@ export const getStaticProps = async (req: GetStaticPropsContext) => {
 }
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
   // Fetch the CMS pages with a topic type
   const pages = await getPages(PageType.Common)
 
