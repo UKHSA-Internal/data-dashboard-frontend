@@ -37,7 +37,7 @@ export type Response = z.infer<typeof responseSchema>
 export const getTabular = async (plots: RequestParams['plots']) => {
   try {
     const body: RequestParams = { plots }
-    const data = await client<Response>('tables/v2', { body })
+    const { data } = await client<Response>('tables/v2', { body })
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
