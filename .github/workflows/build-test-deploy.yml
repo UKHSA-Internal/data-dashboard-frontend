@@ -40,6 +40,8 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
+      - name: Start mock server
+        run: npm run dev:mock-server &
       - name: Build
         run: |
           touch .env.local
