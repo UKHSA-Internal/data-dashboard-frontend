@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "cross-env next dev",
-    "next:dev": "next dev",
+    "dev": "cross-env npm-run-all --parallel dev:next dev:mock-server",
+    "dev:next": "next dev",
+    "dev:mock-server": "nodemon ./src/mock-server/index.ts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
