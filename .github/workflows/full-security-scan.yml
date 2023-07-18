@@ -116,7 +116,7 @@ jobs:
         run: |
           curl -v -X POST "https://ec2-3-10-56-49.eu-west-2.compute.amazonaws.com/api/v2/import-scan/" \
             -H "Authorization: Token 8a5949ed4351bae231680ab5193e80de0aa3babb" -H "accept: application/json" -H  "Content-Type: application/json" \
-            -F 'file=@zap_scan_files/checkov_report.json' \
+            -F 'file=@zap_scan_files/results_json.json' \
             -F 'scan_type=Checkov Scan' \
             -F 'product_name=Winter Pressures Frontend' \
             -F 'engagement_name=Winter Pressures Security PoC' \
