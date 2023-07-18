@@ -41,7 +41,10 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Start mock server
-        run: npm run dev:mock-server &
+        run: npm run dev:mock-server
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
       - name: Build
         run: |
           touch .env.local
@@ -106,10 +109,10 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Start mock server
-        run: npm run dev:mock-server &
+        run: npm run dev:mock-server
       - name: Wait for Mock Server
         shell: sh
-        run: ./.github/scripts/wait-for-service.sh http://localhost:3005 &
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
       - name: Start app
         run: npm run start &
       - uses: ./.github/actions/run-cypress-tests
