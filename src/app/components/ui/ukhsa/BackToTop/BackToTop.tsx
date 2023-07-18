@@ -10,7 +10,7 @@ export const BackToTop = async () => {
   return (
     <a
       href="#content"
-      className="inline-flex items-center"
+      className="govuk-link--no-visited-state inline-flex items-center"
       onClick={(event) => {
         event.preventDefault()
         window.scrollTo({
