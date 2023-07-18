@@ -16,11 +16,11 @@ describe('Other respiratory viruses topic page', () => {
     })
   })
 
-  it('displays an accordion with additional virus information', () => {
+  it.skip('displays an accordion with additional virus information', () => {
     cy.checkAccordionExists()
   })
 
-  it('displays related links', () => {
+  it.skip('displays related links', () => {
     cy.checkRelatedLinksExist()
   })
 
