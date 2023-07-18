@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Choose Topic page', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit('/choose-topic')
     cy.injectAxe()
   })
 
@@ -17,8 +17,6 @@ describe('Choose Topic page', () => {
   })
 
   it('navigates to the choose topic page and displays the available topics', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
-
     cy.findByRole('link', { name: 'Back' }).should('have.attr', 'href', '/')
 
     cy.title().should('eq', 'Which topic are you interested in?')
@@ -34,21 +32,18 @@ describe('Choose Topic page', () => {
   })
 
   it('redirects correctly after selecting coronavirus and submitting the form', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
     cy.findByLabelText('Coronavirus').click()
     cy.findByRole('button', { name: 'Continue' }).click()
     cy.url().should('include', '/choose-topic/coronavirus')
   })
 
   it('redirects correctly after selecting influenza and submitting the form', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
     cy.findByLabelText('Influenza').click()
     cy.findByRole('button', { name: 'Continue' }).click()
     cy.url().should('include', '/choose-topic/influenza')
   })
 
   it('redirects correctly after selecting other respiratory viruses and submitting the form', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
     cy.findByLabelText('Other respiratory viruses').click()
     cy.findByRole('button', { name: 'Continue' }).click()
     cy.url().should('include', '/choose-topic/other-respiratory-viruses')
