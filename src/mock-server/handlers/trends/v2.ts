@@ -1,22 +1,34 @@
 import { Request, Response } from 'express'
 
-import { PercentageMetrics, Topics } from '../../../api/models'
+import { requestSchema } from '@/api/requests/trends/getTrends'
+import { logger } from '@/lib/logger'
+
 import { fixtures } from './fixtures'
 
 export default async function handler(req: Request, res: Response) {
   try {
     if (req.method !== 'GET') {
-      console.error(`Unsupported request method ${req.method}`)
+      logger.error(`Unsupported request method ${req.method}`)
       return res.status(405)
     }
 
+    // Validate query parameters
+    const parsedQueryParams = requestSchema.safeParse(req.query)
+
+    // Return a 500 if the query parameters provided aren't valid
+    if (!parsedQueryParams.success) {
+      return res.status(500)
+    }
+
     // Pick out the metric query parameter
-    const { percentage_metric, topic } = req.query
+    const {
+      data: { percentage_metric, topic },
+    } = parsedQueryParams
 
     // Return a json fixture identified by the topic & metric provided
-    return res.json(fixtures[topic as Topics][percentage_metric as PercentageMetrics])
+    return res.json(fixtures[topic][percentage_metric])
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return res.status(500)
   }
 }

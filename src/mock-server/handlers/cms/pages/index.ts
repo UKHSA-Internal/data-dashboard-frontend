@@ -1,9 +1,12 @@
 import { Request, Response } from 'express'
 
+import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
+import { logger } from '@/lib/logger'
+
 import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './fixtures/pages'
 
 // Contains the `/pages` fixtures for the different cms page types
-const mockedPagesMap: Record<string, unknown> = {
+export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'home.HomePage': pagesWithHomeTypeMock,
   'topic.TopicPage': pagesWithTopicTypeMock,
   'common.CommonPage': pagesWithCommonTypeMock,
@@ -12,18 +15,18 @@ const mockedPagesMap: Record<string, unknown> = {
 export default async function handler(req: Request, res: Response) {
   try {
     if (req.method !== 'GET') {
-      console.error(`Unsupported request method ${req.method}`)
+      logger.error(`Unsupported request method ${req.method}`)
       return res.status(405)
     }
 
     if (!req.query['type']) {
-      console.error('Missing type searchParam')
+      logger.error('Missing type searchParam')
       return res.status(500)
     }
 
-    return res.json(mockedPagesMap[req.query['type'] as string])
+    return res.json(mockedPagesMap[req.query['type'] as PageType])
   } catch (error) {
-    console.error(error)
+    logger.error(error)
     return res.status(500)
   }
 }

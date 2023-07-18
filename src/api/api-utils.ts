@@ -21,31 +21,29 @@ axiosRetry(api, { retries: 3 })
  * This is the API instance which all requests should be initiated from.
  * The Authorization headers and any other common configuration can be set below.
  */
-type Options = Omit<RequestInit, 'body'> & { body?: unknown }
+type Options = { body?: unknown; headers?: Record<string, string> }
 
 export function client<T>(endpoint: string, { body, ...customConfig }: Options = {}): Promise<T> {
-  const headers = { Authorization: process.env.API_KEY, 'content-type': 'application/json' }
+  const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const config: RequestInit = {
-    method: body ? 'POST' : 'GET',
-    ...customConfig,
-    headers: {
-      ...headers,
-      ...customConfig.headers,
-    },
-  }
-  if (body) {
-    config.body = JSON.stringify(body)
-  }
-
-  return global.fetch(`${getApiBaseUrl()}/${endpoint}`, config).then(async (response) => {
-    if (response.ok) {
-      return await response.json()
-    } else {
-      const errorMessage = await response.text()
-      return Promise.reject(new Error(errorMessage))
-    }
-  })
+  return global
+    .fetch(`${getApiBaseUrl()}/${endpoint}`, {
+      method: body ? 'POST' : 'GET',
+      body: body ? JSON.stringify(body) : undefined,
+      ...customConfig,
+      headers: {
+        ...headers,
+        ...customConfig.headers,
+      },
+    })
+    .then(async (response) => {
+      if (response.ok) {
+        return await response.json()
+      } else {
+        const errorMessage = await response.text()
+        return Promise.reject(new Error(errorMessage))
+      }
+    })
 }
 
 /**
