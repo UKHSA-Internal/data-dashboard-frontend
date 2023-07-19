@@ -1,7 +1,7 @@
 import { Fragment } from 'react'
 import { z } from 'zod'
 
-import { WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTabular } from '@/api/requests/tabular/getTabular'
 import { useTranslation } from '@/app/i18n'
@@ -10,7 +10,7 @@ import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */
-  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value']
+  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
 
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'

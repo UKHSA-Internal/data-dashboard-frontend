@@ -19,7 +19,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
         <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
       )}
 
-      {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">Welcome</p>}
+      {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
       <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>
 
