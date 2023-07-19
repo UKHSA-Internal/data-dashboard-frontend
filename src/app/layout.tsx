@@ -1,15 +1,17 @@
 import { Roboto } from 'next/font/google'
 
-const roboto = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-roboto' })
+const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-primary' })
 
 import './globals.scss'
 
 import Link from 'next/link'
 import Script from 'next/script'
 
+import { BackToTop } from './components/ui/ukhsa'
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`govuk-template ${roboto.variable} font-sans`}>
+    <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
       <Script
         id="js-enabled"
         dangerouslySetInnerHTML={{
@@ -29,7 +31,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   <svg
                     aria-hidden="true"
                     focusable="false"
-                    className="govuk-header__logotype-crown inline-block mr-1"
+                    className="govuk-header__logotype-crown mr-1 inline-block"
                     xmlns="http://www.w3.org/2000/svg"
                     viewBox="0 0 132 97"
                     height="30"
@@ -47,7 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
             <div className="govuk-header__content">
               <Link href="/test" className="govuk-header__link govuk-header__service-name">
-                UKHSA Dashboard
+                UKHSA data dashboard
               </Link>
             </div>
           </div>
@@ -58,9 +60,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <strong className="govuk-tag govuk-phase-banner__content__tag">Alpha</strong>
               <span className="govuk-phase-banner__text">
                 This is a new service – your{' '}
-                <a className="govuk-link" href="#">
+                <Link className="govuk-link" href="/feedback">
                   feedback
-                </a>{' '}
+                </Link>{' '}
                 will help us to improve it.
               </span>
             </p>
@@ -69,6 +71,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="govuk-width-container">
           <main className="govuk-main-wrapper" id="main-content" role="main">
             {children}
+            <BackToTop />
           </main>
         </div>
         <footer className="govuk-footer" role="contentinfo">

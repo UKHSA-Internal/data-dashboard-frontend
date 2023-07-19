@@ -1,5 +1,6 @@
 export * from './Chart/Chart'
 export * from './Headline/Headline'
 export * from './Percentage/Percentage'
+export * from './Table/Table'
 export * from './Timestamp/Timestamp'
 export * from './Trend/Trend'
