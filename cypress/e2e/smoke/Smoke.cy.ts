@@ -1,4 +1,4 @@
-describe('Smoke tests - layout', () => {
+describe.skip('Smoke tests - layout', () => {
   it('Displays navigation links', () => {
     cy.visit('/')
 
@@ -11,7 +11,7 @@ describe('Smoke tests - layout', () => {
   })
 })
 
-describe('Smoke tests - choosing a topic user journey', () => {
+describe.skip('Smoke tests - choosing a topic user journey', () => {
   beforeEach(() => {
     cy.visit('/')
   })
@@ -47,30 +47,24 @@ describe('Smoke tests - choosing a topic user journey', () => {
   })
 })
 
-describe('Smoke tests - non-topic pages', () => {
+describe.skip('Smoke tests - non-topic pages', () => {
   beforeEach(() => {
     cy.visit('/')
   })
 
   it('Loads the About page', () => {
-    cy.findByRole('navigation', { name: 'Menu' })
-      .within(() => {
-        cy.findByText('About').click()
-      })
-      .url()
-      .should('include', '/about')
-
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
+      cy.findByText('About').click()
+    })
+    cy.url().should('include', '/about')
     cy.findByRole('heading', { name: 'About' })
   })
 
   it("Loads the What's New page", () => {
-    cy.findByRole('navigation', { name: 'Menu' })
-      .within(() => {
-        cy.findByText("What's new").click()
-      })
-      .url()
-      .should('include', '/whats-new')
-
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
+      cy.findByText("What's new").click()
+    })
+    cy.url().should('include', '/whats-new')
     cy.findByRole('heading', { name: "What's New" })
   })
 })

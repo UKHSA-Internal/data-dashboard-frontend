@@ -7,7 +7,6 @@ import { render } from '@/config/test-utils'
 import { Headline } from './Headline'
 
 jest.mock('@/api/requests/headlines/getHeadlines')
-
 const getHeadlinesMock = jest.mocked(getHeadlines)
 
 test('renders the headline correctly when successful', async () => {
