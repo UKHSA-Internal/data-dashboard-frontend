@@ -7,7 +7,6 @@ import { render } from '@/config/test-utils'
 import { Timestamp } from './Timestamp'
 
 jest.mock('@/api/requests/charts/getCharts')
-
 const getChartsMock = jest.mocked(getCharts)
 
 test('renders the timestamp correctly when successful', async () => {

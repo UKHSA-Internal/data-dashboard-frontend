@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Home page', () => {
   beforeEach(() => {
-    cy.visit('/')
+    cy.visit('/experiments/home-v2')
     cy.injectAxe()
   })
 
