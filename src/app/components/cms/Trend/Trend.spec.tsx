@@ -7,7 +7,6 @@ import { render } from '@/config/test-utils'
 import { Trend } from './Trend'
 
 jest.mock('@/api/requests/trends/getTrends')
-
 const getTrendsMock = jest.mocked(getTrends)
 
 const mockRequestData: ComponentProps<typeof Trend>['data'] = {
