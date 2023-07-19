@@ -45,7 +45,9 @@ export const SideNav = ({ links }: SideNavProps) => {
               {children.map(({ name, href }, childKey: number) => {
                 return (
                   <li key={childKey} className="ukhsa-sidenav-child">
-                    <Link href={href}>{name}</Link>
+                    <Link href={href} className="govuk-link--no-visited-state">
+                      {name}
+                    </Link>
                   </li>
                 )
               })}

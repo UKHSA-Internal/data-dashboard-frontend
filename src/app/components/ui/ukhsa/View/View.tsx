@@ -32,7 +32,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
           href: slug,
           children: [
             {
-              name: 'Test',
+              name: 'Secondary page',
               href: '/',
             },
           ],
@@ -43,7 +43,20 @@ export async function View({ heading, showWelcome, children, description, lastUp
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-one-quarter ukhsa-sidebar">
-        <SideNav links={[{ name: 'Dashboard', href: '/', children: [{ name: 'Test', href: '/' }] }, ...links]} />
+        <SideNav
+          links={[
+            {
+              name: 'Dashboard',
+              href: '/',
+              children: [
+                { name: 'Coronavirus', href: '/' },
+                { name: 'Influenza', href: '/' },
+                { name: 'Other respiratory viruses', href: '/' },
+              ],
+            },
+            ...links,
+          ]}
+        />
       </div>
       <div className="govuk-grid-column-three-quarters">
         {lastUpdated && (
