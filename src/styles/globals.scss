@@ -4,7 +4,6 @@ $govuk-new-link-styles: true;
 $govuk-page-width: 1400px;
 
 @import '~node_modules/govuk-frontend/govuk/all.scss';
-@import '~node_modules/@ministryofjustice/frontend/moj/components/side-navigation/side-navigation';
 
 a:focus,
 summary:focus {
