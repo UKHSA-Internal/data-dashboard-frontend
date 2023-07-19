@@ -16,6 +16,7 @@
   "contentsHeading": "Contents",
   "relatedLinksHeading": "Related Links",
   "backToTop": "Back to top",
+  "welcome": "Welcome",
   "metrics": {
     "headlineValueScreenReaderText": "{{heading}}: {{value}}",
     "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",

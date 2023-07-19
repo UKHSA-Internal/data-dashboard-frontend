@@ -1,14 +1,14 @@
 import Image from 'next/image'
 import { z } from 'zod'
 
-import { WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 interface ChartProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value']
+  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
