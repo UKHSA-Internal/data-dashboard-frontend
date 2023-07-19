@@ -27,3 +27,15 @@
   font-weight: bold;
   text-decoration: none;
 }
+
+.ukhsa-sidenav-child {
+  color: #1d70b8;
+  padding: 12px;
+  margin-left: 20px;
+}
+
+.ukhsa-sidenav-child:before {
+  content: '— ';
+  position: absolute;
+  margin-left: -20px;
+}

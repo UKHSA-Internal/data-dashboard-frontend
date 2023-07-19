@@ -30,7 +30,7 @@ export const pagesWithHomeTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 1,
+    total_count: 4,
   },
   items: [
     {
@@ -119,4 +119,11 @@ export const pagesWithTopicTypeMock: PagesResponse = {
       title: otherRespiratoryVirusesPageMock.title,
     },
   ],
+}
+
+export const allPagesMock: PagesResponse = {
+  meta: {
+    total_count: 7,
+  },
+  items: [...pagesWithHomeTypeMock.items, ...pagesWithCommonTypeMock.items, ...pagesWithTopicTypeMock.items],
 }

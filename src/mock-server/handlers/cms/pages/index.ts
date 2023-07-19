@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
-import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './fixtures/pages'
+import { allPagesMock, pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './fixtures/pages'
 
 // Contains the `/pages` fixtures for the different cms page types
 export const mockedPagesMap: Record<PageType, PagesResponse> = {
@@ -20,8 +20,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     if (!req.query['type']) {
-      logger.error('Missing type searchParam')
-      return res.status(500)
+      return res.json(allPagesMock)
     }
 
     return res.json(mockedPagesMap[req.query['type'] as PageType])
