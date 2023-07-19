@@ -16,13 +16,15 @@ $govuk-new-link-styles: true;
 $govuk-page-width: 1400px;
 
 @import '~node_modules/govuk-frontend/govuk/all.scss';
-@import '~node_modules/@ministryofjustice/frontend/moj/components/side-navigation/side-navigation';
 
 body {
   margin: 0;
 }
 
 :root {
+  // Side Nav
+  --ukhsa-side-nav-width: 220px;
+
   // Govuk brand colours
   --colour-red: #d4351c;
   --colour-yellow: #ffdd00;
