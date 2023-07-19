@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { getPages } from '@/api/requests/cms/getPages'
 import { SideNav } from '@/components/SideNav/SideNav'
 
 import { useTranslation } from '../../../../i18n'
@@ -15,18 +16,34 @@ interface PageProps {
 export async function View({ heading, showWelcome, children, description, lastUpdated }: PageProps) {
   const { t } = await useTranslation('common')
 
+  const pages = await getPages()
+  const links: Array<{
+    name: string
+    href: string
+    children: Array<{
+      name: string
+      href: string
+    }>
+  }> =
+    (pages.success &&
+      pages.data.items.map(({ title, meta: { slug } }) => {
+        return {
+          name: title,
+          href: slug,
+          children: [
+            {
+              name: 'Test',
+              href: '/',
+            },
+          ],
+        }
+      })) ||
+    []
+
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-one-quarter ukhsa-sidebar">
-        <SideNav
-          links={[
-            { name: 'Dashboard', href: '/' },
-            { name: 'API', href: '/api' },
-            { name: 'Maps', href: '/maps' },
-            { name: 'About', href: '/about' },
-            { name: "What's new", href: '/whats-new' },
-          ]}
-        />
+        <SideNav links={[{ name: 'Dashboard', href: '/', children: [{ name: 'Test', href: '/' }] }, ...links]} />
       </div>
       <div className="govuk-grid-column-three-quarters">
         {lastUpdated && (

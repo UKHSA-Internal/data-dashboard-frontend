@@ -5,7 +5,6 @@ import { PropsWithChildren, useEffect } from 'react'
 
 import { Footer } from '../Footer'
 import { ScrollToTop } from '../ScrollToTop'
-import { SideNav } from '../SideNav/SideNav'
 import { Main, TopNavLink } from './Layout.styles'
 
 export const Layout = ({
@@ -44,7 +43,7 @@ export const Layout = ({
       >
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-quarter ukhsa-sidebar">
-            <SideNav
+            {/* <SideNav
               links={[
                 { name: 'Dashboard', href: '/' },
                 { name: 'API', href: '/api' },
@@ -52,7 +51,7 @@ export const Layout = ({
                 { name: 'About', href: '/about' },
                 { name: "What's new", href: '/whats-new' },
               ]}
-            />
+            /> */}
           </div>
           <div className="govuk-grid-column-three-quarters">
             {children}
