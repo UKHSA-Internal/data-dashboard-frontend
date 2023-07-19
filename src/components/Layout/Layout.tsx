@@ -4,7 +4,6 @@ import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, useEffect } from 'react'
 
 import { Footer } from '../Footer'
-import { Navigation } from '../Navigation'
 import { ScrollToTop } from '../ScrollToTop'
 import { Main, TopNavLink } from './Layout.styles'
 
@@ -36,7 +35,6 @@ export const Layout = ({
                 Back
               </Link>
             )}
-            <Navigation />
           </>
         }
         header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}

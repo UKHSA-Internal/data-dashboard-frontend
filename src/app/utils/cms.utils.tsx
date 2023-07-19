@@ -47,8 +47,14 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
         {value.columns.map((column) => {
           const size = value.columns.length === 1 ? 'wide' : 'narrow'
           return (
-            <div key={column.id} className="govuk-grid-column-one-half-from-desktop govuk-!-margin-bottom-6 md:mb-0">
-              <Card>
+            <div
+              key={column.id}
+              className={clsx('govuk-!-margin-bottom-6 md:mb-0', {
+                ['govuk-grid-column-full-from-desktop']: value.columns.length === 1,
+                ['govuk-grid-column-one-half-from-desktop']: value.columns.length === 2,
+              })}
+            >
+              <Card className="govuk-!-margin-bottom-5">
                 <div className="md:min-h-[115px]">
                   <h3 className="govuk-body-m mb-2 text-dark-grey">{column.value.title}</h3>
                   <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
@@ -63,6 +69,14 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                         {column.value.headline_number_columns.map(renderBlock)}
                       </div>
                     </div>
+                    <Chart data={column.value} size={size} />
+                    <Details label="View data in a tabular format">
+                      <Table data={column.value} size={size} />
+                    </Details>
+                  </>
+                )}
+                {column.type === 'chart_card' && (
+                  <>
                     <Chart data={column.value} size={size} />
                     <Details label="View data in a tabular format">
                       <Table data={column.value} size={size} />
