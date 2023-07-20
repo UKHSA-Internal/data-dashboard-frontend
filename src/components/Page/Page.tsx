@@ -22,7 +22,7 @@ export const Page = ({ children, heading, description, lastUpdated, seoTitle, se
       <Meta title={seoTitle} description={seoDescription} />
       <Container>
         <GridRow>
-          <GridCol>
+          <GridCol setDesktopWidth="two-thirds">
             {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
             {heading && <Heading>{heading}</Heading>}
             {description && <FormattedContent>{description}</FormattedContent>}

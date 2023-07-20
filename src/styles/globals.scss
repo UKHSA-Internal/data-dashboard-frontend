@@ -1,3 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--font-primary), arial, sans-serif;
+    color: var(--text-grey);
+  }
+}
+
 $govuk-global-styles: true;
 $govuk-font-family: var(--font-primary), arial, sans-serif;
 $govuk-new-link-styles: true;

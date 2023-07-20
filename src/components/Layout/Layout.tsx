@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, useEffect } from 'react'
 
+import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
+
 import { Footer } from '../Footer'
 import { ScrollToTop } from '../ScrollToTop'
 import { Main, TopNavLink } from './Layout.styles'
@@ -35,7 +37,6 @@ export const Layout = ({
                 Back
               </Link>
             )}
-            {/* <Navigation /> */}
           </>
         }
         header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}
@@ -43,15 +44,25 @@ export const Layout = ({
       >
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-one-quarter ukhsa-sidebar">
-            {/* <SideNav
-              links={[
-                { name: 'Dashboard', href: '/' },
-                { name: 'API', href: '/api' },
-                { name: 'Maps', href: '/maps' },
-                { name: 'About', href: '/about' },
-                { name: "What's new", href: '/whats-new' },
-              ]}
-            /> */}
+            <SideNav>
+              <SideNavLink
+                href="/"
+                subMenu={
+                  <SideNavSubMenu>
+                    <SideNavSubMenuLink href="/topics/coronavirus">COVID-19</SideNavSubMenuLink>
+                    <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
+                    <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
+                      Other respiratory viruses
+                    </SideNavSubMenuLink>
+                  </SideNavSubMenu>
+                }
+              >
+                Dashboard
+              </SideNavLink>
+              <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
+              <SideNavLink href="/about">About</SideNavLink>
+              <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
+            </SideNav>
           </div>
           <div className="govuk-grid-column-three-quarters">
             {children}
