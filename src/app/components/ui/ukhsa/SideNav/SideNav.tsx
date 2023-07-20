@@ -8,7 +8,7 @@ import { ReactNode } from 'react'
 /**
  * SideNav
  */
-export const SideNav = async ({ children }: { children: ReactNode }) => {
+export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
     <nav className="mt-0 min-w-[var(--ukhsa-side-nav-width)] lg:mt-7">
       <ul className="">{children}</ul>
@@ -56,7 +56,7 @@ interface SideNavSubMenuProps {
   children: ReactNode
 }
 
-export const SideNavSubMenu = async ({ children }: SideNavSubMenuProps) => {
+export const SideNavSubMenu = ({ children }: SideNavSubMenuProps) => {
   return <ul className="moj-side-navigation__list govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
 }
 
