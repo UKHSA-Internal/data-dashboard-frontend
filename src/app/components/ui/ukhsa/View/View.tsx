@@ -35,6 +35,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
         <SideNavLink href="/about">About</SideNavLink>
         <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
       </SideNav>
+
       <div className="w-full">
         {lastUpdated && (
           <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
