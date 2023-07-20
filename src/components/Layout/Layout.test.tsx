@@ -20,8 +20,8 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   )
   expect(screen.getByText('feedback')).toHaveAttribute('href', '/feedback')
 
-  // Navigation TODO: Restore this once SideNav is added to Layout
-  // expect(screen.getByRole('navigation', { name: 'Menu' })).toBeInTheDocument()
+  // Navigation
+  expect(screen.getByRole('navigation')).toBeInTheDocument()
 
   // Footer
   const copyright = screen.getByText(/© Crown copyright/)
