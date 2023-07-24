@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </Link>
             </div>
             <div className="govuk-header__content">
-              <Link href="/test" className="govuk-header__link govuk-header__service-name">
+              <Link href="/" className="govuk-header__link govuk-header__service-name">
                 UKHSA data dashboard
               </Link>
             </div>
