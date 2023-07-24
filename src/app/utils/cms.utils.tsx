@@ -6,8 +6,7 @@ import { z } from 'zod'
 import { Body, ContentTypes } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 
-import { Chart, Headline, Percentage, Table, Trend } from '../components/cms'
-import { Timestamp } from '../components/cms/Timestamp/Timestamp'
+import { Chart, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
 import { Details } from '../components/ui/govuk'
 import { Card } from '../components/ui/ukhsa'
 
@@ -72,6 +71,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                       </div>
                     </div>
                     <Chart data={column.value} size={size} />
+                    <Download chart={column.value.chart} />
                     <Details label="View data in a tabular format">
                       <Table data={column.value} size={size} />
                     </Details>

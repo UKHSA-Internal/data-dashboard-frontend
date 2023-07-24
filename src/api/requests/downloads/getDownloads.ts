@@ -4,8 +4,6 @@ import { client } from '@/api/api-utils'
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from '../helpers'
-
 export const requestSchema = z.object({
   file_format: z.enum(['json', 'csv']),
   plots: z.array(
@@ -29,7 +27,8 @@ export const getDownloads = async (plots: RequestParams['plots'], format: Reques
       plots,
       file_format: format,
     }
-    const { data } = await client<string>(`${getApiBaseUrl()}/downloads/v2`, { body })
+    const data = await client<string>(`downloads/v2`, { body })
+
     return data
   } catch (error) {
     logger.error(error)
