@@ -1,13 +1,15 @@
-import { Page, PhaseBanner, TopNav } from 'govuk-react'
+import { Page, PhaseBanner } from 'govuk-react'
 import Link from 'next/link'
 import { Trans, useTranslation } from 'next-i18next'
-import { PropsWithChildren, useEffect } from 'react'
+import { PropsWithChildren, ReactNode, useEffect } from 'react'
 
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 
 import { Footer } from '../Footer'
 import { ScrollToTop } from '../ScrollToTop'
-import { Main, TopNavLink } from './Layout.styles'
+import { Main, TopNav, TopNavLink } from './Layout.styles'
+
+const Container = ({ children }: { children: ReactNode }) => <div className="govuk-width-container">{children}</div>
 
 export const Layout = ({
   children,
@@ -41,30 +43,29 @@ export const Layout = ({
         }
         header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}
         main={Main}
+        container={Container}
       >
-        <div className="govuk-grid-row">
-          <div className="govuk-grid-column-one-quarter ukhsa-sidebar">
-            <SideNav>
-              <SideNavLink
-                href="/"
-                subMenu={
-                  <SideNavSubMenu>
-                    <SideNavSubMenuLink href="/topics/coronavirus">COVID-19</SideNavSubMenuLink>
-                    <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
-                    <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
-                      Other respiratory viruses
-                    </SideNavSubMenuLink>
-                  </SideNavSubMenu>
-                }
-              >
-                Dashboard
-              </SideNavLink>
-              <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
-              <SideNavLink href="/about">About</SideNavLink>
-              <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
-            </SideNav>
-          </div>
-          <div className="govuk-grid-column-three-quarters">
+        <div className="flex flex-col gap-5 lg:flex-row lg:gap-7">
+          <SideNav>
+            <SideNavLink
+              href="/"
+              subMenu={
+                <SideNavSubMenu>
+                  <SideNavSubMenuLink href="/topics/coronavirus">COVID-19</SideNavSubMenuLink>
+                  <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
+                  <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
+                    Other respiratory viruses
+                  </SideNavSubMenuLink>
+                </SideNavSubMenu>
+              }
+            >
+              Dashboard
+            </SideNavLink>
+            <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
+            <SideNavLink href="/about">About</SideNavLink>
+            <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
+          </SideNav>
+          <div className="w-full">
             {children}
             {scrollToTop && <ScrollToTop />}
           </div>

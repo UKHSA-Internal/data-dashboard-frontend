@@ -13,7 +13,7 @@ import { Card } from '../components/ui/ukhsa'
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9">
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
-      <Link href={`/choose-topic/${heading.toLowerCase()}`} className="govuk-link--no-visited-state">
+      <Link href={`/topics/${heading.toLowerCase()}`} className="govuk-link--no-visited-state">
         {heading}
       </Link>
     </h2>
