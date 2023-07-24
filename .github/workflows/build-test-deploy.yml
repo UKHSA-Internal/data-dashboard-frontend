@@ -46,7 +46,8 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
       - name: Build
-        run: NODE_ENV=test npm run build
+        run: |
+          NODE_ENV=test npm run build
 
   ###############################################################################
   # Code quality checks
