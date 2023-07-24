@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
 
@@ -25,11 +25,11 @@ type RequestParams = z.infer<typeof requestSchema>
 
 export const getDownloads = async (plots: RequestParams['plots'], format: RequestParams['file_format'] = 'csv') => {
   try {
-    const json: RequestParams = {
+    const body: RequestParams = {
       plots,
       file_format: format,
     }
-    const { data } = await api.post<string>(`${getApiBaseUrl()}/downloads/v2`, json)
+    const { data } = await client<string>(`${getApiBaseUrl()}/downloads/v2`, { body })
     return data
   } catch (error) {
     logger.error(error)
