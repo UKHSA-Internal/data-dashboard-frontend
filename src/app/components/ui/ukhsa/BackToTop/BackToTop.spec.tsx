@@ -8,7 +8,7 @@ test('renders a back to top link', async () => {
   const { getByRole, getByTestId } = render(await BackToTop({ label: 'Back to top' }))
 
   // Verify the rendered content
-  expect(getByRole('link', { name: 'Back to top' })).toHaveAttribute('href', '#content')
+  expect(getByRole('link', { name: 'Back to top' })).toHaveAttribute('href', '#main-content')
   expect(getByTestId('up-arrow')).toHaveAttribute('aria-hidden')
 })
 
