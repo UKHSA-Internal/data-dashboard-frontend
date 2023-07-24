@@ -20,7 +20,7 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Link
-        className="govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden"
+        className="govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden "
         onClick={handleOpen}
         href="/browse"
       >
@@ -28,9 +28,12 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
       </Link>
 
       <nav
-        className={clsx('mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:h-auto ', {
-          'mb-5 h-auto': menuOpen,
-        })}
+        className={clsx(
+          'sticky top-[20px] mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:h-full',
+          {
+            'mb-5 h-auto': menuOpen,
+          }
+        )}
       >
         <ul>{children}</ul>
       </nav>
