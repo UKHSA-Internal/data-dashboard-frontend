@@ -3,16 +3,38 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ReactNode } from 'react'
+import { MouseEvent, ReactNode, useState } from 'react'
 
 /**
  * SideNav
  */
 export const SideNav = ({ children }: { children: ReactNode }) => {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const handleOpen = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    setMenuOpen(!menuOpen)
+    return false
+  }
+
   return (
-    <nav className="mt-0 min-w-[var(--ukhsa-side-nav-width)] lg:mt-7">
-      <ul className="">{children}</ul>
-    </nav>
+    <>
+      <Link
+        className="govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden"
+        onClick={handleOpen}
+        href="/browse"
+      >
+        Menu
+      </Link>
+
+      <nav
+        className={clsx('mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:h-auto ', {
+          'mb-5 h-auto': menuOpen,
+        })}
+      >
+        <ul>{children}</ul>
+      </nav>
+    </>
   )
 }
 
@@ -86,4 +108,7 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
       </Link>
     </li>
   )
+}
+function handleOpen() {
+  throw new Error('Function not implemented.')
 }
