@@ -2,15 +2,13 @@ import 'cypress-axe'
 
 describe('Other respiratory viruses topic page', () => {
   beforeEach(() => {
-    cy.visit('/choose-topic/other-respiratory-viruses')
+    cy.visit('/topics/other-respiratory-viruses')
     cy.injectAxe()
   })
 
   it('has no detectable a11y violations', () => {
     cy.checkA11y('html', {
       rules: {
-        'document-title': { enabled: false },
-        'html-has-lang': { enabled: false },
         region: { enabled: false },
       },
     })
@@ -29,7 +27,6 @@ describe('Other respiratory viruses topic page', () => {
     cy.findByRole('heading', { name: 'Other respiratory viruses', level: 1 })
     cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on other respiratory viruses./)
-    cy.findByRole('link', { name: 'Back' }).should('have.attr', 'href', '/choose-topic')
   })
 
   it('displays all sections correctly', () => {
@@ -49,7 +46,7 @@ describe('Other respiratory viruses topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Healthcare', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/choose-topic/other-respiratory-viruses#healthcare`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/topics/other-respiratory-viruses#healthcare`)
 
     // Heathcare
     cy.findByRole('region', { name: 'Healthcare' }).within(() => {
@@ -68,7 +65,7 @@ describe('Other respiratory viruses topic page', () => {
       })
 
       // Bar chart comparing RSV hospital admissions count by week
-      cy.findByTestId('column-bar-chart-comparing-rsv-hospital-admissions-count-by-week').within(() => {
+      cy.findByTestId('bar-chart-comparing-rsv-hospital-admissions-count-by-week-section').within(() => {
         cy.findByRole('heading', { name: 'Bar chart comparing RSV hospital admissions count by week', level: 3 })
         cy.findByText('Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.')
         cy.findByAltText('')
@@ -77,7 +74,7 @@ describe('Other respiratory viruses topic page', () => {
 
     // Line chart comparing Adenovirus test positivity count by week
     cy.findByRole('region', { name: 'Testing' }).within(() => {
-      cy.findByTestId('column-line-chart-comparing-adenovirus-test-positivity-count-by-week').within(() => {
+      cy.findByTestId('line-chart-comparing-adenovirus-test-positivity-count-by-week-section').within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing Adenovirus test positivity count by week',
           level: 3,
@@ -101,7 +98,7 @@ describe('Other respiratory viruses topic page', () => {
       })
 
       // Line chart comparing hMPV test positivity count by week broken down by age
-      cy.findByTestId('column-line-chart-comparing-h-mpv-test-positivity-count-by-week-broken-down-by-age').within(
+      cy.findByTestId('line-chart-comparing-h-mpv-test-positivity-count-by-week-broken-down-by-age-section').within(
         () => {
           cy.findByRole('heading', {
             name: 'Line chart comparing hMPV test positivity count by week broken down by age',
@@ -114,7 +111,7 @@ describe('Other respiratory viruses topic page', () => {
       )
 
       // Line chart comparing Parainfluenza test positivity count by week
-      cy.findByTestId('column-line-chart-comparing-parainfluenza-test-positivity-count-by-week').within(() => {
+      cy.findByTestId('line-chart-comparing-parainfluenza-test-positivity-count-by-week-section').within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing Parainfluenza test positivity count by week',
           level: 3,
@@ -128,7 +125,7 @@ describe('Other respiratory viruses topic page', () => {
 
       // Line chart comparing Parainfluenza test positivity count by week broken down by age
       cy.findByTestId(
-        'column-line-chart-comparing-parainfluenza-test-positivity-count-by-week-broken-down-by-age'
+        'line-chart-comparing-parainfluenza-test-positivity-count-by-week-broken-down-by-age-section'
       ).within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing Parainfluenza test positivity count by week broken down by age',
@@ -140,7 +137,7 @@ describe('Other respiratory viruses topic page', () => {
       })
 
       // Line chart comparing Rhinovirus test positivity count by week
-      cy.findByTestId('column-line-chart-comparing-rhinovirus-test-positivity-count-by-week').within(() => {
+      cy.findByTestId('line-chart-comparing-rhinovirus-test-positivity-count-by-week-section').within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing Rhinovirus test positivity count by week',
           level: 3,
@@ -166,7 +163,7 @@ describe('Other respiratory viruses topic page', () => {
       })
 
       // Line chart comparing RSV test positivity count by week
-      cy.findByTestId('column-line-chart-comparing-rsv-test-positivity-count-by-week').within(() => {
+      cy.findByTestId('line-chart-comparing-rsv-test-positivity-count-by-week-section').within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing RSV test positivity count by week',
           level: 3,

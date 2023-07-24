@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { z } from 'zod'
 
@@ -53,6 +54,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 ['govuk-grid-column-full-from-desktop']: value.columns.length === 1,
                 ['govuk-grid-column-one-half-from-desktop']: value.columns.length === 2,
               })}
+              data-testid={`${kebabCase(column.value.title)}-section`}
             >
               <Card className="govuk-!-margin-bottom-5">
                 <div className="md:min-h-[115px]">
