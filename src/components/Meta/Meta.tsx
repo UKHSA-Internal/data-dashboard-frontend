@@ -25,7 +25,6 @@ export const Meta = ({ title, description }: MetaProps) => {
             alt: 'gov.uk',
           },
         ],
-        url: process.env.NEXT_PUBLIC_BASE_URL,
       }}
       twitter={{
         site: t('meta.twitterId'),
