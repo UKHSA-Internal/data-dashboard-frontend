@@ -4,7 +4,7 @@ import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
 import { FormEvent, useState } from 'react'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import type { Chart } from '@/api/models/cms/Page'
 import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
@@ -33,16 +33,14 @@ export const ChartDownload = ({ chart }: ChartDownloadProps) => {
     setDownloading(true)
 
     try {
-      const { data } = await api.post<Blob>(
-        chartExportApiRoutePath,
-        {
+      const { data } = await client<Blob>(chartExportApiRoutePath, {
+        body: {
           format: chartExportFormat,
           plots: chart.map((plot) => plot.value),
         },
-        { responseType: 'blob' }
-      )
+      })
 
-      downloadFile(`data.${chartExportFormat}`, data)
+      if (data) downloadFile(`data.${chartExportFormat}`, data)
 
       setDownloading(false)
     } catch (error) {
