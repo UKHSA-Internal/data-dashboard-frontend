@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { z } from 'zod'
 
@@ -13,7 +14,7 @@ import { Card } from '../components/ui/ukhsa'
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9">
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
-      <Link href={`/choose-topic/${heading.toLowerCase()}`} className="govuk-link--no-visited-state">
+      <Link href={`/topics/${heading.toLowerCase()}`} className="govuk-link--no-visited-state">
         {heading}
       </Link>
     </h2>
@@ -53,6 +54,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 ['govuk-grid-column-full-from-desktop']: value.columns.length === 1,
                 ['govuk-grid-column-one-half-from-desktop']: value.columns.length === 2,
               })}
+              data-testid={`${kebabCase(column.value.title)}-section`}
             >
               <Card className="govuk-!-margin-bottom-5">
                 <div className="md:min-h-[115px]">

@@ -5,15 +5,15 @@ import { render } from '@/config/test-utils'
 import { BackToTop } from './BackToTop'
 
 test('renders a back to top link', async () => {
-  const { getByRole, getByTestId } = render(await BackToTop())
+  const { getByRole, getByTestId } = render(await BackToTop({ label: 'Back to top' }))
 
   // Verify the rendered content
-  expect(getByRole('link', { name: 'Back to top' })).toHaveAttribute('href', '#content')
+  expect(getByRole('link', { name: 'Back to top' })).toHaveAttribute('href', '#main-content')
   expect(getByTestId('up-arrow')).toHaveAttribute('aria-hidden')
 })
 
 test('scrolls to the top when clicking the back to top link', async () => {
-  const { getByRole } = render(await BackToTop())
+  const { getByRole } = render(await BackToTop({ label: 'Back to top' }))
 
   // Mock the window.scrollTo function
   const scrollToMock = jest.fn()

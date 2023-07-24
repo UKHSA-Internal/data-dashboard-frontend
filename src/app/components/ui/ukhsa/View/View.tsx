@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
 import { useTranslation } from '../../../../i18n'
+import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '../SideNav/SideNav'
 
 interface PageProps {
   heading: string
@@ -14,18 +15,40 @@ export async function View({ heading, showWelcome, children, description, lastUp
   const { t } = await useTranslation('common')
 
   return (
-    <>
-      {lastUpdated && (
-        <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
-      )}
+    <div className="flex flex-col gap-5 lg:flex-row lg:gap-7">
+      <SideNav>
+        <SideNavLink
+          href="/"
+          subMenu={
+            <SideNavSubMenu>
+              <SideNavSubMenuLink href="/topics/coronavirus">COVID-19</SideNavSubMenuLink>
+              <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
+              <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
+                Other respiratory viruses
+              </SideNavSubMenuLink>
+            </SideNavSubMenu>
+          }
+        >
+          Dashboard
+        </SideNavLink>
+        <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
+        <SideNavLink href="/about">About</SideNavLink>
+        <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
+      </SideNav>
 
-      {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
+      <div className="w-full">
+        {lastUpdated && (
+          <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
+        )}
 
-      <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>
+        {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
-      {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
+        <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>
 
-      {children}
-    </>
+        {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
+
+        {children}
+      </div>
+    </div>
   )
 }

@@ -1,4 +1,4 @@
-import { render } from '@/config/test-utils'
+import { render, within } from '@/config/test-utils'
 
 import { View } from './View'
 
@@ -38,4 +38,24 @@ test('renders the children correctly', async () => {
   const { getByText } = render(await View({ heading: 'Test Heading', children }))
   const childrenElement = getByText('Test Children')
   expect(childrenElement).toBeInTheDocument()
+})
+
+test('renders the side navigation', async () => {
+  process.env.PUBLIC_API_URL = '/public-api'
+
+  const { getByRole } = render(await View({ heading: 'Test Heading', children: null }))
+
+  const nav = getByRole('navigation')
+  expect(nav).toBeInTheDocument()
+
+  expect(within(nav).getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/')
+  expect(within(nav).getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/coronavirus')
+  expect(within(nav).getByRole('link', { name: 'Influenza' })).toHaveAttribute('href', '/topics/influenza')
+  expect(within(nav).getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
+    'href',
+    '/topics/other-respiratory-viruses'
+  )
+  expect(within(nav).getByRole('link', { name: 'API' })).toHaveAttribute('href', '/public-api/api/public/timeseries')
+  expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
+  expect(within(nav).getByRole('link', { name: "What's new" })).toHaveAttribute('href', '/whats-new')
 })

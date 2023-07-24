@@ -34,9 +34,11 @@ export const responseSchema = z.object({
   }),
 })
 
-export const getPages = async (type: PageType) => {
+export const getPages = async (type?: PageType) => {
+  const params = new URLSearchParams()
+  if (type) params.set('type', type)
   try {
-    const { data } = await client<PagesResponse>(`pages/?type=${type}`)
+    const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

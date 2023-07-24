@@ -1,7 +1,18 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    font-family: var(--font-primary), arial, sans-serif;
+    color: var(--text-grey);
+  }
+}
+
 $govuk-global-styles: true;
 $govuk-font-family: var(--font-primary), arial, sans-serif;
 $govuk-new-link-styles: true;
-// $govuk-page-width: 1200px;
+$govuk-page-width: 1400px;
 
 @import '~node_modules/govuk-frontend/govuk/all.scss';
 
@@ -14,4 +25,42 @@ summary:focus {
   text-decoration: none;
   -webkit-box-decoration-break: clone;
   box-decoration-break: clone;
+}
+
+:root {
+  // Container width
+  --ukhsa-page-width: 1400px;
+
+  // Side Nav
+  --ukhsa-side-nav-width: 220px;
+
+  // Govuk brand colours
+  --colour-red: #d4351c;
+  --colour-yellow: #ffdd00;
+  --colour-green: #00703c;
+  --colour-blue: #1d70b8;
+  --colour-dark-blue: #003078;
+  --colour-light-blue: #5694ca;
+  --colour-purple: #4c2c92;
+
+  --colour-black: #0b0c0c;
+  --colour-dark-grey: #505a5f;
+  --colour-mid-grey: #b1b4b6;
+  --colour-light-grey: #f3f2f1;
+  --colour-white: #ffffff;
+
+  --colour-light-purple: #6f72af;
+  --colour-bright-purple: #912b88;
+  --colour-pink: #d53880;
+  --colour-light-pink: #f499be;
+  --colour-orange: #f47738;
+  --colour-brown: #b58840;
+  --colour-light-green: #85994b;
+  --colour-turquoise: #28a197;
+
+  // Govuk greys
+  --colour-grey-1: #6f777b;
+  --colour-grey-2: #bfc1c3;
+  --colour-grey-3: #f3f2f1;
+  --colour-grey-4: #f8f8f8;
 }
