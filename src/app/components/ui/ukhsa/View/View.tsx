@@ -15,7 +15,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
   const { t } = await useTranslation('common')
 
   return (
-    <div className="flex flex-col gap-5 lg:flex-row lg:gap-7">
+    <div className="flex flex-col gap-0 lg:flex-row lg:gap-7">
       <SideNav>
         <SideNavLink
           href="/"
