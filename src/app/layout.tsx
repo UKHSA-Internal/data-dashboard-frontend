@@ -8,8 +8,11 @@ import Link from 'next/link'
 import Script from 'next/script'
 
 import { BackToTop } from './components/ui/ukhsa'
+import { useTranslation } from './i18n'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
+  const { t } = await useTranslation('common')
+
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
       <Script
@@ -55,7 +58,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </header>
         <div className="govuk-width-container">
-          <div className="govuk-phase-banner">
+          <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
             <p className="govuk-phase-banner__content">
               <strong className="govuk-tag govuk-phase-banner__content__tag">Alpha</strong>
               <span className="govuk-phase-banner__text">
@@ -71,7 +74,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="govuk-width-container">
           <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content" role="main">
             {children}
-            <BackToTop />
+            <BackToTop label={t('backToTop')} />
           </main>
         </div>
         <footer className="govuk-footer" role="contentinfo">

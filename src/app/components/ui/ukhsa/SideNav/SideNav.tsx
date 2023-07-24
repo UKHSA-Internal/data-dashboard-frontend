@@ -10,7 +10,7 @@ import { ReactNode } from 'react'
  */
 export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
-    <nav className="mt-0 min-w-[var(--ukhsa-side-nav-width)] lg:mt-7">
+    <nav className="mt-0 min-w-[var(--ukhsa-side-nav-width)] lg:mt-7" aria-label="Menu">
       <ul className="">{children}</ul>
     </nav>
   )
