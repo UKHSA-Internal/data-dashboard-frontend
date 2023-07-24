@@ -47,6 +47,8 @@ jobs:
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
       - name: Build
         run: |
+          touch .env.local
+          echo API_URL=http://localhost:3005 >> .env.local
           NODE_ENV=test npm run build
 
   ###############################################################################
