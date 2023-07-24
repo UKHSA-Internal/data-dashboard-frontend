@@ -6,6 +6,7 @@ const fetch = fetchRetry(global.fetch)
 
 interface Options {
   body?: unknown
+  baseUrl?: string
   headers?: Record<string, string>
 }
 
@@ -17,11 +18,11 @@ interface Options {
 
 export function client<T>(
   endpoint: string,
-  { body, ...customConfig }: Options = {}
+  { body, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  return fetch(`${getApiBaseUrl()}/${endpoint}`, {
+  return fetch(`${baseUrl}${baseUrl && '/'}${endpoint}`, {
     retries: 3,
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
@@ -35,9 +36,15 @@ export function client<T>(
 
     if (ok) {
       try {
+        const type = response.headers.get('Content-Type')
+        if (type && !type.includes('application/json')) {
+          const data = await response.text()
+          return { data, status }
+        }
         const data = await response.json()
         return { data, status }
       } catch (error) {
+        console.error(error)
         return { data: null, status }
       }
     } else {
