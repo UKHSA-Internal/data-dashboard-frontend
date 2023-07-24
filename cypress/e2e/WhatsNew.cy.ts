@@ -14,6 +14,11 @@ describe("What's new", () => {
     })
   })
 
+  // TODO: Restore after migrated to app dir
+  it.skip('Displays the layout', () => {
+    cy.checkLayoutExists()
+  })
+
   it('displays correctly', () => {
     cy.visit('/whats-new')
 

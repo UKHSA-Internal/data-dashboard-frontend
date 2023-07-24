@@ -48,6 +48,7 @@ jobs:
       - name: Build
         run: |
           touch .env.local
+          echo API_URL=http://localhost:3005 >> .env.local
           NODE_ENV=test npm run build
 
   ###############################################################################
@@ -111,6 +112,9 @@ jobs:
       - name: Wait for Mock Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      - name: Re-build
+        run: |
+          NODE_ENV=test npm run build
       - name: Start app
         run: NODE_ENV=test npm run start &
       - uses: ./.github/actions/run-cypress-tests

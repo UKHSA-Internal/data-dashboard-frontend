@@ -20,6 +20,9 @@ test('Displays the gov.uk header, phrase banner, navigation and footer', () => {
   )
   expect(screen.getByText('feedback')).toHaveAttribute('href', '/feedback')
 
+  // Navigation
+  expect(screen.getByRole('navigation')).toBeInTheDocument()
+
   // Footer
   const copyright = screen.getByText(/© Crown copyright/)
   expect(copyright).toHaveAttribute(

@@ -1,7 +1,7 @@
 import { GetStaticPropsContext } from 'next'
 
 import { render } from '@/config/test-utils'
-import ChooseTopic, { getStaticProps } from '@/pages/choose-topic'
+import ChooseTopic, { getStaticProps } from '@/pages/experiments/choose-topic'
 
 test('Choose topic', async () => {
   const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
