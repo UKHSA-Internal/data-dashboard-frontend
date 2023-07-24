@@ -17,7 +17,12 @@ describe('About', () => {
     })
   })
 
-  it('displays correctly', () => {
+  // TODO: Restore after migrated to app dir
+  it.skip('Displays the layout', () => {
+    cy.checkLayoutExists()
+  })
+
+  it('Displays the page', () => {
     // Document title
     cy.title().should('eq', 'About')
 

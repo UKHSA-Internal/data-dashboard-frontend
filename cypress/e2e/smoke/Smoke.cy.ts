@@ -1,53 +1,44 @@
-describe.skip('Smoke tests - layout', () => {
-  it('Displays navigation links', () => {
-    cy.visit('/')
-
-    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByRole('link', { name: 'Home' })
-      cy.findByRole('link', { name: 'API' })
-      cy.findByRole('link', { name: 'About' })
-      cy.findByRole('link', { name: "What's new" })
-    })
-  })
-})
-
-describe.skip('Smoke tests - choosing a topic user journey', () => {
+describe('Smoke tests - layout', () => {
   beforeEach(() => {
     cy.visit('/')
   })
 
+  it('Displays the layout', () => {
+    cy.checkLayoutExists()
+  })
+})
+
+describe('Smoke tests - Navigating to topic pages', () => {
+  beforeEach(() => {
+    cy.visit('/')
+  })
+
+  afterEach(() => {
+    cy.checkLayoutExists()
+  })
+
   it('Navigates to the Coronavirus topic page', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
-    cy.url().should('include', '/choose-topic')
-    cy.findByRole('heading', { name: 'Which topic are you interested in?' })
-    cy.findByLabelText('Coronavirus').click()
-    cy.findByRole('button', { name: 'Continue' }).click()
-    cy.url().should('include', '/choose-topic/coronavirus')
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'COVID-19' }).click())
+    cy.url().should('include', '/topics/coronavirus')
     cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
   })
 
   it('Navigates to the Influenza topic page', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
-    cy.url().should('include', '/choose-topic')
-    cy.findByRole('heading', { name: 'Which topic are you interested in?' })
-    cy.findByLabelText('Influenza').click()
-    cy.findByRole('button', { name: 'Continue' }).click()
-    cy.url().should('include', '/choose-topic/influenza')
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'Influenza' }).click())
+    cy.url().should('include', '/topics/influenza')
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
   })
 
-  it('Navigates to the Other Respiratory Viruses topic page', () => {
-    cy.findByRole('button', { name: 'Start now' }).click()
-    cy.url().should('include', '/choose-topic')
-    cy.findByRole('heading', { name: 'Which topic are you interested in?' })
-    cy.findByLabelText('Other respiratory viruses').click()
-    cy.findByRole('button', { name: 'Continue' }).click()
-    cy.url().should('include', '/choose-topic/other-respiratory-viruses')
+  it('Navigates to the Other respiratory viruses topic page', () => {
+    cy.findByRole('navigation', { name: 'Menu' }).within(() =>
+      cy.findByRole('link', { name: 'Other respiratory viruses' }).click()
+    )
+    cy.url().should('include', '/topics/other-respiratory-viruses')
     cy.findByRole('heading', { name: 'Other respiratory viruses', level: 1 })
   })
 })
 
-describe.skip('Smoke tests - non-topic pages', () => {
+describe('Smoke tests - non-topic pages', () => {
   beforeEach(() => {
     cy.visit('/')
   })
