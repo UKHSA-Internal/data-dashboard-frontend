@@ -19,7 +19,7 @@ describe('Smoke tests - Navigating to topic pages', () => {
 
   it('Navigates to the Coronavirus topic page', () => {
     cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'COVID-19' }).click())
-    cy.url().should('include', '/topics/coronavirus')
+    cy.url().should('include', '/topics/covid-19')
     cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
   })
 
