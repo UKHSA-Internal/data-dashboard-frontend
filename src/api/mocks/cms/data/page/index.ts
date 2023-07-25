@@ -1,5 +1,5 @@
 export * from './about'
-export * from './coronavirus'
+export * from './covid-19'
 export * from './how-to-use-this-data'
 export * from './influenza'
 export * from './maps'
