@@ -30,4 +30,10 @@ describe('', () => {
     cy.findByRole('button', { name: 'Submit' }).click()
     cy.url().should('include', '/feedback/confirmation')
   })
+
+  it('Submits the form with all fields left blank', () => {
+    cy.findByRole('heading', { name: 'UKHSA data dashboard feedback', level: 1 })
+    cy.findByRole('button', { name: 'Submit' }).click()
+    cy.url().should('include', '/feedback/confirmation')
+  })
 })
