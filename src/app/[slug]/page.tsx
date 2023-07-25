@@ -6,7 +6,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '../components/cms'
 import { RelatedLink, RelatedLinks, View } from '../components/ui/ukhsa'
 
-export const revalidate = 3600 // revalidate every hour
+export const revalidate = process.env.NEXT_REVALIDATE_TIME
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
