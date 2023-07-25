@@ -1,8 +1,8 @@
 import 'cypress-axe'
 
-describe('Coronavirus topic page', () => {
+describe('COVID-19 topic page', () => {
   beforeEach(() => {
-    cy.visit('/topics/coronavirus')
+    cy.visit('/topics/covid-19')
     cy.injectAxe()
   })
 
@@ -23,10 +23,10 @@ describe('Coronavirus topic page', () => {
   })
 
   it('displays a title, description and last updated date', () => {
-    cy.title().should('eq', 'Coronavirus')
-    cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
+    cy.title().should('eq', 'COVID-19 | UKHSA data dashboard')
+    cy.findByRole('heading', { name: 'COVID-19', level: 1 })
     cy.findByText(/Last updated on Tuesday, 21 March 2023/)
-    cy.findByText('Data and insights from the UKHSA on Coronavirus.')
+    cy.findByText('Data and insights from the UKHSA on COVID-19.')
     cy.findByRole('link', { name: 'See the simple summary for England (opens in a new tab).' })
       // .should('have.attr', 'target', '_blank')
       .should('have.attr', 'href', 'https://www.gov.uk/government/organisations/uk-health-security-agency')
@@ -52,7 +52,7 @@ describe('Coronavirus topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Cases', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/topics/coronavirus#cases`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/topics/covid-19#cases`)
 
     // Cases
     cy.findByRole('region', { name: 'Cases' }).within(() => {

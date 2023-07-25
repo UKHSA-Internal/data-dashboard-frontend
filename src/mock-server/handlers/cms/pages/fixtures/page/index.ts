@@ -1,5 +1,5 @@
 export { aboutPageMock } from './about'
-export { coronavirusPageMock } from './coronavirus'
+export { covid19PageMock } from './covid-19'
 export { howToUseThisDataPageMock } from './how-to-use-this-data'
 export { influenzaPageMock } from './influenza'
 export { mapsPageMock } from './maps'

@@ -23,7 +23,7 @@ describe('Influenza topic page', () => {
   })
 
   it('displays a title, description and last updated date', () => {
-    cy.title().should('eq', 'Influenza')
+    cy.title().should('eq', 'Influenza | UKHSA data dashboard')
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
     cy.findByText(/Last updated on Monday, 15 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on Influenza/)
