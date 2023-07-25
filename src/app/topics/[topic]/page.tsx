@@ -6,7 +6,7 @@ import { renderCard } from '@/app/utils/cms.utils'
 
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
-export const revalidate = 3600 // revalidate every hour
+export const revalidate = process.env.NEXT_REVALIDATE_TIME
 
 export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
   const {
