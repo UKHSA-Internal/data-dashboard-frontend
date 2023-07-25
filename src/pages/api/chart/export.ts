@@ -36,7 +36,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .status(200)
         .setHeader('Content-Type', 'text/csv')
         .setHeader('Content-Disposition', `attachment; filename=data.csv`)
-        .send(response.data)
+        .send(response)
     }
 
     if (params.data.file_format === 'json') {
@@ -45,7 +45,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
         .status(200)
         .setHeader('Content-Type', 'text/json')
         .setHeader('Content-Disposition', `attachment; filename=data.json`)
-        .send(response.data)
+        .send(response)
     }
   } else {
     logger.error(params.error)
