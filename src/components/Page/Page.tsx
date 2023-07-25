@@ -2,7 +2,6 @@ import { GridCol, GridRow } from 'govuk-react'
 import { useTranslation } from 'next-i18next'
 import { ReactNode } from 'react'
 
-import { FormattedContent } from '../FormattedContent'
 import { Meta } from '../Meta'
 import { Container, Heading, LastUpdated } from './Page.styles'
 
@@ -25,7 +24,7 @@ export const Page = ({ children, heading, description, lastUpdated, seoTitle, se
           <GridCol setDesktopWidth="two-thirds">
             {lastUpdated && <LastUpdated>{t('lastUpdated', { value: new Date(lastUpdated) })}</LastUpdated>}
             {heading && <Heading>{heading}</Heading>}
-            {description && <FormattedContent>{description}</FormattedContent>}
+            {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
           </GridCol>
         </GridRow>
         {children}
