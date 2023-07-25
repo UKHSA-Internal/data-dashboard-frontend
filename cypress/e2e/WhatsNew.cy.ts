@@ -23,10 +23,10 @@ describe("What's new", () => {
     cy.visit('/whats-new')
 
     // Document title
-    cy.title().should('eq', "What's New")
+    cy.title().should('eq', "What's new | UKHSA data dashboard")
 
     // Title
-    cy.findByRole('heading', { name: "What's New", level: 1 })
+    cy.findByRole('heading', { name: "What's new", level: 1 })
 
     // Last updated
     cy.findByText(/Last updated on Friday, 12 May 2023/)
