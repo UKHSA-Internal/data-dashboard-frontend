@@ -6,7 +6,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from './components/ui/ukhsa'
 import { renderSection } from './utils/cms.utils'
 
-export const revalidate = 3600 // revalidate every hour
+export const revalidate = process.env.NEXT_REVALIDATE_TIME
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
