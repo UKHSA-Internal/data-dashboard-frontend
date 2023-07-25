@@ -8,7 +8,7 @@ import { MouseEvent, ReactNode, useState } from 'react'
 /**
  * SideNav
  */
-export const SideNav = ({ children }: { children: ReactNode }) => {
+export const SideNav = ({ children, browse }: { children: ReactNode; browse?: boolean }) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleOpen = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -20,7 +20,12 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Link
-        className="govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden "
+        className={clsx(
+          'govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden',
+          {
+            hidden: browse,
+          }
+        )}
         onClick={handleOpen}
         href="/browse"
       >
@@ -32,6 +37,7 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
           'sticky top-[20px] mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:h-full',
           {
             'mb-5 h-auto': menuOpen,
+            'mb-8 h-full': browse,
           }
         )}
       >
@@ -111,7 +117,4 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
       </Link>
     </li>
   )
-}
-function handleOpen() {
-  throw new Error('Function not implemented.')
 }
