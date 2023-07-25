@@ -23,7 +23,7 @@ describe('Other respiratory viruses topic page', () => {
   })
 
   it('displays a title, description and last updated date', () => {
-    cy.title().should('eq', 'Other respiratory viruses')
+    cy.title().should('eq', 'Other Respiratory Viruses | UKHSA data dashboard')
     cy.findByRole('heading', { name: 'Other respiratory viruses', level: 1 })
     cy.findByText(/Last updated on Wednesday, 10 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on other respiratory viruses./)

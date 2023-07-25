@@ -17,10 +17,10 @@ describe('Smoke tests - Navigating to topic pages', () => {
     cy.checkLayoutExists()
   })
 
-  it('Navigates to the Coronavirus topic page', () => {
+  it('Navigates to the COVID-19 topic page', () => {
     cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'COVID-19' }).click())
-    cy.url().should('include', '/topics/coronavirus')
-    cy.findByRole('heading', { name: 'Coronavirus', level: 1 })
+    cy.url().should('include', '/topics/covid-19')
+    cy.findByRole('heading', { name: 'COVID-19', level: 1 })
   })
 
   it('Navigates to the Influenza topic page', () => {
@@ -51,11 +51,11 @@ describe('Smoke tests - non-topic pages', () => {
     cy.findByRole('heading', { name: 'About' })
   })
 
-  it("Loads the What's New page", () => {
+  it("Loads the What's new page", () => {
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
       cy.findByText("What's new").click()
     })
     cy.url().should('include', '/whats-new')
-    cy.findByRole('heading', { name: "What's New" })
+    cy.findByRole('heading', { name: "What's new" })
   })
 })

@@ -24,7 +24,7 @@ describe('About', () => {
 
   it('Displays the page', () => {
     // Document title
-    cy.title().should('eq', 'About')
+    cy.title().should('eq', 'About | UKHSA data dashboard')
 
     // Last updated
     cy.findByText(/Last updated on Friday/)

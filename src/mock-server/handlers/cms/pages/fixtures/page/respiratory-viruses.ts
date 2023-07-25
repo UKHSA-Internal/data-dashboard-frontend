@@ -4,22 +4,22 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { relatedLinksMock } from '../elements/related-links'
 
 export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
-  id: 6,
+  id: 243,
   meta: {
     type: 'home.HomePage',
-    detail_url: 'http://localhost/api/pages/6/',
+    detail_url: 'http://localhost/api/pages/243/',
     html_url: null,
     slug: 'respiratory-viruses',
-    show_in_menus: false,
-    seo_title: 'Respiratory viruses',
-    search_description: 'Data and insights from the UKHSA on respiratory viruses.',
+    show_in_menus: true,
+    seo_title: 'Respiratory Viruses | UKHSA data dashboard',
+    search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
     first_published_at: '2023-04-26T12:39:38.064114+01:00',
     alias_of: null,
     parent: {
-      id: 2,
+      id: 242,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/2/',
+        detail_url: 'http://localhost/api/pages/242/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -32,12 +32,12 @@ export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
     {
       type: 'section',
       value: {
-        heading: 'Coronavirus',
+        heading: 'COVID-19',
         content: [
           {
             type: 'text_card',
             value: {
-              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on Coronavirus.</p>',
+              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on COVID-19.</p>',
             },
             id: '6a399089-6e24-4010-a484-a12745d38872',
           },
