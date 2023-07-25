@@ -15,6 +15,7 @@ import express from 'express'
 import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
+import downloads from './handlers/downloads/v2'
 import headlines from './handlers/headlines/v2'
 import suggestions from './handlers/suggestions/v1'
 import tables from './handlers/tables/v2'
@@ -34,6 +35,7 @@ app.get('/api/headlines/v2', headlines)
 app.get('/api/trends/v2', trends)
 app.post('/api/charts/v3', charts)
 app.post('/api/tables/v2', tables)
+app.post('/api/downloads/v2', downloads)
 
 // Misc endpoints
 app.post('/api/suggestions/v1', suggestions)

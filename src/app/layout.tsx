@@ -63,7 +63,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <strong className="govuk-tag govuk-phase-banner__content__tag">Alpha</strong>
               <span className="govuk-phase-banner__text">
                 This is a new service – your{' '}
-                <Link className="govuk-link" href="/feedback">
+                <Link className="govuk-link govuk-link--no-visited-state" href="/feedback">
                   feedback
                 </Link>{' '}
                 will help us to improve it.

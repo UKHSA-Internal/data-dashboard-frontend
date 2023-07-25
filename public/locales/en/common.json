@@ -8,8 +8,6 @@
   "serviceTitle": "UKHSA data dashboard",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
-  "feedbackConfirmationTitle": "Form submitted",
-  "feedbackConfirmationBody": "Thank you for your feedback",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
@@ -61,6 +59,13 @@
         "caption": "{{title}} data for {{body}}",
         "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}"
       }
+    }
+  },
+  "feedback": {
+    "confirmation": {
+      "title": "Form submitted",
+      "subtitle": "Thank you for your feedback",
+      "message": "<0>Thank you for taking the time to give feedback on the UKHSA data dashboard. We'll use your feedback to help us continually improve our services.</0><1>We're constantly looking to improve our users' experience of the dashboard. If you'd like to share your thoughts further, please get in touch with our user research team at <0>researchteam.dpd@ukhsa.gov.uk</0></1>"
     }
   }
 }
