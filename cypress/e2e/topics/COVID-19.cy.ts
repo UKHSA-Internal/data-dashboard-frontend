@@ -23,7 +23,7 @@ describe('COVID-19 topic page', () => {
   })
 
   it('displays a title, description and last updated date', () => {
-    cy.title().should('eq', 'COVID-19')
+    cy.title().should('eq', 'COVID-19 | UKHSA data dashboard')
     cy.findByRole('heading', { name: 'COVID-19', level: 1 })
     cy.findByText(/Last updated on Tuesday, 21 March 2023/)
     cy.findByText('Data and insights from the UKHSA on COVID-19.')

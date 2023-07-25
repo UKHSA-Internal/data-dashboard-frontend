@@ -51,11 +51,11 @@ describe('Smoke tests - non-topic pages', () => {
     cy.findByRole('heading', { name: 'About' })
   })
 
-  it("Loads the What's New page", () => {
+  it("Loads the What's new page", () => {
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
       cy.findByText("What's new").click()
     })
     cy.url().should('include', '/whats-new')
-    cy.findByRole('heading', { name: "What's New" })
+    cy.findByRole('heading', { name: "What's new" })
   })
 })
