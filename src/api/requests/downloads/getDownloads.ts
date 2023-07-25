@@ -27,7 +27,7 @@ export const getDownloads = async (plots: RequestParams['plots'], format: Reques
       plots,
       file_format: format,
     }
-    const data = await client<string>(`downloads/v2`, { body })
+    const { data } = await client<string>(`downloads/v2`, { body })
 
     return data
   } catch (error) {
