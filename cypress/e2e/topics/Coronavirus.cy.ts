@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Coronavirus topic page', () => {
   beforeEach(() => {
-    cy.visit('/topics/coronavirus')
+    cy.visit('/topics/covid-19')
     cy.injectAxe()
   })
 
@@ -52,7 +52,7 @@ describe('Coronavirus topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Cases', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/topics/coronavirus#cases`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/topics/covid-19#cases`)
 
     // Cases
     cy.findByRole('region', { name: 'Cases' }).within(() => {
