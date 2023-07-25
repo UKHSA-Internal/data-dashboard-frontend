@@ -4,8 +4,7 @@
     "plugin:import/recommended",
     "next",
     "next/core-web-vitals",
-    "prettier",
-    "plugin:storybook/recommended"
+    "prettier"
   ],
   "plugins": ["simple-import-sort", "unused-imports"],
   "rules": {
