@@ -3,15 +3,15 @@ import { Metadata } from 'next'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
-import { RelatedLink, RelatedLinks, View } from './components/ui/ukhsa'
-import { renderSection } from './utils/cms.utils'
+import { RichText } from '../components/cms'
+import { RelatedLink, RelatedLinks, View } from '../components/ui/ukhsa'
 
 export const revalidate = 3600 // revalidate every hour
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  } = await getPageBySlug(slug, PageType.Common)
 
   return {
     title: seo_title,
@@ -19,17 +19,17 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function HomePage() {
+export default async function CommonPage({ params: { slug } }: { params: { slug: string } }) {
   const {
     title,
     body,
-    page_description: description,
+    last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  } = await getPageBySlug(slug, PageType.Common)
 
   return (
-    <View heading={title} description={description} showWelcome>
-      {body.map(renderSection)}
+    <View heading={title} lastUpdated={lastUpdated}>
+      <RichText linkedHeadings>{body}</RichText>
       {relatedLinks.length && (
         <RelatedLinks>
           {relatedLinks.map(({ title, body, url, id }) => (

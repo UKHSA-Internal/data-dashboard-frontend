@@ -18,7 +18,7 @@ describe('Other respiratory viruses topic page', () => {
     cy.checkAccordionExists()
   })
 
-  it.skip('displays related links', () => {
+  it('displays related links', () => {
     cy.checkRelatedLinksExist()
   })
 
