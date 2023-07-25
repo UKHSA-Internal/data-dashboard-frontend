@@ -1,7 +1,7 @@
 import { PagesResponse } from '@/api/requests/cms/getPages'
 
 import { aboutPageMock } from './page/about'
-import { coronavirusPageMock } from './page/coronavirus'
+import { covid19PageMock } from './page/covid-19'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
 import { mapsPageMock } from './page/maps'
@@ -97,15 +97,15 @@ export const pagesWithTopicTypeMock: PagesResponse = {
       title: influenzaPageMock.title,
     },
     {
-      id: coronavirusPageMock.id,
+      id: covid19PageMock.id,
       meta: {
-        type: coronavirusPageMock.meta.type,
-        detail_url: coronavirusPageMock.meta.detail_url,
-        html_url: coronavirusPageMock.meta.html_url,
-        slug: coronavirusPageMock.meta.slug,
-        first_published_at: coronavirusPageMock.meta.first_published_at,
+        type: covid19PageMock.meta.type,
+        detail_url: covid19PageMock.meta.detail_url,
+        html_url: covid19PageMock.meta.html_url,
+        slug: covid19PageMock.meta.slug,
+        first_published_at: covid19PageMock.meta.first_published_at,
       },
-      title: coronavirusPageMock.title,
+      title: covid19PageMock.title,
     },
     {
       id: otherRespiratoryVirusesPageMock.id,

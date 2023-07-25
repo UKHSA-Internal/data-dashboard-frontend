@@ -1,18 +1,18 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-import { relatedLinksMock } from '../elements/related-links'
+import { relatedLinksMock } from '../elements'
 
-export const coronavirusPageMock: PageResponse<PageType.Topic> = {
+export const covid19PageMock: PageResponse<PageType.Topic> = {
   id: 8,
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/8/',
     html_url: null,
-    slug: 'coronavirus',
-    show_in_menus: false,
-    seo_title: 'Coronavirus',
-    search_description: '',
+    slug: 'covid-19',
+    show_in_menus: true,
+    seo_title: 'COVID-19 | UKHSA data dashboard',
+    search_description: 'Overall summary of COVID-19 in circulation within the UK',
     first_published_at: '2023-05-15T17:23:02.306556+01:00',
     alias_of: null,
     parent: {
@@ -25,9 +25,9 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
       title: 'Respiratory viruses',
     },
   },
-  title: 'Coronavirus',
+  title: 'COVID-19',
   page_description:
-    '<p data-block-key="sud2w">Data and insights from the UKHSA on Coronavirus. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
+    '<p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
   body: [
     {
       type: 'section',
@@ -43,8 +43,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Cases by specimen date',
                     body: 'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -81,8 +81,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: '7-day case rates by specimen date',
                     body: 'Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -102,12 +102,24 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                         },
                         id: '691a30aa-2446-4462-8ac1-ebada957baf9',
                       },
+                    ],
+                  },
+                  id: '9cc32fa3-8ae3-4a12-b68e-fec49acb5062',
+                },
+                {
+                  type: 'chart_card',
+                  value: {
+                    title: 'Case rates by age',
+                    body: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
+                    x_axis: 'stratum',
+                    y_axis: 'metric',
+                    chart: [
                       {
                         type: 'plot',
                         value: {
                           topic: 'COVID-19',
                           metric: 'cases_rate_age_sex',
-                          chart_type: 'line_with_shaded_section',
+                          chart_type: 'bar',
                           date_from: null,
                           date_to: null,
                           stratum: '',
@@ -118,11 +130,11 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                           line_colour: '',
                           line_type: '',
                         },
-                        id: '978f0155-b57e-48ba-96da-d79aa3c72a9d',
+                        id: 'dc28dc64-b433-49ef-858d-67cec5763b0c',
                       },
                     ],
                   },
-                  id: '9cc32fa3-8ae3-4a12-b68e-fec49acb5062',
+                  id: 'ec46d184-5bb6-4327-b964-55ee106f9ec8',
                 },
               ],
             },
@@ -146,8 +158,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Daily deaths with COVID-19 on the death certificate by date of death',
                     body: 'Daily numbers of deaths of people whose death certificate mentioned COVID-19 as one of the causes, and 7-day rolling average. Because of the time it takes for deaths to be registered, there is a lag in reporting of at least 11 days, and data are not shown for the 14 days before the most recent reported date as they are considered incomplete. Data are shown by date of death.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -161,7 +173,7 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                           geography: '',
                           geography_type: '',
                           sex: null,
-                          label: 'New deaths daily',
+                          label: 'Number of deaths',
                           line_colour: 'BLUE',
                           line_type: 'SOLID',
                         },
@@ -179,7 +191,7 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                           geography: '',
                           geography_type: '',
                           sex: null,
-                          label: '7 day rolling average',
+                          label: '7-day average',
                           line_colour: 'RED',
                           line_type: 'DASH',
                         },
@@ -211,8 +223,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Bar chart with overlaying line comparing patients \r\nadmitted to hospital with COVID-19',
                     body: 'Daily and total numbers of COVID-19 patients admitted to hospital. The overlaying line shows the 7-day average.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -241,8 +253,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Patients in hospital',
                     body: 'Daily count of confirmed COVID-19 patients in hospital at 8am. The overlaying line shows the 7-day average.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -277,10 +289,40 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                 {
                   type: 'chart_card',
                   value: {
+                    title: 'Admissions rate by age',
+                    body: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people, since the start of the pandemic. There are fewer people in the oldest age group so the rates show the relative impact on different age groups.',
+                    x_axis: 'stratum',
+                    y_axis: 'metric',
+                    chart: [
+                      {
+                        type: 'plot',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'admissions_rate_age',
+                          chart_type: 'bar',
+                          date_from: null,
+                          date_to: null,
+                          stratum: '',
+                          geography: '',
+                          geography_type: '',
+                          sex: null,
+                          label: 'Admission rate',
+                          line_colour: '',
+                          line_type: '',
+                        },
+                        id: '791efbf1-8880-4dfa-9f5d-526982ed1539',
+                      },
+                    ],
+                  },
+                  id: '7421a4ce-2961-4816-aa58-34edfa1b6e35',
+                },
+                {
+                  type: 'chart_card',
+                  value: {
                     title: 'Patients in mechanical ventilation beds',
                     body: 'Daily count of COVID-19 patients in mechanical ventilation beds, and 7-day rolling average. Data are not updated every day.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -326,8 +368,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Total daily number of PCR tests reported',
                     body: 'The daily number of new polymerase chain reaction (PCR) tests reported. Data is shown by specimen date (the date the sample was collected from the person).',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -356,8 +398,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Weekly positivity of people receiving a PCR test',
                     body: 'The percentage positivity of people who received a polymerase chain reaction (PCR) and had at least one positive COVID-19 PCR test result in the same 7 days. Data is shown by specimen date (the date the sample was collected). People tested more than once in the period are only counted once in the denominator. People with more than one positive result in the period are only included once in the numerator.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -403,8 +445,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'People aged 50 and over who have received autumn booster vaccinations, by vaccination date',
                     body: 'The number of people aged 50 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -418,7 +460,7 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                           geography: '',
                           geography_type: '',
                           sex: null,
-                          label: '',
+                          label: 'Number of vaccinations',
                           line_colour: '',
                           line_type: '',
                         },
@@ -433,8 +475,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Autumn booster vaccination uptake (50+), by vaccination date',
                     body: 'The percentage of people aged 50 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 50 and over on the National Immunisation Management Service (NIMS) database.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -615,8 +657,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'People aged 75 and over who have received spring booster vaccinations, by vaccination date',
                     body: 'The number of people aged 75 and over who have received a spring booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -630,7 +672,7 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                           geography: '',
                           geography_type: '',
                           sex: null,
-                          label: '',
+                          label: 'Number of vaccinations',
                           line_colour: '',
                           line_type: '',
                         },
@@ -645,8 +687,8 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Spring booster vaccination uptake (75+), by vaccination date',
                     body: 'The percentage of people aged 75 and over who have received a spring booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.',
-                    x_axis: '',
-                    y_axis: '',
+                    x_axis: null,
+                    y_axis: null,
                     chart: [
                       {
                         type: 'plot',
@@ -733,11 +775,11 @@ export const coronavirusPageMock: PageResponse<PageType.Topic> = {
       id: '14175b86-36fa-46ee-b0f4-b56dc0a3c70a',
     },
   ],
-  symptoms: '<p data-block-key="v7la9">Symptoms text here</p>',
-  transmission: '<p data-block-key="ldtik">Transmission text here</p>',
-  treatment: '<p data-block-key="8bg6b">Treatment text here</p>',
-  prevention: '<p data-block-key="6m4r2">Prevention text here</p>',
-  surveillance_and_reporting: '<p data-block-key="zn81b">Surveillance and reporting text here</p>',
+  symptoms: '<p data-block-key="v7la9">Text here</p>',
+  transmission: '<p data-block-key="ldtik">Text here</p>',
+  treatment: '<p data-block-key="8bg6b">Text here</p>',
+  prevention: '<p data-block-key="6m4r2">Text here</p>',
+  surveillance_and_reporting: '<p data-block-key="zn81b">Text here</p>',
   related_links: relatedLinksMock,
   last_published_at: '2023-03-21T10:25:34.452098Z',
 }
