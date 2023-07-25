@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
-import { View } from './components/ui/ukhsa'
+import { RelatedLink, RelatedLinks, View } from './components/ui/ukhsa'
 import { renderSection } from './utils/cms.utils'
 
 export const revalidate = 3600 // revalidate every hour
@@ -20,11 +20,25 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
-  const { title, body, page_description: description } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  const {
+    title,
+    body,
+    page_description: description,
+    related_links: relatedLinks,
+  } = await getPageBySlug('respiratory-viruses', PageType.Home)
 
   return (
     <View heading={title} description={description} showWelcome>
       {body.map(renderSection)}
+      {relatedLinks.length && (
+        <RelatedLinks>
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLink key={id} url={url} title={title}>
+              {body}
+            </RelatedLink>
+          ))}
+        </RelatedLinks>
+      )}
     </View>
   )
 }

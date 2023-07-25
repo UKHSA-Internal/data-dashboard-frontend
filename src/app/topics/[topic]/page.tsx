@@ -4,7 +4,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { renderCard } from '@/app/utils/cms.utils'
 
-import { Contents, ContentsItem, View } from '../../components/ui/ukhsa'
+import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
 export const revalidate = 3600 // revalidate every hour
 
@@ -25,6 +25,7 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
     body,
     page_description: description,
     last_published_at: lastUpdated,
+    related_links: relatedLinks,
   } = await getPageBySlug(topic, PageType.Topic)
 
   return (
@@ -36,6 +37,15 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
           </ContentsItem>
         ))}
       </Contents>
+      {relatedLinks.length && (
+        <RelatedLinks>
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLink key={id} url={url} title={title}>
+              {body}
+            </RelatedLink>
+          ))}
+        </RelatedLinks>
+      )}
     </View>
   )
 }

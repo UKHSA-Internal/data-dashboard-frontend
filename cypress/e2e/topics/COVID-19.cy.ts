@@ -18,7 +18,7 @@ describe('COVID-19 topic page', () => {
     cy.checkAccordionExists()
   })
 
-  it.skip('displays related links', () => {
+  it('displays related links', () => {
     cy.checkRelatedLinksExist()
   })
 
