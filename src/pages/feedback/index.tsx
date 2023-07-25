@@ -36,7 +36,8 @@ const Feedback = () => {
             </label>
           </h2>
           <div id="more-detail-hint" className="govuk-hint">
-            Do not include personal information like your name, contact information or credit card details.
+            We will not be able to get in touch with you about your responses so please do not leave any personal
+            details, such as your name or email address.
           </div>
           <textarea className="govuk-textarea" name="reason" id="reason" rows={5} />
         </div>
@@ -95,7 +96,7 @@ const Feedback = () => {
           <button className="govuk-button" type="submit">
             Submit
           </button>
-          <Link className="govuk-link" href="/">
+          <Link className="govuk-link govuk-link--no-visited-state" href="/">
             {t('returnToHomeBtn')}
           </Link>
         </div>

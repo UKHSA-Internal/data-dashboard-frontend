@@ -1,4 +1,4 @@
-import type { NextApiRequest, NextApiResponse } from 'next'
+import { Request, Response } from 'express'
 
 import { requestSchema } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
@@ -6,7 +6,7 @@ import { logger } from '@/lib/logger'
 import { downloadsCsvFixture } from './fixtures/downloads-csv'
 import { downloadsJsonFixture } from './fixtures/downloads-json'
 
-export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+export default async function handler(req: Request, res: Response) {
   try {
     if (req.method !== 'POST') {
       logger.error(`Unsupported request method ${req.method}`)

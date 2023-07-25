@@ -30,7 +30,7 @@ export const Layout = ({
             <PhaseBanner level="alpha" data-testid="phase-banner-content">
               <Trans t={t} i18nKey="feedbackBanner">
                 <span>
-                  <Link href="/feedback"></Link>
+                  <Link href="/feedback" className="govuk-link--no-visited-state"></Link>
                 </span>
               </Trans>
             </PhaseBanner>
