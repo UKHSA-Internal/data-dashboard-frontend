@@ -27,7 +27,7 @@ export async function generateStaticParams() {
 
   if (pages && pages.success) {
     return pages.data.items.map((page) => ({
-      slug: page.meta.slug,
+      topic: page.meta.slug,
     }))
   }
 
