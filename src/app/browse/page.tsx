@@ -1,6 +1,6 @@
 'use Client'
 
-import { BlockNav, NavLink } from '../components/ui/ukhsa/BlockNav.tsx/BlockNav'
+import { BlockNav, NavLink } from '../components/ui/ukhsa/BlockNav/BlockNav'
 
 export default function Browse() {
   return (

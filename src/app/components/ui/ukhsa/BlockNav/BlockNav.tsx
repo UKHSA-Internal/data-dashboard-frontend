@@ -4,10 +4,10 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 
 /**
- * SideNav
+ * BlockNav
  */
 export const BlockNav = ({ children }: { children: ReactNode }) => {
-  return <nav className={'mb-6 grid gap-7 gap-y-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-9'}>{children}</nav>
+  return <nav className="mb-6 grid gap-7 gap-y-8 md:grid-cols-2 lg:grid-cols-3 lg:gap-9">{children}</nav>
 }
 
 /**
