@@ -6,7 +6,10 @@ import { renderCard } from '@/app/utils/cms.utils'
 
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
-export const revalidate = process.env.NEXT_REVALIDATE_TIME
+// Good to know: The new model in the app directory favors granular caching control at the fetch request level
+// over the binary all-or-nothing model of getServerSideProps and getStaticProps at the page-level in the pages directory.
+// The dynamic option is a way to opt back in to the previous model as a convenience and provides a simpler migration path.
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
   const {
