@@ -8,14 +8,13 @@
   "serviceTitle": "UKHSA data dashboard",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
-  "feedbackConfirmationTitle": "Form submitted",
-  "feedbackConfirmationBody": "Thank you for your feedback",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
   "contentsHeading": "Contents",
   "relatedLinksHeading": "Related Links",
   "backToTop": "Back to top",
+  "welcome": "Welcome",
   "metrics": {
     "headlineValueScreenReaderText": "{{heading}}: {{value}}",
     "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",
@@ -25,5 +24,48 @@
     "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
     "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
     "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
+  },
+  "cms": {
+    "blocks": {
+      "headline": {
+        "heading": "{{heading}}",
+        "value": "{{value, number}}"
+      },
+      "percentage": {
+        "heading": "{{heading}}",
+        "value": "{{value}}%"
+      },
+      "trend": {
+        "heading": "{{heading}}",
+        "value": {
+          "percentage": "({{percentage}}%)",
+          "change": "{{change}}"
+        },
+        "alt_green_up": "There has been an increase of {{change}} ({{percentage}}%) compared to the previous 7 days.",
+        "alt_green_down": "There has been a decrease of {{change}} ({{percentage}}%) compared to the previous 7 days.",
+        "alt_red_up": "There has been an increase of {{change}} ({{percentage}}%) compared to the previous 7 days.",
+        "alt_red_down": "There has been an decrease of {{change}} ({{percentage}}%) compared to the previous 7 days."
+      },
+      "timestamp": {
+        "value": "Up to and including {{value, dateShort}}"
+      },
+      "table": {
+        "toggle": "View data in a tabular format",
+        "header_date": "Month",
+        "header_plot_single": "Amount",
+        "header_plot_multi": "{{value}}",
+        "row_date": "{{value, monthAndYear}}",
+        "row_plot": "{{value, number}}",
+        "caption": "{{title}} data for {{body}}",
+        "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}"
+      }
+    }
+  },
+  "feedback": {
+    "confirmation": {
+      "title": "Form submitted",
+      "subtitle": "Thank you for your feedback",
+      "message": "<0>Thank you for taking the time to give feedback on the UKHSA data dashboard. We'll use your feedback to help us continually improve our services.</0><1>We're constantly looking to improve our users' experience of the dashboard. If you'd like to share your thoughts further, please get in touch with our user research team at <0>researchteam.dpd@ukhsa.gov.uk</0></1>"
+    }
   }
 }

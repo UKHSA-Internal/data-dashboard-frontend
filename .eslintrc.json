@@ -4,8 +4,7 @@
     "plugin:import/recommended",
     "next",
     "next/core-web-vitals",
-    "prettier",
-    "plugin:storybook/recommended"
+    "prettier"
   ],
   "plugins": ["simple-import-sort", "unused-imports"],
   "rules": {
@@ -17,9 +16,10 @@
         "message": "Please import from the next-i18next package instead."
       }
     ],
-    "id-length": [2, { "exceptions": ["i", "j", "_", "e", "z"], "properties": "never" }],
+    "id-length": [2, { "exceptions": ["i", "j", "_", "e", "z", "t"], "properties": "never" }],
     "simple-import-sort/imports": "error",
     "simple-import-sort/exports": "error",
-    "unused-imports/no-unused-imports": "error"
+    "unused-imports/no-unused-imports": "error",
+    "react/display-name": "off"
   }
 }

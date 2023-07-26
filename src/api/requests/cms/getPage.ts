@@ -1,10 +1,9 @@
 import { z } from 'zod'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import { Body, Meta, RelatedLinks } from '@/api/models/cms/Page'
 import { logger } from '@/lib/logger'
 
-import { getCmsApiPath } from '../helpers'
 import type { PageType } from './getPages'
 
 /**
@@ -60,7 +59,7 @@ export const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonDa
 
 export const getPage = async <T extends PageType>(id: number) => {
   try {
-    const { data } = await api.get<PageResponse<T>>(`${getCmsApiPath()}/${id}`)
+    const { data } = await client<PageResponse<T>>(`pages/${id}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

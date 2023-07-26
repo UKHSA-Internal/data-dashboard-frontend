@@ -1,10 +1,8 @@
 import { z } from 'zod'
 
-import { api } from '@/api/api-utils'
+import { client } from '@/api/api-utils'
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
-
-import { getApiBaseUrl } from '../helpers'
 
 export const requestSchema = z.object({
   topic: Topics,
@@ -22,7 +20,7 @@ type RequestParams = z.infer<typeof requestSchema>
 export const getHeadlines = async (params: RequestParams) => {
   try {
     const searchParams = new URLSearchParams({ ...params, geography: 'England', geography_type: 'Nation' })
-    const { data } = await api.get(`${getApiBaseUrl()}/headlines/v2`, { params: searchParams })
+    const { data } = await client<z.infer<typeof responseSchema>>(`headlines/v2?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

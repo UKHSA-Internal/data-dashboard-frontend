@@ -2,10 +2,10 @@ import i18n from 'i18next'
 // eslint-disable-next-line no-restricted-imports
 import { initReactI18next } from 'react-i18next'
 
-import formatters from './formatters'
 import common from '../../public/locales/en/common.json'
-import topic from '../../public/locales/en/topic.json'
 import errors from '../../public/locales/en/errors.json'
+import topic from '../../public/locales/en/topic.json'
+import formatters from './formatters'
 
 export const defaultNS = 'common'
 export const resources = {

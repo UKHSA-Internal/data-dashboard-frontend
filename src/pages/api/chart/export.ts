@@ -1,6 +1,5 @@
 import type { NextApiRequest, NextApiResponse } from 'next'
 
-import { initMocks } from '@/api/msw'
 import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 
@@ -9,10 +8,6 @@ import { logger } from '@/lib/logger'
  * Proxying allows us modify the response headers to allow the file to be downloaded to the users file system
  */
 export default async function handler(req: NextApiRequest, res: NextApiResponse) {
-  if (process.env.NEXT_PUBLIC_API_MOCKING === 'enabled') {
-    await initMocks()
-  }
-
   if (req.method !== 'POST') {
     logger.error(`Unsupported request method ${req.method} sent to export endpoint`)
     return res.status(405)

@@ -27,6 +27,13 @@ describe('', () => {
     cy.findByLabelText('How could we improve your experience with the dashboard?').type('Test input')
     cy.findByLabelText('What would you like to see on the dashboard in the future?').type('Test input')
 
-    cy.findByRole('button', { name: 'Submit' }).click().url().should('include', '/feedback/confirmation')
+    cy.findByRole('button', { name: 'Submit' }).click()
+    cy.url().should('include', '/feedback/confirmation')
+  })
+
+  it('Submits the form with all fields left blank', () => {
+    cy.findByRole('heading', { name: 'UKHSA data dashboard feedback', level: 1 })
+    cy.findByRole('button', { name: 'Submit' }).click()
+    cy.url().should('include', '/feedback/confirmation')
   })
 })

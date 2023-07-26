@@ -10,6 +10,33 @@ Cypress.on('uncaught:exception', () => {
   return false
 })
 
+Cypress.Commands.add('checkLayoutExists', () => {
+  cy.findByRole('banner').within(() => {
+    cy.findByRole('link', { name: 'GOV.UK' })
+    cy.findByRole('link', { name: 'UKHSA data dashboard' })
+  })
+
+  cy.findByTestId('ukhsa-phase-banner')
+  cy.findByRole('link', { name: 'Back to top' })
+
+  cy.findByRole('contentinfo').within(() => {
+    cy.findByText(/All content is available under the/)
+    cy.findByText(/Open Government Licence v3.0/)
+    cy.findByText(/, except where otherwise stated/)
+    cy.findByText(/© Crown copyright/)
+  })
+
+  cy.findByRole('navigation', { name: 'Menu' }).within(() => {
+    cy.findByRole('link', { name: 'Dashboard' })
+    cy.findByRole('link', { name: 'COVID-19' })
+    cy.findByRole('link', { name: 'Influenza' })
+    cy.findByRole('link', { name: 'Other respiratory viruses' })
+    cy.findByRole('link', { name: 'API' })
+    cy.findByRole('link', { name: 'About' })
+    cy.findByRole('link', { name: "What's new" })
+  })
+})
+
 Cypress.Commands.add('checkRelatedLinksExist', () => {
   cy.findByRole('heading', { name: 'Related Links', level: 2 })
 
@@ -45,6 +72,7 @@ declare global {
   // eslint-disable-next-line @typescript-eslint/no-namespace
   namespace Cypress {
     interface Chainable {
+      checkLayoutExists(): Chainable<void>
       checkRelatedLinksExist(): Chainable<void>
       checkAccordionExists(): Chainable<void>
     }

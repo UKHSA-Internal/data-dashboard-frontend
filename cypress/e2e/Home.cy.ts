@@ -9,34 +9,41 @@ describe('Home page', () => {
   it('has no detectable a11y violations', () => {
     cy.checkA11y('html', {
       rules: {
-        'document-title': { enabled: false },
-        'html-has-lang': { enabled: false },
         region: { enabled: false },
       },
     })
   })
 
-  it('displays landing page content', () => {
-    cy.title().should('eq', 'UKHSA data dashboard')
+  it('displays the layout correctly', () => {
+    cy.checkLayoutExists()
+  })
+
+  it('displays related links', () => {
+    cy.checkRelatedLinksExist()
+  })
+
+  it('displays a page title, heading and description', () => {
+    cy.title().should('eq', 'Respiratory Viruses | UKHSA data dashboard')
     cy.get('head meta[name="description"]').should(
       'have.attr',
       'content',
-      'The UKHSA data dashboard is for anyone interested in UK health data. Currently, the dashboard reports data for respiratory viruses.'
+      'Overall summary of the respiratory viruses in circulation within the UK'
     )
-    cy.findByRole('heading', { name: 'UKHSA data dashboard', level: 1 })
-    cy.findByText(
-      'The UKHSA data dashboard is for anyone interested in UK health data. Currently, the dashboard reports data for respiratory viruses.'
-    )
+    cy.findByText('Welcome')
+    cy.findByRole('heading', { name: 'Respiratory viruses', level: 1 })
+    cy.findByText('Data and insights from the UKHSA on respiratory viruses.')
+    cy.findByText('See the simple summary for England (opens in a new tab).')
+  })
 
-    cy.findByRole('button', { name: 'Start now' })
+  it('displays the topic summary sections', () => {
+    cy.findByRole('heading', { name: 'COVID-19', level: 2 })
+    cy.findByText('The UKHSA dashboard for data and insights on COVID-19.')
 
-    cy.findByRole('heading', { name: 'Use the API', level: 2 })
-    cy.findByRole('link', { name: 'Go to API' })
+    cy.findByRole('heading', { name: 'Influenza', level: 2 })
+    cy.findByText('The UKHSA dashboard for data and insights on Influenza.')
 
-    cy.findByRole('heading', { name: 'About the dashboard', level: 2 })
-    cy.findByRole('link', { name: 'Find out more about the dashboard' })
-
-    cy.findByRole('heading', { name: "What's new", level: 2 })
-    cy.findByRole('link', { name: 'Get updates' })
+    cy.findAllByAltText('').should('have.length', 4)
+    cy.findAllByRole('button', { name: 'Download (csv)' }).should('have.length', 4)
+    cy.findAllByText('View data in a tabular format').should('have.length', 4)
   })
 })
