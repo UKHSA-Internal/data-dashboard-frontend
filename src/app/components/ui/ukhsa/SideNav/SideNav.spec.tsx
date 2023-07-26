@@ -6,16 +6,14 @@ import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './Side
 
 jest.mock('next/navigation')
 
-test('SideNav with children', async () => {
+test('SideNav with children', () => {
   render(
-    await SideNav({
-      children: (
-        <>
-          <li>Child 1</li>
-          <li>Child 2</li>
-        </>
-      ),
-    })
+    <SideNav>
+      <>
+        <li>Child 1</li>
+        <li>Child 2</li>
+      </>
+    </SideNav>
   )
 
   expect(screen.getByRole('navigation')).toBeInTheDocument()
@@ -24,13 +22,11 @@ test('SideNav with children', async () => {
   expect(screen.getByText('Child 2')).toBeInTheDocument()
 })
 
-test('SideNavLink component with active link', async () => {
+test('SideNavLink component with active link', () => {
   const usePathnameMock = jest.mocked(usePathname)
   usePathnameMock.mockReturnValueOnce('/active')
 
-  render(
-    await SideNavLink({ children: 'Active Link', href: '/active', subMenu: <ul aria-label="Submenu">Submenu</ul> })
-  )
+  render(SideNavLink({ children: 'Active Link', href: '/active', subMenu: <ul aria-label="Submenu">Submenu</ul> }))
 
   const link = screen.getByRole('link', { name: 'Active Link' })
   expect(link).toBeInTheDocument()
@@ -41,13 +37,11 @@ test('SideNavLink component with active link', async () => {
   expect(submenu).toBeInTheDocument()
 })
 
-test('SideNavLink component with inactive link', async () => {
+test('SideNavLink component with inactive link', () => {
   const usePathnameMock = jest.mocked(usePathname)
   usePathnameMock.mockReturnValueOnce('/active')
 
-  render(
-    await SideNavLink({ children: 'Inactive Link', href: '/inactive', subMenu: <ul aria-label="Submenu">Submenu</ul> })
-  )
+  render(SideNavLink({ children: 'Inactive Link', href: '/inactive', subMenu: <ul aria-label="Submenu">Submenu</ul> }))
 
   const link = screen.getByRole('link', { name: 'Inactive Link' })
   expect(link).toBeInTheDocument()
@@ -58,9 +52,9 @@ test('SideNavLink component with inactive link', async () => {
   expect(submenu).toBeInTheDocument()
 })
 
-test('SideNavSubMenu component with children', async () => {
+test('SideNavSubMenu component with children', () => {
   render(
-    await SideNavSubMenu({
+    SideNavSubMenu({
       children: (
         <>
           <li>Child 1</li>
@@ -75,12 +69,12 @@ test('SideNavSubMenu component with children', async () => {
   expect(screen.getByText('Child 2')).toBeInTheDocument()
 })
 
-test('SideNavSubMenuLink with active link', async () => {
+test('SideNavSubMenuLink with active link', () => {
   const usePathnameMock = jest.mocked(usePathname)
   usePathnameMock.mockReturnValueOnce('/active')
 
   render(
-    await SideNavSubMenuLink({
+    SideNavSubMenuLink({
       href: '/active',
       children: 'Active Submenu Link',
     })
@@ -92,12 +86,12 @@ test('SideNavSubMenuLink with active link', async () => {
   expect(link).toHaveAttribute('aria-current', 'page')
 })
 
-test('SideNavSubMenuLink  with inactive link', async () => {
+test('SideNavSubMenuLink  with inactive link', () => {
   const usePathnameMock = jest.mocked(usePathname)
   usePathnameMock.mockReturnValueOnce('/active')
 
   render(
-    await SideNavSubMenuLink({
+    SideNavSubMenuLink({
       href: '/inactive',
       children: 'Inactive Submenu Link',
     })

@@ -8,7 +8,7 @@ import { MouseEvent, ReactNode, useState } from 'react'
 /**
  * SideNav
  */
-export const SideNav = ({ children, browse }: { children: ReactNode; browse?: boolean }) => {
+export const SideNav = ({ children }: { children: ReactNode }) => {
   const [menuOpen, setMenuOpen] = useState(false)
 
   const handleOpen = (event: MouseEvent<HTMLAnchorElement>) => {
@@ -20,12 +20,9 @@ export const SideNav = ({ children, browse }: { children: ReactNode; browse?: bo
   return (
     <>
       <Link
-        className={clsx(
-          'govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden',
-          {
-            hidden: browse,
-          }
-        )}
+        className={
+          'govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden'
+        }
         onClick={handleOpen}
         href="/browse"
       >
@@ -37,7 +34,6 @@ export const SideNav = ({ children, browse }: { children: ReactNode; browse?: bo
           'sticky top-[20px] mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:h-full',
           {
             'mb-5 h-auto': menuOpen,
-            'mb-8 h-full': browse,
           }
         )}
       >
