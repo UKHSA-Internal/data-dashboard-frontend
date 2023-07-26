@@ -1,4 +1,4 @@
-import { downloadFile } from './downloadFile'
+import { downloadFile } from './download.utils'
 
 Object.defineProperty(global, 'URL', {
   value: {
