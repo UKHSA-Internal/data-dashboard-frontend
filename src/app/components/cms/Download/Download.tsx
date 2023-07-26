@@ -1,27 +1,18 @@
-import { BLACK } from 'govuk-colours'
-import { Button } from 'govuk-react'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
+'use client'
+
+import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
 import { client } from '@/api/api-utils'
 import type { Chart } from '@/api/models/cms/Page'
 import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
-import { logger } from '@/lib/logger'
-import { COLOURS } from '@/styles/Theme'
 import { downloadFile } from '@/utils/downloadFile'
 
-import { DownloadButton, IconWrapper } from './ChartDownload.styles'
-
-/**
- * Progressively enhanced download component that submits a POST request via an HTML form
- */
-interface ChartDownloadProps {
+interface DownloadProps {
   chart: Chart
 }
 
-export const ChartDownload = ({ chart }: ChartDownloadProps) => {
-  const { t } = useTranslation('common')
+export function Download({ chart }: DownloadProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
 
@@ -33,18 +24,18 @@ export const ChartDownload = ({ chart }: ChartDownloadProps) => {
     setDownloading(true)
 
     try {
-      const { data } = await client<Blob>(chartExportApiRoutePath, {
+      const { data } = await client<string>(chartExportApiRoutePath, {
+        baseUrl: '',
         body: {
           format: chartExportFormat,
           plots: chart.map((plot) => plot.value),
         },
       })
 
-      if (data) downloadFile(`data.${chartExportFormat}`, data)
+      if (data) downloadFile(`data.${chartExportFormat}`, new Blob([data]))
 
       setDownloading(false)
     } catch (error) {
-      logger.error(error)
       setDownloading(false)
       router.replace('/500')
     }
@@ -71,16 +62,12 @@ export const ChartDownload = ({ chart }: ChartDownloadProps) => {
         />
       ))}
 
-      <Button
+      <button
+        className="govuk-link govuk-body govuk-!-margin-bottom-0 bg-download bg-[left_center] bg-no-repeat pl-5 text-blue hover:bg-download_dark hover:text-dark-blue"
         type="submit"
-        as={DownloadButton}
-        buttonColour={COLOURS.BUTTON_GREY}
-        buttonTextColour={BLACK}
-        buttonShadowColour={BLACK}
-        data-loading={downloading}
       >
-        <IconWrapper>{downloading ? t('downloadingBtn') : t('downloadBtn')}</IconWrapper>
-      </Button>
+        {downloading ? 'Downloading (csv)' : 'Download (csv)'}
+      </button>
     </form>
   )
 }

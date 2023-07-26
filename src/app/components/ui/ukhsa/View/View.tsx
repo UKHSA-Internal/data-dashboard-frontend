@@ -21,7 +21,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
           href="/"
           subMenu={
             <SideNavSubMenu>
-              <SideNavSubMenuLink href="/topics/coronavirus">COVID-19</SideNavSubMenuLink>
+              <SideNavSubMenuLink href="/topics/covid-19">COVID-19</SideNavSubMenuLink>
               <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
               <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
                 Other respiratory viruses

@@ -33,7 +33,7 @@ export async function Chart({ data, size }: ChartProps) {
     } = res
 
     return (
-      <div className="govuk-!-margin-top-4 govuk-!-margin-bottom-2 relative h-[220px] w-full md:min-w-[320px]">
+      <div className="govuk-!-margin-top-4 govuk-!-margin-bottom-6 relative h-[var(--ukhsa-chart-height)] w-full md:min-w-[320px]">
         <Image priority unoptimized alt="" fill sizes="100vw" src={`data:image/svg+xml;utf8,${getChartSvg(chart)}`} />
       </div>
     )

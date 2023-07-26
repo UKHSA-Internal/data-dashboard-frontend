@@ -2,15 +2,13 @@ import 'cypress-axe'
 
 describe('Influenza topic page', () => {
   beforeEach(() => {
-    cy.visit('/choose-topic/influenza')
+    cy.visit('/topics/influenza')
     cy.injectAxe()
   })
 
   it('has no detectable a11y violations', () => {
     cy.checkA11y('html', {
       rules: {
-        'document-title': { enabled: false },
-        'html-has-lang': { enabled: false },
         region: { enabled: false },
       },
     })
@@ -20,16 +18,15 @@ describe('Influenza topic page', () => {
     cy.checkAccordionExists()
   })
 
-  it.skip('displays related links', () => {
+  it('displays related links', () => {
     cy.checkRelatedLinksExist()
   })
 
   it('displays a title, description and last updated date', () => {
-    cy.title().should('eq', 'Influenza')
+    cy.title().should('eq', 'Influenza | UKHSA data dashboard')
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
     cy.findByText(/Last updated on Monday, 15 May 2023/)
     cy.findByText(/Data and insights from the UKHSA on Influenza/)
-    cy.findByRole('link', { name: 'Back' }).should('have.attr', 'href', '/choose-topic')
   })
 
   it('displays all sections correctly', () => {
@@ -49,13 +46,13 @@ describe('Influenza topic page', () => {
     })
 
     cy.findByRole('heading', { name: 'Healthcare', level: 2 }).parent().should('have.focus')
-    cy.url().should('eql', `${Cypress.config().baseUrl}/choose-topic/influenza#healthcare`)
+    cy.url().should('eql', `${Cypress.config().baseUrl}/topics/influenza#healthcare`)
 
     // Heathcare
     cy.findByRole('region', { name: 'Healthcare' }).within(() => {
       // Line chart with overlaying line comparing hospital admission rates of patients admitted to hospital with Influenza
       cy.findByTestId(
-        'column-line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza'
+        'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza-section'
       ).within(() => {
         cy.findByRole('heading', {
           name: 'Line chart with overlaying line comparing hospital admission rates of patients admitted to hospital with Influenza',
@@ -69,7 +66,7 @@ describe('Influenza topic page', () => {
       })
 
       // Line chart comparing Influenza hospital admission rates by age
-      cy.findByTestId('column-line-chart-comparing-influenza-hospital-admission-rates-by-age').within(() => {
+      cy.findByTestId('line-chart-comparing-influenza-hospital-admission-rates-by-age-section').within(() => {
         cy.findByRole('heading', { name: 'Line chart comparing Influenza hospital admission rates by age', level: 3 })
         cy.findByText('Age breakdown of people admitted to hospital, shown as the rate per 100,000 people.')
         cy.findByAltText('')
@@ -78,7 +75,7 @@ describe('Influenza topic page', () => {
 
       // Line chart with overlaying line comparing ICU admission rates of patients admitted to hospital with Influenza
       cy.findByTestId(
-        'column-line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza'
+        'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza-section'
       ).within(() => {
         cy.findByRole('heading', {
           name: 'Line chart with overlaying line comparing ICU admission rates of patients admitted to hospital with Influenza',
@@ -92,7 +89,7 @@ describe('Influenza topic page', () => {
       })
 
       // Line chart comparing Influenza ICU admission rates by age
-      cy.findByTestId('column-line-chart-comparing-influenza-icu-admission-rates-by-age').within(() => {
+      cy.findByTestId('line-chart-comparing-influenza-icu-admission-rates-by-age-section').within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing Influenza ICU admission rates by age',
           level: 3,
@@ -106,7 +103,7 @@ describe('Influenza topic page', () => {
     // Testing
     cy.findByRole('region', { name: 'Testing' }).within(() => {
       // Bar chart with overlaying line comparing positivity for Influenza tests
-      cy.findByTestId('column-bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests').within(() => {
+      cy.findByTestId('bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests-section').within(() => {
         cy.findByRole('heading', {
           name: 'Bar chart with overlaying line comparing positivity for Influenza tests',
           level: 3,
@@ -119,7 +116,7 @@ describe('Influenza topic page', () => {
       })
 
       // Line chart comparing weekly positivity for Influenza tests by age
-      cy.findByTestId('column-line-chart-comparing-weekly-positivity-for-influenza-tests-by-age').within(() => {
+      cy.findByTestId('line-chart-comparing-weekly-positivity-for-influenza-tests-by-age-section').within(() => {
         cy.findByRole('heading', {
           name: 'Line chart comparing weekly positivity for Influenza tests by age',
           level: 3,

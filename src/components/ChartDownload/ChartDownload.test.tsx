@@ -1,23 +1,18 @@
 import userEvent from '@testing-library/user-event'
-import { rest } from 'msw'
 import mockRouter from 'next-router-mock'
 
+import { client } from '@/api/api-utils'
 import type { Chart } from '@/api/models/cms/Page'
-import { server } from '@/api/msw/server'
 import { chartExportApiRoutePath } from '@/config/constants'
 import { render, screen, waitFor } from '@/config/test-utils'
 import { logger } from '@/lib/logger'
-import { downloadFile } from '@/utils/downloadFile'
 
 import { ChartDownload } from './ChartDownload'
 
 jest.mock('next/router', () => require('next-router-mock'))
 jest.mock('@/lib/logger')
 jest.mock('@/utils/downloadFile')
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
+jest.mock('@/api/api-utils')
 
 const chart: Chart = [
   {
@@ -111,11 +106,7 @@ test('Displays the download button correctly', async () => {
 })
 
 test('Downloading the chart', async () => {
-  server.use(
-    rest.post(chartExportApiRoutePath, async (req, res, ctx) => {
-      return res(ctx.delay(100), ctx.status(200))
-    })
-  )
+  const clientApiMock = jest.mocked(client).mockResolvedValueOnce({ data: '', status: 200 })
 
   const user = userEvent.setup()
 
@@ -125,21 +116,31 @@ test('Downloading the chart', async () => {
 
   await user.click(button)
 
-  await screen.findByRole('button', { name: 'Downloading...' })
-
   await waitFor(() => {
-    expect(downloadFile).toHaveBeenCalledWith('data.csv', new Blob())
+    expect(clientApiMock).toHaveBeenCalledWith('/api/chart/export', {
+      body: {
+        format: 'csv',
+        plots: [
+          {
+            chart_type: 'line_with_shaded_section',
+            date_from: null,
+            date_to: null,
+            geography: '',
+            geography_type: '',
+            metric: 'new_cases_daily',
+            stratum: '',
+            topic: 'COVID-19',
+          },
+        ],
+      },
+    })
   })
 
   await screen.findByRole('button', { name: 'Download' })
 })
 
 test('Redirects to the 500 page if the download fails', async () => {
-  server.use(
-    rest.post(chartExportApiRoutePath, async (req, res, ctx) => {
-      return res(ctx.delay(100), ctx.status(500))
-    })
-  )
+  const clientApiMock = jest.mocked(client).mockRejectedValueOnce({ error: new Error('Fail'), status: 500 })
 
   const user = userEvent.setup()
 
@@ -149,9 +150,25 @@ test('Redirects to the 500 page if the download fails', async () => {
 
   await user.click(button)
 
-  await screen.findByRole('button', { name: 'Downloading...' })
-
   await waitFor(() => {
+    expect(clientApiMock).toHaveBeenCalledWith('/api/chart/export', {
+      body: {
+        format: 'csv',
+        plots: [
+          {
+            chart_type: 'line_with_shaded_section',
+            date_from: null,
+            date_to: null,
+            geography: '',
+            geography_type: '',
+            metric: 'new_cases_daily',
+            stratum: '',
+            topic: 'COVID-19',
+          },
+        ],
+      },
+    })
+
     expect(mockRouter.asPath).toEqual('/500')
   })
 

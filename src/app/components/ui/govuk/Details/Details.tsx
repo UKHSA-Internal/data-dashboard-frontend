@@ -11,7 +11,7 @@ export const Details = forwardRef<HTMLDetailsElement, DetailsProps>(({ label, ch
   return (
     <details
       ref={ref}
-      className={clsx('govuk-details govuk-!-margin-top-4 govuk-!-margin-bottom-0', className)}
+      className={clsx('govuk-details govuk-!-margin-top-2 govuk-!-margin-bottom-0', className)}
       data-module="govuk-details"
       {...rest}
     >

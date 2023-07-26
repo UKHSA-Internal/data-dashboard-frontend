@@ -1,59 +1,57 @@
-import axios from 'axios'
-import axiosRetry from 'axios-retry'
+import fetchRetry from 'fetch-retry'
 
 import { getApiBaseUrl } from './requests/helpers'
 
-/**
- * AXIOS CLIENT (Legacy pages dir)
- * This is the API instance which all requests should be initiated from.
- * The Authorization headers and any other common configuration can be set below.
- */
-export const api = axios.create({
-  headers: { Authorization: process.env.API_KEY },
-  responseType: 'json',
-  timeout: 90000,
-})
+const fetch = fetchRetry(global.fetch)
 
-axiosRetry(api, { retries: 3 })
+interface Options {
+  body?: unknown
+  baseUrl?: string
+  headers?: Record<string, string>
+}
 
 /**
- * FETCH CLIENT (New app dir)
- * This is the API instance which all requests should be initiated from.
- * The Authorization headers and any other common configuration can be set below.
+ * Fetch client instance
+ * This is the fetch instance which all requests should be initiated from.
+ * It handles automatic retries and auth headers
  */
-type Options = { body?: unknown; headers?: Record<string, string> }
 
 export function client<T>(
   endpoint: string,
-  { body, ...customConfig }: Options = {}
+  { body, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  return global
-    .fetch(`${getApiBaseUrl()}/${endpoint}`, {
-      method: body ? 'POST' : 'GET',
-      body: body ? JSON.stringify(body) : undefined,
-      ...customConfig,
-      headers: {
-        ...headers,
-        ...customConfig.headers,
-      },
-    })
-    .then(async (response) => {
-      const { status, ok } = response
+  return fetch(`${baseUrl}${baseUrl && '/'}${endpoint}`, {
+    retries: 3,
+    method: body ? 'POST' : 'GET',
+    body: body ? JSON.stringify(body) : undefined,
+    ...customConfig,
+    headers: {
+      ...headers,
+      ...customConfig.headers,
+    },
+  }).then(async (response) => {
+    const { status, ok } = response
 
-      if (ok) {
-        try {
-          const data = await response.json()
+    if (ok) {
+      try {
+        const type = response.headers.get('Content-Type')
+        if (type && !type.includes('application/json')) {
+          const data = await response.text()
           return { data, status }
-        } catch (error) {
-          return { data: null, status }
         }
-      } else {
-        const errorMessage = await response.text()
-        return Promise.reject({ data: null, status, error: new Error(errorMessage) })
+        const data = await response.json()
+        return { data, status }
+      } catch (error) {
+        console.error(error)
+        return { data: null, status }
       }
-    })
+    } else {
+      const errorMessage = await response.text()
+      return Promise.reject({ data: null, status, error: new Error(errorMessage) })
+    }
+  })
 }
 
 /**

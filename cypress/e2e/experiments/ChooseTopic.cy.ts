@@ -2,7 +2,7 @@ import 'cypress-axe'
 
 describe('Choose Topic page', () => {
   beforeEach(() => {
-    cy.visit('/choose-topic')
+    cy.visit('/experiments/choose-topic')
     cy.injectAxe()
   })
 
