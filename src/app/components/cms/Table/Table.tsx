@@ -6,7 +6,7 @@ import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/P
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTabular } from '@/api/requests/tabular/getTabular'
 import { useTranslation } from '@/app/i18n'
-import { parseChartTableData } from '@/components/CMS/Blocks/Chart/utils/parseChartTableData'
+import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
 interface TableProps {
