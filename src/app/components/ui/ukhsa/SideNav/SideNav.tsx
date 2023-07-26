@@ -25,6 +25,9 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
         }
         onClick={handleOpen}
         href="/browse"
+        aria-expanded={menuOpen}
+        aria-controls="ukhsa-sidenav"
+        aria-label={`${menuOpen ? 'Hide' : 'Show'} navigation menu`}
       >
         Menu
       </Link>
@@ -36,6 +39,8 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
             'mb-5 h-auto': menuOpen,
           }
         )}
+        id="ukhsa-sidenav"
+        aria-label="Navigation menu"
       >
         <ul>{children}</ul>
       </nav>

@@ -14,7 +14,7 @@ describe('Navigation', () => {
   it('Displays links', () => {
     cy.visit('/')
 
-    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
+    cy.findByRole('navigation', { name: 'Navigation menu' }).within(() => {
       cy.findByText('Dashboard')
       cy.findByText('COVID-19')
       cy.findByText('Influenza')
