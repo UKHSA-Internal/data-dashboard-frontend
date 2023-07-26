@@ -21,12 +21,12 @@ export const chartTableMaxColumns = {
  */
 export const chartSizes = {
   narrow: {
-    width: 466,
-    height: 235,
+    width: 515,
+    height: 260,
   },
   wide: {
-    width: 1002,
-    height: 237,
+    width: 1100,
+    height: 260,
   },
 } as const
 
