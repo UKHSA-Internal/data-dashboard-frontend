@@ -6,6 +6,7 @@ const nextConfig = {
   i18n,
   output: 'standalone',
   reactStrictMode: true,
+  staticPageGenerationTimeout: 360,
   experimental: {
     appDir: true,
   },
