@@ -93,7 +93,7 @@ interface SideNavSubMenuProps {
 }
 
 export const SideNavSubMenu = ({ children }: SideNavSubMenuProps) => {
-  return <ul className="moj-side-navigation__list govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
+  return <ul className="govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
 }
 
 /**
