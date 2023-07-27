@@ -21,7 +21,7 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
     <>
       <Link
         className={clsx(
-          'ukhsa-chevron govuk-link govuk-link--inverse absolute right-[18px] top-[20px] mb-0 px-2 py-1  md:right-[30px] md:top-[6px] lg:hidden',
+          'ukhsa-chevron govuk-link govuk-link--inverse absolute right-[18px] top-[20px] mb-0 ml-5 px-2 py-1  no-underline md:right-[30px] md:top-[6px] lg:hidden',
           {
             open: menuOpen,
           }

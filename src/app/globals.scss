@@ -72,10 +72,15 @@ body {
     border-right: 2px solid #fff;
     display: inline-block;
     transition: transform 0.2s ease;
-    margin-left: 10px;
+    margin-right: 8px;
   }
 
   &.open:before {
     transform: rotate(225deg);
+  }
+
+  // &:active:before,
+  &:focus:before {
+    border-color: var(--colour-black);
   }
 }
