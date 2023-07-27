@@ -2,7 +2,7 @@ import { BrowseCard } from '../components/ui/ukhsa/BrowseCard/BrowseCard'
 
 export default function Browse() {
   return (
-    <div className="govuk-!-margin-bottom-6">
+    <nav aria-label="Menu" className="govuk-!-margin-bottom-6">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-one-third-from-desktop">
           <BrowseCard
@@ -60,6 +60,6 @@ export default function Browse() {
           />
         </div>
       </div>
-    </div>
+    </nav>
   )
 }
