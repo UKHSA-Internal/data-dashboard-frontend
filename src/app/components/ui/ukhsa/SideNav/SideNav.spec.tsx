@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event'
 import { usePathname } from 'next/navigation'
 
 import { render, screen } from '@/config/test-utils'
@@ -101,4 +102,26 @@ test('SideNavSubMenuLink  with inactive link', () => {
   expect(link).toBeInTheDocument()
   expect(link).toHaveAttribute('href', '/inactive')
   expect(link).not.toHaveAttribute('aria-current', 'page')
+})
+
+test('Mobile menu opens & closes', async () => {
+  window.resizeTo(414, 896)
+
+  render(
+    <SideNav>
+      <>
+        <li>Child 1</li>
+        <li>Child 2</li>
+      </>
+    </SideNav>
+  )
+
+  const link = screen.getByRole('link', { name: 'Show navigation menu', expanded: false })
+  const user = userEvent.setup()
+  expect(link).toBeInTheDocument()
+  expect(link).toHaveAttribute('aria-controls', 'ukhsa-sidenav')
+
+  await user.click(link)
+
+  expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true }))
 })
