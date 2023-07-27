@@ -89,7 +89,7 @@ test('SideNavSubMenuLink  with inactive link', () => {
 })
 
 test('Mobile menu opens & closes', async () => {
-  render(
+  const { getByRole } = render(
     <SideNav>
       <>
         <li>Child 1</li>
@@ -98,21 +98,18 @@ test('Mobile menu opens & closes', async () => {
     </SideNav>
   )
 
-  const link = screen.getByRole('link', { name: 'Show navigation menu', expanded: false })
-  const user = userEvent.setup()
+  const link = getByRole('link', { name: 'Show navigation menu', expanded: false })
   expect(link).toBeInTheDocument()
   expect(link).toHaveAttribute('aria-controls', 'ukhsa-sidenav')
-  expect(screen.getByRole('listitem')).toHaveLength(2)
-  // expect(screen.getByRole('listitem', { text: 'Child 1' } ))
+  expect(getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
 
-  await user.click(link)
+  await userEvent.click(link)
 
-  expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true }))
-  // expect(screen.getAllByRole('listitem')).toHaveLength(2)
-  // expect(screen.getByText('Child 1')).toBeVisible()
+  expect(getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
+  expect(getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
 
-  // await user.click(link)
+  await userEvent.click(link)
 
-  // expect(link).toBeInTheDocument()
-  // expect(screen.getByRole('listitem')).not.toBeVisible()f
+  expect(getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
+  expect(getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
 })
