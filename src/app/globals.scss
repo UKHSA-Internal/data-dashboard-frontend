@@ -60,3 +60,22 @@ body {
   --colour-grey-3: #f3f2f1;
   --colour-grey-4: #f8f8f8;
 }
+
+.ukhsa-chevron {
+  &:before {
+    content: '';
+    height: 8px;
+    width: 8px;
+    top: calc(50% - 4px) !important; // Important required, govuk-button override occuring otherwise
+    transform: rotate(45deg);
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    display: inline-block;
+    transition: transform 0.2s ease;
+    margin-left: 10px;
+  }
+
+  &.open:before {
+    transform: rotate(225deg);
+  }
+}
