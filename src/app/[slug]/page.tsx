@@ -1,12 +1,13 @@
 import { Metadata } from 'next'
 
-import { PageType } from '@/api/requests/cms/getPages'
+import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { logger } from '@/lib/logger'
 
 import { RichText } from '../components/cms'
 import { RelatedLink, RelatedLinks, View } from '../components/ui/ukhsa'
 
-export const revalidate = process.env.NEXT_REVALIDATE_TIME
+export const revalidate = 360
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
@@ -17,6 +18,20 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
     title: seo_title,
     description: search_description,
   }
+}
+
+export async function generateStaticParams() {
+  const pages = await getPages(PageType.Common).catch((err) => {
+    logger.error(err)
+  })
+
+  if (pages && pages.success) {
+    return pages.data.items.map((page) => ({
+      slug: page.meta.slug,
+    }))
+  }
+
+  return []
 }
 
 export default async function CommonPage({ params: { slug } }: { params: { slug: string } }) {

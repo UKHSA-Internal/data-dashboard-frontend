@@ -5,8 +5,8 @@ import { FormEvent, useState } from 'react'
 
 import { client } from '@/api/api-utils'
 import type { Chart } from '@/api/models/cms/Page'
+import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
-import { downloadFile } from '@/utils/downloadFile'
 
 interface DownloadProps {
   chart: Chart
