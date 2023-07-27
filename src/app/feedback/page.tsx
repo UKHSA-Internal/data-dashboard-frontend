@@ -1,8 +1,6 @@
-import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactElement } from 'react'
 
 import { Layout } from '@/components/Layout'
@@ -109,12 +107,4 @@ export default Feedback
 
 Feedback.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
-}
-
-export const getStaticProps: GetStaticProps = async (req) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(req.locale as string, ['common', 'errors'])),
-    },
-  }
 }
