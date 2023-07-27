@@ -20,9 +20,12 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Link
-        className={
-          'govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden'
-        }
+        className={clsx(
+          'ukhsa-chevron govuk-button absolute right-[18px] top-[20px] mb-0 w-[80px] bg-black pl-5 text-white shadow-none md:right-[30px] md:top-[6px] lg:hidden',
+          {
+            open: menuOpen,
+          }
+        )}
         onClick={handleOpen}
         href="/browse"
         aria-expanded={menuOpen}
