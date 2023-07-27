@@ -17,7 +17,7 @@ test('GET /api/heath', async () => {
 
   await health(req, res)
 
-  expect(logger.info).toHaveBeenCalledWith('healthy')
+  expect(logger.info).toHaveBeenCalledWith('GET /api/health - FE is healthy')
   expect(res._getStatusCode()).toBe(200)
   expect(JSON.parse(res._getData())).toEqual({ status: 'ok' })
 })
