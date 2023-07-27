@@ -18,23 +18,19 @@ describe('Smoke tests - Navigating to topic pages', () => {
   })
 
   it('Navigates to the COVID-19 topic page', () => {
-    cy.findByRole('navigation', { name: 'Navigation menu' }).within(() =>
-      cy.findByRole('link', { name: 'COVID-19' }).click()
-    )
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'COVID-19' }).click())
     cy.url().should('include', '/topics/covid-19')
     cy.findByRole('heading', { name: 'COVID-19', level: 1 })
   })
 
   it('Navigates to the Influenza topic page', () => {
-    cy.findByRole('navigation', { name: 'Navigation menu' }).within(() =>
-      cy.findByRole('link', { name: 'Influenza' }).click()
-    )
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'Influenza' }).click())
     cy.url().should('include', '/topics/influenza')
     cy.findByRole('heading', { name: 'Influenza', level: 1 })
   })
 
   it('Navigates to the Other respiratory viruses topic page', () => {
-    cy.findByRole('navigation', { name: 'Navigation menu' }).within(() =>
+    cy.findByRole('navigation', { name: 'Menu' }).within(() =>
       cy.findByRole('link', { name: 'Other respiratory viruses' }).click()
     )
     cy.url().should('include', '/topics/other-respiratory-viruses')
@@ -48,7 +44,7 @@ describe('Smoke tests - non-topic pages', () => {
   })
 
   it('Loads the About page', () => {
-    cy.findByRole('navigation', { name: 'Navigation menu' }).within(() => {
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
       cy.findByText('About').click()
     })
     cy.url().should('include', '/about')
@@ -56,7 +52,7 @@ describe('Smoke tests - non-topic pages', () => {
   })
 
   it("Loads the What's new page", () => {
-    cy.findByRole('navigation', { name: 'Navigation menu' }).within(() => {
+    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
       cy.findByText("What's new").click()
     })
     cy.url().should('include', '/whats-new')

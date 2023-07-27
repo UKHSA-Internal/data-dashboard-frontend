@@ -26,7 +26,7 @@ Cypress.Commands.add('checkLayoutExists', () => {
     cy.findByText(/© Crown copyright/)
   })
 
-  cy.findByRole('navigation', { name: 'Navigation menu' }).within(() => {
+  cy.findByRole('navigation', { name: 'Menu' }).within(() => {
     cy.findByRole('link', { name: 'Dashboard' })
     cy.findByRole('link', { name: 'COVID-19' })
     cy.findByRole('link', { name: 'Influenza' })

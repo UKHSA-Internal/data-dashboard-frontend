@@ -34,13 +34,15 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
 
       <nav
         className={clsx(
-          'sticky top-[20px] mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:h-full',
+          'sticky top-[20px] mt-0 h-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:block lg:h-full',
           {
-            'mb-5 h-auto': menuOpen,
+            hidden: !menuOpen,
+            'mb-5 block h-auto': menuOpen,
           }
         )}
         id="ukhsa-sidenav"
-        aria-label="Navigation menu"
+        aria-label="Menu"
+        hidden={!menuOpen}
       >
         <ul>{children}</ul>
       </nav>
