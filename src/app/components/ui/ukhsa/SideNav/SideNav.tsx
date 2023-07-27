@@ -3,16 +3,52 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { ReactNode } from 'react'
+import { MouseEvent, ReactNode, useState } from 'react'
 
 /**
  * SideNav
  */
 export const SideNav = ({ children }: { children: ReactNode }) => {
+  const [menuOpen, setMenuOpen] = useState(false)
+
+  const handleOpen = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault()
+    setMenuOpen(!menuOpen)
+    return false
+  }
+
   return (
-    <nav className="mt-0 min-w-[var(--ukhsa-side-nav-width)] lg:mt-7" aria-label="Menu">
-      <ul className="">{children}</ul>
-    </nav>
+    <>
+      <Link
+        className={clsx(
+          'ukhsa-chevron govuk-link govuk-link--inverse absolute right-[18px] top-[20px] mb-0 ml-5 px-2 py-1  no-underline motion-reduce:transition-none md:right-[30px] md:top-[6px] lg:hidden',
+          {
+            open: menuOpen,
+          }
+        )}
+        onClick={handleOpen}
+        href="/browse"
+        aria-expanded={menuOpen}
+        aria-controls="ukhsa-sidenav"
+        aria-label={`${menuOpen ? 'Hide' : 'Show'} navigation menu`}
+      >
+        Menu
+      </Link>
+
+      <nav
+        className={clsx(
+          'sticky top-[20px] mt-0 min-w-[var(--ukhsa-side-nav-width)] overflow-hidden lg:mt-7 lg:block lg:h-full',
+          {
+            hidden: !menuOpen,
+            'mb-5': menuOpen,
+          }
+        )}
+        id="ukhsa-sidenav"
+        aria-label="Menu"
+      >
+        <ul>{children}</ul>
+      </nav>
+    </>
   )
 }
 
@@ -57,7 +93,7 @@ interface SideNavSubMenuProps {
 }
 
 export const SideNavSubMenu = ({ children }: SideNavSubMenuProps) => {
-  return <ul className="moj-side-navigation__list govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
+  return <ul className="govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
 }
 
 /**
