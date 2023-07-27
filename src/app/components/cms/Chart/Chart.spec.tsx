@@ -1,3 +1,4 @@
+import { ImageProps } from 'next/image'
 import { ComponentProps, ReactElement } from 'react'
 import { ZodError } from 'zod'
 
@@ -5,6 +6,9 @@ import { getCharts } from '@/api/requests/charts/getCharts'
 import { render } from '@/config/test-utils'
 
 import { Chart } from './Chart'
+
+// eslint-disable-next-line @next/next/no-img-element
+jest.mock('next/image', () => ({ src, alt }: ImageProps) => <img src={src as string} alt={alt} />)
 
 jest.mock('@/api/requests/charts/getCharts')
 const getChartsMock = jest.mocked(getCharts)
