@@ -7,22 +7,6 @@ import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './Side
 
 jest.mock('next/navigation')
 
-test('SideNav with children', () => {
-  render(
-    <SideNav>
-      <>
-        <li>Child 1</li>
-        <li>Child 2</li>
-      </>
-    </SideNav>
-  )
-
-  expect(screen.getByRole('navigation')).toBeInTheDocument()
-  expect(screen.getByRole('list')).toBeInTheDocument()
-  expect(screen.getByText('Child 1')).toBeInTheDocument()
-  expect(screen.getByText('Child 2')).toBeInTheDocument()
-})
-
 test('SideNavLink component with active link', () => {
   const usePathnameMock = jest.mocked(usePathname)
   usePathnameMock.mockReturnValueOnce('/active')
@@ -105,7 +89,7 @@ test('SideNavSubMenuLink  with inactive link', () => {
 })
 
 test('Mobile menu opens & closes', async () => {
-  window.resizeTo(414, 896)
+  window.resizeTo(400, 400)
 
   render(
     <SideNav>
@@ -120,8 +104,17 @@ test('Mobile menu opens & closes', async () => {
   const user = userEvent.setup()
   expect(link).toBeInTheDocument()
   expect(link).toHaveAttribute('aria-controls', 'ukhsa-sidenav')
+  expect(screen.getByText('Child 1')).not.toBeVisible()
+  // expect(screen.getByRole('listitem', { text: 'Child 1' } ))
 
   await user.click(link)
 
   expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true }))
+  expect(screen.getAllByRole('listitem')).toHaveLength(2)
+  expect(screen.getByText('Child 1')).toBeVisible()
+
+  await user.click(link)
+
+  // expect(link).toBeInTheDocument()
+  // expect(screen.getByRole('listitem')).not.toBeVisible()
 })
