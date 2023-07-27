@@ -1,4 +1,6 @@
-import fetchRetry from 'fetch-retry'
+import fetchRetry, { RequestInitWithRetry } from 'fetch-retry'
+
+import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
 import { getApiBaseUrl } from './requests/helpers'
 
@@ -22,16 +24,21 @@ export function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  return fetch(`${baseUrl}${baseUrl && '/'}${endpoint}`, {
+  const fetchOptions: RequestInitWithRetry & { next: Record<string, unknown> } = {
     retries: 3,
     method: body ? 'POST' : 'GET',
+    next: {
+      revalidate: getStaticPropsRevalidateValue(),
+    },
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     headers: {
       ...headers,
       ...customConfig.headers,
     },
-  }).then(async (response) => {
+  }
+
+  return fetch(`${baseUrl}${baseUrl && '/'}${endpoint}`, fetchOptions).then(async (response) => {
     const { status, ok } = response
 
     if (ok) {
