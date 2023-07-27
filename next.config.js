@@ -6,10 +6,9 @@ const nextConfig = {
   i18n,
   output: 'standalone',
   reactStrictMode: true,
-  staticPageGenerationTimeout: 300,
+  staticPageGenerationTimeout: 360,
   experimental: {
     appDir: true,
-    largePageDataBytes: 128 * 100000,
   },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true }
