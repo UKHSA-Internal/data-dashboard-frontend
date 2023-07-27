@@ -5,7 +5,7 @@ import Browse from './page'
 test('Displays browse page content', () => {
   render(<Browse />)
 
-  expect(screen.getByRole('navigation', { name: 'Menu' })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Block Menu' })).toBeInTheDocument()
 
   const dashboard = screen.getByRole('link', { name: 'Dashboard' })
   expect(dashboard).toBeInTheDocument()
