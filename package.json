@@ -19,6 +19,8 @@
   },
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
+    "axios": "^1.4.0",
+    "axios-retry": "^3.6.0",
     "clsx": "^1.2.1",
     "cross-env": "^7.0.3",
     "cypress-axe": "^1.4.0",
