@@ -39,6 +39,7 @@ export const getPages = async (type?: PageType) => {
   if (type) params.set('type', type)
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`GET success pages/?${params.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

@@ -60,6 +60,7 @@ export const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonDa
 export const getPage = async <T extends PageType>(id: number) => {
   try {
     const { data } = await client<PageResponse<T>>(`pages/${id}`)
+    logger.info(`GET success page/${id}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
