@@ -6,7 +6,8 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from './components/ui/ukhsa'
 import { renderSection } from './utils/cms.utils'
 
-export const revalidate = 360
+// https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#segment-cache-configuration
+export const revalidate = 600
 
 export async function generateMetadata(): Promise<Metadata> {
   const {

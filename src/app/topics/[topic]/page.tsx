@@ -7,7 +7,8 @@ import { logger } from '@/lib/logger'
 
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
-export const revalidate = 360
+// https://nextjs.org/docs/app/building-your-application/data-fetching/fetching#segment-cache-configuration
+export const revalidate = 600
 
 export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
   const {

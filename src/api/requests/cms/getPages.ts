@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
@@ -34,14 +35,15 @@ export const responseSchema = z.object({
   }),
 })
 
-export const getPages = async (type?: PageType) => {
+export const getPages = cache(async (type?: PageType) => {
   const params = new URLSearchParams()
   if (type) params.set('type', type)
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`GET success pages/?${params.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
   }
-}
+})

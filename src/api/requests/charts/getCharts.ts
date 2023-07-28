@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
@@ -38,7 +39,7 @@ export const responseSchema = z.object({
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getCharts = async (chart: RequestParams) => {
+export const getCharts = cache(async (chart: RequestParams) => {
   const { plots, x_axis, y_axis, chart_width, chart_height } = chart
 
   const body: RequestParams = {
@@ -52,9 +53,10 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body })
+    logger.info('POST success charts/v3')
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
   }
-}
+})

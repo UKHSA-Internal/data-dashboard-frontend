@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
@@ -34,13 +35,14 @@ export const responseSchema = z.array(
 type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
-export const getTabular = async (plots: RequestParams['plots']) => {
+export const getTabular = cache(async (plots: RequestParams['plots']) => {
   try {
     const body: RequestParams = { plots }
     const { data } = await client<Response>('tables/v2', { body })
+    logger.info('POST success tables/v2')
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
   }
-}
+})

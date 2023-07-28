@@ -1,4 +1,4 @@
-import fetchRetry, { RequestInitWithRetry } from 'fetch-retry'
+import fetchRetry from 'fetch-retry'
 
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 
@@ -18,15 +18,13 @@ interface Options {
  * It handles automatic retries and auth headers
  */
 
-export function client<T>(
-  endpoint: string,
-  { body, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
-): Promise<{ data: T | null; status: number; error?: Error }> {
+export async function client<T>(endpoint: string, { body, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}) {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const fetchOptions: RequestInitWithRetry & { next: Record<string, unknown> } = {
+  const fetchOptions: Record<string, unknown> = {
     retries: 3,
     method: body ? 'POST' : 'GET',
+    keepalive: true,
     next: {
       revalidate: getStaticPropsRevalidateValue(),
     },
@@ -38,7 +36,9 @@ export function client<T>(
     },
   }
 
-  return fetch(`${baseUrl}${baseUrl && '/'}${endpoint}`, fetchOptions).then(async (response) => {
+  const url = `${baseUrl}${baseUrl && '/'}${endpoint}`
+
+  return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok } = response
 
     if (ok) {
@@ -51,12 +51,10 @@ export function client<T>(
         const data = await response.json()
         return { data, status }
       } catch (error) {
-        console.error(error)
-        return { data: null, status }
+        return Promise.reject(JSON.stringify(response))
       }
     } else {
-      const errorMessage = await response.text()
-      return Promise.reject({ data: null, status, error: new Error(errorMessage) })
+      return Promise.reject({ path: url, status, error: response.statusText })
     }
   })
 }

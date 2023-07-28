@@ -1,3 +1,4 @@
+import { cache } from 'react'
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
@@ -57,12 +58,13 @@ const WithCommonData = SharedPageData.extend({
 
 export const responseSchema = z.union([WithHomeData, WithTopicData, WithCommonData])
 
-export const getPage = async <T extends PageType>(id: number) => {
+export const getPage = cache(async <T extends PageType>(id: number) => {
   try {
     const { data } = await client<PageResponse<T>>(`pages/${id}`)
+    logger.info(`GET success page/${id}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
   }
-}
+})

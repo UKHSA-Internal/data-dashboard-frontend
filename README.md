@@ -2,7 +2,15 @@ This is a [Next.js](https://nextjs.org/) project built using the [GOV.UK Fronten
 
 ## Getting Started
 
-First, run the development server:
+First, install the dependencies
+
+```bash
+npm i --legacy-peer-deps
+```
+
+Note: --legacy-peer-deps flag is needed whilst we're using the canary version of React. This can hopefully be removed when React 18.3.0 is released.
+
+Then, run the development server:
 
 ```bash
 npm run dev

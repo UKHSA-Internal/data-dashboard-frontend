@@ -34,9 +34,9 @@
     "next-seo": "^6.0.0",
     "normalize.css": "^8.0.1",
     "pino": "^8.12.1",
-    "react": "^18.2.0",
+    "react": "^18.3.0-canary-9377e1010-20230712",
     "react-accessible-accordion": "^5.0.0",
-    "react-dom": "^18.2.0",
+    "react-dom": "^18.3.0-canary-9377e1010-20230712",
     "react-i18next": "^12.2.0",
     "react-markdown": "^8.0.7",
     "rehype-raw": "^6.1.1",
@@ -46,6 +46,10 @@
     "zod": "^3.21.4",
     "zod-error": "^1.5.0",
     "zustand": "^4.3.7"
+  },
+  "resolutions": {
+    "react": "react@18.2.0",
+    "react-dom": "react-dom@18.2.0"
   },
   "devDependencies": {
     "@testing-library/cypress": "^9.0.0",
@@ -58,8 +62,8 @@
     "@types/lodash": "^4.14.195",
     "@types/module-alias": "^2.0.1",
     "@types/node": "^18.16.0",
-    "@types/react": "^18.2.12",
-    "@types/react-dom": "^18.2.5",
+    "@types/react": "^18.2.17",
+    "@types/react-dom": "^18.2.7",
     "@types/styled-components": "^5.1.26",
     "@types/testing-library__cypress": "^5.0.9",
     "@types/testing-library__jest-dom": "^5.14.5",
