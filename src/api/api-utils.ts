@@ -1,6 +1,6 @@
-import fetchRetry from 'fetch-retry'
+import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
 
-import { getStaticPropsRevalidateValue } from '@/config/app-utils'
+import { logger } from '@/lib/logger'
 
 import { getApiBaseUrl } from './requests/helpers'
 
@@ -24,12 +24,19 @@ export function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const fetchOptions: Record<string, unknown> = {
+  const fetchOptions: RequestInitRetryParams & Record<string, unknown> = {
     retries: 3,
     method: body ? 'POST' : 'GET',
-    keepalive: true,
+    retryOn(attempt, error, response) {
+      if (response?.status === 504 && attempt < 3) {
+        logger.info(`Fetch failed with 504 gateway timeout - ${JSON.stringify(body)}`)
+        return true
+      }
+      return false
+    },
     next: {
-      revalidate: getStaticPropsRevalidateValue(),
+      // revalidate: getStaticPropsRevalidateValue(),
+      revalidate: 1800,
     },
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
