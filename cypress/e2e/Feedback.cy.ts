@@ -1,6 +1,6 @@
 import 'cypress-axe'
 
-describe('', () => {
+describe('Feedback', () => {
   beforeEach(() => {
     cy.visit('/feedback')
     cy.injectAxe()
