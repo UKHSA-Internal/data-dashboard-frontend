@@ -1,6 +1,6 @@
+import { loadEnvConfig } from '@next/env'
 import { defineConfig } from 'cypress'
 import { rmdir } from 'fs'
-import { loadEnvConfig } from '@next/env'
 
 const { combinedEnv } = loadEnvConfig(process.cwd())
 
@@ -10,6 +10,8 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
     video: false,
+    viewportHeight: 1080,
+    viewportWidth: 1920,
     setupNodeEvents(on) {
       on('task', {
         deleteFolder(folderName) {
