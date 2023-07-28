@@ -30,6 +30,8 @@ ENV API_URL $API_URL
 ARG API_KEY
 ENV API_KEY $API_KEY
 
+ENV KEEP_ALIVE_TIMEOUT 61
+
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -62,6 +64,8 @@ ENV API_URL $API_URL
 
 ARG API_KEY
 ENV API_KEY $API_KEY
+
+ENV KEEP_ALIVE_TIMEOUT 60
 
 EXPOSE 3000
 

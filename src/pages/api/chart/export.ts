@@ -13,10 +13,12 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     return res.status(405)
   }
 
-  const plots = Array.isArray(req.body.plots) ? req.body.plots : [JSON.parse(req.body.plots)]
+  const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
+
+  const plots = Array.isArray(body.plots) ? body.plots : [body.plots]
 
   const params = requestSchema.safeParse({
-    file_format: req.body.format,
+    file_format: body.format,
     plots,
   })
 
