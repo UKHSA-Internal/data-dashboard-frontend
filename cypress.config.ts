@@ -11,6 +11,8 @@ export default defineConfig({
     baseUrl: 'http://localhost:3000',
     defaultCommandTimeout: 10000,
     video: false,
+    viewportHeight: 1080,
+    viewportWidth: 1920,
     setupNodeEvents(on) {
       on('task', {
         deleteFolder(folderName) {
