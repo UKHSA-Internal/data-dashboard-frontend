@@ -38,6 +38,7 @@ export const getTabular = async (plots: RequestParams['plots']) => {
   try {
     const body: RequestParams = { plots }
     const { data } = await client<Response>('tables/v2', { body })
+    logger.info('POST success tables/v2')
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
