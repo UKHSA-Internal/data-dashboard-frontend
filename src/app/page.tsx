@@ -4,9 +4,8 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
 import { RelatedLink, RelatedLinks, View } from './components/ui/ukhsa'
+import { warmChartCache } from './utils/cache.utils'
 import { renderSection } from './utils/cms.utils'
-
-export const revalidate = 360
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
@@ -26,6 +25,8 @@ export default async function HomePage() {
     page_description: description,
     related_links: relatedLinks,
   } = await getPageBySlug('respiratory-viruses', PageType.Home)
+
+  await warmChartCache<PageType.Home>(body)
 
   return (
     <View heading={title} description={description} showWelcome>
