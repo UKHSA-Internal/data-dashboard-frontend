@@ -7,8 +7,6 @@ import { logger } from '@/lib/logger'
 import { RichText } from '../components/cms'
 import { RelatedLink, RelatedLinks, View } from '../components/ui/ukhsa'
 
-export const revalidate = 360
-
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
