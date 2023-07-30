@@ -15,10 +15,10 @@ test('Shows confirmation page', async () => {
   ).toBeInTheDocument()
   expect(
     screen.getByText(
-      "We're constantly looking to improve our users' experience of the dashboard. If you'd like to share your thoughts further, please get in touch with our user research team at"
+      /We're constantly looking to improve our users' experience of the dashboard. If you'd like to share your thoughts further, please get in touch with our user research team at/
     )
   ).toBeInTheDocument()
-  expect(screen.getByText('researchteam.dpd@ukhsa.gov.uk')).toHaveAttribute(
+  expect(screen.getByRole('link', { name: /researchteam.dpd@ukhsa.gov.uk/ })).toHaveAttribute(
     'href',
     'mailto:researchteam.dpd@ukhsa.gov.uk'
   )

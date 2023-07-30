@@ -1,4 +1,4 @@
-import formatters from 'config/i18n/formatters'
+import formatters from '../../../config/i18n/formatters'
 
 /* eslint-disable @typescript-eslint/no-var-requires */
 export const fallbackLng = 'en'
