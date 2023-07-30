@@ -1,12 +1,20 @@
+import formatters from 'config/i18n/formatters'
+
+/* eslint-disable @typescript-eslint/no-var-requires */
 export const fallbackLng = 'en'
 export const languages = [fallbackLng]
 export const defaultNS = 'common'
 
-import pagesDirConfig from '../../../next-i18next.config.js'
-
 export function getOptions(lng = fallbackLng, ns = defaultNS) {
   return {
-    ...pagesDirConfig,
+    // https://www.i18next.com/overview/configuration-options#logging
+    // Set debug to true to enable detailed logs in the terminal
+    debug: false,
+    reloadOnPrerender: process.env.NODE_ENV === 'development',
+    localePath: typeof window === 'undefined' ? require('path').resolve('./public/locales') : '/locales',
+    interpolation: {
+      format: formatters,
+    },
     supportedLngs: languages,
     fallbackLng,
     lng,

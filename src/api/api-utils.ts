@@ -1,6 +1,6 @@
 import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
 
-import { getStaticPropsRevalidateValue } from '@/app/utils/app.utils'
+import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 
 import { getApiBaseUrl } from './requests/helpers'
@@ -30,7 +30,7 @@ export function client<T>(
     method: body ? 'POST' : 'GET',
     retryOn(attempt, error, response) {
       if (response?.status === 504 && attempt < 3) {
-        logger.info(`Fetch failed with 504 gateway timeout - ${JSON.stringify(body)}`)
+        logger.info(`504 gateway timeout - ${endpoint} - ${JSON.stringify(body)}`)
         return true
       }
       return false
