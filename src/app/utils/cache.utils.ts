@@ -1,6 +1,7 @@
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { getTabular } from '@/api/requests/tabular/getTabular'
 import { chartSizes } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
@@ -21,12 +22,11 @@ export async function warmChartCache<T extends PageType.Home | PageType.Topic>(
         const size = card.value.columns.length === 1 ? 'wide' : 'narrow'
 
         for (const column of card.value.columns) {
-          logger.info(`Prewarm cache for chart: ${JSON.stringify(column.value)}`)
-
           const { chart, x_axis, y_axis } = column.value
 
           const plots = chart.map((plot) => plot.value)
 
+          logger.info(`Pre-warming cache for chart: ${column.value.title}`)
           await getCharts({
             plots,
             x_axis,
@@ -34,6 +34,9 @@ export async function warmChartCache<T extends PageType.Home | PageType.Topic>(
             chart_width: chartSizes[size].width,
             chart_height: chartSizes[size].height,
           })
+
+          logger.info(`Pre-warming cache for table: ${column.value.title}`)
+          await getTabular(plots)
         }
       }
     }

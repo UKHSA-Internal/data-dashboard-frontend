@@ -1,16 +1,10 @@
-import { GetStaticPropsContext } from 'next'
-
 import { render, screen } from '@/config/test-utils'
-import FeedbackConfirmation, { getStaticProps } from '@/pages/feedback/confirmation'
+import FeedbackConfirmation from '@/pages/feedback/confirmation'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
 test('Shows confirmation page', async () => {
-  const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
-    props: Record<string, never>
-  }
-
-  render(FeedbackConfirmation.getLayout(<FeedbackConfirmation {...props} />))
+  render(FeedbackConfirmation.getLayout(<FeedbackConfirmation />))
 
   expect(screen.getByRole('heading', { name: 'Form submitted', level: 1 })).toBeInTheDocument()
   expect(screen.getByText('Thank you for your feedback')).toBeInTheDocument()

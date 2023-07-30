@@ -1,17 +1,12 @@
-import { GetStaticPropsContext } from 'next'
 import mockRouter from 'next-router-mock'
 
 import { render, screen, within } from '@/config/test-utils'
-import Feedback, { getStaticProps } from '@/pages/feedback'
+import Feedback from '@/pages/feedback'
 
 jest.mock('next/router', () => require('next-router-mock'))
 
 test('Questions showing correctly', async () => {
-  const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
-    props: Record<string, never>
-  }
-
-  render(Feedback.getLayout(<Feedback {...props} />))
+  render(Feedback.getLayout(<Feedback />))
 
   expect(screen.getByRole('heading', { name: 'UKHSA data dashboard feedback', level: 1 })).toBeInTheDocument()
   expect(
@@ -33,11 +28,7 @@ test('Questions showing correctly', async () => {
 test('Shows an error after the api redirects with a generic server error', async () => {
   mockRouter.push('feedback/?error=1')
 
-  const { props } = (await getStaticProps({ locale: 'en' } as GetStaticPropsContext)) as {
-    props: Record<string, never>
-  }
-
-  const { getByRole } = render(Feedback.getLayout(<Feedback {...props} />))
+  const { getByRole } = render(Feedback.getLayout(<Feedback />))
 
   const alert = getByRole('alert')
   expect(alert).toBeInTheDocument()
