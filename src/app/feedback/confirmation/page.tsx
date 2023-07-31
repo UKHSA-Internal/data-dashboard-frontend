@@ -1,10 +1,12 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
-import { ReactElement } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { Layout } from '@/components/Layout'
-
 import { useTranslation } from '../../i18n'
+
+export const metadata: Metadata = {
+  title: 'Feedback Confirmation | UKHSA data dashboard',
+}
 
 export default async function FeedbackConfirmation() {
   const { t } = await useTranslation('common')
@@ -28,8 +30,4 @@ export default async function FeedbackConfirmation() {
       </div>
     </div>
   )
-}
-
-FeedbackConfirmation.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
 }

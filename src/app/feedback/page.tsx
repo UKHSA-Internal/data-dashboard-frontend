@@ -1,11 +1,16 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 
 import { useTranslation } from '../i18n'
 
-export default async function Feedback({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+export const metadata: Metadata = {
+  title: 'Feedback | UKHSA data dashboard',
+}
+
+export default async function Feedback({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
   const { t } = await useTranslation('common')
 
-  const hasServerError = !!searchParams['error']
+  const hasServerError = searchParams && !!searchParams['error']
 
   return (
     <div className="govuk-grid-row">

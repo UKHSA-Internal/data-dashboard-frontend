@@ -1,4 +1,10 @@
+import { Metadata } from 'next'
+
 import { BrowseCard } from '../components/ui/ukhsa/BrowseCard/BrowseCard'
+
+export const metadata: Metadata = {
+  title: 'Browse | UKHSA data dashboard',
+}
 
 export default function Browse() {
   return (

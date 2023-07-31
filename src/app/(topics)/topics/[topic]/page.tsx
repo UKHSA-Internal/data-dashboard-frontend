@@ -5,7 +5,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { renderCard } from '@/app/utils/cms.utils'
 import { logger } from '@/lib/logger'
 
-import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
+import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../../components/ui/ukhsa'
 
 export const revalidate = 360
 
