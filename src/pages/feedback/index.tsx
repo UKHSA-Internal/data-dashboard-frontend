@@ -1,14 +1,10 @@
-import { GetStaticProps } from 'next'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactElement } from 'react'
 
 import { Layout } from '@/components/Layout'
 
 const Feedback = () => {
-  const { t } = useTranslation('common')
   const { query } = useRouter()
 
   const hasServerError = !!query.error
@@ -97,7 +93,7 @@ const Feedback = () => {
             Submit
           </button>
           <Link className="govuk-link govuk-link--no-visited-state" href="/">
-            {t('returnToHomeBtn')}
+            Return to home page
           </Link>
         </div>
       </form>
@@ -109,12 +105,4 @@ export default Feedback
 
 Feedback.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
-}
-
-export const getStaticProps: GetStaticProps = async (req) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(req.locale as string, ['common', 'errors'])),
-    },
-  }
 }
