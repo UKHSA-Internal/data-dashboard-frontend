@@ -96,7 +96,7 @@ export default async function Feedback({ searchParams }: { searchParams?: { [key
             Submit
           </button>
           <Link className="govuk-link govuk-link--no-visited-state" href="/">
-            {t('returnToHomeBtn')}
+            Return to home page
           </Link>
         </div>
       </form>

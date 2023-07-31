@@ -15,8 +15,8 @@ export default async function FeedbackConfirmation() {
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds">
         <div className="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
-          <h1 className="govuk-panel__title">{t('feedback.confirmation.title')}</h1>
-          <div className="govuk-panel__body">{t('feedback.confirmation.subtitle')}</div>
+          <h1 className="govuk-panel__title">Form submitted</h1>
+          <div className="govuk-panel__body">Thank you for your feedback</div>
         </div>
         <Trans i18nKey="feedback.confirmation.message" t={t}>
           <p></p>
@@ -25,7 +25,7 @@ export default async function FeedbackConfirmation() {
           </p>
         </Trans>
         <Link href="/" className="govuk-link--no-visited-state govuk-!-margin-top-2 govuk-body inline-block">
-          {t('returnToHomeBtn')}
+          Return to home page
         </Link>
       </div>
     </div>
