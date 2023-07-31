@@ -1,5 +1,6 @@
-import FeedbackConfirmation from '@/app/feedback/confirmation/page'
 import { render, screen } from '@/config/test-utils'
+
+import FeedbackConfirmation from './page'
 
 jest.mock('next/router', () => require('next-router-mock'))
 

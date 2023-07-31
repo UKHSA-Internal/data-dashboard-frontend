@@ -1,6 +1,7 @@
-import fetchRetry, { RequestInitWithRetry } from 'fetch-retry'
+import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
 
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
+import { logger } from '@/lib/logger'
 
 import { getApiBaseUrl } from './requests/helpers'
 
@@ -24,9 +25,16 @@ export function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const fetchOptions: RequestInitWithRetry & { next: Record<string, unknown> } = {
+  const fetchOptions: RequestInitRetryParams & Record<string, unknown> = {
     retries: 3,
     method: body ? 'POST' : 'GET',
+    retryOn(attempt, error, response) {
+      if (response?.status === 504 && attempt < 3) {
+        logger.info(`504 gateway timeout - ${endpoint} - ${JSON.stringify(body)}`)
+        return true
+      }
+      return false
+    },
     next: {
       revalidate: getStaticPropsRevalidateValue(),
     },
@@ -38,7 +46,9 @@ export function client<T>(
     },
   }
 
-  return fetch(`${baseUrl}${baseUrl && '/'}${endpoint}`, fetchOptions).then(async (response) => {
+  const url = `${baseUrl}${baseUrl && '/'}${endpoint}`
+
+  return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok } = response
 
     if (ok) {
@@ -51,12 +61,10 @@ export function client<T>(
         const data = await response.json()
         return { data, status }
       } catch (error) {
-        console.error(error)
-        return { data: null, status }
+        return Promise.reject(JSON.stringify(response))
       }
     } else {
-      const errorMessage = await response.text()
-      return Promise.reject({ data: null, status, error: new Error(errorMessage) })
+      return Promise.reject({ path: url, status, error: response.statusText })
     }
   })
 }

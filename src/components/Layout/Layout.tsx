@@ -1,6 +1,5 @@
 import { Page, PhaseBanner } from 'govuk-react'
 import Link from 'next/link'
-import { Trans, useTranslation } from 'next-i18next'
 import { PropsWithChildren, ReactNode, useEffect } from 'react'
 
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
@@ -15,8 +14,6 @@ export const Layout = ({
   scrollToTop,
   backLink,
 }: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
-  const { t } = useTranslation('common')
-
   useEffect(() => {
     document.body.classList.add('js-enabled')
   }, [])
@@ -27,11 +24,13 @@ export const Layout = ({
         beforeChildren={
           <>
             <PhaseBanner level="alpha" data-testid="phase-banner-content">
-              <Trans t={t} i18nKey="feedbackBanner">
-                <span>
-                  <Link href="/feedback" className="govuk-link--no-visited-state"></Link>
-                </span>
-              </Trans>
+              <span>
+                This is a new service - your{' '}
+                <Link href="/feedback" className="govuk-link--no-visited-state">
+                  feedback
+                </Link>{' '}
+                will help us to improve it.
+              </span>
             </PhaseBanner>
             {backLink && (
               <Link href={backLink} className="govuk-back-link govuk-!-margin-bottom-1">
@@ -40,7 +39,7 @@ export const Layout = ({
             )}
           </>
         }
-        header={<TopNav serviceTitle={<TopNavLink href="/">{t('serviceTitle')}</TopNavLink>} />}
+        header={<TopNav serviceTitle={<TopNavLink href="/">UKHSA data dashboard</TopNavLink>} />}
         main={Main}
         container={Container}
       >
