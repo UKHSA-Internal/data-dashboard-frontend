@@ -8,6 +8,8 @@ import { logger } from '@/lib/logger'
 
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
+export const revalidate = 360
+
 export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
