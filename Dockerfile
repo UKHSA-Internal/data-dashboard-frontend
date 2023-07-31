@@ -30,8 +30,6 @@ ENV API_URL $API_URL
 ARG API_KEY
 ENV API_KEY $API_KEY
 
-ENV KEEP_ALIVE_TIMEOUT 61
-
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -53,7 +51,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
-COPY --from=builder /app/next-i18next.config.js ./next-i18next.config.js
 COPY --from=builder /app/.env.production ./
 
 USER nextjs
@@ -65,7 +62,7 @@ ENV API_URL $API_URL
 ARG API_KEY
 ENV API_KEY $API_KEY
 
-ENV KEEP_ALIVE_TIMEOUT 60
+ENV KEEP_ALIVE_TIMEOUT 5
 
 EXPOSE 3000
 
