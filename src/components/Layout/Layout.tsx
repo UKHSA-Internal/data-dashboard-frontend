@@ -1,3 +1,5 @@
+'use client'
+
 import { Page, PhaseBanner } from 'govuk-react'
 import Link from 'next/link'
 import { Trans, useTranslation } from 'next-i18next'
@@ -6,7 +8,6 @@ import { PropsWithChildren, ReactNode, useEffect } from 'react'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 
 import { Footer } from '../Footer'
-import { ScrollToTop } from '../ScrollToTop'
 import { Main, TopNav, TopNavLink } from './Layout.styles'
 
 const Container = ({ children }: { children: ReactNode }) => <div className="govuk-width-container">{children}</div>
@@ -65,10 +66,7 @@ export const Layout = ({
             <SideNavLink href="/about">About</SideNavLink>
             <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
           </SideNav>
-          <div className="w-full">
-            {children}
-            {scrollToTop && <ScrollToTop />}
-          </div>
+          <div className="w-full">{children}</div>
         </div>
       </Page>
       <Footer />

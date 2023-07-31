@@ -1,15 +1,11 @@
 import Link from 'next/link'
-import { useRouter } from 'next/router'
-import { useTranslation } from 'next-i18next'
-import { ReactElement } from 'react'
 
-import { Layout } from '@/components/Layout'
+import { useTranslation } from '../i18n'
 
-const Feedback = () => {
-  const { t } = useTranslation('common')
-  const { query } = useRouter()
+export default async function Feedback({ searchParams }: { searchParams: { [key: string]: string | undefined } }) {
+  const { t } = await useTranslation('common')
 
-  const hasServerError = !!query.error
+  const hasServerError = !!searchParams['error']
 
   return (
     <div className="govuk-grid-row">
@@ -101,10 +97,4 @@ const Feedback = () => {
       </form>
     </div>
   )
-}
-
-export default Feedback
-
-Feedback.getLayout = function getLayout(page: ReactElement) {
-  return <Layout>{page}</Layout>
 }
