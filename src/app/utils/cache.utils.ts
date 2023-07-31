@@ -13,7 +13,7 @@ import { logger } from '@/lib/logger'
  * send the heaviest calls and populate NextJs' fetch cache. Subsequent async fetch requests
  * in the RSC will have a cache hit.
  */
-export async function warmChartCache<T extends PageType.Home | PageType.Topic>(
+export async function warmStaticCache<T extends PageType.Home | PageType.Topic>(
   body: Awaited<ReturnType<typeof getPageBySlug<T>>>['body']
 ) {
   for (const section of body) {
