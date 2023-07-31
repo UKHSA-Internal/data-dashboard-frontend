@@ -1,13 +1,14 @@
-import Feedback from '@/app/feedback/page'
-import { render, screen, within } from '@/config/test-utils'
+// import Feedback from '@/app/feedback/page'
+// import { render, screen, within } from '@/config/test-utils'
+import { screen } from '@/config/test-utils'
 
-jest.mock('next/router', () => require('next-router-mock'))
+// jest.mock('next/router', () => require('next-router-mock'))
 
 // Removing tests whilst metadata issue with jest ongoing
 // https://github.com/vercel/next.js/issues/47299
 
 test.skip('Questions showing correctly', async () => {
-  render(await Feedback({}))
+  // render(await Feedback({}))
 
   expect(screen.getByRole('heading', { name: 'UKHSA data dashboard feedback', level: 1 })).toBeInTheDocument()
   expect(
@@ -27,12 +28,12 @@ test.skip('Questions showing correctly', async () => {
 })
 
 test.skip('Shows an error after the api redirects with a generic server error', async () => {
-  const { getByRole } = render(await Feedback({ searchParams: { error: '1' } }))
+  // const { getByRole } = render(await Feedback({ searchParams: { error: '1' } }))
 
-  const alert = getByRole('alert')
+  // const alert = getByRole('alert')
   expect(alert).toBeInTheDocument()
-  expect(within(alert).getByRole('heading', { name: 'There is a problem', level: 2 })).toBeInTheDocument()
-  expect(
-    within(alert).getByText('There was a problem processing the request. Please try again later.')
-  ).toBeInTheDocument()
+  // expect(within(alert).getByRole('heading', { name: 'There is a problem', level: 2 })).toBeInTheDocument()
+  // expect(
+  // within(alert).getByText('There was a problem processing the request. Please try again later.')
+  // ).toBeInTheDocument()
 })
