@@ -2,9 +2,8 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-
-import { RelatedLink, RelatedLinks, View } from '../components/ui/ukhsa'
-import { renderSection } from '../utils/cms.utils'
+import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { renderSection } from '@/app/utils/cms.utils'
 
 export const revalidate = 360
 

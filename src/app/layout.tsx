@@ -73,7 +73,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="govuk-width-container">
           <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content" role="main">
             {children}
-            {/* <BackToTop label={t('backToTop')} /> */}
           </main>
         </div>
         <footer className="govuk-footer" role="contentinfo">

@@ -2,10 +2,9 @@ import { Metadata } from 'next'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { RichText } from '@/app/components/cms'
+import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { logger } from '@/lib/logger'
-
-import { RichText } from '../../components/cms'
-import { RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
 export const revalidate = 360
 
