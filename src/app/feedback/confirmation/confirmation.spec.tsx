@@ -1,6 +1,6 @@
-import { render, screen } from '@/config/test-utils'
+import { screen } from '@/config/test-utils'
 
-import FeedbackConfirmation from './page'
+// import FeedbackConfirmation from './page'
 
 // Removing tests whilst metadata issue with jest ongoing
 // https://github.com/vercel/next.js/issues/47299
@@ -8,7 +8,7 @@ import FeedbackConfirmation from './page'
 jest.mock('next/router', () => require('next-router-mock'))
 
 test.skip('Shows confirmation page', async () => {
-  render(await FeedbackConfirmation())
+  // render(await FeedbackConfirmation())
 
   expect(screen.getByRole('heading', { name: 'Form submitted', level: 1 })).toBeInTheDocument()
   expect(screen.getByText('Thank you for your feedback')).toBeInTheDocument()
