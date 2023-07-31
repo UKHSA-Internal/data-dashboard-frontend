@@ -4,8 +4,8 @@ import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { logger } from '@/lib/logger'
 
-import { RichText } from '../components/cms'
-import { RelatedLink, RelatedLinks, View } from '../components/ui/ukhsa'
+import { RichText } from '../../components/cms'
+import { RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
 export const revalidate = 360
 

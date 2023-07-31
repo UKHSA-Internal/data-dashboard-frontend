@@ -1,13 +1,13 @@
-import { GetStaticProps } from 'next'
 import Link from 'next/link'
-import { Trans, useTranslation } from 'next-i18next'
-import { serverSideTranslations } from 'next-i18next/serverSideTranslations'
 import { ReactElement } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Layout } from '@/components/Layout'
 
-const FeedbackConfirmation = () => {
-  const { t } = useTranslation('common')
+import { useTranslation } from '../../i18n'
+
+export default async function FeedbackConfirmation() {
+  const { t } = await useTranslation('common')
 
   return (
     <div className="govuk-grid-row">
@@ -16,7 +16,7 @@ const FeedbackConfirmation = () => {
           <h1 className="govuk-panel__title">{t('feedback.confirmation.title')}</h1>
           <div className="govuk-panel__body">{t('feedback.confirmation.subtitle')}</div>
         </div>
-        <Trans i18nKey="feedback.confirmation.message">
+        <Trans i18nKey="feedback.confirmation.message" t={t}>
           <p></p>
           <p>
             <a className="govuk-link--no-visited-state" href="mailto:researchteam.dpd@ukhsa.gov.uk"></a>
@@ -30,16 +30,6 @@ const FeedbackConfirmation = () => {
   )
 }
 
-export default FeedbackConfirmation
-
 FeedbackConfirmation.getLayout = function getLayout(page: ReactElement) {
   return <Layout>{page}</Layout>
-}
-
-export const getStaticProps: GetStaticProps = async (req) => {
-  return {
-    props: {
-      ...(await serverSideTranslations(req.locale as string, ['common', 'errors'])),
-    },
-  }
 }

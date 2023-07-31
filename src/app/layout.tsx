@@ -7,7 +7,6 @@ import './globals.scss'
 import Link from 'next/link'
 import Script from 'next/script'
 
-import { BackToTop } from './components/ui/ukhsa'
 import { useTranslation } from './i18n'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -74,7 +73,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <div className="govuk-width-container">
           <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content" role="main">
             {children}
-            <BackToTop label={t('backToTop')} />
+            {/* <BackToTop label={t('backToTop')} /> */}
           </main>
         </div>
         <footer className="govuk-footer" role="contentinfo">
