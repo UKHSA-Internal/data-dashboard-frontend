@@ -7,6 +7,8 @@ import { RelatedLink, RelatedLinks, View } from './components/ui/ukhsa'
 import { warmStaticCache } from './utils/cache.utils'
 import { renderSection } from './utils/cms.utils'
 
+export const revalidate = 360
+
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
