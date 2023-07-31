@@ -1,5 +1,3 @@
-'use client'
-
 import { Page, PhaseBanner } from 'govuk-react'
 import Link from 'next/link'
 import { Trans, useTranslation } from 'next-i18next'

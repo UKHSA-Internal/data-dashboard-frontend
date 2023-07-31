@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 export default async function Feedback({ searchParams }: { searchParams?: { [key: string]: string | undefined } }) {
   const { t } = await useTranslation('common')
 
-  const hasServerError = searchParams && !!searchParams['error']
+  const hasServerError = searchParams && !!searchParams.error
 
   return (
     <div className="govuk-grid-row">
