@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { warmChartCache } from '@/app/utils/cache.utils'
+import { warmStaticCache } from '@/app/utils/cache.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { logger } from '@/lib/logger'
 
@@ -42,7 +42,7 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
     related_links: relatedLinks,
   } = await getPageBySlug(topic, PageType.Topic)
 
-  await warmChartCache<PageType.Topic>(body)
+  await warmStaticCache<PageType.Topic>(body)
 
   return (
     <View heading={title} description={description} lastUpdated={lastUpdated}>
