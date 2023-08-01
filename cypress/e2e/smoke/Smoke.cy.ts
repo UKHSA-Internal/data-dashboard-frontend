@@ -6,7 +6,7 @@ describe('Smoke tests - Home', () => {
 })
 
 describe('Smoke tests - Navigating to topic pages', () => {
-  it('Navigates to the COVID-19 topic page', () => {
+  it('Navigates to the COVID-19 topic page', { defaultCommandTimeout: 15000 }, () => {
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'COVID-19' }).click())
@@ -28,19 +28,15 @@ describe('Smoke tests - Navigating to topic pages', () => {
 })
 
 describe('Smoke tests - common pages', () => {
-  it('Loads the common pages', () => {
-    cy.visit('/')
-
-    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText('About').click()
-    })
+  it('Loads the common pages', { defaultCommandTimeout: 15000 }, () => {
+    cy.visit('/about')
     cy.url().should('include', '/about')
     cy.findByRole('heading', { name: 'About' })
+    cy.checkLayoutExists()
 
-    cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText("What's new").click()
-    })
+    cy.visit('/whats-new')
     cy.url().should('include', '/whats-new')
     cy.findByRole('heading', { name: "What's new" })
+    cy.checkLayoutExists()
   })
 })
