@@ -9,11 +9,7 @@ import { Main, TopNav, TopNavLink } from './Layout.styles'
 
 const Container = ({ children }: { children: ReactNode }) => <div className="govuk-width-container">{children}</div>
 
-export const Layout = ({
-  children,
-  scrollToTop,
-  backLink,
-}: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
+export const Layout = ({ children, backLink }: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
   useEffect(() => {
     document.body.classList.add('js-enabled')
   }, [])
