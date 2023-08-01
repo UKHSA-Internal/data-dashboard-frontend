@@ -5,16 +5,11 @@ import { PropsWithChildren, ReactNode, useEffect } from 'react'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 
 import { Footer } from '../Footer'
-import { ScrollToTop } from '../ScrollToTop'
 import { Main, TopNav, TopNavLink } from './Layout.styles'
 
 const Container = ({ children }: { children: ReactNode }) => <div className="govuk-width-container">{children}</div>
 
-export const Layout = ({
-  children,
-  scrollToTop,
-  backLink,
-}: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
+export const Layout = ({ children, backLink }: PropsWithChildren & { scrollToTop?: boolean; backLink?: string }) => {
   useEffect(() => {
     document.body.classList.add('js-enabled')
   }, [])
@@ -64,10 +59,7 @@ export const Layout = ({
             <SideNavLink href="/about">About</SideNavLink>
             <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
           </SideNav>
-          <div className="w-full">
-            {children}
-            {scrollToTop && <ScrollToTop />}
-          </div>
+          <div className="w-full">{children}</div>
         </div>
       </Page>
       <Footer />
