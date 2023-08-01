@@ -12,8 +12,8 @@
     "export": "next export",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
-    "test:e2e": "cypress open --e2e",
-    "test:e2e:ci": "cypress run --e2e",
+    "test:e2e": "npx playwright test --ui",
+    "test:e2e:ci": "npx playwright test",
     "test:e2e:smoke": "cypress run --spec \"cypress/smoke/*\"",
     "prepare": "husky install"
   },
@@ -38,6 +38,7 @@
     "zod-error": "^1.5.0"
   },
   "devDependencies": {
+    "@playwright/test": "^1.36.2",
     "@testing-library/cypress": "^9.0.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
