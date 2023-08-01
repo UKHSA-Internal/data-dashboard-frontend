@@ -98,6 +98,7 @@ jobs:
 
   e2e-tests:
     name: Playwright e2e tests
+    needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
