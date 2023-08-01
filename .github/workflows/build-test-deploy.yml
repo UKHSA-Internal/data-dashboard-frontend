@@ -90,13 +90,50 @@ jobs:
           junitxml-path: ./junit.xml
           title: Unit tests coverage
 
+  ##############################################################################
+  # Playwright e2e tests
+  ##############################################################################
+
+  # TODO: Restore once flakiness in pipeline is resolved
+
+  e2e-tests:
+    name: Playwright e2e tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
+      - uses: ./.github/actions/build-cache
+      - name: Start mock server
+        run: npm run dev:mock-server &
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run: npx playwright test
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report
+          path: playwright-report/
+          retention-days: 30
+
+  e2e-tests-success:
+    name: e2e tests check
+    needs: [e2e-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'All e2e tests passed ✅'
+
   ###############################################################################
   # Deploy
   ###############################################################################
 
   deploy:
     name: ECR Image Push
-    needs: [quality-checks, unit-tests]
+    needs: [quality-checks, unit-tests, e2e-tests-success]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
