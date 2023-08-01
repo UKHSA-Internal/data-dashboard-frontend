@@ -32,13 +32,13 @@ describe('Smoke tests - common pages', () => {
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText('About').click()
+      cy.findByRole('link', { name: 'About' }).click()
     })
     cy.url().should('include', '/about')
     cy.findByRole('heading', { name: 'About' })
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
-      cy.findByText("What's new").click()
+      cy.findByRole('link', { name: "What's new" }).click()
     })
     cy.url().should('include', '/whats-new')
     cy.findByRole('heading', { name: "What's new" })
