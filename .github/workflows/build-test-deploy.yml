@@ -96,41 +96,33 @@ jobs:
 
   # TODO: Restore once flakiness in pipeline is resolved
 
-  # cypress-tests:
-  #   name: Cypress tests
-  #   needs: [build]
-  #   runs-on: ubuntu-latest
-  #   strategy:
-  #     fail-fast: false # https://github.com/cypress-io/github-action/issues/48
-  #     matrix:
-  #       containers: [1, 2] # Uses 2 parallel instances
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
-  #     - name: Start mock server
-  #       run: npm run dev:mock-server &
-  #     - name: Wait for Mock Server
-  #       shell: sh
-  #       run: ./.github/scripts/wait-for-service.sh http://localhost:3005
-  #     - name: Re-build
-  #       run: |
-  #         NODE_ENV=test npm run build
-  #     - name: Start app
-  #       run: NODE_ENV=test npm run start &
-  #     - uses: ./.github/actions/run-cypress-tests
-  #       with:
-  #         github-token: ${{ secrets.GITHUB_TOKEN }}
-  #         record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
-  #         cache-folder: cypress/cache
+  cypress-tests:
+    name: Cypress tests
+    needs: [build]
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      matrix:
+        containers: [1, 2] # Uses 2 parallel instances
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Start app
+        run: npm run start &
+      - uses: ./.github/actions/run-cypress-tests
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
+          cache-folder: cypress/cache
 
-  # cypress-tests-success:
-  #   name: Cypress tests check
-  #   needs: [cypress-tests]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - run: echo 'All Cypress tests passed ✅'
+  cypress-tests-success:
+    name: Cypress tests check
+    needs: [cypress-tests]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'All Cypress tests passed ✅'
 
   ###############################################################################
   # Deploy
@@ -138,8 +130,7 @@ jobs:
 
   deploy:
     name: ECR Image Push
-    # needs: [quality-checks, unit-tests, cypress-tests-success]
-    needs: [quality-checks, unit-tests]
+    needs: [quality-checks, unit-tests, cypress-tests-success]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
