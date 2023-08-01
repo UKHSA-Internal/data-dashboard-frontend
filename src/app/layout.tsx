@@ -7,11 +7,7 @@ import './globals.scss'
 import Link from 'next/link'
 import Script from 'next/script'
 
-import { useTranslation } from './i18n'
-
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { t } = await useTranslation('common')
-
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
       <Script

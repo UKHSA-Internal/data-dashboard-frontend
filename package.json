@@ -38,7 +38,6 @@
     "react-dom": "^18.2.0",
     "react-i18next": "^12.2.0",
     "react-markdown": "^8.0.7",
-    "reflect-metadata": "^0.1.13",
     "rehype-raw": "^6.1.1",
     "rehype-slug": "^5.1.0",
     "styled-components": "^5.3.8",
