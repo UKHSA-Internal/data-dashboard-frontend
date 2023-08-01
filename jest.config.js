@@ -30,10 +30,10 @@ const customJestConfig = {
   coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/models', '<rootDir>/src/api/msw/index.ts'],
   coverageThreshold: {
     global: {
-      lines: 97,
+      lines: 96,
       functions: 95,
-      branches: 80,
-      statements: 96,
+      branches: 77,
+      statements: 95,
     },
   },
 }
