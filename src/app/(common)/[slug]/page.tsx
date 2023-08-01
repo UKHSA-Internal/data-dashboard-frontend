@@ -8,8 +8,6 @@ import { logger } from '@/lib/logger'
 
 export const revalidate = 360
 
-export const revalidate = 360
-
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
