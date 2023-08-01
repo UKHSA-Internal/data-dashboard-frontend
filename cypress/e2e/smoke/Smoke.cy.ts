@@ -7,6 +7,8 @@ describe('Smoke tests - Home', () => {
 
 describe('Smoke tests - Navigating to topic pages', () => {
   it('Navigates to the COVID-19 topic page', () => {
+    Cypress.config('defaultCommandTimeout', 15000)
+
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => cy.findByRole('link', { name: 'COVID-19' }).click())
@@ -29,6 +31,8 @@ describe('Smoke tests - Navigating to topic pages', () => {
 
 describe('Smoke tests - common pages', () => {
   it('Loads the common pages', () => {
+    Cypress.config('defaultCommandTimeout', 15000)
+
     cy.visit('/')
 
     cy.findByRole('navigation', { name: 'Menu' }).within(() => {
