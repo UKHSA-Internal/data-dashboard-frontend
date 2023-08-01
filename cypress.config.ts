@@ -10,7 +10,6 @@ export default defineConfig({
   e2e: {
     baseUrl: 'http://localhost:3000',
     video: false,
-    defaultCommandTimeout: 10000,
     viewportHeight: 1080,
     viewportWidth: 1920,
     setupNodeEvents(on) {
