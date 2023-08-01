@@ -25,6 +25,6 @@
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/app/components/ui/ukhsa/BlockNav"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
   "exclude": ["node_modules", "./cypress.config.ts", "cypress"]
 }
