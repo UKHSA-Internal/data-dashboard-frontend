@@ -2,11 +2,10 @@ import { Metadata } from 'next'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { warmStaticCache } from '@/app/utils/cache.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { logger } from '@/lib/logger'
-
-import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '../../components/ui/ukhsa'
 
 export const revalidate = 360
 
