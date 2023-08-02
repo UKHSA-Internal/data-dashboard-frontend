@@ -19,4 +19,8 @@ export class HomePage {
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /Respiratory viruses/, level: 1 })).toBeVisible()
   }
+
+  async hasNotLastUpdated() {
+    await expect(this.page.getByText(/Last updated/)).not.toBeVisible()
+  }
 }

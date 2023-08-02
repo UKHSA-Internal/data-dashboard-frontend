@@ -15,4 +15,8 @@ export class OtherRespiratoryVirusesPage {
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /Other respiratory viruses/, level: 1 })).toBeVisible()
   }
+
+  async hasLastUpdated() {
+    await expect(this.page.getByText(/Last updated on Wednesday, 10 May 2023 at 05:27pm/)).toBeVisible()
+  }
 }

@@ -1,11 +1,12 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, Locator, Page, test as base } from '@playwright/test'
+import { kebabCase } from 'lodash'
 
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
 
 import { AboutPage, Covid19Page, HomePage, InfluenzaPage, OtherRespiratoryVirusesPage, WhatsNewPage } from './index'
 
-type CustomFixtures = {
+type Fixtures = {
   app: App
   homePage: HomePage
   aboutPage: AboutPage
@@ -20,6 +21,7 @@ export class App {
   readonly header: Locator
   readonly phaseBanner: Locator
   readonly nav: Locator
+  readonly tableOfContents: Locator
   readonly backToTop: Locator
   readonly footer: Locator
 
@@ -28,8 +30,14 @@ export class App {
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
     this.nav = this.page.getByRole('navigation', { name: 'Menu' })
+    this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
     this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
     this.footer = this.page.getByRole('contentinfo')
+  }
+
+  async hasNoAccessibilityDefects() {
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).disableRules('region').analyze()
+    expect(accessibilityScanResults.violations).toEqual([])
   }
 
   async hasLayout() {
@@ -52,9 +60,6 @@ export class App {
     await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
 
-    // Back to top
-    await expect(this.backToTop).toHaveAttribute('href', '#main-content')
-
     // Footer
     await expect(this.footer.getByText(/All content is available under the/)).toBeVisible()
     await expect(this.footer.getByText(/Open Government Licence v3.0/)).toBeVisible()
@@ -63,6 +68,16 @@ export class App {
       'href',
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'
     )
+  }
+
+  async hasTableOfContents(links: string[]) {
+    await expect(this.tableOfContents).toBeVisible()
+
+    for (const name of links) {
+      const link = this.tableOfContents.getByRole('link', { name })
+      await expect(link).toBeVisible()
+      await expect(link).toHaveAttribute('href', `#${kebabCase(name)}`)
+    }
   }
 
   async hasRelatedLinks() {
@@ -74,13 +89,19 @@ export class App {
     }
   }
 
-  async hasNoAccessibilityDefects() {
-    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).disableRules('region').analyze()
-    expect(accessibilityScanResults.violations).toEqual([])
+  async hasBackToTop() {
+    await expect(this.backToTop).not.toBeInViewport()
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await expect(this.backToTop).toBeInViewport()
+    await expect(this.backToTop).toHaveAttribute('href', '#main-content')
+    await expect(this.header).not.toBeInViewport()
+    await this.backToTop.click()
+    await expect(this.header).toBeInViewport()
+    await expect(this.backToTop).not.toBeInViewport()
   }
 }
 
-export const test = base.extend<CustomFixtures>({
+export const test = base.extend<Fixtures>({
   app: async ({ page }, use) => {
     await use(new App(page))
   },

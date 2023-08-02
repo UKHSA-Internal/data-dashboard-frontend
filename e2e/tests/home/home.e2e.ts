@@ -1,4 +1,4 @@
-import { test } from '../fixtures/base.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 test('Home page', async ({ homePage, app }) => {
   await test.step('loads the page', async () => {
@@ -13,7 +13,13 @@ test('Home page', async ({ homePage, app }) => {
   await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
   })
+  await test.step('does not display the last updated date', async () => {
+    await homePage.hasNotLastUpdated()
+  })
   await test.step('displays related links', async () => {
     await app.hasRelatedLinks()
+  })
+  await test.step('displays back to top', async () => {
+    await app.hasBackToTop()
   })
 })

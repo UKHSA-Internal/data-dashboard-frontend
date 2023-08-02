@@ -1,4 +1,4 @@
-import { test } from '../fixtures/base.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 test.describe('Smoke tests', () => {
   test('Navigates to all pages from the menu', async ({
