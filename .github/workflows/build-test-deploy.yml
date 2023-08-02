@@ -93,8 +93,6 @@ jobs:
   # Playwright e2e tests
   ##############################################################################
 
-  # TODO: Restore once flakiness in pipeline is resolved
-
   e2e-tests:
     name: Playwright e2e tests
     needs: [build]
@@ -105,13 +103,31 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
+
+      - name: Store Playwright's Version
+        run: |
+          PLAYWRIGHT_VERSION=$(npm ls @playwright/test | grep @playwright | sed 's/.*@//')
+          echo "Playwright's Version: $PLAYWRIGHT_VERSION"
+          echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+      - name: Cache Playwright Browsers for Playwright's Version
+        id: cache-playwright-browsers
+        uses: actions/cache@v3
+        with:
+          path: ~/.cache/ms-playwright
+          key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Setup Playwright
+        if: steps.cache-playwright-browsers.outputs.cache-hit != 'true'
+        run: npx playwright install --with-deps
+
       - name: Start mock server
         run: npm run dev:mock-server &
+
       - name: Wait for Mock Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
-      - name: Install Playwright Browsers
-        run: npx playwright install --with-deps
+
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v3
