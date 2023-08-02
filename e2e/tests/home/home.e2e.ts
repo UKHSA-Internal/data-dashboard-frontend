@@ -16,6 +16,25 @@ test('Home page', async ({ homePage, app }) => {
   await test.step('does not display the last updated date', async () => {
     await homePage.hasNotLastUpdated()
   })
+  await test.step('displays page sections', async () => {
+    await homePage.hasWelcomeText()
+    await homePage.hasPageDescription()
+    await homePage.hasSectionHeadingsAndDescription()
+  })
+  await test.step('displays the COVID-19 summary section', async () => {
+    await homePage.hasCovid19HeadlineNumbersRowCard()
+    await homePage.hasCovid19CasesChartRowCard()
+    await homePage.hasCovid19CasesTabularData
+    await homePage.hasCovid19DeathsChartRowCard()
+    await homePage.hasCovid19DeathsTabularData()
+  })
+  await test.step('displays the Influenza summary section', async () => {
+    await homePage.hasInfluenzaHeadlineNumbersRowCard()
+    await homePage.hasInfluenzaHealthareChartRowCard()
+    await homePage.hasInfluenzaHealthcareTabularData()
+    await homePage.hasInfluenzaTestingChartRowCard()
+    await homePage.hasInfluenzaTestingTabularData()
+  })
   await test.step('displays related links', async () => {
     await app.hasRelatedLinks()
   })

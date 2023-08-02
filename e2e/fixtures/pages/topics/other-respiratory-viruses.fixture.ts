@@ -10,6 +10,10 @@ export class OtherRespiratoryVirusesPage {
 
   async hasMetadata() {
     await expect(this.page).toHaveTitle(/Other respiratory viruses | UKHSA data dashboard/)
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Overall summary of other respiratory viruses in circulation within the UK'
+    )
   }
 
   async hasHeading() {

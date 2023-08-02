@@ -14,6 +14,10 @@ export class WhatsNewPage {
 
   async hasMetadata() {
     await expect(this.page).toHaveTitle(/What's new | UKHSA data dashboard/)
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'A list of all the new features and key pieces of data which have been added to the UKHSA data dashboard'
+    )
   }
 
   async hasHeading() {
