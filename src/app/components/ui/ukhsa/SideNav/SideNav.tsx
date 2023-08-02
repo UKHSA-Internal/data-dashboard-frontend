@@ -40,10 +40,10 @@ export const SideNavLink = ({ children, href, subMenu }: SideNavLinkProps) => {
       <Link
         href={href}
         className={clsx(
-          'govuk-link--no-visited-state block px-2 py-[8px] no-underline decoration-1 hover:underline [&:not(:focus)]:hover:bg-grey-3',
+          'govuk-link--no-visited-state block border-l-4 px-2 py-[8px] no-underline decoration-1 hover:bg-grey-3 hover:underline',
           {
-            'font-bold [&:not(:focus)]:bg-grey-3 [&:not(:focus)]:shadow-[-3px_0_0_0_var(--colour-blue)]': isActive,
-            'no-underline': !isActive,
+            'border-blue bg-grey-3 font-bold': isActive,
+            'border-transparent no-underline': !isActive,
           }
         )}
         aria-current={isActive ? 'page' : undefined}
