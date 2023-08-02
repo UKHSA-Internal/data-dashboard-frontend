@@ -14,6 +14,10 @@ export class AboutPage {
 
   async hasMetadata() {
     await expect(this.page).toHaveTitle(/About | UKHSA data dashboard/)
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'The UKHSA data dashboard provides presents a wide range of public health data in an easily accessible format.'
+    )
   }
 
   async hasHeading() {

@@ -10,6 +10,10 @@ export class Covid19Page {
 
   async hasMetadata() {
     await expect(this.page).toHaveTitle(/COVID-19 | UKHSA data dashboard/)
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Overall summary of COVID-19 in circulation within the UK'
+    )
   }
 
   async hasHeading() {
