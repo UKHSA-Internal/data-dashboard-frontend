@@ -15,4 +15,8 @@ export class Covid19Page {
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /COVID-19/, level: 1 })).toBeVisible()
   }
+
+  async hasLastUpdated() {
+    await expect(this.page.getByText(/Last updated on Tuesday, 21 March 2023 at 10:25am/)).toBeVisible()
+  }
 }

@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/base.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 test('About page', async ({ aboutPage, app }) => {
   await test.step('loads the page', async () => {
@@ -13,7 +13,26 @@ test('About page', async ({ aboutPage, app }) => {
   await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
   })
+  await test.step('displays last updated date', async () => {
+    await aboutPage.hasLastUpdated()
+  })
+  await test.step('displays table of contents', async () => {
+    await app.hasTableOfContents([
+      'About the UKHSA data dashboard',
+      'Using the dashboard',
+      'Respiratory viruses',
+      'Metrics',
+      'Data availability',
+      'Data sources',
+    ])
+  })
+  await test.step('displays cms page content', async () => {
+    await aboutPage.hasPageContent()
+  })
   await test.step('displays related links', async () => {
     await app.hasRelatedLinks()
+  })
+  await test.step('displays back to top', async () => {
+    await app.hasBackToTop()
   })
 })
