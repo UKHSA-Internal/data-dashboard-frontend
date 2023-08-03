@@ -7,8 +7,9 @@
 
 # testing
 /coverage
-cypress/screenshots
-cypress/downloads
+/test-results/
+/playwright-report/
+/playwright/.cache/
 junit.xml
 
 # next.js
