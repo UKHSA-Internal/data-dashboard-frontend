@@ -4,5 +4,6 @@ declare namespace NodeJS {
     NEXT_REVALIDATE_TIME: string
     API_URL: string
     API_KEY: string
+    NEXT_PUBLIC_PUBLIC_API_URL: string
   }
 }

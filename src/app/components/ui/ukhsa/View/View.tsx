@@ -31,7 +31,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
         >
           Dashboard
         </SideNavLink>
-        <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
+        <SideNavLink href={process.env.NEXT_PUBLIC_PUBLIC_API_URL}>API</SideNavLink>
         <SideNavLink href="/about">About</SideNavLink>
         <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
       </SideNav>

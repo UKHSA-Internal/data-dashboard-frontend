@@ -34,5 +34,9 @@ test.describe('Smoke tests', () => {
       await app.nav.getByRole('link', { name: /What's new/ }).click()
       await whatsNewPage.hasHeading()
     })
+    await test.step('loads the "api" external url', async () => {
+      await app.nav.getByRole('link', { name: /API/ }).click()
+      await app.page.waitForURL('http://uhd-uat-public-api-1804026123.eu-west-2.elb.amazonaws.com')
+    })
   })
 })

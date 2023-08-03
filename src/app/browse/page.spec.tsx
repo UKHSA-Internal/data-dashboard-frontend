@@ -29,7 +29,7 @@ test.skip('Displays browse page content', () => {
 
   const api = screen.getByRole('link', { name: 'API' })
   expect(api).toBeInTheDocument()
-  expect(api).toHaveAttribute('href', `${process.env.PUBLIC_API_URL}/api/public/timeseries`)
+  expect(api).toHaveAttribute('href', process.env.NEXT_PUBLIC_PUBLIC_API_URL)
 
   const about = screen.getByRole('link', { name: 'About' })
   expect(about).toBeInTheDocument()
