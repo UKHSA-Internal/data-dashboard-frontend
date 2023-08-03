@@ -94,7 +94,7 @@ jobs:
   ##############################################################################
 
   e2e-tests:
-    name: Playwright e2e tests (${{ matrix.shard }}/${{ strategy.job-total }})
+    name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-latest
