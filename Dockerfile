@@ -63,7 +63,8 @@ ARG API_KEY
 ENV API_KEY $API_KEY
 
 # https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-ENV PUBLIC_API_URL
+ARG PUBLIC_API_URL
+ENV PUBLIC_API_URL $PUBLIC_API_URL
 ENV NEXT_PUBLIC_PUBLIC_API_URL ${PUBLIC_API_URL}
 
 ENV KEEP_ALIVE_TIMEOUT 61
