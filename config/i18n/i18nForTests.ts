@@ -1,5 +1,4 @@
 import i18n from 'i18next'
-// eslint-disable-next-line no-restricted-imports
 import { initReactI18next } from 'react-i18next'
 
 import common from '../../public/locales/en/common.json'
