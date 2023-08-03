@@ -94,14 +94,14 @@ jobs:
   ##############################################################################
 
   e2e-tests:
-    name: Playwright e2e tests
+    name: Playwright e2e tests (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
-        containers: [1, 2, 3, 4]
+        shard: [1, 2, 3, 4]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -126,11 +126,11 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Run Playwright tests
-        run: npx playwright test
+        run: npx playwright test --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report
+          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
           retention-days: 30
 
