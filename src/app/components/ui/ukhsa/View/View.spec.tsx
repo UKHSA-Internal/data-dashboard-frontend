@@ -41,8 +41,6 @@ test('renders the children correctly', async () => {
 })
 
 test('renders the side navigation', async () => {
-  process.env.PUBLIC_API_URL = '/public-api'
-
   const { getByRole } = render(await View({ heading: 'Test Heading', children: null }))
 
   const nav = getByRole('navigation')
@@ -55,7 +53,7 @@ test('renders the side navigation', async () => {
     'href',
     '/topics/other-respiratory-viruses'
   )
-  expect(within(nav).getByRole('link', { name: 'API' })).toHaveAttribute('href', '/public-api/api/public/timeseries')
+  expect(within(nav).getByRole('link', { name: 'API' })).toHaveAttribute('href', '/public-api')
   expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
   expect(within(nav).getByRole('link', { name: "What's new" })).toHaveAttribute('href', '/whats-new')
 })
