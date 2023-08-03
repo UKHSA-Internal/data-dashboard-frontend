@@ -61,7 +61,7 @@ export class HomePage {
   }
 
   async hasNotLastUpdated() {
-    await expect(this.page.getByText(/Last updated/)).not.toBeVisible()
+    await expect(this.page.getByText(/Last updated/)).toBeHidden()
   }
 
   async hasWelcomeText() {
@@ -95,124 +95,124 @@ export class HomePage {
     const col4 = this.covidVaccinesColumn
     const col5 = this.covidTestingColumn
 
-    expect(col1.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
-    expect(col1.getByText('Weekly')).toBeVisible()
-    expect(col1.getByText('24,298')).toBeVisible()
-    expect(col1.getByText('Last 7 days')).toBeVisible()
-    expect(col1.getByText('-592 (-3%)')).toBeVisible()
+    await expect(col1.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
+    await expect(col1.getByText('Weekly')).toBeVisible()
+    await expect(col1.getByText('24,298')).toBeVisible()
+    await expect(col1.getByText('Last 7 days')).toBeVisible()
+    await expect(col1.getByText('-592 (-3%)')).toBeVisible()
 
-    expect(col2.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
-    expect(col2.getByText('Weekly')).toBeVisible()
-    expect(col2.getByText('379')).toBeVisible()
-    expect(col2.getByText('Last 7 days')).toBeVisible()
-    expect(col2.getByText('21 (-5%)')).toBeVisible()
+    await expect(col2.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
+    await expect(col2.getByText('Weekly')).toBeVisible()
+    await expect(col2.getByText('379')).toBeVisible()
+    await expect(col2.getByText('Last 7 days')).toBeVisible()
+    await expect(col2.getByText('21 (-5%)')).toBeVisible()
 
-    expect(col3.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
-    expect(col3.getByText('Patients admitted')).toBeVisible()
-    expect(col3.getByText('6,288')).toBeVisible()
-    expect(col3.getByText('Last 7 days')).toBeVisible()
-    expect(col3.getByText('377 (6%)')).toBeVisible()
+    await expect(col3.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
+    await expect(col3.getByText('Patients admitted')).toBeVisible()
+    await expect(col3.getByText('6,288')).toBeVisible()
+    await expect(col3.getByText('Last 7 days')).toBeVisible()
+    await expect(col3.getByText('377 (6%)')).toBeVisible()
 
-    expect(col4.getByRole('heading', { name: 'Vaccines', level: 3 })).toBeVisible()
-    expect(col4.getByText('Autumn booster')).toBeVisible()
-    expect(col4.getByText('4,095,083')).toBeVisible()
-    expect(col4.getByText('Percentage uptake')).toBeVisible()
-    expect(col4.getByText('64.5%')).toBeVisible()
+    await expect(col4.getByRole('heading', { name: 'Vaccines', level: 3 })).toBeVisible()
+    await expect(col4.getByText('Autumn booster')).toBeVisible()
+    await expect(col4.getByText('4,095,083')).toBeVisible()
+    await expect(col4.getByText('Percentage uptake')).toBeVisible()
+    await expect(col4.getByText('64.5%')).toBeVisible()
 
-    expect(col5.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
-    expect(col5.getByText('Virus tests positivity')).toBeVisible()
-    expect(col5.getByText('10.4%')).toBeVisible()
+    await expect(col5.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
+    await expect(col5.getByText('Virus tests positivity')).toBeVisible()
+    await expect(col5.getByText('10.4%')).toBeVisible()
   }
 
   async hasCovid19CasesChartRowCard() {
     const card = this.covidCasesChartRowCard
-    expect(card.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
-    expect(card.getByText(/Positive tests reported in England/)).toBeVisible()
-    expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
-    expect(card.getByText('Last 7 days')).toBeVisible()
-    expect(card.getByText('24,298')).toBeVisible()
-    expect(card.getByText('-592 (-3%)')).toBeVisible()
-    expect(card.getByAltText('')).toBeVisible()
-    expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
+    await expect(card.getByText(/Positive tests reported in England/)).toBeVisible()
+    await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByText('Last 7 days')).toBeVisible()
+    await expect(card.getByText('24,298')).toBeVisible()
+    await expect(card.getByText('-592 (-3%)')).toBeVisible()
+    await expect(card.getByAltText('')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasCovid19CasesTabularData() {
     const card = this.covidCasesChartRowCard
     const name = 'Cases data for positive tests reported in England up to and including 10 May 2023'
-    expect(card.getByRole('table', { name })).not.toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
-    expect(card.getByRole('table', { name })).toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeVisible()
   }
 
   async hasCovid19DeathsChartRowCard() {
     const card = this.covidDeathsChartRowCard
-    expect(card.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
-    expect(card.getByText(/Deaths with COVID-19 on the death certificate in England/)).toBeVisible()
-    expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
-    expect(card.getByText('Last 7 days')).toBeVisible()
-    expect(card.getByText('379')).toBeVisible()
-    expect(card.getByText('21 (-5%)')).toBeVisible()
-    expect(card.getByAltText('')).toBeVisible()
-    expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
+    await expect(card.getByText(/Deaths with COVID-19 on the death certificate in England/)).toBeVisible()
+    await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByText('Last 7 days')).toBeVisible()
+    await expect(card.getByText('379')).toBeVisible()
+    await expect(card.getByText('21 (-5%)')).toBeVisible()
+    await expect(card.getByAltText('')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasCovid19DeathsTabularData() {
     const card = this.covidDeathsChartRowCard
     const name =
       'Deaths data for deaths with COVID-19 on the death certificate in England up to and including 10 May 2023'
-    expect(card.getByRole('table', { name })).not.toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
-    expect(card.getByRole('table', { name })).toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeVisible()
   }
 
   async hasInfluenzaHeadlineNumbersRowCard() {
     const col1 = this.influenzaHealthcareColumn
     const col2 = this.influenzaTestingColumn
-    expect(col1.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
-    expect(col1.getByText('Hospital admission rate (per 100,000)')).toBeVisible()
-    expect(col1.getByText('981,596')).toBeVisible()
-    expect(col1.getByText('Last 7 days')).toBeVisible()
-    expect(col1.getByText('5911 (0.3%)')).toBeVisible()
-    expect(col2.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
-    expect(col2.getByText('Virus tests positivity')).toBeVisible()
-    expect(col2.getByText('12.2%')).toBeVisible()
+    await expect(col1.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
+    await expect(col1.getByText('Hospital admission rate (per 100,000)')).toBeVisible()
+    await expect(col1.getByText('981,596')).toBeVisible()
+    await expect(col1.getByText('Last 7 days')).toBeVisible()
+    await expect(col1.getByText('5911 (0.3%)')).toBeVisible()
+    await expect(col2.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
+    await expect(col2.getByText('Virus tests positivity')).toBeVisible()
+    await expect(col2.getByText('12.2%')).toBeVisible()
   }
 
   async hasInfluenzaHealthareChartRowCard() {
     const card = this.influenzaHealthcareChartRowCard
-    expect(card.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
-    expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
-    expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
-    expect(card.getByText('Last 7 days')).toBeVisible()
-    expect(card.getByText('981,596')).toBeVisible()
-    expect(card.getByText('5911 (0.3%)')).toBeVisible()
-    expect(card.getByAltText('')).toBeVisible()
-    expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
+    await expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
+    await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByText('Last 7 days')).toBeVisible()
+    await expect(card.getByText('981,596')).toBeVisible()
+    await expect(card.getByText('5911 (0.3%)')).toBeVisible()
+    await expect(card.getByAltText('')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasInfluenzaHealthcareTabularData() {
     const card = this.influenzaHealthcareChartRowCard
     const name = 'Healthcare data for weekly hospital admission rates for Influenza up to and including 10 May 2023'
-    expect(card.getByRole('table', { name })).not.toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
-    expect(card.getByRole('table', { name })).toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeVisible()
   }
 
   async hasInfluenzaTestingChartRowCard() {
     const card = this.influenzaTestingChartRowCard
-    expect(card.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
-    expect(card.getByText(/Weekly positivity/)).toBeVisible()
-    expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
-    expect(card.getByAltText('')).toBeVisible()
-    expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
+    await expect(card.getByText(/Weekly positivity/)).toBeVisible()
+    await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByAltText('')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasInfluenzaTestingTabularData() {
     const card = this.influenzaTestingChartRowCard
     const name = 'Testing data for weekly positivity up to and including 10 May 2023'
-    expect(card.getByRole('table', { name })).not.toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
-    expect(card.getByRole('table', { name })).toBeVisible()
+    await expect(card.getByRole('table', { name })).toBeVisible()
   }
 
   async canDownloadChartAsCsv(cards: string[]) {
