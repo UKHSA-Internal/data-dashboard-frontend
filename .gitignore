@@ -7,8 +7,9 @@
 
 # testing
 /coverage
-cypress/screenshots
-cypress/downloads
+/test-results/
+/playwright-report/
+/playwright/.cache/
 junit.xml
 
 # next.js
@@ -37,6 +38,3 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
-/test-results/
-/playwright-report/
-/playwright/.cache/

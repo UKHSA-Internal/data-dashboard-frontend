@@ -18,7 +18,7 @@ Fixes #CDD-
 <!-- Please describe the tests that you ran to verify your changes. Provide instructions so we can reproduce. Please also list any relevant details for your test configuration -->
 
 - [ ] Unit tests
-- [ ] Cypress tests
+- [ ] Playwright e2e tests
 - [ ] Mobile responsiveness
 - [ ] Accessibility (i.e. Lighthouse audit)
 - [ ] Disabled JavaScript
