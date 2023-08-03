@@ -40,7 +40,7 @@ export const SideNavLink = ({ children, href, subMenu }: SideNavLinkProps) => {
       <Link
         href={href}
         className={clsx(
-          'govuk-link--no-visited-state block border-l-4 px-2 py-[8px] no-underline decoration-1 hover:bg-grey-3 hover:underline',
+          'govuk-link--no-visited-state block border-l-4 px-2 py-[15px] no-underline decoration-1 hover:bg-grey-3 hover:underline lg:py-[8px]',
           {
             'border-blue bg-grey-3 font-bold': isActive,
             'border-transparent no-underline': !isActive,
@@ -63,7 +63,7 @@ interface SideNavSubMenuProps {
 }
 
 export const SideNavSubMenu = ({ children }: SideNavSubMenuProps) => {
-  return <ul className="govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
+  return <ul className="lg:my-2">{children}</ul>
 }
 
 /**
@@ -79,7 +79,7 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
   const isActive = pathname === href
 
   return (
-    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-1 pl-6')}>
+    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-[15px] pl-6 lg:py-1')}>
       <Link
         href={href}
         className={clsx('govuk-link--no-visited-state inline-block decoration-1 hover:underline', {

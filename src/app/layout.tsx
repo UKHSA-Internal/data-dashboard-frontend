@@ -49,30 +49,30 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 </span>
               </Link>
             </div>
-            <div className="govuk-header__content">
+            <div className="govuk-header__content inline w-auto sm:w-5/12">
               <Link href="/" className="govuk-header__link govuk-header__service-name">
                 UKHSA data dashboard
               </Link>
-              <TopNav>
-                <SideNavLink
-                  href="/"
-                  subMenu={
-                    <SideNavSubMenu>
-                      <SideNavSubMenuLink href="/topics/covid-19">COVID-19</SideNavSubMenuLink>
-                      <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
-                      <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
-                        Other respiratory viruses
-                      </SideNavSubMenuLink>
-                    </SideNavSubMenu>
-                  }
-                >
-                  Dashboard
-                </SideNavLink>
-                <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
-                <SideNavLink href="/about">About</SideNavLink>
-                <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
-              </TopNav>
             </div>
+            <TopNav>
+              <SideNavLink
+                href="/"
+                subMenu={
+                  <SideNavSubMenu>
+                    <SideNavSubMenuLink href="/topics/covid-19">COVID-19</SideNavSubMenuLink>
+                    <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
+                    <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
+                      Other respiratory viruses
+                    </SideNavSubMenuLink>
+                  </SideNavSubMenu>
+                }
+              >
+                Dashboard
+              </SideNavLink>
+              <SideNavLink href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}>API</SideNavLink>
+              <SideNavLink href="/about">About</SideNavLink>
+              <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
+            </TopNav>
           </div>
         </header>
         <div className="govuk-width-container">
