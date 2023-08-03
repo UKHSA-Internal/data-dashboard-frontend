@@ -87,7 +87,7 @@ export class App {
   }
 
   async hasTopicCard({ name, description }: { name: string; description: string }) {
-    const card = this.page.getByRole('article', { name })
+    const card = this.page.getByRole('article', { name, exact: true })
     await expect(card.getByRole('paragraph')).toContainText(description)
     await expect(card.getByAltText('')).toBeVisible()
     await card.getByText('View data in a tabular format')
