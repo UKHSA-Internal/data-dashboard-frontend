@@ -43,7 +43,7 @@ export default function Browse() {
         </div>
         <div className="govuk-grid-column-one-third-from-desktop">
           <BrowseCard
-            href={`${process.env.PUBLIC_API_URL}/api/public/timeseries`}
+            href={process.env.NEXT_PUBLIC_PUBLIC_API_URL}
             name="API"
             description="Search and download data by using the UKHSA data dashboard’s API."
           />
