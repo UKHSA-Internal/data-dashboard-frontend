@@ -20,6 +20,13 @@ export class Covid19Page {
     await expect(this.page.getByRole('heading', { name: /COVID-19/, level: 1 })).toBeVisible()
   }
 
+  async hasDescription() {
+    await expect(this.page.getByText('Data and insights from the UKHSA on COVID-19.')).toBeVisible()
+    await expect(
+      this.page.getByRole('link', { name: 'See the simple summary for England (opens in a new tab)' })
+    ).toHaveAttribute('href', 'https://www.gov.uk/government/organisations/uk-health-security-agency')
+  }
+
   async hasLastUpdated() {
     await expect(this.page.getByText(/Last updated on Tuesday, 21 March 2023 at 10:25am/)).toBeVisible()
   }
