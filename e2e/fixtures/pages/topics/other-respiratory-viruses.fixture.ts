@@ -20,6 +20,13 @@ export class OtherRespiratoryVirusesPage {
     await expect(this.page.getByRole('heading', { name: /Other respiratory viruses/, level: 1 })).toBeVisible()
   }
 
+  async hasDescription() {
+    await expect(this.page.getByText('Data and insights from the UKHSA on other respiratory viruses.')).toBeVisible()
+    await expect(
+      this.page.getByRole('link', { name: 'See the simple summary for England (opens in a new tab)' })
+    ).toHaveAttribute('href', 'https://www.gov.uk/government/organisations/uk-health-security-agency\\')
+  }
+
   async hasLastUpdated() {
     await expect(this.page.getByText(/Last updated on Wednesday, 10 May 2023 at 05:27pm/)).toBeVisible()
   }

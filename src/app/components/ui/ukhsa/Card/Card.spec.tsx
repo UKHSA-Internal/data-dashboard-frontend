@@ -23,3 +23,9 @@ test('renders the Card component with provided children', async () => {
   const contentElement = getByText('Test Content')
   expect(contentElement).toBeInTheDocument()
 })
+
+test('renders the Card component with custom tag', async () => {
+  const { getByRole } = render(await Card({ children: 'Test Content', as: 'article' }))
+  const contentElement = getByRole('article')
+  expect(contentElement).toBeInTheDocument()
+})

@@ -1,5 +1,8 @@
 import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
+import * as fs from 'fs'
+
+import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 
 export class HomePage {
   readonly page: Page
@@ -131,12 +134,6 @@ export class HomePage {
     expect(card.getByText('-592 (-3%)')).toBeVisible()
     expect(card.getByAltText('')).toBeVisible()
     expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-    expect(card.getByText('View data in a tabular format')).toBeVisible()
-    expect(
-      card.getByRole('table', {
-        name: 'Cases data for positive tests reported in England up to and including 10 May 2023',
-      })
-    ).not.toBeVisible()
   }
 
   async hasCovid19CasesTabularData() {
@@ -157,12 +154,6 @@ export class HomePage {
     expect(card.getByText('21 (-5%)')).toBeVisible()
     expect(card.getByAltText('')).toBeVisible()
     expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-    expect(card.getByText('View data in a tabular format')).toBeVisible()
-    expect(
-      card.getByRole('table', {
-        name: 'Cases data for positive tests reported in England up to and including 10 May 2023',
-      })
-    ).not.toBeVisible()
   }
 
   async hasCovid19DeathsTabularData() {
@@ -197,12 +188,6 @@ export class HomePage {
     expect(card.getByText('5911 (0.3%)')).toBeVisible()
     expect(card.getByAltText('')).toBeVisible()
     expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-    expect(card.getByText('View data in a tabular format')).toBeVisible()
-    expect(
-      card.getByRole('table', {
-        name: 'Cases data for positive tests reported in England up to and including 10 May 2023',
-      })
-    ).not.toBeVisible()
   }
 
   async hasInfluenzaHealthcareTabularData() {
@@ -228,5 +213,26 @@ export class HomePage {
     expect(card.getByRole('table', { name })).not.toBeVisible()
     await card.getByText('View data in a tabular format').click()
     expect(card.getByRole('table', { name })).toBeVisible()
+  }
+
+  async canDownloadChartAsCsv(cards: string[]) {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
+
+      const [download] = await Promise.all([
+        this.page.waitForEvent('download'),
+        card.getByRole('button', { name: 'Download (csv)' }).click(),
+      ])
+
+      const fileName = download.suggestedFilename()
+      expect(fileName).toBe('data.csv')
+
+      const path = await download.path()
+
+      if (path) {
+        const file = fs.readFileSync(path)
+        expect(file.toString()).toEqual(downloadsCsvFixture)
+      }
+    }
   }
 }

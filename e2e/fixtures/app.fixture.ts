@@ -80,6 +80,19 @@ export class App {
     }
   }
 
+  async hasSectionHeadings(headings: string[], level = 2) {
+    for (const name of headings) {
+      this.page.getByRole('heading', { name, level })
+    }
+  }
+
+  async hasTopicCard({ name, description }: { name: string; description: string }) {
+    const card = this.page.getByRole('article', { name })
+    await expect(card.getByRole('paragraph')).toContainText(description)
+    await expect(card.getByAltText('')).toBeVisible()
+    await card.getByText('View data in a tabular format')
+  }
+
   async hasRelatedLinks() {
     await expect(this.page.getByRole('heading', { name: 'Related Links', level: 2 })).toBeVisible()
 

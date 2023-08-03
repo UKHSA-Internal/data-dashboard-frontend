@@ -20,6 +20,13 @@ export class InfluenzaPage {
     await expect(this.page.getByRole('heading', { name: /Influenza/, level: 1 })).toBeVisible()
   }
 
+  async hasDescription() {
+    await expect(this.page.getByText('Data and insights from the UKHSA on Influenza.')).toBeVisible()
+    await expect(
+      this.page.getByRole('link', { name: 'See the simple summary for England (opens in a new tab)' })
+    ).toHaveAttribute('href', 'https://www.gov.uk/government/organisations/uk-health-security-agency\\')
+  }
+
   async hasLastUpdated() {
     await expect(this.page.getByText(/Last updated on Monday, 15 May 2023 at 04:26pm/)).toBeVisible()
   }
