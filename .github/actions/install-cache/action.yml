@@ -10,6 +10,5 @@ runs:
       id: cache-dependencies
       with:
         path: |
-          cypress/cache
           node_modules
         key: dependencies-${{ hashFiles('package-lock.json') }}

@@ -1,0 +1,6 @@
+{
+  "extends": ["plugin:playwright/recommended"],
+  "rules": {
+    "playwright/expect-expect": "off"
+  }
+}

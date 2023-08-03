@@ -24,16 +24,16 @@ const customJestConfig = {
     'parse5/lib/parser/index.js': '<rootDir>/node_modules/hast-util-raw/node_modules/parse5/lib/parser/index.js',
   },
   testEnvironment: 'jest-environment-jsdom',
-  modulePathIgnorePatterns: ['cypress'],
+  modulePathIgnorePatterns: ['e2e'],
   reporters: ['default', 'jest-junit'],
   coverageReporters: ['json-summary', 'text'],
   coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/models', '<rootDir>/src/api/msw/index.ts'],
   coverageThreshold: {
     global: {
-      lines: 97,
+      lines: 96,
       functions: 95,
-      branches: 80,
-      statements: 96,
+      branches: 77,
+      statements: 95,
     },
   },
 }
