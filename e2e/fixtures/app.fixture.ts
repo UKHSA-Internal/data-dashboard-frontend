@@ -90,7 +90,7 @@ export class App {
     const card = this.page.getByRole('article', { name, exact: true })
     await expect(card.getByRole('paragraph')).toContainText(description)
     await expect(card.getByAltText('')).toBeVisible()
-    await card.getByText('View data in a tabular format')
+    card.getByText('View data in a tabular format')
   }
 
   async hasRelatedLinks() {
