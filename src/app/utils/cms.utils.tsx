@@ -11,7 +11,7 @@ import { Details } from '../components/ui/govuk'
 import { Card } from '../components/ui/ukhsa'
 
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
-  <div key={id} className="govuk-!-margin-bottom-9">
+  <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       <Link href={`/topics/${heading.toLowerCase()}`} className="govuk-link--no-visited-state">
         {heading}
@@ -26,14 +26,14 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
     {type === 'headline_numbers_row_card' && (
-      <Card className="govuk-!-margin-bottom-6">
+      <Card className="govuk-!-margin-bottom-6" data-testid="headline-row">
         <div
           className={clsx(`grid grid-cols-2 gap-y-6 sm:grid-cols-3 md:gap-x-5`, {
             [`md:grid-cols-5`]: value.columns.length === 5,
           })}
         >
           {value.columns.map((column) => (
-            <div key={column.id}>
+            <div key={column.id} data-testid={`headline-column-${column.value.title.toLowerCase()}`}>
               <h3 className="govuk-body-m mb-2 text-dark-grey md:mb-3">{column.value.title}</h3>
               <div className="flex flex-col gap-y-2 md:gap-y-4">{column.value.rows.map(renderBlock)}</div>
             </div>
@@ -43,7 +43,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
     )}
 
     {type === 'chart_row_card' && (
-      <div className="govuk-grid-row">
+      <div className="govuk-grid-row" data-testid="chart-row-cards">
         {value.columns.map((column) => {
           const size = value.columns.length === 1 ? 'wide' : 'narrow'
           return (
@@ -53,11 +53,17 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 ['govuk-grid-column-full-from-desktop']: value.columns.length === 1,
                 ['govuk-grid-column-one-half-from-desktop']: value.columns.length === 2,
               })}
-              data-testid={`${kebabCase(column.value.title)}-section`}
+              data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
             >
-              <Card className="govuk-!-margin-bottom-5">
+              <Card
+                as="article"
+                aria-labelledby={`chart-row-card-heading-${column.id}`}
+                className="govuk-!-margin-bottom-5"
+              >
                 <div className="md:min-h-[115px]">
-                  <h3 className="govuk-body-m mb-2 text-dark-grey">{column.value.title}</h3>
+                  <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
+                    {column.value.title}
+                  </h3>
                   <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
                   {column.type === 'chart_with_headline_and_trend_card' && (
                     <Timestamp data={column.value} size={size} />
