@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/app.fixture'
 
-test('Feedback page', async ({ feedbackPage, app }) => {
+test('Feedback page', async ({ feedbackPage, feedbackConfirmationPage, app }) => {
   await test.step('loads the page', async () => {
     await feedbackPage.goto()
   })
@@ -19,8 +19,14 @@ test('Feedback page', async ({ feedbackPage, app }) => {
   await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
   })
-  await test.step('allows form fill and successfully submits', async () => {
-    await feedbackPage.submitsForm()
+  await test.step('fills out the form', async () => {
+    await feedbackPage.fillFormInputs()
+  })
+  await test.step('submits the form', async () => {
+    await feedbackPage.submitForm()
+  })
+  await test.step('confirms redirect to confirmation page', async () => {
+    await feedbackConfirmationPage.hasHeading()
   })
 })
 

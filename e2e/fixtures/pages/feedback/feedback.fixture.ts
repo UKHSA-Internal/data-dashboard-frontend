@@ -41,16 +41,14 @@ export class FeedbackPage {
     ).toBeVisible()
   }
 
-  async submitsForm() {
-    // await this.page.locator('text=/What was your reason for visiting the dashboard today?/').fill('Test input')
+  async fillFormInputs() {
     await this.page.getByLabel(/What was your reason for visiting the dashboard today?/).fill('Test input')
     await this.page.getByLabel(/Yes/).check()
     await this.page.getByLabel(/How could we improve your experience with the dashboard?/).fill('Test input')
     await this.page.getByLabel(/What would you like to see on the dashboard in the future?/).fill('Test input')
+  }
 
+  async submitForm() {
     await this.page.getByRole('button', { name: 'submit' }).click()
-
-    await expect(this.page).toHaveURL('feedback/confirmation')
-    await expect(this.page.getByRole('heading', { name: /Form submitted/, level: 1 })).toBeVisible()
   }
 }
