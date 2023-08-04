@@ -4,7 +4,16 @@ import { kebabCase } from 'lodash'
 
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
 
-import { AboutPage, Covid19Page, HomePage, InfluenzaPage, OtherRespiratoryVirusesPage, WhatsNewPage } from './index'
+import {
+  AboutPage,
+  Covid19Page,
+  FeedbackConfirmationPage,
+  FeedbackPage,
+  HomePage,
+  InfluenzaPage,
+  OtherRespiratoryVirusesPage,
+  WhatsNewPage,
+} from './index'
 
 type Fixtures = {
   app: App
@@ -14,6 +23,8 @@ type Fixtures = {
   covid19Page: Covid19Page
   influenzaPage: InfluenzaPage
   otherRespiratoryVirusesPage: OtherRespiratoryVirusesPage
+  feedbackPage: FeedbackPage
+  feedbackConfirmationPage: FeedbackConfirmationPage
 }
 
 export class App {
@@ -135,6 +146,12 @@ export const test = base.extend<Fixtures>({
   },
   otherRespiratoryVirusesPage: async ({ page }, use) => {
     await use(new OtherRespiratoryVirusesPage(page))
+  },
+  feedbackPage: async ({ page }, use) => {
+    await use(new FeedbackPage(page))
+  },
+  feedbackConfirmationPage: async ({ page }, use) => {
+    await use(new FeedbackConfirmationPage(page))
   },
 })
 
