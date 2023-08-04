@@ -59,3 +59,8 @@ test('renders the side navigation', async () => {
   expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
   expect(within(nav).getByRole('link', { name: "What's new" })).toHaveAttribute('href', '/whats-new')
 })
+
+test('renders without a heading', async () => {
+  const view = render(await View({ children: null })).queryByRole('heading', { level: 1 })
+  expect(view).toBeNull()
+})
