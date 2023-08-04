@@ -6,6 +6,7 @@ import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elem
 
 import {
   AboutPage,
+  BrowsePage,
   Covid19Page,
   FeedbackConfirmationPage,
   FeedbackPage,
@@ -25,6 +26,7 @@ type Fixtures = {
   otherRespiratoryVirusesPage: OtherRespiratoryVirusesPage
   feedbackPage: FeedbackPage
   feedbackConfirmationPage: FeedbackConfirmationPage
+  browsePage: BrowsePage
 }
 
 export class App {
@@ -152,6 +154,9 @@ export const test = base.extend<Fixtures>({
   },
   feedbackConfirmationPage: async ({ page }, use) => {
     await use(new FeedbackConfirmationPage(page))
+  },
+  browsePage: async ({ page }, use) => {
+    await use(new BrowsePage(page))
   },
 })
 
