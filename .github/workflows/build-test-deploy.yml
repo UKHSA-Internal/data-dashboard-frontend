@@ -179,6 +179,6 @@ jobs:
           ECR_REPOSITORY: wp-frontend
           IMAGE_TAG: latest
         run: |
-          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} --build-arg PUBLIC_API_URL=${{ vars.PUBLIC_API_URL }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2

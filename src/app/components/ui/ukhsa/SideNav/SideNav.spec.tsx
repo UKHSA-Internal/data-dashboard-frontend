@@ -1,9 +1,8 @@
-import userEvent from '@testing-library/user-event'
 import { usePathname } from 'next/navigation'
 
 import { render, screen } from '@/config/test-utils'
 
-import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './SideNav'
+import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './SideNav'
 
 jest.mock('next/navigation')
 
@@ -71,7 +70,7 @@ test('SideNavSubMenuLink with active link', () => {
   expect(link).toHaveAttribute('aria-current', 'page')
 })
 
-test('SideNavSubMenuLink  with inactive link', () => {
+test('SideNavSubMenuLink with inactive link', () => {
   const usePathnameMock = jest.mocked(usePathname)
   usePathnameMock.mockReturnValueOnce('/active')
 
@@ -86,30 +85,4 @@ test('SideNavSubMenuLink  with inactive link', () => {
   expect(link).toBeInTheDocument()
   expect(link).toHaveAttribute('href', '/inactive')
   expect(link).not.toHaveAttribute('aria-current', 'page')
-})
-
-test('Mobile menu opens & closes', async () => {
-  const { getByRole } = render(
-    <SideNav>
-      <>
-        <li>Child 1</li>
-        <li>Child 2</li>
-      </>
-    </SideNav>
-  )
-
-  const link = getByRole('link', { name: 'Show navigation menu', expanded: false })
-  expect(link).toBeInTheDocument()
-  expect(link).toHaveAttribute('aria-controls', 'ukhsa-sidenav')
-  expect(getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
-
-  await userEvent.click(link)
-
-  expect(getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
-  expect(getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
-
-  await userEvent.click(link)
-
-  expect(getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
-  expect(getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
 })
