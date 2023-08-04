@@ -31,6 +31,7 @@ test('Returns a list of cms pages by type', async () => {
             detail_url: 'http://localhost/api/pages/6/',
             first_published_at: '2023-04-26T12:39:38.064114+01:00',
             html_url: null,
+            show_in_menus: false,
             slug: 'respiratory-viruses',
             type: 'home.HomePage',
           },

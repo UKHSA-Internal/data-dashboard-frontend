@@ -1,5 +1,7 @@
 import { ReactNode } from 'react'
 
+import { useMenu } from '@/app/utils/menu.utils'
+
 import { useTranslation } from '../../../../i18n'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '../SideNav/SideNav'
 
@@ -13,27 +15,30 @@ interface PageProps {
 
 export async function View({ heading, showWelcome, children, description, lastUpdated }: PageProps) {
   const { t } = await useTranslation('common')
+  const menu = await useMenu()
 
   return (
     <div className="flex flex-col gap-0 lg:flex-row lg:gap-7">
       <SideNav>
-        <SideNavLink
-          href="/"
-          subMenu={
-            <SideNavSubMenu>
-              <SideNavSubMenuLink href="/topics/covid-19">COVID-19</SideNavSubMenuLink>
-              <SideNavSubMenuLink href="/topics/influenza">Influenza</SideNavSubMenuLink>
-              <SideNavSubMenuLink href="/topics/other-respiratory-viruses">
-                Other respiratory viruses
-              </SideNavSubMenuLink>
-            </SideNavSubMenu>
-          }
-        >
-          Dashboard
-        </SideNavLink>
-        <SideNavLink href={process.env.NEXT_PUBLIC_PUBLIC_API_URL}>API</SideNavLink>
-        <SideNavLink href="/about">About</SideNavLink>
-        <SideNavLink href="/whats-new">What&apos;s new</SideNavLink>
+        {menu.map(({ title, slug, children }) => (
+          <SideNavLink
+            key={slug}
+            href={slug}
+            subMenu={
+              children && (
+                <SideNavSubMenu>
+                  {children.map(({ title, slug }) => (
+                    <SideNavSubMenuLink key={slug} href={slug}>
+                      {title}
+                    </SideNavSubMenuLink>
+                  ))}
+                </SideNavSubMenu>
+              )
+            }
+          >
+            {title}
+          </SideNavLink>
+        ))}
       </SideNav>
 
       <div className="w-full">

@@ -1,6 +1,15 @@
+import { client } from '@/api/api-utils'
 import { render, within } from '@/config/test-utils'
+import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { View } from './View'
+
+jest.mock('@/api/api-utils')
+
+jest.mocked(client).mockResolvedValue({
+  data: allPagesMock,
+  status: 200,
+})
 
 /**
  * Jest does not support RSC yet so we must await the component as a function
