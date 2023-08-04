@@ -42,10 +42,11 @@ export class FeedbackPage {
   }
 
   async submitsForm() {
-    await this.page.locator('text=/What was your reason for visiting the dashboard today?/').fill('Test input')
-    await this.page.locator('text=/Yes/').check()
-    await this.page.locator('text=/How could we improve your experience with the dashboard?/').fill('Test input')
-    await this.page.locator('text=/What would you like to see on the dashboard in the future?/').fill('Test input')
+    // await this.page.locator('text=/What was your reason for visiting the dashboard today?/').fill('Test input')
+    await this.page.getByLabel(/What was your reason for visiting the dashboard today?/).fill('Test input')
+    await this.page.getByLabel(/Yes/).check()
+    await this.page.getByLabel(/How could we improve your experience with the dashboard?/).fill('Test input')
+    await this.page.getByLabel(/What would you like to see on the dashboard in the future?/).fill('Test input')
 
     await this.page.getByRole('button', { name: 'submit' }).click()
 
