@@ -20,7 +20,7 @@ export const TopNav = ({ children }: { children: ReactNode }) => {
     <>
       <Link
         className={clsx(
-          'ukhsa-chevron govuk-link govuk-link--inverse float-right ml-5 mt-[-5px] px-2 py-2 no-underline shadow-none motion-reduce:transition-none md:right-[30px] md:top-[6px] lg:hidden',
+          'govuk-!-font-size-19 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[30px] mr-3 flex h-[50px] items-center px-4 no-underline shadow-none motion-reduce:transition-none sm:top-[40px] md:top-[0] md:mr-6 lg:hidden',
           {
             open: menuOpen,
           }
@@ -36,7 +36,7 @@ export const TopNav = ({ children }: { children: ReactNode }) => {
 
       <nav
         className={clsx(
-          'sticky mx-[-15px] my-0 h-full w-[calc(100%+30px)] min-w-[var(--ukhsa-nav-width)] overflow-hidden border-b-[1px] border-mid-grey bg-grey-3 sm:mx-[-30px] sm:w-[calc(100%+60px)] md:mx-[-30px] lg:mt-7 lg:hidden lg:h-full',
+          'sticky border-b-[1px] border-mid-grey bg-grey-3 lg:hidden [&>ul>li>a]:px-3 sm:[&>ul>li>a]:px-6 md:[&>ul>li>a]:px-6',
           {
             'hidden h-0': !menuOpen,
           }
