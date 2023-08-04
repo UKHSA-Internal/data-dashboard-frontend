@@ -4,7 +4,7 @@ import { useTranslation } from '../../../../i18n'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '../SideNav/SideNav'
 
 interface PageProps {
-  heading: string
+  heading?: string
   showWelcome?: ReactNode
   description?: string
   children: ReactNode
@@ -43,7 +43,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
 
         {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
-        <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>
+        {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
 
         {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
 

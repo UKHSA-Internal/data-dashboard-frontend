@@ -14,7 +14,7 @@ export default async function FeedbackConfirmation() {
   const { t } = await useTranslation('common')
 
   return (
-    <View heading="">
+    <View>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
