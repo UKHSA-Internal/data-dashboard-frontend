@@ -46,7 +46,7 @@ test('Feedback confirmation page', async ({ feedbackConfirmationPage, app }) => 
   await test.step('displays the correct layout', async () => {
     await app.hasLayout()
   })
-  // await test.step('displays without any accessibility defects', async () => {
-  //   await app.hasNoAccessibilityDefects()
-  // })
+  await test.step('displays without any accessibility defects', async () => {
+    await app.hasNoAccessibilityDefects()
+  })
 })
