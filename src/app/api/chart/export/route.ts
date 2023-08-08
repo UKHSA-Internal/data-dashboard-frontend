@@ -4,7 +4,7 @@ import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloa
 import { logger } from '@/lib/logger'
 
 export async function POST(req: NextRequest) {
-  const body = typeof req.body === 'string' ? JSON.parse(req.body) : req.body
+  const body = await req.json()
 
   const plots = Array.isArray(body.plots) ? body.plots : [body.plots]
 
