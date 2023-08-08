@@ -6,7 +6,7 @@ import { feedbackSchema } from '@/schemas/feedback.schema'
 
 export const requestSchema = feedbackSchema
 
-type RequestParams = z.infer<typeof requestSchema>
+export type RequestParams = z.infer<typeof requestSchema>
 
 export const postSuggestions = async (suggestions: RequestParams) => {
   try {
