@@ -40,11 +40,11 @@ describe('POST /api/chart/export', () => {
       status: 200,
     })
 
-    const req = Mock.of<NextRequest & { body: RequestBody }>({
-      body: {
+    const req = Mock.of<NextRequest & { json: () => RequestBody }>({
+      json: jest.fn(() => ({
         format: 'csv',
         plots,
-      },
+      })),
     })
 
     const res = await POST(req)
@@ -60,11 +60,11 @@ describe('POST /api/chart/export', () => {
       status: 200,
     })
 
-    const req = Mock.of<NextRequest & { body: RequestBody }>({
-      body: {
+    const req = Mock.of<NextRequest & { json: () => RequestBody }>({
+      json: jest.fn(() => ({
         format: 'json',
         plots,
-      },
+      })),
     })
 
     const res = await POST(req)
@@ -80,11 +80,11 @@ describe('POST /api/chart/export', () => {
       status: 200,
     })
 
-    const req = Mock.of<NextRequest & { body: RequestBody }>({
-      body: {
+    const req = Mock.of<NextRequest & { json: () => RequestBody }>({
+      json: jest.fn(() => ({
         format: 'not_valid',
         plots,
-      },
+      })),
     })
 
     const res = await POST(req)
@@ -109,8 +109,8 @@ describe('POST /api/chart/export', () => {
       status: 500,
     })
 
-    const req = Mock.of<NextRequest & { body: RequestBody }>({
-      body: {
+    const req = Mock.of<NextRequest & { json: () => RequestBody }>({
+      json: jest.fn(() => ({
         format: 'json',
         plots: [
           {
@@ -123,7 +123,7 @@ describe('POST /api/chart/export', () => {
             geography_type: '',
           },
         ],
-      },
+      })),
     })
 
     const res = await POST(req)
