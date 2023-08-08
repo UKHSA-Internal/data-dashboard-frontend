@@ -31,7 +31,7 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
 
   const res = await POST(req)
 
-  expect(res.status).toBe(307)
+  expect(res.status).toBe(302)
   expect(res.headers.get('location')).toBe('http://localhost/feedback/confirmation')
 })
 
@@ -53,11 +53,11 @@ test('Redirect to confirmation page when no suggestions are provided (form is no
 
   const res = await POST(req)
 
-  expect(res.status).toBe(307)
+  expect(res.status).toBe(302)
   expect(res.headers.get('location')).toBe('http://localhost/feedback/confirmation')
 })
 
-test.only('Redirect to error page when an error with the backend API occurs', async () => {
+test('Redirect to error page when an error with the backend API occurs', async () => {
   jest.mocked(client).mockRejectedValueOnce({
     status: 500,
   })
@@ -75,6 +75,6 @@ test.only('Redirect to error page when an error with the backend API occurs', as
   const res = await POST(req)
 
   expect(logger.error).toHaveBeenCalledWith(new Error('form submission to backend failed'))
-  expect(res.status).toBe(307)
+  expect(res.status).toBe(302)
   expect(res.headers.get('location')).toBe('http://localhost/feedback/?error=1')
 })
