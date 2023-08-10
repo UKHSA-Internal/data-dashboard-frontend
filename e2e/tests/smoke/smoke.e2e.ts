@@ -15,6 +15,7 @@ test.describe('Smoke tests', () => {
       await homePage.hasHeading()
     })
     await test.step('loads the "COVID-19" topic page', async () => {
+      if (app.isMobile) await app.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
       await app.nav.getByRole('link', { name: /COVID-19/ }).click()
       await covid19Page.hasHeading()
     })

@@ -37,8 +37,9 @@ export class App {
   readonly tableOfContents: Locator
   readonly backToTop: Locator
   readonly footer: Locator
+  readonly isMobile: boolean
 
-  constructor(page: Page) {
+  constructor(page: Page, isMobile: boolean) {
     this.page = page
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
@@ -46,6 +47,7 @@ export class App {
     this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
     this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
     this.footer = this.page.getByRole('contentinfo')
+    this.isMobile = isMobile
   }
 
   async hasNoAccessibilityDefects() {
@@ -65,6 +67,18 @@ export class App {
     ).toBeVisible()
 
     // Nav
+    if (this.isMobile) {
+      {
+        await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeHidden()
+        await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
+        await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
+        await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
+        await expect(this.nav.getByRole('link', { name: 'API' })).toBeHidden()
+        await expect(this.nav.getByRole('link', { name: 'About' })).toBeHidden()
+        await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
+        await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+      }
+    }
     await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
@@ -128,8 +142,8 @@ export class App {
 }
 
 export const test = base.extend<Fixtures>({
-  app: async ({ page }, use) => {
-    await use(new App(page))
+  app: async ({ page, isMobile }, use) => {
+    await use(new App(page, isMobile))
   },
   homePage: async ({ page }, use) => {
     await use(new HomePage(page))
