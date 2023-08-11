@@ -1,3 +1,5 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
 test('Other respiratory viruses page', async ({ otherRespiratoryVirusesPage, app }) => {
@@ -89,5 +91,32 @@ test('Other respiratory viruses page', async ({ otherRespiratoryVirusesPage, app
   })
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
+  })
+})
+
+test.describe('Other respiratory viruses page - mobile', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Other respiratory viruses page - tablet', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Other respiratory viruses page - desktop', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('displays the navigation on desktop', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
+    await app.hasDesktopNav()
   })
 })
