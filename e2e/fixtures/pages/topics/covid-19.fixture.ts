@@ -2,7 +2,11 @@ import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 export class Covid19Page {
-  constructor(public readonly page: Page) {}
+  readonly page: Page
+
+  constructor(page: Page) {
+    this.page = page
+  }
 
   async goto() {
     await this.page.goto('/topics/covid-19')

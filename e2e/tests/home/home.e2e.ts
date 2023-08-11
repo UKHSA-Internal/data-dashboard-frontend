@@ -1,3 +1,5 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
 test('Home page', async ({ homePage, app }) => {
@@ -51,5 +53,32 @@ test('Home page', async ({ homePage, app }) => {
   })
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
+  })
+})
+
+test.describe('Home page - mobile', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ homePage, app }) => {
+    await homePage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Home page - tablet', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ homePage, app }) => {
+    await homePage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Home page - desktop', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('displays the navigation on desktop', async ({ homePage, app }) => {
+    await homePage.goto()
+    await app.hasDesktopNav()
   })
 })
