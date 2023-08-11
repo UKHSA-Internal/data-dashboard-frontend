@@ -6,7 +6,6 @@ import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/d
 
 export class HomePage {
   readonly page: Page
-  readonly nav: Locator
 
   readonly covidSection: Locator
   readonly covidHeadlineRow: Locator
@@ -27,7 +26,6 @@ export class HomePage {
 
   constructor(page: Page) {
     this.page = page
-    this.nav = this.page.getByRole('navigation', { name: 'Menu' })
 
     this.covidSection = page.getByTestId('section-covid-19')
     this.covidHeadlineRow = this.covidSection.getByTestId('headline-row')
