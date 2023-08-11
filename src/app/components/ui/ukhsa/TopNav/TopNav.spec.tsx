@@ -1,13 +1,13 @@
 import userEvent from '@testing-library/user-event'
 
-import { render } from '@/config/test-utils'
+import { render, screen } from '@/config/test-utils'
 
 import { TopNav } from './TopNav'
 
 jest.mock('next/navigation')
 
 test('Mobile menu opens & closes', async () => {
-  const { getByRole } = render(
+  render(
     <TopNav>
       <>
         <li>Child 1</li>
@@ -16,18 +16,18 @@ test('Mobile menu opens & closes', async () => {
     </TopNav>
   )
 
-  const link = getByRole('link', { name: 'Show navigation menu', expanded: false })
+  const link = screen.getByRole('link', { name: 'Show navigation menu', expanded: false })
   expect(link).toBeInTheDocument()
   expect(link).toHaveAttribute('aria-controls', 'ukhsa-topnav')
-  expect(getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
+  expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
 
   await userEvent.click(link)
 
-  expect(getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
-  expect(getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
+  expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
 
   await userEvent.click(link)
 
-  expect(getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
-  expect(getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
+  expect(screen.getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
 })
