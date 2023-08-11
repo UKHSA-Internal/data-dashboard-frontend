@@ -6,6 +6,7 @@ import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/d
 
 export class HomePage {
   readonly page: Page
+
   readonly covidSection: Locator
   readonly covidHeadlineRow: Locator
   readonly covidCasesColumn: Locator

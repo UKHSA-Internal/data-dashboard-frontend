@@ -64,15 +64,6 @@ export class App {
       this.phaseBanner.getByText(/This is a new service – your feedback will help us to improve it./)
     ).toBeVisible()
 
-    // Nav
-    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'API' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
-
     // Footer
     await expect(this.footer.getByText(/All content is available under the/)).toBeVisible()
     await expect(this.footer.getByText(/Open Government Licence v3.0/)).toBeVisible()
@@ -81,6 +72,44 @@ export class App {
       'href',
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'
     )
+  }
+
+  async hasMobileNav() {
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
+
+    // Open menu
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+
+    // Expect visible items
+    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'API' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
+
+    // Close menu
+    await this.page.getByRole('link', { name: 'Hide navigation menu', expanded: true }).click()
+
+    // Expect no visible menu items
+    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'API' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'About' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
+  }
+
+  async hasDesktopNav() {
+    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'API' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
   }
 
   async hasTableOfContents(links: string[]) {

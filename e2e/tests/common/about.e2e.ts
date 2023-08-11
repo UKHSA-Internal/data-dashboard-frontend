@@ -1,3 +1,5 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
 test('About page', async ({ aboutPage, app }) => {
@@ -34,5 +36,32 @@ test('About page', async ({ aboutPage, app }) => {
   })
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
+  })
+})
+
+test.describe('About page - mobile', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
+    await aboutPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('About page - tablet', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
+    await aboutPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('About page - desktop', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
+    await aboutPage.goto()
+    await app.hasDesktopNav()
   })
 })
