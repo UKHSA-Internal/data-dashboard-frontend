@@ -70,8 +70,8 @@ test('Influenza page', async ({ influenzaPage, app }) => {
 test.describe('Influenza page - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on mobile', async ({ influenzaPage, app }) => {
+    await influenzaPage.goto()
     await app.hasMobileNav()
   })
 })
@@ -79,8 +79,8 @@ test.describe('Influenza page - mobile', () => {
 test.describe('Influenza page - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on tablet', async ({ influenzaPage, app }) => {
+    await influenzaPage.goto()
     await app.hasMobileNav()
   })
 })
@@ -88,8 +88,8 @@ test.describe('Influenza page - tablet', () => {
 test.describe('Influenza page - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on desktop', async ({ influenzaPage, app }) => {
+    await influenzaPage.goto()
     await app.hasDesktopNav()
   })
 })
