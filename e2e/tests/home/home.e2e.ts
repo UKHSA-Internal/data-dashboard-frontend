@@ -1,3 +1,5 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
 test('Home page', async ({ homePage, app }) => {
@@ -10,12 +12,6 @@ test('Home page', async ({ homePage, app }) => {
   await test.step('displays the correct layout', async () => {
     await app.hasLayout()
   })
-  // await test.step('displays the correct layout on a tablet', async () => {
-  //   await app.hasTabletLayout()
-  // })
-  // await test.step('displays the correct layout in mobile', async () => {
-  //   await app.hasMobileLayout()
-  // })
   await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
   })
@@ -57,5 +53,32 @@ test('Home page', async ({ homePage, app }) => {
   })
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
+  })
+})
+
+test.describe('Home page - mobile', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
+    await aboutPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Home page - tablet', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
+    await aboutPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Home page - desktop', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
+    await aboutPage.goto()
+    await app.hasDesktopNav()
   })
 })
