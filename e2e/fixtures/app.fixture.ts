@@ -97,6 +97,56 @@ export class App {
     )
   }
 
+  // async hasTabletLayout() {
+  //   test.use({
+  //     viewport: {
+  //       width: 1000,
+  //       height: 1100,
+  //     },
+  //   })
+
+  //   // Nav is hidden
+  //   await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeHidden()
+  //   await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
+
+  //   // Click menu button
+  //   await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+
+  //   // Nav shown
+  //   await expect(this.nav.getByRole('link', { name: /Dashboard/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /COVID-19/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /Influenza/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /Other respiratory viruses/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /API/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /About/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /What's new/ })).toBeVisible()
+  // }
+
+  // async hasMobileLayout() {
+  //   test.use({
+  //     viewport: {
+  //       width: 390,
+  //       height: 844,
+  //     },
+  //   })
+
+  //   // Nav is hidden
+  //   await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeHidden()
+  //   await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
+
+  //   // Click menu button
+  //   await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+
+  //   // Nav shown
+  //   await expect(this.nav.getByRole('link', { name: /Dashboard/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /COVID-19/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /Influenza/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /Other respiratory viruses/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /API/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /About/ })).toBeVisible()
+  //   await expect(this.nav.getByRole('link', { name: /What's new/ })).toBeVisible()
+  // }
+
   async hasTableOfContents(links: string[]) {
     await expect(this.tableOfContents).toBeVisible()
 
@@ -145,23 +195,23 @@ export const test = base.extend<Fixtures>({
   app: async ({ page, isMobile }, use) => {
     await use(new App(page, isMobile))
   },
-  homePage: async ({ page }, use) => {
-    await use(new HomePage(page))
+  homePage: async ({ page, isMobile }, use) => {
+    await use(new HomePage(page, isMobile))
   },
-  aboutPage: async ({ page }, use) => {
-    await use(new AboutPage(page))
+  aboutPage: async ({ page, isMobile }, use) => {
+    await use(new AboutPage(page, isMobile))
   },
-  whatsNewPage: async ({ page }, use) => {
-    await use(new WhatsNewPage(page))
+  whatsNewPage: async ({ page, isMobile }, use) => {
+    await use(new WhatsNewPage(page, isMobile))
   },
-  covid19Page: async ({ page }, use) => {
-    await use(new Covid19Page(page))
+  covid19Page: async ({ page, isMobile }, use) => {
+    await use(new Covid19Page(page, isMobile))
   },
-  influenzaPage: async ({ page }, use) => {
-    await use(new InfluenzaPage(page))
+  influenzaPage: async ({ page, isMobile }, use) => {
+    await use(new InfluenzaPage(page, isMobile))
   },
-  otherRespiratoryVirusesPage: async ({ page }, use) => {
-    await use(new OtherRespiratoryVirusesPage(page))
+  otherRespiratoryVirusesPage: async ({ page, isMobile }, use) => {
+    await use(new OtherRespiratoryVirusesPage(page, isMobile))
   },
   feedbackPage: async ({ page }, use) => {
     await use(new FeedbackPage(page))

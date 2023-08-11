@@ -1,11 +1,24 @@
-import type { Page } from '@playwright/test'
+import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 export class InfluenzaPage {
-  constructor(public readonly page: Page) {}
+  readonly page: Page
+  readonly isMobile: boolean
+  readonly nav: Locator
+
+  constructor(page: Page, isMobile: boolean) {
+    this.page = page
+    this.isMobile = isMobile
+    this.nav = this.page.getByRole('navigation', { name: 'Menu' })
+  }
 
   async goto() {
     await this.page.goto('/topics/influenza')
+  }
+
+  async goToThroughNav() {
+    if (this.isMobile) await this.nav.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.page.getByRole('link', { name: /Influenza/ }).click()
   }
 
   async hasMetadata() {

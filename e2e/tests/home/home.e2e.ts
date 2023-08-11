@@ -10,6 +10,12 @@ test('Home page', async ({ homePage, app }) => {
   await test.step('displays the correct layout', async () => {
     await app.hasLayout()
   })
+  // await test.step('displays the correct layout on a tablet', async () => {
+  //   await app.hasTabletLayout()
+  // })
+  // await test.step('displays the correct layout in mobile', async () => {
+  //   await app.hasMobileLayout()
+  // })
   await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
   })
