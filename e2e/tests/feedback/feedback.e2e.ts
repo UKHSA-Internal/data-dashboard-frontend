@@ -56,8 +56,8 @@ test('Feedback confirmation page', async ({ feedbackConfirmationPage, app }) => 
 test.describe('Feedback page - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on mobile', async ({ feedbackPage, app }) => {
+    await feedbackPage.goto()
     await app.hasMobileNav()
   })
 })
@@ -65,8 +65,8 @@ test.describe('Feedback page - mobile', () => {
 test.describe('Feedback page - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on tablet', async ({ feedbackPage, app }) => {
+    await feedbackPage.goto()
     await app.hasMobileNav()
   })
 })
@@ -74,8 +74,8 @@ test.describe('Feedback page - tablet', () => {
 test.describe('Feedback page - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on desktop', async ({ feedbackPage, app }) => {
+    await feedbackPage.goto()
     await app.hasDesktopNav()
   })
 })

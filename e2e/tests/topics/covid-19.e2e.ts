@@ -116,8 +116,8 @@ test('COVID-19 page', async ({ covid19Page, app }) => {
 test.describe('COVID-19 page - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on mobile', async ({ covid19Page, app }) => {
+    await covid19Page.goto()
     await app.hasMobileNav()
   })
 })
@@ -125,8 +125,8 @@ test.describe('COVID-19 page - mobile', () => {
 test.describe('COVID-19 page - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on tablet', async ({ covid19Page, app }) => {
+    await covid19Page.goto()
     await app.hasMobileNav()
   })
 })
@@ -134,8 +134,8 @@ test.describe('COVID-19 page - tablet', () => {
 test.describe('COVID-19 page - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on desktop', async ({ covid19Page, app }) => {
+    await covid19Page.goto()
     await app.hasDesktopNav()
   })
 })

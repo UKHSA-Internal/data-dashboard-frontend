@@ -59,8 +59,8 @@ test('Home page', async ({ homePage, app }) => {
 test.describe('Home page - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on mobile', async ({ homePage, app }) => {
+    await homePage.goto()
     await app.hasMobileNav()
   })
 })
@@ -68,8 +68,8 @@ test.describe('Home page - mobile', () => {
 test.describe('Home page - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on tablet', async ({ homePage, app }) => {
+    await homePage.goto()
     await app.hasMobileNav()
   })
 })
@@ -77,8 +77,8 @@ test.describe('Home page - tablet', () => {
 test.describe('Home page - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on desktop', async ({ homePage, app }) => {
+    await homePage.goto()
     await app.hasDesktopNav()
   })
 })

@@ -97,8 +97,8 @@ test('Other respiratory viruses page', async ({ otherRespiratoryVirusesPage, app
 test.describe('Other respiratory viruses page - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the navigation on mobile', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
     await app.hasMobileNav()
   })
 })
@@ -106,8 +106,8 @@ test.describe('Other respiratory viruses page - mobile', () => {
 test.describe('Other respiratory viruses page - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the navigation on tablet', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
     await app.hasMobileNav()
   })
 })
@@ -115,8 +115,8 @@ test.describe('Other respiratory viruses page - tablet', () => {
 test.describe('Other respiratory viruses page - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the navigation on desktop', async ({ aboutPage, app }) => {
-    await aboutPage.goto()
+  test('displays the navigation on desktop', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
     await app.hasDesktopNav()
   })
 })
