@@ -3,22 +3,15 @@ import { expect } from '@playwright/test'
 
 export class WhatsNewPage {
   readonly page: Page
-  readonly isMobile: boolean
   readonly nav: Locator
 
-  constructor(page: Page, isMobile: boolean) {
+  constructor(page: Page) {
     this.page = page
-    this.isMobile = isMobile
     this.nav = this.page.getByRole('navigation', { name: 'Menu' })
   }
 
   async goto() {
     await this.page.goto('/whats-new')
-  }
-
-  async goToThroughNav() {
-    if (this.isMobile) await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    await this.nav.getByRole('link', { name: /What's new/ }).click()
   }
 
   async hasMetadata() {
