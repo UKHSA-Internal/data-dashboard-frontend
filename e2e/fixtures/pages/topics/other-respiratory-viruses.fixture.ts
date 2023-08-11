@@ -1,13 +1,11 @@
-import type { Locator, Page } from '@playwright/test'
+import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
 export class OtherRespiratoryVirusesPage {
   readonly page: Page
-  readonly nav: Locator
 
   constructor(page: Page) {
     this.page = page
-    this.nav = this.page.getByRole('navigation', { name: 'Menu' })
   }
 
   async goto() {
