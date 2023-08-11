@@ -6,6 +6,9 @@ import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/d
 
 export class HomePage {
   readonly page: Page
+  readonly isMobile: boolean
+  readonly nav: Locator
+
   readonly covidSection: Locator
   readonly covidHeadlineRow: Locator
   readonly covidCasesColumn: Locator
@@ -23,8 +26,10 @@ export class HomePage {
   readonly influenzaHealthcareChartRowCard: Locator
   readonly influenzaTestingChartRowCard: Locator
 
-  constructor(page: Page) {
+  constructor(page: Page, isMobile: boolean) {
     this.page = page
+    this.isMobile = isMobile
+    this.nav = this.page.getByRole('navigation', { name: 'Menu' })
 
     this.covidSection = page.getByTestId('section-covid-19')
     this.covidHeadlineRow = this.covidSection.getByTestId('headline-row')
@@ -46,6 +51,11 @@ export class HomePage {
 
   async goto() {
     await this.page.goto('/')
+  }
+
+  async goToThroughNav() {
+    if (this.isMobile) await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.nav.getByRole('link', { name: /Dashboard/ }).click()
   }
 
   async hasMetadata() {
