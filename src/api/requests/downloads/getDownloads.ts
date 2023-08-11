@@ -19,7 +19,7 @@ export const requestSchema = z.object({
   ),
 })
 
-type RequestParams = z.infer<typeof requestSchema>
+export type RequestParams = z.infer<typeof requestSchema>
 
 export const getDownloads = async (plots: RequestParams['plots'], format: RequestParams['file_format'] = 'csv') => {
   try {
