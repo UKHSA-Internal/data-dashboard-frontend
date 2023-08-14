@@ -26,7 +26,33 @@ test('Mobile menu opens & closes', async () => {
   expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
   expect(screen.getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
 
-  await userEvent.click(link)
+  const closeLink = screen.getByRole('link', { name: 'Hide navigation menu', expanded: true })
+
+  await userEvent.click(closeLink)
+
+  expect(screen.getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
+})
+
+test("Check 'ClickAway' functionality works as expected", async () => {
+  render(
+    <>
+      <TopNav>
+        <>
+          <li>Child 1</li>
+          <li>Child 2</li>
+        </>
+      </TopNav>
+      <h1>Outside item</h1>
+    </>
+  )
+
+  await userEvent.click(screen.getByRole('link', { name: 'Show navigation menu', expanded: false }))
+
+  expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
+
+  await userEvent.click(screen.getByRole('heading', { name: 'Outside item', level: 1 }))
 
   expect(screen.getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
   expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
