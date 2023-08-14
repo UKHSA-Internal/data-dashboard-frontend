@@ -34,7 +34,7 @@ test('Mobile menu opens & closes', async () => {
   expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
 })
 
-test("Check 'ClickAway' functionality works as expected", async () => {
+test('Clicking outside of the header closes the navigation menu', async () => {
   render(
     <>
       <TopNav>

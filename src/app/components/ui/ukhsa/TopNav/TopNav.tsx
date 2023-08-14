@@ -1,15 +1,19 @@
 'use client'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { MouseEvent, ReactNode, useRef, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
 
 /**
  * Topnav
  */
 export const TopNav = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname()
   const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
+
+  useEffect(() => setMenuOpen(false), [pathname])
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
@@ -46,8 +50,6 @@ export const TopNav = ({ children }: { children: ReactNode }) => {
         )}
         id="ukhsa-topnav"
         aria-label="Menu"
-        ref={topNavRef}
-        onClick={() => setMenuOpen(false)}
       >
         <ul>{children}</ul>
       </nav>
