@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event'
+import { usePathname } from 'next/navigation'
 
 import { render, screen } from '@/config/test-utils'
 
@@ -53,6 +54,40 @@ test('Clicking outside of the header closes the navigation menu', async () => {
   expect(screen.getByRole('navigation', { name: 'Menu' })).not.toHaveClass('hidden')
 
   await userEvent.click(screen.getByRole('heading', { name: 'Outside item', level: 1 }))
+
+  expect(screen.getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
+})
+
+test('Clicking a menu item closes the navigation menu', async () => {
+  const navigationMock = jest.mocked(usePathname)
+  navigationMock.mockReturnValue('/')
+
+  const { rerender } = render(
+    <TopNav>
+      <>
+        <li>Child 1</li>
+        <li>Child 2</li>
+      </>
+    </TopNav>
+  )
+
+  await userEvent.click(screen.getByRole('link', { name: 'Show navigation menu', expanded: false }))
+
+  expect(screen.getByRole('link', { name: 'Hide navigation menu', expanded: true })).toBeInTheDocument()
+  expect(screen.getByRole('navigation', { name: 'Menu' })).toBeVisible()
+
+  // Simulate route change
+  navigationMock.mockReturnValue('/new-page')
+
+  rerender(
+    <TopNav>
+      <>
+        <li>Child 1</li>
+        <li>Child 2</li>
+      </>
+    </TopNav>
+  )
 
   expect(screen.getByRole('link', { name: 'Show navigation menu', expanded: false })).toBeInTheDocument()
   expect(screen.getByRole('navigation', { name: 'Menu' })).toHaveClass('hidden')
