@@ -1,6 +1,7 @@
 import { ZodError } from 'zod'
 import { generateError } from 'zod-error'
 
+import { SITE_URL } from '../constants/app.constants'
 import { zodErrorMessageOptions } from '../constants/errors.constants'
 
 /**
@@ -20,3 +21,8 @@ export const getStaticPropsRevalidateValue = () => {
  * Formats ZodErrors into human readable format
  */
 export const formatZodError = (error: ZodError) => generateError(error, zodErrorMessageOptions)
+
+/**
+ * Determine if the user is browsing on the production site
+ */
+export const isProd = () => window.location.hostname === SITE_URL
