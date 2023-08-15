@@ -41,7 +41,7 @@ export const linkedHeadingsComponents: Components = {
     </a>
   ),
   h2: ({ children, id }) => (
-    <h2 className="govuk-!-margin-bottom-0 govuk-heading-l text-inherit">
+    <h2 className="govuk-!-margin-bottom-0 govuk-heading-l">
       <Link
         href={`#${id}`}
         id={id}
