@@ -1,23 +1,30 @@
 'use client'
-
 import clsx from 'clsx'
 import Link from 'next/link'
-import { MouseEvent, ReactNode, useState } from 'react'
+import { usePathname } from 'next/navigation'
+import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import { useClickAway } from 'react-use'
 
 /**
  * Topnav
  */
 export const TopNav = ({ children }: { children: ReactNode }) => {
+  const pathname = usePathname()
+  const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
 
-  const handleOpen = (event: MouseEvent<HTMLAnchorElement>) => {
+  useEffect(() => setMenuOpen(false), [pathname])
+
+  const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
     setMenuOpen(!menuOpen)
-    return false
+    return
   }
 
+  useClickAway(topNavRef, () => setMenuOpen(false))
+
   return (
-    <>
+    <div ref={topNavRef}>
       <Link
         className={clsx(
           'govuk-!-font-size-19 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[30px] mr-3 flex h-[50px] items-center px-4 no-underline shadow-none motion-reduce:transition-none sm:top-[40px] md:top-[0] md:mr-6 lg:hidden',
@@ -25,7 +32,7 @@ export const TopNav = ({ children }: { children: ReactNode }) => {
             open: menuOpen,
           }
         )}
-        onClick={handleOpen}
+        onClick={handleClick}
         href="/browse"
         aria-expanded={menuOpen}
         aria-controls="ukhsa-topnav"
@@ -46,6 +53,6 @@ export const TopNav = ({ children }: { children: ReactNode }) => {
       >
         <ul>{children}</ul>
       </nav>
-    </>
+    </div>
   )
 }
