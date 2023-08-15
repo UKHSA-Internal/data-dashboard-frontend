@@ -1,4 +1,5 @@
 import rehypeToc from '@jsdevtools/rehype-toc'
+import Link from 'next/link'
 import { ComponentProps } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
@@ -40,13 +41,15 @@ export const linkedHeadingsComponents: Components = {
     </a>
   ),
   h2: ({ children, id }) => (
-    <a
-      href={`#${id}`}
-      id={id}
-      className="govuk-!-margin-bottom-4 govuk-!-margin-top-6 govuk-link--no-visited-state inline-block [&:not(:hover)]:no-underline"
-    >
-      <h2 className="govuk-!-margin-bottom-0 govuk-heading-l text-inherit">{children}</h2>
-    </a>
+    <h2 className="govuk-!-margin-bottom-0 govuk-heading-l text-inherit">
+      <Link
+        href={`#${id}`}
+        id={id}
+        className="govuk-!-margin-bottom-4 govuk-!-margin-top-6 govuk-link--no-visited-state inline-block"
+      >
+        {children}
+      </Link>
+    </h2>
   ),
   nav: ({ children, className }) => {
     if (className?.includes('toc')) {
