@@ -18,7 +18,7 @@
     "paths": {
       "@/*": ["./src/*"]
     },
-    "types": ["jest", "node", "@types/testing-library__jest-dom"],
+    "types": ["jest", "node", "@types/testing-library__jest-dom", "@types/gtag.js"],
     "plugins": [
       {
         "name": "next"

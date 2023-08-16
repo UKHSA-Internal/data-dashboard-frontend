@@ -9,6 +9,7 @@ import Script from 'next/script'
 
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 
+import { GoogleAnalytics } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
@@ -24,6 +25,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             "document.body.className = document.body.className ? document.body.className + ' js-enabled' : 'js-enabled'",
         }}
       />
+      <GoogleAnalytics />
       <body className="govuk-template__body">
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           Skip to main content
