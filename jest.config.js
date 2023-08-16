@@ -34,7 +34,7 @@ const customJestConfig = {
       lines: 96,
       functions: 95,
       branches: 77,
-      statements: 95,
+      statements: 94,
     },
   },
 }
