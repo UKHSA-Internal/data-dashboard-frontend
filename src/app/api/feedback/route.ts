@@ -7,7 +7,7 @@ import { feedbackSchema } from '@/schemas/feedback.schema'
 
 export async function POST(req: NextRequest) {
   try {
-    logger.info('Feedback success: ', JSON.stringify(req))
+    logger.info('Feedback: ', JSON.stringify(req))
 
     // Validate form request body
     const suggestions = await feedbackSchema.parseAsync(req.body)
