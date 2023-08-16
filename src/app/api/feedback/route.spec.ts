@@ -20,7 +20,9 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
   })
 
   const req = Mock.of<NextRequest & { url: string; body: RequestParams }>({
-    url: 'http://localhost',
+    nextUrl: {
+      origin: 'http://localhost',
+    },
     body: {
       improve_experience: 'quality!',
       did_you_find_everything: 'yes',
@@ -42,7 +44,9 @@ test('Redirect to confirmation page when no suggestions are provided (form is no
   })
 
   const req = Mock.of<NextRequest & { url: string; body: RequestParams }>({
-    url: 'http://localhost',
+    nextUrl: {
+      origin: 'http://localhost',
+    },
     body: {
       improve_experience: '',
       did_you_find_everything: undefined,
@@ -63,7 +67,9 @@ test('Redirect to error page when an error with the backend API occurs', async (
   })
 
   const req = Mock.of<NextRequest & { url: string; body: RequestParams }>({
-    url: 'http://localhost',
+    nextUrl: {
+      origin: 'http://localhost',
+    },
     body: {
       improve_experience: '',
       did_you_find_everything: 'no',
