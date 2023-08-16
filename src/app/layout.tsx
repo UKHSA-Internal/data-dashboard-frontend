@@ -6,6 +6,7 @@ import './globals.scss'
 
 import Link from 'next/link'
 import Script from 'next/script'
+import { Suspense } from 'react'
 
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 
@@ -25,7 +26,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             "document.body.className = document.body.className ? document.body.className + ' js-enabled' : 'js-enabled'",
         }}
       />
-      <GoogleAnalytics />
+      <Suspense fallback={null}>
+        <GoogleAnalytics />
+      </Suspense>
       <body className="govuk-template__body">
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           Skip to main content
