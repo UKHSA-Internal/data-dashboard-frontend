@@ -6,15 +6,19 @@ import './globals.scss'
 
 import Link from 'next/link'
 import Script from 'next/script'
+import { Suspense } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
+import { useTranslation } from '@/app/i18n'
 
-import { GoogleAnalytics } from './components/ui/ukhsa'
+import { CookieBanner, GoogleAnalytics } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const menu = await useMenu()
+  const { t } = await useTranslation('common')
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -30,6 +34,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           Skip to main content
         </a>
+        <Suspense fallback={null}>
+          <CookieBanner
+            title={t('cookieBanner.title')}
+            body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
+          />
+        </Suspense>
         <header className="govuk-header" role="banner" data-module="govuk-header">
           <div className="relative">
             <div className="govuk-header__container govuk-width-container">
@@ -103,10 +113,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {children}
           </main>
         </div>
-        <footer className="govuk-footer" role="contentinfo">
-          <div className="govuk-width-container">
+        <footer className="govuk-footer " role="contentinfo">
+          <div className="govuk-width-container ">
             <div className="govuk-footer__meta">
               <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
+                <h2 className="govuk-visually-hidden">Support links</h2>
+                <ul className="govuk-footer__inline-list">
+                  <li className="govuk-footer__inline-list-item">
+                    <Link href="/cookie-policy" className="govuk-footer__link">
+                      Cookies
+                    </Link>
+                  </li>
+                </ul>
                 <svg
                   aria-hidden="true"
                   focusable="false"
@@ -122,7 +140,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   />
                 </svg>
                 <span className="govuk-footer__licence-description">
-                  All content is available under the&nbsp;
+                  All content is available under the
                   <a
                     className="govuk-footer__link"
                     href="https://www.nationalarchives.gov.uk/doc/open-government-licence/version/3/"
