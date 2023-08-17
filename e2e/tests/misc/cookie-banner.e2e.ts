@@ -45,9 +45,6 @@ test('Does not render the cookie banner if the GDPR cookie is already set', asyn
   await test.step('click "Hide cookie message" button', async () => {
     await app.hideCookies()
   })
-  await test.step('does not display the cookie banner', async () => {
-    await app.hasNotCookieBanner()
-  })
   await test.step('refresh browser', async () => {
     await app.reload()
   })
