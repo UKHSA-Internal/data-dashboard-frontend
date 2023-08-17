@@ -1,11 +1,10 @@
 import { Metadata } from 'next'
 
-import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { warmStaticCache } from '@/app/utils/cache.utils'
 import { renderCard } from '@/app/utils/cms.utils'
-import { logger } from '@/lib/logger'
 
 export const revalidate = 360
 
@@ -20,19 +19,19 @@ export async function generateMetadata({ params: { topic } }: { params: { topic:
   }
 }
 
-export async function generateStaticParams() {
-  const pages = await getPages(PageType.Topic).catch((err) => {
-    logger.error(err)
-  })
+// export async function generateStaticParams() {
+//   const pages = await getPages(PageType.Topic).catch((err) => {
+//     logger.error(err)
+//   })
 
-  if (pages && pages.success) {
-    return pages.data.items.map((page) => ({
-      topic: page.meta.slug,
-    }))
-  }
+//   if (pages && pages.success) {
+//     return pages.data.items.map((page) => ({
+//       topic: page.meta.slug,
+//     }))
+//   }
 
-  return []
-}
+//   return []
+// }
 
 export default async function TopicPage({ params: { topic } }: { params: { topic: string } }) {
   const {
