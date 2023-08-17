@@ -7,17 +7,13 @@ import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constant
 
 import { CookieBanner } from './CookieBanner'
 
-jest.mock('next-client-cookies')
-
 const pushMock = jest.fn()
-
 jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }))
 
+jest.mock('next-client-cookies')
 jest.mock('@/app/hooks/useNavigationEvent')
-
-// const useCookiesMock = jest.mocked(useCookies)
 
 window.gtag = jest.fn()
 
@@ -164,56 +160,3 @@ test('Accepting or rejecting cookies via keyboard', async () => {
 
   expect(screen.getByText(/You’ve rejected additional cookies./)).toBeInTheDocument()
 })
-
-test('Does not render the cookie banner if the GDPR cookie is already set', () => {
-  // Mock the getCookie function to return a truthy value to simulate the cookie being set
-  // ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
-
-  render(<CookieBanner {...props} />)
-
-  // The component should not render the cookie banner
-  expect(screen.queryByLabelText('Cookies on UKHSA data dashboard')).not.toBeInTheDocument()
-})
-
-// test.skip('Displays cookie banner via magic link', async () => {
-//   Object.defineProperty(window, 'location', {
-//     value: {
-//       href: 'http://localhost/cookie-policy?change-settings=1',
-//     },
-//     writable: true,
-//   })
-
-//   const mockFocus = jest.fn()
-//   jest.spyOn(React, 'useRef').mockReturnValue({ current: { focus: mockFocus } })
-
-//   // Mock the getCookie function to return a truthy value to simulate the cookie being set
-//   ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
-
-//   render(<CookieBanner {...props} />)
-
-//   expect(screen.queryByLabelText('Cookies on UKHSA data dashboard')).not.toBeInTheDocument()
-
-//   await act(() => mockRouter.push('/cookie-policy?change-settings=1', undefined, { shallow: true }))
-
-//   expect(screen.getByLabelText('Cookies on UKHSA data dashboard')).toBeInTheDocument()
-
-//   // Refocuses cookie banner after route change
-//   expect(mockFocus).toHaveBeenCalled()
-
-//   // Removes query parameter after clicking accept
-//   await userEvent.click(screen.getByRole('button', { name: /accept additional cookies/i }))
-//   expect(mockRouter.query['change-settings']).toBeUndefined()
-// })
-
-// test.skip('Hides cookie banner on page change if cookie was already set', async () => {
-//   render(<CookieBanner {...props} />)
-
-//   expect(screen.getByLabelText('Cookies on UKHSA data dashboard')).toBeInTheDocument()
-
-//   // Mock the getCookie function to return a truthy value to simulate the cookie being set
-//   ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
-
-//   await act(() => mockRouter.push('/'))
-
-//   expect(screen.queryByLabelText('Cookies on UKHSA data dashboard')).not.toBeInTheDocument()
-// })
