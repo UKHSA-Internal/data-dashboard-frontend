@@ -1,4 +1,5 @@
 import { Roboto } from 'next/font/google'
+import { cookies } from 'next/headers'
 
 const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-primary' })
 
@@ -9,6 +10,7 @@ import Script from 'next/script'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { ClientCookiesProvider } from '@/app/components/misc'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
@@ -35,10 +37,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           Skip to main content
         </a>
         <Suspense fallback={null}>
-          <CookieBanner
-            title={t('cookieBanner.title')}
-            body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
-          />
+          <ClientCookiesProvider value={cookies().getAll()}>
+            <CookieBanner
+              title={t('cookieBanner.title')}
+              body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
+            />
+          </ClientCookiesProvider>
         </Suspense>
         <header className="govuk-header" role="banner" data-module="govuk-header">
           <div className="relative">
