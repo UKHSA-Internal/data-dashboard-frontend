@@ -194,11 +194,11 @@ export class App {
   }
 
   async acceptCookies() {
-    this.cookieBanner.getByRole('button', { name: 'Accept additional cookies' }).click()
+    await this.cookieBanner.getByRole('button', { name: 'Accept additional cookies' }).click()
   }
 
   async hideCookies() {
-    this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
+    await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
   }
 }
 
