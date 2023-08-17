@@ -20,7 +20,7 @@ beforeEach(() => {
 const isProdMock = jest.mocked(isProd)
 jest.mocked(usePathname).mockReturnValue('/mock-pathname')
 
-const params = new URLSearchParams('param=value') as unknown as ReadonlyURLSearchParams
+const params = new URLSearchParams() as unknown as ReadonlyURLSearchParams
 jest.mocked(useSearchParams).mockReturnValue(params)
 
 afterEach(() => {
@@ -51,6 +51,24 @@ test('does not render Google Analytics script when not viewing the production si
 
 test('calls gtag to turn off auto page views and then to manually send a page view on page load', () => {
   isProdMock.mockReturnValue(true)
+
+  render(<GoogleAnalytics />)
+
+  expect(window.gtag).toHaveBeenCalledWith('config', 'G-123', {
+    send_page_view: false,
+  })
+
+  expect(window.gtag).toHaveBeenCalledWith('event', 'page_view', {
+    page_path: '/mock-pathname',
+    send_to: 'G-123',
+  })
+})
+
+test('turns off auto page views and manually sends a page view on page load for urls with search parameters', () => {
+  isProdMock.mockReturnValue(true)
+
+  const params = new URLSearchParams('param=value') as unknown as ReadonlyURLSearchParams
+  jest.mocked(useSearchParams).mockReturnValue(params)
 
   render(<GoogleAnalytics />)
 
