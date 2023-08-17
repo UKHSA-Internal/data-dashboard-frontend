@@ -68,7 +68,6 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
 
   const updateQueryParams = () => {
     const url = new URL(window.location.href)
-    console.log('update: ', url.toString())
     if (url.searchParams.has('change-settings')) {
       url.searchParams.delete('change-settings')
       router.push(url.toString())
