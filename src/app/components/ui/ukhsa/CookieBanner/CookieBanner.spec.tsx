@@ -4,6 +4,7 @@ import { useCookies } from 'next-client-cookies'
 import React, { ComponentProps } from 'react'
 
 import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constants'
+import { useNavigationEvent } from '@/app/hooks/useNavigationEvent'
 
 import { CookieBanner } from './CookieBanner'
 
@@ -27,7 +28,7 @@ const props: ComponentProps<typeof CookieBanner> = {
   body: 'Mocked content',
 }
 
-test('Renders the cookie banner selection view', () => {
+test('renders the cookie banner selection view', () => {
   render(<CookieBanner {...props} />)
 
   expect(screen.getByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).toBeInTheDocument()
@@ -40,7 +41,7 @@ test('Renders the cookie banner selection view', () => {
   expect(screen.queryByTestId('confirmation-message')).not.toBeInTheDocument()
 })
 
-test('Changes to the confirmation view when accepting cookies', async () => {
+test('changes to the confirmation view when accepting cookies', async () => {
   render(<CookieBanner {...props} />)
 
   await userEvent.click(screen.getByRole('button', { name: /accept additional cookies/i }))
@@ -54,7 +55,7 @@ test('Changes to the confirmation view when accepting cookies', async () => {
   })
 })
 
-test('Changes to the confirmation view when rejecting cookies', async () => {
+test('changes to the confirmation view when rejecting cookies', async () => {
   render(<CookieBanner {...props} />)
 
   await userEvent.click(screen.getByRole('button', { name: /reject additional cookies/i }))
@@ -71,7 +72,7 @@ test('Changes to the confirmation view when rejecting cookies', async () => {
   })
 })
 
-test('Hides the cookie banner when "Hide cookie message" is clicked', async () => {
+test('hides the cookie banner when "Hide cookie message" is clicked', async () => {
   render(<CookieBanner {...props} />)
 
   // Click "Accept additional cookies" to show the confirmation view
@@ -88,7 +89,7 @@ test('Hides the cookie banner when "Hide cookie message" is clicked', async () =
   expect(screen.queryByLabelText('Cookies on UKHSA data dashboard')).not.toBeInTheDocument()
 })
 
-test('Hides the cookie banner and redirects to the cookie policy page when "cookie policy" link is clicked', async () => {
+test('hides the cookie banner and redirects to the cookie policy page when "cookie policy" link is clicked', async () => {
   render(<CookieBanner {...props} />)
 
   await userEvent.click(screen.getByRole('button', { name: /accept additional cookies/i }))
@@ -101,7 +102,7 @@ test('Hides the cookie banner and redirects to the cookie policy page when "cook
   expect(pushMock).toHaveBeenCalledWith('/cookie-policy')
 })
 
-test('Changes back to the selection view when "change your cookie settings" is clicked', async () => {
+test('changes back to the selection view when "change your cookie settings" is clicked', async () => {
   render(<CookieBanner {...props} />)
 
   // Click "Accept additional cookies" to show the confirmation view
@@ -124,7 +125,7 @@ test('Changes back to the selection view when "change your cookie settings" is c
   expect(screen.queryByTestId('confirmation-message')).not.toBeInTheDocument()
 })
 
-test('Accepting or rejecting cookies via keyboard', async () => {
+test('accepting or rejecting cookies via keyboard', async () => {
   const user = userEvent.setup()
 
   render(<CookieBanner {...props} />)
@@ -159,4 +160,50 @@ test('Accepting or rejecting cookies via keyboard', async () => {
   await user.keyboard('{Enter}')
 
   expect(screen.getByText(/You’ve rejected additional cookies./)).toBeInTheDocument()
+})
+
+test('displays cookie banner via magic link', async () => {
+  const mockFocus = jest.fn()
+  jest.spyOn(React, 'useRef').mockReturnValue({ current: { focus: mockFocus } })
+
+  // Mock the getCookie function to return a truthy value to simulate the cookie being set
+  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
+
+  const { rerender } = render(<CookieBanner {...props} />)
+
+  expect(screen.queryByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).not.toBeInTheDocument()
+
+  jest.mocked(useNavigationEvent).mockImplementationOnce((callback) => callback('/?change-settings=1'))
+
+  rerender(<CookieBanner {...props} />)
+
+  expect(screen.getByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).toBeInTheDocument()
+
+  // Refocuses cookie banner after route change
+  expect(mockFocus).toHaveBeenCalled()
+
+  // Removes query parameter after clicking accept
+  await userEvent.click(screen.getByRole('button', { name: /accept additional cookies/i }))
+})
+
+test('hides cookie banner on page change if cookie was already set', async () => {
+  // Mock the getCookie function to return a truthy value to simulate the cookie being set
+  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
+
+  const { rerender } = render(<CookieBanner {...props} />)
+
+  expect(screen.queryByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).not.toBeInTheDocument()
+
+  jest.mocked(useNavigationEvent).mockImplementationOnce((callback) => callback('/?change-settings=1'))
+
+  rerender(<CookieBanner {...props} />)
+
+  expect(screen.getByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).toBeInTheDocument()
+
+  // Simulate navigation to another page
+  jest.mocked(useNavigationEvent).mockImplementationOnce((callback) => callback('/other-page'))
+
+  rerender(<CookieBanner {...props} />)
+
+  expect(screen.queryByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).not.toBeInTheDocument()
 })
