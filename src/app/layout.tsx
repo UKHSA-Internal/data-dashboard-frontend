@@ -16,11 +16,14 @@ import { useTranslation } from '@/app/i18n'
 
 import { CookieBanner, GoogleAnalytics } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE, UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { useMenu } from './utils/menu.utils'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
+
+  const cookieStore = cookies()
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -32,14 +35,19 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         }}
       />
       <Suspense fallback={null}>
-        <GoogleAnalytics />
+        <GoogleAnalytics
+          hasAcceptedCookies={
+            !!cookieStore.get(UKHSA_GDPR_COOKIE_NAME) &&
+            cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
+          }
+        />
       </Suspense>
       <body className="govuk-template__body">
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           Skip to main content
         </a>
         <Suspense fallback={null}>
-          <ClientCookiesProvider value={cookies().getAll()}>
+          <ClientCookiesProvider value={cookieStore.getAll()}>
             <CookieBanner
               title={t('cookieBanner.title')}
               body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
