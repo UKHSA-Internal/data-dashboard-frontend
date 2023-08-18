@@ -30,19 +30,19 @@ afterEach(() => {
 test('renders Google Analytics script when tracking ID is provided', () => {
   isProdMock.mockReturnValue(true)
 
-  render(<GoogleAnalytics />)
+  render(<GoogleAnalytics hasAcceptedCookies={false} />)
 
   const scriptElements = document.querySelectorAll('script')
 
   expect(scriptElements).toHaveLength(2)
   expect(scriptElements[0]).toHaveAttribute('src', 'https://www.googletagmanager.com/gtag/js?id=G-123')
-  expect(scriptElements[1]).toHaveAttribute('id', 'google-analytics')
+  expect(scriptElements[1]).toHaveAttribute('id', 'ga')
 })
 
 test('does not render Google Analytics script when not viewing the production site', () => {
   isProdMock.mockReturnValue(false)
 
-  render(<GoogleAnalytics />)
+  render(<GoogleAnalytics hasAcceptedCookies={false} />)
 
   const scriptElements = document.querySelectorAll('script')
 
@@ -52,7 +52,7 @@ test('does not render Google Analytics script when not viewing the production si
 test('calls gtag to turn off auto page views and then to manually send a page view on page load', () => {
   isProdMock.mockReturnValue(true)
 
-  render(<GoogleAnalytics />)
+  render(<GoogleAnalytics hasAcceptedCookies={false} />)
 
   expect(window.gtag).toHaveBeenCalledWith('config', 'G-123', {
     send_page_view: false,
@@ -70,7 +70,7 @@ test('turns off auto page views and manually sends a page view on page load for 
   const params = new URLSearchParams('param=value') as unknown as ReadonlyURLSearchParams
   jest.mocked(useSearchParams).mockReturnValue(params)
 
-  render(<GoogleAnalytics />)
+  render(<GoogleAnalytics hasAcceptedCookies={false} />)
 
   expect(window.gtag).toHaveBeenCalledWith('config', 'G-123', {
     send_page_view: false,
