@@ -8,11 +8,7 @@ import { isProd } from '@/app/utils/app.utils'
 
 const TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-interface GoogleAnalyticsProps {
-  hasAcceptedCookies: boolean
-}
-
-export const GoogleAnalytics = ({ hasAcceptedCookies }: GoogleAnalyticsProps) => {
+export const GoogleAnalytics = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
 
@@ -29,38 +25,20 @@ export const GoogleAnalytics = ({ hasAcceptedCookies }: GoogleAnalyticsProps) =>
       page_path: url,
       send_to: TRACKING_ID,
     })
-  }, [pathname, searchParams, hasAcceptedCookies])
+  }, [pathname, searchParams])
 
   if (!TRACKING_ID.length || !isProd()) return null
 
   return (
     <>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${TRACKING_ID}`} strategy="afterInteractive" />
-      <Script id="ga" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
-          gtag('consent', 'default', {
-            'ad_storage': 'denied',
-            'analytics_storage': 'denied'
-          });
           gtag('js', new Date());
         `}
       </Script>
-      {hasAcceptedCookies && (
-        <Script
-          id="ga-consent"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-            gtag('consent', 'update', {
-              'ad_storage': 'granted',
-              'analytics_storage': 'granted'
-            });
-          `,
-          }}
-        />
-      )}
     </>
   )
 }
