@@ -1,6 +1,6 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
-import { useCookies } from 'next-client-cookies'
+import { getCookie } from 'cookies-next'
 import React, { ComponentProps } from 'react'
 
 import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constants'
@@ -13,14 +13,21 @@ jest.mock('next/navigation', () => ({
   useRouter: () => ({ push: pushMock }),
 }))
 
-jest.mock('next-client-cookies')
+// Mock the getCookie and setCookie functions
+jest.mock('cookies-next', () => ({
+  getCookie: jest.fn(),
+  setCookie: jest.fn(),
+}))
+
+const mockedGetCookie = jest.mocked(getCookie)
+
 jest.mock('@/app/hooks/useNavigationEvent')
 
 window.gtag = jest.fn()
 
 beforeEach(() => {
   jest.resetAllMocks()
-  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => '' })
+  mockedGetCookie.mockReturnValue('')
 })
 
 const props: ComponentProps<typeof CookieBanner> = {
@@ -80,7 +87,7 @@ test('hides the cookie banner when "Hide cookie message" is clicked', async () =
 
   // Ensure that the confirmation message is visible
   expect(screen.getByTestId('confirmation-message')).toBeInTheDocument()
-  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
+  mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
   // Click "Hide cookie message" to hide the entire cookie banner
   await userEvent.click(screen.getByRole('button', { name: /hide cookie message/i }))
@@ -93,7 +100,7 @@ test('hides the cookie banner and redirects to the cookie policy page when "cook
   render(<CookieBanner {...props} />)
 
   await userEvent.click(screen.getByRole('button', { name: /accept additional cookies/i }))
-  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
+  mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
   await userEvent.click(screen.getByRole('link', { name: /cookie policy/i }))
 
@@ -167,7 +174,7 @@ test('displays cookie banner via magic link', async () => {
   jest.spyOn(React, 'useRef').mockReturnValue({ current: { focus: mockFocus } })
 
   // Mock the getCookie function to return a truthy value to simulate the cookie being set
-  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
+  mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
   const { rerender } = render(<CookieBanner {...props} />)
 
@@ -188,7 +195,7 @@ test('displays cookie banner via magic link', async () => {
 
 test('hides cookie banner on page change if cookie was already set', async () => {
   // Mock the getCookie function to return a truthy value to simulate the cookie being set
-  ;(useCookies as jest.Mock).mockReturnValue({ set: () => '', get: () => UKHSA_GDPR_COOKIE_ACCEPT_VALUE })
+  mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
   const { rerender } = render(<CookieBanner {...props} />)
 

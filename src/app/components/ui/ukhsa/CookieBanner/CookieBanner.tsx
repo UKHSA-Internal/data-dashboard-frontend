@@ -1,8 +1,8 @@
 'use client'
 
+import { getCookie, setCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { useCookies } from 'next-client-cookies'
 import { MouseEventHandler, ReactNode, useEffect, useRef, useState } from 'react'
 
 import {
@@ -26,8 +26,6 @@ interface CookieBannerProps {
 }
 
 export const CookieBanner = ({ title, body }: CookieBannerProps) => {
-  const cookieStore = useCookies()
-
   const [view, setView] = useState(CookieBannerView.Hidden)
 
   const regionRef = useRef<HTMLDivElement>(null)
@@ -40,7 +38,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
       regionRef?.current?.focus()
     } else {
       // Hide banner after navigating away from cookie policy page
-      const isCookieSet = !!cookieStore.get(UKHSA_GDPR_COOKIE_NAME)
+      const isCookieSet = !!getCookie(UKHSA_GDPR_COOKIE_NAME)
       if (view === CookieBannerView.Selection && isCookieSet) {
         setView(CookieBannerView.Hidden)
       }
@@ -48,7 +46,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
   })
 
   useEffect(() => {
-    const isCookieSet = !!cookieStore.get(UKHSA_GDPR_COOKIE_NAME)
+    const isCookieSet = !!getCookie(UKHSA_GDPR_COOKIE_NAME)
 
     // Set initial visibility on client
     if (view === CookieBannerView.Hidden && !isCookieSet) {
@@ -64,7 +62,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
     if (view === CookieBannerView.Selection && isCookieSet) {
       regionRef.current?.focus()
     }
-  }, [view, cookieStore])
+  }, [view])
 
   const updateQueryParams = () => {
     const url = new URL(window.location.href)
@@ -76,7 +74,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
 
   const handleAccept: MouseEventHandler = () => {
     setView(CookieBannerView.Accepted)
-    cookieStore.set(UKHSA_GDPR_COOKIE_NAME, UKHSA_GDPR_COOKIE_ACCEPT_VALUE, {
+    setCookie(UKHSA_GDPR_COOKIE_NAME, UKHSA_GDPR_COOKIE_ACCEPT_VALUE, {
       expires: getGDPRCookieExpiryDate(),
       secure: true,
     })
@@ -90,7 +88,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
 
   const handleReject: MouseEventHandler = () => {
     setView(CookieBannerView.Rejected)
-    cookieStore.set(UKHSA_GDPR_COOKIE_NAME, UKHSA_GDPR_COOKIE_REJECT_VALUE, {
+    setCookie(UKHSA_GDPR_COOKIE_NAME, UKHSA_GDPR_COOKIE_REJECT_VALUE, {
       expires: getGDPRCookieExpiryDate(),
       secure: true,
     })
