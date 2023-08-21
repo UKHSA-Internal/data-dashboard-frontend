@@ -1,20 +1,21 @@
 'use client'
 
+import { getCookie } from 'cookies-next'
 import { usePathname, useSearchParams } from 'next/navigation'
 import Script from 'next/script'
 import { useEffect } from 'react'
 
+import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE, UKHSA_GDPR_COOKIE_NAME } from '@/app/constants/cookies.constants'
 import { isProd } from '@/app/utils/app.utils'
 
 const TRACKING_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID
 
-interface GoogleAnalyticsProps {
-  hasAcceptedCookies: boolean
-}
-
-export const GoogleAnalytics = ({ hasAcceptedCookies }: GoogleAnalyticsProps) => {
+export const GoogleAnalytics = () => {
   const pathname = usePathname()
   const searchParams = useSearchParams()
+
+  const hasAcceptedCookies =
+    !!getCookie(UKHSA_GDPR_COOKIE_NAME) && getCookie(UKHSA_GDPR_COOKIE_NAME) === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
 
   useEffect(() => {
     if (!TRACKING_ID || !isProd()) return
@@ -36,7 +37,7 @@ export const GoogleAnalytics = ({ hasAcceptedCookies }: GoogleAnalyticsProps) =>
   return (
     <>
       <Script src={`https://www.googletagmanager.com/gtag/js?id=${TRACKING_ID}`} strategy="afterInteractive" />
-      <Script id="ga" strategy="afterInteractive">
+      <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
           function gtag(){window.dataLayer.push(arguments);}
@@ -49,15 +50,15 @@ export const GoogleAnalytics = ({ hasAcceptedCookies }: GoogleAnalyticsProps) =>
       </Script>
       {hasAcceptedCookies && (
         <Script
-          id="ga-consent"
+          id="google-analytics-with-consent"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `
-            gtag('consent', 'update', {
-              'ad_storage': 'granted',
-              'analytics_storage': 'granted'
-            });
-          `,
+        gtag('consent', 'update', {
+          'ad_storage': 'granted',
+          'analytics_storage': 'granted'
+        });
+      `,
           }}
         />
       )}
