@@ -7,8 +7,10 @@ import { feedbackSchema } from '@/schemas/feedback.schema'
 
 export async function POST(req: NextRequest) {
   try {
+    const formData = await req.formData()
+
     // Validate form request body
-    const suggestions = await feedbackSchema.parseAsync(req.body)
+    const suggestions = await feedbackSchema.parseAsync(Object.fromEntries(formData))
 
     // Send results to the backend
     const { success } = await postSuggestions(suggestions)
@@ -20,9 +22,14 @@ export async function POST(req: NextRequest) {
     const url = new URL(req.headers.get('origin') || '')
     url.pathname = '/feedback/confirmation'
 
+    logger.info(`Feedback submitted successfully, redirecting to ${url}`)
+
     return NextResponse.redirect(url, 302)
   } catch (error) {
     const url = new URL(req.headers.get('origin') || '')
+
+    logger.error('Failed to submit feedback form')
+    logger.trace(error)
 
     if (error instanceof ZodError) {
       url.pathname = '/feedback/confirmation'
@@ -32,8 +39,6 @@ export async function POST(req: NextRequest) {
       // business requirements of having the form completely optional but still submittable...
       return NextResponse.redirect(url, 302)
     }
-
-    logger.error(error)
 
     url.pathname = '/feedback'
     url.searchParams.set('error', '1')
