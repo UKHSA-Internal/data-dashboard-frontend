@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import Link from 'next/link'
 import { forwardRef, HTMLProps } from 'react'
 
 interface FooterProps extends HTMLProps<HTMLElement> {
@@ -17,8 +18,6 @@ export const Footer = forwardRef<HTMLElement, FooterProps>(({ className, ...rest
       <div className="govuk-width-container ">
         <div className="govuk-footer__meta">
           <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">
-            {/* 
-            TODO: Restore once cookie page is added
             <h2 className="govuk-visually-hidden">Support links</h2>
             <ul className="govuk-footer__inline-list">
               <li className="govuk-footer__inline-list-item">
@@ -26,7 +25,7 @@ export const Footer = forwardRef<HTMLElement, FooterProps>(({ className, ...rest
                   Cookies
                 </Link>
               </li>
-            </ul> */}
+            </ul>
             <svg
               aria-hidden="true"
               focusable="false"
