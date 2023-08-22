@@ -76,7 +76,9 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
     setView(CookieBannerView.Accepted)
     setCookie(UKHSA_GDPR_COOKIE_NAME, UKHSA_GDPR_COOKIE_ACCEPT_VALUE, {
       expires: getGDPRCookieExpiryDate(),
-      secure: true,
+      secure: false,
+      sameSite: 'none',
+      path: '/',
     })
     window.gtag &&
       window.gtag('consent', 'update', {
@@ -90,7 +92,9 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
     setView(CookieBannerView.Rejected)
     setCookie(UKHSA_GDPR_COOKIE_NAME, UKHSA_GDPR_COOKIE_REJECT_VALUE, {
       expires: getGDPRCookieExpiryDate(),
-      secure: true,
+      secure: false,
+      sameSite: 'none',
+      path: '/',
     })
     window.gtag &&
       window.gtag('consent', 'update', {
