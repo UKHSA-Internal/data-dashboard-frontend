@@ -6,6 +6,7 @@ import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elem
 
 import {
   AboutPage,
+  AccessibilityStatement,
   BrowsePage,
   Covid19Page,
   FeedbackConfirmationPage,
@@ -27,6 +28,7 @@ type Fixtures = {
   feedbackPage: FeedbackPage
   feedbackConfirmationPage: FeedbackConfirmationPage
   browsePage: BrowsePage
+  accessibilityStatementPage: AccessibilityStatement
 }
 
 export class App {
@@ -154,6 +156,13 @@ export class App {
     await expect(this.header).toBeInViewport()
     await expect(this.backToTop).not.toBeInViewport()
   }
+
+  async checkFooterAccessibilityButton() {
+    const accessibilityButton = this.page.getByRole('link', { name: 'Accessibility Statement' })
+
+    await expect(accessibilityButton).toHaveAttribute('href', '/accessibility-statement')
+    await accessibilityButton.click()
+  }
 }
 
 export const test = base.extend<Fixtures>({
@@ -186,6 +195,9 @@ export const test = base.extend<Fixtures>({
   },
   browsePage: async ({ page }, use) => {
     await use(new BrowsePage(page))
+  },
+  accessibilityStatementPage: async ({ page }, use) => {
+    await use(new AccessibilityStatement(page))
   },
 })
 
