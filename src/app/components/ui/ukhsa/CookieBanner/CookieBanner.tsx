@@ -136,9 +136,9 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
           <button value="reject" type="button" name="cookies" className="govuk-button" onClick={handleReject}>
             Reject additional cookies
           </button>
-          <Link className="govuk-link" href="/cookie-policy">
+          {/* <Link className="govuk-link" href="/cookie-policy">
             View cookies
-          </Link>
+          </Link> */}
         </div>
       </div>
     )
