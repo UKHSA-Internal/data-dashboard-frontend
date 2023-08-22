@@ -10,8 +10,7 @@ test('footer renders correctly', () => {
   expect(footerElement).toBeInTheDocument()
 })
 
-// TODO: restore test once cookies page is added
-test.skip('footer contains support links', () => {
+test('footer contains support links', () => {
   const { getByText } = render(<Footer />)
   expect(getByText('Cookies')).toHaveAttribute('href', '/cookie-policy')
 })
