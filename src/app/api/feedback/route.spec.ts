@@ -20,8 +20,8 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
   })
 
   const req = Mock.of<NextRequest & { url: string; body: RequestParams }>({
-    nextUrl: {
-      clone: jest.fn(() => new URL('http://localhost')),
+    headers: {
+      get: () => 'http://localhost',
     },
     body: {
       improve_experience: 'quality!',
@@ -44,8 +44,8 @@ test('Redirect to confirmation page when no suggestions are provided (form is no
   })
 
   const req = Mock.of<NextRequest & { url: string; body: RequestParams }>({
-    nextUrl: {
-      clone: jest.fn(() => new URL('http://localhost')),
+    headers: {
+      get: () => 'http://localhost',
     },
     body: {
       improve_experience: '',
@@ -67,8 +67,8 @@ test('Redirect to error page when an error with the backend API occurs', async (
   })
 
   const req = Mock.of<NextRequest & { url: string; body: RequestParams }>({
-    nextUrl: {
-      clone: jest.fn(() => new URL('http://localhost')),
+    headers: {
+      get: () => 'http://localhost',
     },
     body: {
       improve_experience: '',
