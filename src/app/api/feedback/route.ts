@@ -7,11 +7,10 @@ import { feedbackSchema } from '@/schemas/feedback.schema'
 
 export async function POST(req: NextRequest) {
   try {
-    console.log('req', req)
-    logger.info(`Feedback: ${req.url}`)
+    const formData = await req.formData()
 
     // Validate form request body
-    const suggestions = await feedbackSchema.parseAsync(req.body)
+    const suggestions = await feedbackSchema.parseAsync(Object.fromEntries(formData))
 
     // Send results to the backend
     const { success } = await postSuggestions(suggestions)
@@ -20,13 +19,19 @@ export async function POST(req: NextRequest) {
       throw new Error('form submission to backend failed')
     }
 
-    const url = req.nextUrl.clone()
+    const url = new URL(req.headers.get('origin') || '')
     url.pathname = '/feedback/confirmation'
+
+    logger.info(`Feedback submitted successfully, redirecting to ${url}`)
 
     return NextResponse.redirect(url, 302)
   } catch (error) {
+    const url = new URL(req.headers.get('origin') || '')
+
+    logger.error('Failed to submit feedback form')
+    logger.trace(error)
+
     if (error instanceof ZodError) {
-      const url = req.nextUrl.clone()
       url.pathname = '/feedback/confirmation'
 
       // For validation errors, we bypass the database insertion and just redirect
@@ -35,9 +40,6 @@ export async function POST(req: NextRequest) {
       return NextResponse.redirect(url, 302)
     }
 
-    logger.error(error)
-
-    const url = req.nextUrl.clone()
     url.pathname = '/feedback'
     url.searchParams.set('error', '1')
 
