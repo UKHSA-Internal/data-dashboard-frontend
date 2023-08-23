@@ -12,9 +12,10 @@ export const requestSchema = z.object({
       stratum: z.optional(z.string()),
       geography: z.optional(Geography),
       geography_type: z.optional(GeographyType),
-      chart_type: z.optional(ChartTypes),
+      age: z.optional(z.string()).nullable(),
       date_from: z.optional(z.nullable(z.string().datetime())),
       date_to: z.optional(z.nullable(z.string().datetime())),
+      chart_type: z.optional(ChartTypes),
     })
   ),
 })
