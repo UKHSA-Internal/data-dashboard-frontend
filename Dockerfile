@@ -51,7 +51,7 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
-COPY --from=builder /app/.env.production ./
+COPY --from=builder /app/.env ./
 
 USER nextjs
 
@@ -67,7 +67,11 @@ ARG PUBLIC_API_URL
 ENV PUBLIC_API_URL $PUBLIC_API_URL
 ENV NEXT_PUBLIC_PUBLIC_API_URL ${PUBLIC_API_URL}
 
-ENV KEEP_ALIVE_TIMEOUT 61
+ARG GA_MEASUREMENT_ID
+ENV GA_MEASUREMENT_ID $GA_MEASUREMENT_ID
+ENV NEXT_PUBLIC_GA_MEASUREMENT_ID ${GA_MEASUREMENT_ID}
+
+ENV KEEP_ALIVE_TIMEOUT 61000
 
 EXPOSE 3000
 

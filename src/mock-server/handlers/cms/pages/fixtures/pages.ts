@@ -1,6 +1,7 @@
 import { PagesResponse } from '@/api/requests/cms/getPages'
 
 import { aboutPageMock } from './page/about'
+import { cookiePolicyPageMock } from './page/cookie-policy'
 import { covid19PageMock } from './page/covid-19'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
@@ -81,6 +82,18 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: howToUseThisDataPageMock.meta.first_published_at,
       },
       title: howToUseThisDataPageMock.title,
+    },
+    {
+      id: cookiePolicyPageMock.id,
+      meta: {
+        type: cookiePolicyPageMock.meta.type,
+        detail_url: cookiePolicyPageMock.meta.detail_url,
+        html_url: cookiePolicyPageMock.meta.html_url,
+        slug: cookiePolicyPageMock.meta.slug,
+        show_in_menus: cookiePolicyPageMock.meta.show_in_menus,
+        first_published_at: cookiePolicyPageMock.meta.first_published_at,
+      },
+      title: cookiePolicyPageMock.title,
     },
   ],
 }

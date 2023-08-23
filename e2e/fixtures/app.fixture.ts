@@ -39,6 +39,7 @@ export class App {
   readonly tableOfContents: Locator
   readonly backToTop: Locator
   readonly footer: Locator
+  readonly cookieBanner: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -48,6 +49,11 @@ export class App {
     this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
     this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
     this.footer = this.page.getByRole('contentinfo')
+    this.cookieBanner = this.page.getByRole('region', { name: 'Cookies on the UKHSA data dashboard' })
+  }
+
+  async reload() {
+    await this.page.reload()
   }
 
   async hasNoAccessibilityDefects() {
@@ -155,6 +161,46 @@ export class App {
     await this.backToTop.click()
     await expect(this.header).toBeInViewport()
     await expect(this.backToTop).not.toBeInViewport()
+  }
+
+  async gotoCookieBanner() {
+    await this.page.goto('/?change-settings=1')
+  }
+
+  async hasCookieBanner() {
+    const banner = this.cookieBanner
+    await expect(banner).toBeVisible()
+    await expect(banner.getByRole('heading', { name: 'Cookies on UKHSA data dashboard', level: 2 })).toBeVisible()
+    await expect(banner.getByText(/We use some essential cookies to make this service work./)).toBeVisible()
+    await expect(
+      banner.getByText(
+        /We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements./
+      )
+    ).toBeVisible()
+    await expect(banner.getByRole('button', { name: 'Accept additional cookies' })).toBeVisible()
+    await expect(banner.getByRole('button', { name: 'Reject additional cookies' })).toBeVisible()
+    await expect(banner.getByRole('link', { name: 'View cookies' })).toHaveAttribute('href', '/cookie-policy')
+  }
+
+  async hasNotCookieBanner() {
+    await expect(this.cookieBanner).toBeHidden()
+  }
+
+  async hasCookieBannerConfirmation() {
+    await expect(
+      this.cookieBanner.getByText(
+        /You’ve accepted additional cookies. You can view the cookie policy or change your cookie settings at any time./
+      )
+    ).toBeVisible()
+    await expect(this.cookieBanner.getByRole('button', { name: 'Hide cookie message' })).toBeVisible()
+  }
+
+  async acceptCookies() {
+    await this.cookieBanner.getByRole('button', { name: 'Accept additional cookies' }).click()
+  }
+
+  async hideCookies() {
+    await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
   }
 
   async checkFooterAccessibilityButton() {
