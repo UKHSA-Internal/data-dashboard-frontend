@@ -12,11 +12,15 @@ export async function POST(req: NextRequest) {
     // Validate form request body
     const suggestions = await feedbackSchema.parseAsync(Object.fromEntries(formData))
 
-    // Send results to the backend
-    const { success } = await postSuggestions(suggestions)
+    const isEmptySubmission = Array.from(formData.values()).every((value) => value === '')
 
-    if (!success) {
-      throw new Error('form submission to backend failed')
+    if (!isEmptySubmission) {
+      // Send results to the backend
+      const { success } = await postSuggestions(suggestions)
+
+      if (!success) {
+        throw new Error('form submission to backend failed')
+      }
     }
 
     const url = new URL(req.headers.get('origin') || '')
