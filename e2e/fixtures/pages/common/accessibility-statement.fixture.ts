@@ -1,7 +1,7 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
-export class AccessibilityStatement {
+export class AccessibilityStatementPage {
   readonly page: Page
 
   constructor(page: Page) {
