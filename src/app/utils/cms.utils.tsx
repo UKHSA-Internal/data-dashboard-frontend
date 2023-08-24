@@ -65,9 +65,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     {column.value.title}
                   </h3>
                   <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
-                  {column.type === 'chart_with_headline_and_trend_card' && (
-                    <Timestamp data={column.value} size={size} />
-                  )}
+                  <Timestamp data={column.value} size={size} />
                 </div>
                 {column.type === 'chart_with_headline_and_trend_card' && (
                   <>
