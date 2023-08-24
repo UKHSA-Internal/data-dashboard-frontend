@@ -44,7 +44,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     return (
       <div className="govuk-!-margin-top-2">
         {tables.map(({ columns, data }, key) => (
-          <table key={key} className="govuk-table govuk-!-margin-bottom-4 [&:last-child]:mb-0">
+          <table key={key} className="govuk-table govuk-!-margin-bottom-4 table-fixed [&:last-child]:mb-0">
             <caption
               className={clsx('govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal', {
                 'govuk-visually-hidden': key !== 0,
