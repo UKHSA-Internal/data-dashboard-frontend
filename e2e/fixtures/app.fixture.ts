@@ -179,7 +179,7 @@ export class App {
     ).toBeVisible()
     await expect(banner.getByRole('button', { name: 'Accept additional cookies' })).toBeVisible()
     await expect(banner.getByRole('button', { name: 'Reject additional cookies' })).toBeVisible()
-    await expect(banner.getByRole('link', { name: 'View cookies' })).toHaveAttribute('href', '/cookie-policy')
+    await expect(banner.getByRole('link', { name: 'View cookies' })).toHaveAttribute('href', '/cookies')
   }
 
   async hasNotCookieBanner() {
