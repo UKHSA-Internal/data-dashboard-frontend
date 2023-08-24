@@ -56,18 +56,6 @@ test('Home page', async ({ homePage, app }) => {
   })
 })
 
-test('Footer', async ({ homePage, app }) => {
-  await test.step('loads home page', async () => {
-    await homePage.goto()
-  })
-  await test.step('clicks footer button', async () => {
-    await app.checkFooterAccessibilityButton()
-  })
-  // await test.step('', async () => {
-  //   await
-  // })
-})
-
 test.describe('Home page - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
