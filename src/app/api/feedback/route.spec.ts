@@ -42,11 +42,6 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
 })
 
 test('Redirect to confirmation page when no suggestions are provided (form is non-mandatory)', async () => {
-  jest.mocked(client).mockResolvedValueOnce({
-    data: null,
-    status: 200,
-  })
-
   const formData = new FormData()
   formData.set('improve_experience', '')
   formData.set('reason', '')
