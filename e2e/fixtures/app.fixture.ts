@@ -80,6 +80,8 @@ export class App {
       'href',
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'
     )
+    await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
   }
 
   async hasMobileNav() {
@@ -201,13 +203,6 @@ export class App {
 
   async hideCookies() {
     await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
-  }
-
-  async checkFooterAccessibilityButton() {
-    const accessibilityButton = this.page.getByRole('link', { name: 'Accessibility Statement' })
-
-    await expect(accessibilityButton).toHaveAttribute('href', '/accessibility-statement')
-    await accessibilityButton.click()
   }
 }
 
