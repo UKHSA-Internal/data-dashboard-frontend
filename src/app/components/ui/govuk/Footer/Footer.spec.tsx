@@ -12,7 +12,7 @@ test('footer renders correctly', () => {
 
 test('footer contains support links', () => {
   const { getByText } = render(<Footer />)
-  expect(getByText('Cookies')).toHaveAttribute('href', '/cookie-policy')
+  expect(getByText('Cookies')).toHaveAttribute('href', '/cookies')
 })
 
 test('footer contains Open Government Licence link', () => {

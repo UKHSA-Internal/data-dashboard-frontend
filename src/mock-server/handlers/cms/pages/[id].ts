@@ -6,7 +6,8 @@ import { logger } from '@/lib/logger'
 
 import {
   aboutPageMock,
-  cookiePolicyPageMock,
+  accessibilityStatementPageMock,
+  cookiesPageMock,
   covid19PageMock,
   howToUseThisDataPageMock,
   influenzaPageMock,
@@ -23,7 +24,8 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [whatsNewPageMock.id]: whatsNewPageMock,
   [mapsPageMock.id]: mapsPageMock,
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
-  [cookiePolicyPageMock.id]: cookiePolicyPageMock,
+  [cookiesPageMock.id]: cookiesPageMock,
+  [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
   [aboutPageMock.id]: aboutPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,

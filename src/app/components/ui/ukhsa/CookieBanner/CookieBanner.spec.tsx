@@ -70,7 +70,7 @@ test('changes to the confirmation view when rejecting cookies', async () => {
   expect(screen.getByTestId('confirmation-message')).toBeInTheDocument()
   expect(screen.getByText(/You’ve rejected additional cookies./)).toBeInTheDocument()
 
-  expect(screen.getByRole('link', { name: /cookie policy/ })).toHaveAttribute('href', '/cookie-policy')
+  expect(screen.getByRole('link', { name: /cookie policy/ })).toHaveAttribute('href', '/cookies')
   expect(screen.getByRole('link', { name: /change your cookie settings/ })).toHaveAttribute('href', '#cookie-banner')
 
   expect(window.gtag).toHaveBeenLastCalledWith('consent', 'update', {
@@ -106,7 +106,7 @@ test('hides the cookie banner and redirects to the cookie policy page when "cook
 
   expect(screen.queryByLabelText('Cookies on UKHSA data dashboard')).not.toBeInTheDocument()
 
-  expect(pushMock).toHaveBeenCalledWith('/cookie-policy')
+  expect(pushMock).toHaveBeenCalledWith('/cookies')
 })
 
 test('changes back to the selection view when "change your cookie settings" is clicked', async () => {
