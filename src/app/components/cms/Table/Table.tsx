@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { getTabular } from '@/api/requests/tabular/getTabular'
+import { getTables } from '@/api/requests/tables/getTables'
 import { useTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
@@ -23,7 +23,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
   const plots = chart.map((plot) => plot.value)
 
   // Call the table endpoint to get the data in table format
-  const tableResponse = await getTabular(plots)
+  const tableResponse = await getTables(plots)
 
   // Call the charts endpoint as this gives us the data timestamp
   const chartResponse = await getCharts({
@@ -59,7 +59,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                   return (
                     <th key={key} scope="col" className="govuk-table__header">
                       {t('cms.blocks.table.header', {
-                        context: key === 0 ? 'date' : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
+                        context: key === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
                         value: column.header,
                       })}
                     </th>
@@ -78,7 +78,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                           {key === 0 ? (
                             <th scope="row" className="govuk-table__header font-normal">
                               {t('cms.blocks.table.row', {
-                                context: 'date',
+                                context: x_axis,
                                 value: item[column.accessorKey],
                               })}
                             </th>

@@ -1,7 +1,7 @@
 import { ComponentProps, ReactElement } from 'react'
 
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { getTabular } from '@/api/requests/tabular/getTabular'
+import { getTables } from '@/api/requests/tables/getTables'
 import { render } from '@/config/test-utils'
 
 import { Table } from './Table'
@@ -16,14 +16,14 @@ getChartsMock.mockResolvedValue({
 })
 
 // Mock table api
-jest.mock('@/api/requests/tabular/getTabular')
-const getTableMock = jest.mocked(getTabular)
+jest.mock('@/api/requests/tables/getTables')
+const getTableMock = jest.mocked(getTables)
 
 getTableMock.mockResolvedValue({
   success: true,
   data: [
     {
-      date: '2022-10-31',
+      reference: '2022-10-31',
       values: [
         {
           label: 'Plot1',
@@ -32,7 +32,7 @@ getTableMock.mockResolvedValue({
       ],
     },
     {
-      date: '2022-11-30',
+      reference: '2022-11-30',
       values: [
         {
           label: 'Plot1',
