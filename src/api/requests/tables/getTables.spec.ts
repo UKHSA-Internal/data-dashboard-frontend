@@ -1,18 +1,18 @@
 import { rest } from 'msw'
 import { z } from 'zod'
 
+import type { Metrics, Topics } from '@/api/models'
+import { server } from '@/api/msw/server'
+import { logger } from '@/lib/logger'
 import {
   newCasesDailyValues,
   newDeathsDailyValues,
   weeklyHospitalAdmissionsRateValues,
   weeklyPositivityValues,
-} from '@/api/mocks/tabular/fixtures'
-import type { Metrics, Topics } from '@/api/models'
-import { server } from '@/api/msw/server'
-import { logger } from '@/lib/logger'
+} from '@/mock-server/handlers/tables/fixtures'
 
 import { getApiBaseUrl } from '../helpers'
-import { getTabular, responseSchema } from './getTabular'
+import { getTables, responseSchema } from './getTables'
 
 jest.mock('@/lib/logger')
 
@@ -32,7 +32,7 @@ const tabularMocks: Array<[Topics, Metrics, Response]> = [
 ]
 
 test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', async (topic, metric, data) => {
-  const result = await getTabular([{ topic, metric }])
+  const result = await getTables([{ topic, metric }])
 
   expect(result).toEqual<SuccessResponse>({ success: true, data })
 })
@@ -44,7 +44,7 @@ test('Handles invalid json received from the api', async () => {
     })
   )
 
-  const result = await getTabular([
+  const result = await getTables([
     {
       topic: 'COVID-19',
       metric: 'new_cases_daily',
@@ -72,7 +72,7 @@ test('Handles generic http error', async () => {
     })
   )
 
-  const result = await getTabular([
+  const result = await getTables([
     {
       topic: 'COVID-19',
       metric: 'new_cases_daily',

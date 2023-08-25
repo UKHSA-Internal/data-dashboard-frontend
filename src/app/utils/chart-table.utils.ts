@@ -1,6 +1,6 @@
 import chunk from 'lodash/chunk'
 
-import { Response } from '@/api/requests/tabular/getTabular'
+import { Response } from '@/api/requests/tables/getTables'
 import { chartTableMaxColumns } from '@/config/constants'
 
 export type Column = {
@@ -21,7 +21,7 @@ const createTable = (sourceData: Response) => {
     const row: Data = {}
 
     // The row col-0 key is reserved for the date
-    row['col-0'] = item.date
+    row['col-0'] = item.reference
 
     // Loop each of the plots for the given date range
     item.values.forEach((plot, idx) => {

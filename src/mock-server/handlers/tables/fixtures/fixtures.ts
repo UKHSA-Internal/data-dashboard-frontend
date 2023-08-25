@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { Topics } from '@/api/models'
-import { responseSchema } from '@/api/requests/tabular/getTabular'
+import { responseSchema } from '@/api/requests/tables/getTables'
 
 import {
   covidOccupiedMVBeds,

@@ -35,11 +35,20 @@ export const coreComponents: Components = {
 export const linkedHeadingsPlugins: RehypePlugins = [rehypeSlug, [rehypeToc, { headings: ['h2'] }]]
 
 export const linkedHeadingsComponents: Components = {
-  a: ({ children, href }) => (
-    <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
-      {children}
-    </a>
-  ),
+  a: ({ children, href }) => {
+    if (href?.includes('change-settings=1')) {
+      return (
+        <Link href="/change-settings=1" className="govuk-link test">
+          {children}
+        </Link>
+      )
+    }
+    return (
+      <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
+        {children}
+      </a>
+    )
+  },
   h2: ({ children, id }) => (
     <h2 className="govuk-!-margin-bottom-0 govuk-heading-l">
       <Link
