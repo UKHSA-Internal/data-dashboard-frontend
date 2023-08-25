@@ -38,7 +38,7 @@ export const linkedHeadingsComponents: Components = {
   a: ({ children, href }) => {
     if (href?.includes('change-settings=1')) {
       return (
-        <Link href="/change-settings=1" className="govuk-link test">
+        <Link href={href} className="govuk-link test">
           {children}
         </Link>
       )

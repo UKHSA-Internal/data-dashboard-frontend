@@ -26,3 +26,11 @@ test('Renders a table of contents using the H2 elements within the provided HTML
   expect(within(listitems[0]).getByText('Secondary test')).toHaveAttribute('href', '#secondary-test')
   expect(screen.getByRole('heading', { name: 'Secondary test', level: 2 })).toBeInTheDocument()
 })
+
+test('Converts a hashed cms cookie settings link into the correct cookie settings link format', () => {
+  const { getByRole } = render(
+    <RichText linkedHeadings>{`<a href="/cookies?change-settings=1">Change cookie settings</a>`}</RichText>
+  )
+
+  expect(getByRole('link', { name: 'Change cookie settings' })).toHaveAttribute('href', '/cookies?change-settings=1')
+})
