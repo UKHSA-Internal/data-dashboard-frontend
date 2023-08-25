@@ -51,11 +51,15 @@
       },
       "table": {
         "toggle": "View data in a tabular format",
-        "header_date": "Month",
+        "header": "Month",
+        "header_age": "Age",
+        "header_stratum": "Stratum",
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
-        "row_date": "{{value, monthAndYear}}",
+        "row": "{{value, monthAndYear}}",
         "row_plot": "{{value, number}}",
+        "row_stratum": "{{value}}",
+        "row_age": "{{value}}",
         "caption": "{{title}} data for {{body}}",
         "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}"
       }

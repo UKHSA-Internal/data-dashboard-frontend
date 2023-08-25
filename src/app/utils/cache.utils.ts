@@ -1,7 +1,7 @@
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { getTabular } from '@/api/requests/tabular/getTabular'
+import { getTables } from '@/api/requests/tables/getTables'
 import { chartSizes } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
@@ -36,7 +36,7 @@ export async function warmStaticCache<T extends PageType.Home | PageType.Topic>(
           })
 
           logger.info(`Pre-warming cache for table: ${column.value.title}`)
-          await getTabular(plots)
+          await getTables(plots)
         }
       }
     }

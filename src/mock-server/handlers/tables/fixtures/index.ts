@@ -1,3 +1,4 @@
+export * from './COVID-19/cases_rate_age_sex'
 export * from './COVID-19/covid_occupied_MV_beds'
 export * from './COVID-19/new_cases_daily'
 export * from './COVID-19/new_cases_rolling_rate'

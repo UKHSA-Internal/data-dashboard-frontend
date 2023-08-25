@@ -1,9 +1,10 @@
 import { z } from 'zod'
 
 import { Topics } from '@/api/models'
-import { responseSchema } from '@/api/requests/tabular/getTabular'
+import { responseSchema } from '@/api/requests/tables/getTables'
 
 import {
+  casesRateAgeSexValues,
   covidOccupiedMVBeds,
   newCasesDailyValues,
   newCasesRollingRateValues,
@@ -48,6 +49,7 @@ export const fixtures: Fixtures = {
     new_admissions_daily: nonUniqueMockedValues,
     covid_occupied_beds: nonUniqueMockedValues,
     covid_occupied_MV_beds: covidOccupiedMVBeds,
+    cases_rate_age_sex: casesRateAgeSexValues,
     new_pcr_tests_daily: nonUniqueMockedValues,
     positivity_PCR_rolling_sum: nonUniqueMockedValues,
     new_vaccinations_autumn22: nonUniqueMockedValues,
