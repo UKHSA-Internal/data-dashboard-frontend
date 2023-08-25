@@ -1,5 +1,6 @@
 export { aboutPageMock } from './about'
 export { accessibilityStatementPageMock } from './accessibility-statement'
+export { compliancePageMock } from './complaince'
 export { cookiesPageMock } from './cookies'
 export { covid19PageMock } from './covid-19'
 export { howToUseThisDataPageMock } from './how-to-use-this-data'

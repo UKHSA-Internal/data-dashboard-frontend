@@ -2,6 +2,7 @@ import { PagesResponse } from '@/api/requests/cms/getPages'
 
 import { aboutPageMock } from './page/about'
 import { accessibilityStatementPageMock } from './page/accessibility-statement'
+import { compliancePageMock } from './page/complaince'
 import { cookiesPageMock } from './page/cookies'
 import { covid19PageMock } from './page/covid-19'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
@@ -107,6 +108,18 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: accessibilityStatementPageMock.meta.first_published_at,
       },
       title: accessibilityStatementPageMock.title,
+    },
+    {
+      id: compliancePageMock.id,
+      meta: {
+        type: compliancePageMock.meta.type,
+        detail_url: compliancePageMock.meta.detail_url,
+        html_url: compliancePageMock.meta.html_url,
+        slug: compliancePageMock.meta.slug,
+        show_in_menus: compliancePageMock.meta.show_in_menus,
+        first_published_at: compliancePageMock.meta.first_published_at,
+      },
+      title: compliancePageMock.title,
     },
   ],
 }

@@ -3,15 +3,15 @@ import { PageType } from '@/api/requests/cms/getPages'
 
 import { relatedLinksMock } from '../elements/related-links'
 
-export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
-  id: 155,
+export const compliancePageMock: PageResponse<PageType.Common> = {
+  id: 156,
   meta: {
     type: 'common.CommonPage',
-    detail_url: 'http://localhost/api/pages/155/',
+    detail_url: 'http://localhost/api/pages/156/',
     html_url: null,
-    slug: 'accessibility-statement',
+    slug: 'compliance',
     show_in_menus: false,
-    seo_title: 'Accessibility Statement | UKHSA data dashboard',
+    seo_title: 'Compliance statement | UKHSA data dashboard',
     search_description: '',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
@@ -25,9 +25,9 @@ export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
       title: 'UKHSA Dashboard Root',
     },
   },
-  title: 'Accessibility statement',
+  title: 'Compliance statement',
   date_posted: '2023-08-24',
-  body: '<p>tbc</p>',
+  body: '<h2>Statement of voluntary application of the Code of Practice for Statistics</h2><p>The government’s coronavirus dashboard publishes up-to-date statistics about the coronavirus (COVID-19) pandemic in the UK. These statistics are not classed as official statistics because...</p>',
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: relatedLinksMock,
 }
