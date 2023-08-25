@@ -3,15 +3,15 @@ import { PageType } from '@/api/requests/cms/getPages'
 
 import { relatedLinksMock } from '../elements/related-links'
 
-export const cookiePolicyPageMock: PageResponse<PageType.Common> = {
+export const cookiesPageMock: PageResponse<PageType.Common> = {
   id: 153,
   meta: {
     type: 'common.CommonPage',
     detail_url: 'http://localhost/api/pages/153/',
     html_url: null,
-    slug: 'cookie-policy',
+    slug: 'cookies',
     show_in_menus: false,
-    seo_title: 'Cookie policy | UKHSA data dashboard',
+    seo_title: 'Cookies | UKHSA data dashboard',
     search_description: '',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
@@ -25,7 +25,7 @@ export const cookiePolicyPageMock: PageResponse<PageType.Common> = {
       title: 'UKHSA Dashboard Root',
     },
   },
-  title: 'Cookie policy',
+  title: 'Cookies',
   date_posted: '2023-05-12',
   body: '<p data-block-key="4elgr"><a href="/cookie-policy/?change-settings=1">change</a></p>',
   last_published_at: '2023-05-12T16:53:51.464146+01:00',

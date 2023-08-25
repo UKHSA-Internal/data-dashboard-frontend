@@ -1,4 +1,6 @@
 export * from './pages/common/about.fixture'
+export * from './pages/common/accessibility-statement.fixture'
+export * from './pages/common/compliance.fixture'
 export * from './pages/common/whats-new.fixture'
 export * from './pages/feedback/confirmation.fixture'
 export * from './pages/feedback/feedback.fixture'

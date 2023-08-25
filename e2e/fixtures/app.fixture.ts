@@ -6,7 +6,9 @@ import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elem
 
 import {
   AboutPage,
+  AccessibilityStatementPage,
   BrowsePage,
+  CompliancePage,
   Covid19Page,
   FeedbackConfirmationPage,
   FeedbackPage,
@@ -27,6 +29,8 @@ type Fixtures = {
   feedbackPage: FeedbackPage
   feedbackConfirmationPage: FeedbackConfirmationPage
   browsePage: BrowsePage
+  accessibilityStatementPage: AccessibilityStatementPage
+  compliancePage: CompliancePage
 }
 
 export class App {
@@ -78,6 +82,9 @@ export class App {
       'href',
       'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'
     )
+    await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Compliance statement' })).toBeVisible()
   }
 
   async hasMobileNav() {
@@ -177,7 +184,7 @@ export class App {
     ).toBeVisible()
     await expect(banner.getByRole('button', { name: 'Accept additional cookies' })).toBeVisible()
     await expect(banner.getByRole('button', { name: 'Reject additional cookies' })).toBeVisible()
-    await expect(banner.getByRole('link', { name: 'View cookies' })).toHaveAttribute('href', '/cookie-policy')
+    await expect(banner.getByRole('link', { name: 'View cookies' })).toHaveAttribute('href', '/cookies')
   }
 
   async hasNotCookieBanner() {
@@ -232,6 +239,12 @@ export const test = base.extend<Fixtures>({
   },
   browsePage: async ({ page }, use) => {
     await use(new BrowsePage(page))
+  },
+  accessibilityStatementPage: async ({ page }, use) => {
+    await use(new AccessibilityStatementPage(page))
+  },
+  compliancePage: async ({ page }, use) => {
+    await use(new CompliancePage(page))
   },
 })
 

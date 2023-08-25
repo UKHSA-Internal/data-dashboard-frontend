@@ -8,6 +8,7 @@ test.describe('Smoke tests', () => {
     covid19Page,
     influenzaPage,
     otherRespiratoryVirusesPage,
+    accessibilityStatementPage,
   }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
@@ -32,6 +33,10 @@ test.describe('Smoke tests', () => {
     await test.step('loads the "whats new" page', async () => {
       await whatsNewPage.goto()
       await whatsNewPage.hasHeading()
+    })
+    await test.step('loads the "Accessibility statement" page', async () => {
+      await accessibilityStatementPage.goto()
+      await accessibilityStatementPage.hasHeading()
     })
     // TODO: Removed API tests for now, until further API work done
     // await test.step('loads the "api" external url', async () => {

@@ -1,7 +1,9 @@
 import { PagesResponse } from '@/api/requests/cms/getPages'
 
 import { aboutPageMock } from './page/about'
-import { cookiePolicyPageMock } from './page/cookie-policy'
+import { accessibilityStatementPageMock } from './page/accessibility-statement'
+import { compliancePageMock } from './page/complaince'
+import { cookiesPageMock } from './page/cookies'
 import { covid19PageMock } from './page/covid-19'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
@@ -84,16 +86,40 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       title: howToUseThisDataPageMock.title,
     },
     {
-      id: cookiePolicyPageMock.id,
+      id: cookiesPageMock.id,
       meta: {
-        type: cookiePolicyPageMock.meta.type,
-        detail_url: cookiePolicyPageMock.meta.detail_url,
-        html_url: cookiePolicyPageMock.meta.html_url,
-        slug: cookiePolicyPageMock.meta.slug,
-        show_in_menus: cookiePolicyPageMock.meta.show_in_menus,
-        first_published_at: cookiePolicyPageMock.meta.first_published_at,
+        type: cookiesPageMock.meta.type,
+        detail_url: cookiesPageMock.meta.detail_url,
+        html_url: cookiesPageMock.meta.html_url,
+        slug: cookiesPageMock.meta.slug,
+        show_in_menus: cookiesPageMock.meta.show_in_menus,
+        first_published_at: cookiesPageMock.meta.first_published_at,
       },
-      title: cookiePolicyPageMock.title,
+      title: cookiesPageMock.title,
+    },
+    {
+      id: accessibilityStatementPageMock.id,
+      meta: {
+        type: accessibilityStatementPageMock.meta.type,
+        detail_url: accessibilityStatementPageMock.meta.detail_url,
+        html_url: accessibilityStatementPageMock.meta.html_url,
+        slug: accessibilityStatementPageMock.meta.slug,
+        show_in_menus: accessibilityStatementPageMock.meta.show_in_menus,
+        first_published_at: accessibilityStatementPageMock.meta.first_published_at,
+      },
+      title: accessibilityStatementPageMock.title,
+    },
+    {
+      id: compliancePageMock.id,
+      meta: {
+        type: compliancePageMock.meta.type,
+        detail_url: compliancePageMock.meta.detail_url,
+        html_url: compliancePageMock.meta.html_url,
+        slug: compliancePageMock.meta.slug,
+        show_in_menus: compliancePageMock.meta.show_in_menus,
+        first_published_at: compliancePageMock.meta.first_published_at,
+      },
+      title: compliancePageMock.title,
     },
   ],
 }

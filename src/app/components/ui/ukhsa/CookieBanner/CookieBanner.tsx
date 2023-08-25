@@ -104,10 +104,10 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
     setView(CookieBannerView.Hidden)
   }
 
-  const handleViewCookiePolicy: MouseEventHandler = (event) => {
+  const handleViewCookies: MouseEventHandler = (event) => {
     event.preventDefault()
     setView(CookieBannerView.Hidden)
-    router.push('/cookie-policy')
+    router.push('/cookies')
   }
 
   const handleChange: MouseEventHandler = (e) => {
@@ -132,7 +132,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
           <button value="reject" type="button" name="cookies" className="govuk-button" onClick={handleReject}>
             Reject additional cookies
           </button>
-          <Link className="govuk-link" href="/cookie-policy">
+          <Link className="govuk-link" href="/cookies">
             View cookies
           </Link>
         </div>
@@ -149,7 +149,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
               <p className="govuk-body" data-testid="confirmation-message">
                 You’ve {view === CookieBannerView.Accepted ? 'accepted' : 'rejected'} additional cookies. You can view
                 the{' '}
-                <Link className="govuk-link" href="/cookie-policy" onClick={handleViewCookiePolicy}>
+                <Link className="govuk-link" href="/cookies" onClick={handleViewCookies}>
                   cookie policy
                 </Link>{' '}
                 or{' '}
