@@ -25,7 +25,7 @@ export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
       title: 'UKHSA Dashboard Root',
     },
   },
-  title: 'Accessibility Statement',
+  title: 'Accessibility statement',
   date_posted: '2023-08-24',
   body: '<p>tbc</p>',
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
