@@ -59,7 +59,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                   return (
                     <th key={key} scope="col" className="govuk-table__header">
                       {t('cms.blocks.table.header', {
-                        context: key === 0 ? 'date' : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
+                        context: key === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
                         value: column.header,
                       })}
                     </th>
@@ -78,7 +78,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                           {key === 0 ? (
                             <th scope="row" className="govuk-table__header font-normal">
                               {t('cms.blocks.table.row', {
-                                context: 'date',
+                                context: x_axis,
                                 value: item[column.accessorKey],
                               })}
                             </th>
