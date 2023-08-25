@@ -84,7 +84,7 @@ export class App {
     )
     await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
-    await expect(this.footer.getByRole('link', { name: 'Compliance statement' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
   }
 
   async hasMobileNav() {
