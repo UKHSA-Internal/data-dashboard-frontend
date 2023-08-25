@@ -54,15 +54,13 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
           </ContentsItem>
         ))}
       </Contents>
-      {relatedLinks.length && (
-        <RelatedLinks>
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLink key={id} url={url} title={title}>
-              {body}
-            </RelatedLink>
-          ))}
-        </RelatedLinks>
-      )}
+      <RelatedLinks>
+        {relatedLinks.map(({ title, body, url, id }) => (
+          <RelatedLink key={id} url={url} title={title}>
+            {body}
+          </RelatedLink>
+        ))}
+      </RelatedLinks>
     </View>
   )
 }

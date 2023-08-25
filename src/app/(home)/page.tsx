@@ -32,15 +32,13 @@ export default async function HomePage() {
   return (
     <View heading={title} description={description} showWelcome>
       {body.map(renderSection)}
-      {relatedLinks.length && (
-        <RelatedLinks>
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLink key={id} url={url} title={title}>
-              {body}
-            </RelatedLink>
-          ))}
-        </RelatedLinks>
-      )}
+      <RelatedLinks>
+        {relatedLinks.map(({ title, body, url, id }) => (
+          <RelatedLink key={id} url={url} title={title}>
+            {body}
+          </RelatedLink>
+        ))}
+      </RelatedLinks>
     </View>
   )
 }
