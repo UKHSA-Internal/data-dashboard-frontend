@@ -8,6 +8,7 @@ import {
   AboutPage,
   AccessibilityStatementPage,
   BrowsePage,
+  CompliancePage,
   Covid19Page,
   FeedbackConfirmationPage,
   FeedbackPage,
@@ -29,6 +30,7 @@ type Fixtures = {
   feedbackConfirmationPage: FeedbackConfirmationPage
   browsePage: BrowsePage
   accessibilityStatementPage: AccessibilityStatementPage
+  compliancePage: CompliancePage
 }
 
 export class App {
@@ -82,6 +84,7 @@ export class App {
     )
     await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Compliance statement' })).toBeVisible()
   }
 
   async hasMobileNav() {
@@ -239,6 +242,9 @@ export const test = base.extend<Fixtures>({
   },
   accessibilityStatementPage: async ({ page }, use) => {
     await use(new AccessibilityStatementPage(page))
+  },
+  compliancePage: async ({ page }, use) => {
+    await use(new CompliancePage(page))
   },
 })
 

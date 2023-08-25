@@ -32,7 +32,7 @@ export const Footer = forwardRef<HTMLElement, FooterProps>(({ className, ...rest
               </li>
               <li className="govuk-footer__inline-list-item">
                 <Link href="/compliance" className="govuk-footer__link">
-                  Complaince statement
+                  Compliance statement
                 </Link>
               </li>
             </ul>
