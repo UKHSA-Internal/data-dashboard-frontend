@@ -17,6 +17,6 @@ export class AccessibilityStatementPage {
   }
 
   async hasHeading() {
-    await expect(this.page.getByRole('heading', { name: /Accessibility Statement/, level: 1 })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: /Accessibility statement/, level: 1 })).toBeVisible()
   }
 }

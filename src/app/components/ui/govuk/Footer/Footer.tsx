@@ -30,6 +30,11 @@ export const Footer = forwardRef<HTMLElement, FooterProps>(({ className, ...rest
                   Accessibility statement
                 </Link>
               </li>
+              <li className="govuk-footer__inline-list-item">
+                <Link href="/compliance" className="govuk-footer__link">
+                  Compliance statement
+                </Link>
+              </li>
             </ul>
             <svg
               aria-hidden="true"
