@@ -2,6 +2,10 @@
 
 This is a [Next.js](https://nextjs.org/) project built using the [GOV.UK Frontend](https://frontend.design-system.service.gov.uk/) and following [GOV.UK Design system (GDS)](https://design-system.service.gov.uk/) principles.
 
+### Prerequists
+
+- NodeJs (Minimum version of 18.16.0)
+
 ### Getting Started
 
 First, run the development server:
