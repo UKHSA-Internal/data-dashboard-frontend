@@ -7,7 +7,7 @@ import { fixtures } from '@/mock-server/handlers/tables/fixtures/fixtures'
 
 export const handlers = [
   rest.post(
-    `${getApiBaseUrl()}/tables/v2`,
+    `${getApiBaseUrl()}/tables/v3`,
     apiResolver(async (req, res, ctx) => {
       // Extract request body
       const requestBody = await req.json()
