@@ -71,7 +71,7 @@ export class App {
     // Phase Banner
     await expect(this.phaseBanner.getByText(/Alpha/)).toBeVisible()
     await expect(
-      this.phaseBanner.getByText(/This is a new service – your feedback will help us to improve it./)
+      this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
     ).toBeVisible()
 
     // Footer

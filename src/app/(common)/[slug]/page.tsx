@@ -44,15 +44,13 @@ export default async function CommonPage({ params: { slug } }: { params: { slug:
   return (
     <View heading={title} lastUpdated={lastUpdated}>
       <RichText linkedHeadings>{body}</RichText>
-      {relatedLinks.length && (
-        <RelatedLinks>
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLink key={id} url={url} title={title}>
-              {body}
-            </RelatedLink>
-          ))}
-        </RelatedLinks>
-      )}
+      <RelatedLinks>
+        {relatedLinks.map(({ title, body, url, id }) => (
+          <RelatedLink key={id} url={url} title={title}>
+            {body}
+          </RelatedLink>
+        ))}
+      </RelatedLinks>
     </View>
   )
 }
