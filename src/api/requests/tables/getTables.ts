@@ -22,7 +22,7 @@ export const requestSchema = z.object({
 
 export const responseSchema = z.array(
   z.object({
-    date: z.string(),
+    reference: z.string(),
     values: z.array(
       z.object({
         label: z.string(),
@@ -35,11 +35,11 @@ export const responseSchema = z.array(
 type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
-export const getTabular = async (plots: RequestParams['plots']) => {
+export const getTables = async (plots: RequestParams['plots']) => {
   try {
     const body: RequestParams = { plots }
-    const { data } = await client<Response>('tables/v2', { body })
-    logger.info('POST success tables/v2')
+    const { data } = await client<Response>('tables/v3', { body })
+    logger.info('POST success tables/v3')
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

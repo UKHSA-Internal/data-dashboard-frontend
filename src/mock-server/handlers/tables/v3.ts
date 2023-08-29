@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { requestSchema } from '@/api/requests/tabular/getTabular'
+import { requestSchema } from '@/api/requests/tables/getTables'
 import { logger } from '@/lib/logger'
 
 import { fixtures } from './fixtures/fixtures'
