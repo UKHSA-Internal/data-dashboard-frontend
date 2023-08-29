@@ -1,13 +1,10 @@
 {
-  "meta": {
-    "title": "{{- title}}",
-    "description": "{{description}}",
-    "copyright": "All content is available under the Open Government Licence v3.0; except where otherwise stated.",
-    "twitterId": "@UKHSA"
-  },
+  "govUkTitle": "GOV.UK",
   "serviceTitle": "UKHSA data dashboard",
+  "skipLink": "Skip to main content",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
+  "feedbackBannerPhase": "Alpha",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
@@ -15,16 +12,6 @@
   "relatedLinksHeading": "Related Links",
   "backToTop": "Back to top",
   "welcome": "Welcome",
-  "metrics": {
-    "headlineValueScreenReaderText": "{{heading}}: {{value}}",
-    "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",
-    "headlineTrendValue": "{{change, number}} ({{percentage}}%)",
-    "headlineTrendScreenReaderText": "{{heading}}: {{value}}, no change compared to the previous 7 days",
-    "headlineTrendScreenReaderText_green_up": "{{heading}}: {{value}}, upward positive trend",
-    "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
-    "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
-    "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
-  },
   "cms": {
     "blocks": {
       "headline": {
@@ -51,11 +38,15 @@
       },
       "table": {
         "toggle": "View data in a tabular format",
-        "header_date": "Month",
+        "header": "Month",
+        "header_age": "Age",
+        "header_stratum": "Stratum",
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
-        "row_date": "{{value, monthAndYear}}",
+        "row": "{{value, monthAndYear}}",
         "row_plot": "{{value, number}}",
+        "row_stratum": "{{value}}",
+        "row_age": "{{value}}",
         "caption": "{{title}} data for {{body}}",
         "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}"
       }

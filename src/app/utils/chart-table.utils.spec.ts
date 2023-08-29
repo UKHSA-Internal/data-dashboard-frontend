@@ -12,7 +12,7 @@ test('transforms the tabular api response to be usable within the ui', () => {
   const { result } = renderHook(() =>
     parseChartTableData([
       {
-        date: '2022-10-31',
+        reference: '2022-10-31',
         values: [
           {
             label: 'Plot1',
@@ -25,7 +25,7 @@ test('transforms the tabular api response to be usable within the ui', () => {
         ],
       },
       {
-        date: '2022-11-31',
+        reference: '2022-11-31',
         values: [
           {
             label: 'Plot1',
@@ -77,7 +77,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
     parseChartTableData(
       [
         {
-          date: '2022-10-31',
+          reference: '2022-10-31',
           values: [
             {
               label: 'Plot1',
@@ -94,7 +94,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           ],
         },
         {
-          date: '2022-11-31',
+          reference: '2022-11-31',
           values: [
             {
               label: 'Plot1',
@@ -190,7 +190,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
     parseChartTableData(
       [
         {
-          date: '2022-10-31',
+          reference: '2022-10-31',
           values: [
             {
               label: 'Plot1',
@@ -227,7 +227,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           ],
         },
         {
-          date: '2022-11-31',
+          reference: '2022-11-31',
           values: [
             {
               label: 'Plot1',

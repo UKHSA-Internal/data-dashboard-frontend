@@ -1,8 +1,8 @@
-import { Response } from '@/api/requests/tabular/getTabular'
+import { Response } from '@/api/requests/tables/getTables'
 
 export const covidOccupiedMVBeds: Response = [
   {
-    date: '2022-05-31',
+    reference: '2022-05-31',
     values: [
       {
         label: 'New deaths daily',
@@ -15,7 +15,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-06-30',
+    reference: '2022-06-30',
     values: [
       {
         label: 'New deaths daily',
@@ -28,7 +28,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-07-31',
+    reference: '2022-07-31',
     values: [
       {
         label: 'New deaths daily',
@@ -41,7 +41,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-08-31',
+    reference: '2022-08-31',
     values: [
       {
         label: 'New deaths daily',
@@ -54,7 +54,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-09-30',
+    reference: '2022-09-30',
     values: [
       {
         label: 'New deaths daily',
@@ -67,7 +67,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-10-31',
+    reference: '2022-10-31',
     values: [
       {
         label: 'New deaths daily',
@@ -80,7 +80,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-11-30',
+    reference: '2022-11-30',
     values: [
       {
         label: 'New deaths daily',
@@ -93,7 +93,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2022-12-31',
+    reference: '2022-12-31',
     values: [
       {
         label: 'New deaths daily',
@@ -106,7 +106,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2023-01-31',
+    reference: '2023-01-31',
     values: [
       {
         label: 'New deaths daily',
@@ -119,7 +119,7 @@ export const covidOccupiedMVBeds: Response = [
     ],
   },
   {
-    date: '2023-02-28',
+    reference: '2023-02-28',
     values: [
       {
         label: 'New deaths daily',
