@@ -13,10 +13,10 @@ export class CompliancePage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Compliance statement | UKHSA data dashboard/)
+    await expect(this.page).toHaveTitle(/Compliance | UKHSA data dashboard/)
   }
 
   async hasHeading() {
-    await expect(this.page.getByRole('heading', { name: /Compliance statement/, level: 1 })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: /Compliance/, level: 1 })).toBeVisible()
   }
 }
