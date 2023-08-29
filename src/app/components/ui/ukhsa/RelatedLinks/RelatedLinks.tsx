@@ -4,12 +4,14 @@ import { ReactNode } from 'react'
 import { useTranslation } from '../../../../i18n'
 
 interface RelatedLinksProps {
-  children: ReactNode
+  children: ReactNode[]
   className?: string
 }
 
 export async function RelatedLinks({ children, className }: RelatedLinksProps) {
   const { t } = await useTranslation('common')
+
+  if (children.length === 0) return null
 
   return (
     <div

@@ -16,7 +16,7 @@ interface RichTextProps {
 export const RichText = ({ children, linkedHeadings }: RichTextProps) => {
   const rehypePlugins: RehypePlugins = corePlugins || []
 
-  if (linkedHeadings) {
+  if (linkedHeadings && children.includes('h2')) {
     rehypePlugins.push(...(linkedHeadingsPlugins || []))
   }
 
