@@ -39,7 +39,7 @@ test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', a
 
 test('Handles invalid json received from the api', async () => {
   server.use(
-    rest.post(`${getApiBaseUrl()}/tables/v2`, (req, res, ctx) => {
+    rest.post(`${getApiBaseUrl()}/tables/v3`, (req, res, ctx) => {
       return res(ctx.status(200), ctx.json({}))
     })
   )
@@ -67,7 +67,7 @@ test('Handles invalid json received from the api', async () => {
 
 test('Handles generic http error', async () => {
   server.use(
-    rest.post(`${getApiBaseUrl()}/tables/v2`, (req, res, ctx) => {
+    rest.post(`${getApiBaseUrl()}/tables/v3`, (req, res, ctx) => {
       return res(ctx.status(404))
     })
   )
