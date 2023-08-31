@@ -8,7 +8,7 @@ interface BackToTopProps {
 export const BackToTop = ({ label, href = '#main-content' }: BackToTopProps) => (
   <a
     href={href}
-    className="govuk-link--no-visited-state inline-flex items-center"
+    className="govuk-link--no-visited-state sticky bottom-8 mt-[calc(100vh+20px)] inline-flex items-center"
     onClick={(event) => {
       event.preventDefault()
       window.scrollTo({
