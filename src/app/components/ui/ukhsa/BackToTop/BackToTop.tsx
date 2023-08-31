@@ -20,7 +20,6 @@ export const BackToTop = ({ label, href = '#main-content' }: BackToTopProps) => 
           sticky: y > 200,
         }
       )}
-      //mt-[calc(100vh+20px)]
       onClick={(event) => {
         event.preventDefault()
         window.scrollTo({
