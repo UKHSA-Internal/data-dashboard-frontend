@@ -43,7 +43,7 @@ export const getCharts = async (chart: RequestParams) => {
   const { plots, x_axis, y_axis, chart_width, chart_height } = chart
 
   const body: RequestParams = {
-    plots: plots.map((plot) => plot),
+    plots,
     file_format: chartFormat,
     chart_width,
     chart_height,

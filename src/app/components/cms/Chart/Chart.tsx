@@ -1,6 +1,7 @@
 import Image from 'next/image'
 import { z } from 'zod'
 
+import { Geography, GeographyType } from '@/api/models'
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getChartSvg } from '@/app/utils/chart.utils'
@@ -12,15 +13,22 @@ interface ChartProps {
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
+
+  /* URL Search Params from the page server component */
+  searchParams: { [key: string]: string | string[] | undefined }
 }
 
-export async function Chart({ data, size }: ChartProps) {
+export async function Chart({ data, size, searchParams }: ChartProps) {
   const { chart, x_axis, y_axis } = data
 
   const plots = chart.map((plot) => plot.value)
 
   const res = await getCharts({
-    plots,
+    plots: plots.map((plot) => ({
+      ...plot,
+      geography: (searchParams.geography as Geography) || 'England',
+      geography_type: (searchParams.geographyType as GeographyType) || 'Nation',
+    })),
     x_axis,
     y_axis,
     chart_width: chartSizes[size].width,

@@ -11,9 +11,10 @@ interface PageProps {
   description?: string
   children: ReactNode
   lastUpdated?: string
+  backLink?: string
 }
 
-export async function View({ heading, showWelcome, children, description, lastUpdated }: PageProps) {
+export async function View({ heading, showWelcome, children, description, lastUpdated, backLink }: PageProps) {
   const { t } = await useTranslation('common')
   const menu = await useMenu()
 
@@ -42,6 +43,12 @@ export async function View({ heading, showWelcome, children, description, lastUp
       </SideNav>
 
       <div className="w-full">
+        {backLink && (
+          <a href={backLink} className="govuk-back-link govuk-!-margin-top-2 govuk-!-margin-bottom-6">
+            Back
+          </a>
+        )}
+
         {lastUpdated && (
           <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
         )}
