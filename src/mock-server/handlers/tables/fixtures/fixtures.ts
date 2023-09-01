@@ -4,6 +4,7 @@ import { Topics } from '@/api/models'
 import { responseSchema } from '@/api/requests/tables/getTables'
 
 import {
+  admissionsRateAgeValues,
   casesRateAgeSexValues,
   covidOccupiedMVBeds,
   newCasesDailyValues,
@@ -43,6 +44,7 @@ const nonUniqueMockedValues = newCasesDailyValues
 
 export const fixtures: Fixtures = {
   'COVID-19': {
+    admissions_rate_age: admissionsRateAgeValues,
     new_cases_daily: newCasesDailyValues,
     new_cases_rolling_rate: newCasesRollingRateValues,
     new_deaths_daily: newDeathsDailyValues,

@@ -32,7 +32,7 @@ const tabularMocks: Array<[Topics, Metrics, Response]> = [
 ]
 
 test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', async (topic, metric, data) => {
-  const result = await getTables([{ topic, metric }])
+  const result = await getTables({ plots: [{ topic, metric }] })
 
   expect(result).toEqual<SuccessResponse>({ success: true, data })
 })
@@ -44,12 +44,16 @@ test('Handles invalid json received from the api', async () => {
     })
   )
 
-  const result = await getTables([
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-    },
-  ])
+  const result = await getTables({
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+      },
+    ],
+    x_axis: 'metric',
+    y_axis: 'stratum',
+  })
 
   expect(result).toEqual<ErrorResponse>({
     success: false,
@@ -72,12 +76,14 @@ test('Handles generic http error', async () => {
     })
   )
 
-  const result = await getTables([
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-    },
-  ])
+  const result = await getTables({
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+      },
+    ],
+  })
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 

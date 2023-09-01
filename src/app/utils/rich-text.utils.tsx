@@ -19,11 +19,20 @@ export const coreComponents: Components = {
   h2: ({ children }) => <h2 className="govuk-heading-l">{children}</h2>,
   h3: ({ children }) => <h3 className="govuk-heading-m">{children}</h3>,
   h4: ({ children }) => <h4 className="govuk-heading-s">{children}</h4>,
-  a: ({ children, href }) => (
-    <a href={href} className="govuk-link">
-      {children}
-    </a>
-  ),
+  a: ({ children, href }) => {
+    if (href?.includes('change-settings=1')) {
+      return (
+        <Link href={href} className="govuk-link test">
+          {children}
+        </Link>
+      )
+    }
+    return (
+      <a href={href} className="govuk-link">
+        {children}
+      </a>
+    )
+  },
   ul: ({ children }) => <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>,
   li: ({ children }) => <li>{children}</li>,
   p: ({ children }) => <p className="govuk-body">{children}</p>,

@@ -5,6 +5,8 @@ import { ChartTypes, Geography, GeographyType, Metrics, Topics } from '@/api/mod
 import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
+  x_axis: z.string().nullable().optional(),
+  y_axis: z.string().nullable().optional(),
   plots: z.array(
     z.object({
       topic: Topics,
@@ -35,9 +37,8 @@ export const responseSchema = z.array(
 type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
-export const getTables = async (plots: RequestParams['plots']) => {
+export const getTables = async (body: RequestParams) => {
   try {
-    const body: RequestParams = { plots }
     const { data } = await client<Response>('tables/v3', { body })
     logger.info('POST success tables/v3')
     return responseSchema.safeParse(data)

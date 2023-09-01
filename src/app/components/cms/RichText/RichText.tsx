@@ -16,11 +16,12 @@ interface RichTextProps {
 export const RichText = ({ children, linkedHeadings }: RichTextProps) => {
   const rehypePlugins: RehypePlugins = corePlugins || []
 
-  if (linkedHeadings && children.includes('h2')) {
+  const showLinkedHeadings = linkedHeadings && children.includes('h2')
+  if (showLinkedHeadings) {
     rehypePlugins.push(...(linkedHeadingsPlugins || []))
   }
 
-  const components = { ...coreComponents, ...(linkedHeadings && linkedHeadingsComponents) }
+  const components = { ...coreComponents, ...(showLinkedHeadings && linkedHeadingsComponents) }
 
   return (
     <>

@@ -36,7 +36,7 @@ export async function warmStaticCache<T extends PageType.Home | PageType.Topic>(
           })
 
           logger.info(`Pre-warming cache for table: ${column.value.title}`)
-          await getTables(plots)
+          await getTables({ plots, x_axis, y_axis })
         }
       }
     }
