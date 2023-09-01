@@ -18,6 +18,7 @@ test('Converts vanilla HTML into Gov UK React components', () => {
 test('Does not render a table of contents using if the the cms page does not contain any H2s', () => {
   const { queryByRole } = render(<RichText linkedHeadings>{`<p>hello</p>`}</RichText>)
   expect(queryByRole('navigation')).not.toBeInTheDocument()
+  expect(queryByRole('heading', { name: 'Contents', level: 2 })).not.toBeInTheDocument()
 })
 
 test('Renders a table of contents using the H2 elements within the provided HTML', () => {

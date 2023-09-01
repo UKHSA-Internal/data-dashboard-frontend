@@ -23,7 +23,11 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
   const plots = chart.map((plot) => plot.value)
 
   // Call the table endpoint to get the data in table format
-  const tableResponse = await getTables(plots)
+  const tableResponse = await getTables({
+    plots,
+    x_axis,
+    y_axis,
+  })
 
   // Call the charts endpoint as this gives us the data timestamp
   const chartResponse = await getCharts({
