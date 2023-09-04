@@ -79,10 +79,10 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
   const isActive = pathname === href
 
   return (
-    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-[15px] pl-6 lg:py-1')}>
+    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat ')}>
       <Link
         href={href}
-        className={clsx('govuk-link--no-visited-state inline-block decoration-1 hover:underline', {
+        className={clsx('govuk-link--no-visited-state block py-[15px] pl-6 decoration-1 hover:underline lg:py-1', {
           'text-black underline': isActive,
           'no-underline': !isActive,
         })}
