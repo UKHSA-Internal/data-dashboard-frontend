@@ -158,6 +158,7 @@ export class App {
   }
 
   async hasBackToTop() {
+    await this.page.evaluate(() => window.scrollTo(0, 0))
     await expect(this.backToTop).not.toBeInViewport()
     await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
     await expect(this.backToTop).toBeInViewport()
