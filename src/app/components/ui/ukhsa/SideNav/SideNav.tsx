@@ -12,7 +12,7 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <nav
-        className="sticky top-[20px] mt-0 hidden min-w-[var(--ukhsa-nav-width)] overflow-hidden lg:block"
+        className="sticky top-[20px] mt-0 hidden min-w-[var(--ukhsa-nav-width)] overflow-hidden xl:block"
         id="ukhsa-sidenav"
         aria-label="Menu"
       >
@@ -40,7 +40,7 @@ export const SideNavLink = ({ children, href, subMenu }: SideNavLinkProps) => {
       <Link
         href={href}
         className={clsx(
-          'govuk-link--no-visited-state block border-l-4 px-2 py-[15px] no-underline decoration-1 hover:underline lg:py-[8px] [&:focus]:border-l-transparent',
+          'govuk-link--no-visited-state block border-l-4 px-2 py-[15px] no-underline decoration-1 hover:underline xl:py-[8px] [&:focus]:border-l-transparent',
           {
             'font-bold [&:not(:focus)]:border-blue [&:not(:focus)]:bg-grey-3': isActive,
             'border-transparent no-underline': !isActive,
@@ -63,7 +63,7 @@ interface SideNavSubMenuProps {
 }
 
 export const SideNavSubMenu = ({ children }: SideNavSubMenuProps) => {
-  return <ul className="lg:my-2">{children}</ul>
+  return <ul className="xl:my-2">{children}</ul>
 }
 
 /**
@@ -79,7 +79,7 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
   const isActive = pathname === href
 
   return (
-    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-[15px] pl-6 lg:py-1')}>
+    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-[15px] pl-6 xl:py-1')}>
       <Link
         href={href}
         className={clsx('govuk-link--no-visited-state inline-block decoration-1 hover:underline', {
