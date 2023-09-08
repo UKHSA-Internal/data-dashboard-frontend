@@ -35,7 +35,7 @@ test('Returns a list of cms pages by type', async () => {
             slug: 'dashboard',
             type: 'home.HomePage',
           },
-          title: 'Dashboard',
+          title: 'UKHSA Data dashboard',
         },
       ],
       meta: {

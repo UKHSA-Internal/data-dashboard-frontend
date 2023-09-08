@@ -55,7 +55,7 @@ test('renders the side navigation', async () => {
   const nav = getByRole('navigation')
   expect(nav).toBeInTheDocument()
 
-  expect(within(nav).getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/')
+  expect(within(nav).getByRole('link', { name: 'Homepage' })).toHaveAttribute('href', '/')
   expect(within(nav).getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
   expect(within(nav).getByRole('link', { name: 'Influenza' })).toHaveAttribute('href', '/topics/influenza')
   expect(within(nav).getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
