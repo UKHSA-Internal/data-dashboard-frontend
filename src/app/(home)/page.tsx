@@ -6,6 +6,7 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { warmStaticCache } from '@/app/utils/cache.utils'
 import { renderSection } from '@/app/utils/cms.utils'
 
+export const revalidate = 360
 const homePageSlug = 'dashboard'
 
 export async function generateMetadata(): Promise<Metadata> {
