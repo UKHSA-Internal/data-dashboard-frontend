@@ -76,7 +76,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     </div>
                     <Chart data={column.value} size={size} />
                     <Download chart={column.value.chart} />
-                    <Details label="View data in a tabular format" className="print:hidden">
+                    <Details label="View data in a tabular format">
                       <Table data={column.value} size={size} />
                     </Details>
                   </>
