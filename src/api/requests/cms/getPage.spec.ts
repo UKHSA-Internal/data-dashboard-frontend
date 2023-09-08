@@ -3,7 +3,7 @@ import 'whatwg-fetch'
 import { rest } from 'msw'
 import z from 'zod'
 
-import { respiratoryVirusesMock } from '@/api/mocks/cms/data/page'
+import { dashboardMock } from '@/api/mocks/cms/data/page'
 import { server } from '@/api/msw/server'
 import { logger } from '@/lib/logger'
 
@@ -20,27 +20,27 @@ type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 test('Returns a full page from thge cms by id', async () => {
-  const result = await getPage(respiratoryVirusesMock.id)
+  const result = await getPage(dashboardMock.id)
 
   expect(result).toEqual<SuccessResponse>({
     success: true,
-    data: respiratoryVirusesMock,
+    data: dashboardMock,
   })
 })
 
 test('Handles invalid json received from the api', async () => {
   server.use(
-    rest.get(`${getCmsApiPath()}/${respiratoryVirusesMock.id}`, (req, res, ctx) => {
+    rest.get(`${getCmsApiPath()}/${dashboardMock.id}`, (req, res, ctx) => {
       return res(
         ctx.status(200),
         ctx.json({
-          ...respiratoryVirusesMock,
+          ...dashboardMock,
           last_published_at: null,
         })
       )
     })
   )
-  const result = await getPage(respiratoryVirusesMock.id)
+  const result = await getPage(dashboardMock.id)
 
   expect(result).toEqual<ErrorResponse>({
     success: false,
@@ -50,12 +50,12 @@ test('Handles invalid json received from the api', async () => {
 
 test('Handles generic http errors', async () => {
   server.use(
-    rest.get(`${getCmsApiPath()}/${respiratoryVirusesMock.id}`, (req, res, ctx) => {
+    rest.get(`${getCmsApiPath()}/${dashboardMock.id}`, (req, res, ctx) => {
       return res(ctx.status(404))
     })
   )
 
-  const result = await getPage(respiratoryVirusesMock.id)
+  const result = await getPage(dashboardMock.id)
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 

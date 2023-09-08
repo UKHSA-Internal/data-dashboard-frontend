@@ -1,43 +1,43 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-import { relatedLinksMock } from '../elements/related-links'
+import { relatedLinksMock } from '../elements'
 
-export const respiratoryVirusesMock: PageResponse<PageType.Home> = {
-  id: 243,
+export const dashboardMock: PageResponse<PageType.Home> = {
+  id: 6,
   meta: {
     type: 'home.HomePage',
-    detail_url: 'http://localhost/api/pages/243/',
+    detail_url: 'http://localhost/api/pages/6/',
     html_url: null,
-    slug: 'respiratory-viruses',
-    show_in_menus: true,
-    seo_title: 'Respiratory Viruses | UKHSA data dashboard',
-    search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
+    slug: 'dashboard',
+    show_in_menus: false,
+    seo_title: 'Homepage',
+    search_description: 'Data and insights from the UKHSA on respiratory viruses.',
     first_published_at: '2023-04-26T12:39:38.064114+01:00',
     alias_of: null,
     parent: {
-      id: 242,
+      id: 2,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/242/',
+        detail_url: 'http://localhost/api/pages/2/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
     },
   },
-  title: 'Respiratory viruses',
+  title: 'UKHSA Data dashboard',
   page_description:
     '<p data-block-key="sud2w">Data and insights from the UKHSA on respiratory viruses. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
   body: [
     {
       type: 'section',
       value: {
-        heading: 'COVID-19',
+        heading: 'Coronavirus',
         content: [
           {
             type: 'text_card',
             value: {
-              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on COVID-19.</p>',
+              body: '<p data-block-key="6du8j">The UKHSA dashboard for data and insights on Coronavirus.</p>',
             },
             id: '6a399089-6e24-4010-a484-a12745d38872',
           },
