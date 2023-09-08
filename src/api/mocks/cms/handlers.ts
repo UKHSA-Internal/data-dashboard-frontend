@@ -9,11 +9,11 @@ import { logger } from '@/lib/logger'
 import {
   aboutPageMock,
   covid19PageMock,
+  dashboardMock,
   howToUseThisDataPageMock,
   influenzaPageMock,
   mapsPageMock,
   otherRespiratoryVirusesPageMock,
-  respiratoryVirusesMock,
   whatsNewPageMock,
 } from './data/page'
 import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './data/pages'
@@ -29,7 +29,7 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
-  [respiratoryVirusesMock.id]: respiratoryVirusesMock,
+  [dashboardMock.id]: dashboardMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,
   [mapsPageMock.id]: mapsPageMock,

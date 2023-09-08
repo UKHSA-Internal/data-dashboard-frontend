@@ -11,7 +11,7 @@ export const revalidate = 360
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  } = await getPageBySlug('dashboard', PageType.Home)
 
   return {
     title: seo_title,
@@ -25,7 +25,7 @@ export default async function HomePage() {
     body,
     page_description: description,
     related_links: relatedLinks,
-  } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  } = await getPageBySlug('dashboard', PageType.Home)
 
   await warmStaticCache<PageType.Home>(body)
 
