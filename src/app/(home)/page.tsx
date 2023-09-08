@@ -6,12 +6,12 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { warmStaticCache } from '@/app/utils/cache.utils'
 import { renderSection } from '@/app/utils/cms.utils'
 
-export const revalidate = 360
+const homePageSlug = 'dashboard'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  } = await getPageBySlug(homePageSlug, PageType.Home)
 
   return {
     title: seo_title,
@@ -25,7 +25,7 @@ export default async function HomePage() {
     body,
     page_description: description,
     related_links: relatedLinks,
-  } = await getPageBySlug('respiratory-viruses', PageType.Home)
+  } = await getPageBySlug(homePageSlug, PageType.Home)
 
   await warmStaticCache<PageType.Home>(body)
 
