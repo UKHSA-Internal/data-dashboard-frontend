@@ -2,11 +2,11 @@ import { PagesResponse } from '@/api/requests/cms/getPages'
 
 import { aboutPageMock } from './page/about'
 import { covid19PageMock } from './page/covid-19'
+import { dashboardMock } from './page/dashboard'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
 import { mapsPageMock } from './page/maps'
 import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
-import { respiratoryVirusesMock } from './page/respiratory-viruses'
 import { whatsNewPageMock } from './page/whats-new'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
@@ -15,16 +15,16 @@ export const pagesWithHomeTypeMock: PagesResponse = {
   },
   items: [
     {
-      id: respiratoryVirusesMock.id,
+      id: dashboardMock.id,
       meta: {
-        type: respiratoryVirusesMock.meta.type,
-        detail_url: respiratoryVirusesMock.meta.detail_url,
-        html_url: respiratoryVirusesMock.meta.html_url,
-        slug: respiratoryVirusesMock.meta.slug,
-        show_in_menus: respiratoryVirusesMock.meta.show_in_menus,
-        first_published_at: respiratoryVirusesMock.meta.first_published_at,
+        type: dashboardMock.meta.type,
+        detail_url: dashboardMock.meta.detail_url,
+        html_url: dashboardMock.meta.html_url,
+        slug: dashboardMock.meta.slug,
+        show_in_menus: dashboardMock.meta.show_in_menus,
+        first_published_at: dashboardMock.meta.first_published_at,
       },
-      title: respiratoryVirusesMock.title,
+      title: dashboardMock.title,
     },
   ],
 }
