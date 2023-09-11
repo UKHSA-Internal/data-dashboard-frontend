@@ -1,12 +1,12 @@
-import type { Response } from '@/api/requests/tables/getTables'
+import { Response } from '@/api/requests/tables/getTables'
 
-export const newCasesDailyValues: Response = [
+export const testing_positivityByWeek: Response = [
   {
     reference: '2022-10-31',
     values: [
       {
         label: 'Plot1',
-        value: 12630.0,
+        value: 28630.0,
       },
     ],
   },
@@ -15,7 +15,7 @@ export const newCasesDailyValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 9360.0,
+        value: 19608.0,
       },
     ],
   },
@@ -24,7 +24,7 @@ export const newCasesDailyValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 10886.0,
+        value: 23886.0,
       },
     ],
   },
@@ -33,7 +33,7 @@ export const newCasesDailyValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 7268.0,
+        value: 12268.0,
       },
     ],
   },
@@ -42,7 +42,7 @@ export const newCasesDailyValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 11408.0,
+        value: 24087.0,
       },
     ],
   },
@@ -51,7 +51,7 @@ export const newCasesDailyValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 5234.0,
+        value: 32364.0,
       },
     ],
   },
