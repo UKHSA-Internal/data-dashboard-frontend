@@ -1,6 +1,6 @@
 import { Response } from '@/api/requests/tables/getTables'
 
-export const weeklyHospitalAdmissionsRateValues: Response = [
+export const healthcare_ICUHDUadmissionrateByWeek: Response = [
   {
     reference: '2022-10-31',
     values: [
