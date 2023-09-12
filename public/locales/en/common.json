@@ -28,10 +28,10 @@
           "percentage": "({{percentage, number}}%)",
           "change": "{{change}}"
         },
-        "alt_green_up": "There has been an increase of {{change}} ({{percentage, number}}%) compared to the previous 7 days.",
-        "alt_green_down": "There has been a decrease of {{change}} ({{percentage, number}}%) compared to the previous 7 days.",
-        "alt_red_up": "There has been an increase of {{change}} ({{percentage, number}}%) compared to the previous 7 days.",
-        "alt_red_down": "There has been an decrease of {{change}} ({{percentage, number}}%) compared to the previous 7 days."
+        "alt_green_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+        "alt_green_down": "There has been a decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+        "alt_red_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+        "alt_red_down": "There has been an decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days."
       },
       "timestamp": {
         "value": "Up to and including {{value, dateShort}}"
