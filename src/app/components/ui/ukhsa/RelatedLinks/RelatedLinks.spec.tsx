@@ -37,7 +37,7 @@ test('Displays the Related links header, checks only 3 items in list, and associ
     })) as ReactElement
   )
 
-  expect(screen.getByRole('heading', { name: 'Related Links', level: 2 })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Related links', level: 2 })).toBeInTheDocument()
 
   const listItems = screen.getAllByRole('listitem')
 

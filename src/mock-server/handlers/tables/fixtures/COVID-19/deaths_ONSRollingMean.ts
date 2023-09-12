@@ -1,12 +1,12 @@
 import { Response } from '@/api/requests/tables/getTables'
 
-export const weeklyPositivityValues: Response = [
+export const deaths_ONSRollingMean: Response = [
   {
     reference: '2022-10-31',
     values: [
       {
         label: 'Plot1',
-        value: 28630.0,
+        value: 4630.0,
       },
     ],
   },
@@ -15,7 +15,7 @@ export const weeklyPositivityValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 19608.0,
+        value: 3608.0,
       },
     ],
   },
@@ -24,7 +24,7 @@ export const weeklyPositivityValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 23886.0,
+        value: 3886.0,
       },
     ],
   },
@@ -33,7 +33,7 @@ export const weeklyPositivityValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 12268.0,
+        value: 3268.0,
       },
     ],
   },
@@ -42,7 +42,7 @@ export const weeklyPositivityValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 24087.0,
+        value: 4087.0,
       },
     ],
   },
@@ -51,7 +51,7 @@ export const weeklyPositivityValues: Response = [
     values: [
       {
         label: 'Plot1',
-        value: 32364.0,
+        value: 2364.0,
       },
     ],
   },
