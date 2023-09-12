@@ -16,7 +16,7 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
 
   expect(menu).toStrictEqual([
     {
-      title: 'Dashboard',
+      title: 'Homepage',
       slug: '/',
       children: [
         {
