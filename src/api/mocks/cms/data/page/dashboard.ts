@@ -13,7 +13,6 @@ export const dashboardMock: PageResponse<PageType.Home> = {
     html_url: null,
     slug: 'dashboard',
     show_in_menus: true,
-
     first_published_at: '2023-09-06T13:51:55.724310+01:00',
     alias_of: null,
     parent: {
