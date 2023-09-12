@@ -26,12 +26,12 @@ test('Returns a list of cms pages by type', async () => {
     data: {
       items: [
         {
-          id: 6,
+          id: 4,
           meta: {
             detail_url: 'http://localhost/api/pages/4/',
             first_published_at: '2023-09-06T13:51:55.724310+01:00',
             html_url: null,
-            show_in_menus: false,
+            show_in_menus: true,
             slug: 'dashboard',
             type: 'home.HomePage',
           },
