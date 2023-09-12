@@ -50,7 +50,7 @@ export class HomePage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Respiratory Viruses | UKHSA data dashboard/)
+    await expect(this.page).toHaveTitle(/UKHSA data dashboard/)
     await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
       'content',
       'Overall summary of the respiratory viruses in circulation within the UK'
@@ -58,7 +58,7 @@ export class HomePage {
   }
 
   async hasHeading() {
-    await expect(this.page.getByRole('heading', { name: /Respiratory viruses/, level: 1 })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: /UKHSA data dashboard/, level: 1 })).toBeVisible()
   }
 
   async hasNotLastUpdated() {
@@ -72,7 +72,7 @@ export class HomePage {
   async hasPageDescription() {
     await expect(
       this.page.getByText(
-        'Data and insights from the UKHSA on respiratory viruses. See the simple summary for England (opens in a new tab).'
+        'The UKHSA data dashboard shows public health data across England. It builds on the success and is an iteration of the COVID-19 in the UK dashboard.'
       )
     ).toBeVisible()
   }
@@ -81,12 +81,16 @@ export class HomePage {
     const covid19Heading = this.page.getByRole('heading', { name: /COVID-19/, level: 2 })
     await expect(covid19Heading).toBeVisible()
     await expect(covid19Heading.getByRole('link', { name: /COVID-19/ })).toHaveAttribute('href', '/topics/covid-19')
-    await expect(this.page.getByText(/The UKHSA dashboard for data and insights on COVID-19./)).toBeVisible()
+    await expect(
+      this.page.getByText(/Summary of COVID-19 data. For more detailed data, go to the COVID-19 page./)
+    ).toBeVisible()
 
     const influnzaHeading = this.page.getByRole('heading', { name: /Influenza/, level: 2 })
     await expect(influnzaHeading).toBeVisible()
     await expect(influnzaHeading.getByRole('link', { name: /Influenza/ })).toHaveAttribute('href', '/topics/influenza')
-    await expect(this.page.getByText(/The UKHSA dashboard for data and insights on Influenza./)).toBeVisible()
+    await expect(
+      this.page.getByText(/Summary of influenza data. For more detailed data, go to the influenza page./)
+    ).toBeVisible()
   }
 
   async hasCovid19HeadlineNumbersRowCard() {
@@ -117,8 +121,6 @@ export class HomePage {
     await expect(col4.getByRole('heading', { name: 'Vaccines', level: 3 })).toBeVisible()
     await expect(col4.getByText('Autumn booster')).toBeVisible()
     await expect(col4.getByText('4,095,083')).toBeVisible()
-    await expect(col4.getByText('Percentage uptake')).toBeVisible()
-    await expect(col4.getByText('64.5%')).toBeVisible()
 
     await expect(col5.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(col5.getByText('Virus tests positivity')).toBeVisible()
@@ -131,7 +133,7 @@ export class HomePage {
     await expect(card.getByText(/Positive tests reported in England/)).toBeVisible()
     await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
     await expect(card.getByText('Last 7 days')).toBeVisible()
-    await expect(card.getByText('24,298')).toBeVisible()
+    await expect(card.getByText('722')).toBeVisible()
     await expect(card.getByText('-592 (-3%)')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
@@ -172,11 +174,9 @@ export class HomePage {
     await expect(col1.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(col1.getByText('Hospital admission rate (per 100,000)')).toBeVisible()
     await expect(col1.getByText('981,596')).toBeVisible()
-    await expect(col1.getByText('Last 7 days')).toBeVisible()
-    await expect(col1.getByText('5911 (0.3%)')).toBeVisible()
     await expect(col2.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(col2.getByText('Virus tests positivity')).toBeVisible()
-    await expect(col2.getByText('12.2%')).toBeVisible()
+    await expect(col2.getByText('0.26%')).toBeVisible()
   }
 
   async hasInfluenzaHealthareChartRowCard() {
@@ -185,8 +185,7 @@ export class HomePage {
     await expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
     await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
     await expect(card.getByText('Last 7 days')).toBeVisible()
-    await expect(card.getByText('981,596')).toBeVisible()
-    await expect(card.getByText('5911 (0.3%)')).toBeVisible()
+    await expect(card.getByText('0.26')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
