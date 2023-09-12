@@ -9,7 +9,7 @@
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
   "contentsHeading": "Contents",
-  "relatedLinksHeading": "Related Links",
+  "relatedLinksHeading": "Related links",
   "backToTop": "Back to top",
   "welcome": "Welcome",
   "cms": {
@@ -20,7 +20,7 @@
       },
       "percentage": {
         "heading": "{{heading}}",
-        "value": "{{value}}%"
+        "value": "{{value, number}}%"
       },
       "trend": {
         "heading": "{{heading}}",
