@@ -107,12 +107,12 @@ test('renders null when the percentage request fails', async () => {
   expect(container.firstChild).toBeNull()
 })
 
-test('formats percentage into two decimal places', async () => {
+test('formats trend values and percentages with multiple decimal places into a two decimal format', async () => {
   getTrendsMock.mockResolvedValueOnce({
     success: true,
     data: {
       metric_name: 'new_cases_7days_change',
-      metric_value: -592,
+      metric_value: -592.123,
       percentage_metric_name: 'new_cases_7days_change_percentage',
       percentage_metric_value: 3.6789,
       colour: 'red',
