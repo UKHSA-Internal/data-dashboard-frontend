@@ -94,7 +94,7 @@ export class App {
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
 
     // Expect visible items
-    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
@@ -106,7 +106,7 @@ export class App {
     await this.page.getByRole('link', { name: 'Hide navigation menu', expanded: true }).click()
 
     // Expect no visible menu items
-    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
@@ -116,7 +116,7 @@ export class App {
   }
 
   async hasDesktopNav() {
-    await expect(this.nav.getByRole('link', { name: 'Dashboard' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
