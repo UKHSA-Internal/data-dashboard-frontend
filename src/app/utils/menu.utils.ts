@@ -31,7 +31,7 @@ export const useMenu = async () => {
       // The CMS pages endpoint cannot provide a homepage type with nested
       // topics so it must be formed manually.
       {
-        title: 'Dashboard',
+        title: 'Homepage',
         slug: '/',
         children: topics,
       },
