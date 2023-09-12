@@ -176,7 +176,7 @@ export class HomePage {
     await expect(col1.getByText('981,596')).toBeVisible()
     await expect(col2.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(col2.getByText('Virus tests positivity')).toBeVisible()
-    await expect(col2.getByText('0.2558%')).toBeVisible()
+    await expect(col2.getByText('0.26%')).toBeVisible()
   }
 
   async hasInfluenzaHealthareChartRowCard() {
