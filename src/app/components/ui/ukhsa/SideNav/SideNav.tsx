@@ -80,7 +80,6 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
 
   return (
     <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-[15px] pl-6 xl:py-1')}>
-
       <Link
         href={href}
         className={clsx('govuk-link--no-visited-state block py-3 pl-6 decoration-1 hover:underline lg:py-1', {
