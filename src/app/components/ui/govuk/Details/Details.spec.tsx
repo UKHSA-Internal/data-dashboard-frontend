@@ -4,8 +4,9 @@ import { render, screen } from '@/config/test-utils'
 
 import { Details } from './Details'
 
+const label = 'View data in a tabular format'
+
 test('renders the label and child content', () => {
-  const label = 'View data in a tabular format'
   const childContent = 'Child content'
 
   render(
@@ -26,7 +27,7 @@ test('applies additional className and attributes', () => {
   const dataTestId = 'details-component'
 
   render(
-    <Details label="View data in a tabular format" className={className} data-testid={dataTestId}>
+    <Details label={label} className={className} data-testid={dataTestId}>
       <p>Child content</p>
     </Details>
   )
