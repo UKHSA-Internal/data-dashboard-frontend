@@ -27,16 +27,16 @@ type Fixtures = Record<Topics, Record<string, z.infer<typeof responseSchema>>>
 
 export const fixtures: Fixtures = {
   'COVID-19': {
-    new_cases_7days_sum: { value: 24298 },
-    new_deaths_7days_sum: { value: 379 },
-    new_admissions_7days: { value: 6288 },
-    latest_total_vaccinations_autumn22: { value: 4095083 },
-    latest_vaccinations_uptake_autumn22: { value: 64.5 },
-    positivity_7days_latest: { value: 10.4 },
+    'COVID-19_headline_newcases_7daytotals': { value: 24298 },
+    'COVID-19_headline_ONSdeaths_7daytotals': { value: 379 },
+    'COVID-19_headline_7DayAdmissions': { value: 6288 },
+    'COVID-19_headline_totalvaccines_spring23': { value: 4095083 },
+    'COVID-19_headline_positivity_latest': { value: 10.4 },
+    'COVID-19_headline_newcases_7daychange': { value: 722 },
   },
   Influenza: {
-    weekly_hospital_admissions_rate_latest: { value: 981596 },
-    weekly_positivity_latest: { value: 12.2 },
+    influenza_headline_ICUHDUadmissionrateLatest: { value: 981596 },
+    influenza_headline_positivityLatest: { value: 0.2558 },
   },
   Adenovirus: {},
   Rhinovirus: {},

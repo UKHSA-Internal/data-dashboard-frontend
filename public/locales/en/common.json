@@ -20,7 +20,7 @@
       },
       "percentage": {
         "heading": "{{heading}}",
-        "value": "{{value}}%"
+        "value": "{{value, number}}%"
       },
       "trend": {
         "heading": "{{heading}}",

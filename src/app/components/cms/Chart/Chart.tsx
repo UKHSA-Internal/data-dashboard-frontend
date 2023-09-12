@@ -1,4 +1,3 @@
-import Image from 'next/image'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
@@ -19,22 +18,51 @@ export async function Chart({ data, size }: ChartProps) {
 
   const plots = chart.map((plot) => plot.value)
 
-  const res = await getCharts({
-    plots,
-    x_axis,
-    y_axis,
-    chart_width: chartSizes[size].width,
-    chart_height: chartSizes[size].height,
-  })
+  // Collect all chart svg's mobile first using the narrow aspect ratio
+  const chartRequests = [
+    getCharts({
+      plots,
+      x_axis,
+      y_axis,
+      chart_width: chartSizes.narrow.width,
+      chart_height: chartSizes.narrow.height,
+    }),
+  ]
 
-  if (res.success) {
+  // The concept of a "wide" chart only applies to the desktop viewport
+  if (size === 'wide') {
+    chartRequests.push(
+      getCharts({
+        plots,
+        x_axis,
+        y_axis,
+        chart_width: chartSizes.wide.width,
+        chart_height: chartSizes.wide.height,
+      })
+    )
+  }
+
+  const [narrowChartResponse, wideChartResponse] = await Promise.all(chartRequests)
+
+  if (narrowChartResponse.success) {
     const {
-      data: { chart },
-    } = res
+      data: { chart: narrowChart },
+    } = narrowChartResponse
+
+    const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
 
     return (
-      <div className="govuk-!-margin-top-4 govuk-!-margin-bottom-6 relative h-[var(--ukhsa-chart-height)] w-full break-inside-avoid md:min-w-[320px]">
-        <Image priority unoptimized alt="" fill sizes="100vw" src={`data:image/svg+xml;utf8,${getChartSvg(chart)}`} />
+      <div className="govuk-!-margin-top-4 govuk-!-margin-bottom-6">
+        <picture>
+          {wideChart && (
+            <source
+              media="(min-width: 768px)"
+              srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
+              data-testid="chart-src-min-768"
+            />
+          )}
+          <img alt="" src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`} className="w-full" />
+        </picture>
       </div>
     )
   }
