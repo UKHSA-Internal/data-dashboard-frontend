@@ -21,7 +21,7 @@ export class BrowsePage {
   }
 
   async hasPageContent() {
-    await expect(this.page.getByRole('link', { name: 'Homepage', exact: true })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: 'Dashboard', exact: true })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'Influenza' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
