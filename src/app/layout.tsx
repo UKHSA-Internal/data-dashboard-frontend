@@ -97,7 +97,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </TopNav>
           </div>
         </header>
-        <div className="govuk-width-container">
+        <div className="govuk-width-container print:hidden">
           <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
             <p className="govuk-phase-banner__content">
               <strong className="govuk-tag govuk-phase-banner__content__tag">{t('feedbackBannerPhase')}</strong>

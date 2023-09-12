@@ -26,6 +26,22 @@ test('renders the percentage correctly when successful', async () => {
   expect(valueElement).toBeInTheDocument()
 })
 
+test('formats the percentage to two decimal places', async () => {
+  getHeadlinesMock.mockResolvedValueOnce({ success: true, data: { value: 55.3846 } })
+
+  const data: ComponentProps<typeof Percentage>['data'] = {
+    topic: 'COVID-19',
+    metric: 'test-metric',
+    body: 'Test Heading',
+  }
+  const { getByText } = render((await Percentage({ data })) as ReactElement)
+  const headingElement = getByText('Test Heading')
+  const valueElement = getByText('55.38%')
+
+  expect(headingElement).toBeInTheDocument()
+  expect(valueElement).toBeInTheDocument()
+})
+
 test('renders null when the percentage request fails', async () => {
   getHeadlinesMock.mockResolvedValueOnce({
     success: false,
