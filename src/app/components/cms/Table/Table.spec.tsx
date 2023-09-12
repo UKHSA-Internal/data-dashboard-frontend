@@ -40,6 +40,33 @@ getTableMock.mockResolvedValue({
         },
       ],
     },
+    {
+      reference: '2023-01-31',
+      values: [
+        {
+          label: 'Plot1',
+          value: 12345.6666,
+        },
+      ],
+    },
+    {
+      reference: '2022-02-28',
+      values: [
+        {
+          label: 'Plot1',
+          value: 600.049,
+        },
+      ],
+    },
+    {
+      reference: '2022-02-28',
+      values: [
+        {
+          label: 'Plot1',
+          value: 8392.6,
+        },
+      ],
+    },
   ],
 })
 
@@ -91,9 +118,12 @@ test('table with row data', async () => {
 
   const cells = getAllByRole('cell')
 
-  expect(cells).toHaveLength(2)
+  expect(cells).toHaveLength(5)
   expect(cells[0]).toHaveTextContent('12,630')
   expect(cells[1]).toHaveTextContent('9,360')
+  expect(cells[2]).toHaveTextContent('12,345.67')
+  expect(cells[3]).toHaveTextContent('600.05')
+  expect(cells[4]).toHaveTextContent('8,392.6')
 })
 
 test('table api request fails', async () => {

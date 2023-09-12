@@ -5,10 +5,10 @@ import type { Metrics, Topics } from '@/api/models'
 import { server } from '@/api/msw/server'
 import { logger } from '@/lib/logger'
 import {
-  newCasesDailyValues,
-  newDeathsDailyValues,
-  weeklyHospitalAdmissionsRateValues,
-  weeklyPositivityValues,
+  cases_casesByDay,
+  deaths_ONSRollingMean,
+  healthcare_ICUHDUadmissionrateByWeek,
+  testing_positivityByWeek,
 } from '@/mock-server/handlers/tables/fixtures'
 
 import { getApiBaseUrl } from '../helpers'
@@ -25,14 +25,14 @@ type SuccessResponse = z.SafeParseSuccess<Response>
 type ErrorResponse = z.SafeParseError<Response>
 
 const tabularMocks: Array<[Topics, Metrics, Response]> = [
-  ['COVID-19', 'new_cases_daily', newCasesDailyValues],
-  ['COVID-19', 'new_deaths_daily', newDeathsDailyValues],
-  ['Influenza', 'weekly_hospital_admissions_rate', weeklyHospitalAdmissionsRateValues],
-  ['Influenza', 'weekly_positivity', weeklyPositivityValues],
+  ['COVID-19', 'COVID-19_cases_casesByDay', cases_casesByDay],
+  ['COVID-19', 'COVID-19_deaths_ONSRollingMean', deaths_ONSRollingMean],
+  ['Influenza', 'influenza_healthcare_ICUHDUadmissionrateByWeek', healthcare_ICUHDUadmissionrateByWeek],
+  ['Influenza', 'influenza_testing_positivityByWeek', testing_positivityByWeek],
 ]
 
 test.each(tabularMocks)('Returns tabular data for the %s topic and %s metric', async (topic, metric, data) => {
-  const result = await getTables([{ topic, metric }])
+  const result = await getTables({ plots: [{ topic, metric }] })
 
   expect(result).toEqual<SuccessResponse>({ success: true, data })
 })
@@ -44,12 +44,16 @@ test('Handles invalid json received from the api', async () => {
     })
   )
 
-  const result = await getTables([
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-    },
-  ])
+  const result = await getTables({
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+      },
+    ],
+    x_axis: 'metric',
+    y_axis: 'stratum',
+  })
 
   expect(result).toEqual<ErrorResponse>({
     success: false,
@@ -72,12 +76,14 @@ test('Handles generic http error', async () => {
     })
   )
 
-  const result = await getTables([
-    {
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-    },
-  ])
+  const result = await getTables({
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+      },
+    ],
+  })
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 

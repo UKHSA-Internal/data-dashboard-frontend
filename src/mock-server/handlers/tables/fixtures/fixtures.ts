@@ -4,14 +4,15 @@ import { Topics } from '@/api/models'
 import { responseSchema } from '@/api/requests/tables/getTables'
 
 import {
+  admissionsRateAgeValues,
+  cases_casesByDay,
   casesRateAgeSexValues,
   covidOccupiedMVBeds,
-  newCasesDailyValues,
+  deaths_ONSRollingMean,
+  healthcare_ICUHDUadmissionrateByWeek,
   newCasesRollingRateValues,
-  newDeathsDailyValues,
-  weeklyHospitalAdmissionsRateValues,
+  testing_positivityByWeek,
   weeklyPositivityByAgeValues,
-  weeklyPositivityValues,
 } from '.'
 
 /**
@@ -39,13 +40,19 @@ import {
 
 type Fixtures = Record<Topics, Record<string, z.infer<typeof responseSchema>>>
 
-const nonUniqueMockedValues = newCasesDailyValues
+const nonUniqueMockedValues = cases_casesByDay
 
 export const fixtures: Fixtures = {
   'COVID-19': {
-    new_cases_daily: newCasesDailyValues,
+    // BETA dataset (used on the mocked homepage)
+    'COVID-19_cases_casesByDay': cases_casesByDay,
+    'COVID-19_deaths_ONSRollingMean': deaths_ONSRollingMean,
+
+    // ALPHA dataset (used on the mocked topic pages which are yet to be updated)
+    admissions_rate_age: admissionsRateAgeValues,
+    new_cases_daily: cases_casesByDay,
     new_cases_rolling_rate: newCasesRollingRateValues,
-    new_deaths_daily: newDeathsDailyValues,
+    new_deaths_daily: deaths_ONSRollingMean,
     new_admissions_daily: nonUniqueMockedValues,
     covid_occupied_beds: nonUniqueMockedValues,
     covid_occupied_MV_beds: covidOccupiedMVBeds,
@@ -58,31 +65,36 @@ export const fixtures: Fixtures = {
     vaccinations_percentage_uptake_spring22: nonUniqueMockedValues,
   },
   Influenza: {
-    weekly_hospital_admissions_rate: weeklyHospitalAdmissionsRateValues,
-    weekly_positivity: weeklyPositivityValues,
+    // BETA dataset (used on the mocked homepage)
+    influenza_healthcare_ICUHDUadmissionrateByWeek: healthcare_ICUHDUadmissionrateByWeek,
+    influenza_testing_positivityByWeek: testing_positivityByWeek,
+
+    // ALPHA dataset (used on the mocked topic pages which are yet to be updated)
+    weekly_hospital_admissions_rate: healthcare_ICUHDUadmissionrateByWeek,
+    weekly_positivity: testing_positivityByWeek,
     weekly_hospital_admissions_rate_by_age: nonUniqueMockedValues,
     weekly_icuhdu_admissions_rate: nonUniqueMockedValues,
     weekly_icu_admissions_rate_by_age: nonUniqueMockedValues,
     weekly_positivity_by_age: nonUniqueMockedValues,
   },
   Adenovirus: {
-    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity: testing_positivityByWeek,
     weekly_positivity_by_age: weeklyPositivityByAgeValues,
   },
   Rhinovirus: {
-    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity: testing_positivityByWeek,
     weekly_positivity_by_age: weeklyPositivityByAgeValues,
   },
   RSV: {
-    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity: testing_positivityByWeek,
     weekly_positivity_by_age: weeklyPositivityByAgeValues,
   },
   Parainfluenza: {
-    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity: testing_positivityByWeek,
     weekly_positivity_by_age: weeklyPositivityByAgeValues,
   },
   hMPV: {
-    weekly_positivity: weeklyPositivityValues,
+    weekly_positivity: testing_positivityByWeek,
     weekly_positivity_by_age: weeklyPositivityByAgeValues,
   },
 }
