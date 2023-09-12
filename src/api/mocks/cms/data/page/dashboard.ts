@@ -6,13 +6,14 @@ import { relatedLinksMock } from '../elements'
 export const dashboardMock: PageResponse<PageType.Home> = {
   id: 4,
   meta: {
+    seo_title: 'UKHSA data dashboard',
+    search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
     type: 'home.HomePage',
     detail_url: 'http://localhost/api/pages/4/',
     html_url: null,
     slug: 'dashboard',
     show_in_menus: true,
-    seo_title: 'Homepage',
-    search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
+
     first_published_at: '2023-09-06T13:51:55.724310+01:00',
     alias_of: null,
     parent: {
