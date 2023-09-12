@@ -82,10 +82,13 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
     <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat xl:py-1')}>
       <Link
         href={href}
-        className={clsx('govuk-link--no-visited-state block py-3 pl-6 decoration-1 hover:underline xl:py-1', {
-          'text-black underline': isActive,
-          'no-underline': !isActive,
-        })}
+        className={clsx(
+          'govuk-link--no-visited-state block py-3 pl-6 decoration-1 hover:underline xl:ml-6 xl:inline-block xl:p-0',
+          {
+            'text-black underline': isActive,
+            'no-underline': !isActive,
+          }
+        )}
         aria-current={isActive ? 'page' : undefined}
       >
         {children}
