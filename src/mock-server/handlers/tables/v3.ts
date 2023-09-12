@@ -26,14 +26,8 @@ export default async function handler(req: Request, res: Response) {
       },
     } = parsedQueryParams
 
-    const mockedMetric = metric as
-      | 'new_cases_daily'
-      | 'new_deaths_daily'
-      | 'weekly_hospital_admissions_rate'
-      | 'weekly_positivity'
-
     // Return a json fixture identified by the topic & metric provided
-    return res.json(fixtures[topic][mockedMetric])
+    return res.json(fixtures[topic][metric])
   } catch (error) {
     logger.error(error)
     return res.status(500)

@@ -18,7 +18,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
   const menu = await useMenu()
 
   return (
-    <div className="flex flex-col gap-0 lg:flex-row lg:gap-7">
+    <div className="flex flex-col gap-0 xl:flex-row xl:gap-7">
       <SideNav>
         {menu.map(({ title, slug, children }) => (
           <SideNavLink
