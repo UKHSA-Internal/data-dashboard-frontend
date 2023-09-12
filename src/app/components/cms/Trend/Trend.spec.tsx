@@ -122,5 +122,7 @@ test('formats trend values and percentages with multiple decimal places into a t
 
   const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
 
-  expect(getByText('There has been an decrease of -592 (3.68%) compared to the previous 7 days.')).toBeInTheDocument()
+  expect(
+    getByText('There has been an decrease of -592.12 (3.68%) compared to the previous 7 days.')
+  ).toBeInTheDocument()
 })
