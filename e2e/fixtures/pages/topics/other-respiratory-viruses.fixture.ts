@@ -34,4 +34,8 @@ export class OtherRespiratoryVirusesPage {
   async hasLastUpdated() {
     await expect(this.page.getByText(/Last updated on Wednesday, 10 May 2023 at 05:27pm/)).toBeVisible()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

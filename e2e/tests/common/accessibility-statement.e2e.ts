@@ -10,4 +10,7 @@ test('Accessibility Statement Page', async ({ accessibilityStatementPage, app })
   await test.step('loads the heading', async () => {
     await accessibilityStatementPage.hasHeading()
   })
+  await test.step('confirms page against screenshot', async () => {
+    await accessibilityStatementPage.hasScreenshot()
+  })
 })

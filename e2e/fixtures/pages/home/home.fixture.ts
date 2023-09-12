@@ -235,4 +235,8 @@ export class HomePage {
       }
     }
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

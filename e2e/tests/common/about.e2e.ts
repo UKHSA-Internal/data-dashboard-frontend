@@ -37,6 +37,9 @@ test('About page', async ({ aboutPage, app }) => {
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
   })
+  await test.step('confirms page against screenshot', async () => {
+    await aboutPage.hasScreenshot()
+  })
 })
 
 test.describe('About page - mobile', () => {

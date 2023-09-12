@@ -51,4 +51,8 @@ export class FeedbackPage {
   async submitForm() {
     await this.page.getByRole('button', { name: 'submit' }).click()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

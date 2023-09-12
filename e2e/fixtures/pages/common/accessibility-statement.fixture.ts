@@ -19,4 +19,8 @@ export class AccessibilityStatementPage {
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /Accessibility statement/, level: 1 })).toBeVisible()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

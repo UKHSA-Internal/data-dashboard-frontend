@@ -10,4 +10,7 @@ test('Compliance Page', async ({ compliancePage }) => {
   await test.step('loads the heading', async () => {
     await compliancePage.hasHeading()
   })
+  await test.step('confirms page against screenshot', async () => {
+    await compliancePage.hasScreenshot()
+  })
 })

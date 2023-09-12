@@ -19,4 +19,8 @@ export class CompliancePage {
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /Compliance/, level: 1 })).toBeVisible()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

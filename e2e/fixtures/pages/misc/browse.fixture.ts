@@ -29,4 +29,8 @@ export class BrowsePage {
     await expect(this.page.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: "What's new" })).toBeVisible()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

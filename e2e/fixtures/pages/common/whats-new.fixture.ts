@@ -45,4 +45,8 @@ export class WhatsNewPage {
       )
     ).toBeVisible()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }

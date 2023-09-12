@@ -30,6 +30,9 @@ test('Feedback page', async ({ feedbackPage, feedbackConfirmationPage, app }) =>
   await test.step('confirms redirect to confirmation page', async () => {
     await feedbackConfirmationPage.hasHeading()
   })
+  await test.step('confirms page against screenshot', async () => {
+    await feedbackPage.hasScreenshot()
+  })
 })
 
 test('Feedback confirmation page', async ({ feedbackConfirmationPage, app }) => {
@@ -50,6 +53,9 @@ test('Feedback confirmation page', async ({ feedbackConfirmationPage, app }) => 
   })
   await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
+  })
+  await test.step('confirms page against screenshot', async () => {
+    await feedbackConfirmationPage.hasScreenshot()
   })
 })
 

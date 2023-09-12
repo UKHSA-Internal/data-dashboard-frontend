@@ -65,4 +65,8 @@ export class AboutPage {
     await expect(this.page.getByRole('heading', { name: 'Data sources', level: 2 })).toBeVisible()
     await expect(this.page.getByText('The data on the UKHSA data dashboard is from a number of sources.')).toBeVisible()
   }
+
+  async hasScreenshot() {
+    await expect(this.page).toHaveScreenshot({ fullPage: true })
+  }
 }
