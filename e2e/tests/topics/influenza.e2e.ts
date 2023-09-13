@@ -65,9 +65,11 @@ test('Influenza page', async ({ influenzaPage, app }) => {
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
   })
-  await test.step('confirms page against screenshot', async () => {
-    await influenzaPage.hasScreenshot()
-  })
+})
+
+test('confirms page against screenshot @visual', async ({ influenzaPage }) => {
+  await influenzaPage.goto()
+  await influenzaPage.hasScreenshot()
 })
 
 test.describe('Influenza page - mobile', () => {

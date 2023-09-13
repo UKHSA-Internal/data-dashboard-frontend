@@ -111,9 +111,11 @@ test('COVID-19 page', async ({ covid19Page, app }) => {
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
   })
-  await test.step('confirms page against screenshot', async () => {
-    await covid19Page.hasScreenshot()
-  })
+})
+
+test('confirms page against screenshot @visual', async ({ covid19Page }) => {
+  await covid19Page.goto()
+  await covid19Page.hasScreenshot()
 })
 
 test.describe('COVID-19 page - mobile', () => {

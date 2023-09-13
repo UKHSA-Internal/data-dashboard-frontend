@@ -30,9 +30,11 @@ test("What's new page", async ({ whatsNewPage, app }) => {
   await test.step('displays back to top', async () => {
     await app.hasBackToTop()
   })
-  await test.step('confirms page against screenshot', async () => {
-    await whatsNewPage.hasScreenshot()
-  })
+})
+
+test('confirms page against screenshot @visual', async ({ whatsNewPage }) => {
+  await whatsNewPage.goto()
+  await whatsNewPage.hasScreenshot()
 })
 
 test.describe("What's new page - mobile", () => {

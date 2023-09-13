@@ -13,7 +13,9 @@ test('Browse page', async ({ browsePage, app }) => {
   await test.step('displays fallback menu', async () => {
     await browsePage.hasPageContent()
   })
-  await test.step('confirms page against screenshot', async () => {
-    await browsePage.hasScreenshot()
-  })
+})
+
+test('confirms page against screenshot @visual', async ({ browsePage }) => {
+  await browsePage.goto()
+  await browsePage.hasScreenshot()
 })

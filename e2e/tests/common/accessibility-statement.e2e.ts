@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/app.fixture'
 
-test('Accessibility Statement Page', async ({ accessibilityStatementPage, app }) => {
+test('Accessibility Statement Page', async ({ accessibilityStatementPage }) => {
   await test.step('loads the page', async () => {
     await accessibilityStatementPage.goto()
   })
@@ -10,7 +10,9 @@ test('Accessibility Statement Page', async ({ accessibilityStatementPage, app })
   await test.step('loads the heading', async () => {
     await accessibilityStatementPage.hasHeading()
   })
-  await test.step('confirms page against screenshot', async () => {
-    await accessibilityStatementPage.hasScreenshot()
-  })
+})
+
+test('confirms page against screenshot @visual', async ({ accessibilityStatementPage }) => {
+  await accessibilityStatementPage.goto()
+  await accessibilityStatementPage.hasScreenshot()
 })
