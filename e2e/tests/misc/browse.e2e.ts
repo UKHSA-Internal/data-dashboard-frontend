@@ -15,7 +15,7 @@ test('Browse page', async ({ browsePage, app }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ browsePage }) => {
+test('confirms page against screenshot @visual', async ({ browsePage, app }) => {
   await browsePage.goto()
-  await browsePage.hasScreenshot()
+  await app.compareVisualDifferences('browse')
 })

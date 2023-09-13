@@ -12,7 +12,7 @@ test('Compliance Page', async ({ compliancePage }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ compliancePage }) => {
+test('confirms page against screenshot @visual', async ({ compliancePage, app }) => {
   await compliancePage.goto()
-  await compliancePage.hasScreenshot()
+  await app.compareVisualDifferences('compliance')
 })

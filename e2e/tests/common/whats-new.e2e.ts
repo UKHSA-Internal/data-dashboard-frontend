@@ -32,9 +32,9 @@ test("What's new page", async ({ whatsNewPage, app }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ whatsNewPage }) => {
+test('confirms page against screenshot @visual', async ({ whatsNewPage, app }) => {
   await whatsNewPage.goto()
-  await whatsNewPage.hasScreenshot()
+  await app.compareVisualDifferences('whatsNew')
 })
 
 test.describe("What's new page - mobile", () => {

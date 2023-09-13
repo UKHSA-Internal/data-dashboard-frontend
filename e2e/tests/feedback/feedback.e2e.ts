@@ -32,12 +32,12 @@ test('Feedback page', async ({ feedbackPage, feedbackConfirmationPage, app }) =>
   })
 })
 
-test('confirms page against screenshot @visual', async ({ feedbackPage, feedbackConfirmationPage }) => {
+test('confirms page against screenshot @visual', async ({ feedbackPage, feedbackConfirmationPage, app }) => {
   await feedbackPage.goto()
-  await feedbackPage.hasScreenshot()
+  await app.compareVisualDifferences('feedback')
 
   await feedbackConfirmationPage.goto()
-  await feedbackConfirmationPage.hasScreenshot()
+  await app.compareVisualDifferences('feedbackConfirmation')
 })
 
 test('Feedback confirmation page', async ({ feedbackConfirmationPage, app }) => {

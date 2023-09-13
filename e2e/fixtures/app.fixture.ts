@@ -208,6 +208,10 @@ export class App {
   async hideCookies() {
     await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
   }
+
+  async compareVisualDifferences(screenshotName: string) {
+    await expect(this.page).toHaveScreenshot(`${screenshotName}.png`, { fullPage: true })
+  }
 }
 
 export const test = base.extend<Fixtures>({

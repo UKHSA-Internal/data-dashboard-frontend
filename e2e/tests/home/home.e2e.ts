@@ -56,9 +56,9 @@ test('Home page', async ({ homePage, app }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ homePage }) => {
+test('confirms page against screenshot @visual', async ({ homePage, app }) => {
   await homePage.goto()
-  await homePage.hasScreenshot()
+  await app.compareVisualDifferences('home')
 })
 
 test.describe('Home page - mobile', () => {

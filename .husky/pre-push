@@ -2,4 +2,4 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 # node_modules/.bin/lint-staged && npm run test:ci
-npx tsc --noEmit && npm run lint && npm run test:ci -- --watchAll=false
+npx tsc --noEmit && npm run lint && npm run test:ci -- --watchAll=false && npm run test:e2e:snapshots

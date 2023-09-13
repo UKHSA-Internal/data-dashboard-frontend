@@ -39,9 +39,9 @@ test('About page', async ({ aboutPage, app }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ aboutPage }) => {
+test('confirms page against screenshot @visual', async ({ aboutPage, app }) => {
   await aboutPage.goto()
-  await aboutPage.hasScreenshot()
+  await app.compareVisualDifferences('about')
 })
 
 test.describe('About page - mobile', () => {

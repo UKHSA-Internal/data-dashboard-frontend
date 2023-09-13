@@ -14,6 +14,8 @@
     "test:ci": "jest --ci --coverage",
     "test:e2e": "npx playwright test --ui",
     "test:e2e:ci": "npx playwright test",
+    "test:e2e:snapshots": "npx playwright test --grep '@visual'",
+    "test:e2e:update": "npx playwright test --update-snapshots",
     "test:e2e:smoke": "cypress run --spec \"cypress/smoke/*\"",
     "prepare": "husky install"
   },

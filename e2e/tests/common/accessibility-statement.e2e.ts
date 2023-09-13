@@ -12,7 +12,7 @@ test('Accessibility Statement Page', async ({ accessibilityStatementPage }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ accessibilityStatementPage }) => {
+test('confirms page against screenshot @visual', async ({ accessibilityStatementPage, app }) => {
   await accessibilityStatementPage.goto()
-  await accessibilityStatementPage.hasScreenshot()
+  await app.compareVisualDifferences('accessibilityStatement')
 })

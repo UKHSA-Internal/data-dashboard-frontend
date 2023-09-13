@@ -113,9 +113,9 @@ test('COVID-19 page', async ({ covid19Page, app }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ covid19Page }) => {
+test('confirms page against screenshot @visual', async ({ covid19Page, app }) => {
   await covid19Page.goto()
-  await covid19Page.hasScreenshot()
+  await app.compareVisualDifferences('covid19')
 })
 
 test.describe('COVID-19 page - mobile', () => {

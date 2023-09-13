@@ -94,9 +94,9 @@ test('Other respiratory viruses page', async ({ otherRespiratoryVirusesPage, app
   })
 })
 
-test('confirms page against screenshot @visual', async ({ otherRespiratoryVirusesPage }) => {
+test('confirms page against screenshot @visual', async ({ otherRespiratoryVirusesPage, app }) => {
   await otherRespiratoryVirusesPage.goto()
-  await otherRespiratoryVirusesPage.hasScreenshot()
+  await app.compareVisualDifferences('otherRespiratoryViruses')
 })
 
 test.describe('Other respiratory viruses page - mobile', () => {

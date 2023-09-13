@@ -67,9 +67,9 @@ test('Influenza page', async ({ influenzaPage, app }) => {
   })
 })
 
-test('confirms page against screenshot @visual', async ({ influenzaPage }) => {
+test('confirms page against screenshot @visual', async ({ influenzaPage, app }) => {
   await influenzaPage.goto()
-  await influenzaPage.hasScreenshot()
+  await app.compareVisualDifferences('influenza')
 })
 
 test.describe('Influenza page - mobile', () => {
