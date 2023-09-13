@@ -3,7 +3,6 @@ import { Metadata } from 'next'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { warmStaticCache } from '@/app/utils/cache.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { logger } from '@/lib/logger'
 
@@ -42,8 +41,6 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
     last_published_at: lastUpdated,
     related_links: relatedLinks,
   } = await getPageBySlug(topic, PageType.Topic)
-
-  await warmStaticCache<PageType.Topic>(body)
 
   return (
     <View heading={title} description={description} lastUpdated={lastUpdated}>
