@@ -62,14 +62,12 @@ ENV API_URL $API_URL
 ARG API_KEY
 ENV API_KEY $API_KEY
 
-# https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-ARG PUBLIC_API_URL
-ENV PUBLIC_API_URL $PUBLIC_API_URL
-ENV NEXT_PUBLIC_PUBLIC_API_URL ${PUBLIC_API_URL}
-
 ARG GA_MEASUREMENT_ID
 ENV GA_MEASUREMENT_ID $GA_MEASUREMENT_ID
-ENV NEXT_PUBLIC_GA_MEASUREMENT_ID ${GA_MEASUREMENT_ID}
+
+# https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
+ARG NEXT_PUBLIC_PUBLIC_API_URL
+ENV NEXT_PUBLIC_PUBLIC_API_URL $NEXT_PUBLIC_PUBLIC_API_URL
 
 ENV KEEP_ALIVE_TIMEOUT 61000
 
