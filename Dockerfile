@@ -30,6 +30,14 @@ ENV API_URL $API_URL
 ARG API_KEY
 ENV API_KEY $API_KEY
 
+# https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
+# NOTE: these variables can only be injected at build time whilst our app is statically built
+ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
+ENV NEXT_PUBLIC_GA_MEASUREMENT_ID $NEXT_PUBLIC_GA_MEASUREMENT_ID
+
+ARG NEXT_PUBLIC_PUBLIC_API_URL
+ENV NEXT_PUBLIC_PUBLIC_API_URL $NEXT_PUBLIC_PUBLIC_API_URL
+
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -63,14 +71,6 @@ ARG API_KEY
 ENV API_KEY $API_KEY
 
 ENV KEEP_ALIVE_TIMEOUT 61000
-
-# https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-
-ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
-ENV NEXT_PUBLIC_GA_MEASUREMENT_ID $NEXT_PUBLIC_GA_MEASUREMENT_ID
-
-ARG NEXT_PUBLIC_PUBLIC_API_URL
-ENV NEXT_PUBLIC_PUBLIC_API_URL $NEXT_PUBLIC_PUBLIC_API_URL
 
 EXPOSE 3000
 
