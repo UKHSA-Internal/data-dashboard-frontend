@@ -13,6 +13,7 @@ export default defineConfig({
   testDir: './e2e',
   testMatch: '*.e2e.ts',
   testIgnore: ['**/src/**'],
+  snapshotPathTemplate: './e2e/__screenshots__/{arg}{ext}',
 
   /* Run tests in files in parallel */
   fullyParallel: true,
@@ -38,11 +39,6 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
-    },
-
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
     },
 
     /* Test against mobile viewports. */
