@@ -13,7 +13,8 @@ export default defineConfig({
   testDir: './e2e',
   testMatch: '*.e2e.ts',
   testIgnore: ['**/src/**'],
-  snapshotPathTemplate: './e2e/__screenshots__/{arg}{ext}',
+  snapshotPathTemplate: './e2e/__screenshots__/{projectName}/{arg}{ext}',
+  expect: { toMatchSnapshot: { threshold: 0.1 } },
 
   /* Run tests in files in parallel */
   fullyParallel: true,
