@@ -6,5 +6,8 @@ declare namespace NodeJS {
     API_KEY: string
     NEXT_PUBLIC_PUBLIC_API_URL: string
     NEXT_PUBLIC_GA_MEASUREMENT_ID: string
+    NEXT_PUBLIC_RUM_GUEST_ROLE_ARN: string
+    NEXT_PUBLIC_RUM_IDENTITY_POOL_ID: string
+    NEXT_PUBLIC_RUM_APPLICATON_ID: string
   }
 }

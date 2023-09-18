@@ -1,6 +1,7 @@
 export * from './BackToTop/BackToTop'
 export * from './BrowseCard/BrowseCard'
 export * from './Card/Card'
+export * from './CloudWatch/CloudWatch'
 export * from './Contents/Contents'
 export * from './CookieBanner/CookieBanner'
 export * from './GoogleAnalytics/GoogleAnalytics'

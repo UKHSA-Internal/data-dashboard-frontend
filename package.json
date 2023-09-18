@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
+    "aws-rum-web": "^1.14.0",
     "clsx": "^1.2.1",
     "cookies-next": "^2.1.2",
     "dayjs": "^1.11.9",

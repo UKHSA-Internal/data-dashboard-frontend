@@ -13,7 +13,7 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner, GoogleAnalytics } from './components/ui/ukhsa'
+import { CloudWatch, CookieBanner, GoogleAnalytics } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
@@ -32,6 +32,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       />
       <Suspense fallback={null}>
         <GoogleAnalytics />
+      </Suspense>
+      <Suspense fallback={null}>
+        <CloudWatch />
       </Suspense>
       <body className="govuk-template__body">
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
