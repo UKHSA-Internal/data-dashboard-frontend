@@ -1,12 +1,14 @@
+import { client } from '@/api/api-utils'
+
 import { postSuggestions } from './postSuggestions'
 
 jest.mock('@/lib/logger')
 
-jest.mock('./postSuggestions')
-const postSuggestion = jest.mocked(postSuggestions)
+jest.mock('@/api/api-utils')
+const postSuggestion = jest.mocked(client)
 
 test('Handles successful submission from the api', async () => {
-  postSuggestion.mockResolvedValueOnce({ success: true })
+  postSuggestion.mockResolvedValueOnce({ status: 200, data: {} })
 
   const { success } = await postSuggestions({
     improve_experience: '',
@@ -19,7 +21,7 @@ test('Handles successful submission from the api', async () => {
 })
 
 test('Handles non 200 response from the api', async () => {
-  postSuggestion.mockResolvedValueOnce({ success: false })
+  postSuggestion.mockResolvedValueOnce({ status: 500, data: {} })
 
   const { success } = await postSuggestions({
     improve_experience: '',
