@@ -4,7 +4,7 @@ declare namespace NodeJS {
     NEXT_REVALIDATE_TIME: string
     API_URL: string
     API_KEY: string
-    FEEDBACK_API: string
+    FEEDBACK_API_URL: string
     NEXT_PUBLIC_PUBLIC_API_URL: string
     NEXT_PUBLIC_GA_MEASUREMENT_ID: string
   }
