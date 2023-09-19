@@ -1,7 +1,7 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
 
-import { View } from '../components/ui/ukhsa/'
+import { View } from '../components/ui/ukhsa'
 
 export const metadata: Metadata = {
   title: 'Feedback | UKHSA data dashboard',
