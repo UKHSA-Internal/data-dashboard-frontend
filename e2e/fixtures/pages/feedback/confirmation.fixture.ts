@@ -24,17 +24,17 @@ export class FeedbackConfirmationPage {
   async hasPageContent() {
     await expect(
       this.page.getByText(
-        /Thank you for taking the time to give feedback on the UKHSA data dashboard. We'll use your feedback to help us continually improve our services./
+        /Thank you for giving feedback on the UKHSA data dashboard. We'll use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments./
       )
     ).toBeVisible()
     await expect(
       this.page.getByText(
-        /We're constantly looking to improve our users' experience of the dashboard. If you'd like to share your thoughts further, please get in touch with our user research team at/
+        /The feedback form is intended for feedback on your experience using the dashboard. If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of the/
       )
     ).toBeVisible()
-    await expect(this.page.getByRole('link', { name: /researchteam.dpd@ukhsa.gov.uk/ })).toHaveAttribute(
+    await expect(this.page.getByRole('link', { name: /UKHSA webpage/ })).toHaveAttribute(
       'href',
-      'mailto:researchteam.dpd@ukhsa.gov.uk'
+      'https://www.gov.uk/government/organisations/uk-health-security-agency'
     )
   }
 }
