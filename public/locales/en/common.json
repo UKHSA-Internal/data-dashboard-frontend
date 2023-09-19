@@ -47,8 +47,8 @@
         "row_plot": "{{value, number}}",
         "row_stratum": "{{value}}",
         "row_age": "{{value}}",
-        "caption": "{{title}} data for {{body}}",
-        "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}"
+        "caption": "{{title}} data for {{body}}.",
+        "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}."
       }
     }
   },
