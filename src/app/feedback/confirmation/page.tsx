@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { View } from '@/app/components/ui/ukhsa/View/View'
+import { View } from '@/app/components/ui/ukhsa'
 
 import { useTranslation } from '../../i18n'
 
