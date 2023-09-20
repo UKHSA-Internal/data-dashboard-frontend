@@ -6,9 +6,8 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { renderSection } from '@/app/utils/cms.utils'
 
 import { HOMEPAGE_CMS_SLUG } from '../constants/app.constants'
-import { warmStaticCache } from '../utils/cache.utils'
 
-export const revalidate = 360
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
@@ -28,8 +27,6 @@ export default async function HomePage() {
     page_description: description,
     related_links: relatedLinks,
   } = await getPageBySlug(HOMEPAGE_CMS_SLUG, PageType.Home)
-
-  await warmStaticCache<PageType.Topic>(body)
 
   return (
     <View heading={title} description={description} showWelcome>

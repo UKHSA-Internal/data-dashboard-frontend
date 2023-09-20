@@ -1,12 +1,11 @@
 import { Metadata } from 'next'
 
-import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { logger } from '@/lib/logger'
 
-export const revalidate = 360
+export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
@@ -17,20 +16,6 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
     title: seo_title,
     description: search_description,
   }
-}
-
-export async function generateStaticParams() {
-  const pages = await getPages(PageType.Common).catch((err) => {
-    logger.error(err)
-  })
-
-  if (pages && pages.success) {
-    return pages.data.items.map((page) => ({
-      slug: page.meta.slug,
-    }))
-  }
-
-  return []
 }
 
 export default async function CommonPage({ params: { slug } }: { params: { slug: string } }) {

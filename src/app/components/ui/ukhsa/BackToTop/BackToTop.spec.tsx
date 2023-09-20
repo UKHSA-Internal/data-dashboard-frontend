@@ -1,4 +1,3 @@
-
 import userEvent from '@testing-library/user-event'
 import { useWindowScroll } from 'react-use'
 
