@@ -4,7 +4,7 @@ This is a [Next.js](https://nextjs.org/) project built using the [GOV.UK Fronten
 
 ### Prerequisites
 
-- NodeJs (Minimum version of 18.16.0)
+- NodeJs 18
 
 ### Getting Started
 
