@@ -24,7 +24,10 @@ export default async function FeedbackConfirmation() {
           <Trans i18nKey="feedback.confirmation.message" t={t}>
             <p></p>
             <p>
-              <a className="govuk-link--no-visited-state" href="mailto:researchteam.dpd@ukhsa.gov.uk"></a>
+              <a
+                className="govuk-link--no-visited-state"
+                href="https://www.gov.uk/government/organisations/uk-health-security-agency"
+              ></a>
             </p>
           </Trans>
           <Link href="/" className="govuk-link--no-visited-state govuk-!-margin-top-2 govuk-body inline-block">
