@@ -1,6 +1,15 @@
+import { client } from '@/api/api-utils'
 import { render, within } from '@/config/test-utils'
+import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { View } from './View'
+
+jest.mock('@/api/api-utils')
+
+jest.mocked(client).mockResolvedValue({
+  data: allPagesMock,
+  status: 200,
+})
 
 /**
  * Jest does not support RSC yet so we must await the component as a function
@@ -41,21 +50,24 @@ test('renders the children correctly', async () => {
 })
 
 test('renders the side navigation', async () => {
-  process.env.PUBLIC_API_URL = '/public-api'
-
   const { getByRole } = render(await View({ heading: 'Test Heading', children: null }))
 
   const nav = getByRole('navigation')
   expect(nav).toBeInTheDocument()
 
-  expect(within(nav).getByRole('link', { name: 'Dashboard' })).toHaveAttribute('href', '/')
+  expect(within(nav).getByRole('link', { name: 'Homepage' })).toHaveAttribute('href', '/')
   expect(within(nav).getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
   expect(within(nav).getByRole('link', { name: 'Influenza' })).toHaveAttribute('href', '/topics/influenza')
   expect(within(nav).getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
     'href',
     '/topics/other-respiratory-viruses'
   )
-  expect(within(nav).getByRole('link', { name: 'API' })).toHaveAttribute('href', '/public-api/api/public/timeseries')
+  expect(within(nav).getByRole('link', { name: 'API' })).toHaveAttribute('href', '/public-api')
   expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
   expect(within(nav).getByRole('link', { name: "What's new" })).toHaveAttribute('href', '/whats-new')
+})
+
+test('renders without a heading', async () => {
+  const view = render(await View({ children: null })).queryByRole('heading', { level: 1 })
+  expect(view).toBeNull()
 })

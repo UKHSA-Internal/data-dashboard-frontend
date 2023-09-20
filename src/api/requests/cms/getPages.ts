@@ -25,6 +25,7 @@ export const responseSchema = z.object({
         detail_url: z.string(),
         html_url: z.string().nullable(),
         slug: z.string(),
+        show_in_menus: z.boolean(),
         first_published_at: z.string().nullable(),
       }),
     })
@@ -39,6 +40,7 @@ export const getPages = async (type?: PageType) => {
   if (type) params.set('type', type)
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`GET success pages/?${params.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

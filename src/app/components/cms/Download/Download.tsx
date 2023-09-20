@@ -3,7 +3,6 @@
 import { useRouter } from 'next/navigation'
 import { FormEvent, useState } from 'react'
 
-import { client } from '@/api/api-utils'
 import type { Chart } from '@/api/models/cms/Page'
 import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath, chartExportFormat } from '@/config/constants'
@@ -24,13 +23,15 @@ export function Download({ chart }: DownloadProps) {
     setDownloading(true)
 
     try {
-      const { data } = await client<string>(chartExportApiRoutePath, {
-        baseUrl: '',
-        body: {
+      const res = await global.fetch(chartExportApiRoutePath, {
+        method: 'post',
+        body: JSON.stringify({
           format: chartExportFormat,
           plots: chart.map((plot) => plot.value),
-        },
+        }),
       })
+
+      const data = await res.text()
 
       if (data) downloadFile(`data.${chartExportFormat}`, new Blob([data]))
 
@@ -63,7 +64,7 @@ export function Download({ chart }: DownloadProps) {
       ))}
 
       <button
-        className="govuk-link govuk-body govuk-!-margin-bottom-0 bg-download bg-[left_center] bg-no-repeat pl-5 text-blue hover:bg-download_dark hover:text-dark-blue"
+        className="govuk-link govuk-body govuk-!-margin-bottom-0 bg-download bg-[left_center] bg-no-repeat pl-5 text-blue hover:bg-download_dark hover:text-dark-blue print:hidden"
         type="submit"
       >
         {downloading ? 'Downloading (csv)' : 'Download (csv)'}

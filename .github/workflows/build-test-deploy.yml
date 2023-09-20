@@ -10,7 +10,6 @@ on:
 
 env:
   AWS_REGION: 'eu-west-2'
-  CYPRESS_CACHE_FOLDER: cypress/cache
 
 permissions:
   id-token: write # This is required for requesting the JWT
@@ -91,44 +90,65 @@ jobs:
           title: Unit tests coverage
 
   ##############################################################################
-  # Cypress tests
+  # Playwright e2e tests
   ##############################################################################
 
-  cypress-tests:
-    name: Cypress tests
+  e2e-tests:
+    name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
+    timeout-minutes: 60
     runs-on: ubuntu-latest
     strategy:
-      fail-fast: false # https://github.com/cypress-io/github-action/issues/48
+      fail-fast: false
       matrix:
-        containers: [1, 2] # Uses 2 parallel instances
+        shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
+
+      # TODO: Caching is broken since adding Playwright mobile emulators.
+      # Needs investigating and fixing
+
+      # - name: Store Playwright's Version
+      #   run: |
+      #     PLAYWRIGHT_VERSION=$(npm ls @playwright/test | grep @playwright | sed 's/.*@//')
+      #     echo "Playwright's Version: $PLAYWRIGHT_VERSION"
+      #     echo "PLAYWRIGHT_VERSION=$PLAYWRIGHT_VERSION" >> $GITHUB_ENV
+
+      # - name: Cache Playwright Browsers for Playwright's Version
+      #   id: cache-playwright-browsers
+      #   uses: actions/cache@v3
+      #   with:
+      #     path: ~/.cache/ms-playwright
+      #     key: playwright-browsers-${{ env.PLAYWRIGHT_VERSION }}
+
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
+
       - name: Start mock server
         run: npm run dev:mock-server &
+
       - name: Wait for Mock Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
-      - name: Re-build
-        run: |
-          NODE_ENV=test npm run build
-      - name: Start app
-        run: NODE_ENV=test npm run start &
-      - uses: ./.github/actions/run-cypress-tests
-        with:
-          github-token: ${{ secrets.GITHUB_TOKEN }}
-          record-key: ${{ secrets.CYPRESS_RECORD_KEY }}
-          cache-folder: cypress/cache
 
-  cypress-tests-success:
-    name: Cypress tests check
-    needs: [cypress-tests]
+      - name: Run Playwright tests
+        run: npx playwright test --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
+          path: playwright-report/
+          retention-days: 30
+
+  e2e-tests-success:
+    name: e2e tests check
+    needs: [e2e-tests]
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'All Cypress tests passed ✅'
+      - run: echo 'All e2e tests passed ✅'
 
   ###############################################################################
   # Deploy
@@ -136,7 +156,7 @@ jobs:
 
   deploy:
     name: ECR Image Push
-    needs: [quality-checks, unit-tests, cypress-tests-success]
+    needs: [quality-checks, unit-tests, e2e-tests-success]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
@@ -161,6 +181,6 @@ jobs:
           ECR_REPOSITORY: wp-frontend
           IMAGE_TAG: latest
         run: |
-          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} --build-arg NEXT_PUBLIC_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_PUBLIC_API_URL }} --build-arg GA_MEASUREMENT_ID=${{ vars.GA_MEASUREMENT_ID }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2

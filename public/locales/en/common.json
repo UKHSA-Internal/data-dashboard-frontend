@@ -1,30 +1,17 @@
 {
-  "meta": {
-    "title": "{{- title}}",
-    "description": "{{description}}",
-    "copyright": "All content is available under the Open Government Licence v3.0; except where otherwise stated.",
-    "twitterId": "@UKHSA"
-  },
+  "govUkTitle": "GOV.UK",
   "serviceTitle": "UKHSA data dashboard",
+  "skipLink": "Skip to main content",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
+  "feedbackBannerPhase": "Alpha",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
   "contentsHeading": "Contents",
-  "relatedLinksHeading": "Related Links",
+  "relatedLinksHeading": "Related links",
   "backToTop": "Back to top",
   "welcome": "Welcome",
-  "metrics": {
-    "headlineValueScreenReaderText": "{{heading}}: {{value}}",
-    "headlineValueScreenReaderText_percent": "{{heading}}: {{value}}%",
-    "headlineTrendValue": "{{change, number}} ({{percentage}}%)",
-    "headlineTrendScreenReaderText": "{{heading}}: {{value}}, no change compared to the previous 7 days",
-    "headlineTrendScreenReaderText_green_up": "{{heading}}: {{value}}, upward positive trend",
-    "headlineTrendScreenReaderText_green_down": "{{heading}}: {{value}}, downward positive trend",
-    "headlineTrendScreenReaderText_red_up": "{{heading}}: {{value}}, upward negative trend",
-    "headlineTrendScreenReaderText_red_down": "{{heading}}: {{value}}, downward negative trend"
-  },
   "cms": {
     "blocks": {
       "headline": {
@@ -33,31 +20,35 @@
       },
       "percentage": {
         "heading": "{{heading}}",
-        "value": "{{value}}%"
+        "value": "{{value, number}}%"
       },
       "trend": {
         "heading": "{{heading}}",
         "value": {
-          "percentage": "({{percentage}}%)",
+          "percentage": "({{percentage, number}}%)",
           "change": "{{change}}"
         },
-        "alt_green_up": "There has been an increase of {{change}} ({{percentage}}%) compared to the previous 7 days.",
-        "alt_green_down": "There has been a decrease of {{change}} ({{percentage}}%) compared to the previous 7 days.",
-        "alt_red_up": "There has been an increase of {{change}} ({{percentage}}%) compared to the previous 7 days.",
-        "alt_red_down": "There has been an decrease of {{change}} ({{percentage}}%) compared to the previous 7 days."
+        "alt_green_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+        "alt_green_down": "There has been a decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+        "alt_red_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+        "alt_red_down": "There has been an decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days."
       },
       "timestamp": {
         "value": "Up to and including {{value, dateShort}}"
       },
       "table": {
         "toggle": "View data in a tabular format",
-        "header_date": "Month",
+        "header": "Month",
+        "header_age": "Age",
+        "header_stratum": "Stratum",
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
-        "row_date": "{{value, monthAndYear}}",
+        "row": "{{value, monthAndYear}}",
         "row_plot": "{{value, number}}",
-        "caption": "{{title}} data for {{body}}",
-        "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}"
+        "row_stratum": "{{value}}",
+        "row_age": "{{value}}",
+        "caption": "{{title}} data for {{body}}.",
+        "caption_timestamp": "{{title}} data for {{body, lowerCaseFirstLetter}} up to and including {{timestamp, dateShort}}."
       }
     }
   },
@@ -65,7 +56,11 @@
     "confirmation": {
       "title": "Form submitted",
       "subtitle": "Thank you for your feedback",
-      "message": "<0>Thank you for taking the time to give feedback on the UKHSA data dashboard. We'll use your feedback to help us continually improve our services.</0><1>We're constantly looking to improve our users' experience of the dashboard. If you'd like to share your thoughts further, please get in touch with our user research team at <0>researchteam.dpd@ukhsa.gov.uk</0></1>"
+      "message": "<0>Thank you for giving feedback on the UKHSA data dashboard. We'll use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments.</0><1>The feedback form is intended for feedback on your experience using the dashboard. If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of the <0>UKHSA webpage</0></1>"
     }
+  },
+  "cookieBanner": {
+    "title": "Cookies on UKHSA data dashboard",
+    "body": "<0>We use some essential cookies to make this service work.</0><1>We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.</1>"
   }
 }

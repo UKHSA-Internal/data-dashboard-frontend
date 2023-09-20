@@ -6,22 +6,28 @@ import { logger } from '@/lib/logger'
 
 import {
   aboutPageMock,
+  accessibilityStatementPageMock,
+  compliancePageMock,
+  cookiesPageMock,
   covid19PageMock,
+  dashboardMock,
   howToUseThisDataPageMock,
   influenzaPageMock,
   mapsPageMock,
   otherRespiratoryVirusesPageMock,
-  respiratoryVirusesMock,
   whatsNewPageMock,
 } from './fixtures/page'
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
-  [respiratoryVirusesMock.id]: respiratoryVirusesMock,
+  [dashboardMock.id]: dashboardMock,
   [aboutPageMock.id]: aboutPageMock,
   [whatsNewPageMock.id]: whatsNewPageMock,
   [mapsPageMock.id]: mapsPageMock,
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
+  [cookiesPageMock.id]: cookiesPageMock,
+  [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
+  [compliancePageMock.id]: compliancePageMock,
   [aboutPageMock.id]: aboutPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,

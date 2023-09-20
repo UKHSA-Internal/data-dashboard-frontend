@@ -2,11 +2,11 @@ import { PagesResponse } from '@/api/requests/cms/getPages'
 
 import { aboutPageMock } from './page/about'
 import { covid19PageMock } from './page/covid-19'
+import { dashboardMock } from './page/dashboard'
 import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
 import { mapsPageMock } from './page/maps'
 import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
-import { respiratoryVirusesMock } from './page/respiratory-viruses'
 import { whatsNewPageMock } from './page/whats-new'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
@@ -15,22 +15,23 @@ export const pagesWithHomeTypeMock: PagesResponse = {
   },
   items: [
     {
-      id: respiratoryVirusesMock.id,
+      id: dashboardMock.id,
       meta: {
-        type: respiratoryVirusesMock.meta.type,
-        detail_url: respiratoryVirusesMock.meta.detail_url,
-        html_url: respiratoryVirusesMock.meta.html_url,
-        slug: respiratoryVirusesMock.meta.slug,
-        first_published_at: respiratoryVirusesMock.meta.first_published_at,
+        type: dashboardMock.meta.type,
+        detail_url: dashboardMock.meta.detail_url,
+        html_url: dashboardMock.meta.html_url,
+        slug: dashboardMock.meta.slug,
+        show_in_menus: dashboardMock.meta.show_in_menus,
+        first_published_at: dashboardMock.meta.first_published_at,
       },
-      title: respiratoryVirusesMock.title,
+      title: dashboardMock.title,
     },
   ],
 }
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 1,
+    total_count: 4,
   },
   items: [
     {
@@ -40,6 +41,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         detail_url: aboutPageMock.meta.detail_url,
         html_url: aboutPageMock.meta.html_url,
         slug: aboutPageMock.meta.slug,
+        show_in_menus: aboutPageMock.meta.show_in_menus,
         first_published_at: aboutPageMock.meta.first_published_at,
       },
       title: aboutPageMock.title,
@@ -51,6 +53,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         detail_url: whatsNewPageMock.meta.detail_url,
         html_url: whatsNewPageMock.meta.html_url,
         slug: whatsNewPageMock.meta.slug,
+        show_in_menus: whatsNewPageMock.meta.show_in_menus,
         first_published_at: whatsNewPageMock.meta.first_published_at,
       },
       title: whatsNewPageMock.title,
@@ -62,6 +65,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         detail_url: mapsPageMock.meta.detail_url,
         html_url: mapsPageMock.meta.html_url,
         slug: mapsPageMock.meta.slug,
+        show_in_menus: mapsPageMock.meta.show_in_menus,
         first_published_at: mapsPageMock.meta.first_published_at,
       },
       title: mapsPageMock.title,
@@ -73,6 +77,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         detail_url: howToUseThisDataPageMock.meta.detail_url,
         html_url: howToUseThisDataPageMock.meta.html_url,
         slug: howToUseThisDataPageMock.meta.slug,
+        show_in_menus: howToUseThisDataPageMock.meta.show_in_menus,
         first_published_at: howToUseThisDataPageMock.meta.first_published_at,
       },
       title: howToUseThisDataPageMock.title,
@@ -92,6 +97,7 @@ export const pagesWithTopicTypeMock: PagesResponse = {
         detail_url: influenzaPageMock.meta.detail_url,
         html_url: influenzaPageMock.meta.html_url,
         slug: influenzaPageMock.meta.slug,
+        show_in_menus: influenzaPageMock.meta.show_in_menus,
         first_published_at: influenzaPageMock.meta.first_published_at,
       },
       title: influenzaPageMock.title,
@@ -103,6 +109,7 @@ export const pagesWithTopicTypeMock: PagesResponse = {
         detail_url: covid19PageMock.meta.detail_url,
         html_url: covid19PageMock.meta.html_url,
         slug: covid19PageMock.meta.slug,
+        show_in_menus: covid19PageMock.meta.show_in_menus,
         first_published_at: covid19PageMock.meta.first_published_at,
       },
       title: covid19PageMock.title,
@@ -114,9 +121,17 @@ export const pagesWithTopicTypeMock: PagesResponse = {
         detail_url: otherRespiratoryVirusesPageMock.meta.detail_url,
         html_url: otherRespiratoryVirusesPageMock.meta.html_url,
         slug: otherRespiratoryVirusesPageMock.meta.slug,
+        show_in_menus: otherRespiratoryVirusesPageMock.meta.show_in_menus,
         first_published_at: otherRespiratoryVirusesPageMock.meta.first_published_at,
       },
       title: otherRespiratoryVirusesPageMock.title,
     },
   ],
+}
+
+export const allPagesMock: PagesResponse = {
+  meta: {
+    total_count: 7,
+  },
+  items: [...pagesWithHomeTypeMock.items, ...pagesWithCommonTypeMock.items, ...pagesWithTopicTypeMock.items],
 }

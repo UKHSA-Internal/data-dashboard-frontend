@@ -1,3 +1,5 @@
+import { ReactElement } from 'react'
+
 import type { RelatedLinks as Links } from '@/api/models/cms/Page'
 import { render, screen, within } from '@/config/test-utils'
 
@@ -26,16 +28,16 @@ const testData: Links = [
 
 test('Displays the Related links header, checks only 3 items in list, and associated content correct', async () => {
   render(
-    await RelatedLinks({
+    (await RelatedLinks({
       children: testData.map(({ title, body, url, id }) => (
         <RelatedLink key={id} url={url} title={title}>
           {body}
         </RelatedLink>
       )),
-    })
+    })) as ReactElement
   )
 
-  expect(screen.getByRole('heading', { name: 'Related Links', level: 2 })).toBeInTheDocument()
+  expect(screen.getByRole('heading', { name: 'Related links', level: 2 })).toBeInTheDocument()
 
   const listItems = screen.getAllByRole('listitem')
 
@@ -70,4 +72,14 @@ test('Displays the Related links header, checks only 3 items in list, and associ
     'href',
     'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis'
   )
+})
+
+test('Displays nothing if no related links are provided', async () => {
+  const { container } = render(
+    (await RelatedLinks({
+      children: [],
+    })) as ReactElement
+  )
+
+  expect(container).toBeEmptyDOMElement()
 })

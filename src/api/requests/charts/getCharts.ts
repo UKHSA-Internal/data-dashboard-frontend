@@ -18,12 +18,13 @@ export const requestSchema = z.object({
       topic: Topics,
       metric: Metrics,
       chart_type: ChartTypes,
-      date_from: z.string().nullable().optional(),
-      date_to: z.string().nullable().optional(),
       stratum: z.string().optional(),
       geography: Geography.optional(),
       geography_type: GeographyType.optional(),
       sex: z.string().nullable().optional(),
+      age: z.string().nullable().optional(),
+      date_from: z.string().nullable().optional(),
+      date_to: z.string().nullable().optional(),
       label: z.string().nullable().optional(),
       line_colour: ChartLineColours.nullable().optional(),
       line_type: ChartLineTypes.nullable().optional(),
@@ -52,6 +53,7 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body })
+    logger.info('POST success charts/v3')
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

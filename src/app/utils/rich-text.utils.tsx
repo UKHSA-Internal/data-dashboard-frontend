@@ -1,4 +1,5 @@
 import rehypeToc from '@jsdevtools/rehype-toc'
+import Link from 'next/link'
 import { ComponentProps } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
@@ -18,11 +19,20 @@ export const coreComponents: Components = {
   h2: ({ children }) => <h2 className="govuk-heading-l">{children}</h2>,
   h3: ({ children }) => <h3 className="govuk-heading-m">{children}</h3>,
   h4: ({ children }) => <h4 className="govuk-heading-s">{children}</h4>,
-  a: ({ children, href }) => (
-    <a href={href} className="govuk-link">
-      {children}
-    </a>
-  ),
+  a: ({ children, href }) => {
+    if (href?.includes('change-settings=1')) {
+      return (
+        <Link href={href} className="govuk-link test">
+          {children}
+        </Link>
+      )
+    }
+    return (
+      <a href={href} className="govuk-link">
+        {children}
+      </a>
+    )
+  },
   ul: ({ children }) => <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>,
   li: ({ children }) => <li>{children}</li>,
   p: ({ children }) => <p className="govuk-body">{children}</p>,
@@ -34,19 +44,30 @@ export const coreComponents: Components = {
 export const linkedHeadingsPlugins: RehypePlugins = [rehypeSlug, [rehypeToc, { headings: ['h2'] }]]
 
 export const linkedHeadingsComponents: Components = {
-  a: ({ children, href }) => (
-    <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
-      {children}
-    </a>
-  ),
+  a: ({ children, href }) => {
+    if (href?.includes('change-settings=1')) {
+      return (
+        <Link href={href} className="govuk-link test">
+          {children}
+        </Link>
+      )
+    }
+    return (
+      <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
+        {children}
+      </a>
+    )
+  },
   h2: ({ children, id }) => (
-    <a
-      href={`#${id}`}
-      id={id}
-      className="govuk-!-margin-bottom-4 govuk-!-margin-top-6 govuk-link--no-visited-state inline-block [&:not(:hover)]:no-underline"
-    >
-      <h2 className="govuk-!-margin-bottom-0 govuk-heading-l text-inherit">{children}</h2>
-    </a>
+    <h2 className="govuk-!-margin-bottom-0 govuk-heading-l">
+      <Link
+        href={`#${id}`}
+        id={id}
+        className="govuk-!-margin-bottom-4 govuk-!-margin-top-6 govuk-link--no-visited-state inline-block"
+      >
+        {children}
+      </Link>
+    </h2>
   ),
   nav: ({ children, className }) => {
     if (className?.includes('toc')) {

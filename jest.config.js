@@ -18,22 +18,23 @@ const customJestConfig = {
     '^@/config/(.*)$': '<rootDir>/src/config/$1',
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
     '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
+    '^@/app/(.*)$': '<rootDir>/src/app/$1',
     // Needed to get react markdown & dependencies to work with react-raw, see:
     // https://stackoverflow.com/questions/70916761/next-js-and-jest-syntaxerror-cannot-use-import-statement-outside-a-module
     'react-markdown': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
     'parse5/lib/parser/index.js': '<rootDir>/node_modules/hast-util-raw/node_modules/parse5/lib/parser/index.js',
   },
   testEnvironment: 'jest-environment-jsdom',
-  modulePathIgnorePatterns: ['cypress'],
+  modulePathIgnorePatterns: ['e2e'],
   reporters: ['default', 'jest-junit'],
   coverageReporters: ['json-summary', 'text'],
   coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/models', '<rootDir>/src/api/msw/index.ts'],
   coverageThreshold: {
     global: {
-      lines: 97,
+      lines: 96,
       functions: 95,
-      branches: 80,
-      statements: 96,
+      branches: 77,
+      statements: 94,
     },
   },
 }

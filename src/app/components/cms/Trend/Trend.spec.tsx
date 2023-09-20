@@ -106,3 +106,23 @@ test('renders null when the percentage request fails', async () => {
 
   expect(container.firstChild).toBeNull()
 })
+
+test('formats trend values and percentages with multiple decimal places into a two decimal format', async () => {
+  getTrendsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      metric_name: 'new_cases_7days_change',
+      metric_value: -592.123,
+      percentage_metric_name: 'new_cases_7days_change_percentage',
+      percentage_metric_value: 3.6789,
+      colour: 'red',
+      direction: 'down',
+    },
+  })
+
+  const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+
+  expect(
+    getByText('There has been an decrease of -592.12 (3.68%) compared to the previous 7 days.')
+  ).toBeInTheDocument()
+})

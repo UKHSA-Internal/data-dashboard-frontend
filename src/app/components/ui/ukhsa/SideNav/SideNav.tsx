@@ -10,9 +10,15 @@ import { ReactNode } from 'react'
  */
 export const SideNav = ({ children }: { children: ReactNode }) => {
   return (
-    <nav className="mt-0 min-w-[var(--ukhsa-side-nav-width)] lg:mt-7" aria-label="Menu">
-      <ul className="">{children}</ul>
-    </nav>
+    <>
+      <nav
+        className="sticky top-[20px] mt-0 hidden min-w-[var(--ukhsa-nav-width)] overflow-hidden xl:block"
+        id="ukhsa-sidenav"
+        aria-label="Menu"
+      >
+        <ul>{children}</ul>
+      </nav>
+    </>
   )
 }
 
@@ -34,10 +40,10 @@ export const SideNavLink = ({ children, href, subMenu }: SideNavLinkProps) => {
       <Link
         href={href}
         className={clsx(
-          'govuk-link--no-visited-state block px-2 py-[8px] no-underline decoration-1 hover:underline [&:not(:focus)]:hover:bg-grey-3',
+          'govuk-link--no-visited-state block border-l-4 px-2 py-[15px] no-underline decoration-1 hover:underline xl:py-[8px] [&:focus]:border-l-transparent',
           {
-            'font-bold [&:not(:focus)]:bg-grey-3 [&:not(:focus)]:shadow-[-3px_0_0_0_var(--colour-blue)]': isActive,
-            'no-underline': !isActive,
+            'font-bold [&:not(:focus)]:border-blue [&:not(:focus)]:bg-grey-3': isActive,
+            'border-transparent no-underline': !isActive,
           }
         )}
         aria-current={isActive ? 'page' : undefined}
@@ -57,7 +63,7 @@ interface SideNavSubMenuProps {
 }
 
 export const SideNavSubMenu = ({ children }: SideNavSubMenuProps) => {
-  return <ul className="moj-side-navigation__list govuk-!-margin-bottom-3 govuk-!-margin-top-2">{children}</ul>
+  return <ul className="xl:my-2">{children}</ul>
 }
 
 /**
@@ -73,13 +79,16 @@ export const SideNavSubMenuLink = ({ children, href }: SideNavSubMenuLinkProps) 
   const isActive = pathname === href
 
   return (
-    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat py-1 pl-6')}>
+    <li className={clsx('govuk-!-margin-left-2 bg-dash bg-[left_center] bg-no-repeat xl:py-1')}>
       <Link
         href={href}
-        className={clsx('govuk-link--no-visited-state inline-block decoration-1 hover:underline', {
-          'text-black underline': isActive,
-          'no-underline': !isActive,
-        })}
+        className={clsx(
+          'govuk-link--no-visited-state block py-3 pl-6 decoration-1 hover:underline xl:ml-6 xl:inline-block xl:p-0',
+          {
+            'text-black underline': isActive,
+            'no-underline': !isActive,
+          }
+        )}
         aria-current={isActive ? 'page' : undefined}
       >
         {children}

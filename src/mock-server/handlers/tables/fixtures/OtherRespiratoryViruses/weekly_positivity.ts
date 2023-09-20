@@ -1,8 +1,8 @@
-import type { Response } from '@/api/requests/tabular/getTabular'
+import type { Response } from '@/api/requests/tables/getTables'
 
 export const weeklyPositivityValues: Response = [
   {
-    date: '2022-10-31',
+    reference: '2022-10-31',
     values: [
       {
         label: 'Plot1',
@@ -11,7 +11,7 @@ export const weeklyPositivityValues: Response = [
     ],
   },
   {
-    date: '2022-11-30',
+    reference: '2022-11-30',
     values: [
       {
         label: 'Plot1',
@@ -20,7 +20,7 @@ export const weeklyPositivityValues: Response = [
     ],
   },
   {
-    date: '2022-12-31',
+    reference: '2022-12-31',
     values: [
       {
         label: 'Plot1',
@@ -29,7 +29,7 @@ export const weeklyPositivityValues: Response = [
     ],
   },
   {
-    date: '2023-01-31',
+    reference: '2023-01-31',
     values: [
       {
         label: 'Plot1',
@@ -38,7 +38,7 @@ export const weeklyPositivityValues: Response = [
     ],
   },
   {
-    date: '2023-02-28',
+    reference: '2023-02-28',
     values: [
       {
         label: 'Plot1',
@@ -47,7 +47,7 @@ export const weeklyPositivityValues: Response = [
     ],
   },
   {
-    date: '2023-03-08',
+    reference: '2023-03-08',
     values: [
       {
         label: 'Plot1',

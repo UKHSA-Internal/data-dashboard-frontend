@@ -8,9 +8,9 @@ export default async function handler(req: Request, res: Response) {
       logger.error(`Unsupported request method ${req.method}`)
       return res.status(405)
     }
-    return res.status(200).send(null)
+    return res.status(200).send({ success: true })
   } catch (error) {
     logger.error(error)
-    return res.status(500)
+    return res.status(500).send({ success: false })
   }
 }

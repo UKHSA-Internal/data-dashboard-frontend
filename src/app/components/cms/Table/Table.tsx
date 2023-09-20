@@ -4,7 +4,7 @@ import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { getTabular } from '@/api/requests/tabular/getTabular'
+import { getTables } from '@/api/requests/tables/getTables'
 import { useTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
@@ -23,7 +23,11 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
   const plots = chart.map((plot) => plot.value)
 
   // Call the table endpoint to get the data in table format
-  const tableResponse = await getTabular(plots)
+  const tableResponse = await getTables({
+    plots,
+    x_axis,
+    y_axis,
+  })
 
   // Call the charts endpoint as this gives us the data timestamp
   const chartResponse = await getCharts({
@@ -44,13 +48,15 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     return (
       <div className="govuk-!-margin-top-2">
         {tables.map(({ columns, data }, key) => (
-          <table key={key} className="govuk-table govuk-!-margin-bottom-4 [&:last-child]:mb-0">
+          <table key={key} className="govuk-table govuk-!-margin-bottom-4 table-fixed [&:last-child]:mb-0">
             <caption
               className={clsx('govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal', {
                 'govuk-visually-hidden': key !== 0,
               })}
             >
               {t('cms.blocks.table.caption', { title, body, timestamp, context: timestamp && 'timestamp' })}
+              {/* TODO: Remove once tables are converted to daily data */}
+              <p className="govuk-!-margin-top-4">Values shown are totals on last day of the calendar month</p>
             </caption>
 
             <thead className="govuk-table__head">
@@ -59,7 +65,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                   return (
                     <th key={key} scope="col" className="govuk-table__header">
                       {t('cms.blocks.table.header', {
-                        context: key === 0 ? 'date' : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
+                        context: key === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
                         value: column.header,
                       })}
                     </th>
@@ -78,7 +84,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                           {key === 0 ? (
                             <th scope="row" className="govuk-table__header font-normal">
                               {t('cms.blocks.table.row', {
-                                context: 'date',
+                                context: x_axis,
                                 value: item[column.accessorKey],
                               })}
                             </th>
