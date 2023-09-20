@@ -55,6 +55,8 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
               })}
             >
               {t('cms.blocks.table.caption', { title, body, timestamp, context: timestamp && 'timestamp' })}
+              {/* TODO: Remove once tables are converted to daily data */}
+              <p className="govuk-!-margin-top-4">Values shown are totals on last day of the calendar month</p>
             </caption>
 
             <thead className="govuk-table__head">
