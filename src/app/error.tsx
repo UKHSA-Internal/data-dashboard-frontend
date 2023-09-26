@@ -1,17 +1,26 @@
 'use client'
 
-export default function Error() {
+import Link from 'next/link'
+
+export default function Error({ heading = 'Sorry, there is a problem with the service' }: { heading?: string }) {
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds-from-desktop">
-        <h1 className="govuk-heading-xl mb-4">Sorry, there is a problem with the service</h1>
-        <p>Try again later.</p>
+        <h1 className="govuk-heading-xl mb-4">{heading}</h1>
+        <p>Please try again later.</p>
         <p>
-          <a href="https://www.gov.uk/government/collections/contacts-public-health-england-regions-local-centres-and-emergency">
-            Contact the UK Health Security Agency (UKHSA)
+          If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of
+          the{` `}
+          <a
+            className="govuk-link--no-visited-state"
+            href="https://www.gov.uk/government/organisations/uk-health-security-agency"
+          >
+            UKHSA webpage
           </a>
-          <span>if you need to speak to someone.</span>
         </p>
+        <Link href="/" className="govuk-link--no-visited-state govuk-!-margin-top-2 govuk-body inline-block">
+          Return to home page
+        </Link>
       </div>
     </div>
   )
