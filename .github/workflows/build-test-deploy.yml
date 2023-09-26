@@ -181,6 +181,6 @@ jobs:
           ECR_REPOSITORY: wp-frontend
           IMAGE_TAG: latest
         run: |
-          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} --build-arg NEXT_PUBLIC_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_PUBLIC_API_URL }} --build-arg GA_MEASUREMENT_ID=${{ vars.GA_MEASUREMENT_ID }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} --build-arg NEXT_PUBLIC_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_PUBLIC_API_URL }} --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID=${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
           aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2
