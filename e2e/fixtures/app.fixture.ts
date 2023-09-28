@@ -14,6 +14,7 @@ import {
   FeedbackPage,
   HomePage,
   InfluenzaPage,
+  NotFoundPage,
   OtherRespiratoryVirusesPage,
   WhatsNewPage,
 } from './index'
@@ -29,6 +30,7 @@ type Fixtures = {
   feedbackPage: FeedbackPage
   feedbackConfirmationPage: FeedbackConfirmationPage
   browsePage: BrowsePage
+  notFoundPage: NotFoundPage
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
 }
@@ -240,6 +242,9 @@ export const test = base.extend<Fixtures>({
   },
   browsePage: async ({ page }, use) => {
     await use(new BrowsePage(page))
+  },
+  notFoundPage: async ({ page }, use) => {
+    await use(new NotFoundPage(page))
   },
   accessibilityStatementPage: async ({ page }, use) => {
     await use(new AccessibilityStatementPage(page))
