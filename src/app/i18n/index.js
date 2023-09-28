@@ -14,10 +14,10 @@ const initI18next = async (lng, ns) => {
   return i18nInstance
 }
 
-export async function useTranslation(lng, ns, options = {}) {
-  const i18nextInstance = await initI18next(lng, ns)
+export async function useTranslation(ns, options = { lng: 'en' }) {
+  const i18nextInstance = await initI18next(options.lng, ns)
   return {
-    t: i18nextInstance.getFixedT(lng, Array.isArray(ns) ? ns[0] : ns, options.keyPrefix),
+    t: i18nextInstance.getFixedT(options.lng, Array.isArray(ns) ? ns[0] : ns, options.keyPrefix),
     i18n: i18nextInstance,
   }
 }
