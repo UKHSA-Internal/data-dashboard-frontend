@@ -105,6 +105,24 @@ test('COVID-19 page', async ({ covid19Page, app }) => {
         'The percentage of people aged 75 and over who have received a spring booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.',
     })
   })
+  await test.step('downloads a csv version of each chart', async () => {
+    await app.canDownloadChartAsCsv([
+      'cases-by-specimen-date',
+      '7-day-case-rates-by-specimen-date',
+      'case-rates-by-age',
+      'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
+      'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
+      'patients-in-hospital',
+      'admissions-rate-by-age',
+      'patients-in-mechanical-ventilation-beds',
+      'total-daily-number-of-pcr-tests-reported',
+      'weekly-positivity-of-people-receiving-a-pcr-test',
+      'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
+      'autumn-booster-vaccination-uptake-50-by-vaccination-date',
+      'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
+      'spring-booster-vaccination-uptake-75-by-vaccination-date',
+    ])
+  })
   await test.step('displays related links', async () => {
     await app.hasRelatedLinks()
   })
