@@ -59,6 +59,16 @@ test('Influenza page', async ({ influenzaPage, app }) => {
       description: 'Weekly time series of positivity for people testing positive for Influenza broken down by age.',
     })
   })
+  await test.step('downloads a csv version of each chart', async () => {
+    await app.canDownloadChartAsCsv([
+      'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+      'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+      'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+      'line-chart-comparing-influenza-icu-admission-rates-by-age',
+      'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+      'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+    ])
+  })
   await test.step('displays related links', async () => {
     await app.hasRelatedLinks()
   })
