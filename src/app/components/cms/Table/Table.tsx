@@ -18,7 +18,7 @@ interface TableProps {
 }
 
 export async function Table({ data: { chart, y_axis, x_axis, title, body }, size }: TableProps) {
-  const { t } = await useTranslation('topic')
+  const { t } = await useTranslation('common')
 
   const plots = chart.map((plot) => plot.value)
 

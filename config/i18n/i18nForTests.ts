@@ -3,14 +3,12 @@ import { initReactI18next } from 'react-i18next'
 
 import common from '../../public/locales/en/common.json'
 import errors from '../../public/locales/en/errors.json'
-import topic from '../../public/locales/en/topic.json'
 import formatters from './formatters'
 
 export const defaultNS = 'common'
 export const resources = {
   en: {
     common,
-    topic,
     errors,
   },
 } as const
