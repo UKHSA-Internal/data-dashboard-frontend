@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { kebabCase } from 'lodash'
 import { Fragment } from 'react'
 import { z } from 'zod'
 
@@ -66,7 +67,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                         incrementingColumnId += 1
                         return (
                           <th
-                            id={`col-${incrementingColumnId}`}
+                            id={`${kebabCase(title)}-col-${incrementingColumnId}`}
                             key={columnIndex}
                             headers="blank"
                             className="govuk-table__header"
@@ -101,7 +102,10 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                                     })}
                                   </th>
                                 ) : (
-                                  <td headers={`col-${incrementingColumnId}`} className="govuk-table__cell">
+                                  <td
+                                    headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
+                                    className="govuk-table__cell"
+                                  >
                                     {t('cms.blocks.table.row', {
                                       context: 'plot',
                                       value: item[column.accessorKey],
