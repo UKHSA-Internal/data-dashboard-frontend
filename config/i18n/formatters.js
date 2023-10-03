@@ -13,6 +13,7 @@ dayjs.tz.setDefault('Europe/London')
  * Example: "Last updated on {{value, date}} at {{value, time}}"
  */
 module.exports = (value, format) => {
+  if (value === null) return ''
   if (format === 'date') return dayjs(value).format('dddd, D MMMM YYYY')
   if (format === 'dateShort') return dayjs(value).format('D MMMM YYYY')
   if (format === 'dateShortest') return dayjs(value).format('D MMM YYYY')

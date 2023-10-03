@@ -107,7 +107,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                                     className="govuk-table__cell"
                                   >
                                     {t('cms.blocks.table.row', {
-                                      context: 'plot',
+                                      context: item[column.accessorKey] === null ? 'plot_null' : 'plot',
                                       value: item[column.accessorKey],
                                     })}
                                   </td>

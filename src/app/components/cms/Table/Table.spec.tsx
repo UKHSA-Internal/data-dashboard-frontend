@@ -140,3 +140,27 @@ test('table api request fails', async () => {
     })
   ).not.toBeInTheDocument()
 })
+
+test('table data containing null plot points', async () => {
+  getTableMock.mockResolvedValueOnce({
+    success: true,
+    data: [
+      {
+        reference: '2022-10-31',
+        values: [
+          {
+            label: 'Plot1',
+            value: null,
+          },
+        ],
+      },
+    ],
+  })
+
+  const { getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+  const cells = getAllByRole('cell')
+
+  expect(cells).toHaveLength(1)
+  expect(cells[0]).toHaveTextContent('-')
+})

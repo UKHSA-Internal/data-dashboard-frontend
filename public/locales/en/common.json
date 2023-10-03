@@ -45,6 +45,7 @@
         "header_plot_multi": "{{value}}",
         "row": "{{value, dateShortest}}",
         "row_plot": "{{value, number}}",
+        "row_plot_null": "-",
         "row_stratum": "{{value}}",
         "row_age": "{{value}}",
         "caption": "{{title}} data for {{body}}.",
