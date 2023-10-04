@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { kebabCase } from 'lodash'
 import { Fragment } from 'react'
 import { z } from 'zod'
 
@@ -39,72 +40,90 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
   })
 
   if (tableResponse.success) {
-    const tables = parseChartTableData(tableResponse.data, {
+    const groups = parseChartTableData(tableResponse.data, {
       maxColumns: chartTableMaxColumns[size],
     })
 
     const timestamp = chartResponse.success && chartResponse.data.last_updated
 
+    let incrementingColumnId = 0
+
     return (
       <div className="govuk-!-margin-top-2">
-        {tables.map(({ columns, data }, key) => (
-          <table key={key} className="govuk-table govuk-!-margin-bottom-4 table-fixed [&:last-child]:mb-0">
+        <div className="govuk-!-margin-bottom-4 max-h-[var(--ukhsa-card-table-height)] overflow-auto [&:last-child]:mb-0">
+          <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
             <caption
-              className={clsx('govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal', {
-                'govuk-visually-hidden': key !== 0,
-              })}
+              className={clsx('govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal')}
             >
               {t('cms.blocks.table.caption', { title, body, timestamp, context: timestamp && 'timestamp' })}
-              {/* TODO: Remove once tables are converted to daily data */}
-              <p className="govuk-!-margin-top-4">Values shown are totals on last day of the calendar month</p>
             </caption>
 
-            <thead className="govuk-table__head">
-              <tr className="govuk-table__row">
-                {columns.map((column, key) => {
-                  return (
-                    <th key={key} scope="col" className="govuk-table__header">
-                      {t('cms.blocks.table.header', {
-                        context: key === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
-                        value: column.header,
-                      })}
-                    </th>
-                  )
-                })}
-              </tr>
-            </thead>
-
             <tbody className="govuk-table__body">
-              {data.map((item, key) => {
+              {groups.map(({ columns, data }, groupIndex) => {
                 return (
-                  <tr key={key} className="govuk-table__row">
-                    {columns.map((column, key) => {
+                  <Fragment key={groupIndex}>
+                    <tr className="govuk-table__row sticky top-0 bg-grey-3">
+                      {columns.map((column, columnIndex) => {
+                        incrementingColumnId += 1
+                        return (
+                          <th
+                            id={`${kebabCase(title)}-col-${incrementingColumnId}`}
+                            key={columnIndex}
+                            headers="blank"
+                            className="govuk-table__header"
+                          >
+                            {t('cms.blocks.table.header', {
+                              context:
+                                columnIndex === 0
+                                  ? x_axis
+                                  : column.header.includes('Plot')
+                                  ? 'plot_single'
+                                  : 'plot_multi',
+                              value: column.header,
+                            })}
+                          </th>
+                        )
+                      })}
+                    </tr>
+
+                    {data.map((item, key) => {
                       return (
-                        <Fragment key={key}>
-                          {key === 0 ? (
-                            <th scope="row" className="govuk-table__header font-normal">
-                              {t('cms.blocks.table.row', {
-                                context: x_axis,
-                                value: item[column.accessorKey],
-                              })}
-                            </th>
-                          ) : (
-                            <td className="govuk-table__cell">
-                              {t('cms.blocks.table.row', {
-                                context: 'plot',
-                                value: item[column.accessorKey],
-                              })}
-                            </td>
-                          )}
-                        </Fragment>
+                        <tr key={key} className="govuk-table__row">
+                          {columns.map((column, columnIndex) => {
+                            const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
+
+                            return (
+                              <Fragment key={columnIndex}>
+                                {columnIndex === 0 ? (
+                                  <th className="govuk-table__header font-normal">
+                                    {t('cms.blocks.table.row', {
+                                      context: x_axis,
+                                      value: item[column.accessorKey],
+                                    })}
+                                  </th>
+                                ) : (
+                                  <td
+                                    headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
+                                    className="govuk-table__cell"
+                                  >
+                                    {t('cms.blocks.table.row', {
+                                      context: item[column.accessorKey] === null ? 'plot_null' : 'plot',
+                                      value: item[column.accessorKey],
+                                    })}
+                                  </td>
+                                )}
+                              </Fragment>
+                            )
+                          })}
+                        </tr>
                       )
                     })}
-                  </tr>
+                  </Fragment>
                 )
               })}
             </tbody>
           </table>
-        ))}
+        </div>
       </div>
     )
   }
