@@ -101,13 +101,12 @@ test('table with caption and headers', async () => {
 
   expect(
     getByRole('table', {
-      name: 'Table Title data for table Body up to and including 10 May 2023. Values shown are totals on last day of the calendar month',
+      name: 'Table Title data for table Body up to and including 10 May 2023.',
     })
   ).toBeInTheDocument()
 
   const headers = getAllByRole('columnheader')
-  expect(headers).toHaveLength(2)
-  expect(headers[0]).toHaveTextContent('Month')
+  expect(headers[0]).toHaveTextContent('Date')
   expect(headers[1]).toHaveTextContent('Amount')
 })
 
@@ -116,7 +115,7 @@ test('table with row data', async () => {
 
   expect(
     getByRole('table', {
-      name: 'Table Title data for table Body up to and including 10 May 2023. Values shown are totals on last day of the calendar month',
+      name: 'Table Title data for table Body up to and including 10 May 2023.',
     })
   ).toBeInTheDocument()
 
@@ -137,7 +136,31 @@ test('table api request fails', async () => {
 
   expect(
     queryByRole('table', {
-      name: 'Table Title data for table Body up to and including 10 May 2023. Values shown are totals on last day of the calendar month',
+      name: 'Table Title data for table Body up to and including 10 May 2023.',
     })
   ).not.toBeInTheDocument()
+})
+
+test('table data containing null plot points', async () => {
+  getTableMock.mockResolvedValueOnce({
+    success: true,
+    data: [
+      {
+        reference: '2022-10-31',
+        values: [
+          {
+            label: 'Plot1',
+            value: null,
+          },
+        ],
+      },
+    ],
+  })
+
+  const { getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+  const cells = getAllByRole('cell')
+
+  expect(cells).toHaveLength(1)
+  expect(cells[0]).toHaveTextContent('-')
 })

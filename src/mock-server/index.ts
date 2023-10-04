@@ -18,7 +18,7 @@ import page from './handlers/cms/pages/[id]'
 import downloads from './handlers/downloads/v2'
 import headlines from './handlers/headlines/v2'
 import suggestions from './handlers/suggestions/v1'
-import tables from './handlers/tables/v3'
+import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v2'
 
 const app = express()
@@ -34,7 +34,7 @@ app.get('/api/pages/:id', page)
 app.get('/api/headlines/v2', headlines)
 app.get('/api/trends/v2', trends)
 app.post('/api/charts/v3', charts)
-app.post('/api/tables/v3', tables)
+app.post('/api/tables/v4', tables)
 app.post('/api/downloads/v2', downloads)
 
 // Misc endpoints
