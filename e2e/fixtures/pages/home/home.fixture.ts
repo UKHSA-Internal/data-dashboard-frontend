@@ -1,8 +1,5 @@
 import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
-import * as fs from 'fs'
-
-import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 
 export class HomePage {
   readonly page: Page
@@ -213,26 +210,5 @@ export class HomePage {
     await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
     await expect(card.getByRole('table', { name })).toBeVisible()
-  }
-
-  async canDownloadChartAsCsv(cards: string[]) {
-    for (const name of cards) {
-      const card = this.page.getByTestId(`chart-row-card-${name}`)
-
-      const [download] = await Promise.all([
-        this.page.waitForEvent('download'),
-        card.getByRole('button', { name: 'Download (csv)' }).click(),
-      ])
-
-      const fileName = download.suggestedFilename()
-      expect(fileName).toBe('data.csv')
-
-      const path = await download.path()
-
-      if (path) {
-        const file = fs.readFileSync(path)
-        expect(file.toString()).toEqual(downloadsCsvFixture)
-      }
-    }
   }
 }
