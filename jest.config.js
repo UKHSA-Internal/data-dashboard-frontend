@@ -30,6 +30,7 @@ const customJestConfig = {
   coverageReporters: ['json-summary', 'text'],
   coveragePathIgnorePatterns: [
     'node_modules',
+    '<rootDir>/src/api/api-utils.ts',
     '<rootDir>/src/api/models',
     '<rootDir>/src/api/msw/index.ts',
     // TODO: Remove this once the tests are in place.
