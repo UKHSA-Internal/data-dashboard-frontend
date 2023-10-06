@@ -38,7 +38,7 @@ export function Download({ chart }: DownloadProps) {
       setDownloading(false)
     } catch (error) {
       setDownloading(false)
-      router.replace('/500')
+      router.replace('/error')
     }
   }
 
