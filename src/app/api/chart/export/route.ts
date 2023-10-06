@@ -16,6 +16,10 @@ export async function POST(req: NextRequest) {
   if (params.success) {
     const { plots, file_format: fileFormat } = params.data
 
+    const url = new URL(req.headers.get('origin') || '')
+    url.pathname = 'http://localhost:3000/error'
+    NextResponse.redirect(url)
+
     const response = await getDownloads(plots, fileFormat)
 
     if (!response) {
