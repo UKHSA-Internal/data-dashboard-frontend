@@ -51,7 +51,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
 
         {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
 
-        {description && <RichText linkedHeadings>{description}</RichText>}
+        {description && <RichText>{description}</RichText>}
 
         {children}
       </div>
