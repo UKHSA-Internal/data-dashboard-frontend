@@ -23,12 +23,11 @@ export function Download({ chart }: DownloadProps) {
     setDownloading(true)
 
     try {
+      const formData = new FormData(event.currentTarget)
+
       const res = await global.fetch(chartExportApiRoutePath, {
         method: 'post',
-        body: JSON.stringify({
-          format: chartExportFormat,
-          plots: chart.map((plot) => plot.value),
-        }),
+        body: formData,
       })
 
       const data = await res.text()
