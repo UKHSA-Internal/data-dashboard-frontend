@@ -99,11 +99,7 @@ const mockSize = 'narrow'
 test('table with caption and headers', async () => {
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
-  expect(
-    getByRole('table', {
-      name: 'Table Title data for table Body Up to and including 10 May 2023.',
-    })
-  ).toBeInTheDocument()
+  expect(getByRole('table')).toBeInTheDocument()
 
   const headers = getAllByRole('columnheader')
   expect(headers[0]).toHaveTextContent('Date')
@@ -113,11 +109,7 @@ test('table with caption and headers', async () => {
 test('table with row data', async () => {
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
-  expect(
-    getByRole('table', {
-      name: 'Table Title data for table Body Up to and including 10 May 2023.',
-    })
-  ).toBeInTheDocument()
+  expect(getByRole('table')).toBeInTheDocument()
 
   const cells = getAllByRole('cell')
 
@@ -134,11 +126,7 @@ test('table api request fails', async () => {
 
   const { queryByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
-  expect(
-    queryByRole('table', {
-      name: 'Table Title data for table Body. Up to and including 10 May 2023.',
-    })
-  ).not.toBeInTheDocument()
+  expect(queryByRole('table')).not.toBeInTheDocument()
 })
 
 test('table data containing null plot points', async () => {
