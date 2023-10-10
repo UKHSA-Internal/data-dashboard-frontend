@@ -3,6 +3,7 @@
  */
 import { NextRequest } from 'next/server'
 import { Mock } from 'ts-mockery'
+import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
 import { downloadsJsonFixture } from '@/api/mocks/downloads/fixtures/downloads-json'
@@ -57,35 +58,37 @@ describe('POST /api/chart/export', () => {
     expect(await res.json()).toEqual(downloadsJsonFixture)
   })
 
-  // test('Returns status 500 when wrong form body is sent', async () => {
-  //   jest.mocked(client).mockResolvedValueOnce({
-  //     data: null,
-  //     status: 200,
-  //   })
+  test('Returns status 301 when wrong form body is sent', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: null,
+      status: 200,
+    })
 
-  //   formData.set('plots', '{}')
+    formData.set('format', 'not_valid')
 
-  //   const res = await POST(req)
+    const res = await POST(req)
 
-  //   expect(logger.error).toHaveBeenCalledWith(
-  //     new z.ZodError([
-  //       {
-  //         received: 'not_valid',
-  //         code: 'invalid_enum_value',
-  //         options: ['json', 'csv'],
-  //         path: ['file_format'],
-  //         message: "Invalid enum value. Expected 'json' | 'csv', received 'not_valid'",
-  //       },
-  //     ])
-  //   )
-  //   expect(res.status).toBe(500)
-  // })
+    expect(logger.error).toHaveBeenCalledWith(
+      new z.ZodError([
+        {
+          received: 'not_valid',
+          code: 'invalid_enum_value',
+          options: ['json', 'csv'],
+          path: ['file_format'],
+          message: "Invalid enum value. Expected 'json' | 'csv', received 'not_valid'",
+        },
+      ])
+    )
+    expect(res.status).toBe(301)
+  })
 
   test('Returns status 301 when the proxied request fails', async () => {
     jest.mocked(client).mockResolvedValueOnce({
       data: null,
       status: 301,
     })
+
+    formData.set('format', 'csv')
 
     const res = await POST(req)
 
