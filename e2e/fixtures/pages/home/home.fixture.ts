@@ -138,7 +138,7 @@ export class HomePage {
 
   async hasCovid19CasesTabularData() {
     const card = this.covidCasesChartRowCard
-    const name = 'Cases data for positive tests reported in England up to and including 10 May 2023'
+    const name = 'Cases data for positive tests reported in England. Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
     await expect(card.getByRole('table', { name })).toBeVisible()
@@ -159,7 +159,7 @@ export class HomePage {
   async hasCovid19DeathsTabularData() {
     const card = this.covidDeathsChartRowCard
     const name =
-      'Deaths data for deaths with COVID-19 on the death certificate in England up to and including 10 May 2023'
+      'Deaths data for deaths with COVID-19 on the death certificate in England. Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
     await expect(card.getByRole('table', { name })).toBeVisible()
@@ -189,7 +189,7 @@ export class HomePage {
 
   async hasInfluenzaHealthcareTabularData() {
     const card = this.influenzaHealthcareChartRowCard
-    const name = 'Healthcare data for weekly hospital admission rates for Influenza up to and including 10 May 2023'
+    const name = 'Healthcare data for weekly hospital admission rates for Influenza. Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
     await expect(card.getByRole('table', { name })).toBeVisible()
@@ -206,7 +206,7 @@ export class HomePage {
 
   async hasInfluenzaTestingTabularData() {
     const card = this.influenzaTestingChartRowCard
-    const name = 'Testing data for weekly positivity up to and including 10 May 2023'
+    const name = 'Testing data for weekly positivity. Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeHidden()
     await card.getByText('View data in a tabular format').click()
     await expect(card.getByRole('table', { name })).toBeVisible()
