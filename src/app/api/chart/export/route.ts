@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
   const plotsFormData = body.get('plots')
 
   if (typeof plotsFormData !== 'string') {
-    return NextResponse.redirect(url, 302)
+    return NextResponse.redirect(url, 301)
   }
 
   const jsonPlots = JSON.parse(plotsFormData)

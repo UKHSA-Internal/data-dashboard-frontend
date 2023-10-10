@@ -27,7 +27,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
   },
   title: 'COVID-19',
   page_description:
-    '<div><h2>heading 2</h2><h3>heading 3</h3><h4>heading 4</h4><ul><li>item 1</li><li>item 2</li><li>item 3</li></ul><p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p></div>',
+    '<p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
   body: [
     {
       type: 'section',
