@@ -55,7 +55,9 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
             <caption
               className={clsx('govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal')}
             >
-              {t('cms.blocks.table.caption', { title, body, timestamp, context: timestamp && 'timestamp' })}
+              {t('cms.blocks.table.caption', { title, body })}
+              <br />
+              <small>{t('cms.blocks.table.timestamp', { timestamp, context: timestamp })}</small>
             </caption>
 
             <tbody className="govuk-table__body">
