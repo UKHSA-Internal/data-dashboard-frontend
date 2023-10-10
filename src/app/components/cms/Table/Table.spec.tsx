@@ -101,7 +101,7 @@ test('table with caption and headers', async () => {
 
   expect(
     getByRole('table', {
-      name: 'Table Title data for table Body up to and including 10 May 2023.',
+      name: 'Table Title data for table Body Up to and including 10 May 2023.',
     })
   ).toBeInTheDocument()
 
@@ -115,7 +115,7 @@ test('table with row data', async () => {
 
   expect(
     getByRole('table', {
-      name: 'Table Title data for table Body up to and including 10 May 2023.',
+      name: 'Table Title data for table Body Up to and including 10 May 2023.',
     })
   ).toBeInTheDocument()
 
@@ -136,7 +136,7 @@ test('table api request fails', async () => {
 
   expect(
     queryByRole('table', {
-      name: 'Table Title data for table Body up to and including 10 May 2023.',
+      name: 'Table Title data for table Body. Up to and including 10 May 2023.',
     })
   ).not.toBeInTheDocument()
 })
