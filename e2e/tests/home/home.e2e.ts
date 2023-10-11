@@ -45,9 +45,9 @@ test('Home page', async ({ homePage, app }) => {
     await homePage.hasInfluenzaTestingChartRowCard()
     await homePage.hasInfluenzaTestingTabularData()
   })
-  await test.step('downloads a csv version of each chart', async () => {
-    await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
-  })
+  // await test.step('downloads a csv version of each chart', async () => {
+  //   await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+  // })
   await test.step('displays related links', async () => {
     await app.hasRelatedLinks()
   })

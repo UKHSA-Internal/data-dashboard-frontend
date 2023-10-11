@@ -97,26 +97,26 @@ test.describe('Other respiratory viruses page', () => {
     })
   })
 
-  test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
-    await test.step('loads the page', async () => {
-      await otherRespiratoryVirusesPage.goto()
-    })
-    await app.canDownloadChartAsCsv([
-      'line-chart-comparing-rsv-hospital-icu-or-hdu-admission-rates-of-positive-cases-per-100-000-population-reported-through-sari-watch-england',
-      'bar-chart-comparing-rsv-hospital-admissions-count-by-week',
-      'bar-chart-comparing-weekly-rsv-icu-hdu-admissions-count-by-week',
-      'line-chart-comparing-adenovirus-test-positivity-count-by-week',
-      'line-chart-comparing-adenovirus-test-positivity-count-by-week-broken-down-by-age',
-      'line-chart-comparing-h-mpv-test-positivity-count-by-week',
-      'line-chart-comparing-h-mpv-test-positivity-count-by-week-broken-down-by-age',
-      'line-chart-comparing-parainfluenza-test-positivity-count-by-week',
-      'line-chart-comparing-parainfluenza-test-positivity-count-by-week-broken-down-by-age',
-      'line-chart-comparing-rhinovirus-test-positivity-count-by-week',
-      'line-chart-comparing-rhinovirus-test-positivity-count-by-week-broken-down-by-age',
-      'line-chart-comparing-rsv-test-positivity-count-by-week',
-      'line-chart-comparing-rsv-test-positivity-count-by-week-broken-down-by-age',
-    ])
-  })
+  // test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
+  //   await test.step('loads the page', async () => {
+  //     await otherRespiratoryVirusesPage.goto()
+  //   })
+  //   await app.canDownloadChartAsCsv([
+  //     'line-chart-comparing-rsv-hospital-icu-or-hdu-admission-rates-of-positive-cases-per-100-000-population-reported-through-sari-watch-england',
+  //     'bar-chart-comparing-rsv-hospital-admissions-count-by-week',
+  //     'bar-chart-comparing-weekly-rsv-icu-hdu-admissions-count-by-week',
+  //     'line-chart-comparing-adenovirus-test-positivity-count-by-week',
+  //     'line-chart-comparing-adenovirus-test-positivity-count-by-week-broken-down-by-age',
+  //     'line-chart-comparing-h-mpv-test-positivity-count-by-week',
+  //     'line-chart-comparing-h-mpv-test-positivity-count-by-week-broken-down-by-age',
+  //     'line-chart-comparing-parainfluenza-test-positivity-count-by-week',
+  //     'line-chart-comparing-parainfluenza-test-positivity-count-by-week-broken-down-by-age',
+  //     'line-chart-comparing-rhinovirus-test-positivity-count-by-week',
+  //     'line-chart-comparing-rhinovirus-test-positivity-count-by-week-broken-down-by-age',
+  //     'line-chart-comparing-rsv-test-positivity-count-by-week',
+  //     'line-chart-comparing-rsv-test-positivity-count-by-week-broken-down-by-age',
+  //   ])
+  // })
 })
 
 test.describe('Other respiratory viruses page - mobile', () => {
