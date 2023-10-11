@@ -128,7 +128,7 @@ export class HomePage {
     const card = this.covidCasesChartRowCard
     await expect(card.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
     await expect(card.getByText(/Positive tests reported in England/)).toBeVisible()
-    // await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('heading', { level: 4, name: 'Up to and including 10 May 2023' })).toBeVisible()
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('722')).toBeVisible()
     await expect(card.getByText('-592 (-3%)')).toBeVisible()
@@ -148,7 +148,7 @@ export class HomePage {
     const card = this.covidDeathsChartRowCard
     await expect(card.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
     await expect(card.getByText(/Deaths with COVID-19 on the death certificate in England/)).toBeVisible()
-    // await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('heading', { level: 4, name: /Up to and including 10 May 2023/ })).toBeVisible()
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('379')).toBeVisible()
     await expect(card.getByText('21 (-5%)')).toBeVisible()
@@ -180,7 +180,7 @@ export class HomePage {
     const card = this.influenzaHealthcareChartRowCard
     await expect(card.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
-    // await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('heading', { level: 4, name: /Up to and including 10 May 2023/ })).toBeVisible()
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('0.26')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
@@ -199,7 +199,7 @@ export class HomePage {
     const card = this.influenzaTestingChartRowCard
     await expect(card.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly positivity/)).toBeVisible()
-    // await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('heading', { level: 4, name: /Up to and including 10 May 2023/ })).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
