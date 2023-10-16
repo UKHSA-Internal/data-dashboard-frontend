@@ -33,7 +33,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
           })}
         >
           {value.columns.map((column) => (
-            <div key={column.id} data-testid={`headline-column-${column.value.title.toLowerCase()}`}>
+            <div key={column.id} data-testid={`headline-column-${kebabCase(column.value.title)}`}>
               <h3 className="govuk-body-m mb-2 text-dark-grey md:mb-3">{column.value.title}</h3>
               <div className="flex flex-col gap-y-2 md:gap-y-4">{column.value.rows.map(renderBlock)}</div>
             </div>
