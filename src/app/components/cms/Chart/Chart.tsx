@@ -52,18 +52,16 @@ export async function Chart({ data, size }: ChartProps) {
     const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
 
     return (
-      <div className="govuk-!-margin-top-4 govuk-!-margin-bottom-6">
-        <picture>
-          {wideChart && (
-            <source
-              media="(min-width: 768px)"
-              srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
-              data-testid="chart-src-min-768"
-            />
-          )}
-          <img alt="" src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`} className="w-full" />
-        </picture>
-      </div>
+      <picture>
+        {wideChart && (
+          <source
+            media="(min-width: 768px)"
+            srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
+            data-testid="chart-src-min-768"
+          />
+        )}
+        <img alt="" src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`} className="w-full" />
+      </picture>
     )
   }
 

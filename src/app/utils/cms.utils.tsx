@@ -42,15 +42,15 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
     )}
 
     {type === 'chart_row_card' && (
-      <div className="govuk-grid-row govuk-!-margin-bottom-6 flex" data-testid="chart-row-cards">
+      <div className="govuk-!-margin-bottom-6 lg:flex lg:gap-6" data-testid="chart-row-cards">
         {value.columns.map((column) => {
           const size = value.columns.length === 1 ? 'wide' : 'narrow'
           return (
             <div
               key={column.id}
-              className={clsx('govuk-!-margin-bottom-6 md:mb-0', {
-                ['govuk-grid-column-full-from-desktop']: value.columns.length === 1,
-                ['govuk-grid-column-one-half-from-desktop']: value.columns.length === 2,
+              className={clsx('govuk-!-margin-bottom-6', {
+                'lg:w-full': value.columns.length === 1,
+                'lg:w-1/2': value.columns.length === 2,
               })}
               data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
             >
@@ -59,7 +59,11 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
                 className="flex h-full flex-col gap-6"
               >
-                <div className="flex-grow">
+                <div
+                  className={clsx({
+                    'md:min-h-[115px]': value.columns.length === 2,
+                  })}
+                >
                   <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
                     {column.value.title}
                   </h3>
@@ -74,10 +78,10 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     </TabsTrigger>
                     <TabsTrigger value="download">Download</TabsTrigger>
                   </TabsList>
-                  <TabsContent value="chart" className="h-[var(--ukhsa-card-table-height)]">
+                  <TabsContent value="chart">
                     {column.type === 'chart_with_headline_and_trend_card' && (
                       <>
-                        <div className="md:min-h-[54px]">
+                        <div className="govuk-!-margin-bottom-4 md:min-h-[54px]">
                           <div className="flex items-end gap-2">
                             {column.value.headline_number_columns.map(renderBlock)}
                           </div>
@@ -86,10 +90,13 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     )}
                     <Chart data={column.value} size={size} />
                   </TabsContent>
-                  <TabsContent value="table" className="h-[var(--ukhsa-card-table-height)] max-h-full overflow-y-auto">
+                  <TabsContent
+                    value="table"
+                    className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto "
+                  >
                     <Table data={column.value} size={size} />
                   </TabsContent>
-                  <TabsContent value="download" className="h-[var(--ukhsa-card-table-height)]">
+                  <TabsContent value="download">
                     <Download chart={column.value.chart} />
                   </TabsContent>
                 </Tabs>
