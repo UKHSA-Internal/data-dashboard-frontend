@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { RichText } from '@/app/components/cms'
 import { useMenu } from '@/app/utils/menu.utils'
 
 import { useTranslation } from '../../../../i18n'
@@ -50,7 +51,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
 
         {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
 
-        {description && <div dangerouslySetInnerHTML={{ __html: description }} />}
+        {description && <RichText>{description}</RichText>}
 
         {children}
       </div>
