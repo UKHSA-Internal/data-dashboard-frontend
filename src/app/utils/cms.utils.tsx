@@ -5,10 +5,9 @@ import { z } from 'zod'
 
 import { Body, ContentTypes } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
+import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
 import { Chart, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
-import { Details } from '../components/ui/govuk'
-import { Card } from '../components/ui/ukhsa'
 
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
@@ -43,7 +42,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
     )}
 
     {type === 'chart_row_card' && (
-      <div className="govuk-grid-row" data-testid="chart-row-cards">
+      <div className="govuk-grid-row govuk-!-margin-bottom-6 flex" data-testid="chart-row-cards">
         {value.columns.map((column) => {
           const size = value.columns.length === 1 ? 'wide' : 'narrow'
           return (
@@ -58,38 +57,42 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
               <Card
                 as="article"
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
-                className="govuk-!-margin-bottom-5"
+                className="flex h-full flex-col gap-6"
               >
-                <div className="md:min-h-[115px]">
+                <div className="flex-grow">
                   <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
                     {column.value.title}
                   </h3>
                   <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
                   <Timestamp data={column.value} size={size} />
                 </div>
-                {column.type === 'chart_with_headline_and_trend_card' && (
-                  <>
-                    <div className="md:min-h-[54px]">
-                      <div className="govuk-!-margin-top-4 flex items-end gap-2">
-                        {column.value.headline_number_columns.map(renderBlock)}
-                      </div>
-                    </div>
+                <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
+                  <TabsList>
+                    <TabsTrigger value="chart">Chart</TabsTrigger>
+                    <TabsTrigger value="table">
+                      Tabular <span className="hidden lg:inline">data</span>
+                    </TabsTrigger>
+                    <TabsTrigger value="download">Download</TabsTrigger>
+                  </TabsList>
+                  <TabsContent value="chart" className="h-[var(--ukhsa-card-table-height)]">
+                    {column.type === 'chart_with_headline_and_trend_card' && (
+                      <>
+                        <div className="md:min-h-[54px]">
+                          <div className="flex items-end gap-2">
+                            {column.value.headline_number_columns.map(renderBlock)}
+                          </div>
+                        </div>
+                      </>
+                    )}
                     <Chart data={column.value} size={size} />
+                  </TabsContent>
+                  <TabsContent value="table" className="h-[var(--ukhsa-card-table-height)] max-h-full overflow-y-auto">
+                    <Table data={column.value} size={size} />
+                  </TabsContent>
+                  <TabsContent value="download" className="h-[var(--ukhsa-card-table-height)]">
                     <Download chart={column.value.chart} />
-                    <Details label="View data in a tabular format">
-                      <Table data={column.value} size={size} />
-                    </Details>
-                  </>
-                )}
-                {column.type === 'chart_card' && (
-                  <>
-                    <Chart data={column.value} size={size} />
-                    <Download chart={column.value.chart} />
-                    <Details label="View data in a tabular format">
-                      <Table data={column.value} size={size} />
-                    </Details>
-                  </>
-                )}
+                  </TabsContent>
+                </Tabs>
               </Card>
             </div>
           )

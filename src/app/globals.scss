@@ -7,6 +7,11 @@
     font-family: var(--font-primary), arial, sans-serif;
     color: var(--text-grey);
   }
+
+  body {
+    min-width: var(--ukhsa-page-min-width);
+    margin: 0;
+  }
 }
 
 // GDS Front-end Overrides
@@ -17,21 +22,24 @@ $govuk-page-width: 1400px;
 
 @import '~node_modules/govuk-frontend/govuk/all.scss';
 
-body {
-  margin: 0;
+@layer utilities {
+  .govuk-focus {
+    @include govuk-focused-text;
+  }
 }
 
 :root {
   --ukhsa-chart-height: 260px;
 
   // Container width
+  --ukhsa-page-min-width: 320px;
   --ukhsa-page-width: 1400px;
 
   // Side Nav
   --ukhsa-nav-width: 220px;
 
   // Cards
-  --ukhsa-card-table-height: 500px;
+  --ukhsa-card-table-height: 348px;
 
   // Govuk brand colours
   --colour-red: #d4351c;
