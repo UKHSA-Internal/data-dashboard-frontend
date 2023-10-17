@@ -73,15 +73,21 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
                   <TabsList>
                     <TabsTrigger asChild value="chart">
-                      <Link href={`#chart-${kebabCase(column.value.title)}`}>Chart</Link>
+                      <Link href={`#chart-${kebabCase(column.value.title)}`}>
+                        <span>Chart</span>
+                      </Link>
                     </TabsTrigger>
                     <TabsTrigger asChild value="table">
                       <Link href={`#table-${kebabCase(column.value.title)}`}>
-                        Tabular <span className="hidden lg:inline">data</span>
+                        <span>
+                          Tabular <span className="hidden lg:inline">data</span>
+                        </span>
                       </Link>
                     </TabsTrigger>
                     <TabsTrigger asChild value="download">
-                      <Link href={`#download-${kebabCase(column.value.title)}`}>Download</Link>
+                      <Link href={`#download-${kebabCase(column.value.title)}`}>
+                        <span>Download</span>
+                      </Link>
                     </TabsTrigger>
                   </TabsList>
                   <TabsContent value="chart" className="no-js:mb-7">
@@ -109,7 +115,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     >
                       Tabular data
                     </span>
-                    <div className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto">
+                    <div className="govuk-!-margin-top-3 max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto">
                       <Table data={column.value} size={size} />
                     </div>
                   </TabsContent>
