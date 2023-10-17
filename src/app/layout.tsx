@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-before-interactive-script-outside-document */
 import { Roboto } from 'next/font/google'
 
 const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap', variable: '--font-primary' })
@@ -5,7 +6,6 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 import './globals.scss'
 
 import Link from 'next/link'
-import Script from 'next/script'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
@@ -23,17 +23,20 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
-      <Script
-        id="js-enabled"
-        dangerouslySetInnerHTML={{
-          __html:
-            "document.body.className = document.body.className ? document.body.className + ' js-enabled' : 'js-enabled'",
-        }}
-      />
       <Suspense fallback={null}>
         <GoogleAnalytics />
       </Suspense>
       <body className="govuk-template__body">
+        {/* Adds the js-enabled class as a high priority script to prevent flash of unstyled content (fouc)
+        Note: The NextJs <Script /> component using a beforeInteractie strategy is broken in 13.5.3 */}
+        <script
+          id="js-enabled"
+          dangerouslySetInnerHTML={{
+            __html:
+              "document.body.className = document.body.className ? document.body.className + ' js-enabled' : 'js-enabled'",
+          }}
+        />
+
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           {t('skipLink')}
         </a>
