@@ -7,8 +7,8 @@ import * as React from 'react'
 const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
->(({ className, children, ...props }, ref) => (
-  <TabsPrimitive.Root ref={ref} className={clsx('', className)} {...props}>
+>(({ className, children, activationMode = 'manual', ...props }, ref) => (
+  <TabsPrimitive.Root ref={ref} activationMode={activationMode} className={clsx('', className)} {...props}>
     {children}
   </TabsPrimitive.Root>
 ))
