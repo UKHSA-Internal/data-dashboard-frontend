@@ -64,7 +64,7 @@ export function Download({ chart }: DownloadProps) {
       ))}
 
       <button
-        className="govuk-link govuk-body govuk-!-margin-bottom-0 bg-download bg-[left_center] bg-no-repeat pl-5 text-blue hover:bg-download_dark hover:text-dark-blue print:hidden"
+        className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 bg-download bg-[6px_center] bg-no-repeat pl-6 print:hidden"
         type="submit"
       >
         {downloading ? 'Downloading (csv)' : 'Download (csv)'}

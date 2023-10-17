@@ -16,7 +16,9 @@ const Tabs = React.forwardRef<
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.List>
->(({ className, ...props }, ref) => <TabsPrimitive.List ref={ref} className={clsx('', className)} {...props} />)
+>(({ className, ...props }, ref) => (
+  <TabsPrimitive.List ref={ref} className={clsx('govuk-clearfix', className)} {...props} />
+))
 TabsList.displayName = TabsPrimitive.List.displayName
 
 const TabsTrigger = React.forwardRef<
@@ -24,18 +26,20 @@ const TabsTrigger = React.forwardRef<
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => (
   <TabsPrimitive.Trigger
+    onClick={(evt) => {
+      evt.preventDefault()
+    }}
     ref={ref}
     className={clsx(
-      '[&:focus>span]:govuk-focus govuk-link govuk-body hover:text-black focus:shadow-none [&:last-child]:mr-0',
-      'relative float-left mb-0 ml-0 mr-[5px] bg-light-grey px-[8px] py-[10px] text-center sm:px-[15px] sm:py-[10px] lg:px-[20px]',
-      'data-[state=active]:px-[7px] data-[state=active]:pb-[16px] data-[state=active]:pt-[14px] sm:data-[state=active]:px-[14px] sm:data-[state=active]:pb-[16px] sm:data-[state=active]:pt-[14px] lg:data-[state=active]:px-[19px]',
-      'data-[state=active]:mb-[-1px] data-[state=active]:mt-[-5px] data-[state=active]:border data-[state=active]:border-b-0 data-[state=active]:border-mid-grey data-[state=active]:bg-white data-[state=active]:no-underline',
-      'data-[state=inactive]:bg-white',
+      'no-js:govuk-dash govuk-link govuk-link--no-visited-state govuk-body js:text-black js:hover:text-black [&:last-child]:mr-0',
+      'relative float-left ml-0 text-center js:mb-0 js:mr-[5px] js:bg-light-grey js:px-[8px] js:py-[10px] no-js:clear-both no-js:mb-2 js:sm:px-[15px] js:sm:py-[10px] js:lg:px-[20px]',
+      'js:data-[state=active]:px-[7px] js:data-[state=active]:pb-[16px] js:data-[state=active]:pt-[14px] js:sm:data-[state=active]:px-[14px] js:sm:data-[state=active]:pb-[16px] js:sm:data-[state=active]:pt-[14px] js:lg:data-[state=active]:px-[19px]',
+      'js:data-[state=active]:mb-[-1px] js:data-[state=active]:mt-[-5px] js:data-[state=active]:border js:data-[state=active]:border-b-0 js:data-[state=active]:border-mid-grey js:data-[state=active]:bg-white js:data-[state=active]:no-underline',
       className
     )}
     {...props}
   >
-    <span>{children}</span>
+    {children}
   </TabsPrimitive.Trigger>
 ))
 TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
@@ -49,8 +53,8 @@ const TabsContent = React.forwardRef<
     ref={ref}
     tabIndex={-1}
     className={clsx(
-      'clear-both mb-0 border border-mid-grey bg-white px-[20px] py-[30px]',
-      'data-[state=inactive]:hidden',
+      'clear-both mb-0 js:border js:border-mid-grey js:bg-white js:px-[20px] js:py-[30px]',
+      'js:data-[state=active]:js:block data-[state=inactive]:js:hidden',
       className
     )}
     {...props}

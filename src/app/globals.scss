@@ -23,8 +23,19 @@ $govuk-page-width: 1400px;
 @import '~node_modules/govuk-frontend/govuk/all.scss';
 
 @layer utilities {
+  // Applies the govuk focus ring to an element
   .govuk-focus {
     @include govuk-focused-text;
+  }
+
+  // Applies a dash to the left of an element
+  .govuk-dash {
+    @apply pl-5;
+
+    &:before {
+      content: '—';
+      @apply absolute left-0 top-1/2 -translate-y-1/2 pr-1 text-black;
+    }
   }
 }
 

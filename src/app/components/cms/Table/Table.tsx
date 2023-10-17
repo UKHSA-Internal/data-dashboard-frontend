@@ -58,7 +58,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
           {groups.map(({ columns, data }, groupIndex) => {
             return (
               <Fragment key={groupIndex}>
-                <tr className="govuk-table__row sticky top-[-30px] bg-grey-3">
+                <tr className="govuk-table__row sticky top-0 bg-grey-3">
                   {columns.map((column, columnIndex) => {
                     incrementingColumnId += 1
                     return (
@@ -66,7 +66,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                         id={`${kebabCase(title)}-col-${incrementingColumnId}`}
                         key={columnIndex}
                         headers="blank"
-                        className="govuk-table__header bg-white"
+                        className="govuk-table__header js:bg-white"
                       >
                         {t('cms.blocks.table.header', {
                           context:

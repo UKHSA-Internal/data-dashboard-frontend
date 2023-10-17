@@ -72,13 +72,25 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 </div>
                 <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
                   <TabsList>
-                    <TabsTrigger value="chart">Chart</TabsTrigger>
-                    <TabsTrigger value="table">
-                      Tabular <span className="hidden lg:inline">data</span>
+                    <TabsTrigger asChild value="chart">
+                      <Link href={`#chart-${kebabCase(column.value.title)}`}>Chart</Link>
                     </TabsTrigger>
-                    <TabsTrigger value="download">Download</TabsTrigger>
+                    <TabsTrigger asChild value="table">
+                      <Link href={`#table-${kebabCase(column.value.title)}`}>
+                        Tabular <span className="hidden lg:inline">data</span>
+                      </Link>
+                    </TabsTrigger>
+                    <TabsTrigger asChild value="download">
+                      <Link href={`#download-${kebabCase(column.value.title)}`}>Download</Link>
+                    </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="chart">
+                  <TabsContent value="chart" className="no-js:mb-7">
+                    <span
+                      className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                      id={`chart-${kebabCase(column.value.title)}`}
+                    >
+                      Chart
+                    </span>
                     {column.type === 'chart_with_headline_and_trend_card' && (
                       <>
                         <div className="govuk-!-margin-bottom-4 md:min-h-[54px]">
@@ -90,13 +102,24 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     )}
                     <Chart data={column.value} size={size} />
                   </TabsContent>
-                  <TabsContent
-                    value="table"
-                    className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto "
-                  >
-                    <Table data={column.value} size={size} />
+                  <TabsContent value="table" className="no-js:mb-4">
+                    <span
+                      className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                      id={`table-${kebabCase(column.value.title)}`}
+                    >
+                      Tabular data
+                    </span>
+                    <div className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto">
+                      <Table data={column.value} size={size} />
+                    </div>
                   </TabsContent>
                   <TabsContent value="download">
+                    <span
+                      className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                      id={`download-${kebabCase(column.value.title)}`}
+                    >
+                      Download
+                    </span>
                     <Download chart={column.value.chart} />
                   </TabsContent>
                 </Tabs>
