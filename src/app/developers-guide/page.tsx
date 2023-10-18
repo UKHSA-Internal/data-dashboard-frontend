@@ -41,19 +41,20 @@ export default function DevelopersGuide() {
     <View heading="Developers Guide" lastUpdated="12 may 2023, 2:40">
       <p className="govuk-body">Welcome to the Developers Guide for the UKHSA data dashboard API.</p>
       <p className="govuk-body">
-        Please use the tabs below for instructions initially on how to interact and use our API, as well as swagger API
-        documentation detailing information about each endpoint including parameters and example resposes
+        Please see below for instructions initially on how to interact and use our API, as well as swagger API
+        documentation detailing information about each endpoint including parameters and example responses
       </p>
       <Tabs defaultValue="developer-guide">
         <TabsList>
           <TabsTrigger value="developer-guide">Using the API</TabsTrigger>
           <TabsTrigger value="api">Swagger</TabsTrigger>
+          <TabsTrigger value="contribute">Contribute</TabsTrigger>
         </TabsList>
         <TabsContent value="developer-guide">
           <h2 className="govuk-heading-m">Who is this API for?</h2>
           <p className="govuk-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a efficitur lectus, non faucibus urna.
-            Interdum et malesuada fames ac ante ipsum primis in faucibus.
+            APIs are used for all kinds of projects, if you consectetur adipiscing elit. Integer a efficitur lectus, non
+            faucibus urna. Interdum et malesuada fames ac ante ipsum primis in faucibus.
             <br />
             <br />
             Morbi et aliquet orci, non convallis nisl. Mauris commodo tincidunt nisi, eu ultricies sapien maximus eget.
@@ -63,8 +64,8 @@ export default function DevelopersGuide() {
           <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
           <h2 className="govuk-heading-m">Initial setup</h2>
           <p className="govuk-body">
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a efficitur lectus, non faucibus urna.
-            Interdum et malesuada fames ac ante ipsum primis in faucibus.
+            When looking to set up this project lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer a
+            efficitur lectus, non faucibus urna. Interdum et malesuada fames ac ante ipsum primis in faucibus.
           </p>
           <CodeBlock code={UrlBlock} />
           <p className="govuk-body govuk-!-margin-top-4">
@@ -99,6 +100,20 @@ export default function DevelopersGuide() {
         </TabsContent>
         <TabsContent value="api">
           <SwaggerDocs />
+        </TabsContent>
+        <TabsContent value="contribute">
+          <h2 className="govuk-heading-m">GitHub Project</h2>
+          <p className="govuk-body">
+            The UKHSA data dashboard API is fully open source. Below is a link to our github project; where you can
+            view, clone and contribute to our project.
+          </p>
+          <button className="govuk-button">Go to project</button>
+
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+          <h2 className="govuk-heading-m">Report an issue</h2>
+          <p className="govuk-body">Alternatively you can provide us some feedback on a potential issue below</p>
+          <textarea className="govuk-textarea" rows={5} />
+          <button className="govuk-button">Submit</button>
         </TabsContent>
       </Tabs>
     </View>
