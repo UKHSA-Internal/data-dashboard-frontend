@@ -37,9 +37,13 @@ export const useMenu = async () => {
       },
       // The API url (and external urls in general) are not supported in the CMS
       // It is hardcoded to point to the environment variable for now.
+      // {
+      //   title: 'API',
+      //   slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
+      // },
       {
-        title: 'API',
-        slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
+        title: 'Developers Guide (API)',
+        slug: '/developers-guide',
       },
       ...links,
     ]
