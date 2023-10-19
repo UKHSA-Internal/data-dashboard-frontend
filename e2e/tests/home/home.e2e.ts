@@ -51,9 +51,12 @@ test.describe('Home page', () => {
   })
 
   test('Downloading a csv version of each chart', async ({ homePage, app }) => {
-    await homePage.goto()
-    await app.hasLayout()
-    await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    })
   })
 })
 
