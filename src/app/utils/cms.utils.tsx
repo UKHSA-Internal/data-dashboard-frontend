@@ -3,11 +3,11 @@ import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { z } from 'zod'
 
-import { Body, ContentTypes } from '@/api/models/cms/Page'
+import { Body, CardTypes } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
-import { Chart, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
+import { Chart, ChartRowCard, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
 
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
@@ -20,7 +20,7 @@ export const renderSection = ({ id, value: { heading, content } }: z.infer<typeo
   </div>
 )
 
-export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) => (
+export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
   <div key={id}>
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
@@ -42,13 +42,13 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
     )}
 
     {type === 'chart_row_card' && (
-      <div className="govuk-!-margin-bottom-6 lg:flex lg:gap-6" data-testid="chart-row-cards">
+      <ChartRowCard>
         {value.columns.map((column) => {
           const size = value.columns.length === 1 ? 'wide' : 'narrow'
           return (
             <div
               key={column.id}
-              className={clsx('govuk-!-margin-bottom-6', {
+              className={clsx('mb-3 sm:mb-6 lg:mb-0', {
                 'lg:w-full': value.columns.length === 1,
                 'lg:w-1/2': value.columns.length === 2,
               })}
@@ -59,17 +59,13 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
                 className="flex h-full flex-col gap-6"
               >
-                <div
-                  className={clsx({
-                    'md:min-h-[115px]': value.columns.length === 2,
-                  })}
-                >
+                <header>
                   <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
                     {column.value.title}
                   </h3>
                   <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
                   <Timestamp data={column.value} size={size} />
-                </div>
+                </header>
                 <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
                   <TabsList>
                     <TabsTrigger asChild value="chart">
@@ -108,14 +104,17 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
                     )}
                     <Chart data={column.value} size={size} />
                   </TabsContent>
-                  <TabsContent value="table" className="no-js:mb-4">
+                  <TabsContent
+                    value="table"
+                    className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto no-js:mb-4"
+                  >
                     <span
                       className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
                       id={`table-${kebabCase(column.value.title)}`}
                     >
                       Tabular data
                     </span>
-                    <div className="govuk-!-margin-top-3 max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto">
+                    <div className="govuk-!-margin-top-3">
                       <Table data={column.value} size={size} />
                     </div>
                   </TabsContent>
@@ -133,7 +132,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof ContentTypes>) =>
             </div>
           )
         })}
-      </div>
+      </ChartRowCard>
     )}
   </div>
 )

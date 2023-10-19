@@ -64,7 +64,7 @@ export function Download({ chart }: DownloadProps) {
       ))}
 
       <button
-        className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 flex items-center gap-2 print:hidden"
+        className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 flex w-auto items-center gap-2 print:hidden"
         type="submit"
       >
         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
