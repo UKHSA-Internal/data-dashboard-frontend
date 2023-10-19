@@ -57,7 +57,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
               <Card
                 as="article"
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
-                className="flex h-full flex-col gap-6"
+                className="flex flex-col gap-6"
               >
                 <header>
                   <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
