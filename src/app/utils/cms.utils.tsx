@@ -75,7 +75,8 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     </TabsTrigger>
                     <TabsTrigger asChild value="table">
                       <Link href={`#table-${kebabCase(column.value.title)}`}>
-                        <span>
+                        <span className="govuk-visually-hidden">Tabular data</span>
+                        <span aria-hidden>
                           Tabular <span className="hidden lg:inline">data</span>
                         </span>
                       </Link>
