@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { createEvent, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Link from 'next/link'
 import React from 'react'
@@ -101,8 +101,8 @@ describe('Opening a new tab', () => {
   })
 })
 
-describe('Composing the tabs', () => {
-  test('to support a url based non-javascript fallback', async () => {
+describe('Composing the tabs to support a url based non-javascript fallback', () => {
+  test('renders the tabs with hrefs', async () => {
     render(
       <Tabs defaultValue="tab-1">
         <TabsList>
@@ -125,5 +125,44 @@ describe('Composing the tabs', () => {
     // All tab panels should be force mounted (the inactive panel is hidden using css)
     expect(screen.getByText(/Content 1/i)).toBeInTheDocument()
     expect(screen.getByText(/Content 2/i)).toBeInTheDocument()
+  })
+
+  test('prevents default link click behaviour', async () => {
+    render(
+      <Tabs defaultValue="tab-1">
+        <TabsList>
+          <TabsTrigger asChild value="tab-1">
+            <Link href="#tab-1">Trigger 1</Link>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+    )
+    const event = createEvent.click(screen.getByRole('tab', { name: 'Trigger 1' }))
+    event.preventDefault = jest.fn()
+
+    fireEvent(screen.getByRole('tab', { name: 'Trigger 1' }), event)
+
+    expect(event.preventDefault).toHaveBeenCalledTimes(1)
+  })
+
+  test('prevents default link spacebar keydown behaviour', async () => {
+    render(
+      <Tabs defaultValue="tab-1">
+        <TabsList>
+          <TabsTrigger asChild value="tab-1">
+            <Link href="#tab-1">Trigger 1</Link>
+          </TabsTrigger>
+        </TabsList>
+      </Tabs>
+    )
+    const event = createEvent.keyDown(screen.getByRole('tab', { name: 'Trigger 1' }), {
+      key: ' ',
+      keyCode: 32,
+    })
+    event.preventDefault = jest.fn()
+
+    fireEvent(screen.getByRole('tab', { name: 'Trigger 1' }), event)
+
+    expect(event.preventDefault).toHaveBeenCalledTimes(1)
   })
 })

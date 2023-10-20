@@ -29,6 +29,19 @@ const TabsTrigger = React.forwardRef<
     onClick={(evt) => {
       evt.preventDefault()
     }}
+    onKeyDown={(evt) => {
+      const tab = evt.currentTarget
+      if (evt.key == ' ' && tab instanceof HTMLAnchorElement) {
+        evt.preventDefault()
+        tab.dispatchEvent(
+          new KeyboardEvent('keydown', {
+            bubbles: true,
+            key: 'Enter',
+            keyCode: 13,
+          })
+        )
+      }
+    }}
     ref={ref}
     tabIndex={0}
     className={clsx(
