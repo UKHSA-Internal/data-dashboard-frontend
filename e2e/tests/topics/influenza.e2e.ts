@@ -113,3 +113,23 @@ test.describe('Influenza page - desktop', () => {
     await app.hasDesktopNav()
   })
 })
+
+test.describe('Influenza page - no JS', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('Downloads without JS', async ({ homePage, app }) => {
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads a csv version of each chart', async () => {
+      await app.canDownloadChartAsCsv([
+        'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+        'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+        'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+        'line-chart-comparing-influenza-icu-admission-rates-by-age',
+        'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+        'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+      ])
+    })
+  })
+})

@@ -82,3 +82,16 @@ test.describe('Home page - desktop', () => {
     await app.hasDesktopNav()
   })
 })
+
+test.describe('Home page - no JS', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('Downloads without JS', async ({ homePage, app }) => {
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads a csv version of each chart', async () => {
+      await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    })
+  })
+})
