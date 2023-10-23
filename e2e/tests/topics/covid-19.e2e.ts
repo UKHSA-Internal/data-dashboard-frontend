@@ -169,9 +169,9 @@ test.describe('COVID-19 page - desktop', () => {
 test.describe('COVID-19 page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads without JS', async ({ homePage, app }) => {
+  test('Downloads without JS', async ({ covid19Page, app }) => {
     await test.step('loads the page', async () => {
-      await homePage.goto()
+      await covid19Page.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
       await app.canDownloadChartAsCsv([
