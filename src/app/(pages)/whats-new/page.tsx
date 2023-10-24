@@ -7,10 +7,10 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.Common)
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
   return {
     title: seo_title,
@@ -18,13 +18,13 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
   }
 }
 
-export default async function CommonPage({ params: { slug } }: { params: { slug: string } }) {
+export default async function WhatsNewParentPage() {
   const {
     title,
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug(slug, PageType.Common)
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>

@@ -3,13 +3,22 @@ import { Request, Response } from 'express'
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
-import { allPagesMock, pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './fixtures/pages'
+import {
+  allPagesMock,
+  pagesWithCommonTypeMock,
+  pagesWithHomeTypeMock,
+  pagesWithTopicTypeMock,
+  pagesWithWhatsNewChildTypeMock,
+  pagesWithWhatsNewParentTypeMock,
+} from './fixtures/pages'
 
 // Contains the `/pages` fixtures for the different cms page types
 export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'home.HomePage': pagesWithHomeTypeMock,
   'topic.TopicPage': pagesWithTopicTypeMock,
   'common.CommonPage': pagesWithCommonTypeMock,
+  'whats_new.WhatsNewParentPage': pagesWithWhatsNewParentTypeMock,
+  'whats_new.WhatsNewChildEntry': pagesWithWhatsNewChildTypeMock,
 }
 
 export default async function handler(req: Request, res: Response) {
