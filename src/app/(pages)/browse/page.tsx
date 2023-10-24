@@ -1,8 +1,8 @@
 import chunk from 'lodash/chunk'
 import { Metadata } from 'next'
 
-import { BrowseCard } from '../components/ui/ukhsa'
-import { useMenu } from '../utils/menu.utils'
+import { BrowseCard } from '@/app/components/ui/ukhsa'
+import { useMenu } from '@/app/utils/menu.utils'
 
 export const metadata: Metadata = {
   title: 'Browse | UKHSA data dashboard',
