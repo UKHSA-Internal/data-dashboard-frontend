@@ -42,8 +42,8 @@ export const useMenu = async () => {
       //   slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
       // },
       {
-        title: 'Developers Guide (API)',
-        slug: '/developers-guide',
+        title: 'Access our data',
+        slug: '/access-our-data',
       },
       ...links,
     ]
