@@ -11,6 +11,8 @@ export enum PageType {
   Home = 'home.HomePage',
   Common = 'common.CommonPage',
   Topic = 'topic.TopicPage',
+  WhatsNewParent = 'whats_new.WhatsNewParentPage',
+  WhatsNewChild = 'whats_new.WhatsNewChildEntry',
 }
 
 export type PagesResponse = z.infer<typeof responseSchema>

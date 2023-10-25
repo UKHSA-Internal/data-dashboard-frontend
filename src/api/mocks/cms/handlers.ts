@@ -1,4 +1,5 @@
 import { rest } from 'msw'
+import { Mock } from 'ts-mockery'
 
 import { apiResolver } from '@/api/msw/resolvers/api-resolver'
 import { PageResponse } from '@/api/requests/cms/getPage'
@@ -14,7 +15,6 @@ import {
   influenzaPageMock,
   mapsPageMock,
   otherRespiratoryVirusesPageMock,
-  whatsNewPageMock,
 } from './data/page'
 import { pagesWithCommonTypeMock, pagesWithHomeTypeMock, pagesWithTopicTypeMock } from './data/pages'
 
@@ -25,13 +25,14 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
   [PageType.Home]: pagesWithHomeTypeMock,
   [PageType.Topic]: pagesWithTopicTypeMock,
   [PageType.Common]: pagesWithCommonTypeMock,
+  [PageType.WhatsNewParent]: Mock.of<PagesResponse>({ items: [] }),
+  [PageType.WhatsNewChild]: Mock.of<PagesResponse>({ items: [] }),
 }
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [dashboardMock.id]: dashboardMock,
   [aboutPageMock.id]: aboutPageMock,
-  [whatsNewPageMock.id]: whatsNewPageMock,
   [mapsPageMock.id]: mapsPageMock,
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
   [aboutPageMock.id]: aboutPageMock,
