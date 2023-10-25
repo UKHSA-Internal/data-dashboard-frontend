@@ -51,12 +51,12 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
   const allTabPanels = row.querySelectorAll('[role="tabpanel"]')
   const chartTabPanels = row.querySelectorAll('[role="tabpanel"][data-type="chart"]')
 
-  // exit early if both 1 column chart tab panels is zero in height due to tab being inactive
+  // exit early in 1 column chart rows when the tab panel is zero in height due to tab being inactive
   if (chartTabPanels.length === 1 && chartTabPanels[0]?.clientHeight === 0) {
     return
   }
 
-  // exit early in 2 column chart tab panels when both are zero in height due to both tabs being inactive
+  // exit early in 2 column chart rows when both tab panels are zero in height due to both tabs being inactive
   if (chartTabPanels.length === 2 && chartTabPanels[0]?.clientHeight === 0 && chartTabPanels[1]?.clientHeight === 0) {
     return
   }
