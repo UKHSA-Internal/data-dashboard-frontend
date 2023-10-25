@@ -17,12 +17,14 @@ import {
   otherRespiratoryVirusesPageMock,
   whatsNewChildMocks,
   whatsNewParentMock,
+  whatsNewV1PageMock,
 } from './fixtures/page'
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [dashboardMock.id]: dashboardMock,
   [aboutPageMock.id]: aboutPageMock,
+  [whatsNewV1PageMock.id]: whatsNewV1PageMock, // TODO: Deprecate once v2 whats-new is live
   [mapsPageMock.id]: mapsPageMock,
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
   [cookiesPageMock.id]: cookiesPageMock,

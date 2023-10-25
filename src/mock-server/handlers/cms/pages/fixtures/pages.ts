@@ -10,7 +10,7 @@ import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
 import { mapsPageMock } from './page/maps'
 import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
-import { whatsNewChildMocks, whatsNewParentMock } from './page/whats-new'
+import { whatsNewChildMocks, whatsNewParentMock, whatsNewV1PageMock } from './page/whats-new'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -48,6 +48,18 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: aboutPageMock.meta.first_published_at,
       },
       title: aboutPageMock.title,
+    },
+    {
+      id: whatsNewV1PageMock.id,
+      meta: {
+        type: whatsNewV1PageMock.meta.type,
+        detail_url: whatsNewV1PageMock.meta.detail_url,
+        html_url: whatsNewV1PageMock.meta.html_url,
+        slug: whatsNewV1PageMock.meta.slug,
+        show_in_menus: whatsNewV1PageMock.meta.show_in_menus,
+        first_published_at: whatsNewV1PageMock.meta.first_published_at,
+      },
+      title: whatsNewV1PageMock.title,
     },
     {
       id: mapsPageMock.id,
