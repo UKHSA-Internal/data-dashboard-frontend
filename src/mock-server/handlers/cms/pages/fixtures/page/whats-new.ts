@@ -42,7 +42,7 @@ export const whatsNewParentMock: PageResponse<PageType.WhatsNewParent> = {
     type: 'whats_new.WhatsNewParentPage',
     detail_url: 'http://localhost/api/pages/21/',
     html_url: null,
-    slug: 'whats-new',
+    slug: 'whats-new-v2',
     show_in_menus: false,
     first_published_at: '2023-10-24T16:09:35.359598+01:00',
     alias_of: null,
