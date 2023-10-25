@@ -71,3 +71,13 @@ test('renders without a heading', async () => {
   const view = render(await View({ children: null })).queryByRole('heading', { level: 1 })
   expect(view).toBeNull()
 })
+
+test('renders the govuk headings', async () => {
+  const children = '<h2>heading 2</h2><h3>heading 3</h3><h4>heading 4</h4>'
+
+  const { getByRole } = render(await View({ heading: 'Test', description: children, children: null }))
+
+  expect(getByRole('heading', { level: 2, name: 'heading 2' })).toHaveClass('govuk-heading-l')
+  expect(getByRole('heading', { level: 3, name: 'heading 3' })).toHaveClass('govuk-heading-m')
+  expect(getByRole('heading', { level: 4, name: 'heading 4' })).toHaveClass('govuk-heading-s')
+})

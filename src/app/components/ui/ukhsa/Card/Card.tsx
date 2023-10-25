@@ -7,12 +7,7 @@ interface CardProps<Element> {
   className?: string
 }
 
-export async function Card<Element extends ElementType = 'div'>({
-  as,
-  children,
-  className,
-  ...props
-}: CardProps<Element>) {
+export function Card<Element extends ElementType = 'div'>({ as, children, className, ...props }: CardProps<Element>) {
   const Component = as ?? 'div'
   return (
     <Component className={clsx('govuk-!-padding-4 bg-grey-3', className)} {...props}>

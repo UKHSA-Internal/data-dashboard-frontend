@@ -1,4 +1,5 @@
 export * from './Chart/Chart'
+export * from './ChartRowCard/ChartRowCard'
 export * from './Download/Download'
 export * from './Headline/Headline'
 export * from './Percentage/Percentage'

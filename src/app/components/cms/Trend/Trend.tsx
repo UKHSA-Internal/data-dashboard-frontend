@@ -22,13 +22,14 @@ export async function Trend({ data }: TrendProps) {
     const { direction, colour, metric_value: change, percentage_metric_value: percentage } = trend.data
 
     return (
-      <div>
+      <>
         <div>{t('cms.blocks.percentage.heading', { heading })}</div>
         <div
           className={clsx('govuk-tag govuk-!-margin-top-1 whitespace-nowrap bg-[6px_center] bg-no-repeat', {
             'govuk-tag--green': colour === 'green',
             'govuk-tag--red': colour === 'red',
-            'govuk-tag--grey bg-white': colour === 'neutral',
+            // 'govuk-tag--grey': colour === 'neutral',
+            'govuk-tag--grey [.headline-numbers-row-card_&]:bg-white': colour === 'neutral',
             'bg-arrow_up_green': direction === 'up' && colour === 'green',
             'bg-arrow_down_green': direction === 'down' && colour === 'green',
             'bg-arrow_up_red': direction === 'up' && colour === 'red',
@@ -52,7 +53,7 @@ export async function Trend({ data }: TrendProps) {
             {t('cms.blocks.trend.value.percentage', { percentage })}
           </span>
         </div>
-      </div>
+      </>
     )
   }
 

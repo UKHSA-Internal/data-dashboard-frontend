@@ -129,19 +129,24 @@ export class HomePage {
     await expect(card.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
     await expect(card.getByText(/Positive tests reported in England/)).toBeVisible()
     await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('tablist')).toBeVisible()
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('722')).toBeVisible()
     await expect(card.getByText('-592 (-3%)')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
-    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-  }
 
-  async hasCovid19CasesTabularData() {
-    const card = this.covidCasesChartRowCard
+    await card.getByRole('tab', { name: 'Tabular data' }).click()
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
     const name = 'Cases data for positive tests reported in England up to and including 10 May 2023'
-    await expect(card.getByRole('table', { name })).toBeHidden()
-    await card.getByText('View data in a tabular format').click()
     await expect(card.getByRole('table', { name })).toBeVisible()
+
+    await card.getByRole('tab', { name: 'Download' }).click()
+    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 
   async hasCovid19DeathsChartRowCard() {
@@ -149,20 +154,25 @@ export class HomePage {
     await expect(card.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
     await expect(card.getByText(/Deaths with COVID-19 on the death certificate in England/)).toBeVisible()
     await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('tablist')).toBeVisible()
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('379')).toBeVisible()
     await expect(card.getByText('21 (-5%)')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
-    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-  }
 
-  async hasCovid19DeathsTabularData() {
-    const card = this.covidDeathsChartRowCard
+    await card.getByRole('tab', { name: 'Tabular data' }).click()
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
     const name =
-      'Deaths data for deaths with COVID-19 on the death certificate in England up to and including 10 May 2023'
-    await expect(card.getByRole('table', { name })).toBeHidden()
-    await card.getByText('View data in a tabular format').click()
+      'Deaths data for deaths with COVID-19 on the death certificate in England up to and including 10 May 2023.'
     await expect(card.getByRole('table', { name })).toBeVisible()
+
+    await card.getByRole('tab', { name: 'Download' }).click()
+    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 
   async hasInfluenzaHeadlineNumbersRowCard() {
@@ -181,18 +191,23 @@ export class HomePage {
     await expect(card.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
     await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('tablist')).toBeVisible()
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('0.26')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
-    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-  }
 
-  async hasInfluenzaHealthcareTabularData() {
-    const card = this.influenzaHealthcareChartRowCard
-    const name = 'Healthcare data for weekly hospital admission rates for Influenza up to and including 10 May 2023'
-    await expect(card.getByRole('table', { name })).toBeHidden()
-    await card.getByText('View data in a tabular format').click()
+    await card.getByRole('tab', { name: 'Tabular data' }).click()
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    const name = 'Healthcare data for weekly hospital admission rates for Influenza up to and including 10 May 2023.'
     await expect(card.getByRole('table', { name })).toBeVisible()
+
+    await card.getByRole('tab', { name: 'Download' }).click()
+    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 
   async hasInfluenzaTestingChartRowCard() {
@@ -200,15 +215,20 @@ export class HomePage {
     await expect(card.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly positivity/)).toBeVisible()
     await expect(card.getByText(/Up to and including 10 May 2023/)).toBeVisible()
+    await expect(card.getByRole('tablist')).toBeVisible()
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByAltText('')).toBeVisible()
-    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
-  }
 
-  async hasInfluenzaTestingTabularData() {
-    const card = this.influenzaTestingChartRowCard
-    const name = 'Testing data for weekly positivity up to and including 10 May 2023'
-    await expect(card.getByRole('table', { name })).toBeHidden()
-    await card.getByText('View data in a tabular format').click()
+    await card.getByRole('tab', { name: 'Tabular data' }).click()
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    const name = 'Testing data for weekly positivity up to and including 10 May 2023.'
     await expect(card.getByRole('table', { name })).toBeVisible()
+
+    await card.getByRole('tab', { name: 'Download' }).click()
+    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 }

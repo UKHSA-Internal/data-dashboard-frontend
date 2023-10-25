@@ -52,7 +52,7 @@ export const WithChartCard = z.object({
 
 export const ChartRowColumns = z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard]))
 
-export const ContentTypes = z.discriminatedUnion('type', [
+export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('text_card'),
     value: WithText,
@@ -78,7 +78,7 @@ export const Body = z.array(
     id: z.string(),
     value: z.object({
       heading: z.string(),
-      content: z.array(ContentTypes),
+      content: z.array(CardTypes),
     }),
   })
 )
