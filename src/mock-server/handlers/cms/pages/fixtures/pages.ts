@@ -10,7 +10,7 @@ import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
 import { mapsPageMock } from './page/maps'
 import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
-import { whatsNewPageMock } from './page/whats-new'
+import { whatsNewChildMocks, whatsNewParentMock, whatsNewV1PageMock } from './page/whats-new'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -50,16 +50,16 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       title: aboutPageMock.title,
     },
     {
-      id: whatsNewPageMock.id,
+      id: whatsNewV1PageMock.id,
       meta: {
-        type: whatsNewPageMock.meta.type,
-        detail_url: whatsNewPageMock.meta.detail_url,
-        html_url: whatsNewPageMock.meta.html_url,
-        slug: whatsNewPageMock.meta.slug,
-        show_in_menus: whatsNewPageMock.meta.show_in_menus,
-        first_published_at: whatsNewPageMock.meta.first_published_at,
+        type: whatsNewV1PageMock.meta.type,
+        detail_url: whatsNewV1PageMock.meta.detail_url,
+        html_url: whatsNewV1PageMock.meta.html_url,
+        slug: whatsNewV1PageMock.meta.slug,
+        show_in_menus: whatsNewV1PageMock.meta.show_in_menus,
+        first_published_at: whatsNewV1PageMock.meta.first_published_at,
       },
-      title: whatsNewPageMock.title,
+      title: whatsNewV1PageMock.title,
     },
     {
       id: mapsPageMock.id,
@@ -168,9 +168,57 @@ export const pagesWithTopicTypeMock: PagesResponse = {
   ],
 }
 
+export const pagesWithWhatsNewParentTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: whatsNewParentMock.id,
+      meta: {
+        type: whatsNewParentMock.meta.type,
+        detail_url: whatsNewParentMock.meta.detail_url,
+        html_url: whatsNewParentMock.meta.html_url,
+        slug: whatsNewParentMock.meta.slug,
+        show_in_menus: whatsNewParentMock.meta.show_in_menus,
+        first_published_at: whatsNewParentMock.meta.first_published_at,
+      },
+      title: whatsNewParentMock.title,
+    },
+  ],
+}
+
+export const pagesWithWhatsNewChildTypeMock: PagesResponse = {
+  meta: {
+    total_count: whatsNewChildMocks.length,
+  },
+  items: whatsNewChildMocks.map(
+    ({ id, title, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at } }) => ({
+      id,
+      meta: {
+        type,
+        detail_url,
+        html_url,
+        slug,
+        show_in_menus,
+        first_published_at,
+      },
+      title,
+    })
+  ),
+}
+
+const items = [
+  ...pagesWithHomeTypeMock.items,
+  ...pagesWithCommonTypeMock.items,
+  ...pagesWithTopicTypeMock.items,
+  ...pagesWithWhatsNewParentTypeMock.items,
+  ...pagesWithWhatsNewChildTypeMock.items,
+]
+
 export const allPagesMock: PagesResponse = {
   meta: {
-    total_count: 7,
+    total_count: items.length,
   },
-  items: [...pagesWithHomeTypeMock.items, ...pagesWithCommonTypeMock.items, ...pagesWithTopicTypeMock.items],
+  items,
 }
