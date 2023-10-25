@@ -63,7 +63,7 @@ export const linkedHeadingsComponents: Components = {
       <Link
         href={`#${id}`}
         id={id}
-        className="govuk-!-margin-bottom-4 govuk-!-margin-top-6 govuk-link--no-visited-state inline-block"
+        className="govuk-!-margin-bottom-4 govuk-!-margin-top-3 govuk-link--no-visited-state inline-block"
       >
         {children}
       </Link>

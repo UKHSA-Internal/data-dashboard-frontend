@@ -39,7 +39,7 @@ export function RelatedLink({ title, url, children, className }: RelatedLinkProp
       <a href={url} rel="noreferrer noopener" target="_blank" aria-label={`${title} (opens in a new window)`}>
         {title}
       </a>
-      <div dangerouslySetInnerHTML={{ __html: children }} />
+      <div dangerouslySetInnerHTML={{ __html: children }} className="break-words" />
     </li>
   )
 }
