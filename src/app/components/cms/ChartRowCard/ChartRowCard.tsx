@@ -53,17 +53,21 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
   // exit early if both charts are zero as neither tab is active
   if (tabPanels[0]?.clientHeight === 0 && tabPanels[3]?.clientHeight === 0) return
 
+  // calculate largest tab header of the two
+  let largestTab = 0
+
   // otherwise, reset any previously applied heights
   for (const tabPanel of tabPanels) {
     ;(tabPanel as HTMLElement).style.height = ``
-  }
 
-  // then recalculate the current height of the responsive chart svg
-  const tabPanelHeight = tabPanels[0]?.clientHeight || tabPanels[3]?.clientHeight
+    if (tabPanel.clientHeight > largestTab) {
+      largestTab = tabPanel.clientHeight
+    }
+  }
 
   // set height to all tab panels
   for (const tabPanel of tabPanels) {
-    ;(tabPanel as HTMLElement).style.height = `${tabPanelHeight}px`
+    ;(tabPanel as HTMLElement).style.height = `${largestTab}px`
   }
 }
 
