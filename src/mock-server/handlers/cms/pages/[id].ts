@@ -15,14 +15,16 @@ import {
   influenzaPageMock,
   mapsPageMock,
   otherRespiratoryVirusesPageMock,
-  whatsNewPageMock,
+  whatsNewChildMocks,
+  whatsNewParentMock,
+  whatsNewV1PageMock,
 } from './fixtures/page'
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [dashboardMock.id]: dashboardMock,
   [aboutPageMock.id]: aboutPageMock,
-  [whatsNewPageMock.id]: whatsNewPageMock,
+  [whatsNewV1PageMock.id]: whatsNewV1PageMock, // TODO: Deprecate once v2 whats-new is live
   [mapsPageMock.id]: mapsPageMock,
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
   [cookiesPageMock.id]: cookiesPageMock,
@@ -32,6 +34,10 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,
   [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,
+  [whatsNewParentMock.id]: whatsNewParentMock,
+  [whatsNewChildMocks[0].id]: whatsNewChildMocks[0],
+  [whatsNewChildMocks[1].id]: whatsNewChildMocks[1],
+  [whatsNewChildMocks[2].id]: whatsNewChildMocks[2],
 }
 
 export default async function handler(req: Request, res: Response) {
