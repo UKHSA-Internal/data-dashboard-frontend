@@ -87,7 +87,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                       </Link>
                     </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="chart" className="no-js:mb-7">
+                  <TabsContent value="chart" className="no-js:mb-7" data-type="chart">
                     <span
                       className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
                       id={`chart-${kebabCase(column.value.title)}`}
