@@ -1,9 +1,15 @@
+import dayjs from 'dayjs'
 import { Metadata } from 'next'
+import Link from 'next/link'
+import { redirect } from 'next/navigation'
+import { SafeParseSuccess } from 'zod'
 
-import { PageType } from '@/api/requests/cms/getPages'
+import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
+import { Details } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { useTranslation } from '@/app/i18n'
 
 export const dynamic = 'force-dynamic'
 
@@ -19,6 +25,8 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WhatsNewParentPage() {
+  const { t } = await useTranslation('common')
+
   const {
     title,
     body,
@@ -26,9 +34,91 @@ export default async function WhatsNewParentPage() {
     related_links: relatedLinks,
   } = await getPageBySlug('whats-new-v2', PageType.WhatsNewParent)
 
+  const whatsNewEntries = await getWhatsNewPages()
+
+  if (!whatsNewEntries.success) {
+    return redirect('/error')
+  }
+
+  const {
+    data: { items },
+  } = whatsNewEntries
+
+  type Page = SafeParseSuccess<WhatsNewPagesResponse>['data']['items']
+
+  const datesByMonth: Record<string, Page> = {}
+
+  // Iterate through the dates and group them by month
+  items.forEach((item) => {
+    const month = dayjs(item.date_posted).format('MMMM YYYY')
+
+    if (!datesByMonth[month]) {
+      datesByMonth[month] = []
+    }
+
+    datesByMonth[month].push(item)
+  })
+
+  // Convert the grouped dates into an array of lists ordered by month
+  const entriesByDate = Object.entries(datesByMonth)
+
   return (
     <View heading={title} lastUpdated={lastUpdated}>
-      <RichText linkedHeadings>{body}</RichText>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <RichText linkedHeadings>{body}</RichText>
+
+          <ul className="govuk-list govuk-!-margin-top-6">
+            {entriesByDate.map(([date, entries], idx) => {
+              return (
+                <li key={idx} className="govuk-!-margin-bottom-7 border-grey-2 [&:not(:last-child)]:border-b">
+                  <header>
+                    <h2 className="govuk-heading-m">
+                      <time dateTime={date}>
+                        <span className="govuk-visually-hidden">List of changes in the month of</span>
+                        {date}
+                      </time>
+                    </h2>
+                  </header>
+                  <ul className="govuk-list">
+                    {entries.map((item) => {
+                      return (
+                        <li key={item.id} className="govuk-body-s govuk-!-margin-top-4 govuk-!-margin-bottom-8">
+                          <h3 className="govuk-heading-s govuk-!-margin-bottom-3">
+                            <small className="govuk-caption-m govuk-!-margin-bottom-2">
+                              <time dateTime={item.date_posted}>
+                                <span className="govuk-visually-hidden">Date:</span>
+                                {t('whatsNew.entry.date', { value: item.date_posted })}
+                              </time>
+                            </small>
+
+                            <div className="flex items-center whitespace-nowrap">
+                              <div className={`govuk-tag govuk-tag--${item.badge.colour} govuk-!-margin-right-3`}>
+                                <span className="govuk-visually-hidden">Category:</span>
+                                {item.badge.text}
+                              </div>
+                              <Link href={`/whats-new/${item.meta.slug}`}>{item.title}</Link>
+                            </div>
+                          </h3>
+                          <div className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-3">
+                            <RichText>{item.body}</RichText>
+                          </div>
+                          {item.additional_details && (
+                            <Details label="Additional information">
+                              <RichText>{item.additional_details}</RichText>
+                            </Details>
+                          )}
+                        </li>
+                      )
+                    })}
+                  </ul>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </div>
+
       <RelatedLinks>
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>
