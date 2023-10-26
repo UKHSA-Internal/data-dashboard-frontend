@@ -150,6 +150,7 @@ test.describe('Other respiratory viruses page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
   test('Downloads without JS', async ({ otherRespiratoryVirusesPage, app, browserName }) => {
+    // Ticket CDD-1419 to investigate
     // eslint-disable-next-line playwright/no-skipped-test
     test.skip(browserName == 'webkit')
 
