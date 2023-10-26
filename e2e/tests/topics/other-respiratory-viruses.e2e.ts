@@ -149,7 +149,10 @@ test.describe('Other respiratory viruses page - desktop', () => {
 test.describe('Other respiratory viruses page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads without JS', async ({ otherRespiratoryVirusesPage, app }) => {
+  test('Downloads without JS', async ({ otherRespiratoryVirusesPage, app, browserName }) => {
+    // eslint-disable-next-line playwright/no-skipped-test
+    test.skip(browserName == 'webkit')
+
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })

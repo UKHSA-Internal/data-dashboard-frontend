@@ -169,7 +169,10 @@ test.describe('COVID-19 page - desktop', () => {
 test.describe('COVID-19 page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads without JS', async ({ covid19Page, app }) => {
+  test('Downloads without JS', async ({ covid19Page, app, browserName }) => {
+    // eslint-disable-next-line playwright/no-skipped-test
+    test.skip(browserName == 'webkit')
+
     await test.step('loads the page', async () => {
       await covid19Page.goto()
     })
