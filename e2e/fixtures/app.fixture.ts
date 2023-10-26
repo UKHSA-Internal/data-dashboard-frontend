@@ -12,6 +12,7 @@ import {
   BrowsePage,
   CompliancePage,
   Covid19Page,
+  ErrorPage,
   FeedbackConfirmationPage,
   FeedbackPage,
   HomePage,
@@ -35,6 +36,7 @@ type Fixtures = {
   notFoundPage: NotFoundPage
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
+  errorPage: ErrorPage
 }
 
 export class App {
