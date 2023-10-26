@@ -15,22 +15,23 @@ import { POST } from './route'
 jest.mock('@/lib/logger')
 jest.mock('@/api/api-utils')
 
+const plots = [
+  {
+    topic: 'COVID-19',
+    metric: 'new_cases_daily',
+    date_from: null,
+    date_to: null,
+    stratum: 'default',
+    geography: 'England',
+    geography_type: 'Nation',
+  },
+]
+
 describe('POST /api/chart/export', () => {
   test('Downloads the requested chart in csv format', async () => {
     const formData = new FormData()
     formData.set('format', 'csv')
-    formData.set(
-      'plots',
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        date_from: null,
-        date_to: null,
-        stratum: 'default',
-        geography: 'England',
-        geography_type: 'Nation',
-      })
-    )
+    formData.set('plots', JSON.stringify(plots))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -54,18 +55,7 @@ describe('POST /api/chart/export', () => {
   test('Downloads the requested chart in json format', async () => {
     const formData = new FormData()
     formData.set('format', 'json')
-    formData.set(
-      'plots',
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        date_from: null,
-        date_to: null,
-        stratum: 'default',
-        geography: 'England',
-        geography_type: 'Nation',
-      })
-    )
+    formData.set('plots', JSON.stringify(plots))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -89,18 +79,7 @@ describe('POST /api/chart/export', () => {
   test('Returns status 301 when wrong form body is sent', async () => {
     const formData = new FormData()
     formData.set('format', 'not_valid')
-    formData.set(
-      'plots',
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        date_from: null,
-        date_to: null,
-        stratum: 'default',
-        geography: 'England',
-        geography_type: 'Nation',
-      })
-    )
+    formData.set('plots', JSON.stringify(plots))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -133,18 +112,7 @@ describe('POST /api/chart/export', () => {
   test('Returns status 301 when the proxied request fails', async () => {
     const formData = new FormData()
     formData.set('format', 'csv')
-    formData.set(
-      'plots',
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        date_from: null,
-        date_to: null,
-        stratum: 'default',
-        geography: 'England',
-        geography_type: 'Nation',
-      })
-    )
+    formData.set('plots', JSON.stringify(plots))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {

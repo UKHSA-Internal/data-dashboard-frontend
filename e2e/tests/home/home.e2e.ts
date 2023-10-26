@@ -91,6 +91,7 @@ test.describe('Home page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
   test('Downloads without JS', async ({ homePage, app, browserName }) => {
+    // Ticket CDD-1419 to investigate
     // eslint-disable-next-line playwright/no-skipped-test
     test.skip(browserName == 'webkit')
 

@@ -170,6 +170,7 @@ test.describe('COVID-19 page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
   test('Downloads without JS', async ({ covid19Page, app, browserName }) => {
+    // Ticket CDD-1419 to investigate
     // eslint-disable-next-line playwright/no-skipped-test
     test.skip(browserName == 'webkit')
 
