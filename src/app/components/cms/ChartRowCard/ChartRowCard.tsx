@@ -47,23 +47,35 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
     return
   }
 
-  // get all the tab panel elements within the current row
-  const tabPanels = row.querySelectorAll('[role="tabpanel"]')
+  // get all the chart tab panel elements within the current row
+  const allTabPanels = row.querySelectorAll('[role="tabpanel"]')
+  const chartTabPanels = row.querySelectorAll('[role="tabpanel"][data-type="chart"]')
 
-  // exit early if both charts are zero as neither tab is active
-  if (tabPanels[0]?.clientHeight === 0 && tabPanels[3]?.clientHeight === 0) return
-
-  // otherwise, reset any previously applied heights
-  for (const tabPanel of tabPanels) {
-    ;(tabPanel as HTMLElement).style.height = ``
+  // exit early in 1 column chart rows when the tab panel is zero in height due to tab being inactive
+  if (chartTabPanels.length === 1 && chartTabPanels[0]?.clientHeight === 0) {
+    return
   }
 
-  // then recalculate the current height of the responsive chart svg
-  const tabPanelHeight = tabPanels[0]?.clientHeight || tabPanels[3]?.clientHeight
+  // exit early in 2 column chart rows when both tab panels are zero in height due to both tabs being inactive
+  if (chartTabPanels.length === 2 && chartTabPanels[0]?.clientHeight === 0 && chartTabPanels[1]?.clientHeight === 0) {
+    return
+  }
+
+  // calculate largest tab header of the two
+  let largestTab = 0
+
+  // otherwise, reset any previously applied heights
+  for (const chartTabPanel of chartTabPanels) {
+    ;(chartTabPanel as HTMLElement).style.height = ``
+
+    if (chartTabPanel.clientHeight > largestTab) {
+      largestTab = chartTabPanel.clientHeight
+    }
+  }
 
   // set height to all tab panels
-  for (const tabPanel of tabPanels) {
-    ;(tabPanel as HTMLElement).style.height = `${tabPanelHeight}px`
+  for (const tabPanel of allTabPanels) {
+    ;(tabPanel as HTMLElement).style.height = `${largestTab}px`
   }
 }
 
