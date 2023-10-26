@@ -13,6 +13,8 @@ export class ErrorPage {
   }
 
   async hasHeading() {
-    await expect(this.page.getByRole('heading', { name: /Page not found/, level: 1 })).toBeVisible()
+    await expect(
+      this.page.getByRole('heading', { name: /Sorry, there is a problem with the service/, level: 1 })
+    ).toBeVisible()
   }
 }

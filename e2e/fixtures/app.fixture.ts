@@ -28,6 +28,7 @@ type Fixtures = {
   aboutPage: AboutPage
   whatsNewPage: WhatsNewPage
   covid19Page: Covid19Page
+  errorPage: ErrorPage
   influenzaPage: InfluenzaPage
   otherRespiratoryVirusesPage: OtherRespiratoryVirusesPage
   feedbackPage: FeedbackPage
@@ -36,7 +37,6 @@ type Fixtures = {
   notFoundPage: NotFoundPage
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
-  errorPage: ErrorPage
 }
 
 export class App {
@@ -278,6 +278,9 @@ export const test = base.extend<Fixtures>({
   },
   compliancePage: async ({ page }, use) => {
     await use(new CompliancePage(page))
+  },
+  errorPage: async ({ page }, use) => {
+    await use(new ErrorPage(page))
   },
 })
 
