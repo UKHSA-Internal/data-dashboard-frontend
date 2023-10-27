@@ -12,6 +12,7 @@ import {
   BrowsePage,
   CompliancePage,
   Covid19Page,
+  ErrorPage,
   FeedbackConfirmationPage,
   FeedbackPage,
   HomePage,
@@ -27,6 +28,7 @@ type Fixtures = {
   aboutPage: AboutPage
   whatsNewPage: WhatsNewPage
   covid19Page: Covid19Page
+  errorPage: ErrorPage
   influenzaPage: InfluenzaPage
   otherRespiratoryVirusesPage: OtherRespiratoryVirusesPage
   feedbackPage: FeedbackPage
@@ -276,6 +278,9 @@ export const test = base.extend<Fixtures>({
   },
   compliancePage: async ({ page }, use) => {
     await use(new CompliancePage(page))
+  },
+  errorPage: async ({ page }, use) => {
+    await use(new ErrorPage(page))
   },
 })
 
