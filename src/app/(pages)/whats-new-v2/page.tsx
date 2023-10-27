@@ -69,7 +69,7 @@ export default async function WhatsNewParentPage() {
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText linkedHeadings>{body}</RichText>
 
-          <ul className="govuk-list govuk-!-margin-top-6">
+          <ul className="govuk-list govuk-!-margin-top-7">
             {entriesByDate.map(([date, entries], idx) => {
               return (
                 <li
@@ -103,12 +103,14 @@ export default async function WhatsNewParentPage() {
                               </time>
                             </small>
 
-                            <div className="flex items-center whitespace-nowrap">
-                              <div className={`govuk-tag govuk-tag--${item.badge.colour} govuk-!-margin-right-3`}>
+                            <div className="flex flex-wrap items-center gap-x-3 gap-y-2 whitespace-nowrap">
+                              <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
                                 <span className="govuk-visually-hidden">Category:</span>
                                 {item.badge.text}
                               </div>
-                              <Link href={`/whats-new/${item.meta.slug}`}>{item.title}</Link>
+                              <Link className="whitespace-normal" href={`/whats-new/${item.meta.slug}`}>
+                                {item.title}
+                              </Link>
                             </div>
                           </h3>
                           <div className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-3">
