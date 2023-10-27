@@ -26,7 +26,7 @@ jest.mock('@/app/hooks/useNavigationEvent')
 window.gtag = jest.fn()
 
 beforeEach(() => {
-  jest.resetAllMocks()
+  jest.clearAllMocks()
   mockedGetCookie.mockReturnValue('')
 })
 
