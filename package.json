@@ -42,8 +42,8 @@
     "zod-error": "^1.5.0"
   },
   "devDependencies": {
-    "@axe-core/playwright": "^4.7.3",
-    "@playwright/test": "^1.36.2",
+    "@axe-core/playwright": "^4.8.1",
+    "@playwright/test": "^1.39.0",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.4.3",
@@ -64,7 +64,7 @@
     "eslint-config-next": "13.4.12",
     "eslint-config-prettier": "^8.7.0",
     "eslint-plugin-import": "^2.27.5",
-    "eslint-plugin-playwright": "^0.15.3",
+    "eslint-plugin-playwright": "^0.18.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-simple-import-sort": "^10.0.0",
     "eslint-plugin-unused-imports": "^2.0.0",
