@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
@@ -71,19 +72,29 @@ export default async function WhatsNewParentPage() {
           <ul className="govuk-list govuk-!-margin-top-6">
             {entriesByDate.map(([date, entries], idx) => {
               return (
-                <li key={idx} className="govuk-!-margin-bottom-7 border-grey-2 [&:not(:last-child)]:border-b">
+                <li
+                  key={idx}
+                  className={clsx('border-grey-2 [&:not(:last-child)]:border-b', {
+                    'govuk-!-margin-bottom-7 govuk-!-padding-bottom-5': idx < entriesByDate.length - 1,
+                  })}
+                >
                   <header>
-                    <h2 className="govuk-heading-m">
+                    <h2 className="govuk-heading-m govuk-!-margin-bottom-6">
                       <time dateTime={date}>
                         <span className="govuk-visually-hidden">List of changes in the month of</span>
                         {date}
                       </time>
                     </h2>
                   </header>
-                  <ul className="govuk-list">
-                    {entries.map((item) => {
+                  <ul className="govuk-list govuk-!-margin-0">
+                    {entries.map((item, entryIndex) => {
                       return (
-                        <li key={item.id} className="govuk-body-s govuk-!-margin-top-4 govuk-!-margin-bottom-8">
+                        <li
+                          key={item.id}
+                          className={clsx('govuk-body-s govuk-!-margin-top-4', {
+                            'govuk-!-margin-bottom-8': entryIndex < entries.length - 1,
+                          })}
+                        >
                           <h3 className="govuk-heading-s govuk-!-margin-bottom-3">
                             <small className="govuk-caption-m govuk-!-margin-bottom-2">
                               <time dateTime={item.date_posted}>
