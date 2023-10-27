@@ -86,3 +86,20 @@ test.describe('Home page - desktop', () => {
     await app.hasDesktopNav()
   })
 })
+
+test.describe('Home page - no JS', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('Downloads without JS', async ({ homePage, app, browserName }) => {
+    // Ticket CDD-1419 to investigate
+    // eslint-disable-next-line playwright/no-skipped-test
+    test.skip(browserName == 'webkit')
+
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads a csv version of each chart', async () => {
+      await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    })
+  })
+})
