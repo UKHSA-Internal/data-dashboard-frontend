@@ -22,8 +22,8 @@ export const Contents = ({ children, heading = 'Contents' }: ContentsProps) => {
         <ol className="govuk-!-margin-bottom-6 govuk-!-margin-left-4">
           {Children.map(children, (child: ReactNode) => {
             return isValidElement(child) ? (
-              <li className="govuk-!-padding-left-6 govuk-body-m govuk-!-margin-bottom-1 relative bg-dash bg-[left_0.75rem] bg-no-repeat">
-                <a className="govuk-link--no-visited-state" href={`#${kebabCase(child.props.heading)}`}>
+              <li className="govuk-body-m govuk-!-margin-bottom-1 relative">
+                <a className="govuk-link--no-visited-state govuk-dash" href={`#${kebabCase(child.props.heading)}`}>
                   {child.props.heading}
                 </a>
               </li>
@@ -57,7 +57,7 @@ interface ContentsItemProps {
 
 export const ContentsItem = ({ children, id, heading }: ContentsItemProps) => {
   return (
-    <section id={id} className="govuk-!-margin-bottom-6" aria-labelledby={kebabCase(heading)}>
+    <section id={id} className="govuk-!-margin-bottom-9" aria-labelledby={kebabCase(heading)}>
       <a
         href={`#${kebabCase(heading)}`}
         id={kebabCase(heading)}

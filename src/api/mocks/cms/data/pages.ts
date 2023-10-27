@@ -7,7 +7,6 @@ import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
 import { influenzaPageMock } from './page/influenza'
 import { mapsPageMock } from './page/maps'
 import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
-import { whatsNewPageMock } from './page/whats-new'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -31,7 +30,7 @@ export const pagesWithHomeTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 4,
+    total_count: 3,
   },
   items: [
     {
@@ -45,18 +44,6 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: aboutPageMock.meta.first_published_at,
       },
       title: aboutPageMock.title,
-    },
-    {
-      id: whatsNewPageMock.id,
-      meta: {
-        type: whatsNewPageMock.meta.type,
-        detail_url: whatsNewPageMock.meta.detail_url,
-        html_url: whatsNewPageMock.meta.html_url,
-        slug: whatsNewPageMock.meta.slug,
-        show_in_menus: whatsNewPageMock.meta.show_in_menus,
-        first_published_at: whatsNewPageMock.meta.first_published_at,
-      },
-      title: whatsNewPageMock.title,
     },
     {
       id: mapsPageMock.id,
@@ -129,9 +116,11 @@ export const pagesWithTopicTypeMock: PagesResponse = {
   ],
 }
 
+const items = [...pagesWithHomeTypeMock.items, ...pagesWithCommonTypeMock.items, ...pagesWithTopicTypeMock.items]
+
 export const allPagesMock: PagesResponse = {
   meta: {
-    total_count: 7,
+    total_count: items.length,
   },
-  items: [...pagesWithHomeTypeMock.items, ...pagesWithCommonTypeMock.items, ...pagesWithTopicTypeMock.items],
+  items,
 }

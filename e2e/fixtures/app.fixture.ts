@@ -1,8 +1,10 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, Locator, Page, test as base } from '@playwright/test'
+import * as fs from 'fs'
 import { kebabCase } from 'lodash'
 
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
+import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 
 import {
   AboutPage,
@@ -211,26 +213,28 @@ export class App {
     await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
   }
 
-  // async canDownloadChartAsCsv(cards: string[]) {
-  //   for (const name of cards) {
-  //     const card = this.page.getByTestId(`chart-row-card-${name}`)
+  async canDownloadChartAsCsv(cards: string[]) {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
 
-  //     const [download] = await Promise.all([
-  //       this.page.waitForEvent('download'),
-  //       card.getByRole('button', { name: 'Download (csv)' }).click(),
-  //     ])
+      card.getByRole('tab', { name: 'Download' }).click()
 
-  //     const fileName = download.suggestedFilename()
-  //     expect(fileName).toBe('data.csv')
+      const [download] = await Promise.all([
+        this.page.waitForEvent('download'),
+        card.getByRole('button', { name: 'Download (csv)' }).click(),
+      ])
 
-  //     const path = await download.path()
+      const fileName = download.suggestedFilename()
+      expect(fileName).toBe('data.csv')
 
-  //     if (path) {
-  //       const file = fs.readFileSync(path)
-  //       expect(file.toString()).toEqual(downloadsCsvFixture)
-  //     }
-  //   }
-  // }
+      const path = await download.path()
+
+      if (path) {
+        const file = fs.readFileSync(path)
+        expect(file.toString()).toEqual(downloadsCsvFixture)
+      }
+    }
+  }
 }
 
 export const test = base.extend<Fixtures>({
