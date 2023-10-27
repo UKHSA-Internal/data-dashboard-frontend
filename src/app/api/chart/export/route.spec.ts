@@ -7,6 +7,7 @@ import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
 import { downloadsJsonFixture } from '@/api/mocks/downloads/fixtures/downloads-json'
+import { RequestParams } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 
@@ -15,7 +16,12 @@ import { POST } from './route'
 jest.mock('@/lib/logger')
 jest.mock('@/api/api-utils')
 
-const plots = [
+interface RequestBody {
+  plots: RequestParams['plots']
+  format: string
+}
+
+const plots: RequestBody['plots'] = [
   {
     topic: 'COVID-19',
     metric: 'new_cases_daily',
