@@ -25,7 +25,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
     {type === 'headline_numbers_row_card' && (
-      <Card className="headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
+      <Card className="ukhsa-headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
         <div
           className={clsx(`grid grid-cols-2 gap-y-6 sm:grid-cols-3 md:gap-x-5`, {
             [`md:grid-cols-5`]: value.columns.length === 5,
@@ -100,7 +100,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     </span>
                     {column.type === 'chart_with_headline_and_trend_card' && (
                       <>
-                        <div className="headline govuk-!-margin-bottom-4 md:min-h-[54px]">
+                        <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[54px]">
                           <div className="flex items-end gap-2">
                             {column.value.headline_number_columns.map(renderBlock)}
                           </div>
