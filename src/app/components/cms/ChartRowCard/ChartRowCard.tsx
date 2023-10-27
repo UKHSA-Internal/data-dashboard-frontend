@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useLayoutEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { useDebounce, useWindowSize } from 'usehooks-ts'
 
 interface ChartRowCardProps {
@@ -8,7 +8,7 @@ interface ChartRowCardProps {
 }
 
 const DESKTOP_BREAKPOINT = 1024
-const DEBOUNCE_MILLISECONDS = 5
+const DEBOUNCE_MILLISECONDS = 20
 
 const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   // exit early if there's not two columns
@@ -25,8 +25,12 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   let largestHeader = 0
 
   for (const header of headers) {
-    // reset any previously applied style
-    ;(header as HTMLElement).style.minHeight = ''
+    // reset only if a height is already applied (i.e. don't reset on page load)
+    const headerEl = header as HTMLElement
+
+    if (headerEl.style.minHeight) {
+      headerEl.style.minHeight = ``
+    }
 
     if (header.clientHeight > largestHeader) {
       largestHeader = header.clientHeight
@@ -66,7 +70,12 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
 
   // otherwise, reset any previously applied heights
   for (const chartTabPanel of chartTabPanels) {
-    ;(chartTabPanel as HTMLElement).style.height = ``
+    const panel = chartTabPanel as HTMLElement
+
+    // reset only if a height is already applied (i.e. don't reset on page load)
+    if (panel.style.height) {
+      panel.style.height = ``
+    }
 
     if (chartTabPanel.clientHeight > largestTab) {
       largestTab = chartTabPanel.clientHeight
@@ -98,7 +107,7 @@ export function ChartRowCard({ children }: ChartRowCardProps) {
 
   const debouncedWidth = useDebounce(width, DEBOUNCE_MILLISECONDS)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)
     setChartCardTabSize(ref.current)
   }, [ref, debouncedWidth])
