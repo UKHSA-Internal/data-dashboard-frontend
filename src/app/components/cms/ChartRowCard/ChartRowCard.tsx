@@ -8,7 +8,7 @@ interface ChartRowCardProps {
 }
 
 const DESKTOP_BREAKPOINT = 1024
-const DEBOUNCE_MILLISECONDS = 5
+const DEBOUNCE_MILLISECONDS = 20
 
 const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   // exit early if there's not two columns
