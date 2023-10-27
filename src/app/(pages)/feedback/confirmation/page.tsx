@@ -3,8 +3,7 @@ import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { View } from '@/app/components/ui/ukhsa'
-
-import { useTranslation } from '../../i18n'
+import { useTranslation } from '@/app/i18n'
 
 export const metadata: Metadata = {
   title: 'Feedback Confirmation | UKHSA data dashboard',
