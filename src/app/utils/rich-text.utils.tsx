@@ -22,7 +22,7 @@ export const coreComponents: Components = {
   a: ({ children, href }) => {
     if (href?.includes('change-settings=1')) {
       return (
-        <Link href={href} className="govuk-link test">
+        <Link href={href} className="govuk-link">
           {children}
         </Link>
       )
@@ -47,7 +47,7 @@ export const linkedHeadingsComponents: Components = {
   a: ({ children, href }) => {
     if (href?.includes('change-settings=1')) {
       return (
-        <Link href={href} className="govuk-link test">
+        <Link href={href} className="govuk-link">
           {children}
         </Link>
       )
