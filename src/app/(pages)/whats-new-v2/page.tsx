@@ -1,8 +1,10 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
+import { kebabCase } from 'lodash'
 import { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
+import { Trans } from 'react-i18next/TransWithoutContext'
 import { SafeParseSuccess } from 'zod'
 
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
@@ -26,7 +28,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function WhatsNewParentPage() {
-  const { t } = await useTranslation('common')
+  const { t } = await useTranslation('whatsNew')
 
   const {
     title,
@@ -69,20 +71,25 @@ export default async function WhatsNewParentPage() {
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText linkedHeadings>{body}</RichText>
 
-          <ul className="govuk-list govuk-!-margin-top-7">
+          <ul className="govuk-list govuk-!-margin-top-7" aria-label={title}>
             {entriesByDate.map(([date, entries], idx) => {
               return (
                 <li
                   key={idx}
+                  aria-describedby={`month-${kebabCase(date)}`}
                   className={clsx('border-grey-2 [&:not(:last-child)]:border-b', {
                     'govuk-!-margin-bottom-7 govuk-!-padding-bottom-5': idx < entriesByDate.length - 1,
                   })}
                 >
                   <header>
-                    <h2 className="govuk-heading-m govuk-!-margin-bottom-6">
+                    <h2 id={`month-${kebabCase(date)}`} className="govuk-heading-m govuk-!-margin-bottom-6">
                       <time dateTime={date}>
-                        <span className="govuk-visually-hidden">List of changes in the month of</span>
-                        {date}
+                        <Trans
+                          i18nKey="monthHeader"
+                          t={t}
+                          components={[<span key={0} className="govuk-visually-hidden" />]}
+                          values={{ value: date }}
+                        />
                       </time>
                     </h2>
                   </header>
@@ -98,26 +105,41 @@ export default async function WhatsNewParentPage() {
                           <h3 className="govuk-heading-s govuk-!-margin-bottom-3">
                             <small className="govuk-caption-m govuk-!-margin-bottom-2">
                               <time dateTime={item.date_posted}>
-                                <span className="govuk-visually-hidden">Date:</span>
-                                {t('whatsNew.entry.date', { value: item.date_posted })}
+                                <Trans
+                                  i18nKey="entryDate"
+                                  t={t}
+                                  components={[<span key={0} className="govuk-visually-hidden" />]}
+                                  values={{ value: item.date_posted }}
+                                />
                               </time>
                             </small>
 
                             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 whitespace-nowrap">
                               <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
-                                <span className="govuk-visually-hidden">Category:</span>
-                                {item.badge.text}
+                                <Trans
+                                  i18nKey="entryCategory"
+                                  t={t}
+                                  components={[<span key={0} className="govuk-visually-hidden" />]}
+                                  values={{ value: item.badge.text }}
+                                />
                               </div>
-                              <Link className="whitespace-normal" href={`/whats-new/${item.meta.slug}`}>
-                                {item.title}
-                              </Link>
+                              <Trans
+                                i18nKey="entryTitle"
+                                t={t}
+                                components={[
+                                  <Link key={0} className="whitespace-normal" href={`/whats-new/${item.meta.slug}`}>
+                                    <span className="govuk-visually-hidden" key={1} />
+                                  </Link>,
+                                ]}
+                                values={{ value: item.title }}
+                              />
                             </div>
                           </h3>
                           <div className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-3">
                             <RichText>{item.body}</RichText>
                           </div>
                           {item.additional_details && (
-                            <Details label="Additional information">
+                            <Details label={t('additionalInformationLabel')}>
                               <RichText>{item.additional_details}</RichText>
                             </Details>
                           )}
