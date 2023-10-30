@@ -70,21 +70,21 @@ test.describe('Influenza page', () => {
     })
   })
 
-  //   test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
-  //     await test.step('loads the page', async () => {
-  //       await influenzaPage.goto()
-  //     })
-  //     await test.step('downloads charts', async () => {
-  //       await app.canDownloadChartAsCsv([
-  //         'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-  //         'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-  //         'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-  //         'line-chart-comparing-influenza-icu-admission-rates-by-age',
-  //         'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-  //         'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-  //       ])
-  //     })
-  //   })
+  test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChartAsCsv([
+        'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+        'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+        'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+        'line-chart-comparing-influenza-icu-admission-rates-by-age',
+        'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+        'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+      ])
+    })
+  })
 })
 
 test.describe('Influenza page - mobile', () => {
