@@ -2,7 +2,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-test("What's new page", async ({ whatsNewPage, app, browserName }) => {
+test("What's new page", async ({ whatsNewPage, app }) => {
   await test.step('loads the page', async () => {
     await whatsNewPage.goto()
   })
@@ -13,11 +13,6 @@ test("What's new page", async ({ whatsNewPage, app, browserName }) => {
     await app.hasLayout()
   })
   await test('displays without any accessibility defects', async () => {
-    // This test randomly started failing despite no changes
-    // Skipping whilst being investigated.
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
     await app.hasNoAccessibilityDefects()
   })
   await test.step('displays last updated date', async () => {
