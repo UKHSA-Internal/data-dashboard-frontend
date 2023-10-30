@@ -69,7 +69,7 @@ export default async function WhatsNewParentPage() {
     <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <RichText linkedHeadings>{body}</RichText>
+          <RichText>{body}</RichText>
 
           <ul className="govuk-list govuk-!-margin-top-7" aria-label={title}>
             {entriesByDate.map(([date, entries], idx) => {
