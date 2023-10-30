@@ -29,7 +29,7 @@ export async function Trend({ data }: TrendProps) {
             'govuk-tag--green': colour === 'green',
             'govuk-tag--red': colour === 'red',
             // 'govuk-tag--grey': colour === 'neutral',
-            'govuk-tag--grey [.headline-numbers-row-card_&]:bg-white': colour === 'neutral',
+            'govuk-tag--grey [.ukhsa-headline-numbers-row-card_&]:bg-white': colour === 'neutral',
             'bg-arrow_up_green': direction === 'up' && colour === 'green',
             'bg-arrow_down_green': direction === 'down' && colour === 'green',
             'bg-arrow_up_red': direction === 'up' && colour === 'red',
