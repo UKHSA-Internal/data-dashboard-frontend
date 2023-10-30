@@ -12,7 +12,7 @@ test("What's new page", async ({ whatsNewPage, app }) => {
   await test.step('displays the correct layout', async () => {
     await app.hasLayout()
   })
-  await test('displays without any accessibility defects', async () => {
+  await test.step('displays without any accessibility defects', async () => {
     await app.hasNoAccessibilityDefects()
   })
   await test.step('displays last updated date', async () => {
