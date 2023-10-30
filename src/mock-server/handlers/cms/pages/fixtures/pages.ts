@@ -193,7 +193,15 @@ export const pagesWithWhatsNewChildTypeMock: PagesResponse = {
     total_count: whatsNewChildMocks.length,
   },
   items: whatsNewChildMocks.map(
-    ({ id, title, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at } }) => ({
+    ({
+      id,
+      title,
+      meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
+      date_posted,
+      additional_details,
+      badge,
+      body,
+    }) => ({
       id,
       meta: {
         type,
@@ -204,6 +212,10 @@ export const pagesWithWhatsNewChildTypeMock: PagesResponse = {
         first_published_at,
       },
       title,
+      date_posted,
+      additional_details,
+      badge,
+      body,
     })
   ),
 }

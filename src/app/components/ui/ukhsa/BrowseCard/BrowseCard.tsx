@@ -3,7 +3,7 @@ import Link from 'next/link'
 /**
  * Browse Card
  */
-interface BrowseCardProps {
+export interface BrowseCardProps {
   href: string
   name: string
   description: string

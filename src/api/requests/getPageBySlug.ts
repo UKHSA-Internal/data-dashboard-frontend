@@ -1,6 +1,5 @@
 import { notFound } from 'next/navigation'
 
-import { formatZodError } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
 
 import { getPage, PageResponse } from './cms/getPage'
@@ -38,7 +37,7 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
           return page.data as PageResponse<T>
         }
 
-        logger.error(formatZodError(page.error))
+        logger.error(page.error)
         throw new Error(`CMS page with slug ${slug} and id ${matchedPage.id} does not match expected response schema`)
       }
 

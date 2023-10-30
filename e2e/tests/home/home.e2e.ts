@@ -90,10 +90,13 @@ test.describe('Home page - desktop', () => {
 test.describe('Home page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads without JS', async ({ homePage, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
+  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
+
+  test('Downloads without JS', async ({ homePage, app }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://digitaltools.phe.org.uk/browse/CDD-1419',
+    })
 
     await test.step('loads the page', async () => {
       await homePage.goto()

@@ -1,15 +1,5 @@
 import { SITE_URL } from '../constants/app.constants'
-import { getStaticPropsRevalidateValue, isProd } from './app.utils'
-
-test('getStaticPropsRevalidateValue', () => {
-  // Converts a string of "false" to an actual boolean type
-  process.env.NEXT_REVALIDATE_TIME = 'false'
-  expect(getStaticPropsRevalidateValue()).toEqual(false)
-
-  // Otherwise, falls back to a number.
-  process.env.NEXT_REVALIDATE_TIME = '60'
-  expect(getStaticPropsRevalidateValue()).toEqual(60)
-})
+import { isProd } from './app.utils'
 
 test('Determine prod env based on hostname', () => {
   window = Object.create(window)
