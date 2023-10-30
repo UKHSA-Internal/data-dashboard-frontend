@@ -5,6 +5,7 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
+import ReactMarkdown from 'react-markdown'
 import { SafeParseSuccess } from 'zod'
 
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
@@ -13,6 +14,7 @@ import { RichText } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
+import { coreComponents, corePlugins } from '@/app/utils/rich-text.utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -75,7 +77,7 @@ export default async function WhatsNewParentPage() {
             {entriesByDate.map(([date, entries], idx) => {
               return (
                 <li
-                  key={idx}
+                  key={date}
                   aria-describedby={`month-${kebabCase(date)}`}
                   className={clsx('border-grey-2 [&:not(:last-child)]:border-b', {
                     'govuk-!-margin-bottom-7 govuk-!-padding-bottom-5': idx < entriesByDate.length - 1,
@@ -136,11 +138,15 @@ export default async function WhatsNewParentPage() {
                             </div>
                           </h3>
                           <div className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-3">
-                            <RichText>{item.body}</RichText>
+                            <ReactMarkdown rehypePlugins={corePlugins} components={coreComponents}>
+                              {item.body}
+                            </ReactMarkdown>
                           </div>
                           {item.additional_details && (
                             <Details label={t('additionalInformationLabel')}>
-                              <RichText>{item.additional_details}</RichText>
+                              <ReactMarkdown rehypePlugins={corePlugins} components={coreComponents}>
+                                {item.additional_details}
+                              </ReactMarkdown>
                             </Details>
                           )}
                         </li>
