@@ -190,7 +190,7 @@ export class HomePage {
     const card = this.influenzaHealthcareChartRowCard
     await expect(card.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
-    await expect(card.getByRole('heading', { level: 4, name: /Up to and including 10 May 2023/ })).toBeVisible() // ?
+    await expect(card.getByRole('heading', { level: 4, name: /Up to and including 10 May 2023/ })).toBeVisible()
     await expect(card.getByRole('tablist')).toBeVisible()
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
