@@ -221,11 +221,11 @@ export class App {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
-      card.getByRole('tab', { name: 'Download' }).click()
+      await card.getByRole('tab', { name: 'Download' }).click()
 
       const [download] = await Promise.all([
         this.page.waitForEvent('download'),
-        card.getByRole('button', { name: 'Download (csv)' }).click(),
+        await card.getByRole('button', { name: 'Download (csv)' }).click(),
       ])
 
       const fileName = download.suggestedFilename()
