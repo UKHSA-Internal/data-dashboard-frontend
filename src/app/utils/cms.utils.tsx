@@ -25,7 +25,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
     {type === 'headline_numbers_row_card' && (
-      <Card className="headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
+      <Card className="ukhsa-headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
         <div
           className={clsx(`grid grid-cols-2 gap-y-6 sm:grid-cols-3 md:gap-x-5`, {
             [`md:grid-cols-5`]: value.columns.length === 5,
@@ -87,7 +87,11 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                       </Link>
                     </TabsTrigger>
                   </TabsList>
-                  <TabsContent value="chart" className="no-js:mb-7">
+                  <TabsContent
+                    value="chart"
+                    className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
+                    data-type="chart"
+                  >
                     <span
                       className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
                       id={`chart-${kebabCase(column.value.title)}`}
@@ -96,7 +100,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     </span>
                     {column.type === 'chart_with_headline_and_trend_card' && (
                       <>
-                        <div className="headline govuk-!-margin-bottom-4 md:min-h-[54px]">
+                        <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[54px]">
                           <div className="flex items-end gap-2">
                             {column.value.headline_number_columns.map(renderBlock)}
                           </div>
@@ -107,7 +111,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                   </TabsContent>
                   <TabsContent
                     value="table"
-                    className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] overflow-y-auto no-js:mb-4"
+                    className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] min-h-[var(--ukhsa-chart-card-tab-min-height)] overflow-y-auto no-js:mb-4"
                   >
                     <span
                       className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
@@ -119,7 +123,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                       <Table data={column.value} size={size} />
                     </div>
                   </TabsContent>
-                  <TabsContent value="download">
+                  <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
                     <span
                       className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
                       id={`download-${kebabCase(column.value.title)}`}

@@ -15,7 +15,9 @@ export default async function NotFoundPage() {
           components={[
             <p key={0} />,
             <p key={1}>
-              <a key={0} href="https://www.gov.uk/government/organisations/uk-health-security-agency" />
+              <a key={0} href="https://www.gov.uk/government/organisations/uk-health-security-agency">
+                UKHSA webpage
+              </a>
             </p>,
           ]}
         />
