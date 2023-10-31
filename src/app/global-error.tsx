@@ -1,11 +1,11 @@
 'use client'
 
-import Error from './error'
+import Error from './(pages)/error/page'
 
 export default function GlobalError({ error }: { error: Error }) {
   console.error('Global error page: ', error)
   return (
-    <html>
+    <html lang="en">
       <body>
         <Error />
       </body>

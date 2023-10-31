@@ -86,3 +86,23 @@ test.describe('Home page - desktop', () => {
     await app.hasDesktopNav()
   })
 })
+
+test.describe('Home page - no JS', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
+
+  test('Downloads without JS', async ({ homePage, app }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://digitaltools.phe.org.uk/browse/CDD-1419',
+    })
+
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads a csv version of each chart', async () => {
+      await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    })
+  })
+})

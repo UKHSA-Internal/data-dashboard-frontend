@@ -1,6 +1,6 @@
 'use client'
 
-import { ReactNode, useLayoutEffect, useRef } from 'react'
+import { ReactNode, useEffect, useRef } from 'react'
 import { useDebounce, useWindowSize } from 'usehooks-ts'
 
 interface ChartRowCardProps {
@@ -8,7 +8,7 @@ interface ChartRowCardProps {
 }
 
 const DESKTOP_BREAKPOINT = 1024
-const DEBOUNCE_MILLISECONDS = 5
+const DEBOUNCE_MILLISECONDS = 20
 
 const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   // exit early if there's not two columns
@@ -25,8 +25,12 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   let largestHeader = 0
 
   for (const header of headers) {
-    // reset any previously applied style
-    ;(header as HTMLElement).style.minHeight = ''
+    // reset only if a height is already applied (i.e. don't reset on page load)
+    const headerEl = header as HTMLElement
+
+    if (headerEl.style.minHeight) {
+      headerEl.style.minHeight = ``
+    }
 
     if (header.clientHeight > largestHeader) {
       largestHeader = header.clientHeight
@@ -47,23 +51,40 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
     return
   }
 
-  // get all the tab panel elements within the current row
-  const tabPanels = row.querySelectorAll('[role="tabpanel"]')
+  // get all the chart tab panel elements within the current row
+  const allTabPanels = row.querySelectorAll('[role="tabpanel"]')
+  const chartTabPanels = row.querySelectorAll('[role="tabpanel"][data-type="chart"]')
 
-  // exit early if both charts are zero as neither tab is active
-  if (tabPanels[0]?.clientHeight === 0 && tabPanels[3]?.clientHeight === 0) return
-
-  // otherwise, reset any previously applied heights
-  for (const tabPanel of tabPanels) {
-    ;(tabPanel as HTMLElement).style.height = ``
+  // exit early in 1 column chart rows when the tab panel is zero in height due to tab being inactive
+  if (chartTabPanels.length === 1 && chartTabPanels[0]?.clientHeight === 0) {
+    return
   }
 
-  // then recalculate the current height of the responsive chart svg
-  const tabPanelHeight = tabPanels[0]?.clientHeight || tabPanels[3]?.clientHeight
+  // exit early in 2 column chart rows when both tab panels are zero in height due to both tabs being inactive
+  if (chartTabPanels.length === 2 && chartTabPanels[0]?.clientHeight === 0 && chartTabPanels[1]?.clientHeight === 0) {
+    return
+  }
+
+  // calculate largest tab header of the two
+  let largestTab = 0
+
+  // otherwise, reset any previously applied heights
+  for (const chartTabPanel of chartTabPanels) {
+    const panel = chartTabPanel as HTMLElement
+
+    // reset only if a height is already applied (i.e. don't reset on page load)
+    if (panel.style.height) {
+      panel.style.height = ``
+    }
+
+    if (chartTabPanel.clientHeight > largestTab) {
+      largestTab = chartTabPanel.clientHeight
+    }
+  }
 
   // set height to all tab panels
-  for (const tabPanel of tabPanels) {
-    ;(tabPanel as HTMLElement).style.height = `${tabPanelHeight}px`
+  for (const tabPanel of allTabPanels) {
+    ;(tabPanel as HTMLElement).style.height = `${largestTab}px`
   }
 }
 
@@ -86,7 +107,7 @@ export function ChartRowCard({ children }: ChartRowCardProps) {
 
   const debouncedWidth = useDebounce(width, DEBOUNCE_MILLISECONDS)
 
-  useLayoutEffect(() => {
+  useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)
     setChartCardTabSize(ref.current)
   }, [ref, debouncedWidth])

@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import { Fragment } from 'react'
 import { z } from 'zod'
@@ -50,8 +49,9 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
-        <caption className={clsx('govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal')}>
-          {t('cms.blocks.table.caption', { title, body, timestamp, context: timestamp && 'timestamp' })}
+        <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
+          <p className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</p>
+          <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
         </caption>
 
         <tbody className="govuk-table__body">

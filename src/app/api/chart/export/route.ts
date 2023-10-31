@@ -4,12 +4,22 @@ import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloa
 import { logger } from '@/lib/logger'
 
 export async function POST(req: NextRequest) {
-  const body = await req.json()
+  const url = new URL(req.headers.get('origin') || '')
+  url.pathname = '/error'
 
-  const plots = Array.isArray(body.plots) ? body.plots : [body.plots]
+  const body = await req.formData()
+
+  const plotsFormData = body.get('plots')
+
+  if (typeof plotsFormData !== 'string') {
+    return NextResponse.redirect(url, 301)
+  }
+
+  const jsonPlots = JSON.parse(plotsFormData)
+  const plots = Array.isArray(jsonPlots) ? jsonPlots : [jsonPlots]
 
   const params = requestSchema.safeParse({
-    file_format: body.format,
+    file_format: body.get('format'),
     plots,
   })
 
@@ -20,7 +30,7 @@ export async function POST(req: NextRequest) {
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')
-      return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+      return NextResponse.redirect(url, 301)
     }
 
     if (params.data.file_format === 'csv') {
@@ -38,7 +48,8 @@ export async function POST(req: NextRequest) {
     }
   } else {
     logger.error(params.error)
+    return NextResponse.redirect(url, 301)
   }
 
-  return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
+  return NextResponse.redirect(url, 301)
 }
