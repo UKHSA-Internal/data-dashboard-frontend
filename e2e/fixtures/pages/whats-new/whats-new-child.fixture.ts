@@ -9,11 +9,11 @@ export class WhatsNewChildPage {
   }
 
   async gotoFirst() {
-    await this.page.goto('/whats-new-v2/soft-launch-of-the-ukhsa-data-dashboard')
+    await this.page.goto('/whats-new/soft-launch-of-the-ukhsa-data-dashboard')
   }
 
   async gotoSecond() {
-    await this.page.goto('/whats-new-v2/other-respiratory-viruses-data-added-to-the-homepage')
+    await this.page.goto('/whats-new/other-respiratory-viruses-data-added-to-the-homepage')
   }
 
   async hasMetadata() {

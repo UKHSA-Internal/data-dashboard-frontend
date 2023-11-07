@@ -9,7 +9,7 @@ export class WhatsNewParentPage {
   }
 
   async goto() {
-    await this.page.goto('/whats-new-v2')
+    await this.page.goto('/whats-new')
   }
 
   async hasMetadata() {

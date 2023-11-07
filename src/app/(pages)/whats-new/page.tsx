@@ -21,7 +21,7 @@ export const dynamic = 'force-dynamic'
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('whats-new-v2', PageType.WhatsNewParent)
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
   return {
     title: seo_title,
@@ -37,7 +37,7 @@ export default async function WhatsNewParentPage() {
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug('whats-new-v2', PageType.WhatsNewParent)
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
   const whatsNewEntries = await getWhatsNewPages()
 
