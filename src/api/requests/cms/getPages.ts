@@ -51,8 +51,6 @@ export const whatsNewResponseSchema = responseSchema.extend({
   ),
 })
 
-export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
-
 export const getPages = async (type?: PageType) => {
   const params = new URLSearchParams()
   if (type) params.set('type', type)
@@ -65,6 +63,8 @@ export const getPages = async (type?: PageType) => {
     return responseSchema.safeParse(error)
   }
 }
+
+export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
 
 export const getWhatsNewPages = async () => {
   const params = new URLSearchParams()

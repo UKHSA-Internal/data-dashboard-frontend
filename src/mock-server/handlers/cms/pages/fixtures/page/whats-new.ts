@@ -67,12 +67,12 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   {
     id: 22,
     meta: {
-      seo_title: '',
+      seo_title: "What's new | UKHSA data dashboard",
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/22/',
       html_url: null,
-      slug: 'soft-launch-of-the-ukhsa-data-dashboard',
+      slug: 'whats-new-v2/soft-launch-of-the-ukhsa-data-dashboard',
       show_in_menus: false,
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
@@ -98,12 +98,12 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   {
     id: 23,
     meta: {
-      seo_title: '',
+      seo_title: "What's new | UKHSA data dashboard",
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/23/',
       html_url: null,
-      slug: 'updated-csv-download-and-tabular-data-functionality',
+      slug: 'whats-new-v2/updated-csv-download-and-tabular-data-functionality',
       show_in_menus: false,
       first_published_at: '2023-10-24T17:20:39.627869+01:00',
       alias_of: null,
@@ -129,12 +129,12 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   {
     id: 24,
     meta: {
-      seo_title: '',
+      seo_title: "What's new | UKHSA data dashboard",
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/24/',
       html_url: null,
-      slug: 'other-respiratory-viruses-data-added-to-the-homepage',
+      slug: 'whats-new-v2/other-respiratory-viruses-data-added-to-the-homepage',
       show_in_menus: false,
       first_published_at: '2023-10-24T17:22:25.297408+01:00',
       alias_of: null,
