@@ -27,10 +27,21 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
 
   return (
     <View heading={title} backLink="/whats-new-v2" lastUpdated={date_posted}>
-      <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-2`}>{badge.text}</div>
-      <RichText>{body}</RichText>
-      <h2 className="govuk-heading-m govuk-!-margin-top-4">{t('additionalInformationLabel')}</h2>
-      <RichText>{additional_details}</RichText>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>{badge.text}</div>
+          <div className="govuk-body-s">
+            <RichText>{body}</RichText>
+          </div>
+        </div>
+      </div>
+
+      {additional_details && (
+        <>
+          <h2 className="govuk-heading-l govuk-!-margin-top-4">{t('additionalInformationLabel')}</h2>
+          <RichText>{additional_details}</RichText>
+        </>
+      )}
     </View>
   )
 }
