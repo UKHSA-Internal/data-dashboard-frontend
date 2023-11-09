@@ -4,7 +4,6 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { Details } from '@/app/components/ui/govuk'
 import { View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
 
@@ -58,6 +57,8 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
             ]}
             values={{ value: title }}
           />
+
+          <span className="govuk-visually-hidden">{t('entryDescription')}</span>
           <RichText>{body}</RichText>
         </div>
       </div>
@@ -65,9 +66,7 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
       {additional_details && (
         <>
           <h2 className="govuk-heading-l govuk-!-margin-top-4">{t('additionalInformationLabel')}</h2>
-          <Details label={t('additionalInformationLabel')}>
-            <RichText>{additional_details}</RichText>
-          </Details>
+          <RichText>{additional_details}</RichText>
         </>
       )}
     </View>
