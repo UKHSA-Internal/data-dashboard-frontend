@@ -90,3 +90,99 @@ test.describe("What's new parent page - desktop", () => {
     await app.hasDesktopNav()
   })
 })
+
+test.describe("What's new child page", () => {
+  test('Page layout', async ({ whatsNewChildPage, app }) => {
+    await test.step('loads child page', async () => {
+      await whatsNewChildPage.goto()
+    })
+    await test.step('metadata is correct', async () => {
+      await whatsNewChildPage.hasMetadata()
+    })
+    await test.step('displays the correct layout', async () => {
+      await app.hasLayout()
+    })
+    // await test.step('displays without any accessibility defects', async () => {
+    //   // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
+    //   test.skip()
+    //   test.info().annotations.push({
+    //     type: 'issue',
+    //     description:
+    //       'Re-enable once the legacy whats new page is removed. Something in the mock responses is causing a data clash in NextJs',
+    //   })
+    //   await app.hasNoAccessibilityDefects()
+    // })
+    await test.step('displays back to top', async () => {
+      await app.hasBackToTop()
+    })
+  })
+
+  test('Shows details for the first child page', async ({ whatsNewParentPage, whatsNewChildPage }) => {
+    await test.step('loads parent page', async () => {
+      await whatsNewParentPage.goto()
+    })
+    await test.step('clicks first entry', async () => {
+      await whatsNewParentPage.openChildPage('Soft launch of the UKHSA data dashboard')
+    })
+    await test.step('shows heading', async () => {
+      await whatsNewChildPage.hasHeading('Soft launch of the UKHSA data dashboard')
+    })
+    await test.step('shows entry badge', async () => {
+      await whatsNewChildPage.hasBadge('New Feature')
+    })
+    await test.step('does not show Additional Information', async () => {
+      await whatsNewChildPage.hasAdditionalInformation(false)
+    })
+    await test.step('clicks back button', async () => {
+      await whatsNewChildPage.clickBackButton()
+    })
+    await test.step('checks now on parent page', async () => {
+      await whatsNewParentPage.hasHeading()
+    })
+  })
+
+  test('Shows details for the second child page', async ({ whatsNewParentPage, whatsNewChildPage }) => {
+    await test.step('loads parent page', async () => {
+      await whatsNewParentPage.goto()
+    })
+    await test.step('clicks first entry', async () => {
+      await whatsNewParentPage.openChildPage('Other respiratory viruses data added to the homepage')
+    })
+    await test.step('shows heading', async () => {
+      await whatsNewChildPage.hasHeading('Other respiratory viruses data added to the homepage')
+    })
+    await test.step('shows entry badge', async () => {
+      await whatsNewChildPage.hasBadge('Data Issue')
+    })
+    await test.step('shows Additional Information', async () => {
+      await whatsNewChildPage.hasAdditionalInformation(true)
+    })
+  })
+})
+
+test.describe("What's new child page - mobile", () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ whatsNewChildPage, app }) => {
+    await whatsNewChildPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe("What's new child page - tablet", () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ whatsNewChildPage, app }) => {
+    await whatsNewChildPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe("What's new child page - desktop", () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('displays the navigation on desktop', async ({ whatsNewChildPage, app }) => {
+    await whatsNewChildPage.goto()
+    await app.hasDesktopNav()
+  })
+})
