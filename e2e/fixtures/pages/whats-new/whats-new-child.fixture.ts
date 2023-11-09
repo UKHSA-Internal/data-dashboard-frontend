@@ -35,6 +35,6 @@ export class WhatsNewChildPage {
   }
 
   async clickBackButton() {
-    await this.page.getByText('Back').click()
+    await this.page.getByRole('link', { name: 'Back', exact: true }).click()
   }
 }
