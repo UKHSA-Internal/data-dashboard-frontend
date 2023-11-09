@@ -127,7 +127,7 @@ export default async function WhatsNewParentPage() {
                                 i18nKey="entryTitle"
                                 t={t}
                                 components={[
-                                  <Link key={0} className="whitespace-normal" href={`${item.meta.slug}`}>
+                                  <Link key={0} className="whitespace-normal" href={`whats-new/${item.meta.slug}`}>
                                     <span className="govuk-visually-hidden" key={1} />
                                   </Link>,
                                 ]}
