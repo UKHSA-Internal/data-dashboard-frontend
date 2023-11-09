@@ -81,3 +81,9 @@ test('renders the govuk headings', async () => {
   expect(getByRole('heading', { level: 3, name: 'heading 3' })).toHaveClass('govuk-heading-m')
   expect(getByRole('heading', { level: 4, name: 'heading 4' })).toHaveClass('govuk-heading-s')
 })
+
+test('renders the back button', async () => {
+  const { getByRole } = render(await View({ heading: 'Test Heading', children: null, backLink: 'whats-new' }))
+
+  expect(getByRole('link', { name: 'Back' })).toHaveAttribute('href', 'whats-new')
+})
