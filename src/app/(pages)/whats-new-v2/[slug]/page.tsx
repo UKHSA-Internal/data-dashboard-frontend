@@ -28,31 +28,40 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
   )
 
   return (
-    <View backLink="/whats-new-v2" lastUpdated={date_posted}>
-      <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>
-        <Trans
-          i18nKey="entryCategory"
-          t={t}
-          components={[<span key={0} className="govuk-visually-hidden" />]}
-          values={{ value: badge.text }}
-        />
-      </div>
-      <Trans
-        i18nKey="entryTitle"
-        t={t}
-        components={[
-          <h1 className="govuk-heading-xl govuk-!-margin-bottom-6" key={0}>
-            <span className="govuk-visually-hidden" key={0} />
-          </h1>,
-        ]}
-        values={{ value: title }}
-      />
-
+    <View backLink="/whats-new-v2">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <div className="govuk-body-s">
-            <RichText>{body}</RichText>
+          <small className="govuk-caption-m govuk-!-margin-bottom-3">
+            <time dateTime={date_posted}>
+              <Trans
+                i18nKey="entryDate"
+                t={t}
+                components={[<span key={0} className="govuk-visually-hidden" />]}
+                values={{ value: date_posted }}
+              />
+            </time>
+          </small>
+
+          <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>
+            <Trans
+              i18nKey="entryCategory"
+              t={t}
+              components={[<span key={0} className="govuk-visually-hidden" />]}
+              values={{ value: badge.text }}
+            />
           </div>
+
+          <Trans
+            i18nKey="entryTitle"
+            t={t}
+            components={[
+              <h1 className="govuk-heading-xl govuk-!-margin-bottom-6" key={0}>
+                <span className="govuk-visually-hidden" key={0} />
+              </h1>,
+            ]}
+            values={{ value: title }}
+          />
+          <RichText>{body}</RichText>
         </div>
       </div>
 

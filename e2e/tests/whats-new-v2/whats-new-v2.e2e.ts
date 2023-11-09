@@ -112,9 +112,6 @@ test.describe("What's new child page", () => {
     //   })
     //   await app.hasNoAccessibilityDefects()
     // })
-    await test.step('displays last updated date', async () => {
-      await whatsNewChildPage.hasLastUpdated()
-    })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()
     })
