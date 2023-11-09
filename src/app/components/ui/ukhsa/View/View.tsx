@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { ReactNode } from 'react'
 
 import { RichText } from '@/app/components/cms'
@@ -12,9 +13,10 @@ interface PageProps {
   description?: string
   children: ReactNode
   lastUpdated?: string
+  backLink?: string
 }
 
-export async function View({ heading, showWelcome, children, description, lastUpdated }: PageProps) {
+export async function View({ heading, showWelcome, children, description, lastUpdated, backLink }: PageProps) {
   const { t } = await useTranslation('common')
   const menu = await useMenu()
 
@@ -43,6 +45,12 @@ export async function View({ heading, showWelcome, children, description, lastUp
       </SideNav>
 
       <div className="w-full">
+        {backLink && (
+          <Link href={backLink} className="govuk-back-link">
+            Back
+          </Link>
+        )}
+
         {lastUpdated && (
           <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
         )}

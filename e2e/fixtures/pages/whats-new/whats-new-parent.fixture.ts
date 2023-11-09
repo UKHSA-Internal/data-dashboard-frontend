@@ -55,4 +55,8 @@ export class WhatsNewParentPage {
     await expect(heading).toBeVisible()
     await expect(this.page.getByText(body)).toBeVisible()
   }
+
+  async openChildPage(name: string) {
+    await this.page.getByText(name).click()
+  }
 }
