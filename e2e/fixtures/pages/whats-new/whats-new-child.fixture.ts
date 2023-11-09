@@ -8,16 +8,12 @@ export class WhatsNewChildPage {
     this.page = page
   }
 
-  async gotoFirst() {
+  async goto() {
     await this.page.goto('/whats-new/soft-launch-of-the-ukhsa-data-dashboard')
   }
 
-  async gotoSecond() {
-    await this.page.goto('/whats-new/other-respiratory-viruses-data-added-to-the-homepage')
-  }
-
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/What's new | UKHSA data dashboard/)
+    await expect(this.page).toHaveTitle(/What's new child | UKHSA data dashboard/)
   }
 
   async hasHeading(name: string) {
@@ -36,5 +32,9 @@ export class WhatsNewChildPage {
     const heading = this.page.getByRole('heading', { level: 2, name: /Additional information/ })
 
     show ? await expect(heading).toBeVisible() : await expect(heading).toBeHidden()
+  }
+
+  async clickBackButton() {
+    await this.page.getByRole('link', { name: 'Back', exact: true }).click()
   }
 }

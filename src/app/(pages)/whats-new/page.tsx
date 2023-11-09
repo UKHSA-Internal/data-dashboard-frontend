@@ -5,7 +5,6 @@ import { Metadata } from 'next'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
-import ReactMarkdown from 'react-markdown'
 import { SafeParseSuccess } from 'zod'
 
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
@@ -14,7 +13,6 @@ import { RichText } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
-import { coreComponents, corePlugins } from '@/app/utils/rich-text.utils'
 
 export const dynamic = 'force-dynamic'
 
@@ -138,15 +136,11 @@ export default async function WhatsNewParentPage() {
                             </div>
                           </h3>
                           <div className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-3">
-                            <ReactMarkdown rehypePlugins={corePlugins} components={coreComponents}>
-                              {item.body}
-                            </ReactMarkdown>
+                            <RichText>{item.body}</RichText>
                           </div>
                           {item.additional_details && (
                             <Details label={t('additionalInformationLabel')}>
-                              <ReactMarkdown rehypePlugins={corePlugins} components={coreComponents}>
-                                {item.additional_details}
-                              </ReactMarkdown>
+                              <RichText>{item.additional_details}</RichText>
                             </Details>
                           )}
                         </li>

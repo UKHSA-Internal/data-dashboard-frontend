@@ -37,7 +37,7 @@ test.describe('Smoke tests', () => {
       await whatsNewParentPage.hasHeading()
     })
     await test.step('loads the "whats new" child page', async () => {
-      await whatsNewChildPage.gotoFirst()
+      await whatsNewChildPage.goto()
       await whatsNewChildPage.hasHeading('Soft launch of the UKHSA data dashboard')
     })
     await test.step('loads the "Accessibility statement" page', async () => {

@@ -36,7 +36,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   {
     id: 22,
     meta: {
-      seo_title: "What's new | UKHSA data dashboard",
+      seo_title: "What's new child | UKHSA data dashboard",
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/22/',
@@ -67,7 +67,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   {
     id: 23,
     meta: {
-      seo_title: "What's new | UKHSA data dashboard",
+      seo_title: "What's new child | UKHSA data dashboard",
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/23/',
@@ -98,7 +98,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   {
     id: 24,
     meta: {
-      seo_title: "What's new | UKHSA data dashboard",
+      seo_title: "What's new child | UKHSA data dashboard",
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/24/',
