@@ -61,6 +61,8 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
             ]}
             values={{ value: title }}
           />
+
+          <span className="govuk-visually-hidden">{t('entryDescription')}</span>
           <RichText>{body}</RichText>
         </div>
       </div>

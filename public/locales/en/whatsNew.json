@@ -3,5 +3,6 @@
   "entryDate": "<0>Entry date: </0>{{value, dateShort}}",
   "entryCategory": "<0>Entry category: </0><1>{{value}}</1>",
   "entryTitle": "<0><0>Entry title: </0><1>{{value}}</1></0>",
+  "entryDescription": "Entry descrpition: ",
   "additionalInformationLabel": "Additional information"
 }
