@@ -37,6 +37,16 @@ export class WhatsNewParentPage {
     }
   }
 
+  async isSortedByDate(expectedDates: string[]) {
+    const dates = this.page.getByRole('time')
+
+    let idx = 0
+    for (const date of expectedDates) {
+      await expect(dates.nth(idx)).toHaveText(date)
+      idx++
+    }
+  }
+
   async checkForEntry({
     title,
     category,

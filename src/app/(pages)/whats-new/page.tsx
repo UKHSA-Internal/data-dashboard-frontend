@@ -63,7 +63,9 @@ export default async function WhatsNewParentPage() {
   })
 
   // Convert the grouped dates into an array of lists ordered by month
-  const entriesByDate = Object.entries(datesByMonth)
+  const entriesByDate = Object.entries(datesByMonth).sort(
+    ([first], [second]) => new Date(second).valueOf() - new Date(first).valueOf()
+  )
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
@@ -73,6 +75,10 @@ export default async function WhatsNewParentPage() {
 
           <ul className="govuk-list govuk-!-margin-top-7" aria-label={title}>
             {entriesByDate.map(([date, entries], idx) => {
+              const entriesNewest = entries.sort(
+                (first, second) => new Date(second.date_posted).valueOf() - new Date(first.date_posted).valueOf()
+              )
+
               return (
                 <li
                   key={date}
@@ -94,7 +100,7 @@ export default async function WhatsNewParentPage() {
                     </h2>
                   </header>
                   <ul className="govuk-list govuk-!-margin-0">
-                    {entries.map((item, entryIndex) => {
+                    {entriesNewest.map((item, entryIndex) => {
                       return (
                         <li
                           key={item.id}
