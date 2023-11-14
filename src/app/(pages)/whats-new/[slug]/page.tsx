@@ -7,10 +7,12 @@ import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.WhatsNewChild)
+  } = await getPageBySlug(slug, PageType.WhatsNewChild, { fields: '*' })
 
   return {
     title: seo_title,
@@ -21,7 +23,9 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function WhatsNewChildPage({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await useTranslation('whatsNew')
 
-  const { title, body, badge, additional_details, date_posted } = await getPageBySlug(slug, PageType.WhatsNewChild)
+  const { title, body, badge, additional_details, date_posted } = await getPageBySlug(slug, PageType.WhatsNewChild, {
+    fields: '*',
+  })
 
   return (
     <View backLink="/whats-new">

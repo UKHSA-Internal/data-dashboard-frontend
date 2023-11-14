@@ -51,9 +51,17 @@ export const whatsNewResponseSchema = responseSchema.extend({
   ),
 })
 
-export const getPages = async (type?: PageType) => {
+// TODO: Unit tests need re-working in CDD-1495
+export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
   const params = new URLSearchParams()
   if (type) params.set('type', type)
+
+  if (additionalParams) {
+    for (const key in additionalParams) {
+      params.append(key, additionalParams[key])
+    }
+  }
+
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
     logger.info(`GET success pages/?${params.toString()}`)
