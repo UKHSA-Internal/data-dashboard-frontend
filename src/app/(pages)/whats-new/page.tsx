@@ -13,6 +13,7 @@ import { RichText } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
+import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
@@ -40,6 +41,7 @@ export default async function WhatsNewParentPage() {
   const whatsNewEntries = await getWhatsNewPages()
 
   if (!whatsNewEntries.success) {
+    logger.info(whatsNewEntries.error.message)
     return redirect('/error')
   }
 
@@ -121,14 +123,16 @@ export default async function WhatsNewParentPage() {
                             </small>
 
                             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 whitespace-nowrap">
-                              <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
-                                <Trans
-                                  i18nKey="entryCategory"
-                                  t={t}
-                                  components={[<span key={0} className="govuk-visually-hidden" />]}
-                                  values={{ value: item.badge.text }}
-                                />
-                              </div>
+                              {item.badge ? (
+                                <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
+                                  <Trans
+                                    i18nKey="entryCategory"
+                                    t={t}
+                                    components={[<span key={0} className="govuk-visually-hidden" />]}
+                                    values={{ value: item.badge.text }}
+                                  />
+                                </div>
+                              ) : null}
                               <Trans
                                 i18nKey="entryTitle"
                                 t={t}

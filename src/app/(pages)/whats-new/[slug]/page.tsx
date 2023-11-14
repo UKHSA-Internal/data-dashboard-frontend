@@ -42,14 +42,16 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
             </time>
           </small>
 
-          <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>
-            <Trans
-              i18nKey="entryCategory"
-              t={t}
-              components={[<span key={0} className="govuk-visually-hidden" />]}
-              values={{ value: badge.text }}
-            />
-          </div>
+          {badge ? (
+            <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>
+              <Trans
+                i18nKey="entryCategory"
+                t={t}
+                components={[<span key={0} className="govuk-visually-hidden" />]}
+                values={{ value: badge.text }}
+              />
+            </div>
+          ) : null}
 
           <Trans
             i18nKey="entryTitle"

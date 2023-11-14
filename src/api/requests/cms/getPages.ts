@@ -43,10 +43,12 @@ export const whatsNewResponseSchema = responseSchema.extend({
       body: z.string(),
       date_posted: z.string(),
       additional_details: z.string(),
-      badge: z.object({
-        text: z.string(),
-        colour: z.string().toLowerCase(),
-      }),
+      badge: z
+        .object({
+          text: z.string(),
+          colour: z.string().toLowerCase(),
+        })
+        .nullable(),
     })
   ),
 })
