@@ -2,6 +2,8 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { AreaSelector } from '@/app/components/cms'
+import { Details } from '@/app/components/ui/govuk'
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { renderCard } from '@/app/utils/cms.utils'
 
@@ -18,7 +20,12 @@ export async function generateMetadata({ params: { topic } }: { params: { topic:
   }
 }
 
-export default async function TopicPage({ params: { topic } }: { params: { topic: string } }) {
+interface TopicPageProps {
+  params: { topic: string }
+  searchParams: { areaType?: string; areaName?: string }
+}
+
+export default async function TopicPage({ params: { topic }, searchParams: { areaType, areaName } }: TopicPageProps) {
   const {
     title,
     body,
@@ -28,7 +35,15 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
   } = await getPageBySlug(topic, PageType.Topic)
 
   return (
-    <View heading={title} description={description} lastUpdated={lastUpdated}>
+    <View heading={`${title}${areaName ? ` in ${areaName}` : ''}`} description={description} lastUpdated={lastUpdated}>
+      <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+      <Details
+        open={Boolean(areaType)}
+        label="Select a nation, region or local authority"
+        className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+      >
+        <AreaSelector />
+      </Details>
       <Contents>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
