@@ -73,10 +73,12 @@ const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_pu
     type: z.literal('whats_new.WhatsNewChildEntry'),
   }),
   additional_details: z.string(),
-  badge: z.object({
-    text: z.string(),
-    colour: z.string().toLowerCase(),
-  }),
+  badge: z
+    .object({
+      text: z.string(),
+      colour: z.string().toLowerCase(),
+    })
+    .nullable(),
   date_posted: z.string(),
 })
 

@@ -4,7 +4,8 @@ test.describe('Smoke tests', () => {
   test('Navigates to all pages from the menu', async ({
     homePage,
     aboutPage,
-    whatsNewPage,
+    whatsNewParentPage,
+    whatsNewChildPage,
     covid19Page,
     influenzaPage,
     otherRespiratoryVirusesPage,
@@ -31,9 +32,13 @@ test.describe('Smoke tests', () => {
       await aboutPage.goto()
       await aboutPage.hasHeading()
     })
-    await test.step('loads the "whats new" page', async () => {
-      await whatsNewPage.goto()
-      await whatsNewPage.hasHeading()
+    await test.step('loads the "whats new" parent page', async () => {
+      await whatsNewParentPage.goto()
+      await whatsNewParentPage.hasHeading()
+    })
+    await test.step('loads the "whats new" child page', async () => {
+      await whatsNewChildPage.goto()
+      await whatsNewChildPage.hasHeading('Soft launch of the UKHSA data dashboard')
     })
     await test.step('loads the "Accessibility statement" page', async () => {
       await accessibilityStatementPage.goto()
