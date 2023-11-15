@@ -38,8 +38,17 @@ test.describe("What's new parent page", () => {
     await test.step('loads the page', async () => {
       await whatsNewParentPage.goto()
     })
-    await test.step('groups the entries by month', async () => {
-      await whatsNewParentPage.isListedByMonth(['September 2023', 'October 2023'])
+    await test.step('groups the entries into monthly sections', async () => {
+      await whatsNewParentPage.isListedByMonth(['October 2023', 'September 2023'])
+    })
+    await test.step('groups the entries within the sections by date posted with newest first', async () => {
+      await whatsNewParentPage.isSortedByDate([
+        'List of changes in the month of October 2023',
+        'Entry date: 5 October 2023',
+        'Entry date: 4 October 2023',
+        'List of changes in the month of September 2023',
+        'Entry date: 26 September 2023',
+      ])
     })
     await test.step('shows entry metadata', async () => {
       await whatsNewParentPage.checkForEntry({

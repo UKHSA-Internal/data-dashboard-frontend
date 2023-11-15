@@ -7,10 +7,12 @@ import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.WhatsNewChild)
+  } = await getPageBySlug(slug, PageType.WhatsNewChild, { fields: '*' })
 
   return {
     title: seo_title,
@@ -21,10 +23,12 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function WhatsNewChildPage({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await useTranslation('whatsNew')
 
-  const { title, body, badge, additional_details, date_posted } = await getPageBySlug(slug, PageType.WhatsNewChild)
+  const { title, body, badge, additional_details, date_posted } = await getPageBySlug(slug, PageType.WhatsNewChild, {
+    fields: '*',
+  })
 
   return (
-    <View backLink="/whats-new-v2">
+    <View backLink="/whats-new">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <small className="govuk-caption-m govuk-!-margin-bottom-3">
@@ -38,14 +42,16 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
             </time>
           </small>
 
-          <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>
-            <Trans
-              i18nKey="entryCategory"
-              t={t}
-              components={[<span key={0} className="govuk-visually-hidden" />]}
-              values={{ value: badge.text }}
-            />
-          </div>
+          {badge ? (
+            <div className={`govuk-tag govuk-tag--${badge.colour} govuk-!-margin-bottom-3`}>
+              <Trans
+                i18nKey="entryCategory"
+                t={t}
+                components={[<span key={0} className="govuk-visually-hidden" />]}
+                values={{ value: badge.text }}
+              />
+            </div>
+          ) : null}
 
           <Trans
             i18nKey="entryTitle"

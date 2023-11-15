@@ -9,11 +9,11 @@ export class WhatsNewChildPage {
   }
 
   async goto() {
-    await this.page.goto('/whats-new-v2/soft-launch-of-the-ukhsa-data-dashboard')
+    await this.page.goto('/whats-new/soft-launch-of-the-ukhsa-data-dashboard')
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/What's new | UKHSA data dashboard/)
+    await expect(this.page).toHaveTitle(/What's new child | UKHSA data dashboard/)
   }
 
   async hasHeading(name: string) {
