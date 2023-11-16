@@ -4,17 +4,17 @@ import { NextRequest, NextResponse } from 'next/server'
 import { client } from '@/api/api-utils'
 import { logger } from '@/lib/logger'
 
-export async function GET(req: NextRequest) {
-  const { searchParams } = new URL(req.headers.get('origin') || '')
+export async function POST(req: NextRequest) {
+  const body = await req.formData()
 
-  if (!searchParams.has('file_format')) {
+  if (!body.has('file_format')) {
     logger.info('bulk download api route handler - missing format')
     redirect('/error')
   }
 
   logger.info('Triggering bulk download')
 
-  const { data, error } = await client<string>(`bulkdownloads/v1?file_format=${searchParams.get('file_format')}`).catch(
+  const { data, error } = await client<string>(`bulkdownloads/v1?file_format=${body.get('file_format')}`).catch(
     (error) => {
       logger.info('bulkdownloads/v1 error', error)
       redirect('/error')
