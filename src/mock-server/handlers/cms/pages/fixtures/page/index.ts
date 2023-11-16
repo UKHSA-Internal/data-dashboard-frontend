@@ -1,5 +1,6 @@
 export { aboutPageMock } from './about'
 export { accessibilityStatementPageMock } from './accessibility-statement'
+export { bulkDownloadsPageMock } from './bulk-downloads'
 export { compliancePageMock } from './complaince'
 export { cookiesPageMock } from './cookies'
 export { covid19PageMock } from './covid-19'
