@@ -1,17 +1,22 @@
 import { PagesResponse } from '@/api/requests/cms/getPages'
 
-import { aboutPageMock } from './page/about'
-import { accessibilityStatementPageMock } from './page/accessibility-statement'
-import { compliancePageMock } from './page/complaince'
-import { cookiesPageMock } from './page/cookies'
-import { covid19PageMock } from './page/covid-19'
-import { dashboardMock } from './page/dashboard'
-import { howToUseThisDataPageMock } from './page/how-to-use-this-data'
-import { influenzaPageMock } from './page/influenza'
-import { mapsPageMock } from './page/maps'
-import { metricsChildMocks, metricsParentMock } from './page/metrics'
-import { otherRespiratoryVirusesPageMock } from './page/other-respiratory-viruses'
-import { whatsNewChildMocks, whatsNewParentMock, whatsNewV1PageMock } from './page/whats-new'
+import {
+  aboutPageMock,
+  accessibilityStatementPageMock,
+  bulkDownloadsPageMock,
+  compliancePageMock,
+  cookiesPageMock,
+  covid19PageMock,
+  dashboardMock,
+  howToUseThisDataPageMock,
+  influenzaPageMock,
+  mapsPageMock,
+  metricsChildMocks,
+  metricsParentMock,
+  otherRespiratoryVirusesPageMock,
+  whatsNewChildMocks,
+  whatsNewParentMock,
+} from './page'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -35,7 +40,7 @@ export const pagesWithHomeTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 4,
+    total_count: 7,
   },
   items: [
     {
@@ -49,18 +54,6 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: aboutPageMock.meta.first_published_at,
       },
       title: aboutPageMock.title,
-    },
-    {
-      id: whatsNewV1PageMock.id,
-      meta: {
-        type: whatsNewV1PageMock.meta.type,
-        detail_url: whatsNewV1PageMock.meta.detail_url,
-        html_url: whatsNewV1PageMock.meta.html_url,
-        slug: whatsNewV1PageMock.meta.slug,
-        show_in_menus: whatsNewV1PageMock.meta.show_in_menus,
-        first_published_at: whatsNewV1PageMock.meta.first_published_at,
-      },
-      title: whatsNewV1PageMock.title,
     },
     {
       id: mapsPageMock.id,
@@ -121,6 +114,18 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: compliancePageMock.meta.first_published_at,
       },
       title: compliancePageMock.title,
+    },
+    {
+      id: bulkDownloadsPageMock.id,
+      meta: {
+        type: bulkDownloadsPageMock.meta.type,
+        detail_url: bulkDownloadsPageMock.meta.detail_url,
+        html_url: bulkDownloadsPageMock.meta.html_url,
+        slug: bulkDownloadsPageMock.meta.slug,
+        show_in_menus: bulkDownloadsPageMock.meta.show_in_menus,
+        first_published_at: bulkDownloadsPageMock.meta.first_published_at,
+      },
+      title: bulkDownloadsPageMock.title,
     },
   ],
 }

@@ -5,7 +5,13 @@ import { logger } from '@/lib/logger'
 import { getPage, PageResponse } from './cms/getPage'
 import { getPages, PageType } from './cms/getPages'
 
-export const getPageBySlug = async <T extends PageType>(slug: string, type: T) => {
+// TODO: Add test coverage CDD-1494
+
+export const getPageBySlug = async <T extends PageType>(
+  slug: string,
+  type: T,
+  additionalParams?: Record<string, string>
+) => {
   try {
     if (!type) {
       throw new Error('No Page Type provided')
@@ -16,7 +22,7 @@ export const getPageBySlug = async <T extends PageType>(slug: string, type: T) =
     }
 
     // Fetch all of pages by type from the CMS
-    const pages = await getPages(type).catch((err) => {
+    const pages = await getPages(type, additionalParams).catch((err) => {
       logger.error(err)
       throw new Error(`Could not get pages with type ${type}`)
     })

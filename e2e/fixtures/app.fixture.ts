@@ -20,7 +20,6 @@ import {
   NotFoundPage,
   OtherRespiratoryVirusesPage,
   WhatsNewChildPage,
-  WhatsNewPage, // TODO: deprecate once v1 common page is unused
   WhatsNewParentPage,
 } from './index'
 
@@ -28,7 +27,6 @@ type Fixtures = {
   app: App
   homePage: HomePage
   aboutPage: AboutPage
-  whatsNewPage: WhatsNewPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
   covid19Page: Covid19Page
@@ -252,9 +250,6 @@ export const test = base.extend<Fixtures>({
   },
   aboutPage: async ({ page }, use) => {
     await use(new AboutPage(page))
-  },
-  whatsNewPage: async ({ page }, use) => {
-    await use(new WhatsNewPage(page))
   },
   whatsNewParentPage: async ({ page }, use) => {
     await use(new WhatsNewParentPage(page))

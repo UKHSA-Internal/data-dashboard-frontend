@@ -13,13 +13,14 @@ import { RichText } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
+import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('whats-new-v2', PageType.WhatsNewParent)
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
   return {
     title: seo_title,
@@ -35,11 +36,12 @@ export default async function WhatsNewParentPage() {
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug('whats-new-v2', PageType.WhatsNewParent)
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
   const whatsNewEntries = await getWhatsNewPages()
 
   if (!whatsNewEntries.success) {
+    logger.info(whatsNewEntries.error.message)
     return redirect('/error')
   }
 
@@ -63,7 +65,9 @@ export default async function WhatsNewParentPage() {
   })
 
   // Convert the grouped dates into an array of lists ordered by month
-  const entriesByDate = Object.entries(datesByMonth)
+  const entriesByDate = Object.entries(datesByMonth).sort(
+    ([first], [second]) => new Date(second).valueOf() - new Date(first).valueOf()
+  )
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
@@ -73,6 +77,10 @@ export default async function WhatsNewParentPage() {
 
           <ul className="govuk-list govuk-!-margin-top-7" aria-label={title}>
             {entriesByDate.map(([date, entries], idx) => {
+              const entriesNewest = entries.sort(
+                (first, second) => new Date(second.date_posted).valueOf() - new Date(first.date_posted).valueOf()
+              )
+
               return (
                 <li
                   key={date}
@@ -94,7 +102,7 @@ export default async function WhatsNewParentPage() {
                     </h2>
                   </header>
                   <ul className="govuk-list govuk-!-margin-0">
-                    {entries.map((item, entryIndex) => {
+                    {entriesNewest.map((item, entryIndex) => {
                       return (
                         <li
                           key={item.id}
@@ -115,19 +123,21 @@ export default async function WhatsNewParentPage() {
                             </small>
 
                             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 whitespace-nowrap">
-                              <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
-                                <Trans
-                                  i18nKey="entryCategory"
-                                  t={t}
-                                  components={[<span key={0} className="govuk-visually-hidden" />]}
-                                  values={{ value: item.badge.text }}
-                                />
-                              </div>
+                              {item.badge ? (
+                                <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
+                                  <Trans
+                                    i18nKey="entryCategory"
+                                    t={t}
+                                    components={[<span key={0} className="govuk-visually-hidden" />]}
+                                    values={{ value: item.badge.text }}
+                                  />
+                                </div>
+                              ) : null}
                               <Trans
                                 i18nKey="entryTitle"
                                 t={t}
                                 components={[
-                                  <Link key={0} className="whitespace-normal" href={`whats-new-v2/${item.meta.slug}`}>
+                                  <Link key={0} className="whitespace-normal" href={`whats-new/${item.meta.slug}`}>
                                     <span className="govuk-visually-hidden" key={1} />
                                   </Link>,
                                 ]}

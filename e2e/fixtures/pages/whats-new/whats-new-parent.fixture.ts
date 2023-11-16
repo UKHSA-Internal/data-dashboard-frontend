@@ -9,7 +9,7 @@ export class WhatsNewParentPage {
   }
 
   async goto() {
-    await this.page.goto('/whats-new-v2')
+    await this.page.goto('/whats-new')
   }
 
   async hasMetadata() {
@@ -34,6 +34,16 @@ export class WhatsNewParentPage {
     for (const heading of await headings) {
       await expect(heading).toHaveText(`List of changes in the month of ${months[index]}`)
       index++
+    }
+  }
+
+  async isSortedByDate(expectedDates: string[]) {
+    const dates = this.page.getByRole('time')
+
+    let idx = 0
+    for (const date of expectedDates) {
+      await expect(dates.nth(idx)).toHaveText(date)
+      idx++
     }
   }
 
