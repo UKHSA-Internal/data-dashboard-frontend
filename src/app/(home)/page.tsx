@@ -5,7 +5,6 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { renderSection } from '@/app/utils/cms.utils'
 
-import { BulkDownload } from '../components/cms'
 import { HOMEPAGE_CMS_SLUG } from '../constants/app.constants'
 
 export const dynamic = 'force-dynamic'
@@ -31,7 +30,6 @@ export default async function HomePage() {
 
   return (
     <View heading={title} description={description} showWelcome>
-      <BulkDownload />
       {body.map(renderSection)}
       <RelatedLinks>
         {relatedLinks.map(({ title, body, url, id }) => (
