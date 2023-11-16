@@ -7,6 +7,7 @@ import { logger } from '@/lib/logger'
 import {
   aboutPageMock,
   accessibilityStatementPageMock,
+  bulkDownloadsPageMock,
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
@@ -17,19 +18,18 @@ import {
   otherRespiratoryVirusesPageMock,
   whatsNewChildMocks,
   whatsNewParentMock,
-  whatsNewV1PageMock,
 } from './fixtures/page'
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [dashboardMock.id]: dashboardMock,
   [aboutPageMock.id]: aboutPageMock,
-  [whatsNewV1PageMock.id]: whatsNewV1PageMock, // TODO: Deprecate once v2 whats-new is live
   [mapsPageMock.id]: mapsPageMock,
   [howToUseThisDataPageMock.id]: howToUseThisDataPageMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
   [compliancePageMock.id]: compliancePageMock,
+  [bulkDownloadsPageMock.id]: bulkDownloadsPageMock,
   [aboutPageMock.id]: aboutPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,

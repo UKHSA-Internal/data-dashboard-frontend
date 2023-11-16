@@ -45,17 +45,27 @@ export const whatsNewResponseSchema = responseSchema.extend({
       body: z.string(),
       date_posted: z.string(),
       additional_details: z.string(),
-      badge: z.object({
-        text: z.string(),
-        colour: z.string().toLowerCase(),
-      }),
+      badge: z
+        .object({
+          text: z.string(),
+          colour: z.string().toLowerCase(),
+        })
+        .nullable(),
     })
   ),
 })
 
-export const getPages = async (type?: PageType) => {
+// TODO: Unit tests need re-working in CDD-1495
+export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
   const params = new URLSearchParams()
   if (type) params.set('type', type)
+
+  if (additionalParams) {
+    for (const key in additionalParams) {
+      params.append(key, additionalParams[key])
+    }
+  }
+
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
     logger.info(`GET success pages/?${params.toString()}`)
