@@ -33,7 +33,7 @@ const plots: RequestBody['plots'] = [
   },
 ]
 
-describe('POST /api/chart/export', () => {
+describe('POST /api/download/chart', () => {
   test('Downloads the requested chart in csv format', async () => {
     const formData = new FormData()
     formData.set('format', 'csv')
