@@ -38,6 +38,7 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
       slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
     },
     { title: 'About', slug: '/about' },
+    { title: 'Bulk downloads', slug: '/bulk-downloads' },
     { title: "What's new", slug: '/whats-new' },
   ])
 })
