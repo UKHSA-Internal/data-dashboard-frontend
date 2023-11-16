@@ -1,18 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { client } from '@/api/api-utils'
 import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
-
-export async function GET(req: NextRequest) {
-  console.log('IN API ROUTE BULKKKK')
-
-  const { data } = await client<string>('bulkdownloads/v1?file_format=csv')
-
-  return new NextResponse(data, {
-    headers: { 'content-type': 'text/csv', 'content-disposition': 'attachment; filename=data.csv' },
-  })
-}
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
