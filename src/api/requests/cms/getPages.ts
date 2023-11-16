@@ -13,6 +13,8 @@ export enum PageType {
   Topic = 'topic.TopicPage',
   WhatsNewParent = 'whats_new.WhatsNewParentPage',
   WhatsNewChild = 'whats_new.WhatsNewChildEntry',
+  MetricsParent = 'metrics.MetricsParentPage',
+  MetricsChild = 'metrics.MetricsChildEntry',
 }
 
 const page = z.object({

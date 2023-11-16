@@ -20,6 +20,10 @@ export type PageResponse<T> = T extends PageType.Home
   ? z.infer<typeof WithWhatsNewParentData>
   : T extends PageType.WhatsNewChild
   ? z.infer<typeof WithWhatsNewChildData>
+  : T extends PageType.MetricsParent
+  ? z.infer<typeof WithMetricsParentData>
+  : T extends PageType.MetricsChild
+  ? z.infer<typeof WithMetricsChildData>
   : never
 
 const SharedPageData = z.object({
@@ -80,12 +84,30 @@ const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_pu
   date_posted: z.string(),
 })
 
+const WithMetricsParentData = SharedPageData.extend({
+  body: z.string(),
+  meta: Meta.extend({
+    type: z.literal('metrics.MetricsParentPage'),
+  }),
+})
+
+const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend({
+  meta: Meta.extend({
+    type: z.literal('metrics.MetricsChildEntry'),
+  }),
+  description: z.string(),
+  category: z.string(),
+  topic: z.string(),
+  apiName: z.string(),
+})
+
 export const responseSchema = z.union([
   WithHomeData,
   WithTopicData,
   WithCommonData,
   WithWhatsNewParentData,
   WithWhatsNewChildData,
+  WithMetricsParentData,
 ])
 
 export const getPage = async <T extends PageType>(id: number) => {
