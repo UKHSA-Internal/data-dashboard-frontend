@@ -15,7 +15,7 @@ export async function BulkDownload() {
           <path fill="currentColor" d="M3 7.414 4.414 6l4.696 4.696-1.414 1.414z" />
           <path fill="currentColor" d="M7.168 11.574 7.742 11l.889.889-.574.574z" />
         </svg>
-        Download (csv)
+        Download (zip)
       </button>
     </form>
   )
