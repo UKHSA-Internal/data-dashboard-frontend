@@ -55,6 +55,18 @@ export const whatsNewResponseSchema = responseSchema.extend({
   ),
 })
 
+export const metricsResponseSchema = responseSchema.extend({
+  items: z.array(
+    page.extend({
+      description: z.string(),
+      category: z.string(),
+      topic: z.string(),
+      apiName: z.string(),
+      last_published_at: z.string(),
+    })
+  ),
+})
+
 // TODO: Unit tests need re-working in CDD-1495
 export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
   const params = new URLSearchParams()
@@ -68,6 +80,7 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
 
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`Data returning from getPages: ${data}, Length: ${data?.items.length} ${data?.items[0].title}`)
     logger.info(`GET success pages/?${params.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
@@ -89,5 +102,21 @@ export const getWhatsNewPages = async () => {
   } catch (error) {
     logger.error(error)
     return whatsNewResponseSchema.safeParse(error)
+  }
+}
+
+export type MetricsPagesResponse = z.infer<typeof metricsResponseSchema>
+
+export const getMetricsPages = async () => {
+  const params = new URLSearchParams()
+  params.set('type', PageType.MetricsChild)
+  params.set('fields', '*')
+  try {
+    const { data } = await client<MetricsPagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`GET success pages/?${params.toString()}`)
+    return metricsResponseSchema.safeParse(data)
+  } catch (error) {
+    logger.error(error)
+    return metricsResponseSchema.safeParse(error)
   }
 }
