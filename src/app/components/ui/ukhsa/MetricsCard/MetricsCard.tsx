@@ -23,7 +23,7 @@ export function MetricsCard({ title, slug, description, category, topic, apiName
         {description}
       </p>
       <div className="govuk-summary-card__content">
-        <dl className="govuk-summary-list govuk-summary-list--no-border">
+        <dl className="govuk-summary-list">
           <div className="govuk-summary-list__row">
             <dt className="govuk-summary-list__key govuk-body-s">Category</dt>
             <dd className="govuk-summary-list__value govuk-body-s">{category}</dd>

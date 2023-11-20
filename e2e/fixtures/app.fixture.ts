@@ -257,6 +257,7 @@ export const test = base.extend<Fixtures>({
   whatsNewChildPage: async ({ page }, use) => {
     await use(new WhatsNewChildPage(page))
   },
+
   covid19Page: async ({ page }, use) => {
     await use(new Covid19Page(page))
   },

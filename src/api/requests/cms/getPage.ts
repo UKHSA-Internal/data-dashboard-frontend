@@ -110,6 +110,7 @@ export const responseSchema = z.union([
   WithWhatsNewParentData,
   WithWhatsNewChildData,
   WithMetricsParentData,
+  WithMetricsChildData,
 ])
 
 export const getPage = async <T extends PageType>(id: number) => {
