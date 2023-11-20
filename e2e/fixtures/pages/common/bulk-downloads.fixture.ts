@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 import * as fs from 'fs'
 
-import { downloadsCsvFixture } from '@/mock-server/handlers/bulkdownloads/fixtures/downloads-csv'
+import { bulkDownloadZip } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
 
 export class BulkDownloadsPage {
   readonly page: Page
@@ -53,7 +53,7 @@ export class BulkDownloadsPage {
 
     if (path) {
       const file = fs.readFileSync(path)
-      expect(file.toString()).toEqual(downloadsCsvFixture)
+      expect(file.toString()).toEqual(bulkDownloadZip)
     }
   }
 }

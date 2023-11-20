@@ -23,10 +23,10 @@ export async function POST(req: NextRequest) {
 
   if (error || !data) {
     logger.info('bulk download api route handler error', error)
-    redirect('/error')
+    return redirect('/error')
   }
 
   return new NextResponse(data, {
-    headers: { 'content-type': 'text/csv', 'content-disposition': 'attachment; filename=data.csv' },
+    headers: { 'content-type': 'application/zip', 'content-disposition': 'attachment; filename=bulk-download.zip' },
   })
 }

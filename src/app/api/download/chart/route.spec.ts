@@ -55,6 +55,7 @@ describe('POST /api/download/chart', () => {
 
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
+    expect(res.headers.get('content-type')).toEqual('text/csv')
     expect(await res.text()).toEqual(downloadsCsvFixture)
   })
 
@@ -79,6 +80,7 @@ describe('POST /api/download/chart', () => {
 
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
+    expect(res.headers.get('content-type')).toEqual('text/json')
     expect(await res.json()).toEqual(downloadsJsonFixture)
   })
 
@@ -101,6 +103,7 @@ describe('POST /api/download/chart', () => {
 
     const res = await POST(req)
 
+    expect(res.headers.get('content-type')).toEqual(null)
     expect(logger.error).toHaveBeenCalledWith(
       new z.ZodError([
         {
@@ -134,6 +137,7 @@ describe('POST /api/download/chart', () => {
 
     const res = await POST(req)
 
+    expect(res.headers.get('content-type')).toEqual(null)
     expect(logger.error).toHaveBeenCalledWith('Proxied request to /api/downloads/v2 failed')
     expect(res.status).toBe(301)
   })
@@ -160,5 +164,6 @@ test('returns status 301 when the formData is not a string', async () => {
 
   const res = await POST(req)
 
+  expect(res.headers.get('content-type')).toEqual(null)
   expect(res.status).toBe(301)
 })
