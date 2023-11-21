@@ -10,21 +10,17 @@ import type { PageType } from './getPages'
  * CMS Page endpoint
  */
 
-export type PageResponse<T> = T extends PageType.Home
-  ? z.infer<typeof WithHomeData>
-  : T extends PageType.Topic
-  ? z.infer<typeof WithTopicData>
-  : T extends PageType.Common
-  ? z.infer<typeof WithCommonData>
-  : T extends PageType.WhatsNewParent
-  ? z.infer<typeof WithWhatsNewParentData>
-  : T extends PageType.WhatsNewChild
-  ? z.infer<typeof WithWhatsNewChildData>
-  : T extends PageType.MetricsParent
-  ? z.infer<typeof WithMetricsParentData>
-  : T extends PageType.MetricsChild
-  ? z.infer<typeof WithMetricsChildData>
-  : never
+export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTypeToDataMap[T]> : never
+
+type PageTypeToDataMap = {
+  [PageType.Home]: typeof WithHomeData
+  [PageType.Topic]: typeof WithTopicData
+  [PageType.Common]: typeof WithCommonData
+  [PageType.WhatsNewParent]: typeof WithWhatsNewParentData
+  [PageType.WhatsNewChild]: typeof WithWhatsNewChildData
+  [PageType.MetricsParent]: typeof WithMetricsParentData
+  [PageType.MetricsChild]: typeof WithMetricsChildData
+}
 
 const SharedPageData = z.object({
   id: z.number(),

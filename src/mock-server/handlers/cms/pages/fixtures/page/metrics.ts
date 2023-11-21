@@ -93,7 +93,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     },
     title: 'New deaths within 60 days of a positive test rate by death date',
     shortText:
-      'Rate per 100,000 people of the daily number of people who either died within 60 days of being identified as a COVID-19 case, or died more than 60 days after being identified as a case and have COVID-19 mentioned on their death certificate. Data are shown by date of death.',
+      'Rate per 100,000 people of the daily number of people who died within 60 days of being identified as a COVID-19 case.',
     definition:
       '<p>This metric shows the count of reported new cases in the last 7 days.</p><p>New cases are reported by specimen date - the date the first sample that identified the infection was taken from an individual.</p>',
     rationale:
@@ -130,8 +130,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       },
     },
     title: 'New PCR tests by publish date',
-    shortText:
-      'Total number of cases since the start of the pandemic. Data are shown by the date the sample was taken from the person being tested.',
+    shortText: 'Total number of cases since the start of the pandemic.',
     definition:
       '<p>This metric shows the count of reported new cases in the last 7 days.</p><p>New cases are reported by specimen date - the date the first sample that identified the infection was taken from an individual.</p>',
     rationale:
@@ -168,8 +167,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       },
     },
     title: 'New people vaccinated with a third dose by publish date',
-    shortText:
-      'Daily numbers of new people who have received a 3rd dose vaccination. These are currently offered to people over 12 with severely weakened immune systems. Unlike boosters, third doses are considered part of your primary vaccination. Data are shown by the date the figures appeared in the published totals.',
+    shortText: 'Daily numbers of new people who have received a 3rd dose vaccination.',
     definition:
       '<p>This metric shows the count of reported new cases in the last 7 days.</p><p>New cases are reported by specimen date - the date the first sample that identified the infection was taken from an individual.</p>',
     rationale:
