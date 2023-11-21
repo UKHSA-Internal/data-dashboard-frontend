@@ -7,7 +7,7 @@ test('renders MetricsCard', async () => {
     await MetricsCard({
       title: 'Test content',
       slug: 'test',
-      description: 'Description for test content card',
+      shortText: 'Description for test content card',
       category: 'Healthcare',
       topic: 'COVID-19',
       apiName: 'test_apiname',
