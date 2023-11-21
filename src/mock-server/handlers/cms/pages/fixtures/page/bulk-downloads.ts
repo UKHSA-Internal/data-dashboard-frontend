@@ -10,7 +10,7 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Common> = {
     slug: 'bulk-downloads',
     show_in_menus: true,
     seo_title: 'Bulk downloads | UKHSA data dashboard',
-    search_description: '',
+    search_description: 'Mocked bulk downloads page description',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
     parent: {
