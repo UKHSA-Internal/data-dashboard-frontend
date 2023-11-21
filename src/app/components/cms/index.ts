@@ -1,3 +1,4 @@
+export * from './BulkDownload/BulkDownload'
 export * from './Chart/Chart'
 export * from './ChartRowCard/ChartRowCard'
 export * from './Download/Download'

@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RichText } from '@/app/components/cms'
+import { BulkDownload, RichText } from '@/app/components/cms'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 
 export const dynamic = 'force-dynamic'
@@ -26,7 +26,7 @@ export default async function BulkDownloads() {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
-          {/* TODO: Bulk downloads component here */}
+          <BulkDownload />
         </div>
       </div>
 
