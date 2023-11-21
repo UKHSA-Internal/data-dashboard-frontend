@@ -83,7 +83,6 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
 
   try {
     const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
-    logger.info(`Data returning from getPages: ${data}, Length: ${data?.items.length} ${data?.items[0].title}`)
     logger.info(`GET success pages/?${params.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {

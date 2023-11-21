@@ -47,16 +47,16 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
               </dl>
             </ContentsItem>
             <ContentsItem heading={'Definition'}>
-              <RichText>{definition}</RichText>
+              {definition ? <RichText>{definition}</RichText> : '<p>No definition available</p>'}
             </ContentsItem>
             <ContentsItem heading={'Rationale'}>
-              <RichText>{rationale}</RichText>
+              {rationale ? <RichText>{rationale}</RichText> : '<p>No rationale available</p>'}
             </ContentsItem>
             <ContentsItem heading={'Methodology'}>
-              <RichText>{methodology}</RichText>
+              {methodology ? <RichText>{methodology}</RichText> : '<p>No methodology available</p>'}
             </ContentsItem>
             <ContentsItem heading={'Caveats'}>
-              <RichText>{caveats}</RichText>
+              {caveats ? <RichText>{caveats}</RichText> : '<p>No caveats available</p>'}
             </ContentsItem>
           </Contents>
         </div>

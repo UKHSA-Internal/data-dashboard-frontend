@@ -1,4 +1,7 @@
 import Link from 'next/link'
+import { Trans } from 'react-i18next/TransWithoutContext'
+
+import { useTranslation } from '@/app/i18n'
 
 interface MetricsCardProps {
   title: string
@@ -9,19 +12,39 @@ interface MetricsCardProps {
   apiName: string
 }
 
-export function MetricsCard({ title, slug, shortText, category, topic, apiName }: MetricsCardProps) {
+export async function MetricsCard({ title, slug, shortText, category, topic, apiName }: MetricsCardProps) {
+  const { t } = await useTranslation('metrics')
+
   return (
     <div className="govuk-summary-card">
       <div className="govuk-summary-card__title-wrapper">
         <h2 className="govuk-summary-card__title">
-          <Link className="govuk-heading-s govuk-!-margin-0 no-underline" href={`metrics/${slug}`}>
-            {title}
-          </Link>
+          <Trans
+            t={t}
+            i18nKey="metricTitle"
+            components={[
+              <Link key={0} className="govuk-heading-s govuk-!-margin-0 no-underline" href={`metrics/${slug}`}>
+                <span className="govuk-visually-hidden" />
+              </Link>,
+            ]}
+            values={{ value: title }}
+          />
         </h2>
       </div>
-      <p className="govuk-body-s govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-top-3 govuk-!-margin-bottom-0">
-        {shortText}
-      </p>
+      <Trans
+        t={t}
+        i18nKey="metricDescription"
+        components={[
+          <p
+            key={0}
+            className="govuk-body-s govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-top-3 govuk-!-margin-bottom-0"
+          >
+            <span className="govuk-visually-hidden" />
+          </p>,
+        ]}
+        values={{ value: shortText }}
+      />
+
       <div className="govuk-summary-card__content">
         <dl className="govuk-summary-list">
           <div className="govuk-summary-list__row">
