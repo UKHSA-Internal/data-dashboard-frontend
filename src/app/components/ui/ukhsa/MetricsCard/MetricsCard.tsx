@@ -3,13 +3,13 @@ import Link from 'next/link'
 interface MetricsCardProps {
   title: string
   slug: string
-  description: string
+  shortText: string
   category: string
   topic: string
   apiName: string
 }
 
-export function MetricsCard({ title, slug, description, category, topic, apiName }: MetricsCardProps) {
+export function MetricsCard({ title, slug, shortText, category, topic, apiName }: MetricsCardProps) {
   return (
     <div className="govuk-summary-card">
       <div className="govuk-summary-card__title-wrapper">
@@ -20,7 +20,7 @@ export function MetricsCard({ title, slug, description, category, topic, apiName
         </h2>
       </div>
       <p className="govuk-body-s govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-top-3 govuk-!-margin-bottom-0">
-        {description}
+        {shortText}
       </p>
       <div className="govuk-summary-card__content">
         <dl className="govuk-summary-list">

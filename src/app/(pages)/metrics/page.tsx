@@ -33,13 +33,13 @@ export default async function MetricsParentPage() {
           <RichText>{body}</RichText>
 
           <div className="govuk-!-margin-top-7" aria-label={title}>
-            {items.map(({ id, title, meta, description, category, topic, apiName }) => {
+            {items.map(({ id, title, meta, shortText, category, topic, apiName }) => {
               return (
                 <MetricsCard
                   key={id}
                   title={title}
                   slug={meta.slug}
-                  description={description}
+                  shortText={shortText}
                   category={category}
                   topic={topic}
                   apiName={apiName}
