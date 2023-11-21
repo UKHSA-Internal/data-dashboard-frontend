@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
@@ -6,6 +7,17 @@ import { RichText } from '@/app/components/cms'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { MetricsCard } from '@/app/components/ui/ukhsa/MetricsCard/MetricsCard'
 import { logger } from '@/lib/logger'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const {
+    meta: { seo_title, search_description },
+  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
+
+  return {
+    title: seo_title,
+    description: search_description,
+  }
+}
 
 export default async function MetricsParentPage() {
   const {

@@ -1,27 +1,22 @@
-// import { Metadata } from 'next'
+import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { Contents, ContentsItem, View } from '@/app/components/ui/ukhsa'
-// import { useTranslation } from '@/app/i18n'
 
-// export const dynamic = 'force-dynamic'
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+  const {
+    meta: { seo_title, search_description },
+  } = await getPageBySlug(slug, PageType.MetricsChild, { fields: '*' })
 
-// export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
-//   const {
-//     meta: { seo_title, search_description },
-//   } = await getPageBySlug(slug, PageType.MetricsChild, { fields: '*' })
-
-//   return {
-//     title: seo_title,
-//     description: search_description,
-//   }
-// }
+  return {
+    title: seo_title,
+    description: search_description,
+  }
+}
 
 export default async function MetricsChildPage({ params: { slug } }: { params: { slug: string } }) {
-  // const { t } = await useTranslation('whatsNew')
-
   const { title, definition, rationale, methodology, caveats, category, topic, apiName, last_published_at } =
     await getPageBySlug(slug, PageType.MetricsChild)
 
