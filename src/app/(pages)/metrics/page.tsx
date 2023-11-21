@@ -38,7 +38,7 @@ export default async function MetricsParentPage() {
                 <MetricsCard
                   key={id}
                   title={title}
-                  slug={meta.slug}
+                  href={`metrics/${meta.slug}`}
                   shortText={shortText}
                   category={category}
                   topic={topic}

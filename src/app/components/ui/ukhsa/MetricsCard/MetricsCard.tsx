@@ -5,14 +5,14 @@ import { useTranslation } from '@/app/i18n'
 
 interface MetricsCardProps {
   title: string
-  slug: string
+  href: string
   shortText: string
   category: string
   topic: string
   apiName: string
 }
 
-export async function MetricsCard({ title, slug, shortText, category, topic, apiName }: MetricsCardProps) {
+export async function MetricsCard({ title, href, shortText, category, topic, apiName }: MetricsCardProps) {
   const { t } = await useTranslation('metrics')
 
   return (
@@ -23,7 +23,7 @@ export async function MetricsCard({ title, slug, shortText, category, topic, api
             t={t}
             i18nKey="metricTitle"
             components={[
-              <Link key={0} className="govuk-heading-s govuk-!-margin-0 no-underline" href={`metrics/${slug}`}>
+              <Link key={0} className="govuk-heading-s govuk-!-margin-0 no-underline" href={href}>
                 <span className="govuk-visually-hidden" />
               </Link>,
             ]}
