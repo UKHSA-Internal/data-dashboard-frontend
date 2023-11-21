@@ -6,7 +6,7 @@ test('renders MetricsCard', async () => {
   const { getByRole, getByText } = render(
     await MetricsCard({
       title: 'Test content',
-      slug: 'test',
+      href: 'metrics/test',
       shortText: 'Description for test content card',
       category: 'Healthcare',
       topic: 'COVID-19',
