@@ -55,10 +55,13 @@ export const whatsNewResponseSchema = responseSchema.extend({
   ),
 })
 
-export const metricsResponseSchema = responseSchema.extend({
+export const metricsChildResponseSchema = responseSchema.extend({
   items: z.array(
     page.extend({
-      description: z.string(),
+      shortText: z.string(),
+      definition: z.string(),
+      rationale: z.string(),
+      methodology: z.string(),
       category: z.string(),
       topic: z.string(),
       apiName: z.string(),
@@ -105,7 +108,7 @@ export const getWhatsNewPages = async () => {
   }
 }
 
-export type MetricsPagesResponse = z.infer<typeof metricsResponseSchema>
+export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
 export const getMetricsPages = async () => {
   const params = new URLSearchParams()
@@ -114,9 +117,9 @@ export const getMetricsPages = async () => {
   try {
     const { data } = await client<MetricsPagesResponse>(`pages/?${params.toString()}`)
     logger.info(`GET success pages/?${params.toString()}`)
-    return metricsResponseSchema.safeParse(data)
+    return metricsChildResponseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
-    return metricsResponseSchema.safeParse(error)
+    return metricsChildResponseSchema.safeParse(error)
   }
 }

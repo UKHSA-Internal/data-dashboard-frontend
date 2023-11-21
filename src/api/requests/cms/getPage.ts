@@ -97,7 +97,11 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
   meta: Meta.extend({
     type: z.literal('metrics.MetricsChildEntry'),
   }),
-  description: z.string(),
+  shortText: z.string(),
+  definition: z.string(),
+  rationale: z.string(),
+  methodology: z.string(),
+  caveats: z.string(),
   category: z.string(),
   topic: z.string(),
   apiName: z.string(),
