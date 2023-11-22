@@ -13,7 +13,8 @@ export class InfluenzaPage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Influenza | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Influenza | UKHSA data dashboard')
     await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
       'content',
       'Detailed summary of Influenza in circulation within the UK'
