@@ -11,7 +11,7 @@ import { logger } from '@/lib/logger'
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
+  } = await getPageBySlug('metrics', PageType.MetricsParent)
 
   return {
     title: seo_title,

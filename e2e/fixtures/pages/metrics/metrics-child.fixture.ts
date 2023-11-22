@@ -13,7 +13,8 @@ export class MetricsChildPage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Metrics child | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Metrics child | UKHSA data dashboard')
   }
 
   async hasHeading(name: string) {

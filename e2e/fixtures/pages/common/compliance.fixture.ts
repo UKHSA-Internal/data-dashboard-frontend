@@ -13,7 +13,8 @@ export class CompliancePage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Compliance | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Compliance | UKHSA data dashboard')
   }
 
   async hasHeading() {

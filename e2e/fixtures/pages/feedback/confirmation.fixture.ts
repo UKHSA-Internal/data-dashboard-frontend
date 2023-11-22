@@ -13,7 +13,8 @@ export class FeedbackConfirmationPage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Feedback Confirmation | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Feedback Confirmation | UKHSA data dashboard')
   }
 
   async hasHeading() {
