@@ -37,14 +37,9 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [covid19PageMock.id]: covid19PageMock,
   [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,
   [whatsNewParentMock.id]: whatsNewParentMock,
-  [whatsNewChildMocks[0].id]: whatsNewChildMocks[0],
-  [whatsNewChildMocks[1].id]: whatsNewChildMocks[1],
-  [whatsNewChildMocks[2].id]: whatsNewChildMocks[2],
   [metricsParentMock.id]: metricsParentMock,
-  [metricsChildMocks[0].id]: metricsChildMocks[0],
-  [metricsChildMocks[1].id]: metricsChildMocks[1],
-  [metricsChildMocks[2].id]: metricsChildMocks[2],
-  [metricsChildMocks[3].id]: metricsChildMocks[3],
+  ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
+  ...Object.fromEntries(metricsChildMocks.map((mock) => [mock.id, mock])),
 }
 
 export default async function handler(req: Request, res: Response) {

@@ -32,7 +32,10 @@ export class MetricsParentPage {
       )
     ).toBeVisible()
 
-    await expect(this.page.getByRole('heading', { level: 2, name: 'New cases 7 days sum' })).toBeVisible()
+    await expect(this.page.getByRole('heading', { level: 2, name: 'Metric title: New cases 7 days sum' })).toBeVisible()
+    await expect(
+      this.page.getByText('Metric description: This metric shows the count of reported new cases in the last 7 days.')
+    ).toBeVisible()
   }
 
   async openChildPage(name: string) {
