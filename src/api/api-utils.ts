@@ -54,7 +54,12 @@ export function client<T>(
     if (ok) {
       try {
         const type = response.headers.get('Content-Type')
+
         if (type && !type.includes('application/json')) {
+          if (type.includes('application/zip')) {
+            const data = await response.blob()
+            return { data, status }
+          }
           const data = await response.text()
           return { data, status }
         }

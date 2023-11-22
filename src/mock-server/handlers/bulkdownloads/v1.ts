@@ -2,8 +2,7 @@ import { Request, Response } from 'express'
 
 import { logger } from '@/lib/logger'
 
-import { downloadsCsvFixture } from './fixtures/downloads-csv'
-import { downloadsJsonFixture } from './fixtures/downloads-json'
+import { bulkDownloadZip } from './fixtures/bulk-download-zip'
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -14,11 +13,11 @@ export default async function handler(req: Request, res: Response) {
 
     // Return a fixture based on the chosen file format
     if (req.query.file_format === 'csv') {
-      return res.send(downloadsCsvFixture)
+      return res.send(bulkDownloadZip)
     }
 
     if (req.query.file_format === 'json') {
-      return res.json(downloadsJsonFixture)
+      return res.json(bulkDownloadZip)
     }
   } catch (error) {
     logger.error(error)
