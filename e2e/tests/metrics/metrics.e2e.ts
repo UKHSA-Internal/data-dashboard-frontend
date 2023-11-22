@@ -16,6 +16,9 @@ test.describe('Metrics parent page', () => {
     await test.step('displays without any accessibility defects', async () => {
       await app.hasNoAccessibilityDefects()
     })
+    await test.step('displays page content', async () => {
+      await metricsParentPage.hasPageContent()
+    })
     await test.step('displays last updated date', async () => {
       await metricsParentPage.hasLastUpdated()
     })
