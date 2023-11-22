@@ -16,7 +16,12 @@ test('renders MetricsCard', async () => {
 
   expect(getByRole('link')).toHaveAttribute('href', 'metrics/test')
   expect(getByText('Description for test content card')).toBeVisible()
+  expect(getByText('Category')).toBeVisible()
   expect(getByText('Healthcare')).toBeVisible()
+
+  expect(getByText('Topic')).toBeVisible()
   expect(getByText('COVID-19')).toBeVisible()
+
+  expect(getByText('API name')).toBeVisible()
   expect(getByText('test_apiname')).toBeVisible()
 })
