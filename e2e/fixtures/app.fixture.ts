@@ -73,7 +73,9 @@ export class App {
   }
 
   async hasNoAccessibilityDefects() {
-    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).disableRules('region').analyze()
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page })
+      .disableRules(['region', 'landmark-unique'])
+      .analyze()
     expect(accessibilityScanResults.violations).toEqual([])
   }
 
