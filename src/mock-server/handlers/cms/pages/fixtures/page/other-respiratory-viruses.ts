@@ -11,7 +11,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
     html_url: null,
     slug: 'other-respiratory-viruses',
     show_in_menus: true,
-    seo_title: 'Other respiratory Viruses | UKHSA data dashboard',
+    seo_title: 'Other respiratory viruses | UKHSA data dashboard',
     search_description: 'Overall summary of other respiratory viruses in circulation within the UK',
     first_published_at: '2023-05-12T16:58:42.332020+01:00',
     alias_of: null,
