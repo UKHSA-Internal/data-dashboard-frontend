@@ -26,7 +26,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
     },
   },
   title: 'Metrics documentation',
-  body: '<p>Metrics documentation description...</p>',
+  body: '<p>Here we outline a list of metrics available in the UKHSA data dashboard. Click to view more information about a metric</p>',
   related_links: relatedLinksMock,
   last_published_at: '2023-10-24T16:09:35.359598+01:00',
 }

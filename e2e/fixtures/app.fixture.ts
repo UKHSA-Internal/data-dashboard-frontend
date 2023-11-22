@@ -17,6 +17,8 @@ import {
   FeedbackPage,
   HomePage,
   InfluenzaPage,
+  MetricsChildPage,
+  MetricsParentPage,
   NotFoundPage,
   OtherRespiratoryVirusesPage,
   WhatsNewChildPage,
@@ -29,6 +31,8 @@ type Fixtures = {
   aboutPage: AboutPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
+  metricsParentPage: MetricsParentPage
+  metricsChildPage: MetricsChildPage
   covid19Page: Covid19Page
   errorPage: ErrorPage
   influenzaPage: InfluenzaPage
@@ -257,7 +261,12 @@ export const test = base.extend<Fixtures>({
   whatsNewChildPage: async ({ page }, use) => {
     await use(new WhatsNewChildPage(page))
   },
-
+  metricsParentPage: async ({ page }, use) => {
+    await use(new MetricsParentPage(page))
+  },
+  metricsChildPage: async ({ page }, use) => {
+    await use(new MetricsChildPage(page))
+  },
   covid19Page: async ({ page }, use) => {
     await use(new Covid19Page(page))
   },
