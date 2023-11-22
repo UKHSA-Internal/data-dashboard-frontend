@@ -13,16 +13,9 @@ test.describe('Metrics parent page', () => {
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
     })
-    // await test.step('displays without any accessibility defects', async () => {
-    //   // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
-    //   test.skip()
-    //   test.info().annotations.push({
-    //     type: 'issue',
-    //     description:
-    //       'Re-enable once the legacy whats new page is removed. Something in the mock responses is causing a data clash in NextJs',
-    //   })
-    //   await app.hasNoAccessibilityDefects()
-    // })
+    await test.step('displays without any accessibility defects', async () => {
+      await app.hasNoAccessibilityDefects()
+    })
     await test.step('displays last updated date', async () => {
       await metricsParentPage.hasLastUpdated()
     })
@@ -73,16 +66,9 @@ test.describe('Metrics child page', () => {
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
     })
-    // await test.step('displays without any accessibility defects', async () => {
-    //   // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
-    //   test.skip()
-    //   test.info().annotations.push({
-    //     type: 'issue',
-    //     description:
-    //       'Re-enable once the legacy whats new page is removed. Something in the mock responses is causing a data clash in NextJs',
-    //   })
-    //   await app.hasNoAccessibilityDefects()
-    // })
+    await test.step('displays without any accessibility defects', async () => {
+      await app.hasNoAccessibilityDefects()
+    })
     await test.step('displays last updated date', async () => {
       await metricsChildPage.hasLastUpdated()
     })
