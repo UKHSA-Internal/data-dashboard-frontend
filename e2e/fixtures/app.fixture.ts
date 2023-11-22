@@ -10,6 +10,7 @@ import {
   AboutPage,
   AccessibilityStatementPage,
   BrowsePage,
+  BulkDownloadsPage,
   CompliancePage,
   Covid19Page,
   ErrorPage,
@@ -29,6 +30,7 @@ type Fixtures = {
   app: App
   homePage: HomePage
   aboutPage: AboutPage
+  bulkDownloadsPage: BulkDownloadsPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
   metricsParentPage: MetricsParentPage
@@ -181,6 +183,13 @@ export class App {
     await expect(this.backToTop).not.toBeInViewport()
   }
 
+  async hasNotBackToTop() {
+    await this.page.evaluate(() => window.scrollTo(0, 0))
+    await expect(this.backToTop).not.toBeInViewport()
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await expect(this.backToTop).not.toBeInViewport()
+  }
+
   async gotoCookieBanner() {
     await this.page.goto('/?change-settings=1')
   }
@@ -254,6 +263,9 @@ export const test = base.extend<Fixtures>({
   },
   aboutPage: async ({ page }, use) => {
     await use(new AboutPage(page))
+  },
+  bulkDownloadsPage: async ({ page }, use) => {
+    await use(new BulkDownloadsPage(page))
   },
   whatsNewParentPage: async ({ page }, use) => {
     await use(new WhatsNewParentPage(page))
