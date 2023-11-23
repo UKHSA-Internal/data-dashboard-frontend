@@ -12,8 +12,11 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { WHATS_NEW_PAGE_LIMIT } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
+
+import { Pagination } from './Pagination'
 
 export const dynamic = 'force-dynamic'
 
@@ -28,7 +31,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function WhatsNewParentPage() {
+interface WhatsNewParentPageProps {
+  searchParams: {
+    page?: number
+  }
+}
+
+export default async function WhatsNewParentPage({ searchParams: { page } }: WhatsNewParentPageProps) {
   const { t } = await useTranslation('whatsNew')
 
   const {
@@ -38,7 +47,7 @@ export default async function WhatsNewParentPage() {
     related_links: relatedLinks,
   } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
-  const whatsNewEntries = await getWhatsNewPages()
+  const whatsNewEntries = await getWhatsNewPages({ page })
 
   if (!whatsNewEntries.success) {
     logger.info(whatsNewEntries.error.message)
@@ -46,7 +55,10 @@ export default async function WhatsNewParentPage() {
   }
 
   const {
-    data: { items },
+    data: {
+      items,
+      meta: { total_count: totalItems },
+    },
   } = whatsNewEntries
 
   type Page = SafeParseSuccess<WhatsNewPagesResponse>['data']['items']
@@ -161,6 +173,8 @@ export default async function WhatsNewParentPage() {
               )
             })}
           </ul>
+
+          <Pagination totalItems={totalItems} initialPage={page ?? 1} initialPageSize={WHATS_NEW_PAGE_LIMIT} />
         </div>
       </div>
 
