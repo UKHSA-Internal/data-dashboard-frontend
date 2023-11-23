@@ -14,7 +14,7 @@ test.describe('Metrics parent page', () => {
       await app.hasLayout()
     })
     await test.step('displays without any accessibility defects', async () => {
-      await app.hasNoAccessibilityDefects('landmark-unique')
+      await app.hasNoAccessibilityDefects(['landmark-unique'])
     })
     await test.step('displays page content', async () => {
       await metricsParentPage.hasPageContent()
@@ -74,6 +74,33 @@ test.describe('Metrics child page', () => {
     })
     await test.step('displays last updated date', async () => {
       await metricsChildPage.hasLastUpdated()
+    })
+    await test.step('displays summary section', async () => {
+      await metricsChildPage.hasSummarySection()
+    })
+    await test.step('displays a definition section', async () => {
+      await metricsChildPage.hasContentSection(
+        'definition',
+        'This metric shows the count of reported new cases in the last 7 days.'
+      )
+    })
+    await test.step('displays a rationale section', async () => {
+      await metricsChildPage.hasContentSection(
+        'rationale',
+        'The timely identification of cases is important to controlling the spread of COVID-19'
+      )
+    })
+    await test.step('displays a methodology section', async () => {
+      await metricsChildPage.hasContentSection(
+        'methodology',
+        'COVID-19 cases are identified by taking specimens from people and testing them for the SARS-CoV-2 virus.'
+      )
+    })
+    await test.step('displays a caveats section', async () => {
+      await metricsChildPage.hasContentSection(
+        'caveats',
+        'This figure will underestimate the actual number of COVID-19 infections due to people not testing'
+      )
     })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()

@@ -21,6 +21,21 @@ export class MetricsChildPage {
     await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
   }
 
+  async hasSummarySection() {
+    await expect(this.page.getByText('Topic')).toBeVisible()
+    await expect(this.page.getByLabel('Summary').getByText('COVID-19')).toBeVisible()
+
+    await expect(this.page.getByText('Category')).toBeVisible()
+    await expect(this.page.getByText('Healthcare')).toBeVisible()
+
+    await expect(this.page.getByText('API name')).toBeVisible()
+    await expect(this.page.getByText('new_cases_7days_sum')).toBeVisible()
+  }
+
+  async hasContentSection(label: string, text: string) {
+    await expect(this.page.getByLabel(label).getByText(text)).toBeVisible()
+  }
+
   async hasLastUpdated() {
     await expect(this.page.getByText(/Last updated on Tuesday, 24 October 2023 at 04:09pm/)).toBeVisible()
   }
