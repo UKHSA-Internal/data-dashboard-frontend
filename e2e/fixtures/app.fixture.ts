@@ -72,8 +72,10 @@ export class App {
     await this.page.reload()
   }
 
-  async hasNoAccessibilityDefects(additionalDisabledRules?: string[]) {
-    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).disableRules(['region', ...additionalDisabledRules]).analyze()
+  async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page })
+      .disableRules(['region', ...additionalDisabledRules])
+      .analyze()
     expect(accessibilityScanResults.violations).toEqual([])
   }
 
