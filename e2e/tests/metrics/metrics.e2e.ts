@@ -76,7 +76,7 @@ test.describe('Metrics child page', () => {
       await metricsChildPage.hasLastUpdated()
     })
     await test.step('displays summary section', async () => {
-      await metricsChildPage.hasSummarySection()
+      await metricsChildPage.hasSummarySection('COVID-19', 'Healthcare', 'new_cases_7days_sum')
     })
     await test.step('displays a definition section', async () => {
       await metricsChildPage.hasContentSection(
