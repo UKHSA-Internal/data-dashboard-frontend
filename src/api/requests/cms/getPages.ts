@@ -82,6 +82,7 @@ export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
   const params = new URLSearchParams()
   params.set('type', PageType.WhatsNewChild)
   params.set('fields', '*')
+  params.set('order', '-date_posted')
   params.set('limit', String(WHATS_NEW_PAGE_LIMIT))
   params.set('offset', String(calculatePageOffset(page, WHATS_NEW_PAGE_LIMIT)))
 
