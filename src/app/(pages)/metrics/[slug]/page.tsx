@@ -4,6 +4,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { Contents, ContentsItem, View } from '@/app/components/ui/ukhsa'
+import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
 import { useTranslation } from '@/app/i18n'
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
@@ -29,20 +30,7 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <Contents>
             <ContentsItem heading={'Summary'}>
-              <dl className="govuk-summary-list govuk-!-width-two-thirds">
-                <div className="govuk-summary-list__row">
-                  <dt className="govuk-summary-list__key">Topic</dt>
-                  <dd className="govuk-summary-list__value">{topic}</dd>
-                </div>
-                <div className="govuk-summary-list__row">
-                  <dt className="govuk-summary-list__key">Category</dt>
-                  <dd className="govuk-summary-list__value">{category}</dd>
-                </div>
-                <div className="govuk-summary-list__row">
-                  <dt className="govuk-summary-list__key">API name</dt>
-                  <dd className="govuk-summary-list__value">{apiName}</dd>
-                </div>
-              </dl>
+              <MetricsSummary topic={topic} category={category} apiName={apiName} />
             </ContentsItem>
             <ContentsItem heading={'Definition'}>
               {definition ? (
