@@ -49,7 +49,7 @@ export function Pagination({
             className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
             href={{
               pathname,
-              query: { ...query, page: currentPage },
+              query: { ...query, page: currentPage - 1 },
             }}
             rel="prev"
           >
