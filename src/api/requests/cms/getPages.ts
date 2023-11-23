@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
+import { WHATS_NEW_PAGE_LIMIT } from '@/app/constants/app.constants'
+import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 /**
@@ -76,10 +78,13 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
 
 export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
 
-export const getWhatsNewPages = async () => {
+export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
   const params = new URLSearchParams()
   params.set('type', PageType.WhatsNewChild)
   params.set('fields', '*')
+  params.set('limit', String(WHATS_NEW_PAGE_LIMIT))
+  params.set('offset', String(calculatePageOffset(page, WHATS_NEW_PAGE_LIMIT)))
+
   try {
     const { data } = await client<WhatsNewPagesResponse>(`pages/?${params.toString()}`)
     logger.info(`GET success pages/?${params.toString()}`)

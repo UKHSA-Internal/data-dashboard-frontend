@@ -5,3 +5,6 @@ export const SITE_URL = 'ukhsa-dashboard.data.gov.uk'
  * Because the CMS returns us multiple pages of the same type, we need to know the unique slug to filter the results
  */
 export const HOMEPAGE_CMS_SLUG = 'dashboard'
+
+// TODO: Increase this when dev done
+export const WHATS_NEW_PAGE_LIMIT = 3
