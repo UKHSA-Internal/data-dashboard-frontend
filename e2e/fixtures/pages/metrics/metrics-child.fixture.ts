@@ -21,15 +21,15 @@ export class MetricsChildPage {
     await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
   }
 
-  async hasSummarySection() {
+  async hasSummarySection(topic: string, category: string, apiName: string) {
     await expect(this.page.getByText('Topic')).toBeVisible()
-    await expect(this.page.getByLabel('Summary').getByText('COVID-19')).toBeVisible()
+    await expect(this.page.getByLabel('Summary').getByText(topic)).toBeVisible()
 
     await expect(this.page.getByText('Category')).toBeVisible()
-    await expect(this.page.getByText('Healthcare')).toBeVisible()
+    await expect(this.page.getByText(category)).toBeVisible()
 
     await expect(this.page.getByText('API name')).toBeVisible()
-    await expect(this.page.getByText('new_cases_7days_sum')).toBeVisible()
+    await expect(this.page.getByText(apiName)).toBeVisible()
   }
 
   async hasContentSection(label: string, text: string) {
