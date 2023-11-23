@@ -2,9 +2,9 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import MetricsSummary from '@/app/(pages)/metrics/components/MetricsSummary/MetricsSummary'
 import { RichText } from '@/app/components/cms'
 import { Contents, ContentsItem, View } from '@/app/components/ui/ukhsa'
-import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
 import { useTranslation } from '@/app/i18n'
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
