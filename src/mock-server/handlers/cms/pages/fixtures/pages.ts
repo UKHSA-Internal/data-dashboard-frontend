@@ -11,6 +11,8 @@ import {
   howToUseThisDataPageMock,
   influenzaPageMock,
   mapsPageMock,
+  metricsChildMocks,
+  metricsParentMock,
   otherRespiratoryVirusesPageMock,
   whatsNewChildMocks,
   whatsNewParentMock,
@@ -224,12 +226,69 @@ export const pagesWithWhatsNewChildTypeMock: PagesResponse = {
   ),
 }
 
+export const pagesWithMetricsParentTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: metricsParentMock.id,
+      meta: {
+        type: metricsParentMock.meta.type,
+        detail_url: metricsParentMock.meta.detail_url,
+        html_url: metricsParentMock.meta.html_url,
+        slug: metricsParentMock.meta.slug,
+        show_in_menus: metricsParentMock.meta.show_in_menus,
+        first_published_at: metricsParentMock.meta.first_published_at,
+      },
+      title: metricsParentMock.title,
+    },
+  ],
+}
+
+export const pagesWithMetricsChildTypeMock: PagesResponse = {
+  meta: {
+    total_count: metricsChildMocks.length,
+  },
+  items: metricsChildMocks.map(
+    ({
+      id,
+      title,
+      meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
+      shortText,
+      definition,
+      rationale,
+      methodology,
+      caveats,
+      category,
+      topic,
+      apiName,
+      last_published_at,
+    }) => ({
+      id,
+      title,
+      meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
+      shortText,
+      definition,
+      rationale,
+      methodology,
+      caveats,
+      category,
+      topic,
+      apiName,
+      last_published_at,
+    })
+  ),
+}
+
 const items = [
   ...pagesWithHomeTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithTopicTypeMock.items,
   ...pagesWithWhatsNewParentTypeMock.items,
   ...pagesWithWhatsNewChildTypeMock.items,
+  ...pagesWithMetricsParentTypeMock.items,
+  ...pagesWithMetricsChildTypeMock.items,
 ]
 
 export const allPagesMock: PagesResponse = {
