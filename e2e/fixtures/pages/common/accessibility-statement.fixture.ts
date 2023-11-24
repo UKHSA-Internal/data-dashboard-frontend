@@ -13,7 +13,8 @@ export class AccessibilityStatementPage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Accessibility Statement | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Accessibility Statement | UKHSA data dashboard')
   }
 
   async hasHeading() {
