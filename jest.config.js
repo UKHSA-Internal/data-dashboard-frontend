@@ -33,8 +33,6 @@ const customJestConfig = {
     '<rootDir>/src/api/api-utils.ts',
     '<rootDir>/src/api/models',
     '<rootDir>/src/api/msw/index.ts',
-    // TODO: Remove this once the tests are in place.
-    '<rootDir>/src/app/utils/cms.utils.tsx',
     // TODO: This component needs tests. Where have they gone!?
     '<rootDir>/src/app/components/cms/Download/Download.tsx',
     // TODO: This is due to be removed in CDD-1252 - Remove this line after that is complete
