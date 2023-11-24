@@ -4,12 +4,14 @@ import {
   mockChartRowCardWithChartHeadlineAndTrendCard,
   mockChartRowCardWithDualChartCard,
   mockChartRowCardWithSingleChartCard,
+  mockHeadlineNumbersRowCard,
+  mockHeadlineNumbersRowCardWithOneColumn,
   mockSection,
   mockSectionWithCard,
   mockSectionWithLongHeading,
   mockTextCard,
 } from './__mocks__/cms'
-import { renderCard, renderSection } from './cms.utils'
+import { renderBlock, renderCard, renderSection } from './cms.utils'
 
 jest.mock('../components/cms', () => ({
   ...jest.requireActual('../components/cms'),
@@ -47,6 +49,52 @@ describe('Text card', () => {
     render(renderCard(mockTextCard))
     expect(screen.getByRole('heading', { level: 3, name: 'Text card heading' })).toBeInTheDocument()
     expect(screen.getByText('Text card body')).toBeInTheDocument()
+  })
+})
+
+describe('Headline numbers row card', () => {
+  test('displays a row of columns containing a heading and metric data', () => {
+    render(renderCard(mockHeadlineNumbersRowCard))
+
+    // Cases
+    const casesColumn = screen.getByTestId('headline-column-cases')
+    expect(within(casesColumn).getByRole('heading', { level: 3, name: 'Cases' })).toBeInTheDocument()
+    expect(within(casesColumn).getByText('Mocked headline number')).toBeInTheDocument()
+    expect(within(casesColumn).getByText('Mocked trend number')).toBeInTheDocument()
+
+    // Deaths
+    const deathsColumn = screen.getByTestId('headline-column-deaths')
+    expect(within(deathsColumn).getByRole('heading', { level: 3, name: 'Deaths' })).toBeInTheDocument()
+    expect(within(deathsColumn).getByText('Mocked headline number')).toBeInTheDocument()
+    expect(within(deathsColumn).getByText('Mocked trend number')).toBeInTheDocument()
+
+    // Healthcare
+    const healthcareColumn = screen.getByTestId('headline-column-healthcare')
+    expect(within(healthcareColumn).getByRole('heading', { level: 3, name: 'Healthcare' })).toBeInTheDocument()
+    expect(within(healthcareColumn).getByText('Mocked headline number')).toBeInTheDocument()
+    expect(within(healthcareColumn).getByText('Mocked trend number')).toBeInTheDocument()
+
+    // Vaccines
+    const vaccinesColumn = screen.getByTestId('headline-column-vaccines')
+    expect(within(vaccinesColumn).getByRole('heading', { level: 3, name: 'Vaccines' })).toBeInTheDocument()
+    expect(within(vaccinesColumn).getByText('Mocked headline number')).toBeInTheDocument()
+
+    // Testing
+    const testingColumn = screen.getByTestId('headline-column-testing')
+    expect(within(testingColumn).getByRole('heading', { level: 3, name: 'Testing' })).toBeInTheDocument()
+    expect(within(testingColumn).getByText('Mocked percentage number')).toBeInTheDocument()
+  })
+
+  test('displays five columns on desktop devices when the default amount of columns (5) is set', () => {
+    render(renderCard(mockHeadlineNumbersRowCard))
+    expect(screen.getByTestId('headline-row').firstChild).toHaveClass('md:grid-cols-5')
+  })
+
+  test('displays a mobile first in a two column layout, then a three-col layout for larger devices', () => {
+    render(renderCard(mockHeadlineNumbersRowCardWithOneColumn))
+    const gridRow = screen.getByTestId('headline-row').firstChild
+    expect(gridRow).toHaveClass('grid-cols-2 sm:grid-cols-3')
+    expect(gridRow).not.toHaveClass('md:grid-cols-5')
   })
 })
 
@@ -104,7 +152,50 @@ describe('Chart row card', () => {
   })
 })
 
-// TODO - Add unit test for headline numbers row card
-// describe.skip('Headline numbers row card', () => {})
+describe('Metrics', () => {
+  test('percentage number', () => {
+    render(
+      renderBlock({
+        type: 'percentage_number',
+        value: {
+          topic: 'COVID-19',
+          metric: 'COVID-19_headline_positivity_latest',
+          body: 'Virus tests positivity',
+        },
+        id: '36746bcd-1dce-4e5e-81f8-60c8b9994540',
+      })
+    )
+    expect(screen.getByText('Mocked percentage number')).toBeInTheDocument()
+  })
 
-// TODO - Add unit tests for renderCard and renderBlock functions
+  test('headline number', () => {
+    render(
+      renderBlock({
+        type: 'headline_number',
+        value: {
+          topic: 'COVID-19',
+          metric: 'COVID-19_headline_totalvaccines_spring23',
+          body: 'Autumn booster',
+        },
+        id: 'ae3344f7-5b23-4977-bea9-2e1ccd84eb50',
+      })
+    )
+    expect(screen.getByText('Mocked headline number')).toBeInTheDocument()
+  })
+
+  test('trend number', () => {
+    render(
+      renderBlock({
+        type: 'trend_number',
+        value: {
+          topic: 'COVID-19',
+          metric: 'COVID-19_headline_newcases_7daychange',
+          body: '',
+          percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
+        },
+        id: '8c42a86e-f675-41d0-a65a-633c20ac98e3',
+      })
+    )
+    expect(screen.getByText('Mocked trend number')).toBeInTheDocument()
+  })
+})
