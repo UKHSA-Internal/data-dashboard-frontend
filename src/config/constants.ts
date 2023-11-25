@@ -1,12 +1,22 @@
 /**
- * The NextJS Api Route path for chart export
+ * The NextJS Api Route path for chart download
  */
-export const chartExportApiRoutePath = '/api/chart/export'
+export const chartExportApiRoutePath = '/api/download/chart'
 
 /**
  * The default file format in which charts are downloaded as
  */
 export const chartExportFormat: 'csv' | 'json' = 'csv'
+
+/**
+ * The NextJS Api Route path for bulk download
+ */
+export const bulkExportApiRoutePath = '/api/download/bulk'
+
+/**
+ * The default file format in which bulk downloaded charts are downloaded as
+ */
+export const bulkExportFormat: 'csv' | 'json' = 'csv'
 
 /**
  * The maximum columns per table in the tabular data view
