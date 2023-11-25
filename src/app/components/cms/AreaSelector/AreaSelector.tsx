@@ -26,6 +26,8 @@ export async function AreaSelector() {
     <AreaSelectorForm
       areaTypeOptions={mockAreaTypes}
       areaNameOptions={mockAreaNames}
+      // TODO: CDD-1479 - Investgiate how we can consume i18n inside client components
+      // so that we don't need to pass in the values as props like this from the server component
       labels={{
         areaType: t('areaSelector.areaType'),
         areaTypePlaceholder: t('areaSelector.areaTypePlaceholder'),
