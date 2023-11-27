@@ -104,6 +104,24 @@ describe('AreaSelectorForm', () => {
     expect(screen.getByLabelText(labels.areaName)).toHaveValue('')
   })
 
+  test('updating the area name select automatically updates the url search params', async () => {
+    mockRouter.push('/topics/mock-topic?areaType=Nation')
+
+    const originalPush = mockRouter.push
+    mockRouter.push = jest.fn()
+
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
+
+    await userEvent.selectOptions(screen.getByLabelText(labels.areaName), ['England'])
+
+    expect(mockRouter.push).toHaveBeenCalledWith(
+      '/topics/mock-topic?areaType=Nation?areaType=Nation&areaName=England',
+      { scroll: false }
+    )
+
+    mockRouter.push = originalPush
+  })
+
   test('clicking reset clears any selected values and then focuses the area type select', async () => {
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
