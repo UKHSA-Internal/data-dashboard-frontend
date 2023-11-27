@@ -37,7 +37,10 @@ export function AreaSelectorForm({
   const router = useRouter()
 
   const resetForm = useCallback(() => {
-    formRef.current?.reset()
+    if (areaTypeSelectRef.current && areaNameSelectRef.current) {
+      areaTypeSelectRef.current.value = ''
+      areaNameSelectRef.current.value = ''
+    }
   }, [])
 
   // Reset form state when the url params get cleared
@@ -56,13 +59,6 @@ export function AreaSelectorForm({
       method="get"
       className="flex flex-wrap items-end justify-center gap-3 sm:flex-nowrap sm:justify-start sm:gap-4"
       aria-label="Area selector"
-      onSubmit={(evt) => {
-        evt.preventDefault()
-        const updatedSearchParams = new URLSearchParams()
-        if (areaTypeSelectRef.current?.value) updatedSearchParams.append('areaType', areaTypeSelectRef.current.value)
-        if (areaNameSelectRef.current?.value) updatedSearchParams.append('areaName', areaNameSelectRef.current.value)
-        router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
-      }}
     >
       <div className="flex w-full gap-3 sm:max-w-xl sm:gap-4">
         <div className="govuk-form-group mb-0 w-1/2">
@@ -75,6 +71,16 @@ export function AreaSelectorForm({
             id="areaType"
             name="areaType"
             defaultValue={searchParams.get('areaType') || ''}
+            onChange={(evt) => {
+              const updatedSearchParams = new URLSearchParams()
+              updatedSearchParams.set('areaType', evt.target.value)
+              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false, shallow: true })
+
+              // Reset areaName whenever the areaType changes
+              if (areaNameSelectRef.current) {
+                areaNameSelectRef.current.value = ''
+              }
+            }}
           >
             <option value="" disabled>
               {labels.areaTypePlaceholder}
@@ -93,10 +99,16 @@ export function AreaSelectorForm({
           </label>
           <select
             ref={areaNameSelectRef}
+            disabled={!searchParams.has('areaType')}
             className="govuk-select w-full min-w-0 max-w-sm"
             id="areaName"
             name="areaName"
             defaultValue={searchParams.get('areaName') || ''}
+            onChange={(evt) => {
+              const updatedSearchParams = new URLSearchParams(searchParams)
+              updatedSearchParams.set('areaName', evt.target.value)
+              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
+            }}
           >
             <option value="" disabled>
               {labels.areaNamePlaceholder}
@@ -110,11 +122,18 @@ export function AreaSelectorForm({
         </div>
       </div>
 
-      <button className="govuk-button mb-[2px]" type="submit">
+      <button className="govuk-button mb-[2px] hidden no-js:block" type="submit">
         {labels.updateBtn}
       </button>
 
-      <Link className="govuk-link--no-visited-state govuk-!-margin-bottom-2" href={initialPathname} onClick={resetForm}>
+      <Link
+        className="govuk-link--no-visited-state govuk-!-margin-bottom-2 govuk-body mb-0"
+        href={initialPathname}
+        onClick={() => {
+          resetForm()
+          areaTypeSelectRef.current?.focus()
+        }}
+      >
         {labels.resetBtn}
       </Link>
     </form>
