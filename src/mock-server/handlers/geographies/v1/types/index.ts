@@ -24,7 +24,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    return res.json(null)
+    return res.json(areaTypeMock)
   } catch (error) {
     logger.error(error)
     return res.status(500)
