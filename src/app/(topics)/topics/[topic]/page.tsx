@@ -2,7 +2,6 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { AreaSelector } from '@/app/components/cms'
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { renderCard } from '@/app/utils/cms.utils'
 
@@ -19,13 +18,7 @@ export async function generateMetadata({ params: { topic } }: { params: { topic:
   }
 }
 
-export default async function TopicPage({
-  params: { topic },
-  searchParams: { areaType },
-}: {
-  params: { topic: string }
-  searchParams: { areaType?: string; areaName?: string }
-}) {
+export default async function TopicPage({ params: { topic } }: { params: { topic: string } }) {
   const {
     title,
     body,
@@ -35,7 +28,6 @@ export default async function TopicPage({
   } = await getPageBySlug(topic, PageType.Topic)
   return (
     <View heading={title} description={description} lastUpdated={lastUpdated}>
-      <AreaSelector areaType={areaType} />
       <Contents>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
