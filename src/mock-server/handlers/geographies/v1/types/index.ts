@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 
 import { logger } from '@/lib/logger'
 
-export const areaTypeMock = [
+export const areaTypes = [
   'Nation',
   'UKHSA Region',
   'Upper Tier Local Authority',
@@ -12,6 +12,11 @@ export const areaTypeMock = [
   'Government Office Region',
 ]
 
+export const areaTypeMock = areaTypes.map((name, id) => ({
+  id,
+  name,
+}))
+
 export default async function handler(req: Request, res: Response) {
   try {
     if (req.method !== 'GET') {
@@ -19,12 +24,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    return res.json(
-      areaTypeMock.map((name, id) => ({
-        id,
-        name,
-      }))
-    )
+    return res.json(null)
   } catch (error) {
     logger.error(error)
     return res.status(500)

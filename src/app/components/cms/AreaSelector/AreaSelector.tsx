@@ -1,17 +1,24 @@
 import { getGeographyNames } from '@/api/requests/geographies/getGeographyNames'
 import { getGeographyTypes } from '@/api/requests/geographies/getGeographyTypes'
 import { useTranslation } from '@/app/i18n'
+import { logger } from '@/lib/logger'
 
 import { AreaSelectorForm } from './AreaSelectorForm'
 
-export async function AreaSelector({ areaType, areaName }: { areaType?: string; areaName?: string }) {
+interface AreaSelectorProps {
+  areaType?: string
+  areaName?: string
+}
+
+export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
   const { t } = await useTranslation('common')
 
   const geographyTypesResponse = await getGeographyTypes()
 
   // Don't show the area selector if we fail to get the geography types
   if (!geographyTypesResponse.success) {
-    return null
+    logger.error('Could not load area selector %s', geographyTypesResponse.error)
+    return <></>
   }
 
   const areaTypeOptions = geographyTypesResponse.data.map((type) => type.name)
@@ -27,9 +34,6 @@ export async function AreaSelector({ areaType, areaName }: { areaType?: string; 
       }
     }
   }
-
-  console.log('types: ', areaTypeOptions)
-  console.log('names: ', areaNameOptions)
 
   return (
     <AreaSelectorForm

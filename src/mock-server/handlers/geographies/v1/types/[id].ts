@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 
 import { logger } from '@/lib/logger'
 
-import { areaTypeMock } from '.'
+import { areaTypes } from '.'
 import { mockLocalAuthorities, mockNations, mockNhsRegions, mockNhsTrusts, mockRegions } from './fixtures'
 
 const areaNameMocks: Record<string, { id: number; name: string }[]> = {
@@ -27,7 +27,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(500)
     }
 
-    const areaTypeName = areaTypeMock[Number(req.params.id)]
+    const areaTypeName = areaTypes[Number(req.params.id)]
 
     return res.json({ geographies: areaNameMocks[areaTypeName] })
   } catch (error) {
