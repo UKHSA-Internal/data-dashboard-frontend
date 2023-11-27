@@ -3,7 +3,6 @@ import { useTranslation } from '@/app/i18n'
 import { AreaSelectorForm } from './AreaSelectorForm'
 
 // TODO: This RSC will fetch the area types and area names on page load if available in the URL
-// The child client component will be responsible for re-fetching on demand for JS users
 
 // NOTE: These are temporary until an API is in place for this server component to consume
 const mockAreaTypes = [
