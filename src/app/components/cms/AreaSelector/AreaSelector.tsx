@@ -7,7 +7,6 @@ import { AreaSelectorForm } from './AreaSelectorForm'
 
 interface AreaSelectorProps {
   areaType?: string
-  areaName?: string
 }
 
 export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
