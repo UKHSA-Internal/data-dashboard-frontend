@@ -1,30 +1,43 @@
+import { getGeographyNames } from '@/api/requests/geographies/getGeographyNames'
+import { getGeographyTypes } from '@/api/requests/geographies/getGeographyTypes'
 import { useTranslation } from '@/app/i18n'
+import { logger } from '@/lib/logger'
 
 import { AreaSelectorForm } from './AreaSelectorForm'
 
-// TODO: This RSC will fetch the area types and area names on page load if available in the URL
+interface AreaSelectorProps {
+  areaType?: string
+}
 
-// NOTE: These are temporary until an API is in place for this server component to consume
-const mockAreaTypes = [
-  'Nation',
-  'UKHSA Region',
-  'Upper Tier Local Authority',
-  'Lower Tier Local Authority',
-  'NHS Region',
-  'NHS Trust',
-  'Government Office Region',
-]
-
-// NOTE: These are temporary until an API is in place for this server component to consume
-const mockAreaNames = ['England', 'Lincolnshire', 'Allerdale', 'Suffolk', 'Southampton']
-
-export async function AreaSelector() {
+export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
   const { t } = await useTranslation('common')
+
+  const geographyTypesResponse = await getGeographyTypes()
+
+  // Don't show the area selector if we fail to get the geography types
+  if (!geographyTypesResponse.success) {
+    logger.error('Could not load area selector %s', geographyTypesResponse.error)
+    return <></>
+  }
+
+  const areaTypeOptions = geographyTypesResponse.data.map((type) => type.name)
+  const areaNameOptions = []
+
+  if (areaType) {
+    const id = geographyTypesResponse.data.find(({ name }) => name === areaType)?.id
+
+    if (typeof id !== 'undefined') {
+      const geographyNamesResponse = await getGeographyNames(id)
+      if (geographyNamesResponse.success) {
+        areaNameOptions.push(...geographyNamesResponse.data.geographies.map(({ name }) => name))
+      }
+    }
+  }
 
   return (
     <AreaSelectorForm
-      areaTypeOptions={mockAreaTypes}
-      areaNameOptions={mockAreaNames}
+      areaTypeOptions={areaTypeOptions}
+      areaNameOptions={areaNameOptions}
       // TODO: CDD-1479 - Investgiate how we can consume i18n inside client components
       // so that we don't need to pass in the values as props like this from the server component
       labels={{
