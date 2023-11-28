@@ -5,20 +5,23 @@ interface DetailsProps extends HTMLProps<HTMLDetailsElement> {
   label: string
   children: ReactNode
   className?: string
+  labelClassName?: string
 }
 
-export const Details = forwardRef<HTMLDetailsElement, DetailsProps>(({ label, children, className, ...rest }, ref) => {
-  return (
-    <details
-      ref={ref}
-      className={clsx('govuk-details govuk-!-margin-top-2 govuk-!-margin-bottom-0 print:hidden', className)}
-      data-module="govuk-details"
-      {...rest}
-    >
-      <summary className="govuk-details__summary">
-        <span className="govuk-details__summary-text">{label}</span>
-      </summary>
-      <div className="govuk-details__text">{children}</div>
-    </details>
-  )
-})
+export const Details = forwardRef<HTMLDetailsElement, DetailsProps>(
+  ({ label, children, className, labelClassName, ...rest }, ref) => {
+    return (
+      <details
+        ref={ref}
+        className={clsx('govuk-details govuk-!-margin-top-2 govuk-!-margin-bottom-0 print:hidden', className)}
+        data-module="govuk-details"
+        {...rest}
+      >
+        <summary className={clsx('govuk-details__summary', labelClassName)}>
+          <span className="govuk-details__summary-text">{label}</span>
+        </summary>
+        <div className="govuk-details__text">{children}</div>
+      </details>
+    )
+  }
+)

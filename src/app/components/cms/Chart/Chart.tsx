@@ -29,12 +29,14 @@ export async function Chart({ data, size }: ChartProps) {
   const areaType = url.searchParams.get('areaType')
   const areaName = url.searchParams.get('areaName')
 
+  const hasSelectedArea = areaType && areaName
+
   const plots = chart.map((plot) => ({
     ...plot.value,
     // Area type uses the URL search params as a global source of truth
     // If non-existent, default to the individual values set per chart in the CMS
-    geography_type: areaType ?? plot.value.geography_type,
-    geography: areaName ?? plot.value.geography,
+    geography_type: hasSelectedArea ? areaType : plot.value.geography_type,
+    geography: hasSelectedArea ? areaName : plot.value.geography,
   }))
 
   // Collect all chart svg's mobile first using the narrow aspect ratio

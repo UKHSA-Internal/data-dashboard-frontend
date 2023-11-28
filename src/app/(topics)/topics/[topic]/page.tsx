@@ -33,16 +33,16 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
     last_published_at: lastUpdated,
     related_links: relatedLinks,
   } = await getPageBySlug(topic, PageType.Topic)
-
   return (
-    <View heading={`${title}${areaName ? ` in ${areaName}` : ''}`} description={description} lastUpdated={lastUpdated}>
+    <View heading={title} description={description} lastUpdated={lastUpdated}>
       <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
       <Details
         open={Boolean(areaType)}
-        label="Select a nation, region or local authority"
+        label={areaName ? `Showing ${title} in ${areaName}` : 'Select a location'}
+        labelClassName="govuk-heading-m"
         className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
       >
-        <AreaSelector />
+        <AreaSelector areaType={areaType} />
       </Details>
       <Contents>
         {body.map(({ id, value }) => (

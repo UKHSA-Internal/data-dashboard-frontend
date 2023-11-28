@@ -12,10 +12,13 @@ addAliases({
 
 import express from 'express'
 
+import bulkDownloads from './handlers/bulkdownloads/v1'
 import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
 import downloads from './handlers/downloads/v2'
+import geographyTypes from './handlers/geographies/v1/types'
+import geographyNames from './handlers/geographies/v1/types/[id]'
 import headlines from './handlers/headlines/v2'
 import suggestions from './handlers/suggestions/v1'
 import tables from './handlers/tables/v4'
@@ -30,9 +33,14 @@ app.use(express.json())
 app.get('/api/pages', pages)
 app.get('/api/pages/:id', page)
 
-// Metric endpoints
+// GET endpoints
 app.get('/api/headlines/v2', headlines)
 app.get('/api/trends/v2', trends)
+app.get('/api/bulkdownloads/v1', bulkDownloads)
+app.get('/api/geographies/v1/types', geographyTypes)
+app.get('/api/geographies/v1/types/:id', geographyNames)
+
+// POST endpoints
 app.post('/api/charts/v3', charts)
 app.post('/api/tables/v4', tables)
 app.post('/api/downloads/v2', downloads)

@@ -10,6 +10,7 @@ import {
   AboutPage,
   AccessibilityStatementPage,
   BrowsePage,
+  BulkDownloadsPage,
   CompliancePage,
   Covid19Page,
   ErrorPage,
@@ -17,6 +18,8 @@ import {
   FeedbackPage,
   HomePage,
   InfluenzaPage,
+  MetricsChildPage,
+  MetricsParentPage,
   NotFoundPage,
   OtherRespiratoryVirusesPage,
   WhatsNewChildPage,
@@ -27,8 +30,11 @@ type Fixtures = {
   app: App
   homePage: HomePage
   aboutPage: AboutPage
+  bulkDownloadsPage: BulkDownloadsPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
+  metricsParentPage: MetricsParentPage
+  metricsChildPage: MetricsChildPage
   covid19Page: Covid19Page
   errorPage: ErrorPage
   influenzaPage: InfluenzaPage
@@ -66,8 +72,10 @@ export class App {
     await this.page.reload()
   }
 
-  async hasNoAccessibilityDefects() {
-    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).disableRules('region').analyze()
+  async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page })
+      .disableRules(['region', ...additionalDisabledRules])
+      .analyze()
     expect(accessibilityScanResults.violations).toEqual([])
   }
 
@@ -177,6 +185,13 @@ export class App {
     await expect(this.backToTop).not.toBeInViewport()
   }
 
+  async hasNotBackToTop() {
+    await this.page.evaluate(() => window.scrollTo(0, 0))
+    await expect(this.backToTop).not.toBeInViewport()
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await expect(this.backToTop).not.toBeInViewport()
+  }
+
   async gotoCookieBanner() {
     await this.page.goto('/?change-settings=1')
   }
@@ -251,11 +266,20 @@ export const test = base.extend<Fixtures>({
   aboutPage: async ({ page }, use) => {
     await use(new AboutPage(page))
   },
+  bulkDownloadsPage: async ({ page }, use) => {
+    await use(new BulkDownloadsPage(page))
+  },
   whatsNewParentPage: async ({ page }, use) => {
     await use(new WhatsNewParentPage(page))
   },
   whatsNewChildPage: async ({ page }, use) => {
     await use(new WhatsNewChildPage(page))
+  },
+  metricsParentPage: async ({ page }, use) => {
+    await use(new MetricsParentPage(page))
+  },
+  metricsChildPage: async ({ page }, use) => {
+    await use(new MetricsChildPage(page))
   },
   covid19Page: async ({ page }, use) => {
     await use(new Covid19Page(page))
