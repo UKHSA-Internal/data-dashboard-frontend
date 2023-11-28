@@ -29,7 +29,7 @@ describe('AreaSelector', () => {
     }
   })
 
-  test('fetches the area types on page load', async () => {
+  test('fetches the area names when an area type has already been selected', async () => {
     jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
     jest.mocked(client).mockResolvedValueOnce({ data: { geographies: mockNations }, status: 200 })
 
