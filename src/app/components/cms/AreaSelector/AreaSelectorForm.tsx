@@ -74,7 +74,7 @@ export function AreaSelectorForm({
             onChange={(evt) => {
               const updatedSearchParams = new URLSearchParams()
               updatedSearchParams.set('areaType', evt.target.value)
-              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false, shallow: true })
+              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
 
               // Reset areaName whenever the areaType changes
               if (areaNameSelectRef.current) {
