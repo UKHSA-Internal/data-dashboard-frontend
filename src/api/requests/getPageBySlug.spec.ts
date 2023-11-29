@@ -1,13 +1,15 @@
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
 
 import { client } from '../api-utils'
+import { PageType } from './cms/getPages'
+import { getPageBySlug } from './getPageBySlug'
 
 jest.mock('@/lib/logger')
-
-const getPageBySlug = jest.mocked(client)
+jest.mock('@/api/api-utils')
+const getPage = jest.mocked(client)
 
 test('returns page successfully', async () => {
-  getPageBySlug.mockResolvedValueOnce({
+  getPage.mockResolvedValueOnce({
     status: 200,
     data: {
       id: 21,
@@ -38,4 +40,6 @@ test('returns page successfully', async () => {
       last_published_at: '2023-10-24T16:09:35.359598+01:00',
     },
   })
+
+  const result = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 })
