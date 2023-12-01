@@ -6,6 +6,8 @@ test.describe('Smoke tests', () => {
     aboutPage,
     whatsNewParentPage,
     whatsNewChildPage,
+    metricsParentPage,
+    metricsChildPage,
     covid19Page,
     influenzaPage,
     otherRespiratoryVirusesPage,
@@ -39,6 +41,14 @@ test.describe('Smoke tests', () => {
     await test.step('loads the "whats new" child page', async () => {
       await whatsNewChildPage.goto()
       await whatsNewChildPage.hasHeading('Soft launch of the UKHSA data dashboard')
+    })
+    await test.step('loads the metrics parent page', async () => {
+      await metricsParentPage.goto()
+      await metricsParentPage.hasHeading()
+    })
+    await test.step('loads the metrics child page', async () => {
+      await metricsChildPage.goto()
+      await metricsChildPage.hasHeading('New cases 7 days sum')
     })
     await test.step('loads the "Accessibility statement" page', async () => {
       await accessibilityStatementPage.goto()
