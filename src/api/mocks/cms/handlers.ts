@@ -27,6 +27,8 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
   [PageType.Common]: pagesWithCommonTypeMock,
   [PageType.WhatsNewParent]: Mock.of<PagesResponse>({ items: [] }),
   [PageType.WhatsNewChild]: Mock.of<PagesResponse>({ items: [] }),
+  [PageType.MetricsParent]: Mock.of<PagesResponse>({ items: [] }),
+  [PageType.MetricsChild]: Mock.of<PagesResponse>({ items: [] }),
 }
 
 // Contains the individual `/pages/{id}` mocks
