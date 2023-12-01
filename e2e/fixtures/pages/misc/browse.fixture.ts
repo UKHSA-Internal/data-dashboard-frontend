@@ -13,7 +13,8 @@ export class BrowsePage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Browse | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Browse | UKHSA data dashboard')
   }
 
   async hasHeading() {

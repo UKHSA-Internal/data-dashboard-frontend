@@ -13,6 +13,8 @@ export enum PageType {
   Topic = 'topic.TopicPage',
   WhatsNewParent = 'whats_new.WhatsNewParentPage',
   WhatsNewChild = 'whats_new.WhatsNewChildEntry',
+  MetricsParent = 'metrics.MetricsParentPage',
+  MetricsChild = 'metrics.MetricsChildEntry',
 }
 
 const page = z.object({
@@ -53,6 +55,21 @@ export const whatsNewResponseSchema = responseSchema.extend({
   ),
 })
 
+export const metricsChildResponseSchema = responseSchema.extend({
+  items: z.array(
+    page.extend({
+      shortText: z.string(),
+      definition: z.string(),
+      rationale: z.string(),
+      methodology: z.string(),
+      category: z.string(),
+      topic: z.string(),
+      apiName: z.string(),
+      last_published_at: z.string(),
+    })
+  ),
+})
+
 // TODO: Unit tests need re-working in CDD-1495
 export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
   const params = new URLSearchParams()
@@ -87,5 +104,21 @@ export const getWhatsNewPages = async () => {
   } catch (error) {
     logger.error(error)
     return whatsNewResponseSchema.safeParse(error)
+  }
+}
+
+export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
+
+export const getMetricsPages = async () => {
+  const params = new URLSearchParams()
+  params.set('type', PageType.MetricsChild)
+  params.set('fields', '*')
+  try {
+    const { data } = await client<MetricsPagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`GET success pages/?${params.toString()}`)
+    return metricsChildResponseSchema.safeParse(data)
+  } catch (error) {
+    logger.error(error)
+    return metricsChildResponseSchema.safeParse(error)
   }
 }

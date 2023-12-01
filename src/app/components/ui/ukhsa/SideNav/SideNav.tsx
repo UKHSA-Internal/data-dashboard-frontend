@@ -14,7 +14,7 @@ export const SideNav = ({ children }: { children: ReactNode }) => {
       <nav
         className="sticky top-[20px] mt-0 hidden min-w-[var(--ukhsa-nav-width)] overflow-hidden xl:block"
         id="ukhsa-sidenav"
-        aria-label="Menu"
+        aria-label="sideMenu"
       >
         <ul>{children}</ul>
       </nav>
