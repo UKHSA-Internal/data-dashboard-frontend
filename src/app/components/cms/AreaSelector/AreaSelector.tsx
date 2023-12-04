@@ -36,6 +36,7 @@ export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
 
   return (
     <AreaSelectorForm
+      areaType={areaType}
       areaTypeOptions={areaTypeOptions}
       areaNameOptions={areaNameOptions}
       // TODO: CDD-1479 - Investgiate how we can consume i18n inside client components
@@ -51,3 +52,5 @@ export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
     />
   )
 }
+
+export * from './AreaSelectorLoader'
