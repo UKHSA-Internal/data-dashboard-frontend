@@ -85,7 +85,7 @@ export class App {
     await expect(this.header.getByRole('link', { name: 'UKHSA data dashboard' })).toBeVisible()
 
     // Phase Banner
-    await expect(this.phaseBanner.getByText(/Alpha/)).toBeVisible()
+    await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
     await expect(
       this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
     ).toBeVisible()
