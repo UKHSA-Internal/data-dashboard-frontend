@@ -4,7 +4,7 @@
   "skipLink": "Skip to main content",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
-  "feedbackBannerPhase": "Alpha",
+  "feedbackBannerPhase": "Beta",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
