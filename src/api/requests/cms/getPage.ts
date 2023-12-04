@@ -85,13 +85,13 @@ const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_pu
 const WithMetricsParentData = SharedPageData.extend({
   body: z.string(),
   meta: Meta.extend({
-    type: z.literal('metrics.MetricsParentPage'),
+    type: z.literal('metrics_documentation.MetricsDocumentationParentPage'),
   }),
 })
 
 const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend({
   meta: Meta.extend({
-    type: z.literal('metrics.MetricsChildEntry'),
+    type: z.literal('metrics_documentation.MetricsDocumentationChildEntry'),
   }),
   shortText: z.string(),
   definition: z.string(),

@@ -8,7 +8,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
   meta: {
     seo_title: 'Metrics documentation | UKHSA data dashboard',
     search_description: '',
-    type: 'metrics.MetricsParentPage',
+    type: 'metrics_documentation.MetricsDocumentationParentPage',
     detail_url: 'http://localhost/api/pages/25/',
     html_url: null,
     slug: 'metrics',
@@ -37,7 +37,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     meta: {
       seo_title: 'Metrics child | UKHSA data dashboard',
       search_description: '',
-      type: 'metrics.MetricsChildEntry',
+      type: 'metrics_documentation.MetricsDocumentationChildEntry',
       detail_url: 'http://localhost/api/pages/26/',
       html_url: null,
       slug: 'new-cases-7days-sum',
@@ -47,7 +47,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       parent: {
         id: 21,
         meta: {
-          type: 'metrics.MetricsParentPage',
+          type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
@@ -74,7 +74,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     meta: {
       seo_title: 'Metrics child | UKHSA data dashboard',
       search_description: '',
-      type: 'metrics.MetricsChildEntry',
+      type: 'metrics_documentation.MetricsDocumentationChildEntry',
       detail_url: 'http://localhost/api/pages/27/',
       html_url: null,
       slug: 'new-deaths-7days-change-percentage',
@@ -84,7 +84,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       parent: {
         id: 21,
         meta: {
-          type: 'metrics.MetricsParentPage',
+          type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
@@ -109,7 +109,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     meta: {
       seo_title: 'Metrics child | UKHSA data dashboard',
       search_description: '',
-      type: 'metrics.MetricsChildEntry',
+      type: 'metrics_documentation.MetricsDocumentationChildEntry',
       detail_url: 'http://localhost/api/pages/28/',
       html_url: null,
       slug: 'covid-occupied-beds-latest',
@@ -119,7 +119,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       parent: {
         id: 21,
         meta: {
-          type: 'metrics.MetricsParentPage',
+          type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
@@ -146,7 +146,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     meta: {
       seo_title: 'Metrics child | UKHSA data dashboard',
       search_description: '',
-      type: 'metrics.MetricsChildEntry',
+      type: 'metrics_documentation.MetricsDocumentationChildEntry',
       detail_url: 'http://localhost/api/pages/29/',
       html_url: null,
       slug: 'new-pcr-tests-daily',
@@ -156,7 +156,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       parent: {
         id: 21,
         meta: {
-          type: 'metrics.MetricsParentPage',
+          type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
