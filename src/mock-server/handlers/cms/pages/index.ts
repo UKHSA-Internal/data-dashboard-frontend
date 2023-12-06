@@ -7,6 +7,8 @@ import {
   allPagesMock,
   pagesWithCommonTypeMock,
   pagesWithHomeTypeMock,
+  pagesWithMetricsChildTypeMock,
+  pagesWithMetricsParentTypeMock,
   pagesWithTopicTypeMock,
   pagesWithWhatsNewChildTypeMock,
   pagesWithWhatsNewParentTypeMock,
@@ -19,6 +21,8 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'common.CommonPage': pagesWithCommonTypeMock,
   'whats_new.WhatsNewParentPage': pagesWithWhatsNewParentTypeMock,
   'whats_new.WhatsNewChildEntry': pagesWithWhatsNewChildTypeMock,
+  'metrics_documentation.MetricsDocumentationParentPage': pagesWithMetricsParentTypeMock,
+  'metrics_documentation.MetricsDocumentationChildEntry': pagesWithMetricsChildTypeMock,
 }
 
 export default async function handler(req: Request, res: Response) {

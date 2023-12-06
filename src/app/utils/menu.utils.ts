@@ -22,11 +22,7 @@ export const useMenu = async () => {
         topics.push({ title, slug: `/topics/${slug}` })
       }
 
-      if (show && type === PageType.WhatsNewParent) {
-        links.push({ title, slug: `/${slug}` })
-      }
-
-      if (show && type === PageType.Common) {
+      if (show && [PageType.MetricsParent, PageType.WhatsNewParent, PageType.Common].includes(type as PageType)) {
         links.push({ title, slug: `/${slug}` })
       }
     }

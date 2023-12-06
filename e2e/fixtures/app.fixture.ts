@@ -18,6 +18,8 @@ import {
   FeedbackPage,
   HomePage,
   InfluenzaPage,
+  MetricsChildPage,
+  MetricsParentPage,
   NotFoundPage,
   OtherRespiratoryVirusesPage,
   WhatsNewChildPage,
@@ -31,6 +33,8 @@ type Fixtures = {
   bulkDownloadsPage: BulkDownloadsPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
+  metricsParentPage: MetricsParentPage
+  metricsChildPage: MetricsChildPage
   covid19Page: Covid19Page
   errorPage: ErrorPage
   influenzaPage: InfluenzaPage
@@ -68,8 +72,10 @@ export class App {
     await this.page.reload()
   }
 
-  async hasNoAccessibilityDefects() {
-    const accessibilityScanResults = await new AxeBuilder({ page: this.page }).disableRules('region').analyze()
+  async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page })
+      .disableRules(['region', ...additionalDisabledRules])
+      .analyze()
     expect(accessibilityScanResults.violations).toEqual([])
   }
 
@@ -79,7 +85,7 @@ export class App {
     await expect(this.header.getByRole('link', { name: 'UKHSA data dashboard' })).toBeVisible()
 
     // Phase Banner
-    await expect(this.phaseBanner.getByText(/Alpha/)).toBeVisible()
+    await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
     await expect(
       this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
     ).toBeVisible()
@@ -268,6 +274,12 @@ export const test = base.extend<Fixtures>({
   },
   whatsNewChildPage: async ({ page }, use) => {
     await use(new WhatsNewChildPage(page))
+  },
+  metricsParentPage: async ({ page }, use) => {
+    await use(new MetricsParentPage(page))
+  },
+  metricsChildPage: async ({ page }, use) => {
+    await use(new MetricsChildPage(page))
   },
   covid19Page: async ({ page }, use) => {
     await use(new Covid19Page(page))
