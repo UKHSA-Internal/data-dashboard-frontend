@@ -26,6 +26,6 @@ describe('Pagination Offset Calculation', () => {
     const currentPage = 1000
     const pageSize = 10000
     const offset = calculatePageOffset(currentPage, pageSize)
-    expect(offset).toBe(9900000) // Offset = (1000 - 1) * 10000 = 9900000
+    expect(offset).toBe(9990000) // Offset = (1000 - 1) * 10000 = 9990000
   })
 })
