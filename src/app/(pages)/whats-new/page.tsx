@@ -172,7 +172,12 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
             })}
           </ul>
 
-          <Pagination totalItems={totalItems} initialPage={page ?? 1} initialPageSize={WHATS_NEW_PAGE_SIZE} />
+          <Pagination
+            className="govuk-!-margin-top-8"
+            totalItems={totalItems}
+            initialPage={page ?? 1}
+            initialPageSize={WHATS_NEW_PAGE_SIZE}
+          />
         </div>
       </div>
 
