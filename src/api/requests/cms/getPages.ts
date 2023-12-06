@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
-import { WHATS_NEW_PAGE_LIMIT } from '@/app/constants/app.constants'
+import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
 
@@ -100,8 +100,8 @@ export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
   params.set('type', PageType.WhatsNewChild)
   params.set('fields', '*')
   params.set('order', '-date_posted')
-  params.set('limit', String(WHATS_NEW_PAGE_LIMIT))
-  params.set('offset', String(calculatePageOffset(page, WHATS_NEW_PAGE_LIMIT)))
+  params.set('limit', String(WHATS_NEW_PAGE_SIZE))
+  params.set('offset', String(calculatePageOffset(page, WHATS_NEW_PAGE_SIZE)))
 
   try {
     const { data } = await client<WhatsNewPagesResponse>(`pages/?${params.toString()}`)
