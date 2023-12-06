@@ -2,8 +2,8 @@
 
 import clsx from 'clsx'
 import Link from 'next/link'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import React, { useEffect } from 'react'
+import { usePathname, useSearchParams } from 'next/navigation'
+import React from 'react'
 
 export function Pagination({
   initialPage,
@@ -16,20 +16,12 @@ export function Pagination({
   initialPageSize: number
   className?: string
 }) {
-  const router = useRouter()
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const currentPage = Number(searchParams.get('page')) || initialPage
-  const totalPages = Math.ceil(totalItems / initialPageSize)
+  const totalPages = Math.ceil(totalItems / initialPageSize) || 1
   const hasNextPage = currentPage < totalPages
   const hasPreviousPage = currentPage > 1
-
-  useEffect(() => {
-    const params = new URLSearchParams(searchParams)
-    params.set('page', String(currentPage))
-
-    router.push(`${pathname}?${params.toString()}`)
-  }, [pathname, searchParams, router, currentPage])
 
   const generatePageNumbers = () => {
     const pages = []
@@ -40,6 +32,8 @@ export function Pagination({
   }
 
   const query = Object.fromEntries(searchParams)
+
+  if (totalPages <= 1) return null
 
   return (
     <nav aria-label="results" className={clsx('govuk-pagination', className)} role="navigation">

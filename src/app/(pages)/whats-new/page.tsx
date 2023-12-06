@@ -10,13 +10,11 @@ import { SafeParseSuccess } from 'zod'
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { Details } from '@/app/components/ui/govuk'
+import { Details, Pagination } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { WHATS_NEW_PAGE_LIMIT } from '@/app/constants/app.constants'
+import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
-
-import { Pagination } from './Pagination'
 
 export const dynamic = 'force-dynamic'
 
@@ -174,7 +172,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
             })}
           </ul>
 
-          <Pagination totalItems={totalItems} initialPage={page ?? 1} initialPageSize={WHATS_NEW_PAGE_LIMIT} />
+          <Pagination totalItems={totalItems} initialPage={page ?? 1} initialPageSize={WHATS_NEW_PAGE_SIZE} />
         </div>
       </div>
 
