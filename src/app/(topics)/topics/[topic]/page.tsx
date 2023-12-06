@@ -26,7 +26,6 @@ export default async function TopicPage({ params: { topic } }: { params: { topic
     last_published_at: lastUpdated,
     related_links: relatedLinks,
   } = await getPageBySlug(topic, PageType.Topic)
-
   return (
     <View heading={title} description={description} lastUpdated={lastUpdated}>
       <Contents>

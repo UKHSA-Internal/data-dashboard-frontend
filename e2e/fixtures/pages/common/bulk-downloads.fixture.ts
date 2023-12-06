@@ -16,7 +16,8 @@ export class BulkDownloadsPage {
   }
 
   async hasMetadata() {
-    await expect(this.page).toHaveTitle(/Bulk downloads | UKHSA data dashboard/)
+    const title = await this.page.title()
+    await expect(title).toBe('Bulk downloads | UKHSA data dashboard')
     await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
       'content',
       'Mocked bulk downloads page description'

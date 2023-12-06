@@ -40,6 +40,7 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
     { title: 'About', slug: '/about' },
     { title: 'Bulk downloads', slug: '/bulk-downloads' },
     { title: "What's new", slug: '/whats-new' },
+    { title: 'Metrics documentation', slug: '/metrics' },
   ])
 })
 

@@ -15,6 +15,8 @@ export enum PageType {
   Topic = 'topic.TopicPage',
   WhatsNewParent = 'whats_new.WhatsNewParentPage',
   WhatsNewChild = 'whats_new.WhatsNewChildEntry',
+  MetricsParent = 'metrics_documentation.MetricsDocumentationParentPage',
+  MetricsChild = 'metrics_documentation.MetricsDocumentationChildEntry',
 }
 
 const page = z.object({
@@ -51,6 +53,21 @@ export const whatsNewResponseSchema = responseSchema.extend({
           colour: z.string().toLowerCase(),
         })
         .nullable(),
+    })
+  ),
+})
+
+export const metricsChildResponseSchema = responseSchema.extend({
+  items: z.array(
+    page.extend({
+      shortText: z.string(),
+      definition: z.string(),
+      rationale: z.string(),
+      methodology: z.string(),
+      category: z.string(),
+      topic: z.string(),
+      apiName: z.string(),
+      last_published_at: z.string(),
     })
   ),
 })
@@ -93,5 +110,21 @@ export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
   } catch (error) {
     logger.error(error)
     return whatsNewResponseSchema.safeParse(error)
+  }
+}
+
+export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
+
+export const getMetricsPages = async () => {
+  const params = new URLSearchParams()
+  params.set('type', PageType.MetricsChild)
+  params.set('fields', '*')
+  try {
+    const { data } = await client<MetricsPagesResponse>(`pages/?${params.toString()}`)
+    logger.info(`GET success pages/?${params.toString()}`)
+    return metricsChildResponseSchema.safeParse(data)
+  } catch (error) {
+    logger.error(error)
+    return metricsChildResponseSchema.safeParse(error)
   }
 }
