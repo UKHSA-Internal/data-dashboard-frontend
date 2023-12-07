@@ -29,7 +29,7 @@ export class WhatsNewParentPage {
     const list = this.page.getByRole('list', { name: "What's new" })
 
     const headings = await list.getByRole('heading', { name: /List of changes in the month of/ }).all()
-    await expect(headings).toHaveLength(2)
+    await expect(headings).toHaveLength(months.length)
 
     let index = 0
     for (const heading of await headings) {
