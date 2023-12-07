@@ -14,12 +14,13 @@ export async function POST(req: NextRequest) {
 
   logger.info('Triggering bulk download')
 
-  const { data, error } = await client<string>(`bulkdownloads/v1?file_format=${body.get('file_format')}`).catch(
-    (error) => {
-      logger.info('bulkdownloads/v1 error', error)
-      redirect('/error')
-    }
-  )
+  const searchParams = new URLSearchParams()
+  searchParams.set('file_format', (body.get('file_format') as string) || 'csv')
+
+  const { data, error } = await client<string>('bulkdownloads/v1', { searchParams }).catch((error) => {
+    logger.info('bulkdownloads/v1 error', error)
+    redirect('/error')
+  })
 
   if (error || !data) {
     logger.info('bulk download api route handler error', error)
