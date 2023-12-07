@@ -127,7 +127,7 @@ describe("Successfully getting all What's new child pages from the cms api", () 
           ...entry,
           badge: {
             text: entry.badge?.text ?? '',
-            colour: entry.badge?.colour ? entry.badge?.colour.toString() : '',
+            colour: entry.badge?.colour ? entry.badge?.colour.toLowerCase() : '',
           },
         })),
       },
