@@ -1,4 +1,4 @@
-import { PagesResponse } from '@/api/requests/cms/getPages'
+import { PagesResponse, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
 
 import {
   aboutPageMock,
@@ -194,7 +194,7 @@ export const pagesWithWhatsNewParentTypeMock: PagesResponse = {
   ],
 }
 
-export const pagesWithWhatsNewChildTypeMock: PagesResponse = {
+export const pagesWithWhatsNewChildTypeMock: WhatsNewPagesResponse = {
   meta: {
     total_count: whatsNewChildMocks.length,
   },
