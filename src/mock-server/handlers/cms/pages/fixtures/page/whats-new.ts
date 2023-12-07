@@ -1,3 +1,5 @@
+import { faker } from '@faker-js/faker'
+
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
@@ -126,4 +128,36 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
       colour: 'BLUE',
     },
   },
+  // Generate a set of random pages for testing of pagination
+  ...Array.from({ length: 30 }).map<PageResponse<PageType.WhatsNewChild>>((item, index) => ({
+    id: faker.number.int() * index,
+    meta: {
+      seo_title: "What's new child | UKHSA data dashboard",
+      search_description: '',
+      type: 'whats_new.WhatsNewChildEntry',
+      detail_url: 'http://localhost/api/pages/24/',
+      html_url: null,
+      slug: faker.lorem.slug(),
+      show_in_menus: false,
+      first_published_at: '2023-10-24T17:22:25.297408+01:00',
+      alias_of: null,
+      parent: {
+        id: 21,
+        meta: {
+          type: 'whats_new.WhatsNewParentPage',
+          detail_url: 'http://localhost/api/pages/21/',
+          html_url: null,
+        },
+        title: "What's new",
+      },
+    },
+    title: faker.company.catchPhrase(),
+    date_posted: '2023-03-05',
+    body: `<p data-block-key="n411d">${faker.lorem.paragraphs()}</p>`,
+    additional_details: `<p data-block-key="vsnf1">${faker.lorem.sentence()}</p>`,
+    badge: {
+      text: 'Data Issue',
+      colour: 'BLUE',
+    },
+  })),
 ]
