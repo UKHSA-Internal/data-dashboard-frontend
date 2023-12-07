@@ -18,13 +18,32 @@ import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewParentPageProps): Promise<Metadata> {
+  const { t } = await useTranslation('whatsNew')
+
   const {
     meta: { seo_title, search_description },
   } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
+  const whatsNewEntries = await getWhatsNewPages({ page })
+
+  if (!whatsNewEntries.success) {
+    logger.info(whatsNewEntries.error.message)
+    return redirect('/error')
+  }
+
+  const {
+    data: {
+      meta: { total_count: totalItems },
+    },
+  } = whatsNewEntries
+
+  const totalPages = Math.ceil(totalItems / WHATS_NEW_PAGE_SIZE) || 1
+
+  const title = seo_title.replace('|', t('documentTitlePagination', { page, totalPages }))
+
   return {
-    title: seo_title,
+    title,
     description: search_description,
   }
 }

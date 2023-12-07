@@ -72,6 +72,10 @@ export class App {
     await this.page.reload()
   }
 
+  async hasDocumentTitle(title: string) {
+    await expect(await this.page.title()).toBe(title)
+  }
+
   async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
     const accessibilityScanResults = await new AxeBuilder({ page: this.page })
       .disableRules(['region', ...additionalDisabledRules])
@@ -192,6 +196,8 @@ export class App {
     await expect(this.backToTop).not.toBeInViewport()
   }
 
+  // Cookie Banner
+
   async gotoCookieBanner() {
     await this.page.goto('/?change-settings=1')
   }
@@ -232,6 +238,8 @@ export class App {
     await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
   }
 
+  // Chart downloads
+
   async canDownloadChartAsCsv(cards: string[]) {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
@@ -253,6 +261,28 @@ export class App {
         expect(file.toString()).toEqual(downloadsCsvFixture)
       }
     }
+  }
+
+  // Pagination
+
+  async hasPagination() {
+    await expect(this.page.getByRole('navigation', { name: 'results' })).toBeVisible()
+  }
+
+  async checkPaginationLinkIsActive(activeLink: number) {
+    await expect(this.page.getByRole('link', { name: `Page ${activeLink}` })).toHaveAttribute('aria-current', 'page')
+  }
+
+  async clickPaginationNumberLink(number: number) {
+    await this.page.getByRole('link', { name: `Page ${number}` }).click()
+  }
+
+  async clickPaginationNextLink() {
+    await this.page.getByRole('link', { name: 'Next' }).click()
+  }
+
+  async clickPaginationPreviousLink() {
+    await this.page.getByRole('link', { name: 'Previous' }).click()
   }
 }
 
