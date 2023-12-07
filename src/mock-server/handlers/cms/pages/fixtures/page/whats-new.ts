@@ -61,7 +61,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
     additional_details: '',
     badge: {
       text: 'New Feature',
-      colour: 'grey',
+      colour: 'GREY',
     },
   },
   {
@@ -92,7 +92,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
     additional_details: '',
     badge: {
       text: 'New Feature',
-      colour: 'grey',
+      colour: 'GREY',
     },
   },
   {
@@ -123,7 +123,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
     additional_details: '<p data-block-key="vsnf1">Nothing to see here yet</p>',
     badge: {
       text: 'Data Issue',
-      colour: 'blue',
+      colour: 'BLUE',
     },
   },
 ]
