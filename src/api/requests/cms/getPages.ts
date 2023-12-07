@@ -65,6 +65,7 @@ export const metricsChildResponseSchema = responseSchema.extend({
       rationale: z.string(),
       methodology: z.string(),
       category: z.string(),
+      caveats: z.string(),
       topic: z.string(),
       apiName: z.string(),
       last_published_at: z.string(),
@@ -72,18 +73,17 @@ export const metricsChildResponseSchema = responseSchema.extend({
   ),
 })
 
-// TODO: Unit tests need re-working in CDD-1495
 export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
-  const searchParams = new URLSearchParams()
-  if (type) searchParams.set('type', type)
-
-  if (additionalParams) {
-    for (const key in additionalParams) {
-      searchParams.append(key, additionalParams[key])
-    }
-  }
-
   try {
+    const searchParams = new URLSearchParams()
+    if (type) searchParams.set('type', type)
+
+    if (additionalParams) {
+      for (const key in additionalParams) {
+        searchParams.append(key, additionalParams[key])
+      }
+    }
+
     const { data } = await client<PagesResponse>('pages', { searchParams })
     logger.info(`GET success pages/?${searchParams.toString()}`)
     return responseSchema.safeParse(data)

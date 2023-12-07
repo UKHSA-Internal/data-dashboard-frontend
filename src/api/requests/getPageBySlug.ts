@@ -22,10 +22,7 @@ export const getPageBySlug = async <T extends PageType>(
     }
 
     // Fetch all of pages by type from the CMS
-    const pages = await getPages(type, additionalParams).catch((err) => {
-      logger.error(err)
-      throw new Error(`Could not get pages with type ${type}`)
-    })
+    const pages = await getPages(type, additionalParams)
 
     // Find the CMS page within the list that matches the provided slug
     if (pages.success) {
@@ -35,9 +32,7 @@ export const getPageBySlug = async <T extends PageType>(
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
-        const page = await getPage<T>(matchedPage.id).catch((err) => {
-          throw new Error(err)
-        })
+        const page = await getPage<T>(matchedPage.id)
 
         if (page.success) {
           return page.data as PageResponse<T>
@@ -50,7 +45,7 @@ export const getPageBySlug = async <T extends PageType>(
       throw new Error(`No page found for slug ${slug}`)
     }
 
-    notFound()
+    throw new Error(`Could not get pages with type ${type}`)
   } catch (e) {
     logger.info(e)
     notFound()
