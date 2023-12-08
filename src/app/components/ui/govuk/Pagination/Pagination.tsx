@@ -65,7 +65,7 @@ export function Pagination({
       <ul className="govuk-pagination__list">
         {generatePageNumbers().map((page) => (
           <li
-            className={clsx('govuk-pagination__item', {
+            className={clsx('govuk-pagination__item block', {
               'govuk-pagination__item--current': page === currentPage,
             })}
             key={page}
