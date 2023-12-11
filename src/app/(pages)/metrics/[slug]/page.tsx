@@ -21,8 +21,14 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function MetricsChildPage({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await useTranslation('metrics')
 
-  const { title, definition, rationale, methodology, caveats, category, topic, apiName, last_published_at } =
-    await getPageBySlug(slug, PageType.MetricsChild)
+  const {
+    title,
+    topic,
+    metric,
+    metric_group: group,
+    body,
+    last_published_at,
+  } = await getPageBySlug(slug, PageType.MetricsChild)
 
   return (
     <View heading={title} lastUpdated={last_published_at} backLink="/metrics">
@@ -30,36 +36,17 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <Contents>
             <ContentsItem heading={'Summary'}>
-              <MetricsSummary topic={topic} category={category} apiName={apiName} />
+              <MetricsSummary topic={topic} group={group} metric={metric} />
             </ContentsItem>
-            <ContentsItem heading={'Definition'}>
-              {definition ? (
-                <RichText>{definition}</RichText>
-              ) : (
-                <p className="govuk-body">{t('emptyDescriptionText', { value: 'definition' })}</p>
-              )}
-            </ContentsItem>
-            <ContentsItem heading={'Rationale'}>
-              {rationale ? (
-                <RichText>{rationale}</RichText>
-              ) : (
-                <p className="govuk-body">{t('emptyDescriptionText', { value: 'rationale' })}</p>
-              )}
-            </ContentsItem>
-            <ContentsItem heading={'Methodology'}>
-              {methodology ? (
-                <RichText>{methodology}</RichText>
-              ) : (
-                <p className="govuk-body">{t('emptyDescriptionText', { value: 'methodology' })}</p>
-              )}
-            </ContentsItem>
-            <ContentsItem heading={'Caveats'}>
-              {caveats ? (
-                <RichText>{caveats}</RichText>
-              ) : (
-                <p className="govuk-body">{t('emptyDescriptionText', { value: 'caveats' })}</p>
-              )}
-            </ContentsItem>
+            {body.map(({ id, value: { title, body } }) => (
+              <ContentsItem key={id} heading={title}>
+                {body ? (
+                  <RichText>{body}</RichText>
+                ) : (
+                  <p className="govuk-body">{t('emptyDescriptionText', { value: title.toLowerCase() })}</p>
+                )}
+              </ContentsItem>
+            ))}
           </Contents>
         </div>
       </div>

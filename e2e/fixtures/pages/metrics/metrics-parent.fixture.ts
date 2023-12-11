@@ -12,11 +12,6 @@ export class MetricsParentPage {
     await this.page.goto('/metrics')
   }
 
-  async hasMetadata() {
-    const title = await this.page.title()
-    await expect(title).toBe('Metrics documentation | UKHSA data dashboard')
-  }
-
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /Metrics documentation/, level: 1 })).toBeVisible()
   }

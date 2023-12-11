@@ -12,11 +12,6 @@ export class WhatsNewParentPage {
     await this.page.goto('/whats-new')
   }
 
-  async hasMetadata() {
-    const title = await this.page.title()
-    await expect(title).toBe("What's new | UKHSA data dashboard")
-  }
-
   async hasHeading() {
     await expect(this.page.getByRole('heading', { name: /What's new/, level: 1 })).toBeVisible()
   }

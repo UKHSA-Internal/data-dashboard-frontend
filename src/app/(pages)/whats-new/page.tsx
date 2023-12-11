@@ -18,6 +18,12 @@ import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
+interface WhatsNewParentPageProps {
+  searchParams: {
+    page?: number
+  }
+}
+
 export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewParentPageProps): Promise<Metadata> {
   const { t } = await useTranslation('whatsNew')
 
@@ -45,12 +51,6 @@ export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewP
   return {
     title,
     description: search_description,
-  }
-}
-
-interface WhatsNewParentPageProps {
-  searchParams: {
-    page?: number
   }
 }
 
