@@ -8,8 +8,8 @@ export class MetricsParentPage {
     this.page = page
   }
 
-  async goto() {
-    await this.page.goto('/metrics')
+  async goto(page?: string) {
+    await this.page.goto(page || '/metrics')
   }
 
   async hasHeading() {

@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 
 import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
@@ -58,8 +58,13 @@ export default async function MetricsParentPage({ searchParams: { page = 1 } }: 
   const metricsEntries = await getMetricsPages({ page })
 
   if (!metricsEntries.success) {
-    logger.info(metricsEntries.error.message)
+    logger.error(metricsEntries.error.message)
     return redirect('/error')
+  }
+
+  if (!metricsEntries.data.items.length) {
+    logger.error('No metrics entries found, redirecting to 404 page')
+    return notFound()
   }
 
   const {

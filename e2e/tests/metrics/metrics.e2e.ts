@@ -63,6 +63,18 @@ test.describe('Metrics parent page', () => {
       await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
     })
   })
+
+  test('Redirects to 404 error page when paginating to a page that does not exist', async ({
+    metricsParentPage,
+    notFoundPage,
+  }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto('/metrics?page=100')
+    })
+    await test.step('redirects to the 404 page', async () => {
+      await notFoundPage.hasPageContent()
+    })
+  })
 })
 
 test.describe('Metrics parent page - mobile', () => {
