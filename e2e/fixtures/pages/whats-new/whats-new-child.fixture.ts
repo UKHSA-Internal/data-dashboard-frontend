@@ -22,7 +22,7 @@ export class WhatsNewChildPage {
   }
 
   async hasLastUpdated() {
-    await expect(this.page.getByText(/Last updated on Tuesday, 26 September 2023 at 01:00am/)).toBeVisible()
+    await expect(this.page.getByText(/Last updated on Tuesday, 24 October 2023 at 04:09pm/)).toBeVisible()
   }
 
   async hasBadge(name: string) {
