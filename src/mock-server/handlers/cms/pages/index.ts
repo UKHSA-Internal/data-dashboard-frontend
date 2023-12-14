@@ -42,6 +42,24 @@ export default async function handler(req: Request, res: Response) {
 
     const pageData = mockedPagesMap[pageType]
 
+    logger.error(`search ${req.query['search']}`)
+    logger.error(`type ${req.query['type']}`)
+
+    // if (req.query['search'] && req.query['type'] === 'metrics_documentation.MetricsDocumentationParentPage') {
+    if (req.query['search'] && req.query['search'] !== '') {
+      logger.info(`Search: ${req.query['search']}`)
+
+      const unfilteredData = mockedPagesMap['metrics_documentation.MetricsDocumentationChildEntry']
+
+      logger.info(`unfiltered data ${unfilteredData}`)
+
+      const filteredData = unfilteredData.items.find(({ title }) => title === req.query['search'])
+
+      logger.info(`post filters ${filteredData}`)
+
+      // return res.json(filteredData)
+    }
+
     // Apply pagination based on the provided limit and offset
     return res.json({
       ...pageData,

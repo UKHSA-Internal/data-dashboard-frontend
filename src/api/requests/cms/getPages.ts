@@ -115,10 +115,12 @@ export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
 
 export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
-export const getMetricsPages = async () => {
+export const getMetricsPages = async ({ search = '' }: { search?: string }) => {
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.MetricsChild)
   searchParams.set('fields', '*')
+  searchParams.set('search', search)
+
   try {
     const { data } = await client<MetricsPagesResponse>('pages', { searchParams })
     logger.info(`GET success pages/?${searchParams.toString()}`)

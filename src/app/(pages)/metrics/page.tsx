@@ -8,6 +8,8 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { MetricsCard } from '@/app/components/ui/ukhsa/MetricsCard/MetricsCard'
 import { logger } from '@/lib/logger'
 
+import MetricsSearch from './components/MetricsSearch/MetricsSearch'
+
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
@@ -19,7 +21,13 @@ export async function generateMetadata(): Promise<Metadata> {
   }
 }
 
-export default async function MetricsParentPage() {
+interface MetricsParentPageProps {
+  searchParams: {
+    search?: string
+  }
+}
+
+export default async function MetricsParentPage({ searchParams: { search } }: MetricsParentPageProps) {
   const {
     title,
     body,
@@ -27,7 +35,7 @@ export default async function MetricsParentPage() {
     related_links: relatedLinks,
   } = await getPageBySlug('metrics', PageType.MetricsParent)
 
-  const metricsEntries = await getMetricsPages()
+  const metricsEntries = await getMetricsPages({ search })
 
   if (!metricsEntries.success) {
     logger.info(metricsEntries.error.message)
@@ -43,6 +51,8 @@ export default async function MetricsParentPage() {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
+
+          <MetricsSearch value={search ?? ''} />
 
           <div className="govuk-!-margin-top-7" aria-label={title}>
             {items.map(({ id, title, meta, shortText, category, topic, apiName }) => {
