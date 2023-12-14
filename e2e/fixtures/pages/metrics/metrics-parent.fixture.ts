@@ -9,7 +9,7 @@ export class MetricsParentPage {
   }
 
   async goto() {
-    await this.page.goto('/metrics')
+    await this.page.goto('/metrics-documentation')
   }
 
   async hasMetadata() {

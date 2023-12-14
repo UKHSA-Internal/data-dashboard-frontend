@@ -74,17 +74,19 @@ export const metricsChildResponseSchema = responseSchema.extend({
 // TODO: Unit tests need re-working in CDD-1495
 export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
   try {
-    const params = new URLSearchParams()
-    if (type) params.set('type', type)
+    const searchParams = new URLSearchParams()
+    if (type) searchParams.set('type', type)
+
+    searchParams.set('limit', '100') // TODO: This is a temporary fix to ensure the backend page limit is not hit
 
     if (additionalParams) {
       for (const key in additionalParams) {
-        params.append(key, additionalParams[key])
+        searchParams.append(key, additionalParams[key])
       }
     }
 
-    const { data } = await client<PagesResponse>(`pages/?${params.toString()}`)
-    logger.info(`GET success pages/?${params.toString()}`)
+    const { data } = await client<PagesResponse>(`pages/?${searchParams.toString()}`)
+    logger.info(`GET success pages/?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
