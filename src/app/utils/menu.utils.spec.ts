@@ -9,7 +9,10 @@ const clientMock = jest.mocked(client)
 
 test('fetches then formats the cms pages into a navigation menu', async () => {
   clientMock.mockResolvedValueOnce({
-    data: allPagesMock,
+    data: {
+      ...allPagesMock,
+      items: allPagesMock.items.filter((page) => page.meta.show_in_menus),
+    },
     status: 200,
   })
   const menu = await useMenu()
