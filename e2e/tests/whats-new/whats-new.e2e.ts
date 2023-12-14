@@ -7,8 +7,8 @@ test.describe("What's new parent page", () => {
     await test.step('loads the page', async () => {
       await whatsNewParentPage.goto()
     })
-    await test.step('metadata is correct', async () => {
-      await whatsNewParentPage.hasMetadata()
+    await test.step('has correct page title', async () => {
+      await app.hasDocumentTitle("What's new (page 1 of 4) | UKHSA data dashboard")
     })
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
@@ -18,8 +18,7 @@ test.describe("What's new parent page", () => {
       test.skip()
       test.info().annotations.push({
         type: 'issue',
-        description:
-          'Re-enable once the legacy whats new page is removed. Something in the mock responses is causing a data clash in NextJs',
+        description: 'https://digitaltools.phe.org.uk/browse/CDD-1514',
       })
       await app.hasNoAccessibilityDefects()
     })
@@ -39,7 +38,7 @@ test.describe("What's new parent page", () => {
       await whatsNewParentPage.goto()
     })
     await test.step('groups the entries into monthly sections', async () => {
-      await whatsNewParentPage.isListedByMonth(['October 2023', 'September 2023'])
+      await whatsNewParentPage.isListedByMonth(['October 2023', 'September 2023', 'March 2023'])
     })
     await test.step('groups the entries within the sections by date posted with newest first', async () => {
       await whatsNewParentPage.isSortedByDate([
@@ -69,6 +68,40 @@ test.describe("What's new parent page", () => {
         date: '5 October 2023',
         body: 'We’ve added data for other respiratory viruses to the homepage of the dashboard. The homepage of the dashboard shows headline positivity figures for:',
       })
+    })
+  })
+
+  test('Paginating back/forward between pages', async ({ whatsNewParentPage, app }) => {
+    await test.step('loads the page', async () => {
+      await whatsNewParentPage.goto()
+    })
+    await test.step('shows a pagination', async () => {
+      await app.hasPagination()
+    })
+    await test.step('defaults to page 1', async () => {
+      await app.checkPaginationLinkIsActive(1)
+      await app.hasDocumentTitle("What's new (page 1 of 4) | UKHSA data dashboard")
+    })
+    await test.step('click "next" pagination link', async () => {
+      await app.clickPaginationNextLink()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle("What's new (page 2 of 4) | UKHSA data dashboard")
+    })
+    await test.step('click "page 3" pagination link', async () => {
+      await app.clickPaginationNumberLink(3)
+    })
+    await test.step('shows page 3', async () => {
+      await app.checkPaginationLinkIsActive(3)
+      await app.hasDocumentTitle("What's new (page 3 of 4) | UKHSA data dashboard")
+    })
+    await test.step('click "previous" pagination link', async () => {
+      await app.clickPaginationPreviousLink()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle("What's new (page 2 of 4) | UKHSA data dashboard")
     })
   })
 })
@@ -111,16 +144,15 @@ test.describe("What's new child page", () => {
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
     })
-    // await test.step('displays without any accessibility defects', async () => {
-    //   // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
-    //   test.skip()
-    //   test.info().annotations.push({
-    //     type: 'issue',
-    //     description:
-    //       'Re-enable once the legacy whats new page is removed. Something in the mock responses is causing a data clash in NextJs',
-    //   })
-    //   await app.hasNoAccessibilityDefects()
-    // })
+    await test.step('displays without any accessibility defects', async () => {
+      // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
+      test.skip()
+      test.info().annotations.push({
+        type: 'issue',
+        description: 'https://digitaltools.phe.org.uk/browse/CDD-1514',
+      })
+      await app.hasNoAccessibilityDefects()
+    })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()
     })

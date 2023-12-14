@@ -1,4 +1,5 @@
 {
+  "documentTitlePagination": "(page {{page}} of {{totalPages}}) |",
   "monthHeader": "<0>List of changes in the month of</0> {{value}}",
   "entryDate": "<0>Entry date: </0>{{value, dateShort}}",
   "entryCategory": "<0>Entry category: </0><1>{{value}}</1>",

@@ -115,13 +115,13 @@ describe("Successfully getting all What's new child pages from the cms api", () 
       data: pagesWithWhatsNewChildTypeMock,
     })
 
-    const response = await getWhatsNewPages()
+    const response = await getWhatsNewPages({ page: 1 })
 
     expect(response).toEqual<WhatsNewSuccessResponse>({
       success: true,
       data: {
         meta: {
-          total_count: 3,
+          total_count: pagesWithWhatsNewChildTypeMock.items.length,
         },
         items: pagesWithWhatsNewChildTypeMock.items.map((entry) => ({
           ...entry,
@@ -147,7 +147,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
       },
     })
 
-    const response = await getWhatsNewPages()
+    const response = await getWhatsNewPages({ page: 1 })
 
     expect(response).toEqual<ErrorResponse>({
       success: false,
@@ -169,9 +169,12 @@ describe("Failing to get all What's new child pages from the cms api", () => {
       data: {},
     })
 
-    const result = await getWhatsNewPages()
+    const result = await getWhatsNewPages({ page: 1 })
 
-    expect(logger.info).toHaveBeenNthCalledWith(1, 'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*')
+    expect(logger.info).toHaveBeenNthCalledWith(
+      1,
+      'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*&order=-date_posted&limit=10&offset=0'
+    )
 
     expect(result).toEqual<ErrorResponse>({
       success: false,
