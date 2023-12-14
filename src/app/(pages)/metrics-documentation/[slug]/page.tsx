@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import MetricsSummary from '@/app/(pages)/metrics/components/MetricsSummary/MetricsSummary'
+import MetricsSummary from '@/app/(pages)/metrics-documentation/components/MetricsSummary/MetricsSummary'
 import { RichText } from '@/app/components/cms'
 import { Contents, ContentsItem, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
