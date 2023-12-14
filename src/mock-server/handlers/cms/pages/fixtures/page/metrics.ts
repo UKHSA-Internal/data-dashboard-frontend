@@ -11,7 +11,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
     type: 'metrics_documentation.MetricsDocumentationParentPage',
     detail_url: 'http://localhost/api/pages/25/',
     html_url: null,
-    slug: 'metrics',
+    slug: 'metrics-documentation',
     show_in_menus: true,
     first_published_at: '2023-10-24T16:09:35.359598+01:00',
     alias_of: null,

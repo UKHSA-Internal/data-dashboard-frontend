@@ -33,10 +33,15 @@ export default async function handler(req: Request, res: Response) {
     }
 
     if (!req.query['type']) {
+      if (req.query.show_in_menus === 'true') {
+        res.json({ ...allPagesMock, items: allPagesMock.items.filter((page) => page.meta.show_in_menus) })
+      }
       return res.json(allPagesMock)
     }
 
-    return res.json(mockedPagesMap[req.query['type'] as PageType])
+    const pages = mockedPagesMap[req.query['type'] as PageType]
+
+    return res.json(pages)
   } catch (error) {
     logger.error(error)
     return res.status(500)
