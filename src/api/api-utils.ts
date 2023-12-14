@@ -9,6 +9,7 @@ const fetch = fetchRetry(global.fetch)
 
 interface Options {
   body?: unknown
+  searchParams?: URLSearchParams
   baseUrl?: string
   headers?: Record<string, string>
 }
@@ -21,7 +22,7 @@ interface Options {
 
 export function client<T>(
   endpoint: string,
-  { body, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
+  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
@@ -46,7 +47,7 @@ export function client<T>(
     },
   }
 
-  const url = `${baseUrl}${baseUrl && '/'}${endpoint}`
+  const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
 
   return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok } = response

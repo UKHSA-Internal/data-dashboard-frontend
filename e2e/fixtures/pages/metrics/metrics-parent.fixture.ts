@@ -8,13 +8,8 @@ export class MetricsParentPage {
     this.page = page
   }
 
-  async goto() {
-    await this.page.goto('/metrics')
-  }
-
-  async hasMetadata() {
-    const title = await this.page.title()
-    await expect(title).toBe('Metrics documentation | UKHSA data dashboard')
+  async goto(page?: string) {
+    await this.page.goto(page || '/metrics-documentation')
   }
 
   async hasHeading() {

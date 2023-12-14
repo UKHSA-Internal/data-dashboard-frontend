@@ -8,7 +8,7 @@ test.describe('Metrics parent page', () => {
       await metricsParentPage.goto()
     })
     await test.step('metadata is correct', async () => {
-      await metricsParentPage.hasMetadata()
+      await app.hasDocumentTitle('Metrics documentation (page 1 of 6) | UKHSA data dashboard')
     })
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
@@ -27,6 +27,52 @@ test.describe('Metrics parent page', () => {
     })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()
+    })
+  })
+
+  test('Paginating back/forward between pages', async ({ metricsParentPage, app }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto()
+    })
+    await test.step('shows a pagination', async () => {
+      await app.hasPagination()
+    })
+    await test.step('defaults to page 1', async () => {
+      await app.checkPaginationLinkIsActive(1)
+      await app.hasDocumentTitle('Metrics documentation (page 1 of 6) | UKHSA data dashboard')
+    })
+    await test.step('click "next" pagination link', async () => {
+      await app.clickPaginationNextLink()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
+    })
+    await test.step('click "page 3" pagination link', async () => {
+      await app.clickPaginationNumberLink(3)
+    })
+    await test.step('shows page 3', async () => {
+      await app.checkPaginationLinkIsActive(3)
+      await app.hasDocumentTitle('Metrics documentation (page 3 of 6) | UKHSA data dashboard')
+    })
+    await test.step('click "previous" pagination link', async () => {
+      await app.clickPaginationPreviousLink()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
+    })
+  })
+
+  test('Redirects to 404 error page when paginating to a page that does not exist', async ({
+    metricsParentPage,
+    notFoundPage,
+  }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto('/metrics?page=100')
+    })
+    await test.step('redirects to the 404 page', async () => {
+      await notFoundPage.hasPageContent()
     })
   })
 })
@@ -64,7 +110,7 @@ test.describe('Metrics child page', () => {
       await metricsChildPage.goto()
     })
     await test.step('metadata is correct', async () => {
-      await metricsChildPage.hasMetadata()
+      await app.hasDocumentTitle('Metrics child | UKHSA data dashboard')
     })
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()

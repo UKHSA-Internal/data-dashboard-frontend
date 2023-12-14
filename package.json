@@ -42,7 +42,8 @@
   },
   "devDependencies": {
     "@axe-core/playwright": "^4.8.1",
-    "@playwright/test": "^1.39.0",
+    "@faker-js/faker": "^8.3.1",
+    "@playwright/test": "^1.40.1",
     "@testing-library/jest-dom": "^5.17.0",
     "@testing-library/react": "^14.0.0",
     "@testing-library/user-event": "^14.5.1",
