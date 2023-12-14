@@ -9,7 +9,7 @@ export class MetricsParentPage {
   }
 
   async goto(page?: string) {
-    await this.page.goto(page || '/metrics')
+    await this.page.goto(page || '/metrics-documentation')
   }
 
   async hasHeading() {

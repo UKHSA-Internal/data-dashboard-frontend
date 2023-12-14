@@ -83,7 +83,7 @@ describe('Failing to get all pages from the cms api', () => {
 
     const result = await getPages(PageType.Common)
 
-    expect(logger.info).toHaveBeenNthCalledWith(1, 'GET success pages/?type=common.CommonPage')
+    expect(logger.info).toHaveBeenNthCalledWith(1, 'GET success pages/?type=common.CommonPage&limit=100')
 
     expect(result).toEqual<ErrorResponse>({
       success: false,
