@@ -158,6 +158,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
     date_posted: '2023-03-05',
     body: `<p data-block-key="n411d">${faker.lorem.paragraphs()}</p>`,
     additional_details: `<p data-block-key="vsnf1">${faker.lorem.sentence()}</p>`,
+    last_published_at: '2023-10-24T16:09:35.359598+01:00',
     badge: {
       text: 'Data Issue',
       colour: 'BLUE',
