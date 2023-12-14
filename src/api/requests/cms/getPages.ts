@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
+import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
+import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 /**
@@ -71,7 +73,6 @@ export const metricsChildResponseSchema = responseSchema.extend({
   ),
 })
 
-// TODO: Unit tests need re-working in CDD-1495
 export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
   try {
     const searchParams = new URLSearchParams()
@@ -81,11 +82,11 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
 
     if (additionalParams) {
       for (const key in additionalParams) {
-        searchParams.append(key, additionalParams[key])
+        searchParams.set(key, additionalParams[key])
       }
     }
 
-    const { data } = await client<PagesResponse>(`pages/?${searchParams.toString()}`)
+    const { data } = await client<PagesResponse>('pages', { searchParams })
     logger.info(`GET success pages/?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
@@ -96,13 +97,17 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
 
 export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
 
-export const getWhatsNewPages = async () => {
-  const params = new URLSearchParams()
-  params.set('type', PageType.WhatsNewChild)
-  params.set('fields', '*')
+export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
+  const searchParams = new URLSearchParams()
+  searchParams.set('type', PageType.WhatsNewChild)
+  searchParams.set('fields', '*')
+  searchParams.set('order', '-date_posted')
+  searchParams.set('limit', String(WHATS_NEW_PAGE_SIZE))
+  searchParams.set('offset', String(calculatePageOffset(page, WHATS_NEW_PAGE_SIZE)))
+
   try {
-    const { data } = await client<WhatsNewPagesResponse>(`pages/?${params.toString()}`)
-    logger.info(`GET success pages/?${params.toString()}`)
+    const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams })
+    logger.info(`GET success pages/?${searchParams.toString()}`)
     return whatsNewResponseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
@@ -113,12 +118,12 @@ export const getWhatsNewPages = async () => {
 export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
 export const getMetricsPages = async () => {
-  const params = new URLSearchParams()
-  params.set('type', PageType.MetricsChild)
-  params.set('fields', '*')
+  const searchParams = new URLSearchParams()
+  searchParams.set('type', PageType.MetricsChild)
+  searchParams.set('fields', '*')
   try {
-    const { data } = await client<MetricsPagesResponse>(`pages/?${params.toString()}`)
-    logger.info(`GET success pages/?${params.toString()}`)
+    const { data } = await client<MetricsPagesResponse>('pages', { searchParams })
+    logger.info(`GET success pages/?${searchParams.toString()}`)
     return metricsChildResponseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
