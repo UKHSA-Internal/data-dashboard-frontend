@@ -93,14 +93,22 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
   meta: Meta.extend({
     type: z.literal('metrics_documentation.MetricsDocumentationChildEntry'),
   }),
-  shortText: z.string(),
-  definition: z.string(),
-  rationale: z.string(),
-  methodology: z.string(),
-  caveats: z.string(),
-  category: z.string(),
+  page_description: z.string(),
+  metric_group: z.string(),
   topic: z.string(),
-  apiName: z.string(),
+  metric: z.string(),
+  last_published_at: z.string(),
+  date_posted: z.string(),
+  body: z.array(
+    z.object({
+      id: z.string(),
+      type: z.literal('section'),
+      value: z.object({
+        title: z.string(),
+        body: z.string(),
+      }),
+    })
+  ),
 })
 
 export const responseSchema = z.union([

@@ -6,8 +6,8 @@ test('renders MetricsCard', async () => {
   const { getByText } = render(
     await MetricsSummary({
       topic: 'COVID-19',
-      category: 'Healthcare',
-      apiName: 'test_apiname',
+      group: 'Healthcare',
+      metric: 'test_apiname',
     })
   )
 

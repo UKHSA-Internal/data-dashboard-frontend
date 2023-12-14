@@ -1,10 +1,10 @@
 interface MetricsSummaryProps {
   topic: string
-  category: string
-  apiName: string
+  group: string
+  metric: string
 }
 
-export default function MetricsSummary({ topic, category, apiName }: MetricsSummaryProps) {
+export default function MetricsSummary({ topic, group, metric }: MetricsSummaryProps) {
   return (
     <dl className="govuk-summary-list govuk-!-width-two-thirds">
       <div className="govuk-summary-list__row">
@@ -13,12 +13,12 @@ export default function MetricsSummary({ topic, category, apiName }: MetricsSumm
       </div>
       <div className="govuk-summary-list__row">
         <dt className="govuk-summary-list__key">Category</dt>
-        <dd className="govuk-summary-list__value">{category}</dd>
+        <dd className="govuk-summary-list__value">{group}</dd>
       </div>
       <div className="govuk-summary-list__row">
         <dt className="govuk-summary-list__key">API name</dt>
         <dd className="govuk-summary-list__value">
-          <code>{apiName}</code>
+          <code>{metric}</code>
         </dd>
       </div>
     </dl>
