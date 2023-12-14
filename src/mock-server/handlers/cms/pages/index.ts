@@ -41,7 +41,7 @@ export default async function handler(req: Request, res: Response) {
 
     const pages = mockedPagesMap[req.query['type'] as PageType]
 
-    return pages
+    return res.json(pages)
   } catch (error) {
     logger.error(error)
     return res.status(500)
