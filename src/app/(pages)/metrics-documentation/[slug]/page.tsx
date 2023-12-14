@@ -25,7 +25,7 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
     await getPageBySlug(slug, PageType.MetricsChild)
 
   return (
-    <View heading={title} lastUpdated={last_published_at} backLink="/metrics">
+    <View heading={title} lastUpdated={last_published_at} backLink="/metrics-documentation">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <Contents>
