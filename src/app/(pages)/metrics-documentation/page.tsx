@@ -11,7 +11,7 @@ import { logger } from '@/lib/logger'
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('metrics', PageType.MetricsParent)
+  } = await getPageBySlug('metrics-documentation', PageType.MetricsParent)
 
   return {
     title: seo_title,
@@ -25,7 +25,7 @@ export default async function MetricsParentPage() {
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug('metrics', PageType.MetricsParent)
+  } = await getPageBySlug('metrics-documentation', PageType.MetricsParent)
 
   const metricsEntries = await getMetricsPages()
 
@@ -50,7 +50,7 @@ export default async function MetricsParentPage() {
                 <MetricsCard
                   key={id}
                   title={title}
-                  href={`metrics/${meta.slug}`}
+                  href={`metrics-documentation/${meta.slug}`}
                   shortText={shortText}
                   category={category}
                   topic={topic}
