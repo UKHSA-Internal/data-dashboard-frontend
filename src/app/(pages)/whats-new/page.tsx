@@ -3,7 +3,7 @@ import dayjs from 'dayjs'
 import { kebabCase } from 'lodash'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { SafeParseSuccess } from 'zod'
 
@@ -17,6 +17,12 @@ import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
+
+interface WhatsNewParentPageProps {
+  searchParams: {
+    page?: number
+  }
+}
 
 export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewParentPageProps): Promise<Metadata> {
   const { t } = await useTranslation('whatsNew')
@@ -48,12 +54,6 @@ export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewP
   }
 }
 
-interface WhatsNewParentPageProps {
-  searchParams: {
-    page?: number
-  }
-}
-
 export default async function WhatsNewParentPage({ searchParams: { page } }: WhatsNewParentPageProps) {
   const { t } = await useTranslation('whatsNew')
 
@@ -69,6 +69,11 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
   if (!whatsNewEntries.success) {
     logger.info(whatsNewEntries.error.message)
     return redirect('/error')
+  }
+
+  if (!whatsNewEntries.data.items.length) {
+    logger.error('No whats-new entries found, redirecting to 404 page')
+    return notFound()
   }
 
   const {
