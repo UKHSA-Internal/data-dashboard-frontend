@@ -16,6 +16,7 @@ interface MetricsParentPageProps {
     page?: number
   }
 }
+
 export async function generateMetadata({ searchParams: { page = 1 } }: MetricsParentPageProps): Promise<Metadata> {
   const { t } = await useTranslation('whatsNew')
 
@@ -26,7 +27,7 @@ export async function generateMetadata({ searchParams: { page = 1 } }: MetricsPa
   const metricsEntries = await getMetricsPages({ page })
 
   if (!metricsEntries.success) {
-    logger.info(metricsEntries.error.message)
+    logger.error(metricsEntries.error.message)
     return redirect('/error')
   }
 
@@ -93,14 +94,14 @@ export default async function MetricsParentPage({ searchParams: { page = 1 } }: 
                 />
               )
             })}
-
-            <Pagination
-              className="govuk-!-margin-top-8"
-              totalItems={totalItems}
-              initialPage={page ?? 1}
-              initialPageSize={METRICS_DOCUMENTATION_PAGE_SIZE}
-            />
           </div>
+
+          <Pagination
+            className="govuk-!-margin-top-8"
+            totalItems={totalItems}
+            initialPage={page ?? 1}
+            initialPageSize={METRICS_DOCUMENTATION_PAGE_SIZE}
+          />
         </div>
       </div>
 
