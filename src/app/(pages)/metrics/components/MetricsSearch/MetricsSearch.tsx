@@ -13,6 +13,7 @@ interface MetricsSearchProps {
 const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
   const router = useRouter()
   const [searchParams, setSearchParams] = useState(value)
+  const [usingJs, setUsingJs] = useState(false)
   const debouncedSearch = useDebounce(searchParams, DEBOUNCE_MILLISECONDS)
 
   const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
@@ -23,6 +24,10 @@ const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
     router.push(`/metrics?search=${debouncedSearch}`)
   }, [debouncedSearch, router])
 
+  useEffect(() => {
+    setUsingJs(true)
+  }, [])
+
   return (
     <form method="GET" action={'/metrics'}>
       <div className="govuk-grid-row">
@@ -32,17 +37,16 @@ const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
               Metric name
             </label>
             <input
-              className="govuk-input mr-2 w-4/5"
+              className={`govuk-input govuk-!-margin-right-2 govuk-!-margin-bottom-2 ${usingJs ? 'w-4/5' : 'w-3/5'}`}
               id="metric-name"
               name="search"
               type="text"
               placeholder={value}
               onChange={handleSearchChange}
             />
-            <a href="/metrics" className="govuk-link inline">
+            <a href="/metrics" className="govuk-link govuk-!-margin-right-2 inline">
               Clear
             </a>
-
             <noscript>
               <button type="submit" className="govuk-button">
                 Search
