@@ -27,7 +27,7 @@ export async function generateMetadata({ searchParams: { page = 1 } }: MetricsPa
   const metricsEntries = await getMetricsPages({ page })
 
   if (!metricsEntries.success) {
-    logger.error(metricsEntries.error.message)
+    logger.info(metricsEntries.error.message)
     return redirect('/error')
   }
 
@@ -58,7 +58,7 @@ export default async function MetricsParentPage({ searchParams: { page = 1 } }: 
   const metricsEntries = await getMetricsPages({ page })
 
   if (!metricsEntries.success) {
-    logger.info(metricsEntries.error.message)
+    logger.error(metricsEntries.error.message)
     return redirect('/error')
   }
 
