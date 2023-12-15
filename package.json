@@ -18,11 +18,13 @@
     "prepare": "husky install"
   },
   "dependencies": {
+    "@faker-js/faker": "^8.3.1",
     "@jsdevtools/rehype-toc": "^3.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "clsx": "^2.0.0",
     "cookies-next": "^4.0.0",
     "dayjs": "^1.11.10",
+    "faker-js": "^1.0.0",
     "fetch-retry": "^5.0.6",
     "govuk-frontend": "^4.7.0",
     "i18next": "^23.6.0",

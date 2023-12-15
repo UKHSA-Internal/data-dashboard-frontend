@@ -21,7 +21,7 @@ export const getHeadlines = async (params: RequestParams) => {
   try {
     const { topic, metric, geography = 'England', geography_type = 'Nation' } = params
     const searchParams = new URLSearchParams({ topic, metric, geography, geography_type })
-    const { data } = await client<z.infer<typeof responseSchema>>(`headlines/v2?${searchParams.toString()}`)
+    const { data } = await client<z.infer<typeof responseSchema>>('headlines/v2', { searchParams })
     logger.info(`GET success headlines/v2?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {

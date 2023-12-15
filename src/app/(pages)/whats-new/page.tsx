@@ -3,32 +3,58 @@ import dayjs from 'dayjs'
 import { kebabCase } from 'lodash'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { redirect } from 'next/navigation'
+import { notFound, redirect } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { SafeParseSuccess } from 'zod'
 
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { Details } from '@/app/components/ui/govuk'
+import { Details, Pagination } from '@/app/components/ui/govuk'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata(): Promise<Metadata> {
+interface WhatsNewParentPageProps {
+  searchParams: {
+    page?: number
+  }
+}
+
+export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewParentPageProps): Promise<Metadata> {
+  const { t } = await useTranslation('whatsNew')
+
   const {
     meta: { seo_title, search_description },
   } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
+  const whatsNewEntries = await getWhatsNewPages({ page })
+
+  if (!whatsNewEntries.success) {
+    logger.info(whatsNewEntries.error.message)
+    return redirect('/error')
+  }
+
+  const {
+    data: {
+      meta: { total_count: totalItems },
+    },
+  } = whatsNewEntries
+
+  const totalPages = Math.ceil(totalItems / WHATS_NEW_PAGE_SIZE) || 1
+
+  const title = seo_title.replace('|', t('documentTitlePagination', { page, totalPages }))
+
   return {
-    title: seo_title,
+    title,
     description: search_description,
   }
 }
 
-export default async function WhatsNewParentPage() {
+export default async function WhatsNewParentPage({ searchParams: { page } }: WhatsNewParentPageProps) {
   const { t } = await useTranslation('whatsNew')
 
   const {
@@ -38,15 +64,23 @@ export default async function WhatsNewParentPage() {
     related_links: relatedLinks,
   } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
 
-  const whatsNewEntries = await getWhatsNewPages()
+  const whatsNewEntries = await getWhatsNewPages({ page })
 
   if (!whatsNewEntries.success) {
     logger.info(whatsNewEntries.error.message)
     return redirect('/error')
   }
 
+  if (!whatsNewEntries.data.items.length) {
+    logger.error('No whats-new entries found, redirecting to 404 page')
+    return notFound()
+  }
+
   const {
-    data: { items },
+    data: {
+      items,
+      meta: { total_count: totalItems },
+    },
   } = whatsNewEntries
 
   type Page = SafeParseSuccess<WhatsNewPagesResponse>['data']['items']
@@ -161,6 +195,13 @@ export default async function WhatsNewParentPage() {
               )
             })}
           </ul>
+
+          <Pagination
+            className="govuk-!-margin-top-8"
+            totalItems={totalItems}
+            initialPage={page ?? 1}
+            initialPageSize={WHATS_NEW_PAGE_SIZE}
+          />
         </div>
       </div>
 

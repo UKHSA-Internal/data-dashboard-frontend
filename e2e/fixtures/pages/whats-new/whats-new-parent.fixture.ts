@@ -8,13 +8,8 @@ export class WhatsNewParentPage {
     this.page = page
   }
 
-  async goto() {
-    await this.page.goto('/whats-new')
-  }
-
-  async hasMetadata() {
-    const title = await this.page.title()
-    await expect(title).toBe("What's new | UKHSA data dashboard")
+  async goto(page?: string) {
+    await this.page.goto(page || '/whats-new')
   }
 
   async hasHeading() {
@@ -29,7 +24,7 @@ export class WhatsNewParentPage {
     const list = this.page.getByRole('list', { name: "What's new" })
 
     const headings = await list.getByRole('heading', { name: /List of changes in the month of/ }).all()
-    await expect(headings).toHaveLength(2)
+    await expect(headings).toHaveLength(months.length)
 
     let index = 0
     for (const heading of await headings) {
