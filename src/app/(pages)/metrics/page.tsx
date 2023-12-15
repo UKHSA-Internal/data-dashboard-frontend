@@ -35,7 +35,7 @@ export default async function MetricsParentPage({ searchParams: { search } }: Me
     related_links: relatedLinks,
   } = await getPageBySlug('metrics', PageType.MetricsParent)
 
-  const metricsEntries = await getMetricsPages({ search })
+  const metricsEntries = await getMetricsPages(search)
 
   if (!metricsEntries.success) {
     logger.info(metricsEntries.error.message)
