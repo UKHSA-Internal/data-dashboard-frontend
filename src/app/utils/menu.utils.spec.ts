@@ -1,4 +1,5 @@
 import { client } from '@/api/api-utils'
+import { logger } from '@/lib/logger'
 import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { useMenu } from './menu.utils'
@@ -54,5 +55,17 @@ test('handles failed fetches to the cms', async () => {
   })
 
   const menu = await useMenu()
-  expect(menu).toEqual([])
+
+  expect(logger.error).toHaveBeenCalled()
+  expect(menu).toEqual([
+    {
+      title: 'Homepage',
+      slug: '/',
+      children: [],
+    },
+    {
+      title: 'API',
+      slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
+    },
+  ])
 })
