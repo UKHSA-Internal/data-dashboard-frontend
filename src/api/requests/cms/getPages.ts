@@ -53,6 +53,7 @@ export const whatsNewResponseSchema = responseSchema.extend({
           colour: z.string().toLowerCase(),
         })
         .nullable(),
+      last_published_at: z.string(),
     })
   ),
 })
