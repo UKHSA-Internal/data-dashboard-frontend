@@ -10,18 +10,23 @@ import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
 import MetricsSearch from './components/MetricsSearch/MetricsSearch'
+import NoResults from './components/NoResults/NoResults'
 
-export async function generateMetadata(): Promise<Metadata> {
+export async function generateMetadata({ searchParams: { search = '', page = 1 } }): Promise<Metadata> {
   const { t } = await useTranslation('metrics')
 
   const {
     meta: { seo_title, search_description },
   } = await getPageBySlug('metrics', PageType.MetricsParent)
 
-  const title = seo_title.replace(
-    '|',
-    t('documentTitleSearch', { search: search_description, seoTitle: seo_title, page, totalPages })
-  )
+  // TODO: Merge with pagination work to pull through
+  const totalPages = 1
+
+  let title = seo_title.replace('|', t('documentTitleSearch', { search, seoTitle: seo_title, page, totalPages }))
+
+  if (search_description === '') {
+    title = seo_title
+  }
 
   return {
     title,
@@ -62,7 +67,7 @@ export default async function MetricsParentPage({ searchParams: { search } }: Me
 
           <MetricsSearch value={search ?? ''} />
 
-          <div className="govuk-!-margin-top-7" aria-label={title}>
+          <div className="govuk-!-margin-top-3" aria-label={title}>
             {items.map(({ id, title, meta, shortText, category, topic, apiName }) => {
               return (
                 <MetricsCard
@@ -76,7 +81,7 @@ export default async function MetricsParentPage({ searchParams: { search } }: Me
                 />
               )
             })}
-            {items.length < 1 && <div>No results found</div>}
+            {items.length < 1 && <NoResults />}
           </div>
         </div>
       </div>
