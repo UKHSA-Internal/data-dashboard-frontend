@@ -253,7 +253,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     expect(logger.info).toHaveBeenNthCalledWith(
       1,
-      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*'
+      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&search='
     )
 
     expect(result).toEqual<ErrorResponse>({
