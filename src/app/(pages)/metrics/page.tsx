@@ -6,17 +6,25 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { MetricsCard } from '@/app/components/ui/ukhsa/MetricsCard/MetricsCard'
+import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
 import MetricsSearch from './components/MetricsSearch/MetricsSearch'
 
 export async function generateMetadata(): Promise<Metadata> {
+  const { t } = await useTranslation('metrics')
+
   const {
     meta: { seo_title, search_description },
   } = await getPageBySlug('metrics', PageType.MetricsParent)
 
+  const title = seo_title.replace(
+    '|',
+    t('documentTitleSearch', { search: search_description, seoTitle: seo_title, page, totalPages })
+  )
+
   return {
-    title: seo_title,
+    title,
     description: search_description,
   }
 }
@@ -68,6 +76,7 @@ export default async function MetricsParentPage({ searchParams: { search } }: Me
                 />
               )
             })}
+            {items.length < 1 && <div>No results found</div>}
           </div>
         </div>
       </div>
