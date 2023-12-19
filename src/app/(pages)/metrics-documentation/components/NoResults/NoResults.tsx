@@ -1,14 +1,24 @@
-export default function NoResults() {
+import { Trans } from 'react-i18next/TransWithoutContext'
+
+import { useTranslation } from '@/app/i18n'
+
+export default async function NoResults() {
+  const { t } = await useTranslation('metrics')
+
   return (
-    <div>
-      <p className="govuk-body govuk-!-font-weight-bold">There are no matching results</p>
-      <p className="govuk-body">Improve your search results by:</p>
-      <ul className="govuk-list govuk-list--bullet">
-        <li>removing filters</li>
-        <li>double-checking your spelling</li>
-        <li>using fewer keywords</li>
-        <li>searching for something less specific</li>
-      </ul>
-    </div>
+    <Trans
+      i18nKey="noResults"
+      t={t}
+      components={[
+        <p className="govuk-body govuk-!-font-weight-bold" key={0}></p>,
+        <p className="govuk-body" key={1}></p>,
+        <ul className="govuk-list govuk-list--bullet" key={2}>
+          <li></li>
+          <li></li>
+          <li></li>
+          <li></li>
+        </ul>,
+      ]}
+    />
   )
 }

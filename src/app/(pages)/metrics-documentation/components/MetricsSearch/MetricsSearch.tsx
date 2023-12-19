@@ -1,7 +1,8 @@
 'use client'
 
+import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { FC, useEffect, useState } from 'react'
+import { useEffect, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 
 const DEBOUNCE_MILLISECONDS = 300
@@ -10,7 +11,7 @@ interface MetricsSearchProps {
   value: string
 }
 
-const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
+export function MetricsSearch({ value }: MetricsSearchProps) {
   const router = useRouter()
   const [searchParams, setSearchParams] = useState(value)
 
@@ -42,14 +43,14 @@ const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
               placeholder={value}
               onChange={handleSearchChange}
             />
-            <a href="/metrics-documentation" className="govuk-link govuk-!-margin-right-2 inline">
-              Clear
-            </a>
             <noscript>
-              <button type="submit" className="govuk-button">
+              <button type="submit" className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2">
                 Search
               </button>
             </noscript>
+            <Link href="/metrics-documentation" className="govuk-link govuk-link--no-visited-state inline">
+              Clear
+            </Link>
           </div>
         </div>
       </div>
