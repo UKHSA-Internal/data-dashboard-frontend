@@ -21,7 +21,7 @@ const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
   }
 
   useEffect(() => {
-    router.push(`/metrics?search=${debouncedSearch}`)
+    router.push(`/metrics-documentation?search=${debouncedSearch}`)
   }, [debouncedSearch, router])
 
   return (
@@ -40,7 +40,7 @@ const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
               placeholder={value}
               onChange={handleSearchChange}
             />
-            <a href="/metrics" className="govuk-link govuk-!-margin-right-2 inline">
+            <a href="/metrics-documentation" className="govuk-link govuk-!-margin-right-2 inline">
               Clear
             </a>
             <noscript>
