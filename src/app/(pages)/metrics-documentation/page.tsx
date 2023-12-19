@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { redirect } from 'next/navigation'
 
 import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
@@ -45,22 +45,10 @@ export async function generateMetadata({
 
   const totalPages = Math.ceil(totalItems / METRICS_DOCUMENTATION_PAGE_SIZE) || 1
 
-  let title = seo_title
-
-  if (totalPages > 1 && search !== '') {
-    title = seo_title.replace(
-      '|',
-      t('documentTitleSearchPagination', { search, seoTitle: seo_title, page, totalPages })
-    )
-  } else if (totalPages > 1 && search === '') {
-    title = seo_title.replace('|', t('documentTitlePagination', { search, seoTitle: seo_title, page, totalPages }))
-  } else if (totalPages === 1 && search !== '') {
-    title = seo_title.replace('|', t('documentTitleSearch', { search, seoTitle: seo_title }))
-  }
-
-  if (search_description !== '') {
-    title = seo_title.replace('|', t('documentTitleSearch', { search, seoTitle: seo_title, page, totalPages }))
-  }
+  const title = seo_title.replace(
+    '|',
+    t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+  )
 
   return {
     title,
@@ -68,7 +56,7 @@ export async function generateMetadata({
   }
 }
 
-export default async function MetricsParentPage({ searchParams: { page = 1, search } }: MetricsParentPageProps) {
+export default async function MetricsParentPage({ searchParams: { search, page = 1 } }: MetricsParentPageProps) {
   const {
     title,
     body,
@@ -76,16 +64,11 @@ export default async function MetricsParentPage({ searchParams: { page = 1, sear
     related_links: relatedLinks,
   } = await getPageBySlug('metrics-documentation', PageType.MetricsParent)
 
-  const metricsEntries = await getMetricsPages({ page })
+  const metricsEntries = await getMetricsPages({ search, page })
 
   if (!metricsEntries.success) {
     logger.error(metricsEntries.error.message)
     return redirect('/error')
-  }
-
-  if (!metricsEntries.data.items.length) {
-    logger.error('No metrics entries found, redirecting to 404 page')
-    return notFound()
   }
 
   const {
