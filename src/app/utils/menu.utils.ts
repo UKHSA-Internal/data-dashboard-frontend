@@ -1,49 +1,69 @@
 import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { logger } from '@/lib/logger'
 
+/**
+ * Represents a menu link with title and slug.
+ */
 interface MenuLink {
   title: string
   slug: string
   children?: MenuLink[]
 }
 
-export const useMenu = async () => {
-  const pages = await getPages()
+/**
+ * Fetches and constructs the menu links.
+ * @returns An array of MenuLink objects representing the menu.
+ */
+export const useMenu = async (): Promise<MenuLink[]> => {
+  try {
+    // Fetch pages with show_in_menus:true filter.
+    const pages = await getPages(undefined, { show_in_menus: 'true' })
 
-  if (pages.success) {
     const links: MenuLink[] = []
-    const topics: MenuLink[] = []
 
-    for (const page of pages.data.items) {
-      const {
-        title,
-        meta: { show_in_menus: show, slug, type },
-      } = page
-      if (show && type === PageType.Topic) {
-        topics.push({ title, slug: `/topics/${slug}` })
-      }
-
-      if (show && [PageType.MetricsParent, PageType.WhatsNewParent, PageType.Common].includes(type as PageType)) {
-        links.push({ title, slug: `/${slug}` })
-      }
+    // Create a homepage link manually since it's not provided by the CMS.
+    const homeLink: MenuLink = {
+      title: 'Homepage',
+      slug: '/',
+      children: [],
     }
 
-    return [
-      // The CMS pages endpoint cannot provide a homepage type with nested
-      // topics so it must be formed manually.
-      {
-        title: 'Homepage',
-        slug: '/',
-        children: topics,
-      },
-      // The API url (and external urls in general) are not supported in the CMS
-      // It is hardcoded to point to the environment variable for now.
-      {
-        title: 'API',
-        slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
-      },
-      ...links,
-    ]
-  }
+    // Create an API link with the URL from environment variables.
+    const apiLink: MenuLink = {
+      title: 'API',
+      slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL || '',
+    }
 
-  return []
+    if (pages.success) {
+      const topics: MenuLink[] = []
+
+      links.push({ ...homeLink, children: topics })
+      links.push(apiLink)
+
+      for (const page of pages.data.items) {
+        const {
+          title,
+          meta: { slug, type },
+        } = page
+
+        if (type === PageType.Topic) {
+          topics.push({ title, slug: `/topics/${slug}` })
+        }
+
+        if (type !== PageType.Home && type !== PageType.Topic) {
+          links.push({ title, slug: `/${slug}` })
+        }
+      }
+
+      return links
+    }
+
+    // Fallback in case of error.
+    logger.error(pages.error)
+    return [homeLink, apiLink]
+  } catch (error) {
+    logger.error(error)
+    // Fallback for unexpected errors.
+    return []
+  }
 }

@@ -40,6 +40,7 @@ export function Pagination({
       {hasPreviousPage && (
         <div className="govuk-pagination__prev">
           <Link
+            prefetch={false}
             className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
             href={{
               pathname,
@@ -71,6 +72,7 @@ export function Pagination({
             key={page}
           >
             <Link
+              prefetch={false}
               aria-current={page === currentPage ? 'page' : undefined}
               aria-label={`Page ${page}`}
               className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
@@ -87,6 +89,7 @@ export function Pagination({
       {hasNextPage && (
         <div className="govuk-pagination__next">
           <Link
+            prefetch={false}
             className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
             href={{
               pathname,
