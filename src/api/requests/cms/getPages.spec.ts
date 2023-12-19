@@ -83,7 +83,7 @@ describe('Failing to get all pages from the cms api', () => {
 
     const result = await getPages(PageType.Common)
 
-    expect(logger.info).toHaveBeenNthCalledWith(1, 'GET success pages/?type=common.CommonPage')
+    expect(logger.info).toHaveBeenNthCalledWith(1, 'GET success pages/?type=common.CommonPage&limit=100')
 
     expect(result).toEqual<ErrorResponse>({
       success: false,
@@ -206,7 +206,7 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
       data: pagesWithMetricsChildTypeMock,
     })
 
-    const response = await getMetricsPages()
+    const response = await getMetricsPages({ page: 1 })
 
     expect(response).toEqual<SuccessResponse>({
       success: true,
@@ -227,7 +227,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
       },
     })
 
-    const response = await getMetricsPages()
+    const response = await getMetricsPages({ page: 1 })
 
     expect(response).toEqual<ErrorResponse>({
       success: false,
@@ -249,11 +249,11 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
       data: {},
     })
 
-    const result = await getMetricsPages()
+    const result = await getMetricsPages({ page: 1 })
 
     expect(logger.info).toHaveBeenNthCalledWith(
       1,
-      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&search='
+      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0&search='
     )
 
     expect(result).toEqual<ErrorResponse>({

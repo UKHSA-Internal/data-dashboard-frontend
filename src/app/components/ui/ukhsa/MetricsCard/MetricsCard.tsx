@@ -6,13 +6,13 @@ import { useTranslation } from '@/app/i18n'
 interface MetricsCardProps {
   title: string
   href: string
-  shortText: string
-  category: string
+  description: string
+  group: string
   topic: string
-  apiName: string
+  metric: string
 }
 
-export async function MetricsCard({ title, href, shortText, category, topic, apiName }: MetricsCardProps) {
+export async function MetricsCard({ title, href, description, group, topic, metric }: MetricsCardProps) {
   const { t } = await useTranslation('metrics')
 
   return (
@@ -42,14 +42,14 @@ export async function MetricsCard({ title, href, shortText, category, topic, api
             <span className="govuk-visually-hidden" />
           </p>,
         ]}
-        values={{ value: shortText }}
+        values={{ value: description }}
       />
 
       <div className="govuk-summary-card__content">
         <dl className="govuk-summary-list">
           <div className="govuk-summary-list__row">
             <dt className="govuk-summary-list__key govuk-body-s">Category</dt>
-            <dd className="govuk-summary-list__value govuk-body-s">{category}</dd>
+            <dd className="govuk-summary-list__value govuk-body-s capitalize">{group}</dd>
           </div>
           <div className="govuk-summary-list__row">
             <dt className="govuk-summary-list__key govuk-body-s">Topic</dt>
@@ -58,7 +58,7 @@ export async function MetricsCard({ title, href, shortText, category, topic, api
           <div className="govuk-summary-list__row">
             <dt className="govuk-summary-list__key govuk-body-s">API name</dt>
             <dd className="govuk-summary-list__value govuk-body-s">
-              <code>{apiName}</code>
+              <code>{metric}</code>
             </dd>
           </div>
         </dl>

@@ -8,13 +8,8 @@ export class WhatsNewParentPage {
     this.page = page
   }
 
-  async goto() {
-    await this.page.goto('/whats-new')
-  }
-
-  async hasMetadata() {
-    const title = await this.page.title()
-    await expect(title).toBe("What's new | UKHSA data dashboard")
+  async goto(page?: string) {
+    await this.page.goto(page || '/whats-new')
   }
 
   async hasHeading() {

@@ -9,12 +9,7 @@ export class MetricsChildPage {
   }
 
   async goto() {
-    await this.page.goto('/metrics/new-cases-7days-sum')
-  }
-
-  async hasMetadata() {
-    const title = await this.page.title()
-    await expect(title).toBe('Metrics child | UKHSA data dashboard')
+    await this.page.goto('/metrics-documentation/new-cases-7days-sum')
   }
 
   async hasHeading(name: string) {

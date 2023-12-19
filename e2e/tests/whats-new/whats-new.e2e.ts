@@ -14,13 +14,7 @@ test.describe("What's new parent page", () => {
       await app.hasLayout()
     })
     await test.step('displays without any accessibility defects', async () => {
-      // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
-      test.skip()
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://digitaltools.phe.org.uk/browse/CDD-1514',
-      })
-      await app.hasNoAccessibilityDefects()
+      await app.hasNoAccessibilityDefects(['landmark-unique'])
     })
     await test.step('displays last updated date', async () => {
       await whatsNewParentPage.hasLastUpdated()
@@ -104,6 +98,18 @@ test.describe("What's new parent page", () => {
       await app.hasDocumentTitle("What's new (page 2 of 4) | UKHSA data dashboard")
     })
   })
+
+  test('Redirects to 404 error page when paginating to a page that does not exist', async ({
+    whatsNewParentPage,
+    notFoundPage,
+  }) => {
+    await test.step('loads the page', async () => {
+      await whatsNewParentPage.goto('/whats-new?page=100')
+    })
+    await test.step('redirects to the 404 page', async () => {
+      await notFoundPage.hasPageContent()
+    })
+  })
 })
 
 test.describe("What's new parent page - mobile", () => {
@@ -145,13 +151,7 @@ test.describe("What's new child page", () => {
       await app.hasLayout()
     })
     await test.step('displays without any accessibility defects', async () => {
-      // eslint-disable-next-line playwright/no-skipped-test -- See annotation below
-      test.skip()
-      test.info().annotations.push({
-        type: 'issue',
-        description: 'https://digitaltools.phe.org.uk/browse/CDD-1514',
-      })
-      await app.hasNoAccessibilityDefects()
+      await app.hasNoAccessibilityDefects(['landmark-unique'])
     })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()
