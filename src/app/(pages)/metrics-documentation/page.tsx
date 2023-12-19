@@ -45,9 +45,6 @@ export async function generateMetadata({
 
   const totalPages = Math.ceil(totalItems / METRICS_DOCUMENTATION_PAGE_SIZE) || 1
 
-  logger.error(`Search params: ${Boolean(search)}`)
-  logger.error(`Search value: ${search}`)
-
   const title = seo_title.replace(
     '|',
     t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })

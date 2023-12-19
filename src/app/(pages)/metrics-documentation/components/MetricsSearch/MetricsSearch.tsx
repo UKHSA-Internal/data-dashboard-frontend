@@ -21,8 +21,10 @@ const MetricsSearch: FC<MetricsSearchProps> = ({ value }) => {
   }
 
   useEffect(() => {
-    router.push(`/metrics-documentation?search=${debouncedSearch}`)
-  }, [debouncedSearch, router])
+    if (value !== '' || debouncedSearch !== '') {
+      router.push(`/metrics-documentation?search=${debouncedSearch}`)
+    }
+  }, [value, debouncedSearch, router])
 
   return (
     <form method="GET" action={'/metrics'}>
