@@ -45,6 +45,9 @@ export async function generateMetadata({
 
   const totalPages = Math.ceil(totalItems / METRICS_DOCUMENTATION_PAGE_SIZE) || 1
 
+  logger.error(`Search params: ${Boolean(search)}`)
+  logger.error(`Search value: ${search}`)
+
   const title = seo_title.replace(
     '|',
     t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
@@ -86,7 +89,7 @@ export default async function MetricsParentPage({ searchParams: { search, page =
 
           <MetricsSearch value={search ?? ''} />
 
-          <div className="govuk-!-margin-top-7" aria-label={title}>
+          <div className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(({ id, title, meta, page_description: description, metric, metric_group: group, topic }) => {
               return (
                 <MetricsCard
