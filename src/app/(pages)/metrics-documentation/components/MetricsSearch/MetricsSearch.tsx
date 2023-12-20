@@ -22,10 +22,14 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
   }
 
   useEffect(() => {
+    const url = new URL(window.location.href)
     if (value !== '' || debouncedSearch !== '') {
-      router.push(`/metrics-documentation?search=${debouncedSearch}`)
+      url.searchParams.set('search', debouncedSearch)
+    } else {
+      url.searchParams.delete('search')
     }
-  }, [value, debouncedSearch, router])
+    router.push(url.toString())
+  }, [debouncedSearch, router])
 
   return (
     <form method="GET" action={'/metrics'}>
@@ -41,6 +45,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
               name="search"
               type="text"
               placeholder={value}
+              value={searchParams}
               onChange={handleSearchChange}
             />
             <noscript>
@@ -48,7 +53,11 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
                 Search
               </button>
             </noscript>
-            <Link href="/metrics-documentation" className="govuk-link govuk-link--no-visited-state inline">
+            <Link
+              href="/metrics-documentation"
+              className="govuk-link govuk-link--no-visited-state inline"
+              onClick={() => setSearchParams('')}
+            >
               Clear
             </Link>
           </div>
