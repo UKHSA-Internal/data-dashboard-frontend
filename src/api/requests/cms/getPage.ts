@@ -80,6 +80,7 @@ const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_pu
     })
     .nullable(),
   date_posted: z.string(),
+  last_published_at: z.string(),
 })
 
 const WithMetricsParentData = SharedPageData.extend({

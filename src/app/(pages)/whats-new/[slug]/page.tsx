@@ -23,12 +23,19 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function WhatsNewChildPage({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await useTranslation('whatsNew')
 
-  const { title, body, badge, additional_details, date_posted } = await getPageBySlug(slug, PageType.WhatsNewChild, {
+  const {
+    title,
+    body,
+    badge,
+    additional_details,
+    date_posted,
+    last_published_at: lastUpdated,
+  } = await getPageBySlug(slug, PageType.WhatsNewChild, {
     fields: '*',
   })
 
   return (
-    <View backLink="/whats-new">
+    <View backLink="/whats-new" lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <small className="govuk-caption-m govuk-!-margin-bottom-3">
