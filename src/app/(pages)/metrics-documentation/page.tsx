@@ -84,6 +84,8 @@ export default async function MetricsParentPage({ searchParams: { search, page =
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
 
+          {/* TODO: CDD-1479 - Investgiate how we can consume i18n inside client components
+              so that we don't need to pass in the values as props like this from the server component */}
           <MetricsSearch value={search ?? ''} />
 
           <div className="govuk-!-margin-top-4" aria-label={title}>
