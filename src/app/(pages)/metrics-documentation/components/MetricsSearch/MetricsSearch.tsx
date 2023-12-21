@@ -13,12 +13,12 @@ interface MetricsSearchProps {
 
 export function MetricsSearch({ value }: MetricsSearchProps) {
   const router = useRouter()
-  const [searchParams, setSearchParams] = useState(value)
+  const [searchValue, setSearchValue] = useState(value)
 
-  const debouncedSearch = useDebounce(searchParams, DEBOUNCE_MILLISECONDS)
+  const debouncedSearch = useDebounce(searchValue, DEBOUNCE_MILLISECONDS)
 
   const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setSearchParams(event.currentTarget.value)
+    setSearchValue(event.currentTarget.value)
   }
 
   useEffect(() => {
@@ -32,7 +32,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
   }, [debouncedSearch, router])
 
   return (
-    <form method="GET" action={'/metrics'}>
+    <form method="GET" action={'/metrics-documentation'}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-form-group">
@@ -44,8 +44,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
               id="metric-name"
               name="search"
               type="text"
-              placeholder={value}
-              value={searchParams}
+              value={searchValue}
               onChange={handleSearchChange}
             />
             <noscript>
@@ -56,7 +55,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
             <Link
               href="/metrics-documentation"
               className="govuk-link govuk-link--no-visited-state inline"
-              onClick={() => setSearchParams('')}
+              onClick={() => setSearchValue('')}
             >
               Clear
             </Link>

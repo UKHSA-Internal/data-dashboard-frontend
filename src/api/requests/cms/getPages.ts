@@ -107,7 +107,7 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
 
 export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
 
-export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
+export const getWhatsNewPages = async ({ page = 1 }: { page: number | undefined }) => {
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.WhatsNewChild)
   searchParams.set('fields', '*')
@@ -127,7 +127,12 @@ export const getWhatsNewPages = async ({ page = 1 }: { page?: number }) => {
 
 export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
-export const getMetricsPages = async ({ search, page = 1 }: { search?: string | undefined; page?: number }) => {
+interface getMetricsPagesProps {
+  search: string | undefined
+  page: number
+}
+
+export const getMetricsPages = async ({ search, page = 1 }: getMetricsPagesProps) => {
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.MetricsChild)
   searchParams.set('fields', '*')
