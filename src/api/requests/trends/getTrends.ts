@@ -1,13 +1,18 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
-import { Metrics, PercentageMetrics, Topics } from '@/api/models'
+import { Age, Geography, GeographyType, Metrics, PercentageMetrics, Sex, Stratum, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
   topic: Topics,
   metric: Metrics,
   percentage_metric: PercentageMetrics,
+  geography_type: z.optional(GeographyType),
+  geography: z.optional(Geography),
+  age: z.optional(Age),
+  sex: z.optional(Sex),
+  statum: z.optional(Stratum),
 })
 
 export const responseSchema = z.object({
@@ -23,10 +28,9 @@ type RequestParams = z.infer<typeof requestSchema>
 
 export const getTrends = async (params: RequestParams) => {
   try {
-    const { topic, metric, percentage_metric } = params
-    const searchParams = new URLSearchParams({ metric, percentage_metric, topic })
-    const { data } = await client<z.infer<typeof responseSchema>>(`trends/v2`, { searchParams })
-    logger.info(`GET success trends/v2?${searchParams.toString()}`)
+    const searchParams = new URLSearchParams(params)
+    const { data } = await client<z.infer<typeof responseSchema>>(`trends/v3`, { searchParams })
+    logger.info(`GET success trends/v3?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

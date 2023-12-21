@@ -19,10 +19,10 @@ import page from './handlers/cms/pages/[id]'
 import downloads from './handlers/downloads/v2'
 import geographyTypes from './handlers/geographies/v1/types'
 import geographyNames from './handlers/geographies/v1/types/[id]'
-import headlines from './handlers/headlines/v2'
+import headlines from './handlers/headlines/v3'
 import suggestions from './handlers/suggestions/v1'
 import tables from './handlers/tables/v4'
-import trends from './handlers/trends/v2'
+import trends from './handlers/trends/v3'
 
 const app = express()
 
@@ -34,8 +34,8 @@ app.get('/api/pages', pages)
 app.get('/api/pages/:id', page)
 
 // GET endpoints
-app.get('/api/headlines/v2', headlines)
-app.get('/api/trends/v2', trends)
+app.get('/api/headlines/v3', headlines)
+app.get('/api/trends/v3', trends)
 app.get('/api/bulkdownloads/v1', bulkDownloads)
 app.get('/api/geographies/v1/types', geographyTypes)
 app.get('/api/geographies/v1/types/:id', geographyNames)
