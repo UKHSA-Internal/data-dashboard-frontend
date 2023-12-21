@@ -207,6 +207,7 @@ export const pagesWithWhatsNewChildTypeMock: WhatsNewPagesResponse = {
       additional_details,
       badge,
       body,
+      last_published_at,
     }) => ({
       id,
       meta: {
@@ -222,6 +223,7 @@ export const pagesWithWhatsNewChildTypeMock: WhatsNewPagesResponse = {
       additional_details,
       badge,
       body,
+      last_published_at,
     })
   ),
 }

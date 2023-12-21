@@ -150,6 +150,9 @@ test.describe("What's new child page", () => {
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
     })
+    await test.step('displays last updated date', async () => {
+      await whatsNewChildPage.hasLastUpdated()
+    })
     await test.step('displays without any accessibility defects', async () => {
       await app.hasNoAccessibilityDefects(['landmark-unique'])
     })
@@ -161,6 +164,9 @@ test.describe("What's new child page", () => {
   test('Shows details for the first child page', async ({ whatsNewParentPage, whatsNewChildPage }) => {
     await test.step('loads parent page', async () => {
       await whatsNewParentPage.goto()
+    })
+    await test.step('displays last updated date', async () => {
+      await whatsNewChildPage.hasLastUpdated()
     })
     await test.step('clicks first entry', async () => {
       await whatsNewParentPage.openChildPage('Soft launch of the UKHSA data dashboard')
@@ -185,6 +191,9 @@ test.describe("What's new child page", () => {
   test('Shows details for the second child page', async ({ whatsNewParentPage, whatsNewChildPage }) => {
     await test.step('loads parent page', async () => {
       await whatsNewParentPage.goto()
+    })
+    await test.step('displays last updated date', async () => {
+      await whatsNewChildPage.hasLastUpdated()
     })
     await test.step('clicks first entry', async () => {
       await whatsNewParentPage.openChildPage('Other respiratory viruses data added to the homepage')
