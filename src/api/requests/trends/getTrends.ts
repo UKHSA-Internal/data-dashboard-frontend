@@ -24,7 +24,7 @@ export const responseSchema = z.object({
   colour: z.enum(['green', 'red', 'neutral']),
 })
 
-type RequestParams = z.infer<typeof requestSchema>
+export type RequestParams = z.infer<typeof requestSchema>
 
 export const getTrends = async (params: RequestParams) => {
   try {

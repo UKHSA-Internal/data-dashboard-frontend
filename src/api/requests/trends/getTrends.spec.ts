@@ -28,6 +28,14 @@ test('Returns a COVID-19 trend', async () => {
     percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
   })
 
+  expect(getTrendsMock).toHaveBeenCalledWith('trends/v3', {
+    searchParams: new URLSearchParams({
+      topic: 'COVID-19',
+      metric: 'COVID-19_headline_newcases_7daychange',
+      percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
+    }),
+  })
+
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
