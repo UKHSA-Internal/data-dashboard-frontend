@@ -213,6 +213,25 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
       data: pagesWithMetricsChildTypeMock,
     })
   })
+
+  test('returns a list of Metrics Documentation child pages from search criteria', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    const response = await getMetricsPages({ search: 'test', page: 1 })
+
+    expect(logger.info).toHaveBeenNthCalledWith(
+      1,
+      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0&search=test'
+    )
+
+    expect(response).toEqual<SuccessResponse>({
+      success: true,
+      data: pagesWithMetricsChildTypeMock,
+    })
+  })
 })
 
 describe('Failing to get all Metrics Documentation pages from the cms api', () => {
@@ -253,7 +272,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     expect(logger.info).toHaveBeenNthCalledWith(
       1,
-      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0&search='
+      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0'
     )
 
     expect(result).toEqual<ErrorResponse>({
