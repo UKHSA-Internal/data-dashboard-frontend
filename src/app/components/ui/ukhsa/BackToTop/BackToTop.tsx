@@ -14,27 +14,16 @@ export const BackToTop = ({ label, href = '#main-content' }: BackToTopProps) => 
   const [hideContent, setHideContent] = useState(false)
 
   function handleResize() {
-    if (window !== undefined) {
-      console.log('Resized', window.devicePixelRatio)
-      if (window.devicePixelRatio >= 1.5) {
-        setHideContent(true)
-      } else {
-        setHideContent(false)
-      }
-    }
+    if (window) setHideContent(window.devicePixelRatio >= 1.5)
   }
 
   useEffect(() => {
-    if (window !== undefined) {
+    if (window) {
       window.addEventListener('resize', handleResize)
-
       handleResize()
-
       return () => window.removeEventListener('resize', handleResize)
     }
   }, [])
-
-  console.log('hideContent', hideContent)
 
   return (
     <a
