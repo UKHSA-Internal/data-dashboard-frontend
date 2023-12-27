@@ -11,7 +11,7 @@ const useWindowScrollMock = jest.mocked(useWindowScroll)
 test('renders a back to top link', async () => {
   useWindowScrollMock.mockReturnValue({ x: 0, y: 100 })
 
-  const { getByRole, getByTestId } = render(await BackToTop({ label: 'Back to top' }))
+  const { getByRole, getByTestId } = render(<BackToTop label="Back to top" />)
 
   // Verify the rendered content
   expect(getByRole('link', { name: 'Back to top' })).toHaveAttribute('href', '#main-content')
@@ -19,7 +19,7 @@ test('renders a back to top link', async () => {
 })
 
 test('scrolls to the top when clicking the back to top link', async () => {
-  const { getByRole } = render(await BackToTop({ label: 'Back to top' }))
+  const { getByRole } = render(<BackToTop label="Back to top" />)
 
   // Mock the window.scrollTo function
   const scrollToMock = jest.fn()
@@ -39,13 +39,13 @@ test('scrolls to the top when clicking the back to top link', async () => {
 test('becomes sticky after scrolling vertically further than 200px', async () => {
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 0 })
 
-  const { getByRole, rerender } = render(await BackToTop({ label: 'Back to top' }))
+  const { getByRole, rerender } = render(<BackToTop label="Back to top" />)
 
   expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('sticky')
 
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 201 })
 
-  rerender(await BackToTop({ label: 'Back to top' }))
+  rerender(<BackToTop label="Back to top" />)
 
   expect(getByRole('link', { name: 'Back to top' })).toHaveClass('sticky')
 })
@@ -53,13 +53,13 @@ test('becomes sticky after scrolling vertically further than 200px', async () =>
 test('becomes not sticky after scrolling vertically below 200px', async () => {
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 201 })
 
-  const { getByRole, rerender } = render(await BackToTop({ label: 'Back to top' }))
+  const { getByRole, rerender } = render(<BackToTop label="Back to top" />)
 
   expect(getByRole('link', { name: 'Back to top' })).toHaveClass('sticky')
 
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 199 })
 
-  rerender(await BackToTop({ label: 'Back to top' }))
+  rerender(<BackToTop label="Back to top" />)
 
   expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('sticky')
 })
