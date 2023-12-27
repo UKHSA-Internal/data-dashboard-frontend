@@ -9,9 +9,14 @@ const DEBOUNCE_MILLISECONDS = 300
 
 interface MetricsSearchProps {
   value: string
+  labels: {
+    searchTitle: string
+    noScriptButtonText: string
+    clearText: string
+  }
 }
 
-export function MetricsSearch({ value }: MetricsSearchProps) {
+export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText, clearText } }: MetricsSearchProps) {
   const router = useRouter()
   const [searchValue, setSearchValue] = useState(value)
 
@@ -37,7 +42,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="metric-name">
-              Metric name
+              {searchTitle}
             </label>
             <input
               className={'govuk-input govuk-!-margin-right-2 govuk-!-margin-bottom-2 w-3/5'}
@@ -49,7 +54,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
             />
             <noscript>
               <button type="submit" className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2">
-                Search
+                {noScriptButtonText}
               </button>
             </noscript>
             <Link
@@ -57,7 +62,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
               className="govuk-link govuk-link--no-visited-state inline"
               onClick={() => setSearchValue('')}
             >
-              Clear
+              {clearText}
             </Link>
           </div>
         </div>
