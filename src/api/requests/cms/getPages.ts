@@ -127,12 +127,12 @@ export const getWhatsNewPages = async ({ page = 1 }: { page: number | undefined 
 
 export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
-interface getMetricsPagesProps {
+interface GetMetricsPagesRequestParams {
   search: string | undefined
   page: number
 }
 
-export const getMetricsPages = async ({ search, page = 1 }: getMetricsPagesProps) => {
+export const getMetricsPages = async ({ search, page = 1 }: GetMetricsPagesRequestParams) => {
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.MetricsChild)
   searchParams.set('fields', '*')
