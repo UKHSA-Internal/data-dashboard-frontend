@@ -1,7 +1,6 @@
 'use client'
 
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 import { useWindowScroll } from 'react-use'
 
 interface BackToTopProps {
@@ -11,19 +10,6 @@ interface BackToTopProps {
 
 export const BackToTop = ({ label, href = '#main-content' }: BackToTopProps) => {
   const { y } = useWindowScroll()
-  const [hideContent, setHideContent] = useState(false)
-
-  function handleResize() {
-    if (window) setHideContent(window.devicePixelRatio >= 1.5)
-  }
-
-  useEffect(() => {
-    if (window) {
-      window.addEventListener('resize', handleResize)
-      handleResize()
-      return () => window.removeEventListener('resize', handleResize)
-    }
-  }, [])
 
   return (
     <a
@@ -31,8 +17,7 @@ export const BackToTop = ({ label, href = '#main-content' }: BackToTopProps) => 
       className={clsx(
         'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 bottom-3 inline-flex items-center print:hidden [&:not(:focus)]:bg-white',
         {
-          sticky: y > 200,
-          hidden: hideContent,
+          'xl:sticky': y > 200,
         }
       )}
       onClick={(event) => {
