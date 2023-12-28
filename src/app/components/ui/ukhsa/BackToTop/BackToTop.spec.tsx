@@ -41,13 +41,13 @@ test('becomes sticky after scrolling vertically further than 200px', async () =>
 
   const { getByRole, rerender } = render(<BackToTop label="Back to top" />)
 
-  expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('sticky')
+  expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('xl:sticky')
 
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 201 })
 
   rerender(<BackToTop label="Back to top" />)
 
-  expect(getByRole('link', { name: 'Back to top' })).toHaveClass('sticky')
+  expect(getByRole('link', { name: 'Back to top' })).toHaveClass('xl:sticky')
 })
 
 test('becomes not sticky after scrolling vertically below 200px', async () => {
@@ -55,11 +55,11 @@ test('becomes not sticky after scrolling vertically below 200px', async () => {
 
   const { getByRole, rerender } = render(<BackToTop label="Back to top" />)
 
-  expect(getByRole('link', { name: 'Back to top' })).toHaveClass('sticky')
+  expect(getByRole('link', { name: 'Back to top' })).toHaveClass('xl:sticky')
 
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 199 })
 
   rerender(<BackToTop label="Back to top" />)
 
-  expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('sticky')
+  expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('xl:sticky')
 })
