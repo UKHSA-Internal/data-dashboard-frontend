@@ -1,6 +1,4 @@
 export * as cms from './cms'
-export * as downloads from './downloads'
 export * as headlines from './headlines'
-export * as suggestions from './suggestions'
 export * as tabular from './tabular'
 export * as trends from './trends'
