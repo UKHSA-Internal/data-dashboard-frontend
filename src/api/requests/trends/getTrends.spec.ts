@@ -5,9 +5,6 @@ import { logger } from '@/lib/logger'
 
 import { getTrends, responseSchema } from './getTrends'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 

@@ -12,9 +12,6 @@ import {
 
 import { getTables, responseSchema } from './getTables'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 type Response = z.infer<typeof responseSchema>
 type SuccessResponse = z.SafeParseSuccess<Response>
 type ErrorResponse = z.SafeParseError<Response>

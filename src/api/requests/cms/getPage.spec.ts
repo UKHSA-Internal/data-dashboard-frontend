@@ -6,9 +6,6 @@ import { dashboardMock } from '@/mock-server/handlers/cms/pages/fixtures/page'
 
 import { getPage, responseSchema } from './getPage'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 

@@ -21,9 +21,6 @@ type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type WhatsNewSuccessResponse = z.SafeParseSuccess<z.infer<typeof whatsNewResponseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 const getPagesResponse = jest.mocked(client)
 
 beforeEach(() => {
