@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
-import { pagesWithHomeTypeMock } from '@/api/mocks/cms/data/pages'
 import { logger } from '@/lib/logger'
 import {
+  pagesWithHomeTypeMock,
   pagesWithMetricsChildTypeMock,
   pagesWithWhatsNewChildTypeMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'

@@ -1,24 +1,31 @@
-import 'whatwg-fetch'
-
-import { rest } from 'msw'
 import z from 'zod'
 
-import { server } from '@/api/msw/server'
+import { client } from '@/api/api-utils'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from '../helpers'
 import { getTrends, responseSchema } from './getTrends'
 
 jest.mock('@/lib/logger')
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
+jest.mock('@/api/api-utils')
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 test('Returns a COVID-19 trend', async () => {
+  const mockData: z.infer<typeof responseSchema> = {
+    metric_name: 'new_cases_7days_change',
+    metric_value: -592,
+    percentage_metric_name: 'new_cases_7days_change_percentage',
+    percentage_metric_value: -3,
+    direction: 'down',
+    colour: 'green',
+  }
+
+  jest.mocked(client).mockResolvedValueOnce({
+    data: mockData,
+    status: 200,
+  })
+
   const result = await getTrends({
     topic: 'COVID-19',
     metric: 'new_cases_7days_change',
@@ -27,18 +34,25 @@ test('Returns a COVID-19 trend', async () => {
 
   expect(result).toEqual<SuccessResponse>({
     success: true,
-    data: {
-      metric_name: 'new_cases_7days_change',
-      metric_value: -592,
-      percentage_metric_name: 'new_cases_7days_change_percentage',
-      percentage_metric_value: -3,
-      direction: 'down',
-      colour: 'green',
-    },
+    data: mockData,
   })
 })
 
 test('Returns an Influenza headline value', async () => {
+  const mockData: z.infer<typeof responseSchema> = {
+    metric_name: 'weekly_hospital_admissions_rate_change',
+    metric_value: 5911,
+    percentage_metric_name: 'weekly_hospital_admissions_rate_change_percentage',
+    percentage_metric_value: 0.3,
+    direction: 'down',
+    colour: 'green',
+  }
+
+  jest.mocked(client).mockResolvedValueOnce({
+    data: mockData,
+    status: 200,
+  })
+
   const result = await getTrends({
     topic: 'Influenza',
     metric: 'weekly_hospital_admissions_rate_change',
@@ -47,33 +61,22 @@ test('Returns an Influenza headline value', async () => {
 
   expect(result).toEqual<SuccessResponse>({
     success: true,
-    data: {
-      metric_name: 'weekly_hospital_admissions_rate_change',
-      metric_value: 5911,
-      percentage_metric_name: 'weekly_hospital_admissions_rate_change_percentage',
-      percentage_metric_value: 0.3,
-      direction: 'down',
-      colour: 'green',
-    },
+    data: mockData,
   })
 })
 
 test('Handles invalid json received from the api', async () => {
-  server.use(
-    rest.get(`${getApiBaseUrl()}/trends/v2`, (req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({
-          metric_name: null,
-          metric_value: '-592', // <--- Wrong type (should get coerced automatically by Zod)
-          percentage_metric_name: 'new_cases_7days_change_percentage',
-          percentage_metric_value: -3.0,
-          colour: '', // <--- Missing colour
-          direction: 'down',
-        })
-      )
-    })
-  )
+  jest.mocked(client).mockResolvedValueOnce({
+    data: {
+      metric_name: null,
+      metric_value: '-592', // <--- Wrong type (should get coerced automatically by Zod)
+      percentage_metric_name: 'new_cases_7days_change_percentage',
+      percentage_metric_value: -3.0,
+      colour: '', // <--- Missing colour
+      direction: 'down',
+    },
+    status: 200,
+  })
 
   const result = await getTrends({
     topic: 'COVID-19',
@@ -103,11 +106,9 @@ test('Handles invalid json received from the api', async () => {
 })
 
 test('Handles generic http errors', async () => {
-  server.use(
-    rest.get(`${getApiBaseUrl()}/trends/v2`, (req, res, ctx) => {
-      return res(ctx.status(404))
-    })
-  )
+  jest.mocked(client).mockRejectedValueOnce({
+    status: 400,
+  })
 
   const result = await getTrends({
     topic: 'COVID-19',
