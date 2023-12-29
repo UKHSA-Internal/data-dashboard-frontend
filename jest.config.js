@@ -32,7 +32,7 @@ const customJestConfig = {
     'node_modules',
     '<rootDir>/src/api/api-utils.ts',
     '<rootDir>/src/api/models',
-    // TODO: This component needs tests. Where have they gone!?
+    // TODO: This component needs tests - CDD-1597
     '<rootDir>/src/app/components/cms/Download/Download.tsx',
   ],
   coverageThreshold: {
