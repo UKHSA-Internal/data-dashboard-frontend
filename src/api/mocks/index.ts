@@ -1,4 +1,3 @@
-export * as charts from './charts'
 export * as cms from './cms'
 export * as downloads from './downloads'
 export * as headlines from './headlines'
