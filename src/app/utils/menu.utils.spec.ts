@@ -4,8 +4,6 @@ import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { useMenu } from './menu.utils'
 
-jest.mock('@/api/api-utils')
-
 const clientMock = jest.mocked(client)
 
 test('fetches then formats the cms pages into a navigation menu', async () => {

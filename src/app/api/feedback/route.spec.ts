@@ -9,9 +9,6 @@ import { logger } from '@/lib/logger'
 
 import { POST } from './route'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 afterEach(() => {
   jest.resetAllMocks()
 })

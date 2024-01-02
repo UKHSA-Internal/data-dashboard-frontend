@@ -5,9 +5,6 @@ import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/
 
 import { getDownloads } from './getDownloads'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 test('Returns chart data in CSV format', async () => {
   jest.mocked(client).mockResolvedValueOnce({
     data: downloadsCsvFixture,
