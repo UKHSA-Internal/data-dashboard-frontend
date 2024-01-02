@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
-import { pagesWithHomeTypeMock } from '@/api/mocks/cms/data/pages'
 import { logger } from '@/lib/logger'
 import {
+  pagesWithHomeTypeMock,
   pagesWithMetricsChildTypeMock,
   pagesWithWhatsNewChildTypeMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
@@ -20,9 +20,6 @@ import {
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type WhatsNewSuccessResponse = z.SafeParseSuccess<z.infer<typeof whatsNewResponseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
-
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
 
 const getPagesResponse = jest.mocked(client)
 

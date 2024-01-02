@@ -1,25 +1,17 @@
-import 'whatwg-fetch'
-
-import { rest } from 'msw'
 import z from 'zod'
 
-import { dashboardMock } from '@/api/mocks/cms/data/page'
-import { server } from '@/api/msw/server'
+import { client } from '@/api/api-utils'
 import { logger } from '@/lib/logger'
+import { dashboardMock } from '@/mock-server/handlers/cms/pages/fixtures/page'
 
-import { getCmsApiPath } from '../helpers'
 import { getPage, responseSchema } from './getPage'
-
-jest.mock('@/lib/logger')
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 test('Returns a full page from thge cms by id', async () => {
+  jest.mocked(client).mockResolvedValueOnce({ data: dashboardMock, status: 200 })
+
   const result = await getPage(dashboardMock.id)
 
   expect(result).toEqual<SuccessResponse>({
@@ -29,17 +21,8 @@ test('Returns a full page from thge cms by id', async () => {
 })
 
 test('Handles invalid json received from the api', async () => {
-  server.use(
-    rest.get(`${getCmsApiPath()}/${dashboardMock.id}`, (req, res, ctx) => {
-      return res(
-        ctx.status(200),
-        ctx.json({
-          ...dashboardMock,
-          last_published_at: null,
-        })
-      )
-    })
-  )
+  jest.mocked(client).mockResolvedValueOnce({ data: { ...dashboardMock, last_published_at: null }, status: 200 })
+
   const result = await getPage(dashboardMock.id)
 
   expect(result).toEqual<ErrorResponse>({
@@ -49,11 +32,7 @@ test('Handles invalid json received from the api', async () => {
 })
 
 test('Handles generic http errors', async () => {
-  server.use(
-    rest.get(`${getCmsApiPath()}/${dashboardMock.id}`, (req, res, ctx) => {
-      return res(ctx.status(404))
-    })
-  )
+  jest.mocked(client).mockRejectedValueOnce({ status: 400 })
 
   const result = await getPage(dashboardMock.id)
 
