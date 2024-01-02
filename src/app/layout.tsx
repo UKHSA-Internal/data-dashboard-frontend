@@ -66,7 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   </svg>
                 </Link>
               </div>
-              <div className="govuk-header__content">
+              <div className="govuk-header__content inline w-auto sm:w-5/12">
                 <Link href="/" className="govuk-header__link govuk-header__service-name">
                   {t('serviceTitle')}
                 </Link>
