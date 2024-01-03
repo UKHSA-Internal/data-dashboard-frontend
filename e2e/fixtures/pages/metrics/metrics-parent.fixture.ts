@@ -27,10 +27,30 @@ export class MetricsParentPage {
       )
     ).toBeVisible()
 
+    await expect(this.page.getByRole('form', { name: 'Metrics search' })).toBeVisible()
+    await expect(this.page.getByRole('textbox', { name: 'Metric name' })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: 'Clear' })).toBeVisible()
+
     await expect(this.page.getByRole('heading', { level: 2, name: 'Metric title: New cases 7 days sum' })).toBeVisible()
     await expect(
       this.page.getByText('Metric description: This metric shows the count of reported new cases in the last 7 days.')
     ).toBeVisible()
+  }
+
+  async countMetricsItems(expectedItems: number) {
+    await expect(await this.page.locator('.govuk-summary-card').all()).toHaveLength(expectedItems)
+  }
+
+  async search(searchParams: string) {
+    await this.page.getByLabel(/Metric name/).fill(searchParams)
+  }
+
+  async clickSearch() {
+    await this.page.getByRole('button', { name: 'Search' }).click()
+  }
+
+  async clickClear() {
+    await this.page.getByRole('link', { name: 'Clear' }).click()
   }
 
   async openChildPage(name: string) {
