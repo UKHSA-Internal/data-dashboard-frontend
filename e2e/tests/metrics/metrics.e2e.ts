@@ -75,6 +75,82 @@ test.describe('Metrics parent page', () => {
       await notFoundPage.hasPageContent()
     })
   })
+
+  test('Performs a search and results have updated with expected result', async ({ metricsParentPage, page }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto()
+    })
+    await test.step('count starting items', async () => {
+      await metricsParentPage.countMetricsItems(10)
+    })
+    await test.step('performs a search', async () => {
+      await metricsParentPage.search('test')
+    })
+    // Need delay of 400ms+ to allow debounce search to take effect
+    await page.waitForTimeout(1000)
+    await test.step('count items after search', async () => {
+      await metricsParentPage.countMetricsItems(2)
+    })
+  })
+
+  test('Performs a search with no results', async ({ metricsParentPage, page }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto()
+    })
+    await test.step('count starting items', async () => {
+      await metricsParentPage.countMetricsItems(10)
+    })
+    await test.step('performs a search', async () => {
+      await metricsParentPage.search('no matches')
+    })
+    // Need delay of 400ms+ to allow debounce search to take effect
+    await page.waitForTimeout(1000)
+    await test.step('count items after search', async () => {
+      await metricsParentPage.countMetricsItems(0)
+    })
+  })
+
+  test('shows all results after clearing the search box', async ({ metricsParentPage, page }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto()
+    })
+    await test.step('performs a search', async () => {
+      await metricsParentPage.search('test')
+    })
+    await page.waitForTimeout(1000)
+    await test.step('count starting items', async () => {
+      await metricsParentPage.countMetricsItems(2)
+    })
+    await test.step('click the clear button', async () => {
+      await metricsParentPage.clickClear()
+    })
+    await page.waitForTimeout(1000)
+    await test.step('shows all items', async () => {
+      await metricsParentPage.countMetricsItems(10)
+    })
+  })
+})
+
+test.describe('Metrics parent page - no JS', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('Performs a search and results have updated with expected result without JS', async ({ metricsParentPage }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto()
+    })
+    await test.step('count starting items', async () => {
+      await metricsParentPage.countMetricsItems(10)
+    })
+    await test.step('performs a search', async () => {
+      await metricsParentPage.search('test')
+    })
+    await test.step('clicks search button', async () => {
+      await metricsParentPage.clickSearch()
+    })
+    await test.step('count items after search', async () => {
+      await metricsParentPage.countMetricsItems(2)
+    })
+  })
 })
 
 test.describe('Metrics parent page - mobile', () => {

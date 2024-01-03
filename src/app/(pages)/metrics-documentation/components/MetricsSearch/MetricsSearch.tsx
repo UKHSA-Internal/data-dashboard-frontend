@@ -28,7 +28,7 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
 
   useEffect(() => {
     const url = new URL(window.location.href)
-    if (value !== '' || debouncedSearch !== '') {
+    if (debouncedSearch !== '') {
       url.searchParams.set('search', debouncedSearch)
     } else {
       url.searchParams.delete('search')
@@ -37,7 +37,7 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
   }, [debouncedSearch, router])
 
   return (
-    <form method="GET" action={'/metrics-documentation'}>
+    <form method="GET" action={'/metrics-documentation'} aria-label="Metrics search">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-form-group">
