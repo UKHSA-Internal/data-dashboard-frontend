@@ -1,13 +1,16 @@
-import { render, screen } from '@testing-library/react'
-import userEvent from '@testing-library/user-event'
+import { render, waitFor } from '@testing-library/react'
+import { userEvent } from '@testing-library/user-event'
 
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 
 import MetricsSearch from './MetricsSearch'
 
-test('renders input and buttons', async () => {
-  mockRouter.push = jest.fn()
+beforeEach(() => {
+  mockRouter.push('/metrics-documentation')
+  console.error = jest.fn()
+})
 
+test('renders input and buttons', async () => {
   const labels = {
     searchTitle: 'Metric name',
     noScriptButtonText: 'Search',
@@ -21,27 +24,14 @@ test('renders input and buttons', async () => {
   expect(getByRole('link', { name: 'Clear' })).toBeVisible()
 })
 
-test('clears the url state when the value is cleared from the search input', async () => {
-  mockRouter.push = jest.fn()
-
-  const labels = {
-    searchTitle: 'Metric name',
-    noScriptButtonText: 'Search',
-    clearText: 'Clear',
-  }
-
-  const { getByDisplayValue, getByRole } = render(<MetricsSearch value="searchValue" labels={labels} />)
-
-  expect(mockRouter.asPath).toEqual('metrics-documentation?search=searchValue')
-  expect(getByDisplayValue('searchValue')).toBeInTheDocument()
-
-  userEvent.click(getByRole('link', { name: 'Clear' }))
-  expect(mockRouter.push).toHaveBeenCalledTimes(1)
-  expect(mockRouter.asPath).toEqual('metrics-documentation?search=')
+test('defaults the search input value with the value set in the url state', async () => {
+  // set the url
+  // render the component
+  // assert that the input has the expected value
 })
 
-test('clears the url state when the value is changed', async () => {
-  mockRouter.push = jest.fn()
+test('sets the url state with the search input when typing', async () => {
+  mockRouter.push('')
 
   const labels = {
     searchTitle: 'Metric name',
@@ -49,21 +39,59 @@ test('clears the url state when the value is changed', async () => {
     clearText: 'Clear',
   }
 
-  render(<MetricsSearch value="searchValue" labels={labels} />)
+  const { getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
 
-  expect(screen.getByDisplayValue('searchValue')).toBeInTheDocument()
+  await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
 
-  screen.getByRole('textbox', { name: 'Metric name' }).simulate('change')
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
+  })
 })
 
-test('sets URL state when value typed into the search bar', async () => {
-  mockRouter.push = jest.fn()
-
+test('clears the url state and search input when clicking the "Clear" link', async () => {
   const labels = {
     searchTitle: 'Metric name',
     noScriptButtonText: 'Search',
     clearText: 'Clear',
   }
 
-  render(<MetricsSearch value="searchValue" labels={labels} />)
+  const { getByRole, getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
+
+  await userEvent.type(getByRole('textbox', { name: 'Metric name' }), 'Mock search value')
+
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
+  })
+
+  await userEvent.click(getByRole('link', { name: 'Clear' }))
+
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/')
+  })
+
+  expect(getByLabelText('Metric name')).toHaveValue('')
+})
+
+test('clears the url state when the search input is cleared (via keyboard e.g backspace)', async () => {
+  const labels = {
+    searchTitle: 'Metric name',
+    noScriptButtonText: 'Search',
+    clearText: 'Clear',
+  }
+
+  const { getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
+
+  await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
+
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
+  })
+
+  await userEvent.clear(getByLabelText('Metric name'))
+
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/')
+  })
+
+  expect(getByLabelText('Metric name')).toHaveValue('')
 })
