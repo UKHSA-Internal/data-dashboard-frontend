@@ -76,7 +76,11 @@ test.describe('Metrics parent page', () => {
     })
   })
 
-  test('Performs a search and results have updated with expected result', async ({ metricsParentPage, page }) => {
+  test('Performs a search and results have updated with expected result', async ({
+    metricsParentPage,
+    app,
+    baseURL,
+  }) => {
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
     })
@@ -86,8 +90,9 @@ test.describe('Metrics parent page', () => {
     await test.step('performs a search', async () => {
       await metricsParentPage.search('test')
     })
-    // Need delay of 400ms+ to allow debounce search to take effect
-    await page.waitForTimeout(1000)
+    await test.step('updates the url', async () => {
+      await app.waitForUrl(`${baseURL}/metrics-documentation?search=test`)
+    })
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(2)
     })
