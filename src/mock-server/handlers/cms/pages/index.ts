@@ -45,10 +45,22 @@ export default async function handler(req: Request, res: Response) {
 
     const pageData = mockedPagesMap[pageType]
 
+    const items = pageData.items.slice(offset, offset + limit)
+
+    if (req.query.order) {
+      if (req.query.order === '-date_posted') {
+        items.sort(
+          (first, second) =>
+            new Date(second.meta.first_published_at || '').valueOf() -
+            new Date(first.meta.first_published_at || '').valueOf()
+        )
+      }
+    }
+
     // Apply pagination based on the provided limit and offset
     return res.json({
       ...pageData,
-      items: pageData.items.slice(offset, offset + limit),
+      items,
     })
   } catch (error) {
     logger.error(error)

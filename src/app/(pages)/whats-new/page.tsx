@@ -111,10 +111,6 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
 
           <ul className="govuk-list govuk-!-margin-top-7" aria-label={title}>
             {entriesByDate.map(([date, entries], idx) => {
-              const entriesNewest = entries.sort(
-                (first, second) => new Date(second.date_posted).valueOf() - new Date(first.date_posted).valueOf()
-              )
-
               return (
                 <li
                   key={date}
@@ -136,7 +132,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
                     </h2>
                   </header>
                   <ul className="govuk-list govuk-!-margin-0">
-                    {entriesNewest.map((item, entryIndex) => {
+                    {entries.map((item, entryIndex) => {
                       return (
                         <li
                           key={item.id}
