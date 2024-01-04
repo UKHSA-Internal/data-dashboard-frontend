@@ -18,6 +18,7 @@ interface MetricsSearchProps {
 
 export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText, clearText } }: MetricsSearchProps) {
   const router = useRouter()
+
   const [searchValue, setSearchValue] = useState(value)
 
   const debouncedSearch = useDebounce(searchValue, DEBOUNCE_MILLISECONDS)
@@ -34,7 +35,9 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
       url.searchParams.delete('search')
     }
     router.push(url.toString())
-  }, [debouncedSearch, router])
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- router is omitted as it causes infinite redirects
+  }, [debouncedSearch])
 
   return (
     <form method="GET" action={'/metrics-documentation'} aria-label="Metrics search">
@@ -60,7 +63,10 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
             <Link
               href="/metrics-documentation"
               className="govuk-link govuk-link--no-visited-state inline"
-              onClick={() => setSearchValue('')}
+              onClick={() => {
+                router.push('/metrics-documentation')
+                setSearchValue('')
+              }}
             >
               {clearText}
             </Link>
