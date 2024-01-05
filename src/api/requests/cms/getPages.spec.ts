@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
+import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 import {
   pagesWithHomeTypeMock,
@@ -35,6 +36,13 @@ describe('Successfully getting all pages from the cms api ', () => {
     })
 
     const response = await getPages(PageType.Home)
+
+    expect(client).toHaveBeenCalledWith('pages', {
+      searchParams: new URLSearchParams({
+        type: PageType.Home,
+        limit: '100',
+      }),
+    })
 
     expect(response).toEqual<SuccessResponse>({
       success: true,
@@ -113,6 +121,16 @@ describe("Successfully getting all What's new child pages from the cms api", () 
     })
 
     const response = await getWhatsNewPages({ page: 1 })
+
+    expect(client).toHaveBeenCalledWith('pages', {
+      searchParams: new URLSearchParams({
+        type: PageType.WhatsNewChild,
+        fields: '*',
+        order: '-date_posted',
+        limit: String(WHATS_NEW_PAGE_SIZE),
+        offset: '0',
+      }),
+    })
 
     expect(response).toEqual<WhatsNewSuccessResponse>({
       success: true,
@@ -204,6 +222,15 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
     })
 
     const response = await getMetricsPages({ page: 1 })
+
+    expect(client).toHaveBeenCalledWith('pages', {
+      searchParams: new URLSearchParams({
+        type: PageType.MetricsChild,
+        fields: '*',
+        limit: String(METRICS_DOCUMENTATION_PAGE_SIZE),
+        offset: '0',
+      }),
+    })
 
     expect(response).toEqual<SuccessResponse>({
       success: true,
