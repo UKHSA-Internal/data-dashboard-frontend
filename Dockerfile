@@ -23,13 +23,6 @@ COPY . .
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Custom environment variables for the project used at build time only
-ARG API_URL
-ENV API_URL $API_URL
-
-ARG API_KEY
-ENV API_KEY $API_KEY
-
 # https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
 # NOTE: NEXT_PUBLIC_ prefixed variables must be baked into the image to be accessible in the browser environment
 ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
@@ -59,15 +52,6 @@ COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/.env ./
 
 USER nextjs
-
-# Custom environment variables for the project used at run time only
-ARG API_URL
-ENV API_URL $API_URL
-
-ARG API_KEY
-ENV API_KEY $API_KEY
-
-ENV KEEP_ALIVE_TIMEOUT 61000
 
 EXPOSE 3000
 
