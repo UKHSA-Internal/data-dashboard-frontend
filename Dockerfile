@@ -31,12 +31,9 @@ ARG API_KEY
 ENV API_KEY $API_KEY
 
 # https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-# NOTE: these variables can only be injected at build time whilst our app is statically built
+# NOTE: NEXT_PUBLIC_ prefixed variables must be baked into the image to be accessible in the browser environment
 ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
 ENV NEXT_PUBLIC_GA_MEASUREMENT_ID $NEXT_PUBLIC_GA_MEASUREMENT_ID
-
-ARG NEXT_PUBLIC_PUBLIC_API_URL
-ENV NEXT_PUBLIC_PUBLIC_API_URL $NEXT_PUBLIC_PUBLIC_API_URL
 
 RUN npm run build
 
