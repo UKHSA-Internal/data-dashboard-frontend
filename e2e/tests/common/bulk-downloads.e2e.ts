@@ -37,6 +37,19 @@ test.describe('Bulk downloads', () => {
   })
 })
 
+test.describe('Bulk downloads - no JavaScript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
+    await test.step('loads the page', async () => {
+      await bulkDownloadsPage.goto()
+    })
+    await test.step('downloads bulk csv', async () => {
+      await bulkDownloadsPage.canBulkDownload()
+    })
+  })
+})
+
 test.describe('Bulk downloads - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
