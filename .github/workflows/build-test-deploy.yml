@@ -175,4 +175,3 @@ jobs:
         run: |
           docker build --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID=${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2
