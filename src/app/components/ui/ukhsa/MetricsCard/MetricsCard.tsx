@@ -23,7 +23,11 @@ export async function MetricsCard({ title, href, description, group, topic, metr
             t={t}
             i18nKey="metricTitle"
             components={[
-              <Link key={0} className="govuk-heading-s govuk-!-margin-0 no-underline" href={href}>
+              <Link
+                key={0}
+                className="govuk-heading-s govuk-!-margin-0 govuk-link--no-visited-state no-underline"
+                href={href}
+              >
                 <span className="govuk-visually-hidden" />
               </Link>,
             ]}
