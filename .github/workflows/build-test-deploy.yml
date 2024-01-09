@@ -151,10 +151,10 @@ jobs:
       - run: echo 'All e2e tests passed ✅'
 
   ###############################################################################
-  # Deploy
+  # Publish image
   ###############################################################################
 
-  deploy:
+  publish-image:
     name: ECR Image Push
     needs: [quality-checks, unit-tests, e2e-tests-success]
     runs-on: ubuntu-latest
