@@ -37,6 +37,14 @@ export class MetricsParentPage {
     ).toBeVisible()
   }
 
+  async hasMatchedEntries(entries: string[]) {
+    entries.forEach(async (entry) => {
+      await expect(
+        this.page.locator('.govuk-summary-card').getByRole('heading', { level: 2, name: entry })
+      ).toBeVisible()
+    })
+  }
+
   async countMetricsItems(expectedItems: number) {
     await expect(await this.page.locator('.govuk-summary-card').all()).toHaveLength(expectedItems)
   }

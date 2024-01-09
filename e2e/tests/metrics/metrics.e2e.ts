@@ -96,9 +96,12 @@ test.describe('Metrics parent page', () => {
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(2)
     })
+    await test.step('check entries match expected', async () => {
+      await metricsParentPage.hasMatchedEntries(['Covid occupied beds latest', 'New pcr tests daily'])
+    })
   })
 
-  test('Performs a search with no results', async ({ metricsParentPage, page }) => {
+  test('Performs a search with no results', async ({ metricsParentPage, app, baseURL }) => {
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
     })
@@ -108,28 +111,36 @@ test.describe('Metrics parent page', () => {
     await test.step('performs a search', async () => {
       await metricsParentPage.search('no matches')
     })
-    // Need delay of 400ms+ to allow debounce search to take effect
-    await page.waitForTimeout(1000)
+    await test.step('updates the url', async () => {
+      await app.waitForUrl(`${baseURL}/metrics-documentation?search=no+matches`)
+    })
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(0)
     })
   })
 
-  test('shows all results after clearing the search box', async ({ metricsParentPage, page }) => {
+  test('shows all results after clearing the search box', async ({ metricsParentPage, app, baseURL }) => {
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
     })
     await test.step('performs a search', async () => {
       await metricsParentPage.search('test')
     })
-    await page.waitForTimeout(1000)
+    await test.step('updates the url', async () => {
+      await app.waitForUrl(`${baseURL}/metrics-documentation?search=test`)
+    })
+    await test.step('check entries match expected', async () => {
+      await metricsParentPage.hasMatchedEntries(['Covid occupied beds latest', 'New pcr tests daily'])
+    })
     await test.step('count starting items', async () => {
       await metricsParentPage.countMetricsItems(2)
     })
     await test.step('click the clear button', async () => {
       await metricsParentPage.clickClear()
     })
-    await page.waitForTimeout(1000)
+    await test.step('updates the url', async () => {
+      await app.waitForUrl(`${baseURL}/metrics-documentation`)
+    })
     await test.step('shows all items', async () => {
       await metricsParentPage.countMetricsItems(10)
     })
@@ -151,6 +162,9 @@ test.describe('Metrics parent page - no JS', () => {
     })
     await test.step('clicks search button', async () => {
       await metricsParentPage.clickSearch()
+    })
+    await test.step('check entries match expected', async () => {
+      await metricsParentPage.hasMatchedEntries(['Covid occupied beds latest', 'New pcr tests daily'])
     })
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(2)

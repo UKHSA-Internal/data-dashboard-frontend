@@ -5,13 +5,15 @@ import { mockRouter } from '@/app/utils/__mocks__/next-router'
 
 import MetricsSearch from './MetricsSearch'
 
+type Labels = ComponentProps<typeof MetricsSearch>['labels']
+
 beforeEach(() => {
   mockRouter.push('/metrics-documentation')
   console.error = jest.fn()
 })
 
 test('renders input and buttons', async () => {
-  const labels = {
+  const labels: Labels = {
     searchTitle: 'Metric name',
     noScriptButtonText: 'Search',
     clearText: 'Clear',
@@ -19,21 +21,37 @@ test('renders input and buttons', async () => {
 
   const { getByRole } = render(<MetricsSearch value="" labels={labels} />)
 
-  expect(getByRole('form', { name: 'Metrics search' })).toBeVisible()
+  const form = getByRole('form', { name: 'Metrics search' })
+  expect(form).toBeVisible()
+  expect(form).toHaveAttribute('method', 'GET')
+  expect(form).toHaveAttribute('action', '/metrics-documentation')
+
   expect(getByRole('textbox', { name: 'Metric name' })).toBeVisible()
   expect(getByRole('link', { name: 'Clear' })).toBeVisible()
 })
 
 test('defaults the search input value with the value set in the url state', async () => {
-  // set the url
-  // render the component
+  mockRouter.push('/?search=test')
+
+  const labels: Labels = {
+    searchTitle: 'Metric name',
+    noScriptButtonText: 'Search',
+    clearText: 'Clear',
+  }
+
+  render(<MetricsSearch value="" labels={labels} />)
+
+  await waitFor(() => {
+    expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
+  })
+
   // assert that the input has the expected value
 })
 
 test('sets the url state with the search input when typing', async () => {
   mockRouter.push('')
 
-  const labels = {
+  const labels: Labels = {
     searchTitle: 'Metric name',
     noScriptButtonText: 'Search',
     clearText: 'Clear',
@@ -49,7 +67,7 @@ test('sets the url state with the search input when typing', async () => {
 })
 
 test('clears the url state and search input when clicking the "Clear" link', async () => {
-  const labels = {
+  const labels: Labels = {
     searchTitle: 'Metric name',
     noScriptButtonText: 'Search',
     clearText: 'Clear',
@@ -73,7 +91,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
 })
 
 test('clears the url state when the search input is cleared (via keyboard e.g backspace)', async () => {
-  const labels = {
+  const labels: Labels = {
     searchTitle: 'Metric name',
     noScriptButtonText: 'Search',
     clearText: 'Clear',
