@@ -5,8 +5,6 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { renderCard } from '@/app/utils/cms.utils'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
