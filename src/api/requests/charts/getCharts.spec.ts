@@ -1,47 +1,23 @@
-import 'whatwg-fetch'
-
-import { rest } from 'msw'
 import z from 'zod'
 
-import { server } from '@/api/msw/server'
+import { client } from '@/api/api-utils'
 import { chartSizes } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from '../helpers'
-import { getCharts } from './getCharts'
+import { getCharts, responseSchema } from './getCharts'
 
-jest.mock('@/lib/logger')
+test('Returns a chart svg and last updated date', async () => {
+  const mockResponseData: z.infer<typeof responseSchema> = {
+    chart: 'mocked-chart-svg',
+    last_updated: '123',
+  }
 
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
+  jest.mocked(client).mockResolvedValueOnce({
+    data: mockResponseData,
+    status: 200,
+  })
 
-test('Supports a narrow and wide chart size', async () => {
-  server.use(
-    rest.post(`${getApiBaseUrl()}/charts/v3`, async (req, res, ctx) => {
-      const body = await req.json()
-
-      if (body.chart_height === chartSizes.narrow.height && body.chart_width === chartSizes.narrow.width) {
-        return res(
-          ctx.json({
-            chart: 'mocked-narrow',
-            last_updated: '123',
-          })
-        )
-      }
-
-      if (body.chart_height === chartSizes.wide.height && body.chart_width === chartSizes.wide.width) {
-        return res(
-          ctx.json({
-            chart: 'mocked-wide',
-            last_updated: '123',
-          })
-        )
-      }
-    })
-  )
-
-  const narrowResponse = await getCharts({
+  const result = await getCharts({
     x_axis: null,
     y_axis: null,
     chart_height: chartSizes.narrow.height,
@@ -54,48 +30,24 @@ test('Supports a narrow and wide chart size', async () => {
       },
     ],
   })
-  expect(narrowResponse).toEqual({
-    data: {
-      chart: 'mocked-narrow',
-      last_updated: '123',
-    },
-    success: true,
-  })
 
-  const wideResponse = await getCharts({
-    x_axis: null,
-    y_axis: null,
-    chart_height: chartSizes.wide.height,
-    chart_width: chartSizes.wide.width,
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: 'new_cases_7days_sum',
-        chart_type: 'line_with_shaded_section',
-      },
-    ],
-  })
-  expect(wideResponse).toEqual({
-    data: {
-      chart: 'mocked-wide',
-      last_updated: '123',
-    },
+  expect(result).toEqual({
+    data: mockResponseData,
     success: true,
   })
 })
 
-test('Handles generic http errors', async () => {
-  server.use(
-    rest.post(`${getApiBaseUrl()}/charts/v3`, (req, res, ctx) => {
-      return res(ctx.status(404))
-    })
-  )
+test('Handles API errors', async () => {
+  jest.mocked(client).mockRejectedValueOnce({
+    data: null,
+    status: 400,
+  })
 
   const result = await getCharts({
     x_axis: null,
     y_axis: null,
-    chart_height: chartSizes.wide.height,
-    chart_width: chartSizes.wide.width,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
     plots: [
       {
         topic: 'COVID-19',

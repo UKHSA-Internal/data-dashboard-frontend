@@ -1,7 +1,0 @@
-export * from './about'
-export * from './covid-19'
-export * from './dashboard'
-export * from './how-to-use-this-data'
-export * from './influenza'
-export * from './maps'
-export * from './other-respiratory-viruses'
