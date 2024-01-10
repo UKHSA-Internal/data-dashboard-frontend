@@ -6,9 +6,6 @@ import { logger } from '@/lib/logger'
 
 import { getCharts, responseSchema } from './getCharts'
 
-jest.mock('@/api/api-utils')
-jest.mock('@/lib/logger')
-
 test('Returns a chart svg and last updated date', async () => {
   const mockResponseData: z.infer<typeof responseSchema> = {
     chart: 'mocked-chart-svg',

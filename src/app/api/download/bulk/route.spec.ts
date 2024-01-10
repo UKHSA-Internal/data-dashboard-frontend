@@ -11,10 +11,6 @@ import { bulkDownloadZip } from '@/mock-server/handlers/bulkdownloads/fixtures/b
 
 import { POST } from './route'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-jest.mock('next/navigation')
-
 describe('POST api/download/bulk', () => {
   test('Downloads bulk data in csv format', async () => {
     const formData = new FormData()

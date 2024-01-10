@@ -9,10 +9,6 @@ import { client } from '../api-utils'
 import { PageType } from './cms/getPages'
 import { getPageBySlug } from './getPageBySlug'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-jest.mock('next/navigation')
-
 const getPages = jest.mocked(client)
 const getPage = jest.mocked(client)
 

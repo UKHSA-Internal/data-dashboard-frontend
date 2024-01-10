@@ -16,8 +16,6 @@ import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
-export const dynamic = 'force-dynamic'
-
 interface WhatsNewParentPageProps {
   searchParams: {
     page?: number

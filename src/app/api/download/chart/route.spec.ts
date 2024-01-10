@@ -13,9 +13,6 @@ import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/
 
 import { POST } from './route'
 
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
-
 interface RequestBody {
   plots: RequestParams['plots']
   format: string

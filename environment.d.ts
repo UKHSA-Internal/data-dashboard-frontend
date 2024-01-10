@@ -5,7 +5,7 @@ declare namespace NodeJS {
     API_URL: string
     API_KEY: string
     FEEDBACK_API_URL: string
-    NEXT_PUBLIC_PUBLIC_API_URL: string
+    PUBLIC_API_URL: string
     NEXT_PUBLIC_GA_MEASUREMENT_ID: string
   }
 }

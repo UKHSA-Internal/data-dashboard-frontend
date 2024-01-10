@@ -24,11 +24,15 @@ const highPriority: MetadataRoute.Sitemap = [
   'topics/other-respiratory-viruses',
 ].map(getSitemapObject(0.8, 'weekly'))
 
-const mediumPriority: MetadataRoute.Sitemap = ['about', 'whats-new', 'whats-coming', 'feedback'].map(
-  getSitemapObject(0.7, 'weekly')
-)
+const mediumPriority: MetadataRoute.Sitemap = [
+  'about',
+  'whats-new',
+  'whats-coming',
+  'feedback',
+  'metrics-documentation',
+].map(getSitemapObject(0.7, 'weekly'))
 
-const lowPriority: MetadataRoute.Sitemap = ['cookies', 'accessibility-statement', 'compliance'].map(
+const lowPriority: MetadataRoute.Sitemap = ['cookies', 'accessibility-statement', 'compliance', 'bulk-downloads'].map(
   getSitemapObject(0.5, 'monthly')
 )
 
