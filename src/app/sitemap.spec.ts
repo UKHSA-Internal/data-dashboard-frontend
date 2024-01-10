@@ -51,6 +51,12 @@ test('Sitemap displays correctly', () => {
       url: 'https://ukhsa-dashboard.data.gov.uk/feedback',
     },
     {
+      changeFrequency: 'weekly',
+      lastModified: expect.any(Date),
+      priority: 0.7,
+      url: 'https://ukhsa-dashboard.data.gov.uk/metrics-documentation',
+    },
+    {
       changeFrequency: 'monthly',
       lastModified: expect.any(Date),
       priority: 0.5,
@@ -67,6 +73,12 @@ test('Sitemap displays correctly', () => {
       lastModified: expect.any(Date),
       priority: 0.5,
       url: 'https://ukhsa-dashboard.data.gov.uk/compliance',
+    },
+    {
+      changeFrequency: 'monthly',
+      lastModified: expect.any(Date),
+      priority: 0.5,
+      url: 'https://ukhsa-dashboard.data.gov.uk/bulk-downloads',
     },
     {
       changeFrequency: 'monthly',

@@ -1,6 +1,10 @@
 import type { Locator, Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 
+type ChartRowCardTestOptions = Partial<{
+  javaScriptEnabled: boolean
+}>
+
 export class HomePage {
   readonly page: Page
 
@@ -125,7 +129,7 @@ export class HomePage {
     await expect(col5.getByText('10.4%')).toBeVisible()
   }
 
-  async hasCovid19CasesChartRowCard() {
+  async hasCovid19CasesChartRowCard({ javaScriptEnabled }: ChartRowCardTestOptions = { javaScriptEnabled: true }) {
     const card = this.covidCasesChartRowCard
     await expect(card.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
     await expect(card.getByText(/Positive tests reported in England/)).toBeVisible()
@@ -137,20 +141,26 @@ export class HomePage {
     await expect(card.getByText('-592 (-3%)')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Tabular data' }).click()
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Tabular data' }).click()
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     const name = 'Cases data for positive tests reported in England Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Download' }).click()
-    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Download' }).click()
+      await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 
-  async hasCovid19DeathsChartRowCard() {
+  async hasCovid19DeathsChartRowCard({ javaScriptEnabled }: ChartRowCardTestOptions = { javaScriptEnabled: true }) {
     const card = this.covidDeathsChartRowCard
     await expect(card.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
     await expect(card.getByText(/Deaths with COVID-19 on the death certificate in England/)).toBeVisible()
@@ -162,17 +172,23 @@ export class HomePage {
     await expect(card.getByText('21 (-5%)')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Tabular data' }).click()
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Tabular data' }).click()
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     const name =
       'Deaths data for deaths with COVID-19 on the death certificate in England Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Download' }).click()
-    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Download' }).click()
+      await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 
@@ -187,7 +203,9 @@ export class HomePage {
     await expect(col2.getByText('0.26%')).toBeVisible()
   }
 
-  async hasInfluenzaHealthareChartRowCard() {
+  async hasInfluenzaHealthareChartRowCard(
+    { javaScriptEnabled }: ChartRowCardTestOptions = { javaScriptEnabled: true }
+  ) {
     const card = this.influenzaHealthcareChartRowCard
     await expect(card.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly hospital admission rates for Influenza/)).toBeVisible()
@@ -198,20 +216,26 @@ export class HomePage {
     await expect(card.getByText('0.26')).toBeVisible()
     await expect(card.getByAltText('')).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Tabular data' }).click()
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Tabular data' }).click()
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     const name = 'Healthcare data for weekly hospital admission rates for Influenza Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Download' }).click()
-    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Download' }).click()
+      await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 
-  async hasInfluenzaTestingChartRowCard() {
+  async hasInfluenzaTestingChartRowCard({ javaScriptEnabled }: ChartRowCardTestOptions = { javaScriptEnabled: true }) {
     const card = this.influenzaTestingChartRowCard
     await expect(card.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(card.getByText(/Weekly positivity/)).toBeVisible()
@@ -220,16 +244,22 @@ export class HomePage {
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByAltText('')).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Tabular data' }).click()
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Tabular data' }).click()
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     const name = 'Testing data for weekly positivity Up to and including 10 May 2023'
     await expect(card.getByRole('table', { name })).toBeVisible()
 
-    await card.getByRole('tab', { name: 'Download' }).click()
-    await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
-    await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    if (javaScriptEnabled) {
+      await card.getByRole('tab', { name: 'Download' }).click()
+      await expect(card.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'true')
+      await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'false')
+      await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    }
+
     await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
   }
 }

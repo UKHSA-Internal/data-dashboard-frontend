@@ -1,24 +1,19 @@
-import 'whatwg-fetch'
-
-import { rest } from 'msw'
 import z from 'zod'
 
-import { server } from '@/api/msw/server'
+import { client } from '@/api/api-utils'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from '../helpers'
 import { getHeadlines, responseSchema } from './getHeadlines'
-
-jest.mock('@/lib/logger')
-
-beforeAll(() => server.listen())
-afterAll(() => server.close())
-afterEach(() => server.resetHandlers())
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 test('Returns a COVID-19 headline value', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: { value: 24298 },
+    status: 200,
+  })
+
   const result = await getHeadlines({
     topic: 'COVID-19',
     geography: 'England',
@@ -35,6 +30,11 @@ test('Returns a COVID-19 headline value', async () => {
 })
 
 test('Returns an Influenza headline value', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: { value: '12.2' },
+    status: 200,
+  })
+
   const result = await getHeadlines({
     topic: 'Influenza',
     geography: 'England',
@@ -51,11 +51,10 @@ test('Returns an Influenza headline value', async () => {
 })
 
 test('Handles invalid json received from the api', async () => {
-  server.use(
-    rest.get(`${getApiBaseUrl()}/headlines/v2`, (req, res, ctx) => {
-      return res(ctx.status(200), ctx.json({}))
-    })
-  )
+  jest.mocked(client).mockResolvedValueOnce({
+    data: {},
+    status: 200,
+  })
 
   const result = await getHeadlines({
     topic: 'COVID-19',
@@ -79,11 +78,9 @@ test('Handles invalid json received from the api', async () => {
 })
 
 test('Handles generic http errors', async () => {
-  server.use(
-    rest.get(`${getApiBaseUrl()}/headlines/v2`, (req, res, ctx) => {
-      return res(ctx.status(404))
-    })
-  )
+  jest.mocked(client).mockRejectedValueOnce({
+    status: 400,
+  })
 
   const result = await getHeadlines({
     topic: 'COVID-19',

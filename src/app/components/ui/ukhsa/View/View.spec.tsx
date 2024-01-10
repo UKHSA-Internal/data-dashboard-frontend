@@ -4,8 +4,6 @@ import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { View } from './View'
 
-jest.mock('@/api/api-utils')
-
 jest.mocked(client).mockResolvedValue({
   data: allPagesMock,
   status: 200,

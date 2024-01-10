@@ -5,8 +5,6 @@ import { areaTypeMock } from '@/mock-server/handlers/geographies/v1/types'
 
 import { getGeographyTypes } from './getGeographyTypes'
 
-jest.mock('@/api/api-utils')
-
 describe('GET geographies/v1/types', () => {
   test('successful response', async () => {
     jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })

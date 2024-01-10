@@ -87,7 +87,7 @@ test.describe('Home page - desktop', () => {
   })
 })
 
-test.describe('Home page - no JS', () => {
+test.describe('Home page - no JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
   test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
@@ -103,6 +103,30 @@ test.describe('Home page - no JS', () => {
     })
     await test.step('downloads a csv version of each chart', async () => {
       await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    })
+  })
+
+  test('Tabs fallback', async ({ homePage }) => {
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('displays the COVID-19 headline numbers row card', async () => {
+      await homePage.hasCovid19HeadlineNumbersRowCard()
+    })
+    await test.step('displays the COVID-19 "cases" chart row card', async () => {
+      await homePage.hasCovid19CasesChartRowCard({ javaScriptEnabled: false })
+    })
+    await test.step('displays the COVID-19 "deaths" chart row card', async () => {
+      await homePage.hasCovid19DeathsChartRowCard({ javaScriptEnabled: false })
+    })
+    await test.step('displays the Influenza headline numbers row card', async () => {
+      await homePage.hasInfluenzaHeadlineNumbersRowCard()
+    })
+    await test.step('displays the Influenza "healthcare" chart row card', async () => {
+      await homePage.hasInfluenzaHealthareChartRowCard({ javaScriptEnabled: false })
+    })
+    await test.step('displays the Influenza "testing" chart row card', async () => {
+      await homePage.hasInfluenzaTestingChartRowCard({ javaScriptEnabled: false })
     })
   })
 })

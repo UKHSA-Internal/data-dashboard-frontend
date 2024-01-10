@@ -79,7 +79,6 @@
     "jsdom": "^21.1.2",
     "lint-staged": "^13.1.2",
     "module-alias": "^2.2.3",
-    "msw": "^1.2.1",
     "next-router-mock": "^0.9.10",
     "node-mocks-http": "^1.12.2",
     "nodemon": "^3.0.1",

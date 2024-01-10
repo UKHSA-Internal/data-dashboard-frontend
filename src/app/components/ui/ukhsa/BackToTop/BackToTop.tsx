@@ -17,7 +17,7 @@ export const BackToTop = ({ label, href = '#main-content' }: BackToTopProps) => 
       className={clsx(
         'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 bottom-3 inline-flex items-center print:hidden [&:not(:focus)]:bg-white',
         {
-          sticky: y > 200,
+          'xl:sticky': y > 200,
         }
       )}
       onClick={(event) => {
