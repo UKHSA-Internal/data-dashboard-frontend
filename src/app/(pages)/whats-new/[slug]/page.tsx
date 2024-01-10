@@ -7,8 +7,6 @@ import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
