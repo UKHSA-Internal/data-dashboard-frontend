@@ -8,5 +8,5 @@ runs:
     - name: Install Node.js
       uses: actions/setup-node@v3
       with:
-        node-version: '18.18.0'
+        node-version: '20.10.0'
         cache: 'npm'
