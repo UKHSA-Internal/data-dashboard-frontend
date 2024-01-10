@@ -10,14 +10,12 @@ interface HeadlineProps {
   data: z.infer<typeof HeadlineNumber>['value']
 }
 
-export async function Headline({ data }: HeadlineProps) {
+export async function Headline({ data: { body: heading, ...requestParams } }: HeadlineProps) {
   const { t } = await useTranslation('common')
 
-  const headline = await getHeadlines(data)
+  const headline = await getHeadlines(requestParams)
 
   if (headline.success) {
-    const { body: heading } = data
-
     const {
       data: { value },
     } = headline

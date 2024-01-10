@@ -10,14 +10,12 @@ interface PercentageProps {
   data: z.infer<typeof HeadlineNumber>['value']
 }
 
-export async function Percentage({ data }: PercentageProps) {
+export async function Percentage({ data: { body: heading, ...requestParams } }: PercentageProps) {
   const { t } = await useTranslation('common')
 
-  const headline = await getHeadlines(data)
+  const headline = await getHeadlines(requestParams)
 
   if (headline.success) {
-    const { body: heading } = data
-
     const {
       data: { value },
     } = headline

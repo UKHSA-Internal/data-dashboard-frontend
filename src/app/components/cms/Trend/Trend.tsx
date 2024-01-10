@@ -11,14 +11,12 @@ interface TrendProps {
   data: z.infer<typeof TrendNumber>['value']
 }
 
-export async function Trend({ data }: TrendProps) {
+export async function Trend({ data: { body: heading, ...requestParams } }: TrendProps) {
   const { t } = await useTranslation('common')
 
-  const trend = await getTrends(data)
+  const trend = await getTrends(requestParams)
 
   if (trend.success) {
-    const { body: heading } = data
-
     const { direction, colour, metric_value: change, percentage_metric_value: percentage } = trend.data
 
     return (
