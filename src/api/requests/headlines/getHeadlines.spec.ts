@@ -2,16 +2,24 @@ import z from 'zod'
 
 import { client } from '@/api/api-utils'
 import { logger } from '@/lib/logger'
+import { fixtures } from '@/mock-server/handlers/headlines/fixtures'
 
 import { getHeadlines, responseSchema } from './getHeadlines'
+
+jest.mock('@/lib/logger')
+jest.mock('@/api/api-utils')
+
+const getHeadlinesMock = jest.mocked(client)
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
+beforeEach(() => jest.clearAllMocks())
+
 test('Returns a COVID-19 headline value', async () => {
-  jest.mocked(client).mockResolvedValueOnce({
-    data: { value: 24298 },
+  getHeadlinesMock.mockResolvedValueOnce({
     status: 200,
+    data: fixtures['COVID-19']['COVID-19_headline_newcases_7daytotals'],
   })
 
   const result = await getHeadlines({
@@ -30,9 +38,9 @@ test('Returns a COVID-19 headline value', async () => {
 })
 
 test('Returns an Influenza headline value', async () => {
-  jest.mocked(client).mockResolvedValueOnce({
-    data: { value: '12.2' },
+  getHeadlinesMock.mockResolvedValueOnce({
     status: 200,
+    data: fixtures.Influenza['influenza_headline_positivityLatest'],
   })
 
   const result = await getHeadlines({
@@ -45,15 +53,15 @@ test('Returns an Influenza headline value', async () => {
   expect(result).toEqual<SuccessResponse>({
     success: true,
     data: {
-      value: 12.2,
+      value: 0.2558,
     },
   })
 })
 
 test('Handles invalid json received from the api', async () => {
-  jest.mocked(client).mockResolvedValueOnce({
-    data: {},
+  getHeadlinesMock.mockResolvedValueOnce({
     status: 200,
+    data: {},
   })
 
   const result = await getHeadlines({
@@ -78,8 +86,9 @@ test('Handles invalid json received from the api', async () => {
 })
 
 test('Handles generic http errors', async () => {
-  jest.mocked(client).mockRejectedValueOnce({
-    status: 400,
+  getHeadlinesMock.mockRejectedValueOnce({
+    status: 500,
+    data: null,
   })
 
   const result = await getHeadlines({
