@@ -39,16 +39,8 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
-      - name: Start mock server
-        run: npm run dev:mock-server &
-      - name: Wait for Mock Server
-        shell: sh
-        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
       - name: Build
-        run: |
-          touch .env.local
-          echo API_URL=http://localhost:3005 >> .env.local
-          NODE_ENV=test npm run build
+        run: NODE_ENV=test npm run build
 
   ###############################################################################
   # Code quality checks
@@ -151,7 +143,7 @@ jobs:
       - run: echo 'All e2e tests passed ✅'
 
   ###############################################################################
-  # Deploy
+  # Push image to ECR
   ###############################################################################
 
   deploy:
@@ -181,6 +173,5 @@ jobs:
           ECR_REPOSITORY: wp-frontend
           IMAGE_TAG: latest
         run: |
-          docker build --build-arg API_URL=${{ vars.API_URL }} --build-arg API_KEY=${{ secrets.API_KEY }} --build-arg NEXT_PUBLIC_PUBLIC_API_URL=${{ vars.NEXT_PUBLIC_PUBLIC_API_URL }} --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID=${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+          docker build --build-arg NEXT_PUBLIC_GA_MEASUREMENT_ID=${{ vars.NEXT_PUBLIC_GA_MEASUREMENT_ID }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          aws ecs update-service --cluster wp-frontend-cluster --service wp-frontend-service --force-new-deployment --region eu-west-2

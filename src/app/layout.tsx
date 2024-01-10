@@ -16,6 +16,9 @@ import { CookieBanner, GoogleAnalytics } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
+// Force all pages to be dynamic (ssr)
+export const dynamic = 'force-dynamic'
+
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
