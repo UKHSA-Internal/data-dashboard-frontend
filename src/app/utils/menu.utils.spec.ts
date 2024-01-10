@@ -37,7 +37,7 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
     },
     {
       title: 'API',
-      slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
+      slug: process.env.PUBLIC_API_URL,
     },
     { title: 'About', slug: '/about' },
     { title: 'Bulk downloads', slug: '/bulk-downloads' },
@@ -63,7 +63,7 @@ test('handles failed fetches to the cms', async () => {
     },
     {
       title: 'API',
-      slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL,
+      slug: process.env.PUBLIC_API_URL,
     },
   ])
 })

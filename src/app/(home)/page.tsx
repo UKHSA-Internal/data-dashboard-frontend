@@ -7,8 +7,6 @@ import { renderSection } from '@/app/utils/cms.utils'
 
 import { HOMEPAGE_CMS_SLUG } from '../constants/app.constants'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
