@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { Metrics, PercentageMetrics } from '../../Metrics'
-import { Topics } from '../../Topics'
+import { requestSchema as headlinesSchema } from '@/api/requests/headlines/getHeadlines'
+import { requestSchema as trendsSchema } from '@/api/requests/trends/getTrends'
 
 /**
  * Headline and Trend data types
@@ -9,9 +9,7 @@ import { Topics } from '../../Topics'
 
 export const HeadlineNumber = z.object({
   type: z.literal('headline_number'),
-  value: z.object({
-    topic: Topics,
-    metric: Metrics,
+  value: headlinesSchema.extend({
     body: z.string(),
   }),
   id: z.string(),
@@ -19,10 +17,7 @@ export const HeadlineNumber = z.object({
 
 export const TrendNumber = z.object({
   type: z.literal('trend_number'),
-  value: z.object({
-    topic: Topics,
-    metric: Metrics,
-    percentage_metric: PercentageMetrics,
+  value: trendsSchema.extend({
     body: z.string(),
   }),
   id: z.string(),
@@ -30,9 +25,7 @@ export const TrendNumber = z.object({
 
 export const PercentageNumber = z.object({
   type: z.literal('percentage_number'),
-  value: z.object({
-    topic: Topics,
-    metric: Metrics,
+  value: headlinesSchema.extend({
     body: z.string(),
   }),
   id: z.string(),

@@ -2,9 +2,6 @@ import { client } from '@/api/api-utils'
 
 import { postSuggestions } from './postSuggestions'
 
-jest.mock('@/lib/logger')
-
-jest.mock('@/api/api-utils')
 const postSuggestion = jest.mocked(client)
 
 test('Handles successful submission from the api', async () => {

@@ -5,8 +5,6 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { BulkDownload, RichText } from '@/app/components/cms'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },

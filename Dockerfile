@@ -1,4 +1,4 @@
-FROM node:18-alpine AS base
+FROM node:20-alpine AS base
 # Install dependencies only when needed
 FROM base AS deps
 # Check https://github.com/nodejs/docker-node/tree/b4117f9333da4138b03a546ec926ef50a31506c3#nodealpine to understand why libc6-compat might be needed.
@@ -23,20 +23,10 @@ COPY . .
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# Custom environment variables for the project used at build time only
-ARG API_URL
-ENV API_URL $API_URL
-
-ARG API_KEY
-ENV API_KEY $API_KEY
-
 # https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-# NOTE: these variables can only be injected at build time whilst our app is statically built
+# NOTE: NEXT_PUBLIC_ prefixed variables must be baked into the image to be accessible in the browser environment
 ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
 ENV NEXT_PUBLIC_GA_MEASUREMENT_ID $NEXT_PUBLIC_GA_MEASUREMENT_ID
-
-ARG NEXT_PUBLIC_PUBLIC_API_URL
-ENV NEXT_PUBLIC_PUBLIC_API_URL $NEXT_PUBLIC_PUBLIC_API_URL
 
 RUN npm run build
 
@@ -62,15 +52,6 @@ COPY --from=builder /app/next.config.js ./next.config.js
 COPY --from=builder /app/.env ./
 
 USER nextjs
-
-# Custom environment variables for the project used at run time only
-ARG API_URL
-ENV API_URL $API_URL
-
-ARG API_KEY
-ENV API_KEY $API_KEY
-
-ENV KEEP_ALIVE_TIMEOUT 61000
 
 EXPOSE 3000
 
