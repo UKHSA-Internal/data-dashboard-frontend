@@ -97,7 +97,7 @@ export default async function MetricsParentPage({ searchParams: { search, page =
             }}
           />
 
-          <div className="govuk-!-margin-top-4" aria-label={title}>
+          <ul className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(({ id, title, meta, page_description: description, metric, metric_group: group, topic }) => {
               return (
                 <MetricsCard
@@ -111,8 +111,8 @@ export default async function MetricsParentPage({ searchParams: { search, page =
                 />
               )
             })}
-            {items.length < 1 && <NoResults />}
-          </div>
+          </ul>
+          {items.length < 1 && <NoResults />}
 
           <Pagination
             className="govuk-!-margin-top-8"

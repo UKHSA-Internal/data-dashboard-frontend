@@ -39,14 +39,14 @@ export class MetricsParentPage {
 
   async hasMatchedEntries(entries: string[]) {
     entries.forEach(async (entry) => {
-      await expect(
-        this.page.locator('.govuk-summary-card').getByRole('heading', { level: 2, name: entry })
-      ).toBeVisible()
+      await expect(this.page.getByRole('listitem').getByRole('heading', { level: 2, name: entry })).toBeVisible()
     })
   }
 
   async countMetricsItems(expectedItems: number) {
-    await expect(await this.page.locator('.govuk-summary-card').all()).toHaveLength(expectedItems)
+    await expect(
+      await this.page.getByRole('list', { name: 'Metrics documentation' }).getByRole('listitem').all()
+    ).toHaveLength(expectedItems)
   }
 
   async search(searchParams: string) {
