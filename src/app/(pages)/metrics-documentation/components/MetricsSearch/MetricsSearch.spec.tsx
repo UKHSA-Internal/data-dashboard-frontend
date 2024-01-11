@@ -1,5 +1,6 @@
 import { render, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
+import { ComponentProps } from 'react'
 
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 
@@ -31,7 +32,7 @@ test('renders input and buttons', async () => {
 })
 
 test('defaults the search input value with the value set in the url state', async () => {
-  mockRouter.push('')
+  mockRouter.push('/?search=Mock+search+value')
 
   const labels: Labels = {
     searchTitle: 'Metric name',
@@ -39,9 +40,7 @@ test('defaults the search input value with the value set in the url state', asyn
     clearText: 'Clear',
   }
 
-  const { getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
-
-  mockRouter.push('/?search=Mock+search+value')
+  const { getByLabelText } = render(<MetricsSearch value="Mock search value" labels={labels} />)
 
   await waitFor(() => {
     expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
