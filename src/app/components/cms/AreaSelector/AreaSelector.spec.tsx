@@ -9,8 +9,6 @@ import { mockNations } from '@/mock-server/handlers/geographies/v1/types/fixture
 
 import { AreaSelector } from './AreaSelector'
 
-jest.mock('@/api/api-utils')
-
 describe('AreaSelector', () => {
   beforeEach(() => {
     mockRouter.push('/topics/mock-topic')

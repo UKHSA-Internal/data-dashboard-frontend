@@ -31,7 +31,7 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     // Create an API link with the URL from environment variables.
     const apiLink: MenuLink = {
       title: 'API',
-      slug: process.env.NEXT_PUBLIC_PUBLIC_API_URL || '',
+      slug: process.env.PUBLIC_API_URL || '',
     }
 
     if (pages.success) {

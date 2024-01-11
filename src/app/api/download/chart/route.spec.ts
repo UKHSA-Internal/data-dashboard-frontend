@@ -6,15 +6,12 @@ import { Mock } from 'ts-mockery'
 import { z } from 'zod'
 
 import { client } from '@/api/api-utils'
-import { downloadsJsonFixture } from '@/api/mocks/downloads/fixtures/downloads-json'
 import { RequestParams } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
+import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-json'
 
 import { POST } from './route'
-
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
 
 interface RequestBody {
   plots: RequestParams['plots']

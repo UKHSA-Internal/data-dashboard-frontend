@@ -64,7 +64,16 @@ export const fixtures: Fixtures = {
       direction: 'up',
     },
   },
-  Influenza: {},
+  Influenza: {
+    influenza_headline_ICUHDUadmissionRateChange: {
+      metric_name: 'influenza_headline_ICUHDUadmissionRateChange',
+      metric_value: 5911,
+      percentage_metric_name: 'influenza_headline_ICUHDUadmissionRatePercentChange',
+      percentage_metric_value: 0.3,
+      colour: 'green',
+      direction: 'down',
+    },
+  },
   Adenovirus: {},
   Rhinovirus: {},
   RSV: {},

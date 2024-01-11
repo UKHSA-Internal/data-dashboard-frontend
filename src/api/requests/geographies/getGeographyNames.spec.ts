@@ -5,8 +5,6 @@ import { mockRegions } from '@/mock-server/handlers/geographies/v1/types/fixture
 
 import { getGeographyNames } from './getGeographyNames'
 
-jest.mock('@/api/api-utils')
-
 describe('GET geographies/v1/types/:id', () => {
   test('successful response', async () => {
     jest.mocked(client).mockResolvedValueOnce({ data: { geographies: mockRegions }, status: 200 })

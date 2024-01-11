@@ -32,11 +32,8 @@ const customJestConfig = {
     'node_modules',
     '<rootDir>/src/api/api-utils.ts',
     '<rootDir>/src/api/models',
-    '<rootDir>/src/api/msw/index.ts',
-    // TODO: This component needs tests. Where have they gone!?
+    // TODO: This component needs tests - CDD-1597
     '<rootDir>/src/app/components/cms/Download/Download.tsx',
-    // TODO: This is due to be removed in CDD-1252 - Remove this line after that is complete
-    '<rootDir>/src/api/mocks',
   ],
   coverageThreshold: {
     global: {
@@ -53,6 +50,6 @@ const customJestConfig = {
 module.exports = async () => ({
   ...(await createJestConfig(customJestConfig)()),
   transformIgnorePatterns: [
-    'node_modules/(?!(ky-universal|ky|rehype-slug|github-slugger|hast-util-has-property|hast-util-to-string|hast-util-heading-rank|rehype-raw|hast-util-raw|unist-util-position|unist-util-visit|unist-util-visit-parents|unist-util-is|hast-util-from-parse5|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens|vfile-location|web-namespaces|hast-util-to-parse5|zwitch|html-void-elements)/)',
+    'node_modules/(?!(rehype-slug|github-slugger|hast-util-has-property|hast-util-to-string|hast-util-heading-rank|rehype-raw|hast-util-raw|unist-util-position|unist-util-visit|unist-util-visit-parents|unist-util-is|hast-util-from-parse5|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens|vfile-location|web-namespaces|hast-util-to-parse5|zwitch|html-void-elements)/)',
   ],
 })
