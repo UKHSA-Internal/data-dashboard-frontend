@@ -31,7 +31,7 @@ test('renders input and buttons', async () => {
 })
 
 test('defaults the search input value with the value set in the url state', async () => {
-  mockRouter.push('/?search=test')
+  mockRouter.push('')
 
   const labels: Labels = {
     searchTitle: 'Metric name',
@@ -39,13 +39,17 @@ test('defaults the search input value with the value set in the url state', asyn
     clearText: 'Clear',
   }
 
-  render(<MetricsSearch value="" labels={labels} />)
+  const { getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
+
+  mockRouter.push('/?search=Mock+search+value')
 
   await waitFor(() => {
     expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
   })
 
-  // assert that the input has the expected value
+  await waitFor(() => {
+    expect(getByLabelText('Metric name')).toHaveValue('Mock search value')
+  })
 })
 
 test('sets the url state with the search input when typing', async () => {
