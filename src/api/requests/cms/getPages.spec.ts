@@ -203,7 +203,26 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
       data: pagesWithMetricsChildTypeMock,
     })
 
-    const response = await getMetricsPages({ page: 1 })
+    const response = await getMetricsPages({ search: undefined, page: 1 })
+
+    expect(response).toEqual<SuccessResponse>({
+      success: true,
+      data: pagesWithMetricsChildTypeMock,
+    })
+  })
+
+  test('returns a list of Metrics Documentation child pages from search criteria', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    const response = await getMetricsPages({ search: 'test', page: 1 })
+
+    expect(logger.info).toHaveBeenNthCalledWith(
+      1,
+      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0&search=test'
+    )
 
     expect(response).toEqual<SuccessResponse>({
       success: true,
@@ -224,7 +243,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
       },
     })
 
-    const response = await getMetricsPages({ page: 1 })
+    const response = await getMetricsPages({ search: undefined, page: 1 })
 
     expect(response).toEqual<ErrorResponse>({
       success: false,
@@ -246,7 +265,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
       data: {},
     })
 
-    const result = await getMetricsPages({ page: 1 })
+    const result = await getMetricsPages({ search: undefined, page: 1 })
 
     expect(logger.info).toHaveBeenNthCalledWith(
       1,

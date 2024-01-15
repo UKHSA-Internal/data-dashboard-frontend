@@ -72,6 +72,11 @@ export class App {
     await this.page.reload()
   }
 
+  async waitForUrl(url: string) {
+    await this.page.waitForURL(url, { timeout: 5000 })
+    await expect(this.page.url()).toEqual(url)
+  }
+
   async hasDocumentTitle(title: string) {
     await expect(await this.page.title()).toBe(title)
   }
