@@ -7,5 +7,6 @@ declare namespace NodeJS {
     FEEDBACK_API_URL: string
     PUBLIC_API_URL: string
     NEXT_PUBLIC_GA_MEASUREMENT_ID: string
+    GOOGLE_TAG_MANAGER_ID: string
   }
 }
