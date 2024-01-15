@@ -16,14 +16,18 @@ export async function MetricsCard({ title, href, description, group, topic, metr
   const { t } = await useTranslation('metrics')
 
   return (
-    <div className="govuk-summary-card">
+    <li className="govuk-summary-card">
       <div className="govuk-summary-card__title-wrapper">
         <h2 className="govuk-summary-card__title">
           <Trans
             t={t}
             i18nKey="metricTitle"
             components={[
-              <Link key={0} className="govuk-heading-s govuk-!-margin-0 no-underline" href={href}>
+              <Link
+                key={0}
+                className="govuk-heading-s govuk-!-margin-0 govuk-link--no-visited-state no-underline"
+                href={href}
+              >
                 <span className="govuk-visually-hidden" />
               </Link>,
             ]}
@@ -63,6 +67,6 @@ export async function MetricsCard({ title, href, description, group, topic, metr
           </div>
         </dl>
       </div>
-    </div>
+    </li>
   )
 }

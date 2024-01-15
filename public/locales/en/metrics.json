@@ -1,6 +1,13 @@
 {
   "documentTitlePagination": "(page {{page}} of {{totalPages}}) |",
+  "documentTitlePagination_withSearch": "- \"{{search}}\" (page {{page}} of {{totalPages}}) |",
   "metricTitle": "<0><0>Metric title: </0>{{value}}</0>",
   "metricDescription": "<0><0>Metric description: </0>{{value}}</0>",
-  "emptyDescriptionText": "No {{value}} available"
+  "emptyDescriptionText": "No {{value}} available",
+  "noResults": "<0>There are no matching results</0><1>Improve your search results by:</1><2><0>removing filters</0><1>double-checking your spelling</1><2>using fewer keywords</2><3>searching for something less specific</3></2>",
+  "metricsSearch": {
+    "searchTitle": "Metric name",
+    "noScriptButtonText": "Search",
+    "clearText": "Clear"
+  }
 }
