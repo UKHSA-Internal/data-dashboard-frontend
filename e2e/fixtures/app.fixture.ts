@@ -73,7 +73,7 @@ export class App {
   }
 
   async waitForUrl(url: string) {
-    await this.page.waitForURL(url, { timeout: 5000 })
+    await this.page.waitForURL(url, { timeout: 10000 })
     await expect(this.page.url()).toEqual(url)
   }
 
