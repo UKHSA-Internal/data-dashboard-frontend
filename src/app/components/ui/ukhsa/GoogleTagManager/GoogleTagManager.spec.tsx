@@ -1,5 +1,5 @@
 import { render } from '@testing-library/react'
-import { getCookie } from 'cookies-next'
+import { getCookie, hasCookie } from 'cookies-next'
 import React from 'react'
 
 import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constants'
@@ -7,9 +7,11 @@ import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constant
 import { GoogleTagManager } from './GoogleTagManager'
 
 jest.mock('cookies-next', () => ({
+  hasCookie: jest.fn(),
   getCookie: jest.fn(),
 }))
 
+const mockedHasCookie = jest.mocked(hasCookie)
 const mockedGetCookie = jest.mocked(getCookie)
 
 jest.mock('@/app/utils/app.utils')
@@ -29,6 +31,7 @@ test('renders Google Tag Manager script when a GTM ID is provided', () => {
 })
 
 test('renders Google Tag Manager with consent script when GDPR cookies are set', () => {
+  mockedHasCookie.mockReturnValue(true)
   mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
   render(<GoogleTagManager />)

@@ -1,4 +1,5 @@
-import { getCookie } from 'cookies-next'
+import { getCookie, hasCookie } from 'cookies-next'
+import { cookies } from 'next/headers'
 import Script from 'next/script'
 
 import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE, UKHSA_GDPR_COOKIE_NAME } from '@/app/constants/cookies.constants'
@@ -6,10 +7,11 @@ import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE, UKHSA_GDPR_COOKIE_NAME } from '@/app/co
 const GTM_ID = process.env.GOOGLE_TAG_MANAGER_ID
 
 export const GoogleTagManager = () => {
-  const hasAcceptedCookies =
-    !!getCookie(UKHSA_GDPR_COOKIE_NAME) && getCookie(UKHSA_GDPR_COOKIE_NAME) === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
-
   if (!GTM_ID.length) return null
+
+  const hasAcceptedCookies =
+    hasCookie(UKHSA_GDPR_COOKIE_NAME, { cookies }) &&
+    getCookie(UKHSA_GDPR_COOKIE_NAME, { cookies }) === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
 
   return (
     <>

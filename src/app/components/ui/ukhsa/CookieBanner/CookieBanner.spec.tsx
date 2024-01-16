@@ -24,6 +24,7 @@ const mockedGetCookie = jest.mocked(getCookie)
 jest.mock('@/app/hooks/useNavigationEvent')
 
 window.gtag = jest.fn()
+window.dataLayer = []
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -60,6 +61,13 @@ test('changes to the confirmation view when accepting cookies', async () => {
     ad_storage: 'granted',
     analytics_storage: 'granted',
   })
+
+  expect(window.dataLayer).toEqual([
+    {
+      event: 'page_view',
+      page: 'http://localhost/',
+    },
+  ])
 })
 
 test('changes to the confirmation view when rejecting cookies', async () => {
