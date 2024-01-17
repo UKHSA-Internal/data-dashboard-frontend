@@ -170,7 +170,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     expect(logger.info).toHaveBeenNthCalledWith(
       1,
-      'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*&order=-date_posted&limit=10&offset=0'
+      'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*&order=-date_posted&limit=15&offset=0'
     )
 
     expect(result).toEqual<ErrorResponse>({
