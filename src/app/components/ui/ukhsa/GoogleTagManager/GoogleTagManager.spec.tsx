@@ -43,11 +43,3 @@ test('renders Google Tag Manager with consent script when GDPR cookies are set',
   expect(scriptElements[1]).toHaveAttribute('id', 'google-tag-manager')
   expect(scriptElements[2]).toHaveAttribute('id', 'google-tag-manager-with-consent')
 })
-
-test('renders a noscript fallback for non-js users', () => {
-  render(<GoogleTagManager />)
-
-  const scriptElements = document.querySelectorAll('noscript')
-  expect(scriptElements).toHaveLength(1)
-  expect(scriptElements[0].innerHTML).toContain('https://www.googletagmanager.com/ns.html?id=GTM-123')
-})
