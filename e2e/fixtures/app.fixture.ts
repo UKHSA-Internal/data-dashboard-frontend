@@ -275,15 +275,23 @@ export class App {
   }
 
   async checkPaginationLinkIsActive(activeLink: number) {
-    await expect(this.page.getByRole('link', { name: `Page ${activeLink}` })).toHaveAttribute('aria-current', 'page')
+    await expect(
+      this.page.getByRole('navigation', { name: 'results' }).getByRole('link', { name: `Page ${activeLink}` })
+    ).toHaveAttribute('aria-current', 'page')
   }
 
   async clickPaginationNumberLink(number: number) {
-    await this.page.getByRole('link', { name: `Page ${number}` }).click()
+    await this.page
+      .getByRole('navigation', { name: 'results' })
+      .getByRole('link', { name: `Page ${number}` })
+      .click()
   }
 
   async clickPaginationNextLink() {
-    await this.page.getByRole('link', { name: 'Next', exact: true }).click()
+    await this.page
+      .getByRole('navigation', { name: 'results' })
+      .getByRole('link', { name: 'Next', exact: true })
+      .click()
   }
 
   async clickPaginationPreviousLink() {
