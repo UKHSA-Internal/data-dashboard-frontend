@@ -283,7 +283,10 @@ export class App {
   }
 
   async clickPaginationNextLink() {
-    await this.page.getByRole('link', { name: 'Next' }).click()
+    await this.page
+      .getByRole('navigation', { name: 'results' })
+      .getByRole('link', { name: 'Next', exact: true })
+      .click()
   }
 
   async clickPaginationPreviousLink() {
