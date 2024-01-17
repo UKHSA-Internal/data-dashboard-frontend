@@ -276,6 +276,70 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       },
     ],
   },
+  {
+    id: 30,
+    meta: {
+      seo_title: 'Metrics child | UKHSA data dashboard',
+      search_description: '',
+      type: 'metrics_documentation.MetricsDocumentationChildEntry',
+      detail_url: 'http://localhost/api/pages/26/',
+      html_url: null,
+      slug: 'new-cases-7days-percent',
+      show_in_menus: false,
+      first_published_at: '2023-10-24T16:10:44.385654+01:00',
+      alias_of: null,
+      parent: {
+        id: 21,
+        meta: {
+          type: 'metrics_documentation.MetricsDocumentationParentPage',
+          detail_url: 'http://localhost/api/pages/25/',
+          html_url: null,
+        },
+        title: 'Metrics documentation',
+      },
+    },
+    page_description: 'This metric shows the percentage of reported new cases in the last 7 days.',
+    last_published_at: '2023-10-24T16:09:35.359598+01:00',
+    title: 'New cases 7 days percent',
+    date_posted: '2023-12-07',
+    metric: 'COVID-new_cases_7days_percent',
+    topic: 'COVID-19',
+    metric_group: 'cases',
+    body: [
+      {
+        type: 'section',
+        value: {
+          title: 'Definition',
+          body: '<p>This metric shows the percent of reported new cases in the last 7 days.</p><p>New cases are reported by specimen date - the date the first sample that identified the infection was taken from an individual.</p>',
+        },
+        id: faker.string.uuid(),
+      },
+      {
+        type: 'section',
+        value: {
+          title: 'Rationale',
+          body: '<p>The timely identification of cases is important to controlling the spread of COVID-19 and reducing the burden on healthcare systems.</p>',
+        },
+        id: faker.string.uuid(),
+      },
+      {
+        type: 'section',
+        value: {
+          title: 'Methodology',
+          body: '<p>COVID-19 cases are identified by taking specimens from people and testing them for the SARS-CoV-2 virus. If the test is positive, this is a case. Some positive rapid lateral flow test results are confirmed with lab-based polymerase chain reaction (PCR) tests taken within 72 hours. If the PCR test results are negative, these are not reported as confirmed cases.</p><p>People who test positive again after a given time period are counted as new cases. In England people are counted as new cases if they test positive again more than 90 days after their last positive test.</p><p>Data for the last 5 days by specimen date are considered incomplete as it takes time to get test results and record them on relevant lab systems. Cases data for England includes all positive lab-confirmed PCR test results plus, positive rapid lateral flow tests unless followed by a negative PCR test taken within 72 hours.</p><p>The count of reported new cases in the last 7 days is the total of the daily cases counts in the 7 days up to and including the most recent date with "complete" data (i.e. 5 days before the current date).</p>',
+        },
+        id: faker.string.uuid(),
+      },
+      {
+        type: 'section',
+        value: {
+          title: 'Caveats',
+          body: '<p>This figure will underestimate the actual number of COVID-19 infections due to people not testing or not being able to report LFD results.</p><p>Variation in cases can reflect differences in the underlying population, including variation in vaccination status, public health measures and community transmission.</p>',
+        },
+        id: faker.string.uuid(),
+      },
+    ],
+  },
 
   // Generate a set of random pages for testing of pagination
   ...Array.from({ length: 50 }).map<PageResponse<PageType.MetricsChild>>((item, index) => ({
