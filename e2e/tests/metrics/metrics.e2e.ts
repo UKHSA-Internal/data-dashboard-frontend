@@ -3,6 +3,10 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Metrics parent page', () => {
+  // Ticket CDD-1630 to investigate
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
+
   test('Page layout', async ({ metricsParentPage, app }) => {
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
@@ -81,10 +85,6 @@ test.describe('Metrics parent page', () => {
     app,
     baseURL,
   }) => {
-    // Ticket CDD-1630 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
     })
@@ -106,10 +106,6 @@ test.describe('Metrics parent page', () => {
   })
 
   test('Performs a search with no results', async ({ metricsParentPage, app, baseURL }) => {
-    // Ticket CDD-1630 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
     })
@@ -128,10 +124,6 @@ test.describe('Metrics parent page', () => {
   })
 
   test('shows all results after clearing the search box', async ({ metricsParentPage, app, baseURL }) => {
-    // Ticket CDD-1630 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
     })
