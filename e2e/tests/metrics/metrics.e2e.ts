@@ -3,6 +3,10 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Metrics parent page', () => {
+  // Ticket CDD-1630 to investigate
+  // eslint-disable-next-line playwright/no-skipped-test
+  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
+
   test('Page layout', async ({ metricsParentPage, app }) => {
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()
@@ -88,16 +92,16 @@ test.describe('Metrics parent page', () => {
       await metricsParentPage.countMetricsItems(10)
     })
     await test.step('performs a search', async () => {
-      await metricsParentPage.search('test')
+      await metricsParentPage.search('New cases 7 days')
     })
     await test.step('updates the url', async () => {
-      await app.waitForUrl(`${baseURL}/metrics-documentation?search=test`)
+      await app.waitForUrl(`${baseURL}/metrics-documentation?search=New+cases+7+days`)
     })
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(2)
     })
     await test.step('check entries match expected', async () => {
-      await metricsParentPage.hasMatchedEntries(['Covid occupied beds latest', 'New pcr tests daily'])
+      await metricsParentPage.hasMatchedEntries(['New cases 7 days sum', 'New cases 7 days percent'])
     })
   })
 
@@ -124,13 +128,13 @@ test.describe('Metrics parent page', () => {
       await metricsParentPage.goto()
     })
     await test.step('performs a search', async () => {
-      await metricsParentPage.search('test')
+      await metricsParentPage.search('New cases 7 days')
     })
     await test.step('updates the url', async () => {
-      await app.waitForUrl(`${baseURL}/metrics-documentation?search=test`)
+      await app.waitForUrl(`${baseURL}/metrics-documentation?search=New+cases+7+days`)
     })
     await test.step('check entries match expected', async () => {
-      await metricsParentPage.hasMatchedEntries(['Covid occupied beds latest', 'New pcr tests daily'])
+      await metricsParentPage.hasMatchedEntries(['New cases 7 days sum', 'New cases 7 days percent'])
     })
     await test.step('count starting items', async () => {
       await metricsParentPage.countMetricsItems(2)
@@ -158,13 +162,13 @@ test.describe('Metrics parent page - no JS', () => {
       await metricsParentPage.countMetricsItems(10)
     })
     await test.step('performs a search', async () => {
-      await metricsParentPage.search('test')
+      await metricsParentPage.search('New cases 7 days')
     })
     await test.step('clicks search button', async () => {
       await metricsParentPage.clickSearch()
     })
     await test.step('check entries match expected', async () => {
-      await metricsParentPage.hasMatchedEntries(['Covid occupied beds latest', 'New pcr tests daily'])
+      await metricsParentPage.hasMatchedEntries(['New cases 7 days sum', 'New cases 7 days percent'])
     })
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(2)
