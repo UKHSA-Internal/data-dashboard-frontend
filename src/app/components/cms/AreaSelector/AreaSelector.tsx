@@ -6,10 +6,10 @@ import { logger } from '@/lib/logger'
 import { AreaSelectorForm } from './AreaSelectorForm'
 
 interface AreaSelectorProps {
-  areaType?: string
+  areaType: string | undefined
 }
 
-export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
+export async function AreaSelector({ areaType }: AreaSelectorProps) {
   const { t } = await useTranslation('common')
 
   const geographyTypesResponse = await getGeographyTypes()
@@ -28,6 +28,7 @@ export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
 
     if (typeof id !== 'undefined') {
       const geographyNamesResponse = await getGeographyNames(id)
+      console.log('geographyNamesResponse', geographyNamesResponse)
       if (geographyNamesResponse.success) {
         areaNameOptions.push(...geographyNamesResponse.data.geographies.map(({ name }) => name))
       }

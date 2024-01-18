@@ -9,8 +9,11 @@ import { Chart } from './Chart'
 
 // eslint-disable-next-line @next/next/no-img-element
 jest.mock('next/image', () => ({ src, alt }: ImageProps) => <img src={src as string} alt={alt} />)
-
+jest.mock('next/headers', () => ({
+  headers: () => ({ get: () => new URL('http://localhost?areaType=Nation&areaName=England') }),
+}))
 jest.mock('@/api/requests/charts/getCharts')
+
 const getChartsMock = jest.mocked(getCharts)
 
 test('renders the chart correctly when successful', async () => {
@@ -59,7 +62,7 @@ test('full width charts should also have an acompanying narrow version for mobil
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('media', '(min-width: 768px)')
 })
 
-test('renders null when the chart request fails', async () => {
+test('renders a fallback message when the chart requests fail', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: false,
     error: new ZodError([
@@ -78,11 +81,12 @@ test('renders null when the chart request fails', async () => {
     y_axis: null,
     chart: [],
     body: '',
-    title: '',
+    title: 'Cases by specimen date',
     headline_number_columns: [],
   }
 
-  const { container } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
+  const { getByText, getByRole } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
 
-  expect(container.firstChild).toBeNull()
+  expect(getByText('No data for Cases by specimen date in England')).toBeInTheDocument()
+  expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
 })
