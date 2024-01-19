@@ -34,7 +34,6 @@ const customJestConfig = {
     '<rootDir>/src/api/models',
     // TODO: This component needs tests - CDD-1597
     '<rootDir>/src/app/components/cms/Download/Download.tsx',
-    '<rootDir>/src/app/components/ui/ukhsa/GoogleTagManager',
   ],
   coverageThreshold: {
     global: {
