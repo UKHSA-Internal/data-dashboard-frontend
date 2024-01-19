@@ -28,7 +28,6 @@ export async function AreaSelector({ areaType }: AreaSelectorProps) {
 
     if (typeof id !== 'undefined') {
       const geographyNamesResponse = await getGeographyNames(id)
-      console.log('geographyNamesResponse', geographyNamesResponse)
       if (geographyNamesResponse.success) {
         areaNameOptions.push(...geographyNamesResponse.data.geographies.map(({ name }) => name))
       }
