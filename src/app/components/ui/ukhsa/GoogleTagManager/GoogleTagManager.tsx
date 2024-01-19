@@ -1,18 +1,12 @@
-import { cookies } from 'next/headers'
 import Script from 'next/script'
+import { Suspense } from 'react'
 
-import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE, UKHSA_GDPR_COOKIE_NAME } from '@/app/constants/cookies.constants'
+import { ConsentScript } from './ConsentScript'
 
 const GTM_ID = process.env.GOOGLE_TAG_MANAGER_ID
 
 export const GoogleTagManager = () => {
   if (!GTM_ID.length) return null
-
-  const cookieStore = cookies()
-
-  const hasAcceptedCookies =
-    cookieStore.has(UKHSA_GDPR_COOKIE_NAME) &&
-    cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
 
   return (
     <>
@@ -32,20 +26,9 @@ export const GoogleTagManager = () => {
           'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
           })(window,document,'script','dataLayer','${GTM_ID}');`}
       </Script>
-      {hasAcceptedCookies && (
-        <Script
-          id="google-tag-manager-with-consent"
-          strategy="afterInteractive"
-          dangerouslySetInnerHTML={{
-            __html: `
-        gtag('consent', 'update', {
-          'ad_storage': 'granted',
-          'analytics_storage': 'granted'
-        });
-      `,
-          }}
-        />
-      )}
+      <Suspense fallback={null}>
+        <ConsentScript />
+      </Suspense>
     </>
   )
 }
