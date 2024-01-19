@@ -1,4 +1,3 @@
-import { getCookie, hasCookie } from 'cookies-next'
 import { cookies } from 'next/headers'
 import Script from 'next/script'
 
@@ -9,9 +8,11 @@ const GTM_ID = process.env.GOOGLE_TAG_MANAGER_ID
 export const GoogleTagManager = () => {
   if (!GTM_ID.length) return null
 
+  const cookieStore = cookies()
+
   const hasAcceptedCookies =
-    hasCookie(UKHSA_GDPR_COOKIE_NAME, { cookies }) &&
-    getCookie(UKHSA_GDPR_COOKIE_NAME, { cookies }) === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
+    cookieStore.has(UKHSA_GDPR_COOKIE_NAME) &&
+    cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value === UKHSA_GDPR_COOKIE_ACCEPT_VALUE
 
   return (
     <>
