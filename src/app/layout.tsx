@@ -12,7 +12,7 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner, GoogleAnalytics } from './components/ui/ukhsa'
+import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
@@ -25,10 +25,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
-      <Suspense fallback={null}>
-        <GoogleAnalytics />
-      </Suspense>
       <body className="govuk-template__body">
+        <GoogleTagManager />
         {/* Adds the js-enabled class as a high priority script to prevent flash of unstyled content (fouc)
         Note: The NextJs <Script /> component using a beforeInteractie strategy is broken in 13.5.3 */}
         <script

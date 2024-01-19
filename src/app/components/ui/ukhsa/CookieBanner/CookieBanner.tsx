@@ -12,6 +12,7 @@ import {
 } from '@/app/constants/cookies.constants'
 import { useNavigationEvent } from '@/app/hooks/useNavigationEvent'
 import { getGDPRCookieExpiryDate } from '@/app/utils/date.utils'
+import { pageView } from '@/lib/gtag'
 
 enum CookieBannerView {
   Hidden,
@@ -83,6 +84,7 @@ export const CookieBanner = ({ title, body }: CookieBannerProps) => {
         ad_storage: 'granted',
         analytics_storage: 'granted',
       })
+    pageView(window.location.href)
     updateQueryParams()
   }
 

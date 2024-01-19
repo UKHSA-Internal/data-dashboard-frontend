@@ -21,7 +21,7 @@
     "@jsdevtools/rehype-toc": "^3.0.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "clsx": "^2.0.0",
-    "cookies-next": "^4.0.0",
+    "cookies-next": "^4.1.0",
     "dayjs": "^1.11.10",
     "fetch-retry": "^5.0.6",
     "govuk-frontend": "^5.0.0",
