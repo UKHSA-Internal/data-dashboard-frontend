@@ -16,7 +16,7 @@ export const ConsentScript = () => {
     <>
       {hasAcceptedCookies && (
         <Script
-          id="google-analytics-with-consent"
+          id="google-tag-manager-with-consent"
           strategy="afterInteractive"
           dangerouslySetInnerHTML={{
             __html: `	
