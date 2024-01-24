@@ -28,12 +28,14 @@ export async function Chart({ data, size }: ChartProps) {
   const areaType = url.searchParams.get('areaType')
   const areaName = url.searchParams.get('areaName')
 
+  const hasSelectedArea = areaType && areaName
+
   const plots = chart.map((plot) => ({
     ...plot.value,
     // Area type uses the URL search params as a global source of truth
     // If non-existent, default to the individual values set per chart in the CMS
-    geography_type: (areaType && areaName) ?? plot.value.geography_type,
-    geography: (areaName && areaName) ?? plot.value.geography,
+    geography_type: hasSelectedArea ? areaType : plot.value.geography_type,
+    geography: hasSelectedArea ? areaName : plot.value.geography,
   }))
 
   // Collect all chart svg's mobile first using the narrow aspect ratio
@@ -85,13 +87,11 @@ export async function Chart({ data, size }: ChartProps) {
 
   // Fallback when no data exists for a chart
   return (
-    <div className="relative h-full">
-      <div className="govuk-body text-center">
-        <p>{t('areaSelector.noData', { title: data.title, areaName })}</p>
-        <Link className="govuk-link govuk-link--no-visited-state" href={url.pathname} scroll={false}>
-          {t('areaSelector.resetBtn')}
-        </Link>
-      </div>
+    <div className="govuk-body text-center">
+      <p>{t('areaSelector.noData', { areaName })}</p>
+      <Link className="govuk-link govuk-link--no-visited-state" href={url.pathname} scroll={false}>
+        {t('areaSelector.resetBtn')}
+      </Link>
     </div>
   )
 }

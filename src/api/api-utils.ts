@@ -70,7 +70,9 @@ export function client<T>(
         return Promise.reject(JSON.stringify(response))
       }
     } else {
-      return Promise.reject({ path: url, status, error: response.statusText })
+      const error = new Error(response.statusText)
+      error.code = status
+      return Promise.reject(error)
     }
   })
 }

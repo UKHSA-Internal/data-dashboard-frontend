@@ -9,3 +9,10 @@ declare namespace NodeJS {
     NEXT_PUBLIC_GA_MEASUREMENT_ID: string
   }
 }
+
+declare interface Error {
+  name: string
+  message: string
+  stack?: string
+  code?: number | string
+}

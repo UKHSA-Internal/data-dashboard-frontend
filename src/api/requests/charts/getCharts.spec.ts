@@ -37,7 +37,7 @@ test('Returns a chart svg and last updated date', async () => {
   })
 })
 
-test('Handles API errors', async () => {
+test('Handles API errors when data is missing (400 status code)', async () => {
   jest.mocked(client).mockRejectedValueOnce({
     data: null,
     status: 400,
@@ -57,7 +57,49 @@ test('Handles API errors', async () => {
     ],
   })
 
-  expect(logger.error).toHaveBeenCalledTimes(1)
+  expect(logger.info).toHaveBeenNthCalledWith(1, 'POST success charts/v3 - %s', 'new_cases_7days_sum')
+
+  expect(result).toEqual({
+    success: false,
+    error: new z.ZodError([
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['chart'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['last_updated'],
+        message: 'Required',
+      },
+    ]),
+  })
+})
+
+test('Handles API errors for non-400 error responses', async () => {
+  const error = new Error('Failed')
+  error.code = 500
+  jest.mocked(client).mockRejectedValueOnce(error)
+
+  const result = await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
+
+  expect(logger.error).toHaveBeenNthCalledWith(1, 'Failed')
 
   expect(result).toEqual({
     success: false,
