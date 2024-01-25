@@ -23,11 +23,6 @@ COPY . .
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
-# https://nextjs.org/docs/pages/building-your-application/configuring/environment-variables#bundling-environment-variables-for-the-browser
-# NOTE: NEXT_PUBLIC_ prefixed variables must be baked into the image to be accessible in the browser environment
-ARG NEXT_PUBLIC_GA_MEASUREMENT_ID
-ENV NEXT_PUBLIC_GA_MEASUREMENT_ID $NEXT_PUBLIC_GA_MEASUREMENT_ID
-
 RUN npm run build
 
 # Production image, copy all the files and run next
@@ -38,6 +33,7 @@ ENV NODE_ENV production
 
 # Disable telemetry during runtime
 ENV NEXT_TELEMETRY_DISABLED 1
+ENV TZ "Europe/London"
 
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
@@ -49,7 +45,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
-COPY --from=builder /app/.env ./
 
 USER nextjs
 

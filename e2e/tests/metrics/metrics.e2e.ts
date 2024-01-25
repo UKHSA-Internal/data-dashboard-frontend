@@ -3,10 +3,6 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Metrics parent page', () => {
-  // Ticket CDD-1630 to investigate
-  // eslint-disable-next-line playwright/no-skipped-test
-  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
   test('Page layout', async ({ metricsParentPage, app }) => {
     await test.step('loads the page', async () => {
       await metricsParentPage.goto()

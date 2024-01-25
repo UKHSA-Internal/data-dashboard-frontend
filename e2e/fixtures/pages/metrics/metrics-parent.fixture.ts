@@ -49,8 +49,8 @@ export class MetricsParentPage {
     ).toHaveLength(expectedItems)
   }
 
-  async search(searchParams: string) {
-    await this.page.getByLabel(/Metric name/).fill(searchParams)
+  async search(value: string) {
+    await this.page.getByLabel('Metric name').fill(value, { timeout: 1000 })
   }
 
   async clickSearch() {
