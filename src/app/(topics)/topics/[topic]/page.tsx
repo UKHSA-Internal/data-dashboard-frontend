@@ -33,6 +33,7 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
     page_description: description,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
+    enable_area_selector: enableAreaSelector,
   } = await getPageBySlug(topic, PageType.Topic)
   return (
     <View
@@ -40,14 +41,18 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
       description={description}
       lastUpdated={lastUpdated}
     >
-      <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
-      <Details
-        open={Boolean(areaType)}
-        label={t('areaSelector.detailsLabel')}
-        className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
-      >
-        <AreaSelector areaType={areaType} />
-      </Details>
+      {enableAreaSelector && (
+        <>
+          <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+          <Details
+            open={Boolean(areaType)}
+            label={t('areaSelector.detailsLabel')}
+            className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+          >
+            <AreaSelector areaType={areaType} />
+          </Details>
+        </>
+      )}
       <Contents>
         {body.map(({ id, value }) => (
           <ContentsItem key={id} heading={value.heading}>
