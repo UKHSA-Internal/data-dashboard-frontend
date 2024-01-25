@@ -140,7 +140,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Download
                     </span>
-                    <Download chart={column.value.chart} />
+                    <Download data={column.value} />
                   </TabsContent>
                 </Tabs>
               </Card>

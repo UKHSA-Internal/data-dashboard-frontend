@@ -74,6 +74,7 @@
     "areaNamePlaceholder": "Select area name",
     "updateBtn": "Update",
     "resetBtn": "Reset",
-    "noData": "No data available in {{areaName}}"
+    "noData": "No data available",
+    "noData_withArea": "No data available in {{areaName}}"
   }
 }

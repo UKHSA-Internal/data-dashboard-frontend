@@ -1,4 +1,3 @@
-import Link from 'next/link'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
@@ -8,6 +7,8 @@ import { usePathname } from '@/app/hooks/usePathname'
 import { useTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
+
+import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
@@ -26,8 +27,6 @@ export async function Chart({ data, size }: ChartProps) {
 
   const plots = chart.map((plot) => ({
     ...plot.value,
-    // Area type uses the URL search params as a global source of truth
-    // If non-existent, default to the individual values set per chart in the CMS
     geography_type: areaType ?? plot.value.geography_type,
     geography: areaName ?? plot.value.geography,
   }))
@@ -79,13 +78,13 @@ export async function Chart({ data, size }: ChartProps) {
     )
   }
 
-  // Fallback when no data exists for a chart
   return (
-    <div className="govuk-body text-center">
-      <p>{t('areaSelector.noData', { areaName })}</p>
-      <Link className="govuk-link govuk-link--no-visited-state" href={pathname} scroll={false}>
-        {t('areaSelector.resetBtn')}
-      </Link>
-    </div>
+    <ChartEmpty
+      resetHref={pathname}
+      labels={{
+        description: t('areaSelector.noData', { areaName, context: areaName && 'withArea' }),
+        reset: t('areaSelector.resetBtn'),
+      }}
+    />
   )
 }

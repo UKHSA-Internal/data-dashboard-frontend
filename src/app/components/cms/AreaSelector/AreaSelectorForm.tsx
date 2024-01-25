@@ -122,7 +122,6 @@ export function AreaSelectorForm({
             name="areaName"
             defaultValue={searchParams.get('areaName') || ''}
             onChange={(evt) => {
-              console.log('dispatch loading true ')
               window.dispatchEvent(
                 new CustomEvent('topic.location.change', {
                   detail: { loading: true },

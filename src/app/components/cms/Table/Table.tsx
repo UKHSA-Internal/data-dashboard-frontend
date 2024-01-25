@@ -1,5 +1,4 @@
 import { kebabCase } from 'lodash'
-import Link from 'next/link'
 import { Fragment } from 'react'
 import { z } from 'zod'
 
@@ -11,6 +10,8 @@ import { usePathname } from '@/app/hooks/usePathname'
 import { useTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
+
+import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */
@@ -28,8 +29,6 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
   const plots = chart.map((plot) => ({
     ...plot.value,
-    // Area type uses the URL search params as a global source of truth
-    // If non-existent, default to the individual values set per chart in the CMS
     geography_type: areaType ?? plot.value.geography_type,
     geography: areaName ?? plot.value.geography,
   }))
@@ -130,13 +129,13 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     )
   }
 
-  // Fallback when no data exists for a table
   return (
-    <div className="govuk-body text-center">
-      <p>{t('areaSelector.noData', { areaName })}</p>
-      <Link className="govuk-link govuk-link--no-visited-state" href={pathname} scroll={false}>
-        {t('areaSelector.resetBtn')}
-      </Link>
-    </div>
+    <ChartEmpty
+      resetHref={pathname}
+      labels={{
+        description: t('areaSelector.noData', { areaName, context: areaName && 'withArea' }),
+        reset: t('areaSelector.resetBtn'),
+      }}
+    />
   )
 }
