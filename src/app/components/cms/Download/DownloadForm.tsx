@@ -47,7 +47,13 @@ export function DownloadForm({ chart }: DownloadFormProps) {
   }
 
   return (
-    <form action={chartExportApiRoutePath} method="POST" data-testid="download-form" onSubmit={handleSubmit}>
+    <form
+      action={chartExportApiRoutePath}
+      method="POST"
+      data-testid="download-form"
+      onSubmit={handleSubmit}
+      aria-label="Download"
+    >
       <input type="hidden" name="format" value={chartExportFormat} data-testid="download-form-format" />
       {chart.map(({ id, value }) => (
         <input
@@ -71,7 +77,7 @@ export function DownloadForm({ chart }: DownloadFormProps) {
         className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 flex w-auto items-center gap-2 print:hidden"
         type="submit"
       >
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" aria-hidden>
           <path fill="currentColor" d="M7 0h2v11H7zM0 16v-2h16v2z" />
           <path fill="currentColor" d="M8.414 12.11 7 10.698 11.696 6l1.414 1.414z" />
           <path fill="currentColor" d="M9 11H7V1h2z" />
