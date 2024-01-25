@@ -1,18 +1,17 @@
-import { headers } from 'next/headers'
 import { ImageProps } from 'next/image'
 import { ComponentProps, ReactElement } from 'react'
 import { ZodError } from 'zod'
 
 import { getCharts } from '@/api/requests/charts/getCharts'
+import { useSearchParams } from '@/app/hooks/useSearchParams'
 import { render } from '@/config/test-utils'
 
 import { Chart } from './Chart'
 
-const mockHeaders = headers as jest.Mock
-
-jest.mock('next/headers', () => ({
-  headers: jest.fn(() => ({ get: () => new URL('http://localhost') })),
-}))
+// Mock the url utils
+const defaultUrl = new URL('http://localhost')
+jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
+jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
 
 // eslint-disable-next-line @next/next/no-img-element
 jest.mock('next/image', () => ({ src, alt }: ImageProps) => <img src={src as string} alt={alt} />)
@@ -69,9 +68,9 @@ test('renders the chart correctly when successful', async () => {
 })
 
 test('renders the chart by geography and geography type when both are present in the url search params', async () => {
-  mockHeaders.mockReturnValueOnce({
-    get: () => new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East'),
-  })
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: true,
@@ -147,9 +146,9 @@ test('full width charts should also have an acompanying narrow version for mobil
 })
 
 test('renders a fallback message when the chart requests fail', async () => {
-  mockHeaders.mockReturnValueOnce({
-    get: () => new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East'),
-  })
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: false,

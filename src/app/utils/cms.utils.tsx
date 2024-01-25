@@ -131,9 +131,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Tabular data
                     </span>
-                    <div className="govuk-!-margin-top-3">
-                      <Table data={column.value} size={size} />
-                    </div>
+                    <Table data={column.value} size={size} />
                   </TabsContent>
                   <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
                     <span

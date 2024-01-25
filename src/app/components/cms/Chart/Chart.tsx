@@ -1,9 +1,10 @@
-import { headers } from 'next/headers'
 import Link from 'next/link'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
+import { useAreaSelector } from '@/app/hooks/useAreaSelector'
+import { usePathname } from '@/app/hooks/usePathname'
 import { useTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
@@ -20,22 +21,15 @@ export async function Chart({ data, size }: ChartProps) {
   const { t } = await useTranslation('common')
   const { chart, x_axis, y_axis } = data
 
-  const headersList = headers()
-  const headersUrl = headersList.get('x-url') || ''
-
-  const url = new URL(headersUrl)
-
-  const areaType = url.searchParams.get('areaType')
-  const areaName = url.searchParams.get('areaName')
-
-  const hasSelectedArea = areaType && areaName
+  const pathname = usePathname()
+  const [areaType, areaName] = useAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,
     // Area type uses the URL search params as a global source of truth
     // If non-existent, default to the individual values set per chart in the CMS
-    geography_type: hasSelectedArea ? areaType : plot.value.geography_type,
-    geography: hasSelectedArea ? areaName : plot.value.geography,
+    geography_type: areaType ?? plot.value.geography_type,
+    geography: areaName ?? plot.value.geography,
   }))
 
   // Collect all chart svg's mobile first using the narrow aspect ratio
@@ -89,7 +83,7 @@ export async function Chart({ data, size }: ChartProps) {
   return (
     <div className="govuk-body text-center">
       <p>{t('areaSelector.noData', { areaName })}</p>
-      <Link className="govuk-link govuk-link--no-visited-state" href={url.pathname} scroll={false}>
+      <Link className="govuk-link govuk-link--no-visited-state" href={pathname} scroll={false}>
         {t('areaSelector.resetBtn')}
       </Link>
     </div>
