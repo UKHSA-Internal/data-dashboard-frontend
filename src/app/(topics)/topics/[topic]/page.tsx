@@ -5,6 +5,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { useTranslation } from '@/app/i18n'
 import { renderCard } from '@/app/utils/cms.utils'
 
 export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
@@ -24,6 +25,8 @@ interface TopicPageProps {
 }
 
 export default async function TopicPage({ params: { topic }, searchParams: { areaType, areaName } }: TopicPageProps) {
+  const { t } = await useTranslation('common')
+
   const {
     title,
     body,
@@ -32,12 +35,15 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
     related_links: relatedLinks,
   } = await getPageBySlug(topic, PageType.Topic)
   return (
-    // TODO: i18n heading
-    <View heading={`${title}${areaName ? ` in ${areaName}` : ''}`} description={description} lastUpdated={lastUpdated}>
+    <View
+      heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })}
+      description={description}
+      lastUpdated={lastUpdated}
+    >
       <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
       <Details
         open={Boolean(areaType)}
-        label="Select a nation, region or local authority" // TODO: i18n
+        label={t('areaSelector.detailsLabel')}
         className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
       >
         <AreaSelector areaType={areaType} />

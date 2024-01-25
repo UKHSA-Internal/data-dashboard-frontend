@@ -12,6 +12,8 @@
   "relatedLinksHeading": "Related links",
   "backToTop": "Back to top",
   "welcome": "Welcome",
+  "pageTitle": "{{title}}",
+  "pageTitle_withArea": "{{title}} in {{areaName}}",
   "cms": {
     "blocks": {
       "headline": {
@@ -65,6 +67,7 @@
     "body": "<0>We use some essential cookies to make this service work.</0><1>We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.</1>"
   },
   "areaSelector": {
+    "detailsLabel": "Filter results by location",
     "areaType": "Area type",
     "areaTypePlaceholder": "Select area type",
     "areaName": "Area name",
