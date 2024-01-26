@@ -1,4 +1,4 @@
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 
 import { postSuggestions } from './postSuggestions'
 

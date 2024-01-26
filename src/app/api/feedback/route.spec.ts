@@ -4,7 +4,7 @@
 import { NextRequest } from 'next/server'
 import { Mock } from 'ts-mockery'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 import { POST } from './route'

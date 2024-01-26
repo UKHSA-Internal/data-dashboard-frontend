@@ -1,10 +1,9 @@
 import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
-import { any } from 'zod'
 
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from './requests/helpers'
+import { getApiBaseUrl } from '../requests/helpers'
 
 const fetch = fetchRetry(global.fetch)
 
@@ -76,17 +75,4 @@ export function client<T>(
       return Promise.reject(error)
     }
   })
-}
-
-/**
- * Create a Zod schema matches anything and returns a value. Use it with `or`:
- *
- * const schema = zod.number();
- * const tolerant = schema.or(fallback(-1));
- *
- * schema.parse('foo')      // => ZodError
- * tolerant.parse('foo')    // -1
- */
-export function fallback<T>(value: T) {
-  return any().transform(() => value)
 }

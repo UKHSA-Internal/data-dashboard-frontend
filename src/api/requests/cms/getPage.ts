@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
-import { client, fallback } from '@/api/api-utils'
 import { Body, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { client } from '@/api/utils/api.utils'
+import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
 
 import type { PageType } from './getPages'

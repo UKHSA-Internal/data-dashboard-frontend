@@ -1,13 +1,10 @@
 import z from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import { fixtures } from '@/mock-server/handlers/headlines/fixtures'
 
 import { getHeadlines, responseSchema } from './getHeadlines'
-
-jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
 
 const getHeadlinesMock = jest.mocked(client)
 

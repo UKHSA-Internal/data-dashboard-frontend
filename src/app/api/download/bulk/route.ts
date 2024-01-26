@@ -1,7 +1,7 @@
 import { redirect } from 'next/navigation'
 import { NextRequest, NextResponse } from 'next/server'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 export async function POST(req: NextRequest) {

@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
-import { client } from '@/api/api-utils'
 import { ChartTypes, FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { ChartLineColours } from '@/api/models/ChartLineColours'
 import { ChartLineTypes } from '@/api/models/ChartLineTypes'
+import { client } from '@/api/utils/api.utils'
 import { chartFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
