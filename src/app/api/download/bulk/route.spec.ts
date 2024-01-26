@@ -5,7 +5,7 @@ import { redirect } from 'next/navigation'
 import { NextRequest } from 'next/server'
 import { Mock } from 'ts-mockery'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import { bulkDownloadZip } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
 

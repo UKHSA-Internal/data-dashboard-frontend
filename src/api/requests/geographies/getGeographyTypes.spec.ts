@@ -1,6 +1,6 @@
 import { ZodError } from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { areaTypeMock } from '@/mock-server/handlers/geographies/v1/types'
 
 import { getGeographyTypes } from './getGeographyTypes'

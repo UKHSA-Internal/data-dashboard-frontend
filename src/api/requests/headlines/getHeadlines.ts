@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { client } from '@/api/api-utils'
 import { Age, Geography, GeographyType, Metrics, Sex, Stratum, Topics } from '@/api/models'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({

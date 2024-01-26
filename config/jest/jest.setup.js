@@ -8,5 +8,5 @@ import 'whatwg-fetch'
  * 3. 'next/navigation': Mocks Next.js navigation functionality.
  */
 jest.mock('@/lib/logger')
-jest.mock('@/api/api-utils')
+jest.mock('@/api/utils/api.utils')
 jest.mock('next/navigation')

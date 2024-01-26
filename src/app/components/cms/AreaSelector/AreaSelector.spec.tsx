@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { ZodError } from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { logger } from '@/lib/logger'
 import { areaTypeMock } from '@/mock-server/handlers/geographies/v1/types'
