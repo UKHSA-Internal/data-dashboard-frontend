@@ -7,17 +7,7 @@ import { Body, CardTypes } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
-import {
-  AreaSelectorLoader,
-  Chart,
-  ChartRowCard,
-  Download,
-  Headline,
-  Percentage,
-  Table,
-  Timestamp,
-  Trend,
-} from '../components/cms'
+import { Chart, ChartRowCard, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
 
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
@@ -117,9 +107,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                         </div>
                       </>
                     )}
-                    <AreaSelectorLoader>
-                      <Chart data={column.value} size={size} />
-                    </AreaSelectorLoader>
+                    <Chart data={column.value} size={size} />
                   </TabsContent>
                   <TabsContent
                     value="table"
@@ -131,7 +119,9 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Tabular data
                     </span>
-                    <Table data={column.value} size={size} />
+                    <div className="govuk-!-margin-top-3">
+                      <Table data={column.value} size={size} />
+                    </div>
                   </TabsContent>
                   <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
                     <span
@@ -140,7 +130,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Download
                     </span>
-                    <Download data={column.value} />
+                    <Download chart={column.value.chart} />
                   </TabsContent>
                 </Tabs>
               </Card>

@@ -24,14 +24,7 @@ describe('AreaSelectorForm', () => {
   })
 
   test('renders with default values and labels', () => {
-    render(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     // Form
     const form = screen.getByRole('form', { name: 'Area selector' })
@@ -54,14 +47,7 @@ describe('AreaSelectorForm', () => {
   test('renders with pre-selected values persisted from the url', () => {
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-    render(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     // Form
     const form = screen.getByRole('form', { name: 'Area selector' })
@@ -85,7 +71,7 @@ describe('AreaSelectorForm', () => {
 
   test('area name select is disabled or enabled depending on when an area type is selected', async () => {
     const { rerender } = render(
-      <AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={[]} labels={labels} areaType="Nation" />
+      <AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={[]} labels={labels} />
     )
 
     // Area type select
@@ -99,14 +85,7 @@ describe('AreaSelectorForm', () => {
       await mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
     })
 
-    rerender(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    rerender(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     expect(screen.getByLabelText(labels.areaName)).toBeEnabled()
     expect(screen.getByRole('option', { name: labels.areaNamePlaceholder })).toHaveAttribute('selected')
@@ -115,14 +94,7 @@ describe('AreaSelectorForm', () => {
   test('area name select is reset whenever the area type value is changed', async () => {
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-    render(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     expect(mockRouter.asPath).toEqual('/topics/mock-topic?areaType=Nation&areaName=England')
     expect(screen.getByLabelText(labels.areaName)).toHaveValue('England')
@@ -138,14 +110,7 @@ describe('AreaSelectorForm', () => {
     const originalPush = mockRouter.push
     mockRouter.push = jest.fn()
 
-    render(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     await userEvent.selectOptions(screen.getByLabelText(labels.areaName), ['England'])
 
@@ -160,14 +125,7 @@ describe('AreaSelectorForm', () => {
   test('clicking reset clears any selected values and then focuses the area type select', async () => {
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-    render(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     expect(screen.getByLabelText(labels.areaName)).toHaveValue('England')
     expect(screen.getByLabelText(labels.areaType)).toHaveValue('Nation')
@@ -181,14 +139,7 @@ describe('AreaSelectorForm', () => {
   })
 
   test('shows a submit button for non-javascript users', async () => {
-    render(
-      <AreaSelectorForm
-        areaTypeOptions={areaTypeOptions}
-        areaNameOptions={areaNameOptions}
-        labels={labels}
-        areaType="Nation"
-      />
-    )
+    render(<AreaSelectorForm areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} labels={labels} />)
 
     expect(mockRouter.asPath).toBe('/topics/mock-topic')
     expect(screen.getByRole('button', { name: labels.updateBtn })).toHaveClass('hidden no-js:block')

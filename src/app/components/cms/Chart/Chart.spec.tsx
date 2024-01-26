@@ -3,20 +3,14 @@ import { ComponentProps, ReactElement } from 'react'
 import { ZodError } from 'zod'
 
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { useSearchParams } from '@/app/hooks/useSearchParams'
 import { render } from '@/config/test-utils'
 
 import { Chart } from './Chart'
 
-// Mock the url utils
-const defaultUrl = new URL('http://localhost')
-jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
-jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
-
 // eslint-disable-next-line @next/next/no-img-element
 jest.mock('next/image', () => ({ src, alt }: ImageProps) => <img src={src as string} alt={alt} />)
-jest.mock('@/api/requests/charts/getCharts')
 
+jest.mock('@/api/requests/charts/getCharts')
 const getChartsMock = jest.mocked(getCharts)
 
 test('renders the chart correctly when successful', async () => {
@@ -28,93 +22,13 @@ test('renders the chart correctly when successful', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
-    chart: [
-      {
-        id: '',
-        type: 'plot',
-        value: {
-          topic: 'COVID-19',
-          metric: '',
-          chart_type: 'simple_line',
-          geography: 'London',
-          geography_type: 'UKHSA Region',
-        },
-      },
-    ],
+    chart: [],
     body: '',
     title: '',
     headline_number_columns: [],
   }
 
   const { getByAltText } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
-
-  expect(getChartsMock).toHaveBeenCalledWith({
-    chart_height: 260,
-    chart_width: 515,
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: '',
-        chart_type: 'simple_line',
-        geography: 'London',
-        geography_type: 'UKHSA Region',
-      },
-    ],
-    x_axis: null,
-    y_axis: null,
-  })
-
-  expect(getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart')
-})
-
-test('renders the chart by geography and geography type when both are present in the url search params', async () => {
-  jest
-    .mocked(useSearchParams)
-    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
-
-  getChartsMock.mockResolvedValueOnce({
-    success: true,
-    data: { chart: 'mock-chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
-  })
-
-  const data: ComponentProps<typeof Chart>['data'] = {
-    x_axis: null,
-    y_axis: null,
-    chart: [
-      {
-        id: '',
-        type: 'plot',
-        value: {
-          topic: 'COVID-19',
-          metric: '',
-          chart_type: 'simple_line',
-          geography: 'London',
-          geography_type: 'UKHSA Region',
-        },
-      },
-    ],
-    body: '',
-    title: '',
-    headline_number_columns: [],
-  }
-
-  const { getByAltText } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
-
-  expect(getChartsMock).toHaveBeenCalledWith({
-    chart_height: 260,
-    chart_width: 515,
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: '',
-        chart_type: 'simple_line',
-        geography: 'North East',
-        geography_type: 'UKHSA Region',
-      },
-    ],
-    x_axis: null,
-    y_axis: null,
-  })
 
   expect(getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart')
 })
@@ -145,11 +59,7 @@ test('full width charts should also have an acompanying narrow version for mobil
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('media', '(min-width: 768px)')
 })
 
-test('renders a fallback message when the chart requests fail', async () => {
-  jest
-    .mocked(useSearchParams)
-    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
-
+test('renders null when the chart request fails', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: false,
     error: new ZodError([
@@ -168,12 +78,11 @@ test('renders a fallback message when the chart requests fail', async () => {
     y_axis: null,
     chart: [],
     body: '',
-    title: 'Cases by specimen date',
+    title: '',
     headline_number_columns: [],
   }
 
-  const { getByText, getByRole } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
+  const { container } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
 
-  expect(getByText('No data available in North East')).toBeInTheDocument()
-  expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
+  expect(container.firstChild).toBeNull()
 })

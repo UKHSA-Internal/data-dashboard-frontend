@@ -34,7 +34,7 @@ export default async function handler(req: Request, res: Response) {
 
     if (!req.query.type) {
       if (req.query.show_in_menus === 'true') {
-        return res.json({ ...allPagesMock, items: allPagesMock.items.filter((page) => page.meta.show_in_menus) })
+        res.json({ ...allPagesMock, items: allPagesMock.items.filter((page) => page.meta.show_in_menus) })
       }
       return res.json(allPagesMock)
     }

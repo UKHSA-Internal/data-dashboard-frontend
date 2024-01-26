@@ -888,7 +888,11 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
       id: '0086c9ed-1b53-41f6-a6b4-4c2012925ed8',
     },
   ],
-  enable_area_selector: false,
+  symptoms: '<p data-block-key="d7q4l">Text here</p>',
+  transmission: '<p data-block-key="00o6s">Text here</p>',
+  treatment: '<p data-block-key="gilvx">Text here</p>',
+  prevention: '<p data-block-key="dq4ux">Text here</p>',
+  surveillance_and_reporting: '<p data-block-key="tlwk2">Text here</p>',
   related_links: relatedLinksMock,
   last_published_at: '2023-05-10T17:27:37.116337+01:00',
 }

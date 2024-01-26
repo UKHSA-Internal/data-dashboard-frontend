@@ -801,7 +801,11 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
       id: '14175b86-36fa-46ee-b0f4-b56dc0a3c70a',
     },
   ],
-  enable_area_selector: true,
+  symptoms: '<p data-block-key="v7la9">Text here</p>',
+  transmission: '<p data-block-key="ldtik">Text here</p>',
+  treatment: '<p data-block-key="8bg6b">Text here</p>',
+  prevention: '<p data-block-key="6m4r2">Text here</p>',
+  surveillance_and_reporting: '<p data-block-key="zn81b">Text here</p>',
   related_links: relatedLinksMock,
   last_published_at: '2023-03-21T10:25:34.452098Z',
 }
