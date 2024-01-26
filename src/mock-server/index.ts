@@ -2,15 +2,6 @@ import 'module-alias/register'
 
 import { addAliases } from 'module-alias'
 
-declare global {
-  interface Error {
-    name: string
-    message: string
-    stack?: string
-    code?: number | string
-  }
-}
-
 // Import path aliases used in the NextJs project need to be maintained
 // here as well so that they're resolved correctly by ts-node
 addAliases({

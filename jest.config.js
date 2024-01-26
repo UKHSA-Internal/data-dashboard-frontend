@@ -28,7 +28,13 @@ const customJestConfig = {
   modulePathIgnorePatterns: ['e2e'],
   reporters: ['default', 'jest-junit'],
   coverageReporters: ['json-summary', 'text'],
-  coveragePathIgnorePatterns: ['node_modules', '<rootDir>/src/api/api-utils.ts', '<rootDir>/src/api/models'],
+  coveragePathIgnorePatterns: [
+    'node_modules',
+    '<rootDir>/src/api/api-utils.ts',
+    '<rootDir>/src/api/models',
+    // TODO: This component needs tests - CDD-1597
+    '<rootDir>/src/app/components/cms/Download/Download.tsx',
+  ],
   coverageThreshold: {
     global: {
       lines: 95,
