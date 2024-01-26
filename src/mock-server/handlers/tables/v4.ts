@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { requestSchema } from '@/api/requests/tables/getTables'
 import { logger } from '@/lib/logger'
 
+import { cases_casesByDay } from './fixtures'
 import { fixtures } from './fixtures/fixtures'
 
 export default async function handler(req: Request, res: Response) {
@@ -27,7 +28,12 @@ export default async function handler(req: Request, res: Response) {
     } = parsedQueryParams
 
     // Return a json fixture identified by the topic & metric provided
-    return res.json(fixtures[topic][metric])
+    if (fixtures[topic][metric]) {
+      return res.json(fixtures[topic][metric])
+    }
+
+    // Otherwise just return some default data so something can be shown
+    return res.json(cases_casesByDay)
   } catch (error) {
     logger.error(error)
     return res.status(500)

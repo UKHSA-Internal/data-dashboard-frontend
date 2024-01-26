@@ -53,10 +53,16 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body })
-    logger.info('POST success charts/v3')
+    logger.info('POST success charts/v3 - %s', plots.map((plot) => plot.metric).join())
     return responseSchema.safeParse(data)
   } catch (error) {
-    logger.error(error)
+    if (error instanceof Error) {
+      if (error.code === 400) {
+        logger.info('POST failed (no data) charts/v3 %s', plots.map((plot) => plot.metric).join())
+      } else {
+        logger.error(error.message)
+      }
+    }
     return responseSchema.safeParse(error)
   }
 }
