@@ -7,7 +7,17 @@ import { Body, CardTypes } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
-import { Chart, ChartRowCard, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
+import {
+  AreaSelectorLoader,
+  Chart,
+  ChartRowCard,
+  Download,
+  Headline,
+  Percentage,
+  Table,
+  Timestamp,
+  Trend,
+} from '../components/cms'
 
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
@@ -107,7 +117,9 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                         </div>
                       </>
                     )}
-                    <Chart data={column.value} size={size} />
+                    <AreaSelectorLoader>
+                      <Chart data={column.value} size={size} />
+                    </AreaSelectorLoader>
                   </TabsContent>
                   <TabsContent
                     value="table"
@@ -119,9 +131,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Tabular data
                     </span>
-                    <div className="govuk-!-margin-top-3">
-                      <Table data={column.value} size={size} />
-                    </div>
+                    <Table data={column.value} size={size} />
                   </TabsContent>
                   <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
                     <span
@@ -130,7 +140,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Download
                     </span>
-                    <Download chart={column.value.chart} />
+                    <Download data={column.value} />
                   </TabsContent>
                 </Tabs>
               </Card>

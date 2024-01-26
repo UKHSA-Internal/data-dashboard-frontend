@@ -44,11 +44,7 @@ const WithTopicData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
-  symptoms: z.string().optional(),
-  transmission: z.string().optional(),
-  treatment: z.string().optional(),
-  prevention: z.string().optional(),
-  surveillance_and_reporting: z.string().optional(),
+  enable_area_selector: z.boolean(),
 })
 
 const WithCommonData = SharedPageData.extend({

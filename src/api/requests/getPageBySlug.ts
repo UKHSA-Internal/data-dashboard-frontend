@@ -5,8 +5,6 @@ import { logger } from '@/lib/logger'
 import { getPage, PageResponse } from './cms/getPage'
 import { getPages, PageType } from './cms/getPages'
 
-// TODO: Add test coverage CDD-1494
-
 export const getPageBySlug = async <T extends PageType>(
   slug: string,
   type: T,

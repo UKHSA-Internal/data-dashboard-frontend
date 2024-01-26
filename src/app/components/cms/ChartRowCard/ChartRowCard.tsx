@@ -1,5 +1,5 @@
 'use client'
-
+import { useSearchParams } from 'next/navigation'
 import { ReactNode, useEffect, useRef } from 'react'
 import { useDebounce, useWindowSize } from 'usehooks-ts'
 
@@ -104,13 +104,13 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
 export function ChartRowCard({ children }: ChartRowCardProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useWindowSize()
-
+  const searchParams = useSearchParams()
   const debouncedWidth = useDebounce(width, DEBOUNCE_MILLISECONDS)
 
   useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)
     setChartCardTabSize(ref.current)
-  }, [ref, debouncedWidth])
+  }, [ref, debouncedWidth, searchParams])
 
   return (
     <div ref={ref} className="mb-3 sm:mb-6 lg:flex lg:gap-6" data-testid="chart-row-cards">
