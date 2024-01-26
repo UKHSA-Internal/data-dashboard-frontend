@@ -1,4 +1,4 @@
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-json'

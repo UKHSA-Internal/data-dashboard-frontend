@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
-import { client } from '@/api/api-utils'
 import { Body, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { client } from '@/api/utils/api.utils'
+import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
 
 import type { PageType } from './getPages'
@@ -44,11 +45,7 @@ const WithTopicData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
-  symptoms: z.string().optional(),
-  transmission: z.string().optional(),
-  treatment: z.string().optional(),
-  prevention: z.string().optional(),
-  surveillance_and_reporting: z.string().optional(),
+  enable_area_selector: z.boolean().or(fallback(false)),
 })
 
 const WithCommonData = SharedPageData.extend({

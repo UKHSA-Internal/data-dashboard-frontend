@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import { ZodError } from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { logger } from '@/lib/logger'
 import { areaTypeMock } from '@/mock-server/handlers/geographies/v1/types'
@@ -18,7 +18,7 @@ describe('AreaSelector', () => {
   test('fetches the area types on page load', async () => {
     jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
 
-    render(await AreaSelector())
+    render(await AreaSelector({ areaType: undefined }))
 
     expect(screen.getByLabelText('Area type')).toHaveValue('')
 
@@ -52,7 +52,7 @@ describe('AreaSelector', () => {
       status: 500,
     })
 
-    const { container } = render(await AreaSelector())
+    const { container } = render(await AreaSelector({ areaType: 'Nation' }))
 
     expect(logger.error).toHaveBeenCalledWith(
       'Could not load area selector %s',

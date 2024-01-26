@@ -3,7 +3,7 @@ import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from './requests/helpers'
+import { getApiBaseUrl } from '../requests/helpers'
 
 const fetch = fetchRetry(global.fetch)
 
@@ -70,7 +70,9 @@ export function client<T>(
         return Promise.reject(JSON.stringify(response))
       }
     } else {
-      return Promise.reject({ path: url, status, error: response.statusText })
+      const error = new Error(response.statusText)
+      error.code = status
+      return Promise.reject(error)
     }
   })
 }
