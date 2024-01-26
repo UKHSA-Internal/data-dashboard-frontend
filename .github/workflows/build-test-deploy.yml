@@ -111,7 +111,7 @@ jobs:
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
       - name: Run Playwright tests
-        run: npx playwright test --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -119,12 +119,47 @@ jobs:
           path: playwright-report/
           retention-days: 10
 
-  e2e-tests-success:
-    name: e2e tests check
-    needs: [e2e-tests]
+  ###############################################################################
+  # Smoke tests
+  ###############################################################################
+
+  smoke-tests:
+    name: Playwright smoke tests (${{ matrix.shard }}/${{ strategy.job-total }})
+    needs: [build]
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [2]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
+
+      - name: Run Playwright tests
+        run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
+          path: playwright-report/
+          retention-days: 10
+
+  ###############################################################################
+  # Success gate
+  ###############################################################################
+
+  tests-success:
+    name: e2e & smoke tests check
+    needs: [e2e-tests, smoke-tests]
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'All e2e tests passed ✅'
+      - run: echo 'All tests passed ✅'
 
   ###############################################################################
   # Push image to ECR
@@ -132,7 +167,7 @@ jobs:
 
   publish-image:
     name: ECR Image Push
-    needs: [quality-checks, unit-tests, e2e-tests-success]
+    needs: [quality-checks, unit-tests, tests-success, smoke-tests]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
