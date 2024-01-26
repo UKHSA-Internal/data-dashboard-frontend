@@ -8,13 +8,20 @@ import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/c
 import { useTranslation } from '@/app/i18n'
 import { renderCard } from '@/app/utils/cms.utils'
 
-export async function generateMetadata({ params: { topic } }: { params: { topic: string } }): Promise<Metadata> {
+export async function generateMetadata({
+  params: { topic },
+  searchParams: { areaName },
+}: TopicPageProps): Promise<Metadata> {
+  const { t } = await useTranslation('common')
+
   const {
     meta: { seo_title, search_description },
   } = await getPageBySlug(topic, PageType.Topic)
 
+  const title = areaName ? seo_title.replace('|', t('areaSelector.documentTitle', { areaName })) : seo_title
+
   return {
-    title: seo_title,
+    title,
     description: search_description,
   }
 }
