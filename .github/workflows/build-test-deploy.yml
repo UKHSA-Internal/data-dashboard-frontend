@@ -128,6 +128,7 @@ jobs:
     needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
     strategy:
       fail-fast: false
       matrix:
@@ -154,8 +155,8 @@ jobs:
   # Success gate
   ###############################################################################
 
-  tests-success:
-    name: e2e & smoke tests check
+  tests-success-gate:
+    name: Tests Success Check
     needs: [e2e-tests, smoke-tests]
     runs-on: ubuntu-latest
     steps:
@@ -167,7 +168,7 @@ jobs:
 
   publish-image:
     name: ECR Image Push
-    needs: [quality-checks, unit-tests, tests-success, smoke-tests]
+    needs: [quality-checks, unit-tests, tests-success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
