@@ -23,9 +23,23 @@ jobs:
       - name: Install
         run: npm ci --no-audit --no-fund
 
+  # TODO: Playwright currently needs a local instance of the app to initialise correctly
+  # We should tweak this to not need this so the below job can be removed.
+  build:
+    name: Build
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Build
+        run: NODE_ENV=test npm run build
+
   smoke-tests:
     name: Playwright smoke tests (${{ matrix.shard }}/${{ strategy.job-total }})
-    needs: [install]
+    needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
