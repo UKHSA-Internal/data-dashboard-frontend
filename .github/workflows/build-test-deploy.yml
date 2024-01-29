@@ -142,6 +142,13 @@ jobs:
       - name: Setup Playwright
         run: npx playwright install --with-deps
 
+      - name: Start mock server
+        run: npm run dev:mock-server &
+
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+
       - name: Run Playwright tests
         run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - uses: actions/upload-artifact@v3

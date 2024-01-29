@@ -58,10 +58,10 @@ export default defineConfig({
     },
   ],
 
-  // /* Run your local dev server before starting the tests */
-  // webServer: {
-  //   command: 'NODE_ENV=test npm run start',
-  //   url: 'http://localhost:3000',
-  //   reuseExistingServer: !process.env.CI,
-  // },
+  /* Run your local dev server before starting the tests */
+  webServer: {
+    command: 'NODE_ENV=test npm run start',
+    url: 'http://localhost:3000',
+    reuseExistingServer: !process.env.CI,
+  },
 })
