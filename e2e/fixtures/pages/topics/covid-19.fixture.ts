@@ -21,8 +21,8 @@ export class Covid19Page {
     )
   }
 
-  async hasHeading() {
-    await expect(this.page.getByRole('heading', { name: /COVID-19/, level: 1 })).toBeVisible()
+  async hasHeading(heading?: string) {
+    await expect(this.page.getByRole('heading', { name: heading ?? /COVID-19/, level: 1 })).toBeVisible()
   }
 
   async hasDescription() {
