@@ -18,7 +18,7 @@ describe('AreaSelector', () => {
   test('fetches the area types on page load', async () => {
     jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
 
-    render(await AreaSelector({ areaType: undefined }))
+    render(await AreaSelector({ areaType: undefined, selectedTopics: ['COVID-19'] }))
 
     expect(screen.getByLabelText('Area type')).toHaveValue('')
 
@@ -31,7 +31,7 @@ describe('AreaSelector', () => {
     jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
     jest.mocked(client).mockResolvedValueOnce({ data: { geographies: mockNations }, status: 200 })
 
-    render(await AreaSelector({ areaType: 'Nation' }))
+    render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
 
     expect(screen.getByLabelText('Area type')).toHaveValue('')
 
@@ -52,7 +52,7 @@ describe('AreaSelector', () => {
       status: 500,
     })
 
-    const { container } = render(await AreaSelector({ areaType: 'Nation' }))
+    const { container } = render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
 
     expect(logger.error).toHaveBeenCalledWith(
       'Could not load area selector %s',

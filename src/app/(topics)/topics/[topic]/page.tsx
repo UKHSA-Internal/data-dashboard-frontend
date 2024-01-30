@@ -41,6 +41,7 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
     last_published_at: lastUpdated,
     related_links: relatedLinks,
     enable_area_selector: enableAreaSelector,
+    selected_topics: selectedTopics,
   } = await getPageBySlug(topic, PageType.Topic)
   return (
     <View
@@ -56,7 +57,7 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
             label={t('areaSelector.detailsLabel')}
             className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
           >
-            <AreaSelector areaType={areaType} />
+            <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
           </Details>
         </>
       )}
