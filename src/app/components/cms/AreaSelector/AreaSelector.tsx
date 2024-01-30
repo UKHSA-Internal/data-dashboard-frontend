@@ -1,5 +1,5 @@
-import { getGeographyNames } from '@/api/requests/geographies/getGeographyNames'
-import { getGeographyTypes } from '@/api/requests/geographies/getGeographyTypes'
+import { Topics } from '@/api/models'
+import { getGeographies } from '@/api/requests/geographies/getGeographies'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
@@ -7,31 +7,28 @@ import { AreaSelectorForm } from './AreaSelectorForm'
 
 interface AreaSelectorProps {
   areaType: string | undefined
-  selectedTopics: string[]
+  selectedTopics: Topics[]
 }
 
-export async function AreaSelector({ areaType }: AreaSelectorProps) {
+export async function AreaSelector({ areaType, selectedTopics }: AreaSelectorProps) {
   const { t } = await useTranslation('common')
 
-  const geographyTypesResponse = await getGeographyTypes()
+  const geographiesResponse = await getGeographies(selectedTopics[0])
 
   // Don't show the area selector if we fail to get the geography types
-  if (!geographyTypesResponse.success) {
-    logger.error('Could not load area selector %s', geographyTypesResponse.error)
+  if (!geographiesResponse.success) {
+    logger.error('Could not load area selector %s', geographiesResponse.error)
     return <></>
   }
 
-  const areaTypeOptions = geographyTypesResponse.data.map((type) => type.name)
+  const areaTypeOptions = geographiesResponse.data.map((geography) => geography.geography_type)
   const areaNameOptions = []
 
   if (areaType) {
-    const id = geographyTypesResponse.data.find(({ name }) => name === areaType)?.id
+    const selectedGeography = geographiesResponse.data.find((geography) => geography.geography_type === areaType)
 
-    if (typeof id !== 'undefined') {
-      const geographyNamesResponse = await getGeographyNames(id)
-      if (geographyNamesResponse.success) {
-        areaNameOptions.push(...geographyNamesResponse.data.geographies.map(({ name }) => name))
-      }
+    if (selectedGeography) {
+      areaNameOptions.push(...selectedGeography.geographies.map((area) => area.name))
     }
   }
 

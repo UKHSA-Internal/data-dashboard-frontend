@@ -211,4 +211,4 @@ export const mockNhsTrusts = [
   'Wye Valley NHS Trust',
   'Yeovil District Hospital NHS Foundation Trust',
   'York Teaching Hospital NHS Foundation Trust',
-].map((name: string, id: number) => ({ id, name }))
+].map((name: string) => ({ name }))

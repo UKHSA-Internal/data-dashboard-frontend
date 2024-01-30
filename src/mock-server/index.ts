@@ -26,8 +26,7 @@ import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
 import downloads from './handlers/downloads/v2'
-import geographyTypes from './handlers/geographies/v1/types'
-import geographyNames from './handlers/geographies/v1/types/[id]'
+import geographies from './handlers/geographies/v2/[topic]'
 import headlines from './handlers/headlines/v3'
 import suggestions from './handlers/suggestions/v1'
 import tables from './handlers/tables/v4'
@@ -46,8 +45,7 @@ app.get('/api/pages/:id', page)
 app.get('/api/headlines/v3', headlines)
 app.get('/api/trends/v3', trends)
 app.get('/api/bulkdownloads/v1', bulkDownloads)
-app.get('/api/geographies/v1/types', geographyTypes)
-app.get('/api/geographies/v1/types/:id', geographyNames)
+app.get('/api/geographies/v2/:topic', geographies)
 
 // POST endpoints
 app.post('/api/charts/v3', charts)
