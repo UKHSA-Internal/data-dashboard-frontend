@@ -93,7 +93,7 @@ const sideBarTestData: Links = [
       type: 'topic.TopicPageRelatedLink',
     },
     title: 'View swagger documentation',
-    url: '/test',
+    url: 'https://api.dev.ukhsa-dashboard.data.gov.uk/',
   },
   {
     id: 2,
@@ -114,6 +114,7 @@ describe('Related links sidebar variant', () => {
             {body}
           </RelatedLink>
         )),
+        variant: 'sidebar',
       })) as ReactElement
     )
 
@@ -124,7 +125,10 @@ describe('Related links sidebar variant', () => {
     expect(listItems).toHaveLength(2)
 
     expect(within(listItems[0]).getByText('View swagger documentation')).toBeInTheDocument()
-    expect(within(listItems[0]).getByText('View swagger documentation')).toHaveAttribute('href', '/test')
+    expect(within(listItems[0]).getByText('View swagger documentation')).toHaveAttribute(
+      'href',
+      'https://api.dev.ukhsa-dashboard.data.gov.uk/'
+    )
 
     expect(within(listItems[1]).getByText('Contribute to our open source project')).toBeInTheDocument()
     expect(within(listItems[1]).getByText('Contribute to our open source project')).toHaveAttribute(
