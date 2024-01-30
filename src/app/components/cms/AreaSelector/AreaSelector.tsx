@@ -7,6 +7,7 @@ import { AreaSelectorForm } from './AreaSelectorForm'
 
 interface AreaSelectorProps {
   areaType: string | undefined
+  selectedTopics: string[]
 }
 
 export async function AreaSelector({ areaType }: AreaSelectorProps) {

@@ -20,6 +20,9 @@ test.describe('Influenza page', () => {
       await influenzaPage.hasHeading()
       await influenzaPage.hasDescription()
     })
+    await test.step('displays area selector', async () => {
+      await app.hasAreaSelector()
+    })
     await test.step('displays last updated date', async () => {
       await influenzaPage.hasLastUpdated()
     })
@@ -84,6 +87,45 @@ test.describe('Influenza page', () => {
         'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
       ])
     })
+  })
+
+  test('Area selection already chosen upon visiting the page', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/topics/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+    })
+    await test.step('check the area selector is open by default', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle('Influenza in Southampton | UKHSA data dashboard')
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading('Influenza in Southampton')
+    })
+    await test.step('area selector inputs are filled with a default value', async () => {
+      await app.checkAreaSelectorInputMatchesValue('Area type', 'Lower Tier Local Authority')
+      await app.checkAreaSelectorInputMatchesValue('Area name', 'Southampton')
+    })
+  })
+
+  // TODO: CDD-1650
+  test('Area selection after choosing a location from the form', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('open the area selector', async () => {
+      await app.clickAreaSelectorToggle()
+    })
+    await test.step('check the area selector is open', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    // check area type options loaded
+    // choose an area type
+    // check area name options loaded
+    // choose an area name
+    // check document title is updated
+    // check page heading is updated
+    // check chart cards have updated
   })
 })
 

@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { Topics } from '@/api/models'
 import { Body, Meta, RelatedLinks } from '@/api/models/cms/Page'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
@@ -46,6 +47,7 @@ const WithTopicData = SharedPageData.extend({
     type: z.literal('topic.TopicPage'),
   }),
   enable_area_selector: z.boolean().or(fallback(false)),
+  selected_topics: z.array(Topics).or(fallback([])),
 })
 
 const WithCommonData = SharedPageData.extend({
