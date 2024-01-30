@@ -3,7 +3,7 @@ import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
 import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 
-import { getApiBaseUrl } from './requests/helpers'
+import { getApiBaseUrl } from '../requests/helpers'
 
 const fetch = fetchRetry(global.fetch)
 
