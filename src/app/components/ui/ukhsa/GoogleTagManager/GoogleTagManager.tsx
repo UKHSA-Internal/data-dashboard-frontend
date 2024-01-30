@@ -6,7 +6,7 @@ import { ConsentScript } from './ConsentScript'
 const GTM_ID = process.env.GOOGLE_TAG_MANAGER_ID
 
 export const GoogleTagManager = () => {
-  if (!GTM_ID.length) return null
+  if (!GTM_ID?.length) return null
 
   return (
     <>
