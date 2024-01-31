@@ -6,7 +6,7 @@ export const RelatedLink = z.object({
     type: z.string(),
   }),
   title: z.string(),
-  body: z.string(),
+  body: z.optional(z.string()),
   url: z.string(),
 })
 
