@@ -56,6 +56,7 @@ export class App {
   readonly backToTop: Locator
   readonly footer: Locator
   readonly cookieBanner: Locator
+  readonly areaSelector: Locator
 
   constructor(page: Page) {
     this.page = page
@@ -66,6 +67,7 @@ export class App {
     this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
     this.footer = this.page.getByRole('contentinfo')
     this.cookieBanner = this.page.getByRole('region', { name: 'Cookies on the UKHSA data dashboard' })
+    this.areaSelector = this.page.getByRole('form', { name: 'Area selector' })
   }
 
   async goto(path: string) {
@@ -318,12 +320,56 @@ export class App {
     await this.page.getByText('Filter results by location').click()
   }
 
-  async checkAreaSelectorFormIsActive() {
-    await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeVisible()
+  async checkAreaSelectorFormIsActive(isActive = true) {
+    if (isActive) {
+      await expect(this.areaSelector).toBeVisible()
+    } else {
+      await expect(this.areaSelector).toBeHidden()
+    }
   }
 
   async checkAreaSelectorInputMatchesValue(label: 'Area type' | 'Area name', expectedValue: string) {
-    await expect(this.page.getByLabel(label)).toHaveValue(expectedValue)
+    await expect(this.areaSelector.getByLabel(label)).toHaveValue(expectedValue)
+  }
+
+  async checkAreaSelectorDropdownOptions(label: 'Area type' | 'Area name', expectedOptions: Array<string>) {
+    const input = this.areaSelector.getByLabel(label)
+
+    // Placeholder option
+    await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('disabled')
+    await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('selected')
+    await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('value', '')
+
+    // Selectable options
+    for (const name of expectedOptions) {
+      await expect(input.getByRole('option', { name })).toHaveAttribute('value', name)
+    }
+  }
+
+  async checkAreaSelectorAreaNameIsDisabled() {
+    await expect(this.areaSelector.getByLabel('Area name')).toBeDisabled()
+  }
+
+  async selectAreaSelectorDropdownOption(label: 'Area type' | 'Area name', selectedOption: string) {
+    await this.areaSelector.getByLabel(label).selectOption(selectedOption)
+  }
+
+  async checkAreaSelectorChartsRefreshedForLocation(location: string) {
+    for (const img of await this.page.getByTestId('chart').all()) {
+      if (!location) {
+        await expect(img).not.toHaveAttribute('data-location')
+      } else {
+        await expect(img).toHaveAttribute('data-location', location)
+      }
+    }
+  }
+
+  async clickAreaSelectorResetLink() {
+    await this.areaSelector.getByRole('link', { name: 'Reset' }).click()
+  }
+
+  async submitAreaSelectorForm() {
+    await this.areaSelector.getByRole('button', { name: 'Update' }).click()
   }
 }
 

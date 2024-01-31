@@ -1,7 +1,8 @@
 'use client'
+
 import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { useCallback, useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef } from 'react'
 
 interface AreaSelectorProps {
   areaType: string | undefined
@@ -32,7 +33,6 @@ export function AreaSelectorForm({
   const formRef = useRef<HTMLFormElement>(null)
   const areaTypeSelectRef = useRef<HTMLSelectElement>(null)
   const areaNameSelectRef = useRef<HTMLSelectElement>(null)
-  const [areaNameOptionsLoading, setAreaNameOptionsLoading] = useState(false)
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -42,14 +42,11 @@ export function AreaSelectorForm({
   const areaName = searchParams.get('areaName')
 
   useEffect(() => {
-    // First create the event
     window.dispatchEvent(
       new CustomEvent('topic.location.change', {
         detail: { loading: false },
       })
     )
-
-    setAreaNameOptionsLoading(false)
   }, [areaType, areaName])
 
   const resetForm = useCallback(() => {
@@ -88,10 +85,10 @@ export function AreaSelectorForm({
             name="areaType"
             defaultValue={searchParams.get('areaType') || ''}
             onChange={(evt) => {
-              setAreaNameOptionsLoading(true)
               const updatedSearchParams = new URLSearchParams(searchParams)
               updatedSearchParams.set('areaType', evt.target.value)
-              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
+              updatedSearchParams.delete('areaName')
+              router.push(`${initialPathname}?${updatedSearchParams.toString()}`, { scroll: false })
 
               // Reset areaName whenever the areaType changes
               if (areaNameSelectRef.current) {
@@ -122,33 +119,22 @@ export function AreaSelectorForm({
             name="areaName"
             defaultValue={searchParams.get('areaName') || ''}
             onChange={(evt) => {
-              window.dispatchEvent(
-                new CustomEvent('topic.location.change', {
-                  detail: { loading: true },
-                })
-              )
-
+              window.dispatchEvent(new CustomEvent('topic.location.change', { detail: { loading: true } }))
               const updatedSearchParams = new URLSearchParams(searchParams)
               updatedSearchParams.set('areaName', evt.target.value)
-              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
+              router.push(`${initialPathname}?${updatedSearchParams.toString()}`, { scroll: false })
             }}
           >
-            {areaNameOptionsLoading ? (
+            <>
               <option value="" disabled>
-                Loading...
+                {labels.areaNamePlaceholder}
               </option>
-            ) : (
-              <>
-                <option value="" disabled>
-                  {labels.areaNamePlaceholder}
+              {areaNameOptions.map((value) => (
+                <option key={value} value={value}>
+                  {value}
                 </option>
-                {areaNameOptions.map((value) => (
-                  <option key={value} value={value}>
-                    {value}
-                  </option>
-                ))}
-              </>
-            )}
+              ))}
+            </>
           </select>
         </div>
       </div>

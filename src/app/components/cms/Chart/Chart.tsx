@@ -65,7 +65,7 @@ export async function Chart({ data, size }: ChartProps) {
     const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
 
     return (
-      <picture>
+      <picture data-testid="chart" data-location={areaName}>
         {wideChart && (
           <source
             media="(min-width: 768px)"

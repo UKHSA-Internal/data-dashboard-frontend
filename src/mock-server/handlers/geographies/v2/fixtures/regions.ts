@@ -8,4 +8,4 @@ export const mockRegions = [
   'South West',
   'West Midlands',
   'Yorkshire and The Humber',
-].map((name: string, id: number) => ({ id, name }))
+].map((name: string) => ({ name }))

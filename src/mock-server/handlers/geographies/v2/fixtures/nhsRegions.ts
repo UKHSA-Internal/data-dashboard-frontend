@@ -6,4 +6,4 @@ export const mockNhsRegions = [
   'North West',
   'South East',
   'South West',
-].map((name: string, id: number) => ({ id, name }))
+].map((name: string) => ({ name }))

@@ -158,10 +158,12 @@ test.describe('COVID-19 page', () => {
       await app.checkAreaSelectorInputMatchesValue('Area type', 'Lower Tier Local Authority')
       await app.checkAreaSelectorInputMatchesValue('Area name', 'Southampton')
     })
+    await test.step('chart card images are refreshed', async () => {
+      await app.checkAreaSelectorChartsRefreshedForLocation('Southampton')
+    })
   })
 
-  // TODO: CDD-1650
-  test('Area selection after choosing a location from the form', async ({ covid19Page, app }) => {
+  test('Area selection after choosing a location from the form', async ({ covid19Page, app, baseURL }) => {
     await test.step('loads the page', async () => {
       await covid19Page.goto()
     })
@@ -171,13 +173,71 @@ test.describe('COVID-19 page', () => {
     await test.step('check the area selector is open', async () => {
       await app.checkAreaSelectorFormIsActive()
     })
-    // check area type options loaded
-    // choose an area type
-    // check area name options loaded
-    // choose an area name
-    // check document title is updated
-    // check page heading is updated
-    // check chart cards have updated
+    await test.step('area type dropdown defaults to unselected', async () => {
+      await app.checkAreaSelectorInputMatchesValue('Area type', '')
+    })
+    await test.step('area type dropdown list is populated', async () => {
+      await app.checkAreaSelectorDropdownOptions('Area type', ['Nation', 'Lower Tier Local Authority'])
+    })
+    await test.step('area name dropdown defaults to unselected', async () => {
+      await app.checkAreaSelectorInputMatchesValue('Area name', '')
+    })
+    await test.step('area name dropdown list is disabled whilst no area type is selected', async () => {
+      await app.checkAreaSelectorAreaNameIsDisabled()
+    })
+    await test.step('choose an area type', async () => {
+      await app.selectAreaSelectorDropdownOption('Area type', 'Nation')
+      await app.checkAreaSelectorInputMatchesValue('Area type', 'Nation')
+      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation`)
+    })
+    await test.step('area name dropdown list is populated', async () => {
+      await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
+    })
+    await test.step('choose an area name', async () => {
+      await app.selectAreaSelectorDropdownOption('Area name', 'England')
+      await app.checkAreaSelectorInputMatchesValue('Area name', 'England')
+      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation&areaName=England`)
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle('COVID-19 in England | UKHSA data dashboard')
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading('COVID-19 in England')
+    })
+    await test.step('chart card images are refreshed', async () => {
+      await app.checkAreaSelectorChartsRefreshedForLocation('England')
+    })
+  })
+
+  test('Area selection is reset', async ({ covid19Page, app, baseURL }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+    })
+    await test.step('check the area selector is open by default', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle('COVID-19 in Southampton | UKHSA data dashboard')
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading('COVID-19 in Southampton')
+    })
+    await test.step('click reset link', async () => {
+      await app.clickAreaSelectorResetLink()
+      await app.waitForUrl(`${baseURL}/topics/covid-19`)
+    })
+    await test.step('check the area selector is closed', async () => {
+      await app.checkAreaSelectorFormIsActive(false)
+    })
+    await test.step('document title is reset', async () => {
+      await app.hasDocumentTitle('COVID-19 | UKHSA data dashboard')
+    })
+    await test.step('page heading is reset', async () => {
+      await covid19Page.hasHeading('COVID-19')
+    })
+    await test.step('chart card images are refreshed', async () => {
+      await app.checkAreaSelectorChartsRefreshedForLocation('')
+    })
   })
 })
 
@@ -236,6 +296,111 @@ test.describe('COVID-19 page - no JS', () => {
         'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
         'spring-booster-vaccination-uptake-75-by-vaccination-date',
       ])
+    })
+  })
+
+  test('Area selection already chosen upon visiting the page', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+    })
+    await test.step('check the area selector is open by default', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle('COVID-19 in Southampton | UKHSA data dashboard')
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading('COVID-19 in Southampton')
+    })
+    await test.step('area selector inputs are filled with a default value', async () => {
+      await app.checkAreaSelectorInputMatchesValue('Area type', 'Lower Tier Local Authority')
+      await app.checkAreaSelectorInputMatchesValue('Area name', 'Southampton')
+    })
+    await test.step('chart card images are refreshed', async () => {
+      await app.checkAreaSelectorChartsRefreshedForLocation('Southampton')
+    })
+  })
+
+  test('Area selection after choosing a location from the form', async ({ covid19Page, app, baseURL }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('open the area selector', async () => {
+      await app.clickAreaSelectorToggle()
+    })
+    await test.step('check the area selector is open', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    await test.step('area type dropdown defaults to unselected', async () => {
+      await app.checkAreaSelectorInputMatchesValue('Area type', '')
+    })
+    await test.step('area type dropdown list is populated', async () => {
+      await app.checkAreaSelectorDropdownOptions('Area type', ['Nation', 'Lower Tier Local Authority'])
+    })
+    await test.step('area name dropdown defaults to unselected', async () => {
+      await app.checkAreaSelectorInputMatchesValue('Area name', '')
+    })
+    await test.step('area name dropdown list is disabled whilst no area type is selected', async () => {
+      await app.checkAreaSelectorAreaNameIsDisabled()
+    })
+    await test.step('choose an area type', async () => {
+      await app.selectAreaSelectorDropdownOption('Area type', 'Nation')
+      await app.checkAreaSelectorInputMatchesValue('Area type', 'Nation')
+    })
+    await test.step('submit the form', async () => {
+      await app.submitAreaSelectorForm()
+      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation`)
+    })
+    await test.step('area name dropdown list is populated', async () => {
+      await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
+    })
+    await test.step('choose an area name', async () => {
+      await app.selectAreaSelectorDropdownOption('Area name', 'England')
+      await app.checkAreaSelectorInputMatchesValue('Area name', 'England')
+    })
+    await test.step('submit the form', async () => {
+      await app.submitAreaSelectorForm()
+      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation&areaName=England`)
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle('COVID-19 in England | UKHSA data dashboard')
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading('COVID-19 in England')
+    })
+    await test.step('chart card images are refreshed', async () => {
+      await app.checkAreaSelectorChartsRefreshedForLocation('England')
+    })
+  })
+
+  test('Area selection is reset', async ({ covid19Page, app, baseURL }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+    })
+    await test.step('check the area selector is open by default', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle('COVID-19 in Southampton | UKHSA data dashboard')
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading('COVID-19 in Southampton')
+    })
+    await test.step('click reset link', async () => {
+      await app.clickAreaSelectorResetLink()
+      await app.waitForUrl(`${baseURL}/topics/covid-19`)
+    })
+    await test.step('check the area selector is closed', async () => {
+      await app.checkAreaSelectorFormIsActive(false)
+    })
+    await test.step('document title is reset', async () => {
+      await app.hasDocumentTitle('COVID-19 | UKHSA data dashboard')
+    })
+    await test.step('page heading is reset', async () => {
+      await covid19Page.hasHeading('COVID-19')
+    })
+    await test.step('chart card images are refreshed', async () => {
+      await app.checkAreaSelectorChartsRefreshedForLocation('')
     })
   })
 })

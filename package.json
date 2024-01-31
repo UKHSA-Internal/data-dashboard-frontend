@@ -12,9 +12,9 @@
     "export": "next export",
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
-    "test:e2e": "npx playwright test --ui",
-    "test:e2e:ci": "npx playwright test",
-    "test:e2e:smoke": "cypress run --spec \"cypress/smoke/*\"",
+    "test:e2e": "npx playwright test --ui --grep-invert @smoke",
+    "test:e2e:ci": "npx playwright test --grep-invert @smoke",
+    "test:e2e:smoke": "baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke",
     "prepare": "husky install"
   },
   "dependencies": {
