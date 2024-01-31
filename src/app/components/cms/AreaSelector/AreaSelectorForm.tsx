@@ -87,7 +87,8 @@ export function AreaSelectorForm({
             onChange={(evt) => {
               const updatedSearchParams = new URLSearchParams(searchParams)
               updatedSearchParams.set('areaType', evt.target.value)
-              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
+              updatedSearchParams.delete('areaName')
+              router.push(`${initialPathname}?${updatedSearchParams.toString()}`, { scroll: false })
 
               // Reset areaName whenever the areaType changes
               if (areaNameSelectRef.current) {
@@ -121,7 +122,7 @@ export function AreaSelectorForm({
               window.dispatchEvent(new CustomEvent('topic.location.change', { detail: { loading: true } }))
               const updatedSearchParams = new URLSearchParams(searchParams)
               updatedSearchParams.set('areaName', evt.target.value)
-              router.push(`${pathname}?${updatedSearchParams.toString()}`, { scroll: false })
+              router.push(`${initialPathname}?${updatedSearchParams.toString()}`, { scroll: false })
             }}
           >
             <>
