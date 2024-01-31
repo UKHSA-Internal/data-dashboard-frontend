@@ -38,15 +38,11 @@ jobs:
         run: NODE_ENV=test npm run build
 
   smoke-tests:
-    name: Playwright smoke tests (${{ matrix.shard }}/${{ strategy.job-total }})
+    name: Playwright smoke tests
     needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [2]
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -64,10 +60,10 @@ jobs:
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
       - name: Run Playwright tests
-        run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke
       - uses: actions/upload-artifact@v3
         if: always()
         with:
-          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
+          name: playwright-report-smoke
           path: playwright-report/
           retention-days: 10
