@@ -408,4 +408,4 @@ export const mockLocalAuthorities = [
   'Wyre',
   'Wyre Forest',
   'York',
-].map((name: string, id: number) => ({ id, name }))
+].map((name: string) => ({ name }))

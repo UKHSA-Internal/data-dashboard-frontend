@@ -1,22 +1,27 @@
 import { ZodError } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
-import { areaTypeMock } from '@/mock-server/handlers/geographies/v1/types'
+import { geographyMock } from '@/mock-server/handlers/geographies/v2/[topic]'
 
-import { getGeographyTypes } from './getGeographyTypes'
+import { getGeographies } from './getGeographies'
 
-describe('GET geographies/v1/types', () => {
+describe('GET geographies/v2/:topic', () => {
   test('successful response', async () => {
-    jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
-    expect(await getGeographyTypes()).toEqual({
+    jest.mocked(client).mockResolvedValueOnce({
+      data: geographyMock,
+      status: 200,
+    })
+
+    expect(await getGeographies('COVID-19')).toEqual({
       success: true,
-      data: areaTypeMock,
+      data: geographyMock,
     })
   })
 
   test('failure response', async () => {
     jest.mocked(client).mockRejectedValueOnce({ data: null, status: 400 })
-    expect(await getGeographyTypes()).toEqual({
+
+    expect(await getGeographies('Influenza')).toEqual({
       success: false,
       error: new ZodError([
         {
