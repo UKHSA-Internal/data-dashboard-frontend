@@ -68,6 +68,10 @@ export class App {
     this.cookieBanner = this.page.getByRole('region', { name: 'Cookies on the UKHSA data dashboard' })
   }
 
+  async goto(path: string) {
+    await this.page.goto(path)
+  }
+
   async reload() {
     await this.page.reload()
   }
@@ -299,6 +303,27 @@ export class App {
       .getByRole('navigation', { name: 'results' })
       .getByRole('link', { name: 'Previous', exact: true })
       .click()
+  }
+
+  // Area Selector
+  async hasAreaSelector() {
+    await expect(this.page.getByText('Filter results by location')).toBeVisible()
+  }
+
+  async hasNotAreaSelector() {
+    await expect(this.page.getByText('Filter results by location')).toBeHidden()
+  }
+
+  async clickAreaSelectorToggle() {
+    await this.page.getByText('Filter results by location').click()
+  }
+
+  async checkAreaSelectorFormIsActive() {
+    await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeVisible()
+  }
+
+  async checkAreaSelectorInputMatchesValue(label: 'Area type' | 'Area name', expectedValue: string) {
+    await expect(this.page.getByLabel(label)).toHaveValue(expectedValue)
   }
 }
 

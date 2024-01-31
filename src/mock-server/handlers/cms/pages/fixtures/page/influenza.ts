@@ -602,11 +602,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
       id: '0f9dae99-697b-4d7d-8c92-f977ffbcd622',
     },
   ],
-  symptoms: '<p data-block-key="9dri3">Text here</p>',
-  transmission: '<p data-block-key="7vq7i">Text here</p>',
-  treatment: '<p data-block-key="9gmkc">Text here</p>',
-  prevention: '<p data-block-key="08t25">Text here</p>',
-  surveillance_and_reporting: '<p data-block-key="m4q2b">Text here</p>',
+  enable_area_selector: true,
+  selected_topics: ['Influenza'],
   related_links: relatedLinksMock,
   last_published_at: '2023-05-15T16:26:41.095645+01:00',
 }

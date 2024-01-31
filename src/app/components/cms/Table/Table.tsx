@@ -5,9 +5,13 @@ import { z } from 'zod'
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
+import { useAreaSelector } from '@/app/hooks/useAreaSelector'
+import { usePathname } from '@/app/hooks/usePathname'
 import { useTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
+
+import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */
@@ -20,7 +24,14 @@ interface TableProps {
 export async function Table({ data: { chart, y_axis, x_axis, title, body }, size }: TableProps) {
   const { t } = await useTranslation('common')
 
-  const plots = chart.map((plot) => plot.value)
+  const pathname = usePathname()
+  const [areaType, areaName] = useAreaSelector()
+
+  const plots = chart.map((plot) => ({
+    ...plot.value,
+    geography_type: areaType ?? plot.value.geography_type,
+    geography: areaName ?? plot.value.geography,
+  }))
 
   // Call the table endpoint to get the data in table format
   const tableResponse = await getTables({
@@ -48,7 +59,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     let incrementingColumnId = 0
 
     return (
-      <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
+      <table className="govuk-table govuk-!-margin-top-3 govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <p className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</p>
           <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
@@ -118,5 +129,13 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     )
   }
 
-  return null
+  return (
+    <ChartEmpty
+      resetHref={pathname}
+      labels={{
+        description: t('areaSelector.noData', { areaName, context: areaName && 'withArea' }),
+        reset: t('areaSelector.resetBtn'),
+      }}
+    />
+  )
 }

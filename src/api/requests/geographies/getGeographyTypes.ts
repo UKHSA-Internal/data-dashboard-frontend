@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 export const responseSchema = z.array(

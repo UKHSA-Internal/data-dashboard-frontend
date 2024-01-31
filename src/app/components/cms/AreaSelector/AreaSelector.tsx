@@ -6,10 +6,11 @@ import { logger } from '@/lib/logger'
 import { AreaSelectorForm } from './AreaSelectorForm'
 
 interface AreaSelectorProps {
-  areaType?: string
+  areaType: string | undefined
+  selectedTopics: string[]
 }
 
-export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
+export async function AreaSelector({ areaType }: AreaSelectorProps) {
   const { t } = await useTranslation('common')
 
   const geographyTypesResponse = await getGeographyTypes()
@@ -36,6 +37,7 @@ export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
 
   return (
     <AreaSelectorForm
+      areaType={areaType}
       areaTypeOptions={areaTypeOptions}
       areaNameOptions={areaNameOptions}
       // TODO: CDD-1479 - Investgiate how we can consume i18n inside client components
@@ -51,3 +53,5 @@ export async function AreaSelector({ areaType }: AreaSelectorProps = {}) {
     />
   )
 }
+
+export * from './AreaSelectorLoader'
