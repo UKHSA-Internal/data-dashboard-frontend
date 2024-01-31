@@ -68,7 +68,7 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
           </ContentsItem>
         ))}
       </Contents>
-      <RelatedLinks>
+      <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>
             {body}

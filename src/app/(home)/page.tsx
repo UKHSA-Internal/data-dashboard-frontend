@@ -29,7 +29,7 @@ export default async function HomePage() {
   return (
     <View heading={title} description={description} showWelcome>
       {body.map(renderSection)}
-      <RelatedLinks>
+      <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>
             {body}
