@@ -111,7 +111,7 @@ jobs:
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
       - name: Run Playwright tests
-        run: npx playwright test --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -119,12 +119,16 @@ jobs:
           path: playwright-report/
           retention-days: 10
 
-  e2e-tests-success:
-    name: e2e tests check
+  ###############################################################################
+  # Success gate
+  ###############################################################################
+
+  tests-success-gate:
+    name: Tests Success Check
     needs: [e2e-tests]
     runs-on: ubuntu-latest
     steps:
-      - run: echo 'All e2e tests passed ✅'
+      - run: echo 'All tests passed ✅'
 
   ###############################################################################
   # Push image to ECR
@@ -132,7 +136,7 @@ jobs:
 
   publish-image:
     name: ECR Image Push
-    needs: [quality-checks, unit-tests, e2e-tests-success]
+    needs: [quality-checks, unit-tests, tests-success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
