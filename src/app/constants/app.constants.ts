@@ -7,7 +7,7 @@ export const SITE_URL = 'ukhsa-dashboard.data.gov.uk'
 export const HOMEPAGE_CMS_SLUG = 'dashboard'
 
 // Determines the number of entries to display per page on the "What's New" page.
-export const WHATS_NEW_PAGE_SIZE = 15
+export const WHATS_NEW_PAGE_SIZE = 10
 
 // Determines the number of entries to display per page on the "Metrics Documentation" page.
 export const METRICS_DOCUMENTATION_PAGE_SIZE = 10

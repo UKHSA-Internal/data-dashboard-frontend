@@ -1,7 +1,7 @@
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Smoke tests', () => {
-  test('Navigates to all pages from the menu', async ({
+  test('Navigates to all pages from the menu @smoke', async ({
     homePage,
     aboutPage,
     whatsNewParentPage,
@@ -47,8 +47,8 @@ test.describe('Smoke tests', () => {
       await metricsParentPage.hasHeading()
     })
     await test.step('loads the metrics child page', async () => {
-      await metricsChildPage.goto()
-      await metricsChildPage.hasHeading('New cases 7 days sum')
+      await metricsParentPage.openChildPage('COVID-19 headline cases 7 day totals')
+      await metricsChildPage.hasHeading('COVID-19 headline cases 7 day totals')
     })
     await test.step('loads the "Accessibility statement" page', async () => {
       await accessibilityStatementPage.goto()
@@ -69,7 +69,7 @@ test.describe('Smoke tests', () => {
 test.describe('Smoke tests - no JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Navigates to all pages from the menu', async ({
+  test('Navigates to all pages from the menu @smoke', async ({
     homePage,
     aboutPage,
     whatsNewParentPage,
@@ -115,8 +115,8 @@ test.describe('Smoke tests - no JavaScript', () => {
       await metricsParentPage.hasHeading()
     })
     await test.step('loads the metrics child page', async () => {
-      await metricsChildPage.goto()
-      await metricsChildPage.hasHeading('New cases 7 days sum')
+      await metricsParentPage.openChildPage('COVID-19 headline cases 7 day totals')
+      await metricsChildPage.hasHeading('COVID-19 headline cases 7 day totals')
     })
     await test.step('loads the "Accessibility statement" page', async () => {
       await accessibilityStatementPage.goto()
