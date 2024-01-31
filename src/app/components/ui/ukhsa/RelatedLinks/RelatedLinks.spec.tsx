@@ -47,12 +47,12 @@ describe('Related links footer variant', () => {
 
     expect(
       within(listItems[0]).getByRole('link', {
-        name: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season',
+        name: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season (opens in a new window)',
       })
     ).toBeInTheDocument()
     expect(
       within(listItems[0]).getByRole('link', {
-        name: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season',
+        name: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season (opens in a new window)',
       })
     ).toHaveAttribute(
       'href',
@@ -65,10 +65,14 @@ describe('Related links footer variant', () => {
     ).toBeInTheDocument()
 
     expect(
-      within(listItems[1]).getByRole('link', { name: 'Respiratory syncytial virus (RSV): guidance, data and analysis' })
+      within(listItems[1]).getByRole('link', {
+        name: 'Respiratory syncytial virus (RSV): guidance, data and analysis (opens in a new window)',
+      })
     ).toBeInTheDocument()
     expect(
-      within(listItems[1]).getByRole('link', { name: 'Respiratory syncytial virus (RSV): guidance, data and analysis' })
+      within(listItems[1]).getByRole('link', {
+        name: 'Respiratory syncytial virus (RSV): guidance, data and analysis (opens in a new window)',
+      })
     ).toHaveAttribute(
       'href',
       'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis'
@@ -130,19 +134,19 @@ describe('Related links sidebar variant', () => {
 
     expect(listItems).toHaveLength(2)
 
-    expect(within(listItems[0]).getByRole('link', { name: 'View swagger documentation' })).toBeInTheDocument()
-    expect(within(listItems[0]).getByRole('link', { name: 'View swagger documentation' })).toHaveAttribute(
-      'href',
-      'https://api.dev.ukhsa-dashboard.data.gov.uk/'
-    )
+    expect(
+      within(listItems[0]).getByRole('link', { name: 'View swagger documentation (opens in a new window)' })
+    ).toBeInTheDocument()
+    expect(
+      within(listItems[0]).getByRole('link', { name: 'View swagger documentation (opens in a new window)' })
+    ).toHaveAttribute('href', 'https://api.dev.ukhsa-dashboard.data.gov.uk/')
 
     expect(
-      within(listItems[1]).getByRole('link', { name: 'Contribute to our open source project' })
+      within(listItems[1]).getByRole('link', { name: 'Contribute to our open source project (opens in a new window)' })
     ).toBeInTheDocument()
-    expect(within(listItems[1]).getByRole('link', { name: 'Contribute to our open source project' })).toHaveAttribute(
-      'href',
-      'github.com'
-    )
+    expect(
+      within(listItems[1]).getByRole('link', { name: 'Contribute to our open source project (opens in a new window)' })
+    ).toHaveAttribute('href', 'github.com')
   })
 })
 
