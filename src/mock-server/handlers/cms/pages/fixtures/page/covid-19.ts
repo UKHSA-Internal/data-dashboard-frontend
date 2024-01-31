@@ -802,6 +802,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
     },
   ],
   enable_area_selector: true,
+  selected_topics: ['COVID-19'],
   related_links: relatedLinksMock,
   last_published_at: '2023-03-21T10:25:34.452098Z',
 }

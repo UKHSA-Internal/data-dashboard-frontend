@@ -20,6 +20,9 @@ test.describe('Other respiratory viruses page', () => {
       await otherRespiratoryVirusesPage.hasHeading()
       await otherRespiratoryVirusesPage.hasDescription()
     })
+    await test.step('does not display the area selector', async () => {
+      await app.hasNotAreaSelector()
+    })
     await test.step('displays last updated date', async () => {
       await otherRespiratoryVirusesPage.hasLastUpdated()
     })
