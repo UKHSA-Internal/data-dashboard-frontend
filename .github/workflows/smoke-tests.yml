@@ -1,0 +1,73 @@
+name: Smoke Tests
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger_smoke_tests]
+
+env:
+  AWS_REGION: 'eu-west-2'
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for the actions/checkout
+
+jobs:
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+  # TODO: Playwright currently needs a local instance of the app to initialise correctly
+  # We should tweak this to not need this so the below job can be removed.
+  build:
+    name: Build
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Build
+        run: NODE_ENV=test npm run build
+
+  smoke-tests:
+    name: Playwright smoke tests (${{ matrix.shard }}/${{ strategy.job-total }})
+    needs: [build]
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [2]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
+
+      - name: Start mock server
+        run: npm run dev:mock-server &
+
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+
+      - name: Run Playwright tests
+        run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
+          path: playwright-report/
+          retention-days: 10
