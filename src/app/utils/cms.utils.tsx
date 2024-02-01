@@ -11,6 +11,7 @@ import {
   AreaSelectorLoader,
   Chart,
   ChartRowCard,
+  ChartRowCardHeader,
   Download,
   Headline,
   Percentage,
@@ -69,13 +70,9 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
                 className="flex flex-col gap-6"
               >
-                <header>
-                  <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
-                    {column.value.title}
-                  </h3>
-                  <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
+                <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
                   <Timestamp data={column.value} size={size} />
-                </header>
+                </ChartRowCardHeader>
                 <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
                   <TabsList>
                     <TabsTrigger asChild value="chart">
