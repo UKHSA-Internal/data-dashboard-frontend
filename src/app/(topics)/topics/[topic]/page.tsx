@@ -4,7 +4,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { Contents, ContentsItem, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { PageSection, PageSectionWithContents, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
 import { renderCard } from '@/app/utils/cms.utils'
 
@@ -61,13 +61,13 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
           </Details>
         </>
       )}
-      <Contents>
+      <PageSectionWithContents>
         {body.map(({ id, value }) => (
-          <ContentsItem key={id} heading={value.heading}>
+          <PageSection key={id} heading={value.heading}>
             {value.content.map(renderCard)}
-          </ContentsItem>
+          </PageSection>
         ))}
-      </Contents>
+      </PageSectionWithContents>
       <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>
