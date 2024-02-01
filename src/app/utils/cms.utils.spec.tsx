@@ -1,5 +1,7 @@
 import { render, screen, within } from '@testing-library/react'
+import { ComponentProps } from 'react'
 
+import { ChartRowCardHeader } from '../components/cms'
 import {
   mockChartRowCardWithChartHeadlineAndTrendCard,
   mockChartRowCardWithDualChartCard,
@@ -13,6 +15,8 @@ import {
 } from './__mocks__/cms'
 import { renderBlock, renderCard, renderSection } from './cms.utils'
 
+// This is an ugly hack because Jest currently cannot render nested server components. As a result we must
+// stub these components in order to test the functionality within cms.utils.tsx
 jest.mock('../components/cms', () => ({
   ...jest.requireActual('../components/cms'),
   Timestamp: () => <div>Up to and including 27 September 2023</div>,
@@ -22,6 +26,13 @@ jest.mock('../components/cms', () => ({
   Percentage: () => <div>Mocked percentage number</div>,
   Headline: () => <div>Mocked headline number</div>,
   Trend: () => <div>Mocked trend number</div>,
+  ChartRowCardHeader: ({ title, description, children, id }: ComponentProps<typeof ChartRowCardHeader>) => (
+    <header>
+      <h3 id={`chart-row-card-heading-${id}`}>{title}</h3>
+      <p>{description}</p>
+      {children}
+    </header>
+  ),
 }))
 
 describe('Displaying a section from the cms home page', () => {
