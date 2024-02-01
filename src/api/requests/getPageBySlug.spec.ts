@@ -5,7 +5,7 @@ import { logger } from '@/lib/logger'
 import { whatsNewParentMock } from '@/mock-server/handlers/cms/pages/fixtures/page'
 import { pagesWithWhatsNewParentTypeMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
-import { client } from '../api-utils'
+import { client } from '../utils/api.utils'
 import { PageType } from './cms/getPages'
 import { getPageBySlug } from './getPageBySlug'
 

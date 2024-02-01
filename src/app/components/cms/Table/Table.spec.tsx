@@ -2,6 +2,7 @@ import { ComponentProps, ReactElement } from 'react'
 
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
+import { useSearchParams } from '@/app/hooks/useSearchParams'
 import { render } from '@/config/test-utils'
 
 import { Table } from './Table'
@@ -18,6 +19,11 @@ getChartsMock.mockResolvedValue({
 // Mock table api
 jest.mock('@/api/requests/tables/getTables')
 const getTableMock = jest.mocked(getTables)
+
+// Mock the url utils
+const defaultUrl = new URL('http://localhost')
+jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
+jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
 
 getTableMock.mockResolvedValue({
   success: true,
@@ -125,14 +131,23 @@ test('table with row data', async () => {
   expect(cells[4]).toHaveTextContent('8,392.6')
 })
 
-test('table api request fails', async () => {
+test('table api request fails displays a fallback message', async () => {
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
+
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
-  const { queryByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+  const { queryByRole, getByText, getByRole } = render(
+    (await Table({ data: mockData, size: mockSize })) as ReactElement
+  )
 
   expect(
     queryByRole('table', { name: 'Table Title data for table Body Up to and including 10 May 2023' })
   ).not.toBeInTheDocument()
+
+  expect(getByText('No data available in North East')).toBeInTheDocument()
+  expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
 })
 
 test('table data containing null plot points', async () => {
@@ -157,4 +172,42 @@ test('table data containing null plot points', async () => {
 
   expect(cells).toHaveLength(1)
   expect(cells[0]).toHaveTextContent('-')
+})
+
+test('table by geography and geography type when both are present in the url search params', async () => {
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
+
+  const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+  expect(getTableMock).toHaveBeenCalledWith({
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        chart_type: 'line_with_shaded_section',
+        date_from: null,
+        date_to: null,
+        geography: 'North East',
+        geography_type: 'UKHSA Region',
+        stratum: '',
+      },
+    ],
+    x_axis: 'x-axis',
+    y_axis: 'y-axis',
+  })
+
+  expect(
+    getByRole('table', { name: 'Table Title data for table Body Up to and including 10 May 2023' })
+  ).toBeInTheDocument()
+
+  const cells = getAllByRole('cell')
+
+  expect(cells).toHaveLength(5)
+  expect(cells[0]).toHaveTextContent('12,630')
+  expect(cells[1]).toHaveTextContent('9,360')
+  expect(cells[2]).toHaveTextContent('12,345.67')
+  expect(cells[3]).toHaveTextContent('600.05')
+  expect(cells[4]).toHaveTextContent('8,392.6')
 })

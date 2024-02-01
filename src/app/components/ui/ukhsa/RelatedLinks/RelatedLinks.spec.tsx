@@ -35,6 +35,7 @@ describe('Related links footer variant', () => {
             {body}
           </RelatedLink>
         )),
+        variant: 'footer',
       })) as ReactElement
     )
 
@@ -45,40 +46,49 @@ describe('Related links footer variant', () => {
     expect(listItems).toHaveLength(2)
 
     expect(
-      within(listItems[0]).getByText('National flu and COVID-19 surveillance reports: 2022 to 2023 season')
+      within(listItems[0]).getByRole('link', {
+        name: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season (opens in a new window)',
+      })
     ).toBeInTheDocument()
+    expect(
+      within(listItems[0]).getByRole('link', {
+        name: 'National flu and COVID-19 surveillance reports: 2022 to 2023 season (opens in a new window)',
+      })
+    ).toHaveAttribute(
+      'href',
+      'https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season'
+    )
     expect(
       within(listItems[0]).getByText(
         'National influenza and COVID-19 report, monitoring COVID-19 activity, seasonal flu and other seasonal respiratory illnesses.'
       )
     ).toBeInTheDocument()
-    expect(
-      within(listItems[0]).getByText('National flu and COVID-19 surveillance reports: 2022 to 2023 season')
-    ).toHaveAttribute(
-      'href',
-      'https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2022-to-2023-season'
-    )
 
     expect(
-      within(listItems[1]).getByText('Respiratory syncytial virus (RSV): guidance, data and analysis')
+      within(listItems[1]).getByRole('link', {
+        name: 'Respiratory syncytial virus (RSV): guidance, data and analysis (opens in a new window)',
+      })
     ).toBeInTheDocument()
+    expect(
+      within(listItems[1]).getByRole('link', {
+        name: 'Respiratory syncytial virus (RSV): guidance, data and analysis (opens in a new window)',
+      })
+    ).toHaveAttribute(
+      'href',
+      'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis'
+    )
     expect(
       within(listItems[1]).getByText(
         'These documents provide advice on the symptoms, diagnosis, treatment, management and epidemiology of respiratory syncytial virus.'
       )
     ).toBeInTheDocument()
-    expect(
-      within(listItems[1]).getByText('Respiratory syncytial virus (RSV): guidance, data and analysis')
-    ).toHaveAttribute(
-      'href',
-      'https://www.gov.uk/government/collections/respiratory-syncytial-virus-rsv-guidance-data-and-analysis'
-    )
   })
 
   test('Displays nothing if no related links are provided', async () => {
     const { container } = render(
       (await RelatedLinks({
         children: [],
+        variant: 'footer',
       })) as ReactElement
     )
 
@@ -124,17 +134,19 @@ describe('Related links sidebar variant', () => {
 
     expect(listItems).toHaveLength(2)
 
-    expect(within(listItems[0]).getByText('View swagger documentation')).toBeInTheDocument()
-    expect(within(listItems[0]).getByText('View swagger documentation')).toHaveAttribute(
-      'href',
-      'https://api.dev.ukhsa-dashboard.data.gov.uk/'
-    )
+    expect(
+      within(listItems[0]).getByRole('link', { name: 'View swagger documentation (opens in a new window)' })
+    ).toBeInTheDocument()
+    expect(
+      within(listItems[0]).getByRole('link', { name: 'View swagger documentation (opens in a new window)' })
+    ).toHaveAttribute('href', 'https://api.dev.ukhsa-dashboard.data.gov.uk/')
 
-    expect(within(listItems[1]).getByText('Contribute to our open source project')).toBeInTheDocument()
-    expect(within(listItems[1]).getByText('Contribute to our open source project')).toHaveAttribute(
-      'href',
-      'github.com'
-    )
+    expect(
+      within(listItems[1]).getByRole('link', { name: 'Contribute to our open source project (opens in a new window)' })
+    ).toBeInTheDocument()
+    expect(
+      within(listItems[1]).getByRole('link', { name: 'Contribute to our open source project (opens in a new window)' })
+    ).toHaveAttribute('href', 'github.com')
   })
 })
 
@@ -147,6 +159,7 @@ test('displays a custom header', async () => {
         </RelatedLink>
       )),
       heading: 'Custom heading test',
+      variant: 'sidebar',
     })) as ReactElement
   )
 

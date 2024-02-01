@@ -1,48 +1,69 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, within } from '@testing-library/react'
 import { ZodError } from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { logger } from '@/lib/logger'
-import { areaTypeMock } from '@/mock-server/handlers/geographies/v1/types'
-import { mockNations } from '@/mock-server/handlers/geographies/v1/types/fixtures'
+import { geographyMock } from '@/mock-server/handlers/geographies/v2/[topic]'
+import { mockNations } from '@/mock-server/handlers/geographies/v2/fixtures'
 
 import { AreaSelector } from './AreaSelector'
 
 describe('AreaSelector', () => {
   beforeEach(() => {
-    mockRouter.push('/topics/mock-topic')
+    mockRouter.push('/topics/covid-19')
     console.error = jest.fn()
   })
 
-  test('fetches the area types on page load', async () => {
-    jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
+  test('fetches the geographies on page load and populates the area type dropdown with a list of area types', async () => {
+    jest.mocked(client).mockResolvedValueOnce({ data: geographyMock, status: 200 })
 
-    render(await AreaSelector())
+    render(await AreaSelector({ areaType: undefined, selectedTopics: ['COVID-19'] }))
 
     expect(screen.getByLabelText('Area type')).toHaveValue('')
 
-    for (const areaType of areaTypeMock) {
-      expect(screen.getByRole('option', { name: areaType.name })).toBeInTheDocument()
+    for (const geography of geographyMock) {
+      expect(
+        within(screen.getByLabelText('Area type')).getByRole('option', { name: geography.geography_type })
+      ).toBeInTheDocument()
     }
   })
 
-  test('fetches the area names when an area type has already been selected', async () => {
-    jest.mocked(client).mockResolvedValueOnce({ data: areaTypeMock, status: 200 })
-    jest.mocked(client).mockResolvedValueOnce({ data: { geographies: mockNations }, status: 200 })
+  test('pre-populates the area type from the url search parameters', async () => {
+    mockRouter.push('/topics/covid-19?areaType=Nation')
+    jest.mocked(client).mockResolvedValueOnce({ data: geographyMock, status: 200 })
 
-    render(await AreaSelector({ areaType: 'Nation' }))
+    render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
+    expect(screen.getByLabelText('Area type')).toHaveValue('Nation')
+  })
 
-    expect(screen.getByLabelText('Area type')).toHaveValue('')
+  test('pre-populates the area name from the url search parameters', async () => {
+    mockRouter.push('/topics/covid-19?areaType=Nation&areaName=England')
+    jest.mocked(client).mockResolvedValueOnce({ data: geographyMock, status: 200 })
 
-    for (const areaType of areaTypeMock) {
-      expect(screen.getByRole('option', { name: areaType.name })).toBeInTheDocument()
+    render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
+    expect(screen.getByLabelText('Area type')).toHaveValue('Nation')
+    expect(screen.getByLabelText('Area name')).toHaveValue('England')
+  })
+
+  test('shows a dropdown list of area names when an area type has been set', async () => {
+    mockRouter.push('/topics/covid-19?areaType=Nation')
+
+    jest.mocked(client).mockResolvedValueOnce({ data: geographyMock, status: 200 })
+
+    render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
+
+    expect(screen.getByLabelText('Area type')).toHaveValue('Nation')
+    expect(screen.getByLabelText('Area name')).toHaveValue('')
+
+    for (const geography of geographyMock) {
+      within(screen.getByLabelText('Area type')).getByRole('option', { name: geography.geography_type })
     }
 
     expect(screen.getByLabelText('Area name')).toHaveValue('')
 
     for (const nation of mockNations) {
-      expect(screen.getByRole('option', { name: nation.name })).toBeInTheDocument()
+      expect(within(screen.getByLabelText('Area name')).getByRole('option', { name: nation.name })).toBeInTheDocument()
     }
   })
 
@@ -52,7 +73,7 @@ describe('AreaSelector', () => {
       status: 500,
     })
 
-    const { container } = render(await AreaSelector())
+    const { container } = render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
 
     expect(logger.error).toHaveBeenCalledWith(
       'Could not load area selector %s',

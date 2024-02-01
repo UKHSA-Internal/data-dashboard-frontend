@@ -7,7 +7,18 @@ import { Body, CardTypes } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
-import { Chart, ChartRowCard, Download, Headline, Percentage, Table, Timestamp, Trend } from '../components/cms'
+import {
+  AreaSelectorLoader,
+  Chart,
+  ChartRowCard,
+  ChartRowCardHeader,
+  Download,
+  Headline,
+  Percentage,
+  Table,
+  Timestamp,
+  Trend,
+} from '../components/cms'
 
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
@@ -59,13 +70,9 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
                 className="flex flex-col gap-6"
               >
-                <header>
-                  <h3 id={`chart-row-card-heading-${column.id}`} className="govuk-body-m mb-2 text-dark-grey">
-                    {column.value.title}
-                  </h3>
-                  <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{column.value.body}</p>
+                <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
                   <Timestamp data={column.value} size={size} />
-                </header>
+                </ChartRowCardHeader>
                 <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
                   <TabsList>
                     <TabsTrigger asChild value="chart">
@@ -107,7 +114,9 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                         </div>
                       </>
                     )}
-                    <Chart data={column.value} size={size} />
+                    <AreaSelectorLoader>
+                      <Chart data={column.value} size={size} />
+                    </AreaSelectorLoader>
                   </TabsContent>
                   <TabsContent
                     value="table"
@@ -119,9 +128,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Tabular data
                     </span>
-                    <div className="govuk-!-margin-top-3">
-                      <Table data={column.value} size={size} />
-                    </div>
+                    <Table data={column.value} size={size} />
                   </TabsContent>
                   <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
                     <span
@@ -130,7 +137,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     >
                       Download
                     </span>
-                    <Download chart={column.value.chart} />
+                    <Download data={column.value} />
                   </TabsContent>
                 </Tabs>
               </Card>

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
-import { client } from '@/api/api-utils'
 import type { Metrics, Topics } from '@/api/models'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import {
   cases_casesByDay,

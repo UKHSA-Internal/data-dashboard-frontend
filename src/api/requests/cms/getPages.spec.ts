@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { client } from '@/api/api-utils'
+import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import {
   pagesWithHomeTypeMock,
@@ -170,7 +170,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     expect(logger.info).toHaveBeenNthCalledWith(
       1,
-      'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*&order=-date_posted&limit=15&offset=0'
+      'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*&order=-date_posted&limit=10&offset=0'
     )
 
     expect(result).toEqual<ErrorResponse>({

@@ -6,11 +6,11 @@ import { useTranslation } from '../../../../i18n'
 interface RelatedLinksProps {
   children: ReactNode[]
   className?: string
-  variant?: 'footer' | 'sidebar'
+  variant: 'footer' | 'sidebar'
   heading?: string
 }
 
-export async function RelatedLinks({ children, className, variant = 'footer', heading }: RelatedLinksProps) {
+export async function RelatedLinks({ children, className, variant, heading }: RelatedLinksProps) {
   const { t } = await useTranslation('common')
 
   if (children.length === 0) return null
