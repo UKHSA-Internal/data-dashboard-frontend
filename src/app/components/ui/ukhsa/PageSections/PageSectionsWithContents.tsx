@@ -1,7 +1,7 @@
 import kebabCase from 'lodash/kebabCase'
 import { Children, cloneElement, isValidElement, ReactNode } from 'react'
 
-import { ContentsLink } from '../Contents/Contents'
+import { Contents, ContentsLink } from '../Contents/Contents'
 
 /**
  * PageSectionWithContents
@@ -13,22 +13,18 @@ import { ContentsLink } from '../Contents/Contents'
  */
 interface PageSectionWithContentsProps {
   children: ReactNode
-  heading?: string
 }
 
-export const PageSectionWithContents = ({ children, heading = 'Contents' }: PageSectionWithContentsProps) => {
+export const PageSectionWithContents = ({ children }: PageSectionWithContentsProps) => {
   return (
     <>
-      <nav className="govuk-!-margin-bottom-5" aria-label="Contents">
-        <h2 className="govuk-heading-s govuk-!-margin-bottom-1 font-normal">{heading}</h2>
-        <ol className="govuk-!-margin-bottom-6 govuk-!-margin-left-4">
-          {Children.map(children, (child: ReactNode) => {
-            return isValidElement(child) ? (
-              <ContentsLink href={`#${kebabCase(child.props.heading)}`}>{child.props.heading}</ContentsLink>
-            ) : null
-          })}
-        </ol>
-      </nav>
+      <Contents>
+        {Children.map(children, (child: ReactNode) => {
+          return isValidElement(child) ? (
+            <ContentsLink href={`#${kebabCase(child.props.heading)}`}>{child.props.heading}</ContentsLink>
+          ) : null
+        })}
+      </Contents>
       {Children.map(children, (child: ReactNode) => {
         return isValidElement(child) ? (
           <>
