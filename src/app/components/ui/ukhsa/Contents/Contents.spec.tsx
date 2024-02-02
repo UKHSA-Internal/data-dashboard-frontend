@@ -1,40 +1,21 @@
 import { render, within } from '@/config/test-utils'
 
-import { Contents, ContentsItem } from './Contents'
-
-const getComponent = () => (
-  <Contents>
-    <ContentsItem heading="Covid">covid stuff</ContentsItem>
-    <ContentsItem heading="Man Flu">flu stuff</ContentsItem>
-    <ContentsItem heading="Influenza">influenza stuff</ContentsItem>
-  </Contents>
-)
+import { Contents, ContentsLink } from './Contents'
 
 test('Automatically generates a table of contents usings the headings of each item', () => {
-  const { getByRole } = render(getComponent())
+  const { getByRole } = render(
+    <Contents>
+      <ContentsLink href="/access-our-data/overview">Overview</ContentsLink>
+      <ContentsLink href="/access-our-data/what-is-an-api">What is an API</ContentsLink>
+      <ContentsLink href="/access-our-data/getting-started">Getting started</ContentsLink>
+    </Contents>
+  )
 
   const nav = getByRole('navigation')
   const listitems = within(nav).getAllByRole('listitem')
 
   expect(listitems).toHaveLength(3)
-  expect(within(listitems[0]).getByText('Covid')).toHaveAttribute('href', '#covid')
-  expect(within(listitems[1]).getByText('Man Flu')).toHaveAttribute('href', '#man-flu')
-  expect(within(listitems[2]).getByText('Influenza')).toHaveAttribute('href', '#influenza')
-})
-
-test('Displays a heading and content for each contents item', () => {
-  const { getByRole, getAllByRole } = render(getComponent())
-
-  // Check the headings are correctly associated with the article element
-  expect(getByRole('region', { name: 'Covid' }))
-  expect(getByRole('region', { name: 'Man Flu' }))
-  expect(getByRole('region', { name: 'Influenza' }))
-
-  const sections = getAllByRole('region')
-
-  // Check the order of the sections are correct & the content appears
-  expect(sections).toHaveLength(3)
-  expect(within(sections[0]).getByText('covid stuff'))
-  expect(within(sections[1]).getByText('flu stuff'))
-  expect(within(sections[2]).getByText('influenza stuff'))
+  expect(within(listitems[0]).getByText('Overview')).toHaveAttribute('href', '/access-our-data/overview')
+  expect(within(listitems[1]).getByText('What is an API')).toHaveAttribute('href', '/access-our-data/what-is-an-api')
+  expect(within(listitems[2]).getByText('Getting started')).toHaveAttribute('href', '/access-our-data/getting-started')
 })
