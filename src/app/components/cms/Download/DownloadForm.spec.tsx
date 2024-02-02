@@ -21,6 +21,8 @@ const mockData: ComponentProps<typeof DownloadForm>['chart'] = [
       stratum: '',
       geography: '',
       geography_type: '',
+      age: '',
+      sex: '',
     },
     id: '123',
   },
@@ -51,6 +53,8 @@ describe('DownloadForm', () => {
         geography: '',
         date_from: null,
         date_to: null,
+        age: '',
+        sex: '',
       })
     )
 
@@ -79,6 +83,8 @@ describe('DownloadForm', () => {
         geography: 'England',
         date_from: null,
         date_to: null,
+        age: '',
+        sex: '',
       })
     )
 
@@ -112,6 +118,8 @@ describe('DownloadForm', () => {
         geography: 'England',
         date_from: null,
         date_to: null,
+        age: '',
+        sex: '',
       })
     )
 
