@@ -15,6 +15,8 @@ export const requestSchema = z.object({
       geography_type: z.optional(GeographyType),
       date_from: z.string().nullable().optional(),
       date_to: z.string().nullable().optional(),
+      age: z.string().nullable().optional(),
+      sex: z.string().nullable().optional(),
     })
   ),
 })
