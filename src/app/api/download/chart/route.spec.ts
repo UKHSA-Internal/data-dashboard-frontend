@@ -18,23 +18,21 @@ interface RequestBody {
   format: string
 }
 
-const plots: RequestBody['plots'] = [
-  {
-    topic: 'COVID-19',
-    metric: 'new_cases_daily',
-    date_from: null,
-    date_to: null,
-    stratum: 'default',
-    geography: 'England',
-    geography_type: 'Nation',
-  },
-]
+const mockPlot: RequestBody['plots'][number] = {
+  topic: 'COVID-19',
+  metric: 'new_cases_daily',
+  date_from: null,
+  date_to: null,
+  stratum: 'default',
+  geography: 'England',
+  geography_type: 'Nation',
+}
 
 describe('POST /api/download/chart', () => {
   test('Downloads the requested chart in csv format', async () => {
     const formData = new FormData()
     formData.set('format', 'csv')
-    formData.set('plots', JSON.stringify(plots))
+    formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -50,6 +48,55 @@ describe('POST /api/download/chart', () => {
 
     const res = await POST(req)
 
+    expect(client).toHaveBeenCalledWith('downloads/v2', {
+      body: {
+        file_format: 'csv',
+        plots: [mockPlot],
+      },
+    })
+    expect(logger.error).not.toHaveBeenCalled()
+    expect(res.status).toBe(200)
+    expect(res.headers.get('content-type')).toEqual('text/csv')
+    expect(await res.text()).toEqual(downloadsCsvFixture)
+  })
+
+  test('Downloads the requested chart with multiple plots', async () => {
+    const formData = new FormData()
+    formData.set('format', 'csv')
+    formData.set('plots', JSON.stringify(mockPlot))
+    formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-1' }))
+    formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-2' }))
+
+    const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
+      headers: {
+        get: () => 'http://localhost:3000',
+      },
+      formData: () => formData,
+    })
+
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsCsvFixture,
+      status: 200,
+    })
+
+    const res = await POST(req)
+
+    expect(client).toHaveBeenCalledWith('downloads/v2', {
+      body: {
+        file_format: 'csv',
+        plots: [
+          mockPlot,
+          {
+            ...mockPlot,
+            stratum: 'mock-1',
+          },
+          {
+            ...mockPlot,
+            stratum: 'mock-2',
+          },
+        ],
+      },
+    })
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toEqual('text/csv')
@@ -59,7 +106,7 @@ describe('POST /api/download/chart', () => {
   test('Downloads the requested chart in json format', async () => {
     const formData = new FormData()
     formData.set('format', 'json')
-    formData.set('plots', JSON.stringify(plots))
+    formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -84,7 +131,7 @@ describe('POST /api/download/chart', () => {
   test('Returns status 301 when wrong form body is sent', async () => {
     const formData = new FormData()
     formData.set('format', 'not_valid')
-    formData.set('plots', JSON.stringify(plots))
+    formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -118,7 +165,7 @@ describe('POST /api/download/chart', () => {
   test('Returns status 301 when the proxied request fails', async () => {
     const formData = new FormData()
     formData.set('format', 'csv')
-    formData.set('plots', JSON.stringify(plots))
+    formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
