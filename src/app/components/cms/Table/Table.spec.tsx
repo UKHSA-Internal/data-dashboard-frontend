@@ -150,6 +150,21 @@ test('table api request fails displays a fallback message', async () => {
   expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
 })
 
+test('Fallback message with escaped characters', async () => {
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(
+      new URL('http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust')
+        .searchParams
+    )
+
+  getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
+
+  const { getByText } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+  expect(getByText("No data available in Birmingham Women's and Children's NHS Foundation Trust")).toBeInTheDocument()
+})
+
 test('table data containing null plot points', async () => {
   getTableMock.mockResolvedValueOnce({
     success: true,
