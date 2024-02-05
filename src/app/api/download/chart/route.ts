@@ -9,14 +9,15 @@ export async function POST(req: NextRequest) {
 
   const body = await req.formData()
 
-  const plotsFormData = body.get('plots')
-
-  if (typeof plotsFormData !== 'string') {
-    return NextResponse.redirect(url, 301)
+  const plots = []
+  for (const [key, value] of body.entries()) {
+    if (key === 'plots') {
+      if (typeof value !== 'string') {
+        return NextResponse.redirect(url, 301)
+      }
+      plots.push(JSON.parse(value))
+    }
   }
-
-  const jsonPlots = JSON.parse(plotsFormData)
-  const plots = Array.isArray(jsonPlots) ? jsonPlots : [jsonPlots]
 
   const params = requestSchema.safeParse({
     file_format: body.get('format'),
