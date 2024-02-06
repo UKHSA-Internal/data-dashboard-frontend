@@ -239,6 +239,25 @@ test.describe('COVID-19 page', () => {
       await app.checkAreaSelectorChartsRefreshedForLocation('')
     })
   })
+
+  test('Area selection for a location with special characters', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto(
+        '/topics/covid-19?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
+      )
+    })
+    await test.step('check the area selector is open by default', async () => {
+      await app.checkAreaSelectorFormIsActive()
+    })
+    await test.step('document title shows the selected location', async () => {
+      await app.hasDocumentTitle(
+        "COVID-19 in Birmingham Women's and Children's NHS Foundation Trust | UKHSA data dashboard"
+      )
+    })
+    await test.step('page heading shows the selected location', async () => {
+      await covid19Page.hasHeading("COVID-19 in Birmingham Women's and Children's NHS Foundation Trust")
+    })
+  })
 })
 
 test.describe('COVID-19 page - mobile', () => {
