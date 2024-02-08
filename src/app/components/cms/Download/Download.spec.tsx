@@ -86,3 +86,18 @@ test('Chart download button fails to show due to lack of data', async () => {
   expect(getByText('No data available in North East')).toBeInTheDocument()
   expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
 })
+
+test('Fallback message with escaped characters', async () => {
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(
+      new URL('http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust')
+        .searchParams
+    )
+
+  getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
+
+  const { getByText } = render((await Download({ data: mockData })) as ReactElement)
+
+  expect(getByText("No data available in Birmingham Women's and Children's NHS Foundation Trust")).toBeInTheDocument()
+})

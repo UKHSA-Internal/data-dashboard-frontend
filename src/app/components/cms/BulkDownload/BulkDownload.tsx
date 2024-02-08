@@ -2,7 +2,7 @@ import { bulkExportApiRoutePath, bulkExportFormat } from '@/config/constants'
 
 export async function BulkDownload() {
   return (
-    <form action={bulkExportApiRoutePath} method="POST">
+    <form action={bulkExportApiRoutePath} method="POST" aria-label="Bulk downloads">
       <input type="hidden" name="file_format" value={bulkExportFormat} />
       <button
         className="govuk-button govuk-!-margin-bottom-0 flex w-auto items-center gap-2 print:hidden"

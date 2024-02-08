@@ -177,3 +177,38 @@ test('renders a fallback message when the chart requests fail', async () => {
   expect(getByText('No data available in North East')).toBeInTheDocument()
   expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
 })
+
+test('Fallback message with escaped characters', async () => {
+  jest
+    .mocked(useSearchParams)
+    .mockReturnValueOnce(
+      new URL('http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust')
+        .searchParams
+    )
+
+  getChartsMock.mockResolvedValueOnce({
+    success: false,
+    error: new ZodError([
+      {
+        received: 'mock',
+        code: 'invalid_enum_value',
+        options: [],
+        path: ['mock'],
+        message: 'Invalid',
+      },
+    ]),
+  })
+
+  const data: ComponentProps<typeof Chart>['data'] = {
+    x_axis: null,
+    y_axis: null,
+    chart: [],
+    body: '',
+    title: 'Cases by specimen date',
+    headline_number_columns: [],
+  }
+
+  const { getByText } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
+
+  expect(getByText("No data available in Birmingham Women's and Children's NHS Foundation Trust")).toBeInTheDocument()
+})
