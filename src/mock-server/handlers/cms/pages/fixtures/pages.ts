@@ -40,7 +40,7 @@ export const pagesWithHomeTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 7,
+    total_count: 6,
   },
   items: [
     {
@@ -115,6 +115,14 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       },
       title: compliancePageMock.title,
     },
+  ],
+}
+
+export const pagesWithCompositeTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
     {
       id: bulkDownloadsPageMock.id,
       meta: {
@@ -282,6 +290,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
 const items = [
   ...pagesWithHomeTypeMock.items,
   ...pagesWithCommonTypeMock.items,
+  ...pagesWithCompositeTypeMock.items,
   ...pagesWithTopicTypeMock.items,
   ...pagesWithWhatsNewParentTypeMock.items,
   ...pagesWithWhatsNewChildTypeMock.items,
