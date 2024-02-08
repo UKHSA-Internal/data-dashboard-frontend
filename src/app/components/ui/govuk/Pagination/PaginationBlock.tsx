@@ -10,7 +10,7 @@ export const PaginationBlock = ({ previousLink, previousText, nextLink, nextText
     <nav className="govuk-pagination govuk-pagination--block" aria-label="PaginationBlock">
       {previousLink && previousText && (
         <div className="govuk-pagination__prev">
-          <a className="govuk-link govuk-pagination__link" href={previousLink} rel="prev">
+          <a className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={previousLink} rel="prev">
             <svg
               className="govuk-pagination__icon govuk-pagination__icon--prev inline align-baseline"
               xmlns="http://www.w3.org/2000/svg"
@@ -32,7 +32,7 @@ export const PaginationBlock = ({ previousLink, previousText, nextLink, nextText
       )}
       {nextLink && nextText && (
         <div className="govuk-pagination__next">
-          <a className="govuk-link govuk-pagination__link" href={nextLink} rel="next">
+          <a className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={nextLink} rel="next">
             <svg
               className="govuk-pagination__icon govuk-pagination__icon--next inline align-baseline"
               xmlns="http://www.w3.org/2000/svg"
