@@ -6,6 +6,7 @@ import { logger } from '@/lib/logger'
 import {
   allPagesMock,
   pagesWithCommonTypeMock,
+  pagesWithCompositeTypeMock,
   pagesWithHomeTypeMock,
   pagesWithMetricsChildTypeMock,
   pagesWithMetricsParentTypeMock,
@@ -19,6 +20,7 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'home.HomePage': pagesWithHomeTypeMock,
   'topic.TopicPage': pagesWithTopicTypeMock,
   'common.CommonPage': pagesWithCommonTypeMock,
+  'composite.CompositePage': pagesWithCompositeTypeMock,
   'whats_new.WhatsNewParentPage': pagesWithWhatsNewParentTypeMock,
   'whats_new.WhatsNewChildEntry': pagesWithWhatsNewChildTypeMock,
   'metrics_documentation.MetricsDocumentationParentPage': pagesWithMetricsParentTypeMock,
@@ -45,11 +47,11 @@ export default async function handler(req: Request, res: Response) {
 
     const pageData = mockedPagesMap[pageType]
 
-    if (req.query['search'] && req.query['search'] !== '') {
+    if (req.query.search && req.query.search !== '') {
       const unfilteredData = mockedPagesMap['metrics_documentation.MetricsDocumentationChildEntry']
 
       const filteredData = unfilteredData.items.filter(({ title }) =>
-        title.includes(req.query['search']?.toString() ?? '')
+        title.includes(req.query.search?.toString() ?? '')
       )
 
       if (filteredData) {
