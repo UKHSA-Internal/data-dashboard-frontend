@@ -79,21 +79,23 @@ jobs:
         if: ${{ success() }}
         with:
           status: success
-          notification_title: ':white_check_mark: {workflow} has {status_message} :white_check_mark:'
+          notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
           message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
           mention_users: ${{ vars.SLACK_MENTION_USERS }}
           mention_users_when: 'failure,warnings'
+          footer: '<{run_url}|View Run>'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: 'Report Failure'
         uses: ravsamhq/notify-slack-action@v1
-        if: ${{ failure() }}
+        if: ${{ success() }}
         with:
           status: failure
-          notification_title: ':alert: {workflow} has {status_message} :alert:'
+          notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
           message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
           mention_users: ${{ vars.SLACK_MENTION_USERS }}
           mention_users_when: 'failure,warnings'
+          footer: '<{run_url}|View Run>'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
