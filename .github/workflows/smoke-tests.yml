@@ -13,83 +13,82 @@ permissions:
   contents: read # This is required for the actions/checkout
 
 jobs:
-  # install:
-  #   name: Install
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - name: Install
-  #       run: npm ci --no-audit --no-fund
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - name: Install
+        run: npm ci --no-audit --no-fund
 
-  # # TODO: Playwright currently needs a local instance of the app to initialise correctly
-  # # We should tweak this to not need this so the below job can be removed.
-  # build:
-  #   name: Build
-  #   needs: [install]
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
-  #     - name: Build
-  #       run: NODE_ENV=test npm run build
+  # TODO: Playwright currently needs a local instance of the app to initialise correctly
+  # We should tweak this to not need this so the below job can be removed.
+  build:
+    name: Build
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Build
+        run: NODE_ENV=test npm run build
 
-  # smoke-tests:
-  #   name: Playwright smoke tests
-  #   needs: [build]
-  #   timeout-minutes: 60
-  #   runs-on: ubuntu-latest
-  #   if: ${{ github.ref == 'refs/heads/main' }}
-  #   steps:
-  #     - uses: actions/checkout@v3
-  #     - uses: ./.github/actions/setup-node
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
+  smoke-tests:
+    name: Playwright smoke tests
+    needs: [build]
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
 
-  #     - name: Setup Playwright
-  #       run: npx playwright install --with-deps
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
 
-  #     - name: Start mock server
-  #       run: npm run dev:mock-server &
+      - name: Start mock server
+        run: npm run dev:mock-server &
 
-  #     - name: Wait for Mock Server
-  #       shell: sh
-  #       run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
-  #     - name: Run Playwright tests
-  #       run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke
-  #     - uses: actions/upload-artifact@v3
-  #       if: always()
-  #       with:
-  #         name: playwright-report-smoke
-  #         path: playwright-report/
-  #         retention-days: 10
+      - name: Run Playwright tests
+        run: baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: playwright-report-smoke
+          path: playwright-report/
+          retention-days: 10
 
-  test-notification:
-    name: Test Notify
+  slack-notify:
+    name: Slack Notify
+    needs: [smoke-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
-      # - name: 'Report Success'
-      #   uses: ravsamhq/notify-slack-action@v1
-      #   if: ${{ success() }}
-      #   with:
-      #     status: success
-      #     notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
-      #     message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
-      #     mention_users: ${{ vars.SLACK_MENTION_USERS }}
-      #     mention_users_when: 'failure,warnings'
-      #     footer: '<{run_url}|View Run>'
-      #   env:
-      #     SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - name: 'Report Success'
+        uses: ravsamhq/notify-slack-action@v1
+        if: ${{ success() }}
+        with:
+          status: success
+          notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
+          message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
+          footer: '<{run_url}|View Run>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: 'Report Failure'
         uses: ravsamhq/notify-slack-action@v1
-        if: ${{ success() }}
+        if: ${{ failure() }}
         with:
           status: failure
           notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
