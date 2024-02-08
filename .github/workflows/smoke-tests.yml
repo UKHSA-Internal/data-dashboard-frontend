@@ -79,8 +79,8 @@ jobs:
         if: ${{ success() }}
         with:
           status: success
-          notification_title: ':white_check_mark: *${{ github.workflow }} has succeeded* :white_check_mark:'
-          message_format: '_${{ github.workflow }}_ in *${{ github.repository }}* was triggered by ${{ github.triggering_actor }}'
+          notification_title: ':white_check_mark: *<${{ github.workflow }}|{workflow_url}> workflow has succeeded* :white_check_mark:'
+          message_format: '_${{ github.workflow }}_ in *<${{ github.repository }}|${{ github.repositoryUrl }}>* was triggered by ${{ github.triggering_actor }}'
           footer: 'Run id is ${{ github.run_id }}'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
@@ -90,9 +90,9 @@ jobs:
         if: ${{ failure() }}
         with:
           status: failure
-          notification_title: ':alert: *${{ github.workflow }} has failed* :alert:'
-          message_format: '_${{ github.workflow }}_ in *${{ github.repository }}* was triggered by ${{ github.triggering_actor }}'
-          footer: 'Run id is ${{ github.run_id }}'
-          mention_groups: '${{ secrets.SLACK_ENGINEERING_GROUP_ID }}'
+          notification_title: ':alert: *<${{ github.workflow }}|{workflow_url}> workflow has failed* :alert:'
+          message_format: '_${{ github.workflow }}_ in *<${{ github.repository }}|${{ github.repositoryUrl }}>* was triggered by ${{ github.triggering_actor }}'
+          mention_users: ${{ vars.SLACK_MENTION_USERS }}
+          mention_users_when: 'failure,warnings'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
