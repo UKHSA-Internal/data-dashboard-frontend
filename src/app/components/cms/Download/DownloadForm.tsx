@@ -68,6 +68,8 @@ export function DownloadForm({ chart }: DownloadFormProps) {
             geography: hasSelectedArea ? areaName : value.geography,
             date_from: value.date_from,
             date_to: value.date_to,
+            age: value.age,
+            sex: value.sex,
           })}
           data-testid="download-form-plots"
         />

@@ -203,7 +203,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
         </div>
       </div>
 
-      <RelatedLinks>
+      <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>
             {body}
