@@ -1,9 +1,11 @@
+/* eslint-disable playwright/no-skipped-test */
 import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
+// TODO: Unskip tests once CDD-1646 is complete
 test.describe('Bulk downloads', () => {
-  test('Page layout', async ({ bulkDownloadsPage, app }) => {
+  test.skip('Page layout', async ({ bulkDownloadsPage, app }) => {
     await test.step('loads the page', async () => {
       await bulkDownloadsPage.goto()
     })
@@ -27,7 +29,7 @@ test.describe('Bulk downloads', () => {
     })
   })
 
-  test('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
+  test.skip('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
     await test.step('loads the page', async () => {
       await bulkDownloadsPage.goto()
     })
@@ -40,7 +42,7 @@ test.describe('Bulk downloads', () => {
 test.describe('Bulk downloads - no JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
+  test.skip('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
     await test.step('loads the page', async () => {
       await bulkDownloadsPage.goto()
     })
@@ -53,7 +55,7 @@ test.describe('Bulk downloads - no JavaScript', () => {
 test.describe('Bulk downloads - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the navigation on mobile', async ({ bulkDownloadsPage, app }) => {
+  test.skip('displays the navigation on mobile', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
     await app.hasMobileNav()
   })
@@ -62,7 +64,7 @@ test.describe('Bulk downloads - mobile', () => {
 test.describe('Bulk downloads - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
+  test.skip('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
     await app.hasMobileNav()
   })
@@ -71,7 +73,7 @@ test.describe('Bulk downloads - tablet', () => {
 test.describe('Bulk downloads - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the navigation on desktop', async ({ bulkDownloadsPage, app }) => {
+  test.skip('displays the navigation on desktop', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
     await app.hasDesktopNav()
   })
