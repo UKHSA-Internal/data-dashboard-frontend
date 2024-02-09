@@ -1,4 +1,3 @@
-import { usePathname } from '@/app/hooks/usePathname'
 import { useSearchParams } from '@/app/hooks/useSearchParams'
 
 type PaginationBlockReturnType = {
@@ -32,12 +31,7 @@ interface PaginationBlockProps {
 export function usePaginationBlock({ paginationLinks }: PaginationBlockProps): PaginationBlockReturnType {
   let pageIndex = 0
 
-  const pathname = usePathname()
   const searchParams = useSearchParams()
-
-  console.log('Pathname: ', pathname)
-  console.log('Search params: ', searchParams)
-  console.log('Params got: ', searchParams.get('page'))
 
   if (searchParams.get('page')) {
     pageIndex = paginationLinks.findIndex(
