@@ -5,10 +5,6 @@ import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { Pagination } from '@/app/components/ui/govuk/Pagination/Pagination'
-import { usePaginationBlock } from '@/app/components/ui/govuk/Pagination/v2/hooks/usePaginationBlock'
-import { Pagination as PaginationV2 } from '@/app/components/ui/govuk/Pagination/v2/Pagination'
-import { PaginationNext } from '@/app/components/ui/govuk/Pagination/v2/PaginationNext'
-import { PaginationPrevious } from '@/app/components/ui/govuk/Pagination/v2/PaginationPrevious'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { MetricsCard } from '@/app/components/ui/ukhsa/MetricsCard/MetricsCard'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
@@ -62,16 +58,6 @@ export async function generateMetadata({
 
 export default async function MetricsParentPage({ searchParams: { search, page = 1 } }: MetricsParentPageProps) {
   const { t } = await useTranslation('metrics')
-  const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
-    paginationLinks: [
-      { pageHref: '/access-our-data?page=overview', pageText: 'Overview' },
-      { pageHref: '/access-our-data?page=what-is-an-api', pageText: 'What is an API' },
-      { pageHref: '/access-our-data?page=getting-started', pageText: 'Getting started' },
-      { pageHref: '/access-our-data?page=api-authentication', pageText: 'API authentication' },
-      { pageHref: '/access-our-data?page=data-structure', pageText: 'Data structure' },
-      { pageHref: '/access-our-data?page=examples', pageText: 'Examples' },
-    ],
-  })
 
   const {
     title,
@@ -98,11 +84,6 @@ export default async function MetricsParentPage({ searchParams: { search, page =
     <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <PaginationV2 variant="block">
-            {previousText && <PaginationPrevious href={previousPageHref}>{previousText}</PaginationPrevious>}
-            {nextText && <PaginationNext href={nextPageHref}>{nextText}</PaginationNext>}
-          </PaginationV2>
-
           <RichText>{body}</RichText>
 
           {/* TODO: CDD-1479 - Investgiate how we can consume i18n inside client components
