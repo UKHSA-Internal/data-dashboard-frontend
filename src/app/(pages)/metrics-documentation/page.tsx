@@ -4,7 +4,10 @@ import { redirect } from 'next/navigation'
 import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { Pagination } from '@/app/components/ui/govuk'
+import { Pagination } from '@/app/components/ui/govuk/Pagination/Pagination'
+import { Pagination as PaginationV2 } from '@/app/components/ui/govuk/Pagination/v2/Pagination'
+import { PaginationNext } from '@/app/components/ui/govuk/Pagination/v2/PaginationNext'
+import { PaginationPrevious } from '@/app/components/ui/govuk/Pagination/v2/PaginationPrevious'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { MetricsCard } from '@/app/components/ui/ukhsa/MetricsCard/MetricsCard'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
@@ -84,6 +87,11 @@ export default async function MetricsParentPage({ searchParams: { search, page =
     <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
+          <PaginationV2 variant="block">
+            <PaginationPrevious href={'/'}>Last section</PaginationPrevious>
+            <PaginationNext href={'/'}>Last section</PaginationNext>
+          </PaginationV2>
+
           <RichText>{body}</RichText>
 
           {/* TODO: CDD-1479 - Investgiate how we can consume i18n inside client components

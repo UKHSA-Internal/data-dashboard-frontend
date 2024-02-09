@@ -1,6 +1,6 @@
 import { render, screen, within } from '@testing-library/react'
 
-import { PaginationBlock } from './PaginationBlock'
+import { PaginationBlock } from './usePaginationBlock'
 
 describe('Pagination block', () => {
   test('Shows previous and next buttons when given all parameters', () => {
