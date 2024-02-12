@@ -1,10 +1,10 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-export const bulkDownloadsPageMock: PageResponse<PageType.Common> = {
+export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
   id: 156,
   meta: {
-    type: 'common.CommonPage',
+    type: 'composite.CompositePage',
     detail_url: 'http://localhost/api/pages/157/',
     html_url: null,
     slug: 'bulk-downloads',
@@ -25,7 +25,25 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Common> = {
   },
   title: 'Bulk downloads',
   date_posted: '2023-08-24',
-  body: '<p>The government’s coronavirus dashboard publishes up-to-date statistics about the coronavirus (COVID-19) pandemic in the UK. These statistics are not classed as official statistics because...</p>',
+  body: [
+    {
+      type: 'text',
+      value:
+        '<p data-block-key="0od86">You can download all the data from the UKHSA data dashboard charts on this page by clicking the Download button. </p><p data-block-key="ea5ul">This is useful if you want to analyse the data using your own tools. </p><p data-block-key="cqg56">The data is available in a zip file format, which has a size of about 70 kB so it should be quick to download even on slower internet connections.</p>',
+      id: '5eeefac8-ca5e-4838-b63d-3ecbbba59eed',
+    },
+    {
+      type: 'button',
+      value: {
+        text: 'download (zip)',
+        loading_text: '',
+        endpoint: '/api/bulkdownloads/v1',
+        method: 'POST',
+        button_type: 'DOWNLOAD',
+      },
+      id: 'b1b97fd7-8c46-4cf4-bab1-1a3d7ae5a912',
+    },
+  ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: [],
 }

@@ -8,16 +8,13 @@ import { logger } from '@/lib/logger'
 
 import type { PageType } from './getPages'
 
-/**
- * CMS Page endpoint
- */
-
 export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTypeToDataMap[T]> : never
 
 type PageTypeToDataMap = {
   [PageType.Home]: typeof WithHomeData
   [PageType.Topic]: typeof WithTopicData
   [PageType.Common]: typeof WithCommonData
+  [PageType.Composite]: typeof WithCompositeData
   [PageType.WhatsNewParent]: typeof WithWhatsNewParentData
   [PageType.WhatsNewChild]: typeof WithWhatsNewChildData
   [PageType.MetricsParent]: typeof WithMetricsParentData
@@ -54,6 +51,33 @@ const WithCommonData = SharedPageData.extend({
   body: z.string(),
   meta: Meta.extend({
     type: z.literal('common.CommonPage'),
+  }),
+  date_posted: z.string(),
+})
+
+const WithCompositeData = SharedPageData.extend({
+  body: z.array(
+    z.discriminatedUnion('type', [
+      z.object({
+        type: z.literal('text'),
+        value: z.string(),
+        id: z.string(),
+      }),
+      z.object({
+        type: z.literal('button'),
+        value: z.object({
+          text: z.string(),
+          loading_text: z.string(),
+          endpoint: z.string(),
+          method: z.string(),
+          button_type: z.string(),
+        }),
+        id: z.string(),
+      }),
+    ])
+  ),
+  meta: Meta.extend({
+    type: z.literal('composite.CompositePage'),
   }),
   date_posted: z.string(),
 })
@@ -115,11 +139,24 @@ export const responseSchema = z.union([
   WithHomeData,
   WithTopicData,
   WithCommonData,
+  WithCompositeData,
   WithWhatsNewParentData,
   WithWhatsNewChildData,
   WithMetricsParentData,
   WithMetricsChildData,
 ])
+
+/**
+ * Fetches and validates page data from the CMS using a specified page ID and type.
+ * Leverages TypeScript generics and Zod schemas to ensure the returned data adheres to the expected structure
+ * based on the page type. This setup provides compile-time and runtime assurances about data integrity.
+ *
+ * - PageResponse<T>: Dynamically infers return type based on PageType, ensuring type safety.
+ * - PageTypeToDataMap: Maps PageType to corresponding Zod schemas for data validation.
+ * - responseSchema: Uses Zod union to validate the API response against expected data structures.
+ *
+ * Designed to facilitate type-safe API interactions, enhancing data consistency and reliability.
+ */
 
 export const getPage = async <T extends PageType>(id: number) => {
   try {

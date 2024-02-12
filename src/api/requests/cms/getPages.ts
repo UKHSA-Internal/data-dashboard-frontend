@@ -6,12 +6,31 @@ import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 /**
- * CMS Pages endpoint
+ * Defines API request handlers and Zod schemas for fetching and validating CMS page data.
+ * The file structures around the PageType enum, which categorizes the types of CMS pages
+ * available, and leverages Zod for runtime validation of the API responses to ensure they
+ * adhere to expected structures.
+ *
+ * Key components include:
+ * - PageType: An enum that outlines the various CMS page types that can be requested.
+ * - Zod Schemas: These are detailed schemas for the expected structure of API responses
+ *   for different page queries. They are crucial for validating the shape and type of
+ *   fetched data at runtime.
+ * - Response Types: TypeScript types inferred from Zod schemas (e.g., PagesResponse,
+ *   WhatsNewPagesResponse, MetricsChildPagesResponse) that provide compile-time assurances
+ *   about the structure and type of API response data.
+ * - API Request Handlers: Functions (`getPages`, `getWhatsNewPages`, `getMetricsPages`)
+ *   that perform async requests to the CMS. These functions use the defined Zod schemas
+ *   to validate responses and ensure data integrity.
+ *
+ * The setup facilitates a robust, type-safe interaction with the CMS, leveraging TypeScript
+ * for static type checking and Zod for dynamic validation of the response data structure.
  */
 
 export enum PageType {
   Home = 'home.HomePage',
   Common = 'common.CommonPage',
+  Composite = 'composite.CompositePage',
   Topic = 'topic.TopicPage',
   WhatsNewParent = 'whats_new.WhatsNewParentPage',
   WhatsNewChild = 'whats_new.WhatsNewChildEntry',
