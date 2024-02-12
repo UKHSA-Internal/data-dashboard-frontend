@@ -11,10 +11,17 @@ import { bulkDownloadZip } from '@/mock-server/handlers/bulkdownloads/fixtures/b
 
 import { POST } from './route'
 
+const clientMock = jest.mocked(client)
+
 describe('POST api/download/bulk', () => {
+  beforeEach(() => {
+    jest.resetAllMocks()
+  })
+
   test('Downloads bulk data in csv format', async () => {
     const formData = new FormData()
     formData.set('file_format', 'csv')
+    formData.set('endpoint', 'bulkdownloads/v1')
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -23,13 +30,16 @@ describe('POST api/download/bulk', () => {
       formData: () => formData,
     })
 
-    jest.mocked(client).mockResolvedValueOnce({
+    clientMock.mockResolvedValueOnce({
       data: bulkDownloadZip,
       status: 200,
     })
 
     const res = await POST(req)
 
+    expect(client).toHaveBeenCalledWith('bulkdownloads/v1', {
+      searchParams: new URLSearchParams({ file_format: 'csv' }),
+    })
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toEqual('application/zip')
@@ -38,7 +48,8 @@ describe('POST api/download/bulk', () => {
 
   test('Downloads bulk data in json format', async () => {
     const formData = new FormData()
-    formData.set('file_format', 'csv')
+    formData.set('file_format', 'json')
+    formData.set('endpoint', 'bulkdownloads/v1')
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -47,13 +58,16 @@ describe('POST api/download/bulk', () => {
       formData: () => formData,
     })
 
-    jest.mocked(client).mockResolvedValueOnce({
+    clientMock.mockResolvedValueOnce({
       data: JSON.stringify(bulkDownloadZip),
       status: 200,
     })
 
     const res = await POST(req)
 
+    expect(client).toHaveBeenCalledWith('bulkdownloads/v1', {
+      searchParams: new URLSearchParams({ file_format: 'json' }),
+    })
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toEqual('application/zip')
@@ -71,7 +85,7 @@ describe('POST api/download/bulk', () => {
       formData: () => formData,
     })
 
-    jest.mocked(client).mockResolvedValueOnce({
+    clientMock.mockResolvedValueOnce({
       data: null,
       status: 200,
     })
@@ -79,13 +93,16 @@ describe('POST api/download/bulk', () => {
     const res = await POST(req)
 
     expect(res).toBeUndefined()
-    expect(logger.info).toHaveBeenCalledWith('bulk download api route handler error', undefined)
+    expect(logger.info).not.toHaveBeenCalled()
+    expect(logger.error).toHaveBeenCalledWith('POST /api/download proxy endpoint failed')
+    expect(logger.error).toHaveBeenCalledWith(new Error('download api route handler - missing parameters'))
     expect(redirect).toHaveBeenCalledWith('/error')
   })
 
   test('Redirects to error page when backend api returns an error', async () => {
     const formData = new FormData()
     formData.set('file_format', 'csv')
+    formData.set('endpoint', 'bulkdownloads/v1')
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
@@ -94,7 +111,7 @@ describe('POST api/download/bulk', () => {
       formData: () => formData,
     })
 
-    jest.mocked(client).mockResolvedValueOnce({
+    clientMock.mockResolvedValueOnce({
       data: null,
       error: new Error('Failed!'),
       status: 500,
@@ -103,7 +120,9 @@ describe('POST api/download/bulk', () => {
     const res = await POST(req)
 
     expect(res).toBeUndefined()
-    expect(logger.info).toHaveBeenCalledWith('bulk download api route handler error', new Error('Failed!'))
+    expect(logger.info).toHaveBeenCalledWith('Triggering composite download to %s', 'bulkdownloads/v1')
+    expect(logger.error).toHaveBeenCalledWith('POST /api/download proxy endpoint failed')
+    expect(logger.error).toHaveBeenCalledWith(new Error('Failed!'))
     expect(redirect).toHaveBeenCalledWith('/error')
   })
 })
