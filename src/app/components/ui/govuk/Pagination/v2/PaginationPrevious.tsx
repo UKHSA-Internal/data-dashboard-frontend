@@ -2,7 +2,7 @@ import Link from 'next/link'
 import React from 'react'
 
 interface PaginationPreviousProps {
-  href: string | null
+  href: string
   children: string
 }
 

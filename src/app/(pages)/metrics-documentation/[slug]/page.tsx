@@ -34,7 +34,6 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
   return (
     <View heading={title} lastUpdated={last_published_at} backLink="/metrics-documentation">
       <div className="govuk-grid-row">
-        :
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>
             <PageSection heading={'Summary'}>
