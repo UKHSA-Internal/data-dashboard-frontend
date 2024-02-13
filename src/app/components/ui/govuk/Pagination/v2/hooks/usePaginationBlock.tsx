@@ -1,12 +1,5 @@
 import { usePathname } from '@/app/hooks/usePathname'
 
-type PaginationBlockReturnType = {
-  previousText: string | null
-  previousPageHref: string | null
-  nextText: string | null
-  nextPageHref: string | null
-}
-
 type PaginationLink = {
   pageText: string
   pageHref: string
@@ -16,7 +9,7 @@ interface PaginationBlockProps {
   links: Array<PaginationLink>
 }
 
-export function usePaginationBlock({ links }: PaginationBlockProps): PaginationBlockReturnType {
+export function usePaginationBlock({ links }: PaginationBlockProps) {
   const pathname = usePathname()
 
   const pageIndex = links.findIndex(({ pageHref }) => pageHref === pathname)
