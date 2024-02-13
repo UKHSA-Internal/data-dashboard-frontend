@@ -17,13 +17,9 @@ interface PaginationBlockProps {
 }
 
 export function usePaginationBlock({ links }: PaginationBlockProps): PaginationBlockReturnType {
-  let pageIndex = 0
-
   const pathname = usePathname()
-  const pathnameSections = pathname.split('/')
 
-  if (pathnameSections.length > 2) pageIndex = links.findIndex(({ pageHref }) => pageHref === pathname)
-  else pageIndex = 0
+  const pageIndex = links.findIndex(({ pageHref }) => pageHref === pathname)
 
   // First item
   if (pageIndex === 0 || pageIndex === -1) {
