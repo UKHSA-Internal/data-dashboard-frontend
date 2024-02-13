@@ -2,10 +2,11 @@ import { usePathname } from '@/app/hooks/usePathname'
 
 import { usePaginationBlock } from './usePaginationBlock'
 
+jest.mock('@/app/hooks/usePathname', () => ({
+  usePathname: jest.fn(),
+}))
+
 describe('usePaginationBlock', () => {
-  jest.mock('@/app/hooks/usePathname', () => ({
-    usePathname: jest.fn(),
-  }))
   const usePathnameMock = jest.mocked(usePathname)
 
   test("when on first page, only 'next' button shows", async () => {
@@ -19,10 +20,10 @@ describe('usePaginationBlock', () => {
       ],
     })
 
-    expect(previousText).tobe(null)
-    expect(previousPageHref).tobe(null)
-    expect(nextText).tobe('What is an API')
-    expect(nextPageHref).tobe('/access-our-data/what-is-an-api')
+    expect(previousText).toBeNull()
+    expect(previousPageHref).toBeNull()
+    expect(nextText).toEqual('What is an API')
+    expect(nextPageHref).toEqual('/access-our-data/what-is-an-api')
   })
 
   test("when on last page, only 'previous' button shows", async () => {
@@ -36,10 +37,10 @@ describe('usePaginationBlock', () => {
       ],
     })
 
-    expect(previousText).tobe('What is an API')
-    expect(previousPageHref).tobe('/access-our-data/what-is-an-api')
-    expect(nextText).tobe(null)
-    expect(nextPageHref).tobe(null)
+    expect(previousText).toEqual('What is an API')
+    expect(previousPageHref).toEqual('/access-our-data/what-is-an-api')
+    expect(nextText).toBeNull()
+    expect(nextPageHref).toBeNull()
   })
 
   test('when on any other page, show both next & previous buttons', async () => {
@@ -53,10 +54,10 @@ describe('usePaginationBlock', () => {
       ],
     })
 
-    expect(previousText).tobe('Overview')
-    expect(previousPageHref).tobe('/access-our-data/overview')
-    expect(nextText).tobe('Getting started')
-    expect(nextPageHref).tobe('/access-our-data/getting-started')
+    expect(previousText).toEqual('Overview')
+    expect(previousPageHref).toEqual('/access-our-data/overview')
+    expect(nextText).toEqual('Getting started')
+    expect(nextPageHref).toEqual('/access-our-data/getting-started')
   })
 
   test('when on default route (no subpage), only the next button shows', async () => {
@@ -70,9 +71,9 @@ describe('usePaginationBlock', () => {
       ],
     })
 
-    expect(previousText).tobe(null)
-    expect(previousPageHref).tobe(null)
-    expect(nextText).tobe('What is an API')
-    expect(nextPageHref).tobe('/access-our-data/what-is-an-api')
+    expect(previousText).toBeNull()
+    expect(previousPageHref).toBeNull()
+    expect(nextText).toEqual('What is an API')
+    expect(nextPageHref).toEqual('/access-our-data/what-is-an-api')
   })
 })
