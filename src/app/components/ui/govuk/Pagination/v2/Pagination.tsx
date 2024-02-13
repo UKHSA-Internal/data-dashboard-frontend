@@ -13,6 +13,7 @@ export const Pagination = ({ variant, children }: PaginationProps) => {
         'govuk-pagination--block': variant === 'block',
       })}
       role="navigation"
+      aria-label="Pagination"
     >
       {children}
     </nav>

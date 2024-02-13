@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import React from 'react'
 
 interface PaginationPreviousProps {
@@ -8,7 +9,7 @@ interface PaginationPreviousProps {
 export const PaginationPrevious = ({ href, children }: PaginationPreviousProps) => {
   return (
     <div className="govuk-pagination__prev">
-      <a className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href ?? ''} rel="prev">
+      <Link className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href ?? ''} rel="prev">
         <svg
           className="govuk-pagination__icon govuk-pagination__icon--prev inline align-baseline"
           xmlns="http://www.w3.org/2000/svg"
@@ -25,7 +26,7 @@ export const PaginationPrevious = ({ href, children }: PaginationPreviousProps) 
         </span>
         <span className="govuk-visually-hidden">:</span>
         <span className="govuk-pagination__link-label">{children}</span>
-      </a>
+      </Link>
     </div>
   )
 }
