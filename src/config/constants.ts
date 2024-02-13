@@ -4,11 +4,6 @@
 export const chartExportApiRoutePath = '/api/download/chart'
 
 /**
- * The default file format in which charts are downloaded as
- */
-export const chartExportFormat: 'csv' | 'json' = 'csv'
-
-/**
  * The NextJS Api Route path for bulk download
  */
 export const bulkExportApiRoutePath = '/api/download/bulk'
