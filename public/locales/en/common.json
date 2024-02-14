@@ -52,6 +52,14 @@
         "row_age": "{{value}}",
         "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}",
         "timestamp": "Up to and including {{timestamp, dateShort}}"
+      },
+      "download": {
+        "heading": "Download data",
+        "hint": "Select file format",
+        "inputLabelCsv": "CSV",
+        "inputLabelJson": "JSON",
+        "buttonDownload": "Download",
+        "buttonDownloading": "Downloading"
       }
     }
   },

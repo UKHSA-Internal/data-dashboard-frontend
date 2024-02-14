@@ -9,24 +9,34 @@ import { DownloadForm } from './DownloadForm'
 
 jest.mock('@/app/utils/download.utils')
 
-const mockData: ComponentProps<typeof DownloadForm>['chart'] = [
-  {
-    type: 'plot',
-    value: {
-      topic: 'COVID-19',
-      metric: 'new_cases_daily',
-      chart_type: 'line_with_shaded_section',
-      date_from: null,
-      date_to: null,
-      stratum: '',
-      geography: '',
-      geography_type: '',
-      age: '',
-      sex: '',
+const props: ComponentProps<typeof DownloadForm> = {
+  chart: [
+    {
+      type: 'plot',
+      value: {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        chart_type: 'line_with_shaded_section',
+        date_from: null,
+        date_to: null,
+        stratum: '',
+        geography: '',
+        geography_type: '',
+        age: '',
+        sex: '',
+      },
+      id: '123',
     },
-    id: '123',
+  ],
+  labels: {
+    heading: 'Download data',
+    hint: 'Select file format',
+    inputLabelCsv: 'CSV',
+    inputLabelJson: 'JSON',
+    buttonDownload: 'Download',
+    buttonDownloading: 'Downloading',
   },
-]
+}
 
 describe('DownloadForm', () => {
   beforeEach(() => {
@@ -35,7 +45,7 @@ describe('DownloadForm', () => {
   })
 
   test('renders a progressively enhanced form with hidden inputs and submit button', () => {
-    render(<DownloadForm chart={mockData} />)
+    render(<DownloadForm {...props} />)
 
     // Form
     const form = screen.getByRole('form', { name: 'Download' })
@@ -65,7 +75,7 @@ describe('DownloadForm', () => {
   test('renders the form with geography parameters when a location is selected', () => {
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-    render(<DownloadForm chart={mockData} />)
+    render(<DownloadForm {...props} />)
 
     // Form
     const form = screen.getByRole('form', { name: 'Download' })
@@ -100,7 +110,7 @@ describe('DownloadForm', () => {
 
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-    render(<DownloadForm chart={mockData} />)
+    render(<DownloadForm {...props} />)
 
     // Form
     const form = screen.getByRole('form', { name: 'Download' })

@@ -9,9 +9,20 @@ import { chartExportApiRoutePath } from '@/config/constants'
 
 interface DownloadFormProps {
   chart: Chart
+  labels: {
+    heading: string
+    hint: string
+    inputLabelCsv: string
+    inputLabelJson: string
+    buttonDownload: string
+    buttonDownloading: string
+  }
 }
 
-export function DownloadForm({ chart }: DownloadFormProps) {
+export function DownloadForm({
+  chart,
+  labels: { heading, hint, inputLabelCsv, inputLabelJson, buttonDownload, buttonDownloading },
+}: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -59,9 +70,9 @@ export function DownloadForm({ chart }: DownloadFormProps) {
       <div className="govuk-form-group govuk-!-margin-bottom-0">
         <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 className="govuk-fieldset__heading">Download data</h1>
+            <h1 className="govuk-fieldset__heading">{heading}</h1>
           </legend>
-          <div className="govuk-hint">Select file format</div>
+          <div className="govuk-hint">{hint}</div>
           <div className="govuk-radios govuk-radios--small govuk-radios--inline">
             <div className="govuk-radios__item">
               <input
@@ -73,7 +84,7 @@ export function DownloadForm({ chart }: DownloadFormProps) {
                 defaultChecked
               />
               <label className="govuk-label govuk-radios__label" htmlFor={`format-${formatInputId}`}>
-                CSV
+                {inputLabelCsv}
               </label>
             </div>
             <div className="govuk-radios__item">
@@ -85,7 +96,7 @@ export function DownloadForm({ chart }: DownloadFormProps) {
                 value="json"
               />
               <label className="govuk-label govuk-radios__label" htmlFor={`format-${formatInputId}-2`}>
-                JSON
+                {inputLabelJson}
               </label>
             </div>
           </div>
@@ -122,7 +133,7 @@ export function DownloadForm({ chart }: DownloadFormProps) {
             <path fill="currentColor" d="M3 7.414 4.414 6l4.696 4.696-1.414 1.414z" />
             <path fill="currentColor" d="M7.168 11.574 7.742 11l.889.889-.574.574z" />
           </svg>
-          {downloading ? 'Downloading' : 'Download'}
+          {downloading ? buttonDownloading : buttonDownload}
         </button>
       </div>
     </form>
