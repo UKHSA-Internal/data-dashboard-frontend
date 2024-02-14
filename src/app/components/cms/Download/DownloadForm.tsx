@@ -1,7 +1,7 @@
 'use client'
 
 import { useRouter, useSearchParams } from 'next/navigation'
-import { FormEvent, useState } from 'react'
+import { FormEvent, useId, useState } from 'react'
 
 import type { Chart } from '@/api/models/cms/Page'
 import { downloadFile } from '@/app/utils/download.utils'
@@ -15,10 +15,12 @@ export function DownloadForm({ chart }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
+
   const areaType = searchParams.get('areaType')
   const areaName = searchParams.get('areaName')
-
   const hasSelectedArea = areaType && areaName
+
+  const formatInputId = useId()
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -64,19 +66,25 @@ export function DownloadForm({ chart }: DownloadFormProps) {
             <div className="govuk-radios__item">
               <input
                 className="govuk-radios__input"
-                id="format"
+                id={`format-${formatInputId}`}
                 name="format"
                 type="radio"
                 value="csv"
                 defaultChecked
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="format">
+              <label className="govuk-label govuk-radios__label" htmlFor={`format-${formatInputId}`}>
                 CSV
               </label>
             </div>
             <div className="govuk-radios__item">
-              <input className="govuk-radios__input" id="format-2" name="format" type="radio" value="json" />
-              <label className="govuk-label govuk-radios__label" htmlFor="format-2">
+              <input
+                className="govuk-radios__input"
+                id={`format-${formatInputId}-2`}
+                name="format"
+                type="radio"
+                value="json"
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor={`format-${formatInputId}-2`}>
                 JSON
               </label>
             </div>
