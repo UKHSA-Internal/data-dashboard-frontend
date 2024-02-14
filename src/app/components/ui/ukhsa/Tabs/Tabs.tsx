@@ -67,7 +67,7 @@ const TabsContent = React.forwardRef<
     ref={ref}
     tabIndex={-1}
     className={clsx(
-      'clear-both mb-0 js:border js:border-mid-grey js:bg-white js:px-[20px] js:py-[30px]',
+      'clear-both mb-0 js:border js:border-mid-grey js:bg-white js:p-3 js:lg:px-4 js:lg:py-6',
       'js:data-[state=active]:js:block data-[state=inactive]:js:hidden',
       className
     )}
