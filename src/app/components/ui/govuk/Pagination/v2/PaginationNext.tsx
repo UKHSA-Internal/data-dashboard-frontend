@@ -9,7 +9,7 @@ interface PaginationNextProps {
 export const PaginationNext = ({ href, children }: PaginationNextProps) => {
   return (
     <div className="govuk-pagination__next">
-      <Link className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href ?? ''} rel="next">
+      <Link className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href} rel="next">
         <svg
           className="govuk-pagination__icon govuk-pagination__icon--next inline align-baseline"
           xmlns="http://www.w3.org/2000/svg"
