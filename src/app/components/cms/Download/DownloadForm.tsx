@@ -70,7 +70,7 @@ export function DownloadForm({
       <div className="govuk-form-group govuk-!-margin-bottom-0">
         <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h1 className="govuk-fieldset__heading">{heading}</h1>
+            <h3 className="govuk-fieldset__heading">{heading}</h3>
           </legend>
           <div className="govuk-hint">{hint}</div>
           <div className="govuk-radios govuk-radios--small govuk-radios--inline">
