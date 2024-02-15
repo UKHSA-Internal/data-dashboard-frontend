@@ -3,7 +3,7 @@ import { Request, Response } from 'express'
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
-import { accessOurDataParentMock } from './fixtures/page/access-our-data'
+import { accessOurDataChildMocks, accessOurDataParentMock } from './fixtures/page/access-our-data'
 import {
   allPagesMock,
   pagesWithCommonTypeMock,
@@ -39,7 +39,7 @@ export default async function handler(req: Request, res: Response) {
     if (req.query.child_of && Number(req.query.child_of) === accessOurDataParentMock.id) {
       return res.json({
         ...allPagesMock,
-        items: allPagesMock.items.filter((page) => [32, 33, 34, 35, 36].includes(page.id)),
+        items: accessOurDataChildMocks,
       })
     }
 
