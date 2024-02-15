@@ -123,7 +123,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
 const accessOurDataChildPages = accessOurDataChildMocks.map(
   ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
     id,
-    meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at, parent: { id } },
+    meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
     title,
   })
 )
@@ -138,9 +138,6 @@ accessOurDataChildPages.push(
       slug: bulkDownloadsPageMock.meta.slug,
       show_in_menus: bulkDownloadsPageMock.meta.show_in_menus,
       first_published_at: bulkDownloadsPageMock.meta.first_published_at,
-      parent: {
-        id: dashboardMock.meta.parent.id,
-      },
     },
     title: bulkDownloadsPageMock.title,
   },
@@ -153,9 +150,6 @@ accessOurDataChildPages.push(
       slug: accessOurDataParentMock.meta.slug,
       show_in_menus: accessOurDataParentMock.meta.show_in_menus,
       first_published_at: accessOurDataParentMock.meta.first_published_at,
-      parent: {
-        id: dashboardMock.meta.parent.id,
-      },
     },
     title: accessOurDataParentMock.title,
   }
@@ -255,9 +249,6 @@ export const pagesWithWhatsNewChildTypeMock: WhatsNewPagesResponse = {
         slug,
         show_in_menus,
         first_published_at,
-        parent: {
-          id,
-        },
       },
       title,
       date_posted,
@@ -308,7 +299,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
     }) => ({
       id,
       title,
-      meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at, parent: { id } },
+      meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
       page_description,
       metric_group,
       topic,
