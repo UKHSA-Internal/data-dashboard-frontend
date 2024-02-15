@@ -36,7 +36,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     // filter all items where has a parent of ID
-    if (req.query.childOf && Number(req.query.childOf) === accessOurDataParentMock.id) {
+    if (req.query.child_of && Number(req.query.child_of) === accessOurDataParentMock.id) {
       return res.json({
         ...allPagesMock,
         items: allPagesMock.items.filter((page) => [32, 33, 34, 35, 36].includes(page.id)),
