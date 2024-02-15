@@ -34,6 +34,14 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
+    // filter all items where has a parent of ID
+    if (req.query.childOf) {
+      return res.json({
+        ...allPagesMock,
+        items: allPagesMock.items.filter((page) => page.meta.parent.id.toString() === req.query.childOf),
+      })
+    }
+
     if (!req.query.type) {
       if (req.query.show_in_menus === 'true') {
         return res.json({ ...allPagesMock, items: allPagesMock.items.filter((page) => page.meta.show_in_menus) })
@@ -41,7 +49,7 @@ export default async function handler(req: Request, res: Response) {
       return res.json(allPagesMock)
     }
 
-    const pageType = req.query['type'] as PageType
+    const pageType = req.query.type as PageType
     const limit = parseInt(req.query.limit as string, 10) || 10 // Default limit to 10 if not provided
     const offset = parseInt(req.query.offset as string, 10) || 0 // Default offset to 0 if not provided
 
