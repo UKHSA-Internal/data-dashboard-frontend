@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
+import { accessOurDataParentMock } from './fixtures/page/access-our-data'
 import {
   allPagesMock,
   pagesWithCommonTypeMock,
@@ -35,10 +36,10 @@ export default async function handler(req: Request, res: Response) {
     }
 
     // filter all items where has a parent of ID
-    if (req.query.childOf) {
+    if (req.query.childOf && Number(req.query.childOf) === accessOurDataParentMock.id) {
       return res.json({
         ...allPagesMock,
-        items: allPagesMock.items.filter((page) => page.meta.parent.id.toString() === req.query.childOf),
+        items: allPagesMock.items.filter((page) => [32, 33, 34, 35, 36].includes(page.id)),
       })
     }
 

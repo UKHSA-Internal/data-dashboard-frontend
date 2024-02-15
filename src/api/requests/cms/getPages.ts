@@ -48,9 +48,6 @@ const page = z.object({
     slug: z.string(),
     show_in_menus: z.boolean(),
     first_published_at: z.string().nullable(),
-    parent: z.object({
-      id: z.number(),
-    }),
   }),
 })
 
