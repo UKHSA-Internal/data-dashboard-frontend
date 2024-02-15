@@ -119,47 +119,43 @@ export const pagesWithCommonTypeMock: PagesResponse = {
   ],
 }
 
-// Pages with composite type mock, map children then append static pages
-const accessOurDataChildPages = accessOurDataChildMocks.map(
-  ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
-    id,
-    meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
-    title,
-  })
-)
-
-accessOurDataChildPages.push(
-  {
-    id: bulkDownloadsPageMock.id,
-    meta: {
-      type: bulkDownloadsPageMock.meta.type,
-      detail_url: bulkDownloadsPageMock.meta.detail_url,
-      html_url: bulkDownloadsPageMock.meta.html_url,
-      slug: bulkDownloadsPageMock.meta.slug,
-      show_in_menus: bulkDownloadsPageMock.meta.show_in_menus,
-      first_published_at: bulkDownloadsPageMock.meta.first_published_at,
-    },
-    title: bulkDownloadsPageMock.title,
-  },
-  {
-    id: accessOurDataParentMock.id,
-    meta: {
-      type: accessOurDataParentMock.meta.type,
-      detail_url: accessOurDataParentMock.meta.detail_url,
-      html_url: accessOurDataParentMock.meta.html_url,
-      slug: accessOurDataParentMock.meta.slug,
-      show_in_menus: accessOurDataParentMock.meta.show_in_menus,
-      first_published_at: accessOurDataParentMock.meta.first_published_at,
-    },
-    title: accessOurDataParentMock.title,
-  }
-)
-
 export const pagesWithCompositeTypeMock: PagesResponse = {
   meta: {
-    total_count: accessOurDataChildMocks.length + 2,
+    total_count: 2 + accessOurDataChildMocks.length,
   },
-  items: accessOurDataChildPages,
+  items: [
+    {
+      id: bulkDownloadsPageMock.id,
+      meta: {
+        type: bulkDownloadsPageMock.meta.type,
+        detail_url: bulkDownloadsPageMock.meta.detail_url,
+        html_url: bulkDownloadsPageMock.meta.html_url,
+        slug: bulkDownloadsPageMock.meta.slug,
+        show_in_menus: bulkDownloadsPageMock.meta.show_in_menus,
+        first_published_at: bulkDownloadsPageMock.meta.first_published_at,
+      },
+      title: bulkDownloadsPageMock.title,
+    },
+    {
+      id: accessOurDataParentMock.id,
+      meta: {
+        type: accessOurDataParentMock.meta.type,
+        detail_url: accessOurDataParentMock.meta.detail_url,
+        html_url: accessOurDataParentMock.meta.html_url,
+        slug: accessOurDataParentMock.meta.slug,
+        show_in_menus: accessOurDataParentMock.meta.show_in_menus,
+        first_published_at: accessOurDataParentMock.meta.first_published_at,
+      },
+      title: accessOurDataParentMock.title,
+    },
+    ...accessOurDataChildMocks.map(
+      ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
+        id,
+        meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
+        title,
+      })
+    ),
+  ],
 }
 
 export const pagesWithTopicTypeMock: PagesResponse = {
