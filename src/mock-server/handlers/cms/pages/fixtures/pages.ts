@@ -17,6 +17,7 @@ import {
   whatsNewChildMocks,
   whatsNewParentMock,
 } from './page'
+import { accessOurDataChildMocks, accessOurDataParentMock } from './page/access-our-data'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -120,7 +121,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
 
 export const pagesWithCompositeTypeMock: PagesResponse = {
   meta: {
-    total_count: 1,
+    total_count: 2 + accessOurDataChildMocks.length,
   },
   items: [
     {
@@ -135,6 +136,25 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
       },
       title: bulkDownloadsPageMock.title,
     },
+    {
+      id: accessOurDataParentMock.id,
+      meta: {
+        type: accessOurDataParentMock.meta.type,
+        detail_url: accessOurDataParentMock.meta.detail_url,
+        html_url: accessOurDataParentMock.meta.html_url,
+        slug: accessOurDataParentMock.meta.slug,
+        show_in_menus: accessOurDataParentMock.meta.show_in_menus,
+        first_published_at: accessOurDataParentMock.meta.first_published_at,
+      },
+      title: accessOurDataParentMock.title,
+    },
+    ...accessOurDataChildMocks.map(
+      ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
+        id,
+        meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
+        title,
+      })
+    ),
   ],
 }
 
