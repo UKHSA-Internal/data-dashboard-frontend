@@ -116,7 +116,6 @@ export const getPages = async (type?: PageType, additionalParams?: Record<string
     }
 
     const { data } = await client<PagesResponse>('pages', { searchParams })
-    logger.info(`GET success pages/?${searchParams.toString()}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
@@ -136,7 +135,6 @@ export const getWhatsNewPages = async ({ page = 1 }: { page: number | undefined 
 
   try {
     const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams })
-    logger.info(`GET success pages/?${searchParams.toString()}`)
     return whatsNewResponseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
@@ -164,7 +162,6 @@ export const getMetricsPages = async ({ search, page = 1 }: GetMetricsPagesReque
 
   try {
     const { data } = await client<MetricsPagesResponse>('pages', { searchParams })
-    logger.info(`GET success pages/?${searchParams.toString()}`)
     return metricsChildResponseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
