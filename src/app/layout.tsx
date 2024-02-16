@@ -17,7 +17,7 @@ import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui
 import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
-export const dynamic = 'force-dynamic'
+export const dynamic = 'auto'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const menu = await useMenu()
