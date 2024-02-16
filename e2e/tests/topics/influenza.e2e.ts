@@ -78,14 +78,36 @@ test.describe('Influenza page', () => {
       await influenzaPage.goto()
     })
     await test.step('downloads charts', async () => {
-      await app.canDownloadChartAsCsv([
-        'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-        'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-        'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-        'line-chart-comparing-influenza-icu-admission-rates-by-age',
-        'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-        'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-      ])
+      await app.canDownloadChart(
+        [
+          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-icu-admission-rates-by-age',
+          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+        ],
+        'csv'
+      )
+    })
+  })
+
+  test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(
+        [
+          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-icu-admission-rates-by-age',
+          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+        ],
+        'json'
+      )
     })
   })
 
@@ -219,7 +241,7 @@ test.describe('Influenza page - desktop', () => {
 test.describe('Influenza page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads without JS', async ({ influenzaPage, app, browserName }) => {
+  test('Downloads csv charts', async ({ influenzaPage, app, browserName }) => {
     // Ticket CDD-1419 to investigate
     // eslint-disable-next-line playwright/no-skipped-test
     test.skip(browserName == 'webkit')
@@ -228,14 +250,40 @@ test.describe('Influenza page - no JS', () => {
       await influenzaPage.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChartAsCsv([
-        'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-        'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-        'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-        'line-chart-comparing-influenza-icu-admission-rates-by-age',
-        'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-        'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-      ])
+      await app.canDownloadChart(
+        [
+          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-icu-admission-rates-by-age',
+          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+        ],
+        'csv'
+      )
+    })
+  })
+
+  test('Downloads json charts', async ({ influenzaPage, app, browserName }) => {
+    // Ticket CDD-1419 to investigate
+    // eslint-disable-next-line playwright/no-skipped-test
+    test.skip(browserName == 'webkit')
+
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads a json version of each chart', async () => {
+      await app.canDownloadChart(
+        [
+          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-icu-admission-rates-by-age',
+          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+        ],
+        'json'
+      )
     })
   })
 

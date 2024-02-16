@@ -55,24 +55,31 @@ const mockData: ComponentProps<typeof Download>['data'] = {
   body: 'Table Body',
 }
 
-test('Chart download button', async () => {
+test('Chart download', async () => {
   mockRouter.push('/topics/mock-topic')
-  const { getByRole } = render((await Download({ data: mockData })) as ReactElement)
-  expect(getByRole('button', { name: 'Download (csv)' })).toBeInTheDocument()
+
+  const { getByRole, getByText, getByLabelText } = render((await Download({ data: mockData })) as ReactElement)
+
+  expect(getByRole('heading', { name: 'Download data', level: 3 })).toBeInTheDocument()
+  expect(getByText('Select file format')).toBeInTheDocument()
+  expect(getByLabelText('CSV')).toBeChecked()
+  expect(getByLabelText('JSON')).toBeInTheDocument()
+
+  expect(getByRole('button', { name: 'Download' })).toBeInTheDocument()
 })
 
-test('Chart download button fails to show due to api exception', async () => {
+test('Chart download fails to show due to api exception', async () => {
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
   const { queryByRole, getByRole, getByText } = render((await Download({ data: mockData })) as ReactElement)
 
-  expect(queryByRole('button', { name: 'Download (csv)' })).not.toBeInTheDocument()
+  expect(queryByRole('button', { name: 'Download' })).not.toBeInTheDocument()
 
   expect(getByText('No data available')).toBeInTheDocument()
   expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')
 })
 
-test('Chart download button fails to show due to lack of data', async () => {
+test('Chart download fails to show due to lack of data', async () => {
   jest
     .mocked(useSearchParams)
     .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
@@ -81,7 +88,7 @@ test('Chart download button fails to show due to lack of data', async () => {
 
   const { queryByRole, getByRole, getByText } = render((await Download({ data: mockData })) as ReactElement)
 
-  expect(queryByRole('button', { name: 'Download (csv)' })).not.toBeInTheDocument()
+  expect(queryByRole('button', { name: 'Download' })).not.toBeInTheDocument()
 
   expect(getByText('No data available in North East')).toBeInTheDocument()
   expect(getByRole('link', { name: 'Reset' })).toHaveAttribute('href', '/')

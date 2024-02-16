@@ -8,6 +8,7 @@ interface ChartRowCardProps {
 }
 
 const DESKTOP_BREAKPOINT = 1024
+const TABLET_BREAKPOINT = 768
 const DEBOUNCE_MILLISECONDS = 20
 
 const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
@@ -45,7 +46,7 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   }
 }
 
-const setChartCardTabSize = (row: HTMLDivElement | null) => {
+const setChartCardTabSize = (row: HTMLDivElement | null, width: number) => {
   // exit early if there's no columns
   if (!row || !row.hasChildNodes()) {
     return
@@ -84,7 +85,11 @@ const setChartCardTabSize = (row: HTMLDivElement | null) => {
 
   // set height to all tab panels
   for (const tabPanel of allTabPanels) {
-    ;(tabPanel as HTMLElement).style.height = `${largestTab}px`
+    if (width >= TABLET_BREAKPOINT) {
+      ;(tabPanel as HTMLElement).style.height = `${largestTab}px`
+    } else {
+      ;(tabPanel as HTMLElement).style.height = ``
+    }
   }
 }
 
@@ -109,7 +114,7 @@ export function ChartRowCard({ children }: ChartRowCardProps) {
 
   useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)
-    setChartCardTabSize(ref.current)
+    setChartCardTabSize(ref.current, debouncedWidth)
   }, [ref, debouncedWidth, searchParams])
 
   return (

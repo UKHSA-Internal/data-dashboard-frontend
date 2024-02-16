@@ -157,7 +157,11 @@ export class HomePage {
       await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
     }
 
-    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
+    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByLabel('CSV')).toBeChecked()
+    await expect(card.getByLabel('JSON')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasCovid19DeathsChartRowCard({ javaScriptEnabled }: ChartRowCardTestOptions = { javaScriptEnabled: true }) {
@@ -189,7 +193,11 @@ export class HomePage {
       await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
     }
 
-    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
+    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByLabel('CSV')).toBeChecked()
+    await expect(card.getByLabel('JSON')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasInfluenzaHeadlineNumbersRowCard() {
@@ -232,7 +240,11 @@ export class HomePage {
       await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
     }
 
-    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
+    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByLabel('CSV')).toBeChecked()
+    await expect(card.getByLabel('JSON')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async hasInfluenzaTestingChartRowCard({ javaScriptEnabled }: ChartRowCardTestOptions = { javaScriptEnabled: true }) {
@@ -260,6 +272,10 @@ export class HomePage {
       await expect(card.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
     }
 
-    await expect(card.getByRole('button', { name: 'Download (csv)' })).toBeVisible()
+    await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
+    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByLabel('CSV')).toBeChecked()
+    await expect(card.getByLabel('JSON')).toBeVisible()
+    await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 }
