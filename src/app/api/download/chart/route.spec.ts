@@ -116,7 +116,7 @@ describe('POST /api/download/chart', () => {
     })
 
     jest.mocked(client).mockResolvedValueOnce({
-      data: JSON.stringify(downloadsJsonFixture),
+      data: downloadsJsonFixture,
       status: 200,
     })
 

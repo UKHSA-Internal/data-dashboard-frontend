@@ -37,14 +37,17 @@ export async function POST(req: NextRequest) {
     if (params.data.file_format === 'csv') {
       logger.info('successful csv download')
       return new NextResponse(response, {
-        headers: { 'content-type': 'text/csv', 'content-disposition': 'attachment; filename=data.csv' },
+        headers: { 'content-type': 'text/csv', 'content-disposition': 'attachment; filename=ukhsa-chart-download.csv' },
       })
     }
 
     if (params.data.file_format === 'json') {
       logger.info('successful json download')
-      return new Response(response, {
-        headers: { 'content-type': 'text/json', 'content-disposition': 'attachment; filename=data.json' },
+      return new Response(JSON.stringify(response), {
+        headers: {
+          'content-type': 'text/json',
+          'content-disposition': 'attachment; filename=ukhsa-chart-download.json',
+        },
       })
     }
   } else {

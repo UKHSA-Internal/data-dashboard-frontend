@@ -55,7 +55,16 @@ test.describe('Home page', () => {
       await homePage.goto()
     })
     await test.step('downloads charts', async () => {
-      await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+      await app.canDownloadChart(['cases', 'deaths', 'healthcare', 'testing'], 'csv')
+    })
+  })
+
+  test('Downloading a json version of each chart', async ({ homePage, app }) => {
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(['cases', 'deaths', 'healthcare', 'testing'], 'json')
     })
   })
 })
@@ -92,7 +101,7 @@ test.describe('Home page - no JavaScript', () => {
 
   test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
 
-  test('Downloads without JS', async ({ homePage, app }) => {
+  test('Downloading a csv version of each chart', async ({ homePage, app }) => {
     test.info().annotations.push({
       type: 'issue',
       description: 'https://digitaltools.phe.org.uk/browse/CDD-1419',
@@ -101,8 +110,17 @@ test.describe('Home page - no JavaScript', () => {
     await test.step('loads the page', async () => {
       await homePage.goto()
     })
-    await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChartAsCsv(['cases', 'deaths', 'healthcare', 'testing'])
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(['cases', 'deaths', 'healthcare', 'testing'], 'csv')
+    })
+  })
+
+  test('Downloading a json version of each chart', async ({ homePage, app }) => {
+    await test.step('loads the page', async () => {
+      await homePage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(['cases', 'deaths', 'healthcare', 'testing'], 'json')
     })
   })
 

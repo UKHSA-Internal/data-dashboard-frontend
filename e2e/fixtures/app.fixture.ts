@@ -5,6 +5,7 @@ import { kebabCase } from 'lodash'
 
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
+import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-json'
 
 import {
   AboutPage,
@@ -251,25 +252,34 @@ export class App {
 
   // Chart downloads
 
-  async canDownloadChartAsCsv(cards: string[]) {
+  async canDownloadChart(cards: string[], format: 'csv' | 'json') {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
       await card.getByRole('tab', { name: 'Download' }).click()
 
+      await card.getByLabel(format.toUpperCase()).click()
+
       const [download] = await Promise.all([
         this.page.waitForEvent('download'),
-        await card.getByRole('button', { name: 'Download (csv)' }).click(),
+        await card.getByRole('button', { name: 'Download' }).click(),
       ])
 
       const fileName = download.suggestedFilename()
-      expect(fileName).toBe('data.csv')
+      expect(fileName).toBe(`ukhsa-chart-download.${format}`)
 
       const path = await download.path()
 
       if (path) {
         const file = fs.readFileSync(path)
-        expect(file.toString()).toEqual(downloadsCsvFixture)
+
+        if (format === 'csv') {
+          expect(file.toString()).toEqual(downloadsCsvFixture)
+        }
+
+        if (format === 'json') {
+          expect(file.toString()).toEqual(JSON.stringify(downloadsJsonFixture))
+        }
       }
     }
   }
