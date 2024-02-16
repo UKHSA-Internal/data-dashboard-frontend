@@ -1,6 +1,5 @@
 import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
 
-import { getStaticPropsRevalidateValue } from '@/config/app-utils'
 import { logger } from '@/lib/logger'
 
 import { getApiBaseUrl } from '../requests/helpers'
@@ -35,9 +34,6 @@ export function client<T>(
         return true
       }
       return false
-    },
-    next: {
-      revalidate: getStaticPropsRevalidateValue(),
     },
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
