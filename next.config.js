@@ -4,7 +4,11 @@
 const nextConfig = {
   output: 'standalone',
   reactStrictMode: true,
-  staticPageGenerationTimeout: 600,
+  logging: {
+    fetches: {
+      fullUrl: true,
+    },
+  },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true }
     return config
