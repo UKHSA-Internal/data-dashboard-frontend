@@ -39,6 +39,8 @@ $govuk-page-width: 1400px;
 }
 
 :root {
+  --ukhsa-font-code: Consolas, Monaco, 'Andale Mono', 'Ubuntu Mono', monospace;
+
   --ukhsa-chart-height: 260px;
 
   // Container width
@@ -53,34 +55,51 @@ $govuk-page-width: 1400px;
   --ukhsa-chart-card-tab-min-height: 110px;
 
   // Govuk brand colours
-  --colour-red: #d4351c;
-  --colour-yellow: #ffdd00;
-  --colour-green: #00703c;
-  --colour-blue: #1d70b8;
-  --colour-dark-blue: #003078;
-  --colour-light-blue: #5694ca;
-  --colour-purple: #4c2c92;
+  --colour-red: #{govuk-colour('red')};
+  --colour-yellow: #{govuk-colour('yellow')};
+  --colour-green: #{govuk-colour('green')};
+  --colour-blue: #{govuk-colour('blue')};
+  --colour-dark-blue: #{govuk-colour('dark-blue')};
+  --colour-light-blue: #{govuk-colour('light-blue')};
+  --colour-purple: #{govuk-colour('purple')};
 
-  --colour-black: #0b0c0c;
-  --colour-dark-grey: #505a5f;
-  --colour-mid-grey: #b1b4b6;
-  --colour-light-grey: #f3f2f1;
-  --colour-white: #ffffff;
+  --colour-black: #{govuk-colour('black')};
+  --colour-dark-grey: #{govuk-colour('dark-grey')};
+  --colour-mid-grey: #{govuk-colour('mid-grey')};
+  --colour-light-grey: #{govuk-colour('light-grey')};
+  --colour-white: #{govuk-colour('white')};
 
-  --colour-light-purple: #6f72af;
-  --colour-bright-purple: #912b88;
-  --colour-pink: #d53880;
-  --colour-light-pink: #f499be;
-  --colour-orange: #f47738;
-  --colour-brown: #b58840;
-  --colour-light-green: #85994b;
-  --colour-turquoise: #28a197;
+  --colour-light-purple: #{govuk-colour('light-purple')};
+  --colour-bright-purple: #{govuk-colour('bright-purple')};
+  --colour-pink: #{govuk-colour('pink')};
+  --colour-light-pink: #{govuk-colour('light-pink')};
+  --colour-orange: #{govuk-colour('orange')};
+  --colour-brown: #{govuk-colour('brown')};
+  --colour-light-green: #{govuk-colour('light-green')};
+  --colour-turquoise: #{govuk-colour('turquoise')};
 
   // Govuk greys
   --colour-grey-1: #6f777b;
   --colour-grey-2: #bfc1c3;
   --colour-grey-3: #f3f2f1;
   --colour-grey-4: #f8f8f8;
+
+  // Govuk code colours
+  // Based on https://github.com/alphagov/govuk_elements/blob/master/assets/sass/vendor/prism.scss
+  --colour-code-background: var(--colour-light-grey);
+  --colour-code-text: var(--colour-black);
+  --colour-code-dark-red: #{govuk-shade(govuk-colour('red'), 7%)};
+  --colour-code-grey: var(--colour-grey-1);
+  --colour-code-light-red: #{govuk-tint(govuk-colour('red'), 2%)};
+  --colour-code-blue: var(--colour-blue);
+  --colour-code-green: var(--colour-green);
+}
+
+code[class*='language-'],
+pre[class*='language-'] {
+  text-shadow: 0 1px var(--colour-white);
+  tab-size: 4;
+  hyphens: none;
 }
 
 .ukhsa-chevron {
