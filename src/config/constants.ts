@@ -9,11 +9,6 @@ export const chartExportApiRoutePath = '/api/download/chart'
 export const downloadApiRoutePath = '/api/download'
 
 /**
- * The default file format for CMS driven downloadable content
- */
-export const downloadFormat: 'csv' | 'json' = 'csv'
-
-/**
  * The maximum columns per table in the tabular data view
  */
 export const chartTableMaxColumns = {

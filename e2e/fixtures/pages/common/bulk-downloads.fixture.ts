@@ -38,13 +38,13 @@ export class BulkDownloadsPage {
         'The government’s coronavirus dashboard publishes up-to-date statistics about the coronavirus (COVID-19) pandemic in the UK. These statistics are not classed as official statistics because...'
       )
     ).toBeVisible()
-    await expect(this.page.getByRole('button', { name: 'Download (zip)' })).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
   async canBulkDownload() {
     const [download] = await Promise.all([
       this.page.waitForEvent('download'),
-      await this.page.getByRole('button', { name: 'Download (zip)' }).click(),
+      await this.page.getByRole('button', { name: 'Download' }).click(),
     ])
 
     const fileName = download.suggestedFilename()
