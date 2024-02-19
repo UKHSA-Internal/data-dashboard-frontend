@@ -18,7 +18,6 @@ export const responseSchema = z.array(
 export const getGeographies = async (topic: Topics) => {
   try {
     const { data } = await client<z.infer<typeof responseSchema>>(`geographies/v2/${topic}`)
-    logger.info(`GET success geographies/v2/${topic}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
