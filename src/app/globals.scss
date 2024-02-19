@@ -89,7 +89,7 @@ $govuk-page-width: 1400px;
   --colour-code-background: var(--colour-light-grey);
   --colour-code-text: var(--colour-black);
   --colour-code-dark-red: #{govuk-shade(govuk-colour('red'), 7%)};
-  --colour-code-grey: var(--colour-grey-1);
+  --colour-code-grey: var(--colour-dark-grey);
   --colour-code-light-red: #{govuk-tint(govuk-colour('red'), 2%)};
   --colour-code-blue: var(--colour-blue);
   --colour-code-green: var(--colour-green);
