@@ -2,11 +2,22 @@ import { render } from '@/config/test-utils'
 
 import { CodeBlock } from './CodeBlock'
 
-const mockCodeSnippet =
-  '<h1>Primary test</h1><h2>Secondary test</h2><h3>Tertiary test</h3><a href="/test">Link test</a><ul><li>List item test</li></ul>'
+const mockCodeSnippet = `<body><h1>hello world</h1></body>`
 
 test('Displays the code block', () => {
   const { container } = render(<CodeBlock language="html">{mockCodeSnippet}</CodeBlock>)
 
-  expect(container).not.toBeEmptyDOMElement()
+  expect(container.firstChild).toHaveClass('language-html')
+  expect(container).toMatchSnapshot()
+})
+
+test('Custom class name', () => {
+  const { container } = render(
+    <CodeBlock language="javascript" className="govuk-!-margin-4">
+      {mockCodeSnippet}
+    </CodeBlock>
+  )
+
+  expect(container.firstChild).toHaveClass('language-javascript')
+  expect(container.firstChild).toHaveClass('govuk-!-margin-4')
 })
