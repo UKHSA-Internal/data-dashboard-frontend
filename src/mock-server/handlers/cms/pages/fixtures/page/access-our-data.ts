@@ -31,7 +31,7 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
     {
       type: 'text',
       value:
-        '<p data-block-key="zo3gr">Welcome to the developers guide for the UKHSA data dashboard API.</p><p data-block-key="cj8br"></p><p data-block-key="6v1v4">Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example reponse.</p>',
+        '<p data-block-key="zo3gr">Welcome to the developers guide for the UKHSA data dashboard API.</p><p data-block-key="cj8br"></p><p data-block-key="6v1v4">Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example response.</p>',
       id: 'dc4cfcb9-9f54-4a5f-ad28-1a0edf86c873',
     },
   ],
