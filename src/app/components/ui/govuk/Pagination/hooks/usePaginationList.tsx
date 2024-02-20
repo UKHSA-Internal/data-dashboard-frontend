@@ -3,13 +3,13 @@ import { UrlObject } from 'node:url'
 import { usePathname } from '@/app/hooks/usePathname'
 import { useSearchParams } from '@/app/hooks/useSearchParams'
 
-interface PaginationListItemProps {
+interface PaginationListProps {
   totalItems: number
   initialPage: number
   initialPageSize: number
 }
 
-export function usePaginationListItem({ totalItems, initialPage, initialPageSize }: PaginationListItemProps) {
+export function usePaginationList({ totalItems, initialPage, initialPageSize }: PaginationListProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
   const currentPage = Number(searchParams.get('page')) || initialPage

@@ -18,7 +18,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
-import { usePaginationListItem } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationListItem'
+import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
@@ -89,7 +89,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
     },
   } = whatsNewEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationListItem({
+  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: WHATS_NEW_PAGE_SIZE,

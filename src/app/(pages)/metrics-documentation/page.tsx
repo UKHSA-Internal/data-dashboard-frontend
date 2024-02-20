@@ -11,7 +11,7 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
-import { usePaginationListItem } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationListItem'
+import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { MetricsCard, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
@@ -86,7 +86,7 @@ export default async function MetricsParentPage({ searchParams: { search, page =
     },
   } = metricsEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationListItem({
+  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: METRICS_DOCUMENTATION_PAGE_SIZE,

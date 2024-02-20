@@ -17,10 +17,10 @@ test('when variant is block has appropriate classname', () => {
 
 test('custom classname passes through as expected', () => {
   render(
-    <Pagination variant="block" className="test-classname">
+    <Pagination variant="block" className="govuk-!-margin-3">
       test
     </Pagination>
   )
 
-  expect(screen.getByRole('navigation', { name: 'Pagination' })).toHaveClass('test-classname')
+  expect(screen.getByRole('navigation', { name: 'Pagination' })).toHaveClass('govuk-!-margin-3')
 })
