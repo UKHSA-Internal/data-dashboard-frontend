@@ -9,6 +9,9 @@ interface PaginationListProps {
   initialPageSize: number
 }
 
+type PageHref = UrlObject | null
+type Pages = Array<{ page: number; href: UrlObject }>
+
 export function usePaginationList({ totalItems, initialPage, initialPageSize }: PaginationListProps) {
   const searchParams = useSearchParams()
   const pathname = usePathname()
@@ -36,21 +39,21 @@ export function usePaginationList({ totalItems, initialPage, initialPageSize }: 
     }
   }
 
-  const previousPageHref: UrlObject | null = hasPreviousPage
+  const previousPageHref: PageHref = hasPreviousPage
     ? {
         pathname,
         query: { ...query, page: currentPage - 1 },
       }
     : null
 
-  const nextPageHref: UrlObject | null = hasNextPage
+  const nextPageHref: PageHref = hasNextPage
     ? {
         pathname,
         query: { ...query, page: currentPage + 1 },
       }
     : null
 
-  const pages: Array<{ page: number; href: UrlObject }> = generatePageNumbers().map((page) => ({
+  const pages: Pages = generatePageNumbers().map((page) => ({
     page,
     href: {
       pathname,
