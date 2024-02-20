@@ -1,4 +1,5 @@
 export { aboutPageMock } from './about'
+export { accessOurDataChildMocks, accessOurDataParentMock } from './access-our-data'
 export { accessibilityStatementPageMock } from './accessibility-statement'
 export { bulkDownloadsPageMock } from './bulk-downloads'
 export { compliancePageMock } from './complaince'

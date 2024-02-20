@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BulkDownloads() {
-  const { title, body, related_links: relatedLinks } = await getPageBySlug('bulk-downloads', PageType.Common)
+  const { title, body, related_links: relatedLinks } = await getPageBySlug('bulk-downloads', PageType.Composite)
 
   return (
     <View heading={title}>

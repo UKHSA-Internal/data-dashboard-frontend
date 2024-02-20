@@ -31,12 +31,31 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
     {
       type: 'text',
       value:
-        '<p>Welcome to the Developers Guide for the UKHSA data dashboard API.</p><br /><p>Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example responses</p>',
+        '<p>Welcome to the Developers Guide for the UKHSA data dashboard API.</p><p>Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example responses</p>',
       id: faker.string.uuid(),
     },
   ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
-  related_links: [],
+  related_links: [
+    {
+      id: 1,
+      meta: {
+        type: 'topic.TopicPageRelatedLink',
+      },
+      title: 'View swagger documentation',
+      body: '',
+      url: '/',
+    },
+    {
+      id: 2,
+      meta: {
+        type: 'topic.TopicPageRelatedLink',
+      },
+      title: 'Contribute to our open source project',
+      body: '',
+      url: '/',
+    },
+  ],
 }
 
 export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
@@ -62,7 +81,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         title: 'Access our data',
       },
     },
-    title: 'Access our data',
+    title: 'Overview',
     date_posted: '2024-02-14',
     body: [
       {
@@ -75,26 +94,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 33,
@@ -179,35 +179,16 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       {
         type: 'text',
         value:
-          '<h2>What you can do with this API</h2>' +
+          '<h3>What you can do with this API</h3>' +
           '<p>This API is useful for applications that incorporate content from the UKHSA data dasbhoard, and for keeping that content up to date. It provides a more accessible and predictable interface that what can be achieved through scraping HTML pages.</p>' +
-          "<h2>What you can't do with this API</h2>" +
+          "<h3>What you can't do with this API</h3>" +
           '<p>The content within thie API is limited to data provided in the UKHSA data dashboard, and does not include other websites or areas of gov.uk</p>' +
           '<p>Not all content is available, there will be some selections (such as when filtering by location) that either do not have data yet, or will never have data. UKHSA relies on external data (from NHS/ government sources) for the data dashboard.</p>',
         id: faker.string.uuid(),
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 35,
@@ -297,25 +278,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
 ]
