@@ -1,17 +1,27 @@
+import { UrlObject } from 'node:url'
+
 import Link from 'next/link'
 import React from 'react'
 
+import { PaginationVariant } from './Pagination'
+
 interface PaginationPreviousProps {
-  href: string
-  children: string
+  href: string | UrlObject
+  variant: PaginationVariant
+  children?: string
 }
 
-export const PaginationPrevious = ({ href, children }: PaginationPreviousProps) => {
+export const PaginationPrevious = ({ href, children, variant }: PaginationPreviousProps) => {
   return (
     <div className="govuk-pagination__prev">
-      <Link className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href} rel="prev">
+      <Link
+        prefetch={false}
+        className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
+        href={href}
+        rel="prev"
+      >
         <svg
-          className="govuk-pagination__icon govuk-pagination__icon--prev inline align-baseline"
+          className="govuk-pagination__icon govuk-pagination__icon--prev"
           xmlns="http://www.w3.org/2000/svg"
           height="13"
           width="15"
@@ -23,9 +33,9 @@ export const PaginationPrevious = ({ href, children }: PaginationPreviousProps) 
         </svg>
         <span className="govuk-pagination__link-title">
           Previous<span className="govuk-visually-hidden"> page</span>
+          {variant === 'block' && <span className="govuk-visually-hidden">:</span>}
         </span>
-        <span className="govuk-visually-hidden">:</span>
-        <span className="govuk-pagination__link-label">{children}</span>
+        {variant === 'block' && <span className="govuk-pagination__link-label">{children}</span>}
       </Link>
     </div>
   )
