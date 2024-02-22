@@ -11,6 +11,8 @@ import { Contents, ContentsLink } from '@/app/components/ui/ukhsa/Contents/Conte
 export default async function AccessOurData() {
   const { title, body, related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
 
+  const { title: childTitle, body: childBody } = await getPageBySlug('overview', PageType.Composite)
+
   const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
     links: [
       { pageHref: '/access-our-data/overview', pageText: 'Overview' },
@@ -38,7 +40,10 @@ export default async function AccessOurData() {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
-          <p>Child page content</p>
+          <h2 className="govuk-heading-l govuk-!-margin-bottom-4">{childTitle}</h2>
+          {childBody.map(({ value, type, id }) => (
+            <CompositeComponent key={id} type={type} value={value} />
+          ))}
 
           <Pagination variant="block">
             {previousPageHref && <PaginationPrevious href={previousPageHref}>{previousText}</PaginationPrevious>}

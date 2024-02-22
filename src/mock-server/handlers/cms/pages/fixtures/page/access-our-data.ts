@@ -44,7 +44,7 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
       },
       title: 'View swagger documentation',
       body: '',
-      url: '/',
+      url: 'https://api.dev.ukhsa-dashboard.data.gov.uk/api/swagger/#/',
     },
     {
       id: 2,
@@ -88,7 +88,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         type: 'text',
         value:
           '<p>The UK Health Security Agency (UKHSA) is responsible for protecting every member of every community from the impact of infectious diseases, chemical, biological, radiological and nuclear incidents and other health threats.</p>' +
-          '<p>UKHSA is an executive agency, sponsored by the [Department of Health and Social Care] (https://www.gov.uk/government/organisations/department-of-health-and-social-care)</p>' +
+          '<p>UKHSA is an executive agency, sponsored by the Department of Health and Social Care</p>' +
           '<p>The UKHSA data dashboard API is designed to support developers and other users to easily extract and save data, that is present in the dashboard. It allows for easy access to data, integration with software, tailed responses for each use case</p>',
         id: faker.string.uuid(),
       },
@@ -130,26 +130,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 34,
@@ -222,26 +203,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 36,

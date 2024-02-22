@@ -40,6 +40,9 @@ export default async function handler(req: Request, res: Response) {
       return res.json({
         ...allPagesMock,
         items: accessOurDataChildMocks,
+        meta: {
+          total_count: accessOurDataChildMocks.length,
+        },
       })
     }
 

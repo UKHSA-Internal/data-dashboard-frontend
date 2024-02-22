@@ -1,4 +1,4 @@
-import { PageType } from '@/api/requests/cms/getPages'
+import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { usePaginationBlock } from '@/app/components/ui/govuk/Pagination/v2/hooks/usePaginationBlock'
 import { Pagination } from '@/app/components/ui/govuk/Pagination/v2/Pagination'
@@ -6,18 +6,19 @@ import { PaginationNext } from '@/app/components/ui/govuk/Pagination/v2/Paginati
 import { PaginationPrevious } from '@/app/components/ui/govuk/Pagination/v2/PaginationPrevious'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { CompositeComponent } from '@/app/components/ui/ukhsa/CompositeComponent/CompositeComponent'
+import { Contents, ContentsLink } from '@/app/components/ui/ukhsa/Contents/Contents'
 
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
   const { title, body, related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
 
   const { title: childTitle, body: childBody } = await getPageBySlug(slug, PageType.Composite)
 
+  const childPages = await getPages(PageType.Composite, { child_of: '31' })
+
   const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
-    links: [
-      { pageHref: '/access-our-data/overview', pageText: 'Overview' },
-      { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
-      { pageHref: '/access-our-data/getting-started', pageText: 'Getting started' },
-    ],
+    links: childPages.success
+      ? childPages.data.items.map((item) => ({ pageHref: `/access-our-data/${item.meta.slug}`, pageText: item.title }))
+      : [],
   })
 
   return (
@@ -27,6 +28,15 @@ export default async function AccessOurDataChild({ params: { slug } }: { params:
           {body.map(({ value, type, id }) => (
             <CompositeComponent key={id} type={type} value={value} />
           ))}
+
+          <Contents>
+            {childPages.success &&
+              childPages.data.items.map((item) => (
+                <ContentsLink key={item.id} href={`/access-our-data/${item.meta.slug}`}>
+                  {item.title}
+                </ContentsLink>
+              ))}
+          </Contents>
         </div>
       </div>
 

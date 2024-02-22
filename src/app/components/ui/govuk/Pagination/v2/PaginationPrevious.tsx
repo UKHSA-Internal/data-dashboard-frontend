@@ -9,7 +9,12 @@ interface PaginationPreviousProps {
 export const PaginationPrevious = ({ href, children }: PaginationPreviousProps) => {
   return (
     <div className="govuk-pagination__prev">
-      <Link className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href} rel="prev">
+      <Link
+        className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
+        href={href}
+        rel="prev"
+        prefetch={false}
+      >
         <svg
           className="govuk-pagination__icon govuk-pagination__icon--prev inline align-baseline"
           xmlns="http://www.w3.org/2000/svg"
