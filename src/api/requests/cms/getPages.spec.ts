@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
 import {
   pagesWithHomeTypeMock,
   pagesWithMetricsChildTypeMock,
@@ -79,8 +78,6 @@ describe('Failing to get all pages from the cms api', () => {
     })
 
     const result = await getPages(PageType.Common)
-
-    expect(logger.info).toHaveBeenNthCalledWith(1, 'GET success pages/?type=common.CommonPage&limit=100')
 
     expect(result).toEqual<ErrorResponse>({
       success: false,
@@ -168,11 +165,6 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const result = await getWhatsNewPages({ page: 1 })
 
-    expect(logger.info).toHaveBeenNthCalledWith(
-      1,
-      'GET success pages/?type=whats_new.WhatsNewChildEntry&fields=*&order=-date_posted&limit=10&offset=0'
-    )
-
     expect(result).toEqual<ErrorResponse>({
       success: false,
       error: new z.ZodError([
@@ -219,11 +211,6 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
 
     const response = await getMetricsPages({ search: 'test', page: 1 })
 
-    expect(logger.info).toHaveBeenNthCalledWith(
-      1,
-      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0&search=test'
-    )
-
     expect(response).toEqual<SuccessResponse>({
       success: true,
       data: pagesWithMetricsChildTypeMock,
@@ -266,11 +253,6 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
     })
 
     const result = await getMetricsPages({ search: undefined, page: 1 })
-
-    expect(logger.info).toHaveBeenNthCalledWith(
-      1,
-      'GET success pages/?type=metrics_documentation.MetricsDocumentationChildEntry&fields=*&limit=10&offset=0'
-    )
 
     expect(result).toEqual<ErrorResponse>({
       success: false,

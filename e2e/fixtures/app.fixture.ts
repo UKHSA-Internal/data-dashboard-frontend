@@ -287,33 +287,33 @@ export class App {
   // Pagination
 
   async hasPagination() {
-    await expect(this.page.getByRole('navigation', { name: 'results' })).toBeVisible()
+    await expect(this.page.getByRole('navigation', { name: 'Pagination' })).toBeVisible()
   }
 
   async checkPaginationLinkIsActive(activeLink: number) {
     await expect(
-      this.page.getByRole('navigation', { name: 'results' }).getByRole('link', { name: `Page ${activeLink}` })
+      this.page.getByRole('navigation', { name: 'Pagination' }).getByRole('link', { name: `Page ${activeLink}` })
     ).toHaveAttribute('aria-current', 'page')
   }
 
   async clickPaginationNumberLink(number: number) {
     await this.page
-      .getByRole('navigation', { name: 'results' })
+      .getByRole('navigation', { name: 'Pagination' })
       .getByRole('link', { name: `Page ${number}` })
       .click()
   }
 
   async clickPaginationNextLink() {
     await this.page
-      .getByRole('navigation', { name: 'results' })
-      .getByRole('link', { name: 'Next', exact: true })
+      .getByRole('navigation', { name: 'Pagination' })
+      .getByRole('link', { name: 'Next page', exact: true })
       .click()
   }
 
   async clickPaginationPreviousLink() {
     await this.page
-      .getByRole('navigation', { name: 'results' })
-      .getByRole('link', { name: 'Previous', exact: true })
+      .getByRole('navigation', { name: 'Pagination' })
+      .getByRole('link', { name: 'Previous page', exact: true })
       .click()
   }
 

@@ -57,8 +57,6 @@ test('Handles API errors when data is missing (400 status code)', async () => {
     ],
   })
 
-  expect(logger.info).toHaveBeenNthCalledWith(1, 'POST success charts/v3 - %s', 'new_cases_7days_sum')
-
   expect(result).toEqual({
     success: false,
     error: new z.ZodError([

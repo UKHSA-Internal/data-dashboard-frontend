@@ -64,6 +64,23 @@ const WithCompositeData = SharedPageData.extend({
         id: z.string(),
       }),
       z.object({
+        type: z.literal('code_block'),
+        value: z.object({
+          heading: z.string(),
+          content: z.array(
+            z.object({
+              type: z.literal('code_snippet'),
+              value: z.object({
+                language: z.string(),
+                code: z.string(),
+              }),
+              id: z.string(),
+            })
+          ),
+        }),
+        id: z.string(),
+      }),
+      z.object({
         type: z.literal('button'),
         value: z.object({
           text: z.string(),
@@ -161,7 +178,6 @@ export const responseSchema = z.union([
 export const getPage = async <T extends PageType>(id: number) => {
   try {
     const { data } = await client<PageResponse<T>>(`pages/${id}`)
-    logger.info(`GET success page/${id}`)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

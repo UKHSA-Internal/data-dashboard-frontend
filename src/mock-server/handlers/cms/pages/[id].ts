@@ -7,6 +7,8 @@ import { logger } from '@/lib/logger'
 import {
   aboutPageMock,
   accessibilityStatementPageMock,
+  accessOurDataChildMocks,
+  accessOurDataParentMock,
   bulkDownloadsPageMock,
   compliancePageMock,
   cookiesPageMock,
@@ -38,8 +40,10 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,
   [whatsNewParentMock.id]: whatsNewParentMock,
   [metricsParentMock.id]: metricsParentMock,
+  [accessOurDataParentMock.id]: accessOurDataParentMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(metricsChildMocks.map((mock) => [mock.id, mock])),
+  ...Object.fromEntries(accessOurDataChildMocks.map((mock) => [mock.id, mock])),
 }
 
 export default async function handler(req: Request, res: Response) {
