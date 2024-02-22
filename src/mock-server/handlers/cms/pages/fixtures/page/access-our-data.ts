@@ -31,8 +31,8 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
     {
       type: 'text',
       value:
-        '<p>Welcome to the Developers Guide for the UKHSA data dashboard API.</p><br /><p>Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example responses</p>',
-      id: faker.string.uuid(),
+        '<p data-block-key="zo3gr">Welcome to the developers guide for the UKHSA data dashboard API.</p><p data-block-key="cj8br"></p><p data-block-key="6v1v4">Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example response.</p>',
+      id: 'dc4cfcb9-9f54-4a5f-ad28-1a0edf86c873',
     },
   ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
@@ -185,6 +185,31 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
           '<p>The content within thie API is limited to data provided in the UKHSA data dashboard, and does not include other websites or areas of gov.uk</p>' +
           '<p>Not all content is available, there will be some selections (such as when filtering by location) that either do not have data yet, or will never have data. UKHSA relies on external data (from NHS/ government sources) for the data dashboard.</p>',
         id: faker.string.uuid(),
+      },
+      {
+        type: 'code_block',
+        value: {
+          heading: 'Setup your first UKHSA data dashboard API call',
+          content: [
+            {
+              type: 'code_snippet',
+              value: {
+                language: 'javascript',
+                code: 'const endpoint =\r\n  "https://api.coronavirus.data.gov.uk/v1/data?" +\r\n  "filters=areaType=nation;areaName=england&" +\r\n  \'structure={"date":"date", "newCases":"newCaseByPublishDate"}\';\r\n\r\nconst getData = async (url) => {\r\n  const { data, status, statusText } = await get(url, { timeout: 1000 });\r\n\r\n  if (status >= 400) throw new Error(statusText);\r\n\r\n  return data;\r\n};',
+              },
+              id: 'e0b8aeb4-12ef-4b79-b723-071879eae1aa',
+            },
+            {
+              type: 'code_snippet',
+              value: {
+                language: 'python',
+                code: 'ALLOWABLE_BODY_CONTENT_COMPOSITE = StreamField(\r\n    [\r\n        (\r\n            "text",\r\n            RichTextBlock(\r\n                features=AVAILABLE_RICH_TEXT_FEATURES_COMPOSITE,\r\n                help_text=help_texts.REQUIRED_BODY_FIELD,\r\n                required=True\r\n            ),\r\n        ),\r\n        ("button", blocks.ButtonChooserBlock("snippets.button", required=False)),\r\n        ("code_block", sections.CodeExample(help_texts="placeholder code block single example multiple languages possible")),\r\n    ],\r\n    block_counts={"button": {"max_num": 1}},\r\n    use_json_field=True,\r\n)',
+              },
+              id: 'eed43b5e-4217-49b0-88d1-773c6aec9b07',
+            },
+          ],
+        },
+        id: 'dfdc74cb-c780-4f99-a2a1-45e1eb31baab',
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',

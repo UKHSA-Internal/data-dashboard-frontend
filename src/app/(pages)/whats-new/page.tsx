@@ -10,7 +10,15 @@ import { SafeParseSuccess } from 'zod'
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { Details, Pagination } from '@/app/components/ui/govuk'
+import {
+  Details,
+  Pagination,
+  PaginationListItem,
+  PaginationListItems,
+  PaginationNext,
+  PaginationPrevious,
+} from '@/app/components/ui/govuk'
+import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
@@ -80,6 +88,12 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
       meta: { total_count: totalItems },
     },
   } = whatsNewEntries
+
+  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationList({
+    totalItems,
+    initialPage: page ?? 1,
+    initialPageSize: WHATS_NEW_PAGE_SIZE,
+  })
 
   type Page = SafeParseSuccess<WhatsNewPagesResponse>['data']['items']
 
@@ -194,12 +208,20 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
             })}
           </ul>
 
-          <Pagination
-            className="govuk-!-margin-top-8"
-            totalItems={totalItems}
-            initialPage={page ?? 1}
-            initialPageSize={WHATS_NEW_PAGE_SIZE}
-          />
+          {pages.length > 0 && (
+            <Pagination variant="list-item" className="govuk-!-margin-top-8">
+              {previousPageHref && <PaginationPrevious variant="list-item" href={previousPageHref} />}
+              <PaginationListItems>
+                {pages.map(({ page, href }) => (
+                  <PaginationListItem key={page} href={href} current={currentPage === page}>
+                    {page}
+                  </PaginationListItem>
+                ))}
+              </PaginationListItems>
+
+              {nextPageHref && <PaginationNext variant="list-item" href={nextPageHref} />}
+            </Pagination>
+          )}
         </div>
       </div>
 
