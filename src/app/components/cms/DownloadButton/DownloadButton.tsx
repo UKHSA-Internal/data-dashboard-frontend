@@ -12,6 +12,8 @@ interface DownloadButtonProps extends HTMLProps<HTMLFormElement> {
   method: string
   /** The unique identifier to make this download button distinct from others. */
   id: string
+  /** A list of supported file formats for the user to choose from. When no formats are provided, it falls back to a default  */
+  formats?: string[]
 }
 
 /**
@@ -26,7 +28,7 @@ interface DownloadButtonProps extends HTMLProps<HTMLFormElement> {
  * for the download request, the HTTP method for the request, and any additional HTML properties for the form element.
  * @returns A form element configured as a download button.
  */
-export async function DownloadButton({ label, endpoint, method, id, ...props }: DownloadButtonProps) {
+export async function DownloadButton({ label, endpoint, method, id, formats, ...props }: DownloadButtonProps) {
   const { t } = await useTranslation('common')
 
   return (
@@ -34,39 +36,31 @@ export async function DownloadButton({ label, endpoint, method, id, ...props }: 
       <input type="hidden" name="endpoint" value={endpoint.replace('/api/', '')} />
 
       <div className="govuk-form-group govuk-!-margin-bottom-0">
-        <fieldset className="govuk-fieldset">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 className="govuk-fieldset__heading sr-only">{t('cms.blocks.download.heading')}</h3>
-          </legend>
-          <div className="govuk-hint">{t('cms.blocks.download.hint')}</div>
-          <div className="govuk-radios govuk-radios--small govuk-radios--inline">
-            <div className="govuk-radios__item">
-              <input
-                className="govuk-radios__input"
-                id={`format-${id}`}
-                name="file_format"
-                type="radio"
-                value="csv"
-                defaultChecked
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor={`format-${id}`}>
-                {t('cms.blocks.download.inputLabelCsv')}
-              </label>
+        {formats && formats?.length > 1 && (
+          <fieldset className="govuk-fieldset">
+            <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
+              <h3 className="govuk-fieldset__heading sr-only">{t('cms.blocks.download.heading')}</h3>
+            </legend>
+            <div className="govuk-hint">{t('cms.blocks.download.hint')}</div>
+            <div className="govuk-radios govuk-radios--small govuk-radios--inline">
+              {formats.map((format, index) => (
+                <div key={format} className="govuk-radios__item">
+                  <input
+                    className="govuk-radios__input"
+                    id={`format-${id}-${index}`}
+                    name="file_format"
+                    type="radio"
+                    value="csv"
+                    defaultChecked={index === 0}
+                  />
+                  <label className="govuk-label govuk-radios__label" htmlFor={`format-${id}-${index}`}>
+                    {t('cms.blocks.download.inputLabel', { context: format })}
+                  </label>
+                </div>
+              ))}
             </div>
-            <div className="govuk-radios__item">
-              <input
-                className="govuk-radios__input"
-                id={`format-${id}-2`}
-                name="file_format"
-                type="radio"
-                value="json"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor={`format-${id}-2`}>
-                {t('cms.blocks.download.inputLabelJson')}
-              </label>
-            </div>
-          </div>
-        </fieldset>
+          </fieldset>
+        )}
 
         <button
           className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 govuk-!-margin-top-4 flex w-auto items-center gap-2 print:hidden"

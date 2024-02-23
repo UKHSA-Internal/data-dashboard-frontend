@@ -56,8 +56,8 @@
       "download": {
         "heading": "Download data",
         "hint": "Select format",
-        "inputLabelCsv": "CSV",
-        "inputLabelJson": "JSON",
+        "inputLabel_csv": "CSV",
+        "inputLabel_json": "JSON",
         "buttonDownload": "Download",
         "buttonDownloading": "Downloading"
       }

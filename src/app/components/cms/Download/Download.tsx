@@ -47,8 +47,8 @@ export async function Download({ data: { chart, y_axis, x_axis } }: DownloadProp
         labels={{
           heading: t('cms.blocks.download.heading'),
           hint: t('cms.blocks.download.hint'),
-          inputLabelCsv: t('cms.blocks.download.inputLabelCsv'),
-          inputLabelJson: t('cms.blocks.download.inputLabelJson'),
+          inputLabelCsv: t('cms.blocks.download.inputLabel', { context: 'csv' }),
+          inputLabelJson: t('cms.blocks.download.inputLabel', { context: 'json' }),
           buttonDownload: t('cms.blocks.download.buttonDownload'),
           buttonDownloading: t('cms.blocks.download.buttonDownloading'),
         }}
