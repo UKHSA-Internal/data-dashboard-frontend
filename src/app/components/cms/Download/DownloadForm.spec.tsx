@@ -31,7 +31,7 @@ const props: ComponentProps<typeof DownloadForm> = {
   ],
   labels: {
     heading: 'Download data',
-    hint: 'Select file format',
+    hint: 'Select format',
     inputLabelCsv: 'CSV',
     inputLabelJson: 'JSON',
     buttonDownload: 'Download',

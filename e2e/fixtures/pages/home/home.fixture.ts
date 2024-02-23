@@ -158,7 +158,7 @@ export class HomePage {
     }
 
     await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
-    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByText('Select format')).toBeVisible()
     await expect(card.getByLabel('CSV')).toBeChecked()
     await expect(card.getByLabel('JSON')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
@@ -194,7 +194,7 @@ export class HomePage {
     }
 
     await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
-    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByText('Select format')).toBeVisible()
     await expect(card.getByLabel('CSV')).toBeChecked()
     await expect(card.getByLabel('JSON')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
@@ -241,7 +241,7 @@ export class HomePage {
     }
 
     await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
-    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByText('Select format')).toBeVisible()
     await expect(card.getByLabel('CSV')).toBeChecked()
     await expect(card.getByLabel('JSON')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
@@ -273,7 +273,7 @@ export class HomePage {
     }
 
     await expect(card.getByRole('heading', { name: 'Download data', level: 3 })).toBeVisible()
-    await expect(card.getByText('Select file format')).toBeVisible()
+    await expect(card.getByText('Select format')).toBeVisible()
     await expect(card.getByLabel('CSV')).toBeChecked()
     await expect(card.getByLabel('JSON')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
