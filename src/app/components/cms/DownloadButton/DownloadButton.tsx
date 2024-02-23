@@ -35,11 +35,11 @@ export async function DownloadButton({ label, endpoint, method, id, formats, ...
     <form {...props} action={downloadApiRoutePath} method={method}>
       <input type="hidden" name="endpoint" value={endpoint.replace('/api/', '')} />
 
-      <div className="govuk-form-group govuk-!-margin-bottom-0">
+      <div className="govuk-form-group govuk-!-margin-bottom-0 govuk-!-margin-top-6">
         {formats && formats?.length > 1 && (
           <fieldset className="govuk-fieldset">
-            <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-              <h3 className="govuk-fieldset__heading sr-only">{t('cms.blocks.download.heading')}</h3>
+            <legend className="govuk-fieldset__legend govuk-fieldset__legend--m sr-only">
+              <div className="govuk-fieldset__heading">{t('cms.blocks.download.heading')}</div>
             </legend>
             <div className="govuk-hint">{t('cms.blocks.download.hint')}</div>
             <div className="govuk-radios govuk-radios--small govuk-radios--inline">
@@ -50,7 +50,7 @@ export async function DownloadButton({ label, endpoint, method, id, formats, ...
                     id={`format-${id}-${index}`}
                     name="file_format"
                     type="radio"
-                    value="csv"
+                    value={format}
                     defaultChecked={index === 0}
                   />
                   <label className="govuk-label govuk-radios__label" htmlFor={`format-${id}-${index}`}>

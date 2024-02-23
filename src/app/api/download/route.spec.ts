@@ -7,7 +7,7 @@ import { Mock } from 'ts-mockery'
 
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
-import { bulkDownloadZip } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
+import { bulkDownloadCsv, bulkDownloadJson } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
 
 import { POST } from './route'
 
@@ -31,8 +31,9 @@ describe('POST api/download/bulk', () => {
     })
 
     clientMock.mockResolvedValueOnce({
-      data: bulkDownloadZip,
+      data: bulkDownloadCsv,
       status: 200,
+      headers: new Headers({ 'content-type': 'application/zip' }),
     })
 
     const res = await POST(req)
@@ -43,7 +44,7 @@ describe('POST api/download/bulk', () => {
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toEqual('application/zip')
-    expect(await res.text()).toEqual(bulkDownloadZip)
+    expect(await res.text()).toEqual(bulkDownloadCsv)
   })
 
   test('Downloads bulk data in json format', async () => {
@@ -59,8 +60,9 @@ describe('POST api/download/bulk', () => {
     })
 
     clientMock.mockResolvedValueOnce({
-      data: JSON.stringify(bulkDownloadZip),
+      data: JSON.stringify(bulkDownloadJson),
       status: 200,
+      headers: new Headers({ 'content-type': 'application/zip' }),
     })
 
     const res = await POST(req)
@@ -71,7 +73,7 @@ describe('POST api/download/bulk', () => {
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toEqual('application/zip')
-    expect(await res.json()).toEqual(bulkDownloadZip)
+    expect(await res.json()).toEqual(bulkDownloadJson)
   })
 
   test('Redirects to error page when wrong file format is detected', async () => {
@@ -88,6 +90,7 @@ describe('POST api/download/bulk', () => {
     clientMock.mockResolvedValueOnce({
       data: null,
       status: 200,
+      headers: new Headers({ 'content-type': 'application/zip' }),
     })
 
     const res = await POST(req)
@@ -95,7 +98,7 @@ describe('POST api/download/bulk', () => {
     expect(res).toBeUndefined()
     expect(logger.info).not.toHaveBeenCalled()
     expect(logger.error).toHaveBeenCalledWith('POST /api/download proxy endpoint failed')
-    expect(logger.error).toHaveBeenCalledWith(new Error('download api route handler - missing parameters'))
+    expect(logger.error).toHaveBeenCalledWith(new Error('download api route handler - missing endpoint'))
     expect(redirect).toHaveBeenCalledWith('/error')
   })
 
@@ -120,7 +123,7 @@ describe('POST api/download/bulk', () => {
     const res = await POST(req)
 
     expect(res).toBeUndefined()
-    expect(logger.info).toHaveBeenCalledWith('Triggering composite download to %s', 'bulkdownloads/v1')
+    expect(logger.info).toHaveBeenCalledWith('Triggering download to %s', 'bulkdownloads/v1')
     expect(logger.error).toHaveBeenCalledWith('POST /api/download proxy endpoint failed')
     expect(logger.error).toHaveBeenCalledWith(new Error('Failed!'))
     expect(redirect).toHaveBeenCalledWith('/error')
