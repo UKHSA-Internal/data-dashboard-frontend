@@ -10,6 +10,7 @@ import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/
 import {
   AboutPage,
   AccessibilityStatementPage,
+  AccessOurDataPage,
   BrowsePage,
   BulkDownloadsPage,
   CompliancePage,
@@ -46,6 +47,7 @@ type Fixtures = {
   notFoundPage: NotFoundPage
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
+  accessOurDataPage: AccessOurDataPage
 }
 
 export class App {
@@ -437,6 +439,9 @@ export const test = base.extend<Fixtures>({
   },
   errorPage: async ({ page }, use) => {
     await use(new ErrorPage(page))
+  },
+  accessOurDataPage: async ({ page }, use) => {
+    await use(new AccessOurDataPage(page))
   },
 })
 
