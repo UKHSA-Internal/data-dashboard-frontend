@@ -55,9 +55,9 @@
       },
       "download": {
         "heading": "Download data",
-        "hint": "Select file format",
-        "inputLabelCsv": "CSV",
-        "inputLabelJson": "JSON",
+        "hint": "Select format",
+        "inputLabel_csv": "CSV",
+        "inputLabel_json": "JSON",
         "buttonDownload": "Download",
         "buttonDownloading": "Downloading"
       }

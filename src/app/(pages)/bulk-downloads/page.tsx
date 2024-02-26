@@ -35,6 +35,8 @@ export default async function BulkDownloads() {
                   endpoint={value.endpoint}
                   method={value.method}
                   label={value.text}
+                  id={id}
+                  formats={['csv', 'json']}
                 />
               )
             }

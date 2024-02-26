@@ -22,7 +22,7 @@ interface Options {
 export function client<T>(
   endpoint: string,
   { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
-): Promise<{ data: T | null; status: number; error?: Error }> {
+): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   const fetchOptions: RequestInitRetryParams & Record<string, unknown> = {
@@ -46,7 +46,7 @@ export function client<T>(
   const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
 
   return fetch(url, fetchOptions).then(async (response) => {
-    const { status, ok } = response
+    const { status, ok, headers } = response
 
     if (ok) {
       try {
@@ -55,13 +55,13 @@ export function client<T>(
         if (type && !type.includes('application/json')) {
           if (type.includes('application/zip')) {
             const data = await response.blob()
-            return { data, status }
+            return { data, status, headers }
           }
           const data = await response.text()
-          return { data, status }
+          return { data, status, headers }
         }
         const data = await response.json()
-        return { data, status }
+        return { data, status, headers }
       } catch (error) {
         return Promise.reject(JSON.stringify(response))
       }
