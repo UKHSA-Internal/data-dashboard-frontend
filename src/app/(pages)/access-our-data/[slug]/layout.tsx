@@ -4,18 +4,11 @@ import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Contents, ContentsLink, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { CompositeComponent } from '@/app/components/ui/ukhsa/CompositeComponent/CompositeComponent'
-import { usePathname } from '@/app/hooks/usePathname'
 
 export default async function Layout({ children }: { children: ReactNode }) {
-  const pathname = usePathname()
+  const { id, title, body, related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
 
-  const { title, body, related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
-
-  const { meta: childMeta } = await getPageBySlug(pathname.split('/')[2], PageType.Composite)
-
-  const childPages = await getPages(PageType.Composite, { child_of: childMeta.parent.id.toString() })
-
-  console.log('Path:', pathname)
+  const childPages = await getPages(PageType.Composite, { child_of: id.toString() })
 
   return (
     <View heading={title}>

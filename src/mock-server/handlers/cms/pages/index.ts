@@ -38,7 +38,6 @@ export default async function handler(req: Request, res: Response) {
     // filter all items where has a parent of ID
     if (req.query.child_of && Number(req.query.child_of) === accessOurDataParentMock.id) {
       return res.json({
-        ...allPagesMock,
         items: accessOurDataChildMocks,
         meta: {
           total_count: accessOurDataChildMocks.length,
