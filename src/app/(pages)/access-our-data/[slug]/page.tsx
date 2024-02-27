@@ -1,10 +1,10 @@
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { usePaginationBlock } from '@/app/components/ui/govuk/Pagination/v2/hooks/usePaginationBlock'
-import { Pagination } from '@/app/components/ui/govuk/Pagination/v2/Pagination'
-import { PaginationNext } from '@/app/components/ui/govuk/Pagination/v2/PaginationNext'
-import { PaginationPrevious } from '@/app/components/ui/govuk/Pagination/v2/PaginationPrevious'
-import { CompositeComponent } from '@/app/components/ui/ukhsa/CompositeComponent/CompositeComponent'
+import { usePaginationBlock } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationBlock'
+import { Pagination } from '@/app/components/ui/govuk/Pagination/Pagination'
+import { PaginationNext } from '@/app/components/ui/govuk/Pagination/PaginationNext'
+import { PaginationPrevious } from '@/app/components/ui/govuk/Pagination/PaginationPrevious'
+import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
   const { title, body, meta } = await getPageBySlug(slug, PageType.Composite)
@@ -20,13 +20,19 @@ export default async function AccessOurDataChild({ params: { slug } }: { params:
   return (
     <>
       <h2 className="govuk-heading-l govuk-!-margin-bottom-4">{title}</h2>
-      {body.map(({ value, type, id }) => (
-        <CompositeComponent key={id} type={type} value={value} />
-      ))}
+      {body.map(renderCompositeBlock)}
 
       <Pagination variant="block">
-        {previousPageHref && <PaginationPrevious href={previousPageHref}>{previousText}</PaginationPrevious>}
-        {nextPageHref && <PaginationNext href={nextPageHref}>{nextText}</PaginationNext>}
+        {previousPageHref && (
+          <PaginationPrevious href={previousPageHref} variant="block">
+            {previousText}
+          </PaginationPrevious>
+        )}
+        {nextPageHref && (
+          <PaginationNext href={nextPageHref} variant="block">
+            {nextText}
+          </PaginationNext>
+        )}
       </Pagination>
     </>
   )

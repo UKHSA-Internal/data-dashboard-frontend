@@ -14,6 +14,9 @@ test.describe('Access our data', () => {
     await test.step('loads the page', async () => {
       await accessOurDataPage.goto('/access-our-data')
     })
+    await test.step('metadata is correct', async () => {
+      await accessOurDataPage.hasMetadata()
+    })
     await test.step('displays parent heading', async () => {
       await accessOurDataPage.hasParentHeading()
     })
@@ -124,5 +127,3 @@ test.describe('Access our data', () => {
     })
   })
 })
-
-// use related links tests?

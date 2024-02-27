@@ -2,7 +2,7 @@ import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
 import * as fs from 'fs'
 
-import { bulkDownloadZip } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
+import { bulkDownloadCsv, bulkDownloadJson } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
 
 export class BulkDownloadsPage {
   readonly page: Page
@@ -35,26 +35,44 @@ export class BulkDownloadsPage {
   async hasPageContent() {
     await expect(
       this.page.getByText(
-        'The government’s coronavirus dashboard publishes up-to-date statistics about the coronavirus (COVID-19) pandemic in the UK. These statistics are not classed as official statistics because...'
+        'You can download all the data from the UKHSA data dashboard charts on this page by clicking the Download button.'
       )
     ).toBeVisible()
-    await expect(this.page.getByRole('button', { name: 'Download (zip)' })).toBeVisible()
+    await expect(
+      this.page.getByText('This is useful if you want to analyse the data using your own tools.')
+    ).toBeVisible()
+    await expect(
+      this.page.getByText(
+        'The data is available in a zip file format, which has a size of about 70 kB so it should be quick to download even on slower internet connections.'
+      )
+    ).toBeVisible()
+    await expect(this.page.getByText('Select format')).toBeVisible()
+    await expect(this.page.getByLabel('CSV')).toBeChecked()
+    await expect(this.page.getByLabel('JSON')).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
-  async canBulkDownload() {
+  async canBulkDownload(format: 'csv' | 'json') {
+    await this.page.getByLabel(format.toUpperCase()).click()
+
     const [download] = await Promise.all([
       this.page.waitForEvent('download'),
-      await this.page.getByRole('button', { name: 'Download (zip)' }).click(),
+      await this.page.getByRole('button', { name: 'Download' }).click(),
     ])
 
     const fileName = download.suggestedFilename()
-    expect(fileName).toBe('bulk-download.zip')
+    expect(fileName).toBe(`ukhsa-mock-download-${format}.zip`)
 
     const path = await download.path()
 
     if (path) {
       const file = fs.readFileSync(path)
-      expect(file.toString()).toEqual(bulkDownloadZip)
+      if (format === 'json') {
+        expect(file.toString()).toEqual(JSON.stringify(bulkDownloadJson))
+      }
+      if (format === 'csv') {
+        expect(file.toString()).toEqual(bulkDownloadCsv)
+      }
     }
   }
 }

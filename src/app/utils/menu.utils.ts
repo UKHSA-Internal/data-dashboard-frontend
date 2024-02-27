@@ -15,55 +15,51 @@ interface MenuLink {
  * @returns An array of MenuLink objects representing the menu.
  */
 export const useMenu = async (): Promise<MenuLink[]> => {
+  // Create a homepage link manually since it's not provided by the CMS.
+  const homeLink: MenuLink = {
+    title: 'Homepage',
+    slug: '/',
+    children: [],
+  }
+
+  // Create an API link with the URL from environment variables.
+  const apiLink: MenuLink = {
+    title: 'API',
+    slug: process.env.PUBLIC_API_URL || '',
+  }
+
   try {
     // Fetch pages with show_in_menus:true filter.
     const pages = await getPages(undefined, { show_in_menus: 'true' })
 
     const links: MenuLink[] = []
 
-    // Create a homepage link manually since it's not provided by the CMS.
-    const homeLink: MenuLink = {
-      title: 'Homepage',
-      slug: '/',
-      children: [],
-    }
+    if (!pages.success) throw pages.error
 
-    // Create an API link with the URL from environment variables.
-    const apiLink: MenuLink = {
-      title: 'API',
-      slug: process.env.PUBLIC_API_URL || '',
-    }
+    const topics: MenuLink[] = []
 
-    if (pages.success) {
-      const topics: MenuLink[] = []
+    links.push({ ...homeLink, children: topics })
+    links.push(apiLink)
 
-      links.push({ ...homeLink, children: topics })
-      links.push(apiLink)
+    for (const page of pages.data.items) {
+      const {
+        title,
+        meta: { slug, type },
+      } = page
 
-      for (const page of pages.data.items) {
-        const {
-          title,
-          meta: { slug, type },
-        } = page
-
-        if (type === PageType.Topic) {
-          topics.push({ title, slug: `/topics/${slug}` })
-        }
-
-        if (type !== PageType.Home && type !== PageType.Topic) {
-          links.push({ title, slug: `/${slug}` })
-        }
+      if (type === PageType.Topic) {
+        topics.push({ title, slug: `/topics/${slug}` })
       }
 
-      return links
+      if (type !== PageType.Home && type !== PageType.Topic) {
+        links.push({ title, slug: `/${slug}` })
+      }
     }
 
-    // Fallback in case of error.
-    logger.error(pages.error)
-    return [homeLink, apiLink]
+    return links
   } catch (error) {
     logger.error(error)
     // Fallback for unexpected errors.
-    return []
+    return [homeLink, apiLink]
   }
 }

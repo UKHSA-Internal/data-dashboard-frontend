@@ -11,6 +11,11 @@ export class AccessOurDataPage {
     await this.page.goto(page || '/access-our-data')
   }
 
+  async hasMetadata() {
+    const title = await this.page.title()
+    await expect(title).toBe('Access our data | UKHSA data dashboard')
+  }
+
   async hasParentHeading() {
     await expect(this.page.getByRole('heading', { level: 1, name: /Access our data/ })).toBeVisible()
   }

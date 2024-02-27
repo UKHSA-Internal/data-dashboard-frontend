@@ -3,7 +3,7 @@ import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { z } from 'zod'
 
-import { Body, CardTypes } from '@/api/models/cms/Page'
+import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
@@ -12,9 +12,12 @@ import {
   Chart,
   ChartRowCard,
   ChartRowCardHeader,
+  CodeBlock,
   Download,
+  DownloadButton,
   Headline,
   Percentage,
+  RichText,
   Table,
   Timestamp,
   Trend,
@@ -156,3 +159,26 @@ export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number])
     {type === 'trend_number' && <Trend data={value} />}
   </div>
 )
+
+export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number]) => {
+  if (type === 'text') {
+    return <RichText>{value}</RichText>
+  }
+
+  if (type === 'button') {
+    return (
+      <DownloadButton
+        id={id}
+        aria-label={value.text}
+        endpoint={value.endpoint}
+        method={value.method}
+        label={value.text}
+        formats={['csv', 'json']}
+      />
+    )
+  }
+
+  if (type === 'code_block') {
+    return <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
+  }
+}

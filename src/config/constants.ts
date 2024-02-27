@@ -6,12 +6,7 @@ export const chartExportApiRoutePath = '/api/download/chart'
 /**
  * The NextJS Api Route path for bulk download
  */
-export const bulkExportApiRoutePath = '/api/download/bulk'
-
-/**
- * The default file format in which bulk downloaded charts are downloaded as
- */
-export const bulkExportFormat: 'csv' | 'json' = 'csv'
+export const downloadApiRoutePath = '/api/download'
 
 /**
  * The maximum columns per table in the tabular data view

@@ -1,9 +1,21 @@
+import { Metadata } from 'next'
 import { ReactNode } from 'react'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Contents, ContentsLink, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { CompositeComponent } from '@/app/components/ui/ukhsa/CompositeComponent/CompositeComponent'
+import { renderCompositeBlock } from '@/app/utils/cms.utils'
+
+export async function generateMetadata(): Promise<Metadata> {
+  const {
+    meta: { seo_title, search_description },
+  } = await getPageBySlug('access-our-data', PageType.Composite)
+
+  return {
+    title: seo_title,
+    description: search_description,
+  }
+}
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const { id, title, body, related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
@@ -14,18 +26,17 @@ export default async function Layout({ children }: { children: ReactNode }) {
     <View heading={title}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          {body.map(({ value, type, id }) => (
-            <CompositeComponent key={id} type={type} value={value} />
-          ))}
+          {body.map(renderCompositeBlock)}
 
-          <Contents>
-            {childPages.success &&
-              childPages.data.items.map((item) => (
+          {childPages.success && (
+            <Contents>
+              {childPages.data.items.map((item) => (
                 <ContentsLink key={item.id} href={`/access-our-data/${item.meta.slug}`}>
                   {item.title}
                 </ContentsLink>
               ))}
-          </Contents>
+            </Contents>
+          )}
         </div>
       </div>
 

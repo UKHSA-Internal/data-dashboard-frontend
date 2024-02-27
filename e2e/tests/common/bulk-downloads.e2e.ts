@@ -1,11 +1,9 @@
-/* eslint-disable playwright/no-skipped-test */
 import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-// TODO: Unskip tests once CDD-1646 is complete
 test.describe('Bulk downloads', () => {
-  test.skip('Page layout', async ({ bulkDownloadsPage, app }) => {
+  test('Page layout', async ({ bulkDownloadsPage, app }) => {
     await test.step('loads the page', async () => {
       await bulkDownloadsPage.goto()
     })
@@ -29,12 +27,21 @@ test.describe('Bulk downloads', () => {
     })
   })
 
-  test.skip('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
+  test('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
     await test.step('loads the page', async () => {
       await bulkDownloadsPage.goto()
     })
     await test.step('downloads bulk csv', async () => {
-      await bulkDownloadsPage.canBulkDownload()
+      await bulkDownloadsPage.canBulkDownload('csv')
+    })
+  })
+
+  test('Downloads a bulk json of all data', async ({ bulkDownloadsPage }) => {
+    await test.step('loads the page', async () => {
+      await bulkDownloadsPage.goto()
+    })
+    await test.step('downloads bulk json', async () => {
+      await bulkDownloadsPage.canBulkDownload('json')
     })
   })
 })
@@ -42,12 +49,21 @@ test.describe('Bulk downloads', () => {
 test.describe('Bulk downloads - no JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test.skip('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
+  test('Downloads a bulk csv of all data', async ({ bulkDownloadsPage }) => {
     await test.step('loads the page', async () => {
       await bulkDownloadsPage.goto()
     })
     await test.step('downloads bulk csv', async () => {
-      await bulkDownloadsPage.canBulkDownload()
+      await bulkDownloadsPage.canBulkDownload('csv')
+    })
+  })
+
+  test('Downloads a bulk json of all data', async ({ bulkDownloadsPage }) => {
+    await test.step('loads the page', async () => {
+      await bulkDownloadsPage.goto()
+    })
+    await test.step('downloads bulk csv', async () => {
+      await bulkDownloadsPage.canBulkDownload('json')
     })
   })
 })
@@ -55,7 +71,7 @@ test.describe('Bulk downloads - no JavaScript', () => {
 test.describe('Bulk downloads - mobile', () => {
   test.use({ viewport: viewports.mobile })
 
-  test.skip('displays the navigation on mobile', async ({ bulkDownloadsPage, app }) => {
+  test('displays the navigation on mobile', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
     await app.hasMobileNav()
   })
@@ -64,7 +80,7 @@ test.describe('Bulk downloads - mobile', () => {
 test.describe('Bulk downloads - tablet', () => {
   test.use({ viewport: viewports.tablet })
 
-  test.skip('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
+  test('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
     await app.hasMobileNav()
   })
@@ -73,7 +89,7 @@ test.describe('Bulk downloads - tablet', () => {
 test.describe('Bulk downloads - desktop', () => {
   test.use({ viewport: viewports.desktop })
 
-  test.skip('displays the navigation on desktop', async ({ bulkDownloadsPage, app }) => {
+  test('displays the navigation on desktop', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
     await app.hasDesktopNav()
   })

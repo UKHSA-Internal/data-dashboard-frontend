@@ -35,7 +35,7 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
     {
       type: 'button',
       value: {
-        text: 'download (zip)',
+        text: 'Download',
         loading_text: '',
         endpoint: '/api/bulkdownloads/v1',
         method: 'POST',

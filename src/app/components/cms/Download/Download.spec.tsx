@@ -31,37 +31,39 @@ getTableMock.mockResolvedValue({
   ],
 })
 
-const mockData: ComponentProps<typeof Download>['data'] = {
-  chart: [
-    {
-      type: 'plot',
-      value: {
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        chart_type: 'line_with_shaded_section',
-        date_from: null,
-        date_to: null,
-        stratum: '',
-        geography: '',
-        geography_type: '',
+const props: ComponentProps<typeof Download> = {
+  data: {
+    chart: [
+      {
+        type: 'plot',
+        value: {
+          topic: 'COVID-19',
+          metric: 'new_cases_daily',
+          chart_type: 'line_with_shaded_section',
+          date_from: null,
+          date_to: null,
+          stratum: '',
+          geography: '',
+          geography_type: '',
+        },
+        id: '123',
       },
-      id: '123',
-    },
-  ],
-  y_axis: 'y-axis',
-  x_axis: 'x-axis',
-  headline_number_columns: [],
-  title: 'Table Title',
-  body: 'Table Body',
+    ],
+    y_axis: 'y-axis',
+    x_axis: 'x-axis',
+    headline_number_columns: [],
+    title: 'Table Title',
+    body: 'Table Body',
+  },
 }
 
 test('Chart download', async () => {
   mockRouter.push('/topics/mock-topic')
 
-  const { getByRole, getByText, getByLabelText } = render((await Download({ data: mockData })) as ReactElement)
+  const { getByRole, getByText, getByLabelText } = render((await Download(props)) as ReactElement)
 
   expect(getByRole('heading', { name: 'Download data', level: 3 })).toBeInTheDocument()
-  expect(getByText('Select file format')).toBeInTheDocument()
+  expect(getByText('Select format')).toBeInTheDocument()
   expect(getByLabelText('CSV')).toBeChecked()
   expect(getByLabelText('JSON')).toBeInTheDocument()
 
@@ -71,7 +73,7 @@ test('Chart download', async () => {
 test('Chart download fails to show due to api exception', async () => {
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
-  const { queryByRole, getByRole, getByText } = render((await Download({ data: mockData })) as ReactElement)
+  const { queryByRole, getByRole, getByText } = render((await Download(props)) as ReactElement)
 
   expect(queryByRole('button', { name: 'Download' })).not.toBeInTheDocument()
 
@@ -86,7 +88,7 @@ test('Chart download fails to show due to lack of data', async () => {
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
-  const { queryByRole, getByRole, getByText } = render((await Download({ data: mockData })) as ReactElement)
+  const { queryByRole, getByRole, getByText } = render((await Download(props)) as ReactElement)
 
   expect(queryByRole('button', { name: 'Download' })).not.toBeInTheDocument()
 
@@ -104,7 +106,7 @@ test('Fallback message with escaped characters', async () => {
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
-  const { getByText } = render((await Download({ data: mockData })) as ReactElement)
+  const { getByText } = render((await Download(props)) as ReactElement)
 
   expect(getByText("No data available in Birmingham Women's and Children's NHS Foundation Trust")).toBeInTheDocument()
 })
