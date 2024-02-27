@@ -24,7 +24,7 @@
     "cookies-next": "^4.1.0",
     "dayjs": "^1.11.10",
     "fetch-retry": "^5.0.6",
-    "govuk-frontend": "^5.0.0",
+    "govuk-frontend": "^5.2.0",
     "i18next": "^23.6.0",
     "lodash": "^4.17.21",
     "next": "^14.1.0",
