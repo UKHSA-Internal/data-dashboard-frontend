@@ -2,12 +2,17 @@ import { test } from '../../fixtures/app.fixture'
 
 test.describe('Access our data', () => {
   test('Parent page', async ({ accessOurDataPage }) => {
-    await accessOurDataPage.goto()
+    await test.step('go to route page', async () => {
+      await accessOurDataPage.goto()
+    })
+    await test.step('it redirects to first child page', async () => {
+      await accessOurDataPage.hasChildHeading('Overview')
+    })
   })
 
   test('Overview page (first page)', async ({ accessOurDataPage }) => {
     await test.step('loads the page', async () => {
-      await accessOurDataPage.goto('/access-our-data/overview')
+      await accessOurDataPage.goto('/access-our-data')
     })
     await test.step('displays parent heading', async () => {
       await accessOurDataPage.hasParentHeading()
