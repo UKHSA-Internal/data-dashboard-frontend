@@ -28,8 +28,23 @@ export class AccessOurDataPage {
   async hasContentsSection() {
     await expect(this.page.getByRole('heading', { level: 2, name: /Contents/ })).toBeVisible()
 
-    // TODO: Fix length expectation
-    // await expect(this.page.getByRole('navigation', { name: /Contents/ })).toHaveLength(5)
+    await expect(this.page.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '/access-our-data/overview')
+    await expect(this.page.getByRole('link', { name: '— What is an API', exact: true })).toHaveAttribute(
+      'href',
+      '/access-our-data/what-is-an-api'
+    )
+    await expect(this.page.getByRole('link', { name: 'Getting started' })).toHaveAttribute(
+      'href',
+      '/access-our-data/getting-started'
+    )
+    await expect(this.page.getByRole('link', { name: 'API Authentication' })).toHaveAttribute(
+      'href',
+      '/access-our-data/api-authentication'
+    )
+    await expect(this.page.getByRole('link', { name: 'Data structure' })).toHaveAttribute(
+      'href',
+      '/access-our-data/data-structure'
+    )
   }
 
   async selectContentsItem(name: string) {
@@ -37,7 +52,7 @@ export class AccessOurDataPage {
   }
 
   async hasRelatedLinks() {
-    await expect(this.page.getByRole('heading', { level: 2, name: /Related Links/ })).toBeVisible()
+    await expect(this.page.getByRole('heading', { level: 2, name: /Related links/ })).toBeVisible()
     await expect(
       this.page.getByRole('link', { name: 'View swagger documentation (opens in a new window)' })
     ).toBeVisible()

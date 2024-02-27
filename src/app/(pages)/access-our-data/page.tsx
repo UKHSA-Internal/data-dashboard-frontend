@@ -1,9 +1,13 @@
 import { redirect } from 'next/navigation'
 
+import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+
 export default async function AccessOurData() {
-  // get all child pages of access our data
+  const { meta } = await getPageBySlug('access-our-data', PageType.Composite)
+  const childPages = await getPages(PageType.Composite, { child_of: meta.parent.id.toString() })
 
-  // redirect to first
+  const firstChild = childPages.success && childPages.data.items[0].meta.slug
 
-  redirect('/access-our-data/overview')
+  redirect(`/access-our-data/${firstChild}`)
 }
