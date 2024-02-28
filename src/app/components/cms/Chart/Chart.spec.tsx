@@ -41,7 +41,7 @@ test('renders the chart correctly when successful', async () => {
         },
       },
     ],
-    body: '',
+    body: 'COVID-19 chart description.',
     title: '',
     headline_number_columns: [],
   }
@@ -64,7 +64,10 @@ test('renders the chart correctly when successful', async () => {
     y_axis: null,
   })
 
-  expect(getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart')
+  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data below.')).toHaveAttribute(
+    'src',
+    'data:image/svg+xml;utf8,mock-chart'
+  )
 })
 
 test('renders the chart by geography and geography type when both are present in the url search params', async () => {
@@ -93,7 +96,7 @@ test('renders the chart by geography and geography type when both are present in
         },
       },
     ],
-    body: '',
+    body: 'COVID-19 chart description.',
     title: '',
     headline_number_columns: [],
   }
@@ -116,7 +119,10 @@ test('renders the chart by geography and geography type when both are present in
     y_axis: null,
   })
 
-  expect(getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart')
+  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data below.')).toHaveAttribute(
+    'src',
+    'data:image/svg+xml;utf8,mock-chart'
+  )
 })
 
 test('full width charts should also have an acompanying narrow version for mobile viewports', async () => {
@@ -133,14 +139,17 @@ test('full width charts should also have an acompanying narrow version for mobil
     x_axis: null,
     y_axis: null,
     chart: [],
-    body: '',
+    body: 'COVID-19 chart description.',
     title: '',
     headline_number_columns: [],
   }
 
   const { getByAltText, getByTestId } = render((await Chart({ data, size: 'wide' })) as ReactElement)
 
-  expect(getByAltText('')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-narrow')
+  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data below.')).toHaveAttribute(
+    'src',
+    'data:image/svg+xml;utf8,mock-chart-narrow'
+  )
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-wide')
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('media', '(min-width: 768px)')
 })
@@ -167,7 +176,7 @@ test('renders a fallback message when the chart requests fail', async () => {
     x_axis: null,
     y_axis: null,
     chart: [],
-    body: '',
+    body: 'COVID-19 chart description.',
     title: 'Cases by specimen date',
     headline_number_columns: [],
   }
@@ -203,7 +212,7 @@ test('Fallback message with escaped characters', async () => {
     x_axis: null,
     y_axis: null,
     chart: [],
-    body: '',
+    body: 'COVID-19 chart description.',
     title: 'Cases by specimen date',
     headline_number_columns: [],
   }

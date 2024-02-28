@@ -73,7 +73,11 @@ export async function Chart({ data, size }: ChartProps) {
             data-testid="chart-src-min-768"
           />
         )}
-        <img alt="" src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`} className="w-full" />
+        <img
+          alt={t('cms.blocks.chart.alt', { body: data.body })}
+          src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`}
+          className="w-full"
+        />
       </picture>
     )
   }
