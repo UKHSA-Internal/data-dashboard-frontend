@@ -13,7 +13,7 @@ import {
   mockSectionWithLongHeading,
   mockTextCard,
 } from './__mocks__/cms'
-import { renderBlock, renderCard, renderSection } from './cms.utils'
+import { renderBlock, renderCard, renderCompositeBlock, renderSection } from './cms.utils'
 
 // This is an ugly hack because Jest currently cannot render nested server components. As a result we must
 // stub these components in order to test the functionality within cms.utils.tsx
@@ -208,5 +208,65 @@ describe('Metrics', () => {
       })
     )
     expect(screen.getByText('Mocked trend number')).toBeInTheDocument()
+  })
+})
+
+describe('Composite block', () => {
+  test('composite with text block', () => {
+    render(
+      renderCompositeBlock([
+        {
+          type: 'text',
+          value: 'text test content',
+          id: '2df8361c-12f4-40d3-aa01-ce2c68a24d04',
+        },
+      ])
+    )
+    expect(screen.getByText('text test content')).toBeInTheDocument()
+  })
+
+  test('button', () => {
+    render(
+      renderCompositeBlock([
+        {
+          type: 'button',
+          value: {
+            text: 'Download',
+            loading_text: 'Downloading...',
+            endpoint: '/test',
+            method: 'POST',
+            button_type: 'DOWNLOAD',
+          },
+          id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+        },
+      ])
+    )
+    const button = screen.getByRole('button', { name: 'Download' })
+    expect(button).toHaveAttribute('href', '/test')
+
+    button.click()
+
+    expect(screen.getByRole('button', { name: 'Downloading...' })).toBeVisible()
+  })
+
+  test('code_block', () => {
+    render(
+      renderCompositeBlock([
+        {
+          type: 'code_block',
+          value: {
+            heading: 'code block example',
+            conent: [
+              {
+                language: 'javascript',
+                code: 'const test = "example";',
+              },
+            ],
+          },
+          id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+        },
+      ])
+    )
+    expect(screen.getByText('text test content')).toBeInTheDocument()
   })
 })

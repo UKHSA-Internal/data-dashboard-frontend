@@ -36,6 +36,7 @@ export const coreComponents: Components = {
   ul: ({ children }) => <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>,
   li: ({ children }) => <li>{children}</li>,
   p: ({ children }) => <p className="govuk-body">{children}</p>,
+  code: ({ children }) => <code className="govuk-error-colour ukhsa-inline-codeblock">{children}</code>,
 }
 
 /**
