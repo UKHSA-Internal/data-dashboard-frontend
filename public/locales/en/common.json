@@ -62,7 +62,7 @@
         "buttonDownloading": "Downloading"
       },
       "chart": {
-        "alt": "Chart showing {{body}} Refer to tabular data below."
+        "alt": "Chart showing {{- body}} Refer to tabular data below."
       }
     }
   },
