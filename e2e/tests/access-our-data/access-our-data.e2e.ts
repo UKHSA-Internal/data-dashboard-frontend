@@ -15,7 +15,7 @@ test.describe('Access our data', () => {
       await accessOurDataPage.goto('/access-our-data')
     })
     await test.step('metadata is correct', async () => {
-      await accessOurDataPage.hasMetadata()
+      await accessOurDataPage.hasMetadata('Overview')
     })
     await test.step('displays parent heading', async () => {
       await accessOurDataPage.hasParentHeading()
@@ -53,6 +53,9 @@ test.describe('Access our data', () => {
     await test.step('loads the page', async () => {
       await accessOurDataPage.goto('/access-our-data/getting-started')
     })
+    await test.step('metadata is correct', async () => {
+      await accessOurDataPage.hasMetadata('Getting started')
+    })
     await test.step('displays child heading', async () => {
       await accessOurDataPage.hasChildHeading('Getting started')
     })
@@ -77,6 +80,9 @@ test.describe('Access our data', () => {
     await test.step('loads the page', async () => {
       await accessOurDataPage.goto('/access-our-data/data-structure')
     })
+    await test.step('metadata is correct', async () => {
+      await accessOurDataPage.hasMetadata('Data structure')
+    })
     await test.step('displays child heading', async () => {
       await accessOurDataPage.hasChildHeading('Data structure')
     })
@@ -96,7 +102,7 @@ test.describe('Access our data', () => {
 
   test('Contents navigation works', async ({ accessOurDataPage }) => {
     await test.step('loads the page', async () => {
-      await accessOurDataPage.goto('/access-our-data/overview')
+      await accessOurDataPage.goto('/access-our-data')
     })
     await test.step('click contents item', async () => {
       await accessOurDataPage.selectContentsItem('Getting started')

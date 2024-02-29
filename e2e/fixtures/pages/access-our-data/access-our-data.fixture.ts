@@ -11,9 +11,11 @@ export class AccessOurDataPage {
     await this.page.goto(page || '/access-our-data')
   }
 
-  async hasMetadata() {
+  async hasMetadata(expectedTitle?: string) {
     const title = await this.page.title()
-    await expect(title).toBe('Access our data | UKHSA data dashboard')
+    await expect(title).toBe(
+      title ? `${expectedTitle} - Access our data | UKHSA data dashboard` : 'Access our data | UKHSA data dashboard'
+    )
   }
 
   async hasParentHeading() {
