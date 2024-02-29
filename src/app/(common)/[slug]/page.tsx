@@ -26,7 +26,9 @@ export default async function CommonPage({ params: { slug } }: { params: { slug:
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
-      <RichText linkedHeadings>{body}</RichText>
+      <RichText linkedHeadings id="main-content">
+        {body}
+      </RichText>
       <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>

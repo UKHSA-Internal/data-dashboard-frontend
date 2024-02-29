@@ -110,7 +110,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </div>
         <div className="govuk-width-container">
-          <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content" role="main">
+          <main className="govuk-main-wrapper govuk-!-padding-top-4" role="main">
             {children}
           </main>
         </div>

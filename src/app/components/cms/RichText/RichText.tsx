@@ -11,9 +11,10 @@ import {
 interface RichTextProps {
   children: string
   linkedHeadings?: boolean
+  id?: string
 }
 
-export const RichText = ({ children, linkedHeadings }: RichTextProps) => {
+export const RichText = ({ children, linkedHeadings, id }: RichTextProps) => {
   const rehypePlugins: RehypePlugins = corePlugins || []
 
   const showLinkedHeadings = linkedHeadings && children.includes('h2')
@@ -25,7 +26,7 @@ export const RichText = ({ children, linkedHeadings }: RichTextProps) => {
 
   return (
     <>
-      <ReactMarkdown rehypePlugins={corePlugins} components={components}>
+      <ReactMarkdown rehypePlugins={corePlugins} components={components} id={id}>
         {children}
       </ReactMarkdown>
     </>
