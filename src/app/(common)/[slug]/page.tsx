@@ -8,7 +8,7 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.Common)
+  } = await getPageBySlug(slug, PageType.Composite)
 
   return {
     title: seo_title,
