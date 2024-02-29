@@ -64,7 +64,7 @@ test('renders the chart correctly when successful', async () => {
     y_axis: null,
   })
 
-  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data below.')).toHaveAttribute(
+  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart'
   )
@@ -119,7 +119,7 @@ test('renders the chart by geography and geography type when both are present in
     y_axis: null,
   })
 
-  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data below.')).toHaveAttribute(
+  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart'
   )
@@ -146,7 +146,7 @@ test('full width charts should also have an acompanying narrow version for mobil
 
   const { getByAltText, getByTestId } = render((await Chart({ data, size: 'wide' })) as ReactElement)
 
-  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data below.')).toHaveAttribute(
+  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart-narrow'
   )
