@@ -27,7 +27,7 @@ export class AccessOurDataPage {
 
     await expect(
       this.page.getByText(
-        'Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example responses'
+        'Please see below for instructions initially on how to interact and use our API, as well as swagger API documentation detailing information about each endpoint including parameters and example response.'
       )
     ).toBeVisible()
   }
