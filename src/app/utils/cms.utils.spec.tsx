@@ -33,6 +33,9 @@ jest.mock('../components/cms', () => ({
       {children}
     </header>
   ),
+  DownloadButton: () => <div>Mocked download button</div>,
+  RichText: () => <div>Mocked richtext component</div>,
+  CodeBlock: () => <div>Mocked code block</div>,
 }))
 
 describe('Displaying a section from the cms home page', () => {
@@ -214,59 +217,52 @@ describe('Metrics', () => {
 describe('Composite block', () => {
   test('composite with text block', () => {
     render(
-      renderCompositeBlock([
-        {
-          type: 'text',
-          value: 'text test content',
-          id: '2df8361c-12f4-40d3-aa01-ce2c68a24d04',
-        },
-      ])
+      renderCompositeBlock({
+        type: 'text',
+        value: 'text test content',
+        id: '2df8361c-12f4-40d3-aa01-ce2c68a24d04',
+      })
     )
-    expect(screen.getByText('text test content')).toBeInTheDocument()
+    expect(screen.getByText('Mocked richtext component')).toBeInTheDocument()
   })
 
   test('button', () => {
     render(
-      renderCompositeBlock([
-        {
-          type: 'button',
-          value: {
-            text: 'Download',
-            loading_text: 'Downloading...',
-            endpoint: '/test',
-            method: 'POST',
-            button_type: 'DOWNLOAD',
-          },
-          id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+      renderCompositeBlock({
+        type: 'button',
+        value: {
+          text: 'Download',
+          loading_text: 'Downloading...',
+          endpoint: '/test',
+          method: 'POST',
+          button_type: 'DOWNLOAD',
         },
-      ])
+        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+      })
     )
-    const button = screen.getByRole('button', { name: 'Download' })
-    expect(button).toHaveAttribute('href', '/test')
-
-    button.click()
-
-    expect(screen.getByRole('button', { name: 'Downloading...' })).toBeVisible()
+    expect(screen.getByText('Mocked download button')).toBeInTheDocument()
   })
 
-  test('code_block', () => {
+  test('code block', () => {
     render(
-      renderCompositeBlock([
-        {
-          type: 'code_block',
-          value: {
-            heading: 'code block example',
-            conent: [
-              {
+      renderCompositeBlock({
+        type: 'code_block',
+        value: {
+          heading: 'code block example',
+          content: [
+            {
+              id: '8fec603a-fc71-4081-b7f6-8d278180ebbd',
+              type: 'code_snippet',
+              value: {
                 language: 'javascript',
                 code: 'const test = "example";',
               },
-            ],
-          },
-          id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+            },
+          ],
         },
-      ])
+        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+      })
     )
-    expect(screen.getByText('text test content')).toBeInTheDocument()
+    expect(screen.getByText('Mocked code block')).toBeInTheDocument()
   })
 })

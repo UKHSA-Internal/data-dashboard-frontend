@@ -160,25 +160,23 @@ export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number])
   </div>
 )
 
-export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number]) => {
-  if (type === 'text') {
-    return <RichText>{value}</RichText>
-  }
+export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number]) => (
+  <>
+    {type === 'text' && <RichText>{value}</RichText>}
 
-  if (type === 'button') {
-    return (
+    {type === 'button' && (
       <DownloadButton
-        id={id}
-        aria-label={value.text}
+        label={value.text}
         endpoint={value.endpoint}
         method={value.method}
-        label={value.text}
+        id={id}
         formats={['csv', 'json']}
+        aria-label={value.text}
       />
-    )
-  }
+    )}
 
-  if (type === 'code_block') {
-    return <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
-  }
-}
+    {type === 'code_block' && (
+      <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
+    )}
+  </>
+)
