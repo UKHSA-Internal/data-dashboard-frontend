@@ -1,3 +1,5 @@
+import { Metadata } from 'next'
+
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { usePaginationBlock } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationBlock'
@@ -5,6 +7,17 @@ import { Pagination } from '@/app/components/ui/govuk/Pagination/Pagination'
 import { PaginationNext } from '@/app/components/ui/govuk/Pagination/PaginationNext'
 import { PaginationPrevious } from '@/app/components/ui/govuk/Pagination/PaginationPrevious'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+
+export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+  const {
+    meta: { seo_title, search_description },
+  } = await getPageBySlug(slug, PageType.Common)
+
+  return {
+    title: seo_title,
+    description: search_description,
+  }
+}
 
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
   const { title, body, meta } = await getPageBySlug(slug, PageType.Composite)
