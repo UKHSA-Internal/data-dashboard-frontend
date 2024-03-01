@@ -20,7 +20,7 @@ export async function generateMetadata(): Promise<Metadata> {
 export default async function Layout({ children }: { children: ReactNode }) {
   const { id, title, body, related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
 
-  const childPages = await getPages(PageType.Composite, { child_of: id.toString() })
+  const childPages = await getPages(undefined, { child_of: id.toString() })
 
   return (
     <View heading={title}>

@@ -22,7 +22,7 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
   const { title, body, meta } = await getPageBySlug(slug, PageType.Composite)
 
-  const childPages = await getPages(PageType.Composite, { child_of: meta.parent.id.toString() })
+  const childPages = await getPages(undefined, { child_of: meta.parent.id.toString() })
 
   const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
     links: childPages.success
