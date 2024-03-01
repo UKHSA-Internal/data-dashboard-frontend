@@ -10,7 +10,7 @@ test.describe('Access our data', () => {
     })
   })
 
-  test('Overview page (first page)', async ({ accessOurDataPage }) => {
+  test('Overview page (first page)', async ({ accessOurDataPage, app }) => {
     await test.step('loads the page', async () => {
       await accessOurDataPage.goto('/access-our-data')
     })
@@ -28,6 +28,9 @@ test.describe('Access our data', () => {
     })
     await test.step('displays related links menu', async () => {
       await accessOurDataPage.hasRelatedLinks()
+    })
+    await test.step('displays back to top', async () => {
+      await app.hasBackToTop()
     })
     await test.step('displays child heading', async () => {
       await accessOurDataPage.hasChildHeading('Overview')
