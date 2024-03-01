@@ -20,8 +20,8 @@ export const CodeBlock = ({ children, language, className }: CodeBlockProps) => 
           // eslint-disable-next-line tailwindcss/no-custom-classname
           className={clsx(
             className,
-            `language-${language} govuk-!-padding-4 govuk-!-margin-bottom-6 overflow-auto print:drop-shadow-none`,
-            `whitespace-pre-wrap break-words font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)]`
+            `language-${language} govuk-!-padding-4 govuk-!-margin-bottom-6 print:text-shadow-none overflow-auto`,
+            `whitespace-pre-wrap break-words font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)] text-shadow-[0_1px_white]`
           )}
         >
           {tokens.map((line, i) => (

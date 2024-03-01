@@ -37,7 +37,7 @@ export const coreComponents: Components = {
   li: ({ children }) => <li>{children}</li>,
   p: ({ children }) => <p className="govuk-body">{children}</p>,
   code: ({ children }) => (
-    <code className="inline-block max-w-full break-words bg-[var(--colour-code-background)] px-[3px] py-[1px] font-[var(--ukhsa-font-code)] text-[var(--colour-code-dark-red)]">
+    <code className="inline-block max-w-full break-words bg-[var(--colour-code-background)] px-[3px] py-[1px] font-[var(--ukhsa-font-code)] text-[var(--colour-code-dark-red)] text-shadow-[0_1px_white]">
       {children}
     </code>
   ),
