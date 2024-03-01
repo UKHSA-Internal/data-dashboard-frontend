@@ -18,7 +18,7 @@ interface PageSectionWithContentsProps {
 export const PageSectionWithContents = ({ children }: PageSectionWithContentsProps) => {
   return (
     <>
-      <Contents>
+      <Contents className="govuk-!-margin-bottom-5">
         {Children.map(children, (child: ReactNode) => {
           return isValidElement(child) ? (
             <ContentsLink href={`#${kebabCase(child.props.heading)}`}>{child.props.heading}</ContentsLink>
