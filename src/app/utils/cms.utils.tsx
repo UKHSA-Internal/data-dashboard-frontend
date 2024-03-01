@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
+import { Fragment } from 'react'
 import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
@@ -161,7 +162,7 @@ export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number])
 )
 
 export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number]) => (
-  <>
+  <Fragment key={id}>
     {type === 'text' && <RichText>{value}</RichText>}
 
     {type === 'button' && (
@@ -178,5 +179,5 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     {type === 'code_block' && (
       <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
     )}
-  </>
+  </Fragment>
 )
