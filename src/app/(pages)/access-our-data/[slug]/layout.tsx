@@ -1,4 +1,3 @@
-import { Metadata } from 'next'
 import { ReactNode } from 'react'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
@@ -6,17 +5,6 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { BackToTop, Contents, ContentsLink, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
-
-export async function generateMetadata(): Promise<Metadata> {
-  const {
-    meta: { seo_title, search_description },
-  } = await getPageBySlug('access-our-data', PageType.Composite)
-
-  return {
-    title: seo_title,
-    description: search_description,
-  }
-}
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const { t } = await useTranslation('common')
