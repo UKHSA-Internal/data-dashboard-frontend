@@ -1,3 +1,5 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Access our data', () => {
@@ -133,6 +135,96 @@ test.describe('Access our data', () => {
     })
     await test.step('displays updated page', async () => {
       await accessOurDataPage.hasChildHeading('Overview')
+    })
+  })
+})
+
+test.describe('Access our data - mobile', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ accessOurDataPage, app }) => {
+    await accessOurDataPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Access our data - tablet', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ accessOurDataPage, app }) => {
+    await accessOurDataPage.goto()
+    await app.hasMobileNav()
+  })
+})
+
+test.describe('Access our data - desktop', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('displays the navigation on desktop', async ({ accessOurDataPage, app }) => {
+    await accessOurDataPage.goto()
+    await app.hasDesktopNav()
+  })
+})
+
+test.describe('Access our data page - no Javascript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
+
+  test('Parent page', async ({ accessOurDataPage }) => {
+    await test.step('go to route page', async () => {
+      await accessOurDataPage.goto()
+    })
+    await test.step('it redirects to first child page', async () => {
+      await accessOurDataPage.hasChildHeading('Overview')
+    })
+  })
+
+  test('Page content, no Javascript', async ({ accessOurDataPage }) => {
+    await test.step('loads the page', async () => {
+      await accessOurDataPage.goto('/access-our-data')
+    })
+    await test.step('displays parent heading', async () => {
+      await accessOurDataPage.hasParentHeading()
+    })
+    await test.step('displays parent body content', async () => {
+      await accessOurDataPage.hasParentContent()
+    })
+    await test.step('displays contents menu', async () => {
+      await accessOurDataPage.hasContentsSection()
+    })
+    await test.step('displays related links menu', async () => {
+      await accessOurDataPage.hasRelatedLinks()
+    })
+    await test.step('displays child heading', async () => {
+      await accessOurDataPage.hasChildHeading('Overview')
+    })
+    await test.step('displays child content', async () => {
+      await accessOurDataPage.hasChildContent(
+        'The UK Health Security Agency (UKHSA) is responsible for protecting every member of every community from the impact of infectious diseases, chemical, biological, radiological and nuclear incidents and other health threats.'
+      )
+      await accessOurDataPage.hasChildContent(
+        'UKHSA is an executive agency, sponsored by the Department of Health and Social Care'
+      )
+      await accessOurDataPage.hasChildContent(
+        'The UKHSA data dashboard API is designed to support developers and other users to easily extract and save data, that is present in the dashboard. It allows for easy access to data, integration with software, tailed responses for each use case'
+      )
+    })
+    await test.step('Shows only next link', async () => {
+      await accessOurDataPage.noPreviousLink()
+      await accessOurDataPage.hasNextLink('What is an API')
+    })
+  })
+
+  test('Contents navigation works', async ({ accessOurDataPage }) => {
+    await test.step('loads the page', async () => {
+      await accessOurDataPage.goto('/access-our-data')
+    })
+    await test.step('click contents item', async () => {
+      await accessOurDataPage.selectContentsItem('Getting started')
+    })
+    await test.step('displays updated page', async () => {
+      await accessOurDataPage.hasChildHeading('Getting started')
     })
   })
 })
