@@ -13,8 +13,6 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
     meta: { seo_title, search_description },
   } = await getPageBySlug(slug, PageType.Composite)
 
-  console.log('\nChild page meta: ', seo_title)
-
   return {
     title: seo_title,
     description: search_description,
