@@ -1,3 +1,5 @@
+'use client'
+
 import clsx from 'clsx'
 import { Highlight } from 'prism-react-renderer'
 import Prism from 'prismjs'
