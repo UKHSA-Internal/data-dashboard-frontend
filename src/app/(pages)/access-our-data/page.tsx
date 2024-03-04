@@ -5,7 +5,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 
 export default async function AccessOurData() {
   const { id } = await getPageBySlug('access-our-data', PageType.Composite)
-  const childPages = await getPages(PageType.Composite, { child_of: id.toString() })
+  const childPages = await getPages(undefined, { child_of: id.toString() })
 
   if (!childPages.success || !childPages.data.items.length) {
     notFound()
