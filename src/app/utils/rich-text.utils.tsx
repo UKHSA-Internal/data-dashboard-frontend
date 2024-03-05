@@ -1,4 +1,4 @@
-import rehypeToc from '@jsdevtools/rehype-toc'
+import rehypeToc, { HtmlElementNode } from '@jsdevtools/rehype-toc'
 import Link from 'next/link'
 import { ComponentProps } from 'react'
 import ReactMarkdown from 'react-markdown'
@@ -7,7 +7,7 @@ import rehypeSlug from 'rehype-slug'
 
 type ReactMarkdownProps = ComponentProps<typeof ReactMarkdown>
 type Components = ReactMarkdownProps['components']
-export type RehypePlugins = ReactMarkdownProps['rehypePlugins']
+export type RehypePlugins = NonNullable<ReactMarkdownProps['rehypePlugins']>
 
 /**
  * Default Plugins and components for rich text
@@ -46,7 +46,25 @@ export const coreComponents: Components = {
 /**
  * Plugins and components for when a table of contents is required
  */
-export const linkedHeadingsPlugins: RehypePlugins = [rehypeSlug, [rehypeToc, { headings: ['h2'] }]]
+export const linkedHeadingsPlugins: RehypePlugins = [
+  rehypeSlug,
+  [
+    rehypeToc,
+    {
+      headings: ['h2'],
+      customizeTOC: (toc: HtmlElementNode) => {
+        // Ensure that the toc plugin only applies when needed. Without this it will add unused HTML to the DOM
+        if (toc && toc.children) {
+          const firstChild = toc.children[0] as HtmlElementNode
+          if (firstChild && !firstChild.children?.length) {
+            return false
+          }
+        }
+        return toc
+      },
+    },
+  ],
+]
 
 export const linkedHeadingsComponents: Components = {
   a: ({ children, href }) => {

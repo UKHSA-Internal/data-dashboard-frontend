@@ -1,4 +1,4 @@
-import { render, within } from '@/config/test-utils'
+import { render } from '@/config/test-utils'
 
 import { RichText } from './RichText'
 
@@ -15,28 +15,21 @@ test('Converts vanilla HTML into Gov UK React components', () => {
   expect(getAllByRole('listitem')).toHaveLength(1)
 })
 
-test('Does not render a table of contents using if the the cms page does not contain any H2s', () => {
-  const { queryByRole } = render(<RichText linkedHeadings>{`<p>hello</p>`}</RichText>)
+test('Does not render a table of contents when the cms page does NOT contain any h2s', () => {
+  const { queryByRole } = render(<RichText>{`<p>hello</p>`}</RichText>)
   expect(queryByRole('navigation')).not.toBeInTheDocument()
   expect(queryByRole('heading', { name: 'Contents', level: 2 })).not.toBeInTheDocument()
 })
 
-test('Renders a table of contents using the H2 elements within the provided HTML', () => {
-  const { getByRole } = render(<RichText linkedHeadings>{mockData}</RichText>)
+test('Does not render a table of contents when the cms page DOES contain h2s', () => {
+  const { getByRole, queryByRole } = render(<RichText>{mockData}</RichText>)
 
-  const nav = getByRole('navigation')
-  const listitems = within(nav).getAllByRole('listitem')
-
-  expect(listitems).toHaveLength(1)
-  expect(within(nav).getByRole('heading', { name: 'Contents', level: 2 }))
-  expect(within(listitems[0]).getByText('Secondary test')).toHaveAttribute('href', '#secondary-test')
+  expect(queryByRole('navigation')).not.toBeInTheDocument()
   expect(getByRole('heading', { name: 'Secondary test', level: 2 })).toBeInTheDocument()
 })
 
 test('Converts a cms cookie settings anchor into the nextjs link', () => {
-  const { getByRole } = render(
-    <RichText linkedHeadings>{`<a href="/cookies?change-settings=1">Change cookie settings</a>`}</RichText>
-  )
+  const { getByRole } = render(<RichText>{`<a href="/cookies?change-settings=1">Change cookie settings</a>`}</RichText>)
 
   expect(getByRole('link', { name: 'Change cookie settings' })).toHaveAttribute('href', '/cookies?change-settings=1')
 })
