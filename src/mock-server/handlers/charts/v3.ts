@@ -32,6 +32,7 @@ export default async function handler(req: Request, res: Response) {
     if (chart_height === chartSizes.narrow.height && chart_width === chartSizes.narrow.width) {
       return res.json({
         chart: narrowFixture.toString(),
+        alt_text: 'Mocked alt text',
         last_updated: '2023-05-10T15:18:06.939535+01:00',
       })
     }
@@ -39,6 +40,7 @@ export default async function handler(req: Request, res: Response) {
     if (chart_height === chartSizes.wide.height && chart_width === chartSizes.wide.width) {
       return res.json({
         chart: wideFixture.toString(),
+        alt_text: 'Mocked alt text',
         last_updated: '2023-05-10T15:18:06.939535+01:00',
       })
     }

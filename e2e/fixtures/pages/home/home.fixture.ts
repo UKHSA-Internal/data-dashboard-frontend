@@ -139,9 +139,7 @@ export class HomePage {
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('722')).toBeVisible()
     await expect(card.getByText('-592 (-3%)')).toBeVisible()
-    await expect(
-      card.getByAltText('Chart showing Positive tests reported in England Refer to tabular data.')
-    ).toBeVisible()
+    await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 
     if (javaScriptEnabled) {
       await card.getByRole('tab', { name: 'Tabular data' }).click()
@@ -176,9 +174,7 @@ export class HomePage {
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('379')).toBeVisible()
     await expect(card.getByText('21 (-5%)')).toBeVisible()
-    await expect(
-      card.getByAltText('Chart showing Deaths with COVID-19 on the death certificate in England Refer to tabular data.')
-    ).toBeVisible()
+    await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 
     if (javaScriptEnabled) {
       await card.getByRole('tab', { name: 'Tabular data' }).click()
@@ -226,9 +222,7 @@ export class HomePage {
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
     await expect(card.getByText('0.26')).toBeVisible()
-    await expect(
-      card.getByAltText('Chart showing Weekly hospital admission rates for Influenza Refer to tabular data.')
-    ).toBeVisible()
+    await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 
     if (javaScriptEnabled) {
       await card.getByRole('tab', { name: 'Tabular data' }).click()
@@ -260,7 +254,7 @@ export class HomePage {
     await expect(card.getByRole('heading', { level: 4, name: /Up to and including 10 May 2023/ })).toBeVisible()
     await expect(card.getByRole('tablist')).toBeVisible()
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
-    await expect(card.getByAltText('Chart showing Weekly positivity Refer to tabular data.')).toBeVisible()
+    await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 
     if (javaScriptEnabled) {
       await card.getByRole('tab', { name: 'Tabular data' }).click()
