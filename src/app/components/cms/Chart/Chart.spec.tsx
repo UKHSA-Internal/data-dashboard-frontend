@@ -22,7 +22,7 @@ const getChartsMock = jest.mocked(getCharts)
 test('renders the chart correctly when successful', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: { chart: 'mock-chart', alt_text: 'alt text for chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -64,7 +64,7 @@ test('renders the chart correctly when successful', async () => {
     y_axis: null,
   })
 
-  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data.')).toHaveAttribute(
+  expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart'
   )
@@ -77,7 +77,7 @@ test('renders the chart by geography and geography type when both are present in
 
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: { chart: 'mock-chart', alt_text: 'alt text for chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -119,7 +119,7 @@ test('renders the chart by geography and geography type when both are present in
     y_axis: null,
   })
 
-  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data.')).toHaveAttribute(
+  expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart'
   )
@@ -128,11 +128,19 @@ test('renders the chart by geography and geography type when both are present in
 test('full width charts should also have an acompanying narrow version for mobile viewports', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart-narrow', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: {
+      chart: 'mock-chart-narrow',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+    },
   })
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart-wide', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: {
+      chart: 'mock-chart-wide',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -146,7 +154,7 @@ test('full width charts should also have an acompanying narrow version for mobil
 
   const { getByAltText, getByTestId } = render((await Chart({ data, size: 'wide' })) as ReactElement)
 
-  expect(getByAltText('Chart showing COVID-19 chart description. Refer to tabular data.')).toHaveAttribute(
+  expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart-narrow'
   )

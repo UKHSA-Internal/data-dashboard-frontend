@@ -59,7 +59,7 @@ export async function Chart({ data, size }: ChartProps) {
 
   if (narrowChartResponse.success) {
     const {
-      data: { chart: narrowChart },
+      data: { chart: narrowChart, alt_text: alt },
     } = narrowChartResponse
 
     const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
@@ -74,7 +74,7 @@ export async function Chart({ data, size }: ChartProps) {
           />
         )}
         <img
-          alt={t('cms.blocks.chart.alt', { body: data.body })}
+          alt={t('cms.blocks.chart.alt', { body: alt })}
           src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`}
           className="w-full"
         />

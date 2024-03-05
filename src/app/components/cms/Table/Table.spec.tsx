@@ -13,7 +13,7 @@ const getChartsMock = jest.mocked(getCharts)
 
 getChartsMock.mockResolvedValue({
   success: true,
-  data: { chart: 'mock-chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+  data: { chart: 'mock-chart', alt_text: '', last_updated: '2023-05-10T15:18:06.939535+01:00' },
 })
 
 // Mock table api
