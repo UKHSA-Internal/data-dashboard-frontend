@@ -132,7 +132,7 @@ export class App {
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'API' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
 
@@ -154,7 +154,7 @@ export class App {
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'API' })).toBeVisible()
+    await expect(this.nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
   }
