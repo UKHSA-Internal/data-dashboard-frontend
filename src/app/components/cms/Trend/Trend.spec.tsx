@@ -88,6 +88,24 @@ test('renders downward negative trend correctly', async () => {
   expect(getByText('There has been an decrease of -592 (-3%) compared to the previous 7 days.')).toBeInTheDocument()
 })
 
+test('renders neutral trend correctly', async () => {
+  getTrendsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      metric_name: 'new_cases_7days_change',
+      metric_value: 0,
+      percentage_metric_name: 'new_cases_7days_change_percentage',
+      percentage_metric_value: 0,
+      colour: 'neutral',
+      direction: 'neutral',
+    },
+  })
+
+  const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+
+  expect(getByText('There has been no change compared to the previous 7 days.')).toBeInTheDocument()
+})
+
 test('renders null when the percentage request fails', async () => {
   getTrendsMock.mockResolvedValueOnce({
     success: false,
