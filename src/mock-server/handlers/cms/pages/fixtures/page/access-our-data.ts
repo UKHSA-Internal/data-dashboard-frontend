@@ -62,7 +62,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         title: 'Access our data',
       },
     },
-    title: 'Access our data',
+    title: 'Overview',
     date_posted: '2024-02-14',
     body: [
       {
