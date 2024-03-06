@@ -12,13 +12,14 @@ import { ReactNode } from 'react'
 interface ContentsProps {
   heading?: string
   children: ReactNode
+  className?: string
 }
 
-export const Contents = ({ heading = 'Contents', children }: ContentsProps) => {
+export const Contents = ({ heading = 'Contents', children, className }: ContentsProps) => {
   return (
-    <nav className="govuk-!-margin-bottom-5" aria-label="Contents">
+    <nav className={className} aria-label="Contents">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-1 font-normal">{heading}</h2>
-      <ol className="govuk-!-margin-bottom-6 govuk-!-margin-left-4">{children}</ol>
+      <ol className="govuk-!-margin-left-4">{children}</ol>
     </nav>
   )
 }

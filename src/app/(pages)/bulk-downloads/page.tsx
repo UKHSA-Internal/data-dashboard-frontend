@@ -2,8 +2,8 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { DownloadButton, RichText } from '@/app/components/cms'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export async function generateMetadata(): Promise<Metadata> {
   const {
@@ -22,26 +22,7 @@ export default async function BulkDownloads() {
   return (
     <View heading={title}>
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-three-quarters-from-desktop">
-          {body.map(({ type, value, id }) => {
-            if (type === 'text') {
-              return <RichText key={id}>{value}</RichText>
-            }
-            if (type === 'button') {
-              return (
-                <DownloadButton
-                  key={id}
-                  aria-label="Bulk downloads"
-                  endpoint={value.endpoint}
-                  method={value.method}
-                  label={value.text}
-                  id={id}
-                  formats={['csv', 'json']}
-                />
-              )
-            }
-          })}
-        </div>
+        <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
       <RelatedLinks variant="footer">

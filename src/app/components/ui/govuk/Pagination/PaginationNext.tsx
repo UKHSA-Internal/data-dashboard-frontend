@@ -14,7 +14,12 @@ interface PaginationNextProps {
 export const PaginationNext = ({ href, children, variant }: PaginationNextProps) => {
   return (
     <div className="govuk-pagination__next">
-      <Link className="govuk-link govuk-pagination__link govuk-link--no-visited-state" href={href} rel="next">
+      <Link
+        className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
+        href={href}
+        rel="next"
+        prefetch={false}
+      >
         {variant === 'list-item' && (
           <span className="govuk-pagination__link-title">
             Next<span className="govuk-visually-hidden"> page</span>
@@ -22,7 +27,7 @@ export const PaginationNext = ({ href, children, variant }: PaginationNextProps)
         )}
         <svg
           aria-hidden="true"
-          className="govuk-pagination__icon govuk-pagination__icon--next"
+          className="govuk-pagination__icon govuk-pagination__icon--next inline align-baseline"
           focusable="false"
           height="13"
           viewBox="0 0 15 13"

@@ -36,7 +36,26 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
     },
   ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
-  related_links: [],
+  related_links: [
+    {
+      id: 1,
+      meta: {
+        type: 'topic.TopicPageRelatedLink',
+      },
+      title: 'View swagger documentation',
+      body: '',
+      url: 'https://api.dev.ukhsa-dashboard.data.gov.uk/api/swagger/#/',
+    },
+    {
+      id: 2,
+      meta: {
+        type: 'topic.TopicPageRelatedLink',
+      },
+      title: 'Contribute to our open source project',
+      body: '',
+      url: '/',
+    },
+  ],
 }
 
 export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
@@ -48,7 +67,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       html_url: null,
       slug: 'overview',
       show_in_menus: false,
-      seo_title: 'Access our data child | UKHSA data dashboard',
+      seo_title: 'Overview - Access our data | UKHSA data dashboard',
       search_description: 'Mocked Access our data page description',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
@@ -69,32 +88,13 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         type: 'text',
         value:
           '<p>The UK Health Security Agency (UKHSA) is responsible for protecting every member of every community from the impact of infectious diseases, chemical, biological, radiological and nuclear incidents and other health threats.</p>' +
-          '<p>UKHSA is an executive agency, sponsored by the [Department of Health and Social Care] (https://www.gov.uk/government/organisations/department-of-health-and-social-care)</p>' +
+          '<p>UKHSA is an executive agency, sponsored by the Department of Health and Social Care</p>' +
           '<p>The UKHSA data dashboard API is designed to support developers and other users to easily extract and save data, that is present in the dashboard. It allows for easy access to data, integration with software, tailed responses for each use case</p>',
         id: faker.string.uuid(),
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 33,
@@ -104,7 +104,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       html_url: null,
       slug: 'what-is-an-api',
       show_in_menus: false,
-      seo_title: 'Access our data child | UKHSA data dashboard',
+      seo_title: 'What is an API - Access our data | UKHSA data dashboard',
       search_description: 'Mocked Access our data page description',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
@@ -130,26 +130,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 34,
@@ -159,7 +140,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       html_url: null,
       slug: 'getting-started',
       show_in_menus: false,
-      seo_title: 'Access our data child | UKHSA data dashboard',
+      seo_title: 'Getting started - Access our data | UKHSA data dashboard',
       search_description: 'Mocked Access our data page description',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
@@ -179,9 +160,9 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       {
         type: 'text',
         value:
-          '<h2>What you can do with this API</h2>' +
+          '<h3>What you can do with this API</h3>' +
           '<p>This API is useful for applications that incorporate content from the UKHSA data dasbhoard, and for keeping that content up to date. It provides a more accessible and predictable interface that what can be achieved through scraping HTML pages.</p>' +
-          "<h2>What you can't do with this API</h2>" +
+          "<h3>What you can't do with this API</h3>" +
           '<p>The content within thie API is limited to data provided in the UKHSA data dashboard, and does not include other websites or areas of gov.uk</p>' +
           '<p>Not all content is available, there will be some selections (such as when filtering by location) that either do not have data yet, or will never have data. UKHSA relies on external data (from NHS/ government sources) for the data dashboard.</p>',
         id: faker.string.uuid(),
@@ -213,26 +194,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 35,
@@ -242,7 +204,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       html_url: null,
       slug: 'api-authentication',
       show_in_menus: false,
-      seo_title: 'Access our data child | UKHSA data dashboard',
+      seo_title: 'API Authentication - Access our data | UKHSA data dashboard',
       search_description: 'Mocked Access our data page description',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
@@ -266,26 +228,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
   {
     id: 36,
@@ -295,7 +238,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       html_url: null,
       slug: 'data-structure',
       show_in_menus: false,
-      seo_title: 'Access our data child | UKHSA data dashboard',
+      seo_title: 'Data structure - Access our data | UKHSA data dashboard',
       search_description: 'Mocked Access our data page description',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
@@ -322,25 +265,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
       },
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
-    related_links: [
-      {
-        id: 1,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'View swagger documentation',
-        body: '',
-        url: '/',
-      },
-      {
-        id: 2,
-        meta: {
-          type: 'topic.TopicPageRelatedLink',
-        },
-        title: 'Contribute to our open source project',
-        body: '',
-        url: '/',
-      },
-    ],
+    related_links: [],
   },
 ]

@@ -13,6 +13,7 @@ test.describe('Smoke tests', () => {
     otherRespiratoryVirusesPage,
     accessibilityStatementPage,
     errorPage,
+    accessOurDataPage,
   }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
@@ -62,6 +63,10 @@ test.describe('Smoke tests', () => {
     await test.step('loads the "Error" page', async () => {
       await errorPage.goto()
       await errorPage.hasHeading()
+    })
+    await test.step('loads the access our data page', async () => {
+      await accessOurDataPage.goto()
+      await accessOurDataPage.hasParentHeading()
     })
   })
 })

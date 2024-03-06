@@ -84,3 +84,43 @@ export const Body = z.array(
 )
 
 export type Body = z.infer<typeof Body>
+
+export const CompositeBody = z.array(
+  z.discriminatedUnion('type', [
+    z.object({
+      type: z.literal('text'),
+      value: z.string(),
+      id: z.string(),
+    }),
+    z.object({
+      type: z.literal('code_block'),
+      value: z.object({
+        heading: z.string(),
+        content: z.array(
+          z.object({
+            type: z.literal('code_snippet'),
+            value: z.object({
+              language: z.string(),
+              code: z.string(),
+            }),
+            id: z.string(),
+          })
+        ),
+      }),
+      id: z.string(),
+    }),
+    z.object({
+      type: z.literal('button'),
+      value: z.object({
+        text: z.string(),
+        loading_text: z.string(),
+        endpoint: z.string(),
+        method: z.string(),
+        button_type: z.string(),
+      }),
+      id: z.string(),
+    }),
+  ])
+)
+
+export type CompositeBody = z.infer<typeof CompositeBody>
