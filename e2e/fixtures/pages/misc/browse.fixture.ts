@@ -26,7 +26,7 @@ export class BrowsePage {
     await expect(this.page.getByRole('link', { name: 'COVID-19' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'Influenza' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'API' })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: 'Access our data' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: "What's new" })).toBeVisible()
   }

@@ -55,6 +55,7 @@ export class App {
   readonly header: Locator
   readonly phaseBanner: Locator
   readonly nav: Locator
+  readonly sideNav: Locator
   readonly tableOfContents: Locator
   readonly backToTop: Locator
   readonly footer: Locator
@@ -66,6 +67,7 @@ export class App {
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
     this.nav = this.page.getByRole('navigation', { name: 'Menu' })
+    this.sideNav = this.page.getByRole('navigation', { name: 'Side navigation' })
     this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
     this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
     this.footer = this.page.getByRole('contentinfo')
@@ -144,19 +146,19 @@ export class App {
     await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: 'API' })).toBeHidden()
+    await expect(this.nav.getByRole('link', { name: 'Access our data' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: 'About' })).toBeHidden()
     await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
   }
 
   async hasDesktopNav() {
-    await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: 'Homepage' })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: 'Influenza' })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: 'Access our data' })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: 'About' })).toBeVisible()
+    await expect(this.sideNav.getByRole('link', { name: "What's new" })).toBeVisible()
   }
 
   async hasTableOfContents(links: string[]) {
