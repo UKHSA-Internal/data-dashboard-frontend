@@ -1,9 +1,10 @@
 import clsx from 'clsx'
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
+import { Fragment } from 'react'
 import { z } from 'zod'
 
-import { Body, CardTypes } from '@/api/models/cms/Page'
+import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
@@ -12,9 +13,12 @@ import {
   Chart,
   ChartRowCard,
   ChartRowCardHeader,
+  CodeBlock,
   Download,
+  DownloadButton,
   Headline,
   Percentage,
+  RichText,
   Table,
   Timestamp,
   Trend,
@@ -155,4 +159,25 @@ export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number])
     {type === 'headline_number' && <Headline data={value} />}
     {type === 'trend_number' && <Trend data={value} />}
   </div>
+)
+
+export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number]) => (
+  <Fragment key={id}>
+    {type === 'text' && <RichText>{value}</RichText>}
+
+    {type === 'button' && (
+      <DownloadButton
+        label={value.text}
+        endpoint={value.endpoint}
+        method={value.method}
+        id={id}
+        formats={['csv', 'json']}
+        aria-label={value.text}
+      />
+    )}
+
+    {type === 'code_block' && (
+      <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
+    )}
+  </Fragment>
 )

@@ -1,33 +1,15 @@
 import ReactMarkdown from 'react-markdown'
 
-import {
-  coreComponents,
-  corePlugins,
-  linkedHeadingsComponents,
-  linkedHeadingsPlugins,
-  RehypePlugins,
-} from '@/app/utils/rich-text.utils'
+import { coreComponents, corePlugins } from '@/app/utils/rich-text.utils'
 
 interface RichTextProps {
   children: string
-  linkedHeadings?: boolean
 }
 
-export const RichText = ({ children, linkedHeadings }: RichTextProps) => {
-  const rehypePlugins: RehypePlugins = corePlugins || []
-
-  const showLinkedHeadings = linkedHeadings && children.includes('h2')
-  if (showLinkedHeadings) {
-    rehypePlugins.push(...(linkedHeadingsPlugins || []))
-  }
-
-  const components = { ...coreComponents, ...(showLinkedHeadings && linkedHeadingsComponents) }
-
+export const RichText = ({ children }: RichTextProps) => {
   return (
-    <>
-      <ReactMarkdown rehypePlugins={corePlugins} components={components}>
-        {children}
-      </ReactMarkdown>
-    </>
+    <ReactMarkdown rehypePlugins={corePlugins} components={coreComponents}>
+      {children}
+    </ReactMarkdown>
   )
 }
