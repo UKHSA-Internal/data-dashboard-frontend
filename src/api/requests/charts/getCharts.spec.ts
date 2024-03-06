@@ -9,6 +9,7 @@ import { getCharts, responseSchema } from './getCharts'
 test('Returns a chart svg and last updated date', async () => {
   const mockResponseData: z.infer<typeof responseSchema> = {
     chart: 'mocked-chart-svg',
+    alt_text: 'alt text',
     last_updated: '123',
   }
 
@@ -74,6 +75,13 @@ test('Handles API errors when data is missing (400 status code)', async () => {
         path: ['last_updated'],
         message: 'Required',
       },
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['alt_text'],
+        message: 'Required',
+      },
     ]),
   })
 })
@@ -114,6 +122,13 @@ test('Handles API errors for non-400 error responses', async () => {
         expected: 'string',
         received: 'undefined',
         path: ['last_updated'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['alt_text'],
         message: 'Required',
       },
     ]),

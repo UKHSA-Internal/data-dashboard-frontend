@@ -35,6 +35,7 @@ export const requestSchema = z.object({
 export const responseSchema = z.object({
   chart: z.string(),
   last_updated: z.string(),
+  alt_text: z.string(),
 })
 
 export type RequestParams = z.infer<typeof requestSchema>
