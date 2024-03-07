@@ -27,7 +27,7 @@ export const CodeBlock = ({ children, language, className }: CodeBlockProps) => 
           className={clsx(
             className,
             `language-${lang} govuk-!-padding-4 govuk-!-margin-bottom-6 print:text-shadow-none overflow-auto`,
-            `whitespace-pre-wrap break-words font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)] text-shadow-[0_1px_white]`
+            `whitespace-pre-wrap break-all font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)] text-shadow-[0_1px_white]`
           )}
         >
           {tokens.map((line, i) => (
