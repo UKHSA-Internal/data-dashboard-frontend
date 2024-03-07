@@ -3,7 +3,7 @@
 exports[`Displays the code block 1`] = `
 <div>
   <pre
-    class="language-html govuk-!-padding-4 govuk-!-margin-bottom-6 print:text-shadow-none overflow-auto whitespace-pre-wrap break-words font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)] text-shadow-[0_1px_white]"
+    class="language-html govuk-!-padding-4 govuk-!-margin-bottom-6 print:text-shadow-none overflow-auto whitespace-pre-wrap break-all font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)] text-shadow-[0_1px_white]"
   >
     <div
       class="token-line"
