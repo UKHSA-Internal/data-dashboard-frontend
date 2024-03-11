@@ -2,8 +2,7 @@ import { ReactNode } from 'react'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { BackToTop, View } from '@/app/components/ui/ukhsa'
-import { useTranslation } from '@/app/i18n'
+import { View } from '@/app/components/ui/ukhsa'
 export const dynamic = 'auto'
 
 export default async function Layout({
@@ -17,8 +16,6 @@ export default async function Layout({
   sidebar: ReactNode
   pagination: ReactNode
 }) {
-  const { t } = await useTranslation('common')
-
   const { title } = await getPageBySlug('access-our-data', PageType.Composite)
 
   return (
@@ -38,7 +35,6 @@ export default async function Layout({
           <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">{sidebar}</div>
         </div>
       </View>
-      <BackToTop label={t('backToTop')} />
     </>
   )
 }
