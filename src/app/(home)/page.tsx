@@ -28,7 +28,6 @@ export default async function HomePage() {
 
   return (
     <View heading={title} description={description} showWelcome>
-      <div hidden id="main-content" />
       {body.map(renderSection)}
       <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (

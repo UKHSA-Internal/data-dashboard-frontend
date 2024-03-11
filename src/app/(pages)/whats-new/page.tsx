@@ -121,7 +121,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
 
-          <ul className="govuk-list govuk-!-margin-top-7" aria-label={title} id="main-content">
+          <ul className="govuk-list govuk-!-margin-top-7" aria-label={title}>
             {entriesByDate.map(([date, entries], idx) => {
               const entriesNewest = entries.sort(
                 (first, second) => new Date(second.date_posted).valueOf() - new Date(first.date_posted).valueOf()

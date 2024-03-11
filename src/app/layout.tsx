@@ -110,7 +110,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </div>
         <div className="govuk-width-container">
-          <main className="govuk-main-wrapper govuk-!-padding-top-4" role="main">
+          <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content" role="main">
             <div className="flex flex-col gap-0 xl:flex-row xl:gap-7">
               <SideNav>
                 {menu.map(({ title, slug, children }) => (
@@ -133,6 +133,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   </SideNavLink>
                 ))}
               </SideNav>
+
               {children}
             </div>
           </main>

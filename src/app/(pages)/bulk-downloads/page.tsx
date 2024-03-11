@@ -22,7 +22,7 @@ export default async function BulkDownloads() {
   return (
     <View heading={title}>
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-three-quarters-from-desktop" id="main-content">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
           {body.map(({ type, value, id }) => {
             if (type === 'text') {
               return <RichText key={id}>{value}</RichText>

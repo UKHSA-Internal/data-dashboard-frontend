@@ -36,7 +36,7 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>
-            <PageSection heading={'Summary'} id="main-content">
+            <PageSection heading={'Summary'}>
               <MetricsSummary topic={topic} group={group} metric={metric} />
             </PageSection>
             {body.map(({ id, value: { title, body } }) => (

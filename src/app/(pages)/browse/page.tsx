@@ -22,7 +22,7 @@ export default async function Browse() {
   return (
     <>
       <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">Browse</h1>
-      <nav aria-label="Menu" className="govuk-!-margin-bottom-6" id="main-content">
+      <nav aria-label="Menu" className="govuk-!-margin-bottom-6">
         {groupedMenu.map((group, key) => (
           <div key={key} className="govuk-grid-row">
             {group.map((link) => (
