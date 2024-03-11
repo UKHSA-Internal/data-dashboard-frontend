@@ -2,10 +2,8 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 
 import { RichText } from '@/app/components/cms'
-import { useMenu } from '@/app/utils/menu.utils'
 
 import { useTranslation } from '../../../../i18n'
-import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '../SideNav/SideNav'
 
 interface PageProps {
   heading?: string
@@ -18,32 +16,9 @@ interface PageProps {
 
 export async function View({ heading, showWelcome, children, description, lastUpdated, backLink }: PageProps) {
   const { t } = await useTranslation('common')
-  const menu = await useMenu()
 
   return (
-    <div className="flex flex-col gap-0 xl:flex-row xl:gap-7">
-      <SideNav>
-        {menu.map(({ title, slug, children }) => (
-          <SideNavLink
-            key={slug}
-            href={slug}
-            subMenu={
-              children && (
-                <SideNavSubMenu>
-                  {children.map(({ title, slug }) => (
-                    <SideNavSubMenuLink key={slug} href={slug}>
-                      {title}
-                    </SideNavSubMenuLink>
-                  ))}
-                </SideNavSubMenu>
-              )
-            }
-          >
-            {title}
-          </SideNavLink>
-        ))}
-      </SideNav>
-
+    <>
       <div className="w-full">
         {backLink && (
           <Link href={backLink} className="govuk-back-link">
@@ -63,6 +38,6 @@ export async function View({ heading, showWelcome, children, description, lastUp
 
         {children}
       </div>
-    </div>
+    </>
   )
 }

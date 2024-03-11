@@ -13,7 +13,7 @@ import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
-import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
@@ -111,7 +111,30 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </div>
         <div className="govuk-width-container">
           <main className="govuk-main-wrapper govuk-!-padding-top-4" role="main">
-            {children}
+            <div className="flex flex-col gap-0 xl:flex-row xl:gap-7">
+              <SideNav>
+                {menu.map(({ title, slug, children }) => (
+                  <SideNavLink
+                    key={slug}
+                    href={slug}
+                    subMenu={
+                      children && (
+                        <SideNavSubMenu>
+                          {children.map(({ title, slug }) => (
+                            <SideNavSubMenuLink key={slug} href={slug}>
+                              {title}
+                            </SideNavSubMenuLink>
+                          ))}
+                        </SideNavSubMenu>
+                      )
+                    }
+                  >
+                    {title}
+                  </SideNavLink>
+                ))}
+              </SideNav>
+              {children}
+            </div>
           </main>
         </div>
         <Footer />
