@@ -26,7 +26,8 @@ export const RichText = ({ children, linkedHeadings, id }: RichTextProps) => {
 
   return (
     <>
-      <ReactMarkdown rehypePlugins={corePlugins} components={components} id={id}>
+      {id && <span id={id} />}
+      <ReactMarkdown rehypePlugins={corePlugins} components={components}>
         {children}
       </ReactMarkdown>
     </>

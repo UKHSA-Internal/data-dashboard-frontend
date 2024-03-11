@@ -36,7 +36,7 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
     <View backLink="/whats-new" lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <small className="govuk-caption-m govuk-!-margin-bottom-3">
+          <small className="govuk-caption-m govuk-!-margin-bottom-3" id="main-content">
             <time dateTime={date_posted}>
               <Trans
                 i18nKey="entryDate"

@@ -16,7 +16,7 @@ export default async function FeedbackConfirmation() {
     <View>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
-          <div className="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6">
+          <div className="govuk-panel govuk-panel--confirmation govuk-!-margin-bottom-6" id="main-content">
             <h1 className="govuk-panel__title">Form submitted</h1>
             <div className="govuk-panel__body">Thank you for your feedback</div>
           </div>

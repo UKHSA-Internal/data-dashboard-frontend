@@ -14,7 +14,7 @@ export default function Feedback({ searchParams }: { searchParams?: { [key: stri
     <View heading="UKHSA data dashboard feedback">
       <div className="govuk-grid-row">
         <form className="govuk-grid-column-two-thirds" action="/api/feedback" method="POST">
-          <div className="govuk-form-group govuk-!-margin-bottom-9">
+          <div className="govuk-form-group govuk-!-margin-bottom-9" id="main-content">
             {hasServerError && (
               <div className="govuk-error-summary" data-module="govuk-error-summary">
                 <div role="alert">
