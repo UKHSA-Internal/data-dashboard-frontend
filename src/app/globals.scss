@@ -96,13 +96,6 @@ $govuk-page-width: 1400px;
   --colour-code-green: var(--colour-green);
 }
 
-code[class*='language-'],
-pre[class*='language-'] {
-  text-shadow: 0 1px var(--colour-white);
-  tab-size: 4;
-  hyphens: none;
-}
-
 .ukhsa-chevron {
   &:before {
     content: '';

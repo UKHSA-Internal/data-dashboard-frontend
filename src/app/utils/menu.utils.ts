@@ -22,12 +22,6 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     children: [],
   }
 
-  // Create an API link with the URL from environment variables.
-  const apiLink: MenuLink = {
-    title: 'API',
-    slug: process.env.PUBLIC_API_URL || '',
-  }
-
   try {
     // Fetch pages with show_in_menus:true filter.
     const pages = await getPages(undefined, { show_in_menus: 'true' })
@@ -39,7 +33,6 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     const topics: MenuLink[] = []
 
     links.push({ ...homeLink, children: topics })
-    links.push(apiLink)
 
     for (const page of pages.data.items) {
       const {
@@ -60,6 +53,6 @@ export const useMenu = async (): Promise<MenuLink[]> => {
   } catch (error) {
     logger.error(error)
     // Fallback for unexpected errors.
-    return [homeLink, apiLink]
+    return [homeLink]
   }
 }

@@ -15,13 +15,13 @@ export const PaginationPrevious = ({ href, children, variant }: PaginationPrevio
   return (
     <div className="govuk-pagination__prev">
       <Link
-        prefetch={false}
         className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
         href={href}
         rel="prev"
+        prefetch={false}
       >
         <svg
-          className="govuk-pagination__icon govuk-pagination__icon--prev"
+          className="govuk-pagination__icon govuk-pagination__icon--prev inline align-baseline"
           xmlns="http://www.w3.org/2000/svg"
           height="13"
           width="15"

@@ -50,7 +50,7 @@ test('renders the children correctly', async () => {
 test('renders the side navigation', async () => {
   const { getByRole } = render(await View({ heading: 'Test Heading', children: null }))
 
-  const nav = getByRole('navigation')
+  const nav = getByRole('navigation', { name: 'Side navigation' })
   expect(nav).toBeInTheDocument()
 
   expect(within(nav).getByRole('link', { name: 'Homepage' })).toHaveAttribute('href', '/')
@@ -60,7 +60,7 @@ test('renders the side navigation', async () => {
     'href',
     '/topics/other-respiratory-viruses'
   )
-  expect(within(nav).getByRole('link', { name: 'API' })).toHaveAttribute('href', '/public-api')
+  expect(within(nav).getByRole('link', { name: 'Access our data' })).toHaveAttribute('href', '/access-our-data')
   expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
   expect(within(nav).getByRole('link', { name: "What's new" })).toHaveAttribute('href', '/whats-new')
 })

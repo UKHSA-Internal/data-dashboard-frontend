@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RichText } from '@/app/components/cms'
+import { RichTextAutoHeadings } from '@/app/components/cms/RichText/RichTextAutoHeadings'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
@@ -26,7 +26,7 @@ export default async function CommonPage({ params: { slug } }: { params: { slug:
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
-      <RichText linkedHeadings>{body}</RichText>
+      <RichTextAutoHeadings>{body}</RichTextAutoHeadings>
       <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>

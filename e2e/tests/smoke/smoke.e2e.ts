@@ -13,6 +13,7 @@ test.describe('Smoke tests', () => {
     otherRespiratoryVirusesPage,
     accessibilityStatementPage,
     errorPage,
+    accessOurDataPage,
   }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
@@ -54,14 +55,13 @@ test.describe('Smoke tests', () => {
       await accessibilityStatementPage.goto()
       await accessibilityStatementPage.hasHeading()
     })
-    // TODO: Removed API tests for now, until further API work done
-    // await test.step('loads the "api" external url', async () => {
-    //   await app.nav.getByRole('link', { name: /API/ }).click()
-    //   await app.page.waitForURL('http://uhd-uat-public-api-1804026123.eu-west-2.elb.amazonaws.com')
-    // })
     await test.step('loads the "Error" page', async () => {
       await errorPage.goto()
       await errorPage.hasHeading()
+    })
+    await test.step('loads the access our data page', async () => {
+      await accessOurDataPage.goto()
+      await accessOurDataPage.hasParentHeading()
     })
   })
 })
@@ -122,11 +122,6 @@ test.describe('Smoke tests - no JavaScript', () => {
       await accessibilityStatementPage.goto()
       await accessibilityStatementPage.hasHeading()
     })
-    // TODO: Removed API tests for now, until further API work done
-    // await test.step('loads the "api" external url', async () => {
-    //   await app.nav.getByRole('link', { name: /API/ }).click()
-    //   await app.page.waitForURL('http://uhd-uat-public-api-1804026123.eu-west-2.elb.amazonaws.com')
-    // })
     await test.step('loads the "Error" page', async () => {
       await errorPage.goto()
       await errorPage.hasHeading()

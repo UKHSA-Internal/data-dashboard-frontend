@@ -73,9 +73,17 @@ module.exports = {
     },
   },
   plugins: [
-    plugin(function ({ addVariant }) {
+    plugin(function ({ addVariant, matchUtilities, theme }) {
       addVariant('js', 'body.js-enabled &')
       addVariant('no-js', 'body:not(.js-enabled) &')
+      matchUtilities(
+        {
+          'text-shadow': (value) => ({
+            textShadow: value,
+          }),
+        },
+        { values: theme('textShadow') }
+      )
     }),
   ],
 }

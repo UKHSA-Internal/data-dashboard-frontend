@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { Topics } from '@/api/models'
-import { Body, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { Body, CompositeBody, Meta, RelatedLinks } from '@/api/models/cms/Page'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -56,43 +56,7 @@ const WithCommonData = SharedPageData.extend({
 })
 
 const WithCompositeData = SharedPageData.extend({
-  body: z.array(
-    z.discriminatedUnion('type', [
-      z.object({
-        type: z.literal('text'),
-        value: z.string(),
-        id: z.string(),
-      }),
-      z.object({
-        type: z.literal('code_block'),
-        value: z.object({
-          heading: z.string(),
-          content: z.array(
-            z.object({
-              type: z.literal('code_snippet'),
-              value: z.object({
-                language: z.string(),
-                code: z.string(),
-              }),
-              id: z.string(),
-            })
-          ),
-        }),
-        id: z.string(),
-      }),
-      z.object({
-        type: z.literal('button'),
-        value: z.object({
-          text: z.string(),
-          loading_text: z.string(),
-          endpoint: z.string(),
-          method: z.string(),
-          button_type: z.string(),
-        }),
-        id: z.string(),
-      }),
-    ])
-  ),
+  body: CompositeBody,
   meta: Meta.extend({
     type: z.literal('composite.CompositePage'),
   }),
