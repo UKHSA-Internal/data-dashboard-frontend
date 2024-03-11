@@ -12,7 +12,7 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
+import { BackToTop, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
@@ -136,6 +136,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
               {children}
             </div>
+            <BackToTop label={t('backToTop')} />
           </main>
         </div>
         <Footer />
