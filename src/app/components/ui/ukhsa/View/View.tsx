@@ -18,26 +18,24 @@ export async function View({ heading, showWelcome, children, description, lastUp
   const { t } = await useTranslation('common')
 
   return (
-    <>
-      <div className="w-full">
-        {backLink && (
-          <Link href={backLink} className="govuk-back-link">
-            Back
-          </Link>
-        )}
+    <div className="w-full">
+      {backLink && (
+        <Link href={backLink} className="govuk-back-link">
+          Back
+        </Link>
+      )}
 
-        {lastUpdated && (
-          <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
-        )}
+      {lastUpdated && (
+        <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
+      )}
 
-        {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
+      {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
-        {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
+      {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
 
-        {description && <RichText>{description}</RichText>}
+      {description && <RichText>{description}</RichText>}
 
-        {children}
-      </div>
-    </>
+      {children}
+    </div>
   )
 }
