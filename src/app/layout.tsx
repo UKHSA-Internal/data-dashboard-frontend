@@ -110,34 +110,33 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </div>
         <div className="govuk-width-container">
-          <main className="govuk-main-wrapper govuk-!-padding-top-4" id="main-content" role="main">
-            <div className="flex flex-col gap-0 xl:flex-row xl:gap-7">
-              <SideNav>
-                {menu.map(({ title, slug, children }) => (
-                  <SideNavLink
-                    key={slug}
-                    href={slug}
-                    subMenu={
-                      children && (
-                        <SideNavSubMenu>
-                          {children.map(({ title, slug }) => (
-                            <SideNavSubMenuLink key={slug} href={slug}>
-                              {title}
-                            </SideNavSubMenuLink>
-                          ))}
-                        </SideNavSubMenu>
-                      )
-                    }
-                  >
-                    {title}
-                  </SideNavLink>
-                ))}
-              </SideNav>
-
+          <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:flex-row xl:gap-7">
+            <SideNav>
+              {menu.map(({ title, slug, children }) => (
+                <SideNavLink
+                  key={slug}
+                  href={slug}
+                  subMenu={
+                    children && (
+                      <SideNavSubMenu>
+                        {children.map(({ title, slug }) => (
+                          <SideNavSubMenuLink key={slug} href={slug}>
+                            {title}
+                          </SideNavSubMenuLink>
+                        ))}
+                      </SideNavSubMenu>
+                    )
+                  }
+                >
+                  {title}
+                </SideNavLink>
+              ))}
+            </SideNav>
+            <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content" role="main">
               {children}
-            </div>
-            <BackToTop label={t('backToTop')} />
-          </main>
+            </main>
+          </div>
+          <BackToTop label={t('backToTop')} className="govuk-!-margin-bottom-4" />
         </div>
         <Footer />
       </body>
