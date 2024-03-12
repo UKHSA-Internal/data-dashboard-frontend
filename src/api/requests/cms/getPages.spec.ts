@@ -33,7 +33,7 @@ describe('Successfully getting all pages from the cms api ', () => {
       data: pagesWithHomeTypeMock,
     })
 
-    const response = await getPages(PageType.Home)
+    const response = await getPages({ type: PageType.Home })
 
     expect(response).toEqual<SuccessResponse>({
       success: true,
@@ -55,7 +55,7 @@ describe('Failing to get all pages from the cms api', () => {
       },
     })
 
-    const response = await getPages(PageType.Home)
+    const response = await getPages({ type: PageType.Home })
 
     expect(response).toEqual<ErrorResponse>({
       success: false,
@@ -77,7 +77,7 @@ describe('Failing to get all pages from the cms api', () => {
       data: {},
     })
 
-    const result = await getPages(PageType.Common)
+    const result = await getPages({ type: PageType.Common })
 
     expect(result).toEqual<ErrorResponse>({
       success: false,

@@ -34,7 +34,7 @@ export async function generateMetadata({
 
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('metrics-documentation', PageType.MetricsParent)
+  } = await getPageBySlug('metrics-documentation', { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page })
 
@@ -70,7 +70,7 @@ export default async function MetricsParentPage({ searchParams: { search, page =
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug('metrics-documentation', PageType.MetricsParent)
+  } = await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page })
 

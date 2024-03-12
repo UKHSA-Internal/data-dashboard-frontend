@@ -35,7 +35,7 @@ export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewP
 
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
+  } = await getPageBySlug('whats-new', { type: PageType.WhatsNewParent })
 
   const whatsNewEntries = await getWhatsNewPages({ page })
 
@@ -68,7 +68,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug('whats-new', PageType.WhatsNewParent)
+  } = await getPageBySlug<PageType.WhatsNewParent>('whats-new', { type: PageType.WhatsNewParent })
 
   const whatsNewEntries = await getWhatsNewPages({ page })
 

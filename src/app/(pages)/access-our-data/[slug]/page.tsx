@@ -7,7 +7,7 @@ import { renderCompositeBlock } from '@/app/utils/cms.utils'
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.Composite)
+  } = await getPageBySlug<PageType.Composite>(slug)
 
   return {
     title: seo_title,
@@ -16,7 +16,7 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 }
 
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
-  const { title, body } = await getPageBySlug(slug, PageType.Composite)
+  const { title, body } = await getPageBySlug<PageType.Composite>(slug)
 
   return (
     <>

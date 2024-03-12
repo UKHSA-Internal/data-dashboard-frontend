@@ -1,6 +1,5 @@
 import { ReactNode } from 'react'
 
-import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { BackToTop, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
@@ -19,7 +18,7 @@ export default async function Layout({
 }) {
   const { t } = await useTranslation('common')
 
-  const { title } = await getPageBySlug('access-our-data', PageType.Composite)
+  const { title } = await getPageBySlug('access-our-data')
 
   return (
     <>

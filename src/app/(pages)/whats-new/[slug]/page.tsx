@@ -10,7 +10,7 @@ import { useTranslation } from '@/app/i18n'
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.WhatsNewChild, { fields: '*' })
+  } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
   return {
     title: seo_title,
@@ -28,9 +28,7 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
     additional_details,
     date_posted,
     last_published_at: lastUpdated,
-  } = await getPageBySlug(slug, PageType.WhatsNewChild, {
-    fields: '*',
-  })
+  } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
   return (
     <View backLink="/whats-new" lastUpdated={lastUpdated}>

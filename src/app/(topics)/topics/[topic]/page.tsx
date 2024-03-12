@@ -16,7 +16,7 @@ export async function generateMetadata({
 
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(topic, PageType.Topic)
+  } = await getPageBySlug<PageType.Topic>(topic, { type: PageType.Topic })
 
   const title = areaName ? seo_title.replace('|', t('areaSelector.documentTitle', { areaName })) : seo_title
 
@@ -42,7 +42,7 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
     related_links: relatedLinks,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
-  } = await getPageBySlug(topic, PageType.Topic)
+  } = await getPageBySlug<PageType.Topic>(topic, { type: PageType.Topic })
   return (
     <View
       heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })}
