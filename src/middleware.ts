@@ -16,7 +16,7 @@ const paths = {
 }
 
 export async function middleware(request: NextRequest) {
-  // Access our data redirects
+  // Access our data redirects/rewrites
   if (request.nextUrl.pathname === `/${paths.accessOurData}`) {
     try {
       const { id } = await getPageBySlug(paths.accessOurData, PageType.Composite)
@@ -35,7 +35,7 @@ export async function middleware(request: NextRequest) {
           },
         } = pages
 
-        return NextResponse.redirect(new URL(`/${paths.accessOurData}/${slug}`, request.url))
+        return NextResponse.rewrite(new URL(`/${paths.accessOurData}/${slug}`, request.url))
       }
       notFound()
     } catch (error) {
