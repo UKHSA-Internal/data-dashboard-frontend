@@ -40,13 +40,13 @@ export class ArchiveDataPage {
       )
     ).toBeVisible()
 
-    await expect(this.page.getByRole('link', { name: 'Download all' })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: 'Download all (Opens in a new tab)' })).toBeVisible()
 
     const headings = ['Cases', 'Deaths', 'Healthcare', 'Testing', 'Vaccinations']
     for (const name of headings) {
       await expect(this.page.getByRole('heading', { name })).toBeVisible()
     }
 
-    await expect(await this.page.getByRole('link', { name: 'Download', exact: true }).all()).toHaveLength(6)
+    await expect(await this.page.getByRole('link', { name: 'Download (Opens in a new tab)' }).all()).toHaveLength(5)
   }
 }
