@@ -11,7 +11,7 @@ import MetricsSummary from '../components/MetricsSummary/MetricsSummary'
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(slug, PageType.MetricsChild, { fields: '*' })
+  } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild, fields: '*' })
 
   return {
     title: seo_title,
@@ -29,7 +29,7 @@ export default async function MetricsChildPage({ params: { slug } }: { params: {
     metric_group: group,
     body,
     last_published_at,
-  } = await getPageBySlug(slug, PageType.MetricsChild)
+  } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
   return (
     <View heading={title} lastUpdated={last_published_at} backLink="/metrics-documentation">

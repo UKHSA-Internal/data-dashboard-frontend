@@ -6,7 +6,6 @@ import { whatsNewParentMock } from '@/mock-server/handlers/cms/pages/fixtures/pa
 import { pagesWithWhatsNewParentTypeMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { client } from '../utils/api.utils'
-import { PageType } from './cms/getPages'
 import { getPageBySlug } from './getPageBySlug'
 
 const getPages = jest.mocked(client)
@@ -27,33 +26,13 @@ describe('Successfully getting pages by slug from API', () => {
       data: whatsNewParentMock,
     })
 
-    const result = await getPageBySlug('whats-new', PageType.WhatsNewParent)
+    const result = await getPageBySlug('whats-new')
 
     expect(result).toEqual(whatsNewParentMock)
   })
 })
 
 describe('Failing to get page from cms API', () => {
-  test('no type provided error', async () => {
-    const typeMock = undefined as unknown as PageType
-
-    const result = await getPageBySlug('whats-new', typeMock)
-
-    expect(logger.info).toHaveBeenNthCalledWith(1, new Error('No Page Type provided'))
-    expect(notFound).toHaveBeenCalledTimes(1)
-
-    expect(result).not.toBeDefined()
-  })
-
-  test('no slug provided error', async () => {
-    const result = await getPageBySlug('', PageType.WhatsNewParent)
-
-    expect(logger.info).toHaveBeenNthCalledWith(1, new Error('No slug provided'))
-    expect(notFound).toHaveBeenCalledTimes(1)
-
-    expect(result).not.toBeDefined()
-  })
-
   test('getting the pages from the API fails with a server error', async () => {
     getPages.mockRejectedValueOnce({
       status: 500,
@@ -61,9 +40,9 @@ describe('Failing to get page from cms API', () => {
       error: 'API call failed',
     })
 
-    const result = await getPageBySlug('incorrect', PageType.Common)
+    const result = await getPageBySlug('incorrect')
 
-    expect(logger.info).toHaveBeenNthCalledWith(1, new Error(`Could not get pages with type ${PageType.Common}`))
+    expect(logger.info).toHaveBeenNthCalledWith(1, new Error(`Could not get cms pages`))
     expect(notFound).toHaveBeenCalledTimes(1)
 
     expect(result).not.toBeDefined()
@@ -75,7 +54,7 @@ describe('Failing to get page from cms API', () => {
       data: pagesWithWhatsNewParentTypeMock,
     })
 
-    const result = await getPageBySlug('slugDoesntExist', PageType.WhatsNewParent)
+    const result = await getPageBySlug('slugDoesntExist')
 
     expect(logger.info).toHaveBeenCalledWith(new Error(`No page found for slug slugDoesntExist`))
     expect(notFound).toHaveBeenCalledTimes(1)
@@ -96,7 +75,7 @@ describe('Failing to get page from cms API', () => {
     const slugToTest = 'whats-new'
     const matchingId = pagesWithWhatsNewParentTypeMock.items[0].id
 
-    const result = await getPageBySlug(slugToTest, PageType.WhatsNewParent)
+    const result = await getPageBySlug(slugToTest)
 
     expect(logger.error).toHaveBeenCalledWith(expect.any(ZodError))
     expect(logger.info).toHaveBeenCalledWith(

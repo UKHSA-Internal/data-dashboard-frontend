@@ -8,7 +8,7 @@ import { renderCompositeBlock } from '@/app/utils/cms.utils'
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('bulk-downloads', PageType.Composite)
+  } = await getPageBySlug('bulk-downloads')
 
   return {
     title: seo_title,
@@ -17,7 +17,7 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function BulkDownloads() {
-  const { title, body, related_links: relatedLinks } = await getPageBySlug('bulk-downloads', PageType.Composite)
+  const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>('bulk-downloads')
 
   return (
     <View heading={title}>

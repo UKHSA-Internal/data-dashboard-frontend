@@ -10,7 +10,7 @@ import { HOMEPAGE_CMS_SLUG } from '../constants/app.constants'
 export async function generateMetadata(): Promise<Metadata> {
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug(HOMEPAGE_CMS_SLUG, PageType.Home)
+  } = await getPageBySlug<PageType.Home>(HOMEPAGE_CMS_SLUG, { type: PageType.Home })
 
   return {
     title: seo_title,
@@ -24,7 +24,7 @@ export default async function HomePage() {
     body,
     page_description: description,
     related_links: relatedLinks,
-  } = await getPageBySlug(HOMEPAGE_CMS_SLUG, PageType.Home)
+  } = await getPageBySlug<PageType.Home>(HOMEPAGE_CMS_SLUG, { type: PageType.Home })
 
   return (
     <View heading={title} description={description} showWelcome>

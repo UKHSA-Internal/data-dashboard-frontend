@@ -4,9 +4,9 @@ import { Contents, ContentsLink } from '@/app/components/ui/ukhsa'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export default async function ParentView() {
-  const { id, body } = await getPageBySlug('access-our-data', PageType.Composite)
+  const { id, body } = await getPageBySlug<PageType.Composite>('access-our-data')
 
-  const childPages = await getPages(undefined, { child_of: id.toString() })
+  const childPages = await getPages({ child_of: id.toString() })
 
   return (
     <>

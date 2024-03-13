@@ -1,12 +1,12 @@
-import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { getPages } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Pagination, PaginationNext, PaginationPrevious } from '@/app/components/ui/govuk'
 import { usePaginationBlock } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationBlock'
 
 export default async function PaginationView({ params: { slug } }: { params: { slug: string } }) {
-  const { meta } = await getPageBySlug(slug, PageType.Composite)
+  const { meta } = await getPageBySlug(slug)
 
-  const childPages = await getPages(undefined, { child_of: meta.parent.id.toString() })
+  const childPages = await getPages({ child_of: meta.parent.id.toString() })
 
   const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
     links: childPages.success
