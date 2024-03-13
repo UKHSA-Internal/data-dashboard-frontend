@@ -16,6 +16,7 @@ import {
   CodeBlock,
   Download,
   DownloadButton,
+  DownloadButtonExternal,
   Headline,
   Percentage,
   RichText,
@@ -174,6 +175,10 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
         formats={['csv', 'json']}
         aria-label={value.text}
       />
+    )}
+
+    {type === 'external_button' && (
+      <DownloadButtonExternal label={value.text} href={value.url} icon={value.icon} type={value.button_type} />
     )}
 
     {type === 'code_block' && (

@@ -28,8 +28,8 @@ export class BulkDownloadsPage {
     await expect(this.page.getByRole('heading', { name: /Bulk downloads/, level: 1 })).toBeVisible()
   }
 
-  async hasNotLastUpdated() {
-    await expect(this.page.getByText(/Last updated/)).toBeHidden()
+  async hasLastUpdated() {
+    await expect(this.page.getByText(/Last updated on Thursday, 24 August 2023 at 04:53pm/)).toBeVisible()
   }
 
   async hasPageContent() {

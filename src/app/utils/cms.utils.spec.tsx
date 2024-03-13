@@ -34,6 +34,7 @@ jest.mock('../components/cms', () => ({
     </header>
   ),
   DownloadButton: () => <div>Mocked download button</div>,
+  DownloadButtonExternal: () => <div>Mocked external download button</div>,
   RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
 }))
@@ -241,6 +242,22 @@ describe('Composite block', () => {
       })
     )
     expect(screen.getByText('Mocked download button')).toBeInTheDocument()
+  })
+
+  test('external button', () => {
+    render(
+      renderCompositeBlock({
+        type: 'external_button',
+        value: {
+          text: 'Download',
+          url: 'http://mockurl/an/external/asset.zip',
+          button_type: 'primary',
+          icon: '',
+        },
+        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+      })
+    )
+    expect(screen.getByText('Mocked external download button')).toBeInTheDocument()
   })
 
   test('code block', () => {

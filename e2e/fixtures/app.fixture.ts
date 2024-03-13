@@ -11,6 +11,7 @@ import {
   AboutPage,
   AccessibilityStatementPage,
   AccessOurDataPage,
+  ArchiveDataPage,
   BrowsePage,
   BulkDownloadsPage,
   CompliancePage,
@@ -32,6 +33,7 @@ type Fixtures = {
   app: App
   homePage: HomePage
   aboutPage: AboutPage
+  archiveDataPage: ArchiveDataPage
   bulkDownloadsPage: BulkDownloadsPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
@@ -395,6 +397,9 @@ export const test = base.extend<Fixtures>({
   },
   aboutPage: async ({ page }, use) => {
     await use(new AboutPage(page))
+  },
+  archiveDataPage: async ({ page }, use) => {
+    await use(new ArchiveDataPage(page))
   },
   bulkDownloadsPage: async ({ page }, use) => {
     await use(new BulkDownloadsPage(page))
