@@ -47,6 +47,6 @@ export class ArchiveDataPage {
       await expect(this.page.getByRole('heading', { name })).toBeVisible()
     }
 
-    await expect(await this.page.getByRole('link', { name: 'Download' }).all()).toHaveLength(7)
+    await expect(await this.page.getByRole('link', { name: 'Download', exact: true }).all()).toHaveLength(6)
   }
 }
