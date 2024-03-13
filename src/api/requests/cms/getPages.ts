@@ -105,7 +105,7 @@ export type MetricsChildPagesResponse = z.infer<typeof metricsChildResponseSchem
 export const getPages = async (additionalParams?: Record<string, string>) => {
   try {
     const searchParams = new URLSearchParams()
-    searchParams.set('limit', '100') // TODO: This is a temporary fix to ensure the backend page limit is not hit
+    searchParams.set('limit', '200') // TODO: This is a temporary fix to ensure the backend page limit is not hit
 
     if (additionalParams) {
       for (const key in additionalParams) {
