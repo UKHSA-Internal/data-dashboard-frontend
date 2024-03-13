@@ -25,6 +25,10 @@ export class ArchiveDataPage {
     await expect(this.page.getByText(/Last updated on Wednesday, 13 March 2024 at 11:08am/)).toBeVisible()
   }
 
+  async hasDownloadLinkByHref(href: string) {
+    await expect(this.page.locator(`a[href="${href}"]`)).toBeVisible()
+  }
+
   async hasPageContent() {
     await expect(
       this.page.getByText(
