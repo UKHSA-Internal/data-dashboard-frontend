@@ -16,14 +16,14 @@ test.describe('Bulk downloads', () => {
     await test.step('displays without any accessibility defects', async () => {
       await app.hasNoAccessibilityDefects()
     })
-    await test.step('does not display last updated date', async () => {
-      await bulkDownloadsPage.hasNotLastUpdated()
+    await test.step('displays last updated date', async () => {
+      await bulkDownloadsPage.hasLastUpdated()
     })
     await test.step('displays page content', async () => {
       await bulkDownloadsPage.hasPageContent()
     })
-    await test.step('does not display back to top', async () => {
-      await app.hasNotBackToTop()
+    await test.step('displays back to top', async () => {
+      await app.hasBackToTop()
     })
   })
 
