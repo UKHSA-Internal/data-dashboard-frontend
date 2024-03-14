@@ -153,6 +153,11 @@ export class App {
     await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
   }
 
+  async clickMobileNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.nav.getByRole('link', { name }).click()
+  }
+
   async hasDesktopNav() {
     await expect(this.sideNav.getByRole('link', { name: 'Homepage' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
@@ -161,6 +166,14 @@ export class App {
     await expect(this.sideNav.getByRole('link', { name: 'Access our data' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: "What's new" })).toBeVisible()
+  }
+
+  async clickDesktopNav(name: string) {
+    await this.sideNav.getByRole('link', { name }).click()
+  }
+
+  async hasHeading(name: string) {
+    await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
   }
 
   async hasTableOfContents(links: string[]) {
