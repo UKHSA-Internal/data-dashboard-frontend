@@ -19,7 +19,8 @@
     "blocks": {
       "headline": {
         "heading": "{{heading}}",
-        "value": "{{value, number}}"
+        "value": "{{value, number}}",
+        "date": "Up to {{value, dateShortest}}"
       },
       "percentage": {
         "heading": "{{heading}}",

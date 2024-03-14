@@ -73,7 +73,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
               <Card
                 as="article"
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
-                className="flex flex-col gap-6"
+                className="ukhsa-chart-card flex flex-col gap-6"
               >
                 <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
                   <Timestamp data={column.value} size={size} />
@@ -112,8 +112,8 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                     </span>
                     {column.type === 'chart_with_headline_and_trend_card' && (
                       <>
-                        <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[54px]">
-                          <div className="flex items-end gap-2">
+                        <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
+                          <div className="flex items-start gap-2">
                             {column.value.headline_number_columns.map(renderBlock)}
                           </div>
                         </div>
