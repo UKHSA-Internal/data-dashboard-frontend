@@ -104,28 +104,36 @@ export class HomePage {
 
     await expect(col1.getByRole('heading', { name: 'Cases', level: 3 })).toBeVisible()
     await expect(col1.getByText('Weekly')).toBeVisible()
+    await expect(col1.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col1.getByText('24,298')).toBeVisible()
     await expect(col1.getByText('Last 7 days')).toBeVisible()
+    await expect(col1.getByText('Up to 4 Nov 2023')).toBeVisible()
     await expect(col1.getByText('-592 (-3%)')).toBeVisible()
 
     await expect(col2.getByRole('heading', { name: 'Deaths', level: 3 })).toBeVisible()
     await expect(col2.getByText('Weekly')).toBeVisible()
+    await expect(col2.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col2.getByText('379')).toBeVisible()
     await expect(col2.getByText('Last 7 days')).toBeVisible()
+    await expect(col2.getByText('Up to 4 Nov 2023')).toBeVisible()
     await expect(col2.getByText('21 (-5%)')).toBeVisible()
 
     await expect(col3.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(col3.getByText('Patients admitted')).toBeVisible()
+    await expect(col3.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col3.getByText('6,288')).toBeVisible()
     await expect(col3.getByText('Last 7 days')).toBeVisible()
+    await expect(col2.getByText('Up to 4 Nov 2023')).toBeVisible()
     await expect(col3.getByText('377 (6%)')).toBeVisible()
 
     await expect(col4.getByRole('heading', { name: 'Vaccines', level: 3 })).toBeVisible()
     await expect(col4.getByText('Autumn booster')).toBeVisible()
+    await expect(col4.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col4.getByText('4,095,083')).toBeVisible()
 
     await expect(col5.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(col5.getByText('Virus tests positivity')).toBeVisible()
+    await expect(col5.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col5.getByText('10.4%')).toBeVisible()
   }
 
@@ -137,7 +145,9 @@ export class HomePage {
     await expect(card.getByRole('tablist')).toBeVisible()
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
+    await expect(card.getByText('Up to 3 Nov 2023')).toBeHidden()
     await expect(card.getByText('722')).toBeVisible()
+    await expect(card.getByText('Up to 4 Nov 2023')).toBeHidden()
     await expect(card.getByText('-592 (-3%)')).toBeVisible()
     await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 
@@ -172,7 +182,9 @@ export class HomePage {
     await expect(card.getByRole('tablist')).toBeVisible()
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
+    await expect(card.getByText('Up to 3 Nov 2023')).toBeHidden()
     await expect(card.getByText('379')).toBeVisible()
+    await expect(card.getByText('Up to 4 Nov 2023')).toBeHidden()
     await expect(card.getByText('21 (-5%)')).toBeVisible()
     await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 
@@ -205,9 +217,11 @@ export class HomePage {
     const col2 = this.influenzaTestingColumn
     await expect(col1.getByRole('heading', { name: 'Healthcare', level: 3 })).toBeVisible()
     await expect(col1.getByText('Hospital admission rate (per 100,000)')).toBeVisible()
+    await expect(col1.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col1.getByText('981,596')).toBeVisible()
     await expect(col2.getByRole('heading', { name: 'Testing', level: 3 })).toBeVisible()
     await expect(col2.getByText('Virus tests positivity')).toBeVisible()
+    await expect(col2.getByText('Up to 3 Nov 2023')).toBeVisible()
     await expect(col2.getByText('0.26%')).toBeVisible()
   }
 
@@ -221,6 +235,7 @@ export class HomePage {
     await expect(card.getByRole('tablist')).toBeVisible()
     await expect(card.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     await expect(card.getByText('Last 7 days')).toBeVisible()
+    await expect(card.getByText('Up to 3 Nov 2023')).toBeHidden()
     await expect(card.getByText('0.26')).toBeVisible()
     await expect(card.getByAltText('Mocked alt text - Refer to tabular data.')).toBeVisible()
 

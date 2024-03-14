@@ -37,10 +37,10 @@ test('Returns a COVID-19 trend', async () => {
     success: true,
     data: {
       metric_name: 'COVID-19_headline_newcases_7daychange',
-      metric_period_end: '2023-11-03',
+      metric_period_end: '2023-11-04',
       metric_value: -592,
       percentage_metric_name: 'COVID-19_headline_newcases_7daypercentchange',
-      percentage_metric_period_end: '2023-11-03',
+      percentage_metric_period_end: '2023-11-04',
       percentage_metric_value: -3,
       direction: 'down',
       colour: 'green',
@@ -64,10 +64,10 @@ test('Returns an Influenza headline value', async () => {
     success: true,
     data: {
       metric_name: 'influenza_headline_ICUHDUadmissionRateChange',
-      metric_period_end: '2023-11-03',
+      metric_period_end: '2023-11-04',
       metric_value: 5911,
       percentage_metric_name: 'influenza_headline_ICUHDUadmissionRatePercentChange',
-      percentage_metric_period_end: '2023-11-03',
+      percentage_metric_period_end: '2023-11-04',
       percentage_metric_value: 0.3,
       direction: 'down',
       colour: 'green',
@@ -80,10 +80,10 @@ test('Handles invalid json received from the api', async () => {
     status: 200,
     data: {
       metric_name: null,
-      metric_period_end: '2023-11-03',
+      metric_period_end: '2023-11-04',
       metric_value: '-592', // <--- Wrong type (should get coerced automatically by Zod)
       percentage_metric_name: 'new_cases_7days_change_percentage',
-      percentage_metric_period_end: '2023-11-03',
+      percentage_metric_period_end: '2023-11-04',
       percentage_metric_value: -3.0,
       colour: '', // <--- Missing colour
       direction: 'down',
