@@ -18,8 +18,10 @@ export const requestSchema = z.object({
 export const responseSchema = z.object({
   metric_name: Metrics,
   metric_value: z.coerce.number(),
+  metric_period_end: z.string(),
   percentage_metric_name: PercentageMetrics,
   percentage_metric_value: z.coerce.number(),
+  percentage_metric_period_end: z.string(),
   direction: z.enum(['up', 'down', 'neutral']),
   colour: z.enum(['green', 'red', 'neutral']),
 })

@@ -17,13 +17,22 @@ export async function Trend({ data: { body: heading, ...requestParams } }: Trend
   const trend = await getTrends(requestParams)
 
   if (trend.success) {
-    const { direction, colour, metric_value: change, percentage_metric_value: percentage } = trend.data
+    const {
+      direction,
+      colour,
+      metric_value: change,
+      metric_period_end: date,
+      percentage_metric_value: percentage,
+    } = trend.data
 
     return (
       <>
-        <div>{t('cms.blocks.percentage.heading', { heading })}</div>
+        <div>{t('cms.blocks.percentage.heading', { heading: heading || '\u00A0' })}</div>
+        <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
+          {t('cms.blocks.headline.date', { value: date })}
+        </div>
         <div
-          className={clsx('govuk-tag govuk-!-margin-top-1 whitespace-nowrap bg-[6px_center] bg-no-repeat', {
+          className={clsx('govuk-tag mt-[2px] whitespace-nowrap bg-[6px_center] bg-no-repeat', {
             'govuk-tag--green': colour === 'green',
             'govuk-tag--red': colour === 'red',
             // 'govuk-tag--grey': colour === 'neutral',
