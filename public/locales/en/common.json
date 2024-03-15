@@ -2,6 +2,7 @@
   "govUkTitle": "GOV.UK",
   "serviceTitle": "UKHSA data dashboard",
   "skipLink": "Skip to main content",
+  "externalLinkAltText": "(Opens in a new tab)",
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
   "feedbackBannerPhase": "Beta",
@@ -18,7 +19,8 @@
     "blocks": {
       "headline": {
         "heading": "{{heading}}",
-        "value": "{{value, number}}"
+        "value": "{{value, number}}",
+        "date": "Up to {{value, dateShortest}}"
       },
       "percentage": {
         "heading": "{{heading}}",

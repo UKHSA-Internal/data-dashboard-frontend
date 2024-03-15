@@ -24,7 +24,7 @@ export const useMenu = async (): Promise<MenuLink[]> => {
 
   try {
     // Fetch pages with show_in_menus:true filter.
-    const pages = await getPages(undefined, { show_in_menus: 'true' })
+    const pages = await getPages({ show_in_menus: 'true' })
 
     const links: MenuLink[] = []
 

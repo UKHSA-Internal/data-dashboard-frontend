@@ -11,6 +11,7 @@ import {
   AboutPage,
   AccessibilityStatementPage,
   AccessOurDataPage,
+  ArchiveDataPage,
   BrowsePage,
   BulkDownloadsPage,
   CompliancePage,
@@ -32,6 +33,7 @@ type Fixtures = {
   app: App
   homePage: HomePage
   aboutPage: AboutPage
+  archiveDataPage: ArchiveDataPage
   bulkDownloadsPage: BulkDownloadsPage
   whatsNewParentPage: WhatsNewParentPage
   whatsNewChildPage: WhatsNewChildPage
@@ -151,6 +153,11 @@ export class App {
     await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
   }
 
+  async clickMobileNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.nav.getByRole('link', { name }).click()
+  }
+
   async hasDesktopNav() {
     await expect(this.sideNav.getByRole('link', { name: 'Homepage' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
@@ -159,6 +166,14 @@ export class App {
     await expect(this.sideNav.getByRole('link', { name: 'Access our data' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: 'About' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: "What's new" })).toBeVisible()
+  }
+
+  async clickDesktopNav(name: string) {
+    await this.sideNav.getByRole('link', { name }).click()
+  }
+
+  async hasHeading(name: string) {
+    await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
   }
 
   async hasTableOfContents(links: string[]) {
@@ -395,6 +410,9 @@ export const test = base.extend<Fixtures>({
   },
   aboutPage: async ({ page }, use) => {
     await use(new AboutPage(page))
+  },
+  archiveDataPage: async ({ page }, use) => {
+    await use(new ArchiveDataPage(page))
   },
   bulkDownloadsPage: async ({ page }, use) => {
     await use(new BulkDownloadsPage(page))

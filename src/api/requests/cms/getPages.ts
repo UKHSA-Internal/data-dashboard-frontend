@@ -7,7 +7,7 @@ import { logger } from '@/lib/logger'
 
 /**
  * Defines API request handlers and Zod schemas for fetching and validating CMS page data.
- * The file structures around the PageType enum, which categorizes the types of CMS pages
+ * The file structures around the PageType enum, which categorises the types of CMS pages
  * available, and leverages Zod for runtime validation of the API responses to ensure they
  * adhere to expected structures.
  *
@@ -102,12 +102,10 @@ export const metricsChildResponseSchema = responseSchema.extend({
 
 export type MetricsChildPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
-export const getPages = async (type?: PageType, additionalParams?: Record<string, string>) => {
+export const getPages = async (additionalParams?: Record<string, string>) => {
   try {
     const searchParams = new URLSearchParams()
-    if (type) searchParams.set('type', type)
-
-    searchParams.set('limit', '100') // TODO: This is a temporary fix to ensure the backend page limit is not hit
+    searchParams.set('limit', '200') // TODO: This is a temporary fix to ensure the backend page limit is not hit
 
     if (additionalParams) {
       for (const key in additionalParams) {

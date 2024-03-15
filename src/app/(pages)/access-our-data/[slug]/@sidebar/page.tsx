@@ -3,7 +3,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
 
 export default async function SidebarView() {
-  const { related_links: relatedLinks } = await getPageBySlug('access-our-data', PageType.Composite)
+  const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>('access-our-data')
 
   return (
     <RelatedLinks variant="sidebar">

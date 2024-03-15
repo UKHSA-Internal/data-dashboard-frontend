@@ -1,130 +1,67 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
-test.describe('Smoke tests', () => {
-  test('Navigates to all pages from the menu @smoke', async ({
-    homePage,
-    aboutPage,
-    whatsNewParentPage,
-    whatsNewChildPage,
-    metricsParentPage,
-    metricsChildPage,
-    covid19Page,
-    influenzaPage,
-    otherRespiratoryVirusesPage,
-    accessibilityStatementPage,
-    errorPage,
-    accessOurDataPage,
-  }) => {
+const pagesShownInNavMenu = [
+  'COVID-19',
+  'Influenza',
+  'Respiratory syncytial virus (RSV)',
+  'Other respiratory viruses',
+  'About',
+  'Metrics documentation',
+  "What's new",
+  "What's coming",
+  'Access our data',
+]
+
+test.describe('Smoke tests - desktop @smoke', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('Navigates to each page from the side navigation menu', async ({ app, homePage }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
       await homePage.hasHeading()
     })
-    await test.step('loads the "COVID-19" topic page', async () => {
-      await covid19Page.goto()
-      await covid19Page.hasHeading()
-    })
-    await test.step('loads the "Influenza" topic page', async () => {
-      await influenzaPage.goto()
-      await influenzaPage.hasHeading()
-    })
-    await test.step('loads the "Other respiratory viruses" topic page', async () => {
-      await otherRespiratoryVirusesPage.goto()
-      await otherRespiratoryVirusesPage.hasHeading()
-    })
-    await test.step('loads the "about" page', async () => {
-      await aboutPage.goto()
-      await aboutPage.hasHeading()
-    })
-    await test.step('loads the "whats new" parent page', async () => {
-      await whatsNewParentPage.goto()
-      await whatsNewParentPage.hasHeading()
-    })
-    await test.step('loads the "whats new" child page', async () => {
-      await whatsNewChildPage.goto()
-      await whatsNewChildPage.hasHeading('Soft launch of the UKHSA data dashboard')
-    })
-    await test.step('loads the metrics parent page', async () => {
-      await metricsParentPage.goto()
-      await metricsParentPage.hasHeading()
-    })
-    await test.step('loads the metrics child page', async () => {
-      await metricsParentPage.openChildPage('COVID-19 headline cases 7 day totals')
-      await metricsChildPage.hasHeading('COVID-19 headline cases 7 day totals')
-    })
-    await test.step('loads the "Accessibility statement" page', async () => {
-      await accessibilityStatementPage.goto()
-      await accessibilityStatementPage.hasHeading()
-    })
-    await test.step('loads the "Error" page', async () => {
-      await errorPage.goto()
-      await errorPage.hasHeading()
-    })
-    await test.step('loads the access our data page', async () => {
-      await accessOurDataPage.goto()
-      await accessOurDataPage.hasParentHeading()
-    })
+
+    for (const page of pagesShownInNavMenu) {
+      await test.step(`loads the "${page}" page`, async () => {
+        await app.clickDesktopNav(page)
+        await app.hasHeading(page)
+      })
+    }
   })
 })
 
-test.describe('Smoke tests - no JavaScript', () => {
-  test.use({ javaScriptEnabled: false })
+test.describe('Smoke tests - mobile @smoke', () => {
+  test.use({ viewport: viewports.mobile })
 
-  test('Navigates to all pages from the menu @smoke', async ({
-    homePage,
-    aboutPage,
-    whatsNewParentPage,
-    whatsNewChildPage,
-    metricsParentPage,
-    metricsChildPage,
-    covid19Page,
-    influenzaPage,
-    otherRespiratoryVirusesPage,
-    accessibilityStatementPage,
-    errorPage,
-  }) => {
+  test('Navigates to each page from the dropdown mobile navigation menu', async ({ app, homePage }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
       await homePage.hasHeading()
     })
-    await test.step('loads the "COVID-19" topic page', async () => {
-      await covid19Page.goto()
-      await covid19Page.hasHeading()
+    for (const page of pagesShownInNavMenu) {
+      await test.step(`loads the "${page}" page`, async () => {
+        await app.clickMobileNav(page)
+        await app.hasHeading(page)
+      })
+    }
+  })
+})
+
+test.describe('Smoke tests - no JavaScript @smoke', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('Navigates to each page from the side navigation menu', async ({ app, homePage }) => {
+    await test.step('loads the home page', async () => {
+      await homePage.goto()
+      await homePage.hasHeading()
     })
-    await test.step('loads the "Influenza" topic page', async () => {
-      await influenzaPage.goto()
-      await influenzaPage.hasHeading()
-    })
-    await test.step('loads the "Other respiratory viruses" topic page', async () => {
-      await otherRespiratoryVirusesPage.goto()
-      await otherRespiratoryVirusesPage.hasHeading()
-    })
-    await test.step('loads the "about" page', async () => {
-      await aboutPage.goto()
-      await aboutPage.hasHeading()
-    })
-    await test.step('loads the "whats new" parent page', async () => {
-      await whatsNewParentPage.goto()
-      await whatsNewParentPage.hasHeading()
-    })
-    await test.step('loads the "whats new" child page', async () => {
-      await whatsNewChildPage.goto()
-      await whatsNewChildPage.hasHeading('Soft launch of the UKHSA data dashboard')
-    })
-    await test.step('loads the metrics parent page', async () => {
-      await metricsParentPage.goto()
-      await metricsParentPage.hasHeading()
-    })
-    await test.step('loads the metrics child page', async () => {
-      await metricsParentPage.openChildPage('COVID-19 headline cases 7 day totals')
-      await metricsChildPage.hasHeading('COVID-19 headline cases 7 day totals')
-    })
-    await test.step('loads the "Accessibility statement" page', async () => {
-      await accessibilityStatementPage.goto()
-      await accessibilityStatementPage.hasHeading()
-    })
-    await test.step('loads the "Error" page', async () => {
-      await errorPage.goto()
-      await errorPage.hasHeading()
-    })
+    for (const page of pagesShownInNavMenu) {
+      await test.step(`loads the "${page}" page`, async () => {
+        await app.clickMobileNav(page)
+        await app.hasHeading(page)
+      })
+    }
   })
 })

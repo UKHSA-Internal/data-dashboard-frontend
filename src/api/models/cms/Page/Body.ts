@@ -120,6 +120,16 @@ export const CompositeBody = z.array(
       }),
       id: z.string(),
     }),
+    z.object({
+      type: z.literal('external_button'),
+      value: z.object({
+        text: z.string(),
+        url: z.string(),
+        button_type: z.string().toLowerCase(),
+        icon: z.string(),
+      }),
+      id: z.string(),
+    }),
   ])
 )
 

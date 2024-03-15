@@ -34,6 +34,7 @@ jest.mock('../components/cms', () => ({
     </header>
   ),
   DownloadButton: () => <div>Mocked download button</div>,
+  DownloadButtonExternal: () => <div>Mocked external download button</div>,
   RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
 }))
@@ -69,6 +70,8 @@ describe('Text card', () => {
 describe('Headline numbers row card', () => {
   test('displays a row of columns containing a heading and metric data', () => {
     render(renderCard(mockHeadlineNumbersRowCard))
+
+    expect(screen.getByTestId('headline-row')).toHaveClass('ukhsa-headline-numbers-row-card')
 
     // Cases
     const casesColumn = screen.getByTestId('headline-column-cases')
@@ -120,6 +123,7 @@ describe('Chart row card', () => {
 
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
     expect(article).toBeInTheDocument()
+    expect(article).toHaveClass('ukhsa-chart-card')
 
     // Heading and description
     expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
@@ -241,6 +245,22 @@ describe('Composite block', () => {
       })
     )
     expect(screen.getByText('Mocked download button')).toBeInTheDocument()
+  })
+
+  test('external button', () => {
+    render(
+      renderCompositeBlock({
+        type: 'external_button',
+        value: {
+          text: 'Download',
+          url: 'http://mockurl/an/external/asset.zip',
+          button_type: 'primary',
+          icon: '',
+        },
+        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+      })
+    )
+    expect(screen.getByText('Mocked external download button')).toBeInTheDocument()
   })
 
   test('code block', () => {

@@ -3,6 +3,7 @@ import { PagesResponse, WhatsNewPagesResponse } from '@/api/requests/cms/getPage
 import {
   aboutPageMock,
   accessibilityStatementPageMock,
+  archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
   cookiesPageMock,
@@ -121,9 +122,21 @@ export const pagesWithCommonTypeMock: PagesResponse = {
 
 export const pagesWithCompositeTypeMock: PagesResponse = {
   meta: {
-    total_count: 2 + accessOurDataChildMocks.length,
+    total_count: 3 + accessOurDataChildMocks.length,
   },
   items: [
+    {
+      id: archiveDataPageMock.id,
+      meta: {
+        type: archiveDataPageMock.meta.type,
+        detail_url: archiveDataPageMock.meta.detail_url,
+        html_url: archiveDataPageMock.meta.html_url,
+        slug: archiveDataPageMock.meta.slug,
+        show_in_menus: archiveDataPageMock.meta.show_in_menus,
+        first_published_at: archiveDataPageMock.meta.first_published_at,
+      },
+      title: archiveDataPageMock.title,
+    },
     {
       id: bulkDownloadsPageMock.id,
       meta: {

@@ -14,7 +14,7 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
 
 Before you begin, ensure you have the following installed:
 
-- Node.js version 20.10.0 or later
+- Node.js version 20.11.1 or later
 
 ## Getting Started
 
@@ -46,7 +46,7 @@ The frontend interacts with a Node.js Express-based mock server during developme
 
 ## Deployment
 
-Our project uses a GitHub Actions workflow for CI/CD. The workflow, located at `.github/workflows/build-test-deploy`, automates the build, test, code quality checks, and deployment processes. Deployments are made to AWS Elastic Container Service (ECS) on port `3000`. The workflow also initiates deployment updates in our [infrastructure repository](https://github.com/UKHSA-Internal/winter-pressures-infra/).
+Our project uses a GitHub Actions workflow for CI/CD. The workflow, located at `.github/workflows/build-test-deploy`, automates the build, test, code quality checks, and deployment processes. Deployments are made to AWS Elastic Container Service (ECS) on port `3000`. The workflow also initiates deployment updates in our [infrastructure repository](https://github.com/UKHSA-Internal/data-dashboard-infra/).
 
 ## Styling
 
