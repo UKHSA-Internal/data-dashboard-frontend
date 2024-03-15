@@ -5,19 +5,18 @@ import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDebounce } from 'usehooks-ts'
 
+import { useTranslation } from '@/app/i18n/client'
+
 const DEBOUNCE_MILLISECONDS = 300
 
 interface MetricsSearchProps {
   value: string
-  labels: {
-    searchTitle: string
-    noScriptButtonText: string
-    clearText: string
-  }
 }
 
-export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText, clearText } }: MetricsSearchProps) {
+export function MetricsSearch({ value }: MetricsSearchProps) {
   const router = useRouter()
+
+  const { t } = useTranslation('metrics')
 
   const [searchValue, setSearchValue] = useState(value)
 
@@ -45,7 +44,7 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="metric-name">
-              {searchTitle}
+              {t('metricsSearch.searchTitle')}
             </label>
             <input
               className={'govuk-input govuk-!-margin-right-2 govuk-!-margin-bottom-2 w-3/5'}
@@ -57,7 +56,7 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
             />
             <noscript>
               <button type="submit" className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2">
-                {noScriptButtonText}
+                {t('metricsSearch.noScriptButtonText')}
               </button>
             </noscript>
             <Link
@@ -68,7 +67,7 @@ export function MetricsSearch({ value, labels: { searchTitle, noScriptButtonText
                 setSearchValue('')
               }}
             >
-              {clearText}
+              {t('metricsSearch.clearText')}
             </Link>
           </div>
         </div>
