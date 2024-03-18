@@ -70,13 +70,14 @@ jobs:
 
   slack-notify:
     name: Slack Notify
+    needs: [smoke-tests]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
 
       - name: 'Report Success'
         uses: ravsamhq/notify-slack-action@v1
-        if: ${{ success() }}
+        if: success()
         with:
           status: success
           notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
@@ -87,7 +88,7 @@ jobs:
 
       - name: 'Report Failure'
         uses: ravsamhq/notify-slack-action@v1
-        if: ${{ failure() }}
+        if: failure()
         with:
           status: failure
           notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
