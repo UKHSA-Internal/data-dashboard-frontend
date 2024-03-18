@@ -72,6 +72,7 @@ jobs:
     name: Slack Notify
     needs: [smoke-tests]
     runs-on: ubuntu-latest
+    if: always()
     steps:
       - uses: actions/checkout@v3
 
