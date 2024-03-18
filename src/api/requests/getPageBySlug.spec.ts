@@ -42,7 +42,10 @@ describe('Failing to get page from cms API', () => {
 
     const result = await getPageBySlug('incorrect')
 
-    expect(logger.info).toHaveBeenNthCalledWith(1, new Error(`Could not get cms pages`))
+    expect(logger.info).toHaveBeenNthCalledWith(
+      1,
+      new Error(`Failed to parse CMS pages from API - There is likely an issue with the API response`)
+    )
     expect(notFound).toHaveBeenCalledTimes(1)
 
     expect(result).not.toBeDefined()
