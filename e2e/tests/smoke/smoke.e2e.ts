@@ -25,8 +25,8 @@ test.describe('Smoke tests - desktop @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickDesktopNav(page)
-        await app.hasHeading(page)
+        await app.clickDesktopNav(decodeURI(page))
+        await app.hasHeading(decodeURI(page))
       })
     }
   })
@@ -42,8 +42,8 @@ test.describe('Smoke tests - mobile @smoke', () => {
     })
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickMobileNav(page)
-        await app.hasHeading(page)
+        await app.clickMobileNav(decodeURI(page))
+        await app.hasHeading(decodeURI(page))
       })
     }
   })
@@ -57,10 +57,11 @@ test.describe('Smoke tests - no JavaScript @smoke', () => {
       await homePage.goto()
       await homePage.hasHeading()
     })
+
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickMobileNav(page)
-        await app.hasHeading(page)
+        await app.clickDesktopNav(decodeURI(page))
+        await app.hasHeading(decodeURI(page))
       })
     }
   })
