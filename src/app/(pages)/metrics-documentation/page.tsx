@@ -63,8 +63,6 @@ export async function generateMetadata({
 }
 
 export default async function MetricsParentPage({ searchParams: { search, page = 1 } }: MetricsParentPageProps) {
-  const { t } = await useTranslation('metrics')
-
   const {
     title,
     body,
