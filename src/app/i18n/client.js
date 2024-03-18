@@ -28,7 +28,7 @@ i18next
 export function useTranslation(ns, options = { lng: 'en' }) {
   const ret = useTranslationOrg(ns, options)
   const { i18n } = ret
-  if (runsOnServerSide && options.lng && i18n.resolvedLanguage !== lng) {
+  if (runsOnServerSide && options.lng && i18n.resolvedLanguage !== options.lng) {
     i18n.changeLanguage(lng)
   } else {
     const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage)
