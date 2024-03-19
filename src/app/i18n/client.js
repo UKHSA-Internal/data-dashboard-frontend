@@ -1,48 +1,29 @@
 'use client'
 
-// Adapted from this tutorial:
-// https://locize.com/blog/next-app-dir-i18n/
-
 import i18next from 'i18next'
-import resourcesToBackend from 'i18next-resources-to-backend'
-import { useEffect, useState } from 'react'
 import { initReactI18next, useTranslation as useTranslationOrg } from 'react-i18next'
 
-import { getOptions, languages } from './settings'
-
-const runsOnServerSide = typeof window === 'undefined'
+import common from '../../../public/locales/en/common.json'
+import errors from '../../../public/locales/en/errors.json'
+import metrics from '../../../public/locales/en/metrics.json'
+import whatsNew from '../../../public/locales/en/whatsNew.json'
+import { getOptions } from './settings'
 
 // eslint-disable-next-line import/no-named-as-default-member
-i18next
-  .use(initReactI18next)
-  .use(resourcesToBackend((language, namespace) => import(`../../../public/locales/${language}/${namespace}.json`)))
-  .init({
-    ...getOptions(),
-    reloadOnPrerender: false, // Breaks client side rendering if enabled
-    lng: undefined, // let detect the language on client side
-    detection: {
-      order: ['path', 'htmlTag', 'cookie', 'navigator'],
+i18next.use(initReactI18next).init({
+  ...getOptions(),
+  supportedLngs: ['en'],
+  resources: {
+    en: {
+      common,
+      metrics,
+      whatsNew,
+      errors,
     },
-    preload: runsOnServerSide ? languages : [],
-  })
+  },
+  lng: 'en',
+})
 
 export function useTranslation(ns, options = { lng: 'en' }) {
-  const ret = useTranslationOrg(ns, options)
-  const { i18n } = ret
-  if (runsOnServerSide && options.lng && i18n.resolvedLanguage !== options.lng) {
-    i18n.changeLanguage(lng)
-  } else {
-    const [activeLng, setActiveLng] = useState(i18n.resolvedLanguage)
-
-    useEffect(() => {
-      if (activeLng === i18n.resolvedLanguage) return
-      setActiveLng(i18n.resolvedLanguage)
-    }, [activeLng, i18n.resolvedLanguage])
-
-    useEffect(() => {
-      if (!options.lng || i18n.resolvedLanguage === options.lng) return
-      i18n.changeLanguage(options.lng)
-    }, [options.lng, i18n])
-  }
-  return ret
+  return useTranslationOrg(ns, { ...options })
 }
