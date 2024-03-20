@@ -25,8 +25,8 @@ test.describe('Smoke tests - desktop @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickDesktopNav(page)
-        await app.hasHeading(page)
+        await app.clickDesktopNav(decodeURI(page))
+        await app.hasHeading(decodeURI(page))
       })
     }
   })
@@ -40,27 +40,29 @@ test.describe('Smoke tests - mobile @smoke', () => {
       await homePage.goto()
       await homePage.hasHeading()
     })
+
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickMobileNav(page)
-        await app.hasHeading(page)
+        await app.clickMobileNav(decodeURI(page))
+        await app.hasHeading(decodeURI(page))
       })
     }
   })
 })
 
 test.describe('Smoke tests - no JavaScript @smoke', () => {
-  test.use({ javaScriptEnabled: false })
+  test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
 
   test('Navigates to each page from the side navigation menu', async ({ app, homePage }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
       await homePage.hasHeading()
     })
+
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickMobileNav(page)
-        await app.hasHeading(page)
+        await app.clickDesktopNav(decodeURI(page))
+        await app.hasHeading(decodeURI(page))
       })
     }
   })
