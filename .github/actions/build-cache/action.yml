@@ -6,7 +6,7 @@ runs:
   using: 'composite'
   steps:
     - name: Cache builds
-      uses: actions/cache@v3
+      uses: actions/cache@v4
       id: build-cache
       with:
         path: |

@@ -31,7 +31,7 @@ export const getPageBySlug = async <T extends PageType>(slug: string, additional
       throw new Error(`No page found for slug ${slug}`)
     }
 
-    throw new Error(`Could not get cms pages`)
+    throw new Error(`Failed to parse CMS pages from API - There is likely an issue with the API response`)
   } catch (e) {
     logger.info(e)
     notFound()

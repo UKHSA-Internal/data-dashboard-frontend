@@ -17,12 +17,15 @@ export async function Percentage({ data: { body: heading, ...requestParams } }: 
 
   if (headline.success) {
     const {
-      data: { value },
+      data: { value, period_end: date },
     } = headline
 
     return (
       <div>
         <div>{t('cms.blocks.percentage.heading', { heading })}</div>
+        <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
+          {t('cms.blocks.headline.date', { value: date })}
+        </div>
         <div className="govuk-body-l govuk-!-margin-bottom-0">{t('cms.blocks.percentage.value', { value })}</div>
       </div>
     )

@@ -17,12 +17,15 @@ export async function Headline({ data: { body: heading, ...requestParams } }: He
 
   if (headline.success) {
     const {
-      data: { value },
+      data: { value, period_end: date },
     } = headline
 
     return (
       <div>
         <div>{t('cms.blocks.headline.heading', { heading })}</div>
+        <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
+          {t('cms.blocks.headline.date', { value: date })}
+        </div>
         <div className="govuk-body-l govuk-!-margin-bottom-0">{t('cms.blocks.headline.value', { value })}</div>
       </div>
     )

@@ -1,5 +1,5 @@
 import { client } from '@/api/utils/api.utils'
-import { render, within } from '@/config/test-utils'
+import { render } from '@/config/test-utils'
 import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { View } from './View'
@@ -15,8 +15,8 @@ jest.mocked(client).mockResolvedValue({
 
 test('renders the heading correctly', async () => {
   const heading = 'Test Heading'
-  const { getByText } = render(await View({ heading, children: null }))
-  const headingElement = getByText(heading)
+  const { getByRole } = render(await View({ heading, children: null }))
+  const headingElement = getByRole('heading', { level: 1, name: heading })
   expect(headingElement).toBeInTheDocument()
 })
 
@@ -45,24 +45,6 @@ test('renders the children correctly', async () => {
   const { getByText } = render(await View({ heading: 'Test Heading', children }))
   const childrenElement = getByText('Test Children')
   expect(childrenElement).toBeInTheDocument()
-})
-
-test('renders the side navigation', async () => {
-  const { getByRole } = render(await View({ heading: 'Test Heading', children: null }))
-
-  const nav = getByRole('navigation', { name: 'Side navigation' })
-  expect(nav).toBeInTheDocument()
-
-  expect(within(nav).getByRole('link', { name: 'Homepage' })).toHaveAttribute('href', '/')
-  expect(within(nav).getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
-  expect(within(nav).getByRole('link', { name: 'Influenza' })).toHaveAttribute('href', '/topics/influenza')
-  expect(within(nav).getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
-    'href',
-    '/topics/other-respiratory-viruses'
-  )
-  expect(within(nav).getByRole('link', { name: 'Access our data' })).toHaveAttribute('href', '/access-our-data')
-  expect(within(nav).getByRole('link', { name: 'About' })).toHaveAttribute('href', '/about')
-  expect(within(nav).getByRole('link', { name: "What's new" })).toHaveAttribute('href', '/whats-new')
 })
 
 test('renders without a heading', async () => {

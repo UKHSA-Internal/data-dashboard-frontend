@@ -76,3 +76,21 @@ test.describe('Archive data download - desktop', () => {
     await app.hasDesktopNav()
   })
 })
+
+test.describe('Archive data download @smoke tests', () => {
+  test('displays all download links', async ({ archiveDataPage }) => {
+    const downloadHrefs = [
+      'https://archive.ukhsa-dashboard.data.gov.uk/coronavirus-dashboard/covid-19-archive.zip',
+      'https://archive.ukhsa-dashboard.data.gov.uk/coronavirus-dashboard/cases.zip',
+      'https://archive.ukhsa-dashboard.data.gov.uk/coronavirus-dashboard/deaths.zip',
+      'https://archive.ukhsa-dashboard.data.gov.uk/coronavirus-dashboard/healthcare.zip',
+      'https://archive.ukhsa-dashboard.data.gov.uk/coronavirus-dashboard/vaccinations.zip',
+      'https://archive.ukhsa-dashboard.data.gov.uk/coronavirus-dashboard/testing.zip',
+    ]
+
+    await archiveDataPage.goto()
+    for (const href of downloadHrefs) {
+      await archiveDataPage.hasDownloadLinkByHref(href)
+    }
+  })
+})

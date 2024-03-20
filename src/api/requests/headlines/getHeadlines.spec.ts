@@ -30,6 +30,7 @@ test('Returns a COVID-19 headline value', async () => {
     success: true,
     data: {
       value: 24298,
+      period_end: '2023-11-03',
     },
   })
 })
@@ -51,6 +52,7 @@ test('Returns an Influenza headline value', async () => {
     success: true,
     data: {
       value: 0.2558,
+      period_end: '2023-11-03',
     },
   })
 })
@@ -77,6 +79,13 @@ test('Handles invalid json received from the api', async () => {
         received: 'nan',
         path: ['value'],
         message: 'Expected number, received nan',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['period_end'],
+        message: 'Required',
       },
     ]),
   })
@@ -106,6 +115,13 @@ test('Handles generic http errors', async () => {
         received: 'nan',
         path: ['value'],
         message: 'Expected number, received nan',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'string',
+        received: 'undefined',
+        path: ['period_end'],
+        message: 'Required',
       },
     ]),
   })
