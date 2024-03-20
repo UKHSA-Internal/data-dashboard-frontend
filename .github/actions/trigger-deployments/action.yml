@@ -16,5 +16,5 @@ runs:
             -H "Accept: application/vnd.github+json" \
             -H "Authorization: Bearer ${{ inputs.token }}" \
             -H "X-GitHub-Api-Version: 2022-11-28" \
-            -d '{"event_type":"trigger-deployments","client_payload":{"unit":false,"integration":true}}'
+            -d '{"event_type":"trigger-deployments","client_payload":{"unit":false,"integration":true,"repository":"UKHSA-data-dashboard/frontend"}}'
       shell: bash
