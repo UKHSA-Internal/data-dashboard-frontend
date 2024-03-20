@@ -1,10 +1,11 @@
 import { ReactNode } from 'react'
 
+import { BackToTop } from '@/app/components/ui/ukhsa'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { useTranslation } from '@/app/i18n'
 import { useMenu } from '@/app/utils/menu.utils'
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
 
@@ -36,6 +37,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
           {children}
         </main>
       </div>
+      <BackToTop label={t('backToTop')} className="govuk-!-margin-bottom-4" />
     </>
   )
 }
