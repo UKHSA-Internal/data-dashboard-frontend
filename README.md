@@ -14,7 +14,7 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
 
 Before you begin, ensure you have the following installed:
 
-- Node.js version 20.10.0 or later
+- Node.js version 20.11.1 or later
 
 ## Getting Started
 

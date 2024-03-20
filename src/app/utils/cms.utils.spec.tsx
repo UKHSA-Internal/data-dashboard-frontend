@@ -71,6 +71,8 @@ describe('Headline numbers row card', () => {
   test('displays a row of columns containing a heading and metric data', () => {
     render(renderCard(mockHeadlineNumbersRowCard))
 
+    expect(screen.getByTestId('headline-row')).toHaveClass('ukhsa-headline-numbers-row-card')
+
     // Cases
     const casesColumn = screen.getByTestId('headline-column-cases')
     expect(within(casesColumn).getByRole('heading', { level: 3, name: 'Cases' })).toBeInTheDocument()
@@ -121,6 +123,7 @@ describe('Chart row card', () => {
 
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
     expect(article).toBeInTheDocument()
+    expect(article).toHaveClass('ukhsa-chart-card')
 
     // Heading and description
     expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
