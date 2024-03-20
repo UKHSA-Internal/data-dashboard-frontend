@@ -5,7 +5,7 @@ import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/
 import { useTranslation } from '@/app/i18n'
 import { useMenu } from '@/app/utils/menu.utils'
 
-export default async function Layout({ children }: { children: ReactNode }) {
+export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
 
