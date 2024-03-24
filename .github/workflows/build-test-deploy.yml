@@ -151,24 +151,22 @@ jobs:
           architecture: amd64
           image-tag: latest
 
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: wp-frontend
-          IMAGE_TAG: latest
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-
-  publish-image:
-    name: Publish image to ECR
+  publish-image-graviton:
+    name: Publish ARM64 image to ECR
     needs: [quality-checks, unit-tests, tests-success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
+      - name: Build and publish docker image
+        uses: ./.github/actions/publish-image
+        with:
+          ecr-repository: data-dashboard/front-end
+          role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
+          architecture: arm64
+          image-tag: latest-graviton
 
   publish-image:
     name: Publish image to ECR
