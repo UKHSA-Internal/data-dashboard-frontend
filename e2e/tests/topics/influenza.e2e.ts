@@ -241,11 +241,7 @@ test.describe('Influenza page - desktop', () => {
 test.describe('Influenza page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads csv charts', async ({ influenzaPage, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
+  test('Downloads csv charts', async ({ influenzaPage, app }) => {
     await test.step('loads the page', async () => {
       await influenzaPage.goto()
     })
@@ -264,11 +260,7 @@ test.describe('Influenza page - no JS', () => {
     })
   })
 
-  test('Downloads json charts', async ({ influenzaPage, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
+  test('Downloads json charts', async ({ influenzaPage, app }) => {
     await test.step('loads the page', async () => {
       await influenzaPage.goto()
     })
