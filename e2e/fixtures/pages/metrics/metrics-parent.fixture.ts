@@ -38,15 +38,15 @@ export class MetricsParentPage {
   }
 
   async hasMatchedEntries(entries: string[]) {
-    entries.forEach(async (entry) => {
-      await expect(this.page.getByRole('listitem').getByRole('heading', { level: 2, name: entry })).toBeVisible()
-    })
+    for (const entry of entries) {
+      const heading = this.page.getByRole('listitem').getByRole('heading', { level: 2, name: entry })
+      await expect(heading).toBeVisible()
+    }
   }
 
   async countMetricsItems(expectedItems: number) {
-    await expect(
-      await this.page.getByRole('list', { name: 'Metrics documentation' }).getByRole('listitem').all()
-    ).toHaveLength(expectedItems)
+    const items = await this.page.getByRole('list', { name: 'Metrics documentation' }).getByRole('listitem').all()
+    await expect(items).toHaveLength(expectedItems)
   }
 
   async search(value: string) {
