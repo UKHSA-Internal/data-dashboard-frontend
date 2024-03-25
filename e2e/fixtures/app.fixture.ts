@@ -280,7 +280,7 @@ export class App {
 
       const [download] = await Promise.all([
         this.page.waitForEvent('download'),
-        await card.getByRole('button', { name: 'Download' }).click(),
+        card.getByRole('button', { name: 'Download' }).click(),
       ])
 
       const fileName = download.suggestedFilename()
