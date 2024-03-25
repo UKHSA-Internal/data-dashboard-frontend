@@ -4,7 +4,6 @@ import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/P
 import { getTables } from '@/api/requests/tables/getTables'
 import { useAreaSelector } from '@/app/hooks/useAreaSelector'
 import { usePathname } from '@/app/hooks/usePathname'
-import { useTranslation } from '@/app/i18n'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
@@ -15,8 +14,6 @@ interface DownloadProps {
 }
 
 export async function Download({ data: { chart, y_axis, x_axis } }: DownloadProps) {
-  const { t } = await useTranslation('common')
-
   const pathname = usePathname()
   const [areaType, areaName] = useAreaSelector()
 
@@ -44,25 +41,9 @@ export async function Download({ data: { chart, y_axis, x_axis } }: DownloadProp
             geography: areaName ?? plot.value.geography,
           },
         }))}
-        labels={{
-          heading: t('cms.blocks.download.heading'),
-          hint: t('cms.blocks.download.hint'),
-          inputLabelCsv: t('cms.blocks.download.inputLabel', { context: 'csv' }),
-          inputLabelJson: t('cms.blocks.download.inputLabel', { context: 'json' }),
-          buttonDownload: t('cms.blocks.download.buttonDownload'),
-          buttonDownloading: t('cms.blocks.download.buttonDownloading'),
-        }}
       />
     )
   }
 
-  return (
-    <ChartEmpty
-      resetHref={pathname}
-      labels={{
-        description: t('areaSelector.noData', { areaName, context: areaName && 'withArea' }),
-        reset: t('areaSelector.resetBtn'),
-      }}
-    />
-  )
+  return <ChartEmpty resetHref={pathname} />
 }

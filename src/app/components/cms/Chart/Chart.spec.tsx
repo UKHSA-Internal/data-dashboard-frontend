@@ -1,9 +1,10 @@
 import { ImageProps } from 'next/image'
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 import { ComponentProps, ReactElement } from 'react'
 import { ZodError } from 'zod'
 
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { useSearchParams } from '@/app/hooks/useSearchParams'
+import { useSearchParams as serverUseSearchParams } from '@/app/hooks/useSearchParams'
 import { render } from '@/config/test-utils'
 
 import { Chart } from './Chart'
@@ -11,7 +12,15 @@ import { Chart } from './Chart'
 // Mock the url utils
 const defaultUrl = new URL('http://localhost')
 jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
+
+// Mock our custom server component util
 jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
+
+// Mock the default NextJs util (for client components)
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  useSearchParams: jest.fn(() => defaultUrl.searchParams),
+}))
 
 // eslint-disable-next-line @next/next/no-img-element
 jest.mock('next/image', () => ({ src, alt }: ImageProps) => <img src={src as string} alt={alt} />)
@@ -72,7 +81,7 @@ test('renders the chart correctly when successful', async () => {
 
 test('renders the chart by geography and geography type when both are present in the url search params', async () => {
   jest
-    .mocked(useSearchParams)
+    .mocked(serverUseSearchParams)
     .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
   getChartsMock.mockResolvedValueOnce({
@@ -163,9 +172,9 @@ test('full width charts should also have an acompanying narrow version for mobil
 })
 
 test('renders a fallback message when the chart requests fail', async () => {
-  jest
-    .mocked(useSearchParams)
-    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
+  const url = 'http://localhost?areaType=UKHSA+Region&areaName=North+East'
+  jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
+  jest.mocked(serverUseSearchParams).mockReturnValueOnce(new URL(url).searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: false,
@@ -196,12 +205,9 @@ test('renders a fallback message when the chart requests fail', async () => {
 })
 
 test('Fallback message with escaped characters', async () => {
-  jest
-    .mocked(useSearchParams)
-    .mockReturnValueOnce(
-      new URL('http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust')
-        .searchParams
-    )
+  const url = 'http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
+  jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
+  jest.mocked(serverUseSearchParams).mockReturnValueOnce(new URL(url).searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: false,

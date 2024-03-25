@@ -4,35 +4,20 @@ import Link from 'next/link'
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useCallback, useEffect, useRef } from 'react'
 
+import { useTranslation } from '@/app/i18n/client'
+
 interface AreaSelectorProps {
   areaType: string | undefined
   areaTypeOptions: string[]
   areaNameOptions: string[]
-  labels?: {
-    areaType?: string
-    areaTypePlaceholder?: string
-    areaName?: string
-    areaNamePlaceholder?: string
-    updateBtn?: string
-    resetBtn?: string
-  }
 }
 
-export function AreaSelectorForm({
-  areaTypeOptions,
-  areaNameOptions,
-  labels = {
-    areaType: 'Area type',
-    areaTypePlaceholder: 'Select area type',
-    areaName: 'Area name',
-    areaNamePlaceholder: 'Select area name',
-    updateBtn: 'Update',
-    resetBtn: 'Reset',
-  },
-}: AreaSelectorProps) {
+export function AreaSelectorForm({ areaTypeOptions, areaNameOptions }: AreaSelectorProps) {
   const formRef = useRef<HTMLFormElement>(null)
   const areaTypeSelectRef = useRef<HTMLSelectElement>(null)
   const areaNameSelectRef = useRef<HTMLSelectElement>(null)
+
+  const { t } = useTranslation('common')
 
   const pathname = usePathname()
   const searchParams = useSearchParams()
@@ -76,7 +61,7 @@ export function AreaSelectorForm({
       <div className="flex w-full gap-3 sm:max-w-xl sm:gap-4">
         <div className="govuk-form-group mb-0 w-1/2">
           <label className="govuk-label" htmlFor="areaType">
-            {labels.areaType}
+            {t('areaSelector.areaType')}
           </label>
           <select
             ref={areaTypeSelectRef}
@@ -97,7 +82,7 @@ export function AreaSelectorForm({
             }}
           >
             <option value="" disabled>
-              {labels.areaTypePlaceholder}
+              {t('areaSelector.areaTypePlaceholder')}
             </option>
             {areaTypeOptions.map((value) => (
               <option key={value} value={value}>
@@ -109,7 +94,7 @@ export function AreaSelectorForm({
 
         <div className="govuk-form-group mb-0 w-1/2">
           <label className="govuk-label" htmlFor="areaName">
-            {labels.areaName}
+            {t('areaSelector.areaName')}
           </label>
           <select
             ref={areaNameSelectRef}
@@ -127,7 +112,7 @@ export function AreaSelectorForm({
           >
             <>
               <option value="" disabled>
-                {labels.areaNamePlaceholder}
+                {t('areaSelector.areaNamePlaceholder')}
               </option>
               {areaNameOptions.map((value) => (
                 <option key={value} value={value}>
@@ -140,7 +125,7 @@ export function AreaSelectorForm({
       </div>
 
       <button className="govuk-button mb-[2px] hidden no-js:block" type="submit">
-        {labels.updateBtn}
+        {t('areaSelector.updateBtn')}
       </button>
 
       <Link
@@ -151,7 +136,7 @@ export function AreaSelectorForm({
           areaTypeSelectRef.current?.focus()
         }}
       >
-        {labels.resetBtn}
+        {t('areaSelector.resetBtn')}
       </Link>
     </form>
   )

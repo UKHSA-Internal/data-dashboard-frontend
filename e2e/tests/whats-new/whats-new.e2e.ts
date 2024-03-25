@@ -17,7 +17,7 @@ test.describe("What's new parent page", () => {
       await app.hasLayout()
     })
     await test.step('displays without any accessibility defects', async () => {
-      await app.hasNoAccessibilityDefects(['landmark-unique'])
+      await app.hasNoAccessibilityDefects()
     })
     await test.step('displays last updated date', async () => {
       await whatsNewParentPage.hasLastUpdated()
@@ -157,7 +157,7 @@ test.describe("What's new child page", () => {
       await whatsNewChildPage.hasLastUpdated()
     })
     await test.step('displays without any accessibility defects', async () => {
-      await app.hasNoAccessibilityDefects(['landmark-unique'])
+      await app.hasNoAccessibilityDefects()
     })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()

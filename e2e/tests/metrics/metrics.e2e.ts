@@ -14,7 +14,7 @@ test.describe('Metrics parent page', () => {
       await app.hasLayout()
     })
     await test.step('displays without any accessibility defects', async () => {
-      await app.hasNoAccessibilityDefects(['landmark-unique'])
+      await app.hasNoAccessibilityDefects()
     })
     await test.step('displays page content', async () => {
       await metricsParentPage.hasPageContent()
@@ -211,7 +211,7 @@ test.describe('Metrics child page', () => {
       await app.hasLayout()
     })
     await test.step('displays without any accessibility defects', async () => {
-      await app.hasNoAccessibilityDefects(['landmark-unique'])
+      await app.hasNoAccessibilityDefects()
     })
     await test.step('displays last updated date', async () => {
       await metricsChildPage.hasLastUpdated()

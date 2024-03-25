@@ -82,13 +82,5 @@ export async function Chart({ data, size }: ChartProps) {
     )
   }
 
-  return (
-    <ChartEmpty
-      resetHref={pathname}
-      labels={{
-        description: t('areaSelector.noData', { areaName, context: areaName && 'withArea' }),
-        reset: t('areaSelector.resetBtn'),
-      }}
-    />
-  )
+  return <ChartEmpty resetHref={pathname} />
 }
