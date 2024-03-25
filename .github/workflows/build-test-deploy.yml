@@ -163,7 +163,6 @@ jobs:
       - name: Build and publish docker image
         uses: ./.github/actions/publish-image
         with:
-          ecr-repository: data-dashboard/front-end
           role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
           architecture: arm64
           image-tag: latest-graviton
@@ -180,7 +179,6 @@ jobs:
       - name: Build and publish docker image
         uses: ./.github/actions/publish-image
         with:
-          ecr-repository: data-dashboard/front-end
           role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
           architecture: amd64
           image-tag: latest
