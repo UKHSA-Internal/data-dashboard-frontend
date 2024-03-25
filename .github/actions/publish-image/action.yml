@@ -6,9 +6,6 @@ inputs:
   architecture:
     description: 'The architecture to use when building the image.'
     required: true
-  ecr-repository:
-    description: 'The name of the Amazon ECR repository to push the image to.'
-    required: true
   role-to-assume:
     description: 'The role to assume when publishing the image'
     required: true
@@ -41,7 +38,7 @@ runs:
     - name: Build, tag, and push image to AWS ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: ${{ inputs.ecr-repository }}
+        ECR_REPOSITORY: data-dashboard/front-end
         IMAGE_TAG: ${{ inputs.image-tag }}
       run: |
           docker build --platform linux/${{ inputs.architecture }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
