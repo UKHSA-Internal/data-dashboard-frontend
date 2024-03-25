@@ -1,7 +1,8 @@
+import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 import { ComponentProps, ReactElement } from 'react'
 
 import { getTables } from '@/api/requests/tables/getTables'
-import { useSearchParams } from '@/app/hooks/useSearchParams'
+import { useSearchParams as serverUseSearchParams } from '@/app/hooks/useSearchParams'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { render } from '@/config/test-utils'
 
@@ -14,7 +15,16 @@ const getTableMock = jest.mocked(getTables)
 // Mock the url utils
 const defaultUrl = new URL('http://localhost')
 jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
+
+// Mock our custom server component util
 jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
+
+// Mock the default NextJs util (for client components)
+jest.mock('next/navigation', () => ({
+  ...jest.requireActual('next/navigation'),
+  useRouter: jest.fn(),
+  useSearchParams: jest.fn(() => defaultUrl.searchParams),
+}))
 
 getTableMock.mockResolvedValue({
   success: true,
@@ -82,9 +92,9 @@ test('Chart download fails to show due to api exception', async () => {
 })
 
 test('Chart download fails to show due to lack of data', async () => {
-  jest
-    .mocked(useSearchParams)
-    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
+  const url = 'http://localhost?areaType=UKHSA+Region&areaName=North+East'
+  jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
+  jest.mocked(serverUseSearchParams).mockReturnValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
@@ -97,12 +107,9 @@ test('Chart download fails to show due to lack of data', async () => {
 })
 
 test('Fallback message with escaped characters', async () => {
-  jest
-    .mocked(useSearchParams)
-    .mockReturnValueOnce(
-      new URL('http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust')
-        .searchParams
-    )
+  const url = 'http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
+  jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
+  jest.mocked(serverUseSearchParams).mockReturnValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 

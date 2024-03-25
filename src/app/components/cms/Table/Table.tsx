@@ -129,13 +129,5 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     )
   }
 
-  return (
-    <ChartEmpty
-      resetHref={pathname}
-      labels={{
-        description: t('areaSelector.noData', { areaName, context: areaName && 'withArea' }),
-        reset: t('areaSelector.resetBtn'),
-      }}
-    />
-  )
+  return <ChartEmpty resetHref={pathname} />
 }

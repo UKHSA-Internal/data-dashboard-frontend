@@ -1,19 +1,19 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen } from '@/config/test-utils'
 
 import { ChartEmpty } from './ChartEmpty'
 
+jest.mock('next/navigation', () => ({
+  useSearchParams: () => new URLSearchParams(),
+}))
+
 describe('ChartEmpty', () => {
-  const labels = {
-    description: 'No data available',
-    reset: 'Reset',
-  }
   const resetHref = '/reset-path'
 
   test('renders the description and reset link', () => {
-    render(<ChartEmpty labels={labels} resetHref={resetHref} />)
+    render(<ChartEmpty resetHref={resetHref} />)
 
-    const descriptionElement = screen.getByText(labels.description)
-    const resetLinkElement = screen.getByRole('link', { name: labels.reset })
+    const descriptionElement = screen.getByText('No data available')
+    const resetLinkElement = screen.getByRole('link', { name: 'Reset' })
 
     expect(descriptionElement).toBeInTheDocument()
     expect(resetLinkElement).toBeInTheDocument()

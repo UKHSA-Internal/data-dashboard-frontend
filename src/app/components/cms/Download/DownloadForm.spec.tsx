@@ -1,10 +1,10 @@
-import { render, screen, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
 import React, { ComponentProps } from 'react'
 
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath } from '@/config/constants'
+import { render, screen, waitFor } from '@/config/test-utils'
 
 import { DownloadForm } from './DownloadForm'
 
@@ -29,14 +29,6 @@ const props: ComponentProps<typeof DownloadForm> = {
       id: '123',
     },
   ],
-  labels: {
-    heading: 'Download data',
-    hint: 'Select format',
-    inputLabelCsv: 'CSV',
-    inputLabelJson: 'JSON',
-    buttonDownload: 'Download',
-    buttonDownloading: 'Downloading',
-  },
 }
 
 describe('DownloadForm', () => {
