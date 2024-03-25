@@ -126,10 +126,14 @@ export class App {
   }
 
   async hasMobileNav() {
+    await this.page.waitForLoadState() // Wait for load event as sometimes the tests will try to click the menu button before the JS is loaded
+
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
 
     // Open menu
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
 
     // Expect visible items
     await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
