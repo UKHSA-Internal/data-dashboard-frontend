@@ -282,11 +282,10 @@ export class App {
 
       await card.getByLabel(format.toUpperCase()).click()
 
-      const downloadPromise = this.page.waitForEvent('download')
-
-      await card.getByRole('button', { name: 'Download' }).click()
-
-      const download = await downloadPromise
+      const [download] = await Promise.all([
+        this.page.waitForEvent('download'),
+        card.getByRole('button', { name: 'Download' }).click(),
+      ])
 
       const fileName = download.suggestedFilename()
       expect(fileName).toBe(`ukhsa-chart-download.${format}`)

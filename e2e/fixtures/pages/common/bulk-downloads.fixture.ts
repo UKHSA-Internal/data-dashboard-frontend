@@ -55,11 +55,10 @@ export class BulkDownloadsPage {
   async canBulkDownload(format: 'csv' | 'json') {
     await this.page.getByLabel(format.toUpperCase()).click()
 
-    const downloadPromise = this.page.waitForEvent('download')
-
-    await this.page.getByRole('button', { name: 'Download' }).click()
-
-    const download = await downloadPromise
+    const [download] = await Promise.all([
+      this.page.waitForEvent('download'),
+      this.page.getByRole('button', { name: 'Download' }).click(),
+    ])
 
     const fileName = download.suggestedFilename()
     expect(fileName).toBe(`ukhsa-mock-download-${format}.zip`)
