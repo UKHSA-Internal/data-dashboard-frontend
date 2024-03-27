@@ -134,34 +134,21 @@ jobs:
   # Push image to ECR
   ###############################################################################
 
-  publish-image-to-deprecated-ecr:
-    name: Publish image to deprecated ECR
+  publish-image-graviton:
+    name: Publish ARM64 image to ECR
     needs: [quality-checks, unit-tests, tests-success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: actions/checkout@v4
+      - name: Build and publish docker image
+        uses: ./.github/actions/publish-image
         with:
-          role-to-assume: ${{ secrets.AWS_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: wp-frontend
-          IMAGE_TAG: latest
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
+          architecture: arm64
+          image-tag: latest-graviton
 
   publish-image:
     name: Publish image to ECR
@@ -171,26 +158,13 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v2
-
-      - name: Configure AWS credentials
-        uses: aws-actions/configure-aws-credentials@v4
+        uses: actions/checkout@v4
+      - name: Build and publish docker image
+        uses: ./.github/actions/publish-image
         with:
           role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
-          aws-region: ${{ env.AWS_REGION }}
-
-      - name: Login to Amazon ECR
-        id: login-ecr
-        uses: aws-actions/amazon-ecr-login@v1
-
-      - name: Build, tag, and push image to Amazon ECR
-        env:
-          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-          ECR_REPOSITORY: data-dashboard/front-end
-          IMAGE_TAG: latest
-        run: |
-          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
-          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
+          architecture: amd64
+          image-tag: latest
 
   ###############################################################################
   # Deploy
@@ -198,7 +172,7 @@ jobs:
 
   trigger-deployments:
     name: Trigger deployments
-    needs: [publish-image-to-deprecated-ecr]
+    needs: [publish-image]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
