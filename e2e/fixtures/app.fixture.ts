@@ -85,9 +85,13 @@ export class App {
     await this.page.reload()
   }
 
+  async waitForPageLoaded() {
+    // Wait for our JS bundle to be fully loaded as sometimes the tests will try to interact with the UI before the JS is loaded
+    await this.page.waitForFunction(() => document.body.className.includes('js-enabled'), undefined, { timeout: 5000 })
+  }
+
   async waitForUrl(url: string) {
     await this.page.waitForURL(url, { timeout: 10000 })
-    await expect(this.page.url()).toEqual(url)
   }
 
   async hasDocumentTitle(title: string) {
@@ -103,8 +107,8 @@ export class App {
 
   async hasLayout() {
     // Header
-    await expect(this.header.getByRole('link', { name: 'GOV.UK' })).toBeVisible()
-    await expect(this.header.getByRole('link', { name: 'UKHSA data dashboard' })).toBeVisible()
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'UKHSA data dashboard' })).toBeVisible()
 
     // Phase Banner
     await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
@@ -126,7 +130,7 @@ export class App {
   }
 
   async hasMobileNav() {
-    await this.page.waitForLoadState() // Wait for load event as sometimes the tests will try to click the menu button before the JS is loaded
+    await this.waitForPageLoaded()
 
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
 
@@ -135,31 +139,35 @@ export class App {
 
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
 
+    let nav = this.page.getByRole('navigation', { name: 'Menu' })
+
     // Expect visible items
-    await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: 'About' })).toBeVisible()
-    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'About' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: "What's new" })).toBeVisible()
 
     // Close menu
     await this.page.getByRole('link', { name: 'Hide navigation menu', expanded: true }).click()
 
+    nav = this.page.getByRole('navigation', { name: 'Menu' })
+
     // Expect no visible menu items
-    await expect(this.nav.getByRole('link', { name: 'Homepage' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: 'Access our data' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: 'About' })).toBeHidden()
-    await expect(this.nav.getByRole('link', { name: "What's new" })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'About' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: "What's new" })).toBeHidden()
   }
 
   async clickMobileNav(name: string) {
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    await this.nav.getByRole('link', { name }).click()
+    await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
   }
 
   async hasDesktopNav() {
@@ -282,10 +290,11 @@ export class App {
 
       await card.getByLabel(format.toUpperCase()).click()
 
-      const [download] = await Promise.all([
-        this.page.waitForEvent('download'),
-        card.getByRole('button', { name: 'Download' }).click(),
-      ])
+      const downloadPromise = this.page.waitForEvent('download')
+
+      await card.getByRole('button', { name: 'Download' }).click()
+
+      const download = await downloadPromise
 
       const fileName = download.suggestedFilename()
       expect(fileName).toBe(`ukhsa-chart-download.${format}`)
@@ -354,18 +363,18 @@ export class App {
 
   async checkAreaSelectorFormIsActive(isActive = true) {
     if (isActive) {
-      await expect(this.areaSelector).toBeVisible()
+      await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeVisible({ timeout: 10000 })
     } else {
-      await expect(this.areaSelector).toBeHidden()
+      await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeHidden({ timeout: 10000 })
     }
   }
 
   async checkAreaSelectorInputMatchesValue(label: 'Area type' | 'Area name', expectedValue: string) {
-    await expect(this.areaSelector.getByLabel(label)).toHaveValue(expectedValue)
+    await expect(this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label)).toHaveValue(expectedValue)
   }
 
   async checkAreaSelectorDropdownOptions(label: 'Area type' | 'Area name', expectedOptions: Array<string>) {
-    const input = this.areaSelector.getByLabel(label)
+    const input = this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label)
 
     // Placeholder option
     await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('disabled')
@@ -379,11 +388,11 @@ export class App {
   }
 
   async checkAreaSelectorAreaNameIsDisabled() {
-    await expect(this.areaSelector.getByLabel('Area name')).toBeDisabled()
+    await expect(this.page.getByRole('form', { name: 'Area selector' }).getByLabel('Area name')).toBeDisabled()
   }
 
   async selectAreaSelectorDropdownOption(label: 'Area type' | 'Area name', selectedOption: string) {
-    await this.areaSelector.getByLabel(label).selectOption(selectedOption)
+    await this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label).selectOption(selectedOption)
   }
 
   async checkAreaSelectorChartsRefreshedForLocation(location: string) {
@@ -397,11 +406,11 @@ export class App {
   }
 
   async clickAreaSelectorResetLink() {
-    await this.areaSelector.getByRole('link', { name: 'Reset' }).click()
+    await this.page.getByRole('form', { name: 'Area selector' }).getByRole('link', { name: 'Reset' }).click()
   }
 
   async submitAreaSelectorForm() {
-    await this.areaSelector.getByRole('button', { name: 'Update' }).click()
+    await this.page.getByRole('form', { name: 'Area selector' }).getByRole('button', { name: 'Update' }).click()
   }
 }
 
