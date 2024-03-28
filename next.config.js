@@ -3,12 +3,15 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   output: 'standalone',
-  reactStrictMode: true,
-  logging: {
-    fetches: {
-      fullUrl: true,
-    },
+  experimental: {
+    typedRoutes: true,
   },
+  reactStrictMode: true,
+  // logging: {
+  //   fetches: {
+  //     fullUrl: true,
+  //   },
+  // },
   webpack(config) {
     config.experiments = { ...config.experiments, topLevelAwait: true }
     return config

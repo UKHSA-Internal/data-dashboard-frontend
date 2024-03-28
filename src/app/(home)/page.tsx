@@ -1,3 +1,4 @@
+import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
@@ -19,6 +20,9 @@ export async function generateMetadata(): Promise<Metadata> {
 }
 
 export default async function HomePage() {
+  const { enabled } = await flag('nextjs-example')
+
+  console.log('UNLESAH: ', enabled)
   const {
     title,
     body,
@@ -26,6 +30,9 @@ export default async function HomePage() {
     related_links: relatedLinks,
   } = await getPageBySlug<PageType.Home>(HOMEPAGE_CMS_SLUG, { type: PageType.Home })
 
+  if (enabled) {
+    return <>New homepage</>
+  }
   return (
     <View heading={title} description={description} showWelcome>
       {body.map(renderSection)}
