@@ -99,8 +99,6 @@ test.describe('Home page - desktop', () => {
 test.describe('Home page - no JavaScript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
   test('Downloading a csv version of each chart', async ({ homePage, app }) => {
     test.info().annotations.push({
       type: 'issue',

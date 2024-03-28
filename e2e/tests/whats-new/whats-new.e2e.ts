@@ -3,9 +3,6 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 test.describe("What's new parent page", () => {
-  // TODO: Look into why safari tests timing out
-  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
   test('Page layout', async ({ whatsNewParentPage, app }) => {
     await test.step('loads the page', async () => {
       await whatsNewParentPage.goto()

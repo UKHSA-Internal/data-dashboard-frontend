@@ -169,8 +169,6 @@ test.describe('Access our data - desktop', () => {
 test.describe('Access our data page - no Javascript', () => {
   test.use({ javaScriptEnabled: false })
 
-  test.skip(({ browserName }) => browserName === 'webkit', 'Not working in safari')
-
   test('Parent page', async ({ accessOurDataPage }) => {
     await test.step('go to route page', async () => {
       await accessOurDataPage.goto()

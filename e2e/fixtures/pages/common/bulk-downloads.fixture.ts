@@ -57,7 +57,7 @@ export class BulkDownloadsPage {
 
     const [download] = await Promise.all([
       this.page.waitForEvent('download'),
-      await this.page.getByRole('button', { name: 'Download' }).click(),
+      this.page.getByRole('button', { name: 'Download' }).click(),
     ])
 
     const fileName = download.suggestedFilename()
