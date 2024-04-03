@@ -13,7 +13,6 @@ import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
-import { Announcement } from './components/ui/ukhsa/Announcement/Announcement'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useMenu } from './utils/menu.utils'
 
@@ -109,13 +108,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               </Trans>
             </p>
           </div>
-          <Announcement
-            variant="Information"
-            heading="Data for COVID-19 is delayed"
-            summary="Data is only current up to 20th December 2023. We apologise for the inconvenience and aim to get this resolved
-        as soon as possible"
-            className="govuk-!-margin-top-2"
-          />
         </div>
         <div className="govuk-width-container">{children}</div>
         <Footer />
