@@ -174,11 +174,18 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
         id={id}
         formats={['csv', 'json']}
         aria-label={value.text}
+        className="govuk-!-margin-bottom-6"
       />
     )}
 
     {type === 'external_button' && (
-      <DownloadButtonExternal label={value.text} href={value.url} icon={value.icon} type={value.button_type} />
+      <DownloadButtonExternal
+        label={value.text}
+        href={value.url}
+        icon={value.icon}
+        type={value.button_type}
+        className="govuk-!-margin-bottom-6"
+      />
     )}
 
     {type === 'code_block' && (
