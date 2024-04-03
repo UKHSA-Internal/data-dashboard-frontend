@@ -320,11 +320,7 @@ test.describe('COVID-19 page - desktop', () => {
 test.describe('COVID-19 page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads csv charts', async ({ covid19Page, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
+  test('Downloads csv charts', async ({ covid19Page, app }) => {
     await test.step('loads the page', async () => {
       await covid19Page.goto()
     })
@@ -351,11 +347,7 @@ test.describe('COVID-19 page - no JS', () => {
     })
   })
 
-  test('Downloads json charts', async ({ covid19Page, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
+  test('Downloads json charts', async ({ covid19Page, app }) => {
     await test.step('loads the page', async () => {
       await covid19Page.goto()
     })
@@ -432,6 +424,8 @@ test.describe('COVID-19 page - no JS', () => {
     })
     await test.step('submit the form', async () => {
       await app.submitAreaSelectorForm()
+    })
+    await test.step('resets the url', async () => {
       await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation`)
     })
     await test.step('area name dropdown list is populated', async () => {
@@ -443,6 +437,8 @@ test.describe('COVID-19 page - no JS', () => {
     })
     await test.step('submit the form', async () => {
       await app.submitAreaSelectorForm()
+    })
+    await test.step('resets the url', async () => {
       await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation&areaName=England`)
     })
     await test.step('document title shows the selected location', async () => {
@@ -471,6 +467,8 @@ test.describe('COVID-19 page - no JS', () => {
     })
     await test.step('click reset link', async () => {
       await app.clickAreaSelectorResetLink()
+    })
+    await test.step('resets the url', async () => {
       await app.waitForUrl(`${baseURL}/topics/covid-19`)
     })
     await test.step('check the area selector is closed', async () => {

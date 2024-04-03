@@ -1,12 +1,9 @@
-import { render, waitFor } from '@testing-library/react'
 import { userEvent } from '@testing-library/user-event'
-import { ComponentProps } from 'react'
 
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
+import { render, waitFor } from '@/config/test-utils'
 
 import MetricsSearch from './MetricsSearch'
-
-type Labels = ComponentProps<typeof MetricsSearch>['labels']
 
 beforeEach(() => {
   mockRouter.push('/metrics-documentation')
@@ -14,13 +11,7 @@ beforeEach(() => {
 })
 
 test('renders input and buttons', async () => {
-  const labels: Labels = {
-    searchTitle: 'Metric name',
-    noScriptButtonText: 'Search',
-    clearText: 'Clear',
-  }
-
-  const { getByRole } = render(<MetricsSearch value="" labels={labels} />)
+  const { getByRole } = render(<MetricsSearch value="" />)
 
   const form = getByRole('form', { name: 'Metrics search' })
   expect(form).toBeVisible()
@@ -34,13 +25,7 @@ test('renders input and buttons', async () => {
 test('defaults the search input value with the value set in the url state', async () => {
   mockRouter.push('/?search=Mock+search+value')
 
-  const labels: Labels = {
-    searchTitle: 'Metric name',
-    noScriptButtonText: 'Search',
-    clearText: 'Clear',
-  }
-
-  const { getByLabelText } = render(<MetricsSearch value="Mock search value" labels={labels} />)
+  const { getByLabelText } = render(<MetricsSearch value="Mock search value" />)
 
   await waitFor(() => {
     expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
@@ -54,13 +39,7 @@ test('defaults the search input value with the value set in the url state', asyn
 test('sets the url state with the search input when typing', async () => {
   mockRouter.push('')
 
-  const labels: Labels = {
-    searchTitle: 'Metric name',
-    noScriptButtonText: 'Search',
-    clearText: 'Clear',
-  }
-
-  const { getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
+  const { getByLabelText } = render(<MetricsSearch value="" />)
 
   await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
 
@@ -70,13 +49,7 @@ test('sets the url state with the search input when typing', async () => {
 })
 
 test('clears the url state and search input when clicking the "Clear" link', async () => {
-  const labels: Labels = {
-    searchTitle: 'Metric name',
-    noScriptButtonText: 'Search',
-    clearText: 'Clear',
-  }
-
-  const { getByRole, getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
+  const { getByRole, getByLabelText } = render(<MetricsSearch value="" />)
 
   await userEvent.type(getByRole('textbox', { name: 'Metric name' }), 'Mock search value')
 
@@ -94,13 +67,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
 })
 
 test('clears the url state when the search input is cleared (via keyboard e.g backspace)', async () => {
-  const labels: Labels = {
-    searchTitle: 'Metric name',
-    noScriptButtonText: 'Search',
-    clearText: 'Clear',
-  }
-
-  const { getByLabelText } = render(<MetricsSearch value="" labels={labels} />)
+  const { getByLabelText } = render(<MetricsSearch value="" />)
 
   await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
 

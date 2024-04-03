@@ -179,11 +179,7 @@ test.describe('Other respiratory viruses page - desktop', () => {
 test.describe('Other respiratory viruses page - no JS', () => {
   test.use({ javaScriptEnabled: false })
 
-  test('Downloads csv charts', async ({ otherRespiratoryVirusesPage, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
+  test('Downloads csv charts', async ({ otherRespiratoryVirusesPage, app }) => {
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })
@@ -209,11 +205,7 @@ test.describe('Other respiratory viruses page - no JS', () => {
     })
   })
 
-  test('Downloads json charts', async ({ otherRespiratoryVirusesPage, app, browserName }) => {
-    // Ticket CDD-1419 to investigate
-    // eslint-disable-next-line playwright/no-skipped-test
-    test.skip(browserName == 'webkit')
-
+  test('Downloads json charts', async ({ otherRespiratoryVirusesPage, app }) => {
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })
