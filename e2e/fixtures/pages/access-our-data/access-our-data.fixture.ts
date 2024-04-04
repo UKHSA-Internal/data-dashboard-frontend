@@ -68,6 +68,10 @@ export class AccessOurDataPage {
     ).toBeVisible()
   }
 
+  async hasLastUpdated() {
+    await expect(this.page.getByText(/Last updated on Thursday, 24 August 2023 at 04:53pm/)).toBeVisible()
+  }
+
   async hasChildHeading(heading: string) {
     await expect(this.page.getByRole('heading', { level: 2, name: heading })).toBeVisible()
   }
@@ -79,9 +83,11 @@ export class AccessOurDataPage {
   async hasPreviousLink(name: string) {
     await expect(this.page.getByRole('link', { name: `Previous page : ${name}` })).toBeVisible()
   }
+
   async noPreviousLink() {
     await expect(this.page.getByRole('link', { name: 'Previous page :', exact: false })).toBeHidden()
   }
+
   async clickPreviousLink(name: string) {
     await this.page.getByRole('link', { name: `Previous page : ${name}` }).click()
   }
@@ -89,9 +95,11 @@ export class AccessOurDataPage {
   async hasNextLink(name: string) {
     await expect(this.page.getByRole('link', { name: `Next page : ${name}` })).toBeVisible()
   }
+
   async noNextLink() {
     await expect(this.page.getByRole('link', { name: 'Next page :', exact: false })).toBeHidden()
   }
+
   async clickNextLink(name: string) {
     await this.page.getByRole('link', { name: `Next page : ${name}` }).click()
   }

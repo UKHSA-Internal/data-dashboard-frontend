@@ -4,10 +4,10 @@ import { test } from '../../fixtures/app.fixture'
 
 test.describe('Access our data', () => {
   test('Parent page', async ({ accessOurDataPage }) => {
-    await test.step('go to route page', async () => {
+    await test.step('go to root page', async () => {
       await accessOurDataPage.goto()
     })
-    await test.step('it redirects to first child page', async () => {
+    await test.step('it shows content of the first child page', async () => {
       await accessOurDataPage.hasChildHeading('Overview')
     })
   })
@@ -27,6 +27,9 @@ test.describe('Access our data', () => {
     })
     await test.step('displays contents menu', async () => {
       await accessOurDataPage.hasContentsSection()
+    })
+    await test.step('displays last updated date', async () => {
+      await accessOurDataPage.hasLastUpdated()
     })
     await test.step('displays related links menu', async () => {
       await accessOurDataPage.hasRelatedLinks()
@@ -64,6 +67,9 @@ test.describe('Access our data', () => {
     await test.step('displays child heading', async () => {
       await accessOurDataPage.hasChildHeading('Getting started')
     })
+    await test.step('displays last updated date', async () => {
+      await accessOurDataPage.hasLastUpdated()
+    })
     await test.step('displays child content', async () => {
       await accessOurDataPage.hasChildContent(
         'This API is useful for applications that incorporate content from the UKHSA data dasbhoard, and for keeping that content up to date. It provides a more accessible and predictable interface that what can be achieved through scraping HTML pages.'
@@ -90,6 +96,9 @@ test.describe('Access our data', () => {
     })
     await test.step('displays child heading', async () => {
       await accessOurDataPage.hasChildHeading('Data structure')
+    })
+    await test.step('displays last updated date', async () => {
+      await accessOurDataPage.hasLastUpdated()
     })
     await test.step('displays child content', async () => {
       await accessOurDataPage.hasChildContent(
