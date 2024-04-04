@@ -62,7 +62,7 @@ export class WhatsNewParentPage {
     await expect(this.page.getByText(body)).toBeVisible()
   }
 
-  async openChildPage(name: string) {
-    await this.page.getByText(name).click()
+  async openChildPage(name: string | RegExp) {
+    await this.page.getByRole('link', { name }).click()
   }
 }
