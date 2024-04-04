@@ -14,6 +14,7 @@ import {
 import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { MetricsCard, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
+import { useReturnUrlWithParams } from '@/app/hooks/useReturnUrlWithParams'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
@@ -90,6 +91,8 @@ export default async function MetricsParentPage({ searchParams: { search, page =
     initialPageSize: METRICS_DOCUMENTATION_PAGE_SIZE,
   })
 
+  const setReturnUrl = useReturnUrlWithParams()
+
   return (
     <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
@@ -104,7 +107,7 @@ export default async function MetricsParentPage({ searchParams: { search, page =
                 <MetricsCard
                   key={id}
                   title={title}
-                  href={`metrics-documentation/${meta.slug}`}
+                  href={setReturnUrl(`metrics-documentation/${meta.slug}`)}
                   description={description}
                   group={group}
                   topic={topic}

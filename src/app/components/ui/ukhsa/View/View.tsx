@@ -2,8 +2,7 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 
 import { RichText } from '@/app/components/cms'
-
-import { useTranslation } from '../../../../i18n'
+import { useTranslation } from '@/app/i18n'
 
 interface PageProps {
   heading?: string
@@ -21,7 +20,7 @@ export async function View({ heading, showWelcome, children, description, lastUp
     <div className="w-full">
       {backLink && (
         <Link href={backLink} className="govuk-back-link">
-          Back
+          {t('backLink')}
         </Link>
       )}
 

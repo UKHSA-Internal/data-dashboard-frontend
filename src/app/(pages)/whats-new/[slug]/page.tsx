@@ -5,6 +5,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
+import { useSearchParams } from '@/app/hooks/useSearchParams'
 import { useTranslation } from '@/app/i18n'
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
@@ -20,6 +21,7 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 
 export default async function WhatsNewChildPage({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await useTranslation('whatsNew')
+  const searchParams = useSearchParams()
 
   const {
     title,
@@ -30,8 +32,10 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
     last_published_at: lastUpdated,
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
+  const backLink = searchParams.get('returnUrl') || '/whats-new'
+
   return (
-    <View backLink="/whats-new" lastUpdated={lastUpdated}>
+    <View backLink={backLink} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <small className="govuk-caption-m govuk-!-margin-bottom-3">
