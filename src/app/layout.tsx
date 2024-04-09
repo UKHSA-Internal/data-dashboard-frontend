@@ -19,7 +19,7 @@ import { useMenu } from './utils/menu.utils'
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
 
-export default async function RootLayout({ children }: { children: React.ReactNode }) {
+export default async function RootLayout({ children, maps }: { children: React.ReactNode; maps: React.ReactNode }) {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
 
@@ -109,8 +109,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </p>
           </div>
         </div>
+
         <div className="govuk-width-container">{children}</div>
         <Footer />
+
+        {maps}
       </body>
     </html>
   )

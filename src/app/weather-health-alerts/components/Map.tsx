@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css'
 import Leaflet, { LatLngExpression, LeafletMouseEvent } from 'leaflet'
 import { CSSProperties, useMemo, useState } from 'react'
 import VectorBasemapLayer from 'react-esri-leaflet/plugins/VectorBasemapLayer'
-import { GeoJSON, LayersControl, MapContainer, Marker, Popup, TileLayer } from 'react-leaflet'
+import { GeoJSON, LayersControl, MapContainer, Marker, Popup, TileLayer, ZoomControl } from 'react-leaflet'
 
 // GeoJSON data
 import { featureCollection } from '../data'
@@ -14,7 +14,7 @@ import { featureCollection } from '../data'
 const zoom = 7
 const center: LatLngExpression = [52.7957, -1.5479]
 const featureNameIdentifier = 'phec16nm'
-const style: CSSProperties = { height: '75vh' }
+const defaultStyle: CSSProperties = { height: '75vh' }
 
 // Custom marker icon
 const customMarkerIcon = Leaflet.divIcon({
@@ -29,7 +29,11 @@ const customMarkerIcon = Leaflet.divIcon({
   className: '',
 })
 
-export default function Map() {
+interface MapProps {
+  style?: CSSProperties
+}
+
+export default function Map({ style }: MapProps) {
   const [clickedFeature, setClickedFeature] = useState<string | null>(null)
   const [hoveredFeature, setHoveredFeature] = useState<string | null>(null)
 
@@ -47,8 +51,9 @@ export default function Map() {
 
   const displayMap = useMemo(() => {
     return (
-      <MapContainer center={center} zoom={zoom} scrollWheelZoom style={style}>
-        <LayersControl position="topleft">
+      <MapContainer center={center} zoom={zoom} scrollWheelZoom zoomControl={false} style={style || defaultStyle}>
+        <ZoomControl position="bottomright" />
+        <LayersControl position="bottomright">
           <LayersControl.BaseLayer name="OpenStreetMaps Default" checked>
             <TileLayer
               attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
@@ -126,12 +131,12 @@ export default function Map() {
         </LayersControl>
       </MapContainer>
     )
-  }, [clickedFeature, hoveredFeature])
+  }, [clickedFeature, hoveredFeature, style])
 
   return (
     <>
-      <h3 className="govuk-heading-m mb-0">Selected region</h3>
-      <p>{clickedFeature || '-'}</p>
+      {/* <h3 className="govuk-heading-m mb-0">Selected region</h3>
+      <p>{clickedFeature || '-'}</p> */}
       {displayMap}
     </>
   )
