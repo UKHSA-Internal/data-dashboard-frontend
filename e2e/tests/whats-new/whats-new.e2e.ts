@@ -110,6 +110,36 @@ test.describe("What's new parent page", () => {
       await notFoundPage.hasPageContent()
     })
   })
+
+  test('Persists the current page number when navigating to an entry and then clicking the back button', async ({
+    app,
+    whatsNewParentPage,
+    whatsNewChildPage,
+  }) => {
+    await test.step('loads the page', async () => {
+      await whatsNewParentPage.goto('/whats-new')
+    })
+    await test.step('click "next" pagination link', async () => {
+      await app.clickPaginationNextLink()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle("What's new (page 2 of 4) | UKHSA data dashboard")
+    })
+    await test.step('opens an entry', async () => {
+      await whatsNewParentPage.openChildPage(/What's new child mock 8/)
+    })
+    await test.step('shows heading', async () => {
+      await whatsNewChildPage.hasHeading(/What's new child mock 8/)
+    })
+    await test.step('clicks back button', async () => {
+      await whatsNewChildPage.clickBackButton()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle("What's new (page 2 of 4) | UKHSA data dashboard")
+    })
+  })
 })
 
 test.describe("What's new parent page - mobile", () => {

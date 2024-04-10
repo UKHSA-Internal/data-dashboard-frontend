@@ -17,7 +17,7 @@ export class WhatsNewChildPage {
     await expect(title).toBe("What's new child | UKHSA data dashboard")
   }
 
-  async hasHeading(name: string) {
+  async hasHeading(name: string | RegExp) {
     await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
   }
 

@@ -133,14 +133,14 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
   },
   // Generate a set of random pages for testing of pagination
   ...Array.from({ length: 30 }).map<PageResponse<PageType.WhatsNewChild>>((item, index) => ({
-    id: faker.number.int() * index,
+    id: index * 1000,
     meta: {
-      seo_title: "What's new child | UKHSA data dashboard",
+      seo_title: `What's new child ${index + 1} | UKHSA data dashboard`,
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/24/',
       html_url: null,
-      slug: faker.lorem.slug(),
+      slug: `whats-new-child-mock-${index + 1}`,
       show_in_menus: false,
       first_published_at: '2023-10-24T17:22:25.297408+01:00',
       alias_of: null,
@@ -154,7 +154,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
         title: "What's new",
       },
     },
-    title: faker.company.catchPhrase(),
+    title: `What's new child mock ${index + 1}`,
     date_posted: '2023-03-05',
     body: `<p data-block-key="n411d">${faker.lorem.paragraphs()}</p>`,
     additional_details: `<p data-block-key="vsnf1">${faker.lorem.sentence()}</p>`,
