@@ -15,23 +15,21 @@ describe('useReturnPathWithParams', () => {
   }))
 
   test('should construct a return URL with returnUrl parameter if "page" is present in search params', () => {
-    const currentUrl = 'http://localhost/metrics-documentation?page=6'
-
-    mockHeaders.mockReturnValue(currentUrl)
+    mockHeaders.mockReturnValue('http://localhost/metrics-documentation?page=6')
     mockSearchParams.mockReturnValue(new URLSearchParams({ page: '6' }))
 
     const returnUrlBuilder = useReturnPathWithParams()
     const constructedUrl = returnUrlBuilder('/metrics-documentation/parainfluenza-testing-positivity-by-week')
 
     expect(constructedUrl).toBe(
-      `/metrics-documentation/parainfluenza-testing-positivity-by-week?returnUrl=${encodeURIComponent(currentUrl)}`
+      `/metrics-documentation/parainfluenza-testing-positivity-by-week?returnUrl=${encodeURIComponent(
+        '/metrics-documentation?page=6'
+      )}`
     )
   })
 
   test('should construct a return URL without returnUrl parameter if "page" is not present in search params', () => {
-    const currentUrl = 'http://localhost/metrics-documentation'
-
-    mockHeaders.mockReturnValue(currentUrl)
+    mockHeaders.mockReturnValue('http://localhost/metrics-documentation')
     mockSearchParams.mockReturnValue(new URLSearchParams())
 
     const returnUrlBuilder = useReturnPathWithParams()

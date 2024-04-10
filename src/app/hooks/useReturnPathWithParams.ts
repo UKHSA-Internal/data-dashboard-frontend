@@ -12,13 +12,13 @@ import { useSearchParams } from './useSearchParams'
 export const useReturnPathWithParams = () => {
   const searchParams = useSearchParams()
   const headersList = headers()
-  const url = headersList.get('x-url') || ''
+  const currentUrl = new URL(headersList.get('x-url') || '')
 
   return (path: string) => {
-    const newUrl = new URL(path, url)
+    const newUrl = new URL(path, currentUrl)
 
     if (searchParams.has('page')) {
-      newUrl.searchParams.set('returnUrl', encodeURI(url))
+      newUrl.searchParams.set('returnUrl', encodeURI(`${currentUrl.pathname}${currentUrl.search}`))
     }
 
     return `${newUrl.pathname}${newUrl.search}`
