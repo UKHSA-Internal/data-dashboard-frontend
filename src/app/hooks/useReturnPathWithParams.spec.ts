@@ -1,12 +1,12 @@
 import { headers } from 'next/headers'
 
-import { useReturnUrlWithParams } from './useReturnUrlWithParams'
+import { useReturnPathWithParams } from './useReturnPathWithParams'
 import { useSearchParams } from './useSearchParams'
 
 jest.mock('next/headers')
 jest.mock('./useSearchParams')
 
-describe('useReturnUrlWithParams', () => {
+describe('useReturnPathWithParams', () => {
   const mockSearchParams = jest.mocked(useSearchParams)
   const mockHeaders = jest.fn()
 
@@ -20,13 +20,11 @@ describe('useReturnUrlWithParams', () => {
     mockHeaders.mockReturnValue(currentUrl)
     mockSearchParams.mockReturnValue(new URLSearchParams({ page: '6' }))
 
-    const returnUrlBuilder = useReturnUrlWithParams()
+    const returnUrlBuilder = useReturnPathWithParams()
     const constructedUrl = returnUrlBuilder('/metrics-documentation/parainfluenza-testing-positivity-by-week')
 
     expect(constructedUrl).toBe(
-      `http://localhost/metrics-documentation/parainfluenza-testing-positivity-by-week?returnUrl=${encodeURIComponent(
-        currentUrl
-      )}`
+      `/metrics-documentation/parainfluenza-testing-positivity-by-week?returnUrl=${encodeURIComponent(currentUrl)}`
     )
   })
 
@@ -36,9 +34,9 @@ describe('useReturnUrlWithParams', () => {
     mockHeaders.mockReturnValue(currentUrl)
     mockSearchParams.mockReturnValue(new URLSearchParams())
 
-    const returnUrlBuilder = useReturnUrlWithParams()
+    const returnUrlBuilder = useReturnPathWithParams()
     const constructedUrl = returnUrlBuilder('/metrics-documentation/parainfluenza-testing-positivity-by-week')
 
-    expect(constructedUrl).toBe(`http://localhost/metrics-documentation/parainfluenza-testing-positivity-by-week`)
+    expect(constructedUrl).toBe(`/metrics-documentation/parainfluenza-testing-positivity-by-week`)
   })
 })

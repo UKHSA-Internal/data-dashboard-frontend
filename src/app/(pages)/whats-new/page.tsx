@@ -21,7 +21,7 @@ import {
 import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
-import { useReturnUrlWithParams } from '@/app/hooks/useReturnUrlWithParams'
+import { useReturnPathWithParams } from '@/app/hooks/useReturnPathWithParams'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
@@ -64,7 +64,7 @@ export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewP
 export default async function WhatsNewParentPage({ searchParams: { page } }: WhatsNewParentPageProps) {
   const { t } = await useTranslation('whatsNew')
 
-  const setReturnUrl = useReturnUrlWithParams()
+  const setReturnPath = useReturnPathWithParams()
 
   const {
     title,
@@ -189,7 +189,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
                                   <Link
                                     key={0}
                                     className="whitespace-normal"
-                                    href={setReturnUrl(`whats-new/${item.meta.slug}`)}
+                                    href={setReturnPath(`whats-new/${item.meta.slug}`)}
                                   >
                                     <span className="govuk-visually-hidden" key={1} />
                                   </Link>,
