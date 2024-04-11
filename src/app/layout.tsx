@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         </Suspense>
 
-        <header className="govuk-header" role="banner" data-module="govuk-header">
+        <header className="govuk-header" data-module="govuk-header">
           <div className="relative">
             <div className="govuk-header__container govuk-width-container">
               <div className="govuk-header__logo">
