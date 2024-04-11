@@ -15,7 +15,6 @@ export const Pagination = ({ variant, children, className }: PaginationProps) =>
       className={clsx('govuk-pagination', className, {
         'govuk-pagination--block': variant === 'block',
       })}
-      role="navigation"
       aria-label="Pagination"
     >
       {children}

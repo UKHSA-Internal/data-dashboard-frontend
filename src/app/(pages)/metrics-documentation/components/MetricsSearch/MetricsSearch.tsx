@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
-import { useDebounce } from 'usehooks-ts'
+import { useDebounceValue } from 'usehooks-ts'
 
 import { useTranslation } from '@/app/i18n/client'
 
@@ -20,7 +20,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
 
   const [searchValue, setSearchValue] = useState(value)
 
-  const debouncedSearch = useDebounce(searchValue, DEBOUNCE_MILLISECONDS)
+  const [debouncedSearch] = useDebounceValue(searchValue, DEBOUNCE_MILLISECONDS)
 
   const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
     setSearchValue(event.currentTarget.value)
