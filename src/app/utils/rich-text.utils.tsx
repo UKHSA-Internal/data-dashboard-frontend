@@ -95,7 +95,7 @@ export const linkedHeadingsComponents: Components = {
   nav: ({ children, className }) => {
     if (className?.includes('toc')) {
       return (
-        <nav role="navigation" aria-label="Contents" className="govuk-!-margin-bottom-5">
+        <nav aria-label="Contents" className="govuk-!-margin-bottom-5">
           <h2 className="govuk-body-m govuk-!-margin-bottom-1">Contents</h2>
           {children}
         </nav>

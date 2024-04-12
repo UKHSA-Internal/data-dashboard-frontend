@@ -8,13 +8,7 @@ interface FooterProps extends HTMLProps<HTMLElement> {
 
 export const Footer = forwardRef<HTMLElement, FooterProps>(({ className, ...rest }, ref) => {
   return (
-    <footer
-      ref={ref}
-      className={clsx('govuk-footer', className)}
-      role="contentinfo"
-      data-module="govuk-Footer"
-      {...rest}
-    >
+    <footer ref={ref} className={clsx('govuk-footer', className)} data-module="govuk-Footer" {...rest}>
       <div className="govuk-width-container ">
         <div className="govuk-footer__meta">
           <div className="govuk-footer__meta-item govuk-footer__meta-item--grow">

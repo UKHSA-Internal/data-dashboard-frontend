@@ -61,7 +61,7 @@ export class MetricsParentPage {
     await this.page.getByRole('link', { name: 'Clear' }).click()
   }
 
-  async openChildPage(name: string) {
+  async openChildPage(name: string | RegExp) {
     await this.page.getByText(name).click()
   }
 }

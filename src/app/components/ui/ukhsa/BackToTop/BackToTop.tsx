@@ -31,7 +31,7 @@ export const BackToTop = ({ label, href = '#main-content', className }: BackToTo
       }}
     >
       <div
-        className="govuk-!-margin-right-2 h-[16px] w-[16px] bg-back_to_top bg-center bg-no-repeat"
+        className="govuk-!-margin-right-2 size-[16px] bg-back_to_top bg-center bg-no-repeat"
         aria-hidden
         data-testid="up-arrow"
       />
