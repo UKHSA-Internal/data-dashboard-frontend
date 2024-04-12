@@ -1,10 +1,4 @@
-import fetchRetry, { RequestInitRetryParams } from 'fetch-retry'
-
-import { logger } from '@/lib/logger'
-
 import { getApiBaseUrl } from '../requests/helpers'
-
-const fetch = fetchRetry(global.fetch)
 
 interface Options {
   body?: unknown
@@ -25,16 +19,9 @@ export function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const fetchOptions: RequestInitRetryParams & Record<string, unknown> = {
+  const fetchOptions: Record<string, unknown> = {
     retries: 3,
     method: body ? 'POST' : 'GET',
-    retryOn(attempt, error, response) {
-      if (response?.status === 504 && attempt < 3) {
-        logger.info(`504 gateway timeout - ${endpoint} - ${JSON.stringify(body)}`)
-        return true
-      }
-      return false
-    },
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     headers: {
