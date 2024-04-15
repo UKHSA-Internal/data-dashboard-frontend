@@ -10,6 +10,7 @@ import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components
 
 import {
   AreaSelectorLoader,
+  ButtonExternal,
   ButtonInternal,
   Chart,
   ChartRowCard,
@@ -17,7 +18,6 @@ import {
   CodeBlock,
   Download,
   DownloadButton,
-  DownloadButtonExternal,
   Headline,
   Percentage,
   RichText,
@@ -191,7 +191,7 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'external_button' && (
-      <DownloadButtonExternal
+      <ButtonExternal
         label={value.text}
         href={value.url}
         icon={value.icon}

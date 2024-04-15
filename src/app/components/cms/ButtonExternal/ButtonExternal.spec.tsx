@@ -1,10 +1,10 @@
 import { render, screen } from '@testing-library/react'
 import { ComponentProps } from 'react'
 
-import { DownloadButtonExternal } from './DownloadButtonExternal'
+import { ButtonExternal } from './ButtonExternal'
 
-describe('DownloadButtonExternal', () => {
-  const props: ComponentProps<typeof DownloadButtonExternal> = {
+describe('ButtonExternal', () => {
+  const props: ComponentProps<typeof ButtonExternal> = {
     label: 'Download',
     href: 'http://mockurl/an/external/asset.zip',
     type: 'primary',
@@ -12,7 +12,7 @@ describe('DownloadButtonExternal', () => {
   }
 
   test('renders a link with an href styled as a primary button', async () => {
-    render(await DownloadButtonExternal(props))
+    render(await ButtonExternal(props))
 
     const button = screen.getByRole('link', { name: 'Download (Opens in a new tab)' })
     expect(button).toHaveAttribute('href', props.href)
@@ -20,7 +20,7 @@ describe('DownloadButtonExternal', () => {
   })
 
   test('renders a link with an href styled as a secondary button', async () => {
-    render(await DownloadButtonExternal({ ...props, type: 'secondary' }))
+    render(await ButtonExternal({ ...props, type: 'secondary' }))
 
     const button = screen.getByRole('link', { name: 'Download (Opens in a new tab)' })
     expect(button).toHaveAttribute('href', props.href)
