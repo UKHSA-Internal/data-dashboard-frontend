@@ -1,4 +1,5 @@
 export * from './AreaSelector/AreaSelector'
+export * from './ButtonInternal/ButtonInternal'
 export * from './Chart/Chart'
 export * from './ChartEmpty/ChartEmpty'
 export * from './ChartRowCard/ChartRowCard'

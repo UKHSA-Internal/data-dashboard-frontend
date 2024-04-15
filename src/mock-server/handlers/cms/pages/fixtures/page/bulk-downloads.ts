@@ -32,6 +32,7 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
         '<p data-block-key="0od86">You can download all the data from the UKHSA data dashboard charts on this page by clicking the Download button. </p><p data-block-key="ea5ul">This is useful if you want to analyse the data using your own tools. </p><p data-block-key="cqg56">The data is available in a zip file format, which has a size of about 70 kB so it should be quick to download even on slower internet connections.</p>',
       id: '5eeefac8-ca5e-4838-b63d-3ecbbba59eed',
     },
+    // TODO: Remove once button is fully deprecated
     {
       type: 'button',
       value: {
@@ -42,6 +43,16 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
         button_type: 'DOWNLOAD',
       },
       id: 'b1b97fd7-8c46-4cf4-bab1-1a3d7ae5a912',
+    },
+    {
+      type: 'internal_button',
+      value: {
+        text: 'Download',
+        button_type: 'BULK_DOWNLOAD',
+        endpoint: '/api/bulkdownloads/v1',
+        method: 'POST',
+      },
+      id: '3b750f69-d66f-40e7-aaa4-f67289ec4bde',
     },
   ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',

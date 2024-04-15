@@ -10,6 +10,7 @@ import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components
 
 import {
   AreaSelectorLoader,
+  ButtonInternal,
   Chart,
   ChartRowCard,
   ChartRowCardHeader,
@@ -174,6 +175,17 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
         id={id}
         formats={['csv', 'json']}
         aria-label={value.text}
+        className="govuk-!-margin-bottom-6"
+      />
+    )}
+
+    {type === 'internal_button' && (
+      <ButtonInternal
+        id={id}
+        label={value.text}
+        endpoint={value.endpoint}
+        method={value.method}
+        variant={value.button_type}
         className="govuk-!-margin-bottom-6"
       />
     )}
