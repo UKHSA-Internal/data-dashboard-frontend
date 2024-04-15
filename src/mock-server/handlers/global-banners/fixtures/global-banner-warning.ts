@@ -1,4 +1,4 @@
-import { ResponseSchema } from '@/api/requests/global-banners/handlers'
+import { ResponseSchema } from '@/api/requests/global-banners/getGlobalBanners'
 
 export const globalBannerWarning: ResponseSchema = {
   'active-global-banner': {
