@@ -34,7 +34,8 @@ jest.mock('../components/cms', () => ({
     </header>
   ),
   DownloadButton: () => <div>Mocked download button</div>,
-  DownloadButtonExternal: () => <div>Mocked external download button</div>,
+  ButtonExternal: () => <div>Mocked external download button</div>,
+  ButtonInternal: () => <div>Mocked internal download button</div>,
   RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
 }))
@@ -261,6 +262,22 @@ describe('Composite block', () => {
       })
     )
     expect(screen.getByText('Mocked external download button')).toBeInTheDocument()
+  })
+
+  test('internal button', () => {
+    render(
+      renderCompositeBlock({
+        type: 'internal_button',
+        value: {
+          text: 'download (zip)',
+          button_type: 'BULK_DOWNLOAD',
+          endpoint: '/api/bulkdownloads/v1',
+          method: 'POST',
+        },
+        id: '3b750f69-d66f-40e7-aaa4-f67289ec4bde',
+      })
+    )
+    expect(screen.getByText('Mocked internal download button')).toBeInTheDocument()
   })
 
   test('code block', () => {

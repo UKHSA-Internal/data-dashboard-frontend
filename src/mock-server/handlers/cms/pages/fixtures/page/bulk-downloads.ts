@@ -33,15 +33,14 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
       id: '5eeefac8-ca5e-4838-b63d-3ecbbba59eed',
     },
     {
-      type: 'button',
+      type: 'internal_button',
       value: {
         text: 'Download',
-        loading_text: '',
+        button_type: 'BULK_DOWNLOAD',
         endpoint: '/api/bulkdownloads/v1',
         method: 'POST',
-        button_type: 'DOWNLOAD',
       },
-      id: 'b1b97fd7-8c46-4cf4-bab1-1a3d7ae5a912',
+      id: '3b750f69-d66f-40e7-aaa4-f67289ec4bde',
     },
   ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
