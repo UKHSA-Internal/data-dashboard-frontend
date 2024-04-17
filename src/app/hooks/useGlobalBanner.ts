@@ -12,7 +12,7 @@ export const useGlobalBanner = async () => {
   if (!globalBannerRequest.success) return null
 
   const {
-    data: { 'active-global-banner': globalBanner },
+    data: { active_global_banner: globalBanner },
   } = globalBannerRequest
 
   if (!globalBanner) return null

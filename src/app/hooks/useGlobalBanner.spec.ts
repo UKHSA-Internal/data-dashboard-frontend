@@ -14,7 +14,7 @@ describe('useGlobalBanner', () => {
   test('returns banner data when request is successful', async () => {
     clientMock.mockResolvedValueOnce({
       data: {
-        'active-global-banner': {
+        active_global_banner: {
           title: 'Test Banner',
           banner_type: 'Information',
           body: 'This is a test banner',
@@ -35,7 +35,7 @@ describe('useGlobalBanner', () => {
   test('returns null when no banner is active', async () => {
     clientMock.mockResolvedValueOnce({
       data: {
-        'active-global-banner': null,
+        active_global_banner: null,
       },
       status: 200,
     })

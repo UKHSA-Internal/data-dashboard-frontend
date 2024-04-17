@@ -4,7 +4,7 @@ import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 export const responseSchema = z.object({
-  'active-global-banner': z
+  active_global_banner: z
     .object({
       title: z.string(),
       body: z.string(),
