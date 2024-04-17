@@ -109,19 +109,6 @@ export const CompositeBody = z.array(
       }),
       id: z.string(),
     }),
-    // "button" type is now deprecated in favour of "internal_button" and "external_button"
-    // TODO: Remove this once all environments have switched over to the new type
-    z.object({
-      type: z.literal('button'),
-      value: z.object({
-        text: z.string(),
-        loading_text: z.string(),
-        endpoint: z.string(),
-        method: z.string(),
-        button_type: z.string(),
-      }),
-      id: z.string(),
-    }),
     z.object({
       type: z.literal('internal_button'),
       value: z.object({
