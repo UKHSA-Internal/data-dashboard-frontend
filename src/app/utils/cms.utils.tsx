@@ -17,7 +17,6 @@ import {
   ChartRowCardHeader,
   CodeBlock,
   Download,
-  DownloadButton,
   Headline,
   Percentage,
   RichText,
@@ -166,18 +165,6 @@ export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number])
 export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number]) => (
   <Fragment key={id}>
     {type === 'text' && <RichText>{value}</RichText>}
-
-    {type === 'button' && (
-      <DownloadButton
-        label={value.text}
-        endpoint={value.endpoint}
-        method={value.method}
-        id={id}
-        formats={['csv', 'json']}
-        aria-label={value.text}
-        className="govuk-!-margin-bottom-6"
-      />
-    )}
 
     {type === 'internal_button' && (
       <ButtonInternal
