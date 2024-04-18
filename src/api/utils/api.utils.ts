@@ -1,3 +1,5 @@
+import { cookies } from 'next/headers'
+
 import { getApiBaseUrl } from '../requests/helpers'
 
 interface Options {
@@ -27,6 +29,7 @@ export function client<T>(
     headers: {
       ...headers,
       ...customConfig.headers,
+      cookie: cookies().get('UKHSASwitchboard')?.value,
     },
   }
 

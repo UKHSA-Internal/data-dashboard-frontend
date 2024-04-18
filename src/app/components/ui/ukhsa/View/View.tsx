@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
@@ -11,13 +12,22 @@ interface PageProps {
   children: ReactNode
   lastUpdated?: string
   backLink?: string
+  className?: string
 }
 
-export async function View({ heading, showWelcome, children, description, lastUpdated, backLink }: PageProps) {
+export async function View({
+  heading,
+  showWelcome,
+  children,
+  description,
+  lastUpdated,
+  backLink,
+  className,
+}: PageProps) {
   const { t } = await useTranslation('common')
 
   return (
-    <div className="w-full">
+    <div className={clsx('w-full', className)}>
       {backLink && (
         <Link href={backLink} className="govuk-back-link">
           {t('backLink')}

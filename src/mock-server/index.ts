@@ -1,5 +1,6 @@
 import 'module-alias/register'
 
+import cookieParser from 'cookie-parser'
 import { addAliases } from 'module-alias'
 
 declare global {
@@ -37,6 +38,7 @@ const app = express()
 
 app.use(express.urlencoded())
 app.use(express.json())
+app.use(cookieParser())
 
 // CMS endpoints
 app.get('/api/pages', pages)
