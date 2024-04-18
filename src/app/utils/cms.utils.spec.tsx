@@ -33,7 +33,6 @@ jest.mock('../components/cms', () => ({
       {children}
     </header>
   ),
-  DownloadButton: () => <div>Mocked download button</div>,
   ButtonExternal: () => <div>Mocked external download button</div>,
   ButtonInternal: () => <div>Mocked internal download button</div>,
   RichText: () => <div>Mocked richtext component</div>,
@@ -229,23 +228,6 @@ describe('Composite block', () => {
       })
     )
     expect(screen.getByText('Mocked richtext component')).toBeInTheDocument()
-  })
-
-  test('button', () => {
-    render(
-      renderCompositeBlock({
-        type: 'button',
-        value: {
-          text: 'Download',
-          loading_text: 'Downloading...',
-          endpoint: '/test',
-          method: 'POST',
-          button_type: 'DOWNLOAD',
-        },
-        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
-      })
-    )
-    expect(screen.getByText('Mocked download button')).toBeInTheDocument()
   })
 
   test('external button', () => {
