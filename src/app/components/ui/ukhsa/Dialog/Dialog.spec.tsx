@@ -90,15 +90,24 @@ describe('Dialog', () => {
     expect(screen.getByRole('dialog', { name: 'Dialog title' })).toHaveClass('w-full h-full')
   })
 
+  test('Background overlay', () => {
+    const { container } = render(
+      <Dialog defaultOpen>
+        <DialogOverlay>Nothing to see here</DialogOverlay>
+      </Dialog>
+    )
+
+    expect(container).toMatchSnapshot()
+    expect(screen.getByRole('dialog', { name: 'Dialog title' })).toBeInTheDocument()
+  })
+
   test('Custom footer', () => {
     render(
       <Dialog defaultOpen>
-        <DialogOverlay>
-          <DialogContent fullscreen>
-            {dialogHeader}
-            <DialogFooter>Dialog footer</DialogFooter>
-          </DialogContent>
-        </DialogOverlay>
+        <DialogContent fullscreen>
+          {dialogHeader}
+          <DialogFooter>Dialog footer</DialogFooter>
+        </DialogContent>
       </Dialog>
     )
 
