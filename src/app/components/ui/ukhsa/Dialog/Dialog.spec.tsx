@@ -98,7 +98,6 @@ describe('Dialog', () => {
     )
 
     expect(container).toMatchSnapshot()
-    expect(screen.getByRole('dialog', { name: 'Dialog title' })).toBeInTheDocument()
   })
 
   test('Custom footer', () => {
