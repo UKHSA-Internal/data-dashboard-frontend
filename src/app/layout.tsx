@@ -12,8 +12,9 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
+import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
@@ -22,6 +23,8 @@ export const dynamic = 'force-dynamic'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
+
+  const globalBanner = await useGlobalBanner()
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -109,6 +112,23 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </p>
           </div>
         </div>
+
+        {globalBanner ? (
+          <div className="govuk-width-container">
+            <div className="govuk-grid-row">
+              <div className="govuk-grid-column-three-quarters">
+                <Announcement
+                  heading={globalBanner.heading}
+                  variant={globalBanner.variant}
+                  className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
+                >
+                  {globalBanner.body}
+                </Announcement>
+              </div>
+            </div>
+          </div>
+        ) : null}
+
         <div className="govuk-width-container">{children}</div>
         <Footer />
       </body>
