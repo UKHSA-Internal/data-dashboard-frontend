@@ -3,7 +3,16 @@ import Link from 'next/link'
 
 import { render, screen } from '@/config/test-utils'
 
-import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, DialogTrigger } from './Dialog'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+  DialogTrigger,
+} from './Dialog'
 
 const dialogHeader = (
   <DialogHeader>
@@ -79,5 +88,20 @@ describe('Dialog', () => {
     )
 
     expect(screen.getByRole('dialog', { name: 'Dialog title' })).toHaveClass('w-full h-full')
+  })
+
+  test('Custom footer', () => {
+    render(
+      <Dialog defaultOpen>
+        <DialogOverlay>
+          <DialogContent fullscreen>
+            {dialogHeader}
+            <DialogFooter>Dialog footer</DialogFooter>
+          </DialogContent>
+        </DialogOverlay>
+      </Dialog>
+    )
+
+    expect(screen.getByText('Dialog footer')).toBeInTheDocument()
   })
 })
