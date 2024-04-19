@@ -29,21 +29,25 @@ describe('Dialog', () => {
   })
 
   test('Opening a dialog from a trigger', async () => {
-    const { container } = render(
+    render(
       <Dialog>
         <DialogTrigger>Open</DialogTrigger>
         {dialogContent}
       </Dialog>
     )
 
-    expect(container).toMatchSnapshot()
+    const triggerElement = screen.getByRole('button', { name: 'Open' })
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
+    expect(triggerElement).toHaveAttribute('aria-haspopup', 'dialog')
+    expect(triggerElement).toHaveAttribute('aria-controls', 'radix-:r0:')
+
     expect(screen.queryByRole('dialog', { name: 'Dialog title' })).not.toBeInTheDocument()
 
-    const triggerElement = screen.getByRole('button', { name: 'Open' })
     await userEvent.click(triggerElement)
 
+    expect(triggerElement).toHaveAttribute('aria-expanded', 'true')
+
     const dialog = screen.getByRole('dialog', { name: 'Dialog title' })
-    expect(dialog).toMatchSnapshot()
 
     expect(dialog).toBeInTheDocument()
     expect(screen.getByText('Dialog description')).toBeInTheDocument()
