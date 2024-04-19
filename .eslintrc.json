@@ -10,6 +10,17 @@
   ],
   "plugins": ["simple-import-sort", "unused-imports"],
   "rules": {
+    "no-restricted-imports": [
+      "error",
+      {
+        "name": "@radix-ui/react-dialog",
+        "message": "Please avoid using the @radix-ui/react-dialog package and use our built in Dialog component directly"
+      },
+      {
+        "name": "@radix-ui/react-tabs",
+        "message": "Please avoid using the @radix-ui/react-tabs package and use our built in Tabs component directly"
+      }
+    ],
     "import/no-anonymous-default-export": "off",
     "import/no-named-as-default": "off",
     "react-hooks/rules-of-hooks": ["off"],

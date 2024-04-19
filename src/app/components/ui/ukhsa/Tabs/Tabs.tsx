@@ -1,5 +1,6 @@
 'use client'
 
+// eslint-disable-next-line no-restricted-imports
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import clsx from 'clsx'
 import * as React from 'react'
