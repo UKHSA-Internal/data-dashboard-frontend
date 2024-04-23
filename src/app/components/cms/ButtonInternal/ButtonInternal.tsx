@@ -1,6 +1,7 @@
 import { HTMLProps } from 'react'
 
 import { useTranslation } from '@/app/i18n'
+import { gaTrack } from '@/app/utils/googleAnalytics.utils'
 import { downloadApiRoutePath } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
@@ -45,8 +46,14 @@ export async function ButtonInternal({ label, endpoint, method, id, variant, ...
 
   const showFileFormat = [ButtonInternalVariants.BulkDownload].includes(variant)
 
+  const trackSubmit = () => {
+    console.log(`GA event submitted: ${variant}, internal_button_form_submit, ${variant}_clicked)`)
+
+    gaTrack(variant, 'internal_button_form_submit', `${variant}_clicked`)
+  }
+
   return (
-    <form {...props} action={downloadApiRoutePath} method={method}>
+    <form {...props} action={downloadApiRoutePath} method={method} onSubmit={trackSubmit}>
       <input type="hidden" name="endpoint" value={endpoint.replace('/api/', '')} />
 
       <div className="govuk-form-group govuk-!-margin-bottom-0 govuk-!-margin-top-6">

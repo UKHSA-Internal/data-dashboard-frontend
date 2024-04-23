@@ -6,13 +6,15 @@ import { FormEvent, useId, useState } from 'react'
 import type { Chart } from '@/api/models/cms/Page'
 import { useTranslation } from '@/app/i18n/client'
 import { downloadFile } from '@/app/utils/download.utils'
+import { gaTrack } from '@/app/utils/googleAnalytics.utils'
 import { chartExportApiRoutePath } from '@/config/constants'
 
 interface DownloadFormProps {
+  uniqueId?: string
   chart: Chart
 }
 
-export function DownloadForm({ chart }: DownloadFormProps) {
+export function DownloadForm({ uniqueId, chart }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -42,6 +44,8 @@ export function DownloadForm({ chart }: DownloadFormProps) {
       const data = await res.text()
 
       if (data) downloadFile(`ukhsa-chart-download.${formData.get('format')}`, new Blob([data]))
+
+      gaTrack(uniqueId, 'download_form_submit', 'Chart download')
 
       setDownloading(false)
     } catch (error) {
