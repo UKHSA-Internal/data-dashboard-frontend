@@ -1,9 +1,8 @@
 'use client'
 
-import { HTMLProps } from 'react'
+import { HTMLProps, useState } from 'react'
 
-import { useTranslation } from '@/app/i18n'
-import { gaTrack } from '@/app/utils/googleAnalytics.utils'
+import { useTranslation } from '@/app/i18n/client'
 import { downloadApiRoutePath } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
@@ -38,8 +37,9 @@ interface ButtonInternalProps extends HTMLProps<HTMLFormElement> {
  * for the download request, the HTTP method for the request, and any additional HTML properties for the form element.
  * @returns A form element configured as a download button.
  */
-export async function ButtonInternal({ label, endpoint, method, id, variant, ...props }: ButtonInternalProps) {
-  const { t } = await useTranslation('common')
+export function ButtonInternal({ label, endpoint, method, id, variant, ...props }: ButtonInternalProps) {
+  const { t } = useTranslation('common')
+  const [fileFormatValue, setFileFormatValue] = useState('csv')
 
   if (variant !== ButtonInternalVariants.BulkDownload) {
     logger.error('Attempting to render an unsupported internal button')
@@ -48,16 +48,8 @@ export async function ButtonInternal({ label, endpoint, method, id, variant, ...
 
   const showFileFormat = [ButtonInternalVariants.BulkDownload].includes(variant)
 
-  const trackSubmit = () => {
-    gaTrack(
-      // `${variant.toLowerCase()}_form_submitted`,
-      `bulk_download_form_submitted`,
-      `json`
-    )
-  }
-
   return (
-    <form {...props} action={downloadApiRoutePath} method={method} onSubmit={trackSubmit}>
+    <form {...props} action={downloadApiRoutePath} method={method} data-tracking-file-format={fileFormatValue}>
       <input type="hidden" name="endpoint" value={endpoint.replace('/api/', '')} />
 
       <div className="govuk-form-group govuk-!-margin-bottom-0 govuk-!-margin-top-6">
@@ -77,6 +69,7 @@ export async function ButtonInternal({ label, endpoint, method, id, variant, ...
                     type="radio"
                     value={format}
                     defaultChecked={index === 0}
+                    onChange={() => setFileFormatValue(format)}
                   />
                   <label className="govuk-label govuk-radios__label" htmlFor={`format-${id}-${index}`}>
                     {t('cms.blocks.download.inputLabel', { context: format })}
