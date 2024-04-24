@@ -1,9 +1,9 @@
 'use client'
 
-import { useWeatherHealthAlertsStore } from './Store'
+import { useMapStore } from '@/app/providers/MapProvider'
 
 export const DrawerContent = () => {
-  const store = useWeatherHealthAlertsStore()
+  const selectedMapFeature = useMapStore((store) => store.selectedMapFeature)
 
-  return <h1>hi {store.selectedMapFeature && store.selectedMapFeature.id}</h1>
+  return <h1>hi {selectedMapFeature && selectedMapFeature.id}</h1>
 }

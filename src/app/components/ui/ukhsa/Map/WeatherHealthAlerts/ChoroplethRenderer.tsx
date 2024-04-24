@@ -2,20 +2,14 @@
 
 import dynamic from 'next/dynamic'
 
-import { useWeatherHealthAlertsStore } from './Store'
+import { useMapStore } from '@/app/providers/MapProvider'
 
 const Choropleth = dynamic(() => import('@/app/components/ui/ukhsa/Map/Choropleth'), {
   ssr: false,
 })
 
 export const ChoroplethRenderer = () => {
-  const store = useWeatherHealthAlertsStore()
+  const { setSelectedMapFeature } = useMapStore((state) => state)
 
-  return (
-    <Choropleth
-      onClick={(feature) => {
-        store.setSelectedMapFeature(feature)
-      }}
-    />
-  )
+  return <Choropleth onClick={setSelectedMapFeature} />
 }

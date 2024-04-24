@@ -10,6 +10,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
+import { MapStoreProvider } from '@/app/providers/MapProvider'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
@@ -110,7 +111,10 @@ export default async function RootLayout({ children, maps }: { children: React.R
           </div>
         </div>
 
-        <div className="govuk-width-container">{children}</div>
+        <MapStoreProvider>
+          <div className="govuk-width-container">{children}</div>
+        </MapStoreProvider>
+
         <Footer />
 
         {maps}
