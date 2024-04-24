@@ -26,9 +26,7 @@ export default function Form() {
   }, [state])
 
   const trackSubmit = () => {
-    console.log("GA event submitted: 'feedback_form_submitted', 'form_submit', 'feedback form submitted'")
-
-    gaTrack('feedback_form_submitted', 'form_submit', 'feedback form submitted')
+    gaTrack('feedback', 'feedback_form_submitted', 'feedback form submitted')
   }
 
   return (
