@@ -1,9 +1,9 @@
 'use client'
 
-import { useMapStore } from '@/app/providers/MapProvider'
+import { useMapContext } from '@/app/context/MapContext'
 
 export const DrawerContent = () => {
-  const selectedMapFeature = useMapStore((store) => store.selectedMapFeature)
+  const { selectedMapFeature } = useMapContext()
 
   return <h1>hi {selectedMapFeature && selectedMapFeature.id}</h1>
 }

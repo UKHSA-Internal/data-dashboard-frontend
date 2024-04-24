@@ -10,11 +10,11 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
-import { MapStoreProvider } from '@/app/providers/MapProvider'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { MapContextProvider } from './context/MapContext'
 import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
@@ -111,9 +111,9 @@ export default async function RootLayout({ children, maps }: { children: React.R
           </div>
         </div>
 
-        <MapStoreProvider>
+        <MapContextProvider>
           <div className="govuk-width-container">{children}</div>
-        </MapStoreProvider>
+        </MapContextProvider>
 
         <Footer />
 
