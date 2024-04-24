@@ -3,7 +3,6 @@
 import { HTMLProps } from 'react'
 
 import { useTranslation } from '@/app/i18n'
-import { gaTrack } from '@/app/utils/googleAnalytics.utils'
 import { downloadApiRoutePath } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
@@ -48,16 +47,8 @@ export async function ButtonInternal({ label, endpoint, method, id, variant, ...
 
   const showFileFormat = [ButtonInternalVariants.BulkDownload].includes(variant)
 
-  const trackSubmit = () => {
-    gaTrack(
-      // `${variant.toLowerCase()}_form_submitted`,
-      `bulk_download_form_submitted`,
-      `json`
-    )
-  }
-
   return (
-    <form {...props} action={downloadApiRoutePath} method={method} onSubmit={trackSubmit}>
+    <form {...props} action={downloadApiRoutePath} method={method}>
       <input type="hidden" name="endpoint" value={endpoint.replace('/api/', '')} />
 
       <div className="govuk-form-group govuk-!-margin-bottom-0 govuk-!-margin-top-6">
