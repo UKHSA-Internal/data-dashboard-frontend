@@ -4,8 +4,6 @@ import Link from 'next/link'
 import { useEffect } from 'react'
 import { useFormState } from 'react-dom'
 
-import { gaTrack } from '@/app/utils/googleAnalytics.utils'
-
 import { handler } from './utils/handler'
 
 const initialState = {
@@ -25,12 +23,8 @@ export default function Form() {
     }
   }, [state])
 
-  const trackSubmit = () => {
-    gaTrack('feedback', 'feedback_form_submitted')
-  }
-
   return (
-    <form className="govuk-grid-column-two-thirds" action={formAction} onSubmit={trackSubmit}>
+    <form className="govuk-grid-column-two-thirds" action={formAction}>
       <div className="govuk-form-group govuk-!-margin-bottom-9">
         {state.message && (
           <div className="govuk-error-summary" data-module="govuk-error-summary">
