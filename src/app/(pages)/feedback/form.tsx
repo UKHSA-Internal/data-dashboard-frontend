@@ -26,7 +26,7 @@ export default function Form() {
   }, [state])
 
   const trackSubmit = () => {
-    gaTrack('feedback', 'feedback_form_submitted', 'feedback form submitted')
+    gaTrack('feedback', 'feedback_form_submitted')
   }
 
   return (

@@ -1,10 +1,10 @@
-import ReactGA from 'react-ga4'
+import { sendGTMEvent } from '@next/third-parties/google'
 
 /**
  * Fire a google analytics tracking event
  */
-export function gaTrack(category: string, action: string, label: string) {
-  console.log(`firing GA event: ${category} ${action} ${label}`)
+export function gaTrack(event: string, value: string) {
+  console.log(`firing GA event: ${event} ${value}`)
 
-  ReactGA.event({ category, action, label })
+  sendGTMEvent({ event, value })
 }

@@ -19,6 +19,7 @@
   },
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
+    "@next/third-parties": "^14.2.2",
     "@radix-ui/react-tabs": "^1.0.4",
     "clsx": "^2.1.0",
     "cookies-next": "^4.1.1",

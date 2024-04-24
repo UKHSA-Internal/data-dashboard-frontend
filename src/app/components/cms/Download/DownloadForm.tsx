@@ -45,7 +45,7 @@ export function DownloadForm({ uniqueId, chart }: DownloadFormProps) {
 
       if (data) downloadFile(`ukhsa-chart-download.${formData.get('format')}`, new Blob([data]))
 
-      gaTrack('download_form_submit', `unique_id_${uniqueId ?? ''}`, 'Chart download')
+      gaTrack('chart_card_download', `${uniqueId ?? ''}`)
 
       setDownloading(false)
     } catch (error) {

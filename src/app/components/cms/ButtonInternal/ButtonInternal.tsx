@@ -49,7 +49,11 @@ export async function ButtonInternal({ label, endpoint, method, id, variant, ...
   const showFileFormat = [ButtonInternalVariants.BulkDownload].includes(variant)
 
   const trackSubmit = () => {
-    gaTrack('internal_button_form_submit', `${variant}_form_submitted`, `${variant}_clicked`)
+    gaTrack(
+      // `${variant.toLowerCase()}_form_submitted`,
+      `bulk_download_form_submitted`,
+      `json`
+    )
   }
 
   return (

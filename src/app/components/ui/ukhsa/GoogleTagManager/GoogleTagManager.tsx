@@ -1,3 +1,4 @@
+import { GoogleTagManager as GTMNext } from '@next/third-parties/google'
 import Script from 'next/script'
 import { Suspense } from 'react'
 
@@ -10,6 +11,7 @@ export const GoogleTagManager = () => {
 
   return (
     <>
+      <GTMNext gtmId={GTM_ID} />
       <Script id="google-tag-manager" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
