@@ -13,7 +13,7 @@ interface DownloadProps {
   data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
 }
 
-export async function Download({ data: { chart, y_axis, x_axis, title } }: DownloadProps) {
+export async function Download({ data: { chart, y_axis, x_axis } }: DownloadProps) {
   const pathname = usePathname()
   const [areaType, areaName] = useAreaSelector()
 
@@ -33,7 +33,6 @@ export async function Download({ data: { chart, y_axis, x_axis, title } }: Downl
   if (tableResponse.success) {
     return (
       <DownloadForm
-        uniqueId={title}
         chart={chart.map((plot) => ({
           ...plot,
           value: {

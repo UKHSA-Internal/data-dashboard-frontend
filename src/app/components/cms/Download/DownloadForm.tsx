@@ -9,11 +9,10 @@ import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath } from '@/config/constants'
 
 interface DownloadFormProps {
-  uniqueId?: string
   chart: Chart
 }
 
-export function DownloadForm({ uniqueId, chart }: DownloadFormProps) {
+export function DownloadForm({ chart }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
