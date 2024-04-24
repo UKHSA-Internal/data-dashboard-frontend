@@ -6,7 +6,6 @@ import { FormEvent, useId, useState } from 'react'
 import type { Chart } from '@/api/models/cms/Page'
 import { useTranslation } from '@/app/i18n/client'
 import { downloadFile } from '@/app/utils/download.utils'
-import { gaTrack } from '@/app/utils/googleAnalytics.utils'
 import { chartExportApiRoutePath } from '@/config/constants'
 
 interface DownloadFormProps {
@@ -44,8 +43,6 @@ export function DownloadForm({ uniqueId, chart }: DownloadFormProps) {
       const data = await res.text()
 
       if (data) downloadFile(`ukhsa-chart-download.${formData.get('format')}`, new Blob([data]))
-
-      gaTrack('chart_card_download', `${uniqueId ?? ''}`)
 
       setDownloading(false)
     } catch (error) {
