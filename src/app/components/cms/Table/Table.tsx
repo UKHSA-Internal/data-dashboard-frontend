@@ -12,6 +12,7 @@ import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+import { RichText } from '../RichText/RichText'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */
@@ -61,7 +62,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
-          <p className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</p>
+          <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
           <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
         </caption>
 
@@ -69,7 +70,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
           {groups.map(({ columns, data }, groupIndex) => {
             return (
               <Fragment key={groupIndex}>
-                <tr className="govuk-table__row sticky top-0 bg-grey-3 js:top-[-30px]">
+                <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
                   {columns.map((column, columnIndex) => {
                     incrementingColumnId += 1
                     return (

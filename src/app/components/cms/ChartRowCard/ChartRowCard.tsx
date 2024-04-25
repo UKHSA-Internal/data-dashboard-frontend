@@ -1,7 +1,7 @@
 'use client'
 import { useSearchParams } from 'next/navigation'
 import { ReactNode, useEffect, useRef } from 'react'
-import { useDebounce, useWindowSize } from 'usehooks-ts'
+import { useDebounceValue, useWindowSize } from 'usehooks-ts'
 
 interface ChartRowCardProps {
   children: ReactNode
@@ -110,7 +110,7 @@ export function ChartRowCard({ children }: ChartRowCardProps) {
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useWindowSize()
   const searchParams = useSearchParams()
-  const debouncedWidth = useDebounce(width, DEBOUNCE_MILLISECONDS)
+  const [debouncedWidth] = useDebounceValue(width, DEBOUNCE_MILLISECONDS)
 
   useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)

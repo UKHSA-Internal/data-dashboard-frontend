@@ -145,6 +145,36 @@ test.describe('Metrics parent page', () => {
       await metricsParentPage.countMetricsItems(10)
     })
   })
+
+  test('Persists the current page number when navigating to an entry and then clicking the back button', async ({
+    app,
+    metricsParentPage,
+    metricsChildPage,
+  }) => {
+    await test.step('loads the page', async () => {
+      await metricsParentPage.goto()
+    })
+    await test.step('click "next" pagination link', async () => {
+      await app.clickPaginationNextLink()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
+    })
+    await test.step('opens an entry', async () => {
+      await metricsParentPage.openChildPage(/Metrics child mock 6/)
+    })
+    await test.step('shows heading', async () => {
+      await metricsChildPage.hasHeading(/Metrics child mock 6/)
+    })
+    await test.step('clicks back button', async () => {
+      await metricsChildPage.clickBackButton()
+    })
+    await test.step('shows page 2', async () => {
+      await app.checkPaginationLinkIsActive(2)
+      await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
+    })
+  })
 })
 
 test.describe('Metrics parent page - no JS', () => {

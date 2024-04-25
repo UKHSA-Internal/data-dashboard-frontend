@@ -33,7 +33,7 @@ export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
             </SideNavLink>
           ))}
         </SideNav>
-        <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content" role="main">
+        <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
           {children}
         </main>
       </div>

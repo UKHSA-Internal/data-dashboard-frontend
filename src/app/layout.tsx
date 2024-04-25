@@ -12,9 +12,10 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
+import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { MapContextProvider } from './context/MapContext'
+import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
@@ -23,6 +24,8 @@ export const dynamic = 'force-dynamic'
 export default async function RootLayout({ children, maps }: { children: React.ReactNode; maps: React.ReactNode }) {
   const menu = await useMenu()
   const { t } = await useTranslation('common')
+
+  const globalBanner = await useGlobalBanner()
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -48,7 +51,7 @@ export default async function RootLayout({ children, maps }: { children: React.R
           />
         </Suspense>
 
-        <header className="govuk-header" role="banner" data-module="govuk-header">
+        <header className="govuk-header" data-module="govuk-header">
           <div className="relative">
             <div className="govuk-header__container govuk-width-container">
               <div className="govuk-header__logo">
@@ -110,6 +113,22 @@ export default async function RootLayout({ children, maps }: { children: React.R
             </p>
           </div>
         </div>
+
+        {globalBanner ? (
+          <div className="govuk-width-container">
+            <div className="govuk-grid-row">
+              <div className="govuk-grid-column-three-quarters">
+                <Announcement
+                  heading={globalBanner.heading}
+                  variant={globalBanner.variant}
+                  className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
+                >
+                  {globalBanner.body}
+                </Announcement>
+              </div>
+            </div>
+          </div>
+        ) : null}
 
         <MapContextProvider>
           <div className="govuk-width-container">{children}</div>

@@ -10,13 +10,13 @@ import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components
 
 import {
   AreaSelectorLoader,
+  ButtonExternal,
+  ButtonInternal,
   Chart,
   ChartRowCard,
   ChartRowCardHeader,
   CodeBlock,
   Download,
-  DownloadButton,
-  DownloadButtonExternal,
   Headline,
   Percentage,
   RichText,
@@ -166,20 +166,19 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
   <Fragment key={id}>
     {type === 'text' && <RichText>{value}</RichText>}
 
-    {type === 'button' && (
-      <DownloadButton
+    {type === 'internal_button' && (
+      <ButtonInternal
+        id={id}
         label={value.text}
         endpoint={value.endpoint}
         method={value.method}
-        id={id}
-        formats={['csv', 'json']}
-        aria-label={value.text}
+        variant={value.button_type}
         className="govuk-!-margin-bottom-6"
       />
     )}
 
     {type === 'external_button' && (
-      <DownloadButtonExternal
+      <ButtonExternal
         label={value.text}
         href={value.url}
         icon={value.icon}

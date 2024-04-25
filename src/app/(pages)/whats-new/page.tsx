@@ -21,6 +21,7 @@ import {
 import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
+import { useReturnPathWithParams } from '@/app/hooks/useReturnPathWithParams'
 import { useTranslation } from '@/app/i18n'
 import { logger } from '@/lib/logger'
 
@@ -62,6 +63,8 @@ export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewP
 
 export default async function WhatsNewParentPage({ searchParams: { page } }: WhatsNewParentPageProps) {
   const { t } = await useTranslation('whatsNew')
+
+  const setReturnPath = useReturnPathWithParams()
 
   const {
     title,
@@ -183,7 +186,11 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
                                 i18nKey="entryTitle"
                                 t={t}
                                 components={[
-                                  <Link key={0} className="whitespace-normal" href={`whats-new/${item.meta.slug}`}>
+                                  <Link
+                                    key={0}
+                                    className="whitespace-normal"
+                                    href={setReturnPath(`whats-new/${item.meta.slug}`)}
+                                  >
                                     <span className="govuk-visually-hidden" key={1} />
                                   </Link>,
                                 ]}
@@ -211,6 +218,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
           {pages.length > 0 && (
             <Pagination variant="list-item" className="govuk-!-margin-top-8">
               {previousPageHref && <PaginationPrevious variant="list-item" href={previousPageHref} />}
+
               <PaginationListItems>
                 {pages.map(({ page, href }) => (
                   <PaginationListItem key={page} href={href} current={currentPage === page}>

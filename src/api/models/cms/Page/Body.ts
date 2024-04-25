@@ -110,13 +110,12 @@ export const CompositeBody = z.array(
       id: z.string(),
     }),
     z.object({
-      type: z.literal('button'),
+      type: z.literal('internal_button'),
       value: z.object({
         text: z.string(),
-        loading_text: z.string(),
+        button_type: z.enum(['BULK_DOWNLOAD']),
         endpoint: z.string(),
-        method: z.string(),
-        button_type: z.string(),
+        method: z.enum(['POST', 'GET']),
       }),
       id: z.string(),
     }),

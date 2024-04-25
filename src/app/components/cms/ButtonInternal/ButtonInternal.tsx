@@ -1,9 +1,18 @@
-import { HTMLProps } from 'react'
+'use client'
 
-import { useTranslation } from '@/app/i18n'
+import { HTMLProps, useState } from 'react'
+
+import { useTranslation } from '@/app/i18n/client'
 import { downloadApiRoutePath } from '@/config/constants'
+import { logger } from '@/lib/logger'
 
-interface DownloadButtonProps extends HTMLProps<HTMLFormElement> {
+export const ButtonInternalVariants = {
+  BulkDownload: 'BULK_DOWNLOAD',
+} as const
+
+const FILE_FORMATS = ['csv', 'json']
+
+interface ButtonInternalProps extends HTMLProps<HTMLFormElement> {
   /** The text to display on the download button. */
   label: string
   /** The specific endpoint to which the download request will be sent. */
@@ -12,15 +21,15 @@ interface DownloadButtonProps extends HTMLProps<HTMLFormElement> {
   method: string
   /** The unique identifier to make this download button distinct from others. */
   id: string
-  /** A list of supported file formats for the user to choose from. When no formats are provided, it falls back to a default  */
-  formats?: string[]
+  /** The variant of button specified in by the content creator */
+  variant: string | (typeof ButtonInternalVariants)[keyof typeof ButtonInternalVariants]
 }
 
 /**
- * A React component that renders a button for downloading content. This component creates a form that, when submitted,
- * sends a request to a specified endpoint via a proxy API route.
+ * A React Server component that renders a form and submit button for the purpose of (currently) downloading content.
+ * When submitted, the form sends a request to a specified endpoint via a generic proxy-like NextJs API route.
  *
- * The form includes hidden fields for specifying the file format and endpoint.. This approach
+ * The form includes hidden fields for specifying the file format and endpoint. This approach
  * allows for a clean and scalable implementation of a download functionality that is integrated with the application's
  * backend architecture.
  *
@@ -28,22 +37,30 @@ interface DownloadButtonProps extends HTMLProps<HTMLFormElement> {
  * for the download request, the HTTP method for the request, and any additional HTML properties for the form element.
  * @returns A form element configured as a download button.
  */
-export async function DownloadButton({ label, endpoint, method, id, formats, ...props }: DownloadButtonProps) {
-  const { t } = await useTranslation('common')
+export function ButtonInternal({ label, endpoint, method, id, variant, ...props }: ButtonInternalProps) {
+  const { t } = useTranslation('common')
+  const [fileFormatValue, setFileFormatValue] = useState('csv')
+
+  if (variant !== ButtonInternalVariants.BulkDownload) {
+    logger.error('Attempting to render an unsupported internal button')
+    return null
+  }
+
+  const showFileFormat = [ButtonInternalVariants.BulkDownload].includes(variant)
 
   return (
-    <form {...props} action={downloadApiRoutePath} method={method}>
+    <form {...props} action={downloadApiRoutePath} method={method} data-tracking-file-format={fileFormatValue}>
       <input type="hidden" name="endpoint" value={endpoint.replace('/api/', '')} />
 
       <div className="govuk-form-group govuk-!-margin-bottom-0 govuk-!-margin-top-6">
-        {formats && formats?.length > 1 && (
+        {showFileFormat && (
           <fieldset className="govuk-fieldset">
             <legend className="govuk-fieldset__legend govuk-fieldset__legend--m sr-only">
               <div className="govuk-fieldset__heading">{t('cms.blocks.download.heading')}</div>
             </legend>
             <div className="govuk-hint">{t('cms.blocks.download.hint')}</div>
             <div className="govuk-radios govuk-radios--small govuk-radios--inline">
-              {formats.map((format, index) => (
+              {FILE_FORMATS.map((format, index) => (
                 <div key={format} className="govuk-radios__item">
                   <input
                     className="govuk-radios__input"
@@ -52,6 +69,7 @@ export async function DownloadButton({ label, endpoint, method, id, formats, ...
                     type="radio"
                     value={format}
                     defaultChecked={index === 0}
+                    onChange={() => setFileFormatValue(format)}
                   />
                   <label className="govuk-label govuk-radios__label" htmlFor={`format-${id}-${index}`}>
                     {t('cms.blocks.download.inputLabel', { context: format })}

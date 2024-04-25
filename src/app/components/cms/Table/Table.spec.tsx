@@ -105,7 +105,7 @@ const mockData: ComponentProps<typeof Table>['data'] = {
   y_axis: 'y-axis',
   x_axis: 'x-axis',
   headline_number_columns: [],
-  title: 'Table Title',
+  title: 'Table Title ABC/XYZ',
   body: 'Table Body',
 }
 
@@ -115,7 +115,7 @@ test('table with caption and headers', async () => {
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
   expect(
-    getByRole('table', { name: 'Table Title data for table Body Up to and including 10 May 2023' })
+    getByRole('table', { name: 'Table Title ABC/XYZ data for table Body Up to and including 10 May 2023' })
   ).toBeInTheDocument()
 
   const headers = getAllByRole('columnheader')
@@ -127,7 +127,7 @@ test('table with row data', async () => {
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
   expect(
-    getByRole('table', { name: 'Table Title data for table Body Up to and including 10 May 2023' })
+    getByRole('table', { name: 'Table Title ABC/XYZ data for table Body Up to and including 10 May 2023' })
   ).toBeInTheDocument()
 
   const cells = getAllByRole('cell')
@@ -152,7 +152,7 @@ test('table api request fails displays a fallback message', async () => {
   )
 
   expect(
-    queryByRole('table', { name: 'Table Title data for table Body Up to and including 10 May 2023' })
+    queryByRole('table', { name: 'Table Title ABC/XYZ data for table Body Up to and including 10 May 2023' })
   ).not.toBeInTheDocument()
 
   expect(getByText('No data available in North East')).toBeInTheDocument()
@@ -220,7 +220,7 @@ test('table by geography and geography type when both are present in the url sea
   })
 
   expect(
-    getByRole('table', { name: 'Table Title data for table Body Up to and including 10 May 2023' })
+    getByRole('table', { name: 'Table Title ABC/XYZ data for table Body Up to and including 10 May 2023' })
   ).toBeInTheDocument()
 
   const cells = getAllByRole('cell')

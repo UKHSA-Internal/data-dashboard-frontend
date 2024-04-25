@@ -1,5 +1,6 @@
 'use client'
 
+// eslint-disable-next-line no-restricted-imports
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import clsx from 'clsx'
 import * as React from 'react'
@@ -46,9 +47,9 @@ const TabsTrigger = React.forwardRef<
     tabIndex={0}
     className={clsx(
       'no-js:govuk-dash js:[&:focus>span]:govuk-focus govuk-link govuk-link--no-visited-state govuk-body js:text-black js:shadow-none js:hover:text-black [&:last-child]:mr-0',
-      'relative float-left ml-0 text-center js:mb-0 js:mr-[5px] js:bg-light-grey js:px-[8px] js:py-[10px] no-js:clear-both no-js:mb-2 js:sm:px-[15px] js:sm:py-[10px] js:lg:px-[20px]',
+      'relative float-left ml-0 text-center js:mb-0 js:mr-1 js:bg-light-grey js:px-[8px] js:py-2 no-js:clear-both no-js:mb-2 js:sm:px-3 js:sm:py-2 js:lg:px-4',
       'js:data-[state=active]:px-[7px] js:data-[state=active]:pb-[16px] js:data-[state=active]:pt-[14px] js:sm:data-[state=active]:px-[14px] js:sm:data-[state=active]:pb-[16px] js:sm:data-[state=active]:pt-[14px] js:lg:data-[state=active]:px-[19px]',
-      'js:data-[state=active]:mb-[-1px] js:data-[state=active]:mt-[-5px] js:data-[state=active]:border js:data-[state=active]:border-b-0 js:data-[state=active]:border-mid-grey js:data-[state=active]:bg-white js:data-[state=active]:no-underline',
+      'js:data-[state=active]:-mt-1 js:data-[state=active]:mb-[-1px] js:data-[state=active]:border js:data-[state=active]:border-b-0 js:data-[state=active]:border-mid-grey js:data-[state=active]:bg-white js:data-[state=active]:no-underline',
       className
     )}
     {...props}

@@ -343,14 +343,14 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
 
   // Generate a set of random pages for testing of pagination
   ...Array.from({ length: 50 }).map<PageResponse<PageType.MetricsChild>>((item, index) => ({
-    id: faker.number.int() * index,
+    id: index * 2000,
     meta: {
-      seo_title: 'Metrics child | UKHSA data dashboard',
+      seo_title: `Metrics child ${index + 1} | UKHSA data dashboard`,
       search_description: '',
       type: 'metrics_documentation.MetricsDocumentationChildEntry',
       detail_url: 'http://localhost/api/pages/29/',
       html_url: null,
-      slug: faker.lorem.slug(),
+      slug: `metrics-child-mock-${index + 1}`,
       show_in_menus: false,
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
@@ -366,7 +366,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     },
     page_description: faker.lorem.paragraph(),
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
-    title: faker.lorem.words(),
+    title: `Metrics child mock ${index + 1}`,
     date_posted: '2023-12-07',
     metric: 'new_pcr_tests_daily',
     topic: sample(['COVID-19', 'Influenza']) || 'COVID-19',
