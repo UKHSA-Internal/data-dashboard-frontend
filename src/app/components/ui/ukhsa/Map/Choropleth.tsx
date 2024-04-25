@@ -1,8 +1,9 @@
 'use client'
 
-import { LeafletMouseEvent } from 'leaflet'
-import { ComponentProps, useState } from 'react'
-import { GeoJSON } from 'react-leaflet'
+import Leaflet, { LeafletMouseEvent } from 'leaflet'
+import { useQueryState } from 'nuqs'
+import { ComponentProps, useCallback, useRef } from 'react'
+import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { Feature, featureCollection, FeatureProperties } from './geojson/ukhsa-regions'
 
@@ -19,7 +20,7 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
   /**
    * Optional callback prop that fires when individual features are clicked.
    */
-  onClick?: (feature: Feature) => void
+  onClick?: (feature: Feature | null) => void
 }
 
 interface CustomLeafletEvent extends LeafletMouseEvent {
@@ -35,76 +36,109 @@ interface CustomLeafletEvent extends LeafletMouseEvent {
  * All props supported by the GeoJSON component are also supported by Choropleth.
  */
 const Choropleth = ({ data, onClick, ...rest }: ChoroplethProps) => {
-  const [clickedFeature, setClickedFeature] = useState<Feature | null>()
-  const [hoveredFeature, setHoveredFeature] = useState<Feature | null>()
+  const [selectedFeatureId, setFeatureIdUrlParam] = useQueryState('fid')
+
+  // TODO: Progamatically set styles instead of useState
+  // const [hoveredFeature, setHoveredFeature] = useState<Feature | null>()
+  const hoveredFeatureRef = useRef<Feature | null>()
 
   const handleClick = (event: CustomLeafletEvent) => {
-    const feature = event.target.feature
-    setClickedFeature(feature)
-    onClick?.(feature)
+    // Prevent map click events from firing
+    Leaflet.DomEvent.stopPropagation(event)
+
+    setFeatureIdUrlParam((featureId) => {
+      const feature = event.target.feature
+      if (feature.id == featureId) {
+        // Clicked same feature
+        onClick?.(null)
+        return null
+      } else {
+        // Clicked new feature
+        onClick?.(feature)
+        return feature.id ? String(feature.id) : null
+      }
+    })
   }
 
   const handleMouseOver = (event: CustomLeafletEvent) => {
     const feature = event.target.feature
-    setHoveredFeature(feature)
+    hoveredFeatureRef.current = feature
+    // setHoveredFeature(feature)
   }
 
   const handleMouseOut = () => {
-    setHoveredFeature(null)
+    // setHoveredFeature(null)
+    hoveredFeatureRef.current = null
   }
 
+  const MapEvents = useCallback(() => {
+    useMapEvents({
+      click() {
+        if (selectedFeatureId) {
+          onClick?.(null)
+          setFeatureIdUrlParam(null)
+        }
+      },
+    })
+    return null
+  }, [onClick, selectedFeatureId, setFeatureIdUrlParam])
+
   return (
-    <GeoJSON
-      data={data ?? featureCollection}
-      onEachFeature={(feature, layer) => {
-        layer.on({
-          click: handleClick,
-          mouseover: handleMouseOver,
-          mouseout: handleMouseOut,
-        })
-      }}
-      style={(feature) => {
-        if (!feature || !feature.properties) return {}
+    <>
+      <MapEvents />
+      <GeoJSON
+        data={data ?? featureCollection}
+        onEachFeature={(feature, layer) => {
+          console.log('layer', layer)
+          layer.on({
+            click: handleClick,
+            mouseover: handleMouseOver,
+            mouseout: handleMouseOut,
+          })
+        }}
+        style={(feature) => {
+          if (!feature || !feature.properties) return {}
 
-        const properties = feature.properties as FeatureProperties
+          const properties = feature.properties as FeatureProperties
 
-        const featureId = feature.id
-        const isHovered = hoveredFeature?.id === featureId
-        const isClicked = clickedFeature?.id === featureId
+          const featureId = feature.id
+          const isHovered = hoveredFeatureRef.current?.id === featureId
+          const isClicked = selectedFeatureId == featureId
 
-        const fillOpacity = isClicked ? 0.85 : isHovered ? 0.65 : 0.55
-        const className = 'transition-all duration-200'
+          const fillOpacity = isClicked ? 0.85 : isHovered ? 0.65 : 0.55
+          const className = 'transition-all duration-200'
 
-        switch (properties.phec16nm) {
-          case 'North East':
-          case 'North West':
-            return {
-              weight: 1,
-              color: 'white',
-              fillColor: 'var(--colour-red)',
-              fillOpacity,
-              className,
-            }
-          case 'East of England':
-          case 'London':
-            return {
-              weight: 1,
-              color: 'white',
-              fillColor: 'var(--colour-orange)',
-              fillOpacity,
-              className,
-            }
-        }
-        return {
-          weight: 1,
-          color: 'white',
-          fillColor: 'var(--colour-green)',
-          fillOpacity,
-          className,
-        }
-      }}
-      {...rest}
-    />
+          switch (properties.phec16nm) {
+            case 'North East':
+            case 'North West':
+              return {
+                weight: 1,
+                color: 'white',
+                fillColor: 'var(--colour-red)',
+                fillOpacity,
+                className,
+              }
+            case 'East of England':
+            case 'London':
+              return {
+                weight: 1,
+                color: 'white',
+                fillColor: 'var(--colour-orange)',
+                fillOpacity,
+                className,
+              }
+          }
+          return {
+            weight: 1,
+            color: 'white',
+            fillColor: 'var(--colour-green)',
+            fillOpacity,
+            className,
+          }
+        }}
+        {...rest}
+      />
+    </>
   )
 }
 

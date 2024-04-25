@@ -9,7 +9,7 @@ export type MapState = {
 }
 
 export type MapActions = {
-  setSelectedMapFeature: (feature: Feature) => void
+  setSelectedMapFeature: (feature: Feature | null) => void
 }
 
 export type MapContextType = MapState & MapActions
