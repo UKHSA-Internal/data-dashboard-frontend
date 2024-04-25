@@ -41,7 +41,7 @@ interface MapProps {
 }
 
 const Map = ({ children, className, options: { zoomControlPosition, ...options } = mapDefaults }: MapProps) => (
-  <MapContainer {...options} className={clsx('h-[50vh]', className)} zoomControl={false}>
+  <MapContainer {...options} className={clsx('h-screen', className)} zoomControl={false}>
     <ZoomControl position={zoomControlPosition} />
     {children}
   </MapContainer>
