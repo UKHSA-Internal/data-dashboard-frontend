@@ -46,6 +46,7 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const setChartCardTabSize = (row: HTMLDivElement | null, width: number) => {
   // exit early if there's no columns
   if (!row || !row.hasChildNodes()) {
@@ -114,7 +115,8 @@ export function ChartRowCard({ children }: ChartRowCardProps) {
 
   useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)
-    setChartCardTabSize(ref.current, debouncedWidth)
+    // TODO: Investigate bug in CDD-1929
+    // setChartCardTabSize(ref.current, debouncedWidth)
   }, [ref, debouncedWidth, searchParams])
 
   return (
