@@ -120,10 +120,12 @@ const MapChoropleth = <T extends LayerWithFeature>({
           })
         },
         mouseover: () => {
+          // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
           layer.setStyle({ fillOpacity: theme.hover.fillOpacity })
         },
         mouseout: () => {
+          // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
           layer.setStyle({ fillOpacity: theme.fillOpacity })
         },
@@ -131,6 +133,7 @@ const MapChoropleth = <T extends LayerWithFeature>({
     },
   }
 
+  // Setup map click events for interactions outside of the geojson features
   const MapEvents = useCallback(() => {
     useMapEvents({
       click() {
