@@ -121,7 +121,7 @@ const MapChoropleth = <T extends LayerWithFeature>({
         },
         mouseover: () => {
           if (clickedFeatureIdRef.current === layer.feature.id) return
-          layer.setStyle({ fillOpacity: theme.fillOpacity })
+          layer.setStyle({ fillOpacity: theme.hover.fillOpacity })
         },
         mouseout: () => {
           if (clickedFeatureIdRef.current === layer.feature.id) return
