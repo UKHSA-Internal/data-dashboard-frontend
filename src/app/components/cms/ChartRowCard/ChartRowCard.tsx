@@ -114,7 +114,8 @@ export function ChartRowCard({ children }: ChartRowCardProps) {
 
   useEffect(() => {
     setChartCardHeaderSize(ref.current, debouncedWidth)
-    setChartCardTabSize(ref.current, debouncedWidth)
+    // TODO: Investigate bug in CDD-1929
+    // setChartCardTabSize(ref.current, debouncedWidth)
   }, [ref, debouncedWidth, searchParams])
 
   return (
