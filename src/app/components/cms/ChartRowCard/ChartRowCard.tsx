@@ -46,6 +46,7 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
   }
 }
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const setChartCardTabSize = (row: HTMLDivElement | null, width: number) => {
   // exit early if there's no columns
   if (!row || !row.hasChildNodes()) {
