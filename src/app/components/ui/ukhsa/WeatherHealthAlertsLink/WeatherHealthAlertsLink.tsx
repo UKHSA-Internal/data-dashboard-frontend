@@ -3,11 +3,13 @@
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
+import { mapQueryKeys } from '@/app/constants/map.constants'
+
 export default function WeatherHealthAlertsLink() {
   const searchParams = useSearchParams()
 
   const searchParamsWithMap = new URLSearchParams(searchParams)
-  searchParamsWithMap.set('view', 'map')
+  searchParamsWithMap.set(mapQueryKeys.view, 'map')
 
   return (
     <Link

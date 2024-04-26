@@ -2,8 +2,8 @@
 
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useQueryState } from 'nuqs'
+import { useRouter } from 'next/navigation'
+import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import {
   Dialog,
@@ -22,7 +22,7 @@ import {
   DrawerTitle,
 } from '@/app/components/ui/ukhsa/Drawer/Drawer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
-import { useMapContext } from '@/app/context/MapContext'
+import { mapQueryKeys } from '@/app/constants/map.constants'
 
 const { Map, BaseLayer, Choropleth } = {
   Map: dynamic(() => import('@/app/components/ui/ukhsa/Map/Map'), {
@@ -38,16 +38,15 @@ const { Map, BaseLayer, Choropleth } = {
 }
 
 export default function MapDialog() {
-  const [selectedMapFeatureId, setSelectedMapFeatureUrlParam] = useQueryState('fid')
+  const [view] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
+  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsInteger)
 
-  const searchParams = useSearchParams()
   const router = useRouter()
-  const { selectedMapFeature, setSelectedMapFeature } = useMapContext()
 
   return (
     <>
       <Dialog
-        open={searchParams.get('view') === 'map'}
+        open={!!view}
         onOpenChange={(isOpen) => {
           if (!isOpen) {
             router.back()
@@ -68,21 +67,20 @@ export default function MapDialog() {
             <DialogDescription>Custom description</DialogDescription>
           </DialogHeader>
 
-          <Drawer direction="left" open={!!selectedMapFeatureId}>
+          <Drawer direction="left" open={!!selectedFeatureId}>
             <DrawerContent>
               <DrawerHeader>
-                <DrawerTitle>{selectedMapFeature?.properties.phec16nm}</DrawerTitle>
-                <DrawerDescription>This action cannot be undone.</DrawerDescription>
+                <DrawerTitle>Region id: {selectedFeatureId}</DrawerTitle>
+                <DrawerDescription></DrawerDescription>
               </DrawerHeader>
               <DrawerFooter>
-                <button>Submit</button>
                 <DrawerClose
                   className="govuk-button govuk-button--secondary"
                   onClick={() => {
-                    setSelectedMapFeatureUrlParam(null)
+                    setSelectedFeatureId(null)
                   }}
                 >
-                  Cancel pls
+                  Close
                 </DrawerClose>
               </DrawerFooter>
             </DrawerContent>
@@ -93,7 +91,7 @@ export default function MapDialog() {
               variant="Default"
               options={{ attribution: '', url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' }}
             />
-            <Choropleth onClick={setSelectedMapFeature} />
+            <Choropleth selectedFeatureId={selectedFeatureId} onSelectFeature={setSelectedFeatureId} />
           </Map>
         </DialogContent>
       </Dialog>

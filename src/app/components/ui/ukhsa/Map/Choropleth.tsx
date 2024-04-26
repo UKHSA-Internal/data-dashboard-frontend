@@ -1,7 +1,6 @@
 'use client'
 
 import Leaflet, { LeafletMouseEvent } from 'leaflet'
-import { useQueryState } from 'nuqs'
 import { ComponentProps, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
@@ -17,10 +16,13 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
   data?: GeoJSONProps['data']
+
+  selectedFeatureId?: number | null
+
   /**
    * Optional callback prop that fires when individual features are clicked.
    */
-  onClick?: (feature: Feature | null) => void
+  onSelectFeature?: (callback: (featureId: number | null) => number | null) => void
 }
 
 interface CustomLeafletEvent extends LeafletMouseEvent {
@@ -35,8 +37,8 @@ interface CustomLeafletEvent extends LeafletMouseEvent {
  * The data for UKHSA regions is automatically provided as the default data source, but you can optionally override it using the 'data' prop.
  * All props supported by the GeoJSON component are also supported by Choropleth.
  */
-const Choropleth = ({ data, onClick, ...rest }: ChoroplethProps) => {
-  const [selectedFeatureId, setFeatureIdUrlParam] = useQueryState('fid')
+const Choropleth = ({ selectedFeatureId, onSelectFeature, data, ...rest }: ChoroplethProps) => {
+  // const [selectedFeatureId, setFeatureIdUrlParam] = useQueryState('fid')
 
   // TODO: Progamatically set styles instead of useState
   // const [hoveredFeature, setHoveredFeature] = useState<Feature | null>()
@@ -46,16 +48,15 @@ const Choropleth = ({ data, onClick, ...rest }: ChoroplethProps) => {
     // Prevent map click events from firing
     Leaflet.DomEvent.stopPropagation(event)
 
-    setFeatureIdUrlParam((featureId) => {
+    // Fire the callback prop if provided
+    onSelectFeature?.((featureId) => {
       const feature = event.target.feature
       if (feature.id == featureId) {
         // Clicked same feature
-        onClick?.(null)
         return null
       } else {
         // Clicked new feature
-        onClick?.(feature)
-        return feature.id ? String(feature.id) : null
+        return feature.id ? Number(feature.id) : null
       }
     })
   }
@@ -75,13 +76,12 @@ const Choropleth = ({ data, onClick, ...rest }: ChoroplethProps) => {
     useMapEvents({
       click() {
         if (selectedFeatureId) {
-          onClick?.(null)
-          setFeatureIdUrlParam(null)
+          onSelectFeature?.(() => null)
         }
       },
     })
     return null
-  }, [onClick, selectedFeatureId, setFeatureIdUrlParam])
+  }, [onSelectFeature, selectedFeatureId])
 
   return (
     <>
@@ -89,7 +89,6 @@ const Choropleth = ({ data, onClick, ...rest }: ChoroplethProps) => {
       <GeoJSON
         data={data ?? featureCollection}
         onEachFeature={(feature, layer) => {
-          console.log('layer', layer)
           layer.on({
             click: handleClick,
             mouseover: handleMouseOver,
