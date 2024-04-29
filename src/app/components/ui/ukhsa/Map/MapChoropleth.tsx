@@ -9,7 +9,7 @@ import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'l
 import { ComponentProps, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
-import { Feature, featureCollection, FeatureProperties } from './geojson/ukhsa-regions'
+import { Feature, featureCollection } from './geojson/ukhsa-regions'
 
 /**
  * Extracted type of props that GeoJSON component accepts.
@@ -25,6 +25,11 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
   data?: GeoJSONProps['data']
+
+  /**
+   * Colours mapping object to associate a particular region id with one of the four available colours
+   */
+  featureColours: Record<number, 'green' | 'amber' | 'yellow' | 'red'>
 
   /**
    * The ID of the selected feature.
@@ -86,6 +91,7 @@ const defaultTheme = {
  * All props supported by the GeoJSON component are also supported by Choropleth.
  */
 const MapChoropleth = <T extends LayerWithFeature>({
+  featureColours,
   selectedFeatureId,
   onSelectFeature,
   data,
@@ -152,40 +158,29 @@ const MapChoropleth = <T extends LayerWithFeature>({
         data={data ?? featureCollection}
         {...defaultOptions}
         style={(feature) => {
-          if (!feature || !feature.properties) return {}
+          // If the feature or its ID is not available, return an empty style
+          if (!feature || !feature.id) return {}
 
           const { active, ...rest } = theme
 
-          const properties = feature.properties as FeatureProperties
+          // Determine the fill opacity based on whether the feature is selected
+          const fillOpacity = selectedFeatureId == feature.id ? active.fillOpacity : theme.fillOpacity
 
-          const isClicked = selectedFeatureId == feature.id
-          const fillOpacity = isClicked ? active.fillOpacity : theme.fillOpacity
-
-          // TODO: This needs to be refactored so the mapping of status/colours is dynamically driven
-          switch (properties.phec16nm) {
-            case 'North East':
-            case 'North West':
-              return {
-                ...rest,
-                fillOpacity,
-                fillColor: 'var(--colour-red)',
-                className,
-              }
-            case 'East of England':
-            case 'London':
-              return {
-                ...rest,
-                fillOpacity,
-                fillColor: 'var(--colour-orange)',
-                className,
-              }
-          }
-          return {
+          // Define the base style for the feature
+          const style: Leaflet.PathOptions = {
             ...rest,
             fillOpacity,
-            fillColor: 'var(--colour-green)',
             className,
           }
+
+          // Apply custom colours if the feature ID is present in the featureColours map
+          if (feature.id in featureColours) {
+            const colour = featureColours[Number(feature.id)]
+            // Set the fill color using CSS variable and featureColours map
+            style.fillColor = `var(--colour-${colour === 'amber' ? 'orange' : colour})`
+          }
+
+          return style
         }}
         {...rest}
       />
