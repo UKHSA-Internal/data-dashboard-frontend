@@ -26,6 +26,7 @@ import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
 import downloads from './handlers/downloads/v2'
+import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
 import globalBanners from './handlers/global-banners/v1'
 import headlines from './handlers/headlines/v3'
@@ -56,6 +57,7 @@ app.post('/api/downloads/v2', downloads)
 
 // Misc endpoints
 app.post('/api/suggestions/v1', suggestions)
+app.get('/flags/client/features', flags)
 
 app.listen(3005, () => {
   console.log('Mock server started on port 3005!')
