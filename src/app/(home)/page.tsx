@@ -5,7 +5,6 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { renderSection } from '@/app/utils/cms.utils'
 
-import WeatherHealthAlertsLink from '../components/ui/ukhsa/WeatherHealthAlertsLink/WeatherHealthAlertsLink'
 import { HOMEPAGE_CMS_SLUG } from '../constants/app.constants'
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -29,8 +28,6 @@ export default async function HomePage() {
 
   return (
     <View heading={title} description={description} showWelcome>
-      <WeatherHealthAlertsLink />
-
       {body.map(renderSection)}
       <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
