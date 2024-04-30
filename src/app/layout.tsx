@@ -130,7 +130,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ) : null}
 
         <div className="govuk-width-container">{children}</div>
-
         <Footer />
       </body>
     </html>
