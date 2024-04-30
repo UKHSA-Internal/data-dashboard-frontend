@@ -10,13 +10,13 @@ import VectorBasemapLayer from 'react-esri-leaflet/plugins/VectorBasemapLayer'
 
 type EsriProps = ComponentProps<typeof VectorBasemapLayer>
 
-interface MapBaseLayerEsriProps extends Omit<EsriProps, 'name'> {
+interface BaseLayerEsriProps extends Omit<EsriProps, 'name'> {
   name?: EsriProps['name']
   apiKey?: string
 }
 
-const MapBaseLayerEsri = ({ name = 'ArcGIS:Navigation', apiKey, ...rest }: MapBaseLayerEsriProps) => {
+const BaseLayerEsri = ({ name = 'ArcGIS:Navigation', apiKey, ...rest }: BaseLayerEsriProps) => {
   return <VectorBasemapLayer {...rest} name={name} apiKey={apiKey} />
 }
 
-export default MapBaseLayerEsri
+export default BaseLayerEsri

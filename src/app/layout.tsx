@@ -11,11 +11,9 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
-import MapDialog from './(topics)/(extreme-events)/weather-health-alerts/components/MapDialog'
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
-import { MapContextProvider } from './context/MapContext'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { useMenu } from './utils/menu.utils'
 
@@ -132,10 +130,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ) : null}
 
         <div className="govuk-width-container">{children}</div>
-
-        <MapContextProvider>
-          <MapDialog />
-        </MapContextProvider>
 
         <Footer />
       </body>

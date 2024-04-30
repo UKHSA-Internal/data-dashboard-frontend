@@ -8,18 +8,23 @@
 import 'leaflet/dist/leaflet.css'
 
 import clsx from 'clsx'
-import { ControlPosition } from 'leaflet'
-import { ComponentProps, ReactNode } from 'react'
-import { MapContainer, ZoomControl } from 'react-leaflet'
+import { ControlPosition, Map as MapType } from 'leaflet'
+import { ComponentProps, ReactNode, useRef } from 'react'
+import { MapContainer } from 'react-leaflet'
+
+import AttributionControl from './shared/controls/AttributionControl'
+import { ZoomControl } from './shared/controls/ZoomControl'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
+  attributionControlPosition: ControlPosition
 }
 
 const mapDefaults: DefaultOptions = {
   zoom: 7,
   center: [52.7957, -1.5479],
   scrollWheelZoom: true,
+  attributionControlPosition: 'bottomright',
   zoomControlPosition: 'bottomright',
 }
 
@@ -29,11 +34,21 @@ interface MapProps {
   className?: string
 }
 
-const Map = ({ children, className, options: { zoomControlPosition, ...options } = mapDefaults }: MapProps) => (
-  <MapContainer {...options} className={clsx('h-screen', className)} zoomControl={false}>
-    <ZoomControl position={zoomControlPosition} />
-    {children}
-  </MapContainer>
-)
+const Map = ({
+  children,
+  className,
+  options: { attributionControlPosition, zoomControlPosition, ...options } = mapDefaults,
+}: MapProps) => {
+  const mapRef = useRef<MapType | null>(null)
+
+  return (
+    <MapContainer {...options} ref={mapRef} className={clsx('h-screen', className)} zoomControl={false}>
+      <AttributionControl position={attributionControlPosition} />
+      <ZoomControl position={zoomControlPosition} />
+
+      {children}
+    </MapContainer>
+  )
+}
 
 export default Map
