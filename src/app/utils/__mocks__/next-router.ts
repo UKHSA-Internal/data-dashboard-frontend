@@ -12,7 +12,12 @@ mockRouter.useParser(
 jest.mock<typeof import('next/navigation')>('next/navigation', () => {
   const actual = jest.requireActual('next/navigation')
   const nextRouterMock = jest.requireActual('next-router-mock')
-  const { useRouter } = nextRouterMock
+
+  const useRouter = jest.fn().mockImplementation(() => {
+    const router = nextRouterMock.useRouter()
+    return { ...router, refresh: jest.fn() }
+  })
+
   const usePathname = jest.fn().mockImplementation(() => {
     const router = useRouter()
     return router.asPath
@@ -25,7 +30,7 @@ jest.mock<typeof import('next/navigation')>('next/navigation', () => {
 
   return {
     ...actual,
-    useRouter: jest.fn().mockImplementation(useRouter),
+    useRouter,
     usePathname,
     useSearchParams,
   }
