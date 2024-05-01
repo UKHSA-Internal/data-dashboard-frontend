@@ -9,7 +9,7 @@ import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'l
 import { ComponentProps, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
-import { Feature, featureCollection } from './geojson/ukhsa-regions'
+import { Feature, featureCollection } from '../data/geojson/ukhsa-regions'
 
 /**
  * Extracted type of props that GeoJSON component accepts.
@@ -34,7 +34,7 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
   /**
    * The ID of the selected feature.
    */
-  selectedFeatureId?: number
+  selectedFeatureId?: number | null
 
   /**
    * Callback that fires when individual features are clicked.
@@ -90,16 +90,16 @@ const defaultTheme = {
  * The data for UKHSA regions is automatically provided as the default data source, but you can optionally override it using the 'data' prop.
  * All props supported by the GeoJSON component are also supported by Choropleth.
  */
-const MapChoropleth = <T extends LayerWithFeature>({
+const ChoroplethLayer = <T extends LayerWithFeature>({
   featureColours,
-  selectedFeatureId,
+  selectedFeatureId = null,
   onSelectFeature,
   data,
   theme = defaultTheme,
   className = 'transition-all duration-200',
   ...rest
 }: ChoroplethProps) => {
-  const clickedFeatureIdRef = useRef<number | undefined>(selectedFeatureId)
+  const clickedFeatureIdRef = useRef<number | null>(selectedFeatureId)
 
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
@@ -188,4 +188,4 @@ const MapChoropleth = <T extends LayerWithFeature>({
   )
 }
 
-export default MapChoropleth
+export default ChoroplethLayer
