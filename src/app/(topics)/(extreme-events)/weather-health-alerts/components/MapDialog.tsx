@@ -28,10 +28,10 @@ const { Map, BaseLayer, Choropleth } = {
     ssr: false,
     loading: () => <Skeleton className="h-screen" />,
   }),
-  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/BaseLayer'), {
+  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayerEsri'), {
     ssr: false,
   }),
-  Choropleth: dynamic(() => import('@/app/components/ui/ukhsa/Map/Choropleth'), {
+  Choropleth: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
     ssr: false,
   }),
 }
@@ -108,11 +108,22 @@ export default function MapDialog() {
           </Drawer>
 
           <Map>
-            <BaseLayer
-              variant="Default"
-              options={{ attribution: '', url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png' }}
+            <BaseLayer apiKey={process.env.NEXT_PUBLIC_ESRI_API_KEY} />
+            <Choropleth
+              featureColours={{
+                1: 'green',
+                2: 'green',
+                3: 'green',
+                4: 'green',
+                5: 'green',
+                6: 'green',
+                7: 'green',
+                8: 'green',
+                9: 'green',
+              }}
+              selectedFeatureId={selectedFeatureId}
+              onSelectFeature={setSelectedFeatureId}
             />
-            <Choropleth selectedFeatureId={selectedFeatureId} onSelectFeature={setSelectedFeatureId} />
           </Map>
         </DialogContent>
       </Dialog>

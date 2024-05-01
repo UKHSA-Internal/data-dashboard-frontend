@@ -2,7 +2,7 @@
 
 import { createContext, ReactNode, useContext, useState } from 'react'
 
-import { Feature } from '../components/ui/ukhsa/Map/geojson/ukhsa-regions'
+import { Feature } from '../components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions'
 
 export type MapState = {
   selectedMapFeature: Feature | null

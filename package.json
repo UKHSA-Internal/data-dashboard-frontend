@@ -20,6 +20,7 @@
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
     "@radix-ui/react-dialog": "^1.0.5",
+    "@radix-ui/react-scroll-area": "^1.0.5",
     "@radix-ui/react-tabs": "^1.0.4",
     "clsx": "^2.1.0",
     "cookies-next": "^4.1.1",
@@ -38,6 +39,7 @@
     "react-esri-leaflet": "^2.0.1",
     "react-i18next": "^14.1.0",
     "react-leaflet": "^4.2.1",
+    "react-leaflet-custom-control": "^1.4.0",
     "react-markdown": "^8.0.7",
     "react-use": "^17.5.0",
     "rehype-raw": "^6.1.1",

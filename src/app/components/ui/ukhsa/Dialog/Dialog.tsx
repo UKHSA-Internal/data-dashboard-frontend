@@ -50,7 +50,7 @@ const DialogContent = React.forwardRef<
   >
     {children}
     <DialogPrimitive.Close className="focus:govuk-focus absolute left-4 top-4 disabled:pointer-events-none" asChild>
-      {closeButton || <button className="govuk-button govuk-button--secondary">Close</button>}
+      {closeButton || <DialogClose className="govuk-button govuk-button--secondary">Close</DialogClose>}
     </DialogPrimitive.Close>
   </DialogPrimitive.Content>
 ))

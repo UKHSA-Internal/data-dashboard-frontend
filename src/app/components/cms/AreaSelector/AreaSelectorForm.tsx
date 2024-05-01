@@ -38,15 +38,16 @@ export function AreaSelectorForm({ areaTypeOptions, areaNameOptions }: AreaSelec
     if (areaTypeSelectRef.current && areaNameSelectRef.current) {
       areaTypeSelectRef.current.value = ''
       areaNameSelectRef.current.value = ''
+      router.refresh()
     }
-  }, [])
+  }, [router])
 
   // Reset form state when the url params get cleared
   useEffect(() => {
-    if (!searchParams.get('areaType') && !searchParams.get('areaName')) {
+    if (!areaType && !areaName) {
       resetForm()
     }
-  }, [searchParams, resetForm])
+  }, [areaType, areaName, resetForm])
 
   const initialPathname = pathname.split('?')[0]
 
