@@ -7,7 +7,6 @@ import { flags } from '@/app/constants/flags.constants'
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const { enabled } = await flag(flags.extremeEvents)
-  console.log('enabled', enabled)
 
   if (!enabled) notFound()
 
