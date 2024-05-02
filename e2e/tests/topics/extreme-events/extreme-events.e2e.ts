@@ -61,11 +61,14 @@ import { test } from '../../../fixtures/app.fixture'
 /**
  *  Feature flag disabled
  */
-test.describe('Feature flag disabled @smoke', () => {
+test.describe('Feature flag disabled', () => {
   test.describe('Extreme events category page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
         await app.goto('/extreme-events')
+      })
+      await test.step('metadata is correct', async () => {
+        await app.hasDocumentTitle('Page not found')
       })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
@@ -78,6 +81,9 @@ test.describe('Feature flag disabled @smoke', () => {
       await test.step('loads the page', async () => {
         await app.goto('/extreme-events/heat-health-alerts')
       })
+      await test.step('metadata is correct', async () => {
+        await app.hasDocumentTitle('Page not found')
+      })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
       })
@@ -89,6 +95,9 @@ test.describe('Feature flag disabled @smoke', () => {
       await test.step('loads the page', async () => {
         await app.goto('/extreme-events/cold-health-alerts')
       })
+      await test.step('metadata is correct', async () => {
+        await app.hasDocumentTitle('Page not found')
+      })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
       })
@@ -99,6 +108,9 @@ test.describe('Feature flag disabled @smoke', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
         await app.goto('/extreme-events/cold-health-alerts/east-midlands')
+      })
+      await test.step('metadata is correct', async () => {
+        await app.hasDocumentTitle('Page not found')
       })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
