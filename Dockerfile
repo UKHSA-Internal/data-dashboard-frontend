@@ -35,10 +35,6 @@ ENV NODE_ENV production
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
-# Feature flag environment variable mapping
-ENV UNLEASH_SERVER_API_URL=$UNLEASH_URL/api
-ENV UNLEASH_SERVER_API_TOKEN=$FEATURE_FLAGS_API_KEY
-
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
