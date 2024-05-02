@@ -7,14 +7,14 @@
 
 import { TileLayer, type TileLayerProps } from 'react-leaflet'
 
-interface MapBaseLayerProps extends Partial<TileLayerProps> {}
+interface BaseLayerProps extends Partial<TileLayerProps> {}
 
-const MapBaseLayer = ({
+const BaseLayer = ({
   url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
   attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
   ...rest
-}: MapBaseLayerProps) => {
+}: BaseLayerProps) => {
   return <TileLayer {...rest} attribution={attribution} url={url} />
 }
 
-export default MapBaseLayer
+export default BaseLayer
