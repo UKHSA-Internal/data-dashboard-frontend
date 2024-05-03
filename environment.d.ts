@@ -6,6 +6,8 @@ declare namespace NodeJS {
     FEEDBACK_API_URL: string
     PUBLIC_API_URL: string
     GOOGLE_TAG_MANAGER_ID: string
+    UNLEASH_SERVER_API_URL: string
+    UNLEASH_SERVER_API_TOKEN: string
   }
 }
 
