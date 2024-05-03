@@ -6,7 +6,7 @@
 'use client'
 
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
-import { ComponentProps, useCallback, useRef } from 'react'
+import { ComponentProps, ReactNode, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { Feature, featureCollection } from '../data/geojson/ukhsa-regions'
@@ -53,6 +53,11 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
    * Optional class name to attach to each feature.
    */
   className?: string
+
+  /**
+   * Optional child elements
+   */
+  children?: ReactNode
 }
 
 interface CustomLeafletEvent extends LeafletMouseEvent {
@@ -97,6 +102,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   data,
   theme = defaultTheme,
   className = 'transition-all duration-200',
+  children,
   ...rest
 }: ChoroplethProps) => {
   const clickedFeatureIdRef = useRef<number | null>(selectedFeatureId)
@@ -184,6 +190,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         }}
         {...rest}
       />
+      {children}
     </>
   )
 }
