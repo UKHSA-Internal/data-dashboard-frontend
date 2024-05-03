@@ -6,7 +6,7 @@ import { LayoutSideNav } from '@/app/components/ui/ukhsa/Layout/LayoutSideNav'
 import { flags } from '@/app/constants/flags.constants'
 
 export default async function Layout({ children }: { children: ReactNode }) {
-  const { enabled } = await flag(flags.extremeEvents)
+  const { enabled } = await flag(flags.adverseWeather)
 
   if (!enabled) notFound()
 

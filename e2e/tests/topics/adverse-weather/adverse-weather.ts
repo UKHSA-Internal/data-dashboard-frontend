@@ -62,10 +62,10 @@ import { test } from '../../../fixtures/app.fixture'
  *  Feature flag disabled
  */
 test.describe('Feature flag disabled', () => {
-  test.describe('Extreme events category page', () => {
+  test.describe('Adverse weather category page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/extreme-events')
+        await app.goto('/adverse-weather')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found')
@@ -79,7 +79,7 @@ test.describe('Feature flag disabled', () => {
   test.describe('Heat health alerts page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/extreme-events/heat-health-alerts')
+        await app.goto('/adverse-weather/heat-health-alerts')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found')
@@ -93,7 +93,7 @@ test.describe('Feature flag disabled', () => {
   test.describe('Cold health alerts page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/extreme-events/cold-health-alerts')
+        await app.goto('/adverse-weather/cold-health-alerts')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found')
@@ -107,7 +107,7 @@ test.describe('Feature flag disabled', () => {
   test.describe('Weather health alerts page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/extreme-events/cold-health-alerts/east-midlands')
+        await app.goto('/adverse-weather/cold-health-alerts/east-midlands')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found')

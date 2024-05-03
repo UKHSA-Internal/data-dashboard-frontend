@@ -11,9 +11,18 @@ interface PageProps {
   children: ReactNode
   lastUpdated?: string
   backLink?: string
+  breadcrumbs?: Array<{ name: string; link: string }>
 }
 
-export async function View({ heading, showWelcome, children, description, lastUpdated, backLink }: PageProps) {
+export async function View({
+  heading,
+  showWelcome,
+  children,
+  description,
+  lastUpdated,
+  backLink,
+  breadcrumbs,
+}: PageProps) {
   const { t } = await useTranslation('common')
 
   return (
@@ -22,6 +31,20 @@ export async function View({ heading, showWelcome, children, description, lastUp
         <Link href={backLink} className="govuk-back-link">
           {t('backLink')}
         </Link>
+      )}
+
+      {breadcrumbs && (
+        <div className="govuk-breadcrumbs govuk-!-margin-top-2">
+          <ol className="govuk-breadcrumbs__list">
+            {breadcrumbs.map(({ name, link }, key) => (
+              <li key={key} className="govuk-breadcrumbs__list-item">
+                <a className="govuk-breadcrumbs__link" href={link}>
+                  {name}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
 
       {lastUpdated && (

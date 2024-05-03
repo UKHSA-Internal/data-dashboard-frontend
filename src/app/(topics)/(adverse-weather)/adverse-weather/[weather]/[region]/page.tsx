@@ -4,7 +4,7 @@ import { View } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
 
 export async function generateMetadata() {
-  const { enabled } = await flag(flags.extremeEvents)
+  const { enabled } = await flag(flags.adverseWeather)
 
   if (!enabled)
     return {
@@ -13,15 +13,15 @@ export async function generateMetadata() {
     }
 
   return {
-    title: 'Extreme events category page',
-    description: 'Extreme events category page description',
+    title: 'Weather health alert page',
+    description: 'Weather health alert description',
   }
 }
 
-export default async function ExtremeEvents() {
+export default async function Alert() {
   return (
-    <View heading="Extreme events">
-      <div>Extreme events parent page</div>
+    <View heading="Weather alert for East Midlands">
+      <div>Weather health alert info page</div>
     </View>
   )
 }

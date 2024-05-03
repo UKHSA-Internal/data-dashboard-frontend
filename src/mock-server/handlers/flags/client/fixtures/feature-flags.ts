@@ -2,9 +2,9 @@ export const featureFlags = {
   version: 2,
   features: [
     {
-      name: 'extreme-events',
+      name: 'adverse-weather',
       type: 'release',
-      enabled: false,
+      enabled: true,
       project: 'default',
       stale: false,
       strategies: [],

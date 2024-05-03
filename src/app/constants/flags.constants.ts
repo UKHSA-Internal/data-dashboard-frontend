@@ -1,3 +1,3 @@
 export const flags = {
-  extremeEvents: 'extreme-events',
+  adverseWeather: 'adverse-weather',
 }
