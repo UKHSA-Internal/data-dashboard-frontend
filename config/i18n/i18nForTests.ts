@@ -1,6 +1,7 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
+import adverseWeather from '../../public/locales/en/adverseWeather.json'
 import common from '../../public/locales/en/common.json'
 import errors from '../../public/locales/en/errors.json'
 import metrics from '../../public/locales/en/metrics.json'
@@ -12,6 +13,7 @@ export const resources = {
   en: {
     common,
     whatsNew,
+    adverseWeather,
     metrics,
     errors,
   },
@@ -19,7 +21,7 @@ export const resources = {
 
 i18n.use(initReactI18next).init({
   lng: 'en',
-  ns: ['common', 'topic', 'whatsNew', 'metrics', 'errors'],
+  ns: ['common', 'topic', 'adverseWeather', 'whatsNew', 'metrics', 'errors'],
   resources,
   defaultNS,
   interpolation: {

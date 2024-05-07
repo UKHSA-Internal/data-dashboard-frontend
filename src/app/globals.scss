@@ -37,6 +37,49 @@ $govuk-page-width: 1400px;
       @apply absolute left-0 top-1/2 -translate-y-1/2 pr-1 text-black;
     }
   }
+
+  // UKHSA Map global styles
+  .ukhsa-map {
+    &:focus:after {
+      @apply absolute inset-[5px];
+      content: '';
+      box-shadow:
+        0px 0px 0px 0px #fff,
+        inset 0px 0px 0px 1px #0b0c0c,
+        0px 0px 0px 2px #0b0c0c,
+        0px 0px 0px 5px #fd0;
+      outline: 3px solid rgba(0, 0, 0, 0);
+      pointer-events: none;
+      z-index: 1000;
+    }
+
+    // Button variant for UKHSA maps
+    &__button {
+      @apply flex mb-0 #{!important};
+
+      &:not(:hover) {
+        background-color: govuk-colour('white');
+      }
+
+      &:focus {
+        @apply shadow-none #{!important};
+        background-color: govuk-colour('white');
+
+        &:after {
+          @apply absolute inset-[2px];
+          content: '';
+          box-shadow:
+            0px 0px 0px 2px govuk-colour('white'),
+            inset 0px 0px 0px 0px govuk-colour('black'),
+            0px 0px 0px 5px govuk-colour('black'),
+            0px 0px 0px 8px govuk-colour('yellow');
+          outline: 3px solid rgba(0, 0, 0, 0);
+          pointer-events: none;
+          z-index: 1000;
+        }
+      }
+    }
+  }
 }
 
 :root {
@@ -121,12 +164,35 @@ $govuk-page-width: 1400px;
   }
 }
 
-/* 
-  Force hide the default Leaflet attribution element to prevent it from being displayed.
-  The <MapAttributionDialog /> component listens for mutations to this element,
-  dynamically updating the content of our custom copyright dialog based on changes
-  to the tile layer attributions.
-*/
-.leaflet-control-attribution {
-  display: none !important;
+.leaflet-container {
+  position: relative;
+  overflow: hidden;
+
+  &:focus:after {
+    position: absolute;
+    content: '';
+    left: 5px;
+    right: 5px;
+    top: 5px;
+    bottom: 5px;
+    box-shadow:
+      0px 0px 0px 0px #fff,
+      inset 0px 0px 0px 1px #0b0c0c,
+      0px 0px 0px 2px #0b0c0c,
+      0px 0px 0px 5px #fd0;
+    outline: 3px solid rgba(0, 0, 0, 0);
+    pointer-events: none;
+    z-index: 1000;
+  }
+
+  /* 
+    Force hide the default Leaflet attribution element to prevent it from being displayed.
+    The <MapAttributionDialog /> component listens for mutations to this element,
+    dynamically updating the content of our custom copyright dialog based on changes
+    to the tile layer attributions.
+  */
+
+  .leaflet-control-attribution {
+    display: none !important;
+  }
 }

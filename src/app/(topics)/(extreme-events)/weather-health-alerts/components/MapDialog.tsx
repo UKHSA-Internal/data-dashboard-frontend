@@ -57,9 +57,12 @@ export default function MapDialog() {
           className="p-0 no-js:hidden"
           fullscreen
           closeButton={
-            <Link href={'/'} className="govuk-button govuk-button--secondary absolute z-[1000] inline-flex gap-2">
+            <Link
+              href={'/'}
+              className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2"
+            >
               <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
-                <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
+                <path d="M4.828,11L12.314,18.485L10.899,19.899L1,10L10.899,0.101L12.314,1.515L4.828,9L19,9L19,11L4.828,11Z"></path>
               </svg>
               Exit map
             </Link>
