@@ -8,23 +8,15 @@
 import 'leaflet/dist/leaflet.css'
 
 import clsx from 'clsx'
-import { ControlPosition, Map as MapType } from 'leaflet'
-import { ComponentProps, ReactNode, useCallback } from 'react'
+import { ControlPosition } from 'leaflet'
+import { ComponentProps, ReactNode } from 'react'
 import { MapContainer } from 'react-leaflet'
 
-import {
-  center,
-  mapDescriptionId,
-  mapId,
-  mapRole,
-  mapTitle,
-  maxZoom,
-  minZoom,
-  zoom,
-} from '@/app/constants/map.constants'
+import { center, mapDescriptionId, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
 import { AttributionControl } from './shared/controls/AttributionControl'
 import { ZoomControl } from './shared/controls/ZoomControl'
+import { useMapRef } from './shared/hooks/useMapRef'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -50,19 +42,7 @@ const Map = ({
   className,
   options: { attributionControlPosition, zoomControlPosition, ...options } = mapDefaults,
 }: MapProps) => {
-  // This callback is responsible for dynamically setting our interactive accessibility
-  // attributes to the underlying Leaflet container element. Their <MapContainer /> component
-  // does provide the ability to add custom attributes.
-  // [TODO]: Move to a hook
-  const mapRefCallback = useCallback((node: MapType | null) => {
-    if (node) {
-      const container = node.getContainer()
-      container.setAttribute('tabindex', '0')
-      container.setAttribute('role', mapRole)
-      container.setAttribute('aria-label', mapTitle)
-      container.setAttribute('aria-describedby', mapDescriptionId)
-    }
-  }, [])
+  const ref = useMapRef()
 
   return (
     <MapContainer
@@ -70,7 +50,7 @@ const Map = ({
       id={mapId}
       minZoom={minZoom}
       maxZoom={maxZoom}
-      ref={mapRefCallback}
+      ref={ref}
       className={clsx('h-screen', className)}
       zoomControl={false}
     >
