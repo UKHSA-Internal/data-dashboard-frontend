@@ -12,7 +12,16 @@ import { ControlPosition, Map as MapType } from 'leaflet'
 import { ComponentProps, ReactNode, useCallback } from 'react'
 import { MapContainer } from 'react-leaflet'
 
-import { mapId, mapRole, mapTitle } from '@/app/constants/map.constants'
+import {
+  center,
+  mapDescriptionId,
+  mapId,
+  mapRole,
+  mapTitle,
+  maxZoom,
+  minZoom,
+  zoom,
+} from '@/app/constants/map.constants'
 
 import { AttributionControl } from './shared/controls/AttributionControl'
 import { ZoomControl } from './shared/controls/ZoomControl'
@@ -23,8 +32,8 @@ interface DefaultOptions extends ComponentProps<typeof MapContainer> {
 }
 
 const mapDefaults: DefaultOptions = {
-  zoom: 7,
-  center: [52.7957, -1.5479],
+  zoom,
+  center,
   scrollWheelZoom: true,
   attributionControlPosition: 'bottomright',
   zoomControlPosition: 'bottomright',
@@ -51,7 +60,7 @@ const Map = ({
       container.setAttribute('tabindex', '0')
       container.setAttribute('role', mapRole)
       container.setAttribute('aria-label', mapTitle)
-      container.setAttribute('aria-labelledby', 'viewportDescription')
+      container.setAttribute('aria-describedby', mapDescriptionId)
     }
   }, [])
 
@@ -59,13 +68,13 @@ const Map = ({
     <MapContainer
       {...options}
       id={mapId}
-      minZoom={6}
-      maxZoom={10}
+      minZoom={minZoom}
+      maxZoom={maxZoom}
       ref={mapRefCallback}
       className={clsx('h-screen', className)}
       zoomControl={false}
     >
-      <div id="viewportDescription" className="govuk-visually-hidden">
+      <div id={mapDescriptionId} className="govuk-visually-hidden">
         {/* TODO */}
         UKHSA Weather health alerts map viewer. 9 regions highlighed in the map area with 3 active alerts. Use number
         keys to select. 1: London - No alerts 2: North East - 1 yellow alert 3: North West - 1 amber alert 4: West
