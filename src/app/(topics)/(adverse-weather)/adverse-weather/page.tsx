@@ -1,6 +1,7 @@
 import { flag } from '@unleash/nextjs'
 
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { ContentsCard } from '@/app/components/ui/ukhsa/ContentsCard/ContentsCard'
 import { flags } from '@/app/constants/flags.constants'
 
 export async function generateMetadata() {
@@ -24,37 +25,48 @@ export default async function AdverseWeather() {
   }
 
   return (
-    <View heading={title} breadcrumbs={['Home', 'Adverse Weather']}>
-      {/* <div className="govuk-breadcrumbs">
-        <ol className="govuk-breadcrumbs__list">
-          <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/">
-              Home
-            </a>
-          </li>
-          <li className="govuk-breadcrumbs__list-item">
-            <a className="govuk-breadcrumbs__link" href="/">
-              Adverse Weather
-            </a>
-          </li>
-        </ol>
-      </div> */}
-
-      {/* Map through extreme events array, pass values into new components */}
-      <div>
-        <h2>Cold weather-health alerts</h2>
-        <p>Check your risk of cold alerts, view latest messages and updates</p>
-      </div>
-      <div>
-        <h2>Heat weather-health alerts</h2>
-        <p>Check your risk of heat alerts, view latest messages and updates</p>
+    <View
+      heading={title}
+      breadcrumbs={[
+        { name: 'Home', link: '/' },
+        { name: 'Adverse Weather', link: '/adverse-weather' },
+      ]}
+    >
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <div className="govuk-body">
+            Summary of weather health alerts data in England. For more detailed data, go to the individual event pages.
+            The Weather-Health Alerting System is provided by the UK Health Security Agency (UKHSA) in partnership with
+            the Met Office.
+          </div>
+        </div>
       </div>
 
-      {/* Map through related links */}
-      <RelatedLinks variant="sidebar">
-        <RelatedLink title="" url="/" />
-        <RelatedLink title="" url="/" />
-      </RelatedLinks>
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <div className="govuk-body">
+            <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+
+            <ContentsCard
+              title="Cold weather-health alerts"
+              body="Check your risk of cold alerts, view latest messages and updates"
+              url="/adverse-weather/cold-health-alerts"
+            />
+            <ContentsCard
+              title="Heat weather-health alerts"
+              body="Check your risk of heat alerts, view latest messages and updates"
+              url="/adverse-weather/heat-health-alerts"
+            />
+          </div>
+        </div>
+
+        <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
+          <RelatedLinks variant="sidebar">
+            <RelatedLink title="Adverse weather help" url="/" />
+            <RelatedLink title="What to do in adverse weather" url="/" />
+          </RelatedLinks>
+        </div>
+      </div>
     </View>
   )
 }
