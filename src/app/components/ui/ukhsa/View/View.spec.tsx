@@ -67,3 +67,19 @@ test('renders the back button', async () => {
 
   expect(getByRole('link', { name: 'Back' })).toHaveAttribute('href', 'whats-new')
 })
+
+test('renders breadcrumbs', async () => {
+  const { getByRole } = render(
+    await View({
+      heading: 'Test',
+      children: null,
+      breadcrumbs: [
+        { name: 'Home', link: '/home' },
+        { name: 'Breadcrumb test', link: '/breadbrumb-test' },
+      ],
+    })
+  )
+
+  expect(getByRole('link', { name: 'Home' })).toHaveAttribute('href', '/home')
+  expect(getByRole('link', { name: 'Breadcrumb test' })).toHaveAttribute('href', '/breadbrumb-test')
+})
