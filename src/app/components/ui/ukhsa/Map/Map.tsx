@@ -51,7 +51,7 @@ const Map = ({
       minZoom={minZoom}
       maxZoom={maxZoom}
       ref={ref}
-      className={clsx('h-screen', className)}
+      className={clsx('relative h-screen overflow-hidden ukhsa-focus', className)}
       zoomControl={false}
     >
       <div id={mapDescriptionId} className="govuk-visually-hidden">

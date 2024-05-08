@@ -74,7 +74,7 @@ module.exports = {
   },
   plugins: [
     require('tailwindcss-animate'),
-    plugin(function ({ addVariant, matchUtilities, theme }) {
+    plugin(function ({ addVariant, addComponents, addUtilities, matchUtilities, theme }) {
       addVariant('js', 'body.js-enabled &')
       addVariant('no-js', 'body:not(.js-enabled) &')
       matchUtilities(
@@ -85,6 +85,43 @@ module.exports = {
         },
         { values: theme('textShadow') }
       )
+      addUtilities({
+        // UKHSA Focus utility
+        '.ukhsa-focus': {
+          '&:focus:after': {
+            '@apply absolute inset-[5px] pointer-events-none z-[1000] content-[""]': {},
+            'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0;`,
+            outline: '3px solid rgba(0, 0, 0, 0)',
+          },
+          '&--button': {
+            '@apply ukhsa-focus': {},
+            '&:focus:after': {
+              'box-shadow': `0px 0px 0px 2px #fff, inset 0px 0px 0px 0px #0b0c0c, 0px 0px 0px 5px #0b0c0c, 0px 0px 0px 8px #fd0;`,
+            },
+          },
+        },
+      })
+      addComponents({
+        // UKHSA Map component
+        '.ukhsa-map': {
+          // Button variant
+          '&__button': {
+            '@apply ukhsa-focus--button flex mb-0 !important': {},
+
+            '&:not(:hover)': {
+              '@apply bg-white': {},
+            },
+
+            '&:focus': {
+              '@apply shadow-none bg-white !important': {},
+
+              '&:after': {
+                '@apply absolute inset-[2px]': {},
+              },
+            },
+          },
+        },
+      })
     }),
   ],
 }
