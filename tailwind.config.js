@@ -90,13 +90,13 @@ module.exports = {
         '.ukhsa-focus': {
           '&:focus:after': {
             '@apply absolute inset-[5px] pointer-events-none z-[1000] content-[""]': {},
-            'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0;`,
+            'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0`,
             outline: '3px solid rgba(0, 0, 0, 0)',
           },
           '&--button': {
             '@apply ukhsa-focus': {},
             '&:focus:after': {
-              'box-shadow': `0px 0px 0px 2px #fff, inset 0px 0px 0px 0px #0b0c0c, 0px 0px 0px 5px #0b0c0c, 0px 0px 0px 8px #fd0;`,
+              'box-shadow': `0px 0px 0px 2px #fff, inset 0px 0px 0px 0px #0b0c0c, 0px 0px 0px 5px #0b0c0c, 0px 0px 0px 8px #fd0`,
             },
           },
         },
