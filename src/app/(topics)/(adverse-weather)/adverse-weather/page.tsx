@@ -1,7 +1,9 @@
 import { flag } from '@unleash/nextjs'
+import Link from 'next/link'
 
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { ContentsCard } from '@/app/components/ui/ukhsa/ContentsCard/ContentsCard'
+import { List } from '@/app/components/ui/ukhsa/List/List'
+import { ListItem, ListItemArrow } from '@/app/components/ui/ukhsa/List/ListItem'
 import { flags } from '@/app/constants/flags.constants'
 
 export async function generateMetadata() {
@@ -47,16 +49,35 @@ export default async function AdverseWeather() {
           <div className="govuk-body">
             <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
 
-            <ContentsCard
-              title="Cold weather-health alerts"
-              body="Check your risk of cold alerts, view latest messages and updates"
-              url="/adverse-weather/cold-health-alerts"
-            />
-            <ContentsCard
-              title="Heat weather-health alerts"
-              body="Check your risk of heat alerts, view latest messages and updates"
-              url="/adverse-weather/heat-health-alerts"
-            />
+            <List>
+              <ListItem>
+                <ListItemArrow>
+                  <h2 className="govuk-heading-m">
+                    <Link
+                      className="govuk-link govuk-link--no-visited-state after:absolute after:inset-0 after:content-['']"
+                      href="/adverse-weather/cold-health-alerts"
+                    >
+                      Cold weather-health alerts
+                    </Link>
+                  </h2>
+                  <p className="govuk-body-m">Check your risk of cold alerts, view latest messages and updates</p>
+                </ListItemArrow>
+              </ListItem>
+
+              <ListItem>
+                <ListItemArrow>
+                  <h2 className="govuk-heading-m">
+                    <Link
+                      className="govuk-link govuk-link--no-visited-state after:absolute after:inset-0 after:content-['']"
+                      href="/adverse-weather/heat-health-alerts"
+                    >
+                      Heat weather-health alerts
+                    </Link>
+                  </h2>
+                  <p className="govuk-body-m">Check your risk of heat alerts, view latest messages and updates</p>
+                </ListItemArrow>
+              </ListItem>
+            </List>
           </div>
         </div>
 
