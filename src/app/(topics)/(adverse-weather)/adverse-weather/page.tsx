@@ -1,9 +1,9 @@
 import { flag } from '@unleash/nextjs'
-import Link from 'next/link'
 
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { List } from '@/app/components/ui/ukhsa/List/List'
-import { ListItem, ListItemArrow } from '@/app/components/ui/ukhsa/List/ListItem'
+import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
+import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { flags } from '@/app/constants/flags.constants'
 
 export async function generateMetadata() {
@@ -52,29 +52,23 @@ export default async function AdverseWeather() {
             <List>
               <ListItem>
                 <ListItemArrow>
-                  <h2 className="govuk-heading-m">
-                    <Link
-                      className="govuk-link govuk-link--no-visited-state after:absolute after:inset-0 after:content-['']"
-                      href="/adverse-weather/cold-health-alerts"
-                    >
-                      Cold weather-health alerts
-                    </Link>
-                  </h2>
-                  <p className="govuk-body-m">Check your risk of cold alerts, view latest messages and updates</p>
+                  <ListItemArrowLink href="/adverse-weather/cold-health-alerts">
+                    Cold weather-health alerts
+                  </ListItemArrowLink>
+                  <ListItemArrowParagraph>
+                    Check your risk of cold alerts, view latest messages and updates
+                  </ListItemArrowParagraph>
                 </ListItemArrow>
               </ListItem>
 
               <ListItem>
                 <ListItemArrow>
-                  <h2 className="govuk-heading-m">
-                    <Link
-                      className="govuk-link govuk-link--no-visited-state after:absolute after:inset-0 after:content-['']"
-                      href="/adverse-weather/heat-health-alerts"
-                    >
-                      Heat weather-health alerts
-                    </Link>
-                  </h2>
-                  <p className="govuk-body-m">Check your risk of heat alerts, view latest messages and updates</p>
+                  <ListItemArrowLink href="/adverse-weather/heat-health-alerts">
+                    Heat weather-health alerts
+                  </ListItemArrowLink>
+                  <ListItemArrowParagraph>
+                    Check your risk of heat alerts, view latest messages and updates
+                  </ListItemArrowParagraph>
                 </ListItemArrow>
               </ListItem>
             </List>
