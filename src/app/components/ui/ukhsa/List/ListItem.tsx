@@ -5,7 +5,7 @@ interface ListItemProps {
   showRule?: boolean
 }
 
-export const ListItem = ({ children, showRule }: ListItemProps) => {
+export const ListItem = ({ children, showRule = true }: ListItemProps) => {
   return (
     <li>
       {children}
