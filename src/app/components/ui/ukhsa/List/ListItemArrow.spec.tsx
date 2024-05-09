@@ -8,4 +8,5 @@ test('renders children within a list item', async () => {
   )
 
   expect(getByRole('link', { name: 'List item arrow link content' })).toHaveAttribute('href', '/list-item-arrow')
+  expect(getByRole('link', { name: 'List item arrow link content' })).toHaveClass('before:bg-list_item_arrow')
 })
