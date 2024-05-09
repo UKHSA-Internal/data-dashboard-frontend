@@ -94,6 +94,12 @@ export class App {
     await this.page.waitForURL(url, { timeout: 10000 })
   }
 
+  async hasMetadata({ title, description }: { title: string; description: string }) {
+    const pageTitle = await this.page.title()
+    await expect(pageTitle).toBe(title)
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute('content', description)
+  }
+
   async hasDocumentTitle(title: string) {
     await expect(await this.page.title()).toBe(title)
   }
