@@ -2,6 +2,8 @@ import { ControlPosition } from 'leaflet'
 import { useMap } from 'react-leaflet'
 import Control from 'react-leaflet-custom-control'
 
+import { mapId } from '@/app/constants/map.constants'
+
 interface ZoomControlProps {
   position: ControlPosition
   zoomInText?: string
@@ -14,8 +16,8 @@ export const ZoomControl = ({ position, zoomInText = 'Zoom in', zoomOutText = 'Z
   return (
     <Control prepend position={position}>
       <button
-        aria-controls="viewport"
-        className="govuk-button govuk-button--secondary mb-0 block [&:focus:hover]:bg-[#ffdd00] [&:not(:focus)]:bg-white"
+        aria-controls={mapId}
+        className="govuk-button govuk-button--secondary ukhsa-map__button"
         onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
           event.preventDefault()
           map.setZoom(map.getZoom() + 1)
@@ -28,8 +30,8 @@ export const ZoomControl = ({ position, zoomInText = 'Zoom in', zoomOutText = 'Z
         </svg>
       </button>
       <button
-        aria-controls="viewport"
-        className="govuk-button govuk-button--secondary mb-0 block [&:focus:hover]:bg-[#ffdd00] [&:not(:focus)]:bg-white"
+        aria-controls={mapId}
+        className="govuk-button govuk-button--secondary ukhsa-map__button"
         onClick={(event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => {
           event.preventDefault()
           map.setZoom(map.getZoom() - 1)

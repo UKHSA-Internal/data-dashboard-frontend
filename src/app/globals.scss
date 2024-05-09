@@ -121,12 +121,15 @@ $govuk-page-width: 1400px;
   }
 }
 
-/* 
-  Force hide the default Leaflet attribution element to prevent it from being displayed.
-  The <MapAttributionDialog /> component listens for mutations to this element,
-  dynamically updating the content of our custom copyright dialog based on changes
-  to the tile layer attributions.
-*/
-.leaflet-control-attribution {
-  display: none !important;
+.leaflet-container {
+  /* 
+    Force hide the default Leaflet attribution element to prevent it from being displayed.
+    The <MapAttributionDialog /> component listens for mutations to this element,
+    dynamically updating the content of our custom copyright dialog based on changes
+    to the tile layer attributions.
+  */
+
+  .leaflet-control-attribution {
+    display: none !important;
+  }
 }
