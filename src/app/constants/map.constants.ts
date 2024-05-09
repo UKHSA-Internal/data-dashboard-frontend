@@ -1,14 +1,41 @@
+import { LatLngExpression } from 'leaflet'
+
 /**
- * Unique identifier for our leaflet map container
- * This id is essential for accessibility as various our controls utilise `aria-controls` attributes
- * pointing to this value.
+ * Identifier for the container of our Leaflet map.
+ * This ID is important for accessibility, as it's referenced by `aria-controls` attributes
+ * in various controls.
  */
 export const mapId = 'viewport'
 
 /**
- * Accessible role for the leafet map container
+ * Element ID that describes the map, used by the `aria-describedby` attribute on the map container.
+ * This ID assists accessibility by providing a description for the map.
+ */
+export const mapDescriptionId = 'viewportDescription'
+
+/**
+ * Accessible role for the container of the Leaflet map.
+ * This role ensures accessibility for users of assistive technologies.
  */
 export const mapRole = 'application'
+
+/**
+ * Title for the container of the Leaflet map.
+ * This title is read aloud for screen readers.
+ */
+export const mapTitle = 'Interactive adverse weather map viewer'
+
+// Default map zoom level
+export const zoom = 7
+
+// Minimum zoom level allowed for the map
+export const minZoom = 6
+
+// Maximum zoom level allowed for the map
+export const maxZoom = 10
+
+// Default center coordinates of the map
+export const center: LatLngExpression = [52.7957, -1.5479]
 
 /**
  * Object mapping query parameter keys to their respective constants.
