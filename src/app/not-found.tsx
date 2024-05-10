@@ -3,6 +3,13 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { useTranslation } from './i18n'
 
+export async function generateMetadata() {
+  return {
+    title: 'Page not found',
+    description: 'Error - Page not found',
+  }
+}
+
 export default async function NotFoundPage() {
   const { t } = await useTranslation('errors')
   return (
