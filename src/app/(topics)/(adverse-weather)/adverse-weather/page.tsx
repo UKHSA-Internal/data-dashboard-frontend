@@ -47,7 +47,10 @@ export default async function AdverseWeather() {
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">
-            <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+            <hr
+              className="govuk-section-break govuk-section-break--l govuk-section-break--visible"
+              role="presentation"
+            />
 
             <List>
               <ListItem>

@@ -9,7 +9,9 @@ export const ListItem = ({ children, showRule = true }: ListItemProps) => {
   return (
     <li>
       {children}
-      {showRule && <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />}
+      {showRule && (
+        <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" role="presentation" />
+      )}
     </li>
   )
 }
