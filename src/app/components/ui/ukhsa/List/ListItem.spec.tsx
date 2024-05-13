@@ -15,5 +15,5 @@ test('renders children within a list item', async () => {
 test('shows horizontal rule', async () => {
   const { getByRole } = render(await ListItem({ children: 'List item content test' }))
 
-  expect(getByRole('separator')).toBeInTheDocument()
+  expect(getByRole('presentation')).toBeInTheDocument()
 })
