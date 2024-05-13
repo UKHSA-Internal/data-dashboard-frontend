@@ -13,6 +13,7 @@ import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
+import { HealthAlertsMapDialog } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapDialog'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { useMenu } from './utils/menu.utils'
@@ -130,6 +131,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ) : null}
 
         <div className="govuk-width-container">{children}</div>
+
+        <HealthAlertsMapDialog />
+
         <Footer />
       </body>
     </html>

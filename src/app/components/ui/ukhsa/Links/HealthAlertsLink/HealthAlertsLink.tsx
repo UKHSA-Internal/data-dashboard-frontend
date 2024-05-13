@@ -5,8 +5,13 @@ import { useSearchParams } from 'next/navigation'
 
 import { mapQueryKeys } from '@/app/constants/map.constants'
 import { useTranslation } from '@/app/i18n/client'
+import { clsx } from '@/lib/clsx'
 
-export default function HealthAlertsLink() {
+interface HealthAlertsLinkProps {
+  className?: string
+}
+
+export default function HealthAlertsLink({ className }: HealthAlertsLinkProps) {
   const { t } = useTranslation('adverseWeather')
   const searchParams = useSearchParams()
 
@@ -15,7 +20,7 @@ export default function HealthAlertsLink() {
 
   return (
     <Link
-      className="govuk-button govuk-button--secondary inline-flex gap-2 no-js:hidden"
+      className={clsx('govuk-button govuk-button--secondary inline-flex gap-2 no-js:hidden', className)}
       href={{
         search: searchParamsWithMap.toString(),
       }}
