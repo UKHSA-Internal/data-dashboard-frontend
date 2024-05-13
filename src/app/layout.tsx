@@ -4,6 +4,7 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 
 import './globals.scss'
 
+import { flag } from '@unleash/nextjs'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -13,7 +14,9 @@ import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
+import { HealthAlertsMapDialog } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapDialog'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { flags } from './constants/flags.constants'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { useMenu } from './utils/menu.utils'
 
@@ -25,6 +28,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { t } = await useTranslation('common')
 
   const globalBanner = await useGlobalBanner()
+
+  const { enabled: adverseWeatherEnabled } = await flag(flags.adverseWeather)
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -130,6 +135,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         ) : null}
 
         <div className="govuk-width-container">{children}</div>
+
+        {adverseWeatherEnabled ? <HealthAlertsMapDialog /> : null}
+
         <Footer />
       </body>
     </html>

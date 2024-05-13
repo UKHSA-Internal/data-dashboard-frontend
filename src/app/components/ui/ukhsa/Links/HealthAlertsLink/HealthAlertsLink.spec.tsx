@@ -18,4 +18,10 @@ describe('HealthAlertsLink', () => {
     expect(link).toBeInTheDocument()
     expect(link).toHaveAttribute('href', '?v=map')
   })
+
+  test('renders the link with custom className', () => {
+    render(<HealthAlertsLink className="ukhsa-test-class" />)
+    const link = screen.getByRole('link', { name: 'View map of weather health alerts' })
+    expect(link).toHaveClass('ukhsa-test-class')
+  })
 })
