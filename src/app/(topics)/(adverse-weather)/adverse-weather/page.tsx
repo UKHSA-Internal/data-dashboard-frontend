@@ -53,7 +53,7 @@ export default async function AdverseWeather() {
             />
 
             <List>
-              <ListItem>
+              <ListItem spacing="l">
                 <ListItemArrow>
                   <ListItemArrowLink href="/adverse-weather/cold-health-alerts">
                     Cold weather-health alerts
@@ -64,7 +64,7 @@ export default async function AdverseWeather() {
                 </ListItemArrow>
               </ListItem>
 
-              <ListItem>
+              <ListItem spacing="l">
                 <ListItemArrow>
                   <ListItemArrowLink href="/adverse-weather/heat-health-alerts">
                     Heat weather-health alerts

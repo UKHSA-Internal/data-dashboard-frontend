@@ -1,9 +1,9 @@
 import { flag } from '@unleash/nextjs'
+import Link from 'next/link'
 
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { flags } from '@/app/constants/flags.constants'
 
 export async function generateMetadata() {
@@ -53,30 +53,19 @@ export default async function WeatherHealthAlert() {
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">
             <hr
-              className="govuk-section-break govuk-section-break--l govuk-section-break--visible"
+              className="govuk-section-break govuk-section-break--m govuk-section-break--visible"
               role="presentation"
             />
 
             <List>
               <ListItem>
-                <ListItemArrow>
-                  <ListItemArrowLink href="/adverse-weather/cold-health-alerts">East midlands</ListItemArrowLink>
-                  <ListItemArrowParagraph>
-                    Check your risk of cold alerts, view latest messages and updates
-                  </ListItemArrowParagraph>
-                </ListItemArrow>
+                <div className="">Icon</div>
+                <Link href="/">East Midlands</Link>
+                <span>Updated 7:07am on 8 April 2024</span>
+                <div>RED</div>
               </ListItem>
-
-              <ListItem>
-                <ListItemArrow>
-                  <ListItemArrowLink href="/adverse-weather/heat-health-alerts">
-                    Heat weather-health alerts
-                  </ListItemArrowLink>
-                  <ListItemArrowParagraph>
-                    Check your risk of heat alerts, view latest messages and updates
-                  </ListItemArrowParagraph>
-                </ListItemArrow>
-              </ListItem>
+              <ListItem>East of England</ListItem>
+              <ListItem>London</ListItem>
             </List>
           </div>
         </div>
