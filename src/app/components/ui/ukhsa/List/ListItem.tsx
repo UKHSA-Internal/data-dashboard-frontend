@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { ReactNode } from 'react'
 
 interface ListItemProps {
@@ -12,7 +13,9 @@ export const ListItem = ({ children, showRule = true, spacing = 'm' }: ListItemP
       {children}
       {showRule && (
         <hr
-          className={`govuk-section-break govuk-section-break--${spacing} govuk-section-break--visible`}
+          className={clsx(`govuk-section-break govuk-section-break--${spacing} govuk-section-break--visible`, {
+            'govuk-!-margin-top-1 govuk-!-margin-bottom-1': spacing == 's',
+          })}
           role="presentation"
         />
       )}
