@@ -20,7 +20,7 @@ export default function HealthAlertsLink({ className }: HealthAlertsLinkProps) {
 
   return (
     <Link
-      className={clsx('govuk-button govuk-button--secondary inline-flex gap-2 no-js:hidden', className)}
+      className={clsx('govuk-button govuk-button--secondary inline-flex w-auto gap-2 no-js:hidden', className)}
       href={{
         search: searchParamsWithMap.toString(),
       }}

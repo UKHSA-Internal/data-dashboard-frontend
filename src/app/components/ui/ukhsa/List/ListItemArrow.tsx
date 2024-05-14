@@ -6,7 +6,7 @@ interface ListItemArrowProps {
 }
 
 export const ListItemArrow = ({ children }: ListItemArrowProps) => {
-  return <div className="relative">{children}</div>
+  return <div className="govuk-!-padding-right-3 relative">{children}</div>
 }
 
 export const ListItemArrowParagraph = ({ children }: ListItemArrowProps) => {
