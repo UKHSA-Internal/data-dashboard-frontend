@@ -2,6 +2,7 @@ import { flag } from '@unleash/nextjs'
 import Link from 'next/link'
 
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import {
@@ -56,6 +57,8 @@ export default async function WeatherHealthAlert() {
           </div>
         </div>
       </div>
+
+      <HealthAlertsLink className="govuk-!-margin-bottom-5" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
