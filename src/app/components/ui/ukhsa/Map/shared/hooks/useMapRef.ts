@@ -7,7 +7,7 @@
 import { type Map } from 'leaflet'
 import { useCallback } from 'react'
 
-import { mapDescriptionId, mapRole, mapTitle } from '@/app/constants/map.constants'
+import { mapDescriptionId, mapRole } from '@/app/constants/map.constants'
 
 export const useMapRef = () =>
   useCallback((node: Map | null) => {
@@ -15,7 +15,7 @@ export const useMapRef = () =>
       const container = node.getContainer()
       container.setAttribute('tabindex', '0')
       container.setAttribute('role', mapRole)
-      container.setAttribute('aria-label', mapTitle)
       container.setAttribute('aria-describedby', mapDescriptionId)
+      container.setAttribute('aria-live', 'assertive')
     }
   }, [])
