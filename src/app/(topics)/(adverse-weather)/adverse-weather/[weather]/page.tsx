@@ -171,25 +171,45 @@ export default async function WeatherHealthAlert() {
           </div>
 
           <h3 className="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
-          <Link className="govuk-link govuk-link--no-visited-state" href="/">
-            Hot weather and Health: Supporting vulnerable people
-          </Link>
-
-          <h3 className="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-1">UKHSA Action Cards</h3>
           <List className="govuk-!-margin-bottom-7">
             <ListItem showRule={false}>
-              <Link className="govuk-link govuk-link--no-visited-state" href="/">
-                Voluntary and community sector
+              <Link
+                className="govuk-link govuk-link--no-visited-state"
+                href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1171545/Adverse-weather-health-plan-2023.pdf"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                UKHSA Adverse Weather and Health Plan and supporting evidence
               </Link>
             </ListItem>
             <ListItem showRule={false}>
-              <Link className="govuk-link govuk-link--no-visited-state" href="/">
-                Commissioners
+              <Link
+                className="govuk-link govuk-link--no-visited-state"
+                href="https://www.metoffice.gov.uk/"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Find the latest weather forecasts and warnings
               </Link>
             </ListItem>
             <ListItem showRule={false}>
-              <Link className="govuk-link govuk-link--no-visited-state" href="/">
-                Health and social care providers
+              <Link
+                className="govuk-link govuk-link--no-visited-state"
+                href="https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Met Office National Severe Weather Warning Service
+              </Link>
+            </ListItem>
+            <ListItem showRule={false}>
+              <Link
+                className="govuk-link govuk-link--no-visited-state"
+                href="https://check-for-flooding.service.gov.uk/alerts-and-warnings"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                Flood Alerts and Warnings
               </Link>
             </ListItem>
           </List>

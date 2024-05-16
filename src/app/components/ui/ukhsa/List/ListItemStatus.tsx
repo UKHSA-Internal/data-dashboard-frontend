@@ -27,7 +27,7 @@ interface ListItemStatusIconProps {
 export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => {
   let icon
 
-  if (type == 'heat') {
+  if (type === 'heat') {
     switch (level) {
       case 'green':
         icon = <HeatHealthAlertGreenIcon />
@@ -43,7 +43,7 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
         break
     }
   }
-  if (type == 'cold') {
+  if (type === 'cold') {
     switch (level) {
       case 'green':
         icon = <ColdHealthAlertGreenIcon />
@@ -97,18 +97,18 @@ interface ListItemStatusTagProps {
 export const ListItemStatusTag = ({ level, region }: ListItemStatusTagProps) => {
   let ariaLabel = `There is currently a ${level} heat alert status for ${region}`
 
-  if (level == 'amber') ariaLabel = `There is currently an ${level} heat alert status for ${region}`
+  if (level === 'amber') ariaLabel = `There is currently an ${level} heat alert status for ${region}`
 
-  if (level == 'no alerts') ariaLabel = `There are currently no alerts for ${region}`
+  if (level === 'no alerts') ariaLabel = `There are currently no alerts for ${region}`
 
   return (
     <div
       className={clsx('govuk-tag govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
-        'govuk-tag--green': level == 'green',
-        'govuk-tag--yellow': level == 'yellow',
-        'govuk-tag--orange': level == 'amber',
-        'govuk-tag--red': level == 'red',
-        'govuk-tag--grey': level == 'no alerts',
+        'govuk-tag--green': level === 'green',
+        'govuk-tag--yellow': level === 'yellow',
+        'govuk-tag--orange': level === 'amber',
+        'govuk-tag--red': level === 'red',
+        'govuk-tag--grey': level === 'no alerts',
       })}
       aria-label={ariaLabel}
     >
