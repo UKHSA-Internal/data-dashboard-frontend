@@ -59,12 +59,12 @@ export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [J
 
   // Otherwise, provide instructions for selecting regions using keyboard numbers.
   const description = (
-    <div id={mapDescriptionId} className="govuk-visually-hidden">
-      {`${visibleRegions.length} regions highlighted in the map area with X active alerts. Use number keys to select a
-        region.`}
-
+    <div id={mapDescriptionId} className="govuk-visually-hidden" data-testid="ukhsa-map-sr">
+      {`${numVisibleRegions} regions highlighted in the map area with X active alerts. Use number keys to select a region.`}
       {visibleRegions.map((region, index) => {
-        return `${index + 1}. ${region.properties.phec16nm} - X alert \n`
+        // TODO: Once integrated with API, add dynamic alert text.
+        // TODO: See if we can use i18n for this instead.
+        return `${index + 1}. ${region.properties[geoJsonFeatureId]} - X alert \n`
       })}
     </div>
   )
