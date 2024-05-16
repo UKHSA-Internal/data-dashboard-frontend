@@ -16,7 +16,7 @@ interface ListItemStatusProps {
 }
 
 export const ListItemStatus = ({ children }: ListItemStatusProps) => {
-  return <div className="relative grid grid-cols-[50px_1fr_115px] gap-2">{children}</div>
+  return <div className="relative grid grid-cols-[1fr_100px] gap-2 sm:grid-cols-[50px_1fr_100px]">{children}</div>
 }
 
 interface ListItemStatusIconProps {
@@ -60,7 +60,7 @@ export const ListItemStatusIcon = ({ alertLevel, weather }: ListItemStatusIconPr
     }
   }
 
-  return <div className="m-auto">{icon}</div>
+  return <div className="m-auto hidden sm:block">{icon}</div>
 }
 
 export const ListItemStatusContent = ({ children }: ListItemStatusProps) => {
@@ -82,7 +82,11 @@ export const ListItemStatusLink = ({ children, href }: ListItemStatusLinkProps) 
 }
 
 export const ListItemStatusTimestamp = ({ children }: ListItemStatusProps) => {
-  return <span className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1">{children}</span>
+  return (
+    <span className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1 text-[14px] sm:text-[16px]">
+      {children}
+    </span>
+  )
 }
 
 interface ListItemStatusTagProps {

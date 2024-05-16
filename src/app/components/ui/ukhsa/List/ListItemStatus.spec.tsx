@@ -1,6 +1,6 @@
 import { render } from '@testing-library/react'
 
-import { ListItemStatusTag } from './ListItemStatus'
+import { ListItemStatusTag, ListItemStatusTimestamp } from './ListItemStatus'
 
 describe('renders correct tag', () => {
   test('renders green tag', async () => {
@@ -32,4 +32,10 @@ describe('renders correct tag', () => {
 
     expect(getByText('NO ALERTS')).toHaveClass('govuk-tag--grey')
   })
+})
+
+test('renders timestamp classes as expected', async () => {
+  const { getByText } = render(await ListItemStatusTimestamp({ children: 'timestamp test' }))
+
+  expect(getByText('timestamp test')).toHaveClass('govuk-body-s')
 })
