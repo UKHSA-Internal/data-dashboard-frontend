@@ -1,5 +1,5 @@
 export const HeatHealthAlertAmberIcon = () => (
-  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
       clipRule="evenodd"

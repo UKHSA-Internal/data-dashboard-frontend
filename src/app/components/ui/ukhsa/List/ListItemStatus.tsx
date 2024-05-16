@@ -20,15 +20,15 @@ export const ListItemStatus = ({ children }: ListItemStatusProps) => {
 }
 
 interface ListItemStatusIconProps {
-  alertLevel: 'green' | 'yellow' | 'amber' | 'red'
-  weather: 'heat' | 'cold'
+  level: 'green' | 'yellow' | 'amber' | 'red'
+  type: 'heat' | 'cold'
 }
 
-export const ListItemStatusIcon = ({ alertLevel, weather }: ListItemStatusIconProps) => {
+export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => {
   let icon
 
-  if (weather == 'heat') {
-    switch (alertLevel) {
+  if (type == 'heat') {
+    switch (level) {
       case 'green':
         icon = <HeatHealthAlertGreenIcon />
         break
@@ -43,8 +43,8 @@ export const ListItemStatusIcon = ({ alertLevel, weather }: ListItemStatusIconPr
         break
     }
   }
-  if (weather == 'cold') {
-    switch (alertLevel) {
+  if (type == 'cold') {
+    switch (level) {
       case 'green':
         icon = <ColdHealthAlertGreenIcon />
         break
@@ -90,21 +90,29 @@ export const ListItemStatusTimestamp = ({ children }: ListItemStatusProps) => {
 }
 
 interface ListItemStatusTagProps {
-  alertLevel: 'green' | 'yellow' | 'amber' | 'red' | 'no alerts'
+  level: 'green' | 'yellow' | 'amber' | 'red' | 'no alerts'
+  region: string
 }
 
-export const ListItemStatusTag = ({ alertLevel }: ListItemStatusTagProps) => {
+export const ListItemStatusTag = ({ level, region }: ListItemStatusTagProps) => {
+  let ariaLabel = `There is currently a ${level} heat alert status for ${region}`
+
+  if (level == 'amber') ariaLabel = `There is currently an ${level} heat alert status for ${region}`
+
+  if (level == 'no alerts') ariaLabel = `There are currently no alerts for ${region}`
+
   return (
     <div
-      className={clsx('govuk-tag govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto', {
-        'govuk-tag--green': alertLevel == 'green',
-        'govuk-tag--yellow': alertLevel == 'yellow',
-        'govuk-tag--orange': alertLevel == 'amber',
-        'govuk-tag--red': alertLevel == 'red',
-        'govuk-tag--grey': alertLevel == 'no alerts',
+      className={clsx('govuk-tag govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
+        'govuk-tag--green': level == 'green',
+        'govuk-tag--yellow': level == 'yellow',
+        'govuk-tag--orange': level == 'amber',
+        'govuk-tag--red': level == 'red',
+        'govuk-tag--grey': level == 'no alerts',
       })}
+      aria-label={ariaLabel}
     >
-      {alertLevel.toUpperCase()}
+      {level}
     </div>
   )
 }

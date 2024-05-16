@@ -71,100 +71,100 @@ export default async function WeatherHealthAlert() {
             <List>
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="red" weather="heat" />
+                  <ListItemStatusIcon level="red" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">East Midlands</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="red" />
+                  <ListItemStatusTag level="red" region="East Midlands" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="red" weather="heat" />
+                  <ListItemStatusIcon level="red" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">East of England</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="red" />
+                  <ListItemStatusTag level="red" region="East of England" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="amber" weather="heat" />
+                  <ListItemStatusIcon level="amber" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">London</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="amber" />
+                  <ListItemStatusTag level="amber" region="London" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="yellow" weather="heat" />
+                  <ListItemStatusIcon level="yellow" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">North East</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="yellow" />
+                  <ListItemStatusTag level="yellow" region="North East" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="yellow" weather="heat" />
+                  <ListItemStatusIcon level="yellow" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">North West</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="yellow" />
+                  <ListItemStatusTag level="yellow" region="North West" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="green" weather="heat" />
+                  <ListItemStatusIcon level="green" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">South East</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="no alerts" />
+                  <ListItemStatusTag level="no alerts" region="South East" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="green" weather="heat" />
+                  <ListItemStatusIcon level="green" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">South West</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="no alerts" />
+                  <ListItemStatusTag level="no alerts" region="South West" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="green" weather="heat" />
+                  <ListItemStatusIcon level="green" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">West Midlands</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="no alerts" />
+                  <ListItemStatusTag level="no alerts" region="West Midlands" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon alertLevel="green" weather="heat" />
+                  <ListItemStatusIcon level="green" type="heat" />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">Yorkshire and Humber</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag alertLevel="no alerts" />
+                  <ListItemStatusTag level="no alerts" region="Yorkshire and Humber" />
                 </ListItemStatus>
               </ListItem>
             </List>
