@@ -3,6 +3,7 @@
 exports[`Checks icons match snapshots ColdHealthAlertAmberIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -165,6 +166,7 @@ exports[`Checks icons match snapshots ColdHealthAlertAmberIcon matches expected 
 exports[`Checks icons match snapshots ColdHealthAlertGreenIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -327,6 +329,7 @@ exports[`Checks icons match snapshots ColdHealthAlertGreenIcon matches expected 
 exports[`Checks icons match snapshots ColdHealthAlertRedIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -489,6 +492,7 @@ exports[`Checks icons match snapshots ColdHealthAlertRedIcon matches expected sn
 exports[`Checks icons match snapshots ColdHealthAlertYellowIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -651,6 +655,7 @@ exports[`Checks icons match snapshots ColdHealthAlertYellowIcon matches expected
 exports[`Checks icons match snapshots HeatHealthAlertAmberIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -813,6 +818,7 @@ exports[`Checks icons match snapshots HeatHealthAlertAmberIcon matches expected 
 exports[`Checks icons match snapshots HeatHealthAlertGreenIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -975,6 +981,7 @@ exports[`Checks icons match snapshots HeatHealthAlertGreenIcon matches expected 
 exports[`Checks icons match snapshots HeatHealthAlertRedIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"
@@ -1137,6 +1144,7 @@ exports[`Checks icons match snapshots HeatHealthAlertRedIcon matches expected sn
 exports[`Checks icons match snapshots HeatHealthAlertYellowIcon matches expected snapshot 1`] = `
 <div>
   <svg
+    aria-hidden="true"
     fill="none"
     height="45"
     viewBox="0 0 400 381"

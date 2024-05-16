@@ -14,7 +14,7 @@ export const ListItem = ({ children, showRule = true, spacing = 'm' }: ListItemP
       {showRule && (
         <hr
           className={clsx(`govuk-section-break govuk-section-break--${spacing} govuk-section-break--visible`, {
-            'govuk-!-margin-top-1 govuk-!-margin-bottom-1': spacing == 's',
+            'govuk-!-margin-top-2 govuk-!-margin-bottom-2': spacing == 's',
           })}
           role="presentation"
         />

@@ -64,7 +64,7 @@ export default async function WeatherHealthAlert() {
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">
             <hr
-              className="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-1 govuk-!-margin-bottom-1"
+              className="govuk-section-break govuk-section-break--m govuk-section-break--visible govuk-!-margin-top-2 govuk-!-margin-bottom-2"
               role="presentation"
             />
 
