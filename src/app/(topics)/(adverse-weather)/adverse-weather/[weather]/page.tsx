@@ -176,7 +176,7 @@ export default async function WeatherHealthAlert() {
           </Link>
 
           <h3 className="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-1">UKHSA Action Cards</h3>
-          <List>
+          <List className="govuk-!-margin-bottom-7">
             <ListItem showRule={false}>
               <Link className="govuk-link govuk-link--no-visited-state" href="/">
                 Voluntary and community sector

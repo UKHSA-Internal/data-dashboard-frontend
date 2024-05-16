@@ -1,19 +1,19 @@
 export const ColdHealthAlertRedIcon = () => (
   <svg width="48" height="45" viewBox="0 0 400 381" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M200.404 11.0065C207.954 11.2062 215.121 15.5333 218.885 22.1793L386.879 338.013C393.466 351.194 384.023 369.612 368.037 370H32.0379C17.4302 369.645 6.02855 352.348 13.2066 338.013L181.201 22.1793C183.087 18.7139 185.875 15.8397 189.261 13.8697C192.647 11.8997 196.501 10.9094 200.404 11.0065Z"
       fill="white"
       stroke="#E3000F"
-      stroke-width="22"
-      stroke-miterlimit="1.41421"
-      stroke-linejoin="round"
+      strokeWidth="22"
+      strokeMiterlimit="1.41421"
+      strokeLinejoin="round"
     />
     <mask id="path-2-inside-1_0_1" fill="white">
       <path
-        fill-rule="evenodd"
-        clip-rule="evenodd"
+        fillRule="evenodd"
+        clipRule="evenodd"
         d="M205.405 126C195.162 126 186.859 134.304 186.859 144.547V269.111C173.865 275.919 165 289.534 165 305.219C165 327.717 183.238 345.956 205.737 345.956C228.235 345.956 246.473 327.717 246.473 305.219C246.473 289.268 237.306 275.459 223.952 268.772V144.547C223.952 134.304 215.649 126 205.405 126Z"
       />
     </mask>
@@ -30,14 +30,14 @@ export const ColdHealthAlertRedIcon = () => (
     <rect x="229.251" y="161.769" width="13.2477" height="5.29908" rx="2.64954" fill="black" />
     <rect x="229.251" y="143.222" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M205.737 143.222C202.993 143.222 200.769 145.446 200.769 148.19V282.186C190.168 284.466 182.222 293.893 182.222 305.175C182.222 318.162 192.75 328.69 205.737 328.69C218.723 328.69 229.251 318.162 229.251 305.175C229.251 293.893 221.305 284.466 210.705 282.186V148.19C210.705 145.446 208.48 143.222 205.737 143.222Z"
       fill="#E3000F"
     />
     <path
-      fill-rule="evenodd"
-      clip-rule="evenodd"
+      fillRule="evenodd"
+      clipRule="evenodd"
       d="M182 151.083C162.716 151.083 147.082 166.716 147.082 186C147.082 205.285 162.716 220.918 182 220.918V151.083Z"
       fill="#FFCB00"
     />
