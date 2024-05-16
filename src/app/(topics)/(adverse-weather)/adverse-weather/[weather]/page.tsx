@@ -176,7 +176,7 @@ export default async function WeatherHealthAlert() {
               <Link
                 className="govuk-link govuk-link--no-visited-state"
                 href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1171545/Adverse-weather-health-plan-2023.pdf"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 target="_blank"
               >
                 UKHSA Adverse Weather and Health Plan and supporting evidence
@@ -186,7 +186,7 @@ export default async function WeatherHealthAlert() {
               <Link
                 className="govuk-link govuk-link--no-visited-state"
                 href="https://www.metoffice.gov.uk/"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 target="_blank"
               >
                 Find the latest weather forecasts and warnings
@@ -196,7 +196,7 @@ export default async function WeatherHealthAlert() {
               <Link
                 className="govuk-link govuk-link--no-visited-state"
                 href="https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 target="_blank"
               >
                 Met Office National Severe Weather Warning Service
@@ -206,7 +206,7 @@ export default async function WeatherHealthAlert() {
               <Link
                 className="govuk-link govuk-link--no-visited-state"
                 href="https://check-for-flooding.service.gov.uk/alerts-and-warnings"
-                rel="noopener noreferrer"
+                rel="noopener noreferrer nofollow"
                 target="_blank"
               >
                 Flood Alerts and Warnings
