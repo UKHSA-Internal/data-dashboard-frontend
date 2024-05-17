@@ -92,12 +92,13 @@ export const ListItemStatusTimestamp = ({ children }: ListItemStatusProps) => {
 interface ListItemStatusTagProps {
   level: 'green' | 'yellow' | 'amber' | 'red' | 'no alerts'
   region: string
+  type: 'heat' | 'cold'
 }
 
-export const ListItemStatusTag = ({ level, region }: ListItemStatusTagProps) => {
-  let ariaLabel = `There is currently a ${level} heat alert status for ${region}`
+export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
+  let ariaLabel = `There is currently a ${level} ${type} alert status for ${region}`
 
-  if (level === 'amber') ariaLabel = `There is currently an ${level} heat alert status for ${region}`
+  if (level === 'amber') ariaLabel = `There is currently an ${level} ${type} alert status for ${region}`
 
   if (level === 'no alerts') ariaLabel = `There are currently no alerts for ${region}`
 

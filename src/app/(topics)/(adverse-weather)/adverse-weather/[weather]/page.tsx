@@ -76,7 +76,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">East Midlands</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="red" region="East Midlands" />
+                  <ListItemStatusTag type="heat" level="red" region="East Midlands" />
                 </ListItemStatus>
               </ListItem>
 
@@ -87,7 +87,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">East of England</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="red" region="East of England" />
+                  <ListItemStatusTag type="heat" level="red" region="East of England" />
                 </ListItemStatus>
               </ListItem>
 
@@ -98,7 +98,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">London</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="amber" region="London" />
+                  <ListItemStatusTag type="heat" level="amber" region="London" />
                 </ListItemStatus>
               </ListItem>
 
@@ -109,7 +109,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">North East</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="yellow" region="North East" />
+                  <ListItemStatusTag type="heat" level="yellow" region="North East" />
                 </ListItemStatus>
               </ListItem>
 
@@ -120,7 +120,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">North West</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="yellow" region="North West" />
+                  <ListItemStatusTag type="heat" level="yellow" region="North West" />
                 </ListItemStatus>
               </ListItem>
 
@@ -131,7 +131,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">South East</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="no alerts" region="South East" />
+                  <ListItemStatusTag type="heat" level="no alerts" region="South East" />
                 </ListItemStatus>
               </ListItem>
 
@@ -142,7 +142,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">South West</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="no alerts" region="South West" />
+                  <ListItemStatusTag type="heat" level="no alerts" region="South West" />
                 </ListItemStatus>
               </ListItem>
 
@@ -153,7 +153,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">West Midlands</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="no alerts" region="West Midlands" />
+                  <ListItemStatusTag type="heat" level="no alerts" region="West Midlands" />
                 </ListItemStatus>
               </ListItem>
 
@@ -164,7 +164,7 @@ export default async function WeatherHealthAlert() {
                     <ListItemStatusLink href="/">Yorkshire and Humber</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag level="no alerts" region="Yorkshire and Humber" />
+                  <ListItemStatusTag type="heat" level="no alerts" region="Yorkshire and Humber" />
                 </ListItemStatus>
               </ListItem>
             </List>
