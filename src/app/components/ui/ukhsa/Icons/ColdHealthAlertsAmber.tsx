@@ -1,5 +1,6 @@
 export const ColdHealthAlertAmberIcon = () => (
   <svg width="48" height="45" viewBox="0 0 400 381" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
+    <title>Cold health alerts amber</title>
     <path
       fillRule="evenodd"
       clipRule="evenodd"
