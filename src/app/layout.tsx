@@ -136,7 +136,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <div className="govuk-width-container">{children}</div>
 
-        {adverseWeatherEnabled ? <HealthAlertsMapDialog /> : null}
+        {adverseWeatherEnabled ? (
+          <Suspense fallback={null}>
+            <HealthAlertsMapDialog />
+          </Suspense>
+        ) : null}
 
         <Footer />
       </body>
