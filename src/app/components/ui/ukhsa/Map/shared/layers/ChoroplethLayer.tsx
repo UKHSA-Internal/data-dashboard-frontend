@@ -9,7 +9,10 @@ import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'l
 import { ComponentProps, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
+import { geoJsonFeatureId } from '@/app/constants/map.constants'
+
 import { Feature, featureCollection } from '../data/geojson/ukhsa-regions'
+import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 
 /**
  * Extracted type of props that GeoJSON component accepts.
@@ -29,17 +32,17 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
   /**
    * Colours mapping object to associate a particular region id with one of the four available colours
    */
-  featureColours: Record<number, 'green' | 'amber' | 'yellow' | 'red'>
+  featureColours: Record<string, 'green' | 'amber' | 'yellow' | 'red'>
 
   /**
    * The ID of the selected feature.
    */
-  selectedFeatureId?: number | null
+  selectedFeatureId?: string | null
 
   /**
    * Callback that fires when individual features are clicked.
    */
-  onSelectFeature?: (callback: (featureId: number | null) => number | null) => void
+  onSelectFeature?: (callback: (featureId: string | null) => string | null) => void
 
   /**
    * Optional theme object to override the GeoJSON styles.
@@ -99,15 +102,19 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   className = 'transition-all duration-200',
   ...rest
 }: ChoroplethProps) => {
-  const clickedFeatureIdRef = useRef<number | null>(selectedFeatureId)
+  const featuresRef = useRef<Array<Feature>>([])
+
+  const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
 
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
+      featuresRef.current = [...featuresRef.current, feature]
+
       layer.on({
         click: (event: CustomLeafletEvent) => {
           // Store the clicked ref
           if (layer.feature.id) {
-            clickedFeatureIdRef.current = Number(layer.feature.id)
+            clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
 
           // Prevent map click events from firing
@@ -121,7 +128,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
               return null
             } else {
               // Clicked new feature
-              return feature.id ? Number(feature.id) : null
+              return feature.properties[geoJsonFeatureId]
             }
           })
         },
@@ -139,6 +146,8 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
     },
   }
 
+  const [screenReaderText, updateScreenReaderText] = useChoroplethKeyboardAccessibility(featuresRef.current)
+
   // Setup map click events for interactions outside of the geojson features
   const MapEvents = useCallback(() => {
     useMapEvents({
@@ -147,12 +156,16 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           onSelectFeature?.(() => null)
         }
       },
+      moveend() {
+        updateScreenReaderText()
+      },
     })
     return null
-  }, [onSelectFeature, selectedFeatureId])
+  }, [onSelectFeature, selectedFeatureId, updateScreenReaderText])
 
   return (
     <>
+      {screenReaderText}
       <MapEvents />
       <GeoJSON
         data={data ?? featureCollection}
@@ -163,8 +176,10 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
 
           const { active, ...rest } = theme
 
+          const currentFeatureId = feature.properties[geoJsonFeatureId]
+
           // Determine the fill opacity based on whether the feature is selected
-          const fillOpacity = selectedFeatureId == feature.id ? active.fillOpacity : theme.fillOpacity
+          const fillOpacity = selectedFeatureId == currentFeatureId ? active.fillOpacity : theme.fillOpacity
 
           // Define the base style for the feature
           const style: Leaflet.PathOptions = {
@@ -174,8 +189,8 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           }
 
           // Apply custom colours if the feature ID is present in the featureColours map
-          if (feature.id in featureColours) {
-            const colour = featureColours[Number(feature.id)]
+          if (currentFeatureId in featureColours) {
+            const colour = featureColours[currentFeatureId]
             // Set the fill color using CSS variable and featureColours map
             style.fillColor = `var(--colour-${colour === 'amber' ? 'orange' : colour})`
           }

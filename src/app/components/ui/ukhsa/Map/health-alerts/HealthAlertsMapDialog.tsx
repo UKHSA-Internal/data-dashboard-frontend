@@ -3,13 +3,13 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { parseAsInteger, parseAsStringLiteral, useQueryState } from 'nuqs'
+import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
 import { mapQueryKeys } from '@/app/constants/map.constants'
 
-const { Map, BaseLayer, Choropleth } = {
+const { Map, BaseLayer, Choropleth, HealthAlert } = {
   Map: dynamic(() => import('@/app/components/ui/ukhsa/Map/Map'), {
     ssr: false,
     loading: () => <Skeleton className="h-screen" />,
@@ -20,11 +20,14 @@ const { Map, BaseLayer, Choropleth } = {
   Choropleth: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
     ssr: false,
   }),
+  HealthAlert: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/controls/HealthAlertControl'), {
+    ssr: false,
+  }),
 }
 
 export function HealthAlertsMapDialog() {
   const [view] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
-  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsInteger)
+  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
 
   const router = useRouter()
 
@@ -61,19 +64,20 @@ export function HealthAlertsMapDialog() {
             <BaseLayer />
             <Choropleth
               featureColours={{
-                1: 'green',
-                2: 'green',
-                3: 'green',
-                4: 'green',
-                5: 'green',
-                6: 'green',
-                7: 'green',
-                8: 'green',
-                9: 'green',
+                E45000001: 'green',
+                E45000005: 'green',
+                E45000009: 'green',
+                E45000010: 'green',
+                E45000016: 'green',
+                E45000017: 'green',
+                E45000018: 'green',
+                E45000019: 'green',
+                E45000020: 'green',
               }}
               selectedFeatureId={selectedFeatureId}
               onSelectFeature={setSelectedFeatureId}
-            ></Choropleth>
+            />
+            <HealthAlert open={!!selectedFeatureId} onClose={() => setSelectedFeatureId(null)} />
           </Map>
         </DialogContent>
       </Dialog>
