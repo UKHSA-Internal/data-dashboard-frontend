@@ -14,7 +14,7 @@ import { useTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
-import { HealthAlertsMapDialog } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapDialog'
+import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { flags } from './constants/flags.constants'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
@@ -136,11 +136,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <div className="govuk-width-container">{children}</div>
 
-        {adverseWeatherEnabled ? (
-          <Suspense fallback={null}>
-            <HealthAlertsMapDialog />
-          </Suspense>
-        ) : null}
+        {adverseWeatherEnabled ? <HealthAlertsMapWrapper /> : null}
 
         <Footer />
       </body>
