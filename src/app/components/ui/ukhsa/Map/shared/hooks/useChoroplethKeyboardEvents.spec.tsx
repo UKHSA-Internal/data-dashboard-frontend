@@ -3,6 +3,7 @@ import { useQueryState } from 'nuqs'
 import { useMap } from 'react-leaflet'
 import { Mock } from 'ts-mockery'
 
+import { geoJsonFeatureId } from '@/app/constants/map.constants'
 import { act, render, renderHook, waitFor, within } from '@/config/test-utils'
 
 import { FeatureCollection } from '../data/geojson/ukhsa-regions'
@@ -14,7 +15,7 @@ jest.mock('nuqs')
 const features = Mock.of<FeatureCollection['features']>([
   {
     type: 'Feature',
-    properties: { phec16cd: '1' },
+    properties: { [geoJsonFeatureId]: '1' },
     geometry: {
       type: 'Polygon',
       coordinates: [

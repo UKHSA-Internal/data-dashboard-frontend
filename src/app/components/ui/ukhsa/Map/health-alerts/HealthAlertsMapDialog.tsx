@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
+import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
 import { mapQueryKeys } from '@/app/constants/map.constants'
 
@@ -25,7 +26,11 @@ const { Map, BaseLayer, Choropleth, HealthAlert } = {
   }),
 }
 
-export function HealthAlertsMapDialog() {
+interface HealthAlertsMapDialogProps {
+  featureCollection: GeoJSONProps['data']
+}
+
+export function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
   const [view] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
 
@@ -63,16 +68,17 @@ export function HealthAlertsMapDialog() {
           <Map>
             <BaseLayer />
             <Choropleth
+              data={featureCollection}
               featureColours={{
-                E45000001: 'green',
-                E45000005: 'green',
-                E45000009: 'green',
-                E45000010: 'green',
-                E45000016: 'green',
-                E45000017: 'green',
-                E45000018: 'green',
-                E45000019: 'green',
-                E45000020: 'green',
+                E12000001: 'green',
+                E12000002: 'green',
+                E12000003: 'green',
+                E12000004: 'green',
+                E12000005: 'green',
+                E12000006: 'green',
+                E12000007: 'green',
+                E12000008: 'green',
+                E12000009: 'green',
               }}
               selectedFeatureId={selectedFeatureId}
               onSelectFeature={setSelectedFeatureId}
