@@ -1,7 +1,7 @@
-const baseUrl = process.env.API_URL
-const feedbackApiBaseUrl = process.env.FEEDBACK_API_URL
+const baseUrl = process.env.API_URL ?? ''
+const feedbackApiBaseUrl = process.env.FEEDBACK_API_URL ?? ''
 
-export const getApiBaseUrl = () => `${baseUrl ?? ''}/api`
+export const getApiBaseUrl = () => `${baseUrl}/api`
 
 export const getFeedbackApiBaseUrl = () => `${feedbackApiBaseUrl}/api`
 
