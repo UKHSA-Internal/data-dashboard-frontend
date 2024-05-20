@@ -1,6 +1,18 @@
 import { render } from '@testing-library/react'
 
-import { ListItemArrowLink } from './ListItemArrow'
+import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from './ListItemArrow'
+
+test('renders relative container around children', async () => {
+  const { getByText } = render(await ListItemArrow({ children: 'list item arrow' }))
+
+  expect(getByText('list item arrow')).toHaveClass('govuk-!-padding-right-3 relative')
+})
+
+test('renders govuk body', async () => {
+  const { getByText } = render(await ListItemArrowParagraph({ children: 'list item paragraph' }))
+
+  expect(getByText('list item paragraph')).toHaveClass('govuk-body-m')
+})
 
 test('renders children within a list item', async () => {
   const { getByRole } = render(

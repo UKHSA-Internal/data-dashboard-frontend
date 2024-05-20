@@ -36,10 +36,10 @@ const customJestConfig = {
   ],
   coverageThreshold: {
     global: {
+      statements: 93.8,
+      branches: 86,
       lines: 95,
-      functions: 95,
-      branches: 77,
-      statements: 93,
+      functions: 96,
     },
   },
   watchPathIgnorePatterns: ['node_modules'],
