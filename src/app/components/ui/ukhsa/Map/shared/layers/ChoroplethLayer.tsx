@@ -11,13 +11,13 @@ import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { geoJsonFeatureId } from '@/app/constants/map.constants'
 
-import { Feature, featureCollection } from '../data/geojson/ukhsa-regions'
+import { Feature } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 
 /**
  * Extracted type of props that GeoJSON component accepts.
  */
-type GeoJSONProps = ComponentProps<typeof GeoJSON>
+export type GeoJSONProps = ComponentProps<typeof GeoJSON>
 
 /**
  * Props specific to the Choropleth component.
@@ -27,7 +27,7 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
    * Optional prop to override the data received by the underlying GeoJSON component from react-leaflet.
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
-  data?: GeoJSONProps['data']
+  data: GeoJSONProps['data']
 
   /**
    * Colours mapping object to associate a particular region id with one of the four available colours
@@ -168,7 +168,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
       {screenReaderText}
       <MapEvents />
       <GeoJSON
-        data={data ?? featureCollection}
+        data={data}
         {...defaultOptions}
         style={(feature) => {
           // If the feature or its ID is not available, return an empty style
