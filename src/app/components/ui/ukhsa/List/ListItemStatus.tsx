@@ -16,7 +16,7 @@ interface ListItemStatusProps {
 }
 
 export const ListItemStatus = ({ children }: ListItemStatusProps) => {
-  return <div className="relative grid grid-cols-[1fr_100px] gap-2 sm:grid-cols-[50px_1fr_100px]">{children}</div>
+  return <div className="relative grid grid-cols-[1fr_70px] gap-2 sm:grid-cols-[50px_1fr_70px]">{children}</div>
 }
 
 interface ListItemStatusIconProps {
@@ -104,12 +104,11 @@ export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProp
 
   return (
     <div
-      className={clsx('govuk-tag govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
-        'govuk-tag--green': level === 'green',
-        'govuk-tag--yellow': level === 'yellow',
-        'govuk-tag--orange': level === 'amber',
-        'govuk-tag--red': level === 'red',
-        'govuk-tag--grey': level === 'no alerts',
+      className={clsx('govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
+        'govuk-tag govuk-tag--green': level === 'green',
+        'govuk-tag govuk-tag--yellow': level === 'yellow',
+        'govuk-tag govuk-tag--orange': level === 'amber',
+        'govuk-tag govuk-tag--red': level === 'red',
       })}
       aria-label={ariaLabel}
     >

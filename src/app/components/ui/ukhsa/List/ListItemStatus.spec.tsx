@@ -124,7 +124,7 @@ describe('renders correct tag', () => {
   test('renders no alerts tag', async () => {
     const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'no alerts', region: 'London' }))
 
-    expect(getByText('no alerts')).toHaveClass('govuk-tag--grey')
+    expect(getByText('no alerts')).not.toHaveClass('govuk-tag')
     expect(getByText('no alerts')).toHaveAttribute('aria-label', 'There are currently no alerts for London')
   })
 })
