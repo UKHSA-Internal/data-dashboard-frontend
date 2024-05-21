@@ -27,7 +27,7 @@ export const AlertBanner = ({ level, type }: AlertBannerProps) => {
   return (
     <div
       className={clsx(
-        `govuk-inset-text govuk-!-padding-top-2 govuk-!-padding-bottom-2 grid grid-cols-[50px_1fr] gap-3`,
+        `govuk-inset-text govuk-!-padding-top-2 govuk-!-padding-bottom-2 govuk-!-margin-top-0 govuk-!-margin-bottom-4 grid grid-cols-[50px_1fr] gap-3`,
         {
           'border-green bg-green_opaque': level === 'green',
           'border-yellow bg-yellow_opaque': level === 'yellow',
