@@ -1,6 +1,6 @@
 import { flag } from '@unleash/nextjs'
 
-import { View } from '@/app/components/ui/ukhsa'
+import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { flags } from '@/app/constants/flags.constants'
@@ -32,8 +32,10 @@ export default async function Alert() {
         { name: 'East Midlands', link: '/adverse-weather/heat-health-alerts/east-midlands' },
       ]}
     >
-      <AlertBanner type={'heat'} level={'amber'} />
       <div className="govuk-grid-row">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <AlertBanner type={'heat'} level={'amber'} />
+        </div>
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">
             Significant impacts are expected across the health and social care sector due to the high temperatures,
@@ -46,6 +48,13 @@ export default async function Alert() {
             issues; staffing issues due to external factors (e.g. transport); cross system demand for temporary AC
             capacity being exceeded possible and other sectors starting to be observe impacts (e.g. travel delays).
           </div>
+        </div>
+
+        <div className="govuk-grid-column-one-quarter-from-desktop">
+          <RelatedLinks variant="sidebar">
+            <RelatedLink title="Adverse weather help" url="/" />
+            <RelatedLink title="What to do in adverse weather" url="/" />
+          </RelatedLinks>
         </div>
       </div>
 

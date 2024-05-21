@@ -14,7 +14,7 @@ export const Announcement = ({ variant, heading, children, className }: Announce
     <div
       className={clsx(
         className,
-        'govuk-inset-text govuk-!-margin-top-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1 govuk-!-margin-bottom-0 flex flex-wrap gap-2',
+        'govuk-inset-text govuk-!-margin-top-0 govuk-!-padding-top-1 govuk-!-padding-bottom-1 govuk-!-margin-bottom-0 govuk-!-margin-top-0 govuk-!-margin-bottom-1 flex flex-wrap gap-2',
         {
           'border-blue': variant === 'Information',
           'border-red': variant === 'Warning',
