@@ -33,6 +33,7 @@ const customJestConfig = {
     '<rootDir>/src/api/utils/api.utils.ts',
     '<rootDir>/src/api/models',
     '<rootDir>/src/middleware.ts',
+    '<rootDir>/src/mock-server',
   ],
   coverageThreshold: {
     global: {
