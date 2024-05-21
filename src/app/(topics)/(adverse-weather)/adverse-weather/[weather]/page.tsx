@@ -170,7 +170,7 @@ export default async function WeatherHealthAlert() {
             </List>
           </div>
 
-          <h3 className="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
+          <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
           <List className="govuk-!-margin-bottom-7">
             <ListItem showRule={false}>
               <Link

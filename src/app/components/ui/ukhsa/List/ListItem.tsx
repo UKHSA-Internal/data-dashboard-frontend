@@ -9,7 +9,7 @@ interface ListItemProps {
 
 export const ListItem = ({ children, showRule = true, spacing = 'm' }: ListItemProps) => {
   return (
-    <li>
+    <li className={clsx({ 'govuk-!-margin-top-2': !showRule })}>
       {children}
       {showRule && (
         <hr
