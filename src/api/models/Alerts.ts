@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 export const HealthAlertTypes = z.enum(['heat', 'cold'])
 
-export const HealthAlertStatus = z.enum(['GREEN', 'RED', 'AMBER', 'YELLOW'])
+export const HealthAlertStatus = z.enum(['Green', 'Red', 'Amber', 'Yellow'])
 
 export const HealthAlert = z.object({
   status: HealthAlertStatus,
