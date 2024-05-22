@@ -6,10 +6,12 @@
 'use client'
 
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
+import { parseAsString, useQueryState } from 'nuqs'
 import { ComponentProps, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
-import { geoJsonFeatureId } from '@/app/constants/map.constants'
+import { HealthAlertStatus } from '@/api/models/Alerts'
+import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
 
 import { Feature } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
@@ -32,7 +34,7 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
   /**
    * Colours mapping object to associate a particular region id with one of the four available colours
    */
-  featureColours: Record<string, 'green' | 'amber' | 'yellow' | 'red'>
+  featureColours: Record<string, HealthAlertStatus>
 
   /**
    * The ID of the selected feature.
@@ -76,14 +78,15 @@ interface GeoJSONLayer<T extends LayerWithFeature> extends GeoJSONOptions {
 }
 
 const defaultTheme = {
-  weight: 1,
-  color: 'rgba(255,255, 255, 0.7)',
-  fillOpacity: 0.55,
+  weight: 2,
+  color: 'rgba(255, 255, 255, 1)',
+  fillOpacity: 1,
   hover: {
-    fillOpacity: 0.65,
+    fillOpacity: 1,
   },
   active: {
-    fillOpacity: 0.86,
+    fillColor: 'black',
+    fillOpacity: 1,
   },
 } as const
 
@@ -95,13 +98,13 @@ const defaultTheme = {
  */
 const ChoroplethLayer = <T extends LayerWithFeature>({
   featureColours,
-  selectedFeatureId = null,
-  onSelectFeature,
   data,
   theme = defaultTheme,
-  className = 'transition-all duration-200',
+  className = 'transition-all duration-150',
   ...rest
 }: ChoroplethProps) => {
+  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
+
   const featuresRef = useRef<Array<Feature>>([])
 
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
@@ -121,7 +124,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           Leaflet.DomEvent.stopPropagation(event)
 
           // Fire the callback prop if provided
-          onSelectFeature?.((featureId) => {
+          setSelectedFeatureId((featureId) => {
             const feature = event.target.feature
             if (feature.id == featureId) {
               // Clicked same feature
@@ -135,12 +138,22 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         mouseover: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
-          layer.setStyle({ fillOpacity: theme.hover.fillOpacity })
+
+          const colour = layer.options.fillColor ?? ''
+          const hoverColour = colour.replace(/(--colour-)(green|yellow|orange|red)/g, '$1$2-dark')
+          layer.setStyle({ fillColor: hoverColour, fillOpacity: theme.hover.fillOpacity })
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
-          layer.setStyle({ fillOpacity: theme.fillOpacity })
+
+          const colour = featureColours[feature.properties[geoJsonFeatureId]].toLowerCase()
+
+          layer.setStyle({
+            // TODO: Move this colour logic to a function
+            fillColor: `var(--colour-${colour === 'amber' ? 'orange' : colour})`,
+            fillOpacity: theme.fillOpacity,
+          })
         },
       })
     },
@@ -153,7 +166,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
     useMapEvents({
       click() {
         if (selectedFeatureId) {
-          onSelectFeature?.(() => null)
+          setSelectedFeatureId(null)
         }
       },
       moveend() {
@@ -161,7 +174,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
       },
     })
     return null
-  }, [onSelectFeature, selectedFeatureId, updateScreenReaderText])
+  }, [setSelectedFeatureId, selectedFeatureId, updateScreenReaderText])
 
   return (
     <>
@@ -171,6 +184,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         data={data}
         {...defaultOptions}
         style={(feature) => {
+          console.log('selectedFeatureId', selectedFeatureId)
           // If the feature or its ID is not available, return an empty style
           if (!feature || !feature.id) return {}
 
@@ -178,8 +192,9 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
 
           const currentFeatureId = feature.properties[geoJsonFeatureId]
 
+          const isSelected = selectedFeatureId == currentFeatureId
           // Determine the fill opacity based on whether the feature is selected
-          const fillOpacity = selectedFeatureId == currentFeatureId ? active.fillOpacity : theme.fillOpacity
+          const fillOpacity = isSelected ? active.fillOpacity : theme.fillOpacity
 
           // Define the base style for the feature
           const style: Leaflet.PathOptions = {
@@ -192,7 +207,13 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           if (currentFeatureId in featureColours) {
             const colour = featureColours[currentFeatureId]
             // Set the fill color using CSS variable and featureColours map
-            style.fillColor = `var(--colour-${colour === 'amber' ? 'orange' : colour})`
+            if (isSelected) {
+              const hoverColour = `var(--colour-${colour.toLowerCase()}-darkest)`
+              style.fillColor = hoverColour
+            } else {
+              // TODO: Move this colour logic to a function
+              style.fillColor = `var(--colour-${colour.toLocaleLowerCase() === 'amber' ? 'orange' : colour.toLowerCase()})`
+            }
           }
 
           return style

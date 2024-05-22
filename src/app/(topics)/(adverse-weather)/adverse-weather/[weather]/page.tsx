@@ -58,7 +58,7 @@ export default async function WeatherHealthAlert() {
         </div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-bottom-5" />
+      <HealthAlertsLink type="heat" className="govuk-!-margin-bottom-5" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">

@@ -94,6 +94,19 @@ $govuk-page-width: 1400px;
   --colour-code-light-red: #{govuk-tint(govuk-colour('red'), 2%)};
   --colour-code-blue: var(--colour-blue);
   --colour-code-green: var(--colour-green);
+
+  // UKHSA Map Custom Colours
+  --colour-orange-dark: #{govuk-shade(govuk-colour('orange'), 15%)};
+  --colour-amber-dark: #{govuk-shade(govuk-colour('orange'), 15%)};
+  --colour-red-dark: #{govuk-shade(govuk-colour('red'), 15%)};
+  --colour-yellow-dark: #{govuk-shade(govuk-colour('yellow'), 15%)};
+  --colour-green-dark: #{govuk-shade(govuk-colour('green'), 15%)};
+
+  --colour-orange-darkest: #{govuk-shade(govuk-colour('orange'), 45%)};
+  --colour-amber-darkest: #{govuk-shade(govuk-colour('orange'), 45%)};
+  --colour-red-darkest: #{govuk-shade(govuk-colour('red'), 45%)};
+  --colour-yellow-darkest: #{govuk-shade(govuk-colour('yellow'), 45%)};
+  --colour-green-darkest: #{govuk-shade(govuk-colour('green'), 45%)};
 }
 
 .ukhsa-chevron {
