@@ -21,6 +21,8 @@ addAliases({
 
 import express from 'express'
 
+import alertList from './handlers/alerts/v1/[category]'
+import alertDetail from './handlers/alerts/v1/[category]/[region]'
 import bulkDownloads from './handlers/bulkdownloads/v1'
 import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
@@ -49,6 +51,8 @@ app.get('/api/trends/v3', trends)
 app.get('/api/bulkdownloads/v1', bulkDownloads)
 app.get('/api/geographies/v2/:topic', geographies)
 app.get('/api/global-banners/v1', globalBanners)
+app.get('/api/alerts/v1/:category', alertList)
+app.get('/api/alerts/v1/:category/:region', alertDetail)
 
 // POST endpoints
 app.post('/api/charts/v3', charts)
