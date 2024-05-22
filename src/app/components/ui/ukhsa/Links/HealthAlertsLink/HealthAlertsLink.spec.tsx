@@ -1,8 +1,11 @@
 import React from 'react'
 
+import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { render, screen } from '@/config/test-utils'
 
 import HealthAlertsLink from './HealthAlertsLink'
+
+mockRouter.push('/mock-age')
 
 describe('HealthAlertsLink', () => {
   test('renders the link with correct styles', () => {
@@ -30,5 +33,12 @@ describe('HealthAlertsLink', () => {
     render(<HealthAlertsLink type="heat" className="ukhsa-test-class" />)
     const link = screen.getByRole('link', { name: 'View map of weather health alerts' })
     expect(link).toHaveClass('ukhsa-test-class')
+  })
+
+  test('Shows a fallback message when there is an unrecoverable map error', () => {
+    mockRouter.push('/mock-age?error=map')
+    render(<HealthAlertsLink type="heat" className="ukhsa-test-class" />)
+    expect(screen.getByText('There is a problem with the map. Please try again later.')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'View map of weather health alerts' })).not.toBeInTheDocument()
   })
 })
