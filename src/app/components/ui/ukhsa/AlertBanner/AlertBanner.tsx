@@ -1,27 +1,29 @@
 import clsx from 'clsx'
 
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+
 import { ListItemStatusIcon } from '../List/ListItemStatus'
 
 interface AlertBannerProps {
-  level: 'green' | 'yellow' | 'amber' | 'red'
-  type: 'heat' | 'cold'
+  level: HealthAlertStatus
+  type: HealthAlertTypes
 }
 
 export const AlertBanner = ({ level, type }: AlertBannerProps) => {
   const alertType = type.charAt(0).toUpperCase() + type.slice(1)
 
   const title = {
-    green: `${alertType} warning`,
-    yellow: `${alertType} warning`,
-    amber: `Extreme ${alertType} warning`,
-    red: `Extreme ${alertType} warning`,
+    Green: `${alertType} warning`,
+    Yellow: `${alertType} warning`,
+    Amber: `Extreme ${alertType} warning`,
+    Red: `Extreme ${alertType} warning`,
   }
 
   const message = {
-    green: `${alertType} warnings may occur`,
-    yellow: `${alertType} warnings are possible`,
-    amber: `${alertType} warnings are likely`,
-    red: `${alertType} warnings are extremely likely`,
+    Green: `${alertType} warnings may occur`,
+    Yellow: `${alertType} warnings are possible`,
+    Amber: `${alertType} warnings are likely`,
+    Red: `${alertType} warnings are extremely likely`,
   }
 
   return (
@@ -29,10 +31,10 @@ export const AlertBanner = ({ level, type }: AlertBannerProps) => {
       className={clsx(
         `govuk-inset-text govuk-!-padding-top-2 govuk-!-padding-bottom-2 govuk-!-margin-top-0 govuk-!-margin-bottom-4 grid grid-cols-[50px_1fr] gap-3`,
         {
-          'border-green bg-green_opaque': level === 'green',
-          'border-yellow bg-yellow_opaque': level === 'yellow',
-          'border-orange bg-orange_opaque': level === 'amber',
-          'border-red bg-red_opaque': level === 'red',
+          'border-green bg-green_opaque': level === 'Green',
+          'border-yellow bg-yellow_opaque': level === 'Yellow',
+          'border-orange bg-orange_opaque': level === 'Amber',
+          'border-red bg-red_opaque': level === 'Red',
         }
       )}
     >
