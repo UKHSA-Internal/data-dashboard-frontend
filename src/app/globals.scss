@@ -94,6 +94,11 @@ $govuk-page-width: 1400px;
   --colour-code-light-red: #{govuk-tint(govuk-colour('red'), 2%)};
   --colour-code-blue: var(--colour-blue);
   --colour-code-green: var(--colour-green);
+
+  --colour-green-opaque: #c2ddd0;
+  --colour-yellow-opaque: #fff7c2;
+  --colour-orange-opaque: #fcdecf;
+  --colour-red-opaque: #f5cfc9;
 }
 
 .ukhsa-chevron {
