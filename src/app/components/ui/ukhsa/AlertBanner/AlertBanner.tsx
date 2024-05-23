@@ -31,10 +31,10 @@ export const AlertBanner = ({ level, type }: AlertBannerProps) => {
       className={clsx(
         `govuk-inset-text govuk-!-padding-top-2 govuk-!-padding-bottom-2 govuk-!-margin-top-0 govuk-!-margin-bottom-4 grid grid-cols-[50px_1fr] gap-3`,
         {
-          'border-green bg-green_opaque': level === 'Green',
-          'border-yellow bg-yellow_opaque': level === 'Yellow',
-          'border-orange bg-orange_opaque': level === 'Amber',
-          'border-red bg-red_opaque': level === 'Red',
+          'border-green bg-green-opaque': level === 'Green',
+          'border-yellow bg-yellow-opaque': level === 'Yellow',
+          'border-orange bg-orange-opaque': level === 'Amber',
+          'border-red bg-red-opaque': level === 'Red',
         }
       )}
     >
