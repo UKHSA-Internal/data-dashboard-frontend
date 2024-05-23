@@ -10,16 +10,21 @@ import { clsx } from '@/lib/clsx'
 
 interface HealthAlertsLinkProps {
   type: HealthAlertTypes
+  regionId?: string
   className?: string
 }
 
-export default function HealthAlertsLink({ className, type }: HealthAlertsLinkProps) {
+export default function HealthAlertsLink({ className, type, regionId }: HealthAlertsLinkProps) {
   const { t } = useTranslation('adverseWeather')
   const searchParams = useSearchParams()
 
   const searchParamsWithMap = new URLSearchParams(searchParams)
   searchParamsWithMap.set(mapQueryKeys.view, 'map')
   searchParamsWithMap.set(mapQueryKeys.alertType, type)
+
+  if (regionId) {
+    searchParamsWithMap.set(mapQueryKeys.featureId, regionId)
+  }
 
   if (searchParams.has('error') && searchParams.get('error') === 'map') {
     return <p>{t('map.fatalError')}</p>

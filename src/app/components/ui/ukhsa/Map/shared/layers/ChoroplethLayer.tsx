@@ -12,6 +12,11 @@ import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { HealthAlertStatus } from '@/api/models/Alerts'
 import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
+import {
+  getActiveCssVariableFromColour,
+  getCssVariableFromColour,
+  getHoverCssVariableFromColour,
+} from '@/app/utils/map.utils'
 
 import { Feature } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
@@ -49,10 +54,7 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
   /**
    * Optional theme object to override the GeoJSON styles.
    */
-  theme?: PathOptions & {
-    hover: PathOptions
-    active: PathOptions
-  }
+  theme?: PathOptions
 
   /**
    * Optional class name to attach to each feature.
@@ -81,13 +83,6 @@ const defaultTheme = {
   weight: 2,
   color: 'rgba(255, 255, 255, 1)',
   fillOpacity: 1,
-  hover: {
-    fillOpacity: 1,
-  },
-  active: {
-    fillColor: 'black',
-    fillOpacity: 1,
-  },
 } as const
 
 /**
@@ -139,19 +134,17 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
 
-          const colour = layer.options.fillColor ?? ''
-          const hoverColour = colour.replace(/(--colour-)(green|yellow|orange|red)/g, '$1$2-dark')
-          layer.setStyle({ fillColor: hoverColour, fillOpacity: theme.hover.fillOpacity })
+          const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
+          const hoverColour = getHoverCssVariableFromColour(colour)
+          layer.setStyle({ fillColor: hoverColour })
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
 
-          const colour = featureColours[feature.properties[geoJsonFeatureId]].toLowerCase()
-
+          const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
           layer.setStyle({
-            // TODO: Move this colour logic to a function
-            fillColor: `var(--colour-${colour === 'amber' ? 'orange' : colour})`,
+            fillColor: getCssVariableFromColour(colour),
             fillOpacity: theme.fillOpacity,
           })
         },
@@ -188,31 +181,22 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           // If the feature or its ID is not available, return an empty style
           if (!feature || !feature.id) return {}
 
-          const { active, ...rest } = theme
-
           const currentFeatureId = feature.properties[geoJsonFeatureId]
-
           const isSelected = selectedFeatureId == currentFeatureId
-          // Determine the fill opacity based on whether the feature is selected
-          const fillOpacity = isSelected ? active.fillOpacity : theme.fillOpacity
 
           // Define the base style for the feature
           const style: Leaflet.PathOptions = {
-            ...rest,
-            fillOpacity,
+            ...theme,
             className,
           }
 
           // Apply custom colours if the feature ID is present in the featureColours map
           if (currentFeatureId in featureColours) {
             const colour = featureColours[currentFeatureId]
-            // Set the fill color using CSS variable and featureColours map
             if (isSelected) {
-              const hoverColour = `var(--colour-${colour.toLowerCase()}-darkest)`
-              style.fillColor = hoverColour
+              style.fillColor = getActiveCssVariableFromColour(colour)
             } else {
-              // TODO: Move this colour logic to a function
-              style.fillColor = `var(--colour-${colour.toLocaleLowerCase() === 'amber' ? 'orange' : colour.toLowerCase()})`
+              style.fillColor = getCssVariableFromColour(colour)
             }
           }
 

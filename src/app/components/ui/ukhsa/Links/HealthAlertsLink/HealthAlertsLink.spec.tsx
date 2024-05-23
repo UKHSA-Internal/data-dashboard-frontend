@@ -29,6 +29,13 @@ describe('HealthAlertsLink', () => {
     expect(link).toHaveAttribute('href', '?v=map&type=heat')
   })
 
+  test('renders the link with the region id specified', () => {
+    render(<HealthAlertsLink type="heat" regionId="123" />)
+    const link = screen.getByRole('link', { name: 'View map of weather health alerts' })
+    expect(link).toBeInTheDocument()
+    expect(link).toHaveAttribute('href', '?v=map&type=heat&fid=123')
+  })
+
   test('renders the link with custom className', () => {
     render(<HealthAlertsLink type="heat" className="ukhsa-test-class" />)
     const link = screen.getByRole('link', { name: 'View map of weather health alerts' })
