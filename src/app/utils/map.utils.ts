@@ -23,10 +23,10 @@ export function getCssVariableFromColour(color: keyof typeof ColourVariableMap) 
   return ColourVariableMap[color]
 }
 
-export function getHoverCssVariableFromColour(color: keyof typeof ColourVariableMap) {
+export function getHoverCssVariableFromColour(color: keyof typeof HoverColourVariableMap) {
   return `${HoverColourVariableMap[color]}`
 }
 
-export function getActiveCssVariableFromColour(color: keyof typeof ColourVariableMap) {
+export function getActiveCssVariableFromColour(color: keyof typeof ActiveColourVariableMap) {
   return `${ActiveColourVariableMap[color]}`
 }
