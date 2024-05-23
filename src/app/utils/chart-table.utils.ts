@@ -59,7 +59,7 @@ export const parseChartTableData = (
   response: Response | null,
   { maxColumns }: Options = { maxColumns: chartTableMaxColumns.wide }
 ) => {
-  if (!response) return []
+  if (!response || !response.length) return []
 
   const maxColumnsExcludingDate = maxColumns - 1
   const numColumns = response[0].values.length
