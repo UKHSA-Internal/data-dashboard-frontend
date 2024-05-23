@@ -19,6 +19,7 @@ import {
   whatsNewParentMock,
 } from './page'
 import { accessOurDataChildMocks, accessOurDataParentMock } from './page/access-our-data'
+import { adverseWeatherChildMocks, adverseWeatherParentMock } from './page/adverse-weather'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -162,6 +163,25 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
       title: accessOurDataParentMock.title,
     },
     ...accessOurDataChildMocks.map(
+      ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
+        id,
+        meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
+        title,
+      })
+    ),
+    {
+      id: adverseWeatherParentMock.id,
+      meta: {
+        type: adverseWeatherParentMock.meta.type,
+        detail_url: adverseWeatherParentMock.meta.detail_url,
+        html_url: adverseWeatherParentMock.meta.html_url,
+        slug: adverseWeatherParentMock.meta.slug,
+        show_in_menus: adverseWeatherParentMock.meta.show_in_menus,
+        first_published_at: adverseWeatherParentMock.meta.first_published_at,
+      },
+      title: adverseWeatherParentMock.title,
+    },
+    ...adverseWeatherChildMocks.map(
       ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
         id,
         meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },
