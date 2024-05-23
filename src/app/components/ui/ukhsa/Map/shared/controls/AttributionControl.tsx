@@ -12,9 +12,8 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/app/components/ui/ukhsa/Dialog/Dialog'
+import { ScrollArea, ScrollBar } from '@/app/components/ui/ukhsa/ScrollArea/ScrollArea'
 import { mapId } from '@/app/constants/map.constants'
-
-import { ScrollArea, ScrollBar } from '../../../ScrollArea/ScrollArea'
 
 interface AttributionControlProps {
   position: ControlPosition

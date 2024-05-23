@@ -6,7 +6,9 @@ import { Suspense } from 'react'
 import Control from 'react-leaflet-custom-control'
 
 import { type HealthAlertTypes } from '@/api/models/Alerts'
+import { ScrollArea, ScrollBar } from '@/app/components/ui/ukhsa/ScrollArea/ScrollArea'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/app/components/ui/ukhsa/Sheet/Sheet'
+import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
 import {
   SummaryList,
   SummaryListKey,
@@ -16,8 +18,6 @@ import {
 import { mapQueryKeys } from '@/app/constants/map.constants'
 import { useTranslation } from '@/app/i18n/client'
 
-import { ScrollArea, ScrollBar } from '../../../ScrollArea/ScrollArea'
-import { Skeleton } from '../../../Skeleton/Skeleton'
 import { useSelectedAlert } from '../hooks/useSelectedAlert'
 
 function DialogSkeleton() {
