@@ -2,6 +2,8 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+
 import { ColdHealthAlertAmberIcon } from '../Icons/ColdHealthAlertsAmber'
 import { ColdHealthAlertGreenIcon } from '../Icons/ColdHealthAlertsGreen'
 import { ColdHealthAlertRedIcon } from '../Icons/ColdHealthAlertsRed'
@@ -16,12 +18,12 @@ interface ListItemStatusProps {
 }
 
 export const ListItemStatus = ({ children }: ListItemStatusProps) => {
-  return <div className="relative grid grid-cols-[1fr_100px] gap-2 sm:grid-cols-[50px_1fr_100px]">{children}</div>
+  return <div className="relative grid grid-cols-[1fr_70px] gap-2 sm:grid-cols-[50px_1fr_70px]">{children}</div>
 }
 
 interface ListItemStatusIconProps {
-  level: 'green' | 'yellow' | 'amber' | 'red'
-  type: 'heat' | 'cold'
+  level: HealthAlertStatus
+  type: HealthAlertTypes
 }
 
 export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => {
@@ -29,32 +31,32 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
 
   if (type === 'heat') {
     switch (level) {
-      case 'green':
+      case 'Green':
         icon = <HeatHealthAlertGreenIcon />
         break
-      case 'yellow':
+      case 'Yellow':
         icon = <HeatHealthAlertYellowIcon />
         break
-      case 'amber':
+      case 'Amber':
         icon = <HeatHealthAlertAmberIcon />
         break
-      case 'red':
+      case 'Red':
         icon = <HeatHealthAlertRedIcon />
         break
     }
   }
   if (type === 'cold') {
     switch (level) {
-      case 'green':
+      case 'Green':
         icon = <ColdHealthAlertGreenIcon />
         break
-      case 'yellow':
+      case 'Yellow':
         icon = <ColdHealthAlertYellowIcon />
         break
-      case 'amber':
+      case 'Amber':
         icon = <ColdHealthAlertAmberIcon />
         break
-      case 'red':
+      case 'Red':
         icon = <ColdHealthAlertRedIcon />
         break
     }
@@ -90,26 +92,25 @@ export const ListItemStatusTimestamp = ({ children }: ListItemStatusProps) => {
 }
 
 interface ListItemStatusTagProps {
-  level: 'green' | 'yellow' | 'amber' | 'red' | 'no alerts'
+  level: HealthAlertStatus | 'No alerts'
   region: string
-  type: 'heat' | 'cold'
+  type: HealthAlertTypes
 }
 
 export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
   let ariaLabel = `There is currently a ${level} ${type} alert status for ${region}`
 
-  if (level === 'amber') ariaLabel = `There is currently an ${level} ${type} alert status for ${region}`
+  if (level === 'Amber') ariaLabel = `There is currently an ${level} ${type} alert status for ${region}`
 
-  if (level === 'no alerts') ariaLabel = `There are currently no alerts for ${region}`
+  if (level === 'No alerts') ariaLabel = `There are currently no alerts for ${region}`
 
   return (
     <div
-      className={clsx('govuk-tag govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
-        'govuk-tag--green': level === 'green',
-        'govuk-tag--yellow': level === 'yellow',
-        'govuk-tag--orange': level === 'amber',
-        'govuk-tag--red': level === 'red',
-        'govuk-tag--grey': level === 'no alerts',
+      className={clsx('govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
+        'govuk-tag govuk-tag--green': level === 'Green',
+        'govuk-tag govuk-tag--yellow': level === 'Yellow',
+        'govuk-tag govuk-tag--orange': level === 'Amber',
+        'govuk-tag govuk-tag--red': level === 'Red',
       })}
       aria-label={ariaLabel}
     >

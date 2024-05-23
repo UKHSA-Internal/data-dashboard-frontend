@@ -34,7 +34,7 @@ export default async function Alert() {
     >
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <AlertBanner type={'heat'} level={'amber'} />
+          <AlertBanner type={'heat'} level={'Amber'} />
         </div>
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">

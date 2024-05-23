@@ -10,49 +10,49 @@ import {
 
 describe('correct health alerts icons displaying', () => {
   test('heat health alert green icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'green', type: 'heat' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Green', type: 'heat' }))
 
     expect(getByTitle('Heat health alerts green')).toBeInTheDocument()
   })
 
   test('heat health alert yellow icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'yellow', type: 'heat' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Yellow', type: 'heat' }))
 
     expect(getByTitle('Heat health alerts yellow')).toBeInTheDocument()
   })
 
   test('heat health alert amber icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'amber', type: 'heat' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Amber', type: 'heat' }))
 
     expect(getByTitle('Heat health alerts amber')).toBeInTheDocument()
   })
 
   test('heat health alert red icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'red', type: 'heat' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Red', type: 'heat' }))
 
     expect(getByTitle('Heat health alerts red')).toBeInTheDocument()
   })
 
   test('cold health alert green icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'green', type: 'cold' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Green', type: 'cold' }))
 
     expect(getByTitle('Cold health alerts green')).toBeInTheDocument()
   })
 
   test('cold health alert yellow icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'yellow', type: 'cold' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Yellow', type: 'cold' }))
 
     expect(getByTitle('Cold health alerts yellow')).toBeInTheDocument()
   })
 
   test('cold health alert amber icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'amber', type: 'cold' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Amber', type: 'cold' }))
 
     expect(getByTitle('Cold health alerts amber')).toBeInTheDocument()
   })
 
   test('cold health alert red icon', async () => {
-    const { getByTitle } = render(ListItemStatusIcon({ level: 'red', type: 'cold' }))
+    const { getByTitle } = render(ListItemStatusIcon({ level: 'Red', type: 'cold' }))
 
     expect(getByTitle('Cold health alerts red')).toBeInTheDocument()
   })
@@ -82,49 +82,49 @@ test('renders timestamp classes as expected', async () => {
 
 describe('renders correct tag', () => {
   test('renders green tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'green', region: 'East of England' }))
+    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'Green', region: 'East of England' }))
 
-    expect(getByText('green')).toHaveClass('govuk-tag--green')
-    expect(getByText('green')).toHaveAttribute(
+    expect(getByText('Green')).toHaveClass('govuk-tag--green')
+    expect(getByText('Green')).toHaveAttribute(
       'aria-label',
-      'There is currently a green heat alert status for East of England'
+      'There is currently a Green heat alert status for East of England'
     )
   })
 
   test('renders yellow tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'yellow', region: 'South East' }))
+    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'Yellow', region: 'South East' }))
 
-    expect(getByText('yellow')).toHaveClass('govuk-tag--yellow')
-    expect(getByText('yellow')).toHaveAttribute(
+    expect(getByText('Yellow')).toHaveClass('govuk-tag--yellow')
+    expect(getByText('Yellow')).toHaveAttribute(
       'aria-label',
-      'There is currently a yellow heat alert status for South East'
+      'There is currently a Yellow heat alert status for South East'
     )
   })
 
   test('renders amber tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'cold', level: 'amber', region: 'West Midlands' }))
+    const { getByText } = render(await ListItemStatusTag({ type: 'cold', level: 'Amber', region: 'West Midlands' }))
 
-    expect(getByText('amber')).toHaveClass('govuk-tag--orange')
-    expect(getByText('amber')).toHaveAttribute(
+    expect(getByText('Amber')).toHaveClass('govuk-tag--orange')
+    expect(getByText('Amber')).toHaveAttribute(
       'aria-label',
-      'There is currently an amber cold alert status for West Midlands'
+      'There is currently an Amber cold alert status for West Midlands'
     )
   })
 
   test('renders red tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'cold', level: 'red', region: 'East Midlands' }))
+    const { getByText } = render(await ListItemStatusTag({ type: 'cold', level: 'Red', region: 'East Midlands' }))
 
-    expect(getByText('red')).toHaveClass('govuk-tag--red')
-    expect(getByText('red')).toHaveAttribute(
+    expect(getByText('Red')).toHaveClass('govuk-tag--red')
+    expect(getByText('Red')).toHaveAttribute(
       'aria-label',
-      'There is currently a red cold alert status for East Midlands'
+      'There is currently a Red cold alert status for East Midlands'
     )
   })
 
   test('renders no alerts tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'no alerts', region: 'London' }))
+    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'No alerts', region: 'London' }))
 
-    expect(getByText('no alerts')).toHaveClass('govuk-tag--grey')
-    expect(getByText('no alerts')).toHaveAttribute('aria-label', 'There are currently no alerts for London')
+    expect(getByText('No alerts')).not.toHaveClass('govuk-tag')
+    expect(getByText('No alerts')).toHaveAttribute('aria-label', 'There are currently no alerts for London')
   })
 })
