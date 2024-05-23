@@ -177,7 +177,6 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         data={data}
         {...defaultOptions}
         style={(feature) => {
-          console.log('selectedFeatureId', selectedFeatureId)
           // If the feature or its ID is not available, return an empty style
           if (!feature || !feature.id) return {}
 

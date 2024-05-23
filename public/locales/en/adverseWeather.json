@@ -1,5 +1,7 @@
 {
   "map": {
+    "title": "Weather health alerts map",
+    "exitBtn": "Exit map",
     "trigger": "View map of weather health alerts",
     "fatalError": "There is a problem with the map. Please try again later.",
     "alertDialog": {

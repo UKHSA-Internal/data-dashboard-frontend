@@ -11,6 +11,7 @@ import ExitMapIcon from '@/app/components/ui/ukhsa/Icons/ExitMap'
 import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
 import { mapQueryKeys } from '@/app/constants/map.constants'
+import { useTranslation } from '@/app/i18n/client'
 
 import { useChoroplethFeatureColours } from '../shared/hooks/useChoroplethFeatureColours'
 
@@ -35,6 +36,7 @@ interface HealthAlertsMapDialogProps {
 }
 
 export default function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
+  const { t } = useTranslation('adverseWeather')
   const [, setError] = useQueryState(mapQueryKeys.error)
   const [mapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const router = useRouter()
@@ -78,12 +80,12 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
             className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2"
           >
             <ExitMapIcon />
-            Exit map
+            {t('map.exitBtn')}
           </Link>
         }
       >
         <DialogHeader aria-hidden className="govuk-visually-hidden">
-          <DialogTitle>Weather health alerts map</DialogTitle>
+          <DialogTitle>{t('map.title')}</DialogTitle>
         </DialogHeader>
 
         <Map>
