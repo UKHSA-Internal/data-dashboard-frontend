@@ -192,13 +192,10 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           // Apply custom colours if the feature ID is present in the featureColours map
           if (currentFeatureId in featureColours) {
             const colour = featureColours[currentFeatureId]
-            // Set the fill color using CSS variable and featureColours map
             if (isSelected) {
-              const hoverColour = getActiveCssVariableFromColour(colour)
-              style.fillColor = hoverColour
+              style.fillColor = getActiveCssVariableFromColour(colour)
             } else {
-              // TODO: Move this colour logic to a function
-              style.fillColor = `var(--colour-${colour.toLocaleLowerCase() === 'amber' ? 'orange' : colour.toLowerCase()})`
+              style.fillColor = getCssVariableFromColour(colour)
             }
           }
 
