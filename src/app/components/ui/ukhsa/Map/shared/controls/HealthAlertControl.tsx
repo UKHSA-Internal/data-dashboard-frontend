@@ -7,6 +7,12 @@ import Control from 'react-leaflet-custom-control'
 
 import { type HealthAlertTypes } from '@/api/models/Alerts'
 import { Sheet, SheetContent, SheetHeader, SheetTitle } from '@/app/components/ui/ukhsa/Sheet/Sheet'
+import {
+  SummaryList,
+  SummaryListKey,
+  SummaryListRow,
+  SummaryListValue,
+} from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
 import { mapQueryKeys } from '@/app/constants/map.constants'
 import { useTranslation } from '@/app/i18n/client'
 
@@ -43,29 +49,29 @@ function AlertDialogContent() {
       <SheetHeader>
         <ScrollArea className="h-[calc(100vh-75px)]">
           <SheetTitle className="mb-0 flex flex-wrap items-center gap-2">{regionName}</SheetTitle>
-          <dl className="govuk-summary-list">
-            <div className="govuk-summary-list__row">
-              <dt className="govuk-summary-list__key">{t('map.alertDialog.typeKey')}</dt>
-              <dd className="govuk-summary-list__value">{t('map.alertDialog.typeValue', { context: category })}</dd>
-            </div>
-            <div className="govuk-summary-list__row">
-              <dt className="govuk-summary-list__key">{t('map.alertDialog.statusKey')}</dt>
-              <dd className="govuk-summary-list__value">
+          <SummaryList>
+            <SummaryListRow>
+              <SummaryListKey>{t('map.alertDialog.typeKey')}</SummaryListKey>
+              <SummaryListValue>{t('map.alertDialog.typeValue', { context: category })}</SummaryListValue>
+            </SummaryListRow>
+            <SummaryListRow>
+              <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
+              <SummaryListValue>
                 {/* TODO: Move this colour logic to a function */}
                 <div
                   className={`govuk-tag capitalize ${status === 'Amber' ? 'govuk-tag--orange' : `govuk-tag--${status.toLowerCase()}`} mb-[2px]`}
                 >
                   {status.toLowerCase()}
                 </div>
-              </dd>
-            </div>
-            <div className="govuk-summary-list__row">
-              <dt className="govuk-summary-list__key">{t('map.alertDialog.dateKey')}</dt>
-              <dd className="govuk-summary-list__value">
+              </SummaryListValue>
+            </SummaryListRow>
+            <SummaryListRow>
+              <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
+              <SummaryListValue>
                 {t('map.alertDialog.firstPublished', { value: new Date(firstPublished) })}
-              </dd>
-            </div>
-          </dl>
+              </SummaryListValue>
+            </SummaryListRow>
+          </SummaryList>
 
           <div className="govuk-!-margin-top-3">
             <strong></strong>
