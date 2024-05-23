@@ -19,7 +19,7 @@ const { Map, BaseLayer, ChoroplethLayer, HealthAlertControl } = {
     ssr: false,
     loading: () => <Skeleton className="h-screen" />,
   }),
-  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayerEsri'), {
+  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
     ssr: false,
   }),
   ChoroplethLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
@@ -41,7 +41,7 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
   const featureColours = useChoroplethFeatureColours()
 
   const baseLayer = useMemo(() => {
-    return <BaseLayer token={process.env.NEXT_PUBLIC_ESRI_API_KEY} />
+    return <BaseLayer />
   }, [])
 
   const choroplethLayer = useMemo(() => {
