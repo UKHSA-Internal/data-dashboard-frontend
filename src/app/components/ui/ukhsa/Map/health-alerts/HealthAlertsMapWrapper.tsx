@@ -1,13 +1,18 @@
-import { Suspense, use } from 'react'
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 
-import { HealthAlertsMapDialog } from './HealthAlertsMapDialog'
+import featureCollection from '../shared/data/geojson/ukhsa-regions'
 
-export function HealthAlertsMapWrapper() {
-  const featureCollection = use(import('@/app/components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions')).default
+const HealthAlertsMapDialog = dynamic(() => import('./HealthAlertsMapDialog'))
 
+import { ErrorBoundary } from 'react-error-boundary'
+
+export async function HealthAlertsMapWrapper() {
   return (
-    <Suspense fallback={null}>
-      <HealthAlertsMapDialog featureCollection={featureCollection} />
-    </Suspense>
+    <ErrorBoundary fallback={null}>
+      <Suspense fallback={null}>
+        <HealthAlertsMapDialog featureCollection={featureCollection} />
+      </Suspense>
+    </ErrorBoundary>
   )
 }

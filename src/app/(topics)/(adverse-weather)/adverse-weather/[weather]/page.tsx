@@ -1,6 +1,7 @@
 import { flag } from '@unleash/nextjs'
 import Link from 'next/link'
 
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
@@ -165,19 +166,28 @@ export default async function WeatherHealthAlert() {
               {regions.map(({ id, region, type, level, link, lastUpdated }) => (
                 <ListItem key={id} spacing="s">
                   <ListItemStatus>
-                    <ListItemStatusIcon level={level} type={type} />
+                    {/* TODO: Remove type cast after integration*/}
+                    <ListItemStatusIcon
+                      level={level as HealthAlertStatus | 'No alerts'}
+                      type={type as HealthAlertTypes}
+                    />
                     <ListItemStatusContent>
                       <ListItemStatusLink href={link}>{region}</ListItemStatusLink>
                       <ListItemStatusTimestamp>{lastUpdated}</ListItemStatusTimestamp>
                     </ListItemStatusContent>
-                    <ListItemStatusTag type={type} level={level} region={region} />
+                    {/* TODO: Remove type cast */}
+                    <ListItemStatusTag
+                      level={level as HealthAlertStatus | 'No alerts'}
+                      type={type as HealthAlertTypes}
+                      region={region}
+                    />
                   </ListItemStatus>
                 </ListItem>
               ))}
             </List>
           </div>
 
-          <h3 className="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
+          <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
           <List className="govuk-!-margin-bottom-7">
             {furtherAdviceLinks.map(({ id, name, link }) => (
               <ListItem key={id} showRule={false}>

@@ -30,7 +30,7 @@ interface HealthAlertsMapDialogProps {
   featureCollection: GeoJSONProps['data']
 }
 
-export function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
+export default function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
   const [view] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
 
