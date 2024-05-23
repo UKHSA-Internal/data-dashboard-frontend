@@ -31,8 +31,109 @@ export async function generateMetadata() {
 }
 
 export default async function WeatherHealthAlert() {
-  const { title } = {
+  const { title, body, regions, relatedLinks, furtherAdviceLinks } = {
     title: 'Heat health alerts',
+    body: 'The alerting system provides an early warning when adverse temperatures are likely to impact on the health and wellbeing of the population. The Weather-Health Alerting System is provided by the UK Health Security Agency (UKHSA) in partnership with the Met Office. It’s intended to provide early warning to the health and social care sector, the responder community, the voluntary and community sector and government departments when adverse temperatures are likely to impact on the health and wellbeing of the population. The Weather-Health Alerting System is made up of the Heat-Health Alerts (HHA) and the Cold-Health Alerts (CHA). The Weather-Health Alerting System underpins the Adverse Weather and Health Plan.',
+    regions: [
+      {
+        id: 0,
+        region: 'East Midlands',
+        type: 'heat',
+        level: 'red',
+        link: '/adverse-weather/heat-health-alerts/east-midlands',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 1,
+        region: 'East of England',
+        type: 'heat',
+        level: 'red',
+        link: '/adverse-weather/heat-health-alerts/east-of-england',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 2,
+        region: 'London',
+        type: 'heat',
+        level: 'amber',
+        link: '/adverse-weather/heat-health-alerts/london',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 3,
+        region: 'North East',
+        type: 'heat',
+        level: 'yellow',
+        link: '/adverse-weather/heat-health-alerts/north-east',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 4,
+        region: 'North West',
+        type: 'heat',
+        level: 'yellow',
+        link: '/adverse-weather/heat-health-alerts/north-west',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 5,
+        region: 'South East',
+        type: 'heat',
+        level: 'no alerts',
+        link: '/adverse-weather/heat-health-alerts/south-east',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 6,
+        region: 'South West',
+        type: 'heat',
+        level: 'no alerts',
+        link: '/adverse-weather/heat-health-alerts/south-west',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 7,
+        region: 'West Midlands',
+        type: 'heat',
+        level: 'no alerts',
+        link: '/adverse-weather/heat-health-alerts/west-midlands',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+      {
+        id: 8,
+        region: 'Yorkshire and Humber',
+        type: 'heat',
+        level: 'no alerts',
+        link: '/adverse-weather/heat-health-alerts/yorkshire-and-humber',
+        lastUpdated: 'Updated 7:07am on 8 April 2024',
+      },
+    ],
+    furtherAdviceLinks: [
+      {
+        id: 0,
+        name: 'UKHSA Adverse Weather and Health Plan and supporting evidence',
+        link: 'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1171545/Adverse-weather-health-plan-2023.pdf',
+      },
+      {
+        id: 1,
+        name: 'Find the latest weather forecasts and warnings',
+        link: 'https://www.metoffice.gov.uk/',
+      },
+      {
+        id: 2,
+        name: 'Met Office National Severe Weather Warning Service',
+        link: 'https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings',
+      },
+      {
+        id: 3,
+        name: 'Flood Alerts and Warnings',
+        link: 'https://check-for-flooding.service.gov.uk/alerts-and-warnings',
+      },
+    ],
+    relatedLinks: [
+      { title: 'Adverse weather help', url: '/', id: 0 },
+      { title: 'What to do in adverse weather', url: '/', id: 1 },
+    ],
   }
 
   return (
@@ -46,15 +147,7 @@ export default async function WeatherHealthAlert() {
     >
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <div className="govuk-body">
-            The alerting system provides an early warning when adverse temperatures are likely to impact on the health
-            and wellbeing of the population. The Weather-Health Alerting System is provided by the UK Health Security
-            Agency (UKHSA) in partnership with the Met Office. It’s intended to provide early warning to the health and
-            social care sector, the responder community, the voluntary and community sector and government departments
-            when adverse temperatures are likely to impact on the health and wellbeing of the population. The
-            Weather-Health Alerting System is made up of the Heat-Health Alerts (HHA) and the Cold-Health Alerts (CHA).
-            The Weather-Health Alerting System underpins the Adverse Weather and Health Plan.
-          </div>
+          <div className="govuk-body">{body}</div>
         </div>
       </div>
 
@@ -69,156 +162,43 @@ export default async function WeatherHealthAlert() {
             />
 
             <List>
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="red" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">East Midlands</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="red" region="East Midlands" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="red" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">East of England</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="red" region="East of England" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="amber" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">London</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="amber" region="London" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="yellow" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">North East</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="yellow" region="North East" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="yellow" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">North West</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="yellow" region="North West" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="green" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">South East</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="no alerts" region="South East" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="green" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">South West</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="no alerts" region="South West" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="green" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">West Midlands</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="no alerts" region="West Midlands" />
-                </ListItemStatus>
-              </ListItem>
-
-              <ListItem spacing="s">
-                <ListItemStatus>
-                  <ListItemStatusIcon level="green" type="heat" />
-                  <ListItemStatusContent>
-                    <ListItemStatusLink href="/">Yorkshire and Humber</ListItemStatusLink>
-                    <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
-                  </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="no alerts" region="Yorkshire and Humber" />
-                </ListItemStatus>
-              </ListItem>
+              {regions.map(({ id, region, type, level, link, lastUpdated }) => (
+                <ListItem key={id} spacing="s">
+                  <ListItemStatus>
+                    <ListItemStatusIcon level={level} type={type} />
+                    <ListItemStatusContent>
+                      <ListItemStatusLink href={link}>{region}</ListItemStatusLink>
+                      <ListItemStatusTimestamp>{lastUpdated}</ListItemStatusTimestamp>
+                    </ListItemStatusContent>
+                    <ListItemStatusTag type={type} level={level} region={region} />
+                  </ListItemStatus>
+                </ListItem>
+              ))}
             </List>
           </div>
 
           <h3 className="govuk-heading-s govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
           <List className="govuk-!-margin-bottom-7">
-            <ListItem showRule={false}>
-              <Link
-                className="govuk-link govuk-link--no-visited-state"
-                href="https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1171545/Adverse-weather-health-plan-2023.pdf"
-                rel="noreferrer nofollow"
-                target="_blank"
-              >
-                UKHSA Adverse Weather and Health Plan and supporting evidence
-              </Link>
-            </ListItem>
-            <ListItem showRule={false}>
-              <Link
-                className="govuk-link govuk-link--no-visited-state"
-                href="https://www.metoffice.gov.uk/"
-                rel="noreferrer nofollow"
-                target="_blank"
-              >
-                Find the latest weather forecasts and warnings
-              </Link>
-            </ListItem>
-            <ListItem showRule={false}>
-              <Link
-                className="govuk-link govuk-link--no-visited-state"
-                href="https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings"
-                rel="noreferrer nofollow"
-                target="_blank"
-              >
-                Met Office National Severe Weather Warning Service
-              </Link>
-            </ListItem>
-            <ListItem showRule={false}>
-              <Link
-                className="govuk-link govuk-link--no-visited-state"
-                href="https://check-for-flooding.service.gov.uk/alerts-and-warnings"
-                rel="noreferrer nofollow"
-                target="_blank"
-              >
-                Flood Alerts and Warnings
-              </Link>
-            </ListItem>
+            {furtherAdviceLinks.map(({ id, name, link }) => (
+              <ListItem key={id} showRule={false}>
+                <Link
+                  className="govuk-link govuk-link--no-visited-state"
+                  href={link}
+                  rel="noreferrer nofollow"
+                  target="_blank"
+                >
+                  {name}
+                </Link>
+              </ListItem>
+            ))}
           </List>
         </div>
 
         <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-1 sticky top-2">
           <RelatedLinks variant="sidebar">
-            <RelatedLink title="Adverse weather help" url="/" />
-            <RelatedLink title="What to do in adverse weather" url="/" />
+            {relatedLinks.map(({ title, url, id }) => (
+              <RelatedLink key={id} title={title} url={url} />
+            ))}
           </RelatedLinks>
         </div>
       </div>

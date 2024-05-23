@@ -20,7 +20,7 @@ export const ListItemStatus = ({ children }: ListItemStatusProps) => {
 }
 
 interface ListItemStatusIconProps {
-  level: 'green' | 'yellow' | 'amber' | 'red'
+  level: 'green' | 'yellow' | 'amber' | 'red' | 'no alerts'
   type: 'heat' | 'cold'
 }
 
@@ -30,6 +30,7 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
   if (type === 'heat') {
     switch (level) {
       case 'green':
+      case 'no alerts':
         icon = <HeatHealthAlertGreenIcon />
         break
       case 'yellow':
@@ -46,6 +47,7 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
   if (type === 'cold') {
     switch (level) {
       case 'green':
+      case 'no alerts':
         icon = <ColdHealthAlertGreenIcon />
         break
       case 'yellow':
