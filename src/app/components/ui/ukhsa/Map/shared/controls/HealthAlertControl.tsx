@@ -20,16 +20,18 @@ import { useTranslation } from '@/app/i18n/client'
 
 import { useSelectedAlert } from '../hooks/useSelectedAlert'
 
-function DialogSkeleton() {
-  return (
-    <div className="govuk-!-padding-4 mt-[70px]">
-      <Skeleton className="mb-3 h-4 w-3/4" />
+const DialogSkeleton = () => (
+  <div className="govuk-!-padding-4 mt-[70px] flex flex-col gap-4">
+    <Skeleton className="mb-1 h-4 w-1/4" />
+    <div className="flex flex-col gap-5">
       <Skeleton className="h-4 w-1/2" />
+      <Skeleton className="h-4 w-1/3" />
+      <Skeleton className="h-4 w-3/4" />
     </div>
-  )
-}
+  </div>
+)
 
-function AlertDialogContent() {
+const AlertDialogContent = () => {
   const { t } = useTranslation('adverseWeather')
   const alert = useSelectedAlert()
 
