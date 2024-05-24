@@ -70,15 +70,15 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
             <Choropleth
               data={featureCollection}
               featureColours={{
-                E12000001: 'green',
-                E12000002: 'green',
-                E12000003: 'green',
-                E12000004: 'green',
-                E12000005: 'green',
-                E12000006: 'green',
-                E12000007: 'green',
-                E12000008: 'green',
-                E12000009: 'green',
+                E12000001: 'Green',
+                E12000002: 'Green',
+                E12000003: 'Green',
+                E12000004: 'Green',
+                E12000005: 'Green',
+                E12000006: 'Green',
+                E12000007: 'Green',
+                E12000008: 'Green',
+                E12000009: 'Green',
               }}
               selectedFeatureId={selectedFeatureId}
               onSelectFeature={setSelectedFeatureId}
