@@ -10,7 +10,7 @@ export const adverseWeatherParentMock: PageResponse<PageType.Composite> = {
     detail_url: 'http://localhost/api/pages/40/',
     html_url: null,
     slug: 'adverse-weather',
-    show_in_menus: true,
+    show_in_menus: false,
     seo_title: 'Adverse weather | UKHSA data dashboard',
     search_description: 'Mocked adverse weather page description',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',

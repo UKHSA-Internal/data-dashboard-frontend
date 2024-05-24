@@ -2,6 +2,8 @@ import { flag } from '@unleash/nextjs'
 import Link from 'next/link'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
@@ -21,13 +23,17 @@ export async function generateMetadata() {
 
   if (!enabled)
     return {
-      title: 'Page not found',
+      title: 'Page not found | UKHSA data dashboard',
       description: 'Error - Page not found',
     }
 
+  const {
+    meta: { seo_title: title, search_description: description },
+  } = await getPageBySlug('adverse-weather', { type: PageType.Composite })
+
   return {
-    title: 'Health alerts page',
-    description: 'Health alerts page description',
+    title,
+    description,
   }
 }
 

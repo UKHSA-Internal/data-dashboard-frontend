@@ -5,7 +5,7 @@ import { useTranslation } from './i18n'
 
 export async function generateMetadata() {
   return {
-    title: 'Page not found',
+    title: 'Page not found | UKHSA data dashboard',
     description: 'Error - Page not found',
   }
 }

@@ -31,10 +31,6 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
 
   if (type === 'heat') {
     switch (level) {
-      case 'Green':
-      case 'No alerts':
-        icon = <HeatHealthAlertGreenIcon />
-        break
       case 'Yellow':
         icon = <HeatHealthAlertYellowIcon />
         break
@@ -44,14 +40,12 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
       case 'Red':
         icon = <HeatHealthAlertRedIcon />
         break
+      default:
+        icon = <HeatHealthAlertGreenIcon />
     }
   }
   if (type === 'cold') {
     switch (level) {
-      case 'Green':
-      case 'No alerts':
-        icon = <ColdHealthAlertGreenIcon />
-        break
       case 'Yellow':
         icon = <ColdHealthAlertYellowIcon />
         break
@@ -61,6 +55,8 @@ export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => 
       case 'Red':
         icon = <ColdHealthAlertRedIcon />
         break
+      default:
+        icon = <ColdHealthAlertGreenIcon />
     }
   }
 
