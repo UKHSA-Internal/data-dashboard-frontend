@@ -1,4 +1,5 @@
 import { flag } from '@unleash/nextjs'
+import { Metadata } from 'next'
 import Link from 'next/link'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
@@ -17,8 +18,9 @@ import {
   ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
+import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-export async function generateMetadata() {
+export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
 
   if (!enabled)
@@ -29,7 +31,7 @@ export async function generateMetadata() {
 
   const {
     meta: { seo_title: title, search_description: description },
-  } = await getPageBySlug('adverse-weather', { type: PageType.Composite })
+  } = await getPageBySlug<PageType.Composite>(weather)
 
   return {
     title,
@@ -37,10 +39,9 @@ export async function generateMetadata() {
   }
 }
 
-export default async function WeatherHealthAlert() {
-  const { title, body, regions, relatedLinks, furtherAdviceLinks } = {
-    title: 'Heat health alerts',
-    body: 'The alerting system provides an early warning when adverse temperatures are likely to impact on the health and wellbeing of the population. The Weather-Health Alerting System is provided by the UK Health Security Agency (UKHSA) in partnership with the Met Office. It’s intended to provide early warning to the health and social care sector, the responder community, the voluntary and community sector and government departments when adverse temperatures are likely to impact on the health and wellbeing of the population. The Weather-Health Alerting System is made up of the Heat-Health Alerts (HHA) and the Cold-Health Alerts (CHA). The Weather-Health Alerting System underpins the Adverse Weather and Health Plan.',
+export default async function WeatherHealthAlert({ params: { weather } }: { params: { weather: string } }) {
+  const { regions, furtherAdviceLinks } = {
+    // TODO: Regions data will come from alerts endpoints (CDD-1972)
     regions: [
       {
         id: 0,
@@ -115,6 +116,8 @@ export default async function WeatherHealthAlert() {
         lastUpdated: 'Updated 7:07am on 8 April 2024',
       },
     ],
+
+    // Further advice links hardcoded currently, need to confirm these are correct and/or if they want them showing
     furtherAdviceLinks: [
       {
         id: 0,
@@ -137,11 +140,9 @@ export default async function WeatherHealthAlert() {
         link: 'https://check-for-flooding.service.gov.uk/alerts-and-warnings',
       },
     ],
-    relatedLinks: [
-      { title: 'Adverse weather help', url: '/', id: 0 },
-      { title: 'What to do in adverse weather', url: '/', id: 1 },
-    ],
   }
+
+  const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
   return (
     <View
@@ -149,13 +150,11 @@ export default async function WeatherHealthAlert() {
       breadcrumbs={[
         { name: 'Home', link: '/' },
         { name: 'Adverse Weather', link: '/adverse-weather' },
-        { name: 'Heat Health Alerts', link: '/adverse-weather/heat-health-alerts' },
+        { name: title, link: `/adverse-weather/${weather}` },
       ]}
     >
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-three-quarters-from-desktop">
-          <div className="govuk-body">{body}</div>
-        </div>
+        <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
       <HealthAlertsLink className="govuk-!-margin-bottom-5" />
@@ -210,7 +209,7 @@ export default async function WeatherHealthAlert() {
           </List>
         </div>
 
-        <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-1 sticky top-2">
+        <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
           <RelatedLinks variant="sidebar">
             {relatedLinks.map(({ title, url, id }) => (
               <RelatedLink key={id} title={title} url={url} />
