@@ -16,9 +16,11 @@ import {
   SummaryListValue,
 } from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
 import { mapQueryKeys } from '@/app/constants/map.constants'
+import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import { useTranslation } from '@/app/i18n/client'
-
-import { useSelectedAlert } from '../hooks/useSelectedAlert'
+import { toSlug } from '@/app/utils/app.utils'
+import { getTagVariantFromStatus } from '@/app/utils/map.utils'
+import { clsx } from '@/lib/clsx'
 
 const DialogSkeleton = () => (
   <div className="govuk-!-padding-4 mt-[70px] flex flex-col gap-4">
@@ -33,18 +35,23 @@ const DialogSkeleton = () => (
 
 const AlertDialogContent = () => {
   const { t } = useTranslation('adverseWeather')
-  const alert = useSelectedAlert()
 
   const [category] = useQueryState(
     mapQueryKeys.alertType,
     parseAsStringLiteral<HealthAlertTypes>(['heat', 'cold']).withDefault('heat')
   )
 
-  if (!alert) {
+  const alert = useWeatherHealthAlert()
+
+  if (alert.isFetching) {
     return <DialogSkeleton />
   }
 
-  const { geography_name: regionName, status, text, refresh_date: lastUpdated, period_start: firstPublished } = alert
+  if (alert.error || !alert.data) {
+    return null
+  }
+
+  const { regionName, status, text, lastUpdated, firstPublished } = alert.data
 
   return (
     <>
@@ -59,10 +66,7 @@ const AlertDialogContent = () => {
             <SummaryListRow>
               <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
               <SummaryListValue>
-                {/* TODO: Move this colour logic to a function */}
-                <div
-                  className={`govuk-tag capitalize ${status === 'Amber' ? 'govuk-tag--orange' : `govuk-tag--${status.toLowerCase()}`} mb-[2px]`}
-                >
+                <div className={clsx(`govuk-tag mb-[2px] capitalize`, getTagVariantFromStatus(status))}>
                   {status.toLowerCase()}
                 </div>
               </SummaryListValue>
@@ -82,11 +86,7 @@ const AlertDialogContent = () => {
             <h3 className="govuk-heading-s">{t('map.alertDialog.textKey')}</h3>
             <p className="govuk-body">{text}</p>
           </div>
-          {/* TODO: Create a util for the region name conversion between lower snake case and capitlised with spaces */}
-          <Link
-            href={`/adverse-weather/${category}/${regionName.toLowerCase().replaceAll(' ', '-')}`}
-            className="govuk-body"
-          >
+          <Link href={`/adverse-weather/${category}/${toSlug(regionName)}`} className="govuk-body">
             {t('map.alertDialog.alertCta')}
           </Link>
           <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />

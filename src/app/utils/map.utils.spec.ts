@@ -1,4 +1,27 @@
-import { getActiveCssVariableFromColour, getCssVariableFromColour, getHoverCssVariableFromColour } from './map.utils'
+import {
+  getActiveCssVariableFromColour,
+  getCssVariableFromColour,
+  getHoverCssVariableFromColour,
+  getTagVariantFromStatus,
+} from './map.utils'
+
+describe('getTagVariantFromStatus', () => {
+  test('returns correct class for Amber status', () => {
+    expect(getTagVariantFromStatus('Amber')).toBe('govuk-tag--orange')
+  })
+
+  test('returns correct class for Green status', () => {
+    expect(getTagVariantFromStatus('Green')).toBe('govuk-tag--green')
+  })
+
+  test('returns correct class for Red status', () => {
+    expect(getTagVariantFromStatus('Red')).toBe('govuk-tag--red')
+  })
+
+  test('returns correct class for Yellow status', () => {
+    expect(getTagVariantFromStatus('Yellow')).toBe('govuk-tag--yellow')
+  })
+})
 
 describe('getCssVariableFromColour', () => {
   test('Returns the correct CSS variable for Green', () => {

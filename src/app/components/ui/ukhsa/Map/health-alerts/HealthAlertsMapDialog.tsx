@@ -11,9 +11,8 @@ import ExitMapIcon from '@/app/components/ui/ukhsa/Icons/ExitMap'
 import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
 import { mapQueryKeys } from '@/app/constants/map.constants'
+import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
-
-import { useChoroplethFeatureColours } from '../shared/hooks/useChoroplethFeatureColours'
 
 const { Map, BaseLayer, ChoroplethLayer, HealthAlertControl } = {
   Map: dynamic(() => import('@/app/components/ui/ukhsa/Map/Map'), {
@@ -40,16 +39,21 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
   const [, setError] = useQueryState(mapQueryKeys.error)
   const [mapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const router = useRouter()
-  const featureColours = useChoroplethFeatureColours()
+  const alertsQuery = useWeatherHealthAlertList()
 
   const baseLayer = useMemo(() => {
     return <BaseLayer />
   }, [])
 
   const choroplethLayer = useMemo(() => {
-    if (!featureColours) return null
-    return <ChoroplethLayer data={featureCollection} featureColours={featureColours} />
-  }, [featureCollection, featureColours])
+    if (!alertsQuery.data) return
+    return (
+      <ChoroplethLayer
+        data={featureCollection}
+        featureColours={Object.fromEntries(alertsQuery.data.map((alert) => [alert.geography_code, alert.status]))}
+      />
+    )
+  }, [featureCollection, alertsQuery.data])
 
   const healthAlertControl = useMemo(() => {
     return <HealthAlertControl />
@@ -57,7 +61,7 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
 
   if (!mapOpen) return null
 
-  if (!featureColours) {
+  if (alertsQuery.error || !alertsQuery.data) {
     setError('map')
     return null
   }

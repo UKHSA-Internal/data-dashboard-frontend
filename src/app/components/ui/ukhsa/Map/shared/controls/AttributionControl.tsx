@@ -57,21 +57,19 @@ export function AttributionControl({ position }: AttributionControlProps) {
   }, [map])
 
   return (
-    <>
-      <Control position={position}>
-        <Dialog modal>
-          {dialogTrigger}
-          <DialogContent>
-            <DialogHeader aria-hidden className="govuk-visually-hidden">
-              <DialogTitle>&copy; Copyright</DialogTitle>
-            </DialogHeader>
-            <ScrollArea className="h-[10rem]">
-              <p>{text}</p>
-              <ScrollBar />
-            </ScrollArea>
-          </DialogContent>
-        </Dialog>
-      </Control>
-    </>
+    <Control position={position}>
+      <Dialog modal>
+        {dialogTrigger}
+        <DialogContent>
+          <DialogHeader aria-hidden className="govuk-visually-hidden">
+            <DialogTitle>&copy; Copyright</DialogTitle>
+          </DialogHeader>
+          <ScrollArea className="h-[10rem]">
+            <p>{text}</p>
+            <ScrollBar />
+          </ScrollArea>
+        </DialogContent>
+      </Dialog>
+    </Control>
   )
 }
