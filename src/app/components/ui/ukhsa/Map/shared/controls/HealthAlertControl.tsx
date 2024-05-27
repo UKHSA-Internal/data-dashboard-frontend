@@ -66,7 +66,7 @@ const AlertDialogContent = () => {
             <SummaryListRow>
               <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
               <SummaryListValue>
-                <div className={clsx(`govuk-tag mb-[2px] capitalize`, getTagVariantFromStatus(status))}>
+                <div className={clsx(`govuk-tag capitalize`, getTagVariantFromStatus(status))}>
                   {status.toLowerCase()}
                 </div>
               </SummaryListValue>
@@ -78,10 +78,6 @@ const AlertDialogContent = () => {
               </SummaryListValue>
             </SummaryListRow>
           </SummaryList>
-
-          <div className="govuk-!-margin-top-3">
-            <strong></strong>
-          </div>
           <div className="govuk-!-margin-top-3 govuk-body-s">
             <h3 className="govuk-heading-s">{t('map.alertDialog.textKey')}</h3>
             <p className="govuk-body">{text}</p>
