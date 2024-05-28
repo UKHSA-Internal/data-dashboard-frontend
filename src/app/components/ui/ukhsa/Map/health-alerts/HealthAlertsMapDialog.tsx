@@ -3,14 +3,18 @@
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs'
+import { parseAsStringLiteral, useQueryState } from 'nuqs'
+import { useMemo } from 'react'
 
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
+import ExitMapIcon from '@/app/components/ui/ukhsa/Icons/ExitMap'
 import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
 import { mapQueryKeys } from '@/app/constants/map.constants'
+import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
+import { useTranslation } from '@/app/i18n/client'
 
-const { Map, BaseLayer, Choropleth, HealthAlert } = {
+const { Map, BaseLayer, ChoroplethLayer, HealthAlertControl } = {
   Map: dynamic(() => import('@/app/components/ui/ukhsa/Map/Map'), {
     ssr: false,
     loading: () => <Skeleton className="h-screen" />,
@@ -18,10 +22,10 @@ const { Map, BaseLayer, Choropleth, HealthAlert } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
     ssr: false,
   }),
-  Choropleth: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
+  ChoroplethLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
     ssr: false,
   }),
-  HealthAlert: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/controls/HealthAlertControl'), {
+  HealthAlertControl: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/controls/HealthAlertControl'), {
     ssr: false,
   }),
 }
@@ -31,62 +35,69 @@ interface HealthAlertsMapDialogProps {
 }
 
 export default function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
-  const [view] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
-  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
-
+  const { t } = useTranslation('adverseWeather')
+  const [, setError] = useQueryState(mapQueryKeys.error)
+  const [mapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const router = useRouter()
+  const alertsQuery = useWeatherHealthAlertList()
+
+  const baseLayer = useMemo(() => {
+    return <BaseLayer />
+  }, [])
+
+  const choroplethLayer = useMemo(() => {
+    if (!alertsQuery.data) return
+    return (
+      <ChoroplethLayer
+        data={featureCollection}
+        featureColours={Object.fromEntries(alertsQuery.data.map((alert) => [alert.geography_code, alert.status]))}
+      />
+    )
+  }, [featureCollection, alertsQuery.data])
+
+  const healthAlertControl = useMemo(() => {
+    return <HealthAlertControl />
+  }, [])
+
+  if (!mapOpen) return null
+
+  if (alertsQuery.error || !alertsQuery.data) {
+    setError('map')
+    return null
+  }
 
   return (
-    <>
-      <Dialog
-        open={!!view}
-        onOpenChange={(isOpen) => {
-          if (!isOpen) {
-            router.back()
-          }
-        }}
+    <Dialog
+      open={!!mapOpen}
+      onOpenChange={(isOpen) => {
+        if (!isOpen) {
+          router.back()
+        }
+      }}
+    >
+      <DialogContent
+        className="p-0 no-js:hidden"
+        fullscreen
+        closeButton={
+          <Link
+            href="/"
+            className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2"
+          >
+            <ExitMapIcon />
+            {t('map.exitBtn')}
+          </Link>
+        }
       >
-        <DialogContent
-          className="p-0 no-js:hidden"
-          fullscreen
-          closeButton={
-            <Link
-              href={'/'}
-              className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2"
-            >
-              <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
-                <path d="M4.828,11L12.314,18.485L10.899,19.899L1,10L10.899,0.101L12.314,1.515L4.828,9L19,9L19,11L4.828,11Z"></path>
-              </svg>
-              Exit map
-            </Link>
-          }
-        >
-          <DialogHeader aria-hidden className="govuk-visually-hidden">
-            <DialogTitle>Weather health alerts map</DialogTitle>
-          </DialogHeader>
+        <DialogHeader aria-hidden className="govuk-visually-hidden">
+          <DialogTitle>{t('map.title')}</DialogTitle>
+        </DialogHeader>
 
-          <Map>
-            <BaseLayer />
-            <Choropleth
-              data={featureCollection}
-              featureColours={{
-                E12000001: 'Green',
-                E12000002: 'Green',
-                E12000003: 'Green',
-                E12000004: 'Green',
-                E12000005: 'Green',
-                E12000006: 'Green',
-                E12000007: 'Green',
-                E12000008: 'Green',
-                E12000009: 'Green',
-              }}
-              selectedFeatureId={selectedFeatureId}
-              onSelectFeature={setSelectedFeatureId}
-            />
-            <HealthAlert open={!!selectedFeatureId} onClose={() => setSelectedFeatureId(null)} />
-          </Map>
-        </DialogContent>
-      </Dialog>
-    </>
+        <Map>
+          {baseLayer}
+          {choroplethLayer}
+          {healthAlertControl}
+        </Map>
+      </DialogContent>
+    </Dialog>
   )
 }

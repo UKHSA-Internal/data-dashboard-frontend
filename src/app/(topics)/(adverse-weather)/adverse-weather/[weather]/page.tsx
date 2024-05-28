@@ -1,6 +1,7 @@
 import { flag } from '@unleash/nextjs'
 import Link from 'next/link'
 
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
@@ -14,6 +15,7 @@ import {
   ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
+import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 export async function generateMetadata() {
   const { enabled } = await flag(flags.adverseWeather)
@@ -30,10 +32,18 @@ export async function generateMetadata() {
   }
 }
 
-export default async function WeatherHealthAlert() {
+interface WeatherHealthAlertProps {
+  params: {
+    weather: 'heat-health-alerts' | 'cold-health-alerts'
+  }
+}
+
+export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
   const { title } = {
     title: 'Heat health alerts',
   }
+
+  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
 
   return (
     <View
@@ -58,7 +68,7 @@ export default async function WeatherHealthAlert() {
         </div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-bottom-5" />
+      <HealthAlertsLink type={type} className="govuk-!-margin-bottom-5" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
@@ -71,100 +81,100 @@ export default async function WeatherHealthAlert() {
             <List>
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Red" type="heat" />
+                  <ListItemStatusIcon level="Red" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">East Midlands</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="Red" region="East Midlands" />
+                  <ListItemStatusTag type={type} level="Red" region="East Midlands" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Red" type="heat" />
+                  <ListItemStatusIcon level="Red" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">East of England</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="Red" region="East of England" />
+                  <ListItemStatusTag type={type} level="Red" region="East of England" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Amber" type="heat" />
+                  <ListItemStatusIcon level="Amber" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">London</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="Amber" region="London" />
+                  <ListItemStatusTag type={type} level="Amber" region="London" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Yellow" type="heat" />
+                  <ListItemStatusIcon level="Yellow" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">North East</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="Yellow" region="North East" />
+                  <ListItemStatusTag type={type} level="Yellow" region="North East" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Yellow" type="heat" />
+                  <ListItemStatusIcon level="Yellow" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">North West</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="Yellow" region="North West" />
+                  <ListItemStatusTag type={type} level="Yellow" region="North West" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Green" type="heat" />
+                  <ListItemStatusIcon level="Green" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">South East</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="No alerts" region="South East" />
+                  <ListItemStatusTag type={type} level="No alerts" region="South East" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Green" type="heat" />
+                  <ListItemStatusIcon level="Green" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">South West</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="No alerts" region="South West" />
+                  <ListItemStatusTag type={type} level="No alerts" region="South West" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Green" type="heat" />
+                  <ListItemStatusIcon level="Green" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">West Midlands</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="No alerts" region="West Midlands" />
+                  <ListItemStatusTag type={type} level="No alerts" region="West Midlands" />
                 </ListItemStatus>
               </ListItem>
 
               <ListItem spacing="s">
                 <ListItemStatus>
-                  <ListItemStatusIcon level="Green" type="heat" />
+                  <ListItemStatusIcon level="Green" type={type} />
                   <ListItemStatusContent>
                     <ListItemStatusLink href="/">Yorkshire and Humber</ListItemStatusLink>
                     <ListItemStatusTimestamp>Updated 7:07am on 8 April 2024</ListItemStatusTimestamp>
                   </ListItemStatusContent>
-                  <ListItemStatusTag type="heat" level="No alerts" region="Yorkshire and Humber" />
+                  <ListItemStatusTag type={type} level="No alerts" region="Yorkshire and Humber" />
                 </ListItemStatus>
               </ListItem>
             </List>

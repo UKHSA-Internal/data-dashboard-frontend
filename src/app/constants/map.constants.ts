@@ -56,6 +56,16 @@ export const mapQueryKeys = {
    * @type {string}
    */
   featureId: 'fid',
+  /**
+   * Represents the query parameter key for the Healh Alert Types.
+   * @type {string}
+   */
+  alertType: 'type',
+  /**
+   * Represents the query parameter key for any unrecoverable Map related errors
+   * @type {string}
+   */
+  error: 'error',
 } as const
 
 // The ID property of the GeoJson feature properties object
