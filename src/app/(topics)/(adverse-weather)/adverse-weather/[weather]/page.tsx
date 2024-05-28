@@ -1,7 +1,6 @@
 import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
-import { notFound } from 'next/navigation'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
@@ -22,6 +21,7 @@ import {
 import { flags } from '@/app/constants/flags.constants'
 import { useTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
@@ -42,11 +42,14 @@ export async function generateMetadata({ params: { weather } }: { params: { weat
   }
 }
 
-export default async function WeatherHealthAlert({ params: { weather } }: { params: { weather: string } }) {
-  let healthAlertType: HealthAlertTypes
-  if (weather === 'cold-health-alerts') healthAlertType = 'cold'
-  else if (weather === 'heat-health-alerts') healthAlertType = 'heat'
-  else notFound()
+interface WeatherHealthAlertProps {
+  params: {
+    weather: 'heat-health-alerts' | 'cold-health-alerts'
+  }
+}
+
+export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
+  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
 
   const { furtherAdviceLinks } = {
     // Further advice links hardcoded currently, need to confirm these are correct and/or if they want them showing
@@ -76,7 +79,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
 
   const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
-  const healthAlerts = await getHealthAlerts(healthAlertType)
+  const healthAlerts = await getHealthAlerts(type)
 
   const { t } = await useTranslation('adverseWeather')
 
@@ -93,7 +96,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
         <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-bottom-5" />
+      <HealthAlertsLink type={type} className="govuk-!-margin-bottom-5" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
@@ -108,7 +111,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
                 healthAlerts.data.map(({ status, geography_name: name, refresh_date: lastUpdated }) => (
                   <ListItem key={name} spacing="s">
                     <ListItemStatus>
-                      <ListItemStatusIcon level={status} type={healthAlertType} />
+                      <ListItemStatusIcon level={status} type={type} />
                       <ListItemStatusContent>
                         <ListItemStatusLink
                           href={`/adverse-wether/${weather}-health-alerts/${name.toLowerCase().split(' ').join('-')}`}
@@ -125,7 +128,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
                         )}
                       </ListItemStatusContent>
 
-                      <ListItemStatusTag level={status} type={healthAlertType} region={name} />
+                      <ListItemStatusTag level={status} type={type} region={name} />
                     </ListItemStatus>
                   </ListItem>
                 ))}

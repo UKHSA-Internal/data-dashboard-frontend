@@ -1,9 +1,11 @@
 import { flag } from '@unleash/nextjs'
 
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { flags } from '@/app/constants/flags.constants'
+import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 export async function generateMetadata() {
   const { enabled } = await flag(flags.adverseWeather)
@@ -20,7 +22,16 @@ export async function generateMetadata() {
   }
 }
 
-export default async function Alert() {
+interface WeatherHealthAlertProps {
+  params: {
+    weather: 'heat-health-alerts' | 'cold-health-alerts'
+    region: string
+  }
+}
+
+export default async function Alert({ params: { weather } }: WeatherHealthAlertProps) {
+  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
+
   return (
     <View
       heading="Weather alert for East Midlands"
@@ -58,7 +69,8 @@ export default async function Alert() {
         </div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-bottom-5" />
+      {/* TODO: Once the alert page is integrated with the API endpoints, fill in the regionId below */}
+      <HealthAlertsLink regionId="E12000004" type={type} className="govuk-!-margin-bottom-5" />
     </View>
   )
 }

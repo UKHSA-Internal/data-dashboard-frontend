@@ -73,7 +73,7 @@ export default async function AdverseWeather() {
         </div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds-from-desktop">

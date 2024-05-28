@@ -1,6 +1,12 @@
 import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import {
+  SummaryList,
+  SummaryListKey,
+  SummaryListRow,
+  SummaryListValue,
+} from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
 import { useTranslation } from '@/app/i18n'
 
 interface MetricsCardProps {
@@ -50,22 +56,22 @@ export async function MetricsCard({ title, href, description, group, topic, metr
       />
 
       <div className="govuk-summary-card__content">
-        <dl className="govuk-summary-list">
-          <div className="govuk-summary-list__row">
-            <dt className="govuk-summary-list__key govuk-body-s">Category</dt>
-            <dd className="govuk-summary-list__value govuk-body-s capitalize">{group}</dd>
-          </div>
-          <div className="govuk-summary-list__row">
-            <dt className="govuk-summary-list__key govuk-body-s">Topic</dt>
-            <dd className="govuk-summary-list__value govuk-body-s">{topic}</dd>
-          </div>
-          <div className="govuk-summary-list__row">
-            <dt className="govuk-summary-list__key govuk-body-s">API name</dt>
-            <dd className="govuk-summary-list__value govuk-body-s">
+        <SummaryList>
+          <SummaryListRow>
+            <SummaryListKey className="govuk-body-s">Category</SummaryListKey>
+            <SummaryListValue className="govuk-body-s capitalize">{group}</SummaryListValue>
+          </SummaryListRow>
+          <SummaryListRow>
+            <SummaryListKey className="govuk-body-s">Topic</SummaryListKey>
+            <SummaryListValue className="govuk-body-s">{topic}</SummaryListValue>
+          </SummaryListRow>
+          <SummaryListRow>
+            <SummaryListKey className="govuk-body-s">API name</SummaryListKey>
+            <SummaryListValue className="govuk-body-s">
               <code>{metric}</code>
-            </dd>
-          </div>
-        </dl>
+            </SummaryListValue>
+          </SummaryListRow>
+        </SummaryList>
       </div>
     </li>
   )

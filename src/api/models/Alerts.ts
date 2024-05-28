@@ -7,9 +7,9 @@ export const HealthAlertStatus = z.enum(['Green', 'Red', 'Amber', 'Yellow'])
 export const HealthAlert = z.object({
   status: HealthAlertStatus,
   text: z.string(),
-  period_start: z.string(),
-  period_end: z.string(),
-  refresh_date: z.string(),
+  period_start: z.string().nullable(),
+  period_end: z.string().nullable(),
+  refresh_date: z.string().nullable(),
   geography_name: z.string(),
   geography_code: z.string(),
 })
@@ -19,7 +19,7 @@ export const HealthAlertList = z.array(
     status: HealthAlertStatus,
     geography_name: z.string(),
     geography_code: z.string(),
-    refresh_date: z.string(),
+    refresh_date: z.string().nullable(),
   })
 )
 
