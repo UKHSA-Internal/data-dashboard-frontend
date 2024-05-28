@@ -1,10 +1,12 @@
 import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { notFound } from 'next/navigation'
 
-import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
@@ -15,7 +17,6 @@ import {
   ListItemStatusIcon,
   ListItemStatusLink,
   ListItemStatusTag,
-  ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
@@ -40,83 +41,12 @@ export async function generateMetadata({ params: { weather } }: { params: { weat
 }
 
 export default async function WeatherHealthAlert({ params: { weather } }: { params: { weather: string } }) {
-  const { regions, furtherAdviceLinks } = {
-    // TODO: Regions data will come from alerts endpoints (CDD-1972)
-    regions: [
-      {
-        id: 0,
-        region: 'East Midlands',
-        type: 'heat',
-        level: 'Red',
-        link: '/adverse-weather/heat-health-alerts/east-midlands',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 1,
-        region: 'East of England',
-        type: 'heat',
-        level: 'Red',
-        link: '/adverse-weather/heat-health-alerts/east-of-england',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 2,
-        region: 'London',
-        type: 'heat',
-        level: 'Amber',
-        link: '/adverse-weather/heat-health-alerts/london',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 3,
-        region: 'North East',
-        type: 'heat',
-        level: 'Yellow',
-        link: '/adverse-weather/heat-health-alerts/north-east',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 4,
-        region: 'North West',
-        type: 'heat',
-        level: 'Yellow',
-        link: '/adverse-weather/heat-health-alerts/north-west',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 5,
-        region: 'South East',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/south-east',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 6,
-        region: 'South West',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/south-west',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 7,
-        region: 'West Midlands',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/west-midlands',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 8,
-        region: 'Yorkshire and Humber',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/yorkshire-and-humber',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-    ],
+  let healthAlertType: HealthAlertTypes
+  if (weather === 'cold-health-alerts') healthAlertType = 'cold'
+  else if (weather === 'heat-health-alerts') healthAlertType = 'heat'
+  else notFound()
 
+  const { furtherAdviceLinks } = {
     // Further advice links hardcoded currently, need to confirm these are correct and/or if they want them showing
     furtherAdviceLinks: [
       {
@@ -144,6 +74,8 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
 
   const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
+  const healthAlerts = await getHealthAlerts(healthAlertType)
+
   return (
     <View
       heading={title}
@@ -168,27 +100,25 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
             />
 
             <List>
-              {regions.map(({ id, region, type, level, link, lastUpdated }) => (
-                <ListItem key={id} spacing="s">
-                  <ListItemStatus>
-                    {/* TODO: Remove type cast after integration*/}
-                    <ListItemStatusIcon
-                      level={level as HealthAlertStatus | 'No alerts'}
-                      type={type as HealthAlertTypes}
-                    />
-                    <ListItemStatusContent>
-                      <ListItemStatusLink href={link}>{region}</ListItemStatusLink>
-                      <ListItemStatusTimestamp>{lastUpdated}</ListItemStatusTimestamp>
-                    </ListItemStatusContent>
-                    {/* TODO: Remove type cast */}
-                    <ListItemStatusTag
-                      level={level as HealthAlertStatus | 'No alerts'}
-                      type={type as HealthAlertTypes}
-                      region={region}
-                    />
-                  </ListItemStatus>
-                </ListItem>
-              ))}
+              {healthAlerts.success &&
+                healthAlerts.data.map(({ status, geography_name: name }) => (
+                  <ListItem key={name} spacing="s">
+                    <ListItemStatus>
+                      <ListItemStatusIcon level={status} type={healthAlertType} />
+                      <ListItemStatusContent>
+                        <ListItemStatusLink
+                          href={`/adverse-wether/${weather}-health-alerts/${name.toLowerCase().split(' ').join('-')}`}
+                        >
+                          {name}
+                        </ListItemStatusLink>
+                        {/* TODO: Do we need to remove this, or get from a different location */}
+                        {/* <ListItemStatusTimestamp>{lastUpdated}</ListItemStatusTimestamp> */}
+                      </ListItemStatusContent>
+
+                      <ListItemStatusTag level={status} type={healthAlertType} region={name} />
+                    </ListItemStatus>
+                  </ListItem>
+                ))}
             </List>
           </div>
 
