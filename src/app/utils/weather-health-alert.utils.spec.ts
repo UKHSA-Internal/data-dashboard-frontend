@@ -3,7 +3,7 @@ import {
   getCssVariableFromColour,
   getHoverCssVariableFromColour,
   getTagVariantFromStatus,
-} from './map.utils'
+} from './weather-health-alert.utils'
 
 describe('getTagVariantFromStatus', () => {
   test('returns correct class for Amber status', () => {

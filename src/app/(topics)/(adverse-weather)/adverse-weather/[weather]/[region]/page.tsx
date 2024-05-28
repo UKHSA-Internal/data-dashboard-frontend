@@ -5,7 +5,7 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { flags } from '@/app/constants/flags.constants'
-import { extractHealthAlertTypeFromSlug } from '@/app/utils/map.utils'
+import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 export async function generateMetadata() {
   const { enabled } = await flag(flags.adverseWeather)

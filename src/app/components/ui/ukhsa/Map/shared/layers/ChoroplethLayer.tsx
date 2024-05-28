@@ -16,7 +16,7 @@ import {
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
   getHoverCssVariableFromColour,
-} from '@/app/utils/map.utils'
+} from '@/app/utils/weather-health-alert.utils'
 
 import { Feature } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'

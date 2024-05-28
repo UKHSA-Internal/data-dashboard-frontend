@@ -15,7 +15,7 @@ import {
   ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
-import { extractHealthAlertTypeFromSlug } from '@/app/utils/map.utils'
+import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 export async function generateMetadata() {
   const { enabled } = await flag(flags.adverseWeather)
