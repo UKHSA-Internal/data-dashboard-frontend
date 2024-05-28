@@ -17,8 +17,10 @@ import {
   ListItemStatusIcon,
   ListItemStatusLink,
   ListItemStatusTag,
+  ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
+import { useTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
@@ -76,6 +78,8 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
 
   const healthAlerts = await getHealthAlerts(healthAlertType)
 
+  const { t } = await useTranslation('adverseWeather')
+
   return (
     <View
       heading={title}
@@ -101,7 +105,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
 
             <List>
               {healthAlerts.success &&
-                healthAlerts.data.map(({ status, geography_name: name }) => (
+                healthAlerts.data.map(({ status, geography_name: name, refresh_date: lastUpdated }) => (
                   <ListItem key={name} spacing="s">
                     <ListItemStatus>
                       <ListItemStatusIcon level={status} type={healthAlertType} />
@@ -111,8 +115,14 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
                         >
                           {name}
                         </ListItemStatusLink>
-                        {/* TODO: Do we need to remove this, or get from a different location */}
-                        {/* <ListItemStatusTimestamp>{lastUpdated}</ListItemStatusTimestamp> */}
+
+                        {lastUpdated === null || lastUpdated === '' ? (
+                          <ListItemStatusTimestamp>-</ListItemStatusTimestamp>
+                        ) : (
+                          <ListItemStatusTimestamp>
+                            {t('lastUpdated', { value: new Date(lastUpdated) })}
+                          </ListItemStatusTimestamp>
+                        )}
                       </ListItemStatusContent>
 
                       <ListItemStatusTag level={status} type={healthAlertType} region={name} />

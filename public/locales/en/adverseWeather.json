@@ -1,5 +1,6 @@
 {
   "map": {
     "trigger": "View map of weather health alerts"
-  }
+  },
+  "lastUpdated": "Updated {{value, time}} on {{ value, dateShort }}"
 }

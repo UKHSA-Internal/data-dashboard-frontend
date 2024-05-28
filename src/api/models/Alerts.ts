@@ -19,6 +19,7 @@ export const HealthAlertList = z.array(
     status: HealthAlertStatus,
     geography_name: z.string(),
     geography_code: z.string(),
+    refresh_date: z.string(),
   })
 )
 
