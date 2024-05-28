@@ -74,7 +74,7 @@ const AlertDialogContent = () => {
             <SummaryListRow>
               <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
               <SummaryListValue>
-                {t('map.alertDialog.firstPublished', { value: new Date(firstPublished) })}
+                {firstPublished ? t('map.alertDialog.firstPublished', { value: new Date(firstPublished) }) : '–'}
               </SummaryListValue>
             </SummaryListRow>
           </SummaryList>
@@ -85,8 +85,12 @@ const AlertDialogContent = () => {
           <Link href={`/adverse-weather/${category}/${toSlug(regionName)}`} className="govuk-body">
             {t('map.alertDialog.alertCta')}
           </Link>
-          <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
-          <p className="govuk-body-xs mb-2">{t('map.alertDialog.lastUpdated', { value: new Date(lastUpdated) })}</p>
+          {lastUpdated ? (
+            <>
+              <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+              <p className="govuk-body-xs mb-2">{t('map.alertDialog.lastUpdated', { value: new Date(lastUpdated) })}</p>
+            </>
+          ) : null}
           <ScrollBar />
         </ScrollArea>
       </SheetHeader>
