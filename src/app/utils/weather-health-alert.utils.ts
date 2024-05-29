@@ -1,3 +1,25 @@
+/**
+ * This is a temporary solution for extracting the health alert type from the slug.
+ * TODO: Remove this once the link is converted to a CMS internal button in CDD-1977
+ */
+
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+
+export const extractHealthAlertTypeFromSlug = (str: string) => str.split('-')[0] as HealthAlertTypes
+
+/**
+ * Util for return a GOV.UK Tag component style variant based on Weather Health Alert statuses
+ */
+export const getTagVariantFromStatus = (status: HealthAlertStatus) => {
+  if (status === 'Amber') return 'govuk-tag--orange'
+  return `govuk-tag--${status.toLowerCase()}`
+}
+
+/**
+ * Utils for mapping health alert statues to GOV.UK compatible colours
+ * Note: the dark & darkest variations are bespoke and can be modified in globals.scss.
+ */
+
 export enum ColourVariableMap {
   Green = 'var(--colour-green)',
   Amber = 'var(--colour-orange)',

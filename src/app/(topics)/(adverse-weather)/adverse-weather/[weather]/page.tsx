@@ -19,6 +19,7 @@ import {
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
@@ -39,7 +40,15 @@ export async function generateMetadata({ params: { weather } }: { params: { weat
   }
 }
 
-export default async function WeatherHealthAlert({ params: { weather } }: { params: { weather: string } }) {
+interface WeatherHealthAlertProps {
+  params: {
+    weather: 'heat-health-alerts' | 'cold-health-alerts'
+  }
+}
+
+export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
+  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
+
   const { regions, furtherAdviceLinks } = {
     // TODO: Regions data will come from alerts endpoints (CDD-1972)
     regions: [
@@ -157,7 +166,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: { para
         <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-bottom-5" />
+      <HealthAlertsLink type={type} className="govuk-!-margin-bottom-5" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">

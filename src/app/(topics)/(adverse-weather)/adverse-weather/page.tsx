@@ -41,24 +41,6 @@ export default async function AdverseWeather() {
 
   const childPages = await getPages({ child_of: id.toString() })
 
-  // TODO: Investigate hardcoding the listItem body. Check with client
-  // const { adverseWeatherAlerts } = {
-  //   adverseWeatherAlerts: [
-  //     {
-  //       id: 0,
-  //       name: 'Cold health alerts',
-  //       link: '/adverse-weather/cold-health-alerts',
-  //       body: 'Check your risk of cold alerts, view latest messages and updates',
-  //     },
-  //     {
-  //       id: 1,
-  //       name: 'Heat health alerts',
-  //       link: '/adverse-weather/heat-health-alerts',
-  //       body: 'Check your risk of heat alerts, view latest messages and updates',
-  //     },
-  //   ],
-  // }
-
   return (
     <View
       heading={title}
@@ -73,7 +55,7 @@ export default async function AdverseWeather() {
         </div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds-from-desktop">
@@ -89,6 +71,7 @@ export default async function AdverseWeather() {
                   <ListItem key={childId} spacing="l">
                     <ListItemArrow>
                       <ListItemArrowLink href={`/adverse-weather/${meta.slug}`}>{title}</ListItemArrowLink>
+                      {/* TODO: Child page description to come from the CMS in future. CDD-1980 */}
                       {/* <ListItemArrowParagraph>{body}</ListItemArrowParagraph> */}
                     </ListItemArrow>
                   </ListItem>
