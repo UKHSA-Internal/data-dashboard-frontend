@@ -105,12 +105,11 @@ export const adverseWeatherChildMocks: PageResponse<PageType.Composite>[] = [
       {
         id: 2,
         meta: {
-          type: 'User guide to use the impact based Weather-Health Alerts',
+          type: 'topic.TopicPageRelatedLink',
         },
-        title:
-          'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
+        title: 'User guide to use the impact based Weather-Health Alerts',
         body: '',
-        url: '/',
+        url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
   },
@@ -160,12 +159,11 @@ export const adverseWeatherChildMocks: PageResponse<PageType.Composite>[] = [
       {
         id: 2,
         meta: {
-          type: 'User guide to use the impact based Weather-Health Alerts',
+          type: 'topic.TopicPageRelatedLink',
         },
-        title:
-          'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
+        title: 'User guide to use the impact based Weather-Health Alerts',
         body: '',
-        url: '/',
+        url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
   },
