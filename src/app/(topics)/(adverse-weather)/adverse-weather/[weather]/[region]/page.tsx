@@ -12,7 +12,7 @@ export async function generateMetadata() {
 
   if (!enabled)
     return {
-      title: 'Page not found',
+      title: 'Page not found | UKHSA data dashboard',
       description: 'Error - Page not found',
     }
 
