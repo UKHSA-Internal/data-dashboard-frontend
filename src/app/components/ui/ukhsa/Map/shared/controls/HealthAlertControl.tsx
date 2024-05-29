@@ -41,7 +41,14 @@ const AlertDialogContent = () => {
     parseAsStringLiteral<HealthAlertTypes>(['heat', 'cold']).withDefault('heat')
   )
 
-  const alert = useWeatherHealthAlert()
+  const [regionId] = useQueryState(mapQueryKeys.featureId, parseAsString.withDefault(''))
+
+  const [type] = useQueryState(
+    mapQueryKeys.alertType,
+    parseAsStringLiteral<HealthAlertTypes>(['heat', 'cold']).withDefault('heat')
+  )
+
+  const alert = useWeatherHealthAlert({ type, regionId })
 
   if (alert.isFetching) {
     return <DialogSkeleton />

@@ -6,6 +6,7 @@ import { useRouter } from 'next/navigation'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
 import ExitMapIcon from '@/app/components/ui/ukhsa/Icons/ExitMap'
 import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
@@ -39,7 +40,13 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
   const [, setError] = useQueryState(mapQueryKeys.error)
   const [mapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const router = useRouter()
-  const alertsQuery = useWeatherHealthAlertList()
+
+  const [type] = useQueryState(
+    mapQueryKeys.alertType,
+    parseAsStringLiteral<HealthAlertTypes>(['heat', 'cold']).withDefault('heat')
+  )
+
+  const alertsQuery = useWeatherHealthAlertList({ type })
 
   const baseLayer = useMemo(() => {
     return <BaseLayer />

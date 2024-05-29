@@ -1,6 +1,7 @@
 import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { redirect } from 'next/navigation'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
@@ -18,9 +19,11 @@ import {
   ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
+import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
+import { logger } from '@/lib/logger'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
@@ -78,7 +81,12 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
 
   const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
-  const healthAlerts = await getHealthAlerts(type)
+  const healthAlerts = useWeatherHealthAlertList({ type })
+
+  if (healthAlerts.error || !healthAlerts.data) {
+    logger.error(healthAlerts.error)
+    return redirect('/error')
+  }
 
   const { t } = await useTranslation('adverseWeather')
 
@@ -106,31 +114,30 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
             />
 
             <List>
-              {healthAlerts.success &&
-                healthAlerts.data.map(({ status, geography_name: name, refresh_date: lastUpdated }) => (
-                  <ListItem key={name} spacing="s">
-                    <ListItemStatus>
-                      <ListItemStatusIcon level={status} type={type} />
-                      <ListItemStatusContent>
-                        <ListItemStatusLink
-                          href={`/adverse-wether/${weather}-health-alerts/${name.toLowerCase().split(' ').join('-')}`}
-                        >
-                          {name}
-                        </ListItemStatusLink>
+              {healthAlerts.data.map(({ status, geography_name: name, refresh_date: lastUpdated }) => (
+                <ListItem key={name} spacing="s">
+                  <ListItemStatus>
+                    <ListItemStatusIcon level={status} type={type} />
+                    <ListItemStatusContent>
+                      <ListItemStatusLink
+                        href={`/adverse-wether/${weather}-health-alerts/${name.toLowerCase().split(' ').join('-')}`}
+                      >
+                        {name}
+                      </ListItemStatusLink>
 
-                        {lastUpdated === null || lastUpdated === '' ? (
-                          <ListItemStatusTimestamp>-</ListItemStatusTimestamp>
-                        ) : (
-                          <ListItemStatusTimestamp>
-                            {t('lastUpdated', { value: new Date(lastUpdated) })}
-                          </ListItemStatusTimestamp>
-                        )}
-                      </ListItemStatusContent>
+                      {lastUpdated === null || lastUpdated === '' ? (
+                        <ListItemStatusTimestamp>-</ListItemStatusTimestamp>
+                      ) : (
+                        <ListItemStatusTimestamp>
+                          {t('lastUpdated', { value: new Date(lastUpdated) })}
+                        </ListItemStatusTimestamp>
+                      )}
+                    </ListItemStatusContent>
 
-                      <ListItemStatusTag level={status} type={type} region={name} />
-                    </ListItemStatus>
-                  </ListItem>
-                ))}
+                    <ListItemStatusTag level={status} type={type} region={name} />
+                  </ListItemStatus>
+                </ListItem>
+              ))}
             </List>
           </div>
 
