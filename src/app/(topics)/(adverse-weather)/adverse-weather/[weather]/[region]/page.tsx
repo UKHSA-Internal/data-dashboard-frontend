@@ -7,7 +7,7 @@ import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/H
 import { flags } from '@/app/constants/flags.constants'
 import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
-export async function generateMetadata() {
+export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
 
   if (!enabled)
@@ -16,8 +16,10 @@ export async function generateMetadata() {
       description: 'Error - Page not found',
     }
 
+  const title = `Weather alert for ${region} | UKHSA data dashboard`
+
   return {
-    title: 'Weather health alert page',
+    title,
     description: 'Weather health alert description',
   }
 }
