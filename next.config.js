@@ -6,7 +6,7 @@ const nextConfig = {
   reactStrictMode: true,
   logging: {
     fetches: {
-      fullUrl: false,
+      fullUrl: true,
     },
   },
   webpack(config) {
