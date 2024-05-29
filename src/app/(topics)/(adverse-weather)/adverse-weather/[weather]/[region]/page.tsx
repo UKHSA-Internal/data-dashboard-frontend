@@ -1,18 +1,14 @@
 import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
-import { redirect } from 'next/navigation'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
-import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
+import { View } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
-import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
-import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
-import { logger } from '@/lib/logger'
+
+import AlertBody from './AlertBody'
 
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
@@ -41,22 +37,6 @@ export default async function Alert({ params: { weather, region } }: WeatherHeal
 
   const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
-  const healthAlertsList = useWeatherHealthAlertList({ type })
-
-  if (healthAlertsList.error || !healthAlertsList.data) {
-    logger.error(healthAlertsList.error)
-    return redirect('/error')
-  }
-
-  const regionId = healthAlertsList.data.find((regionAlert) => regionAlert.slug === region)?.geography_code ?? ''
-
-  const healthAlert = useWeatherHealthAlert({ type, regionId })
-
-  if (healthAlert.error || !healthAlert.data) {
-    logger.error(healthAlert.error)
-    return redirect('/error')
-  }
-
   return (
     <View
       heading={`Weather alert for ${region}`}
@@ -67,24 +47,7 @@ export default async function Alert({ params: { weather, region } }: WeatherHeal
         { name: 'Heat Health Alerts', link: `/adverse-weather/${weather}` },
       ]}
     >
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-three-quarters-from-desktop">
-          <AlertBanner type={type} level={healthAlert.data.status} />
-        </div>
-        <div className="govuk-grid-column-three-quarters-from-desktop">
-          <div className="govuk-body">{healthAlert.data.text}</div>
-        </div>
-
-        <div className="govuk-grid-column-one-quarter-from-desktop">
-          <RelatedLinks variant="sidebar">
-            {relatedLinks.map(({ title, url, id }) => (
-              <RelatedLink key={id} title={title} url={url} />
-            ))}
-          </RelatedLinks>
-        </div>
-      </div>
-
-      <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+      <AlertBody type={type} region={region} relatedLinks={relatedLinks} />
     </View>
   )
 }
