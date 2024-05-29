@@ -80,7 +80,10 @@ const AlertDialogContent = () => {
           </SummaryList>
           <div className="govuk-!-margin-top-3 govuk-body-s">
             <h3 className="govuk-heading-s">{t('map.alertDialog.textKey')}</h3>
-            <p className="govuk-body">{text}</p>
+            <div
+              className="govuk-body [&_li]:mb-2 [&_li]:list-disc [&_ul]:py-0 [&_ul]:pl-4"
+              dangerouslySetInnerHTML={{ __html: text }}
+            />
           </div>
           <Link href={`/adverse-weather/${category}/${toSlug(regionName)}`} className="govuk-body">
             {t('map.alertDialog.alertCta')}
