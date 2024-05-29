@@ -77,7 +77,6 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
       breadcrumbs={[
         { name: 'Home', link: '/' },
         { name: 'Adverse Weather', link: '/adverse-weather' },
-        { name: title, link: `/adverse-weather/${weather}` },
       ]}
     >
       <div className="govuk-grid-row">

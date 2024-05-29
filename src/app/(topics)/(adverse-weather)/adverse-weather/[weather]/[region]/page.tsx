@@ -3,6 +3,8 @@ import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
@@ -37,6 +39,8 @@ interface WeatherHealthAlertProps {
 export default async function Alert({ params: { weather, region } }: WeatherHealthAlertProps) {
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
 
+  const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
+
   const healthAlertsList = useWeatherHealthAlertList({ type })
 
   if (healthAlertsList.error || !healthAlertsList.data) {
@@ -60,8 +64,7 @@ export default async function Alert({ params: { weather, region } }: WeatherHeal
       breadcrumbs={[
         { name: 'Home', link: '/' },
         { name: 'Adverse Weather', link: '/adverse-weather' },
-        { name: 'Heat Health Alerts', link: '/adverse-weather/heat-health-alerts' },
-        { name: 'East Midlands', link: '/adverse-weather/heat-health-alerts/east-midlands' },
+        { name: 'Heat Health Alerts', link: `/adverse-weather/${weather}` },
       ]}
     >
       <div className="govuk-grid-row">
@@ -72,11 +75,11 @@ export default async function Alert({ params: { weather, region } }: WeatherHeal
           <div className="govuk-body">{healthAlert.data.text}</div>
         </div>
 
-        {/* TODO: Pull related links from parent */}
         <div className="govuk-grid-column-one-quarter-from-desktop">
           <RelatedLinks variant="sidebar">
-            <RelatedLink title="Adverse weather help" url="/" />
-            <RelatedLink title="What to do in adverse weather" url="/" />
+            {relatedLinks.map(({ title, url, id }) => (
+              <RelatedLink key={id} title={title} url={url} />
+            ))}
           </RelatedLinks>
         </div>
       </div>
