@@ -56,9 +56,9 @@ const AlertDialogContent = () => {
   return (
     <>
       <SheetHeader>
-        <ScrollArea className="h-[calc(100vh-75px)]">
+        <ScrollArea className="h-[calc(100vh-90px)]">
           <SheetTitle className="mb-0 flex flex-wrap items-center gap-2">{regionName}</SheetTitle>
-          <SummaryList>
+          <SummaryList className="govuk-!-margin-bottom-3">
             <SummaryListRow>
               <SummaryListKey>{t('map.alertDialog.typeKey')}</SummaryListKey>
               <SummaryListValue>{t('map.alertDialog.typeValue', { context: category })}</SummaryListValue>
@@ -81,11 +81,11 @@ const AlertDialogContent = () => {
           <div className="govuk-!-margin-top-3 govuk-body-s">
             <h3 className="govuk-heading-s">{t('map.alertDialog.textKey')}</h3>
             <div
-              className="govuk-body [&_li]:mb-2 [&_li]:list-disc [&_ul]:py-0 [&_ul]:pl-4"
+              className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
               dangerouslySetInnerHTML={{ __html: text }}
             />
           </div>
-          <Link href={`/adverse-weather/${category}/${toSlug(regionName)}`} className="govuk-body">
+          <Link href={`/adverse-weather/${category}/${toSlug(regionName)}`} className="govuk-body mb-0">
             {t('map.alertDialog.alertCta')}
           </Link>
           {lastUpdated ? (
