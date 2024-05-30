@@ -17,6 +17,7 @@ import {
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
+import { capitalizeFirstLetter } from '@/app/utils/app.utils'
 import { extractHealthAlertTypeFromSlug, getTagVariantFromStatus } from '@/app/utils/weather-health-alert.utils'
 import { logger } from '@/lib/logger'
 
@@ -53,16 +54,21 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
   const breadcrumbs = [
     { name: 'Home', link: '/' },
     { name: 'Adverse Weather', link: '/adverse-weather' },
-    { name: `${type} Health Alerts`, link: `/adverse-weather/${weather}` },
+    { name: `${capitalizeFirstLetter(type)}-Health Alerts`, link: `/adverse-weather/${weather}` },
+    { name: regionName, link: `/adverse-weather/${weather}/${region}` },
   ]
 
   return (
     <div>
       <div className="govuk-breadcrumbs govuk-!-margin-top-2">
         <ol className="govuk-breadcrumbs__list capitalize">
-          {breadcrumbs.map(({ name, link }, key) => (
-            <li key={key} className="govuk-breadcrumbs__list-item">
-              <Link className="govuk-breadcrumbs__link" href={link}>
+          {breadcrumbs.map(({ name, link }, idx) => (
+            <li key={name} className="govuk-breadcrumbs__list-item">
+              <Link
+                className="govuk-breadcrumbs__link"
+                href={link}
+                aria-current={idx === breadcrumbs.length - 1 ? 'page' : undefined}
+              >
                 {name}
               </Link>
             </li>

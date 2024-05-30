@@ -21,3 +21,7 @@ export const toSlug = (text: string | null) => {
     .replace(/^-+/, '')
     .replace(/-+$/, '')
 }
+
+export const capitalizeFirstLetter = (string: string) => {
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}

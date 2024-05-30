@@ -10,6 +10,7 @@ import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/H
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { flags } from '@/app/constants/flags.constants'
+import { capitalizeFirstLetter } from '@/app/utils/app.utils'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
@@ -77,6 +78,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
       breadcrumbs={[
         { name: 'Home', link: '/' },
         { name: 'Adverse Weather', link: '/adverse-weather' },
+        { name: `${capitalizeFirstLetter(type)}-Health Alerts`, link: `/adverse-weather/${type}-health-alerts` },
       ]}
     >
       <div className="govuk-grid-row">
