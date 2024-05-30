@@ -17,5 +17,5 @@
     }
   },
   "lastUpdated": "Updated {{value, time}} on {{ value, dateShort }}",
-  "weatherAlert": "Weather alert for {{region}}"
+  "weatherAlert": "Weather alert for {{regionName}}"
 }

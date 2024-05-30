@@ -1,13 +1,10 @@
 import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 
-import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
-import { useTranslation } from '@/app/i18n'
-import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 import AlertBody from './AlertBody'
 
@@ -34,25 +31,13 @@ interface WeatherHealthAlertProps {
 }
 
 export default async function Alert({ params: { weather, region } }: WeatherHealthAlertProps) {
-  const { t } = await useTranslation('adverseWeather')
-
-  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
-
   const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
   return (
-    <View
-      heading={t('weatherAlert', { region })}
-      lastUpdated=""
-      breadcrumbs={[
-        { name: 'Home', link: '/' },
-        { name: 'Adverse Weather', link: '/adverse-weather' },
-        { name: 'Heat Health Alerts', link: `/adverse-weather/${weather}` },
-      ]}
-    >
-      <div className="govuk-grid-row">
-        <AlertBody type={type} region={region} />
-
+    <AlertBody
+      weather={weather}
+      region={region}
+      relatedLinks={
         <div className="govuk-grid-column-one-quarter-from-desktop">
           <RelatedLinks variant="sidebar">
             {relatedLinks.map(({ title, url, id }) => (
@@ -60,7 +45,7 @@ export default async function Alert({ params: { weather, region } }: WeatherHeal
             ))}
           </RelatedLinks>
         </div>
-      </div>
-    </View>
+      }
+    />
   )
 }
