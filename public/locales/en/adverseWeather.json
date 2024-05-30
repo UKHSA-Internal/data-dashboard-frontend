@@ -5,14 +5,16 @@
     "trigger": "View map of weather health alerts",
     "fatalError": "There is a problem with the map. Please try again later.",
     "alertDialog": {
-      "dateKey": "Date",
+      "dateKey": "Start",
+      "expiryKey": "End",
       "statusKey": "Colour",
       "textKey": "Description",
       "typeKey": "Type",
       "typeValue_heat": "Heat Health Alert",
       "typeValue_cold": "Cold Health Alert",
-      "firstPublished": "{{value, date}} at {{value, time}}",
-      "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
+      "firstPublished": "{{value, dateShort}} at {{value, time}}",
+      "expiryDate": "{{value, dateShort}} at {{value, time}}",
+      "lastUpdated": "{{value, date}} at {{value, time}}",
       "alertCta": "Go to alert page"
     }
   },

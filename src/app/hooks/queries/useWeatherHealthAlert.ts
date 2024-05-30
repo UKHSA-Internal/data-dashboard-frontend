@@ -20,6 +20,7 @@ export default function useWeatherHealthAlert({ type, regionId }: WeatherHealthA
           text,
           refresh_date: lastUpdated,
           period_start: firstPublished,
+          period_end: expiryDate,
         } = data.data
 
         return {
@@ -28,6 +29,7 @@ export default function useWeatherHealthAlert({ type, regionId }: WeatherHealthA
           text,
           lastUpdated,
           firstPublished,
+          expiryDate,
         }
       }
     },

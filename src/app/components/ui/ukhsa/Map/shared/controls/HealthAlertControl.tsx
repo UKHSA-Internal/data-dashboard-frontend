@@ -58,7 +58,7 @@ const AlertDialogContent = () => {
     return null
   }
 
-  const { regionName, status, text, lastUpdated, firstPublished } = alert.data
+  const { regionName, status, text, lastUpdated, firstPublished, expiryDate } = alert.data
 
   return (
     <>
@@ -84,6 +84,12 @@ const AlertDialogContent = () => {
                 {firstPublished ? t('map.alertDialog.firstPublished', { value: new Date(firstPublished) }) : '–'}
               </SummaryListValue>
             </SummaryListRow>
+            <SummaryListRow>
+              <SummaryListKey>{t('map.alertDialog.expiryKey')}</SummaryListKey>
+              <SummaryListValue>
+                {expiryDate ? t('map.alertDialog.expiryDate', { value: new Date(expiryDate) }) : '–'}
+              </SummaryListValue>
+            </SummaryListRow>
           </SummaryList>
           <div className="govuk-!-margin-top-3 govuk-body-s">
             <h3 className="govuk-heading-s">{t('map.alertDialog.textKey')}</h3>
@@ -92,7 +98,7 @@ const AlertDialogContent = () => {
               dangerouslySetInnerHTML={{ __html: text }}
             />
           </div>
-          <Link href={`/adverse-weather/${category}/${toSlug(regionName)}`} className="govuk-body mb-0">
+          <Link href={`/adverse-weather/${category}-health-alert/${toSlug(regionName)}`} className="govuk-body mb-0">
             {t('map.alertDialog.alertCta')}
           </Link>
           {lastUpdated ? (
