@@ -1,5 +1,6 @@
 'use client'
 
+import clsx from 'clsx'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ReactNode } from 'react'
@@ -7,10 +8,16 @@ import { ReactNode } from 'react'
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
+import {
+  SummaryList,
+  SummaryListKey,
+  SummaryListRow,
+  SummaryListValue,
+} from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
-import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
+import { extractHealthAlertTypeFromSlug, getTagVariantFromStatus } from '@/app/utils/weather-health-alert.utils'
 import { logger } from '@/lib/logger'
 
 interface AlertProps {
@@ -41,7 +48,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
     return redirect('/error')
   }
 
-  const { regionName, status, text, lastUpdated } = healthAlert.data
+  const { regionName, status, text, lastUpdated, firstPublished, expiryDate } = healthAlert.data
 
   const breadcrumbs = [
     { name: 'Home', link: '/' },
@@ -71,9 +78,38 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <AlertBanner type={type} level={status} />
+          {status === 'Green' ? null : <AlertBanner type={type} level={status} />}
         </div>
         <div className="govuk-grid-column-three-quarters-from-desktop ">
+          <div className="govuk-grid-row">
+            <div className="govuk-grid-column-three-quarters-from-desktop ">
+              <SummaryList>
+                <SummaryListRow>
+                  <SummaryListKey>{t('map.alertDialog.typeKey')}</SummaryListKey>
+                  <SummaryListValue>{t('map.alertDialog.typeValue', { context: 'heat' })}</SummaryListValue>
+                </SummaryListRow>
+                <SummaryListRow>
+                  <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
+                  <SummaryListValue>
+                    <div className={clsx(`govuk-tag capitalize`, getTagVariantFromStatus(status))}>{status}</div>
+                  </SummaryListValue>
+                </SummaryListRow>
+                <SummaryListRow>
+                  <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
+                  <SummaryListValue>
+                    {firstPublished ? t('map.alertDialog.firstPublished', { value: new Date(firstPublished) }) : '–'}
+                  </SummaryListValue>
+                </SummaryListRow>
+                <SummaryListRow>
+                  <SummaryListKey>{t('map.alertDialog.expiryKey')}</SummaryListKey>
+                  <SummaryListValue>
+                    {expiryDate ? t('map.alertDialog.expiryDate', { value: new Date(expiryDate) }) : '–'}
+                  </SummaryListValue>
+                </SummaryListRow>
+              </SummaryList>
+            </div>
+          </div>
+          <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.textKey')}</h3>
           <div
             className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
             dangerouslySetInnerHTML={{ __html: text }}
