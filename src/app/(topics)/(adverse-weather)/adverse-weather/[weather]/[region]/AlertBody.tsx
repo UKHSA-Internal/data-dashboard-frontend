@@ -46,13 +46,13 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
   const breadcrumbs = [
     { name: 'Home', link: '/' },
     { name: 'Adverse Weather', link: '/adverse-weather' },
-    { name: 'Heat Health Alerts', link: `/adverse-weather/${weather}` },
+    { name: `${type} Health Alerts`, link: `/adverse-weather/${weather}` },
   ]
 
   return (
     <div>
       <div className="govuk-breadcrumbs govuk-!-margin-top-2">
-        <ol className="govuk-breadcrumbs__list">
+        <ol className="govuk-breadcrumbs__list capitalize">
           {breadcrumbs.map(({ name, link }, key) => (
             <li key={key} className="govuk-breadcrumbs__list-item">
               <Link className="govuk-breadcrumbs__link" href={link}>
@@ -66,23 +66,21 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
       <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{t('weatherAlert', { regionName })}</h1>
 
       <p className="govuk-!-margin-bottom-4 govuk-body-s">
-        {ct('lastUpdated', { value: new Date(lastUpdated ?? '') })}
+        {lastUpdated ? ct('lastUpdated', { value: new Date(lastUpdated) }) : null}
       </p>
 
       <div className="govuk-grid-row">
-        <>
-          <div className="govuk-grid-column-three-quarters-from-desktop">
-            <AlertBanner type={type} level={status} />
-          </div>
-          <div className="govuk-grid-column-three-quarters-from-desktop ">
-            <div
-              className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
-              dangerouslySetInnerHTML={{ __html: text }}
-            />
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <AlertBanner type={type} level={status} />
+        </div>
+        <div className="govuk-grid-column-three-quarters-from-desktop ">
+          <div
+            className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
+            dangerouslySetInnerHTML={{ __html: text }}
+          />
 
-            <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
-          </div>
-        </>
+          <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+        </div>
 
         {relatedLinks}
       </div>
