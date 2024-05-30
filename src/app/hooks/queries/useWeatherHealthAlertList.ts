@@ -1,22 +1,23 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
-import { parseAsStringLiteral, useQueryState } from 'nuqs'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
-import { mapQueryKeys } from '@/app/constants/map.constants'
+import { toSlug } from '@/app/utils/app.utils'
 
-export default function useWeatherHealthAlertList() {
-  const [category] = useQueryState(
-    mapQueryKeys.alertType,
-    parseAsStringLiteral<HealthAlertTypes>(['heat', 'cold']).withDefault('heat')
-  )
+interface WeatherHealthAlertListProps {
+  type: HealthAlertTypes
+}
 
+export default function useWeatherHealthAlertList({ type }: WeatherHealthAlertListProps) {
   return useSuspenseQuery({
-    queryKey: ['weather-alert-list', category],
-    queryFn: async () => getHealthAlerts(category),
+    queryKey: ['weather-alert-list', type],
+    queryFn: async () => getHealthAlerts(type),
     select(data) {
       if (data.success) {
-        return data.data
+        return data.data.map((geography) => ({
+          ...geography,
+          slug: toSlug(geography.geography_name),
+        }))
       }
     },
   })

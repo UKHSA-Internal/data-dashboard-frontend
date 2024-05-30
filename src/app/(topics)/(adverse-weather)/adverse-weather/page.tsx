@@ -42,13 +42,7 @@ export default async function AdverseWeather() {
   const childPages = await getPages({ child_of: id.toString() })
 
   return (
-    <View
-      heading={title}
-      breadcrumbs={[
-        { name: 'Home', link: '/' },
-        { name: 'Adverse Weather', link: '/adverse-weather' },
-      ]}
-    >
+    <View heading={title} breadcrumbs={[{ name: 'Home', link: '/' }]}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">{body.map(renderCompositeBlock)}</div>

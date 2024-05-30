@@ -2,24 +2,18 @@ import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
-import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import {
-  ListItemStatus,
-  ListItemStatusContent,
-  ListItemStatusIcon,
-  ListItemStatusLink,
-  ListItemStatusTag,
-  ListItemStatusTimestamp,
-} from '@/app/components/ui/ukhsa/List/ListItemStatus'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
+
+import AlertList from './AlertList'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
@@ -49,83 +43,7 @@ interface WeatherHealthAlertProps {
 export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
 
-  const { regions, furtherAdviceLinks } = {
-    // TODO: Regions data will come from alerts endpoints (CDD-1972)
-    regions: [
-      {
-        id: 0,
-        region: 'East Midlands',
-        type: 'heat',
-        level: 'Red',
-        link: '/adverse-weather/heat-health-alerts/east-midlands',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 1,
-        region: 'East of England',
-        type: 'heat',
-        level: 'Red',
-        link: '/adverse-weather/heat-health-alerts/east-of-england',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 2,
-        region: 'London',
-        type: 'heat',
-        level: 'Amber',
-        link: '/adverse-weather/heat-health-alerts/london',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 3,
-        region: 'North East',
-        type: 'heat',
-        level: 'Yellow',
-        link: '/adverse-weather/heat-health-alerts/north-east',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 4,
-        region: 'North West',
-        type: 'heat',
-        level: 'Yellow',
-        link: '/adverse-weather/heat-health-alerts/north-west',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 5,
-        region: 'South East',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/south-east',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 6,
-        region: 'South West',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/south-west',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 7,
-        region: 'West Midlands',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/west-midlands',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-      {
-        id: 8,
-        region: 'Yorkshire and Humber',
-        type: 'heat',
-        level: 'No alerts',
-        link: '/adverse-weather/heat-health-alerts/yorkshire-and-humber',
-        lastUpdated: 'Updated 7:07am on 8 April 2024',
-      },
-    ],
-
+  const { furtherAdviceLinks } = {
     // Further advice links hardcoded currently, need to confirm these are correct and/or if they want them showing
     furtherAdviceLinks: [
       {
@@ -159,7 +77,6 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
       breadcrumbs={[
         { name: 'Home', link: '/' },
         { name: 'Adverse Weather', link: '/adverse-weather' },
-        { name: title, link: `/adverse-weather/${weather}` },
       ]}
     >
       <div className="govuk-grid-row">
@@ -176,29 +93,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
               role="presentation"
             />
 
-            <List>
-              {regions.map(({ id, region, type, level, link, lastUpdated }) => (
-                <ListItem key={id} spacing="s">
-                  <ListItemStatus>
-                    {/* TODO: Remove type cast after integration*/}
-                    <ListItemStatusIcon
-                      level={level as HealthAlertStatus | 'No alerts'}
-                      type={type as HealthAlertTypes}
-                    />
-                    <ListItemStatusContent>
-                      <ListItemStatusLink href={link}>{region}</ListItemStatusLink>
-                      <ListItemStatusTimestamp>{lastUpdated}</ListItemStatusTimestamp>
-                    </ListItemStatusContent>
-                    {/* TODO: Remove type cast */}
-                    <ListItemStatusTag
-                      level={level as HealthAlertStatus | 'No alerts'}
-                      type={type as HealthAlertTypes}
-                      region={region}
-                    />
-                  </ListItemStatus>
-                </ListItem>
-              ))}
-            </List>
+            <AlertList type={type} />
           </div>
 
           <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
