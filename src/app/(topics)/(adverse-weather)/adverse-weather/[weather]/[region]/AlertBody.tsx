@@ -3,7 +3,6 @@
 import { redirect } from 'next/navigation'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
-import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
@@ -13,18 +12,9 @@ import { logger } from '@/lib/logger'
 interface AlertProps {
   type: HealthAlertTypes
   region: string
-  relatedLinks: Array<{
-    meta: {
-      type: string
-    }
-    title: string
-    url: string
-    id: number
-    body?: string | undefined
-  }>
 }
 
-export default function AlertBody({ type, region, relatedLinks }: AlertProps) {
+export default function AlertBody({ type, region }: AlertProps) {
   const healthAlertsList = useWeatherHealthAlertList({ type })
 
   if (healthAlertsList.error || !healthAlertsList.data) {
@@ -41,26 +31,21 @@ export default function AlertBody({ type, region, relatedLinks }: AlertProps) {
     return redirect('/error')
   }
 
+  const { status, text } = healthAlert.data
+
   return (
     <>
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-three-quarters-from-desktop">
-          <AlertBanner type={type} level={healthAlert.data.status} />
-        </div>
-        <div className="govuk-grid-column-three-quarters-from-desktop">
-          <div className="govuk-body">{healthAlert.data.text}</div>
-        </div>
-
-        <div className="govuk-grid-column-one-quarter-from-desktop">
-          <RelatedLinks variant="sidebar">
-            {relatedLinks.map(({ title, url, id }) => (
-              <RelatedLink key={id} title={title} url={url} />
-            ))}
-          </RelatedLinks>
-        </div>
+      <div className="govuk-grid-column-three-quarters-from-desktop">
+        <AlertBanner type={type} level={status} />
       </div>
+      <div className="govuk-grid-column-three-quarters-from-desktop ">
+        <div
+          className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
+          dangerouslySetInnerHTML={{ __html: text }}
+        />
 
-      <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+        <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+      </div>
     </>
   )
 }

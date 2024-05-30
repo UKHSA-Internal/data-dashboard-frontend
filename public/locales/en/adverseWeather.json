@@ -16,5 +16,6 @@
       "alertCta": "Go to alert page"
     }
   },
-  "lastUpdated": "Updated {{value, time}} on {{ value, dateShort }}"
+  "lastUpdated": "Updated {{value, time}} on {{ value, dateShort }}",
+  "weatherAlert": "Weather alert for {{region}}"
 }
