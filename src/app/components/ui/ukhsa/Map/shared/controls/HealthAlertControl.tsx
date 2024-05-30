@@ -51,7 +51,7 @@ const AlertDialogContent = () => {
     return null
   }
 
-  const { regionName, status, text, lastUpdated, firstPublished } = alert.data
+  const { regionName, status, text, lastUpdated, firstPublished, expiryDate } = alert.data
 
   return (
     <>
@@ -75,6 +75,12 @@ const AlertDialogContent = () => {
               <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
               <SummaryListValue>
                 {firstPublished ? t('map.alertDialog.firstPublished', { value: new Date(firstPublished) }) : '–'}
+              </SummaryListValue>
+            </SummaryListRow>
+            <SummaryListRow>
+              <SummaryListKey>{t('map.alertDialog.expiryKey')}</SummaryListKey>
+              <SummaryListValue>
+                {expiryDate ? t('map.alertDialog.expiryDate', { value: new Date(expiryDate) }) : '–'}
               </SummaryListValue>
             </SummaryListRow>
           </SummaryList>
