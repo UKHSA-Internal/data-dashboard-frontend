@@ -24,6 +24,7 @@ export default function useWeatherHealthAlert() {
           text,
           refresh_date: lastUpdated,
           period_start: firstPublished,
+          period_end: expiryDate,
         } = data.data
 
         return {
@@ -32,6 +33,7 @@ export default function useWeatherHealthAlert() {
           text,
           lastUpdated,
           firstPublished,
+          expiryDate,
         }
       }
     },
