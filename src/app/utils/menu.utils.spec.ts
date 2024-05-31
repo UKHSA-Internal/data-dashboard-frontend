@@ -47,12 +47,12 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
         },
       ],
     },
+    { title: 'Adverse weather', slug: '/adverse-weather' },
     { title: 'About', slug: '/about' },
     { title: 'Bulk downloads', slug: '/bulk-downloads' },
     { title: 'Access our data', slug: '/access-our-data' },
     { title: "What's new", slug: '/whats-new' },
     { title: 'Metrics documentation', slug: '/metrics-documentation' },
-    { title: 'Adverse weather', slug: '/adverse-weather' },
   ])
 })
 
