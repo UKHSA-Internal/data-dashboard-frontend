@@ -4,6 +4,7 @@ import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
 import { accessOurDataChildMocks, accessOurDataParentMock } from './fixtures/page/access-our-data'
+import { adverseWeatherChildMocks, adverseWeatherParentMock } from './fixtures/page/adverse-weather'
 import {
   allPagesMock,
   pagesWithCommonTypeMock,
@@ -35,12 +36,22 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    // filter all items where has a parent of ID
+    // filter all items where requesting child of access our data parent
     if (req.query.child_of && Number(req.query.child_of) === accessOurDataParentMock.id) {
       return res.json({
         items: accessOurDataChildMocks,
         meta: {
           total_count: accessOurDataChildMocks.length,
+        },
+      })
+    }
+
+    // filter all items where requesting child of adverse weather parent
+    if (req.query.child_of && Number(req.query.child_of) === adverseWeatherParentMock.id) {
+      return res.json({
+        items: adverseWeatherChildMocks,
+        meta: {
+          total_count: adverseWeatherChildMocks.length,
         },
       })
     }

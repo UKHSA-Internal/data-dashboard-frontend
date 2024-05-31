@@ -19,10 +19,13 @@ export function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const fetchOptions: Record<string, unknown> = {
-    retries: 3,
+  const fetchOptions: RequestInit & { next: { revalidate: number } } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
+    next: {
+      // Disable NextJs router caching
+      revalidate: 0,
+    },
     ...customConfig,
     headers: {
       ...headers,

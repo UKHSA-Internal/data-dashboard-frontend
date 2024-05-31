@@ -6,15 +6,25 @@
 'use client'
 
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
+import { parseAsString, useQueryState } from 'nuqs'
 import { ComponentProps, useCallback, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
-import { Feature, featureCollection } from '../data/geojson/ukhsa-regions'
+import { HealthAlertStatus } from '@/api/models/Alerts'
+import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
+import {
+  getActiveCssVariableFromColour,
+  getCssVariableFromColour,
+  getHoverCssVariableFromColour,
+} from '@/app/utils/weather-health-alert.utils'
+
+import { Feature } from '../data/geojson/ukhsa-regions'
+import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 
 /**
  * Extracted type of props that GeoJSON component accepts.
  */
-type GeoJSONProps = ComponentProps<typeof GeoJSON>
+export type GeoJSONProps = ComponentProps<typeof GeoJSON>
 
 /**
  * Props specific to the Choropleth component.
@@ -24,30 +34,27 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
    * Optional prop to override the data received by the underlying GeoJSON component from react-leaflet.
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
-  data?: GeoJSONProps['data']
+  data: GeoJSONProps['data']
 
   /**
    * Colours mapping object to associate a particular region id with one of the four available colours
    */
-  featureColours: Record<number, 'green' | 'amber' | 'yellow' | 'red'>
+  featureColours: Record<string, HealthAlertStatus>
 
   /**
    * The ID of the selected feature.
    */
-  selectedFeatureId?: number | null
+  selectedFeatureId?: string | null
 
   /**
    * Callback that fires when individual features are clicked.
    */
-  onSelectFeature?: (callback: (featureId: number | null) => number | null) => void
+  onSelectFeature?: (callback: (featureId: string | null) => string | null) => void
 
   /**
    * Optional theme object to override the GeoJSON styles.
    */
-  theme?: PathOptions & {
-    hover: PathOptions
-    active: PathOptions
-  }
+  theme?: PathOptions
 
   /**
    * Optional class name to attach to each feature.
@@ -73,15 +80,9 @@ interface GeoJSONLayer<T extends LayerWithFeature> extends GeoJSONOptions {
 }
 
 const defaultTheme = {
-  weight: 1,
-  color: 'rgba(255,255, 255, 0.7)',
-  fillOpacity: 0.55,
-  hover: {
-    fillOpacity: 0.65,
-  },
-  active: {
-    fillOpacity: 0.86,
-  },
+  weight: 2,
+  color: 'rgba(255, 255, 255, 1)',
+  fillOpacity: 1,
 } as const
 
 /**
@@ -92,92 +93,110 @@ const defaultTheme = {
  */
 const ChoroplethLayer = <T extends LayerWithFeature>({
   featureColours,
-  selectedFeatureId = null,
-  onSelectFeature,
   data,
   theme = defaultTheme,
-  className = 'transition-all duration-200',
+  className = 'transition-all duration-150',
   ...rest
 }: ChoroplethProps) => {
-  const clickedFeatureIdRef = useRef<number | null>(selectedFeatureId)
+  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
+
+  const featuresRef = useRef<Array<Feature>>([])
+
+  const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
 
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
+      featuresRef.current = [...featuresRef.current, feature]
+
       layer.on({
         click: (event: CustomLeafletEvent) => {
           // Store the clicked ref
           if (layer.feature.id) {
-            clickedFeatureIdRef.current = Number(layer.feature.id)
+            clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
 
           // Prevent map click events from firing
           Leaflet.DomEvent.stopPropagation(event)
 
           // Fire the callback prop if provided
-          onSelectFeature?.((featureId) => {
+          setSelectedFeatureId((featureId) => {
             const feature = event.target.feature
             if (feature.id == featureId) {
               // Clicked same feature
               return null
             } else {
               // Clicked new feature
-              return feature.id ? Number(feature.id) : null
+              return feature.properties[geoJsonFeatureId]
             }
           })
         },
         mouseover: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
-          layer.setStyle({ fillOpacity: theme.hover.fillOpacity })
+
+          const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
+          const hoverColour = getHoverCssVariableFromColour(colour)
+          layer.setStyle({ fillColor: hoverColour })
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
-          layer.setStyle({ fillOpacity: theme.fillOpacity })
+
+          const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
+          layer.setStyle({
+            fillColor: getCssVariableFromColour(colour),
+            fillOpacity: theme.fillOpacity,
+          })
         },
       })
     },
   }
+
+  const [screenReaderText, updateScreenReaderText] = useChoroplethKeyboardAccessibility(featuresRef.current)
 
   // Setup map click events for interactions outside of the geojson features
   const MapEvents = useCallback(() => {
     useMapEvents({
       click() {
         if (selectedFeatureId) {
-          onSelectFeature?.(() => null)
+          setSelectedFeatureId(null)
         }
+      },
+      moveend() {
+        updateScreenReaderText()
       },
     })
     return null
-  }, [onSelectFeature, selectedFeatureId])
+  }, [setSelectedFeatureId, selectedFeatureId, updateScreenReaderText])
 
   return (
     <>
+      {screenReaderText}
       <MapEvents />
       <GeoJSON
-        data={data ?? featureCollection}
+        data={data}
         {...defaultOptions}
         style={(feature) => {
           // If the feature or its ID is not available, return an empty style
           if (!feature || !feature.id) return {}
 
-          const { active, ...rest } = theme
-
-          // Determine the fill opacity based on whether the feature is selected
-          const fillOpacity = selectedFeatureId == feature.id ? active.fillOpacity : theme.fillOpacity
+          const currentFeatureId = feature.properties[geoJsonFeatureId]
+          const isSelected = selectedFeatureId == currentFeatureId
 
           // Define the base style for the feature
           const style: Leaflet.PathOptions = {
-            ...rest,
-            fillOpacity,
+            ...theme,
             className,
           }
 
           // Apply custom colours if the feature ID is present in the featureColours map
-          if (feature.id in featureColours) {
-            const colour = featureColours[Number(feature.id)]
-            // Set the fill color using CSS variable and featureColours map
-            style.fillColor = `var(--colour-${colour === 'amber' ? 'orange' : colour})`
+          if (currentFeatureId in featureColours) {
+            const colour = featureColours[currentFeatureId]
+            if (isSelected) {
+              style.fillColor = getActiveCssVariableFromColour(colour)
+            } else {
+              style.fillColor = getCssVariableFromColour(colour)
+            }
           }
 
           return style

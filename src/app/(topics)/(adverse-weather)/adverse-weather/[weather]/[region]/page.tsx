@@ -1,27 +1,51 @@
 import { flag } from '@unleash/nextjs'
+import { Metadata } from 'next'
 
-import { View } from '@/app/components/ui/ukhsa'
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
 
-export async function generateMetadata() {
+import AlertBody from './AlertBody'
+
+export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   const { enabled } = await flag(flags.adverseWeather)
 
   if (!enabled)
     return {
-      title: 'Page not found',
+      title: 'Page not found | UKHSA data dashboard',
       description: 'Error - Page not found',
     }
 
   return {
-    title: 'Weather health alert page',
-    description: 'Weather health alert description',
+    title: `Weather alert for ${region} | UKHSA data dashboard`,
+    description: `Weather alert for ${region}`,
   }
 }
 
-export default async function Alert() {
+interface WeatherHealthAlertProps {
+  params: {
+    weather: 'heat-health-alerts' | 'cold-health-alerts'
+    region: string
+  }
+}
+
+export default async function Alert({ params: { weather, region } }: WeatherHealthAlertProps) {
+  const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
+
   return (
-    <View heading="Weather alert for East Midlands">
-      <div>Weather health alert info page</div>
-    </View>
+    <AlertBody
+      weather={weather}
+      region={region}
+      relatedLinks={
+        <div className="govuk-grid-column-one-quarter-from-desktop">
+          <RelatedLinks variant="sidebar">
+            {relatedLinks.map(({ title, url, id }) => (
+              <RelatedLink key={id} title={title} url={url} />
+            ))}
+          </RelatedLinks>
+        </div>
+      }
+    />
   )
 }

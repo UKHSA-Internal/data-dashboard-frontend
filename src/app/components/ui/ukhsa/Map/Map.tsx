@@ -12,7 +12,7 @@ import { ControlPosition } from 'leaflet'
 import { ComponentProps, ReactNode } from 'react'
 import { MapContainer } from 'react-leaflet'
 
-import { center, mapDescriptionId, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
 import { AttributionControl } from './shared/controls/AttributionControl'
 import { ZoomControl } from './shared/controls/ZoomControl'
@@ -54,15 +54,8 @@ const Map = ({
       className={clsx('relative h-screen overflow-hidden ukhsa-focus', className)}
       zoomControl={false}
     >
-      <div id={mapDescriptionId} className="govuk-visually-hidden">
-        {/* TODO */}
-        UKHSA Weather health alerts map viewer. 9 regions highlighed in the map area with 3 active alerts. Use number
-        keys to select. 1: London - No alerts 2: North East - 1 yellow alert 3: North West - 1 amber alert 4: West
-        Midlands - 1 amber alert 5: East Midlands - No alerts
-      </div>
       <AttributionControl position={attributionControlPosition} />
       <ZoomControl position={zoomControlPosition} />
-
       {children}
     </MapContainer>
   )
