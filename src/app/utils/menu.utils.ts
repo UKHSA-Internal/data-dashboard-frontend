@@ -40,6 +40,10 @@ export const useMenu = async (): Promise<MenuLink[]> => {
 
     links.push({ ...homeLink, children: topics })
 
+    if (adverseWeatherEnabled) {
+      links.push({ title: 'Adverse weather', slug: '/adverse-weather' })
+    }
+
     for (const page of pages.data.items) {
       const {
         title,
@@ -53,10 +57,6 @@ export const useMenu = async (): Promise<MenuLink[]> => {
       if (type !== PageType.Home && type !== PageType.Topic) {
         links.push({ title, slug: `/${slug}` })
       }
-    }
-
-    if (adverseWeatherEnabled) {
-      links.push({ title: 'Adverse weather', slug: '/adverse-weather' })
     }
 
     return links
