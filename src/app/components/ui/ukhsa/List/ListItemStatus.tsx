@@ -29,16 +29,12 @@ interface ListItemStatusIconProps {
 export const ListItemStatusIcon = ({ level, type }: ListItemStatusIconProps) => {
   let icon
 
-  console.log(`Level: ${level}, Type: ${type}`)
-
   if (type === 'heat') {
     switch (level) {
       case 'Yellow':
-        console.log('Yellow heat icon')
         icon = <HeatHealthAlertYellowIcon />
         break
       case 'Amber':
-        console.log('Amber heat icon')
         icon = <HeatHealthAlertAmberIcon />
         break
       case 'Red':
