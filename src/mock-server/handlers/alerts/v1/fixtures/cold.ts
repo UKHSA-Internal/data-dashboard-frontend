@@ -1,24 +1,24 @@
 import { type HealthAlertList } from '@/api/models/Alerts'
 
 export const coldAlertsFixture: HealthAlertList = [
-  { geography_code: 'E12000001', geography_name: 'North East', status: 'Green', refresh_date: '2024-05-07 12:00:00' },
+  { geography_code: 'E12000001', geography_name: 'North East', status: 'Yellow', refresh_date: '2024-05-07 12:00:00' },
   { geography_code: 'E12000002', geography_name: 'North West', status: 'Green', refresh_date: '2024-05-07 12:00:00' },
   {
     geography_code: 'E12000003',
     geography_name: 'Yorkshire and The Humber',
-    status: 'Green',
+    status: 'Yellow',
     refresh_date: '2024-05-07 12:00:00',
   },
   {
     geography_code: 'E12000004',
     geography_name: 'East Midlands',
-    status: 'Green',
+    status: 'Amber',
     refresh_date: '2024-05-07 12:00:00',
   },
   {
     geography_code: 'E12000005',
     geography_name: 'West Midlands',
-    status: 'Green',
+    status: 'Red',
     refresh_date: '2024-05-07 12:00:00',
   },
   {
