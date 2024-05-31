@@ -1,3 +1,4 @@
+import { flag } from '@unleash/nextjs'
 import { ZodError } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
@@ -6,7 +7,11 @@ import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { useMenu } from './menu.utils'
 
+jest.mock('@unleash/nextjs')
+
 const clientMock = jest.mocked(client)
+
+const featureFlagMock = jest.mocked(flag).mockResolvedValue({ enabled: true, variant: {} })
 
 beforeEach(() => {
   jest.clearAllMocks()
@@ -20,6 +25,48 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
     },
     status: 200,
   })
+
+  const menu = await useMenu()
+
+  expect(menu).toStrictEqual([
+    {
+      title: 'Homepage',
+      slug: '/',
+      children: [
+        {
+          slug: '/topics/covid-19',
+          title: 'COVID-19',
+        },
+        {
+          slug: '/topics/influenza',
+          title: 'Influenza',
+        },
+        {
+          slug: '/topics/other-respiratory-viruses',
+          title: 'Other respiratory viruses',
+        },
+      ],
+    },
+    { title: 'About', slug: '/about' },
+    { title: 'Bulk downloads', slug: '/bulk-downloads' },
+    { title: 'Access our data', slug: '/access-our-data' },
+    { title: "What's new", slug: '/whats-new' },
+    { title: 'Metrics documentation', slug: '/metrics-documentation' },
+    { title: 'Adverse weather', slug: '/adverse-weather' },
+  ])
+})
+
+test('Adverse weather feature flag is disabled', async () => {
+  clientMock.mockResolvedValueOnce({
+    data: {
+      ...allPagesMock,
+      items: allPagesMock.items.filter((page) => page.meta.show_in_menus),
+    },
+    status: 200,
+  })
+
+  featureFlagMock.mockResolvedValueOnce({ enabled: false, variant: {} })
+
   const menu = await useMenu()
 
   expect(menu).toStrictEqual([

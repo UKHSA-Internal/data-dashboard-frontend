@@ -1,7 +1,7 @@
 import { type Map } from 'leaflet'
 import { Mock } from 'ts-mockery'
 
-import { mapDescriptionId, mapRole, mapTitle } from '@/app/constants/map.constants'
+import { mapDescriptionId, mapRole } from '@/app/constants/map.constants'
 import { renderHook } from '@/config/test-utils'
 
 import { useMapRef } from './useMapRef'
@@ -24,8 +24,8 @@ describe('useMapRef', () => {
     expect(mockMap.getContainer).toHaveBeenCalledTimes(1)
     expect(mockMap.getContainer().setAttribute).toHaveBeenCalledWith('tabindex', '0')
     expect(mockMap.getContainer().setAttribute).toHaveBeenCalledWith('role', mapRole)
-    expect(mockMap.getContainer().setAttribute).toHaveBeenCalledWith('aria-label', mapTitle)
     expect(mockMap.getContainer().setAttribute).toHaveBeenCalledWith('aria-describedby', mapDescriptionId)
+    expect(mockMap.getContainer().setAttribute).toHaveBeenCalledWith('aria-live', 'assertive')
   })
 
   test('does not set attributes if node is null', () => {

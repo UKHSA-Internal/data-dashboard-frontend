@@ -68,7 +68,7 @@ test.describe('Feature flag disabled', () => {
         await app.goto('/adverse-weather')
       })
       await test.step('metadata is correct', async () => {
-        await app.hasDocumentTitle('Page not found')
+        await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
       })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
@@ -82,7 +82,7 @@ test.describe('Feature flag disabled', () => {
         await app.goto('/adverse-weather/heat-health-alerts')
       })
       await test.step('metadata is correct', async () => {
-        await app.hasDocumentTitle('Page not found')
+        await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
       })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
@@ -96,7 +96,7 @@ test.describe('Feature flag disabled', () => {
         await app.goto('/adverse-weather/cold-health-alerts')
       })
       await test.step('metadata is correct', async () => {
-        await app.hasDocumentTitle('Page not found')
+        await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
       })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')
@@ -110,7 +110,7 @@ test.describe('Feature flag disabled', () => {
         await app.goto('/adverse-weather/cold-health-alerts/east-midlands')
       })
       await test.step('metadata is correct', async () => {
-        await app.hasDocumentTitle('Page not found')
+        await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
       })
       await test.step('Shows page not found message', async () => {
         await app.hasHeading('Page not found')

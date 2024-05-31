@@ -1,5 +1,7 @@
 import { LatLngExpression } from 'leaflet'
 
+import { Feature } from '../components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions'
+
 /**
  * Identifier for the container of our Leaflet map.
  * This ID is important for accessibility, as it's referenced by `aria-controls` attributes
@@ -54,4 +56,17 @@ export const mapQueryKeys = {
    * @type {string}
    */
   featureId: 'fid',
+  /**
+   * Represents the query parameter key for the Healh Alert Types.
+   * @type {string}
+   */
+  alertType: 'type',
+  /**
+   * Represents the query parameter key for any unrecoverable Map related errors
+   * @type {string}
+   */
+  error: 'error',
 } as const
+
+// The ID property of the GeoJson feature properties object
+export const geoJsonFeatureId = 'RGN23CD' satisfies keyof Feature['properties']

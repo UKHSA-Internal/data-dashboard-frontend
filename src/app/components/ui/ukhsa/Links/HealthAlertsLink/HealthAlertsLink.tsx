@@ -3,20 +3,32 @@
 import Link from 'next/link'
 import { useSearchParams } from 'next/navigation'
 
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { mapQueryKeys } from '@/app/constants/map.constants'
 import { useTranslation } from '@/app/i18n/client'
 import { clsx } from '@/lib/clsx'
 
 interface HealthAlertsLinkProps {
+  type: HealthAlertTypes
+  regionId?: string
   className?: string
 }
 
-export default function HealthAlertsLink({ className }: HealthAlertsLinkProps) {
+export default function HealthAlertsLink({ className, type, regionId }: HealthAlertsLinkProps) {
   const { t } = useTranslation('adverseWeather')
   const searchParams = useSearchParams()
 
   const searchParamsWithMap = new URLSearchParams(searchParams)
   searchParamsWithMap.set(mapQueryKeys.view, 'map')
+  searchParamsWithMap.set(mapQueryKeys.alertType, type)
+
+  if (regionId) {
+    searchParamsWithMap.set(mapQueryKeys.featureId, regionId)
+  }
+
+  if (searchParams.has('error') && searchParams.get('error') === 'map') {
+    return <p>{t('map.fatalError')}</p>
+  }
 
   return (
     <Link

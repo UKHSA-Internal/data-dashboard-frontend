@@ -58,6 +58,10 @@ module.exports = {
       brown: 'var(--colour-brown)',
       'light-green': 'var(--colour-light-green)',
       turquoise: 'var(--colour-turquoise)',
+      'green-opaque': 'var(--colour-green-opaque)',
+      'yellow-opaque': 'var(--colour-yellow-opaque)',
+      'orange-opaque': 'var(--colour-orange-opaque)',
+      'red-opaque': 'var(--colour-red-opaque)',
     }),
     extend: {
       backgroundImage: {

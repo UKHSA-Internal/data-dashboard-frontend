@@ -1,51 +1,55 @@
 import { flag } from '@unleash/nextjs'
 
+import { getPages, PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
+import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { flags } from '@/app/constants/flags.constants'
+import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export async function generateMetadata() {
   const { enabled } = await flag(flags.adverseWeather)
 
   if (!enabled)
     return {
-      title: 'Page not found',
+      title: 'Page not found | UKHSA data dashboard',
       description: 'Error - Page not found',
     }
 
+  const {
+    meta: { seo_title: title, search_description: description },
+  } = await getPageBySlug('adverse-weather', { type: PageType.Composite })
+
   return {
-    title: 'Extreme events category page',
-    description: 'Extreme events category page description',
+    title,
+    description,
   }
 }
 
 export default async function AdverseWeather() {
-  const { title } = {
-    title: 'Adverse Weather',
-  }
+  const {
+    id,
+    title,
+    body,
+    related_links: relatedLinks,
+  } = await getPageBySlug<PageType.Composite>('adverse-weather', {
+    type: PageType.Composite,
+  })
+
+  const childPages = await getPages({ child_of: id.toString() })
 
   return (
-    <View
-      heading={title}
-      breadcrumbs={[
-        { name: 'Home', link: '/' },
-        { name: 'Adverse Weather', link: '/adverse-weather' },
-      ]}
-    >
+    <View heading={title} breadcrumbs={[{ name: 'Home', link: '/' }]}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          <div className="govuk-body">
-            Summary of weather health alerts data in England. For more detailed data, go to the individual event pages.
-            The Weather-Health Alerting System is provided by the UK Health Security Agency (UKHSA) in partnership with
-            the Met Office.
-          </div>
+          <div className="govuk-body">{body.map(renderCompositeBlock)}</div>
         </div>
       </div>
 
-      <HealthAlertsLink className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds-from-desktop">
@@ -56,35 +60,25 @@ export default async function AdverseWeather() {
             />
 
             <List>
-              <ListItem>
-                <ListItemArrow>
-                  <ListItemArrowLink href="/adverse-weather/cold-health-alerts">
-                    Cold weather-health alerts
-                  </ListItemArrowLink>
-                  <ListItemArrowParagraph>
-                    Check your risk of cold alerts, view latest messages and updates
-                  </ListItemArrowParagraph>
-                </ListItemArrow>
-              </ListItem>
-
-              <ListItem>
-                <ListItemArrow>
-                  <ListItemArrowLink href="/adverse-weather/heat-health-alerts">
-                    Heat weather-health alerts
-                  </ListItemArrowLink>
-                  <ListItemArrowParagraph>
-                    Check your risk of heat alerts, view latest messages and updates
-                  </ListItemArrowParagraph>
-                </ListItemArrow>
-              </ListItem>
+              {childPages.success &&
+                childPages.data.items.map(({ id: childId, title, meta }) => (
+                  <ListItem key={childId} spacing="l">
+                    <ListItemArrow>
+                      <ListItemArrowLink href={`/adverse-weather/${meta.slug}`}>{title}</ListItemArrowLink>
+                      {/* TODO: Child page description to come from the CMS in future. CDD-1980 */}
+                      {/* <ListItemArrowParagraph>{body}</ListItemArrowParagraph> */}
+                    </ListItemArrow>
+                  </ListItem>
+                ))}
             </List>
           </div>
         </div>
 
         <div className="govuk-grid-column-one-third-from-desktop govuk-!-margin-top-6 sticky top-2">
           <RelatedLinks variant="sidebar">
-            <RelatedLink title="Adverse weather help" url="/" />
-            <RelatedLink title="What to do in adverse weather" url="/" />
+            {relatedLinks.map(({ title, url, id }) => (
+              <RelatedLink key={id} title={title} url={url} />
+            ))}
           </RelatedLinks>
         </div>
       </div>

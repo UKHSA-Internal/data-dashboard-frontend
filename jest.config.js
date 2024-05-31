@@ -33,15 +33,17 @@ const customJestConfig = {
     '<rootDir>/src/api/utils/api.utils.ts',
     '<rootDir>/src/api/models',
     '<rootDir>/src/middleware.ts',
+    '<rootDir>/src/mock-server',
   ],
   coverageThreshold: {
     global: {
+      statements: 93.8,
+      branches: 86,
       lines: 95,
-      functions: 95,
-      branches: 77,
-      statements: 93,
+      functions: 96,
     },
   },
+  watchPathIgnorePatterns: ['node_modules'],
 }
 
 // createJestConfig is exported this way to ensure that next/jest can load the Next.js config which is async
