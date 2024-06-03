@@ -31,6 +31,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
   const { t: ct } = useTranslation('common')
 
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
+  const weatherType = type.charAt(0).toUpperCase() + type.slice(1)
 
   const healthAlertsList = useWeatherHealthAlertList({ type })
 
@@ -75,7 +76,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
         </ol>
       </div>
 
-      <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{t('weatherAlert', { type, regionName })}</h1>
+      <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{t('weatherAlert', { weatherType, regionName })}</h1>
 
       <p className="govuk-!-margin-bottom-4 govuk-body-s">
         {lastUpdated ? ct('lastUpdated', { value: new Date(lastUpdated) }) : null}

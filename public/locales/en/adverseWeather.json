@@ -19,5 +19,5 @@
     }
   },
   "lastUpdated": "Updated {{value, time}} on {{ value, dateShort }}",
-  "weatherAlert": "{{type}}-health alert for {{regionName}}"
+  "weatherAlert": "{{weatherType}}-health alert for {{regionName}}"
 }
