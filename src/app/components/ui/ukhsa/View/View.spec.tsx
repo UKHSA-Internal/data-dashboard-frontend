@@ -22,7 +22,9 @@ test('renders the heading correctly', async () => {
 
 test('renders the lastUpdated text if provided', async () => {
   const lastUpdated = '2023-03-21T10:25:34.452098Z'
-  const { getByText } = render(await View({ heading: 'Test Heading', children: null, lastUpdated }))
+  const { getByText, getByRole } = render(await View({ heading: 'Test Heading', children: null, lastUpdated }))
+  expect(getByRole('heading', { level: 1, name: 'Test Heading' })).toHaveClass('govuk-!-margin-bottom-2')
+
   const lastUpdatedElement = getByText('Last updated on Tuesday, 21 March 2023 at 10:25am')
   expect(lastUpdatedElement).toBeInTheDocument()
 })
