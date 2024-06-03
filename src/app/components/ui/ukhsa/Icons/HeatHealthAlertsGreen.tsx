@@ -1,16 +1,16 @@
 export const HeatHealthAlertGreenIcon = () => (
-  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
-    <title>Heat health alerts green</title>
+  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
       d="M200.404 11.0065C207.954 11.2062 215.121 15.5333 218.885 22.1793L386.879 338.013C393.466 351.194 384.023 369.612 368.037 370H32.0379C17.4302 369.645 6.02855 352.348 13.2066 338.013L181.201 22.1793C183.087 18.7139 185.875 15.8397 189.261 13.8697C192.647 11.8997 196.501 10.9094 200.404 11.0065Z"
       fill="white"
-      stroke="#255832"
+      stroke="#00703C"
       strokeWidth="22"
       strokeMiterlimit="1.41421"
       strokeLinejoin="round"
     />
+    <title>Heat health alerts green</title>
     <mask id="path-2-inside-1_0_1" fill="white">
       <path
         fillRule="evenodd"
@@ -23,23 +23,23 @@ export const HeatHealthAlertGreenIcon = () => (
       fill="black"
       mask="url(#path-2-inside-1_0_1)"
     />
-    <rect x="229.251" y="254.503" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
+    <rect x="229.251" y="254.502" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
     <rect x="229.251" y="235.956" width="13.2477" height="5.29908" rx="2.64954" fill="black" />
     <rect x="229.251" y="217.409" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
     <rect x="229.251" y="198.862" width="13.2477" height="5.29908" rx="2.64954" fill="black" />
-    <rect x="229.251" y="180.316" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
+    <rect x="229.251" y="180.315" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
     <rect x="229.251" y="161.769" width="13.2477" height="5.29908" rx="2.64954" fill="black" />
     <rect x="229.251" y="143.222" width="22.5211" height="5.29908" rx="2.64954" fill="black" />
     <path
       fillRule="evenodd"
       clipRule="evenodd"
       d="M206 247C203.239 247 201 249.239 201 252V282.138C190.284 284.329 182.222 293.811 182.222 305.175C182.222 318.162 192.75 328.69 205.737 328.69C218.723 328.69 229.251 318.162 229.251 305.175C229.251 293.998 221.453 284.642 211 282.252V252C211 249.239 208.761 247 206 247Z"
-      fill="#255832"
+      fill="#00703C"
     />
     <path
       fillRule="evenodd"
       clipRule="evenodd"
-      d="M182 151.082C162.715 151.082 147.082 166.716 147.082 186C147.082 205.285 162.715 220.918 182 220.918V151.082Z"
+      d="M182 151.083C162.715 151.083 147.082 166.716 147.082 186C147.082 205.285 162.715 220.918 182 220.918V151.083Z"
       fill="#FFCB00"
     />
     <rect x="176.729" y="130" width="5.27059" height="19.1059" rx="2.63529" fill="#FFCB00" />
@@ -73,7 +73,7 @@ export const HeatHealthAlertGreenIcon = () => (
       width="5.27046"
       height="19.1057"
       rx="2.63523"
-      transform="matrix(0.487087 0.873353 0.873367 -0.487063 131.929 211.118)"
+      transform="matrix(0.487087 0.873353 0.873367 -0.487063 131.929 211.117)"
       fill="#FFCB00"
     />
     <rect
