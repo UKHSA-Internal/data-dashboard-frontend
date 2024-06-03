@@ -23,11 +23,13 @@ export default async function AccessOurDataChild({ params: { slug } }: { params:
 
   return (
     <>
-      {lastUpdated && (
-        <p className="govuk-!-margin-bottom-0 govuk-body-xs">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
-      )}
+      <h2 className="govuk-heading-l govuk-!-margin-bottom-2">{title}</h2>
 
-      <h2 className="govuk-heading-l govuk-!-margin-bottom-4">{title}</h2>
+      {lastUpdated && (
+        <p className="govuk-!-margin-bottom-0 govuk-body-xs govuk-!-margin-bottom-4">
+          {t('lastUpdated', { value: new Date(lastUpdated) })}
+        </p>
+      )}
 
       {body.map(renderCompositeBlock)}
     </>
