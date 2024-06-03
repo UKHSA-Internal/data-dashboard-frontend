@@ -31,6 +31,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
   const { t: ct } = useTranslation('common')
 
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
+  const weatherType = type.charAt(0).toUpperCase() + type.slice(1)
 
   const healthAlertsList = useWeatherHealthAlertList({ type })
 
@@ -56,6 +57,11 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
     { name: `${type} Health Alerts`, link: `/adverse-weather/${weather}` },
   ]
 
+  const firstPublishedDate = firstPublished
+    ? t('map.alertDialog.firstPublished', { value: new Date(firstPublished) })
+    : '–'
+  const alertExpiryDate = expiryDate ? t('map.alertDialog.expiryDate', { value: new Date(expiryDate) }) : '-'
+
   return (
     <div>
       <div className="govuk-breadcrumbs govuk-!-margin-top-2">
@@ -70,7 +76,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
         </ol>
       </div>
 
-      <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{t('weatherAlert', { regionName })}</h1>
+      <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{t('weatherAlert', { weatherType, regionName })}</h1>
 
       <p className="govuk-!-margin-bottom-4 govuk-body-s">
         {lastUpdated ? ct('lastUpdated', { value: new Date(lastUpdated) }) : null}
@@ -78,7 +84,9 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          {status === 'Green' ? null : <AlertBanner type={type} level={status} />}
+          {status === 'Green' ? null : (
+            <AlertBanner type={type} level={status} dateFrom={firstPublishedDate} dateTo={alertExpiryDate} />
+          )}
         </div>
         <div className="govuk-grid-column-three-quarters-from-desktop ">
           <div className="govuk-grid-row">
@@ -86,7 +94,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
               <SummaryList>
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.typeKey')}</SummaryListKey>
-                  <SummaryListValue>{t('map.alertDialog.typeValue', { context: 'heat' })}</SummaryListValue>
+                  <SummaryListValue>{t('map.alertDialog.typeValue', { context: type })}</SummaryListValue>
                 </SummaryListRow>
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
@@ -96,15 +104,11 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
                 </SummaryListRow>
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
-                  <SummaryListValue>
-                    {firstPublished ? t('map.alertDialog.firstPublished', { value: new Date(firstPublished) }) : '–'}
-                  </SummaryListValue>
+                  <SummaryListValue>{firstPublishedDate}</SummaryListValue>
                 </SummaryListRow>
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.expiryKey')}</SummaryListKey>
-                  <SummaryListValue>
-                    {expiryDate ? t('map.alertDialog.expiryDate', { value: new Date(expiryDate) }) : '–'}
-                  </SummaryListValue>
+                  <SummaryListValue>{alertExpiryDate}</SummaryListValue>
                 </SummaryListRow>
               </SummaryList>
             </div>

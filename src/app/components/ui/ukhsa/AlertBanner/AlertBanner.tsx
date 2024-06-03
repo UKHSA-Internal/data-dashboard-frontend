@@ -7,24 +7,12 @@ import { ListItemStatusIcon } from '../List/ListItemStatus'
 interface AlertBannerProps {
   level: HealthAlertStatus
   type: HealthAlertTypes
+  dateFrom: string
+  dateTo: string
 }
 
-export const AlertBanner = ({ level, type }: AlertBannerProps) => {
+export const AlertBanner = ({ level, type, dateFrom, dateTo }: AlertBannerProps) => {
   const alertType = type.charAt(0).toUpperCase() + type.slice(1)
-
-  const title = {
-    Green: `${alertType} warning`,
-    Yellow: `${alertType} warning`,
-    Amber: `Extreme ${alertType} warning`,
-    Red: `Extreme ${alertType} warning`,
-  }
-
-  const message = {
-    Green: `${alertType} warnings may occur`,
-    Yellow: `${alertType} warnings are possible`,
-    Amber: `${alertType} warnings are likely`,
-    Red: `${alertType} warnings are extremely likely`,
-  }
 
   return (
     <div
@@ -40,8 +28,8 @@ export const AlertBanner = ({ level, type }: AlertBannerProps) => {
     >
       <ListItemStatusIcon level={level} type={type} />
       <div>
-        <h2 className="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-0">{title[level]}</h2>
-        <span>{message[level]}</span>
+        <h2 className="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-0">{`${level} ${alertType}-health alert has been issued`}</h2>
+        <span className="govuk-body-s">{`Alert is in effect from ${dateFrom} to ${dateTo}`}</span>
       </div>
     </div>
   )

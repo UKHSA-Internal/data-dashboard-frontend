@@ -44,12 +44,12 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
 
   const { furtherAdviceLinks } = {
-    // Further advice links hardcoded currently, need to confirm these are correct and/or if they want them showing
+    // Further advice links hardcoded currently
     furtherAdviceLinks: [
       {
         id: 0,
         name: 'UKHSA Adverse Weather and Health Plan and supporting evidence',
-        link: 'https://assets.publishing.service.gov.uk/government/uploads/system/uploads/attachment_data/file/1171545/Adverse-weather-health-plan-2023.pdf',
+        link: 'https://www.gov.uk/government/publications/adverse-weather-and-health-plan',
       },
       {
         id: 1,
@@ -65,6 +65,11 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
         id: 3,
         name: 'Flood Alerts and Warnings',
         link: 'https://check-for-flooding.service.gov.uk/alerts-and-warnings',
+      },
+      {
+        id: 4,
+        name: 'Local resilience forums: contact details guidance',
+        link: 'https://www.gov.uk/guidance/local-resilience-forums-contact-details',
       },
     ],
   }
