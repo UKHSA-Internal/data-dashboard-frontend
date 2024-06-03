@@ -12,7 +12,7 @@ export const heatAlertsFixture: HealthAlertList = [
   {
     geography_code: 'E12000004',
     geography_name: 'East Midlands',
-    status: 'Green',
+    status: 'Yellow',
     refresh_date: '2024-05-07 12:00:00',
   },
   {

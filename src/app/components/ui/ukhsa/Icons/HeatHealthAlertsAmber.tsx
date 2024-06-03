@@ -1,16 +1,16 @@
 export const HeatHealthAlertAmberIcon = () => (
-  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" aria-hidden xmlns="http://www.w3.org/2000/svg">
-    <title>Heat health alerts amber</title>
+  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" xmlns="http://www.w3.org/2000/svg">
     <path
       fillRule="evenodd"
       clipRule="evenodd"
       d="M200.404 11.0065C207.954 11.2062 215.121 15.5333 218.885 22.1793L386.879 338.013C393.466 351.194 384.023 369.612 368.037 370H32.0379C17.4302 369.645 6.02855 352.348 13.2066 338.013L181.201 22.1793C183.087 18.7139 185.875 15.8397 189.261 13.8697C192.647 11.8997 196.501 10.9094 200.404 11.0065Z"
       fill="white"
-      stroke="#F18700"
+      stroke="#F47738"
       strokeWidth="22"
       strokeMiterlimit="1.41421"
       strokeLinejoin="round"
     />
+    <title>Heat health alerts amber</title>
     <mask id="path-2-inside-1_0_1" fill="white">
       <path
         fillRule="evenodd"
@@ -34,12 +34,12 @@ export const HeatHealthAlertAmberIcon = () => (
       fillRule="evenodd"
       clipRule="evenodd"
       d="M206 186C203.239 186 201 188.239 201 191V282.138C190.284 284.329 182.222 293.811 182.222 305.175C182.222 318.162 192.75 328.69 205.737 328.69C218.723 328.69 229.251 318.162 229.251 305.175C229.251 293.998 221.453 284.642 211 282.252V191C211 188.239 208.761 186 206 186Z"
-      fill="#F18700"
+      fill="#F47738"
     />
     <path
       fillRule="evenodd"
       clipRule="evenodd"
-      d="M182 151.083C162.716 151.083 147.082 166.716 147.082 186C147.082 205.285 162.716 220.918 182 220.918V151.083Z"
+      d="M182 151.083C162.715 151.083 147.082 166.716 147.082 186C147.082 205.285 162.715 220.918 182 220.918V151.083Z"
       fill="#FFCB00"
     />
     <rect x="176.729" y="130" width="5.27059" height="19.1059" rx="2.63529" fill="#FFCB00" />
