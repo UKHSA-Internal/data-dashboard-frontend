@@ -15,7 +15,7 @@ export default async function NotFoundPage() {
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds-from-desktop">
-        <h1 className="govuk-heading-xl mb-4">{t('pageNotFound.heading')}</h1>
+        <h1 className="govuk-heading-xl govuk-!-margin-top-2 govuk-!-margin-bottom-4">{t('pageNotFound.heading')}</h1>
         <Trans
           i18nKey="pageNotFound.body"
           t={t}
