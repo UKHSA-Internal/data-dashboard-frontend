@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
@@ -47,13 +48,22 @@ export async function View({
         </div>
       )}
 
-      {lastUpdated && (
-        <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
-      )}
-
       {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
-      {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
+      {heading && (
+        <h1
+          className={clsx('govuk-heading-xl', {
+            'govuk-!-margin-bottom-4': !lastUpdated,
+            'govuk-!-margin-bottom-2': lastUpdated,
+          })}
+        >
+          {heading}
+        </h1>
+      )}
+
+      {lastUpdated && (
+        <p className="govuk-!-margin-bottom-6 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
+      )}
 
       {description && <RichText>{description}</RichText>}
 
