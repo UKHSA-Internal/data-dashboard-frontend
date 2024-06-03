@@ -10,6 +10,7 @@ export const ColdHealthAlertRedIcon = () => (
       strokeMiterlimit="1.41421"
       strokeLinejoin="round"
     />
+    <title>Cold health alerts red</title>
     <rect
       x="196.729"
       y="312.409"
