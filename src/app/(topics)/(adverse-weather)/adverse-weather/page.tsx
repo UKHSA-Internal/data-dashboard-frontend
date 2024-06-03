@@ -6,7 +6,7 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
+import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
@@ -66,7 +66,7 @@ export default async function AdverseWeather() {
                     <ListItemArrow>
                       <ListItemArrowLink href={`/adverse-weather/${meta.slug}`}>{title}</ListItemArrowLink>
                       {/* TODO: Child page description to come from the CMS in future. CDD-1980 */}
-                      {/* <ListItemArrowParagraph>{body}</ListItemArrowParagraph> */}
+                      <ListItemArrowParagraph>{`View all ${meta.slug.split('-')[0]} health alerts currently in place in England`}</ListItemArrowParagraph>
                     </ListItemArrow>
                   </ListItem>
                 ))}

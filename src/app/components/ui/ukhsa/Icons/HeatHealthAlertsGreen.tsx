@@ -10,6 +10,7 @@ export const HeatHealthAlertGreenIcon = () => (
       strokeMiterlimit="1.41421"
       strokeLinejoin="round"
     />
+    <title>Heat health alerts green</title>
     <mask id="path-2-inside-1_0_1" fill="white">
       <path
         fillRule="evenodd"
