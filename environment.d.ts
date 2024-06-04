@@ -8,6 +8,7 @@ declare namespace NodeJS {
     GOOGLE_TAG_MANAGER_ID: string
     UNLEASH_SERVER_API_URL: string
     UNLEASH_SERVER_API_TOKEN: string
+    FEATURE_FLAGS_AUTH_KEY: string
   }
 }
 

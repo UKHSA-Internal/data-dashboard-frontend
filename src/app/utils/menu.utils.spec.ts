@@ -1,17 +1,17 @@
-import { flag } from '@unleash/nextjs'
 import { ZodError } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
+import { getFeatureFlag } from './flags.utils'
 import { useMenu } from './menu.utils'
 
-jest.mock('@unleash/nextjs')
+jest.mock('./flags.utils')
 
 const clientMock = jest.mocked(client)
 
-const featureFlagMock = jest.mocked(flag).mockResolvedValue({ enabled: true, variant: {} })
+const featureFlagMock = jest.mocked(getFeatureFlag).mockResolvedValue({ enabled: true, variant: {} })
 
 beforeEach(() => {
   jest.clearAllMocks()
