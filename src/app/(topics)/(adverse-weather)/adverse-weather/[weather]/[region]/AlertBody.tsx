@@ -27,8 +27,7 @@ interface AlertProps {
 }
 
 export default function AlertBody({ relatedLinks, weather, region }: AlertProps) {
-  const { t } = useTranslation('adverseWeather')
-  const { t: ct } = useTranslation('common')
+  const { t } = useTranslation(['adverseWeather', 'common'])
 
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
   const weatherType = type.charAt(0).toUpperCase() + type.slice(1)
@@ -79,7 +78,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
       <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{t('weatherAlert', { weatherType, regionName })}</h1>
 
       <p className="govuk-!-margin-bottom-4 govuk-body-s">
-        {lastUpdated ? ct('lastUpdated', { value: new Date(lastUpdated) }) : null}
+        {lastUpdated ? t('lastUpdated', { value: new Date(lastUpdated) }) : null}
       </p>
 
       <div className="govuk-grid-row">
