@@ -16,7 +16,7 @@ import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert
 import AlertList from './AlertList'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
-  const { enabled } = await flag(flags.adverseWeather)
+  const { enabled } = await flag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {
@@ -81,7 +81,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
       heading={title}
       breadcrumbs={[
         { name: 'Home', link: '/' },
-        { name: 'Adverse Weather', link: '/adverse-weather' },
+        { name: 'Weather health alerts', link: '/weather-health-alerts' },
       ]}
     >
       <div className="govuk-grid-row">

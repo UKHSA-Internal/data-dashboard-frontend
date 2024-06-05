@@ -9,8 +9,6 @@ import {
   accessibilityStatementPageMock,
   accessOurDataChildMocks,
   accessOurDataParentMock,
-  adverseWeatherChildMocks,
-  adverseWeatherParentMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
@@ -23,6 +21,8 @@ import {
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
+  weatherHealthAlertsChildMocks,
+  weatherHealthAlertsParentMock,
   whatsNewChildMocks,
   whatsNewParentMock,
 } from './fixtures/page'
@@ -45,11 +45,11 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [whatsNewParentMock.id]: whatsNewParentMock,
   [metricsParentMock.id]: metricsParentMock,
   [accessOurDataParentMock.id]: accessOurDataParentMock,
-  [adverseWeatherParentMock.id]: adverseWeatherParentMock,
+  [weatherHealthAlertsParentMock.id]: weatherHealthAlertsParentMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(metricsChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(accessOurDataChildMocks.map((mock) => [mock.id, mock])),
-  ...Object.fromEntries(adverseWeatherChildMocks.map((mock) => [mock.id, mock])),
+  ...Object.fromEntries(weatherHealthAlertsChildMocks.map((mock) => [mock.id, mock])),
 }
 
 export default async function handler(req: Request, res: Response) {

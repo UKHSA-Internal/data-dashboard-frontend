@@ -27,7 +27,7 @@ interface AlertProps {
 }
 
 export default function AlertBody({ relatedLinks, weather, region }: AlertProps) {
-  const { t } = useTranslation('adverseWeather')
+  const { t } = useTranslation('weatherHealthAlerts')
   const { t: ct } = useTranslation('common')
 
   const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
@@ -53,8 +53,8 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
 
   const breadcrumbs = [
     { name: 'Home', link: '/' },
-    { name: 'Adverse Weather', link: '/adverse-weather' },
-    { name: `${type} Health Alerts`, link: `/adverse-weather/${weather}` },
+    { name: 'Weather health alerts', link: '/weather-health-alerts' },
+    { name: `${type} Health Alerts`, link: `/weather-health-alerts/${weather}` },
   ]
 
   const firstPublishedDate = firstPublished

@@ -34,7 +34,7 @@ const DialogSkeleton = () => (
 )
 
 const AlertDialogContent = () => {
-  const { t } = useTranslation('adverseWeather')
+  const { t } = useTranslation('weatherHealthAlerts')
 
   const [category] = useQueryState(
     mapQueryKeys.alertType,
@@ -98,7 +98,10 @@ const AlertDialogContent = () => {
               dangerouslySetInnerHTML={{ __html: text }}
             />
           </div>
-          <Link href={`/adverse-weather/${category}-health-alerts/${toSlug(regionName)}`} className="govuk-body mb-0">
+          <Link
+            href={`/weather-health-alerts/${category}-health-alerts/${toSlug(regionName)}`}
+            className="govuk-body mb-0"
+          >
             {t('map.alertDialog.alertCta')}
           </Link>
           {lastUpdated ? (

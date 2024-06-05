@@ -3,16 +3,16 @@ import { faker } from '@faker-js/faker'
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-export const adverseWeatherParentMock: PageResponse<PageType.Composite> = {
+export const weatherHealthAlertsParentMock: PageResponse<PageType.Composite> = {
   id: 40,
   meta: {
     type: 'composite.CompositePage',
     detail_url: 'http://localhost/api/pages/40/',
     html_url: null,
-    slug: 'adverse-weather',
+    slug: 'weather-health-alerts',
     show_in_menus: false,
-    seo_title: 'Adverse weather | UKHSA data dashboard',
-    search_description: 'Mocked adverse weather page description',
+    seo_title: 'Weather health alerts | UKHSA data dashboard',
+    search_description: 'Mocked weather health alerts page description',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
     parent: {
@@ -25,7 +25,7 @@ export const adverseWeatherParentMock: PageResponse<PageType.Composite> = {
       title: 'UKHSA Dashboard Root',
     },
   },
-  title: 'Adverse weather',
+  title: 'Weather health alerts',
   date_posted: '2024-05-23',
   body: [
     {
@@ -58,7 +58,7 @@ export const adverseWeatherParentMock: PageResponse<PageType.Composite> = {
   ],
 }
 
-export const adverseWeatherChildMocks: PageResponse<PageType.Composite>[] = [
+export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] = [
   {
     id: 41,
     meta: {
@@ -78,7 +78,7 @@ export const adverseWeatherChildMocks: PageResponse<PageType.Composite>[] = [
           detail_url: 'http://localhost/api/pages/40/',
           html_url: null,
         },
-        title: 'Adverse weather',
+        title: 'Weather health alerts',
       },
     },
     title: 'Cold health alerts',
@@ -132,7 +132,7 @@ export const adverseWeatherChildMocks: PageResponse<PageType.Composite>[] = [
           detail_url: 'http://localhost/api/pages/40/',
           html_url: null,
         },
-        title: 'Adverse weather',
+        title: 'Weather health alerts',
       },
     },
     title: 'Heat health alerts',

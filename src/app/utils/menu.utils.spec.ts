@@ -47,7 +47,7 @@ test('fetches then formats the cms pages into a navigation menu', async () => {
         },
       ],
     },
-    { title: 'Adverse weather', slug: '/adverse-weather' },
+    { title: 'Weather health alerts', slug: '/weather-health-alerts' },
     { title: 'About', slug: '/about' },
     { title: 'Bulk downloads', slug: '/bulk-downloads' },
     { title: 'Access our data', slug: '/access-our-data' },

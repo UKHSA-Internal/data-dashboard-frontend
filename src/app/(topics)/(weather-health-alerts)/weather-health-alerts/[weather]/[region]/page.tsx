@@ -9,7 +9,7 @@ import { flags } from '@/app/constants/flags.constants'
 import AlertBody from './AlertBody'
 
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
-  const { enabled } = await flag(flags.adverseWeather)
+  const { enabled } = await flag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {
