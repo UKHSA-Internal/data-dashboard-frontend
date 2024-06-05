@@ -1,5 +1,7 @@
 import { cookies } from 'next/headers'
 
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
+
 import { getApiBaseUrl } from '../requests/helpers'
 
 interface Options {
@@ -19,17 +21,26 @@ export function client<T>(
   endpoint: string,
   { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
-  const headers = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
+  const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
-  const fetchOptions: Record<string, unknown> = {
-    retries: 3,
+  // Send the local mock overrides with all requests
+  const cookieStore = cookies()
+  const switchBoardCookie = cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)
+  if (switchBoardCookie) {
+    headers.Cookie = switchBoardCookie.value
+  }
+
+  const fetchOptions: RequestInit & { next: { revalidate: number } } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
+    next: {
+      // Disable NextJs router caching
+      revalidate: 0,
+    },
     ...customConfig,
     headers: {
       ...headers,
       ...customConfig.headers,
-      cookie: cookies().get('UKHSASwitchboard')?.value,
     },
   }
 

@@ -1,6 +1,6 @@
 import { viewports } from 'e2e/constants/viewports.constants'
 
-import { test } from '../../fixtures/app.fixture'
+import { test } from '../../../fixtures/app.fixture'
 
 test.describe('COVID-19 page', () => {
   test('Page layout', async ({ covid19Page, app }) => {

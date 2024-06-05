@@ -3,12 +3,19 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { useTranslation } from './i18n'
 
+export async function generateMetadata() {
+  return {
+    title: 'Page not found | UKHSA data dashboard',
+    description: 'Error - Page not found',
+  }
+}
+
 export default async function NotFoundPage() {
   const { t } = await useTranslation('errors')
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds-from-desktop">
-        <h1 className="govuk-heading-xl mb-4">{t('pageNotFound.heading')}</h1>
+        <h1 className="govuk-heading-xl govuk-!-margin-top-2 govuk-!-margin-bottom-4">{t('pageNotFound.heading')}</h1>
         <Trans
           i18nKey="pageNotFound.body"
           t={t}

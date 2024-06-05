@@ -13,6 +13,7 @@ interface PageProps {
   lastUpdated?: string
   backLink?: string
   className?: string
+  breadcrumbs?: Array<{ name: string; link: string }>
 }
 
 export async function View({
@@ -23,6 +24,7 @@ export async function View({
   lastUpdated,
   backLink,
   className,
+  breadcrumbs,
 }: PageProps) {
   const { t } = await useTranslation('common')
 
@@ -34,13 +36,36 @@ export async function View({
         </Link>
       )}
 
-      {lastUpdated && (
-        <p className="govuk-!-margin-bottom-4 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
+      {breadcrumbs && (
+        <div className="govuk-breadcrumbs govuk-!-margin-top-2">
+          <ol className="govuk-breadcrumbs__list">
+            {breadcrumbs.map(({ name, link }, key) => (
+              <li key={key} className="govuk-breadcrumbs__list-item">
+                <Link className="govuk-breadcrumbs__link" href={link}>
+                  {name}
+                </Link>
+              </li>
+            ))}
+          </ol>
+        </div>
       )}
 
       {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
-      {heading && <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">{heading}</h1>}
+      {heading && (
+        <h1
+          className={clsx('govuk-heading-xl', {
+            'govuk-!-margin-bottom-4': !lastUpdated,
+            'govuk-!-margin-bottom-2': lastUpdated,
+          })}
+        >
+          {heading}
+        </h1>
+      )}
+
+      {lastUpdated && (
+        <p className="govuk-!-margin-bottom-6 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
+      )}
 
       {description && <RichText>{description}</RichText>}
 

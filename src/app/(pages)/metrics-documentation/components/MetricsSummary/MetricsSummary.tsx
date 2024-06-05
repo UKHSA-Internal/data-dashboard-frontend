@@ -1,3 +1,10 @@
+import {
+  SummaryList,
+  SummaryListKey,
+  SummaryListRow,
+  SummaryListValue,
+} from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
+
 interface MetricsSummaryProps {
   topic: string
   group: string
@@ -6,21 +13,21 @@ interface MetricsSummaryProps {
 
 export default function MetricsSummary({ topic, group, metric }: MetricsSummaryProps) {
   return (
-    <dl className="govuk-summary-list govuk-!-width-two-thirds">
-      <div className="govuk-summary-list__row">
-        <dt className="govuk-summary-list__key">Topic</dt>
-        <dd className="govuk-summary-list__value">{topic}</dd>
-      </div>
-      <div className="govuk-summary-list__row">
-        <dt className="govuk-summary-list__key">Category</dt>
-        <dd className="govuk-summary-list__value">{group}</dd>
-      </div>
-      <div className="govuk-summary-list__row">
-        <dt className="govuk-summary-list__key">API name</dt>
-        <dd className="govuk-summary-list__value">
+    <SummaryList className="govuk-!-width-two-thirds">
+      <SummaryListRow>
+        <SummaryListKey>Topic</SummaryListKey>
+        <SummaryListValue>{topic}</SummaryListValue>
+      </SummaryListRow>
+      <SummaryListRow>
+        <SummaryListKey>Category</SummaryListKey>
+        <SummaryListValue>{group}</SummaryListValue>
+      </SummaryListRow>
+      <SummaryListRow>
+        <SummaryListKey>API name</SummaryListKey>
+        <SummaryListValue>
           <code>{metric}</code>
-        </dd>
-      </div>
-    </dl>
+        </SummaryListValue>
+      </SummaryListRow>
+    </SummaryList>
   )
 }

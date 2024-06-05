@@ -1,5 +1,9 @@
+import { flag } from '@unleash/nextjs'
+
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
+
+import { flags } from '../constants/flags.constants'
 
 /**
  * Represents a menu link with title and slug.
@@ -26,6 +30,8 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     // Fetch pages with show_in_menus:true filter.
     const pages = await getPages({ show_in_menus: 'true' })
 
+    const { enabled: adverseWeatherEnabled } = await flag(flags.adverseWeather)
+
     const links: MenuLink[] = []
 
     if (!pages.success) throw pages.error
@@ -33,6 +39,10 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     const topics: MenuLink[] = []
 
     links.push({ ...homeLink, children: topics })
+
+    if (adverseWeatherEnabled) {
+      links.push({ title: 'Adverse weather', slug: '/adverse-weather' })
+    }
 
     for (const page of pages.data.items) {
       const {

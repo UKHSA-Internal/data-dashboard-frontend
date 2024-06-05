@@ -94,6 +94,25 @@ $govuk-page-width: 1400px;
   --colour-code-light-red: #{govuk-tint(govuk-colour('red'), 2%)};
   --colour-code-blue: var(--colour-blue);
   --colour-code-green: var(--colour-green);
+
+  // UKHSA Map colours
+  --colour-orange-dark: #{govuk-shade(govuk-colour('orange'), 15%)};
+  --colour-amber-dark: #{govuk-shade(govuk-colour('orange'), 15%)};
+  --colour-red-dark: #{govuk-shade(govuk-colour('red'), 15%)};
+  --colour-yellow-dark: #{govuk-shade(govuk-colour('yellow'), 15%)};
+  --colour-green-dark: #{govuk-shade(govuk-colour('green'), 15%)};
+
+  --colour-orange-darkest: #{govuk-shade(govuk-colour('orange'), 45%)};
+  --colour-amber-darkest: #{govuk-shade(govuk-colour('orange'), 45%)};
+  --colour-red-darkest: #{govuk-shade(govuk-colour('red'), 45%)};
+  --colour-yellow-darkest: #{govuk-shade(govuk-colour('yellow'), 45%)};
+  --colour-green-darkest: #{govuk-shade(govuk-colour('green'), 45%)};
+
+  // UKHSA Alert banner colours
+  --colour-green-opaque: #c2ddd0;
+  --colour-yellow-opaque: #fff7c2;
+  --colour-orange-opaque: #fcdecf;
+  --colour-red-opaque: #f5cfc9;
 }
 
 .ukhsa-chevron {
@@ -118,5 +137,18 @@ $govuk-page-width: 1400px;
   // &:active:before,
   &:focus:before {
     border-color: var(--colour-black);
+  }
+}
+
+.leaflet-container {
+  /* 
+    Force hide the default Leaflet attribution element to prevent it from being displayed.
+    The <MapAttributionDialog /> component listens for mutations to this element,
+    dynamically updating the content of our custom copyright dialog based on changes
+    to the tile layer attributions.
+  */
+
+  .leaflet-control-attribution {
+    display: none !important;
   }
 }
