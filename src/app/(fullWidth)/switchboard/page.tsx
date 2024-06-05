@@ -19,19 +19,37 @@ export default function SwitchBoard() {
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Global banner</h2>
-            <span className="govuk-hint govuk-!-margin-top-2">Select banner type</span>
           </legend>
-          <div className="govuk-radios" data-module="govuk-radios">
+          <div className="govuk-form-group mb-0 w-1/2">
+            <label className="govuk-label" htmlFor="global-banner.status">
+              Status
+            </label>
+            <select
+              className="govuk-select"
+              id="global-banner.status"
+              name="global-banner.status"
+              defaultValue={globalBanner.status}
+            >
+              <option value="200">200 - OK</option>
+              <option value="400">400 - Application Error</option>
+              <option value="401">401 - Unauthorized</option>
+              <option value="500">500 - Internal Server Error</option>
+            </select>
+          </div>
+          <div className="govuk-radios govuk-radios--small govuk-!-margin-top-6" data-module="govuk-radios">
+            <label className="govuk-label" htmlFor="global-banner.selected.Information">
+              Variant
+            </label>
             <div className="govuk-radios__item">
               <input
                 defaultChecked={globalBanner.selected === 'Information'}
                 className="govuk-radios__input"
-                id="global-banner-info"
+                id="global-banner.selected.Information"
                 name="global-banner.selected"
                 type="radio"
                 value="Information"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banner-info">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banner.selected.Information">
                 Information
               </label>
             </div>
@@ -40,12 +58,12 @@ export default function SwitchBoard() {
               <input
                 defaultChecked={globalBanner.selected === 'Warning'}
                 className="govuk-radios__input"
-                id="global-banner-warning"
+                id="global-banner.selected.Warning"
                 name="global-banner.selected"
                 type="radio"
                 value="Warning"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banner-warning">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banner.selected.Warning">
                 Warning
               </label>
             </div>
@@ -54,12 +72,12 @@ export default function SwitchBoard() {
               <input
                 defaultChecked={!globalBanner.selected}
                 className="govuk-radios__input"
-                id="global-banner-inactive"
+                id="global-banner.selected.Inactive"
                 name="global-banner.selected"
                 type="radio"
                 value=""
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banner-inactive">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banner.selected.Inactive">
                 Inactive
               </label>
             </div>

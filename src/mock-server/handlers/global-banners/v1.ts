@@ -18,15 +18,17 @@ export default async function handler(req: Request, res: Response) {
       api: { 'global-banners': globalBanner },
     } = getSwitchBoardState(req.headers.cookie)
 
-    if (globalBanner.selected === 'Information') {
-      return res.send(globalBannerInformation)
+    const { status, selected } = globalBanner
+
+    if (selected === 'Information') {
+      return res.status(Number(status)).send(globalBannerInformation)
     }
 
-    if (globalBanner.selected === 'Warning') {
-      return res.send(globalBannerWarning)
+    if (selected === 'Warning') {
+      return res.status(Number(status)).send(globalBannerWarning)
     }
 
-    return res.send(globalBannerInactive)
+    return res.status(Number(status)).send(globalBannerInactive)
   } catch (error) {
     logger.error(error)
     return res.status(500)
