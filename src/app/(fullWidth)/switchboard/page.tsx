@@ -3,8 +3,8 @@ import { cookies } from 'next/headers'
 import { View } from '@/app/components/ui/ukhsa'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
-import { action } from './action'
 import { getSwitchBoardState } from './state'
+import { handleSubmitAction } from './utils'
 
 export default function SwitchBoard() {
   const cookieStore = cookies()
@@ -15,19 +15,20 @@ export default function SwitchBoard() {
 
   return (
     <View heading="Switchboard" className="govuk-!-margin-top-5">
-      <form className="govuk-!-margin-top-3" action={action}>
+      <form className="govuk-!-margin-top-3" action={handleSubmitAction}>
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Global banner</h2>
           </legend>
+          <input type="hidden" name="id" value="global-banners" />
           <div className="govuk-form-group mb-0 w-1/2">
-            <label className="govuk-label" htmlFor="global-banner.status">
+            <label className="govuk-label" htmlFor="global-banners.status">
               Status
             </label>
             <select
               className="govuk-select"
-              id="global-banner.status"
-              name="global-banner.status"
+              id="global-banners.status"
+              name="global-banners.status"
               defaultValue={globalBanner.status}
             >
               <option value="200">200 - OK</option>
@@ -37,19 +38,19 @@ export default function SwitchBoard() {
             </select>
           </div>
           <div className="govuk-radios govuk-radios--small govuk-!-margin-top-6" data-module="govuk-radios">
-            <label className="govuk-label" htmlFor="global-banner.selected.Information">
+            <label className="govuk-label" htmlFor="global-banners.selected.Information">
               Variant
             </label>
             <div className="govuk-radios__item">
               <input
                 defaultChecked={globalBanner.selected === 'Information'}
                 className="govuk-radios__input"
-                id="global-banner.selected.Information"
-                name="global-banner.selected"
+                id="global-banners.selected.Information"
+                name="global-banners.selected"
                 type="radio"
                 value="Information"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banner.selected.Information">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Information">
                 Information
               </label>
             </div>
@@ -58,12 +59,12 @@ export default function SwitchBoard() {
               <input
                 defaultChecked={globalBanner.selected === 'Warning'}
                 className="govuk-radios__input"
-                id="global-banner.selected.Warning"
-                name="global-banner.selected"
+                id="global-banners.selected.Warning"
+                name="global-banners.selected"
                 type="radio"
                 value="Warning"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banner.selected.Warning">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Warning">
                 Warning
               </label>
             </div>
@@ -72,12 +73,12 @@ export default function SwitchBoard() {
               <input
                 defaultChecked={!globalBanner.selected}
                 className="govuk-radios__input"
-                id="global-banner.selected.Inactive"
-                name="global-banner.selected"
+                id="global-banners.selected.Inactive"
+                name="global-banners.selected"
                 type="radio"
                 value=""
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banner.selected.Inactive">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Inactive">
                 Inactive
               </label>
             </div>
