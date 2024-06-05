@@ -1,13 +1,10 @@
 import { cookies } from 'next/headers'
 
 import { View } from '@/app/components/ui/ukhsa'
-import { List } from '@/app/components/ui/ukhsa/List/List'
-import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
-import { getSwitchBoardState } from './state'
-import { handleSubmitAction } from './utils'
+import { getSwitchBoardState } from '../../state'
+import { handleSubmitAction } from '../../utils'
 
 export default function SwitchBoard() {
   const cookieStore = cookies()
@@ -17,35 +14,7 @@ export default function SwitchBoard() {
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
-    <View heading="UKHSA Front-end Dashboard" className="govuk-!-margin-top-5">
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-half-from-desktop">
-          <List>
-            <ListItem spacing="l">
-              <ListItemArrow>
-                <ListItemArrowLink href={`/switchboard/global-banners`}>
-                  Global Banners<div className="govuk-tag govuk-tag--green ml-2">v1</div>
-                </ListItemArrowLink>
-              </ListItemArrow>
-            </ListItem>
-            <ListItem spacing="l">
-              <ListItemArrow>
-                <ListItemArrowLink href={`/global-banners`}>
-                  Alerts<div className="govuk-tag govuk-tag--green ml-2">v1</div>
-                </ListItemArrowLink>
-              </ListItemArrow>
-            </ListItem>
-          </List>
-        </div>
-        <div className="govuk-grid-column-one-half-from-desktop">
-          <h3 className="govuk-heading govuk-heading--m">Feature flags</h3>
-        </div>
-      </div>
-    </View>
-  )
-
-  return (
-    <View heading="Switchboard" className="govuk-!-margin-top-5">
+    <View heading="Global Banners" className="govuk-!-margin-top-5" backLink="/switchboard">
       <form className="govuk-!-margin-top-3" action={handleSubmitAction}>
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
