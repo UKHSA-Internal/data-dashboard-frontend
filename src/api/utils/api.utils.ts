@@ -17,17 +17,16 @@ interface Options {
  * It handles automatic retries and auth headers
  */
 
-export function client<T>(
+export async function client<T>(
   endpoint: string,
   { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   // Send the local mock overrides with all requests
-  const cookieStore = cookies()
-  const switchBoardCookie = cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)
+  const switchBoardCookie = cookies().get(UKHSA_SWITCHBOARD_COOKIE_NAME)
   if (switchBoardCookie) {
-    headers.Cookie = switchBoardCookie.value
+    headers.cookie = switchBoardCookie.value
   }
 
   const fetchOptions: RequestInit & { next: { revalidate: number } } = {

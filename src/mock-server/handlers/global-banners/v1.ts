@@ -1,22 +1,11 @@
 import { Request, Response } from 'express'
-import { IncomingHttpHeaders } from 'http'
 
+import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/state'
 import { logger } from '@/lib/logger'
 
 import { globalBannerInactive } from './fixtures/global-banner-inactive'
 import { globalBannerInformation } from './fixtures/global-banner-information'
 import { globalBannerWarning } from './fixtures/global-banner-warning'
-
-const getSwitchboardState = (headers: IncomingHttpHeaders) => {
-  try {
-    if (headers.cookie) {
-      console.log(headers.cookie)
-      return JSON.parse(headers.cookie)
-    }
-  } catch (error) {
-    console.error(error)
-  }
-}
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -25,13 +14,15 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    const state = getSwitchboardState(req.headers)
+    const {
+      api: { 'global-banners': globalBanner },
+    } = getSwitchBoardState(req.headers.cookie)
 
-    if (state.globalBanner.type === 'Information') {
+    if (globalBanner.selected === 'Information') {
       return res.send(globalBannerInformation)
     }
 
-    if (state.globalBanner.type === 'Warning') {
+    if (globalBanner.selected === 'Warning') {
       return res.send(globalBannerWarning)
     }
 

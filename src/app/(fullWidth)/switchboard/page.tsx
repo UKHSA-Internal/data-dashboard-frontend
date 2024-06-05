@@ -1,52 +1,21 @@
 import { cookies } from 'next/headers'
 
 import { View } from '@/app/components/ui/ukhsa'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
-const SWITCHBOARD_COOKIE_KEY = 'UKHSASwitchboard'
-
-const getCurrentState = (cookieStore: ReturnType<typeof cookies>): SwitchboardState => {
-  if (cookieStore.has(SWITCHBOARD_COOKIE_KEY) && cookieStore.get(SWITCHBOARD_COOKIE_KEY)?.value) {
-    return JSON.parse(cookieStore.get(SWITCHBOARD_COOKIE_KEY)?.value as string)
-  }
-  return {} as SwitchboardState
-}
-
-interface SwitchboardState {
-  globalBanner: {
-    type: 'Information' | 'Warning' | 'Inactive'
-  }
-}
+import { action } from './action'
+import { getSwitchBoardState } from './state'
 
 export default function SwitchBoard() {
   const cookieStore = cookies()
 
-  console.log('cookieStore', cookieStore.get(SWITCHBOARD_COOKIE_KEY))
-
-  const initialState = getCurrentState(cookieStore)
-
-  console.log('initialState', initialState.globalBanner.type)
+  const {
+    api: { 'global-banners': globalBanner },
+  } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
     <View heading="Switchboard" className="govuk-!-margin-top-5">
-      <form
-        className="govuk-!-margin-top-3"
-        action={async (form) => {
-          'use server'
-
-          const cookieStore = cookies()
-          // cookieStore.delete(SWITCHBOARD_COOKIE_KEY)
-
-          cookieStore.set(
-            SWITCHBOARD_COOKIE_KEY,
-            JSON.stringify({
-              ...getCurrentState(cookieStore),
-              globalBanner: {
-                type: form.get('global-banner-type'),
-              },
-            })
-          )
-        }}
-      >
+      <form className="govuk-!-margin-top-3" action={action}>
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Global banner</h2>
@@ -55,10 +24,10 @@ export default function SwitchBoard() {
           <div className="govuk-radios" data-module="govuk-radios">
             <div className="govuk-radios__item">
               <input
-                defaultChecked={initialState.globalBanner.type === 'Information'}
+                defaultChecked={globalBanner.selected === 'Information'}
                 className="govuk-radios__input"
                 id="global-banner-info"
-                name="global-banner-type"
+                name="global-banner.selected"
                 type="radio"
                 value="Information"
               />
@@ -69,10 +38,10 @@ export default function SwitchBoard() {
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={initialState.globalBanner.type === 'Warning'}
+                defaultChecked={globalBanner.selected === 'Warning'}
                 className="govuk-radios__input"
                 id="global-banner-warning"
-                name="global-banner-type"
+                name="global-banner.selected"
                 type="radio"
                 value="Warning"
               />
@@ -83,12 +52,12 @@ export default function SwitchBoard() {
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={initialState.globalBanner.type === 'Inactive'}
+                defaultChecked={!globalBanner.selected}
                 className="govuk-radios__input"
                 id="global-banner-inactive"
-                name="global-banner-type"
+                name="global-banner.selected"
                 type="radio"
-                value="Inactive"
+                value=""
               />
               <label className="govuk-label govuk-radios__label" htmlFor="global-banner-inactive">
                 Inactive
