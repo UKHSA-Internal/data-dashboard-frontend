@@ -18,6 +18,6 @@
       "alertCta": "Go to alert page"
     }
   },
-  "lastUpdated": "Updated {{value, time}} on {{ value, dateShort }}",
+  "updated": "Updated {{value, time}} on {{ value, dateShort }}",
   "weatherAlert": "{{weatherType}}-health alert for {{regionName}}"
 }

@@ -43,7 +43,7 @@ export default function AlertList({ type }: AlertListProps) {
                 {name}
               </ListItemStatusLink>
               <ListItemStatusTimestamp>
-                {lastUpdated ? t('lastUpdated', { value: new Date(lastUpdated) }) : '-'}
+                {lastUpdated ? t('updated', { value: new Date(lastUpdated) }) : '-'}
               </ListItemStatusTimestamp>
             </ListItemStatusContent>
 
