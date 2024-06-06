@@ -1,6 +1,7 @@
 import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 
+import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
@@ -25,7 +26,7 @@ export async function generateMetadata({ params: { region } }: { params: { regio
 
 interface WeatherHealthAlertProps {
   params: {
-    weather: 'heat-health-alerts' | 'cold-health-alerts'
+    weather: HealthAlertTypes
     region: string
   }
 }

@@ -3,9 +3,7 @@
  * TODO: Remove this once the link is converted to a CMS internal button in CDD-1977
  */
 
-import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
-
-export const extractHealthAlertTypeFromSlug = (str: string) => str.split('-')[0] as HealthAlertTypes
+import { HealthAlertStatus } from '@/api/models/Alerts'
 
 /**
  * Util for return a GOV.UK Tag component style variant based on Weather Health Alert statuses

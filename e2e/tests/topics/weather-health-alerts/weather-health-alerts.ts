@@ -79,7 +79,7 @@ test.describe('Feature flag disabled', () => {
   test.describe('Heat health alerts page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/weather-health-alerts/heat-health-alerts')
+        await app.goto('/weather-health-alerts/heat')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
@@ -93,7 +93,7 @@ test.describe('Feature flag disabled', () => {
   test.describe('Cold health alerts page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/weather-health-alerts/cold-health-alerts')
+        await app.goto('/weather-health-alerts/cold')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
@@ -107,7 +107,7 @@ test.describe('Feature flag disabled', () => {
   test.describe('Weather health alerts page', () => {
     test('loads the page', async ({ app }) => {
       await test.step('loads the page', async () => {
-        await app.goto('/weather-health-alerts/cold-health-alerts/east-midlands')
+        await app.goto('/weather-health-alerts/cold/east-midlands')
       })
       await test.step('metadata is correct', async () => {
         await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
