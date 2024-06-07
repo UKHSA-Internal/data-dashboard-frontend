@@ -15,7 +15,7 @@ interface HealthAlertsLinkProps {
 }
 
 export default function HealthAlertsLink({ className, type, regionId }: HealthAlertsLinkProps) {
-  const { t } = useTranslation('adverseWeather')
+  const { t } = useTranslation('weatherHealthAlerts')
   const searchParams = useSearchParams()
 
   const searchParamsWithMap = new URLSearchParams(searchParams)

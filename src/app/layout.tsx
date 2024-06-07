@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   const globalBanner = await useGlobalBanner()
 
-  const { enabled: adverseWeatherEnabled } = await flag(flags.adverseWeather)
+  const { enabled: weatherHealthAlertsEnabled } = await flag(flags.weatherHealthAlert)
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -137,7 +137,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Providers>
           <div className="govuk-width-container">{children}</div>
-          {adverseWeatherEnabled ? <HealthAlertsMapWrapper /> : null}
+          {weatherHealthAlertsEnabled ? <HealthAlertsMapWrapper /> : null}
         </Providers>
 
         <Footer />

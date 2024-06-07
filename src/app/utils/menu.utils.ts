@@ -30,7 +30,7 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     // Fetch pages with show_in_menus:true filter.
     const pages = await getPages({ show_in_menus: 'true' })
 
-    const { enabled: adverseWeatherEnabled } = await flag(flags.adverseWeather)
+    const { enabled: weatherHealthAlertEnabled } = await flag(flags.weatherHealthAlert)
 
     const links: MenuLink[] = []
 
@@ -40,8 +40,8 @@ export const useMenu = async (): Promise<MenuLink[]> => {
 
     links.push({ ...homeLink, children: topics })
 
-    if (adverseWeatherEnabled) {
-      links.push({ title: 'Adverse weather', slug: '/adverse-weather' })
+    if (weatherHealthAlertEnabled) {
+      links.push({ title: 'Weather health alerts', slug: '/weather-health-alerts' })
     }
 
     for (const page of pages.data.items) {
