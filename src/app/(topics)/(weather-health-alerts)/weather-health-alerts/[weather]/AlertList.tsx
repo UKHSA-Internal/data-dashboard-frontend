@@ -39,9 +39,7 @@ export default function AlertList({ type }: AlertListProps) {
           <ListItemStatus>
             <ListItemStatusIcon level={status} type={type} />
             <ListItemStatusContent>
-              <ListItemStatusLink href={`/weather-health-alerts/${type}-health-alerts/${toSlug(name)}`}>
-                {name}
-              </ListItemStatusLink>
+              <ListItemStatusLink href={`/weather-health-alerts/${type}/${toSlug(name)}`}>{name}</ListItemStatusLink>
               <ListItemStatusTimestamp>
                 {lastUpdated ? t('updated', { value: new Date(lastUpdated) }) : '-'}
               </ListItemStatusTimestamp>
