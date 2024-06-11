@@ -3,6 +3,7 @@ import { cookies } from 'next/headers'
 import { View } from '@/app/components/ui/ukhsa'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
+import { heading } from '../../constants'
 import { getSwitchBoardState } from '../../state'
 import { handleSubmitAction } from '../../utils'
 
@@ -14,9 +15,16 @@ export default function SwitchBoard() {
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
-    <View heading="Global Banners" className="govuk-!-margin-top-5" backLink="/switchboard">
+    <View
+      heading={heading}
+      className="govuk-!-margin-top-5"
+      breadcrumbs={[
+        { name: 'Switchboard', link: '/switchboard' },
+        { name: 'Global Banners', link: '/switchboard/global-banners' },
+      ]}
+    >
       <form className="govuk-!-margin-top-3" action={handleSubmitAction}>
-        <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
+        <fieldset className="govuk-fieldset govuk-!-margin-bottom-6">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Global banner</h2>
           </legend>

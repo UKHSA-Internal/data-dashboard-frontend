@@ -1,124 +1,97 @@
-import { cookies } from 'next/headers'
+import Link from 'next/link'
 
 import { View } from '@/app/components/ui/ukhsa'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
-import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
-import { getSwitchBoardState } from './state'
-import { handleSubmitAction } from './utils'
+import { heading, wellKnownEnvironments } from './constants'
+
+const description =
+  'Access critical information for the UKHSA data dashboard frontend, including environment settings, third-party dependencies, and local mock server configurations.'
 
 export default function SwitchBoard() {
-  const cookieStore = cookies()
-
-  const {
-    api: { 'global-banners': globalBanner },
-  } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
-
   return (
-    <View heading="UKHSA Front-end Dashboard" className="govuk-!-margin-top-5">
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-one-half-from-desktop">
-          <List>
-            <ListItem spacing="l">
+    <View heading={heading} className="govuk-!-margin-top-5" description={description}>
+      <div className="govuk-grid-row govuk-!-margin-top-7">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <h2 className="govuk-heading-m">Well-Known Environments</h2>
+          <p>
+            All well-known environments are deployed together through our CI/CD process whenever changes are merged into
+            the main branch. More information about the environments can be found here:{' '}
+            <Link href="https://confluence.collab.test-and-trace.nhs.uk/display/DPD/Environments">Environments</Link>
+          </p>
+          <List className="flex w-full justify-between gap-4">
+            {wellKnownEnvironments.map((env) => (
+              <ListItem key={env.site} className="w-full" showRule={false}>
+                <div
+                  rel="noreferrer nofollow noopener"
+                  className="govuk-summary-card__title-wrapper govuk-body mb-0 no-underline md:flex md:flex-col"
+                >
+                  <h3 className="govuk-!-margin-bottom-4 govuk-summary-card__title mt-0 flex w-full items-center justify-between uppercase">
+                    {env.name}
+                    <Link
+                      href={env.site}
+                      rel="noreferrer nofollow noopener"
+                      className="govuk-body-xs govuk-link--no-visited-state mb-0 no-underline"
+                    >
+                      <strong>View</strong> <span>&rarr;</span>
+                    </Link>
+                  </h3>
+
+                  <List>
+                    <ListItem spacing="s">
+                      <Link
+                        href={env.api}
+                        rel="noreferrer nofollow noopener"
+                        className="govuk-link--no-visited-state no-underline [&>span]:hover:visible"
+                      >
+                        API <span className="invisible">&rarr;</span>
+                      </Link>
+                    </ListItem>
+                    <ListItem spacing="s">
+                      <Link
+                        href={env.cms}
+                        rel="noreferrer nofollow noopener"
+                        className="govuk-link--no-visited-state no-underline [&>span]:hover:visible"
+                      >
+                        CMS <span className="invisible">&rarr;</span>
+                      </Link>
+                    </ListItem>
+                    <ListItem spacing="s" showRule={false}>
+                      <Link
+                        href={env.flags}
+                        rel="noreferrer nofollow noopener"
+                        className="govuk-link--no-visited-state no-underline [&>span]:hover:visible"
+                      >
+                        Flags <span className="invisible">&rarr;</span>
+                      </Link>
+                    </ListItem>
+                  </List>
+                </div>
+              </ListItem>
+            ))}
+          </List>
+        </div>
+      </div>
+      <div className="govuk-grid-row govuk-!-margin-top-7 govuk-!-margin-bottom-5">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <h2 className="govuk-heading-m">Mock server</h2>
+          <p>Configure the below endpoints to return response variants or different HTTP status codes.</p>
+          <List className="govuk-!-margin-top-6">
+            <ListItem spacing="m">
               <ListItemArrow>
-                <ListItemArrowLink href={`/switchboard/global-banners`}>
-                  Global Banners<div className="govuk-tag govuk-tag--green ml-2">v1</div>
-                </ListItemArrowLink>
+                <ListItemArrowLink href={`/switchboard/global-banners`}>Global Banners</ListItemArrowLink>
               </ListItemArrow>
             </ListItem>
-            <ListItem spacing="l">
+            <ListItem spacing="m" showRule={false}>
               <ListItemArrow>
-                <ListItemArrowLink href={`/global-banners`}>
-                  Alerts<div className="govuk-tag govuk-tag--green ml-2">v1</div>
-                </ListItemArrowLink>
+                <ListItemArrowLink href={`/global-banners`}>Weather Health Alerts</ListItemArrowLink>
               </ListItemArrow>
             </ListItem>
           </List>
         </div>
-        <div className="govuk-grid-column-one-half-from-desktop">
-          <h3 className="govuk-heading govuk-heading--m">Feature flags</h3>
-        </div>
       </div>
-    </View>
-  )
-
-  return (
-    <View heading="Switchboard" className="govuk-!-margin-top-5">
-      <form className="govuk-!-margin-top-3" action={handleSubmitAction}>
-        <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h2 className="govuk-fieldset__heading">Global banner</h2>
-          </legend>
-          <input type="hidden" name="id" value="global-banners" />
-          <div className="govuk-form-group mb-0 w-1/2">
-            <label className="govuk-label" htmlFor="global-banners.status">
-              Status
-            </label>
-            <select
-              className="govuk-select"
-              id="global-banners.status"
-              name="global-banners.status"
-              defaultValue={globalBanner.status}
-            >
-              <option value="200">200 - OK</option>
-              <option value="400">400 - Application Error</option>
-              <option value="401">401 - Unauthorized</option>
-              <option value="500">500 - Internal Server Error</option>
-            </select>
-          </div>
-          <div className="govuk-radios govuk-radios--small govuk-!-margin-top-6" data-module="govuk-radios">
-            <label className="govuk-label" htmlFor="global-banners.selected.Information">
-              Variant
-            </label>
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={globalBanner.selected === 'Information'}
-                className="govuk-radios__input"
-                id="global-banners.selected.Information"
-                name="global-banners.selected"
-                type="radio"
-                value="Information"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Information">
-                Information
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={globalBanner.selected === 'Warning'}
-                className="govuk-radios__input"
-                id="global-banners.selected.Warning"
-                name="global-banners.selected"
-                type="radio"
-                value="Warning"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Warning">
-                Warning
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={!globalBanner.selected}
-                className="govuk-radios__input"
-                id="global-banners.selected.Inactive"
-                name="global-banners.selected"
-                type="radio"
-                value=""
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Inactive">
-                Inactive
-              </label>
-            </div>
-          </div>
-        </fieldset>
-        <button type="submit" className="govuk-button">
-          Save changes
-        </button>
-      </form>
     </View>
   )
 }
