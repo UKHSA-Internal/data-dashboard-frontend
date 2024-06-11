@@ -23,7 +23,7 @@ interface AlertListProps {
 }
 
 export default function AlertList({ type }: AlertListProps) {
-  const { t } = useTranslation('adverseWeather')
+  const { t } = useTranslation('weatherHealthAlerts')
 
   const healthAlerts = useWeatherHealthAlertList({ type })
 
@@ -39,9 +39,7 @@ export default function AlertList({ type }: AlertListProps) {
           <ListItemStatus>
             <ListItemStatusIcon level={status} type={type} />
             <ListItemStatusContent>
-              <ListItemStatusLink href={`/adverse-weather/${type}-health-alerts/${toSlug(name)}`}>
-                {name}
-              </ListItemStatusLink>
+              <ListItemStatusLink href={`/weather-health-alerts/${type}/${toSlug(name)}`}>{name}</ListItemStatusLink>
               <ListItemStatusTimestamp>
                 {lastUpdated ? t('updated', { value: new Date(lastUpdated) }) : '-'}
               </ListItemStatusTimestamp>

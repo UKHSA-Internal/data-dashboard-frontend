@@ -36,7 +36,7 @@ interface HealthAlertsMapDialogProps {
 }
 
 export default function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
-  const { t } = useTranslation('adverseWeather')
+  const { t } = useTranslation('weatherHealthAlerts')
   const [, setError] = useQueryState(mapQueryKeys.error)
   const [mapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
   const router = useRouter()

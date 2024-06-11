@@ -1,3 +1,3 @@
 export const flags = {
-  adverseWeather: 'adverse-weather',
+  weatherHealthAlert: 'adverse-weather',
 }

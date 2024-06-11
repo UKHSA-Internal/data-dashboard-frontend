@@ -17,19 +17,19 @@ import {
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
-import { extractHealthAlertTypeFromSlug, getTagVariantFromStatus } from '@/app/utils/weather-health-alert.utils'
+import { getTagVariantFromStatus } from '@/app/utils/weather-health-alert.utils'
 import { logger } from '@/lib/logger'
 
 interface AlertProps {
-  weather: string
+  weather: HealthAlertTypes
   region: string
   relatedLinks: ReactNode
 }
 
 export default function AlertBody({ relatedLinks, weather, region }: AlertProps) {
-  const { t } = useTranslation(['adverseWeather', 'common'])
+  const { t } = useTranslation(['weatherHealthAlerts', 'common'])
 
-  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
+  const type: HealthAlertTypes = weather
   const weatherType = type.charAt(0).toUpperCase() + type.slice(1)
 
   const healthAlertsList = useWeatherHealthAlertList({ type })
@@ -52,8 +52,8 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
 
   const breadcrumbs = [
     { name: 'Home', link: '/' },
-    { name: 'Adverse Weather', link: '/adverse-weather' },
-    { name: `${type} Health Alerts`, link: `/adverse-weather/${weather}` },
+    { name: 'Weather health alerts', link: '/weather-health-alerts' },
+    { name: `${type} health alerts`, link: `/weather-health-alerts/${weather}` },
   ]
 
   const firstPublishedDate = firstPublished
