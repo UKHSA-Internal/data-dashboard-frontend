@@ -25,6 +25,7 @@ export const AlertBanner = ({ level, type, dateFrom, dateTo }: AlertBannerProps)
           'border-red bg-red-opaque': level === 'Red',
         }
       )}
+      aria-label="Alert banner"
     >
       <ListItemStatusIcon level={level} type={type} />
       <div>
