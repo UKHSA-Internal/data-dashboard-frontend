@@ -31,18 +31,18 @@ export class WeatherHealthAlertsChildPage {
       `?v=map&type=${weather}`
     )
 
-    // TODO: Need to check list length
+    // TODO: Need to check list length, list needs unique label/name to best select
     // const regions = await this.page.getByRole('list').getByRole('listitem').all()
     // expect(regions).toHaveLength(9)
 
     await expect(this.page.getByRole('link', { name: 'North East' })).toHaveAttribute(
       'href',
-      '/weather-health-alerts/cold/north-east'
+      `/weather-health-alerts/${weather}/north-east`
     )
-    await expect(this.page.getByRole('img', { name: 'Cold health alerts red' })).toBeVisible()
+    await expect(this.page.getByRole('img', { name: `${weather} health alerts red` })).toBeVisible()
     // TODO: Check updated text within this item (getting all at the moment)
     // await expect(this.page.getByText('Updated 12:00pm on 7 May 2024')).toBeVisible()
-    await expect(this.page.getByLabel('There is currently a Red cold alert status for North East')).toBeVisible()
+    await expect(this.page.getByLabel(`There is currently a Red ${weather} alert status for North East`)).toBeVisible()
   }
 
   async hasFurtherAdviceSection() {
