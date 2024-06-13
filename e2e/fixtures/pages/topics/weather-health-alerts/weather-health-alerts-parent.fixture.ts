@@ -14,18 +14,23 @@ export class WeatherHealthAlertsParentPage {
     await expect(this.page.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', '/')
   }
 
-  async hasPageContent() {
+  async hasPageDescription() {
     await expect(
       this.page.getByText(
         'Summary of weather health alerts data in England. For more detailed data, go to the individual event pages. The Weather-Health Alerting System is provided by the UK Health Security Agency (UKHSA) in partnership with the Met Office.'
       )
     ).toBeVisible()
+  }
 
+  async hasMapLink() {
     await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toHaveAttribute(
       'href',
       '?v=map&type=heat'
     )
-    // TODO: Should be able to select list length
+  }
+
+  async hasAlertsList() {
+    // TODO: Should be able to select list length, need aria-label on list
     // const alerts = await this.page.getByRole('list').getByRole('listitem').all()
     // expect(alerts).toHaveLength(2)
 

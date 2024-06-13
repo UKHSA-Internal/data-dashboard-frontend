@@ -2,6 +2,13 @@ import { expect, Page } from '@playwright/test'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
+interface alertSummaryListProps {
+  type: string
+  status: string
+  start: string
+  end: string
+}
+
 export class WeatherHealthAlertsRegionPage {
   readonly page: Page
 
@@ -40,32 +47,40 @@ export class WeatherHealthAlertsRegionPage {
     if (!mobile) {
       await expect(
         banner.getByRole('img', { name: `${weatherCapitalise} health alerts ${statusLowercase}` })
-      ).toBeVisible()
+      ).toBeHidden()
+      await expect(banner.getByTestId(`${weather}-alert-icon-${statusLowercase}`)).toBeVisible()
     }
+
     await expect(
       banner.getByRole('heading', { level: 2, name: `${status} ${weatherCapitalise}-health alert has been issued` })
     ).toBeVisible()
     await expect(banner.getByText(/Alert is in effect from/)).toBeVisible()
   }
 
-  async hasSummarySection() {
-    await expect(this.page.getByText('Type')).toBeVisible()
-    await expect(this.page.getByText('Heat Health Alert')).toBeVisible()
-
-    await expect(this.page.getByText('Colour')).toBeVisible()
-    await expect(this.page.getByText('Red')).toBeVisible()
-
-    await expect(this.page.getByText('Start')).toBeVisible()
-    await expect(this.page.getByText('6 May 2024 at 12:00pm')).toBeVisible()
-
-    await expect(this.page.getByText('End')).toBeVisible()
-    await expect(this.page.getByText('8 May 2024 at 12:00pm')).toBeVisible()
+  async hasNoAlertBanner() {
+    await expect(this.page.getByLabel('Alert banner')).toBeHidden()
   }
 
-  async hasBodyContent(bodyText: string, href: string) {
+  async hasAlertSummaryList({ type, status, start, end }: alertSummaryListProps) {
+    await expect(this.page.getByText('Type')).toBeVisible()
+    await expect(this.page.getByText(type)).toBeVisible()
+
+    await expect(this.page.getByText('Colour')).toBeVisible()
+    await expect(this.page.getByText(status)).toBeVisible()
+
+    await expect(this.page.getByText('Start')).toBeVisible()
+    await expect(this.page.getByText(start)).toBeVisible()
+
+    await expect(this.page.getByText('End')).toBeVisible()
+    await expect(this.page.getByText(end)).toBeVisible()
+  }
+
+  async hasBodyContent(bodyText: string) {
     await expect(this.page.getByRole('heading', { level: 3, name: 'Description' })).toBeVisible()
     await expect(this.page.getByText(bodyText)).toBeVisible()
+  }
 
+  async hasMapLink(href: string) {
     await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toHaveAttribute(
       'href',
       href
