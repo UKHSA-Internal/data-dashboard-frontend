@@ -1,6 +1,12 @@
 import { expect, Page } from '@playwright/test'
 
-import { HealthAlertTypes } from '@/api/models/Alerts'
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+
+interface alertListItemsProps {
+  region: string
+  updated: string
+  status: HealthAlertStatus
+}
 
 export class WeatherHealthAlertsChildPage {
   readonly page: Page
@@ -34,26 +40,20 @@ export class WeatherHealthAlertsChildPage {
     )
   }
 
-  async hasListItems() {
-    // TODO: Need to check list length, list needs unique label/name to best select
-    // const regions = await this.page.getByRole('list').getByRole('listitem').all()
-    // expect(regions).toHaveLength(9)
-  }
+  async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<alertListItemsProps>) {
+    const regions = this.page.getByRole('list', { name: `${weather} health alerts list` })
 
-  async hasListItem(region: string, weather: HealthAlertTypes) {
-    // TODO: Select row first, then select items within this
+    await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
 
-    await expect(this.page.getByRole('link', { name: region })).toHaveAttribute(
-      'href',
-      `/weather-health-alerts/${weather}/north-east`
-    )
+    for (let i = 0; i < alertList.length; i++) {
+      const listItem = regions.getByRole('listitem').nth(i)
+      await expect(listItem).toBeVisible()
 
-    // TODO: Getting multiple of type, need row selector then image selector
-    // await expect(this.page.getByRole('img', { name: `${weather} health alerts red` })).toBeVisible()
-
-    // TODO: Check updated text within this item (getting all at the moment)
-    // await expect(this.page.getByText('Updated 12:00pm on 7 May 2024')).toBeVisible()
-    await expect(this.page.getByLabel(`There is currently a Red ${weather} alert status for North East`)).toBeVisible()
+      await expect(listItem.getByRole('heading', { level: 2, name: alertList[i].region })).toBeVisible()
+      await expect(listItem.getByText(alertList[i].updated)).toBeVisible()
+      await expect(listItem.getByText(alertList[i].status, { exact: true })).toBeVisible()
+      await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeVisible()
+    }
   }
 
   async hasFurtherAdviceSection() {

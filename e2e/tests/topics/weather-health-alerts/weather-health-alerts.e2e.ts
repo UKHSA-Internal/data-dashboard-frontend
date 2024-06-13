@@ -57,10 +57,53 @@ test.describe('Feature flag enabled', () => {
         await weatherHealthAlertsChildPage.hasMapLink('cold')
       })
       await test.step('shows all 9 regions', async () => {
-        await weatherHealthAlertsChildPage.hasListItems()
-      })
-      await test.step('has north east list item', async () => {
-        await weatherHealthAlertsChildPage.hasListItem('North East', 'cold')
+        await weatherHealthAlertsChildPage.hasAlertListItems('cold', [
+          {
+            region: 'North East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Red',
+          },
+          {
+            region: 'North West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Amber',
+          },
+          {
+            region: 'Yorkshire and The Humber',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Yellow',
+          },
+          {
+            region: 'East Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Yellow',
+          },
+          {
+            region: 'West Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'East of England',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'London',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+        ])
       })
       await test.step('has further advice section ', async () => {
         await weatherHealthAlertsChildPage.hasFurtherAdviceSection()
@@ -86,9 +129,55 @@ test.describe('Feature flag enabled', () => {
       await test.step('has title', async () => {
         await app.hasHeading('Heat health alerts')
       })
-      // await test.step('has page content', async () => {
-      // await weatherHealthAlertsChildPage.hasPageContent('heat')
-      // })
+      await test.step('shows all 9 regions', async () => {
+        await weatherHealthAlertsChildPage.hasAlertListItems('heat', [
+          {
+            region: 'North East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Red',
+          },
+          {
+            region: 'North West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Red',
+          },
+          {
+            region: 'Yorkshire and The Humber',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Amber',
+          },
+          {
+            region: 'East Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Yellow',
+          },
+          {
+            region: 'West Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'East of England',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'London',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+        ])
+      })
       await test.step('has further advice section ', async () => {
         await weatherHealthAlertsChildPage.hasFurtherAdviceSection()
       })
