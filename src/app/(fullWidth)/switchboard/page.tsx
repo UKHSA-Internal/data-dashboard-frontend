@@ -5,7 +5,7 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 
-import { heading, wellKnownEnvironments } from './constants'
+import { heading, wellKnownEnvironments } from './shared/constants'
 
 const description =
   'Access critical information for the UKHSA data dashboard frontend, including environment settings, third-party dependencies, and local mock server configurations.'
@@ -81,12 +81,17 @@ export default function SwitchBoard() {
           <List className="govuk-!-margin-top-6">
             <ListItem spacing="m">
               <ListItemArrow>
+                <ListItemArrowLink href={`/switchboard/feature-flags`}>Feature Flags</ListItemArrowLink>
+              </ListItemArrow>
+            </ListItem>
+            <ListItem spacing="m">
+              <ListItemArrow>
                 <ListItemArrowLink href={`/switchboard/global-banners`}>Global Banners</ListItemArrowLink>
               </ListItemArrow>
             </ListItem>
             <ListItem spacing="m" showRule={false}>
               <ListItemArrow>
-                <ListItemArrowLink href={`/global-banners`}>Weather Health Alerts</ListItemArrowLink>
+                <ListItemArrowLink href={`/switchboard/weather-health-alerts`}>Weather Health Alerts</ListItemArrowLink>
               </ListItemArrow>
             </ListItem>
           </List>

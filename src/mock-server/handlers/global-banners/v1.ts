@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/state'
+import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import { globalBannerInactive } from './fixtures/global-banner-inactive'
@@ -18,13 +18,13 @@ export default async function handler(req: Request, res: Response) {
       api: { 'global-banners': globalBanner },
     } = getSwitchBoardState(req.headers.cookie)
 
-    const { status, selected } = globalBanner
+    const { status, scenario } = globalBanner
 
-    if (selected === 'Information') {
+    if (scenario === 'Information') {
       return res.status(Number(status)).send(globalBannerInformation)
     }
 
-    if (selected === 'Warning') {
+    if (scenario === 'Warning') {
       return res.status(Number(status)).send(globalBannerWarning)
     }
 

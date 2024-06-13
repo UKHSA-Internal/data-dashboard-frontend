@@ -3,8 +3,7 @@ import { SafeParseError, SafeParseSuccess, ZodError } from 'zod'
 import { HealthAlertList } from '@/api/models/Alerts'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
-import { coldAlertsFixture } from '@/mock-server/handlers/alerts/v1/fixtures/cold'
-import { heatAlertsFixture } from '@/mock-server/handlers/alerts/v1/fixtures/heat'
+import { fixtures } from '@/mock-server/handlers/alerts/v1/fixtures/list'
 
 import { getHealthAlerts } from './getHealthAlerts'
 
@@ -14,31 +13,19 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
+const fixture = fixtures.Green
+
 describe('Successfully getting a list of health alerts from the API', () => {
-  test('returns a list of heat alerts', async () => {
+  test('returns a list of alerts', async () => {
     getHealthAlertsMock.mockResolvedValueOnce({
       status: 200,
-      data: heatAlertsFixture,
+      data: fixture,
     })
 
     const result = await getHealthAlerts('heat')
 
     expect(result).toEqual<SafeParseSuccess<HealthAlertList>>({
-      data: heatAlertsFixture,
-      success: true,
-    })
-  })
-
-  test('returns a list of cold alerts', async () => {
-    getHealthAlertsMock.mockResolvedValueOnce({
-      status: 200,
-      data: coldAlertsFixture,
-    })
-
-    const result = await getHealthAlerts('cold')
-
-    expect(result).toEqual<SafeParseSuccess<HealthAlertList>>({
-      data: coldAlertsFixture,
+      data: fixture,
       success: true,
     })
   })

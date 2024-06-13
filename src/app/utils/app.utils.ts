@@ -23,3 +23,10 @@ export const toSlug = (text: string | null) => {
     .replace(/^-+/, '')
     .replace(/-+$/, '')
 }
+
+/**
+ * Determine if the provided url is a deployed environment
+ */
+export const isWellKnownEnvironment = (url: string) => {
+  return url.includes('ukhsa-dashboard.data.gov.uk')
+}

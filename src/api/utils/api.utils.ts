@@ -1,6 +1,5 @@
-import { cookies } from 'next/headers'
-
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
+import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -24,9 +23,15 @@ export async function client<T>(
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   // Send the local mock overrides with all requests
-  const switchBoardCookie = cookies().get(UKHSA_SWITCHBOARD_COOKIE_NAME)
-  if (switchBoardCookie) {
-    headers.cookie = switchBoardCookie.value
+  if (!isWellKnownEnvironment(process.env.API_URL ?? '') && isSSR) {
+    // Import cookies dynamically only in node environment to not trigger nextjs warnings
+    // TODO: Investigate the above. It means currently any client-side requests won't receive dynamically mocked responses
+    const cookies = async () => (await import('next/headers')).cookies
+    const cookieStore = await cookies()
+    const switchBoardCookie = cookieStore().get(UKHSA_SWITCHBOARD_COOKIE_NAME)
+    if (switchBoardCookie) {
+      headers.cookie = switchBoardCookie.value
+    }
   }
 
   const fetchOptions: RequestInit & { next: { revalidate: number } } = {

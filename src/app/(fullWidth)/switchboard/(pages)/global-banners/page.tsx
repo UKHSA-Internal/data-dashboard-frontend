@@ -3,9 +3,9 @@ import { cookies } from 'next/headers'
 import { View } from '@/app/components/ui/ukhsa'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
-import { heading } from '../../constants'
-import { getSwitchBoardState } from '../../state'
-import { handleSubmitAction } from '../../utils'
+import { StatusSelect } from '../../components/StatusSelect'
+import { heading } from '../../shared/constants'
+import { getSwitchBoardState, syncState } from '../../shared/state'
 
 export default function SwitchBoard() {
   const cookieStore = cookies()
@@ -23,70 +23,67 @@ export default function SwitchBoard() {
         { name: 'Global Banners', link: '/switchboard/global-banners' },
       ]}
     >
-      <form className="govuk-!-margin-top-3" action={handleSubmitAction}>
+      <form
+        className="govuk-!-margin-top-3"
+        action={async (form) => {
+          'use server'
+
+          syncState({
+            'global-banners': {
+              status: Number(form.get('global-banners.status')),
+              scenario: form.get('global-banners.scenario'),
+            },
+          })
+        }}
+      >
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-6">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Global banner</h2>
           </legend>
           <input type="hidden" name="id" value="global-banners" />
-          <div className="govuk-form-group mb-0 w-1/2">
-            <label className="govuk-label" htmlFor="global-banners.status">
-              Status
-            </label>
-            <select
-              className="govuk-select"
-              id="global-banners.status"
-              name="global-banners.status"
-              defaultValue={globalBanner.status}
-            >
-              <option value="200">200 - OK</option>
-              <option value="400">400 - Application Error</option>
-              <option value="401">401 - Unauthorized</option>
-              <option value="500">500 - Internal Server Error</option>
-            </select>
-          </div>
+          <StatusSelect id="global-banners.status" name="global-banners.status" defaultValue={globalBanner.status} />
           <div className="govuk-radios govuk-radios--small govuk-!-margin-top-6" data-module="govuk-radios">
-            <label className="govuk-label" htmlFor="global-banners.selected.Information">
+            <label className="govuk-label" htmlFor="global-banners.scenario.Information">
               Variant
             </label>
             <div className="govuk-radios__item">
               <input
-                defaultChecked={globalBanner.selected === 'Information'}
+                defaultChecked={globalBanner.scenario === 'Information'}
                 className="govuk-radios__input"
-                id="global-banners.selected.Information"
-                name="global-banners.selected"
+                id="global-banners.scenario.Information"
+                name="global-banners.scenario"
                 type="radio"
                 value="Information"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Information">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.scenario.Information">
                 Information
               </label>
             </div>
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={globalBanner.selected === 'Warning'}
+                defaultChecked={globalBanner.scenario === 'Warning'}
                 className="govuk-radios__input"
-                id="global-banners.selected.Warning"
-                name="global-banners.selected"
+                id="global-banners.scenario.Warning"
+                name="global-banners.scenario"
                 type="radio"
                 value="Warning"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Warning">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.scenario.Warning">
                 Warning
               </label>
             </div>
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={!globalBanner.selected}
+                defaultChecked={!globalBanner.scenario}
                 className="govuk-radios__input"
-                id="global-banners.selected.Inactive"
-                name="global-banners.selected"
+                id="global-banners.scenario.Inactive"
+                name="global-banners.scenario"
                 type="radio"
                 value=""
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.selected.Inactive">
+              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.scenario.Inactive">
                 Inactive
               </label>
             </div>

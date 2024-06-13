@@ -1,9 +1,10 @@
 import { Request, Response } from 'express'
 
+import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
-import { heatAlertsFixture } from '../../fixtures/heat'
-import { alertRegionFixture } from '../../fixtures/region'
+import { alertRegionFixture } from '../../fixtures/detail'
+import { fixtures as listFixtures } from '../../fixtures/list'
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -23,15 +24,33 @@ export default async function handler(req: Request, res: Response) {
       return res.status(500)
     }
 
-    const geography_code = req.params['region']
-    const matchedAlertFromListFixture = heatAlertsFixture.find((region) => region.geography_code === geography_code)
+    const {
+      api: {
+        alerts: {
+          scenario,
+          detail: { status },
+        },
+      },
+    } = getSwitchBoardState(req.headers.cookie)
 
-    return res.send({
+    const listFixture = listFixtures[scenario]
+    const geography_code = req.params['region']
+    const matchedAlertFromListFixture = listFixture.find((region) => region.geography_code === geography_code)
+
+    const json = {
       ...alertRegionFixture,
       geography_code,
       status: matchedAlertFromListFixture?.status ?? '',
       geography_name: matchedAlertFromListFixture?.geography_name ?? '',
-    })
+    }
+
+    if (scenario === 'NoAlertsYet') {
+      json.period_start = null
+      json.period_end = null
+      json.refresh_date = null
+    }
+
+    return res.status(Number(status)).json(json)
   } catch (error) {
     logger.error(error)
     return res.status(500)
