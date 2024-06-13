@@ -30,9 +30,9 @@ export class WeatherHealthAlertsParentPage {
   }
 
   async hasAlertsList() {
-    // TODO: Should be able to select list length, need aria-label on list
-    // const alerts = await this.page.getByRole('list').getByRole('listitem').all()
-    // expect(alerts).toHaveLength(2)
+    await expect(
+      await this.page.getByRole('list', { name: `weather health alerts` }).getByRole('listitem').all()
+    ).toHaveLength(2)
 
     await expect(
       this.page
