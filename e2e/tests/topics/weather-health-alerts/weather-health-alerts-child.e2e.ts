@@ -272,7 +272,7 @@ test.describe('Feature flag enabled', () => {
         await weatherHealthAlertsChildPage.hasPageDescription()
       })
       await test.step('has link for the map', async () => {
-        await weatherHealthAlertsChildPage.hasMapLink('cold')
+        await weatherHealthAlertsChildPage.hasMapLink('heat')
       })
       await test.step('map link works as expected', async () => {
         await weatherHealthAlertsChildPage.opensMapLink()
@@ -435,7 +435,7 @@ test.describe('Feature flag enabled', () => {
         await weatherHealthAlertsChildPage.hasPageDescription()
       })
       await test.step('has link for the map', async () => {
-        await weatherHealthAlertsChildPage.hasMapLink('cold')
+        await weatherHealthAlertsChildPage.hasMapLink('heat')
       })
       await test.step('map link works as expected', async () => {
         await weatherHealthAlertsChildPage.opensMapLink()
