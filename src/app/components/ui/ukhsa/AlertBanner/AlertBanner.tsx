@@ -26,9 +26,10 @@ export const AlertBanner = ({ level, type, dateFrom, dateTo }: AlertBannerProps)
         }
       )}
       aria-label="Alert banner"
+      aria-describedby={`${level}-${alertType}-alert`}
     >
       <ListItemStatusIcon level={level} type={type} />
-      <div>
+      <div id={`${level}-${alertType}-alert`}>
         <h2 className="govuk-heading-s govuk-!-margin-bottom-0 govuk-!-margin-top-0">{`${level} ${alertType}-health alert has been issued`}</h2>
         <span className="govuk-body-s">{`Alert is in effect from ${dateFrom} to ${dateTo}`}</span>
       </div>

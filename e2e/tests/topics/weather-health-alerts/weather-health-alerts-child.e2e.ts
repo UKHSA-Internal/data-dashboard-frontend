@@ -26,6 +26,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('cold')
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
+      })
       await test.step('shows all 9 regions', async () => {
         await weatherHealthAlertsChildPage.hasAlertListItems('cold', [
           {
@@ -98,6 +101,15 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has title', async () => {
         await app.hasHeading('Heat health alerts')
+      })
+      await test.step('has page description', async () => {
+        await weatherHealthAlertsChildPage.hasPageDescription()
+      })
+      await test.step('has link for the map', async () => {
+        await weatherHealthAlertsChildPage.hasMapLink('heat')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
       await test.step('shows all 9 regions', async () => {
         await weatherHealthAlertsChildPage.hasAlertListItems('heat', [
@@ -176,6 +188,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('cold')
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
+      })
       await test.step('shows all 9 regions', async () => {
         await weatherHealthAlertsChildPage.hasAlertListItems(
           'cold',
@@ -252,6 +267,15 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has title', async () => {
         await app.hasHeading('Heat health alerts')
+      })
+      await test.step('has page description', async () => {
+        await weatherHealthAlertsChildPage.hasPageDescription()
+      })
+      await test.step('has link for the map', async () => {
+        await weatherHealthAlertsChildPage.hasMapLink('cold')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
       await test.step('shows all 9 regions', async () => {
         await weatherHealthAlertsChildPage.hasAlertListItems(
@@ -406,6 +430,15 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has title', async () => {
         await app.hasHeading('Heat health alerts')
+      })
+      await test.step('has page description', async () => {
+        await weatherHealthAlertsChildPage.hasPageDescription()
+      })
+      await test.step('has link for the map', async () => {
+        await weatherHealthAlertsChildPage.hasMapLink('cold')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
       await test.step('shows all 9 regions', async () => {
         await weatherHealthAlertsChildPage.hasAlertListItems('heat', [

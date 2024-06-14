@@ -41,6 +41,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has map link', () => {
         weatherHealthAlertsRegionPage.hasMapLink('?v=map&type=heat&fid=E12000001')
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsRegionPage.opensMapLink()
+      })
       await test.step('has related links section', () => {
         weatherHealthAlertsRegionPage.hasRelatedLinks()
       })
@@ -85,6 +88,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has map link', () => {
         weatherHealthAlertsRegionPage.hasMapLink('?v=map&type=heat&fid=E12000004')
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsRegionPage.opensMapLink()
+      })
       await test.step('has related links section', () => {
         weatherHealthAlertsRegionPage.hasRelatedLinks()
       })
@@ -128,6 +134,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has map link', () => {
         weatherHealthAlertsRegionPage.hasMapLink('?v=map&type=heat&fid=E12000007')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsRegionPage.opensMapLink()
       })
       await test.step('has related links section', () => {
         weatherHealthAlertsRegionPage.hasRelatedLinks()

@@ -26,6 +26,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsParentPage.hasMapLink()
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsParentPage.opensMapLink()
+      })
       await test.step('has alerts list', async () => {
         await weatherHealthAlertsParentPage.hasAlertsList()
       })
@@ -54,6 +57,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsParentPage.hasMapLink()
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsParentPage.opensMapLink()
+      })
       await test.step('has alerts list', async () => {
         await weatherHealthAlertsParentPage.hasAlertsList()
       })
@@ -81,6 +87,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsParentPage.hasMapLink()
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsParentPage.opensMapLink()
       })
       await test.step('has alerts list', async () => {
         await weatherHealthAlertsParentPage.hasAlertsList()
