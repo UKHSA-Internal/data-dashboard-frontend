@@ -34,7 +34,7 @@ export class WeatherHealthAlertsRegionPage {
     await expect(this.page.getByText(/Last updated on Tuesday, 7 May 2024 at 12:00pm/)).toBeVisible()
   }
 
-  async hasAlertBanner(weather: HealthAlertTypes, status: HealthAlertStatus, mobile?: boolean) {
+  async hasAlertBanner(weather: HealthAlertTypes, status: HealthAlertStatus) {
     const weatherCapitalise = weather.charAt(0).toUpperCase() + weather.slice(1)
     const statusLowercase = status.toLowerCase()
     const banner = this.page.getByLabel('Alert banner')
@@ -43,13 +43,13 @@ export class WeatherHealthAlertsRegionPage {
 
     await expect(banner).toHaveClass(alertClasses)
 
-    // TODO: implement viewport mobile tests
-    if (!mobile) {
-      await expect(
-        banner.getByRole('img', { name: `${weatherCapitalise} health alerts ${statusLowercase}` })
-      ).toBeHidden()
-      await expect(banner.getByTestId(`${weather}-alert-icon-${statusLowercase}`)).toBeVisible()
-    }
+    //TODO: Need to implement tags for mobile vs desktop tags CDD-2024
+    // if (!mobile) {
+    //   await expect(
+    //     banner.getByRole('img', { name: `${weatherCapitalise} health alerts ${statusLowercase}` })
+    //   ).toBeHidden()
+    //   await expect(banner.getByTestId(`${weather}-alert-icon-${statusLowercase}`)).toBeVisible()
+    // }
 
     await expect(
       banner.getByRole('heading', { level: 2, name: `${status} ${weatherCapitalise}-health alert has been issued` })

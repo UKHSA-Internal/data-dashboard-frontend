@@ -192,57 +192,53 @@ test.describe('Feature flag enabled', () => {
         await weatherHealthAlertsChildPage.opensMapLink()
       })
       await test.step('shows all 9 regions', async () => {
-        await weatherHealthAlertsChildPage.hasAlertListItems(
-          'cold',
-          [
-            {
-              region: 'North East',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Red',
-            },
-            {
-              region: 'North West',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Amber',
-            },
-            {
-              region: 'Yorkshire and The Humber',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Yellow',
-            },
-            {
-              region: 'East Midlands',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Yellow',
-            },
-            {
-              region: 'West Midlands',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'East of England',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'London',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'South East',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'South West',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-          ],
-          true
-        )
+        await weatherHealthAlertsChildPage.hasAlertListItems('cold', [
+          {
+            region: 'North East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Red',
+          },
+          {
+            region: 'North West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Amber',
+          },
+          {
+            region: 'Yorkshire and The Humber',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Yellow',
+          },
+          {
+            region: 'East Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Yellow',
+          },
+          {
+            region: 'West Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'East of England',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'London',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+        ])
       })
       await test.step('has further advice section ', async () => {
         await weatherHealthAlertsChildPage.hasFurtherAdviceSection()
@@ -278,57 +274,53 @@ test.describe('Feature flag enabled', () => {
         await weatherHealthAlertsChildPage.opensMapLink()
       })
       await test.step('shows all 9 regions', async () => {
-        await weatherHealthAlertsChildPage.hasAlertListItems(
-          'heat',
-          [
-            {
-              region: 'North East',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Red',
-            },
-            {
-              region: 'North West',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Red',
-            },
-            {
-              region: 'Yorkshire and The Humber',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Amber',
-            },
-            {
-              region: 'East Midlands',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Yellow',
-            },
-            {
-              region: 'West Midlands',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'East of England',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'London',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'South East',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-            {
-              region: 'South West',
-              updated: 'Updated 12:00pm on 7 May 2024',
-              status: 'Green',
-            },
-          ],
-          true
-        )
+        await weatherHealthAlertsChildPage.hasAlertListItems('heat', [
+          {
+            region: 'North East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Red',
+          },
+          {
+            region: 'North West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Red',
+          },
+          {
+            region: 'Yorkshire and The Humber',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Amber',
+          },
+          {
+            region: 'East Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Yellow',
+          },
+          {
+            region: 'West Midlands',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'East of England',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'London',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South East',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+          {
+            region: 'South West',
+            updated: 'Updated 12:00pm on 7 May 2024',
+            status: 'Green',
+          },
+        ])
       })
       await test.step('has further advice section ', async () => {
         await weatherHealthAlertsChildPage.hasFurtherAdviceSection()

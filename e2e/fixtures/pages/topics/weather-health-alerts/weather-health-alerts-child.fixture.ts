@@ -48,7 +48,7 @@ export class WeatherHealthAlertsChildPage {
     await this.page.getByRole('link', { name: 'Exit map' }).click()
   }
 
-  async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<alertListItemsProps>, mobile?: boolean) {
+  async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<alertListItemsProps>) {
     const regions = this.page.getByRole('list', { name: `${weather} health alerts list` })
 
     await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
@@ -60,11 +60,12 @@ export class WeatherHealthAlertsChildPage {
       await expect(listItem.getByRole('heading', { level: 2, name: alertList[i].region })).toBeVisible()
       await expect(listItem.getByText(alertList[i].updated)).toBeVisible()
       await expect(listItem.getByText(alertList[i].status, { exact: true })).toBeVisible()
-      if (mobile) {
-        await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeHidden()
-      } else {
-        await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeVisible()
-      }
+      //TODO: Need to implement tags for mobile vs desktop tags CDD-2024
+      // if (mobile) {
+      //   await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeHidden()
+      // } else {
+      //   await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeVisible()
+      // }
     }
   }
 
