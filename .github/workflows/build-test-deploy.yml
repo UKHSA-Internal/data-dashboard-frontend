@@ -43,6 +43,35 @@ jobs:
         run: NODE_ENV=test npm run build
 
   ###############################################################################
+  # Lighthouse checks
+  ###############################################################################
+
+  lighthouse:
+    name: Lighthouse
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Start mock server
+        run: npm run dev:mock-server &
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      - name: Start Applicaton
+        run: NODE_ENV=test npm run start &
+      - name: Unlighthouse assertions and client
+        run: npx unlighthouse-ci --build-static
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: unlighthouse-report
+          path: ./.unlighthouse
+          retention-days: 10
+
+  ###############################################################################
   # Code quality checks
   ###############################################################################
 
@@ -125,7 +154,7 @@ jobs:
 
   tests-success-gate:
     name: Tests Success Check
-    needs: [e2e-tests]
+    needs: [unit-tests, quality-checks, lighthouse, e2e-tests]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'

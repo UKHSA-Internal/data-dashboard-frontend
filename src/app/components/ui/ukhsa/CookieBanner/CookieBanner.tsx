@@ -1,5 +1,4 @@
 'use client'
-
 import { getCookie, setCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
@@ -24,10 +23,11 @@ enum CookieBannerView {
 interface CookieBannerProps {
   title: ReactNode
   body: ReactNode
+  cookie: string | undefined
 }
 
-export const CookieBanner = ({ title, body }: CookieBannerProps) => {
-  const [view, setView] = useState(CookieBannerView.Hidden)
+export const CookieBanner = ({ title, body, cookie }: CookieBannerProps) => {
+  const [view, setView] = useState(!!cookie ? CookieBannerView.Hidden : CookieBannerView.Selection)
 
   const regionRef = useRef<HTMLDivElement>(null)
 

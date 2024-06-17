@@ -5,6 +5,7 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 import './globals.scss'
 
 import { flag } from '@unleash/nextjs'
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -16,6 +17,7 @@ import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { flags } from './constants/flags.constants'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { Providers } from './providers'
@@ -31,6 +33,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const globalBanner = await useGlobalBanner()
 
   const { enabled: weatherHealthAlertsEnabled } = await flag(flags.weatherHealthAlert)
+
+  const cookieStore = cookies()
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -51,6 +55,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </a>
         <Suspense fallback={null}>
           <CookieBanner
+            cookie={cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value}
             title={t('cookieBanner.title')}
             body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
           />
