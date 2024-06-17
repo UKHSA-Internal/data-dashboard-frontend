@@ -25,6 +25,7 @@ import {
   MetricsParentPage,
   NotFoundPage,
   OtherRespiratoryVirusesPage,
+  WeatherHealthAlertsMapPage,
   WhatsNewChildPage,
   WhatsNewParentPage,
 } from './index'
@@ -50,6 +51,7 @@ type Fixtures = {
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
   accessOurDataPage: AccessOurDataPage
+  weatherHealthAlertsMapPage: WeatherHealthAlertsMapPage
 }
 
 export class App {
@@ -490,6 +492,9 @@ export const test = base.extend<Fixtures>({
   },
   accessOurDataPage: async ({ page }, use) => {
     await use(new AccessOurDataPage(page))
+  },
+  weatherHealthAlertsMapPage: async ({ page }, use) => {
+    await use(new WeatherHealthAlertsMapPage(page))
   },
 })
 
