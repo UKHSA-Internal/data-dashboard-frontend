@@ -70,3 +70,6 @@ export const mapQueryKeys = {
 
 // The ID property of the GeoJson feature properties object
 export const geoJsonFeatureId = 'RGN23CD' satisfies keyof Feature['properties']
+
+// The Name property of the GeoJson feature properties object
+export const geoJsonFeatureName = 'RGN23NM' satisfies keyof Feature['properties']
