@@ -23,11 +23,10 @@ enum CookieBannerView {
 interface CookieBannerProps {
   title: ReactNode
   body: ReactNode
-  cookie: string | undefined
 }
 
-export const CookieBanner = ({ title, body, cookie }: CookieBannerProps) => {
-  const [view, setView] = useState(!!cookie ? CookieBannerView.Hidden : CookieBannerView.Selection)
+export const CookieBanner = ({ title, body }: CookieBannerProps) => {
+  const [view, setView] = useState(CookieBannerView.Hidden)
 
   const regionRef = useRef<HTMLDivElement>(null)
 

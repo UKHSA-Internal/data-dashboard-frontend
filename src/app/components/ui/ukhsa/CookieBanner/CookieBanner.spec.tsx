@@ -34,7 +34,6 @@ beforeEach(() => {
 const props: ComponentProps<typeof CookieBanner> = {
   title: 'Cookies on UKHSA data dashboard',
   body: 'Mocked content',
-  cookie: undefined,
 }
 
 test('renders the cookie banner selection view', () => {
@@ -185,13 +184,13 @@ test('displays cookie banner via magic link', async () => {
   // Mock the getCookie function to return a truthy value to simulate the cookie being set
   mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
-  const { rerender } = render(<CookieBanner {...props} cookie={UKHSA_GDPR_COOKIE_ACCEPT_VALUE} />)
+  const { rerender } = render(<CookieBanner {...props} />)
 
   expect(screen.queryByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).not.toBeInTheDocument()
 
   jest.mocked(useNavigationEvent).mockImplementationOnce((callback) => callback('/?change-settings=1'))
 
-  rerender(<CookieBanner {...props} cookie={undefined} />)
+  rerender(<CookieBanner {...props} />)
 
   expect(screen.getByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).toBeInTheDocument()
 
@@ -206,7 +205,7 @@ test('hides cookie banner on page change if cookie was already set', async () =>
   // Mock the getCookie function to return a truthy value to simulate the cookie being set
   mockedGetCookie.mockReturnValue(UKHSA_GDPR_COOKIE_ACCEPT_VALUE)
 
-  const { rerender } = render(<CookieBanner {...props} cookie={UKHSA_GDPR_COOKIE_ACCEPT_VALUE} />)
+  const { rerender } = render(<CookieBanner {...props} />)
 
   expect(screen.queryByRole('heading', { name: /Cookies on UKHSA data dashboard/i })).not.toBeInTheDocument()
 
