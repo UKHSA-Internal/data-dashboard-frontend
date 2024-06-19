@@ -3,7 +3,7 @@ import { useQueryState } from 'nuqs'
 import { useMap } from 'react-leaflet'
 import { Mock } from 'ts-mockery'
 
-import { geoJsonFeatureId } from '@/app/constants/map.constants'
+import { geoJsonFeatureId, geoJsonFeatureName } from '@/app/constants/map.constants'
 import { act, render, renderHook, waitFor, within } from '@/config/test-utils'
 
 import { FeatureCollection } from '../data/geojson/ukhsa-regions'
@@ -15,7 +15,7 @@ jest.mock('nuqs')
 const features = Mock.of<FeatureCollection['features']>([
   {
     type: 'Feature',
-    properties: { [geoJsonFeatureId]: '1' },
+    properties: { [geoJsonFeatureId]: '1', [geoJsonFeatureName]: 'London' },
     geometry: {
       type: 'Polygon',
       coordinates: [
@@ -51,7 +51,7 @@ describe('useChoroplethKeyboardAccessibility', () => {
 
     const { container } = render(<>{result.current[0]}</>)
     expect(within(container).getByTestId('ukhsa-map-sr')).toHaveTextContent(
-      '1 regions highlighted in the map area with X active alerts. Use number keys to select a region.1. 1 - X alert'
+      '1 regions highlighted in the map area. Use number keys to select a region.1. London'
     )
   })
 

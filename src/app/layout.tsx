@@ -4,7 +4,6 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 
 import './globals.scss'
 
-import { flag } from '@unleash/nextjs'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -21,6 +20,7 @@ import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { flags } from './constants/flags.constants'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { Providers } from './providers'
+import { getFeatureFlag } from './utils/flags.utils'
 import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
@@ -32,7 +32,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
   const globalBanner = await useGlobalBanner()
 
-  const { enabled: weatherHealthAlertsEnabled } = await flag(flags.weatherHealthAlert)
+  const { enabled: weatherHealthAlertsEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   const cookieStore = cookies()
 
