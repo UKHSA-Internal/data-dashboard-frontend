@@ -26,7 +26,6 @@ export default function SwitchBoard() {
         className="govuk-!-margin-top-3"
         action={async (form) => {
           'use server'
-          console.log('form: ', form)
           syncState({}, { 'adverse-weather': form.get('flags.adverseWeather') as string })
         }}
       >

@@ -36,7 +36,6 @@ export default function SwitchBoard() {
           })
         }}
       >
-        <input type="hidden" name="id" value="alerts" />
         <fieldset className="govuk-fieldset govuk-!-margin-bottom-6">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Weather Health Alerts</h2>

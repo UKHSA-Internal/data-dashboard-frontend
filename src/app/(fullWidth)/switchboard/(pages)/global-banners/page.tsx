@@ -40,7 +40,6 @@ export default function SwitchBoard() {
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Global banner</h2>
           </legend>
-          <input type="hidden" name="id" value="global-banners" />
           <StatusSelect id="global-banners.status" name="global-banners.status" defaultValue={globalBanner.status} />
           <div className="govuk-radios govuk-radios--small govuk-!-margin-top-6" data-module="govuk-radios">
             <label className="govuk-label" htmlFor="global-banners.scenario.Information">
