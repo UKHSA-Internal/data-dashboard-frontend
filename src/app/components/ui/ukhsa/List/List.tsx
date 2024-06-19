@@ -1,14 +1,13 @@
-import { ReactNode } from 'react'
+import { HTMLProps, ReactNode } from 'react'
 
-interface ListProps {
+interface ListProps extends HTMLProps<HTMLUListElement> {
   children: ReactNode
   className?: string
-  labelName?: string
 }
 
-export const List = ({ children, className, labelName }: ListProps) => {
+export const List = ({ children, className, ...rest }: ListProps) => {
   return (
-    <ul className={className} aria-label={labelName}>
+    <ul className={className} {...rest}>
       {children}
     </ul>
   )

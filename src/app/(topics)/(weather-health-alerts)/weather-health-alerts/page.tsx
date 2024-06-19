@@ -59,7 +59,7 @@ export default async function WeatherHealthAlerts() {
               role="presentation"
             />
 
-            <List labelName="Weather health alerts">
+            <List aria-label="Weather health alerts">
               {childPages.success &&
                 childPages.data.items.map(({ id: childId, title, meta }) => (
                   <ListItem key={childId} spacing="l">
