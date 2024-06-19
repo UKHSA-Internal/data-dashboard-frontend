@@ -50,7 +50,7 @@ export default async function handler(req: Request, res: Response) {
       json.refresh_date = null
     }
 
-    return res.status(Number(status)).json(json)
+    return res.status(status).json(json)
   } catch (error) {
     logger.error(error)
     return res.status(500)

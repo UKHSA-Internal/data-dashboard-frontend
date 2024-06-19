@@ -14,14 +14,7 @@ export default function SwitchBoard() {
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
-    <View
-      heading={heading}
-      className="govuk-!-margin-top-5"
-      breadcrumbs={[
-        { name: 'Switchboard', link: '/switchboard' },
-        { name: 'Feature Flags', link: '/switchboard/feature-flags' },
-      ]}
-    >
+    <View heading={heading} className="govuk-!-margin-top-5" backLink="/switchboard">
       <form
         className="govuk-!-margin-top-3"
         action={async (form) => {

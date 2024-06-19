@@ -21,14 +21,14 @@ export default async function handler(req: Request, res: Response) {
     const { status, scenario } = globalBanner
 
     if (scenario === 'Information') {
-      return res.status(Number(status)).send(globalBannerInformation)
+      return res.status(status).send(globalBannerInformation)
     }
 
     if (scenario === 'Warning') {
-      return res.status(Number(status)).send(globalBannerWarning)
+      return res.status(status).send(globalBannerWarning)
     }
 
-    return res.status(Number(status)).send(globalBannerInactive)
+    return res.status(status).send(globalBannerInactive)
   } catch (error) {
     logger.error(error)
     return res.status(500)

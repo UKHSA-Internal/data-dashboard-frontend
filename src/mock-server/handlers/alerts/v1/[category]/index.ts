@@ -29,7 +29,7 @@ export default async function handler(req: Request, res: Response) {
 
     const fixture = fixtures[scenario]
 
-    return res.status(Number(status)).json(fixture)
+    return res.status(status).json(fixture)
   } catch (error) {
     logger.error(error)
     return res.status(500)

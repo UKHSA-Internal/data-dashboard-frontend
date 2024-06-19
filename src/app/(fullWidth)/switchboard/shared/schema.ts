@@ -22,7 +22,7 @@ export const switchBoardSchema = z.object({
       detail: baseProps(),
       scenario: z.enum(['Green', 'RedAmberGreenYellow', 'RedAmber', 'NoAlertsYet']),
     }),
-    'global-banners': baseProps(bannerTypes.nullable()),
+    'global-banners': baseProps(bannerTypes.or(z.literal(''))),
   }),
   flags: z.object({
     'adverse-weather': z.enum(['enabled', 'disabled']),
