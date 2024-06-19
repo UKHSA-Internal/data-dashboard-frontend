@@ -71,7 +71,7 @@ jobs:
       - uses: ./.github/actions/install-cache
 
       - name: Unlighthouse assertions and client
-        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=61
+        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=60
       - uses: actions/upload-artifact@v3
         if: always()
         with:
