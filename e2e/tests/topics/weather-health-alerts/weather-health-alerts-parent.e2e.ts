@@ -72,7 +72,7 @@ test.describe('Feature flag enabled', () => {
   test.describe('Tablet - Weather health alerts parent page', () => {
     test.use({ viewport: viewports.tablet })
 
-    test('displays WHA category page on mobile', async ({ app, weatherHealthAlertsParentPage }) => {
+    test('displays category page on mobile', async ({ app, weatherHealthAlertsParentPage }) => {
       await test.step('loads the page', async () => {
         await app.goto('/weather-health-alerts')
       })
