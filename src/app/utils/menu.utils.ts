@@ -1,9 +1,8 @@
-import { flag } from '@unleash/nextjs'
-
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
 import { flags } from '../constants/flags.constants'
+import { getFeatureFlag } from './flags.utils'
 
 /**
  * Represents a menu link with title and slug.
@@ -30,7 +29,7 @@ export const useMenu = async (): Promise<MenuLink[]> => {
     // Fetch pages with show_in_menus:true filter.
     const pages = await getPages({ show_in_menus: 'true' })
 
-    const { enabled: weatherHealthAlertEnabled } = await flag(flags.weatherHealthAlert)
+    const { enabled: weatherHealthAlertEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
     const links: MenuLink[] = []
 

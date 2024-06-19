@@ -19,6 +19,10 @@
       {
         "name": "@radix-ui/react-tabs",
         "message": "Please avoid using the @radix-ui/react-tabs package and use our built in Tabs component directly"
+      },
+      {
+        "name": "@unleash/nextjs",
+        "message": "Please use our feature flag utilities in @app/utils/flags.utils.ts."
       }
     ],
     "import/no-anonymous-default-export": "off",
