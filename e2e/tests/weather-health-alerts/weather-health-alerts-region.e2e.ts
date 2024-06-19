@@ -1,6 +1,6 @@
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
-import { test } from '../../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAlertStatus; fid: string }> = [
   {

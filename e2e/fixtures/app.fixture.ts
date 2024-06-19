@@ -28,9 +28,9 @@ import {
   WhatsNewChildPage,
   WhatsNewParentPage,
 } from './index'
-import { WeatherHealthAlertsChildPage } from './pages/topics/weather-health-alerts/weather-health-alerts-child.fixture'
-import { WeatherHealthAlertsParentPage } from './pages/topics/weather-health-alerts/weather-health-alerts-parent.fixture'
-import { WeatherHealthAlertsRegionPage } from './pages/topics/weather-health-alerts/weather-health-alerts-region.fixture'
+import { WeatherHealthAlertsChildPage } from './pages/weather-health-alerts/weather-health-alerts-child.fixture'
+import { WeatherHealthAlertsParentPage } from './pages/weather-health-alerts/weather-health-alerts-parent.fixture'
+import { WeatherHealthAlertsRegionPage } from './pages/weather-health-alerts/weather-health-alerts-region.fixture'
 
 type Fixtures = {
   app: App
