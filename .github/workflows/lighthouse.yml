@@ -1,0 +1,112 @@
+name: Lighthouse
+run-name: Lighthouse scan for ${{ github.event.inputs.environment || 'prod' }} environment
+
+on:
+  # Run every 4 hours
+  schedule:
+    - cron: '0 */4 * * *'
+
+  # Run on demand
+  workflow_dispatch:
+    inputs:
+      environment:
+        required: true
+        type: choice
+        description: Select a well known environment to run the lighthouse scan for.
+        default: prod
+        options:
+          - prod
+          - uat
+          - dev
+          - test
+          - train
+
+env:
+  AWS_REGION: 'eu-west-2'
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for the actions/checkout
+
+jobs:
+  install:
+    name: Install
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - name: Install
+        run: npm ci --no-audit --no-fund
+
+  lighthouse:
+    name: Lighthouse
+    needs: [install]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Set environment URL
+        id: set-url
+        run: |
+          if [ "${{ github.event_name }}" == "pull_request" ]; then
+            ENVIRONMENT="prod"
+          elif [ "${{ github.event_name }}" == "schedule" ]; then
+            ENVIRONMENT="prod"
+          elif [ -n "${{ github.event.inputs.environment }}" ]; then
+            ENVIRONMENT="${{ github.event.inputs.environment }}"
+          else
+            ENVIRONMENT="prod"
+          fi
+          echo "ENVIRONMENT=${ENVIRONMENT}" >> $GITHUB_ENV
+          case "$ENVIRONMENT" in
+            prod) echo "TARGET_URL=https://ukhsa-dashboard.data.gov.uk/" >> $GITHUB_ENV ;;
+            uat) echo "TARGET_URL=https://uat.ukhsa-dashboard.data.gov.uk/" >> $GITHUB_ENV ;;
+            dev) echo "TARGET_URL=https://dev.ukhsa-dashboard.data.gov.uk/" >> $GITHUB_ENV ;;
+            test) echo "TARGET_URL=https://test.ukhsa-dashboard.data.gov.uk/" >> $GITHUB_ENV ;;
+            train) echo "TARGET_URL=https://train.ukhsa-dashboard.data.gov.uk/" >> $GITHUB_ENV ;;
+          esac
+
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+
+      - name: Unlighthouse assertions and client
+        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=60
+      - uses: actions/upload-artifact@v3
+        if: always()
+        with:
+          name: unlighthouse-report
+          path: ./.unlighthouse
+          retention-days: 10
+
+  slack-notify:
+    name: Slack Notify
+    needs: [lighthouse]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: 'Report Success'
+        uses: ravsamhq/notify-slack-action@v1
+        if: ${{ needs.lighthouse.result == 'success' }}
+        with:
+          status: success
+          notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
+          message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
+          footer: '<{run_url}|View Run>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: 'Report Failure'
+        uses: ravsamhq/notify-slack-action@v1
+        if: ${{ needs.lighthouse.result == 'failure' }}
+        with:
+          status: failure
+          notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
+          message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
+          mention_groups: ${{ vars.SLACK_MENTION_USERS }}
+          mention_groups_when: 'failure,warnings'
+          footer: '<{run_url}|View Run>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
