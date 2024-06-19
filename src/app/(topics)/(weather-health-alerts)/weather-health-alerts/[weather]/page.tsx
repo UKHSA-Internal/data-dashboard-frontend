@@ -11,12 +11,11 @@ import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
-import { extractHealthAlertTypeFromSlug } from '@/app/utils/weather-health-alert.utils'
 
 import AlertList from './AlertList'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
-  const { enabled } = await getFeatureFlag(flags.adverseWeather)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {
@@ -36,13 +35,11 @@ export async function generateMetadata({ params: { weather } }: { params: { weat
 
 interface WeatherHealthAlertProps {
   params: {
-    weather: 'heat-health-alerts' | 'cold-health-alerts'
+    weather: HealthAlertTypes
   }
 }
 
 export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
-  const type: HealthAlertTypes = extractHealthAlertTypeFromSlug(weather)
-
   const { furtherAdviceLinks } = {
     // Further advice links hardcoded currently
     furtherAdviceLinks: [
@@ -81,14 +78,14 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
       heading={title}
       breadcrumbs={[
         { name: 'Home', link: '/' },
-        { name: 'Adverse Weather', link: '/adverse-weather' },
+        { name: 'Weather health alerts', link: '/weather-health-alerts' },
       ]}
     >
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
-      <HealthAlertsLink type={type} className="govuk-!-margin-bottom-5" />
+      <HealthAlertsLink type={weather} className="govuk-!-margin-bottom-5" />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
@@ -98,7 +95,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
               role="presentation"
             />
 
-            <AlertList type={type} />
+            <AlertList type={weather} />
           </div>
 
           <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>

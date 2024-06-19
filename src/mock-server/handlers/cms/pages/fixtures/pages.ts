@@ -19,7 +19,7 @@ import {
   whatsNewParentMock,
 } from './page'
 import { accessOurDataChildMocks, accessOurDataParentMock } from './page/access-our-data'
-import { adverseWeatherChildMocks, adverseWeatherParentMock } from './page/adverse-weather'
+import { weatherHealthAlertsChildMocks, weatherHealthAlertsParentMock } from './page/weather-health-alerts'
 
 export const pagesWithHomeTypeMock: PagesResponse = {
   meta: {
@@ -170,18 +170,18 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
       })
     ),
     {
-      id: adverseWeatherParentMock.id,
+      id: weatherHealthAlertsParentMock.id,
       meta: {
-        type: adverseWeatherParentMock.meta.type,
-        detail_url: adverseWeatherParentMock.meta.detail_url,
-        html_url: adverseWeatherParentMock.meta.html_url,
-        slug: adverseWeatherParentMock.meta.slug,
-        show_in_menus: adverseWeatherParentMock.meta.show_in_menus,
-        first_published_at: adverseWeatherParentMock.meta.first_published_at,
+        type: weatherHealthAlertsParentMock.meta.type,
+        detail_url: weatherHealthAlertsParentMock.meta.detail_url,
+        html_url: weatherHealthAlertsParentMock.meta.html_url,
+        slug: weatherHealthAlertsParentMock.meta.slug,
+        show_in_menus: weatherHealthAlertsParentMock.meta.show_in_menus,
+        first_published_at: weatherHealthAlertsParentMock.meta.first_published_at,
       },
-      title: adverseWeatherParentMock.title,
+      title: weatherHealthAlertsParentMock.title,
     },
-    ...adverseWeatherChildMocks.map(
+    ...weatherHealthAlertsChildMocks.map(
       ({ id, meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at }, title }) => ({
         id,
         meta: { type, detail_url, html_url, slug, show_in_menus, first_published_at },

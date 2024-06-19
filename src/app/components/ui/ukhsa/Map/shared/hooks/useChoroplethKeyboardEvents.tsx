@@ -10,7 +10,7 @@ import { useCallback, useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { useDebounceCallback, useEventListener } from 'usehooks-ts'
 
-import { geoJsonFeatureId, mapDescriptionId, mapQueryKeys } from '@/app/constants/map.constants'
+import { geoJsonFeatureId, geoJsonFeatureName, mapDescriptionId, mapQueryKeys } from '@/app/constants/map.constants'
 
 import { Feature } from '../data/geojson/ukhsa-regions'
 
@@ -60,11 +60,11 @@ export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [J
   // Otherwise, provide instructions for selecting regions using keyboard numbers.
   const description = (
     <div id={mapDescriptionId} className="govuk-visually-hidden" data-testid="ukhsa-map-sr">
-      {`${numVisibleRegions} regions highlighted in the map area with X active alerts. Use number keys to select a region.`}
+      {`${numVisibleRegions} regions highlighted in the map area. Use number keys to select a region.`}
       {visibleRegions.map((region, index) => {
         // TODO: Once integrated with API, add dynamic alert text.
         // TODO: See if we can use i18n for this instead.
-        return `${index + 1}. ${region.properties[geoJsonFeatureId]} - X alert \n`
+        return `${index + 1}. ${region.properties[geoJsonFeatureName]}\n`
       })}
     </div>
   )

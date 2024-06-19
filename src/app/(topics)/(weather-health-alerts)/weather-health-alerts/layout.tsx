@@ -6,7 +6,7 @@ import { flags } from '@/app/constants/flags.constants'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export default async function Layout({ children }: { children: ReactNode }) {
-  const { enabled } = await getFeatureFlag(flags.adverseWeather)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled) notFound()
 

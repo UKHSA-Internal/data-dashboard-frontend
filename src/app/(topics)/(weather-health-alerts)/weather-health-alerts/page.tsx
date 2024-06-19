@@ -10,7 +10,7 @@ import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export async function generateMetadata() {
-  const { enabled } = await getFeatureFlag(flags.adverseWeather)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {
@@ -20,7 +20,7 @@ export async function generateMetadata() {
 
   const {
     meta: { seo_title: title, search_description: description },
-  } = await getPageBySlug('adverse-weather', { type: PageType.Composite })
+  } = await getPageBySlug('weather-health-alerts', { type: PageType.Composite })
 
   return {
     title,
@@ -28,13 +28,13 @@ export async function generateMetadata() {
   }
 }
 
-export default async function AdverseWeather() {
+export default async function WeatherHealthAlerts() {
   const {
     id,
     title,
     body,
     related_links: relatedLinks,
-  } = await getPageBySlug<PageType.Composite>('adverse-weather', {
+  } = await getPageBySlug<PageType.Composite>('weather-health-alerts', {
     type: PageType.Composite,
   })
 
@@ -63,7 +63,7 @@ export default async function AdverseWeather() {
                 childPages.data.items.map(({ id: childId, title, meta }) => (
                   <ListItem key={childId} spacing="l">
                     <ListItemArrow>
-                      <ListItemArrowLink href={`/adverse-weather/${meta.slug}`}>{title}</ListItemArrowLink>
+                      <ListItemArrowLink href={`/weather-health-alerts/${meta.slug}`}>{title}</ListItemArrowLink>
                       {/* TODO: Child page description to come from the CMS in future. CDD-1980 */}
                       <ListItemArrowParagraph>{`View all ${meta.slug.split('-')[0]} health alerts currently in place in England`}</ListItemArrowParagraph>
                     </ListItemArrow>

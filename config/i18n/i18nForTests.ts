@@ -1,10 +1,10 @@
 import i18n from 'i18next'
 import { initReactI18next } from 'react-i18next'
 
-import adverseWeather from '../../public/locales/en/adverseWeather.json'
 import common from '../../public/locales/en/common.json'
 import errors from '../../public/locales/en/errors.json'
 import metrics from '../../public/locales/en/metrics.json'
+import weatherHealthAlerts from '../../public/locales/en/weatherHealthAlerts.json'
 import whatsNew from '../../public/locales/en/whatsNew.json'
 import formatters from './formatters'
 
@@ -13,7 +13,7 @@ export const resources = {
   en: {
     common,
     whatsNew,
-    adverseWeather,
+    weatherHealthAlerts,
     metrics,
     errors,
   },
@@ -21,7 +21,7 @@ export const resources = {
 
 i18n.use(initReactI18next).init({
   lng: 'en',
-  ns: ['common', 'topic', 'adverseWeather', 'whatsNew', 'metrics', 'errors'],
+  ns: ['common', 'topic', 'weatherHealthAlerts', 'whatsNew', 'metrics', 'errors'],
   resources,
   defaultNS,
   interpolation: {

@@ -4,7 +4,7 @@ import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { logger } from '@/lib/logger'
 
 import { accessOurDataChildMocks, accessOurDataParentMock } from './fixtures/page/access-our-data'
-import { adverseWeatherChildMocks, adverseWeatherParentMock } from './fixtures/page/adverse-weather'
+import { weatherHealthAlertsChildMocks, weatherHealthAlertsParentMock } from './fixtures/page/weather-health-alerts'
 import {
   allPagesMock,
   pagesWithCommonTypeMock,
@@ -46,12 +46,12 @@ export default async function handler(req: Request, res: Response) {
       })
     }
 
-    // filter all items where requesting child of adverse weather parent
-    if (req.query.child_of && Number(req.query.child_of) === adverseWeatherParentMock.id) {
+    // filter all items where requesting child of weather health alert parent
+    if (req.query.child_of && Number(req.query.child_of) === weatherHealthAlertsParentMock.id) {
       return res.json({
-        items: adverseWeatherChildMocks,
+        items: weatherHealthAlertsChildMocks,
         meta: {
-          total_count: adverseWeatherChildMocks.length,
+          total_count: weatherHealthAlertsChildMocks.length,
         },
       })
     }
