@@ -118,7 +118,7 @@ test.describe('Feature flag enabled', () => {
     for (const { weather, region, status, fid } of cases) {
       const regionDashCase = region.toLowerCase().replaceAll(' ', '-')
 
-      test(`${region} ${weather} health alerts page - ${status}`, async ({ app, weatherHealthAlertsRegionPage }) => {
+      test(`${weather} alert - ${region} - ${status}`, async ({ app, weatherHealthAlertsRegionPage }) => {
         await test.step('loads the page', async () => {
           await app.goto(`/weather-health-alerts/${weather}/${regionDashCase}`)
         })
