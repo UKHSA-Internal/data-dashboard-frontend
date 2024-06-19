@@ -2,7 +2,7 @@ import { expect, Page } from '@playwright/test'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
-interface alertListItemsProps {
+interface AlertListItems {
   region: string
   updated: string
   status: HealthAlertStatus
@@ -48,7 +48,7 @@ export class WeatherHealthAlertsChildPage {
     await this.page.getByRole('link', { name: 'Exit map' }).click()
   }
 
-  async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<alertListItemsProps>) {
+  async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<AlertListItems>) {
     const regions = this.page.getByRole('list', { name: `${weather} health alerts list` })
 
     await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
