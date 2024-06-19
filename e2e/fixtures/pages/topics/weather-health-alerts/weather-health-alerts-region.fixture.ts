@@ -37,9 +37,12 @@ export class WeatherHealthAlertsRegionPage {
   async hasAlertBanner(weather: HealthAlertTypes, status: HealthAlertStatus) {
     const weatherCapitalise = weather.charAt(0).toUpperCase() + weather.slice(1)
     const statusLowercase = status.toLowerCase()
-    const banner = this.page.getByLabel('Alert banner')
+    const banner = this.page.getByLabel(`Alert banner`)
 
-    const alertClasses = new RegExp(`border-${statusLowercase} bg-${statusLowercase}-opaque`)
+    const alertClasses =
+      status === 'Amber'
+        ? new RegExp(`border-orange bg-orange-opaque`)
+        : new RegExp(`border-${statusLowercase} bg-${statusLowercase}-opaque`)
 
     await expect(banner).toHaveClass(alertClasses)
 

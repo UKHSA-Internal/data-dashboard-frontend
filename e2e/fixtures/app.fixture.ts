@@ -500,8 +500,8 @@ export const test = base.extend<Fixtures>({
   weatherHealthAlertsParentPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsParentPage(page))
   },
-  weatherHealthAlertsChildPage: async ({ page }, use) => {
-    await use(new WeatherHealthAlertsChildPage(page))
+  weatherHealthAlertsChildPage: async ({ page, isMobile }, use) => {
+    await use(new WeatherHealthAlertsChildPage(page, isMobile))
   },
   weatherHealthAlertsRegionPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsRegionPage(page))

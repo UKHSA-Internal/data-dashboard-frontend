@@ -10,9 +10,11 @@ interface AlertListItems {
 
 export class WeatherHealthAlertsChildPage {
   readonly page: Page
+  isMobile: boolean
 
-  constructor(page: Page) {
+  constructor(page: Page, isMobile: boolean) {
     this.page = page
+    this.isMobile = isMobile
   }
 
   async hasBreadcrumbs() {
@@ -49,7 +51,7 @@ export class WeatherHealthAlertsChildPage {
   }
 
   async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<AlertListItems>) {
-    const regions = this.page.getByRole('list', { name: `${weather} health alerts list` })
+    const regions = this.page.getByRole('list', { name: `${weather} health alerts` })
 
     await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
 
@@ -60,8 +62,9 @@ export class WeatherHealthAlertsChildPage {
       await expect(listItem.getByRole('heading', { level: 2, name: alertList[i].region })).toBeVisible()
       await expect(listItem.getByText(alertList[i].updated)).toBeVisible()
       await expect(listItem.getByText(alertList[i].status, { exact: true })).toBeVisible()
+
       //TODO: Need to implement tags for mobile vs desktop tags CDD-2024
-      // if (mobile) {
+      // if (this.isMobile) {
       //   await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeHidden()
       // } else {
       //   await expect(listItem.getByTestId(`${weather}-alert-icon-${alertList[i].status.toLowerCase()}`)).toBeVisible()

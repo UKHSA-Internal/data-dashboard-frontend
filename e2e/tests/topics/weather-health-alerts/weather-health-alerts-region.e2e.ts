@@ -1,147 +1,173 @@
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+
 import { test } from '../../../fixtures/app.fixture'
+
+const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAlertStatus; fid: string }> = [
+  {
+    weather: 'heat',
+    region: 'North East',
+    status: 'Red',
+    fid: 'E12000001',
+  },
+  {
+    weather: 'heat',
+    region: 'North West',
+    status: 'Red',
+    fid: 'E12000002',
+  },
+  {
+    weather: 'heat',
+    region: 'Yorkshire and The Humber',
+    status: 'Amber',
+    fid: 'E12000003',
+  },
+  {
+    weather: 'heat',
+    region: 'East Midlands',
+    status: 'Yellow',
+    fid: 'E12000004',
+  },
+  {
+    weather: 'heat',
+    region: 'West Midlands',
+    status: 'Green',
+    fid: 'E12000005',
+  },
+  {
+    weather: 'heat',
+    region: 'East of England',
+    status: 'Green',
+    fid: 'E12000006',
+  },
+  {
+    weather: 'heat',
+    region: 'London',
+    status: 'Green',
+    fid: 'E12000007',
+  },
+  {
+    weather: 'heat',
+    region: 'South East',
+    status: 'Green',
+    fid: 'E12000008',
+  },
+  {
+    weather: 'heat',
+    region: 'South West',
+    status: 'Green',
+    fid: 'E12000009',
+  },
+  {
+    weather: 'cold',
+    region: 'North East',
+    status: 'Red',
+    fid: 'E12000001',
+  },
+  {
+    weather: 'cold',
+    region: 'North West',
+    status: 'Red',
+    fid: 'E12000002',
+  },
+  {
+    weather: 'cold',
+    region: 'Yorkshire and The Humber',
+    status: 'Amber',
+    fid: 'E12000003',
+  },
+  {
+    weather: 'cold',
+    region: 'East Midlands',
+    status: 'Yellow',
+    fid: 'E12000004',
+  },
+  {
+    weather: 'cold',
+    region: 'West Midlands',
+    status: 'Green',
+    fid: 'E12000005',
+  },
+  {
+    weather: 'cold',
+    region: 'East of England',
+    status: 'Green',
+    fid: 'E12000006',
+  },
+  {
+    weather: 'cold',
+    region: 'London',
+    status: 'Green',
+    fid: 'E12000007',
+  },
+  {
+    weather: 'cold',
+    region: 'South East',
+    status: 'Green',
+    fid: 'E12000008',
+  },
+  {
+    weather: 'cold',
+    region: 'South West',
+    status: 'Green',
+    fid: 'E12000009',
+  },
+]
 
 test.describe('Feature flag enabled', () => {
   test.describe('Weather health alerts region pages', () => {
-    test('North east heat health alerts page - Red', async ({ app, weatherHealthAlertsRegionPage }) => {
-      await test.step('loads the page', async () => {
-        await app.goto('/weather-health-alerts/heat/north-east')
-      })
-      await test.step('metadata is correct', async () => {
-        await app.hasMetadata({
-          title: 'Weather alert for north-east | UKHSA data dashboard',
-          description: 'Weather alert for north-east',
-        })
-      })
-      await test.step('has breadcrumbs', async () => {
-        await weatherHealthAlertsRegionPage.hasBreadcrumbs('heat')
-      })
-      await test.step('has heading', async () => {
-        await app.hasHeading('Heat-health alert for North East')
-      })
-      await test.step('has last updated', () => {
-        weatherHealthAlertsRegionPage.hasLastUpdated()
-      })
-      await test.step('has alert banner', () => {
-        weatherHealthAlertsRegionPage.hasAlertBanner('heat', 'Red')
-      })
-      // TODO: Fix below test, currently playwright just "fails" no error
-      // await test.step('has summary list', () => {
-      //   weatherHealthAlertsRegionPage.hasAlertSummaryList({
-      //     type: 'Heat Health Alert',
-      //     start: '6 May 2024 at 12:00pm',
-      //     end: '	8 May 2024 at 12:00pm',
-      //     status: 'Red',
-      //   })
-      // })
-      await test.step('has body content', () => {
-        weatherHealthAlertsRegionPage.hasBodyContent(
-          'Severe impacts are expected across the health and social care sector due to forecast weather conditions'
-        )
-      })
-      await test.step('has map link', () => {
-        weatherHealthAlertsRegionPage.hasMapLink('?v=map&type=heat&fid=E12000001')
-      })
-      await test.step('map link works as expected', async () => {
-        await weatherHealthAlertsRegionPage.opensMapLink()
-      })
-      await test.step('has related links section', () => {
-        weatherHealthAlertsRegionPage.hasRelatedLinks()
-      })
-    })
+    for (const { weather, region, status, fid } of cases) {
+      const regionDashCase = region.toLowerCase().replaceAll(' ', '-')
 
-    test('East midlands heat health alerts page - Yellow', async ({ app, weatherHealthAlertsRegionPage }) => {
-      await test.step('loads the page', async () => {
-        await app.goto('weather-health-alerts/heat/east-midlands')
-      })
-      await test.step('metadata is correct', async () => {
-        await app.hasMetadata({
-          title: 'Weather alert for east-midlands | UKHSA data dashboard',
-          description: 'Weather alert for east-midlands',
+      test(`${region} ${weather} health alerts page - ${status}`, async ({ app, weatherHealthAlertsRegionPage }) => {
+        await test.step('loads the page', async () => {
+          await app.goto(`/weather-health-alerts/${weather}/${regionDashCase}`)
+        })
+        await test.step('metadata is correct', async () => {
+          await app.hasMetadata({
+            title: `Weather alert for ${regionDashCase} | UKHSA data dashboard`,
+            description: `Weather alert for ${regionDashCase}`,
+          })
+        })
+        await test.step('has breadcrumbs', async () => {
+          await weatherHealthAlertsRegionPage.hasBreadcrumbs(weather)
+        })
+        await test.step('has heading', async () => {
+          await app.hasHeading(`${weather}-health alert for ${region}`)
+        })
+        await test.step('has last updated', () => {
+          weatherHealthAlertsRegionPage.hasLastUpdated()
+        })
+        // eslint-disable-next-line playwright/no-conditional-in-test
+        if (status !== 'Green') {
+          await test.step('has alert banner', () => {
+            weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
+          })
+        }
+        // TODO: Fix below test, currently playwright just "fails" no error
+        // await test.step('has summary list', () => {
+        //   weatherHealthAlertsRegionPage.hasAlertSummaryList({
+        //     type: 'Heat Health Alert',
+        //     start: '6 May 2024 at 12:00pm',
+        //     end: '	8 May 2024 at 12:00pm',
+        //     status: 'Red',
+        //   })
+        // })
+        await test.step('has body content', () => {
+          weatherHealthAlertsRegionPage.hasBodyContent(
+            'Severe impacts are expected across the health and social care sector due to forecast weather conditions'
+          )
+        })
+        await test.step('has map link', () => {
+          weatherHealthAlertsRegionPage.hasMapLink(`?v=map&type=${weather}&fid=${fid}`)
+        })
+        await test.step('map link works as expected', async () => {
+          await weatherHealthAlertsRegionPage.opensMapLink()
+        })
+        await test.step('has related links section', () => {
+          weatherHealthAlertsRegionPage.hasRelatedLinks()
         })
       })
-      await test.step('has breadcrumbs', async () => {
-        await weatherHealthAlertsRegionPage.hasBreadcrumbs('heat')
-      })
-      await test.step('has heading', async () => {
-        await app.hasHeading('Heat-health alert for East midlands')
-      })
-      await test.step('has last updated', () => {
-        weatherHealthAlertsRegionPage.hasLastUpdated()
-      })
-      await test.step('has alert banner', () => {
-        weatherHealthAlertsRegionPage.hasAlertBanner('heat', 'Yellow')
-      })
-      // TODO: Fix below test, currently playwright just "fails" no error
-      // await test.step('has summary list', () => {
-      //   weatherHealthAlertsRegionPage.hasAlertSummaryList({
-      //     type: 'Heat Health Alert',
-      //     start: '6 May 2024 at 12:00pm',
-      //     end: '8 May 2024 at 12:00pm',
-      //     status: 'Yellow',
-      //   })
-      // })
-      await test.step('has body content', () => {
-        weatherHealthAlertsRegionPage.hasBodyContent(
-          'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-        )
-      })
-      await test.step('has map link', () => {
-        weatherHealthAlertsRegionPage.hasMapLink('?v=map&type=heat&fid=E12000004')
-      })
-      await test.step('map link works as expected', async () => {
-        await weatherHealthAlertsRegionPage.opensMapLink()
-      })
-      await test.step('has related links section', () => {
-        weatherHealthAlertsRegionPage.hasRelatedLinks()
-      })
-    })
-
-    test('London heat health alerts page - Green', async ({ app, weatherHealthAlertsRegionPage }) => {
-      await test.step('loads the page', async () => {
-        await app.goto('weather-health-alerts/heat/london')
-      })
-      await test.step('metadata is correct', async () => {
-        await app.hasMetadata({
-          title: 'Weather alert for london | UKHSA data dashboard',
-          description: 'Weather alert for london',
-        })
-      })
-      await test.step('has breadcrumbs', async () => {
-        await weatherHealthAlertsRegionPage.hasBreadcrumbs('heat')
-      })
-      await test.step('has heading', async () => {
-        await app.hasHeading('Heat-health alert for London')
-      })
-      await test.step('has last updated', () => {
-        weatherHealthAlertsRegionPage.hasLastUpdated()
-      })
-      await test.step('has no alert banner', () => {
-        weatherHealthAlertsRegionPage.hasNoAlertBanner()
-      })
-      // TODO: Fix below test, currently playwright just "fails" no error
-      // await test.step('has summary list', () => {
-      //   weatherHealthAlertsRegionPage.hasAlertSummaryList({
-      //     type: 'Heat Health Alert',
-      //     start: '6 May 2024 at 12:00pm',
-      //     end: '8 May 2024 at 12:00pm',
-      //     status: 'Yellow',
-      //   })
-      // })
-      await test.step('has body content', () => {
-        weatherHealthAlertsRegionPage.hasBodyContent(
-          'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-        )
-      })
-      await test.step('has map link', () => {
-        weatherHealthAlertsRegionPage.hasMapLink('?v=map&type=heat&fid=E12000007')
-      })
-      await test.step('map link works as expected', async () => {
-        await weatherHealthAlertsRegionPage.opensMapLink()
-      })
-      await test.step('has related links section', () => {
-        weatherHealthAlertsRegionPage.hasRelatedLinks()
-      })
-    })
+    }
   })
 })
 
