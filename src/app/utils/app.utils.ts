@@ -21,3 +21,10 @@ export const toSlug = (text: string | null) => {
     .replace(/^-+/, '')
     .replace(/-+$/, '')
 }
+
+export const getSiteUrl = () =>
+  process.env.API_URL.includes('localhost') ? `http://localhost:3000` : process.env.API_URL.replace('private-api.', '')
+
+export const slug2String = (slug: string[]): string => slug.join('/')
+
+export const trimTrailingSlash = (url: string) => url.replace(/\/$/, '')
