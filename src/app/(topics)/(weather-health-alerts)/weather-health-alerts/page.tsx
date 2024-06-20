@@ -1,5 +1,3 @@
-import { flag } from '@unleash/nextjs'
-
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
@@ -9,9 +7,10 @@ import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export async function generateMetadata() {
-  const { enabled } = await flag(flags.weatherHealthAlert)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {

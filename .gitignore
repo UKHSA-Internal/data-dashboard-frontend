@@ -11,6 +11,7 @@
 /playwright-report/
 /playwright/.cache/
 junit.xml
+.unlighthouse
 
 # next.js
 /.next/

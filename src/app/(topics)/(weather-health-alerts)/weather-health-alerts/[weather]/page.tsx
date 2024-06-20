@@ -1,4 +1,3 @@
-import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -11,11 +10,12 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import AlertList from './AlertList'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
-  const { enabled } = await flag(flags.weatherHealthAlert)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {
