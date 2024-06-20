@@ -12,6 +12,7 @@ interface PageProps {
   children: ReactNode
   lastUpdated?: string
   backLink?: string
+  className?: string
   breadcrumbs?: Array<{ name: string; link: string }>
 }
 
@@ -22,12 +23,13 @@ export async function View({
   description,
   lastUpdated,
   backLink,
+  className,
   breadcrumbs,
 }: PageProps) {
   const { t } = await useTranslation('common')
 
   return (
-    <div className="w-full">
+    <div className={clsx('w-full', className)}>
       {backLink && (
         <Link href={backLink} className="govuk-back-link">
           {t('backLink')}

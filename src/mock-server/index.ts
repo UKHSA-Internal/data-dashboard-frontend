@@ -1,5 +1,6 @@
 import 'module-alias/register'
 
+import cookieParser from 'cookie-parser'
 import { addAliases } from 'module-alias'
 
 declare global {
@@ -14,6 +15,7 @@ declare global {
 // Import path aliases used in the NextJs project need to be maintained
 // here as well so that they're resolved correctly by ts-node
 addAliases({
+  '@/app': `${process.cwd()}/src/app`,
   '@/config': `${process.cwd()}/src/config`,
   '@/lib': `${process.cwd()}/src/lib`,
   '@/api': `${process.cwd()}/src/api`,
@@ -40,6 +42,7 @@ const app = express()
 
 app.use(express.urlencoded())
 app.use(express.json())
+app.use(cookieParser())
 
 // CMS endpoints
 app.get('/api/pages', pages)

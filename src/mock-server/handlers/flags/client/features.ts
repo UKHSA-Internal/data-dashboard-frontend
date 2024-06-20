@@ -1,5 +1,6 @@
 import { Request, Response } from 'express'
 
+import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import { featureFlags } from './fixtures/feature-flags'
@@ -11,7 +12,16 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    return res.json(featureFlags)
+    const { flags } = getSwitchBoardState(req.headers.cookie)
+
+    return res.json({
+      ...featureFlags,
+      features: featureFlags.features.map((feature) => {
+        if (feature.name in flags) {
+          return { ...feature, enabled: flags[feature.name as keyof typeof flags] === 'enabled' }
+        }
+      }),
+    })
   } catch (error) {
     logger.error(error)
     return res.status(500)
