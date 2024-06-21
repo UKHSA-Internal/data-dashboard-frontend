@@ -12,6 +12,7 @@ const pagesShownInNavMenu = [
   "What's new",
   "What's coming",
   'Access our data',
+  'Weather health alerts',
 ]
 
 test.describe('Smoke tests - desktop @smoke', () => {
@@ -29,6 +30,17 @@ test.describe('Smoke tests - desktop @smoke', () => {
         await app.hasHeading(decodeURI(page))
       })
     }
+  })
+
+  test('Navigates to Weather Health Alerts mid-level pages', async ({ app }) => {
+    await test.step('loads the cold health alerts page', async () => {
+      await app.goto('weather-health-alerts/cold')
+      await app.hasHeading('Cold health alerts')
+    })
+    await test.step('loads the heat health alerts page', async () => {
+      await app.goto('weather-health-alerts/heat')
+      await app.hasHeading('Heat health alerts')
+    })
   })
 })
 
@@ -48,6 +60,17 @@ test.describe('Smoke tests - mobile @smoke', () => {
       })
     }
   })
+
+  test('Navigates to Weather Health Alerts mid-level pages', async ({ app }) => {
+    await test.step('loads the cold health alerts page', async () => {
+      await app.goto('weather-health-alerts/cold')
+      await app.hasHeading('Cold health alerts')
+    })
+    await test.step('loads the heat health alerts page', async () => {
+      await app.goto('weather-health-alerts/heat')
+      await app.hasHeading('Heat health alerts')
+    })
+  })
 })
 
 test.describe('Smoke tests - no JavaScript @smoke', () => {
@@ -65,5 +88,16 @@ test.describe('Smoke tests - no JavaScript @smoke', () => {
         await app.hasHeading(decodeURI(page))
       })
     }
+  })
+
+  test('Navigates to Weather Health Alerts mid-level pages', async ({ app }) => {
+    await test.step('loads the cold health alerts page', async () => {
+      await app.goto('weather-health-alerts/cold')
+      await app.hasHeading('Cold health alerts')
+    })
+    await test.step('loads the heat health alerts page', async () => {
+      await app.goto('weather-health-alerts/heat')
+      await app.hasHeading('Heat health alerts')
+    })
   })
 })
