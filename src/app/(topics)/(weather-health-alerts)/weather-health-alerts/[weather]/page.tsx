@@ -14,6 +14,8 @@ import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import AlertList from './AlertList'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
@@ -99,7 +101,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
           </div>
 
           <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
-          <List className="govuk-!-margin-bottom-7">
+          <List className="govuk-!-margin-bottom-7" aria-label="Further advice links">
             {furtherAdviceLinks.map(({ id, name, link }) => (
               <ListItem key={id} showRule={false}>
                 <Link

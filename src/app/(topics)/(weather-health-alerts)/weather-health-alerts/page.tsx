@@ -9,6 +9,8 @@ import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata() {
   const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
@@ -58,7 +60,7 @@ export default async function WeatherHealthAlerts() {
               role="presentation"
             />
 
-            <List>
+            <List aria-label="Weather health alerts">
               {childPages.success &&
                 childPages.data.items.map(({ id: childId, title, meta }) => (
                   <ListItem key={childId} spacing="l">

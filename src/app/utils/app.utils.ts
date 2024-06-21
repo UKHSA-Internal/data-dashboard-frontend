@@ -1,5 +1,7 @@
 import { SITE_URL } from '../constants/app.constants'
 
+export const isSSR = typeof window === 'undefined'
+
 /**
  * Determine if the user is browsing on the production site
  */
@@ -20,6 +22,13 @@ export const toSlug = (text: string | null) => {
     .replace(/\-\-+/g, '-')
     .replace(/^-+/, '')
     .replace(/-+$/, '')
+}
+
+/**
+ * Determine if the provided url is a deployed environment
+ */
+export const isWellKnownEnvironment = (url: string) => {
+  return url.includes('ukhsa-dashboard.data.gov.uk')
 }
 
 export const getSiteUrl = () =>

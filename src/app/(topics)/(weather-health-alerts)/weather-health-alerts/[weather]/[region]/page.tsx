@@ -9,6 +9,8 @@ import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import AlertBody from './AlertBody'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
