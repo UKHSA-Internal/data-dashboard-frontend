@@ -12,13 +12,13 @@ const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAl
   {
     weather: 'heat',
     region: 'North West',
-    status: 'Red',
+    status: 'Amber',
     fid: 'E12000002',
   },
   {
     weather: 'heat',
     region: 'Yorkshire and The Humber',
-    status: 'Amber',
+    status: 'Yellow',
     fid: 'E12000003',
   },
   {
@@ -66,13 +66,13 @@ const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAl
   {
     weather: 'cold',
     region: 'North West',
-    status: 'Red',
+    status: 'Amber',
     fid: 'E12000002',
   },
   {
     weather: 'cold',
     region: 'Yorkshire and The Humber',
-    status: 'Amber',
+    status: 'Yellow',
     fid: 'E12000003',
   },
   {

@@ -115,12 +115,12 @@ test.describe('Feature flag enabled', () => {
           {
             region: 'North West',
             updated: 'Updated 12:00pm on 7 May 2024',
-            status: 'Red',
+            status: 'Amber',
           },
           {
             region: 'Yorkshire and The Humber',
             updated: 'Updated 12:00pm on 7 May 2024',
-            status: 'Amber',
+            status: 'Yellow',
           },
           {
             region: 'East Midlands',
@@ -277,12 +277,12 @@ test.describe('Feature flag enabled', () => {
           {
             region: 'North West',
             updated: 'Updated 12:00pm on 7 May 2024',
-            status: 'Red',
+            status: 'Amber',
           },
           {
             region: 'Yorkshire and The Humber',
             updated: 'Updated 12:00pm on 7 May 2024',
-            status: 'Amber',
+            status: 'Yellow',
           },
           {
             region: 'East Midlands',
@@ -436,12 +436,12 @@ test.describe('Feature flag enabled', () => {
           {
             region: 'North West',
             updated: 'Updated 12:00pm on 7 May 2024',
-            status: 'Red',
+            status: 'Amber',
           },
           {
             region: 'Yorkshire and The Humber',
             updated: 'Updated 12:00pm on 7 May 2024',
-            status: 'Amber',
+            status: 'Yellow',
           },
           {
             region: 'East Midlands',
