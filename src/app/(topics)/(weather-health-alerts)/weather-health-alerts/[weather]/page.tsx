@@ -101,7 +101,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
           </div>
 
           <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
-          <List className="govuk-!-margin-bottom-7">
+          <List className="govuk-!-margin-bottom-7" aria-label="Further advice links">
             {furtherAdviceLinks.map(({ id, name, link }) => (
               <ListItem key={id} showRule={false}>
                 <Link
