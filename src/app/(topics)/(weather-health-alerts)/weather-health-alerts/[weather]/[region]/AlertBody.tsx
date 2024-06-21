@@ -64,7 +64,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
   return (
     <div>
       <div className="govuk-breadcrumbs govuk-!-margin-top-2">
-        <ol className="govuk-breadcrumbs__list capitalize">
+        <ol className="govuk-breadcrumbs__list capitalize" aria-label="breadcrumbs">
           {breadcrumbs.map(({ name, link }, key) => (
             <li key={key} className="govuk-breadcrumbs__list-item">
               <Link className="govuk-breadcrumbs__link" href={link}>
