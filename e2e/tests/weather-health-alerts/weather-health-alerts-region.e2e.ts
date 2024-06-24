@@ -177,39 +177,39 @@ test.describe('Feature flag enabled', () => {
 
     test('Check region pages', async ({ app }) => {
       await test.step('North East', async () => {
-        await app.goto('/weather-health-alerts/north-east')
+        await app.goto('/weather-health-alerts/cold/north-east')
         await app.hasHeading('North East')
       })
       await test.step('North West', async () => {
-        await app.goto('/weather-health-alerts/north-west')
+        await app.goto('/weather-health-alerts/heat/north-west')
         await app.hasHeading('North West')
       })
       await test.step('Yorkshire and The Humber', async () => {
-        await app.goto('/weather-health-alerts/yorkshire-and-the-humber')
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
         await app.hasHeading('Yorkshire and The Humber')
       })
       await test.step('East Midlands', async () => {
-        await app.goto('/weather-health-alerts/east-midlands')
+        await app.goto('/weather-health-alerts/cold/east-midlands')
         await app.hasHeading('East Midlands')
       })
-      await test.step('West Midlnds', async () => {
-        await app.goto('/weather-health-alerts/west-midlnds')
-        await app.hasHeading('West Midlnds')
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
       })
       await test.step('East of England', async () => {
-        await app.goto('/weather-health-alerts/east-of-england')
+        await app.goto('/weather-health-alerts/cold/east-of-england')
         await app.hasHeading('East of England')
       })
       await test.step('London', async () => {
-        await app.goto('/weather-health-alerts/london')
+        await app.goto('/weather-health-alerts/heat/london')
         await app.hasHeading('London')
       })
       await test.step('South East', async () => {
-        await app.goto('/weather-health-alerts/south-east')
+        await app.goto('/weather-health-alerts/heat/south-east')
         await app.hasHeading('South East')
       })
       await test.step('South West', async () => {
-        await app.goto('/weather-health-alerts/south-west')
+        await app.goto('/weather-health-alerts/heat/south-west')
         await app.hasHeading('South West')
       })
     })
@@ -220,39 +220,39 @@ test.describe('Feature flag enabled', () => {
 
     test('Check region pages', async ({ app }) => {
       await test.step('North East', async () => {
-        await app.goto('/weather-health-alerts/north-east')
+        await app.goto('/weather-health-alerts/cold/north-east')
         await app.hasHeading('North East')
       })
       await test.step('North West', async () => {
-        await app.goto('/weather-health-alerts/north-west')
+        await app.goto('/weather-health-alerts/heat/north-west')
         await app.hasHeading('North West')
       })
       await test.step('Yorkshire and The Humber', async () => {
-        await app.goto('/weather-health-alerts/yorkshire-and-the-humber')
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
         await app.hasHeading('Yorkshire and The Humber')
       })
       await test.step('East Midlands', async () => {
-        await app.goto('/weather-health-alerts/east-midlands')
+        await app.goto('/weather-health-alerts/cold/east-midlands')
         await app.hasHeading('East Midlands')
       })
-      await test.step('West Midlnds', async () => {
-        await app.goto('/weather-health-alerts/west-midlnds')
-        await app.hasHeading('West Midlnds')
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
       })
       await test.step('East of England', async () => {
-        await app.goto('/weather-health-alerts/east-of-england')
+        await app.goto('/weather-health-alerts/cold/east-of-england')
         await app.hasHeading('East of England')
       })
       await test.step('London', async () => {
-        await app.goto('/weather-health-alerts/london')
+        await app.goto('/weather-health-alerts/heat/london')
         await app.hasHeading('London')
       })
       await test.step('South East', async () => {
-        await app.goto('/weather-health-alerts/south-east')
+        await app.goto('/weather-health-alerts/heat/south-east')
         await app.hasHeading('South East')
       })
       await test.step('South West', async () => {
-        await app.goto('/weather-health-alerts/south-west')
+        await app.goto('/weather-health-alerts/heat/south-west')
         await app.hasHeading('South West')
       })
     })
@@ -263,39 +263,39 @@ test.describe('Feature flag enabled', () => {
 
     test('Check region pages', async ({ app }) => {
       await test.step('North East', async () => {
-        await app.goto('/weather-health-alerts/north-east')
+        await app.goto('/weather-health-alerts/cold/north-east')
         await app.hasHeading('North East')
       })
       await test.step('North West', async () => {
-        await app.goto('/weather-health-alerts/north-west')
+        await app.goto('/weather-health-alerts/heat/north-west')
         await app.hasHeading('North West')
       })
       await test.step('Yorkshire and The Humber', async () => {
-        await app.goto('/weather-health-alerts/yorkshire-and-the-humber')
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
         await app.hasHeading('Yorkshire and The Humber')
       })
       await test.step('East Midlands', async () => {
-        await app.goto('/weather-health-alerts/east-midlands')
+        await app.goto('/weather-health-alerts/cold/east-midlands')
         await app.hasHeading('East Midlands')
       })
-      await test.step('West Midlnds', async () => {
-        await app.goto('/weather-health-alerts/west-midlnds')
-        await app.hasHeading('West Midlnds')
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
       })
       await test.step('East of England', async () => {
-        await app.goto('/weather-health-alerts/east-of-england')
+        await app.goto('/weather-health-alerts/cold/east-of-england')
         await app.hasHeading('East of England')
       })
       await test.step('London', async () => {
-        await app.goto('/weather-health-alerts/london')
+        await app.goto('/weather-health-alerts/heat/london')
         await app.hasHeading('London')
       })
       await test.step('South East', async () => {
-        await app.goto('/weather-health-alerts/south-east')
+        await app.goto('/weather-health-alerts/heat/south-east')
         await app.hasHeading('South East')
       })
       await test.step('South West', async () => {
-        await app.goto('/weather-health-alerts/south-west')
+        await app.goto('/weather-health-alerts/heat/south-west')
         await app.hasHeading('South West')
       })
     })
@@ -306,39 +306,39 @@ test.describe('Feature flag enabled', () => {
 
     test('Check region pages', async ({ app }) => {
       await test.step('North East', async () => {
-        await app.goto('/weather-health-alerts/north-east')
+        await app.goto('/weather-health-alerts/cold/north-east')
         await app.hasHeading('North East')
       })
       await test.step('North West', async () => {
-        await app.goto('/weather-health-alerts/north-west')
+        await app.goto('/weather-health-alerts/heat/north-west')
         await app.hasHeading('North West')
       })
       await test.step('Yorkshire and The Humber', async () => {
-        await app.goto('/weather-health-alerts/yorkshire-and-the-humber')
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
         await app.hasHeading('Yorkshire and The Humber')
       })
       await test.step('East Midlands', async () => {
-        await app.goto('/weather-health-alerts/east-midlands')
+        await app.goto('/weather-health-alerts/cold/east-midlands')
         await app.hasHeading('East Midlands')
       })
-      await test.step('West Midlnds', async () => {
-        await app.goto('/weather-health-alerts/west-midlnds')
-        await app.hasHeading('West Midlnds')
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
       })
       await test.step('East of England', async () => {
-        await app.goto('/weather-health-alerts/east-of-england')
+        await app.goto('/weather-health-alerts/cold/east-of-england')
         await app.hasHeading('East of England')
       })
       await test.step('London', async () => {
-        await app.goto('/weather-health-alerts/london')
+        await app.goto('/weather-health-alerts/heat/london')
         await app.hasHeading('London')
       })
       await test.step('South East', async () => {
-        await app.goto('/weather-health-alerts/south-east')
+        await app.goto('/weather-health-alerts/heat/south-east')
         await app.hasHeading('South East')
       })
       await test.step('South West', async () => {
-        await app.goto('/weather-health-alerts/south-west')
+        await app.goto('/weather-health-alerts/heat/south-west')
         await app.hasHeading('South West')
       })
     })
