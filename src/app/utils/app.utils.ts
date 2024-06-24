@@ -1,3 +1,5 @@
+import assert from 'assert'
+
 import { SITE_URL } from '../constants/app.constants'
 
 export const isSSR = typeof window === 'undefined'
@@ -31,8 +33,14 @@ export const isWellKnownEnvironment = (url: string) => {
   return url.includes('ukhsa-dashboard.data.gov.uk')
 }
 
-export const getSiteUrl = () =>
-  process.env.API_URL.includes('localhost') ? `http://localhost:3000` : process.env.API_URL.replace('private-api.', '')
+/**
+ * We use the API url to determine the WKE to avoid injecting additional envrionment variables
+ */
+export const getSiteUrl = () => {
+  const apiUrl = process.env.API_URL
+  assert(apiUrl)
+  return apiUrl.includes('private-api') ? apiUrl.replace('private-api.', '') : apiUrl
+}
 
 export const slug2String = (slug: string[]): string => slug.join('/')
 
