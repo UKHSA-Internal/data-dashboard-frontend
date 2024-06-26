@@ -95,6 +95,8 @@ export class WeatherHealthAlertsRegionPage {
   async opensMapLink() {
     await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
 
+    await expect(this.page.getByRole('dialog', { name: 'Weather health alerts map' })).toBeVisible()
+
     await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
 
     await this.page.getByRole('link', { name: 'Exit map' }).click()
