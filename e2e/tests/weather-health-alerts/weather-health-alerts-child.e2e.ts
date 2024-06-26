@@ -4,6 +4,8 @@ import { test } from '../../fixtures/app.fixture'
 
 test.describe('Feature flag enabled', () => {
   test.describe('Desktop - Weather health alerts child pages', () => {
+    test.use({ viewport: viewports.desktop })
+
     test('displays the navigation', async ({ app }) => {
       await app.goto('/weather-health-alerts/cold')
       await app.hasDesktopNav()
