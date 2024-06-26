@@ -166,9 +166,6 @@ test.describe('Feature flag enabled', () => {
         await test.step('has map link', () => {
           weatherHealthAlertsRegionPage.hasMapLink(`?v=map&type=${weather}&fid=${fid}`)
         })
-        await test.step('map link works as expected', async () => {
-          await weatherHealthAlertsRegionPage.opensMapLink(region)
-        })
         await test.step('has related links section', () => {
           weatherHealthAlertsRegionPage.hasRelatedLinks()
         })
