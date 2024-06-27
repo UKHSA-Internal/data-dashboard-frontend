@@ -2,10 +2,10 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-test.describe('WHA map smoke test - desktop @smoke', () => {
+test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('Navigates to WHA map', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
       app.goto('/weather-health-alerts/cold')
       weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
@@ -16,10 +16,10 @@ test.describe('WHA map smoke test - desktop @smoke', () => {
   })
 })
 
-test.describe('WHA map smoke test - tablet @smoke', () => {
+test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('Navigates to WHA map', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
       app.goto('/weather-health-alerts/cold')
       weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
@@ -30,10 +30,10 @@ test.describe('WHA map smoke test - tablet @smoke', () => {
   })
 })
 
-test.describe('WHA map smoke test - mobile @smoke', () => {
+test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('Navigates to WHA map', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
       app.goto('/weather-health-alerts/cold')
       weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
@@ -44,10 +44,10 @@ test.describe('WHA map smoke test - mobile @smoke', () => {
   })
 })
 
-test.describe('WHA map smoke test - noJavaScript @smoke', () => {
+test.describe('Weather health alerts map, smoke test - no JavaScript @smoke', () => {
   test.use({ javaScriptEnabled: false, viewport: viewports.mobile })
 
-  test('Navigates to WHA parent page', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Does not show a map button on Weather health alerts pages', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
       app.goto('/weather-health-alerts/cold')
       app.hasHeading('Cold health alerts')
