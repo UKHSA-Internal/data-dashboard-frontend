@@ -7,7 +7,8 @@ test.describe('WHA map smoke test - desktop @smoke', () => {
 
   test('Navigates to WHA map', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold?v=map&type=cold')
+      app.goto('/weather-health-alerts/cold')
+      weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit map')
@@ -20,7 +21,8 @@ test.describe('WHA map smoke test - tablet @smoke', () => {
 
   test('Navigates to WHA map', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold?v=map&type=cold')
+      app.goto('/weather-health-alerts/cold')
+      weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit map')
@@ -33,7 +35,8 @@ test.describe('WHA map smoke test - mobile @smoke', () => {
 
   test('Navigates to WHA map', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold?v=map&type=cold')
+      app.goto('/weather-health-alerts/cold')
+      weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows map buttons', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit map')
