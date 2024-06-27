@@ -50,11 +50,11 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByTestId(region).click()
   }
 
-  async hasDialogueContentTitle(region: string) {
+  async hasDialogContentTitle(region: string) {
     await expect(this.page.getByRole('heading', { level: 2, name: region })).toBeVisible()
   }
 
-  async hasDialogueSummaryComponent({ type, status, start, end }: summaryListProps) {
+  async hasDialogSummaryComponent({ type, status, start, end }: summaryListProps) {
     await expect(this.page.getByText('Type')).toBeVisible()
     await expect(this.page.getByText(type, { exact: true })).toBeVisible()
 
@@ -68,12 +68,12 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByText(end)).toBeVisible()
   }
 
-  async hasDialogueDescription(dialogue: string) {
+  async hasDialogDescription(dialog: string) {
     await expect(this.page.getByRole('heading', { level: 3, name: 'Description' })).toBeVisible()
-    await expect(this.page.getByText(dialogue)).toBeVisible()
+    await expect(this.page.getByText(dialog)).toBeVisible()
   }
 
-  async clickDialogueGoToAlertPage() {
+  async clickDialogGoToAlertPage() {
     await this.page.getByRole('link', { name: 'Go to alert page' }).click()
   }
 }
