@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 // test.describe('Feature flag enabled', () => {
 //   test.describe('Extreme events category page', () => {

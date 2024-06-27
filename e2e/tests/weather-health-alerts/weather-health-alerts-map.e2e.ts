@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 test.describe('Weather health alerts map page', () => {
   test('Health alerts overlay opens & has expected buttons', async ({ app, weatherHealthAlertsMapPage }) => {

@@ -47,17 +47,19 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async hasDialogueSummaryComponent({ type, status, start, end }: summaryListProps) {
-    await expect(this.page.getByText('Type')).toBeVisible()
-    await expect(this.page.getByText(type, { exact: true })).toBeVisible()
+    const wrapper = this.page.getByLabel('Dialog summary')
 
-    await expect(this.page.getByText('Colour')).toBeVisible()
-    await expect(this.page.getByLabel(status)).toBeVisible()
+    await expect(wrapper.getByText('Type')).toBeVisible()
+    await expect(wrapper.getByText(type, { exact: true })).toBeVisible()
 
-    await expect(this.page.getByText('Start')).toBeVisible()
-    await expect(this.page.getByText(start)).toBeVisible()
+    await expect(wrapper.getByText('Colour')).toBeVisible()
+    await expect(wrapper.getByLabel(status)).toBeVisible()
 
-    await expect(this.page.getByText('End', { exact: true })).toBeVisible()
-    await expect(this.page.getByText(end)).toBeVisible()
+    await expect(wrapper.getByText('Start')).toBeVisible()
+    await expect(wrapper.getByText(start)).toBeVisible()
+
+    await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
+    await expect(wrapper.getByText(end)).toBeVisible()
   }
 
   async hasDialogueDescription(dialogue: string) {
