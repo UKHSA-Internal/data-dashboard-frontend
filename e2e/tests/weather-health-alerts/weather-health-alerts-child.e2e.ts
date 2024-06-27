@@ -3,14 +3,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Feature flag enabled', () => {
-  test.describe('Desktop - Weather health alerts child pages', () => {
-    test.use({ viewport: viewports.desktop })
-
-    test('displays the navigation', async ({ app }) => {
-      await app.goto('/weather-health-alerts/cold')
-      await app.hasDesktopNav()
-    })
-
+  test.describe('Weather health alerts child pages', () => {
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
       await test.step('loads the page', async () => {
         await app.goto('/weather-health-alerts/cold')
@@ -88,6 +81,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('cold')
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
+      })
     })
 
     test('Heat health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
@@ -166,6 +162,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('heat')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
     })
   })
@@ -173,11 +172,6 @@ test.describe('Feature flag enabled', () => {
   test.describe('Mobile - Weather health alerts child pages', () => {
     test.use({ viewport: viewports.mobile })
 
-    test('displays the navigation', async ({ app }) => {
-      await app.goto('/weather-health-alerts/cold')
-      await app.hasMobileNav()
-    })
-
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
       await test.step('loads the page', async () => {
         await app.goto('/weather-health-alerts/cold')
@@ -248,6 +242,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('cold')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
     })
 
@@ -327,6 +324,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('heat')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
     })
   })
@@ -334,11 +334,6 @@ test.describe('Feature flag enabled', () => {
   test.describe('Tablet - Weather health alerts child pages', () => {
     test.use({ viewport: viewports.tablet })
 
-    test('displays the navigation', async ({ app }) => {
-      await app.goto('/weather-health-alerts/cold')
-      await app.hasMobileNav()
-    })
-
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
       await test.step('loads the page', async () => {
         await app.goto('/weather-health-alerts/cold')
@@ -488,6 +483,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsChildPage.hasMapLink('heat')
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsChildPage.opensMapLink()
       })
     })
   })

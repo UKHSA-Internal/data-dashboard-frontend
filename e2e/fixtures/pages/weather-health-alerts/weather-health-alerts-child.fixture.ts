@@ -42,6 +42,14 @@ export class WeatherHealthAlertsChildPage {
     )
   }
 
+  async opensMapLink() {
+    await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
+
+    await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
+
+    await this.page.getByRole('link', { name: 'Exit map' }).click()
+  }
+
   async hasAlertListItems(weather: HealthAlertTypes, alertList: Array<AlertListItems>) {
     const regions = this.page.getByRole('list', { name: `${weather} health alerts` })
 

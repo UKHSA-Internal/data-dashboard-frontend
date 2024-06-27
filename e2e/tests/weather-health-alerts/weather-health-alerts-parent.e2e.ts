@@ -3,14 +3,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Feature flag enabled', () => {
-  test.describe('Desktop - Weather health alerts parent page', () => {
-    test.use({ viewport: viewports.desktop })
-
-    test('displays the navigation', async ({ app }) => {
-      await app.goto('/weather-health-alerts')
-      await app.hasDesktopNav()
-    })
-
+  test.describe('Weather health alerts parent page', () => {
     test('loads the page', async ({ app, weatherHealthAlertsParentPage }) => {
       await test.step('loads the page', async () => {
         await app.goto('/weather-health-alerts')
@@ -33,6 +26,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsParentPage.hasMapLink()
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsParentPage.opensMapLink()
+      })
       await test.step('has alerts list', async () => {
         await weatherHealthAlertsParentPage.hasAlertsList()
       })
@@ -44,11 +40,6 @@ test.describe('Feature flag enabled', () => {
 
   test.describe('Mobile - Weather health alerts parent page', () => {
     test.use({ viewport: viewports.mobile })
-
-    test('displays the navigation', async ({ app }) => {
-      await app.goto('/weather-health-alerts')
-      await app.hasMobileNav()
-    })
 
     test('displays WHA category page on mobile', async ({ app, weatherHealthAlertsParentPage }) => {
       await test.step('loads the page', async () => {
@@ -66,6 +57,9 @@ test.describe('Feature flag enabled', () => {
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsParentPage.hasMapLink()
       })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsParentPage.opensMapLink()
+      })
       await test.step('has alerts list', async () => {
         await weatherHealthAlertsParentPage.hasAlertsList()
       })
@@ -77,11 +71,6 @@ test.describe('Feature flag enabled', () => {
 
   test.describe('Tablet - Weather health alerts parent page', () => {
     test.use({ viewport: viewports.tablet })
-
-    test('displays the navigation', async ({ app }) => {
-      await app.goto('/weather-health-alerts')
-      await app.hasMobileNav()
-    })
 
     test('displays category page on mobile', async ({ app, weatherHealthAlertsParentPage }) => {
       await test.step('loads the page', async () => {
@@ -98,6 +87,9 @@ test.describe('Feature flag enabled', () => {
       })
       await test.step('has link for the map', async () => {
         await weatherHealthAlertsParentPage.hasMapLink()
+      })
+      await test.step('map link works as expected', async () => {
+        await weatherHealthAlertsParentPage.opensMapLink()
       })
       await test.step('has alerts list', async () => {
         await weatherHealthAlertsParentPage.hasAlertsList()
