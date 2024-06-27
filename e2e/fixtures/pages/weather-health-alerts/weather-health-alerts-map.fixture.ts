@@ -1,6 +1,6 @@
 import { expect, Page } from '@playwright/test'
 
-interface summaryListProps {
+interface SummaryList {
   type: string
   status: string
   start: string
