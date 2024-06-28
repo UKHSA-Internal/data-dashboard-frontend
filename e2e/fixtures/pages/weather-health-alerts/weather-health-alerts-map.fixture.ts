@@ -42,8 +42,8 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByTestId(region).click()
   }
 
-  async dialogIsOpen(region: string) {
-    await expect(this.page.getByRole('dialog', { name: region })).toBeVisible()
+  async dialogIsOpen(name: string) {
+    await expect(this.page.getByRole('dialog', { name })).toBeVisible()
   }
 
   async hasDialogContentTitle(region: string) {
@@ -57,7 +57,7 @@ export class WeatherHealthAlertsMapPage {
     await expect(wrapper.getByText(type, { exact: true })).toBeVisible()
 
     await expect(wrapper.getByText('Colour')).toBeVisible()
-    await expect(wrapper.getByLabel(status)).toBeVisible()
+    await expect(wrapper.getByText(status)).toBeVisible()
 
     await expect(wrapper.getByText('Start')).toBeVisible()
     await expect(wrapper.getByText(start)).toBeVisible()
@@ -66,7 +66,6 @@ export class WeatherHealthAlertsMapPage {
     await expect(wrapper.getByText(end)).toBeVisible()
   }
 
-  // async hasHighlightedRegions(regionCount: number) {
   async hasHighlightedRegions(regionCount: number) {
     await expect(
       this.page.getByTestId('ukhsa-map-sr').getByText(`${regionCount} regions highlighted in the map area.`)
@@ -80,5 +79,16 @@ export class WeatherHealthAlertsMapPage {
 
   async clickDialogGoToAlertPage() {
     await this.page.getByRole('link', { name: 'Go to alert page' }).click()
+  }
+
+  async panWeatherHealthAlertsMap() {
+    await this.page.getByTestId('feature-E12000006').hover()
+    await this.page.mouse.down()
+    await this.page.getByTestId('feature-E12000009').hover()
+    await this.page.mouse.up()
+    await this.page.getByTestId('feature-E12000006').hover()
+    await this.page.mouse.down()
+    await this.page.getByTestId('feature-E12000009').hover()
+    await this.page.mouse.up()
   }
 }
