@@ -42,6 +42,10 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByTestId(region).click()
   }
 
+  async dialogIsOpen(region: string) {
+    await expect(this.page.getByRole('dialog', { name: region })).toBeVisible()
+  }
+
   async hasDialogContentTitle(region: string) {
     await expect(this.page.getByRole('heading', { level: 2, name: region })).toBeVisible()
   }
@@ -60,6 +64,13 @@ export class WeatherHealthAlertsMapPage {
 
     await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
     await expect(wrapper.getByText(end)).toBeVisible()
+  }
+
+  // async hasHighlightedRegions(regionCount: number) {
+  async hasHighlightedRegions(regionCount: number) {
+    await expect(
+      this.page.getByTestId('ukhsa-map-sr').getByText(`${regionCount} regions highlighted in the map area.`)
+    ).toBeVisible()
   }
 
   async hasDialogDescription(dialog: string) {

@@ -1,6 +1,6 @@
-import { test } from '../../fixtures/app.fixture'
+import { test } from '../../../fixtures/app.fixture'
 
-test.describe('Weather health alerts map page', () => {
+test.describe('Weather health alerts map display', () => {
   test('Health alerts overlay opens & has expected buttons', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('weather-health-alerts/cold?v=map&type=cold')
@@ -10,7 +10,7 @@ test.describe('Weather health alerts map page', () => {
     })
   })
 
-  test('map opens overlay and can exit back to previous page', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('map overlay opens and can exit back to previous page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('weather-health-alerts/cold')
     })
@@ -45,27 +45,57 @@ test.describe('Weather Health Alerts map interactivty', () => {
   // TODO: CDD-2028: Keyboard WHA e2e
   // test('Viewing the copyright information by keyboard', async ({}) => {})
 
-  // TODO: Figure out how to track have-zoomed
   test('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    // TODO: test- View amount of items on the page?
+    await test.step('shows all regions initially', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
     await test.step('click zoom in button', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Zoom in')
     })
-    // TODO test view smaller amount of items on the page?
-    await test.step('click zoom in button', async () => {
+    await test.step('shows fewer regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(8)
+    })
+    await test.step('click zoom out button', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Zoom out')
     })
-    // TODO test items on the page back to original
+    await test.step('shows all regions again', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
   })
 
   // TODO: CDD-2028: Keyboard WHA e2e
   // test('Zooming in and out by keyboard', async ({}) => {})
 
-  // TODO: Figure out how to track map panning (count number of items available?)
-  test('Panning the map', async ({}) => {})
+  test('Panning the map', async ({ page, app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts cold page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('click map button', async () => {
+      await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
+    })
+    await test.step('map overlay is open', async () => {
+      await weatherHealthAlertsMapPage.hasMapButtons()
+    })
+    await test.step('shows all regions initially', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('pan the map', async () => {
+      await page.getByTestId('feature-E12000006').hover()
+      await page.mouse.down()
+      await page.getByTestId('feature-E12000009').hover()
+      await page.mouse.up()
+      await page.getByTestId('feature-E12000006').hover()
+      await page.mouse.down()
+      await page.getByTestId('feature-E12000009').hover()
+      await page.mouse.up()
+    })
+    await test.step('shows fewer regions after pan', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(6)
+    })
+  })
 })
 
 test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
