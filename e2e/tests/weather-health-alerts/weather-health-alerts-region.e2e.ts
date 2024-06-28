@@ -143,15 +143,14 @@ test.describe('Feature flag enabled', () => {
             weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
           })
         }
-        // TODO: Fix below test, currently playwright just "fails" no error
-        // await test.step('has summary list', () => {
-        //   weatherHealthAlertsRegionPage.hasAlertSummaryList({
-        //     type: 'Heat Health Alert',
-        //     start: '6 May 2024 at 12:00pm',
-        //     end: '	8 May 2024 at 12:00pm',
-        //     status: 'Red',
-        //   })
-        // })
+        await test.step('has summary list', () => {
+          weatherHealthAlertsRegionPage.hasAlertSummaryList({
+            type: `${weather === 'cold' ? 'Cold' : 'Heat'} Health Alert`,
+            start: '6 May 2024 at 12:00pm',
+            end: '8 May 2024 at 12:00pm',
+            status,
+          })
+        })
         await test.step('has body content', () => {
           weatherHealthAlertsRegionPage.hasBodyContent(
             'Severe impacts are expected across the health and social care sector due to forecast weather conditions'

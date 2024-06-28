@@ -25,6 +25,7 @@ import {
   Trend,
 } from '../components/cms'
 
+// TODO: Move this file into cms folder
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
