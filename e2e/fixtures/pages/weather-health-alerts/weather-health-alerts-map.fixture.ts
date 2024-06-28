@@ -25,7 +25,8 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
   }
 
-  async clickMapButton(name: string) {
+  type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit Map'
+  async clickMapButton(name: ButtonNames) {
     await this.page.getByRole('button', { name }).click()
   }
 
