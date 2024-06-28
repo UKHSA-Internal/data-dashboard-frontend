@@ -101,6 +101,50 @@ test.describe('Feature flag enabled', () => {
   })
 })
 
+test.describe('WHA parent smoke test - desktop @smoke', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('Navigates to Weather Health Alerts parent page', async ({ app }) => {
+    await test.step('loads the Weather health alerts page', async () => {
+      await app.goto('weather-health-alerts')
+      await app.hasHeading('Weather health alerts')
+    })
+  })
+})
+
+test.describe('WHA parent smoke test - mobile @smoke', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('Navigates to Weather Health Alerts parent page', async ({ app }) => {
+    await test.step('loads the Weather health alerts page', async () => {
+      await app.goto('weather-health-alerts')
+      await app.hasHeading('Weather health alerts')
+    })
+  })
+})
+
+test.describe('WHA parent smoke test - tablet @smoke', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('Navigates to Weather Health Alerts parent page - tablet', async ({ app }) => {
+    await test.step('loads the Weather health alerts page', async () => {
+      await app.goto('weather-health-alerts')
+      await app.hasHeading('Weather health alerts')
+    })
+  })
+})
+
+test.describe('WHA parent smoke test - no JavaScript @smoke', () => {
+  test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
+
+  test('Navigates to Weather Health Alerts parent page - no javascript', async ({ app }) => {
+    await test.step('loads the Weather health alerts page', async () => {
+      await app.goto('weather-health-alerts')
+      await app.hasHeading('Weather health alerts')
+    })
+  })
+})
+
 // TODO: CDD-2032 - Ticket to add feature flag tests
 /**
  *  Feature flag disabled

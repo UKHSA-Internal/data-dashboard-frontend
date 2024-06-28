@@ -491,6 +491,91 @@ test.describe('Feature flag enabled', () => {
   })
 })
 
+test.describe('WHA child smoke test - desktop @smoke', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
+test.describe('WHA child smoke test - tablet @smoke', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
+test.describe('WHA child smoke test - mobile @smoke', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
+test.describe('WHA child smoke test - no JavaScript @smoke', () => {
+  test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
 // TODO: CDD-2032 - Ticket to add feature flag tests
 /**
  *  Feature flag disabled
