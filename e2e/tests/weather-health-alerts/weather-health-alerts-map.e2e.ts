@@ -76,19 +76,19 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000001')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('North East')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
     })
-    await test.step('has summary component in dialogue', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueSummaryComponent({
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
         type: 'Cold Health Alert',
         status: 'There is currently a Red cold alert status for North East',
         start: '6 May 2024 at 12:00pm',
         end: '8 May 2024 at 12:00pm',
       })
     })
-    await test.step('has dialogue description', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueDescription(
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
       )
     })
@@ -101,19 +101,19 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000003')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('Yorkshire and The Humber')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('Yorkshire and The Humber')
     })
-    await test.step('has summary component in dialogue', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueSummaryComponent({
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
         type: 'Cold Health Alert',
         status: 'Amber',
         start: '6 May 2024 at 12:00pm',
         end: '8 May 2024 at 12:00pm',
       })
     })
-    await test.step('has dialogue description', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueDescription(
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
       )
     })
@@ -126,19 +126,19 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000004')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('East Midlands')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
     })
-    await test.step('has summary component in dialogue', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueSummaryComponent({
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
         type: 'Cold Health Alert',
         status: 'There is currently a Yellow cold alert status for East Midlands',
         start: '6 May 2024 at 12:00pm',
         end: '8 May 2024 at 12:00pm',
       })
     })
-    await test.step('has dialogue description', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueDescription(
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
       )
     })
@@ -151,19 +151,19 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000007')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('London')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
     })
-    await test.step('has summary component in dialogue', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueSummaryComponent({
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
         type: 'Cold Health Alert',
         status: 'There is currently a Green cold alert status for London',
         start: '6 May 2024 at 12:00pm',
         end: '8 May 2024 at 12:00pm',
       })
     })
-    await test.step('has dialogue description', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueDescription(
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
       )
     })
@@ -176,8 +176,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('North West')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
     })
   })
 
@@ -188,8 +188,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000005')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('West Midlands')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('West Midlands')
     })
   })
 
@@ -200,8 +200,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000006')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('East of England')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('East of England')
     })
   })
 
@@ -213,8 +213,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
   //   await test.step('clicks region', async () => {
   //     await weatherHealthAlertsMapPage.clickRegion('feature-E12000008')
   //   })
-  //   await test.step('dialogue opens', async () => {
-  //     await weatherHealthAlertsMapPage.hasDialogueContentTitle('South East')
+  //   await test.step('dialog opens', async () => {
+  //     await weatherHealthAlertsMapPage.hasdialogContentTitle('South East')
   //   })
   // })
 
@@ -225,8 +225,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000009')
     })
-    await test.step('dialogue opens', async () => {
-      await weatherHealthAlertsMapPage.hasDialogueContentTitle('South West')
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('South West')
     })
   })
 
@@ -238,7 +238,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000009')
     })
     await test.step('clicks go to alert page link', async () => {
-      await weatherHealthAlertsMapPage.clickDialogueGoToAlertPage()
+      await weatherHealthAlertsMapPage.clickDialogGoToAlertPage()
     })
     await test.step('check navigated successfully', async () => {
       await app.hasHeading('South West')

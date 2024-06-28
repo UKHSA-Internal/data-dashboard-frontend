@@ -3,7 +3,7 @@ import { SafeParseError, SafeParseSuccess, ZodError } from 'zod'
 import { HealthAlert } from '@/api/models/Alerts'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
-import { alertRegionFixture } from '@/mock-server/handlers/alerts/v1/fixtures/region'
+import { alertRegionFixture } from '@/mock-server/handlers/alerts/v1/fixtures/detail'
 
 import { getHealthAlertByRegion } from './getHealthAlertByRegion'
 
