@@ -16,6 +16,7 @@
     "test:e2e": "npx playwright test --ui --grep-invert @smoke",
     "test:e2e:ci": "npx playwright test --grep-invert @smoke",
     "test:e2e:smoke": "baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke",
+    "test:e2e:smoke:ui": "npx playwright test --ui --grep @smoke",
     "prepare": "husky install"
   },
   "dependencies": {
