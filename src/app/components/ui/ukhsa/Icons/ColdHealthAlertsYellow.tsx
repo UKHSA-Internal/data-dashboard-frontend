@@ -1,5 +1,13 @@
 export const ColdHealthAlertYellowIcon = () => (
-  <svg width="48" height="45" viewBox="0 0 400 381" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <svg
+    width="48"
+    height="45"
+    viewBox="0 0 400 381"
+    fill="none"
+    xmlns="http://www.w3.org/2000/svg"
+    data-testid="cold-alert-icon-yellow"
+    aria-hidden
+  >
     <path
       fillRule="evenodd"
       clipRule="evenodd"

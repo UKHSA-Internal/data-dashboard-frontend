@@ -11,3 +11,6 @@ export const WHATS_NEW_PAGE_SIZE = 10
 
 // Determines the number of entries to display per page on the "Metrics Documentation" page.
 export const METRICS_DOCUMENTATION_PAGE_SIZE = 10
+
+// Name of the cookie where we store local development mock configuration
+export const UKHSA_SWITCHBOARD_COOKIE_NAME = 'UKHSASwitchboard'

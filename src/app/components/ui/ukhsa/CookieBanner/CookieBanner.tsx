@@ -1,5 +1,4 @@
 'use client'
-
 import { getCookie, setCookie } from 'cookies-next'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'

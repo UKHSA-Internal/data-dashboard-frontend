@@ -1,4 +1,3 @@
-import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 import Link from 'next/link'
 
@@ -11,11 +10,14 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import AlertList from './AlertList'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
-  const { enabled } = await flag(flags.weatherHealthAlert)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {
@@ -99,7 +101,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
           </div>
 
           <h3 className="govuk-heading-m govuk-!-margin-top-8 govuk-!-margin-bottom-1">Further advice and guidance</h3>
-          <List className="govuk-!-margin-bottom-7">
+          <List className="govuk-!-margin-bottom-7" aria-label="Further advice links">
             {furtherAdviceLinks.map(({ id, name, link }) => (
               <ListItem key={id} showRule={false}>
                 <Link

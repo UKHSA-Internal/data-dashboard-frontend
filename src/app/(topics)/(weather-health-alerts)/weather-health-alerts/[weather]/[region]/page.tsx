@@ -1,4 +1,3 @@
-import { flag } from '@unleash/nextjs'
 import { Metadata } from 'next'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
@@ -6,11 +5,14 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import AlertBody from './AlertBody'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
-  const { enabled } = await flag(flags.weatherHealthAlert)
+  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   if (!enabled)
     return {

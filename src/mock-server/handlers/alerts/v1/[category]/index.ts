@@ -1,14 +1,9 @@
 import { Request, Response } from 'express'
 
+import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
-import { coldAlertsFixture } from '../fixtures/cold'
-import { heatAlertsFixture } from '../fixtures/heat'
-
-const fixtureMap: Record<string, typeof heatAlertsFixture | typeof coldAlertsFixture> = {
-  heat: heatAlertsFixture,
-  cold: coldAlertsFixture,
-}
+import { fixtures } from '../fixtures/list'
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -17,13 +12,24 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
+    const {
+      api: {
+        alerts: {
+          scenario,
+          list: { status },
+        },
+      },
+    } = getSwitchBoardState(req.headers.cookie)
+
     // Validate query parameter
     if (!req.params['category']) {
       logger.error('Missing "category" path param')
       return res.status(500)
     }
 
-    return res.send(fixtureMap[req.params.category])
+    const fixture = fixtures[scenario]
+
+    return res.status(status).json(fixture)
   } catch (error) {
     logger.error(error)
     return res.status(500)
