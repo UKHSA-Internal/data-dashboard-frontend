@@ -7,6 +7,8 @@ import CompositePage from '@/app/components/cms/pages/Composite'
 import HomePage from '@/app/components/cms/pages/Home'
 import MetricsChildPage from '@/app/components/cms/pages/MetricsDocumentationChild'
 import MetricsParentPage from '@/app/components/cms/pages/MetricsDocumentationParent'
+import WhatsNewChildPage from '@/app/components/cms/pages/WhatsNewChild'
+import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
 
@@ -31,8 +33,8 @@ const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps> | n
   [PageType.Composite]: CompositePage,
   [PageType.MetricsParent]: MetricsParentPage,
   [PageType.MetricsChild]: MetricsChildPage,
-  [PageType.WhatsNewParent]: null,
-  [PageType.WhatsNewChild]: null,
+  [PageType.WhatsNewParent]: WhatsNewParentPage,
+  [PageType.WhatsNewChild]: WhatsNewChildPage,
   [PageType.Topic]: null,
 }
 
