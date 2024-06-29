@@ -1,5 +1,5 @@
 import { Metadata } from 'next'
-import { notFound, redirect } from 'next/navigation'
+import { notFound } from 'next/navigation'
 
 import { getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
@@ -66,14 +66,13 @@ export async function getPageMetadata(
 
     let title = seoTitle ?? pageTitle
 
-    // TODO: This should be dynamic and cms driven
-    // TODO: Add ticket number for this section
+    // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.WhatsNewParent) {
       const whatsNewEntries = await getWhatsNewPages({ page })
 
       if (!whatsNewEntries.success) {
-        logger.info(whatsNewEntries.error.message)
-        return redirect('/error')
+        logger.error(whatsNewEntries.error.message)
+        return notFound()
       }
 
       const {
@@ -85,10 +84,6 @@ export async function getPageMetadata(
       const totalPages = Math.ceil(totalItems / WHATS_NEW_PAGE_SIZE) || 1
 
       title = seoTitle.replace('|', t('documentTitlePagination', { page, totalPages }))
-    }
-
-    if (pageType === PageType.Topic && searchParams.areaName) {
-      title = title.replace('|', t('areaSelector.documentTitle', { areaName: searchParams.areaName }))
     }
 
     return {
