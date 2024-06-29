@@ -1,10 +1,13 @@
 import type { Metadata } from 'next'
-import React from 'react'
+import { notFound } from 'next/navigation'
+import React, { ComponentType } from 'react'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import CompositePage from '@/app/components/cms/pages/Composite'
 import HomePage from '@/app/components/cms/pages/Home'
-import { PageParams, SearchParams } from '@/app/types'
+import MetricsChildPage from '@/app/components/cms/pages/MetricsDocumentationChild'
+import MetricsParentPage from '@/app/components/cms/pages/MetricsDocumentationParent'
+import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
 
 /**
@@ -22,6 +25,17 @@ export async function generateMetadata({
   return await getPageMetadata(slug, searchParams, pageType)
 }
 
+const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps> | null> = {
+  [PageType.Home]: HomePage,
+  [PageType.Common]: CompositePage,
+  [PageType.Composite]: CompositePage,
+  [PageType.MetricsParent]: MetricsParentPage,
+  [PageType.MetricsChild]: MetricsChildPage,
+  [PageType.WhatsNewParent]: null,
+  [PageType.WhatsNewChild]: null,
+  [PageType.Topic]: null,
+}
+
 /**
  * Renders the page component based on the dynamic slug.
  * Determines the page type from the CMS and conditionally renders the appropriate components.
@@ -29,16 +43,11 @@ export async function generateMetadata({
 export default async function Page({ params, searchParams }: { params: PageParams; searchParams: SearchParams }) {
   const { slug = [] } = params
   const pageType = await getPageTypeBySlug(slug)
+  const PageComponent = PageComponents[pageType]
 
-  const isHomePage = pageType === PageType.Home
-  const isCompositePage = pageType === PageType.Common || pageType === PageType.Composite
+  if (!PageComponent) {
+    return notFound()
+  }
 
-  const props = { slug, searchParams }
-
-  return (
-    <>
-      {isHomePage ? <HomePage /> : null}
-      {isCompositePage ? <CompositePage {...props} /> : null}
-    </>
-  )
+  return <PageComponent slug={slug} searchParams={searchParams} />
 }
