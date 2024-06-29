@@ -13,13 +13,13 @@ import {
 } from '@/app/components/ui/govuk'
 import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
 import { MetricsCard, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
+import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useReturnPathWithParams } from '@/app/hooks/useReturnPathWithParams'
 import { useTranslation } from '@/app/i18n'
+import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
-
-import MetricsSearch from './components/MetricsSearch/MetricsSearch'
-import NoResults from './components/NoResults/NoResults'
 
 interface MetricsParentPageProps {
   searchParams: {
@@ -63,13 +63,16 @@ export async function generateMetadata({
   }
 }
 
-export default async function MetricsParentPage({ searchParams: { search, page = 1 } }: MetricsParentPageProps) {
+export default async function MetricsParentPage({
+  slug,
+  searchParams: { search, page = 1 },
+}: PageComponentBaseProps<{ search: string; page: number }>) {
   const {
     title,
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+  } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page })
 

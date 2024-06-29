@@ -5,20 +5,91 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { client } from '@/api/utils/api.utils'
 import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
-import { bulkDownloadsPageMock, covid19PageMock, dashboardMock } from '@/mock-server/handlers/cms/pages/fixtures/page'
+import {
+  bulkDownloadsPageMock,
+  covid19PageMock,
+  dashboardMock,
+  metricsChildMocks,
+  metricsParentMock,
+} from '@/mock-server/handlers/cms/pages/fixtures/page'
 import {
   pagesWithCompositeTypeMock,
   pagesWithHomeTypeMock,
+  pagesWithMetricsChildTypeMock,
   pagesWithTopicTypeMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
-import { getHomePage, getPageById, getPageMetadata, getPagesByContentType, getPageTypeBySlug } from '.'
+import {
+  getHomePage,
+  getPageById,
+  getPageMetadata,
+  getPagesByContentType,
+  getPageTypeBySlug,
+  validateUrlWithCms,
+} from '.'
 
 const getPage = jest.mocked(client)
 const getPages = jest.mocked(client)
 
 beforeEach(() => {
   jest.clearAllMocks()
+})
+
+describe('validateUrlWithCms', () => {
+  test('Homepage url', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithHomeTypeMock,
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: dashboardMock,
+    })
+
+    const slug: Slug = []
+    const result = await validateUrlWithCms(slug, PageType.Home)
+
+    expect(result).toEqual<Metadata>(dashboardMock)
+  })
+
+  test('Root level page', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithCompositeTypeMock,
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: bulkDownloadsPageMock,
+    })
+
+    const slug: Slug = ['bulk-downloads']
+    const result = await validateUrlWithCms(slug, PageType.Composite)
+
+    expect(result).toEqual<Metadata>(bulkDownloadsPageMock)
+  })
+
+  test('Nested metrics documentation child page', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock }) // Mock parent request
+
+    const slug: Slug = ['metrics-documentation', 'new-cases-7days-sum']
+    const result = await validateUrlWithCms(slug, PageType.MetricsChild)
+
+    expect(result).toEqual<Metadata>(metricsChildMocks[0])
+  })
+
+  test('404 Not Found when a URL cannot be matched against the CMS', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock }) // Mock parent request
+
+    const slug: Slug = ['whats-new', 'new-cases-7days-sum']
+    const result = await validateUrlWithCms(slug, PageType.MetricsChild)
+
+    expect(notFound).toHaveBeenCalledTimes(1)
+    expect(result).toBeUndefined()
+  })
 })
 
 describe('getPageMetadata', () => {
