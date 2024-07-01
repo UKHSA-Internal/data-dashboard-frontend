@@ -13,7 +13,7 @@ test.describe('Weather health alerts map display', () => {
     })
   })
 
-  test('map overlay opens and can exit back to previous page', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Map overlay opens and can exit back to previous page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('weather-health-alerts/cold')
     })
