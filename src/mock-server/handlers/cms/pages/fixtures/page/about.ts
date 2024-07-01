@@ -7,11 +7,13 @@ export const aboutPageMock: PageResponse<PageType.Common> = {
   id: 115,
   meta: {
     type: 'common.CommonPage',
-    detail_url: 'http://localhost/api/pages/115/',
-    html_url: null,
+    detail_url: 'http://localhost:3000/api/pages/115/',
+    html_url: 'http://localhost:3000/about',
     slug: 'about',
     show_in_menus: true,
     seo_title: 'About | UKHSA data dashboard',
+    seo_change_frequency: 'Monthly',
+    seo_priority: 0.7,
     search_description:
       'The UKHSA data dashboard provides presents a wide range of public health data in an easily accessible format.',
     first_published_at: '2023-05-16T11:18:41.084933+01:00',
@@ -20,7 +22,7 @@ export const aboutPageMock: PageResponse<PageType.Common> = {
       id: 3,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/3/',
+        detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',

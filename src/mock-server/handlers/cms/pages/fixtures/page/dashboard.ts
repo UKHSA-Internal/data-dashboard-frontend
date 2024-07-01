@@ -7,10 +7,12 @@ export const dashboardMock: PageResponse<PageType.Home> = {
   id: 4,
   meta: {
     seo_title: 'UKHSA data dashboard',
+    seo_change_frequency: 'Weekly',
+    seo_priority: 1,
     search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
     type: 'home.HomePage',
-    detail_url: 'http://localhost/api/pages/4/',
-    html_url: null,
+    detail_url: 'http://localhost:3000/api/pages/4/',
+    html_url: 'http://localhost:3000/dashboard',
     slug: 'dashboard',
     show_in_menus: true,
     first_published_at: '2023-09-06T13:51:55.724310+01:00',
@@ -19,7 +21,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
       id: 3,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/3/',
+        detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',

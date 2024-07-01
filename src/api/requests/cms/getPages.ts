@@ -48,6 +48,8 @@ const page = z.object({
     slug: z.string(),
     show_in_menus: z.boolean(),
     first_published_at: z.string().nullable(),
+    seo_change_frequency: z.enum(['Always', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Never']),
+    seo_priority: z.coerce.number(),
   }),
 })
 

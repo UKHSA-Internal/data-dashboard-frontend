@@ -1,43 +1,86 @@
+import dayjs from 'dayjs'
 import { MetadataRoute } from 'next'
 
+import { getPages } from '@/api/requests/cms/getPages'
+import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
+import { logger } from '@/lib/logger'
+
 import { SITE_URL } from './constants/app.constants'
+import { toSlug } from './utils/app.utils'
 
 const rootUrl = `https://${SITE_URL}`
 
-const getSitemapObject =
-  (
-    priority: MetadataRoute.Sitemap[number]['priority'],
-    changeFrequency: MetadataRoute.Sitemap[number]['changeFrequency']
-  ) =>
-  (path: string): MetadataRoute.Sitemap[number] => ({
-    url: `${rootUrl}/${path}`,
+type ChangeFrequency = MetadataRoute.Sitemap[number]['changeFrequency']
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const pages = await getPages()
+
+  if (pages.error) {
+    logger.error('Failed to generate sitemap.xml')
+    logger.error(pages.error)
+  }
+
+  const sitemap: MetadataRoute.Sitemap = []
+
+  if (pages.success) {
+    for (const page of pages.data.items) {
+      const url = page.meta.html_url ?? ''
+
+      const {
+        meta: { seo_change_frequency: changeFrequency, seo_priority: priority },
+      } = page
+
+      sitemap.push({
+        url,
+        changeFrequency: changeFrequency.toLowerCase() as ChangeFrequency,
+        priority,
+        lastModified: new Date(),
+      })
+    }
+  }
+
+  // Non-CMS pages. TODO: Migrate these to be CMS delivered
+  // Feedback
+  sitemap.push({
+    url: `${rootUrl}/feedback`,
     lastModified: new Date(),
-    changeFrequency,
-    priority,
+    changeFrequency: 'monthly',
+    priority: 0.7,
   })
 
-const highestPriority: MetadataRoute.Sitemap = [''].map(getSitemapObject(1, 'weekly'))
+  // Brwose
+  sitemap.push({
+    url: `${rootUrl}/browse`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.2,
+  })
 
-const highPriority: MetadataRoute.Sitemap = [
-  'topics/covid-19',
-  'topics/influenza',
-  'topics/other-respiratory-viruses',
-].map(getSitemapObject(0.8, 'weekly'))
+  // Weather Health Alert Regions
+  const [weatherHealthAlertHeatPages, weatherHealthAlertColdPages] = await Promise.all([
+    getHealthAlerts('heat'),
+    getHealthAlerts('cold'),
+  ])
 
-const mediumPriority: MetadataRoute.Sitemap = [
-  'about',
-  'whats-new',
-  'whats-coming',
-  'feedback',
-  'metrics-documentation',
-].map(getSitemapObject(0.7, 'weekly'))
+  if (weatherHealthAlertHeatPages.success && weatherHealthAlertColdPages.success) {
+    for (const page of weatherHealthAlertHeatPages.data) {
+      sitemap.push({
+        url: `${rootUrl}/weather-health-alerts/heat/${toSlug(page.geography_name)}`,
+        lastModified: dayjs(page.refresh_date).toDate(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      })
+    }
 
-const lowPriority: MetadataRoute.Sitemap = ['cookies', 'accessibility-statement', 'compliance', 'bulk-downloads'].map(
-  getSitemapObject(0.5, 'monthly')
-)
+    for (const page of weatherHealthAlertHeatPages.data) {
+      sitemap.push({
+        url: `${rootUrl}/weather-health-alerts/cold/${toSlug(page.geography_name)}`,
+        lastModified: dayjs(page.refresh_date).toDate(),
+        changeFrequency: 'monthly',
+        priority: 0.8,
+      })
+    }
+  }
 
-const lowestPriority: MetadataRoute.Sitemap = ['browse'].map(getSitemapObject(0.2, 'monthly'))
-
-export default function sitemap(): MetadataRoute.Sitemap {
-  return [...highestPriority, ...highPriority, ...mediumPriority, ...lowPriority, ...lowestPriority]
+  return sitemap
 }
