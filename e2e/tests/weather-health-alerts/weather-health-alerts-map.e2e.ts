@@ -316,6 +316,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('check navigated successfully', async () => {
       await app.hasHeading('South West')
     })
+    await test.step('check map is closed', async () => {
+      await weatherHealthAlertsMapPage.dialogIsClosed('Weather health alerts map')
+    })
   })
 })
 

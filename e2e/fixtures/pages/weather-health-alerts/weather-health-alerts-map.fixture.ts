@@ -48,6 +48,9 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('dialog', { name })).toBeVisible()
   }
 
+  async dialogIsClosed(name: string) {
+    await expect(this.page.getByRole('dialog', { name })).toBeHidden()
+  }
   async hasDialogContentTitle(region: string) {
     await expect(this.page.getByRole('heading', { level: 2, name: region })).toBeVisible()
   }
