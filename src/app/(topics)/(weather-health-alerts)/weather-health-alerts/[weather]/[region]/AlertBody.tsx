@@ -90,7 +90,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
         <div className="govuk-grid-column-three-quarters-from-desktop ">
           <div className="govuk-grid-row">
             <div className="govuk-grid-column-three-quarters-from-desktop ">
-              <SummaryList>
+              <SummaryList aria-label="Alert details">
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.typeKey')}</SummaryListKey>
                   <SummaryListValue>{t('map.alertDialog.typeValue', { context: type })}</SummaryListValue>
