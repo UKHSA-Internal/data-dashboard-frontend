@@ -4,9 +4,9 @@ export interface PageParams {
   slug: Slug
 }
 
-export type SearchParams = Record<string, string>
+export type SearchParams<T extends string | unknown = unknown> = Partial<T>
 
-export interface PageComponentBaseProps<S extends Record<string, string> = Record<string, string>> {
+export interface PageComponentBaseProps<S extends Record<string, unknown> = Record<string, string>> {
   slug: Slug
-  searchParams: S
+  searchParams: Partial<S>
 }
