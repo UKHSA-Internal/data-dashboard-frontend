@@ -1,27 +1,18 @@
-import { Metadata } from 'next'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
-import { useSearchParams } from '@/app/hooks/useSearchParams'
 import { useTranslation } from '@/app/i18n'
+import { PageComponentBaseProps } from '@/app/types'
+import { extractRootSlug } from '@/app/utils/cms/slug'
 
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
-  const {
-    meta: { seo_title, search_description },
-  } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
-
-  return {
-    title: seo_title,
-    description: search_description,
-  }
-}
-
-export default async function WhatsNewChildPage({ params: { slug } }: { params: { slug: string } }) {
+export default async function WhatsNewChildPage({
+  slug,
+  searchParams,
+}: PageComponentBaseProps<{ returnUrl?: string }>) {
   const { t } = await useTranslation('whatsNew')
-  const searchParams = useSearchParams()
 
   const {
     title,
@@ -32,7 +23,7 @@ export default async function WhatsNewChildPage({ params: { slug } }: { params: 
     last_published_at: lastUpdated,
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
-  const backLink = searchParams.get('returnUrl') || '/whats-new'
+  const backLink = searchParams.returnUrl || extractRootSlug(slug)
 
   return (
     <View backLink={backLink} lastUpdated={lastUpdated}>
