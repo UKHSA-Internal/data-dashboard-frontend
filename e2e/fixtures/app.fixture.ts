@@ -25,12 +25,13 @@ import {
   MetricsParentPage,
   NotFoundPage,
   OtherRespiratoryVirusesPage,
+  WeatherHealthAlertsChildPage,
+  WeatherHealthAlertsMapPage,
+  WeatherHealthAlertsParentPage,
+  WeatherHealthAlertsRegionPage,
   WhatsNewChildPage,
   WhatsNewParentPage,
 } from './index'
-import { WeatherHealthAlertsChildPage } from './pages/weather-health-alerts/weather-health-alerts-child.fixture'
-import { WeatherHealthAlertsParentPage } from './pages/weather-health-alerts/weather-health-alerts-parent.fixture'
-import { WeatherHealthAlertsRegionPage } from './pages/weather-health-alerts/weather-health-alerts-region.fixture'
 
 type Fixtures = {
   app: App
@@ -53,6 +54,7 @@ type Fixtures = {
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
   accessOurDataPage: AccessOurDataPage
+  weatherHealthAlertsMapPage: WeatherHealthAlertsMapPage
   weatherHealthAlertsParentPage: WeatherHealthAlertsParentPage
   weatherHealthAlertsChildPage: WeatherHealthAlertsChildPage
   weatherHealthAlertsRegionPage: WeatherHealthAlertsRegionPage
@@ -496,6 +498,9 @@ export const test = base.extend<Fixtures>({
   },
   accessOurDataPage: async ({ page }, use) => {
     await use(new AccessOurDataPage(page))
+  },
+  weatherHealthAlertsMapPage: async ({ page }, use) => {
+    await use(new WeatherHealthAlertsMapPage(page))
   },
   weatherHealthAlertsParentPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsParentPage(page))

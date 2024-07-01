@@ -109,6 +109,10 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
       featuresRef.current = [...featuresRef.current, feature]
 
       layer.on({
+        add: (event) => {
+          const testId = `feature-${feature.properties[geoJsonFeatureId]}`
+          event.target.getElement().setAttribute('data-testid', testId)
+        },
         click: (event: CustomLeafletEvent) => {
           // Store the clicked ref
           if (layer.feature.id) {
