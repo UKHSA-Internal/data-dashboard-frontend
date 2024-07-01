@@ -1,4 +1,4 @@
-import { test } from '../../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 test.describe('Weather health alerts map display', () => {
   test('Health alerts overlay opens & has expected buttons', async ({ app, weatherHealthAlertsMapPage }) => {
@@ -37,7 +37,7 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('click copyright button', async () => {
@@ -49,6 +49,12 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('close copyright modal', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Close')
     })
+    await test.step('no longer shows copyright modal', async () => {
+      await weatherHealthAlertsMapPage.notHaveCopyrightModal()
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
   })
 
   // TODO: CDD-2028: Keyboard WHA e2e
@@ -58,7 +64,7 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('shows all regions initially', async () => {
@@ -88,7 +94,7 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('click map button', async () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('map overlay is open', async () => {
@@ -101,7 +107,7 @@ test.describe('Weather Health Alerts map interactivty', () => {
       await weatherHealthAlertsMapPage.panWeatherHealthAlertsMap()
     })
     await test.step('shows fewer regions after pan', async () => {
-      await weatherHealthAlertsMapPage.hasHighlightedRegions(6)
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(7)
     })
   })
 })
@@ -113,7 +119,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -123,7 +129,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
       await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
     })
     await test.step('has summary component in dialog', async () => {
-      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
         type: 'Cold Health Alert',
         status: 'Red',
         start: '6 May 2024 at 12:00pm',
@@ -141,7 +147,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -151,7 +157,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
       await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
     })
     await test.step('has summary component in dialog', async () => {
-      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
         type: 'Cold Health Alert',
         status: 'Amber',
         start: '6 May 2024 at 12:00pm',
@@ -169,7 +175,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -179,7 +185,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
       await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
     })
     await test.step('has summary component in dialog', async () => {
-      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
         type: 'Cold Health Alert',
         status: 'Yellow',
         start: '6 May 2024 at 12:00pm',
@@ -197,7 +203,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -207,7 +213,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
       await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
     })
     await test.step('has summary component in dialog', async () => {
-      await weatherHealthAlertsMapPage.hasDialogSummaryComponent({
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
         type: 'Cold Health Alert',
         status: 'Green',
         start: '6 May 2024 at 12:00pm',
@@ -225,7 +231,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -240,7 +246,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -255,7 +261,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -283,7 +289,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {
@@ -298,7 +304,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
-    await test.step('dialog is open', async () => {
+    await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('clicks region', async () => {

@@ -1,11 +1,8 @@
 import { expect, Page } from '@playwright/test'
 
-interface summaryListProps {
-  type: string
-  status: string
-  start: string
-  end: string
-}
+import { SummaryList } from './shared/types'
+
+type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit Map' | 'Close'
 
 export class WeatherHealthAlertsMapPage {
   readonly page: Page
@@ -25,14 +22,18 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
   }
 
-  type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit Map'
   async clickMapButton(name: ButtonNames) {
-    await this.page.getByRole('button', { name }).click()
+    await this.page.getByRole('button', { name: name }).click()
   }
 
   async hasCopyrightModal() {
     await expect(this.page.getByRole('button', { name: 'Close' })).toBeVisible()
     await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeVisible()
+  }
+
+  async notHaveCopyrightModal() {
+    await expect(this.page.getByRole('button', { name: 'Close' })).toBeHidden()
+    await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeHidden()
   }
 
   async exitMap() {
@@ -51,7 +52,7 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('heading', { level: 2, name: region })).toBeVisible()
   }
 
-  async hasDialogSummaryComponent({ type, status, start, end }: summaryListProps) {
+  async hasDialogWeatherHealthAlertSummary({ type, status, start, end }: SummaryList) {
     const wrapper = this.page.getByLabel('Dialog summary')
 
     await expect(wrapper.getByText('Type')).toBeVisible()
@@ -82,14 +83,11 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByRole('link', { name: 'Go to alert page' }).click()
   }
 
+  // Playwright mouse movement classes: https://playwright.dev/docs/next/api/class-mouse
   async panWeatherHealthAlertsMap() {
-    await this.page.getByTestId('feature-E12000006').hover()
+    await this.page.mouse.move(800, 500)
     await this.page.mouse.down()
-    await this.page.getByTestId('feature-E12000009').hover()
-    await this.page.mouse.up()
-    await this.page.getByTestId('feature-E12000006').hover()
-    await this.page.mouse.down()
-    await this.page.getByTestId('feature-E12000009').hover()
+    await this.page.mouse.move(150, 500)
     await this.page.mouse.up()
   }
 }
