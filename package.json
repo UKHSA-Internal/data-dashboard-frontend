@@ -14,9 +14,13 @@
     "test": "jest --watch",
     "test:ci": "jest --ci --coverage",
     "test:e2e": "npx playwright test --ui --grep-invert @smoke",
+    "test:e2e:desktop": "npx playwright test --ui --grep @desktopOnly",
+    "test:e2e:mobile": "npx playwright test --ui --grep @mobileOnly",
+    "test:e2e:tablet": "npx playwright test --ui --grep @tabletOnly",
     "test:e2e:ci": "npx playwright test --grep-invert @smoke",
     "test:e2e:smoke": "baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "newScript": "echo %npm_config_viewport%"
   },
   "dependencies": {
     "@jsdevtools/rehype-toc": "^3.0.2",
