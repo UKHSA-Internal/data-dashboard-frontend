@@ -65,17 +65,19 @@ export class WeatherHealthAlertsRegionPage {
   }
 
   async hasAlertSummaryList({ type, status, start, end }: AlertSummaryList) {
-    await expect(this.page.getByText('Type')).toBeVisible()
-    await expect(this.page.getByText(type)).toBeVisible()
+    const wrapper = this.page.getByLabel('Alert details')
 
-    await expect(this.page.getByText('Colour')).toBeVisible()
-    await expect(this.page.getByText(status)).toBeVisible()
+    await expect(wrapper.getByText('Type')).toBeVisible()
+    await expect(wrapper.getByText(type)).toBeVisible()
 
-    await expect(this.page.getByText('Start')).toBeVisible()
-    await expect(this.page.getByText(start)).toBeVisible()
+    await expect(wrapper.getByText('Colour')).toBeVisible()
+    await expect(wrapper.getByText(status)).toBeVisible()
 
-    await expect(this.page.getByText('End')).toBeVisible()
-    await expect(this.page.getByText(end)).toBeVisible()
+    await expect(wrapper.getByText('Start')).toBeVisible()
+    await expect(wrapper.getByText(start)).toBeVisible()
+
+    await expect(wrapper.getByText('End')).toBeVisible()
+    await expect(wrapper.getByText(end)).toBeVisible()
   }
 
   async hasBodyContent(bodyText: string) {
