@@ -1,32 +1,17 @@
-import { Metadata } from 'next'
-
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichTextAutoHeadings } from '@/app/components/cms/RichText/RichTextAutoHeadings'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-// Our dynamic routes can be of two different cms page types (common or composite)
-type DynamicPageType = PageType.Common | PageType.Composite
-
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
-  const {
-    meta: { seo_title, search_description },
-  } = await getPageBySlug<DynamicPageType>(slug)
-
-  return {
-    title: seo_title,
-    description: search_description,
-  }
-}
-
-export default async function CommonPage({ params: { slug } }: { params: { slug: string } }) {
+export default async function CompositePage({ slug }: PageComponentBaseProps) {
   const {
     title,
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug<DynamicPageType>(slug)
+  } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>

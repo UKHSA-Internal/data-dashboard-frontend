@@ -1,12 +1,17 @@
 import { notFound } from 'next/navigation'
 
+import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
 
 import { getPage, PageResponse } from './cms/getPage'
 import { getPages, PageType } from './cms/getPages'
 
-export const getPageBySlug = async <T extends PageType>(slug: string, additionalParams?: Record<string, string>) => {
+// TODO: Move this to @app/utils/cms/index.ts
+export const getPageBySlug = async <T extends PageType>(slugParam: string | Slug, additionalParams?: SearchParams) => {
   try {
+    // TODO: Once all pages are migrated to dynamic catch all route, remove non-array slug type
+    const slug = Array.isArray(slugParam) ? slugParam[slugParam.length - 1] : slugParam
+
     // Fetch all of pages by type from the CMS
     const pages = await getPages(additionalParams)
 

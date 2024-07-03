@@ -12,8 +12,6 @@ type FeatureFlag = (typeof flags)[keyof typeof flags]
 
 export async function getFeatureFlag(name: FeatureFlag) {
   try {
-    logger.info('Requesting feature flag: %s', name)
-
     assert(process.env.UNLEASH_SERVER_API_URL, 'Missing env var UNLEASH_SERVER_API_URL')
     assert(process.env.UNLEASH_SERVER_API_TOKEN, 'Missing env var UNLEASH_SERVER_API_TOKEN')
     assert(process.env.FEATURE_FLAGS_AUTH_KEY, 'Missing env var FEATURE_FLAGS_AUTH_KEY')
