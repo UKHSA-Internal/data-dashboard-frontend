@@ -56,7 +56,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async hasDialogWeatherHealthAlertSummary({ type, status, start, end }: SummaryList) {
-    const wrapper = this.page.getByLabel('Dialog summary')
+    const wrapper = this.page.getByLabel('Weather health alerts summary')
 
     await expect(wrapper.getByText('Type')).toBeVisible()
     await expect(wrapper.getByText(type, { exact: true })).toBeVisible()
