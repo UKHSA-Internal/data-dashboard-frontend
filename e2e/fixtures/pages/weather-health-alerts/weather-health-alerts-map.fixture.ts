@@ -15,11 +15,19 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
   }
 
+  async hasNoMapButton() {
+    await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toBeHidden()
+  }
+
   async hasMapButtons() {
     await expect(this.page.getByRole('button', { name: 'Zoom in' })).toBeVisible()
     await expect(this.page.getByRole('button', { name: 'Zoom out' })).toBeVisible()
     await expect(this.page.getByRole('button', { name: 'Copyright information' })).toBeVisible()
     await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
+  }
+
+  async hasButton(name: string) {
+    await expect(this.page.getByRole('link', { name })).toBeVisible()
   }
 
   async clickMapButton(name: ButtonNames) {

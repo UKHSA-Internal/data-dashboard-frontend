@@ -54,10 +54,10 @@ type Fixtures = {
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
   accessOurDataPage: AccessOurDataPage
-  weatherHealthAlertsMapPage: WeatherHealthAlertsMapPage
   weatherHealthAlertsParentPage: WeatherHealthAlertsParentPage
   weatherHealthAlertsChildPage: WeatherHealthAlertsChildPage
   weatherHealthAlertsRegionPage: WeatherHealthAlertsRegionPage
+  weatherHealthAlertsMapPage: WeatherHealthAlertsMapPage
 }
 
 export class App {
@@ -499,9 +499,6 @@ export const test = base.extend<Fixtures>({
   accessOurDataPage: async ({ page }, use) => {
     await use(new AccessOurDataPage(page))
   },
-  weatherHealthAlertsMapPage: async ({ page }, use) => {
-    await use(new WeatherHealthAlertsMapPage(page))
-  },
   weatherHealthAlertsParentPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsParentPage(page))
   },
@@ -510,6 +507,9 @@ export const test = base.extend<Fixtures>({
   },
   weatherHealthAlertsRegionPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsRegionPage(page))
+  },
+  weatherHealthAlertsMapPage: async ({ page }, use) => {
+    await use(new WeatherHealthAlertsMapPage(page))
   },
 })
 
