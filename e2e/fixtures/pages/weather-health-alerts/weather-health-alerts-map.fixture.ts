@@ -93,4 +93,30 @@ export class WeatherHealthAlertsMapPage {
     await this.page.mouse.move(150, 500)
     await this.page.mouse.up()
   }
+
+  // Playwright keyboard movement: https://playwright.dev/docs/api/class-keyboard
+  async openCopyrightWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+  }
+
+  async zoomInWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+    await this.page.keyboard.press('Enter')
+  }
+
+  async zoomOutWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+    await this.page.keyboard.press('Enter')
+  }
+
+  async accessRegionWithKeyboard(regionNumber: number) {
+    await this.page.keyboard.press(`Digit${regionNumber}`)
+  }
 }
