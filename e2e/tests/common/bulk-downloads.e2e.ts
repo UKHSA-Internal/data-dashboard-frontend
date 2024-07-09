@@ -68,7 +68,7 @@ test.describe('Bulk downloads - no JavaScript', () => {
   })
 })
 
-test.describe('Bulk downloads - mobile', () => {
+test.describe('Bulk downloads - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ bulkDownloadsPage, app }) => {
@@ -77,7 +77,7 @@ test.describe('Bulk downloads - mobile', () => {
   })
 })
 
-test.describe('Bulk downloads - tablet', () => {
+test.describe('Bulk downloads - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
@@ -86,7 +86,7 @@ test.describe('Bulk downloads - tablet', () => {
   })
 })
 
-test.describe('Bulk downloads - desktop', () => {
+test.describe('Bulk downloads - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ bulkDownloadsPage, app }) => {

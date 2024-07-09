@@ -148,7 +148,7 @@ test.describe('Access our data', () => {
   })
 })
 
-test.describe('Access our data - mobile', () => {
+test.describe('Access our data - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ accessOurDataPage, app }) => {
@@ -157,7 +157,7 @@ test.describe('Access our data - mobile', () => {
   })
 })
 
-test.describe('Access our data - tablet', () => {
+test.describe('Access our data - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ accessOurDataPage, app }) => {
@@ -166,7 +166,7 @@ test.describe('Access our data - tablet', () => {
   })
 })
 
-test.describe('Access our data - desktop', () => {
+test.describe('Access our data - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ accessOurDataPage, app }) => {
