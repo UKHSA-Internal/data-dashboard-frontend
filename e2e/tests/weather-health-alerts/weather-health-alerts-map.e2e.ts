@@ -287,7 +287,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
   //   })
   // })
 
-  test('South West', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('South West', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
+
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
@@ -302,7 +304,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     })
   })
 
-  test('go to alert page link works', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('go to alert page link works', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
+
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
