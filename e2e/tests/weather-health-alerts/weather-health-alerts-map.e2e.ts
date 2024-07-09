@@ -342,8 +342,8 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
 
   test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold')
-      weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
+      await app.goto('/weather-health-alerts/cold')
+      await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit Map')
@@ -356,8 +356,8 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
 
   test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold')
-      weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
+      await app.goto('/weather-health-alerts/cold')
+      await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit Map')
@@ -370,8 +370,8 @@ test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
 
   test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold')
-      weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
+      await app.goto('/weather-health-alerts/cold')
+      await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows map buttons', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit Map')
@@ -384,11 +384,11 @@ test.describe('Weather health alerts map, smoke test - no JavaScript @smoke', ()
 
   test('Does not show a map button on Weather health alerts pages', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('opens cold health alerts overlay', async () => {
-      app.goto('/weather-health-alerts/cold')
-      app.hasHeading('Cold health alerts')
+      await app.goto('/weather-health-alerts/cold')
+      await app.hasHeading('Cold health alerts')
     })
     await test.step('has no map button showing', async () => {
-      weatherHealthAlertsMapPage.hasNoMapButton()
+      await weatherHealthAlertsMapPage.hasNoMapButton()
     })
   })
 })
