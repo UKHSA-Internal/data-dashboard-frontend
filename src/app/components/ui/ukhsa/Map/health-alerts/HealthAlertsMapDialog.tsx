@@ -1,13 +1,11 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
+import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
 import ExitMapIcon from '@/app/components/ui/ukhsa/Icons/ExitMap'
 import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
@@ -38,8 +36,7 @@ interface HealthAlertsMapDialogProps {
 export default function HealthAlertsMapDialog({ featureCollection }: HealthAlertsMapDialogProps) {
   const { t } = useTranslation('weatherHealthAlerts')
   const [, setError] = useQueryState(mapQueryKeys.error)
-  const [mapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
-  const router = useRouter()
+  const [mapOpen, setMapOpen] = useQueryState(mapQueryKeys.view, parseAsStringLiteral<'map'>(['map']))
 
   const [type] = useQueryState(
     mapQueryKeys.alertType,
@@ -74,25 +71,15 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
   }
 
   return (
-    <Dialog
-      open={!!mapOpen}
-      onOpenChange={(isOpen) => {
-        if (!isOpen) {
-          router.back()
-        }
-      }}
-    >
+    <Dialog open={!!mapOpen} onOpenChange={(isOpen) => !isOpen && setMapOpen(null)}>
       <DialogContent
         className="p-0 no-js:hidden"
         fullscreen
         closeButton={
-          <Link
-            href="/"
-            className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2"
-          >
+          <DialogClose className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2">
             <ExitMapIcon />
             {t('map.exitBtn')}
-          </Link>
+          </DialogClose>
         }
       >
         <DialogHeader aria-hidden className="govuk-visually-hidden">

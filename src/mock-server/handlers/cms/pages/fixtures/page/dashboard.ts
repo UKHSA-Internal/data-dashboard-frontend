@@ -180,6 +180,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Cases',
                     body: 'Positive tests reported in England',
+                    tag_manager_event_id: 'positive_tests_reported_in_england',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -232,6 +233,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Deaths',
                     body: 'Deaths with COVID-19 on the death certificate in England',
+                    tag_manager_event_id: 'deaths_with_covid-19_on_death_certificate',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -352,6 +354,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Healthcare',
                     body: 'Weekly hospital admission rates for Influenza',
+                    tag_manager_event_id: '',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -394,6 +397,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                   value: {
                     title: 'Testing',
                     body: 'Weekly positivity',
+                    tag_manager_event_id: '',
                     x_axis: '',
                     y_axis: '',
                     chart: [

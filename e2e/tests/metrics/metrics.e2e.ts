@@ -297,7 +297,7 @@ test.describe('Metrics child page', () => {
   })
 })
 
-test.describe('Metrics child page - mobile', () => {
+test.describe('Metrics child page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ metricsChildPage, app }) => {
@@ -306,7 +306,7 @@ test.describe('Metrics child page - mobile', () => {
   })
 })
 
-test.describe('Metrics child page - tablet', () => {
+test.describe('Metrics child page - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ metricsChildPage, app }) => {
@@ -315,7 +315,7 @@ test.describe('Metrics child page - tablet', () => {
   })
 })
 
-test.describe('Metrics child page - desktop', () => {
+test.describe('Metrics child page - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ metricsChildPage, app }) => {

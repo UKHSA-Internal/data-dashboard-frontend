@@ -30,6 +30,7 @@ import {
   WhatsNewParentPage,
 } from './index'
 import { WeatherHealthAlertsChildPage } from './pages/weather-health-alerts/weather-health-alerts-child.fixture'
+import { WeatherHealthAlertsMapPage } from './pages/weather-health-alerts/weather-health-alerts-map.fixture'
 import { WeatherHealthAlertsParentPage } from './pages/weather-health-alerts/weather-health-alerts-parent.fixture'
 import { WeatherHealthAlertsRegionPage } from './pages/weather-health-alerts/weather-health-alerts-region.fixture'
 
@@ -58,6 +59,7 @@ type Fixtures = {
   weatherHealthAlertsParentPage: WeatherHealthAlertsParentPage
   weatherHealthAlertsChildPage: WeatherHealthAlertsChildPage
   weatherHealthAlertsRegionPage: WeatherHealthAlertsRegionPage
+  weatherHealthAlertsMapPage: WeatherHealthAlertsMapPage
 }
 
 export class App {
@@ -510,6 +512,9 @@ export const test = base.extend<Fixtures>({
   },
   weatherHealthAlertsRegionPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsRegionPage(page))
+  },
+  weatherHealthAlertsMapPage: async ({ page }, use) => {
+    await use(new WeatherHealthAlertsMapPage(page))
   },
 })
 

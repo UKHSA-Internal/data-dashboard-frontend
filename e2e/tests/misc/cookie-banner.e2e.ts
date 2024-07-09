@@ -2,7 +2,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-test.describe('Cookie banner - mobile', () => {
+test.describe('Cookie banner - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the cookie banner on mobile', async ({ homePage, app }) => {
@@ -11,7 +11,7 @@ test.describe('Cookie banner - mobile', () => {
   })
 })
 
-test.describe('Cookie banner - tablet', () => {
+test.describe('Cookie banner - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the cookie banner on tablet', async ({ homePage, app }) => {
@@ -20,7 +20,7 @@ test.describe('Cookie banner - tablet', () => {
   })
 })
 
-test.describe('Cookie banner - desktop', () => {
+test.describe('Cookie banner - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the cookie banner on desktop', async ({ homePage, app }) => {
