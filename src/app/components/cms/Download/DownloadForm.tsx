@@ -10,9 +10,10 @@ import { chartExportApiRoutePath } from '@/config/constants'
 
 interface DownloadFormProps {
   chart: Chart
+  tagManagerEventId: string | null
 }
 
-export function DownloadForm({ chart }: DownloadFormProps) {
+export function DownloadForm({ chart, tagManagerEventId }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -57,6 +58,7 @@ export function DownloadForm({ chart }: DownloadFormProps) {
       data-testid="download-form"
       onSubmit={handleSubmit}
       aria-label="Download"
+      data-tag-manager-event-id={tagManagerEventId}
     >
       <div className="govuk-form-group govuk-!-margin-bottom-0">
         <fieldset className="govuk-fieldset">
