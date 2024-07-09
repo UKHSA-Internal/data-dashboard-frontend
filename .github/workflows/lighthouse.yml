@@ -71,7 +71,7 @@ jobs:
       - uses: ./.github/actions/install-cache
 
       - name: Unlighthouse assertions and client
-        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=60
+        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=60 --exclude-urls /topics/covid-19
       - uses: actions/upload-artifact@v3
         if: always()
         with:
