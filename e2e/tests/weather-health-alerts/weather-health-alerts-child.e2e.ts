@@ -169,7 +169,7 @@ test.describe('Feature flag enabled', () => {
     })
   })
 
-  test.describe('Mobile - Weather health alerts child pages', () => {
+  test.describe('Mobile - Weather health alerts child pages @mobileOnly', () => {
     test.use({ viewport: viewports.mobile })
 
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
@@ -331,7 +331,7 @@ test.describe('Feature flag enabled', () => {
     })
   })
 
-  test.describe('Tablet - Weather health alerts child pages', () => {
+  test.describe('Tablet - Weather health alerts child pages @tabletOnly', () => {
     test.use({ viewport: viewports.tablet })
 
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
@@ -487,6 +487,91 @@ test.describe('Feature flag enabled', () => {
       await test.step('map link works as expected', async () => {
         await weatherHealthAlertsChildPage.opensMapLink()
       })
+    })
+  })
+})
+
+test.describe('WHA child smoke test - desktop @smoke', () => {
+  test.use({ viewport: viewports.desktop })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
+test.describe('WHA child smoke test - tablet @smoke', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
+test.describe('WHA child smoke test - mobile @smoke', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
+    })
+  })
+})
+
+test.describe('WHA child smoke test - no JavaScript @smoke', () => {
+  test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
+
+  test('Navigates to Cold health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Cold health alerts')
+    })
+  })
+  test('Navigates to Heat health alerts page', async ({ app }) => {
+    await test.step('loads the page', async () => {
+      await app.goto('/weather-health-alerts/heat')
+    })
+    await test.step('Shows header', async () => {
+      await app.hasHeading('Heat health alerts')
     })
   })
 })

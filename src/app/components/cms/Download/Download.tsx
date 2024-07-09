@@ -13,7 +13,7 @@ interface DownloadProps {
   data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
 }
 
-export async function Download({ data: { chart, y_axis, x_axis } }: DownloadProps) {
+export async function Download({ data: { chart, y_axis, x_axis, tag_manager_event_id } }: DownloadProps) {
   const pathname = usePathname()
   const [areaType, areaName] = useAreaSelector()
 
@@ -41,6 +41,7 @@ export async function Download({ data: { chart, y_axis, x_axis } }: DownloadProp
             geography: areaName ?? plot.value.geography,
           },
         }))}
+        tagManagerEventId={tag_manager_event_id}
       />
     )
   }
