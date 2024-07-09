@@ -88,7 +88,7 @@ test.describe('Feedback confirmation page', () => {
   })
 })
 
-test.describe('Feedback page - mobile', () => {
+test.describe('Feedback page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ feedbackPage, app }) => {
@@ -97,7 +97,7 @@ test.describe('Feedback page - mobile', () => {
   })
 })
 
-test.describe('Feedback page - tablet', () => {
+test.describe('Feedback page - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ feedbackPage, app }) => {
@@ -106,7 +106,7 @@ test.describe('Feedback page - tablet', () => {
   })
 })
 
-test.describe('Feedback page - desktop', () => {
+test.describe('Feedback page - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ feedbackPage, app }) => {
