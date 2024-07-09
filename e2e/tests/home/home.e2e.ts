@@ -69,7 +69,7 @@ test.describe('Home page', () => {
   })
 })
 
-test.describe('Home page - mobile', () => {
+test.describe('Home page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ homePage, app }) => {
@@ -78,7 +78,7 @@ test.describe('Home page - mobile', () => {
   })
 })
 
-test.describe('Home page - tablet', () => {
+test.describe('Home page - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ homePage, app }) => {
@@ -87,7 +87,7 @@ test.describe('Home page - tablet', () => {
   })
 })
 
-test.describe('Home page - desktop', () => {
+test.describe('Home page - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ homePage, app }) => {

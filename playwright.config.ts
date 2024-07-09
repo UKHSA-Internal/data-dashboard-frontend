@@ -40,17 +40,20 @@ export default defineConfig({
     {
       name: 'chromium',
       use: { ...devices['Desktop Chrome'] },
+      grepInvert: /@mobileOnly | @tabletOnly/,
     },
 
     {
       name: 'firefox',
       use: { ...devices['Desktop Firefox'] },
+      grepInvert: /@mobileOnly | @tabletOnly/,
     },
 
     /* Test against mobile viewport. */
     {
       name: 'Mobile Chrome',
       use: { ...devices['Pixel 7'] },
+      grepInvert: /@desktopOnly/,
     },
   ],
 

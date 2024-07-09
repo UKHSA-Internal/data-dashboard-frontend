@@ -29,6 +29,7 @@ const props: ComponentProps<typeof DownloadForm> = {
       id: '123',
     },
   ],
+  tagManagerEventId: 'new_cases_daily_test_tag',
 }
 
 describe('DownloadForm', () => {
@@ -76,6 +77,7 @@ describe('DownloadForm', () => {
     const form = screen.getByRole('form', { name: 'Download' })
     expect(form).toHaveAttribute('method', 'POST')
     expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
 
     expect(screen.getByLabelText('CSV')).toBeChecked()
 
@@ -112,6 +114,7 @@ describe('DownloadForm', () => {
     const form = screen.getByRole('form', { name: 'Download' })
     expect(form).toHaveAttribute('method', 'POST')
     expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
 
     expect(screen.getByLabelText('CSV')).toBeChecked()
 
@@ -155,6 +158,7 @@ describe('DownloadForm', () => {
     const form = screen.getByRole('form', { name: 'Download' })
     expect(form).toHaveAttribute('method', 'POST')
     expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
 
     expect(screen.getByLabelText('CSV')).toBeChecked()
 
