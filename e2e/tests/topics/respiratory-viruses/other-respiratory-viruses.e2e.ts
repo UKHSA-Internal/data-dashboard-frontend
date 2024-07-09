@@ -149,7 +149,7 @@ test.describe('Other respiratory viruses page', () => {
   })
 })
 
-test.describe('Other respiratory viruses page - mobile', () => {
+test.describe('Other respiratory viruses page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
@@ -158,7 +158,7 @@ test.describe('Other respiratory viruses page - mobile', () => {
   })
 })
 
-test.describe('Other respiratory viruses page - tablet', () => {
+test.describe('Other respiratory viruses page - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
@@ -167,7 +167,7 @@ test.describe('Other respiratory viruses page - tablet', () => {
   })
 })
 
-test.describe('Other respiratory viruses page - desktop', () => {
+test.describe('Other respiratory viruses page - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ otherRespiratoryVirusesPage, app }) => {

@@ -169,7 +169,7 @@ test.describe('Feature flag enabled', () => {
     })
   })
 
-  test.describe('Mobile - Weather health alerts child pages', () => {
+  test.describe('Mobile - Weather health alerts child pages @mobileOnly', () => {
     test.use({ viewport: viewports.mobile })
 
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
@@ -331,7 +331,7 @@ test.describe('Feature flag enabled', () => {
     })
   })
 
-  test.describe('Tablet - Weather health alerts child pages', () => {
+  test.describe('Tablet - Weather health alerts child pages @tabletOnly', () => {
     test.use({ viewport: viewports.tablet })
 
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {

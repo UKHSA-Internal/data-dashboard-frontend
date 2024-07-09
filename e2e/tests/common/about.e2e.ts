@@ -39,7 +39,7 @@ test('About page', async ({ aboutPage, app }) => {
   })
 })
 
-test.describe('About page - mobile', () => {
+test.describe('About page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ aboutPage, app }) => {
@@ -48,7 +48,7 @@ test.describe('About page - mobile', () => {
   })
 })
 
-test.describe('About page - tablet', () => {
+test.describe('About page - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ aboutPage, app }) => {
@@ -57,7 +57,7 @@ test.describe('About page - tablet', () => {
   })
 })
 
-test.describe('About page - desktop', () => {
+test.describe('About page - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ aboutPage, app }) => {
