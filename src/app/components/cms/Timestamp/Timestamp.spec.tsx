@@ -22,6 +22,7 @@ test('renders the timestamp correctly when successful', async () => {
     body: '',
     title: '',
     headline_number_columns: [],
+    tag_manager_event_id: '',
   }
 
   const { getByText } = render((await Timestamp({ data, size: 'narrow' })) as ReactElement)
@@ -49,6 +50,7 @@ test('renders null when the timestamp request fails', async () => {
     body: '',
     title: '',
     headline_number_columns: [],
+    tag_manager_event_id: '',
   }
 
   const { container } = render((await Timestamp({ data, size: 'narrow' })) as ReactElement)
