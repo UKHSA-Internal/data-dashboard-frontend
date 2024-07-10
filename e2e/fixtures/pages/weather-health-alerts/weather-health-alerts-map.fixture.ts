@@ -1,11 +1,8 @@
 import { expect, Page } from '@playwright/test'
 
-interface SummaryList {
-  type: string
-  status: string
-  start: string
-  end: string
-}
+import { SummaryList } from './shared/types'
+
+type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit Map' | 'Close'
 
 export class WeatherHealthAlertsMapPage {
   readonly page: Page
@@ -29,8 +26,8 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
   }
 
-  async hasExitMapButton() {
-    await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
+  async hasButton(name: ButtonNames) {
+    await expect(this.page.getByRole('button', { name })).toBeVisible()
   }
 
   async clickMapButton(name: string) {
@@ -42,6 +39,11 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeVisible()
   }
 
+  async notHaveCopyrightModal() {
+    await expect(this.page.getByRole('button', { name: 'Close' })).toBeHidden()
+    await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeHidden()
+  }
+
   async exitMap() {
     await this.page.getByRole('button', { name: 'Exit map' }).click()
   }
@@ -50,24 +52,37 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByTestId(region).click()
   }
 
+  async dialogIsOpen(name: string) {
+    await expect(this.page.getByRole('dialog', { name })).toBeVisible()
+  }
+
+  async dialogIsClosed(name: string) {
+    await expect(this.page.getByRole('dialog', { name })).toBeHidden()
+  }
   async hasDialogContentTitle(region: string) {
     await expect(this.page.getByRole('heading', { level: 2, name: region })).toBeVisible()
   }
 
-  async hasDialogSummaryComponent({ type, status, start, end }: SummaryList) {
-    const wrapper = this.page.getByLabel('Dialog summary')
+  async hasDialogWeatherHealthAlertSummary({ type, status, start, end }: SummaryList) {
+    const wrapper = this.page.getByLabel('Weather health alerts summary')
 
     await expect(wrapper.getByText('Type')).toBeVisible()
     await expect(wrapper.getByText(type, { exact: true })).toBeVisible()
 
     await expect(wrapper.getByText('Colour')).toBeVisible()
-    await expect(wrapper.getByLabel(status)).toBeVisible()
+    await expect(wrapper.getByText(status)).toBeVisible()
 
     await expect(wrapper.getByText('Start')).toBeVisible()
     await expect(wrapper.getByText(start)).toBeVisible()
 
     await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
     await expect(wrapper.getByText(end)).toBeVisible()
+  }
+
+  async hasHighlightedRegions(regionCount: number) {
+    await expect(
+      this.page.getByTestId('ukhsa-map-sr').getByText(`${regionCount} regions highlighted in the map area.`)
+    ).toBeVisible()
   }
 
   async hasDialogDescription(dialog: string) {
@@ -77,5 +92,13 @@ export class WeatherHealthAlertsMapPage {
 
   async clickDialogGoToAlertPage() {
     await this.page.getByRole('link', { name: 'Go to alert page' }).click()
+  }
+
+  // Playwright mouse movement classes: https://playwright.dev/docs/next/api/class-mouse
+  async panWeatherHealthAlertsMap() {
+    await this.page.mouse.move(800, 500)
+    await this.page.mouse.down()
+    await this.page.mouse.move(150, 500)
+    await this.page.mouse.up()
   }
 }
