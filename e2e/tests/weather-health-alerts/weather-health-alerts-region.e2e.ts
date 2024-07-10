@@ -138,36 +138,36 @@ test.describe('Feature flag enabled', () => {
         await test.step('has heading', async () => {
           await app.hasHeading(`${weather}-health alert for ${region}`)
         })
-        await test.step('has last updated', () => {
-          weatherHealthAlertsRegionPage.hasLastUpdated()
+        await test.step('has last updated', async () => {
+          await weatherHealthAlertsRegionPage.hasLastUpdated()
         })
         // eslint-disable-next-line playwright/no-conditional-in-test
         if (status !== 'Green') {
-          await test.step('has alert banner', () => {
-            weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
+          await test.step('has alert banner', async () => {
+            await weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
           })
         }
-        await test.step('has summary list', () => {
-          weatherHealthAlertsRegionPage.hasAlertSummaryList({
+        await test.step('has summary list', async () => {
+          await weatherHealthAlertsRegionPage.hasAlertSummaryList({
             type: `${weather === 'cold' ? 'Cold' : 'Heat'} Health Alert`,
             start: '6 May 2024 at 12:00pm',
             end: '8 May 2024 at 12:00pm',
             status,
           })
         })
-        await test.step('has body content', () => {
-          weatherHealthAlertsRegionPage.hasBodyContent(
+        await test.step('has body content', async () => {
+          await weatherHealthAlertsRegionPage.hasBodyContent(
             'Severe impacts are expected across the health and social care sector due to forecast weather conditions'
           )
         })
-        await test.step('has map link', () => {
-          weatherHealthAlertsRegionPage.hasMapLink(`?v=map&type=${weather}&fid=${fid}`)
+        await test.step('has map link', async () => {
+          await weatherHealthAlertsRegionPage.hasMapLink(`?v=map&type=${weather}&fid=${fid}`)
         })
         await test.step('map link works as expected', async () => {
           await weatherHealthAlertsRegionPage.opensMapLink()
         })
-        await test.step('has related links section', () => {
-          weatherHealthAlertsRegionPage.hasRelatedLinks()
+        await test.step('has related links section', async () => {
+          await weatherHealthAlertsRegionPage.hasRelatedLinks()
         })
       })
     }

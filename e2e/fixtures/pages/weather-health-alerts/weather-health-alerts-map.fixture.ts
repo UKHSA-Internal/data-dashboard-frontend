@@ -2,7 +2,7 @@ import { expect, Page } from '@playwright/test'
 
 import { SummaryList } from './shared/types'
 
-type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit Map' | 'Close'
+type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit map' | 'Close'
 
 export class WeatherHealthAlertsMapPage {
   readonly page: Page
@@ -26,8 +26,8 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
   }
 
-  async hasExitMapButton() {
-    await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
+  async hasButton(name: ButtonNames) {
+    await expect(this.page.getByRole('button', { name })).toBeVisible()
   }
 
   async clickMapButton(name: ButtonNames) {

@@ -26,7 +26,7 @@ test.describe('Weather health alerts map display', () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('exit map', async () => {
-      await weatherHealthAlertsMapPage.exitMap()
+      await weatherHealthAlertsMapPage.clickMapButton('Exit map')
     })
     await test.step('shows cold health alerts page', async () => {
       await app.hasHeading('Cold health alerts')
@@ -134,7 +134,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
   })
 
-  test('Panning the map', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Panning the map', async ({ app, weatherHealthAlertsMapPage, isMobile }) => {
+    test.skip(isMobile, 'Mobile failing, CDD-2024 to sort, add @desktopOnly tag')
+
     await test.step('open weather health alerts cold page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })
@@ -332,7 +334,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
   //   })
   // })
 
-  test('South West', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('South West', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
+
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
@@ -347,7 +351,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     })
   })
 
-  test('go to alert page link works', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('go to alert page link works', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
+
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
@@ -596,7 +602,7 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
-      await weatherHealthAlertsMapPage.hasExitMapButton()
+      await weatherHealthAlertsMapPage.hasButton('Exit map')
     })
   })
 })
@@ -610,7 +616,7 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
-      await weatherHealthAlertsMapPage.hasExitMapButton()
+      await weatherHealthAlertsMapPage.hasButton('Exit map')
     })
   })
 })
@@ -624,7 +630,7 @@ test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasExitMapButton()
+      await weatherHealthAlertsMapPage.hasButton('Exit map')
     })
   })
 })

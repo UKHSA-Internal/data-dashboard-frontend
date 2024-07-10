@@ -104,10 +104,10 @@ const mockData: ComponentProps<typeof Table>['data'] = {
   ],
   y_axis: 'y-axis',
   x_axis: 'x-axis',
+  tag_manager_event_id: '',
   headline_number_columns: [],
   title: 'Table Title ABC/XYZ',
   body: 'Table Body',
-  tag_manager_event_id: '',
 }
 
 const mockSize = 'narrow'
