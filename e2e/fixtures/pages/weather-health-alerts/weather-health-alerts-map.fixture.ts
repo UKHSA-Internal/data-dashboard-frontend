@@ -23,11 +23,11 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('button', { name: 'Zoom in' })).toBeVisible()
     await expect(this.page.getByRole('button', { name: 'Zoom out' })).toBeVisible()
     await expect(this.page.getByRole('button', { name: 'Copyright information' })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
   }
 
   async hasButton(name: ButtonNames) {
-    await expect(this.page.getByRole('link', { name })).toBeVisible()
+    await expect(this.page.getByRole('button', { name })).toBeVisible()
   }
 
   async clickMapButton(name: string) {
@@ -42,10 +42,6 @@ export class WeatherHealthAlertsMapPage {
   async notHaveCopyrightModal() {
     await expect(this.page.getByRole('button', { name: 'Close' })).toBeHidden()
     await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeHidden()
-  }
-
-  async exitMap() {
-    await this.page.getByRole('link', { name: 'Exit map' }).click()
   }
 
   async clickRegion(region: string) {

@@ -26,7 +26,7 @@ test.describe('Weather health alerts map display', () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
     await test.step('exit map', async () => {
-      await weatherHealthAlertsMapPage.exitMap()
+      await weatherHealthAlertsMapPage.clickMapButton('Exit map')
     })
     await test.step('shows cold health alerts page', async () => {
       await app.hasHeading('Cold health alerts')
