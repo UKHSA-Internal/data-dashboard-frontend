@@ -23,11 +23,11 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('button', { name: 'Zoom in' })).toBeVisible()
     await expect(this.page.getByRole('button', { name: 'Zoom out' })).toBeVisible()
     await expect(this.page.getByRole('button', { name: 'Copyright information' })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
   }
 
-  async hasButton(name: string) {
-    await expect(this.page.getByRole('link', { name })).toBeVisible()
+  async hasExitMapButton() {
+    await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
   }
 
   async clickMapButton(name: ButtonNames) {
@@ -45,7 +45,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async exitMap() {
-    await this.page.getByRole('link', { name: 'Exit map' }).click()
+    await this.page.getByRole('button', { name: 'Exit map' }).click()
   }
 
   async clickRegion(region: string) {

@@ -596,7 +596,7 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
-      await weatherHealthAlertsMapPage.hasButton('Exit map')
+      await weatherHealthAlertsMapPage.hasExitMapButton()
     })
   })
 })
@@ -610,7 +610,7 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows exit button', async () => {
-      await weatherHealthAlertsMapPage.hasButton('Exit map')
+      await weatherHealthAlertsMapPage.hasExitMapButton()
     })
   })
 })
@@ -624,7 +624,7 @@ test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
     await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasButton('Exit map')
+      await weatherHealthAlertsMapPage.hasExitMapButton()
     })
   })
 })
