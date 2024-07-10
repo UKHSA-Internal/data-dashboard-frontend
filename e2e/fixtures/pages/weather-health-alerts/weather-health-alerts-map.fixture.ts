@@ -44,6 +44,10 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeHidden()
   }
 
+  async exitMap() {
+    await this.page.getByRole('button', { name: 'Exit map' }).click()
+  }
+
   async clickRegion(region: string) {
     await this.page.getByTestId(region).click()
   }

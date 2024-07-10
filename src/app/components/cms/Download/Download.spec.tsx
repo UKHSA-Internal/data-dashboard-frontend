@@ -65,7 +65,6 @@ const props: ComponentProps<typeof Download> = {
     headline_number_columns: [],
     title: 'Table Title',
     body: 'Table Body',
-    tag_manager_event_id: '',
   },
 }
 
