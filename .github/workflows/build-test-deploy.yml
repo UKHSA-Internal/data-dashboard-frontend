@@ -88,6 +88,22 @@ jobs:
         run: npm run lint
 
   ##############################################################################
+  # TypeScript
+  ##############################################################################
+
+  typescript:
+    name: TypeScript
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: TypeScript Compilation
+        run: npm run tsc
+
+  ##############################################################################
   # Unit tests
   ##############################################################################
 
@@ -152,9 +168,9 @@ jobs:
   # Success gate
   ###############################################################################
 
-  tests-success-gate:
-    name: Tests Success Check
-    needs: [unit-tests, quality-checks, lighthouse, e2e-tests]
+  success-gate:
+    name: Build Success Check
+    needs: [unit-tests, quality-checks, typescript, lighthouse, e2e-tests]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'
@@ -165,7 +181,7 @@ jobs:
 
   publish-image:
     name: Publish image to ECR
-    needs: [quality-checks, unit-tests, tests-success-gate]
+    needs: [success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
