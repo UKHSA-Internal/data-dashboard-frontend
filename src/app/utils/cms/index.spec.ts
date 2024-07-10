@@ -12,7 +12,6 @@ import {
   covid19PageMock,
   dashboardMock,
   metricsChildMocks,
-  metricsParentMock,
   whatsNewChildMocks,
   whatsNewParentMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/page'
@@ -31,7 +30,6 @@ import {
   getPageMetadata,
   getPagesByContentType,
   getPageTypeBySlug,
-  getParentPage,
   validateUrlWithCms,
 } from '.'
 
@@ -78,7 +76,6 @@ describe('validateUrlWithCms', () => {
   test('Nested metrics documentation child page', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock }) // Mock parent request
 
     const slug: Slug = ['metrics-documentation', 'new-cases-7days-sum']
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
@@ -89,7 +86,6 @@ describe('validateUrlWithCms', () => {
   test('Nested whats new child page', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewChildMocks[0] }) // Mock initial child request
-    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock }) // Mock parent request
 
     const slug: Slug = ['whats-new', 'soft-launch-of-the-ukhsa-data-dashboard']
     const result = await validateUrlWithCms(slug, PageType.WhatsNewChild)
@@ -109,7 +105,6 @@ describe('validateUrlWithCms', () => {
   test('404 Not Found when a URL cannot be matched against the CMS', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock }) // Mock parent request
 
     const slug: Slug = ['whats-new', 'new-cases-7days-sum']
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
@@ -306,26 +301,6 @@ describe('getHomePage', () => {
       expect(logger.error).toHaveBeenCalledWith(new Error('No homepage matches found'))
       expect(notFound).toHaveBeenCalledTimes(1)
 
-      expect(result).not.toBeDefined()
-    })
-  })
-})
-
-describe('getParentPage', () => {
-  describe('Successfully getting the parent page for a given page', () => {
-    test('returns page successfully', async () => {
-      getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
-      const result = await getParentPage(whatsNewChildMocks[0])
-      expect(result).toEqual<PageResponse<PageType.WhatsNewParent>>(whatsNewParentMock)
-    })
-  })
-
-  describe('Failing to get pages from content type from the API', () => {
-    test('getting the pages from the API fails with a server error', async () => {
-      getPage.mockRejectedValueOnce({ success: false, data: null, error: 'API call failed' })
-      const result = await getParentPage(whatsNewChildMocks[0])
-      expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
-      expect(notFound).toHaveBeenCalledTimes(1)
       expect(result).not.toBeDefined()
     })
   })

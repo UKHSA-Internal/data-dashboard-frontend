@@ -8,7 +8,7 @@ export const aboutPageMock: PageResponse<PageType.Common> = {
   meta: {
     type: 'common.CommonPage',
     detail_url: 'http://localhost/api/pages/115/',
-    html_url: null,
+    html_url: 'http://localhost/about/',
     slug: 'about',
     show_in_menus: true,
     seo_title: 'About | UKHSA data dashboard',

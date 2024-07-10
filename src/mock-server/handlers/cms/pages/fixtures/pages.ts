@@ -9,9 +9,7 @@ import {
   cookiesPageMock,
   covid19PageMock,
   dashboardMock,
-  howToUseThisDataPageMock,
   influenzaPageMock,
-  mapsPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
@@ -43,7 +41,7 @@ export const pagesWithHomeTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 6,
+    total_count: 4,
   },
   items: [
     {
@@ -57,30 +55,6 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         first_published_at: aboutPageMock.meta.first_published_at,
       },
       title: aboutPageMock.title,
-    },
-    {
-      id: mapsPageMock.id,
-      meta: {
-        type: mapsPageMock.meta.type,
-        detail_url: mapsPageMock.meta.detail_url,
-        html_url: mapsPageMock.meta.html_url,
-        slug: mapsPageMock.meta.slug,
-        show_in_menus: mapsPageMock.meta.show_in_menus,
-        first_published_at: mapsPageMock.meta.first_published_at,
-      },
-      title: mapsPageMock.title,
-    },
-    {
-      id: howToUseThisDataPageMock.id,
-      meta: {
-        type: howToUseThisDataPageMock.meta.type,
-        detail_url: howToUseThisDataPageMock.meta.detail_url,
-        html_url: howToUseThisDataPageMock.meta.html_url,
-        slug: howToUseThisDataPageMock.meta.slug,
-        show_in_menus: howToUseThisDataPageMock.meta.show_in_menus,
-        first_published_at: howToUseThisDataPageMock.meta.first_published_at,
-      },
-      title: howToUseThisDataPageMock.title,
     },
     {
       id: cookiesPageMock.id,

@@ -10,30 +10,22 @@ import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, slug2String, trimTrailingSlash } from '../app.utils'
-
-const ROOT_PAGE_TITLE = 'UKHSA Dashboard Root'
-
-const isRootLevelPage = (page: PageResponse<PageType>) => page.meta.parent.title === ROOT_PAGE_TITLE
+import { getPathSegments } from './slug'
 
 export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
-  const isHomePage = pageType === PageType.Home
-  const cmsSlug: Slug = []
-  let pageData: PageResponse<PageType>
-
-  if (isHomePage) {
-    pageData = await getHomePage()
+  // Homepage
+  if (pageType === PageType.Home) {
+    const pageData: PageResponse<PageType> = await getHomePage()
     return pageData
   }
 
-  const lastSlugPart = urlSlug[urlSlug.length - 1]
-  cmsSlug.push(lastSlugPart)
-  pageData = await getPageBySlug(urlSlug)
+  // All other pages
+  const pageData = await getPageBySlug(urlSlug)
+  const {
+    meta: { html_url: url },
+  } = pageData
 
-  let parentPage = pageData
-  while (!isRootLevelPage(parentPage)) {
-    parentPage = await getParentPage(parentPage)
-    cmsSlug.unshift(parentPage.meta.slug)
-  }
+  const cmsSlug = getPathSegments(url ?? '')
 
   if (slug2String(cmsSlug) !== slug2String(urlSlug)) {
     return notFound()
@@ -122,19 +114,6 @@ export const getHomePage = async () => {
     }
     const homePage = await getPageById<PageType.Home>(matches[0].id)
     return homePage
-  } catch (error) {
-    logger.error(error)
-    notFound()
-  }
-}
-
-export const getParentPage = async (page: PageResponse<PageType>) => {
-  try {
-    const parent = await getPage(page.meta.parent.id)
-    if (!parent.success) {
-      throw new Error(`No parent page found`)
-    }
-    return parent.data
   } catch (error) {
     logger.error(error)
     notFound()
