@@ -48,7 +48,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
       parent: {
-        id: 21,
+        id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
@@ -112,7 +112,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
       parent: {
-        id: 21,
+        id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
@@ -176,7 +176,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
       parent: {
-        id: 21,
+        id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
@@ -233,7 +233,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
       parent: {
-        id: 21,
+        id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
@@ -289,7 +289,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
       parent: {
-        id: 21,
+        id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
@@ -355,7 +355,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       first_published_at: '2023-10-24T16:10:44.385654+01:00',
       alias_of: null,
       parent: {
-        id: 21,
+        id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
           detail_url: 'http://localhost/api/pages/25/',
