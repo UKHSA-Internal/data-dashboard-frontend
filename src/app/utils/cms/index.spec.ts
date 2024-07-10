@@ -20,6 +20,7 @@ import {
   pagesWithCompositeTypeMock,
   pagesWithHomeTypeMock,
   pagesWithMetricsChildTypeMock,
+  pagesWithMetricsParentTypeMock,
   pagesWithTopicTypeMock,
   pagesWithWhatsNewChildTypeMock,
   pagesWithWhatsNewParentTypeMock,
@@ -176,6 +177,50 @@ describe('getPageMetadata', () => {
         title: 'Bulk downloads | UKHSA data dashboard',
       },
     })
+  })
+
+  test('Getting metadata for metrics-documentation', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {
+      search: 'covid-19',
+    }
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    expect(result).toEqual<Metadata>({
+      alternates: { canonical: 'http://fake-backend.gov.uk/metrics-documentation' },
+      description: '',
+      openGraph: {
+        description: '',
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      },
+      title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      twitter: {
+        description: '',
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      },
+    })
+  })
+
+  test('Failing to get metrics metadata', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockRejectedValueOnce({ success: false, data: null, error: 'API call failed' })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    expect(logger.error).toHaveBeenCalledWith({
+      data: null,
+      error: 'API call failed',
+      success: false,
+    })
+    expect(notFound).toHaveBeenCalled()
+    expect(result).not.toBeDefined()
   })
 
   test('Getting metadata for whats-new', async () => {

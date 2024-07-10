@@ -1,3 +1,5 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
 import { test } from '../../fixtures/app.fixture'
@@ -115,6 +117,8 @@ const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAl
 
 test.describe('Feature flag enabled', () => {
   test.describe('Weather health alerts region pages', () => {
+    test.describe.configure({ mode: 'parallel' })
+
     for (const { weather, region, status, fid } of cases) {
       const regionDashCase = region.toLowerCase().replaceAll(' ', '-')
 
@@ -134,39 +138,211 @@ test.describe('Feature flag enabled', () => {
         await test.step('has heading', async () => {
           await app.hasHeading(`${weather}-health alert for ${region}`)
         })
-        await test.step('has last updated', () => {
-          weatherHealthAlertsRegionPage.hasLastUpdated()
+        await test.step('has last updated', async () => {
+          await weatherHealthAlertsRegionPage.hasLastUpdated()
         })
         // eslint-disable-next-line playwright/no-conditional-in-test
         if (status !== 'Green') {
-          await test.step('has alert banner', () => {
-            weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
+          await test.step('has alert banner', async () => {
+            await weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
           })
         }
-        await test.step('has summary list', () => {
-          weatherHealthAlertsRegionPage.hasAlertSummaryList({
+        await test.step('has summary list', async () => {
+          await weatherHealthAlertsRegionPage.hasAlertSummaryList({
             type: `${weather === 'cold' ? 'Cold' : 'Heat'} Health Alert`,
             start: '6 May 2024 at 12:00pm',
             end: '8 May 2024 at 12:00pm',
             status,
           })
         })
-        await test.step('has body content', () => {
-          weatherHealthAlertsRegionPage.hasBodyContent(
+        await test.step('has body content', async () => {
+          await weatherHealthAlertsRegionPage.hasBodyContent(
             'Severe impacts are expected across the health and social care sector due to forecast weather conditions'
           )
         })
-        await test.step('has map link', () => {
-          weatherHealthAlertsRegionPage.hasMapLink(`?v=map&type=${weather}&fid=${fid}`)
+        await test.step('has map link', async () => {
+          await weatherHealthAlertsRegionPage.hasMapLink(`?v=map&type=${weather}&fid=${fid}`)
         })
         await test.step('map link works as expected', async () => {
           await weatherHealthAlertsRegionPage.opensMapLink()
         })
-        await test.step('has related links section', () => {
-          weatherHealthAlertsRegionPage.hasRelatedLinks()
+        await test.step('has related links section', async () => {
+          await weatherHealthAlertsRegionPage.hasRelatedLinks()
         })
       })
     }
+  })
+
+  test.describe('WHA region smoke test - desktop @smoke', () => {
+    test.use({ viewport: viewports.desktop })
+
+    test('Check region pages', async ({ app }) => {
+      await test.step('North East', async () => {
+        await app.goto('/weather-health-alerts/cold/north-east')
+        await app.hasHeading('North East')
+      })
+      await test.step('North West', async () => {
+        await app.goto('/weather-health-alerts/heat/north-west')
+        await app.hasHeading('North West')
+      })
+      await test.step('Yorkshire and The Humber', async () => {
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
+        await app.hasHeading('Yorkshire and The Humber')
+      })
+      await test.step('East Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/east-midlands')
+        await app.hasHeading('East Midlands')
+      })
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
+      })
+      await test.step('East of England', async () => {
+        await app.goto('/weather-health-alerts/cold/east-of-england')
+        await app.hasHeading('East of England')
+      })
+      await test.step('London', async () => {
+        await app.goto('/weather-health-alerts/heat/london')
+        await app.hasHeading('London')
+      })
+      await test.step('South East', async () => {
+        await app.goto('/weather-health-alerts/heat/south-east')
+        await app.hasHeading('South East')
+      })
+      await test.step('South West', async () => {
+        await app.goto('/weather-health-alerts/heat/south-west')
+        await app.hasHeading('South West')
+      })
+    })
+  })
+
+  test.describe('WHA region smoke test - tablet @smoke', () => {
+    test.use({ viewport: viewports.tablet })
+
+    test('Check region pages', async ({ app }) => {
+      await test.step('North East', async () => {
+        await app.goto('/weather-health-alerts/cold/north-east')
+        await app.hasHeading('North East')
+      })
+      await test.step('North West', async () => {
+        await app.goto('/weather-health-alerts/heat/north-west')
+        await app.hasHeading('North West')
+      })
+      await test.step('Yorkshire and The Humber', async () => {
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
+        await app.hasHeading('Yorkshire and The Humber')
+      })
+      await test.step('East Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/east-midlands')
+        await app.hasHeading('East Midlands')
+      })
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
+      })
+      await test.step('East of England', async () => {
+        await app.goto('/weather-health-alerts/cold/east-of-england')
+        await app.hasHeading('East of England')
+      })
+      await test.step('London', async () => {
+        await app.goto('/weather-health-alerts/heat/london')
+        await app.hasHeading('London')
+      })
+      await test.step('South East', async () => {
+        await app.goto('/weather-health-alerts/heat/south-east')
+        await app.hasHeading('South East')
+      })
+      await test.step('South West', async () => {
+        await app.goto('/weather-health-alerts/heat/south-west')
+        await app.hasHeading('South West')
+      })
+    })
+  })
+
+  test.describe('WHA region smoke test - mobile @smoke', () => {
+    test.use({ viewport: viewports.mobile })
+
+    test('Check region pages', async ({ app }) => {
+      await test.step('North East', async () => {
+        await app.goto('/weather-health-alerts/cold/north-east')
+        await app.hasHeading('North East')
+      })
+      await test.step('North West', async () => {
+        await app.goto('/weather-health-alerts/heat/north-west')
+        await app.hasHeading('North West')
+      })
+      await test.step('Yorkshire and The Humber', async () => {
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
+        await app.hasHeading('Yorkshire and The Humber')
+      })
+      await test.step('East Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/east-midlands')
+        await app.hasHeading('East Midlands')
+      })
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
+      })
+      await test.step('East of England', async () => {
+        await app.goto('/weather-health-alerts/cold/east-of-england')
+        await app.hasHeading('East of England')
+      })
+      await test.step('London', async () => {
+        await app.goto('/weather-health-alerts/heat/london')
+        await app.hasHeading('London')
+      })
+      await test.step('South East', async () => {
+        await app.goto('/weather-health-alerts/heat/south-east')
+        await app.hasHeading('South East')
+      })
+      await test.step('South West', async () => {
+        await app.goto('/weather-health-alerts/heat/south-west')
+        await app.hasHeading('South West')
+      })
+    })
+  })
+
+  test.describe('WHA region smoke test - no JavaScript @smoke', () => {
+    test.use({ javaScriptEnabled: false, viewport: viewports.mobile })
+
+    test('Check region pages', async ({ app }) => {
+      await test.step('North East', async () => {
+        await app.goto('/weather-health-alerts/cold/north-east')
+        await app.hasHeading('North East')
+      })
+      await test.step('North West', async () => {
+        await app.goto('/weather-health-alerts/heat/north-west')
+        await app.hasHeading('North West')
+      })
+      await test.step('Yorkshire and The Humber', async () => {
+        await app.goto('/weather-health-alerts/cold/yorkshire-and-the-humber')
+        await app.hasHeading('Yorkshire and The Humber')
+      })
+      await test.step('East Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/east-midlands')
+        await app.hasHeading('East Midlands')
+      })
+      await test.step('West Midlands', async () => {
+        await app.goto('/weather-health-alerts/cold/west-midlands')
+        await app.hasHeading('West Midlands')
+      })
+      await test.step('East of England', async () => {
+        await app.goto('/weather-health-alerts/cold/east-of-england')
+        await app.hasHeading('East of England')
+      })
+      await test.step('London', async () => {
+        await app.goto('/weather-health-alerts/heat/london')
+        await app.hasHeading('London')
+      })
+      await test.step('South East', async () => {
+        await app.goto('/weather-health-alerts/heat/south-east')
+        await app.hasHeading('South East')
+      })
+      await test.step('South West', async () => {
+        await app.goto('/weather-health-alerts/heat/south-west')
+        await app.hasHeading('South West')
+      })
+    })
   })
 })
 

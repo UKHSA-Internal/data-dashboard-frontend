@@ -1,6 +1,7 @@
 {
   "govUkTitle": "GOV.UK",
   "documentTitlePagination": "(page {{page}} of {{totalPages}}) |",
+  "documentTitlePagination_withSearch": "- \"{{search}}\" (page {{page}} of {{totalPages}}) |",
   "serviceTitle": "UKHSA data dashboard",
   "skipLink": "Skip to main content",
   "externalLinkAltText": "(Opens in a new tab)",

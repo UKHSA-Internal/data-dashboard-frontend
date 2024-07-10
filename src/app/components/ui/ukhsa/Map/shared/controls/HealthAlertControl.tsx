@@ -65,7 +65,7 @@ const AlertDialogContent = () => {
       <SheetHeader>
         <ScrollArea className="h-[calc(100vh-90px)]">
           <SheetTitle className="mb-0 flex flex-wrap items-center gap-2">{regionName}</SheetTitle>
-          <SummaryList className="govuk-!-margin-bottom-3">
+          <SummaryList className="govuk-!-margin-bottom-3" aria-label="Weather health alerts summary">
             <SummaryListRow>
               <SummaryListKey>{t('map.alertDialog.typeKey')}</SummaryListKey>
               <SummaryListValue>{t('map.alertDialog.typeValue', { context: category })}</SummaryListValue>
