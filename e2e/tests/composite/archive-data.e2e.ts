@@ -50,7 +50,7 @@ test.describe('Archive data download - no JavaScript', () => {
   })
 })
 
-test.describe('Archive data download - mobile', () => {
+test.describe('Archive data download - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ archiveDataPage, app }) => {
@@ -59,7 +59,7 @@ test.describe('Archive data download - mobile', () => {
   })
 })
 
-test.describe('Archive data download - tablet', () => {
+test.describe('Archive data download - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
   test('displays the navigation on tablet', async ({ archiveDataPage, app }) => {
@@ -68,7 +68,7 @@ test.describe('Archive data download - tablet', () => {
   })
 })
 
-test.describe('Archive data download - desktop', () => {
+test.describe('Archive data download - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ archiveDataPage, app }) => {

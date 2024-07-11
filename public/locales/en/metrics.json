@@ -1,6 +1,4 @@
 {
-  "documentTitlePagination": "(page {{page}} of {{totalPages}}) |",
-  "documentTitlePagination_withSearch": "- \"{{search}}\" (page {{page}} of {{totalPages}}) |",
   "metricTitle": "<0><0>Metric title: </0>{{value}}</0>",
   "metricDescription": "<0><0>Metric description: </0>{{value}}</0>",
   "emptyDescriptionText": "No {{value}} available",

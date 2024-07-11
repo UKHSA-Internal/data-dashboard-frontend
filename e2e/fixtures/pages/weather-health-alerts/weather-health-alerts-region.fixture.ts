@@ -2,12 +2,7 @@ import { expect, Page } from '@playwright/test'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
-interface AlertSummaryList {
-  type: string
-  status: string
-  start: string
-  end: string
-}
+import { SummaryList } from './shared/types'
 
 export class WeatherHealthAlertsRegionPage {
   readonly page: Page
@@ -64,7 +59,7 @@ export class WeatherHealthAlertsRegionPage {
     await expect(this.page.getByLabel('Alert banner')).toBeHidden()
   }
 
-  async hasAlertSummaryList({ type, status, start, end }: AlertSummaryList) {
+  async hasAlertSummaryList({ type, status, start, end }: SummaryList) {
     const wrapper = this.page.getByLabel('Alert details')
 
     await expect(wrapper.getByText('Type')).toBeVisible()
@@ -95,9 +90,9 @@ export class WeatherHealthAlertsRegionPage {
   async opensMapLink() {
     await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
 
-    await expect(this.page.getByRole('link', { name: 'Exit map' })).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
 
-    await this.page.getByRole('link', { name: 'Exit map' }).click()
+    await this.page.getByRole('button', { name: 'Exit map' }).click()
   }
 
   async hasRelatedLinks() {

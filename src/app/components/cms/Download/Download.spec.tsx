@@ -61,6 +61,7 @@ const props: ComponentProps<typeof Download> = {
     ],
     y_axis: 'y-axis',
     x_axis: 'x-axis',
+    tag_manager_event_id: '',
     headline_number_columns: [],
     title: 'Table Title',
     body: 'Table Body',
