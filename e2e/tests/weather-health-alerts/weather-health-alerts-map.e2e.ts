@@ -375,7 +375,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
   })
 })
 
-test.describe('Accessing Weather Health Alerts Map Regions by Keyboard', () => {
+test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopOnly', () => {
   test.describe.configure({ mode: 'parallel' })
 
   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
