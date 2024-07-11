@@ -392,6 +392,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(1)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('North East')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
     })
     await test.step('has summary component in dialog', async () => {
@@ -423,6 +424,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(2)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('North West')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
     })
     await test.step('has summary component in dialog', async () => {
@@ -454,6 +456,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(4)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
     })
     await test.step('has summary component in dialog', async () => {
@@ -485,6 +488,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(7)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('London')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
     })
     await test.step('has summary component in dialog', async () => {
@@ -516,6 +520,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(3)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Yorkshire and The Humber')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('Yorkshire and The Humber')
     })
   })
@@ -534,6 +539,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(5)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('West Midlands')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('West Midlands')
     })
   })
@@ -552,6 +558,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(6)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('East of England')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('East of England')
     })
   })
@@ -570,6 +577,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(8)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('South East')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('South East')
     })
   })
@@ -588,6 +596,7 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(9)
     })
     await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('South West')
       await weatherHealthAlertsMapPage.hasDialogContentTitle('South West')
     })
   })
