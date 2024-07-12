@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import dayjs from 'dayjs'
 import { kebabCase } from 'lodash'
-import { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -23,45 +22,13 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useReturnPathWithParams } from '@/app/hooks/useReturnPathWithParams'
 import { useTranslation } from '@/app/i18n'
+import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
-interface WhatsNewParentPageProps {
-  searchParams: {
-    page?: number
-  }
-}
-
-export async function generateMetadata({ searchParams: { page = 1 } }: WhatsNewParentPageProps): Promise<Metadata> {
-  const { t } = await useTranslation('whatsNew')
-
-  const {
-    meta: { seo_title, search_description },
-  } = await getPageBySlug('whats-new', { type: PageType.WhatsNewParent })
-
-  const whatsNewEntries = await getWhatsNewPages({ page })
-
-  if (!whatsNewEntries.success) {
-    logger.info(whatsNewEntries.error.message)
-    return redirect('/error')
-  }
-
-  const {
-    data: {
-      meta: { total_count: totalItems },
-    },
-  } = whatsNewEntries
-
-  const totalPages = Math.ceil(totalItems / WHATS_NEW_PAGE_SIZE) || 1
-
-  const title = seo_title.replace('|', t('documentTitlePagination', { page, totalPages }))
-
-  return {
-    title,
-    description: search_description,
-  }
-}
-
-export default async function WhatsNewParentPage({ searchParams: { page } }: WhatsNewParentPageProps) {
+export default async function WhatsNewParentPage({
+  slug,
+  searchParams: { page },
+}: PageComponentBaseProps<{ page?: number }>) {
   const { t } = await useTranslation('whatsNew')
 
   const setReturnPath = useReturnPathWithParams()
@@ -71,7 +38,7 @@ export default async function WhatsNewParentPage({ searchParams: { page } }: Wha
     body,
     last_published_at: lastUpdated,
     related_links: relatedLinks,
-  } = await getPageBySlug<PageType.WhatsNewParent>('whats-new', { type: PageType.WhatsNewParent })
+  } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })
 
   const whatsNewEntries = await getWhatsNewPages({ page })
 
