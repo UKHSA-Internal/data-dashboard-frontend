@@ -63,7 +63,7 @@ jobs:
       - name: Start Applicaton
         run: NODE_ENV=test npm run start &
       - name: Unlighthouse assertions and client
-        run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=69
+        run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
       - uses: actions/upload-artifact@v3
         if: always()
         with:
