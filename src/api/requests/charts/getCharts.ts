@@ -28,6 +28,8 @@ export const requestSchema = z.object({
       label: z.string().nullable().optional(),
       line_colour: ChartLineColours.nullable().optional(),
       line_type: ChartLineTypes.nullable().optional(),
+      use_smooth_lines: z.boolean().optional(),
+      use_markers: z.boolean().optional(),
     })
   ),
 })

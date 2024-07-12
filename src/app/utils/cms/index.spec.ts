@@ -12,6 +12,7 @@ import {
   covid19PageMock,
   dashboardMock,
   metricsChildMocks,
+  metricsParentMock,
   whatsNewChildMocks,
   whatsNewParentMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/page'
@@ -19,6 +20,7 @@ import {
   pagesWithCompositeTypeMock,
   pagesWithHomeTypeMock,
   pagesWithMetricsChildTypeMock,
+  pagesWithMetricsParentTypeMock,
   pagesWithTopicTypeMock,
   pagesWithWhatsNewChildTypeMock,
   pagesWithWhatsNewParentTypeMock,
@@ -30,6 +32,7 @@ import {
   getPageMetadata,
   getPagesByContentType,
   getPageTypeBySlug,
+  getParentPage,
   validateUrlWithCms,
 } from '.'
 
@@ -173,6 +176,50 @@ describe('getPageMetadata', () => {
     })
   })
 
+  test('Getting metadata for metrics-documentation', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {
+      search: 'covid-19',
+    }
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    expect(result).toEqual<Metadata>({
+      alternates: { canonical: 'http://fake-backend.gov.uk/metrics-documentation' },
+      description: '',
+      openGraph: {
+        description: '',
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      },
+      title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      twitter: {
+        description: '',
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      },
+    })
+  })
+
+  test('Failing to get metrics metadata', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockRejectedValueOnce({ success: false, data: null, error: 'API call failed' })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    expect(logger.error).toHaveBeenCalledWith({
+      data: null,
+      error: 'API call failed',
+      success: false,
+    })
+    expect(notFound).toHaveBeenCalled()
+    expect(result).not.toBeDefined()
+  })
+
   test('Getting metadata for whats-new', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
@@ -301,6 +348,26 @@ describe('getHomePage', () => {
       expect(logger.error).toHaveBeenCalledWith(new Error('No homepage matches found'))
       expect(notFound).toHaveBeenCalledTimes(1)
 
+      expect(result).not.toBeDefined()
+    })
+  })
+})
+
+describe('getParentPage', () => {
+  describe('Successfully getting the parent page for a given page', () => {
+    test('returns page successfully', async () => {
+      getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+      const result = await getParentPage(whatsNewChildMocks[0])
+      expect(result).toEqual<PageResponse<PageType.WhatsNewParent>>(whatsNewParentMock)
+    })
+  })
+
+  describe('Failing to get pages from content type from the API', () => {
+    test('getting the pages from the API fails with a server error', async () => {
+      getPage.mockRejectedValueOnce({ success: false, data: null, error: 'API call failed' })
+      const result = await getParentPage(whatsNewChildMocks[0])
+      expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
+      expect(notFound).toHaveBeenCalledTimes(1)
       expect(result).not.toBeDefined()
     })
   })

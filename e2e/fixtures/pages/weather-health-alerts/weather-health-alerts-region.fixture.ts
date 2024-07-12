@@ -2,12 +2,7 @@ import { expect, Page } from '@playwright/test'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
-interface AlertSummaryList {
-  type: string
-  status: string
-  start: string
-  end: string
-}
+import { SummaryList } from './shared/types'
 
 export class WeatherHealthAlertsRegionPage {
   readonly page: Page
@@ -64,7 +59,7 @@ export class WeatherHealthAlertsRegionPage {
     await expect(this.page.getByLabel('Alert banner')).toBeHidden()
   }
 
-  async hasAlertSummaryList({ type, status, start, end }: AlertSummaryList) {
+  async hasAlertSummaryList({ type, status, start, end }: SummaryList) {
     const wrapper = this.page.getByLabel('Alert details')
 
     await expect(wrapper.getByText('Type')).toBeVisible()

@@ -2,9 +2,9 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getPage, PageResponse } from '@/api/requests/cms/getPage'
-import { getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
+import { getMetricsPages, getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
+import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { useTranslation } from '@/app/i18n'
 import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
@@ -36,12 +36,13 @@ export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
 
 export async function getPageMetadata(
   urlSlug: Slug,
-  searchParams: SearchParams<{ page: number; areaName: string; areaType: string }>,
+  searchParams: SearchParams<{ page: number; search: string; areaName: string; areaType: string }>,
   pageType: PageType
 ): Promise<Metadata> {
   const { t } = await useTranslation('common')
 
   const page = searchParams.page ?? 1
+  const search = searchParams.search
 
   const isHomePage = pageType === PageType.Home
 
@@ -57,6 +58,29 @@ export async function getPageMetadata(
     } = pageData
 
     let title = seoTitle ?? pageTitle
+
+    // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
+    if (pageType === PageType.MetricsParent) {
+      const metricsEntries = await getMetricsPages({ search, page })
+
+      if (!metricsEntries.success) {
+        logger.info(metricsEntries.error.message)
+        return notFound()
+      }
+
+      const {
+        data: {
+          meta: { total_count: totalItems },
+        },
+      } = metricsEntries
+
+      const totalPages = Math.ceil(totalItems / METRICS_DOCUMENTATION_PAGE_SIZE) || 1
+
+      title = seoTitle.replace(
+        '|',
+        t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+      )
+    }
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.WhatsNewParent) {
@@ -114,6 +138,19 @@ export const getHomePage = async () => {
     }
     const homePage = await getPageById<PageType.Home>(matches[0].id)
     return homePage
+  } catch (error) {
+    logger.error(error)
+    notFound()
+  }
+}
+
+export const getParentPage = async (page: PageResponse<PageType>) => {
+  try {
+    const parent = await getPage(page.meta.parent.id)
+    if (!parent.success) {
+      throw new Error(`No parent page found`)
+    }
+    return parent.data
   } catch (error) {
     logger.error(error)
     notFound()
