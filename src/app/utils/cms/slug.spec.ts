@@ -2,7 +2,7 @@
 
 import { Slug } from '@/app/types'
 
-import { extractRootSlug } from './slug'
+import { extractRootSlug, getPathSegments } from './slug'
 
 // Define the test suite for the extractRootSlug function
 describe('extractRootSlug', () => {
@@ -25,5 +25,47 @@ describe('extractRootSlug', () => {
     const slug: Slug = []
     const result = extractRootSlug(slug)
     expect(result).toBe('/')
+  })
+})
+
+describe('getPathSegments', () => {
+  test('handle url with single path segment', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/'
+    expect(getPathSegments(url)).toEqual<Slug>(['access-our-data'])
+  })
+
+  test('handle url with multiple path segments', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/topics/covid-19'
+    expect(getPathSegments(url)).toEqual<Slug>(['topics', 'covid-19'])
+  })
+
+  test('handle unexpected values', () => {
+    const url = ''
+    expect(getPathSegments(url)).toEqual<Slug>([])
+  })
+
+  test('handle URLs without trailing slash', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data'
+    expect(getPathSegments(url)).toEqual<Slug>(['access-our-data'])
+  })
+
+  test('handle root URLs', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/'
+    expect(getPathSegments(url)).toEqual<Slug>([])
+  })
+
+  test('handle URLs with query parameters', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/?query=param'
+    expect(getPathSegments(url)).toEqual<Slug>(['access-our-data'])
+  })
+
+  test('handle URLs with hash fragments', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/#fragment'
+    expect(getPathSegments(url)).toEqual<Slug>(['access-our-data'])
+  })
+
+  test('handle URLs with both query parameters and hash fragments', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/?query=param#fragment'
+    expect(getPathSegments(url)).toEqual<Slug>(['access-our-data'])
   })
 })
