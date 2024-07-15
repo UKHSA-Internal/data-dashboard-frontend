@@ -59,6 +59,14 @@ export async function getPageMetadata(
 
     let title = seoTitle ?? pageTitle
 
+    if (pageType === PageType.Topic) {
+      const areaName = searchParams.areaName
+
+      if (areaName) {
+        title = seoTitle.replace('|', t('areaSelector.documentTitle', { areaName }))
+      }
+    }
+
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.MetricsParent) {
       const metricsEntries = await getMetricsPages({ search, page })

@@ -176,6 +176,31 @@ describe('getPageMetadata', () => {
     })
   })
 
+  test('Getting metadata for topic pages', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithTopicTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: covid19PageMock })
+
+    const slug: Slug = ['topics', 'covid-19']
+    const searchParams: SearchParams = {
+      areaName: 'England',
+    }
+    const result = await getPageMetadata(slug, searchParams, PageType.Topic)
+
+    expect(result).toEqual<Metadata>({
+      alternates: { canonical: 'http://fake-backend.gov.uk/topics/covid-19' },
+      description: 'Overall summary of COVID-19 in circulation within the UK',
+      openGraph: {
+        description: 'Overall summary of COVID-19 in circulation within the UK',
+        title: 'COVID-19  in England | UKHSA data dashboard',
+      },
+      title: 'COVID-19  in England | UKHSA data dashboard',
+      twitter: {
+        description: 'Overall summary of COVID-19 in circulation within the UK',
+        title: 'COVID-19  in England | UKHSA data dashboard',
+      },
+    })
+  })
+
   test('Getting metadata for metrics-documentation', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })

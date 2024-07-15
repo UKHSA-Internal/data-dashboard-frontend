@@ -349,7 +349,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       search_description: '',
       type: 'metrics_documentation.MetricsDocumentationChildEntry',
       detail_url: 'http://localhost/api/pages/29/',
-      html_url: 'http://localhost/metrics-documentation/metrics-child-mock-${index + 1}',
+      html_url: `http://localhost/metrics-documentation/metrics-child-mock-${index + 1}`,
       slug: `metrics-child-mock-${index + 1}`,
       show_in_menus: false,
       first_published_at: '2023-10-24T16:10:44.385654+01:00',

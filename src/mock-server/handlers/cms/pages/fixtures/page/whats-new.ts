@@ -139,7 +139,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
       search_description: '',
       type: 'whats_new.WhatsNewChildEntry',
       detail_url: 'http://localhost/api/pages/24/',
-      html_url: 'http://localhost/whats-new/whats-new-child-mock-${index + 1}',
+      html_url: `http://localhost/whats-new/whats-new-child-mock-${index + 1}`,
       slug: `whats-new-child-mock-${index + 1}`,
       show_in_menus: false,
       first_published_at: '2023-10-24T17:22:25.297408+01:00',
