@@ -28,10 +28,10 @@ export const mapRole = 'application'
 export const mapTitle = 'Interactive adverse weather map viewer'
 
 // Default map zoom level
-export const zoom = 7
+export const zoom = 6
 
 // Minimum zoom level allowed for the map
-export const minZoom = 6
+export const minZoom = 7
 
 // Maximum zoom level allowed for the map
 export const maxZoom = 10

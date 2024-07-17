@@ -9,6 +9,9 @@ declare namespace NodeJS {
     UNLEASH_SERVER_API_URL: string
     UNLEASH_SERVER_API_TOKEN: string
     FEATURE_FLAGS_AUTH_KEY: string
+    ESRI_CLIENT_URL: string
+    ESRI_CLIENT_ID: string
+    ESRI_CLIENT_SECRET: string
   }
 }
 

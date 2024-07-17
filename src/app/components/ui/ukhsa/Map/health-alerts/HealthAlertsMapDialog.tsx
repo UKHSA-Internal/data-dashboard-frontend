@@ -5,7 +5,14 @@ import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { useMemo } from 'react'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
-import { Dialog, DialogClose, DialogContent, DialogHeader, DialogTitle } from '@/app/components/ui/ukhsa/Dialog/Dialog'
+import {
+  Dialog,
+  DialogClose,
+  DialogContent,
+  DialogHeader,
+  DialogOverlay,
+  DialogTitle,
+} from '@/app/components/ui/ukhsa/Dialog/Dialog'
 import ExitMapIcon from '@/app/components/ui/ukhsa/Icons/ExitMap'
 import { type GeoJSONProps } from '@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'
 import { Skeleton } from '@/app/components/ui/ukhsa/Skeleton/Skeleton'
@@ -18,7 +25,7 @@ const { Map, BaseLayer, ChoroplethLayer, HealthAlertControl } = {
     ssr: false,
     loading: () => <Skeleton className="h-screen" />,
   }),
-  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
+  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayerOSM'), {
     ssr: false,
   }),
   ChoroplethLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
@@ -72,9 +79,9 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
 
   return (
     <Dialog open={!!mapOpen} onOpenChange={(isOpen) => !isOpen && setMapOpen(null)}>
+      <DialogOverlay />
       <DialogContent
-        className="p-0 no-js:hidden"
-        fullscreen
+        className="w-3/4 p-0 no-js:hidden"
         closeButton={
           <DialogClose className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2">
             <ExitMapIcon />
