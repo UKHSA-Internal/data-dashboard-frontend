@@ -106,6 +106,7 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
   try {
     const searchParams = new URLSearchParams()
     searchParams.set('limit', '200') // TODO: This is a temporary fix to ensure the backend page limit is not hit
+    searchParams.set('fields', 'html_url')
 
     if (additionalParams) {
       for (const key in additionalParams) {

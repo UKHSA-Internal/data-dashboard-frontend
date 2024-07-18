@@ -7,6 +7,7 @@ import CompositePage from '@/app/components/cms/pages/Composite'
 import HomePage from '@/app/components/cms/pages/Home'
 import MetricsChildPage from '@/app/components/cms/pages/MetricsDocumentationChild'
 import MetricsParentPage from '@/app/components/cms/pages/MetricsDocumentationParent'
+import TopicPage from '@/app/components/cms/pages/Topic'
 import WhatsNewChildPage from '@/app/components/cms/pages/WhatsNewChild'
 import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
@@ -27,15 +28,15 @@ export async function generateMetadata({
   return await getPageMetadata(slug, searchParams, pageType)
 }
 
-const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps> | null> = {
+const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = {
   [PageType.Home]: HomePage,
   [PageType.Common]: CompositePage,
   [PageType.Composite]: CompositePage,
+  [PageType.Topic]: TopicPage,
   [PageType.MetricsParent]: MetricsParentPage,
   [PageType.MetricsChild]: MetricsChildPage,
   [PageType.WhatsNewParent]: WhatsNewParentPage,
   [PageType.WhatsNewChild]: WhatsNewChildPage,
-  [PageType.Topic]: null,
 }
 
 /**
