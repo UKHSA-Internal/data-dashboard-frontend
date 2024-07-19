@@ -60,12 +60,12 @@ export function AttributionControl({ position }: AttributionControlProps) {
     <Control position={position}>
       <Dialog modal>
         {dialogTrigger}
-        <DialogContent>
+        <DialogContent className="max-h-[300px] max-w-lg">
           <DialogHeader aria-hidden className="govuk-visually-hidden">
             <DialogTitle>&copy; Copyright</DialogTitle>
           </DialogHeader>
-          <ScrollArea className="h-[10rem]">
-            <p>{text}</p>
+          <ScrollArea>
+            <p className="whitespace-pre-wrap">{text}</p>
             <ScrollBar />
           </ScrollArea>
         </DialogContent>

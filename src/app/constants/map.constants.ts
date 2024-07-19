@@ -73,3 +73,6 @@ export const geoJsonFeatureId = 'RGN23CD' satisfies keyof Feature['properties']
 
 // The Name property of the GeoJson feature properties object
 export const geoJsonFeatureName = 'RGN23NM' satisfies keyof Feature['properties']
+
+// License number for Ordinance Survey Maps (OSMaps)
+export const ordinanceSurveyMapsLicense = '100016969'

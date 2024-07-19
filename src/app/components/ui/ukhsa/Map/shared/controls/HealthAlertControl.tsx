@@ -127,7 +127,7 @@ export default function HealthAlertControl() {
           }
         }}
       >
-        <SheetContent side="left" className="w-3/4">
+        <SheetContent side="left">
           <Suspense fallback={<DialogSkeleton />}>
             <AlertDialogContent />
           </Suspense>
