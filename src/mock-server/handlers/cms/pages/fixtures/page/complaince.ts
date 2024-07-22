@@ -8,7 +8,7 @@ export const compliancePageMock: PageResponse<PageType.Common> = {
   meta: {
     type: 'common.CommonPage',
     detail_url: 'http://localhost/api/pages/156/',
-    html_url: null,
+    html_url: 'http://localhost/compliance/',
     slug: 'compliance',
     show_in_menus: false,
     seo_title: 'Compliance | UKHSA data dashboard',
