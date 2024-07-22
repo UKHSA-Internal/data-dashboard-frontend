@@ -10,30 +10,22 @@ import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, slug2String, trimTrailingSlash } from '../app.utils'
-
-const ROOT_PAGE_TITLE = 'UKHSA Dashboard Root'
-
-const isRootLevelPage = (page: PageResponse<PageType>) => page.meta.parent.title === ROOT_PAGE_TITLE
+import { getPathSegments } from './slug'
 
 export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
-  const isHomePage = pageType === PageType.Home
-  const cmsSlug: Slug = []
-  let pageData: PageResponse<PageType>
-
-  if (isHomePage) {
-    pageData = await getHomePage()
+  // Homepage
+  if (pageType === PageType.Home) {
+    const pageData: PageResponse<PageType> = await getHomePage()
     return pageData
   }
 
-  const lastSlugPart = urlSlug[urlSlug.length - 1]
-  cmsSlug.push(lastSlugPart)
-  pageData = await getPageBySlug(urlSlug)
+  // All other pages
+  const pageData = await getPageBySlug(urlSlug)
+  const {
+    meta: { html_url: url },
+  } = pageData
 
-  let parentPage = pageData
-  while (!isRootLevelPage(parentPage)) {
-    parentPage = await getParentPage(parentPage)
-    cmsSlug.unshift(parentPage.meta.slug)
-  }
+  const cmsSlug = getPathSegments(url ?? '')
 
   if (slug2String(cmsSlug) !== slug2String(urlSlug)) {
     return notFound()
@@ -66,6 +58,14 @@ export async function getPageMetadata(
     } = pageData
 
     let title = seoTitle ?? pageTitle
+
+    if (pageType === PageType.Topic) {
+      const areaName = searchParams.areaName
+
+      if (areaName) {
+        title = seoTitle.replace('|', t('areaSelector.documentTitle', { areaName }))
+      }
+    }
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.MetricsParent) {
