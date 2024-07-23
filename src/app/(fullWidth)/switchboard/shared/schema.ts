@@ -26,6 +26,7 @@ export const switchBoardSchema = z.object({
   }),
   flags: z.object({
     'adverse-weather': z.enum(['enabled', 'disabled']),
+    'map-tile-provider': z.enum(['OpenStreetMaps', 'OrdinanceSurveyMaps', 'ArcGISEsri']),
   }),
 })
 

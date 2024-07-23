@@ -4,9 +4,10 @@ import { z } from 'zod'
 
 export const dynamic = 'force-dynamic'
 
-const clientUrl = process.env.OSS_CLIENT_URL
-const clientId = process.env.OSS_CLIENT_KEY
-const clientSecret = process.env.OSS_CLIENT_SECRET
+// TODO: Update infra env vars to use generic naming.
+const clientUrl = process.env.ESRI_CLIENT_URL
+const clientId = process.env.ESRI_CLIENT_KEY
+const clientSecret = process.env.ESRI_CLIENT_SECRET
 
 const clientResponseSchema = z.object({
   access_token: z.string(),

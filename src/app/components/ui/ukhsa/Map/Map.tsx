@@ -29,6 +29,8 @@ const mapDefaults: DefaultOptions = {
   scrollWheelZoom: true,
   attributionControlPosition: 'bottomright',
   zoomControlPosition: 'bottomright',
+  minZoom,
+  maxZoom,
 }
 
 interface MapProps {
@@ -48,8 +50,6 @@ const Map = ({
     <MapContainer
       {...options}
       id={mapId}
-      minZoom={minZoom}
-      maxZoom={maxZoom}
       maxBounds={new LatLngBounds([49.528423, -10.76418], [61.331151, 1.9134116])}
       ref={ref}
       className={clsx('relative overflow-hidden ukhsa-focus', className)}
