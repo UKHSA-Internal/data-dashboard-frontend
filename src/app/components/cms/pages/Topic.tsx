@@ -1,37 +1,16 @@
-import { Metadata } from 'next'
-
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { PageSection, PageSectionWithContents, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { useTranslation } from '@/app/i18n'
+import { PageComponentBaseProps } from '@/app/types'
 import { renderCard } from '@/app/utils/cms.utils'
 
-export async function generateMetadata({
-  params: { topic },
-  searchParams: { areaName },
-}: TopicPageProps): Promise<Metadata> {
-  const { t } = await useTranslation('common')
-
-  const {
-    meta: { seo_title, search_description },
-  } = await getPageBySlug<PageType.Topic>(topic, { type: PageType.Topic })
-
-  const title = areaName ? seo_title.replace('|', t('areaSelector.documentTitle', { areaName })) : seo_title
-
-  return {
-    title,
-    description: search_description,
-  }
-}
-
-interface TopicPageProps {
-  params: { topic: string }
-  searchParams: { areaType?: string; areaName?: string }
-}
-
-export default async function TopicPage({ params: { topic }, searchParams: { areaType, areaName } }: TopicPageProps) {
+export default async function TopicPage({
+  slug,
+  searchParams: { areaName, areaType },
+}: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
   const { t } = await useTranslation('common')
 
   const {
@@ -42,7 +21,7 @@ export default async function TopicPage({ params: { topic }, searchParams: { are
     related_links: relatedLinks,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
-  } = await getPageBySlug<PageType.Topic>(topic, { type: PageType.Topic })
+  } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
   return (
     <View
       heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })}

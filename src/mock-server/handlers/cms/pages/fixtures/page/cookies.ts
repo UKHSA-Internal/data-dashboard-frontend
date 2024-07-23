@@ -8,7 +8,7 @@ export const cookiesPageMock: PageResponse<PageType.Common> = {
   meta: {
     type: 'common.CommonPage',
     detail_url: 'http://localhost/api/pages/153/',
-    html_url: null,
+    html_url: 'http://localhost/cookies/',
     slug: 'cookies',
     show_in_menus: false,
     seo_title: 'Cookies | UKHSA data dashboard',
