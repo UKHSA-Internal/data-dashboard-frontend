@@ -13,11 +13,11 @@ export const responseSchema = z.object({
             z.object({
               type: z.literal('column'),
               value: z.object({
-                heading: z.string(), // or nullable?
+                heading: z.string(),
                 links: z.object({
                   primary_link: z.object({
                     title: z.string(),
-                    body: z.string(), // or nullable?
+                    body: z.string(),
                     page: z.number(),
                     html_url: z.string(),
                   }),
@@ -26,7 +26,7 @@ export const responseSchema = z.object({
                       type: z.literal('secondary_link'),
                       value: z.object({
                         title: z.string(),
-                        body: z.string(), // or nullable?
+                        body: z.string(),
                         page: z.number(),
                         html_url: z.string(),
                       }),

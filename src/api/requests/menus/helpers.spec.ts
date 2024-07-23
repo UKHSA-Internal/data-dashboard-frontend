@@ -45,26 +45,27 @@ describe('transformMenuResponse', () => {
       {
         slug: '/weather-health-alerts',
         title: 'Weather health alerts',
+        children: [],
       },
       {
         slug: '/about',
         title: 'About',
-      },
-      {
-        slug: '/bulk-downloads',
-        title: 'Bulk downloads',
-      },
-      {
-        slug: '/access-our-data',
-        title: 'Access our data',
-      },
-      {
-        slug: '/whats-new',
-        title: "What's new",
+        children: [],
       },
       {
         slug: '/metrics-documentation',
         title: 'Metrics documentation',
+        children: [],
+      },
+      {
+        slug: '/whats-new',
+        title: "What's new",
+        children: [],
+      },
+      {
+        slug: '/access-our-data',
+        title: 'Access our data',
+        children: [],
       },
     ]
 

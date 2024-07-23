@@ -141,7 +141,9 @@ export const responseSchema = z.union([
 
 export const getPage = async <T extends PageType>(id: number) => {
   try {
-    const { data } = await client<PageResponse<T>>(`pages/${id}`)
+    const searchParams = new URLSearchParams()
+    searchParams.set('fields', 'html_url')
+    const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

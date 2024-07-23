@@ -19,7 +19,8 @@ export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
               key={slug}
               href={slug}
               subMenu={
-                children && (
+                children &&
+                children.length > 0 && (
                   <SideNavSubMenu>
                     {children.map(({ title, slug }) => (
                       <SideNavSubMenuLink key={slug} href={slug}>
