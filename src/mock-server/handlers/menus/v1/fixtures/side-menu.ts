@@ -1,207 +1,205 @@
-import { faker } from '@faker-js/faker'
-
 import { Response } from '@/api/requests/menus/getMenu'
 
 export const sideMenu: Response = {
   active_menu: [
     {
+      id: '148a85e2-f903-47ca-a83c-5946d98a30ff',
       type: 'row',
       value: {
         columns: [
           {
+            id: '2046faf4-0fca-43e9-9472-20399de214b2',
             type: 'column',
             value: {
-              heading: '',
               links: {
                 primary_link: {
-                  title: 'Homepage',
                   body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/',
+                  page: 4,
+                  title: 'Homepage',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/',
                 },
                 secondary_links: [
                   {
+                    id: '3b2c0639-a617-4b19-bcd8-2840e5aed835',
                     type: 'secondary_link',
                     value: {
+                      body: '',
+                      page: 5,
                       title: 'COVID-19',
-                      body: '<p data-block-key="m285q">Flu ICU and HCU admissions and other statistics</p>',
-                      page: 6,
-                      html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/topics/covid-19/',
+                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/covid-19/',
                     },
-                    id: 'e4411632-4c3f-455a-bcfc-1e8253638f6b',
                   },
                   {
+                    id: 'edd8319d-adf8-4fb6-9f99-30a282a8c595',
                     type: 'secondary_link',
                     value: {
+                      body: '',
+                      page: 6,
                       title: 'Influenza',
-                      body: '<p data-block-key="m285q">Flu ICU and HCU admissions and other statistics</p>',
-                      page: 6,
-                      html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/topics/influenza/',
+                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/influenza/',
                     },
-                    id: 'e4411632-4c3f-455a-bcfc-1e8253638f6b',
                   },
                   {
+                    id: 'f763b344-a08b-4496-8677-1dac26205e87',
                     type: 'secondary_link',
                     value: {
-                      title: 'Other respiratory viruses',
-                      body: '<p data-block-key="m285q">Other common respiratory viruses including adenovirus, hMPV &amp; parainfluenza.</p>',
+                      body: '',
                       page: 7,
-                      html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
+                      title: 'Other respiratory viruses',
+                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
                     },
-                    id: 'bf0bdc55-af63-4d34-990d-0a3d19812eee',
                   },
                 ],
               },
+              heading: '',
             },
-            id: '039edb87-ebc9-466d-838d-6f4fdf86767a',
           },
         ],
       },
-      id: 'd083f3da-b342-4d12-a4b1-3fa4571d514c',
     },
     {
+      id: '5e3101d6-d0d1-49e1-806d-e775d6cc1bb3',
       type: 'row',
       value: {
         columns: [
           {
+            id: '97c48f90-151c-4226-8be0-2353a0254ed2',
             type: 'column',
             value: {
-              heading: '',
               links: {
                 primary_link: {
+                  body: '',
+                  page: 80,
                   title: 'Weather health alerts',
-                  body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/weather-health-alerts',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/weather-health-alerts/',
                 },
                 secondary_links: [],
               },
+              heading: '',
             },
-            id: faker.string.uuid(),
           },
         ],
       },
-      id: faker.string.uuid(),
     },
     {
+      id: '0c9137ca-693d-4f28-a1e3-2c34df5f4c08',
       type: 'row',
       value: {
         columns: [
           {
+            id: '5d3cd150-b869-4cea-b2e9-2fe6e062565f',
             type: 'column',
             value: {
-              heading: '',
               links: {
                 primary_link: {
+                  body: '',
+                  page: 8,
                   title: 'About',
-                  body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/about',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/about/',
                 },
                 secondary_links: [],
               },
+              heading: '',
             },
-            id: faker.string.uuid(),
           },
         ],
       },
-      id: faker.string.uuid(),
     },
     {
+      id: '121e3150-ab58-438a-be89-6a9a8398ae4b',
       type: 'row',
       value: {
         columns: [
           {
+            id: '8a118ff7-170d-4f80-b11e-9429014b6811',
             type: 'column',
             value: {
-              heading: '',
               links: {
                 primary_link: {
-                  title: 'Bulk downloads',
                   body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/bulk-downloads',
-                },
-                secondary_links: [],
-              },
-            },
-            id: faker.string.uuid(),
-          },
-        ],
-      },
-      id: faker.string.uuid(),
-    },
-    {
-      type: 'row',
-      value: {
-        columns: [
-          {
-            type: 'column',
-            value: {
-              heading: '',
-              links: {
-                primary_link: {
-                  title: 'Access our data',
-                  body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/access-our-data',
-                },
-                secondary_links: [],
-              },
-            },
-            id: faker.string.uuid(),
-          },
-        ],
-      },
-      id: faker.string.uuid(),
-    },
-    {
-      type: 'row',
-      value: {
-        columns: [
-          {
-            type: 'column',
-            value: {
-              heading: '',
-              links: {
-                primary_link: {
-                  title: "What's new",
-                  body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/whats-new',
-                },
-                secondary_links: [],
-              },
-            },
-            id: faker.string.uuid(),
-          },
-        ],
-      },
-      id: faker.string.uuid(),
-    },
-    {
-      type: 'row',
-      value: {
-        columns: [
-          {
-            type: 'column',
-            value: {
-              heading: '',
-              links: {
-                primary_link: {
+                  page: 17,
                   title: 'Metrics documentation',
-                  body: '',
-                  page: faker.number.int(),
-                  html_url: 'https://my-prefix.dev.ukhsa-dashboard.data.gov.uk/metrics-documentation',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/metrics-documentation/',
                 },
                 secondary_links: [],
               },
+              heading: '',
             },
-            id: faker.string.uuid(),
           },
         ],
       },
-      id: faker.string.uuid(),
+    },
+    {
+      id: '5a9c85b9-80a7-4a0a-9ace-ed4db304dd76',
+      type: 'row',
+      value: {
+        columns: [
+          {
+            id: 'db5ac32f-052e-4c15-b570-c34205e21437',
+            type: 'column',
+            value: {
+              links: {
+                primary_link: {
+                  body: '',
+                  page: 14,
+                  title: "What's new",
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/whats-new/',
+                },
+                secondary_links: [],
+              },
+              heading: '',
+            },
+          },
+        ],
+      },
+    },
+    {
+      id: '95249686-412f-4f72-8296-8956dbc90f34',
+      type: 'row',
+      value: {
+        columns: [
+          {
+            id: 'e6b12755-f7b0-458c-a535-d4f7b010b076',
+            type: 'column',
+            value: {
+              links: {
+                primary_link: {
+                  body: '',
+                  page: 10,
+                  title: "What's coming",
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/whats-coming-old/',
+                },
+                secondary_links: [],
+              },
+              heading: '',
+            },
+          },
+        ],
+      },
+    },
+    {
+      id: '8a6a1eed-d875-4504-8f4b-39ed00565aca',
+      type: 'row',
+      value: {
+        columns: [
+          {
+            id: '84df090f-c89b-4d82-aa9d-1fa1283db443',
+            type: 'column',
+            value: {
+              links: {
+                primary_link: {
+                  body: '',
+                  page: 73,
+                  title: 'Access our data',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/',
+                },
+                secondary_links: [],
+              },
+              heading: '',
+            },
+          },
+        ],
+      },
     },
   ],
 }
