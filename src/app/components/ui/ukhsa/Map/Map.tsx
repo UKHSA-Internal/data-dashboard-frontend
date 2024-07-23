@@ -8,7 +8,7 @@
 import 'leaflet/dist/leaflet.css'
 
 import clsx from 'clsx'
-import { ControlPosition } from 'leaflet'
+import { ControlPosition, LatLngBounds } from 'leaflet'
 import { ComponentProps, ReactNode } from 'react'
 import { MapContainer } from 'react-leaflet'
 
@@ -29,6 +29,8 @@ const mapDefaults: DefaultOptions = {
   scrollWheelZoom: true,
   attributionControlPosition: 'bottomright',
   zoomControlPosition: 'bottomright',
+  minZoom,
+  maxZoom,
 }
 
 interface MapProps {
@@ -48,10 +50,9 @@ const Map = ({
     <MapContainer
       {...options}
       id={mapId}
-      minZoom={minZoom}
-      maxZoom={maxZoom}
+      maxBounds={new LatLngBounds([49.528423, -10.76418], [61.331151, 1.9134116])}
       ref={ref}
-      className={clsx('relative h-screen overflow-hidden ukhsa-focus', className)}
+      className={clsx('relative overflow-hidden ukhsa-focus', className)}
       zoomControl={false}
     >
       <AttributionControl position={attributionControlPosition} />

@@ -12,6 +12,7 @@ import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { HealthAlertStatus } from '@/api/models/Alerts'
 import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
+import { MapTileProvider } from '@/app/types'
 import {
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
@@ -60,6 +61,11 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
    * Optional class name to attach to each feature.
    */
   className?: string
+
+  /**
+   * Optional class name to attach to each feature.
+   */
+  mapTileProvider: MapTileProvider
 }
 
 interface CustomLeafletEvent extends LeafletMouseEvent {

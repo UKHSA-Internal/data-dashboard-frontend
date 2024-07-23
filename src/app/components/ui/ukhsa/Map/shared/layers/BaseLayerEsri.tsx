@@ -8,18 +8,30 @@
 import { ComponentProps } from 'react'
 import VectorBasemapLayer from 'react-esri-leaflet/plugins/VectorBasemapLayer'
 
+import useMapAuthToken from '@/app/hooks/queries/useMapAuthToken'
+
 import { useBaseLayerEsri } from '../hooks/useBaseLayerEsri'
 
 type EsriProps = ComponentProps<typeof VectorBasemapLayer>
 
 interface BaseLayerEsriProps extends Omit<EsriProps, 'name'> {
   name?: EsriProps['name']
-  apiKey?: string
 }
 
-const BaseLayerEsri = ({ name = 'ArcGIS:Navigation', apiKey, ...rest }: BaseLayerEsriProps) => {
+const BaseLayerEsri = ({ name = 'ArcGIS:Navigation', ...rest }: BaseLayerEsriProps) => {
   useBaseLayerEsri()
-  return <VectorBasemapLayer {...rest} name={name} apiKey={apiKey} />
+  const {
+    data: { token },
+  } = useMapAuthToken()
+  if (!token) return null
+  return (
+    <VectorBasemapLayer
+      {...rest}
+      key={token} // Ensures the refreshed token is injected properly by forcing a re-render after the token is refetched once expired
+      name={name}
+      token={token}
+    />
+  )
 }
 
 export default BaseLayerEsri

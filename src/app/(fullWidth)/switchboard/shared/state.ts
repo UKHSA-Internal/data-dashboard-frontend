@@ -28,6 +28,7 @@ export const initialState: switchBoardSchemaType = {
   },
   flags: {
     'adverse-weather': 'enabled',
+    'map-tile-provider': 'OpenStreetMaps',
   },
 }
 

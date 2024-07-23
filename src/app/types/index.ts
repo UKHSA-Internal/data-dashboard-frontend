@@ -1,3 +1,7 @@
+/**
+ * CMS Page generation types
+ */
+
 export type Slug = string[]
 
 export interface PageParams {
@@ -10,3 +14,9 @@ export interface PageComponentBaseProps<S extends Record<string, unknown> = Reco
   slug: Slug
   searchParams: Partial<S>
 }
+
+/**
+ * Mapping types
+ */
+
+export type MapTileProvider = 'OpenStreetMaps' | 'ArcGISEsri' | 'OrdinanceSurveyMaps' | string
