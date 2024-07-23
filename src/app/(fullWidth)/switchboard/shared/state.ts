@@ -21,6 +21,10 @@ export const initialState: switchBoardSchemaType = {
       scenario: 'Information',
       status: StatusCodes.OK,
     },
+    menus: {
+      scenario: 'SideMenu',
+      status: StatusCodes.OK,
+    },
   },
   flags: {
     'adverse-weather': 'enabled',
