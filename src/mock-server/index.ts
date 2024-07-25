@@ -34,6 +34,7 @@ import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
 import globalBanners from './handlers/global-banners/v1'
 import headlines from './handlers/headlines/v3'
+import menus from './handlers/menus/v1'
 import suggestions from './handlers/suggestions/v1'
 import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v3'
@@ -56,6 +57,7 @@ app.get('/api/geographies/v2/:topic', geographies)
 app.get('/api/global-banners/v1', globalBanners)
 app.get('/api/alerts/v1/:category', alertList)
 app.get('/api/alerts/v1/:category/:region', alertDetail)
+app.get('/api/menus/v1', menus)
 
 // POST endpoints
 app.post('/api/charts/v3', charts)

@@ -79,7 +79,6 @@ describe('validateUrlWithCms', () => {
   test('Nested metrics documentation child page', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock }) // Mock parent request
 
     const slug: Slug = ['metrics-documentation', 'new-cases-7days-sum']
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
@@ -90,7 +89,6 @@ describe('validateUrlWithCms', () => {
   test('Nested whats new child page', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewChildMocks[0] }) // Mock initial child request
-    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock }) // Mock parent request
 
     const slug: Slug = ['whats-new', 'soft-launch-of-the-ukhsa-data-dashboard']
     const result = await validateUrlWithCms(slug, PageType.WhatsNewChild)
@@ -110,7 +108,6 @@ describe('validateUrlWithCms', () => {
   test('404 Not Found when a URL cannot be matched against the CMS', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock }) // Mock parent request
 
     const slug: Slug = ['whats-new', 'new-cases-7days-sum']
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
@@ -175,6 +172,31 @@ describe('getPageMetadata', () => {
       twitter: {
         description: 'Mocked bulk downloads page description',
         title: 'Bulk downloads | UKHSA data dashboard',
+      },
+    })
+  })
+
+  test('Getting metadata for topic pages', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithTopicTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: covid19PageMock })
+
+    const slug: Slug = ['topics', 'covid-19']
+    const searchParams: SearchParams = {
+      areaName: 'England',
+    }
+    const result = await getPageMetadata(slug, searchParams, PageType.Topic)
+
+    expect(result).toEqual<Metadata>({
+      alternates: { canonical: 'http://fake-backend.gov.uk/topics/covid-19' },
+      description: 'Overall summary of COVID-19 in circulation within the UK',
+      openGraph: {
+        description: 'Overall summary of COVID-19 in circulation within the UK',
+        title: 'COVID-19  in England | UKHSA data dashboard',
+      },
+      title: 'COVID-19  in England | UKHSA data dashboard',
+      twitter: {
+        description: 'Overall summary of COVID-19 in circulation within the UK',
+        title: 'COVID-19  in England | UKHSA data dashboard',
       },
     })
   })
