@@ -19,5 +19,8 @@
     }
   },
   "updated": "Updated {{value, time}} on {{ value, dateShort }}",
-  "weatherAlert": "{{weatherType}}-health alert for {{regionName}}"
+  "weatherAlert": "{{weatherType}}-health alert for {{regionName}}",
+  "statusLabelInitial": "There is currently a {{level}} {{type}} alert status for {{region}}",
+  "statusLabelAmber": "There is currently an {{level}} {{type}} alert status for {{region}}",
+  "statusLabelNone": "There are currently no alerts for {{region}}"
 }

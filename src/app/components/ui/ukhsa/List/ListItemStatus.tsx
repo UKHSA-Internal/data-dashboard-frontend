@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { useTranslation } from 'react-i18next'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
@@ -96,11 +97,14 @@ interface ListItemStatusTagProps {
 }
 
 export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
-  let ariaLabel = `There is currently a ${level} ${type} alert status for ${region}`
+  const { t } = useTranslation('weatherHealthAlerts')
 
-  if (level === 'Amber') ariaLabel = `There is currently an ${level} ${type} alert status for ${region}`
+  // let ariaLabel = `There is currently a ${level} ${type} alert status for ${region}`
+  let ariaLabel = t('statusLabelInitial', { level, type, region })
 
-  if (level === 'No alerts') ariaLabel = `There are currently no alerts for ${region}`
+  if (level === 'Amber') ariaLabel = t('statusLabelAmber', { level, type, region })
+
+  if (level === 'No alerts') ariaLabel = t('statusLabelNone', { level, type, region })
 
   return (
     <div
