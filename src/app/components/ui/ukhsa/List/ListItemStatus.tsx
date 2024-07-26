@@ -99,7 +99,6 @@ interface ListItemStatusTagProps {
 export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
   const { t } = useTranslation('weatherHealthAlerts')
 
-  // let ariaLabel = `There is currently a ${level} ${type} alert status for ${region}`
   let ariaLabel = t('statusLabelInitial', { level, type, region })
 
   if (level === 'Amber') ariaLabel = t('statusLabelAmber', { level, type, region })

@@ -33,7 +33,7 @@ export default function AlertList({ type }: AlertListProps) {
   }
 
   return (
-    <List aria-label={`${type} health alerts`}>
+    <List aria-label={t('alertListLabel', { type })}>
       {healthAlerts.data.map(({ status, geography_name: name, refresh_date: lastUpdated }) => (
         <ListItem key={name} spacing="s">
           <ListItemStatus>
