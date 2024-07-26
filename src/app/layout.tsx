@@ -51,7 +51,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           }}
         />
 
-        <AWSRum />
+        <AWSRum applicationId={process.env.RUM_APPLICATION_ID} identityPoolId={process.env.RUM_IDENTITY_POOL_ID} />
 
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           {t('skipLink')}

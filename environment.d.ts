@@ -9,6 +9,8 @@ declare namespace NodeJS {
     UNLEASH_SERVER_API_URL: string
     UNLEASH_SERVER_API_TOKEN: string
     FEATURE_FLAGS_AUTH_KEY: string
+    RUM_APPLICATION_ID: string
+    RUM_IDENTITY_POOL_ID: string
   }
 }
 
