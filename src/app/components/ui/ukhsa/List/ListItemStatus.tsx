@@ -1,9 +1,9 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
-import { useTranslation } from 'react-i18next'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
+import { useTranslation } from '@/app/i18n'
 
 import { ColdHealthAlertAmberIcon } from '../Icons/ColdHealthAlertsAmber'
 import { ColdHealthAlertGreenIcon } from '../Icons/ColdHealthAlertsGreen'
@@ -96,8 +96,8 @@ interface ListItemStatusTagProps {
   type: HealthAlertTypes
 }
 
-export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
-  const { t } = useTranslation('weatherHealthAlerts')
+export const ListItemStatusTag = async ({ level, region, type }: ListItemStatusTagProps) => {
+  const { t } = await useTranslation('weatherHealthAlerts')
 
   let ariaLabel = t('statusLabelInitial', { level, type, region })
 
