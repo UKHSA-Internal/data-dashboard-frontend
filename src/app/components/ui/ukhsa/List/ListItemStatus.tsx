@@ -96,7 +96,7 @@ interface ListItemStatusTagProps {
   type: HealthAlertTypes
 }
 
-export const ListItemStatusTag = async ({ level, region, type }: ListItemStatusTagProps) => {
+export async function ListItemStatusTag({ level, region, type }: ListItemStatusTagProps) {
   const { t } = await useTranslation('weatherHealthAlerts')
 
   let ariaLabel = t('statusLabelInitial', { level, type, region })
