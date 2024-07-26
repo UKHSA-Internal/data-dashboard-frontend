@@ -16,7 +16,7 @@ export const sideMenu: Response = {
                   body: '',
                   page: 4,
                   title: 'Homepage',
-                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/',
                 },
                 secondary_links: [
                   {
@@ -144,30 +144,6 @@ export const sideMenu: Response = {
                   page: 14,
                   title: "What's new",
                   html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/whats-new/',
-                },
-                secondary_links: [],
-              },
-              heading: '',
-            },
-          },
-        ],
-      },
-    },
-    {
-      id: '95249686-412f-4f72-8296-8956dbc90f34',
-      type: 'row',
-      value: {
-        columns: [
-          {
-            id: 'e6b12755-f7b0-458c-a535-d4f7b010b076',
-            type: 'column',
-            value: {
-              links: {
-                primary_link: {
-                  body: '',
-                  page: 10,
-                  title: "What's coming",
-                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/whats-coming-old/',
                 },
                 secondary_links: [],
               },

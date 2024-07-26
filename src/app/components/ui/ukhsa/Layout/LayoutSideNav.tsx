@@ -1,24 +1,26 @@
 import { ReactNode } from 'react'
 
+import { getMenu } from '@/api/requests/menus/getMenu'
+import { transformMenuResponse } from '@/api/requests/menus/helpers'
 import { BackToTop } from '@/app/components/ui/ukhsa'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { useTranslation } from '@/app/i18n'
-import { useMenu } from '@/app/utils/menu.utils'
 
 export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
-  const menu = await useMenu()
   const { t } = await useTranslation('common')
+  const sideNav = transformMenuResponse(await getMenu())
 
   return (
     <>
       <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:flex-row xl:gap-7">
         <SideNav>
-          {menu.map(({ title, slug, children }) => (
+          {sideNav.map(({ title, slug, children }) => (
             <SideNavLink
               key={slug}
               href={slug}
               subMenu={
-                children && (
+                children &&
+                children.length > 0 && (
                   <SideNavSubMenu>
                     {children.map(({ title, slug }) => (
                       <SideNavSubMenuLink key={slug} href={slug}>

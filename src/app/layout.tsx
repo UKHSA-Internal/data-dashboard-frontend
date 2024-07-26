@@ -9,6 +9,8 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { getMenu } from '@/api/requests/menus/getMenu'
+import { transformMenuResponse } from '@/api/requests/menus/helpers'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
@@ -21,14 +23,14 @@ import { flags } from './constants/flags.constants'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { Providers } from './providers'
 import { getFeatureFlag } from './utils/flags.utils'
-import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const menu = await useMenu()
   const { t } = await useTranslation('common')
+
+  const mobileNav = transformMenuResponse(await getMenu())
 
   const globalBanner = await useGlobalBanner()
 
@@ -89,7 +91,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
 
             <TopNav>
-              {menu.map(({ title, slug, children }) => (
+              {mobileNav.map(({ title, slug, children }) => (
                 <SideNavLink
                   key={slug}
                   href={slug}
