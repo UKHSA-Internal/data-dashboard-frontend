@@ -1,15 +1,16 @@
 import chunk from 'lodash/chunk'
 import { Metadata } from 'next'
 
+import { getMenu } from '@/api/requests/menus/getMenu'
+import { transformMenuResponse } from '@/api/requests/menus/helpers'
 import { BrowseCard } from '@/app/components/ui/ukhsa'
-import { useMenu } from '@/app/utils/menu.utils'
 
 export const metadata: Metadata = {
   title: 'Browse | UKHSA data dashboard',
 }
 
 export default async function Browse() {
-  const menu = await useMenu()
+  const menu = transformMenuResponse(await getMenu())
 
   const groupedMenu = chunk(
     menu.flatMap((link) => {

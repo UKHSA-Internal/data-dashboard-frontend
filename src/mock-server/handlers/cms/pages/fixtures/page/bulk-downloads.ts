@@ -5,8 +5,8 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
   id: 156,
   meta: {
     type: 'composite.CompositePage',
-    detail_url: 'http://localhost:3000/api/pages/157/',
-    html_url: 'http://localhost:3000/bulk-downloads',
+    detail_url: 'http://localhost/api/pages/157/',
+    html_url: 'http://localhost/bulk-downloads/',
     slug: 'bulk-downloads',
     show_in_menus: true,
     seo_title: 'Bulk downloads | UKHSA data dashboard',

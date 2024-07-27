@@ -7,8 +7,8 @@ export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
   id: 155,
   meta: {
     type: 'common.CommonPage',
-    detail_url: 'http://localhost:3000/api/pages/155/',
-    html_url: 'http://localhost:3000/accessibility-statement',
+    detail_url: 'http://localhost/api/pages/155/',
+    html_url: 'http://localhost/accessibility-statement/',
     slug: 'accessibility-statement',
     show_in_menus: false,
     seo_title: 'Accessibility Statement | UKHSA data dashboard',

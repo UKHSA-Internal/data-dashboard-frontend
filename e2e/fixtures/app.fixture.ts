@@ -26,13 +26,13 @@ import {
   NotFoundPage,
   OtherRespiratoryVirusesPage,
   SitemapPage,
+  WeatherHealthAlertsChildPage,
+  WeatherHealthAlertsMapPage,
+  WeatherHealthAlertsParentPage,
+  WeatherHealthAlertsRegionPage,
   WhatsNewChildPage,
   WhatsNewParentPage,
 } from './index'
-import { WeatherHealthAlertsChildPage } from './pages/weather-health-alerts/weather-health-alerts-child.fixture'
-import { WeatherHealthAlertsMapPage } from './pages/weather-health-alerts/weather-health-alerts-map.fixture'
-import { WeatherHealthAlertsParentPage } from './pages/weather-health-alerts/weather-health-alerts-parent.fixture'
-import { WeatherHealthAlertsRegionPage } from './pages/weather-health-alerts/weather-health-alerts-region.fixture'
 
 type Fixtures = {
   app: App

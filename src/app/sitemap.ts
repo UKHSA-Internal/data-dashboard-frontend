@@ -3,24 +3,17 @@ import { MetadataRoute } from 'next'
 
 import { getPages } from '@/api/requests/cms/getPages'
 import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
-import { logger } from '@/lib/logger'
 
-import { SITE_URL } from './constants/app.constants'
-import { toSlug } from './utils/app.utils'
+import { getSiteUrl, toSlug } from './utils/app.utils'
 
-const rootUrl = `https://${SITE_URL}`
+const rootUrl = getSiteUrl()
 
 type ChangeFrequency = MetadataRoute.Sitemap[number]['changeFrequency']
 
-export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  const pages = await getPages()
-
-  if (pages.error) {
-    logger.error('Failed to generate sitemap.xml')
-    logger.error(pages.error)
-  }
-
+async function getAllCmsPages() {
   const sitemap: MetadataRoute.Sitemap = []
+
+  const pages = await getPages({ fields: '*' })
 
   if (pages.success) {
     for (const page of pages.data.items) {
@@ -39,24 +32,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     }
   }
 
-  // Non-CMS pages. TODO: Migrate these to be CMS delivered
-  // Feedback
-  sitemap.push({
-    url: `${rootUrl}/feedback`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  })
+  return sitemap
+}
 
-  // Brwose
-  sitemap.push({
-    url: `${rootUrl}/browse`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.2,
-  })
+async function getWeatherHealthAlertRegionPages() {
+  const sitemap: MetadataRoute.Sitemap = []
 
-  // Weather Health Alert Regions
   const [weatherHealthAlertHeatPages, weatherHealthAlertColdPages] = await Promise.all([
     getHealthAlerts('heat'),
     getHealthAlerts('cold'),
@@ -81,6 +62,40 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
       })
     }
   }
+
+  return sitemap
+}
+
+function getNonCmsPages() {
+  const sitemap: MetadataRoute.Sitemap = []
+
+  sitemap.push({
+    url: `${rootUrl}/feedback`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.7,
+  })
+
+  // Brwose
+  sitemap.push({
+    url: `${rootUrl}/browse`,
+    lastModified: new Date(),
+    changeFrequency: 'monthly',
+    priority: 0.2,
+  })
+
+  return sitemap
+}
+
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
+  const sitemap: MetadataRoute.Sitemap = []
+
+  // CMS Pages
+  sitemap.push(...(await getAllCmsPages()))
+
+  // Non-CMS Pages. TODO: Migrate these to be CMS delivered
+  sitemap.push(...getNonCmsPages())
+  sitemap.push(...(await getWeatherHealthAlertRegionPages()))
 
   return sitemap
 }

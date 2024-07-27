@@ -7,8 +7,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
   id: 10,
   meta: {
     type: 'topic.TopicPage',
-    detail_url: 'http://localhost:3000/api/pages/10/',
-    html_url: 'http://localhost:3000/dashboard/other-respiratory-viruses',
+    detail_url: 'http://localhost/api/pages/10/',
+    html_url: 'http://localhost/topics/other-respiratory-viruses/',
     slug: 'other-respiratory-viruses',
     show_in_menus: true,
     seo_title: 'Other respiratory viruses | UKHSA data dashboard',

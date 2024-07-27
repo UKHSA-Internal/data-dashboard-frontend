@@ -2,9 +2,9 @@ name: Lighthouse
 run-name: Lighthouse scan for ${{ github.event.inputs.environment || 'prod' }} environment
 
 on:
-  # Run every 4 hours
+  # Run at 9am and 4pm
   schedule:
-    - cron: '0 */4 * * *'
+    - cron: '0 9,16 * * *'
 
   # Run on demand
   workflow_dispatch:
@@ -71,7 +71,7 @@ jobs:
       - uses: ./.github/actions/install-cache
 
       - name: Unlighthouse assertions and client
-        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=60 --exclude-urls /topics/covid-19
+        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=80
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -103,7 +103,7 @@ jobs:
         if: ${{ needs.lighthouse.result == 'failure' }}
         with:
           status: failure
-          notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
+          notification_title: ':warning: {workflow} score has dropped below 80% :warning:'
           message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
           mention_groups: ${{ vars.SLACK_MENTION_USERS }}
           mention_groups_when: 'failure,warnings'

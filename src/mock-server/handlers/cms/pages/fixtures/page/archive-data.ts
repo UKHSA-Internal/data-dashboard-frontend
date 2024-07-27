@@ -5,8 +5,8 @@ export const archiveDataPageMock: PageResponse<PageType.Composite> = {
   id: 157,
   meta: {
     type: 'composite.CompositePage',
-    detail_url: `http://localhost:3000/api/pages/157/`,
-    html_url: `http://localhost:3000/archive-data`,
+    detail_url: 'http://localhost/api/pages/157/',
+    html_url: 'http://localhost/covid-19-archive-data-download/',
     slug: 'covid-19-archive-data-download',
     show_in_menus: false,
     seo_title: 'COVID-19 Archive data download | UKHSA data dashboard',

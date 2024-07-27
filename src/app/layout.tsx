@@ -4,10 +4,13 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 
 import './globals.scss'
 
+import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { getMenu } from '@/api/requests/menus/getMenu'
+import { transformMenuResponse } from '@/api/requests/menus/helpers'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
@@ -15,22 +18,25 @@ import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
+import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { flags } from './constants/flags.constants'
 import { useGlobalBanner } from './hooks/useGlobalBanner'
 import { Providers } from './providers'
 import { getFeatureFlag } from './utils/flags.utils'
-import { useMenu } from './utils/menu.utils'
 
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const menu = await useMenu()
   const { t } = await useTranslation('common')
+
+  const mobileNav = transformMenuResponse(await getMenu())
 
   const globalBanner = await useGlobalBanner()
 
   const { enabled: weatherHealthAlertsEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
+
+  const cookieStore = cookies()
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
@@ -51,6 +57,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         </a>
         <Suspense fallback={null}>
           <CookieBanner
+            cookie={cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value}
             title={t('cookieBanner.title')}
             body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
           />
@@ -84,7 +91,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
 
             <TopNav>
-              {menu.map(({ title, slug, children }) => (
+              {mobileNav.map(({ title, slug, children }) => (
                 <SideNavLink
                   key={slug}
                   href={slug}
