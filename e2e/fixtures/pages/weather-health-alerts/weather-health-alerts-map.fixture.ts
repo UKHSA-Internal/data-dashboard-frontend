@@ -31,7 +31,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async clickMapButton(name: ButtonNames) {
-    await this.page.getByRole('button', { name: name }).click()
+    await this.page.getByRole('button', { name }).click()
   }
 
   async hasCopyrightModal() {
