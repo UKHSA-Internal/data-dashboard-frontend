@@ -10,9 +10,9 @@ import {
   ListItemStatusContent,
   ListItemStatusIcon,
   ListItemStatusLink,
-  ListItemStatusTag,
   ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
+import ListItemStatusTag from '@/app/components/ui/ukhsa/List/ListItemStatusTag'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
 import { toSlug } from '@/app/utils/app.utils'
