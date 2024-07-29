@@ -171,6 +171,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000001')
     })
@@ -198,6 +201,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     })
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
@@ -227,6 +233,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000004')
     })
@@ -254,6 +263,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     })
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000007')
@@ -283,6 +295,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
     })
@@ -298,6 +313,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000005')
     })
@@ -312,6 +330,9 @@ test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
     })
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('clicks region', async () => {
       await weatherHealthAlertsMapPage.clickRegion('feature-E12000006')
@@ -385,8 +406,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(1)
@@ -417,8 +438,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(2)
@@ -449,8 +470,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(4)
@@ -481,8 +502,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(7)
@@ -513,8 +534,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(3)
@@ -532,8 +553,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(5)
@@ -551,8 +572,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(6)
@@ -570,8 +591,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(8)
@@ -589,8 +610,8 @@ test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopO
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
-    await test.step('shows map buttons', async () => {
-      await weatherHealthAlertsMapPage.hasMapButtons()
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('select region', async () => {
       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(9)
