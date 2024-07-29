@@ -49,6 +49,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async clickRegion(region: string) {
+    await expect(this.page.getByTestId(region)).toBeVisible()
     await this.page.getByTestId(region).click()
   }
 
