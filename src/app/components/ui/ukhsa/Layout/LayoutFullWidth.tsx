@@ -8,7 +8,7 @@ export const LayoutFullWidth = async ({ children }: { children: ReactNode }) => 
 
   return (
     <>
-      <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:flex-row xl:gap-7">
+      <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
         <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
           {children}
         </main>
