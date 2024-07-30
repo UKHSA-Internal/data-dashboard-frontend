@@ -2,7 +2,7 @@ import { expect, Page } from '@playwright/test'
 
 import { SummaryList } from './shared/types'
 
-type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit Map' | 'Close'
+type ButtonNames = 'Copyright information' | 'Zoom in' | 'Zoom out' | 'Exit map' | 'Close'
 
 export class WeatherHealthAlertsMapPage {
   readonly page: Page
@@ -30,7 +30,7 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('button', { name })).toBeVisible()
   }
 
-  async clickMapButton(name: string) {
+  async clickMapButton(name: ButtonNames) {
     await this.page.getByRole('button', { name }).click()
   }
 
@@ -49,6 +49,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async clickRegion(region: string) {
+    await expect(this.page.getByTestId(region)).toBeVisible()
     await this.page.getByTestId(region).click()
   }
 
@@ -100,5 +101,31 @@ export class WeatherHealthAlertsMapPage {
     await this.page.mouse.down()
     await this.page.mouse.move(150, 500)
     await this.page.mouse.up()
+  }
+
+  // Playwright keyboard movement: https://playwright.dev/docs/api/class-keyboard
+  async openCopyrightWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+  }
+
+  async zoomInWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+    await this.page.keyboard.press('Enter')
+  }
+
+  async zoomOutWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+    await this.page.keyboard.press('Enter')
+  }
+
+  async accessRegionWithKeyboard(regionNumber: number) {
+    await this.page.keyboard.press(`Digit${regionNumber}`)
   }
 }
