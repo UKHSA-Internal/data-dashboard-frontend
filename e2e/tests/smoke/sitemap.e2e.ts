@@ -6,14 +6,14 @@ import { test } from '../../fixtures/app.fixture'
  *
  * If the total number of sitemap pages changes, we probably do want to know about it.
  */
-const TOTAL_PAGES = 14
+const TOTAL_PAGES = 106
 
 test.describe('Sitemap.xml @smoke', () => {
   test('Validate sitemap structure', async ({ sitemapPage }) => {
     await test.step('Go to sitemap.xml', async () => {
       await sitemapPage.goto()
     })
-    await test.step('Has expected number of pages (14)', async () => {
+    await test.step(`Has expected number of pages (${TOTAL_PAGES})`, async () => {
       await sitemapPage.count(TOTAL_PAGES)
     })
     await test.step('Check format is correct', async () => {
