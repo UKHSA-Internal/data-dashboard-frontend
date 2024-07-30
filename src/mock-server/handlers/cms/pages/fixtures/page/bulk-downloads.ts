@@ -10,8 +10,6 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
     slug: 'bulk-downloads',
     show_in_menus: true,
     seo_title: 'Bulk downloads | UKHSA data dashboard',
-    seo_change_frequency: 'Monthly',
-    seo_priority: 0.7,
     search_description: 'Mocked bulk downloads page description',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
@@ -25,6 +23,8 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
       title: 'UKHSA Dashboard Root',
     },
   },
+  seo_change_frequency: 5,
+  seo_priority: 0.5,
   title: 'Bulk downloads',
   date_posted: '2023-08-24',
   body: [

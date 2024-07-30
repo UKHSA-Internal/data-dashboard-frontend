@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
+import { fallback } from '@/api/utils/zod.utils'
 import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
@@ -41,6 +42,8 @@ export enum PageType {
 const page = z.object({
   id: z.number(),
   title: z.string(),
+  seo_change_frequency: z.number().or(fallback(5)),
+  seo_priority: z.coerce.number().or(fallback(0.5)),
   meta: z.object({
     type: z.string(),
     detail_url: z.string(),
@@ -48,8 +51,6 @@ const page = z.object({
     slug: z.string(),
     show_in_menus: z.boolean(),
     first_published_at: z.string().nullable(),
-    seo_change_frequency: z.enum(['Always', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Never']),
-    seo_priority: z.coerce.number(),
   }),
 })
 
@@ -108,7 +109,7 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
   try {
     const searchParams = new URLSearchParams()
     searchParams.set('limit', '200') // TODO: This is a temporary fix to ensure the backend page limit is not hit
-    searchParams.set('fields', 'html_url')
+    searchParams.set('fields', '*')
 
     if (additionalParams) {
       for (const key in additionalParams) {

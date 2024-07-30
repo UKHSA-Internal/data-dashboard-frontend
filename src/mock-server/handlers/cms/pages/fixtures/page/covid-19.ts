@@ -12,8 +12,6 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
     slug: 'covid-19',
     show_in_menus: true,
     seo_title: 'COVID-19 | UKHSA data dashboard',
-    seo_change_frequency: 'Weekly',
-    seo_priority: 0.8,
     search_description: 'Overall summary of COVID-19 in circulation within the UK',
     first_published_at: '2023-05-15T17:23:02.306556+01:00',
     alias_of: null,
@@ -27,6 +25,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
       title: 'Respiratory viruses',
     },
   },
+  seo_change_frequency: 4,
+  seo_priority: 0.8,
   title: 'COVID-19',
   page_description:
     '<p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',

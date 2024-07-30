@@ -10,8 +10,6 @@ export const archiveDataPageMock: PageResponse<PageType.Composite> = {
     slug: 'covid-19-archive-data-download',
     show_in_menus: false,
     seo_title: 'COVID-19 Archive data download | UKHSA data dashboard',
-    seo_change_frequency: 'Never',
-    seo_priority: 0.5,
     search_description: 'Mocked archive data page description',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
@@ -25,6 +23,8 @@ export const archiveDataPageMock: PageResponse<PageType.Composite> = {
       title: 'UKHSA Dashboard Root',
     },
   },
+  seo_change_frequency: 5,
+  seo_priority: 0.5,
   title: 'COVID-19 Archive data download',
   date_posted: '2023-08-24',
   body: [

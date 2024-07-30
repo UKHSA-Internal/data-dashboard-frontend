@@ -12,8 +12,6 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
     slug: 'influenza',
     show_in_menus: true,
     seo_title: 'Influenza | UKHSA data dashboard',
-    seo_change_frequency: 'Weekly',
-    seo_priority: 0.8,
     search_description: 'Detailed summary of Influenza in circulation within the UK',
     first_published_at: '2023-05-16T14:06:43.187457+01:00',
     alias_of: null,
@@ -27,6 +25,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
       title: 'Respiratory viruses',
     },
   },
+  seo_change_frequency: 4,
+  seo_priority: 0.8,
   title: 'Influenza',
   page_description:
     '<p data-block-key="z3vrp">Data and insights from the UKHSA on Influenza. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency\\">See the simple summary for England (opens in a new tab)</a>.</p>',

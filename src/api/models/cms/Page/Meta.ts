@@ -8,8 +8,6 @@ export const Meta = z.object({
   show_in_menus: z.boolean(),
   seo_title: z.string(),
   search_description: z.string(),
-  seo_change_frequency: z.enum(['Always', 'Hourly', 'Daily', 'Weekly', 'Monthly', 'Yearly', 'Never']),
-  seo_priority: z.coerce.number(),
   first_published_at: z.string().nullable(),
   alias_of: z.null(),
   parent: z.object({

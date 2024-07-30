@@ -12,8 +12,6 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
     slug: 'other-respiratory-viruses',
     show_in_menus: true,
     seo_title: 'Other respiratory viruses | UKHSA data dashboard',
-    seo_change_frequency: 'Weekly',
-    seo_priority: 0.8,
     search_description: 'Overall summary of other respiratory viruses in circulation within the UK',
     first_published_at: '2023-05-12T16:58:42.332020+01:00',
     alias_of: null,
@@ -27,6 +25,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
       title: 'Respiratory viruses',
     },
   },
+  seo_change_frequency: 4,
+  seo_priority: 0.8,
   title: 'Other respiratory viruses',
   page_description:
     '<p data-block-key="rjyu9">Data and insights from the UKHSA on other respiratory viruses. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency\\">See the simple summary for England (opens in a new tab)</a>.</p>',

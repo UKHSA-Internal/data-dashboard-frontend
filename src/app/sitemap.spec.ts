@@ -9,7 +9,7 @@ test('Sitemap displays correctly', async () => {
   // Mock date as some sitemap pages have their last modified date generated at build time
   jest.useFakeTimers().setSystemTime(new Date('2020-01-01'))
 
-  getPages.mockResolvedValueOnce({
+  getPages.mockResolvedValue({
     status: 200,
     data: allPagesMock,
   })
