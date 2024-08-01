@@ -14,6 +14,7 @@ interface CodeBlockProps {
 
 ;(typeof global !== 'undefined' ? global : window).Prism = Prism
 require('prismjs/components/prism-json')
+require('prismjs/components/prism-python')
 
 export const CodeBlock = ({ children, language, className }: CodeBlockProps) => {
   const lang = language.toLowerCase()
