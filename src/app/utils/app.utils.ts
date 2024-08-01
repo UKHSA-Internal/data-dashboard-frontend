@@ -1,5 +1,3 @@
-import assert from 'assert'
-
 import { SITE_URL } from '../constants/app.constants'
 
 export const isSSR = typeof window === 'undefined'
@@ -38,7 +36,9 @@ export const isWellKnownEnvironment = (url: string) => {
  */
 export const getSiteUrl = () => {
   const apiUrl = process.env.API_URL
-  assert(apiUrl)
+  if (!apiUrl) {
+    throw new Error('Missing environment variable: API_URL')
+  }
   return apiUrl.includes('private-api') ? apiUrl.replace('private-api.', '') : apiUrl
 }
 
