@@ -7,7 +7,7 @@ import { logger } from '@/lib/logger'
 
 import { getSiteUrl, toSlug } from './utils/app.utils'
 
-const rootUrl = getSiteUrl()
+export const dynamic = 'force-dynamic'
 
 export const changeFrequencyMap: Record<number, MetadataRoute.Sitemap[number]['changeFrequency']> = {
   1: 'always',
@@ -62,6 +62,8 @@ async function getAllCmsPages() {
  * @returns {Promise<MetadataRoute.Sitemap>} The generated sitemap.
  */
 async function getWeatherHealthAlertRegionPages() {
+  const rootUrl = getSiteUrl()
+
   const sitemap: MetadataRoute.Sitemap = []
 
   const [weatherHealthAlertHeatPages, weatherHealthAlertColdPages] = await Promise.all([
@@ -102,6 +104,8 @@ async function getWeatherHealthAlertRegionPages() {
  */
 
 function getNonCmsPages() {
+  const rootUrl = getSiteUrl()
+
   const sitemap: MetadataRoute.Sitemap = []
 
   sitemap.push({
