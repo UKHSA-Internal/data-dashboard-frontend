@@ -107,7 +107,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
                         const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
-                        const nextItemHasDelay = data[key + 1].inReportingDelay ?? false
+                        const nextItemHasDelay = data[key + 1]?.inReportingDelay ?? false
 
                         return (
                           <Fragment key={columnIndex}>
