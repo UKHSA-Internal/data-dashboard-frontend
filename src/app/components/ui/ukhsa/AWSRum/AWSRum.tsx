@@ -34,6 +34,6 @@ export function AWSRum({ applicationId, identityPoolId }: AWSRumProps) {
     } catch (error) {
       logger.error(error)
     }
-  }, [])
+  }, [applicationId, identityPoolId])
   return null
 }
