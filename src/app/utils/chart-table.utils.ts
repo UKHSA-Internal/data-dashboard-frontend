@@ -8,7 +8,7 @@ export type Column = {
   accessorKey: string // accessor is the "key" in the data
 }
 
-export type Data = { record: Record<string, string | number | null>; in_reporting_delay_period: boolean }
+export type Data = { record: Record<string, string | number | null>; inReportingDelay: boolean }
 
 const createTable = (sourceData: Response) => {
   const columns: Array<Column> = []
@@ -18,7 +18,7 @@ const createTable = (sourceData: Response) => {
   columns.push({ header: 'Date', accessorKey: `col-0` })
 
   sourceData.forEach((item) => {
-    const row: Data = { record: {}, in_reporting_delay_period: false }
+    const row: Data = { record: {}, inReportingDelay: false }
 
     // The row col-0 key is reserved for the reference field (usually a date or stratum along the x_axis)
     row.record['col-0'] = item.reference
@@ -32,7 +32,7 @@ const createTable = (sourceData: Response) => {
       row.record[`col-${columnIndex}`] = plot.value
 
       // Does at least one item in the row have a reporting delay period
-      row.in_reporting_delay_period = plot.in_reporting_delay_period
+      row.inReportingDelay = plot.in_reporting_delay_period
 
       // Add a new column if it does not already exist in the columns array
       if (!columns.find((column) => column.header === plot.label)) {

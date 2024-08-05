@@ -60,7 +60,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
     let incrementingColumnId = 0
 
-    const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.in_reporting_delay_period))
+    const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.inReportingDelay))
 
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
@@ -105,24 +105,22 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
                 {data.map((item, key) => {
                   return (
-                    <tr key={key} data-delay={`${item.in_reporting_delay_period}`} className="govuk-table__row">
+                    <tr key={key} className="govuk-table__row">
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
-                        const previousItemHasDelay = data[key - 1]?.in_reporting_delay_period ?? false
-                        const nextItemHasDelay = data[key + 1]?.in_reporting_delay_period ?? false
+                        const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
+                        const nextItemHasDelay = data[key + 1]?.inReportingDelay ?? false
 
                         return (
                           <Fragment key={columnIndex}>
                             {columnIndex === 0 ? (
                               <th
-                                data-delay={item.in_reporting_delay_period}
-                                data-previous={previousItemHasDelay}
-                                data-next={nextItemHasDelay}
                                 className={clsx('govuk-table__header font-normal', {
-                                  'bg-delay-blue-opaque': item.in_reporting_delay_period,
-                                  'border-t-2 border-t-delay-blue':
-                                    item.in_reporting_delay_period && !previousItemHasDelay,
-                                  'border-b-2 border-b-delay-blue': item.in_reporting_delay_period && !nextItemHasDelay,
+                                  'bg-delay-blue-opaque': item.inReportingDelay,
+                                  'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
+                                  'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
+                                  'border-b-0': !item.inReportingDelay && nextItemHasDelay,
+                                  'border-t-0': !item.inReportingDelay && previousItemHasDelay,
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
@@ -134,10 +132,11 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                               <td
                                 headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
                                 className={clsx('govuk-table__cell', {
-                                  'bg-delay-blue-opaque': item.in_reporting_delay_period,
-                                  'border-t-2 border-t-delay-blue':
-                                    item.in_reporting_delay_period && !previousItemHasDelay,
-                                  'border-b-2 border-b-delay-blue': item.in_reporting_delay_period && !nextItemHasDelay,
+                                  'bg-delay-blue-opaque': item.inReportingDelay,
+                                  'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
+                                  'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
+                                  'border-b-0': !item.inReportingDelay && nextItemHasDelay,
+                                  'border-t-0': !item.inReportingDelay && previousItemHasDelay,
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
