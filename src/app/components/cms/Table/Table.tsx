@@ -106,8 +106,8 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                     <tr key={key} className="govuk-table__row">
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
-                        const previousItemHasDelay = data[key - 1].inReportingDelay
-                        const nextItemHasDelay = data[key + 1].inReportingDelay
+                        const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
+                        const nextItemHasDelay = data[key + 1].inReportingDelay ?? false
 
                         return (
                           <Fragment key={columnIndex}>
