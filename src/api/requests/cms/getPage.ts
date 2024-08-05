@@ -27,6 +27,8 @@ const SharedPageData = z.object({
   last_published_at: z.string(),
   related_links: RelatedLinks,
   meta: Meta,
+  seo_change_frequency: z.number(),
+  seo_priority: z.coerce.number(),
 })
 
 const WithHomeData = SharedPageData.extend({
