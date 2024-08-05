@@ -25,6 +25,7 @@ import {
  *        values: [{
  *          label: "Plot1",
  *          value: '4630.0',
+ *          in_reporting_delay_period: false,
  *        }]
  *    },
  *    {
@@ -32,6 +33,7 @@ import {
  *        values: [{
  *          label: "Plot1",
  *          value: '3608.0',
+ *          in_reporting_delay_period: false,
  *        }]
  *    },
  *  ]

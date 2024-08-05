@@ -6,6 +6,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 14109.8,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '0-4',
@@ -15,6 +16,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 46415.2,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '10-14',
@@ -24,6 +26,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 50173.4,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '15-19',
@@ -33,6 +36,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 38310.1,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '20-24',
@@ -42,6 +46,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 39676.2,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '25-29',
@@ -51,6 +56,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 40887.6,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '30-34',
@@ -60,6 +66,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 39721.2,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '35-39',
@@ -69,6 +76,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 40779.4,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '40-44',
@@ -78,6 +86,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 35885.5,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '45-49',
@@ -87,6 +96,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 32090.7,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '5-9',
@@ -96,6 +106,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 33037.7,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '50-54',
@@ -105,6 +116,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 36375.9,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '55-59',
@@ -114,6 +126,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 31094.1,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '60-64',
@@ -123,6 +136,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 22917.3,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '65-69',
@@ -132,6 +146,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 17965.4,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '70-74',
@@ -141,6 +156,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 18380.2,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '75-79',
@@ -150,6 +166,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 18493.9,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '80-84',
@@ -159,6 +176,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 27284.6,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '85-89',
@@ -168,6 +186,7 @@ export const casesRateAgeSexValues: Response = [
       {
         label: 'Plot1',
         value: 39160.3,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '90+',

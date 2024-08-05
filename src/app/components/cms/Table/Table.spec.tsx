@@ -43,6 +43,7 @@ getTableMock.mockResolvedValue({
         {
           label: 'Plot1',
           value: 12630.0,
+          in_reporting_delay_period: false,
         },
       ],
     },
@@ -52,6 +53,7 @@ getTableMock.mockResolvedValue({
         {
           label: 'Plot1',
           value: 9360.0,
+          in_reporting_delay_period: false,
         },
       ],
     },
@@ -61,6 +63,7 @@ getTableMock.mockResolvedValue({
         {
           label: 'Plot1',
           value: 12345.6666,
+          in_reporting_delay_period: false,
         },
       ],
     },
@@ -70,6 +73,7 @@ getTableMock.mockResolvedValue({
         {
           label: 'Plot1',
           value: 600.049,
+          in_reporting_delay_period: false,
         },
       ],
     },
@@ -79,6 +83,7 @@ getTableMock.mockResolvedValue({
         {
           label: 'Plot1',
           value: 8392.6,
+          in_reporting_delay_period: false,
         },
       ],
     },
@@ -182,6 +187,7 @@ test('table data containing null plot points', async () => {
           {
             label: 'Plot1',
             value: null,
+            in_reporting_delay_period: false,
           },
         ],
       },

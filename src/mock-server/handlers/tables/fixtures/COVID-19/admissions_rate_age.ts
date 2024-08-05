@@ -6,6 +6,7 @@ export const admissionsRateAgeValues: Response = [
       {
         label: 'Admission rate',
         value: 540.1,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '0-5',
@@ -15,6 +16,7 @@ export const admissionsRateAgeValues: Response = [
       {
         label: 'Admission rate',
         value: 1009.0,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '18-64',
@@ -24,6 +26,7 @@ export const admissionsRateAgeValues: Response = [
       {
         label: 'Admission rate',
         value: 174.1,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '6-17',
@@ -33,6 +36,7 @@ export const admissionsRateAgeValues: Response = [
       {
         label: 'Admission rate',
         value: 4361.0,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '65-84',
@@ -42,6 +46,7 @@ export const admissionsRateAgeValues: Response = [
       {
         label: 'Admission rate',
         value: 14890.0,
+        in_reporting_delay_period: false,
       },
     ],
     reference: '85+',

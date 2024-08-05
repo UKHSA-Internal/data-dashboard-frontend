@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import { Fragment } from 'react'
 import { z } from 'zod'
@@ -59,18 +60,30 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
     let incrementingColumnId = 0
 
+    const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.in_reporting_delay_period))
+
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
           <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
+          {hasReportingDelayPeriod ? (
+            <>
+              <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">
+                Data subject to change
+              </p>
+              <span className="border-delay-blue bg-delay-blue-opaque size-2 border-y-2 p-0 px-2"></span>
+            </>
+          ) : (
+            ''
+          )}
         </caption>
 
         <tbody className="govuk-table__body">
           {groups.map(({ columns, data }, groupIndex) => {
             return (
               <Fragment key={groupIndex}>
-                <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
+                <tr className="govuk-table__row bg-grey-3 js:-top-6 sticky top-0">
                   {columns.map((column, columnIndex) => {
                     incrementingColumnId += 1
                     return (
@@ -92,27 +105,44 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
                 {data.map((item, key) => {
                   return (
-                    <tr key={key} className="govuk-table__row">
+                    <tr key={key} data-delay={`${item.in_reporting_delay_period}`} className="govuk-table__row">
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
+                        const previousItemHasDelay = data[key - 1]?.in_reporting_delay_period ?? false
+                        const nextItemHasDelay = data[key + 1]?.in_reporting_delay_period ?? false
 
                         return (
                           <Fragment key={columnIndex}>
                             {columnIndex === 0 ? (
-                              <th className="govuk-table__header font-normal">
+                              <th
+                                data-delay={item.in_reporting_delay_period}
+                                data-previous={previousItemHasDelay}
+                                data-next={nextItemHasDelay}
+                                className={clsx('govuk-table__header font-normal', {
+                                  'bg-delay-blue-opaque': item.in_reporting_delay_period,
+                                  'border-t-2 border-t-delay-blue':
+                                    item.in_reporting_delay_period && !previousItemHasDelay,
+                                  'border-b-2 border-b-delay-blue': item.in_reporting_delay_period && !nextItemHasDelay,
+                                })}
+                              >
                                 {t('cms.blocks.table.row', {
                                   context: x_axis,
-                                  value: item[column.accessorKey],
+                                  value: item.record[column.accessorKey],
                                 })}
                               </th>
                             ) : (
                               <td
                                 headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
-                                className="govuk-table__cell"
+                                className={clsx('govuk-table__cell', {
+                                  'bg-delay-blue-opaque': item.in_reporting_delay_period,
+                                  'border-t-2 border-t-delay-blue':
+                                    item.in_reporting_delay_period && !previousItemHasDelay,
+                                  'border-b-2 border-b-delay-blue': item.in_reporting_delay_period && !nextItemHasDelay,
+                                })}
                               >
                                 {t('cms.blocks.table.row', {
-                                  context: item[column.accessorKey] === null ? 'plot_null' : 'plot',
-                                  value: item[column.accessorKey],
+                                  context: item.record[column.accessorKey] === null ? 'plot_null' : 'plot',
+                                  value: item.record[column.accessorKey],
                                 })}
                               </td>
                             )}

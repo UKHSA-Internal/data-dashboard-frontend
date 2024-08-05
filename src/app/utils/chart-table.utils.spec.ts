@@ -17,10 +17,12 @@ test('transforms the tabular api response to be usable within the ui', () => {
           {
             label: 'Plot1',
             value: 3897.0,
+            in_reporting_delay_period: false,
           },
           {
             label: 'Plot2',
             value: 3471.1,
+            in_reporting_delay_period: false,
           },
         ],
       },
@@ -30,10 +32,12 @@ test('transforms the tabular api response to be usable within the ui', () => {
           {
             label: 'Plot1',
             value: 3897.0,
+            in_reporting_delay_period: false,
           },
           {
             label: 'Plot2',
             value: 3471.1,
+            in_reporting_delay_period: false,
           },
         ],
       },
@@ -82,14 +86,17 @@ test('divides into multiple tables when the number of plots exceeds the threshol
             {
               label: 'Plot1',
               value: 3897.0,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot2',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot3',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
           ],
         },
@@ -99,14 +106,17 @@ test('divides into multiple tables when the number of plots exceeds the threshol
             {
               label: 'Plot1',
               value: 3897.0,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot2',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot3',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
           ],
         },
@@ -195,34 +205,42 @@ test('divides into multiple tables when the number of plots exceeds the threshol
             {
               label: 'Plot1',
               value: 3897.0,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot2',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot3',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot4',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot5',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot6',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot7',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot8',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
           ],
         },
@@ -232,34 +250,42 @@ test('divides into multiple tables when the number of plots exceeds the threshol
             {
               label: 'Plot1',
               value: 3897.0,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot2',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot3',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot4',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot5',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot6',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot7',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
             {
               label: 'Plot8',
               value: 3471.1,
+              in_reporting_delay_period: false,
             },
           ],
         },

@@ -1,6 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
-const plugin = require('tailwindcss/plugin')
-
 /** @type {import('tailwindcss').Config} */
 module.exports = {
   important: true,
@@ -62,6 +59,8 @@ module.exports = {
       'yellow-opaque': 'var(--colour-yellow-opaque)',
       'orange-opaque': 'var(--colour-orange-opaque)',
       'red-opaque': 'var(--colour-red-opaque)',
+      'delay-blue': 'var(--colour-delay-blue)',
+      'delay-blue-opaque': 'var(--colour-delay-blue-opaque)',
     }),
     extend: {
       backgroundImage: {
