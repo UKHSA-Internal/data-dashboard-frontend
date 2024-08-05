@@ -462,3 +462,77 @@ test('gracefully handles an unexpected response', () => {
   const { result } = renderHook(() => parseChartTableData(null))
   expect(result.current).toEqual([])
 })
+
+test('successfully passes through reporting delay period', () => {
+  const { result } = renderHook(() =>
+    parseChartTableData([
+      {
+        reference: '2022-10-31',
+        values: [
+          {
+            label: 'Plot1',
+            value: 3897.0,
+            in_reporting_delay_period: false,
+          },
+          {
+            label: 'Plot2',
+            value: 3471.1,
+            in_reporting_delay_period: false,
+          },
+        ],
+      },
+      {
+        reference: '2022-11-31',
+        values: [
+          {
+            label: 'Plot1',
+            value: 3897.0,
+            in_reporting_delay_period: true,
+          },
+          {
+            label: 'Plot2',
+            value: 3471.1,
+            in_reporting_delay_period: true,
+          },
+        ],
+      },
+    ])
+  )
+
+  expect(result.current).toEqual([
+    {
+      columns: [
+        {
+          accessorKey: 'col-0',
+          header: 'Date',
+        },
+        {
+          accessorKey: 'col-1',
+          header: 'Plot1',
+        },
+        {
+          accessorKey: 'col-2',
+          header: 'Plot2',
+        },
+      ],
+      data: [
+        {
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3897.0,
+            'col-2': 3471.1,
+          },
+        },
+        {
+          in_reporting_delay_period: true,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3897.0,
+            'col-2': 3471.1,
+          },
+        },
+      ],
+    },
+  ])
+})
