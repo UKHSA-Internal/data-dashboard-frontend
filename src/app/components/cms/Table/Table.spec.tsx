@@ -239,3 +239,46 @@ test('table by geography and geography type when both are present in the url sea
   expect(cells[3]).toHaveTextContent('600.05')
   expect(cells[4]).toHaveTextContent('8,392.6')
 })
+
+test('table data containing reporting lag peroid', async () => {
+  getTableMock.mockResolvedValueOnce({
+    success: true,
+    data: [
+      {
+        reference: '2022-10-31',
+        values: [
+          {
+            label: 'Plot1',
+            value: 12630.0,
+            in_reporting_delay_period: false,
+          },
+        ],
+      },
+      {
+        reference: '2022-02-28',
+        values: [
+          {
+            label: 'Plot1',
+            value: 8392.6,
+            in_reporting_delay_period: true,
+          },
+        ],
+      },
+    ],
+  })
+
+  const { getAllByRole, getByText } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+  expect(getByText('Data subject to change')).toBeInTheDocument()
+
+  const cells = getAllByRole('cell')
+
+  expect(cells).toHaveLength(2)
+
+  expect(cells[0].getAttribute('class')).not.toContain(
+    'bg-delay-blue-opaque border-t-2 border-t-delay-blue border-b-2 border-b-delay-blue'
+  )
+  expect(cells[1].getAttribute('class')).toContain(
+    'bg-delay-blue-opaque border-t-2 border-t-delay-blue border-b-2 border-b-delay-blue'
+  )
+})
