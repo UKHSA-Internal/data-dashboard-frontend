@@ -72,7 +72,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
               <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">
                 Data subject to change
               </p>
-              <span className="border-delay-blue bg-delay-blue-opaque size-2 border-y-2 p-0 px-2"></span>
+              <span className="size-2 border-y-2 border-delay-blue bg-delay-blue-opaque p-0 px-2"></span>
             </>
           ) : (
             ''
@@ -83,7 +83,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
           {groups.map(({ columns, data }, groupIndex) => {
             return (
               <Fragment key={groupIndex}>
-                <tr className="govuk-table__row bg-grey-3 js:-top-6 sticky top-0">
+                <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
                   {columns.map((column, columnIndex) => {
                     incrementingColumnId += 1
                     return (

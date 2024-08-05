@@ -62,14 +62,20 @@ test('transforms the tabular api response to be usable within the ui', () => {
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3897.0,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3897.0,
+            'col-2': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3897.0,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3897.0,
+            'col-2': 3471.1,
+          },
         },
       ],
     },
@@ -139,12 +145,18 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3897.0,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3897.0,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3897.0,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3897.0,
+          },
         },
       ],
     },
@@ -161,12 +173,18 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3471.1,
+          },
         },
       ],
     },
@@ -183,12 +201,18 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3471.1,
+          },
         },
       ],
     },
@@ -312,14 +336,20 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3897.0,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3897.0,
+            'col-2': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3897.0,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3897.0,
+            'col-2': 3471.1,
+          },
         },
       ],
     },
@@ -340,14 +370,20 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3471.1,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3471.1,
+            'col-2': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3471.1,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3471.1,
+            'col-2': 3471.1,
+          },
         },
       ],
     },
@@ -368,14 +404,20 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3471.1,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3471.1,
+            'col-2': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3471.1,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3471.1,
+            'col-2': 3471.1,
+          },
         },
       ],
     },
@@ -396,14 +438,20 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
-          'col-0': '2022-10-31',
-          'col-1': 3471.1,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-10-31',
+            'col-1': 3471.1,
+            'col-2': 3471.1,
+          },
         },
         {
-          'col-0': '2022-11-31',
-          'col-1': 3471.1,
-          'col-2': 3471.1,
+          in_reporting_delay_period: false,
+          record: {
+            'col-0': '2022-11-31',
+            'col-1': 3471.1,
+            'col-2': 3471.1,
+          },
         },
       ],
     },
