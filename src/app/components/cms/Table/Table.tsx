@@ -67,15 +67,13 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
           <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
-          {hasReportingDelayPeriod ? (
+          {hasReportingDelayPeriod && (
             <>
               <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">
-                Data subject to change
+                {t('reportingLagPeriodKey')}
               </p>
               <span className="size-2 border-y-2 border-delay-blue bg-delay-blue-opaque p-0 px-2"></span>
             </>
-          ) : (
-            ''
           )}
         </caption>
 
@@ -108,8 +106,8 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                     <tr key={key} className="govuk-table__row">
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
-                        const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
-                        const nextItemHasDelay = data[key + 1]?.inReportingDelay ?? false
+                        const previousItemHasDelay = data[key - 1].inReportingDelay
+                        const nextItemHasDelay = data[key + 1].inReportingDelay
 
                         return (
                           <Fragment key={columnIndex}>
