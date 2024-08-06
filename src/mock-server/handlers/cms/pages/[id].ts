@@ -28,7 +28,6 @@ import {
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [dashboardMock.id]: dashboardMock,
-  [aboutPageMock.id]: aboutPageMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
   [compliancePageMock.id]: compliancePageMock,
