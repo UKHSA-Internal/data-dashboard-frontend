@@ -19,12 +19,14 @@ export const dashboardMock: PageResponse<PageType.Home> = {
       id: 3,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/3/',
+        detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
     },
   },
+  seo_change_frequency: 4,
+  seo_priority: 1,
   title: 'UKHSA data dashboard',
   page_description:
     '<p data-block-key="sud2w">The UKHSA data dashboard shows public health data across England. It builds on the success and is an iteration of the <a href="https://coronavirus.data.gov.uk/">COVID-19 in the UK dashboard</a>.</p><p data-block-key="dj8jt">Initially, the dashboard presents data on respiratory viruses. In the future, it will grow to present a wider range of data on public health topics in line with the remit of the UKHSA. Find out more <a id="8" linktype="page">about the UKHSA data dashboard</a>.</p><p data-block-key="21gee"><b>The UKHSA data dashboard is still undergoing statistical review. For reporting and analytical purposes, use the</b> <a href="https://coronavirus.data.gov.uk/"><b>COVID-19 dashboard</b></a><b> and the</b> <a href="https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2023-to-2024-season"><b>weekly surveillance report</b></a><b>.</b></p>',

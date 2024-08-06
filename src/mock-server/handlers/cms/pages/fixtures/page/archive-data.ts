@@ -17,12 +17,14 @@ export const archiveDataPageMock: PageResponse<PageType.Composite> = {
       id: 3,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/3/',
+        detail_url: `http://localhost:3000/api/pages/3/`,
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
     },
   },
+  seo_change_frequency: 5,
+  seo_priority: 0.5,
   title: 'COVID-19 Archive data download',
   date_posted: '2023-08-24',
   body: [

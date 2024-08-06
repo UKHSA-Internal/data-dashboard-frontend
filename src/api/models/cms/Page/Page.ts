@@ -11,6 +11,8 @@ export const Page = z.object({
   body: z.array(Body),
   related_links: z.array(RelatedLink),
   last_published_at: z.string().datetime(),
+  seo_change_frequency: z.number(),
+  seo_priority: z.coerce.number(),
 })
 
 export type Page = z.infer<typeof Page>
