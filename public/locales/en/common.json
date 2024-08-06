@@ -95,5 +95,5 @@
     "noData": "No data available",
     "noData_withArea": "No data available in {{- areaName}}"
   },
-  "reportingLagPeriodKey": "Data subject to change"
+  "reportingLagPeriodKey": "Reporting delay period"
 }
