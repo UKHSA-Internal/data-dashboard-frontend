@@ -7,6 +7,7 @@ export const testing_positivityByWeek: Response = [
       {
         label: 'Plot1',
         value: 28630.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -16,6 +17,7 @@ export const testing_positivityByWeek: Response = [
       {
         label: 'Plot1',
         value: 19608.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -25,6 +27,7 @@ export const testing_positivityByWeek: Response = [
       {
         label: 'Plot1',
         value: 23886.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -34,6 +37,7 @@ export const testing_positivityByWeek: Response = [
       {
         label: 'Plot1',
         value: 12268.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -43,6 +47,7 @@ export const testing_positivityByWeek: Response = [
       {
         label: 'Plot1',
         value: 24087.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -52,6 +57,7 @@ export const testing_positivityByWeek: Response = [
       {
         label: 'Plot1',
         value: 32364.0,
+        in_reporting_delay_period: false,
       },
     ],
   },

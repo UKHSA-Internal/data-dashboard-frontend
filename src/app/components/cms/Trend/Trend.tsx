@@ -35,7 +35,6 @@ export async function Trend({ data: { body: heading, ...requestParams } }: Trend
           className={clsx('govuk-tag mt-[2px] whitespace-nowrap bg-[6px_center] bg-no-repeat', {
             'govuk-tag--green': colour === 'green',
             'govuk-tag--red': colour === 'red',
-            // 'govuk-tag--grey': colour === 'neutral',
             'govuk-tag--grey [.ukhsa-headline-numbers-row-card_&]:bg-white': colour === 'neutral',
             'bg-arrow_up_green': direction === 'up' && colour === 'green',
             'bg-arrow_down_green': direction === 'down' && colour === 'green',
