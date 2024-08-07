@@ -281,4 +281,8 @@ test('table data containing reporting lag peroid', async () => {
   expect(cells[1].getAttribute('class')).toContain(
     'bg-delay-blue-opaque border-t-2 border-t-delay-blue border-b-2 border-b-delay-blue'
   )
+
+  const rows = getAllByRole('row')
+  expect(rows[1].getAttribute('aria-label')).toBeNull()
+  expect(rows[2].getAttribute('aria-label')).toContain('Reporting delay period')
 })
