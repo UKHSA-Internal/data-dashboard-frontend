@@ -103,11 +103,11 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
                 {data.map((item, key) => {
                   return (
-                    <tr key={key} className="govuk-table__row">
-                      {item.inReportingDelay && (
-                        <span className="govuk-visually-hidden">{t('reportingLagPeriodKey')}</span>
-                      )}
-
+                    <tr
+                      key={key}
+                      className="govuk-table__row"
+                      aria-label={item.inReportingDelay ? t('reportingLagPeriodKey') : undefined}
+                    >
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
                         const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
