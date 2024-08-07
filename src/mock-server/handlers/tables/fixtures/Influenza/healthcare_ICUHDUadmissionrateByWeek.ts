@@ -7,6 +7,7 @@ export const healthcare_ICUHDUadmissionrateByWeek: Response = [
       {
         label: 'Plot1',
         value: 560.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -16,6 +17,7 @@ export const healthcare_ICUHDUadmissionrateByWeek: Response = [
       {
         label: 'Plot1',
         value: 368.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -25,6 +27,7 @@ export const healthcare_ICUHDUadmissionrateByWeek: Response = [
       {
         label: 'Plot1',
         value: 426.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -34,6 +37,7 @@ export const healthcare_ICUHDUadmissionrateByWeek: Response = [
       {
         label: 'Plot1',
         value: 228.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -43,6 +47,7 @@ export const healthcare_ICUHDUadmissionrateByWeek: Response = [
       {
         label: 'Plot1',
         value: 307.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -52,6 +57,7 @@ export const healthcare_ICUHDUadmissionrateByWeek: Response = [
       {
         label: 'Plot1',
         value: 534.0,
+        in_reporting_delay_period: false,
       },
     ],
   },

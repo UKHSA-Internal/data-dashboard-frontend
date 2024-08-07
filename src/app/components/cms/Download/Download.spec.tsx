@@ -35,6 +35,7 @@ getTableMock.mockResolvedValue({
         {
           label: 'Plot1',
           value: 12630.0,
+          in_reporting_delay_period: false,
         },
       ],
     },

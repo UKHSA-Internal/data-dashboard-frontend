@@ -7,6 +7,7 @@ export const deaths_ONSRollingMean: Response = [
       {
         label: 'Plot1',
         value: 4630.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -16,6 +17,7 @@ export const deaths_ONSRollingMean: Response = [
       {
         label: 'Plot1',
         value: 3608.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -25,6 +27,7 @@ export const deaths_ONSRollingMean: Response = [
       {
         label: 'Plot1',
         value: 3886.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -34,6 +37,7 @@ export const deaths_ONSRollingMean: Response = [
       {
         label: 'Plot1',
         value: 3268.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -43,6 +47,7 @@ export const deaths_ONSRollingMean: Response = [
       {
         label: 'Plot1',
         value: 4087.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -52,6 +57,7 @@ export const deaths_ONSRollingMean: Response = [
       {
         label: 'Plot1',
         value: 2364.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
