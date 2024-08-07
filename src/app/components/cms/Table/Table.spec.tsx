@@ -269,7 +269,7 @@ test('table data containing reporting lag peroid', async () => {
 
   const { getAllByRole, getByText } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
-  expect(getByText('Data subject to change')).toBeInTheDocument()
+  expect(getByText('Reporting delay period')).toBeInTheDocument()
 
   const cells = getAllByRole('cell')
 
