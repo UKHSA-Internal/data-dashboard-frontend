@@ -22,7 +22,7 @@ import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlert
 import { useTranslation } from '@/app/i18n/client'
 import { MapTileProvider } from '@/app/types'
 
-const { Map, BaseLayer, BaseLayerOSM, ChoroplethLayer, HealthAlertControl } = {
+const { Map, BaseLayer, BaseLayerOSM, BaseLayerEsri, ChoroplethLayer, HealthAlertControl } = {
   Map: dynamic(() => import('@/app/components/ui/ukhsa/Map/Map'), {
     ssr: false,
     loading: () => <Skeleton className="h-screen" />,
@@ -31,6 +31,9 @@ const { Map, BaseLayer, BaseLayerOSM, ChoroplethLayer, HealthAlertControl } = {
     ssr: false,
   }),
   BaseLayerOSM: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayerOSM'), {
+    ssr: false,
+  }),
+  BaseLayerEsri: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayerEsri'), {
     ssr: false,
   }),
   ChoroplethLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/ChoroplethLayer'), {
@@ -62,8 +65,12 @@ export default function HealthAlertsMapDialog({ featureCollection, mapTileProvid
   const alertsQuery = useWeatherHealthAlertList({ type })
 
   const baseLayer = useMemo(() => {
+    console.log('mapTileProvider', mapTileProvider)
     if (mapTileProvider === 'OrdinanceSurveyMaps') {
-      return <BaseLayerOSM />
+      return <BaseLayerOSM provider={mapTileProvider} />
+    }
+    if (mapTileProvider === 'ArcGISEsri') {
+      return <BaseLayerEsri provider={mapTileProvider} />
     }
     return <BaseLayer />
   }, [mapTileProvider])

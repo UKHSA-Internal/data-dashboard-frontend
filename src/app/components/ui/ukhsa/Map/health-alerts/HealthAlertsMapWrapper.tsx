@@ -20,6 +20,8 @@ export async function HealthAlertsMapWrapper() {
       <Suspense fallback={null}>
         {mapTileProvider === 'OrdinanceSurveyMaps' ? (
           <HealthAlertsMapDialog mapTileProvider="OrdinanceSurveyMaps" featureCollection={featureCollection} />
+        ) : mapTileProvider === 'ArcGISEsri' ? (
+          <HealthAlertsMapDialog mapTileProvider="ArcGISEsri" featureCollection={featureCollection} />
         ) : (
           <HealthAlertsMapDialog mapTileProvider="OpenStreetMaps" featureCollection={featureCollection} />
         )}
