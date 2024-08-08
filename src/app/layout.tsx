@@ -10,7 +10,7 @@ import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { getMenu } from '@/api/requests/menus/getMenu'
-import { transformMenuResponse } from '@/api/requests/menus/helpers'
+import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { useTranslation } from '@/app/i18n'
 
@@ -18,6 +18,7 @@ import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
+import { MegaMenu } from './components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { flags } from './constants/flags.constants'
@@ -31,7 +32,7 @@ export const dynamic = 'force-dynamic'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await useTranslation('common')
 
-  const mobileNav = transformMenuResponse(await getMenu())
+  const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
 
   const globalBanner = await useGlobalBanner()
 
@@ -116,6 +117,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </TopNav>
           </div>
         </header>
+
+        <div className="govuk-width-container">
+          <MegaMenu />
+        </div>
+
         <div className="govuk-width-container print:hidden">
           <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
             <p className="govuk-phase-banner__content">
