@@ -4,9 +4,9 @@ import {
   ListItemStatusContent,
   ListItemStatusIcon,
   ListItemStatusLink,
-  ListItemStatusTag,
   ListItemStatusTimestamp,
 } from './ListItemStatus'
+import ListItemStatusTag from './ListItemStatusTag'
 
 describe('correct health alerts icons displaying', () => {
   test('heat health alert green icon', async () => {
