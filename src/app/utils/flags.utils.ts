@@ -21,7 +21,7 @@ export async function getFeatureFlag(name: FeatureFlag) {
     }
 
     // Send the local mock overrides with all requests
-    if (!isWellKnownEnvironment(process.env.API_URL ?? '') && isSSR) {
+    if (!isWellKnownEnvironment() && isSSR) {
       // Import cookies dynamically only in node environment to not trigger nextjs warnings
       // TODO: Investigate the above. It means currently any client-side requests won't receive dynamically mocked responses
       const cookies = async () => (await import('next/headers')).cookies

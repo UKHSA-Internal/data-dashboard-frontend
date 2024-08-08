@@ -133,7 +133,7 @@ describe('getPageMetadata', () => {
     const result = await getPageMetadata(slug, searchParams, PageType.Home)
 
     expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://fake-backend.gov.uk' },
+      alternates: { canonical: 'http://localhost' },
       description: 'Overall summary of the respiratory viruses in circulation within the UK',
       openGraph: {
         description: 'Overall summary of the respiratory viruses in circulation within the UK',
@@ -162,7 +162,7 @@ describe('getPageMetadata', () => {
     const result = await getPageMetadata(slug, searchParams, PageType.Composite)
 
     expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://fake-backend.gov.uk/bulk-downloads' },
+      alternates: { canonical: 'http://localhost/bulk-downloads' },
       description: 'Mocked bulk downloads page description',
       openGraph: {
         description: 'Mocked bulk downloads page description',
@@ -187,7 +187,7 @@ describe('getPageMetadata', () => {
     const result = await getPageMetadata(slug, searchParams, PageType.Topic)
 
     expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://fake-backend.gov.uk/topics/covid-19' },
+      alternates: { canonical: 'http://localhost/topics/covid-19' },
       description: 'Overall summary of COVID-19 in circulation within the UK',
       openGraph: {
         description: 'Overall summary of COVID-19 in circulation within the UK',
@@ -213,7 +213,7 @@ describe('getPageMetadata', () => {
     const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
 
     expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://fake-backend.gov.uk/metrics-documentation' },
+      alternates: { canonical: 'http://localhost/metrics-documentation' },
       description: '',
       openGraph: {
         description: '',
@@ -255,7 +255,7 @@ describe('getPageMetadata', () => {
     const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
 
     expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://fake-backend.gov.uk/whats-new' },
+      alternates: { canonical: 'http://localhost/whats-new' },
       description: '',
       openGraph: {
         description: '',
