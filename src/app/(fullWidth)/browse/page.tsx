@@ -2,7 +2,7 @@ import chunk from 'lodash/chunk'
 import { Metadata } from 'next'
 
 import { getMenu } from '@/api/requests/menus/getMenu'
-import { transformMenuResponse } from '@/api/requests/menus/helpers'
+import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { BrowseCard } from '@/app/components/ui/ukhsa'
 
 export const metadata: Metadata = {
@@ -10,7 +10,7 @@ export const metadata: Metadata = {
 }
 
 export default async function Browse() {
-  const menu = transformMenuResponse(await getMenu())
+  const menu = transformMenuSnippetToSideMenu(await getMenu())
 
   const groupedMenu = chunk(
     menu.flatMap((link) => {
