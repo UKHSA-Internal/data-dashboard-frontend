@@ -18,25 +18,15 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
 
   const { t } = useTranslation('metrics')
 
-  const [searchValue, setSearchValue] = useState(value)
-
-  const [debouncedSearch] = useDebounceValue(searchValue, DEBOUNCE_MILLISECONDS)
-
-  const handleSearchChange = (event: React.FormEvent<HTMLInputElement>) => {
-    setSearchValue(event.currentTarget.value)
-  }
+  const [searchInputValue, setSearchInputValue] = useState(value)
+  const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
 
   useEffect(() => {
     const url = new URL(window.location.href)
-    if (debouncedSearch !== '') {
-      url.searchParams.set('search', debouncedSearch)
-    } else {
-      url.searchParams.delete('search')
-    }
-    router.push(url.toString())
-
+    url.searchParams.set('search', debouncedSearchValue)
+    router.replace(url.toString())
     // eslint-disable-next-line react-hooks/exhaustive-deps -- router is omitted as it causes infinite redirects
-  }, [debouncedSearch])
+  }, [debouncedSearchValue])
 
   return (
     <form method="GET" action={'/metrics-documentation'} aria-label="Metrics search">
@@ -51,8 +41,10 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
               id="metric-name"
               name="search"
               type="text"
-              value={searchValue}
-              onChange={handleSearchChange}
+              value={searchInputValue}
+              onChange={(event) => {
+                setSearchInputValue(event.currentTarget.value)
+              }}
             />
             <noscript>
               <button type="submit" className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2">
@@ -62,9 +54,9 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
             <Link
               href="/metrics-documentation"
               className="govuk-link govuk-link--no-visited-state inline"
-              onClick={() => {
-                router.push('/metrics-documentation')
-                setSearchValue('')
+              onClick={(evt) => {
+                evt.preventDefault()
+                setSearchInputValue('')
               }}
             >
               {t('metricsSearch.clearText')}
