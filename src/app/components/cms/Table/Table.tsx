@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import { Fragment } from 'react'
 import { z } from 'zod'
@@ -59,11 +60,21 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
     let incrementingColumnId = 0
 
+    const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.inReportingDelay))
+
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
           <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
+          {hasReportingDelayPeriod && (
+            <>
+              <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">
+                {t('reportingLagPeriodKey')}
+              </p>
+              <span className="size-2 border-y-2 border-delay-blue bg-delay-blue-opaque p-0 px-2"></span>
+            </>
+          )}
         </caption>
 
         <tbody className="govuk-table__body">
@@ -92,27 +103,47 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
 
                 {data.map((item, key) => {
                   return (
-                    <tr key={key} className="govuk-table__row">
+                    <tr
+                      key={key}
+                      className="govuk-table__row"
+                      aria-label={item.inReportingDelay ? t('reportingLagPeriodKey') : undefined}
+                    >
                       {columns.map((column, columnIndex) => {
                         const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
+                        const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
+                        const nextItemHasDelay = data[key + 1]?.inReportingDelay ?? false
 
                         return (
                           <Fragment key={columnIndex}>
                             {columnIndex === 0 ? (
-                              <th className="govuk-table__header font-normal">
+                              <th
+                                className={clsx('govuk-table__header font-normal', {
+                                  'bg-delay-blue-opaque': item.inReportingDelay,
+                                  'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
+                                  'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
+                                  'border-b-0': !item.inReportingDelay && nextItemHasDelay,
+                                  'border-t-0': !item.inReportingDelay && previousItemHasDelay,
+                                })}
+                              >
                                 {t('cms.blocks.table.row', {
                                   context: x_axis,
-                                  value: item[column.accessorKey],
+                                  value: item.record[column.accessorKey],
                                 })}
                               </th>
                             ) : (
                               <td
                                 headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
-                                className="govuk-table__cell"
+                                className={clsx('govuk-table__cell', {
+                                  'bg-delay-blue-opaque': item.inReportingDelay,
+                                  'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
+                                  'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
+                                  'border-b-0': !item.inReportingDelay && nextItemHasDelay,
+                                  'border-t-0': !item.inReportingDelay && previousItemHasDelay,
+                                })}
                               >
                                 {t('cms.blocks.table.row', {
-                                  context: item[column.accessorKey] === null ? 'plot_null' : 'plot',
-                                  value: item[column.accessorKey],
+                                  context: item.record[column.accessorKey] === null ? 'plot_null' : 'plot',
+                                  value: item.record[column.accessorKey],
                                 })}
                               </td>
                             )}

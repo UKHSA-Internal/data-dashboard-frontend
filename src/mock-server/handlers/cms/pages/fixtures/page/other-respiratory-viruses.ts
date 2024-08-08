@@ -19,12 +19,14 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
       id: 6,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost/api/pages/6/',
+        detail_url: 'http://localhost:3000/api/pages/6/',
         html_url: null,
       },
       title: 'Respiratory viruses',
     },
   },
+  seo_change_frequency: 4,
+  seo_priority: 0.8,
   title: 'Other respiratory viruses',
   page_description:
     '<p data-block-key="rjyu9">Data and insights from the UKHSA on other respiratory viruses. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency\\">See the simple summary for England (opens in a new tab)</a>.</p>',

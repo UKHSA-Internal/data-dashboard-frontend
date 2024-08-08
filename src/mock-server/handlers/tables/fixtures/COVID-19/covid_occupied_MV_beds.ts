@@ -7,10 +7,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 42.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 31.1,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -20,10 +22,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 53.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 56.3,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -33,10 +37,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 78.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 86.0,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -46,10 +52,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 56.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 43.6,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -59,10 +67,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 46.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 55.7,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -72,10 +82,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 64.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 72.3,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -85,10 +97,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 35.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 42.3,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -98,10 +112,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 128.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 109.3,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -111,10 +127,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 52.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 57.1,
+        in_reporting_delay_period: false,
       },
     ],
   },
@@ -124,10 +142,12 @@ export const covidOccupiedMVBeds: Response = [
       {
         label: 'New deaths daily',
         value: 62.0,
+        in_reporting_delay_period: false,
       },
       {
         label: '7 day rolling average',
         value: 54.1,
+        in_reporting_delay_period: false,
       },
     ],
   },

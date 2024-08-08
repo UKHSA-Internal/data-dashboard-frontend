@@ -94,5 +94,6 @@
     "resetBtn": "Reset",
     "noData": "No data available",
     "noData_withArea": "No data available in {{- areaName}}"
-  }
+  },
+  "reportingLagPeriodKey": "Reporting delay period"
 }
