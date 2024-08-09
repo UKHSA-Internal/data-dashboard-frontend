@@ -38,7 +38,6 @@ export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newL
                 'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute -top-7 right-0 z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none md:-top-8 md:h-8',
                 {
                   'open bg-white text-blue': menuOpen,
-                  'xl:hidden': !newLandingPage,
                 }
               )}
               onClick={handleClick}
@@ -62,10 +61,9 @@ export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newL
         <>
           <Link
             className={clsx(
-              'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[45px] z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none sm:top-8 md:top-0 md:h-8',
+              'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[45px] z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none sm:top-8 md:top-0 md:h-8 xl:hidden',
               {
                 'open bg-white text-blue': menuOpen,
-                'xl:hidden': !newLandingPage,
               }
             )}
             onClick={handleClick}
