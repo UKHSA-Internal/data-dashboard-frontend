@@ -119,29 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </header>
 
-        {newLandingPageEnabled ? (
-          <TopNav newLandingPage={newLandingPageEnabled}>
-            {mobileNav.map(({ title, slug, children }) => (
-              <SideNavLink
-                key={slug}
-                href={slug}
-                subMenu={
-                  children && (
-                    <SideNavSubMenu>
-                      {children.map(({ title, slug }) => (
-                        <SideNavSubMenuLink key={slug} href={slug}>
-                          {title}
-                        </SideNavSubMenuLink>
-                      ))}
-                    </SideNavSubMenu>
-                  )
-                }
-              >
-                {title}
-              </SideNavLink>
-            ))}
-          </TopNav>
-        ) : null}
+        {newLandingPageEnabled ? <TopNav newLandingPage={newLandingPageEnabled}>Test content</TopNav> : null}
 
         {/* Blue bar underneath header */}
         <div className="govuk-width-container h-2 bg-blue" />

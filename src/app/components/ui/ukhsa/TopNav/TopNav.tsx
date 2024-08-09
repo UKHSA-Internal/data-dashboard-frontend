@@ -54,7 +54,7 @@ export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newL
               'hidden h-0': !menuOpen,
             })}
           >
-            <div className="govuk-width-container py-5 text-blue">Test content</div>
+            <div className="govuk-width-container py-5 text-blue">{children}</div>
           </div>
         </>
       ) : (
