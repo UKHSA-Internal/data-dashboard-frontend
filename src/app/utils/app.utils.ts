@@ -27,7 +27,8 @@ export const toSlug = (text: string | null) => {
 /**
  * Determine if the provided url is a deployed environment
  */
-export const isWellKnownEnvironment = (url: string) => {
+export const isWellKnownEnvironment = () => {
+  const url = getSiteUrl()
   return url.includes('ukhsa-dashboard.data.gov.uk')
 }
 
@@ -35,11 +36,9 @@ export const isWellKnownEnvironment = (url: string) => {
  * We use the API url to determine the WKE to avoid injecting additional envrionment variables
  */
 export const getSiteUrl = () => {
-  const apiUrl = process.env.API_URL
-  if (!apiUrl) {
-    throw new Error('Missing environment variable: API_URL')
-  }
-  return apiUrl.includes('private-api') ? apiUrl.replace('private-api.', '') : apiUrl
+  const baseUrl = process.env.BASE_URL
+  if (!baseUrl) throw new Error('Missing environment variable: BASE_URL')
+  return baseUrl
 }
 
 export const slug2String = (slug: string[]): string => slug.join('/')
