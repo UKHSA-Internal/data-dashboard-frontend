@@ -24,45 +24,71 @@ export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newL
   useClickAway(topNavRef, () => setMenuOpen(false))
 
   return (
-    <div ref={topNavRef} className="-mx-3 sm:-mx-6 print:hidden">
-      <Link
-        className={clsx(
-          'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[45px] z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none sm:top-8 md:top-0 md:h-8',
-          {
-            'open bg-white text-blue': menuOpen,
-            'xl:hidden': !newLandingPage,
-          }
-        )}
-        onClick={handleClick}
-        href="/browse"
-        aria-expanded={menuOpen}
-        aria-controls="ukhsa-topnav"
-        aria-label={`${menuOpen ? 'Hide' : 'Show'} navigation menu`}
-      >
-        Menu
-      </Link>
-
+    <div
+      ref={topNavRef}
+      className={clsx('print:hidden', {
+        '-mx-3 sm:-mx-6 ': !newLandingPage,
+      })}
+    >
       {newLandingPage ? (
-        <div
-          className={clsx('inline-block w-full bg-light-grey px-3 sm:px-6', {
-            'hidden h-0': !menuOpen,
-          })}
-        >
-          <div className="py-5 text-blue">Test content</div>
-        </div>
-      ) : (
-        <nav
-          className={clsx(
-            'sticky inline-block w-full border-b border-mid-grey bg-grey-3 px-3 sm:px-6 xl:hidden [&>ul>li>a]:px-3 sm:[&>ul>li>a]:px-6 md:[&>ul>li>a]:px-6',
-            {
+        <>
+          <div className="govuk-width-container relative">
+            <Link
+              className={clsx(
+                'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute -top-7 right-0 z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none md:-top-8 md:h-8',
+                {
+                  'open bg-white text-blue': menuOpen,
+                  'xl:hidden': !newLandingPage,
+                }
+              )}
+              onClick={handleClick}
+              href="/browse"
+              aria-expanded={menuOpen}
+              aria-controls="ukhsa-topnav"
+              aria-label={`${menuOpen ? 'Hide' : 'Show'} navigation menu`}
+            >
+              Menu
+            </Link>
+          </div>
+          <div
+            className={clsx('inline-block w-full bg-light-grey', {
               'hidden h-0': !menuOpen,
-            }
-          )}
-          id="ukhsa-topnav"
-          aria-label="Menu"
-        >
-          <ul>{children}</ul>
-        </nav>
+            })}
+          >
+            <div className="govuk-width-container py-5 text-blue">Test content</div>
+          </div>
+        </>
+      ) : (
+        <>
+          <Link
+            className={clsx(
+              'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[45px] z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none sm:top-8 md:top-0 md:h-8',
+              {
+                'open bg-white text-blue': menuOpen,
+                'xl:hidden': !newLandingPage,
+              }
+            )}
+            onClick={handleClick}
+            href="/browse"
+            aria-expanded={menuOpen}
+            aria-controls="ukhsa-topnav"
+            aria-label={`${menuOpen ? 'Hide' : 'Show'} navigation menu`}
+          >
+            Menu
+          </Link>
+          <nav
+            className={clsx(
+              'sticky inline-block w-full border-b border-mid-grey bg-grey-3 px-3 sm:px-6 xl:hidden [&>ul>li>a]:px-3 sm:[&>ul>li>a]:px-6 md:[&>ul>li>a]:px-6',
+              {
+                'hidden h-0': !menuOpen,
+              }
+            )}
+            id="ukhsa-topnav"
+            aria-label="Menu"
+          >
+            <ul>{children}</ul>
+          </nav>
+        </>
       )}
     </div>
   )
