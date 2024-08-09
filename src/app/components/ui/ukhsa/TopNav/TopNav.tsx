@@ -8,7 +8,7 @@ import { useClickAway } from 'react-use'
 /**
  * Topnav
  */
-export const TopNav = ({ children }: { children: ReactNode }) => {
+export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newLandingPage?: boolean }) => {
   const pathname = usePathname()
   const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,9 +27,10 @@ export const TopNav = ({ children }: { children: ReactNode }) => {
     <div ref={topNavRef} className="print:hidden">
       <Link
         className={clsx(
-          'govuk-!-font-size-19 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[35px] z-10 mr-3 flex h-8 items-center px-4 no-underline shadow-none motion-reduce:transition-none sm:top-7 md:top-0 md:mr-6 xl:hidden',
+          'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute right-0 top-[35px] z-10 flex h-8 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none sm:top-7 md:top-0',
           {
-            open: menuOpen,
+            'open bg-white text-blue': menuOpen,
+            'xl:hidden': !newLandingPage,
           }
         )}
         onClick={handleClick}

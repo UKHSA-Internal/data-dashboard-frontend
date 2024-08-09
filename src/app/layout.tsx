@@ -36,6 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const globalBanner = await useGlobalBanner()
 
   const { enabled: weatherHealthAlertsEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
+  const { enabled: newLandingPageEnabled } = await getFeatureFlag(flags.newLandingPage)
 
   const cookieStore = cookies()
 
@@ -91,29 +92,28 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   {t('serviceTitle')}
                 </Link>
               </div>
+              <TopNav newLandingPage={newLandingPageEnabled}>
+                {mobileNav.map(({ title, slug, children }) => (
+                  <SideNavLink
+                    key={slug}
+                    href={slug}
+                    subMenu={
+                      children && (
+                        <SideNavSubMenu>
+                          {children.map(({ title, slug }) => (
+                            <SideNavSubMenuLink key={slug} href={slug}>
+                              {title}
+                            </SideNavSubMenuLink>
+                          ))}
+                        </SideNavSubMenu>
+                      )
+                    }
+                  >
+                    {title}
+                  </SideNavLink>
+                ))}
+              </TopNav>
             </div>
-
-            <TopNav>
-              {mobileNav.map(({ title, slug, children }) => (
-                <SideNavLink
-                  key={slug}
-                  href={slug}
-                  subMenu={
-                    children && (
-                      <SideNavSubMenu>
-                        {children.map(({ title, slug }) => (
-                          <SideNavSubMenuLink key={slug} href={slug}>
-                            {title}
-                          </SideNavSubMenuLink>
-                        ))}
-                      </SideNavSubMenu>
-                    )
-                  }
-                >
-                  {title}
-                </SideNavLink>
-              ))}
-            </TopNav>
           </div>
         </header>
         <div className="govuk-width-container print:hidden">
