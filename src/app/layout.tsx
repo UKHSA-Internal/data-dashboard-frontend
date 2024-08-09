@@ -67,10 +67,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         </Suspense>
 
-        <header className="govuk-header" data-module="govuk-header">
+        <header className="govuk-header border-none" data-module="govuk-header">
           <div className="relative">
-            <div className="govuk-header__container govuk-width-container">
-              <div className="govuk-header__logo">
+            <div className="govuk-width-container relative flow-root">
+              <div className="govuk-header__logo govuk-!-padding-top-2">
                 <Link href="/" className="govuk-header__link govuk-header__link--homepage">
                   <svg
                     focusable="false"
@@ -87,11 +87,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   </svg>
                 </Link>
               </div>
-              <div className="govuk-header__content inline w-auto sm:w-5/12">
+
+              <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
                 <Link href="/" className="govuk-header__link govuk-header__service-name">
                   {t('serviceTitle')}
                 </Link>
               </div>
+
               <TopNav newLandingPage={newLandingPageEnabled}>
                 {mobileNav.map(({ title, slug, children }) => (
                   <SideNavLink
@@ -116,6 +118,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             </div>
           </div>
         </header>
+
+        {/* Blue bar underneath header */}
+        <div className="govuk-width-container h-2 bg-blue" />
+
         <div className="govuk-width-container print:hidden">
           <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
             <p className="govuk-phase-banner__content">
