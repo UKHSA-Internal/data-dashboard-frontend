@@ -36,8 +36,7 @@ export const isWellKnownEnvironment = () => {
  * We use the API url to determine the WKE to avoid injecting additional envrionment variables
  */
 export const getSiteUrl = () => {
-  const baseUrl = process.env.BASE_URL
-  if (!baseUrl) throw new Error('Missing environment variable: BASE_URL')
+  const baseUrl = process.env.BASE_URL || 'https://ukhsa-dashboard.data.gov.uk'
   return baseUrl
 }
 
