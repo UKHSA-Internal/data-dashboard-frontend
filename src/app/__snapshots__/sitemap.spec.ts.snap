@@ -5238,13 +5238,13 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
-    "url": "http://fake-backend.gov.uk/feedback",
+    "url": "http://localhost/feedback",
   },
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.2,
-    "url": "http://fake-backend.gov.uk/browse",
+    "url": "http://localhost/browse",
   },
 ]
 `;
