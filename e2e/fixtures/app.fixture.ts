@@ -26,6 +26,7 @@ import {
   NotFoundPage,
   OtherRespiratoryVirusesPage,
   SitemapPage,
+  SwitchboardPage,
   WeatherHealthAlertsChildPage,
   WeatherHealthAlertsMapPage,
   WeatherHealthAlertsParentPage,
@@ -36,6 +37,7 @@ import {
 
 type Fixtures = {
   app: App
+  switchboardPage: SwitchboardPage
   sitemapPage: SitemapPage
   homePage: HomePage
   aboutPage: AboutPage
@@ -446,6 +448,9 @@ export const test = base.extend<Fixtures>({
   },
   sitemapPage: async ({ page }, use) => {
     await use(new SitemapPage(page))
+  },
+  switchboardPage: async ({ page }, use) => {
+    await use(new SwitchboardPage(page))
   },
   homePage: async ({ page }, use) => {
     await use(new HomePage(page))
