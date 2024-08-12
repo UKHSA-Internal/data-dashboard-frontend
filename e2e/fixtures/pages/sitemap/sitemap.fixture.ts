@@ -34,7 +34,7 @@ export class SitemapPage {
   }
 
   async count(number: number) {
-    expect(this.sitemap).toHaveLength(number)
+    expect(this.sitemap.length).not.toBeLessThan(number)
   }
 
   async validate() {

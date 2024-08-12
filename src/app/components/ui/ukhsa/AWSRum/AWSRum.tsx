@@ -21,7 +21,7 @@ export function AWSRum({ applicationId, identityPoolId }: AWSRumProps) {
         sessionSampleRate: 1,
         identityPoolId,
         endpoint: 'https://dataplane.rum.eu-west-2.amazonaws.com',
-        telemetries: [],
+        telemetries: ['errors', 'performance', 'http'],
         allowCookies: false,
         enableXRay: false,
       }
