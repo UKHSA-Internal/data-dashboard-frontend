@@ -49,13 +49,14 @@ export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newL
               Menu
             </Link>
           </div>
-          <div
+          <nav
             className={clsx('inline-block w-full bg-light-grey', {
               'hidden h-0': !menuOpen,
             })}
+            aria-label="Menu"
           >
             <div className="govuk-width-container py-5 text-blue">{children}</div>
-          </div>
+          </nav>
         </>
       ) : (
         <>
