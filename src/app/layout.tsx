@@ -36,7 +36,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const globalBanner = await useGlobalBanner()
 
   const { enabled: weatherHealthAlertsEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
-  const { enabled: newLandingPageEnabled } = await getFeatureFlag(flags.newLandingPage)
+  const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
 
   const cookieStore = cookies()
 
@@ -92,8 +92,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   {t('serviceTitle')}
                 </Link>
               </div>
-              {newLandingPageEnabled ? null : (
-                <TopNav newLandingPage={newLandingPageEnabled}>
+              {megaMenuEnabled ? null : (
+                <TopNav megaMenu={megaMenuEnabled}>
                   {mobileNav.map(({ title, slug, children }) => (
                     <SideNavLink
                       key={slug}
@@ -119,7 +119,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </header>
 
-        {newLandingPageEnabled ? <TopNav newLandingPage={newLandingPageEnabled}>Test content</TopNav> : null}
+        {megaMenuEnabled ? <TopNav megaMenu={megaMenuEnabled}>Test content</TopNav> : null}
 
         {/* Blue bar underneath header */}
         <div className="govuk-width-container h-2 bg-blue" />

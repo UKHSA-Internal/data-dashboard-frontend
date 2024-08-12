@@ -13,7 +13,7 @@ export const featureFlags = {
       impressionData: false,
     },
     {
-      name: 'new-landing-page',
+      name: 'mega-menu',
       type: 'release',
       enabled: false,
       project: 'default',

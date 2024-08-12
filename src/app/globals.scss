@@ -131,9 +131,6 @@ $govuk-page-width: 1400px;
     transition: transform 0.2s ease;
     margin: 0 12px 7px 2px;
   }
-  &:focus:before {
-    border-color: var(--colour-black);
-  }
 
   @media (max-width: 400px) {
     &:before {
@@ -150,9 +147,6 @@ $govuk-page-width: 1400px;
     bottom: 0;
     top: auto;
   }
-  &:focus:after {
-    background: var(--colour-black);
-  }
 
   &.open {
     &:before {
@@ -163,6 +157,18 @@ $govuk-page-width: 1400px;
 
     &:after {
       background: var(--colour-blue);
+    }
+  }
+
+  &:focus {
+    background: var(--colour-yellow) !important;
+    color: var(--colour-black) !important;
+
+    &:before {
+      border-color: var(--colour-black) !important;
+    }
+    &:after {
+      background: var(--colour-black) !important;
     }
   }
 }

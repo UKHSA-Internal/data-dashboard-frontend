@@ -99,7 +99,7 @@ test('Clicking a menu item closes the navigation menu', async () => {
 
 describe('New landing page tests', () => {
   test('Menu opens & closes', async () => {
-    render(<TopNav newLandingPage>Test content</TopNav>)
+    render(<TopNav megaMenu>Test content</TopNav>)
 
     const link = screen.getByRole('link', { name: 'Show navigation menu', expanded: false })
     expect(link).toBeInTheDocument()
@@ -122,7 +122,7 @@ describe('New landing page tests', () => {
   test('Clicking outside of the header closes the navigation menu', async () => {
     render(
       <>
-        <TopNav newLandingPage>
+        <TopNav megaMenu>
           <>
             <li>Child 1</li>
             <li>Child 2</li>
@@ -148,7 +148,7 @@ describe('New landing page tests', () => {
     navigationMock.mockReturnValue('/')
 
     const { rerender } = render(
-      <TopNav newLandingPage>
+      <TopNav megaMenu>
         <>
           <li>Child 1</li>
           <li>Child 2</li>

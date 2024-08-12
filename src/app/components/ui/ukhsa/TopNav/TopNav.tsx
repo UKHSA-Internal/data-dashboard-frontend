@@ -8,7 +8,7 @@ import { useClickAway } from 'react-use'
 /**
  * Topnav
  */
-export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newLandingPage?: boolean }) => {
+export const TopNav = ({ children, megaMenu }: { children: ReactNode; megaMenu?: boolean }) => {
   const pathname = usePathname()
   const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -27,10 +27,10 @@ export const TopNav = ({ children, newLandingPage }: { children: ReactNode; newL
     <div
       ref={topNavRef}
       className={clsx('print:hidden', {
-        '-mx-3 sm:-mx-6 ': !newLandingPage,
+        '-mx-3 sm:-mx-6 ': !megaMenu,
       })}
     >
-      {newLandingPage ? (
+      {megaMenu ? (
         <>
           <div className="govuk-width-container relative">
             <Link

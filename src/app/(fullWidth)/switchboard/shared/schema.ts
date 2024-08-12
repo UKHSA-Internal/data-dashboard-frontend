@@ -27,7 +27,7 @@ export const switchBoardSchema = z.object({
   }),
   flags: z.object({
     'adverse-weather': z.enum(['enabled', 'disabled']),
-    'new-landing-page': z.enum(['enabled', 'disabled']),
+    'mega-menu': z.enum(['enabled', 'disabled']),
   }),
 })
 
