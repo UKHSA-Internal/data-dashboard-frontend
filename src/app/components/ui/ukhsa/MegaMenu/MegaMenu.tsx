@@ -18,12 +18,12 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-7' }: MegaMenu
     <div className={clsx(className)}>
       {activeMenu.map((columns, rowIndex) => {
         return (
-          <div key={rowIndex} className="govuk-grid-row">
+          <div key={rowIndex} data-testid={`mega-menu-row-${rowIndex}`} className="govuk-grid-row">
             {columns.map((column, columnIndex) => {
               return (
                 <div
                   key={columnIndex}
-                  data-testid={`mega-menu-column-${columnIndex}`}
+                  data-testid={`mega-menu-row-${rowIndex}-column-${columnIndex}`}
                   className="govuk-grid-column-one-third-from-desktop [&:not(:first-child)]:mt-6 [&:not(:first-child)]:md:mt-0"
                 >
                   {column.heading ? (
