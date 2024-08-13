@@ -24,7 +24,7 @@ describe('AWSRum', () => {
       sessionSampleRate: 1,
       identityPoolId: 'test-identity-pool-id',
       endpoint: 'https://dataplane.rum.eu-west-2.amazonaws.com',
-      telemetries: [],
+      telemetries: ['errors', 'performance', 'http'],
       allowCookies: false,
       enableXRay: false,
     })
