@@ -18,6 +18,7 @@ import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
+import { MegaMenu } from './components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { flags } from './constants/flags.constants'
@@ -119,7 +120,11 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </div>
         </header>
 
-        {megaMenuEnabled ? <TopNav megaMenu={megaMenuEnabled}>Test content</TopNav> : null}
+        {megaMenuEnabled ? (
+          <TopNav megaMenu={megaMenuEnabled}>
+            <MegaMenu />
+          </TopNav>
+        ) : null}
 
         {/* Blue bar underneath header */}
         <div className="govuk-width-container h-2 bg-blue" />
