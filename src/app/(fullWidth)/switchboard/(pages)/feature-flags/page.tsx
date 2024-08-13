@@ -11,7 +11,7 @@ export default function SwitchBoard() {
 
   const {
     flags: {
-      'adverse-weather': adverseWeather,
+      'adverse-weather': weatherHealthAlert,
       'mega-menu': megaMenu,
       'landing-page-hero': landingPageHero,
       'landing-page-content': landingPageContent,
@@ -28,7 +28,7 @@ export default function SwitchBoard() {
           syncState(
             {},
             {
-              'adverse-weather': form.get('flags.adverseWeather') as string,
+              'adverse-weather': form.get('flags.weatherHealthAlert') as string,
               'mega-menu': form.get('flags.megaMenu') as string,
               'landing-page-hero': form.get('flags.landingPageHero') as string,
               'landing-page-content': form.get('flags.landingPageContent') as string,
@@ -42,33 +42,33 @@ export default function SwitchBoard() {
             <h2 className="govuk-fieldset__heading">Feature flags</h2>
           </legend>
           <div className="govuk-radios govuk-radios--inline govuk-radios--small" data-module="govuk-radios">
-            <label className="govuk-label w-full" htmlFor="flags.adverseWeather.Enabled">
+            <label className="govuk-label w-full" htmlFor="flags.weatherHealthAlert.Enabled">
               Weather health alert
             </label>
             <div className="govuk-radios__item">
               <input
-                defaultChecked={adverseWeather === 'enabled'}
+                defaultChecked={weatherHealthAlert === 'enabled'}
                 className="govuk-radios__input"
-                id="flags.adverseWeather.Enabled"
-                name="flags.adverseWeather"
+                id="flags.weatherHealthAlert.Enabled"
+                name="flags.weatherHealthAlert"
                 type="radio"
                 value="enabled"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.adverseWeather.Enabled">
+              <label className="govuk-label govuk-radios__label" htmlFor="flags.weatherHealthAlert.Enabled">
                 Enabled
               </label>
             </div>
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={adverseWeather === 'disabled'}
+                defaultChecked={weatherHealthAlert === 'disabled'}
                 className="govuk-radios__input"
-                id="flags.adverseWeather.Disabled"
-                name="flags.adverseWeather"
+                id="flags.weatherHealthAlert.Disabled"
+                name="flags.weatherHealthAlert"
                 type="radio"
                 value="disabled"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.adverseWeather.Disabled">
+              <label className="govuk-label govuk-radios__label" htmlFor="flags.weatherHealthAlert.Disabled">
                 Disabled
               </label>
             </div>
