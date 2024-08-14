@@ -17,6 +17,7 @@ import { getServerTranslation } from '@/app/i18n'
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
+import HeroBanner from './components/ui/ukhsa/HeroBanner/HeroBanner'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { MegaMenu } from './components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
@@ -37,6 +38,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const globalBanner = await getGlobalBanner()
 
   const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
+  const { enabled: landingPageHeroEnabled } = await getFeatureFlag(flags.landingPageHero)
 
   const cookieStore = cookies()
 
@@ -124,6 +126,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <MegaMenu />
           </TopNav>
         ) : null}
+
+        {landingPageHeroEnabled ? <HeroBanner /> : null}
 
         {/* Blue bar underneath header */}
         <div className="govuk-width-container h-2 bg-blue" />
