@@ -27,7 +27,6 @@ export const initialState: switchBoardSchemaType = {
     },
   },
   flags: {
-    'adverse-weather': 'enabled',
     'mega-menu': 'disabled',
     'landing-page-hero': 'disabled',
     'landing-page-content': 'disabled',

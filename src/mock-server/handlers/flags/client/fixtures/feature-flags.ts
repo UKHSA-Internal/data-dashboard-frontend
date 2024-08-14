@@ -2,17 +2,6 @@ export const featureFlags = {
   version: 2,
   features: [
     {
-      name: 'adverse-weather',
-      type: 'release',
-      enabled: true,
-      project: 'default',
-      stale: false,
-      strategies: [],
-      variants: [],
-      description: null,
-      impressionData: false,
-    },
-    {
       name: 'mega-menu',
       type: 'release',
       enabled: false,

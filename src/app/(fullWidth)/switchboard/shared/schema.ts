@@ -26,7 +26,6 @@ export const switchBoardSchema = z.object({
     menus: baseProps(z.enum(['Inactive', 'SideMenu', 'MegaMenu'])),
   }),
   flags: z.object({
-    'adverse-weather': z.enum(['enabled', 'disabled']),
     'mega-menu': z.enum(['enabled', 'disabled']),
     'landing-page-hero': z.enum(['enabled', 'disabled']),
     'landing-page-content': z.enum(['enabled', 'disabled']),
