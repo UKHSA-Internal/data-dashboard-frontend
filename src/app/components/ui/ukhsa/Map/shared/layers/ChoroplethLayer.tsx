@@ -7,7 +7,7 @@
 
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
-import { ComponentProps, useCallback, useRef } from 'react'
+import { ComponentProps, useRef } from 'react'
 import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { HealthAlertStatus } from '@/api/models/Alerts'
@@ -159,7 +159,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   const [screenReaderText, updateScreenReaderText] = useChoroplethKeyboardAccessibility(featuresRef.current)
 
   // Setup map click events for interactions outside of the geojson features
-  const MapEvents = useCallback(() => {
+  const MapEvents = () => {
     useMapEvents({
       click() {
         if (selectedFeatureId) {
@@ -171,7 +171,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
       },
     })
     return null
-  }, [setSelectedFeatureId, selectedFeatureId, updateScreenReaderText])
+  }
 
   return (
     <>

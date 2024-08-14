@@ -2,9 +2,9 @@ import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { useAreaSelector } from '@/app/hooks/useAreaSelector'
-import { usePathname } from '@/app/hooks/usePathname'
-import { useTranslation } from '@/app/i18n'
+import { getAreaSelector } from '@/app/hooks/getAreaSelector'
+import { getPathname } from '@/app/hooks/getPathname'
+import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
@@ -19,11 +19,11 @@ interface ChartProps {
 }
 
 export async function Chart({ data, size }: ChartProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
   const { chart, x_axis, y_axis } = data
 
-  const pathname = usePathname()
-  const [areaType, areaName] = useAreaSelector()
+  const pathname = getPathname()
+  const [areaType, areaName] = getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,

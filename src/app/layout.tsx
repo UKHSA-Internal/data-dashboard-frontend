@@ -12,7 +12,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
@@ -20,18 +20,18 @@ import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
-import { useGlobalBanner } from './hooks/useGlobalBanner'
+import { getGlobalBanner } from './hooks/getGlobalBanner'
 import { Providers } from './providers'
 
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
 
-  const globalBanner = await useGlobalBanner()
+  const globalBanner = await getGlobalBanner()
 
   const cookieStore = cookies()
 

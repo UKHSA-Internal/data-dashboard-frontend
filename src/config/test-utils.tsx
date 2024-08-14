@@ -1,4 +1,4 @@
-/* eslint-disable import/export */
+/* eslint-disable no-restricted-imports, import/export -- @testing-library imports/exports are allowed in this file only */
 import { render, RenderOptions } from '@testing-library/react'
 import React, { ReactElement } from 'react'
 import { I18nextProvider } from 'react-i18next'

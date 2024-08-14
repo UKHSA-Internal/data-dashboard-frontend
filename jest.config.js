@@ -12,12 +12,9 @@ const customJestConfig = {
   moduleNameMapper: {
     // Handle module aliases (this will be automatically configured for you soon)
     '^@/components/(.*)$': '<rootDir>/src/components/$1',
-    '^@/styles/(.*)$': '<rootDir>/src/styles/$1',
-    '^@/pages/(.*)$': '<rootDir>/src/pages/$1',
     '^@/api/(.*)$': '<rootDir>/src/api/$1',
     '^@/config/(.*)$': '<rootDir>/src/config/$1',
     '^@/lib/(.*)$': '<rootDir>/src/lib/$1',
-    '^@/utils/(.*)$': '<rootDir>/src/utils/$1',
     '^@/app/(.*)$': '<rootDir>/src/app/$1',
     // Needed to get react markdown & dependencies to work with react-raw, see:
     // https://stackoverflow.com/questions/70916761/next-js-and-jest-syntaxerror-cannot-use-import-statement-outside-a-module

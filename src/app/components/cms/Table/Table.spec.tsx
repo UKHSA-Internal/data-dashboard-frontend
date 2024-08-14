@@ -3,7 +3,7 @@ import { ComponentProps, ReactElement } from 'react'
 
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
-import { useSearchParams as serverUseSearchParams } from '@/app/hooks/useSearchParams'
+import { getSearchParams } from '@/app/hooks/getSearchParams'
 import { render } from '@/config/test-utils'
 
 import { Table } from './Table'
@@ -23,10 +23,12 @@ const getTableMock = jest.mocked(getTables)
 
 // Mock the url utils
 const defaultUrl = new URL('http://localhost')
-jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
+jest.mock('@/app/hooks/getPathname', () => ({ getPathname: jest.fn(() => defaultUrl.pathname) }))
 
 // Mock our custom server component util
-jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
+jest.mock('@/app/hooks/getSearchParams', () => ({
+  getSearchParams: jest.fn(() => defaultUrl.searchParams),
+}))
 
 // Mock the default NextJs util (for client components)
 jest.mock('next/navigation', () => ({
@@ -149,7 +151,7 @@ test('table with row data', async () => {
 test('table api request fails displays a fallback message', async () => {
   const url = 'http://localhost?areaType=UKHSA+Region&areaName=North+East'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(serverUseSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
@@ -168,7 +170,7 @@ test('table api request fails displays a fallback message', async () => {
 test('Fallback message with escaped characters', async () => {
   const url = 'http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(serverUseSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
@@ -204,7 +206,7 @@ test('table data containing null plot points', async () => {
 
 test('table by geography and geography type when both are present in the url search params', async () => {
   jest
-    .mocked(serverUseSearchParams)
+    .mocked(getSearchParams)
     .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)

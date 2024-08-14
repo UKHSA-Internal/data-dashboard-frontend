@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { useAreaSelector } from '@/app/hooks/useAreaSelector'
+import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 
 interface ChartRowCardHeaderProps {
   children?: ReactNode
@@ -10,7 +10,7 @@ interface ChartRowCardHeaderProps {
 }
 
 export async function ChartRowCardHeader({ children, id, title, description }: ChartRowCardHeaderProps) {
-  const [, areaName] = useAreaSelector()
+  const [, areaName] = getAreaSelector()
 
   return (
     <header>

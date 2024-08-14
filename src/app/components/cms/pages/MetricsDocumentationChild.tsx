@@ -3,7 +3,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
 
@@ -11,7 +11,7 @@ export default async function MetricsChildPage({
   slug,
   searchParams: { returnUrl },
 }: PageComponentBaseProps<{ returnUrl: string }>) {
-  const { t } = await useTranslation('metrics')
+  const { t } = await getServerTranslation('metrics')
 
   const {
     title,

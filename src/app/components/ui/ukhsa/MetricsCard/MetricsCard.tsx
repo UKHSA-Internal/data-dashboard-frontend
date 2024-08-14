@@ -7,7 +7,7 @@ import {
   SummaryListRow,
   SummaryListValue,
 } from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface MetricsCardProps {
   title: string
@@ -19,7 +19,7 @@ interface MetricsCardProps {
 }
 
 export async function MetricsCard({ title, href, description, group, topic, metric }: MetricsCardProps) {
-  const { t } = await useTranslation('metrics')
+  const { t } = await getServerTranslation('metrics')
 
   return (
     <li className="govuk-summary-card">

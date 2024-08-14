@@ -2,9 +2,8 @@ import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
+import { getServerTranslation } from '@/app/i18n'
 import { chartSizes } from '@/config/constants'
-
-import { useTranslation } from '../../../i18n'
 
 /**
  * NOTE: The timestamp is currently only returned by the charts endpoint.
@@ -20,7 +19,7 @@ interface TimestampProps {
 }
 
 export async function Timestamp({ data, size }: TimestampProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const { chart, x_axis, y_axis } = data
 

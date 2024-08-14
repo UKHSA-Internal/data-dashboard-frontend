@@ -1,5 +1,6 @@
-import { act, renderHook } from '@testing-library/react'
 import { ReadonlyURLSearchParams, usePathname, useSearchParams } from 'next/navigation'
+
+import { act, renderHook } from '@/config/test-utils'
 
 import { useNavigationEvent } from './useNavigationEvent'
 

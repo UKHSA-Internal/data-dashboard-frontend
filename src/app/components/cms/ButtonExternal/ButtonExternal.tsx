@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import Link from 'next/link'
 import { HTMLProps } from 'react'
 
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface ButtonExternalProps extends HTMLProps<HTMLLinkElement> {
   /** The text to display on the download button. */
@@ -27,7 +27,7 @@ interface ButtonExternalProps extends HTMLProps<HTMLLinkElement> {
 // TODO: Add icon support (this is already built into the cms and currently supports values of "download" or "start"
 
 export async function ButtonExternal({ label, href, type }: ButtonExternalProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
   return (
     <div className="[&+h2]:mt-6">
       <Link

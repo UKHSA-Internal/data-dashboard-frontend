@@ -2,8 +2,8 @@ import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getTables } from '@/api/requests/tables/getTables'
-import { useAreaSelector } from '@/app/hooks/useAreaSelector'
-import { usePathname } from '@/app/hooks/usePathname'
+import { getAreaSelector } from '@/app/hooks/getAreaSelector'
+import { getPathname } from '@/app/hooks/getPathname'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
@@ -14,8 +14,8 @@ interface DownloadProps {
 }
 
 export async function Download({ data: { chart, y_axis, x_axis, tag_manager_event_id } }: DownloadProps) {
-  const pathname = usePathname()
-  const [areaType, areaName] = useAreaSelector()
+  const pathname = getPathname()
+  const [areaType, areaName] = getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,

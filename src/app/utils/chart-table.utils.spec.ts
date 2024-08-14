@@ -1,6 +1,5 @@
-import { renderHook } from '@testing-library/react'
-
 import { chartTableMaxColumns } from '@/config/constants'
+import { renderHook } from '@/config/test-utils'
 
 import { parseChartTableData } from './chart-table.utils'
 

@@ -1,6 +1,6 @@
 import { UrlObject } from 'node:url'
 
-import { render, screen, within } from '@testing-library/react'
+import { render, screen, within } from '@/config/test-utils'
 
 import { PaginationListItem } from './PaginationListItem'
 
