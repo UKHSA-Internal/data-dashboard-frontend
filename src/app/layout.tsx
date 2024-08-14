@@ -20,10 +20,8 @@ import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
-import { flags } from './constants/flags.constants'
 import { getGlobalBanner } from './hooks/getGlobalBanner'
 import { Providers } from './providers'
-import { getFeatureFlag } from './utils/flags.utils'
 
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
@@ -34,8 +32,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
 
   const globalBanner = await getGlobalBanner()
-
-  const { enabled: weatherHealthAlertsEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
 
   const cookieStore = cookies()
 
@@ -148,7 +144,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Providers>
           <div className="govuk-width-container">{children}</div>
-          {weatherHealthAlertsEnabled ? <HealthAlertsMapWrapper /> : null}
+          <HealthAlertsMapWrapper />
         </Providers>
 
         <Footer />
