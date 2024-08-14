@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 
@@ -86,33 +85,5 @@ export const ListItemStatusTimestamp = ({ children }: ListItemStatusProps) => {
     <span className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-1 text-[14px] sm:text-[16px]">
       {children}
     </span>
-  )
-}
-
-interface ListItemStatusTagProps {
-  level: HealthAlertStatus | 'No alerts'
-  region: string
-  type: HealthAlertTypes
-}
-
-export const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
-  let ariaLabel = `There is currently a ${level} ${type} alert status for ${region}`
-
-  if (level === 'Amber') ariaLabel = `There is currently an ${level} ${type} alert status for ${region}`
-
-  if (level === 'No alerts') ariaLabel = `There are currently no alerts for ${region}`
-
-  return (
-    <div
-      className={clsx('govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
-        'govuk-tag govuk-tag--green': level === 'Green',
-        'govuk-tag govuk-tag--yellow': level === 'Yellow',
-        'govuk-tag govuk-tag--orange': level === 'Amber',
-        'govuk-tag govuk-tag--red': level === 'Red',
-      })}
-      aria-label={ariaLabel}
-    >
-      {level}
-    </div>
   )
 }
