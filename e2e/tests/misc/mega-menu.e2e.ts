@@ -6,7 +6,7 @@ test.describe('Mega Menu', () => {
       await switchboardPage.setFeatureFlag('megaMenu', 'Enabled')
     })
 
-    test('Hides the Side Navigation @desktop', async ({ app, homePage }) => {
+    test('Hides the Side Navigation @desktopOnly', async ({ app, homePage }) => {
       await test.step('Navigate to home page', async () => {
         await homePage.goto()
       })
@@ -21,7 +21,7 @@ test.describe('Mega Menu', () => {
       await switchboardPage.setFeatureFlag('megaMenu', 'Disabled')
     })
 
-    test('Shows the Side Navigation @desktop', async ({ app, homePage }) => {
+    test('Shows the Side Navigation @desktopOnly', async ({ app, homePage }) => {
       await test.step('Navigate to home page', async () => {
         await homePage.goto()
       })
