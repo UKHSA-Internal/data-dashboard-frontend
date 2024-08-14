@@ -10,9 +10,9 @@ import {
   ListItemStatusContent,
   ListItemStatusIcon,
   ListItemStatusLink,
-  ListItemStatusTag,
   ListItemStatusTimestamp,
 } from '@/app/components/ui/ukhsa/List/ListItemStatus'
+import ListItemStatusTag from '@/app/components/ui/ukhsa/List/ListItemStatusTag'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
 import { toSlug } from '@/app/utils/app.utils'
@@ -33,7 +33,7 @@ export default function AlertList({ type }: AlertListProps) {
   }
 
   return (
-    <List aria-label={`${type} health alerts`}>
+    <List aria-label={t('alertListLabel', { type })}>
       {healthAlerts.data.map(({ status, geography_name: name, refresh_date: lastUpdated }) => (
         <ListItem key={name} spacing="s">
           <ListItemStatus>

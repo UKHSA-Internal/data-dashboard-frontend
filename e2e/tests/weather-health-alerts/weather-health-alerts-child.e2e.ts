@@ -171,7 +171,6 @@ test.describe('Feature flag enabled', () => {
 
   test.describe('Mobile - Weather health alerts child pages @mobileOnly', () => {
     test.use({ viewport: viewports.mobile })
-
     test('Cold health alerts page', async ({ app, weatherHealthAlertsChildPage }) => {
       await test.step('loads the page', async () => {
         await app.goto('/weather-health-alerts/cold')
