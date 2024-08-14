@@ -1,5 +1,6 @@
-import { render, screen } from '@testing-library/react'
 import { UrlObject } from 'url'
+
+import { render, screen } from '@/config/test-utils'
 
 import { PaginationNext } from './PaginationNext'
 

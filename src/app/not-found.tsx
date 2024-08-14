@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { useTranslation } from './i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 export async function generateMetadata() {
   return {
@@ -11,7 +11,7 @@ export async function generateMetadata() {
 }
 
 export default async function NotFoundPage() {
-  const { t } = await useTranslation('errors')
+  const { t } = await getServerTranslation('errors')
   return (
     <div className="govuk-grid-row">
       <div className="govuk-grid-column-two-thirds-from-desktop">

@@ -1,7 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 
-import { useTranslation } from '../../../../i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface RelatedLinksProps {
   children: ReactNode[]
@@ -11,7 +11,7 @@ interface RelatedLinksProps {
 }
 
 export async function RelatedLinks({ children, className, variant, heading }: RelatedLinksProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   if (children.length === 0) return null
 

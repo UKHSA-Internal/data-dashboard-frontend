@@ -41,6 +41,7 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
 
   const regionId = healthAlertsList.data.find((regionAlert) => regionAlert.slug === region)?.geography_code ?? ''
 
+  // eslint-disable-next-line react-hooks/rules-of-hooks -- TODO: Fix rule of hooks warning
   const healthAlert = useWeatherHealthAlert({ type, regionId })
 
   if (healthAlert.error || !healthAlert.data) {

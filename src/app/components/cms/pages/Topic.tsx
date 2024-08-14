@@ -3,7 +3,7 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import { PageSection, PageSectionWithContents, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCard } from '@/app/utils/cms.utils'
 
@@ -11,7 +11,7 @@ export default async function TopicPage({
   slug,
   searchParams: { areaName, areaType },
 }: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const {
     title,

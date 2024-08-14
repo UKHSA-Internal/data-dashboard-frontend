@@ -2,8 +2,7 @@ import { z } from 'zod'
 
 import { HeadlineNumber } from '@/api/models/cms/Page/Blocks'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
-
-import { useTranslation } from '../../../i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface PercentageProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
@@ -11,7 +10,7 @@ interface PercentageProps {
 }
 
 export async function Percentage({ data: { body: heading, ...requestParams } }: PercentageProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const headline = await getHeadlines(requestParams)
 

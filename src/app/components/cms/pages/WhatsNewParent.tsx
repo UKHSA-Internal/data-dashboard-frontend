@@ -17,11 +17,11 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
-import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
+import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
 import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
-import { useReturnPathWithParams } from '@/app/hooks/useReturnPathWithParams'
-import { useTranslation } from '@/app/i18n'
+import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
+import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
@@ -29,9 +29,9 @@ export default async function WhatsNewParentPage({
   slug,
   searchParams: { page },
 }: PageComponentBaseProps<{ page?: number }>) {
-  const { t } = await useTranslation('whatsNew')
+  const { t } = await getServerTranslation('whatsNew')
 
-  const setReturnPath = useReturnPathWithParams()
+  const setReturnPath = getReturnPathWithParams()
 
   const {
     title,
@@ -59,7 +59,7 @@ export default async function WhatsNewParentPage({
     },
   } = whatsNewEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationList({
+  const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: WHATS_NEW_PAGE_SIZE,

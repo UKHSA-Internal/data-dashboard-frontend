@@ -13,13 +13,13 @@ import { headers } from 'next/headers'
  *
  * Example:
  * ```
- * const pathname = usePathname();
+ * const pathname = getPathname();
  * ```
  *
  * @returns {string} An string containing the URL pathname
  */
 
-export const usePathname = () => {
+export const getPathname = () => {
   const headersList = headers()
   const headersUrl = headersList.get('x-url') || ''
 

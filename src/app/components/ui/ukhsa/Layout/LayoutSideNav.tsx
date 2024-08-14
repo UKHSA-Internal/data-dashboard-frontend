@@ -4,10 +4,10 @@ import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { BackToTop } from '@/app/components/ui/ukhsa'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
   const sideNav = transformMenuSnippetToSideMenu(await getMenu())
 
   return (

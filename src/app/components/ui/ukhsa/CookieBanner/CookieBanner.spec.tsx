@@ -1,10 +1,10 @@
-import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { getCookie } from 'cookies-next'
 import React, { ComponentProps } from 'react'
 
 import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constants'
 import { useNavigationEvent } from '@/app/hooks/useNavigationEvent'
+import { render, screen } from '@/config/test-utils'
 
 import { CookieBanner } from './CookieBanner'
 
