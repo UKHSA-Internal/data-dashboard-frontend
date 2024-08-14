@@ -81,8 +81,8 @@ test('renders timestamp classes as expected', async () => {
 })
 
 describe('renders correct tag', () => {
-  test('renders green tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'Green', region: 'East of England' }))
+  test('renders green tag', () => {
+    const { getByText } = render(<ListItemStatusTag type="heat" level="Green" region="East of England" />)
 
     expect(getByText('Green')).toHaveClass('govuk-tag--green')
     expect(getByText('Green')).toHaveAttribute(
@@ -91,8 +91,8 @@ describe('renders correct tag', () => {
     )
   })
 
-  test('renders yellow tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'Yellow', region: 'South East' }))
+  test('renders yellow tag', () => {
+    const { getByText } = render(<ListItemStatusTag type="heat" level="Yellow" region="South East" />)
 
     expect(getByText('Yellow')).toHaveClass('govuk-tag--yellow')
     expect(getByText('Yellow')).toHaveAttribute(
@@ -101,8 +101,8 @@ describe('renders correct tag', () => {
     )
   })
 
-  test('renders amber tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'cold', level: 'Amber', region: 'West Midlands' }))
+  test('renders amber tag', () => {
+    const { getByText } = render(<ListItemStatusTag type="cold" level="Amber" region="West Midlands" />)
 
     expect(getByText('Amber')).toHaveClass('govuk-tag--orange')
     expect(getByText('Amber')).toHaveAttribute(
@@ -111,8 +111,8 @@ describe('renders correct tag', () => {
     )
   })
 
-  test('renders red tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'cold', level: 'Red', region: 'East Midlands' }))
+  test('renders red tag', () => {
+    const { getByText } = render(<ListItemStatusTag type="cold" level="Red" region="East Midlands" />)
 
     expect(getByText('Red')).toHaveClass('govuk-tag--red')
     expect(getByText('Red')).toHaveAttribute(
@@ -121,8 +121,8 @@ describe('renders correct tag', () => {
     )
   })
 
-  test('renders no alerts tag', async () => {
-    const { getByText } = render(await ListItemStatusTag({ type: 'heat', level: 'No alerts', region: 'London' }))
+  test('renders no alerts tag', () => {
+    const { getByText } = render(<ListItemStatusTag type="heat" level="No alerts" region="London" />)
 
     expect(getByText('No alerts')).not.toHaveClass('govuk-tag')
     expect(getByText('No alerts')).toHaveAttribute('aria-label', 'There are currently no alerts for London')
