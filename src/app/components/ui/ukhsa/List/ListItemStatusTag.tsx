@@ -14,11 +14,16 @@ interface ListItemStatusTagProps {
 const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
   const { t } = useTranslation('weatherHealthAlerts')
 
-  let ariaLabel = t('statusLabel', { context: 'Initial', level, type, region })
-
-  if (level === 'Amber') ariaLabel = t('statusLabel', { context: 'Amber', level, type, region })
-
-  if (level === 'No alerts') ariaLabel = t('statusLabel', { context: 'None', level, type, region })
+  function getStatusKey(level: HealthAlertStatus | 'No alerts') {
+    switch (level) {
+      case 'Amber':
+        return 'Amber'
+      case 'No alerts':
+        return 'None'
+      default:
+        return 'Initial'
+    }
+  }
 
   return (
     <div
@@ -28,7 +33,7 @@ const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
         'govuk-tag govuk-tag--orange': level === 'Amber',
         'govuk-tag govuk-tag--red': level === 'Red',
       })}
-      aria-label={ariaLabel}
+      aria-label={t('statusLabel', { context: getStatusKey(level), level, type, region })}
     >
       {level}
     </div>
