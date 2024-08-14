@@ -3,8 +3,7 @@ import { z } from 'zod'
 
 import { TrendNumber } from '@/api/models/cms/Page/Blocks'
 import { getTrends } from '@/api/requests/trends/getTrends'
-
-import { useTranslation } from '../../../i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface TrendProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
@@ -12,7 +11,7 @@ interface TrendProps {
 }
 
 export async function Trend({ data: { body: heading, ...requestParams } }: TrendProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const trend = await getTrends(requestParams)
 

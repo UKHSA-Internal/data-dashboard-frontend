@@ -11,13 +11,13 @@ import {
   PaginationNext,
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
-import { usePaginationList } from '@/app/components/ui/govuk/Pagination/hooks/usePaginationList'
+import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
 import { MetricsCard, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
 import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
-import { useReturnPathWithParams } from '@/app/hooks/useReturnPathWithParams'
-import { useTranslation } from '@/app/i18n'
+import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
+import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
@@ -31,7 +31,7 @@ interface MetricsParentPageProps {
 export async function generateMetadata({
   searchParams: { search = '', page = 1 },
 }: MetricsParentPageProps): Promise<Metadata> {
-  const { t } = await useTranslation('metrics')
+  const { t } = await getServerTranslation('metrics')
 
   const {
     meta: { seo_title, search_description },
@@ -88,13 +88,13 @@ export default async function MetricsParentPage({
     },
   } = metricsEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = usePaginationList({
+  const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: METRICS_DOCUMENTATION_PAGE_SIZE,
   })
 
-  const setReturnPath = useReturnPathWithParams()
+  const setReturnPath = getReturnPathWithParams()
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>

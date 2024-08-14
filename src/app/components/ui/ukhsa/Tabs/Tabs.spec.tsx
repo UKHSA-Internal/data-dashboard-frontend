@@ -1,7 +1,8 @@
-import { createEvent, fireEvent, render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import Link from 'next/link'
 import React from 'react'
+
+import { createEvent, fireEvent, render, screen } from '@/config/test-utils'
 
 import { Tabs, TabsContent, TabsList, TabsTrigger } from './Tabs'
 

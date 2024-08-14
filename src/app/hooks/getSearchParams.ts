@@ -14,14 +14,14 @@ import { headers } from 'next/headers'
  *
  * Example:
  * ```
- * const searchParams = useSearchParams();
+ * const searchParams = getSearchParams();
  * const value = searchParams.get('paramName');
  * ```
  *
  * @returns {URLSearchParams} An instance of URLSearchParams containing the search parameters of the current page URL.
  */
 
-export const useSearchParams = () => {
+export const getSearchParams = () => {
   const headersList = headers()
   const headersUrl = headersList.get('x-url')
 

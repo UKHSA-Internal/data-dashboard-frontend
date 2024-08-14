@@ -1,12 +1,11 @@
-import { renderHook } from '@testing-library/react'
-
 import { client } from '@/api/utils/api.utils'
+import { renderHook } from '@/config/test-utils'
 
-import { useGlobalBanner } from './useGlobalBanner'
+import { getGlobalBanner } from './getGlobalBanner'
 
 const clientMock = jest.mocked(client)
 
-describe('useGlobalBanner', () => {
+describe('getGlobalBanner', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -23,7 +22,7 @@ describe('useGlobalBanner', () => {
       status: 200,
     })
 
-    const { result } = renderHook(() => useGlobalBanner())
+    const { result } = renderHook(() => getGlobalBanner())
 
     expect(await result.current).toEqual({
       heading: 'Test Banner',
@@ -40,13 +39,13 @@ describe('useGlobalBanner', () => {
       status: 200,
     })
 
-    const { result } = renderHook(() => useGlobalBanner())
+    const { result } = renderHook(() => getGlobalBanner())
 
     expect(await result.current).toBeNull()
   })
 
   test('returns null when request fails', async () => {
-    const { result } = renderHook(() => useGlobalBanner())
+    const { result } = renderHook(() => getGlobalBanner())
 
     expect(await result.current).toBeNull()
   })

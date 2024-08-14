@@ -1,7 +1,7 @@
 import { UrlObject } from 'node:url'
 
-import { usePathname } from '@/app/hooks/usePathname'
-import { useSearchParams } from '@/app/hooks/useSearchParams'
+import { getPathname } from '@/app/hooks/getPathname'
+import { getSearchParams } from '@/app/hooks/getSearchParams'
 
 interface PaginationListProps {
   totalItems: number
@@ -12,9 +12,9 @@ interface PaginationListProps {
 type PageHref = UrlObject | null
 type Pages = Array<{ page: number; href: UrlObject }>
 
-export function usePaginationList({ totalItems, initialPage, initialPageSize }: PaginationListProps) {
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
+export function getPaginationList({ totalItems, initialPage, initialPageSize }: PaginationListProps) {
+  const searchParams = getSearchParams()
+  const pathname = getPathname()
   const currentPage = Number(searchParams.get('page')) || initialPage
   const totalPages = Math.ceil(totalItems / initialPageSize) || 1
   const hasNextPage = currentPage < totalPages

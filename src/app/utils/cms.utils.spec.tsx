@@ -1,5 +1,6 @@
-import { render, screen, within } from '@testing-library/react'
 import { ComponentProps } from 'react'
+
+import { render, screen, within } from '@/config/test-utils'
 
 import { ChartRowCardHeader } from '../components/cms'
 import {

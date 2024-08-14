@@ -6,9 +6,9 @@ import { z } from 'zod'
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
-import { useAreaSelector } from '@/app/hooks/useAreaSelector'
-import { usePathname } from '@/app/hooks/usePathname'
-import { useTranslation } from '@/app/i18n'
+import { getAreaSelector } from '@/app/hooks/getAreaSelector'
+import { getPathname } from '@/app/hooks/getPathname'
+import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
@@ -24,10 +24,10 @@ interface TableProps {
 }
 
 export async function Table({ data: { chart, y_axis, x_axis, title, body }, size }: TableProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
-  const pathname = usePathname()
-  const [areaType, areaName] = useAreaSelector()
+  const pathname = getPathname()
+  const [areaType, areaName] = getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,

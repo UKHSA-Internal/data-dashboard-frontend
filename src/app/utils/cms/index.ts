@@ -5,7 +5,7 @@ import { getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { getMetricsPages, getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
 
@@ -39,7 +39,7 @@ export async function getPageMetadata(
   searchParams: SearchParams<{ page: number; search: string; areaName: string; areaType: string }>,
   pageType: PageType
 ): Promise<Metadata> {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const page = searchParams.page ?? 1
   const search = searchParams.search

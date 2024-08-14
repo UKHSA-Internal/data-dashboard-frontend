@@ -1,21 +1,23 @@
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 
-import { usePaginationList } from './usePaginationList'
+import { getPaginationList } from './getPaginationList'
 
 const pathname = '/mock-page'
 const defaultUrl = new URL(`http://localhost${pathname}?order=asc`)
-jest.mock('@/app/hooks/usePathname', () => ({ usePathname: jest.fn(() => defaultUrl.pathname) }))
-jest.mock('@/app/hooks/useSearchParams', () => ({ useSearchParams: jest.fn(() => defaultUrl.searchParams) }))
+jest.mock('@/app/hooks/getPathname', () => ({ getPathname: jest.fn(() => defaultUrl.pathname) }))
+jest.mock('@/app/hooks/getSearchParams', () => ({
+  getSearchParams: jest.fn(() => defaultUrl.searchParams),
+}))
 
-type PaginationListProps = ReturnType<typeof usePaginationList>
+type PaginationListProps = ReturnType<typeof getPaginationList>
 
-describe('usePaginationList', () => {
+describe('getPaginationList', () => {
   beforeEach(() => {
     mockRouter.push('/')
   })
 
   test('no results', () => {
-    const props = usePaginationList({ initialPage: 0, initialPageSize: 0, totalItems: 0 })
+    const props = getPaginationList({ initialPage: 0, initialPageSize: 0, totalItems: 0 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: null,
@@ -26,7 +28,7 @@ describe('usePaginationList', () => {
   })
 
   test('only one page of results', () => {
-    const props = usePaginationList({ initialPage: 0, initialPageSize: 5, totalItems: 5 })
+    const props = getPaginationList({ initialPage: 0, initialPageSize: 5, totalItems: 5 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: null,
@@ -37,7 +39,7 @@ describe('usePaginationList', () => {
   })
 
   test('show the first page of two', async () => {
-    const props = usePaginationList({ initialPage: 1, initialPageSize: 4, totalItems: 5 })
+    const props = getPaginationList({ initialPage: 1, initialPageSize: 4, totalItems: 5 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: 1,
@@ -75,7 +77,7 @@ describe('usePaginationList', () => {
   })
 
   test('show the second page of two', async () => {
-    const props = usePaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 5 })
+    const props = getPaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 5 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: 2,
@@ -113,7 +115,7 @@ describe('usePaginationList', () => {
   })
 
   test('show the second page of three', async () => {
-    const props = usePaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 10 })
+    const props = getPaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 10 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: 2,

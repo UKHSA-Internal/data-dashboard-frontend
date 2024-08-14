@@ -1,4 +1,4 @@
-import { render } from '@testing-library/react'
+import { render } from '@/config/test-utils'
 
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from './ListItemArrow'
 

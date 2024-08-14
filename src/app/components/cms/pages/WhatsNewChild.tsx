@@ -4,7 +4,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
 
@@ -12,7 +12,7 @@ export default async function WhatsNewChildPage({
   slug,
   searchParams,
 }: PageComponentBaseProps<{ returnUrl?: string }>) {
-  const { t } = await useTranslation('whatsNew')
+  const { t } = await getServerTranslation('whatsNew')
 
   const {
     title,

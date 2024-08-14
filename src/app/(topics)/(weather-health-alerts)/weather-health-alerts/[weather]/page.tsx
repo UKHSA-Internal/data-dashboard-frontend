@@ -8,23 +8,13 @@ import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { flags } from '@/app/constants/flags.constants'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import AlertList from './AlertList'
 
 export const dynamic = 'force-dynamic'
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
-  const { enabled } = await getFeatureFlag(flags.weatherHealthAlert)
-
-  if (!enabled)
-    return {
-      title: 'Page not found | UKHSA data dashboard',
-      description: 'Error - Page not found',
-    }
-
   const {
     meta: { seo_title: title, search_description: description },
   } = await getPageBySlug<PageType.Composite>(weather)

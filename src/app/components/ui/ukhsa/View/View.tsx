@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 
 import { RichText } from '@/app/components/cms'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface PageProps {
   heading?: string
@@ -26,7 +26,7 @@ export async function View({
   className,
   breadcrumbs,
 }: PageProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   return (
     <div className={clsx('w-full', className)}>

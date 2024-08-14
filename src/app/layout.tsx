@@ -12,7 +12,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
@@ -22,7 +22,7 @@ import { MegaMenu } from './components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { flags } from './constants/flags.constants'
-import { useGlobalBanner } from './hooks/useGlobalBanner'
+import { getGlobalBanner } from './hooks/getGlobalBanner'
 import { Providers } from './providers'
 import { getFeatureFlag } from './utils/flags.utils'
 
@@ -30,13 +30,12 @@ import { getFeatureFlag } from './utils/flags.utils'
 export const dynamic = 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
 
-  const globalBanner = await useGlobalBanner()
+  const globalBanner = await getGlobalBanner()
 
-  const { enabled: weatherHealthAlertsEnabled } = await getFeatureFlag(flags.weatherHealthAlert)
   const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
 
   const cookieStore = cookies()
@@ -160,7 +159,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
 
         <Providers>
           <div className="govuk-width-container">{children}</div>
-          {weatherHealthAlertsEnabled ? <HealthAlertsMapWrapper /> : null}
+          <HealthAlertsMapWrapper />
         </Providers>
 
         <Footer />
