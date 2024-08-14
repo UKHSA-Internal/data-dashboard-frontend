@@ -15,9 +15,6 @@ export class SwitchboardPage {
   async setFeatureFlag(flag: Flag, status: FlagStatus) {
     await this.page.goto('/switchboard/feature-flags')
     await this.page.click(`input[id="flags.${flag}.${status}"]`)
-  }
-
-  async saveFeatureFlags() {
     await this.page.getByRole('button', { name: 'Save changes' }).click()
     await this.page.reload()
   }
