@@ -14,11 +14,11 @@ interface ListItemStatusTagProps {
 const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
   const { t } = useTranslation('weatherHealthAlerts')
 
-  let ariaLabel = t('statusLabelInitial', { level, type, region })
+  let ariaLabel = t('statusLabel', { context: 'Initial', level, type, region })
 
-  if (level === 'Amber') ariaLabel = t('statusLabelAmber', { level, type, region })
+  if (level === 'Amber') ariaLabel = t('statusLabel', { context: 'Amber', level, type, region })
 
-  if (level === 'No alerts') ariaLabel = t('statusLabelNone', { level, type, region })
+  if (level === 'No alerts') ariaLabel = t('statusLabel', { context: 'None', level, type, region })
 
   return (
     <div
