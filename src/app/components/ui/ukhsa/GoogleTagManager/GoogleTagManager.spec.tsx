@@ -1,8 +1,8 @@
-import { render } from '@testing-library/react'
 import { getCookie, hasCookie } from 'cookies-next'
 import React from 'react'
 
 import { UKHSA_GDPR_COOKIE_ACCEPT_VALUE } from '@/app/constants/cookies.constants'
+import { render } from '@/config/test-utils'
 
 import { GoogleTagManager } from './GoogleTagManager'
 

@@ -1,9 +1,9 @@
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 export default async function NoResults() {
-  const { t } = await useTranslation('metrics')
+  const { t } = await getServerTranslation('metrics')
 
   return (
     <Trans

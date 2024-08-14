@@ -1,6 +1,6 @@
 import { headers } from 'next/headers'
 
-import { useSearchParams } from './useSearchParams'
+import { getSearchParams } from './getSearchParams'
 
 /**
  * Constructs a return URL pathname with optional parameters based on certain conditions.
@@ -9,8 +9,8 @@ import { useSearchParams } from './useSearchParams'
  * @returns A function that takes a path and constructs a pathname with optional return URL parameter.
  */
 
-export const useReturnPathWithParams = () => {
-  const searchParams = useSearchParams()
+export const getReturnPathWithParams = () => {
+  const searchParams = getSearchParams()
   const headersList = headers()
   const currentUrl = new URL(headersList.get('x-url') || '')
 

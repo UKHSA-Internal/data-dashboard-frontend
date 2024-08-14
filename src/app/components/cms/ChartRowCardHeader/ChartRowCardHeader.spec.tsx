@@ -1,26 +1,26 @@
-import { render, screen } from '@testing-library/react'
 import React from 'react'
 
-import { useAreaSelector } from '@/app/hooks/useAreaSelector'
+import { getAreaSelector } from '@/app/hooks/getAreaSelector'
+import { render, screen } from '@/config/test-utils'
 
 import { ChartRowCardHeader } from './ChartRowCardHeader'
 
-jest.mock('@/app/hooks/useAreaSelector', () => ({
-  useAreaSelector: jest.fn(),
+jest.mock('@/app/hooks/getAreaSelector', () => ({
+  getAreaSelector: jest.fn(),
 }))
 
-const useAreaSelectorMock = jest.mocked(useAreaSelector)
+const getAreaSelectorMock = jest.mocked(getAreaSelector)
 
 describe('ChartRowCardHeader', () => {
   test('renders correctly with props', async () => {
-    useAreaSelectorMock.mockReturnValue([])
+    getAreaSelectorMock.mockReturnValue([])
     render(await ChartRowCardHeader({ id: '1', title: 'Sample Title', description: 'Sample Description' }))
     expect(screen.getByRole('heading', { level: 3, name: 'Sample Title' })).toBeInTheDocument()
     expect(screen.getByText('Sample Description')).toBeInTheDocument()
   })
 
   test('displays a location when set', async () => {
-    useAreaSelectorMock.mockReturnValue([null, 'Test Area'])
+    getAreaSelectorMock.mockReturnValue([null, 'Test Area'])
     render(await ChartRowCardHeader({ id: '1', title: 'Title', description: 'Description' }))
     expect(screen.getByRole('heading', { level: 3, name: 'Title (Test Area)' })).toBeInTheDocument()
   })

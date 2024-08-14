@@ -1,5 +1,6 @@
-import { render } from '@testing-library/react'
 import React from 'react'
+
+import { render } from '@/config/test-utils'
 
 import { SummaryList, SummaryListKey, SummaryListRow, SummaryListValue } from './SummaryList'
 

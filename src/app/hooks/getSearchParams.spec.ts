@@ -1,10 +1,10 @@
 import { headers } from 'next/headers'
 
-import { useSearchParams } from './useSearchParams'
+import { getSearchParams } from './getSearchParams'
 
 jest.mock('next/headers')
 
-describe('useSearchParams', () => {
+describe('getSearchParams', () => {
   // Mock the headers function
   const mockHeaders = jest.fn()
 
@@ -16,14 +16,14 @@ describe('useSearchParams', () => {
 
   test('should correctly extract search parameters from x-url header', () => {
     mockHeaders.mockReturnValue('http://example.com?param1=value1&param2=value2')
-    const searchParams = useSearchParams()
+    const searchParams = getSearchParams()
     expect(searchParams.get('param1')).toBe('value1')
     expect(searchParams.get('param2')).toBe('value2')
   })
 
   test('should handle the absence of x-url header', () => {
     mockHeaders.mockReturnValue(null)
-    const searchParams = useSearchParams()
+    const searchParams = getSearchParams()
     expect([...searchParams.entries()]).toEqual([])
   })
 

@@ -1,10 +1,10 @@
 import { headers } from 'next/headers'
 
-import { usePathname } from './usePathname'
+import { getPathname } from './getPathname'
 
 jest.mock('next/headers')
 
-describe('usePathname', () => {
+describe('getPathname', () => {
   // Mock the headers function
   const mockHeaders = jest.fn()
 
@@ -16,13 +16,13 @@ describe('usePathname', () => {
 
   test('should correctly extract pathname from x-url header', () => {
     mockHeaders.mockReturnValue('http://example.com/some/path?param=value')
-    const pathname = usePathname()
+    const pathname = getPathname()
     expect(pathname).toBe('/some/path')
   })
 
   test('should return an empty string if x-url header is absent', () => {
     mockHeaders.mockReturnValue(null)
-    const pathname = usePathname()
+    const pathname = getPathname()
     expect(pathname).toBe('')
   })
 

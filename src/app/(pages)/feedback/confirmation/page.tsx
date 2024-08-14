@@ -3,14 +3,14 @@ import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { View } from '@/app/components/ui/ukhsa'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 export const metadata: Metadata = {
   title: 'Feedback Confirmation | UKHSA data dashboard',
 }
 
 export default async function FeedbackConfirmation() {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   return (
     <View>

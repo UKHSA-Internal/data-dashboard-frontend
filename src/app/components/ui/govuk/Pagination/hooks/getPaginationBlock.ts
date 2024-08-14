@@ -1,4 +1,4 @@
-import { usePathname } from '@/app/hooks/usePathname'
+import { getPathname } from '@/app/hooks/getPathname'
 
 type PaginationLink = {
   pageText: string
@@ -9,8 +9,8 @@ interface PaginationBlockProps {
   links: Array<PaginationLink>
 }
 
-export function usePaginationBlock({ links }: PaginationBlockProps) {
-  const pathname = usePathname()
+export function getPaginationBlock({ links }: PaginationBlockProps) {
+  const pathname = getPathname()
 
   const pageIndex = links.findIndex(({ pageHref }) => pageHref === pathname)
 

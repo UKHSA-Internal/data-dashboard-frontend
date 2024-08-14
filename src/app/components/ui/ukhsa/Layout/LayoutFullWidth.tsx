@@ -1,10 +1,10 @@
 import { ReactNode } from 'react'
 
 import { BackToTop } from '@/app/components/ui/ukhsa'
-import { useTranslation } from '@/app/i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 export const LayoutFullWidth = async ({ children }: { children: ReactNode }) => {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   return (
     <>

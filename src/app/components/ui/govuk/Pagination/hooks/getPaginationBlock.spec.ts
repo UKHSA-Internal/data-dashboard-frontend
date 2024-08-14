@@ -1,18 +1,18 @@
-import { usePathname } from '@/app/hooks/usePathname'
+import { getPathname } from '@/app/hooks/getPathname'
 
-import { usePaginationBlock } from './usePaginationBlock'
+import { getPaginationBlock } from './getPaginationBlock'
 
-jest.mock('@/app/hooks/usePathname', () => ({
-  usePathname: jest.fn(),
+jest.mock('@/app/hooks/getPathname', () => ({
+  getPathname: jest.fn(),
 }))
 
-describe('usePaginationBlock', () => {
-  const usePathnameMock = jest.mocked(usePathname)
+describe('getPaginationBlock', () => {
+  const getPathnameMock = jest.mocked(getPathname)
 
   test("when on first page, only 'next' button shows", async () => {
-    usePathnameMock.mockReturnValue('/access-our-data/overview')
+    getPathnameMock.mockReturnValue('/access-our-data/overview')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
@@ -27,9 +27,9 @@ describe('usePaginationBlock', () => {
   })
 
   test("when on last page, only 'previous' button shows", async () => {
-    usePathnameMock.mockReturnValue('/access-our-data/getting-started')
+    getPathnameMock.mockReturnValue('/access-our-data/getting-started')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
@@ -44,9 +44,9 @@ describe('usePaginationBlock', () => {
   })
 
   test('when on any other page, show both next & previous buttons', async () => {
-    usePathnameMock.mockReturnValue('/access-our-data/what-is-an-api')
+    getPathnameMock.mockReturnValue('/access-our-data/what-is-an-api')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
@@ -61,9 +61,9 @@ describe('usePaginationBlock', () => {
   })
 
   test('when on default route (no subpage), only the next button shows', async () => {
-    usePathnameMock.mockReturnValue('/access-our-data')
+    getPathnameMock.mockReturnValue('/access-our-data')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = usePaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },

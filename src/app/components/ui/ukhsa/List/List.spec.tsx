@@ -1,4 +1,4 @@
-import { render, within } from '@testing-library/react'
+import { render, within } from '@/config/test-utils'
 
 import { List } from './List'
 

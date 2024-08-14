@@ -2,8 +2,7 @@ import { z } from 'zod'
 
 import { HeadlineNumber } from '@/api/models/cms/Page/Blocks'
 import { getHeadlines } from '@/api/requests/headlines/getHeadlines'
-
-import { useTranslation } from '../../../i18n'
+import { getServerTranslation } from '@/app/i18n'
 
 interface HeadlineProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
@@ -11,7 +10,7 @@ interface HeadlineProps {
 }
 
 export async function Headline({ data: { body: heading, ...requestParams } }: HeadlineProps) {
-  const { t } = await useTranslation('common')
+  const { t } = await getServerTranslation('common')
 
   const headline = await getHeadlines(requestParams)
 
