@@ -15,7 +15,7 @@ interface MegaMenuProps {
  * Currently it is configured to only display responsive columns in a 1/3 grid system.
  * TODO: Expand this to be more dynamic according to how we receive content from the CMS.
  */
-export async function MegaMenu({ className = 'govuk-!-padding-top-7' }: MegaMenuProps) {
+export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenuProps) {
   const menu = await getMenu()
 
   const activeMenu = transformMenuSnippetToMegaMenu(menu)
@@ -43,7 +43,7 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-7' }: MegaMenu
                       &nbsp;
                     </span>
                   )}
-                  <ul className="govuk-list flex flex-col gap-4 border-b border-grey-2 pb-2 md:border-none">
+                  <ul className="govuk-list flex flex-col gap-4 border-b border-grey-2 md:border-none">
                     {column.links.map((link) => (
                       <li key={link.slug} className="govuk-!-padding-right-5 govuk-body-s relative">
                         <Link
