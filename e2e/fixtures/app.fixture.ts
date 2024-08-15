@@ -208,6 +208,10 @@ export class App {
     await expect(this.sideNav.getByRole('link', { name: "What's new" })).toBeVisible()
   }
 
+  async hasNotDesktopNav() {
+    await expect(this.sideNav).toBeHidden()
+  }
+
   async clickDesktopNav(name: string) {
     await this.sideNav.getByRole('link', { name }).click()
   }
