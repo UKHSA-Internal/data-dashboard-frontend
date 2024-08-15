@@ -4,6 +4,7 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 
 import './globals.scss'
 
+import clsx from 'clsx'
 import { cookies } from 'next/headers'
 import Link from 'next/link'
 import { Suspense } from 'react'
@@ -69,7 +70,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         </Suspense>
 
-        <header className="govuk-header border-none" data-module="govuk-header">
+        <header
+          className={clsx('govuk-header border-none', { 'bg-blue': landingPageHeroEnabled })}
+          data-module="govuk-header"
+        >
           <div className="relative ">
             <div className="govuk-width-container relative flow-root">
               <div className="govuk-header__logo govuk-!-padding-top-2">
@@ -89,11 +93,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   </svg>
                 </Link>
               </div>
-              <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
-                <Link href="/" className="govuk-header__link govuk-header__service-name">
-                  {t('serviceTitle')}
-                </Link>
-              </div>
+              {landingPageHeroEnabled ? null : (
+                <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
+                  <Link href="/" className="govuk-header__link govuk-header__service-name">
+                    {t('serviceTitle')}
+                  </Link>
+                </div>
+              )}
               {megaMenuEnabled ? null : (
                 <TopNav megaMenu={megaMenuEnabled}>
                   {mobileNav.map(({ title, slug, children }) => (
@@ -127,10 +133,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </TopNav>
         ) : null}
 
-        {landingPageHeroEnabled ? <HeroBanner /> : null}
-
-        {/* Blue bar underneath header */}
-        <div className="govuk-width-container h-2 bg-blue" />
+        {landingPageHeroEnabled ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
 
         <div className="govuk-width-container print:hidden">
           <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
