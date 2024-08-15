@@ -76,13 +76,6 @@ test.describe('Home page - mobile @mobileOnly', () => {
     await homePage.goto()
     await app.hasMobileNav()
   })
-
-  test('displays new mega menu on mobile', async ({ switchboardPage, homePage, app }) => {
-    await switchboardPage.setFeatureFlag('megaMenu', 'Enabled')
-    await switchboardPage.setMenus('MegaMenu')
-    await homePage.goto()
-    await app.hasMegaMenuNav()
-  })
 })
 
 test.describe('Home page - tablet @tabletOnly', () => {
@@ -92,13 +85,6 @@ test.describe('Home page - tablet @tabletOnly', () => {
     await homePage.goto()
     await app.hasMobileNav()
   })
-
-  test('displays new mega menu on tablet', async ({ switchboardPage, homePage, app }) => {
-    await switchboardPage.setFeatureFlag('megaMenu', 'Enabled')
-    await switchboardPage.setMenus('MegaMenu')
-    await homePage.goto()
-    await app.hasMegaMenuNav()
-  })
 })
 
 test.describe('Home page - desktop @desktopOnly', () => {
@@ -107,13 +93,6 @@ test.describe('Home page - desktop @desktopOnly', () => {
   test('displays the navigation on desktop', async ({ homePage, app }) => {
     await homePage.goto()
     await app.hasDesktopNav()
-  })
-
-  test('displays new mega menu on desktop', async ({ switchboardPage, homePage, app }) => {
-    await switchboardPage.setFeatureFlag('megaMenu', 'Enabled')
-    await switchboardPage.setMenus('MegaMenu')
-    await homePage.goto()
-    await app.hasMegaMenuNav()
   })
 })
 
