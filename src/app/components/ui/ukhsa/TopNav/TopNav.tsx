@@ -50,7 +50,7 @@ export const TopNav = ({ children, megaMenu }: { children: ReactNode; megaMenu?:
             </Link>
           </div>
           <nav
-            className={clsx('inline-block w-full bg-light-grey', {
+            className={clsx('w-full bg-light-grey', {
               'hidden h-0': !menuOpen,
             })}
             aria-label="Menu"
