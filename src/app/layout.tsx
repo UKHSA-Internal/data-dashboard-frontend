@@ -18,10 +18,13 @@ import { Footer } from './components/ui/govuk'
 import { Announcement, CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
 import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
+import { MegaMenu } from './components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from './components/ui/ukhsa/SideNav/SideNav'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
+import { flags } from './constants/flags.constants'
 import { getGlobalBanner } from './hooks/getGlobalBanner'
 import { Providers } from './providers'
+import { getFeatureFlag } from './utils/flags.utils'
 
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
@@ -32,6 +35,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
 
   const globalBanner = await getGlobalBanner()
+
+  const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
 
   const cookieStore = cookies()
 
@@ -62,10 +67,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           />
         </Suspense>
 
-        <header className="govuk-header" data-module="govuk-header">
-          <div className="relative">
-            <div className="govuk-header__container govuk-width-container">
-              <div className="govuk-header__logo">
+        <header className="govuk-header border-none" data-module="govuk-header">
+          <div className="relative ">
+            <div className="govuk-width-container relative flow-root">
+              <div className="govuk-header__logo govuk-!-padding-top-2">
                 <Link href="/" className="govuk-header__link govuk-header__link--homepage">
                   <svg
                     focusable="false"
@@ -82,36 +87,46 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                   </svg>
                 </Link>
               </div>
-              <div className="govuk-header__content inline w-auto sm:w-5/12">
+              <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
                 <Link href="/" className="govuk-header__link govuk-header__service-name">
                   {t('serviceTitle')}
                 </Link>
               </div>
+              {megaMenuEnabled ? null : (
+                <TopNav megaMenu={megaMenuEnabled}>
+                  {mobileNav.map(({ title, slug, children }) => (
+                    <SideNavLink
+                      key={slug}
+                      href={slug}
+                      subMenu={
+                        children && (
+                          <SideNavSubMenu>
+                            {children.map(({ title, slug }) => (
+                              <SideNavSubMenuLink key={slug} href={slug}>
+                                {title}
+                              </SideNavSubMenuLink>
+                            ))}
+                          </SideNavSubMenu>
+                        )
+                      }
+                    >
+                      {title}
+                    </SideNavLink>
+                  ))}
+                </TopNav>
+              )}
             </div>
-
-            <TopNav>
-              {mobileNav.map(({ title, slug, children }) => (
-                <SideNavLink
-                  key={slug}
-                  href={slug}
-                  subMenu={
-                    children && (
-                      <SideNavSubMenu>
-                        {children.map(({ title, slug }) => (
-                          <SideNavSubMenuLink key={slug} href={slug}>
-                            {title}
-                          </SideNavSubMenuLink>
-                        ))}
-                      </SideNavSubMenu>
-                    )
-                  }
-                >
-                  {title}
-                </SideNavLink>
-              ))}
-            </TopNav>
           </div>
         </header>
+
+        {megaMenuEnabled ? (
+          <TopNav megaMenu={megaMenuEnabled}>
+            <MegaMenu />
+          </TopNav>
+        ) : null}
+
+        {/* Blue bar underneath header */}
+        <div className="govuk-width-container h-2 bg-blue" />
 
         <div className="govuk-width-container print:hidden">
           <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
