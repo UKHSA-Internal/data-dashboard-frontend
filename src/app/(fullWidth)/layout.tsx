@@ -5,7 +5,6 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { Announcement } from '@/app/components/ui/ukhsa'
-import { LayoutSideNav } from '@/app/components/ui/ukhsa/Layout/LayoutSideNav'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
@@ -13,6 +12,8 @@ import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
+
+import { LayoutFullWidth } from '../components/ui/ukhsa/Layout/LayoutFullWidth'
 
 export default async function Layout({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
@@ -117,7 +118,7 @@ export default async function Layout({ children }: { children: ReactNode }) {
       ) : null}
 
       <div className="govuk-width-container">
-        <LayoutSideNav>{children}</LayoutSideNav>
+        <LayoutFullWidth>{children}</LayoutFullWidth>
       </div>
     </>
   )
