@@ -58,9 +58,9 @@ export default async function HomePage() {
                   <Trend
                     data={{
                       topic: 'COVID-19',
-                      metric: 'COVID-19_headline_newcases_7daychange',
+                      metric: 'COVID-19_headline_7DayOccupiedBeds',
                       body: 'Last 7 days',
-                      percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                      percentage_metric: 'COVID-19_headline_7DayOccupiedBedsPercentChange',
                     }}
                   />
                 </Link>
@@ -95,9 +95,9 @@ export default async function HomePage() {
                   <Trend
                     data={{
                       topic: 'COVID-19',
-                      metric: 'COVID-19_headline_newcases_7daychange',
+                      metric: 'COVID-19_headline_ONSdeaths_7DayChange',
                       body: 'Last 7 days',
-                      percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
+                      percentage_metric: 'COVID-19_headline_ONSdeaths_7DayPercentChange',
                     }}
                   />
                 </Link>
@@ -132,7 +132,7 @@ export default async function HomePage() {
                   <Trend
                     data={{
                       topic: 'COVID-19',
-                      metric: 'COVID-19_headline_newcases_7daychange',
+                      metric: 'COVID-19_headline_7DayAdmissions',
                       body: 'Last 7 days',
                       percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
                     }}
