@@ -173,6 +173,12 @@ $govuk-page-width: 1400px;
       background: var(--colour-black) !important;
     }
   }
+
+  &:hover:not(:focus):not(.open) {
+    &:after {
+      background-color: var(--colour-white) !important;
+    }
+  }
 }
 
 .leaflet-container {
