@@ -3,8 +3,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { getServerTranslation } from '@/app/i18n'
 
-import { Announcement } from './components/ui/ukhsa'
-import { getGlobalBanner } from './hooks/getGlobalBanner'
+import LayoutBlackBanner from './components/ui/ukhsa/Layout/LayoutBlackBanner'
 
 export async function generateMetadata() {
   return {
@@ -16,33 +15,8 @@ export async function generateMetadata() {
 export default async function NotFoundPage() {
   const { t } = await getServerTranslation('errors')
 
-  const globalBanner = await getGlobalBanner()
-
   return (
-    <>
-      {/* Previous Version: */}
-      {/* <LayoutBlackBanner>
-            <NotFound />
-          </LayoutBlackBanner> */}
-
-      {/* <LayoutHeader /> */}
-
-      {globalBanner ? (
-        <div className="govuk-width-container">
-          <div className="govuk-grid-row">
-            <div className="govuk-grid-column-three-quarters">
-              <Announcement
-                heading={globalBanner.heading}
-                variant={globalBanner.variant}
-                className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
-              >
-                {globalBanner.body}
-              </Announcement>
-            </div>
-          </div>
-        </div>
-      ) : null}
-
+    <LayoutBlackBanner>
       <div className="govuk-width-container">
         <div className="govuk-grid-row">
           <div className="govuk-grid-column-two-thirds-from-desktop">
@@ -67,6 +41,6 @@ export default async function NotFoundPage() {
           </div>
         </div>
       </div>
-    </>
+    </LayoutBlackBanner>
   )
 }
