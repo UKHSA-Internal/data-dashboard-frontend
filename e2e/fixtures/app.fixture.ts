@@ -159,7 +159,7 @@ export class App {
     await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
   }
 
-  async hasHeroBanner() {
+  async hasHeroBannerLayout() {
     await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
 
     await expect(this.heroBanner.getByRole('heading', { level: 1, name: 'UKHSA data dashboard' })).toBeVisible()

@@ -4,8 +4,8 @@ import { test } from '../../fixtures/app.fixture'
 test.describe('Feature flag enabled', () => {
   test.describe('Home page', () => {
     test('Page layout', async ({ switchboardPage, homePage, app }) => {
-      await test.step('enables feature flag', () => {
-        switchboardPage.setFeatureFlag('landingPageHero', 'Enabled')
+      await test.step('enables feature flag', async () => {
+        await switchboardPage.setFeatureFlag('landingPageHero', 'Enabled')
       })
       await test.step('loads the page', async () => {
         await homePage.goto()
@@ -14,7 +14,7 @@ test.describe('Feature flag enabled', () => {
         await homePage.hasMetadata()
       })
       await test.step('displays the correct layout', async () => {
-        await app.hasHeroBanner()
+        await app.hasHeroBannerLayout()
       })
       await test.step('displays without any accessibility defects', async () => {
         await app.hasNoAccessibilityDefects()
@@ -23,8 +23,6 @@ test.describe('Feature flag enabled', () => {
         await homePage.hasNotLastUpdated()
       })
       await test.step('displays page sections', async () => {
-        await homePage.hasWelcomeText()
-        await homePage.hasPageDescription()
         await homePage.hasSectionHeadingsAndDescription()
       })
       await test.step('displays the COVID-19 headline numbers row card', async () => {
