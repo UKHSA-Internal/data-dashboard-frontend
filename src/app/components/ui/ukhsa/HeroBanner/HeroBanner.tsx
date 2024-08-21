@@ -3,7 +3,7 @@ import Link from 'next/link'
 const HeroBanner = () => {
   return (
     <div className="bg-blue">
-      <div className="govuk-width-container govuk-!-padding-bottom-8  bg-blue ">
+      <div className="govuk-width-container govuk-!-padding-bottom-8 bg-blue" data-testid="ukhsa-hero-banner">
         <h1 className="govuk-heading-xl govuk-!-padding-top-7 govuk-!-margin-bottom-4 text-white">
           UKHSA data dashboard
         </h1>

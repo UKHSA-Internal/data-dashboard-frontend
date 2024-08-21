@@ -11,7 +11,7 @@ test.describe('Home page', () => {
       await homePage.hasMetadata()
     })
     await test.step('displays the correct layout', async () => {
-      await app.hasLayout()
+      await app.hasHeroBanner()
     })
     await test.step('displays without any accessibility defects', async () => {
       await app.hasNoAccessibilityDefects()

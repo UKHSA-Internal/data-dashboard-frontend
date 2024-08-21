@@ -68,6 +68,7 @@ export class App {
   readonly page: Page
   readonly header: Locator
   readonly phaseBanner: Locator
+  readonly heroBanner: Locator
   readonly nav: Locator
   readonly sideNav: Locator
   readonly tableOfContents: Locator
@@ -80,6 +81,7 @@ export class App {
     this.page = page
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
+    this.heroBanner = this.page.getByTestId('ukhsa-hero-banner')
     this.nav = this.page.getByRole('navigation', { name: 'Menu' })
     this.sideNav = this.page.getByRole('navigation', { name: 'Side navigation' })
     this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
@@ -155,6 +157,35 @@ export class App {
     await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
+  }
+
+  async hasHeroBanner() {
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
+
+    await expect(this.heroBanner.getByRole('heading', { level: 1, name: 'UKHSA data dashboard' })).toBeVisible()
+    await expect(
+      this.heroBanner.getByRole('heading', { level: 2, name: 'Showing public health data across England' })
+    ).toBeVisible()
+    await expect(this.heroBanner.getByRole('link', { name: 'What is the UKHSA data dashboard?' })).toHaveAttribute(
+      'href',
+      '/about'
+    )
+
+    // Phase Banner
+    await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
+    await expect(
+      this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
+    ).toBeVisible()
+
+    // Announcement
+    const infoBanner = this.page.getByRole('status')
+    await expect(infoBanner.getByText('Information', { exact: true })).toBeVisible()
+    await expect(infoBanner.getByText('This is an information level site wide banner. Puppies are cute')).toBeVisible()
+    await expect(
+      infoBanner.getByText(
+        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.'
+      )
+    ).toBeVisible()
   }
 
   // TODO: Remove below test as part of CDD-2154
