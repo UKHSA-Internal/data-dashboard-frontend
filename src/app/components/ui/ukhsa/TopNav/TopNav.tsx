@@ -37,7 +37,7 @@ export const TopNav = ({ children, megaMenu }: { children: ReactNode; megaMenu?:
               className={clsx(
                 'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse absolute -top-7 right-0 z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none md:-top-8 md:h-8',
                 {
-                  'open bg-white text-blue': menuOpen,
+                  'open bg-light-grey text-blue': menuOpen,
                 }
               )}
               onClick={handleClick}

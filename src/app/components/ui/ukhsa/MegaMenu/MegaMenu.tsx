@@ -43,7 +43,7 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                       &nbsp;
                     </span>
                   )}
-                  <ul className="govuk-list flex flex-col gap-4 border-b border-grey-2 md:border-none">
+                  <ul className="govuk-list govuk-!-padding-bottom-5 flex flex-col gap-4 border-b border-grey-2 md:border-none md:pb-0">
                     {column.links.map((link) => (
                       <li key={link.slug} className="govuk-!-padding-right-5 govuk-body-s relative">
                         <Link
