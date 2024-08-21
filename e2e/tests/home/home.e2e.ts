@@ -1,7 +1,7 @@
 import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
-test.describe('Feature flag enabled', () => {
+test.describe('Landing page hero feature flag enabled', () => {
   test.describe('Home page', () => {
     test('Page layout', async ({ switchboardPage, homePage, app }) => {
       await test.step('enables feature flag', async () => {
@@ -53,7 +53,7 @@ test.describe('Feature flag enabled', () => {
   })
 })
 
-test.describe('Feature flag disabled', () => {
+test.describe('Landing page hero feature flag disabled', () => {
   test.describe('Home page', () => {
     test('Page layout', async ({ homePage, app }) => {
       await test.step('loads the page', async () => {
