@@ -35,7 +35,7 @@ export default async function HomePage() {
               <Card
                 asChild
                 aria-labelledby={`chart-row-card-heading-x1`}
-                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-300 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)]"
+                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href="/topics/covid-19">
                   <h3 id="chart-row-card-heading-x1" className="govuk-heading-m mb-2">
@@ -72,7 +72,7 @@ export default async function HomePage() {
               <Card
                 asChild
                 aria-labelledby={`chart-row-card-heading-x2`}
-                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-300 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)]"
+                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href="/topics/influenza">
                   <h3 id="chart-row-card-heading-x2" className="govuk-heading-m mb-2">
@@ -109,7 +109,7 @@ export default async function HomePage() {
               <Card
                 asChild
                 aria-labelledby={`chart-row-card-heading-x3`}
-                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-300 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)]"
+                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href="/topics/measles">
                   <h3 id="chart-row-card-heading-x3" className="govuk-heading-m mb-2">
