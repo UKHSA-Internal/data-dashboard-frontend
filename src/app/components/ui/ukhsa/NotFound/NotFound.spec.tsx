@@ -1,9 +1,9 @@
 import { render } from '@/config/test-utils'
 
-import NotFoundPage from './not-found'
+import NotFound from './NotFound'
 
 test('Not found page renders correctly', async () => {
-  const { getByText, getByRole } = render(await NotFoundPage())
+  const { getByText, getByRole } = render(await NotFound())
 
   expect(getByRole('heading', { level: 1, name: 'Page not found' })).toBeInTheDocument()
   expect(getByText('Please try again later.')).toBeInTheDocument()

@@ -1,4 +1,3 @@
-import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -6,8 +5,6 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { Announcement } from '@/app/components/ui/ukhsa'
-import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
-import { LayoutSideNav } from '@/app/components/ui/ukhsa/Layout/LayoutSideNav'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
@@ -16,12 +13,7 @@ import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
-interface LayoutProps {
-  children: ReactNode
-  params: { slug: string } | null
-}
-
-export default async function Layout({ children, params }: LayoutProps) {
+export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
 
   const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
@@ -29,13 +21,10 @@ export default async function Layout({ children, params }: LayoutProps) {
   const globalBanner = await getGlobalBanner()
 
   const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
-  const { enabled: landingPageHeroEnabled } = await getFeatureFlag(flags.landingPageHero)
-
-  const onHomePage = landingPageHeroEnabled && !params?.slug
 
   return (
     <>
-      <header className={clsx('govuk-header border-none', { 'bg-blue': onHomePage })} data-module="govuk-header">
+      <header className="govuk-header border-none" data-module="govuk-header">
         <div className="relative ">
           <div className="govuk-width-container relative flow-root">
             <div className="govuk-header__logo govuk-!-padding-top-2">
@@ -55,13 +44,13 @@ export default async function Layout({ children, params }: LayoutProps) {
                 </svg>
               </Link>
             </div>
-            {onHomePage ? null : (
-              <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
-                <Link href="/" className="govuk-header__link govuk-header__service-name">
-                  {t('serviceTitle')}
-                </Link>
-              </div>
-            )}
+
+            <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
+              <Link href="/" className="govuk-header__link govuk-header__service-name">
+                {t('serviceTitle')}
+              </Link>
+            </div>
+
             {megaMenuEnabled ? null : (
               <TopNav megaMenu={megaMenuEnabled}>
                 {mobileNav.map(({ title, slug, children }) => (
@@ -95,7 +84,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </TopNav>
       ) : null}
 
-      {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
+      <div className="govuk-width-container h-2 bg-blue" />
 
       <div className="govuk-width-container print:hidden">
         <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
@@ -126,9 +115,9 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       ) : null}
 
-      <div className="govuk-width-container">
-        <LayoutSideNav>{children}</LayoutSideNav>
-      </div>
+      <div className="govuk-width-container">{children}</div>
     </>
   )
 }
+
+export default LayoutBlackBanner

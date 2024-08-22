@@ -11,12 +11,14 @@ import { ChartRowCard } from '../ChartRowCard/ChartRowCard'
 import { Trend } from '../Trend/v2/Trend'
 
 export default async function HomePage() {
+  const { enabled: heroEnabled } = await getFeatureFlag(flags.landingPageHero)
+
   const { title, body, page_description: description, related_links: relatedLinks } = await getHomePage()
 
   const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
 
   return (
-    <View heading={title} description={description} showWelcome>
+    <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
       {newLandingContentEnabled ? (
         /**
          * New landing page UI for Respiratory viruses.
@@ -145,7 +147,6 @@ export default async function HomePage() {
       ) : (
         <>{body.map(renderSection)}</>
       )}
-
       <RelatedLinks variant="footer">
         {relatedLinks.map(({ title, body, url, id }) => (
           <RelatedLink key={id} url={url} title={title}>

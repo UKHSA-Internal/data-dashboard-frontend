@@ -38,6 +38,7 @@ module.exports = {
         3: 'var(--colour-grey-3)',
         4: 'var(--colour-grey-4)',
       },
+      offwhite: 'var(--colour-offwhite)',
       red: 'var(--colour-red)',
       'red-dark': 'var(--colour-red-dark)',
       yellow: 'var(--colour-yellow)',

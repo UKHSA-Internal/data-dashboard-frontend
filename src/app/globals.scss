@@ -114,6 +114,8 @@ $govuk-page-width: 1400px;
   --colour-orange-opaque: #fcdecf;
   --colour-red-opaque: #f5cfc9;
 
+  --colour-offwhite: #bcd3e9;
+
   // UKHSA delay period colours
   --colour-delay-blue: #0090c6;
   --colour-delay-blue-opaque: #d2e9f1;
@@ -175,6 +177,12 @@ $govuk-page-width: 1400px;
     }
     &:after {
       background: var(--colour-black) !important;
+    }
+  }
+
+  &:hover:not(:focus):not(.open) {
+    &:after {
+      background-color: var(--colour-white) !important;
     }
   }
 }
