@@ -272,7 +272,14 @@ export class App {
     await expect(nav.getByRole('link', { name: "What's coming" })).toBeHidden()
   }
 
+  // TODO: Remove after cleanup
   async clickMobileNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
+  }
+
+  // TODO: Rename after cleanup
+  async clickNav(name: string) {
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
     await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
   }
