@@ -25,7 +25,7 @@ test.describe('Smoke tests - desktop @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickDesktopNav(decodeURI(page))
+        await app.clickNav(decodeURI(page))
         await app.hasHeading(decodeURI(page))
       })
     }
@@ -43,7 +43,7 @@ test.describe('Smoke tests - mobile @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickMobileNav(decodeURI(page))
+        await app.clickNav(decodeURI(page))
         await app.hasHeading(decodeURI(page))
       })
     }
@@ -61,7 +61,7 @@ test.describe('Smoke tests - no JavaScript @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickDesktopNav(decodeURI(page))
+        await app.clickNav(decodeURI(page))
         await app.hasHeading(decodeURI(page))
       })
     }
