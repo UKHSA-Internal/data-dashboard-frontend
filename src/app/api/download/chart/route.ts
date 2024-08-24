@@ -21,13 +21,14 @@ export async function POST(req: NextRequest) {
 
   const params = requestSchema.safeParse({
     file_format: body.get('format'),
+    x_axis: body.get('x_axis'),
     plots,
   })
 
   if (params.success) {
-    const { plots, file_format: fileFormat } = params.data
+    const { plots, file_format: fileFormat, x_axis } = params.data
 
-    const response = await getDownloads(plots, fileFormat)
+    const response = await getDownloads(plots, fileFormat, x_axis)
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')
