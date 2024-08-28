@@ -38,9 +38,12 @@ module.exports = {
         3: 'var(--colour-grey-3)',
         4: 'var(--colour-grey-4)',
       },
+      offwhite: 'var(--colour-offwhite)',
       red: 'var(--colour-red)',
+      'red-dark': 'var(--colour-red-dark)',
       yellow: 'var(--colour-yellow)',
       green: 'var(--colour-green)',
+      'green-dark': 'var(--colour-green-dark)',
       blue: 'var(--colour-blue)',
       'dark-blue': 'var(--colour-dark-blue)',
       'light-blue': 'var(--colour-light-blue)',
@@ -96,6 +99,9 @@ module.exports = {
       addUtilities({
         // UKHSA Focus utility
         '.ukhsa-focus': {
+          '&:focus': {
+            'box-shadow': 'none',
+          },
           '&:focus:after': {
             '@apply absolute inset-[5px] pointer-events-none z-[1000] content-[""]': {},
             'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0`,

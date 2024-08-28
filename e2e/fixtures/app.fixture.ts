@@ -68,6 +68,7 @@ export class App {
   readonly page: Page
   readonly header: Locator
   readonly phaseBanner: Locator
+  readonly heroBanner: Locator
   readonly nav: Locator
   readonly sideNav: Locator
   readonly tableOfContents: Locator
@@ -80,6 +81,7 @@ export class App {
     this.page = page
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
+    this.heroBanner = this.page.getByTestId('ukhsa-hero-banner')
     this.nav = this.page.getByRole('navigation', { name: 'Menu' })
     this.sideNav = this.page.getByRole('navigation', { name: 'Side navigation' })
     this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
@@ -157,6 +159,36 @@ export class App {
     await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
   }
 
+  async hasHeroBannerLayout() {
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
+
+    await expect(this.heroBanner.getByRole('heading', { level: 1, name: 'UKHSA data dashboard' })).toBeVisible()
+    await expect(
+      this.heroBanner.getByRole('heading', { level: 2, name: 'Showing public health data across England' })
+    ).toBeVisible()
+    await expect(this.heroBanner.getByRole('link', { name: 'What is the UKHSA data dashboard?' })).toHaveAttribute(
+      'href',
+      '/about'
+    )
+
+    // Phase Banner
+    await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
+    await expect(
+      this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
+    ).toBeVisible()
+
+    // Announcement
+    const infoBanner = this.page.getByRole('status')
+    await expect(infoBanner.getByText('Information', { exact: true })).toBeVisible()
+    await expect(infoBanner.getByText('This is an information level site wide banner. Puppies are cute')).toBeVisible()
+    await expect(
+      infoBanner.getByText(
+        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.'
+      )
+    ).toBeVisible()
+  }
+
+  // TODO: Remove below test as part of CDD-2154
   async hasMobileNav() {
     await this.waitForPageLoaded()
 
@@ -193,11 +225,66 @@ export class App {
     await expect(nav.getByRole('link', { name: "What's new" })).toBeHidden()
   }
 
+  // TODO: Rename once above test removed in CDD-2154
+  async hasMegaMenuNav() {
+    await this.waitForPageLoaded()
+
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
+
+    // Open menu
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
+
+    let nav = this.page.getByRole('navigation', { name: 'Menu' })
+
+    // Expect visible items
+    await expect(nav.getByRole('heading', { name: 'Respiratory viruses' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
+
+    await expect(nav.getByRole('heading', { name: 'Services and information' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'About' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Metrics documentation' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Weather health alerts' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
+
+    await expect(nav.getByRole('link', { name: "What's new" })).toBeVisible()
+    await expect(nav.getByRole('link', { name: "What's coming" })).toBeVisible()
+
+    // Close menu
+    await this.page.getByRole('link', { name: 'Hide navigation menu', expanded: true }).click()
+
+    nav = this.page.getByRole('navigation', { name: 'Menu' })
+
+    // Expect no visible menu items
+    await expect(nav.getByRole('heading', { name: 'Respiratory viruses' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
+    await expect(nav.getByRole('heading', { name: 'Services and information' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: 'About' })).toBeHidden()
+    await expect(nav.getByRole('link', { name: "What's new" })).toBeHidden()
+    await expect(nav.getByRole('link', { name: "What's coming" })).toBeHidden()
+  }
+
+  // TODO: Remove after cleanup
   async clickMobileNav(name: string) {
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
     await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
   }
 
+  // TODO: Rename after cleanup
+  async clickNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
+  }
+
+  // TODO: Remove below test as part of CDD-2154
   async hasDesktopNav() {
     await expect(this.sideNav.getByRole('link', { name: 'Homepage' })).toBeVisible()
     await expect(this.sideNav.getByRole('link', { name: 'COVID-19' })).toBeVisible()

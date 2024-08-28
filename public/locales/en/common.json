@@ -39,7 +39,19 @@
         "alt_green_down": "There has been a decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
         "alt_red_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
         "alt_red_down": "There has been an decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
-        "alt_neutral_neutral": "There has been no change compared to the previous 7 days."
+        "alt_neutral_neutral": "There has been no change compared to the previous 7 days.",
+        "v2": {
+          "value": {
+            "percentage": "{{percentage, number}}",
+            "symbol": "%",
+            "change": "{{change}}"
+          },
+          "alt_green_up": "Increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_green_down": "Decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_red_up": "Increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_red_down": "Decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_neutral_neutral": "There has been no change compared to the previous 7 days."
+        }
       },
       "timestamp": {
         "value": "Up to and including {{value, dateShort}}"
