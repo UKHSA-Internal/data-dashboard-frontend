@@ -72,80 +72,82 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
               data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
             >
               <Card
-                as="article"
+                asChild
                 aria-labelledby={`chart-row-card-heading-${column.id}`}
                 className="ukhsa-chart-card flex flex-col gap-6"
               >
-                <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
-                  <Timestamp data={column.value} size={size} />
-                </ChartRowCardHeader>
-                <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
-                  <TabsList>
-                    <TabsTrigger asChild value="chart">
-                      <Link href={`#chart-${kebabCase(column.value.title)}`}>
-                        <span>Chart</span>
-                      </Link>
-                    </TabsTrigger>
-                    <TabsTrigger asChild value="table">
-                      <Link href={`#table-${kebabCase(column.value.title)}`}>
-                        <span className="govuk-visually-hidden">Tabular data</span>
-                        <span aria-hidden>
-                          Tabular <span className="hidden lg:inline">data</span>
-                        </span>
-                      </Link>
-                    </TabsTrigger>
-                    <TabsTrigger asChild value="download">
-                      <Link href={`#download-${kebabCase(column.value.title)}`}>
-                        <span>Download</span>
-                      </Link>
-                    </TabsTrigger>
-                  </TabsList>
-                  <TabsContent
-                    value="chart"
-                    className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
-                    data-type="chart"
-                  >
-                    <span
-                      className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
-                      id={`chart-${kebabCase(column.value.title)}`}
+                <article>
+                  <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
+                    <Timestamp data={column.value} size={size} />
+                  </ChartRowCardHeader>
+                  <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
+                    <TabsList>
+                      <TabsTrigger asChild value="chart">
+                        <Link href={`#chart-${kebabCase(column.value.title)}`}>
+                          <span>Chart</span>
+                        </Link>
+                      </TabsTrigger>
+                      <TabsTrigger asChild value="table">
+                        <Link href={`#table-${kebabCase(column.value.title)}`}>
+                          <span className="govuk-visually-hidden">Tabular data</span>
+                          <span aria-hidden>
+                            Tabular <span className="hidden lg:inline">data</span>
+                          </span>
+                        </Link>
+                      </TabsTrigger>
+                      <TabsTrigger asChild value="download">
+                        <Link href={`#download-${kebabCase(column.value.title)}`}>
+                          <span>Download</span>
+                        </Link>
+                      </TabsTrigger>
+                    </TabsList>
+                    <TabsContent
+                      value="chart"
+                      className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
+                      data-type="chart"
                     >
-                      Chart
-                    </span>
-                    {column.type === 'chart_with_headline_and_trend_card' && (
-                      <>
-                        <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
-                          <div className="flex items-start gap-2">
-                            {column.value.headline_number_columns.map(renderBlock)}
+                      <span
+                        className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                        id={`chart-${kebabCase(column.value.title)}`}
+                      >
+                        Chart
+                      </span>
+                      {column.type === 'chart_with_headline_and_trend_card' && (
+                        <>
+                          <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
+                            <div className="flex items-start gap-2">
+                              {column.value.headline_number_columns.map(renderBlock)}
+                            </div>
                           </div>
-                        </div>
-                      </>
-                    )}
-                    <AreaSelectorLoader>
-                      <Chart data={column.value} size={size} />
-                    </AreaSelectorLoader>
-                  </TabsContent>
-                  <TabsContent
-                    value="table"
-                    className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] min-h-[var(--ukhsa-chart-card-tab-min-height)] overflow-y-auto no-js:mb-4"
-                  >
-                    <span
-                      className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
-                      id={`table-${kebabCase(column.value.title)}`}
+                        </>
+                      )}
+                      <AreaSelectorLoader>
+                        <Chart data={column.value} size={size} />
+                      </AreaSelectorLoader>
+                    </TabsContent>
+                    <TabsContent
+                      value="table"
+                      className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] min-h-[var(--ukhsa-chart-card-tab-min-height)] overflow-y-auto no-js:mb-4"
                     >
-                      Tabular data
-                    </span>
-                    <Table data={column.value} size={size} />
-                  </TabsContent>
-                  <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
-                    <span
-                      className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
-                      id={`download-${kebabCase(column.value.title)}`}
-                    >
-                      Download
-                    </span>
-                    <Download data={column.value} />
-                  </TabsContent>
-                </Tabs>
+                      <span
+                        className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                        id={`table-${kebabCase(column.value.title)}`}
+                      >
+                        Tabular data
+                      </span>
+                      <Table data={column.value} size={size} />
+                    </TabsContent>
+                    <TabsContent value="download" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
+                      <span
+                        className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                        id={`download-${kebabCase(column.value.title)}`}
+                      >
+                        Download
+                      </span>
+                      <Download data={column.value} />
+                    </TabsContent>
+                  </Tabs>
+                </article>
               </Card>
             </div>
           )

@@ -69,6 +69,26 @@ export const fixtures: Fixtures = {
       colour: 'red',
       direction: 'up',
     },
+    'COVID-19_headline_7DayOccupiedBedsPercentChange': {
+      metric_name: 'COVID-19_headline_7DayOccupiedBeds',
+      metric_value: 377,
+      metric_period_end: '2023-11-04',
+      percentage_metric_name: 'COVID-19_headline_7DayOccupiedBedsPercentChange',
+      percentage_metric_value: 6.0,
+      percentage_metric_period_end: '2023-11-04',
+      colour: 'red',
+      direction: 'up',
+    },
+    'COVID-19_headline_ONSdeaths_7DayPercentChange': {
+      metric_name: 'COVID-19_headline_ONSdeaths_7DayChange',
+      metric_value: 5911,
+      metric_period_end: '2023-11-04',
+      percentage_metric_name: 'COVID-19_headline_ONSdeaths_7DayPercentChange',
+      percentage_metric_value: 0.3,
+      percentage_metric_period_end: '2023-11-04',
+      colour: 'green',
+      direction: 'down',
+    },
   },
   Influenza: {
     influenza_headline_ICUHDUadmissionRateChange: {
