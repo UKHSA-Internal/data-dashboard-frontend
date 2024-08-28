@@ -24,7 +24,7 @@ export default async function HomePage() {
          * New landing page UI for Health topics.
          * This is in progress & still to be hooked up to the CMS in CDD-2156
          */
-        <section data-testid="category" aria-labelledby="category-health-topics">
+        <section className="govuk-!-margin-top-3" data-testid="category" aria-labelledby="category-health-topics">
           <h2 className="govuk-heading-l govuk-!-margin-bottom-4" id="category-health-topics">
             <a className="govuk-link--no-visited-state" href="/topics">
               Health topics
@@ -70,6 +70,8 @@ export default async function HomePage() {
                       metric: 'COVID-19_headline_7DayOccupiedBeds',
                       body: 'Last 7 days',
                       percentage_metric: 'COVID-19_headline_7DayOccupiedBedsPercentChange',
+                      geography: 'England',
+                      geography_type: 'Nation',
                     }}
                   />
                 </Link>
@@ -114,6 +116,8 @@ export default async function HomePage() {
                       metric: 'COVID-19_headline_ONSdeaths_7DayChange',
                       body: 'Last 7 days',
                       percentage_metric: 'COVID-19_headline_ONSdeaths_7DayPercentChange',
+                      geography: 'England',
+                      geography_type: 'Nation',
                     }}
                   />
                 </Link>
@@ -158,6 +162,8 @@ export default async function HomePage() {
                       metric: 'COVID-19_headline_7DayAdmissions',
                       body: 'Last 7 days',
                       percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                      geography: 'England',
+                      geography_type: 'Nation',
                     }}
                   />
                 </Link>
