@@ -19,7 +19,7 @@ export function PhaseBanner({ children, tag, variant = 'default', className }: P
       <p className="govuk-phase-banner__content">
         <strong
           className={clsx('govuk-tag govuk-phase-banner__content__tag', {
-            'bg-[var(--colour-offwhite)] text-blue font-bold px-2 py-[6px]': variant === 'light',
+            'bg-offwhite text-blue font-bold px-2 py-[6px]': variant === 'light',
           })}
         >
           {tag}

@@ -12,7 +12,7 @@ describe('PhaseBanner', () => {
 
     const tag = screen.getByText('Beta')
     expect(tag).toHaveClass('govuk-tag govuk-phase-banner__content__tag')
-    expect(tag).not.toHaveClass('bg-[var(--colour-offwhite)] text-blue')
+    expect(tag).not.toHaveClass('bg-offwhite text-blue')
 
     expect(screen.getByText('This is a test')).toBeInTheDocument()
   })
@@ -28,9 +28,7 @@ describe('PhaseBanner', () => {
     expect(banner).toHaveClass('govuk-phase-banner [&>*]:text-white border-0')
 
     const tag = screen.getByText('Alpha')
-    expect(tag).toHaveClass(
-      'govuk-tag govuk-phase-banner__content__tag bg-[var(--colour-offwhite)] text-blue font-bold px-2 py-[6px]'
-    )
+    expect(tag).toHaveClass('govuk-tag govuk-phase-banner__content__tag bg-offwhite text-blue font-bold px-2 py-[6px]')
     expect(screen.getByText('Light variant test')).toBeInTheDocument()
   })
 
