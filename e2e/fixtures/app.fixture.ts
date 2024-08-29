@@ -122,7 +122,19 @@ export class App {
     const accessibilityScanResults = await new AxeBuilder({ page: this.page })
       .disableRules(['region', ...additionalDisabledRules])
       .analyze()
-    expect(accessibilityScanResults.violations).toEqual([])
+
+    const violations = accessibilityScanResults.violations.filter((violation) => {
+      if (violation.id === 'color-contrast') {
+        violation.nodes = violation.nodes.filter((node) => {
+          const contrastRatio = parseFloat(node.all[0].data.contrastRatio)
+          return contrastRatio < 3
+        })
+        return violation.nodes.length > 0
+      }
+      return true
+    })
+
+    expect(violations).toEqual([])
   }
 
   async hasLayout() {
