@@ -1,3 +1,5 @@
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
@@ -9,6 +11,10 @@ import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+
+const InteractiveChart = dynamic(() => import('../ChartInteractive/ChartInteractive'), {
+  ssr: false,
+})
 
 interface ChartProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
@@ -65,20 +71,27 @@ export async function Chart({ data, size }: ChartProps) {
     const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
 
     return (
-      <picture data-testid="chart" data-location={areaName}>
-        {wideChart && (
-          <source
-            media="(min-width: 768px)"
-            srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
-            data-testid="chart-src-min-768"
-          />
-        )}
-        <img
-          alt={t('cms.blocks.chart.alt', { body: alt })}
-          src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`}
-          className="w-full"
-        />
-      </picture>
+      <>
+        <noscript>
+          <picture data-testid="chart" data-location={areaName}>
+            {wideChart && (
+              <source
+                media="(min-width: 768px)"
+                srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
+                data-testid="chart-src-min-768"
+              />
+            )}
+            <img
+              alt={t('cms.blocks.chart.alt', { body: alt })}
+              src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`}
+              className="w-full"
+            />
+          </picture>
+        </noscript>
+        <Suspense fallback={null}>
+          <InteractiveChart />
+        </Suspense>
+      </>
     )
   }
 
