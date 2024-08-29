@@ -125,15 +125,7 @@ export class App {
 
     const filteredViolations = accessibilityScanResults.violations.filter((violation) => {
       if (violation.id === 'color-contrast') {
-        violation.nodes = violation.nodes.filter(
-          (node) =>
-            !node.target.some((selector: string | string[]) => {
-              if (typeof selector === 'string') {
-                return selector.includes('.govuk-tag')
-              }
-              return selector.some((ele) => ele.includes('.govuk-tag'))
-            })
-        )
+        violation.nodes = violation.nodes.filter((node) => node.html.includes('.govuk-tag'))
         return violation.nodes.length > 0
       }
       return true
