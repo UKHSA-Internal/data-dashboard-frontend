@@ -123,18 +123,23 @@ export class App {
       .disableRules(['region', ...additionalDisabledRules])
       .analyze()
 
-    const violations = accessibilityScanResults.violations.filter((violation) => {
+    const filteredViolations = accessibilityScanResults.violations.filter((violation) => {
       if (violation.id === 'color-contrast') {
-        violation.nodes = violation.nodes.filter((node) => {
-          const contrastRatio = parseFloat(node.all[0].data.contrastRatio)
-          return contrastRatio < 3
-        })
+        violation.nodes = violation.nodes.filter(
+          (node) =>
+            !node.target.some((selector: string | string[]) => {
+              if (typeof selector === 'string') {
+                return selector.includes('.govuk-tag')
+              }
+              return selector.some((ele) => ele.includes('.govuk-tag'))
+            })
+        )
         return violation.nodes.length > 0
       }
       return true
     })
 
-    expect(violations).toEqual([])
+    expect(filteredViolations).toEqual([])
   }
 
   async hasLayout() {

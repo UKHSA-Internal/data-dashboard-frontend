@@ -293,4 +293,29 @@ export class HomePage {
     await expect(card.getByLabel('JSON')).toBeVisible()
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
+
+  async hasCategories(categories: string[]) {
+    for (const name of categories) {
+      await expect(this.page.getByRole('region', { name })).toBeVisible()
+    }
+  }
+
+  async hasHealthTopicColumns(total: number) {
+    const section = this.page.getByRole('region', { name: 'Health topics' })
+    await expect(await section.getByTestId('chart-row-cards').getByRole('link').count()).toEqual(total)
+  }
+
+  async hasHealthTopicCard(
+    name: string,
+    { tagline, trendPercent, trendDescription }: { tagline: string; trendPercent: string; trendDescription: string }
+  ) {
+    const section = this.page.getByRole('region', { name: 'Health topics' })
+    const card = section.getByRole('link', { name })
+
+    await expect(card.getByRole('heading', { name })).toBeVisible()
+    await expect(card.getByText(tagline)).toBeVisible()
+    await expect(card.getByTestId('chart-image')).toBeVisible()
+    await expect(card.getByText(trendPercent, { exact: true })).toBeVisible()
+    await expect(card.getByText(trendDescription, { exact: true })).toBeVisible()
+  }
 }
