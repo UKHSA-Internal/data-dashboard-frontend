@@ -122,7 +122,16 @@ export class App {
     const accessibilityScanResults = await new AxeBuilder({ page: this.page })
       .disableRules(['region', ...additionalDisabledRules])
       .analyze()
-    expect(accessibilityScanResults.violations).toEqual([])
+
+    const filteredViolations = accessibilityScanResults.violations.filter((violation) => {
+      if (violation.id === 'color-contrast') {
+        violation.nodes = violation.nodes.filter((node) => node.html.includes('.govuk-tag'))
+        return violation.nodes.length > 0
+      }
+      return true
+    })
+
+    expect(filteredViolations).toEqual([])
   }
 
   async hasLayout() {

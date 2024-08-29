@@ -100,6 +100,67 @@ describe('DownloadForm', () => {
     expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
   })
 
+  test('renders a hidden field for a chart x-axis if one is selected', () => {
+    const headline_chart_props = { ...props, xAxis: 'geography' }
+    render(<DownloadForm {...headline_chart_props} />)
+
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+
+    expect(screen.getByLabelText('CSV')).toBeChecked()
+
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: '',
+        geography: '',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+    expect(screen.getByTestId('download-x-axis')).toHaveValue('geography')
+
+    // CTA
+    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+  })
+
+  test('does not render hidden field for a chart x-axis if one is not provided', () => {
+    render(<DownloadForm {...props} />)
+
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+
+    expect(screen.getByLabelText('CSV')).toBeChecked()
+
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: '',
+        geography: '',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+    expect(screen.queryByTestId('download-x-axis')).toBeNull()
+
+    // CTA
+    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+  })
+
   test('Downloading a csv file for users with JavaScript', async () => {
     global.fetch = () =>
       Promise.resolve({

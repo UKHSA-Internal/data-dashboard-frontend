@@ -51,6 +51,7 @@ describe('POST /api/download/chart', () => {
     expect(client).toHaveBeenCalledWith('downloads/v2', {
       body: {
         file_format: 'csv',
+        x_axis: null,
         plots: [mockPlot],
       },
     })
@@ -84,6 +85,7 @@ describe('POST /api/download/chart', () => {
     expect(client).toHaveBeenCalledWith('downloads/v2', {
       body: {
         file_format: 'csv',
+        x_axis: null,
         plots: [
           mockPlot,
           {

@@ -41,6 +41,7 @@ export async function Download({ data: { chart, y_axis, x_axis, tag_manager_even
             geography: areaName ?? plot.value.geography,
           },
         }))}
+        xAxis={x_axis}
         tagManagerEventId={tag_manager_event_id}
       />
     )

@@ -10,10 +10,11 @@ import { chartExportApiRoutePath } from '@/config/constants'
 
 interface DownloadFormProps {
   chart: Chart
+  xAxis?: string | null
   tagManagerEventId: string | null
 }
 
-export function DownloadForm({ chart, tagManagerEventId }: DownloadFormProps) {
+export function DownloadForm({ chart, xAxis, tagManagerEventId }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -93,6 +94,8 @@ export function DownloadForm({ chart, tagManagerEventId }: DownloadFormProps) {
               </label>
             </div>
           </div>
+
+          {xAxis && <input type="hidden" name="x_axis" value={xAxis} data-testid="download-x-axis" />}
 
           {chart.map(({ id, value }) => (
             <input
