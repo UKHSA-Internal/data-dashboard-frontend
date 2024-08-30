@@ -41,7 +41,7 @@ export const WithChartHeadlineAndTrendCard = z.object({
 
 export const WithChartCard = z.object({
   id: z.string(),
-  type: z.literal('chart_card'),
+  type: z.enum(['chart_card', 'headline_chart_card']),
   value: z.object({
     title: z.string(),
     body: z.string(),
