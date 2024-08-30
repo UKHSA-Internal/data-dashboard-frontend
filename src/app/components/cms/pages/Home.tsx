@@ -38,10 +38,10 @@ export default async function HomePage() {
                 className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href="/topics/covid-19">
-                  <h3 id="chart-row-card-heading-x1" className="govuk-heading-m mb-2">
+                  <h3 id="chart-row-card-heading-x1" className="govuk-heading-m mb-1">
                     COVID-19
                   </h3>
-                  <p className="govuk-body-s">Positive cases reported</p>
+                  <p className="govuk-body-s text-grey-1">Positive cases reported</p>
 
                   <div className="my-3">
                     <svg
@@ -84,10 +84,10 @@ export default async function HomePage() {
                 className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href="/topics/influenza">
-                  <h3 id="chart-row-card-heading-x2" className="govuk-heading-m mb-2">
+                  <h3 id="chart-row-card-heading-x2" className="govuk-heading-m mb-1">
                     Influenza
                   </h3>
-                  <p className="govuk-body-s">Weekly hospital admission rates</p>
+                  <p className="govuk-body-s text-grey-1">Weekly hospital admission rates</p>
 
                   <div className="my-3">
                     <svg
@@ -130,10 +130,10 @@ export default async function HomePage() {
                 className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href="/topics/measles">
-                  <h3 id="chart-row-card-heading-x3" className="govuk-heading-m mb-2">
+                  <h3 id="chart-row-card-heading-x3" className="govuk-heading-m mb-1">
                     Measles
                   </h3>
-                  <p className="govuk-body-s">Positive cases reported</p>
+                  <p className="govuk-body-s text-grey-1">Positive cases reported</p>
 
                   <div className="my-3">
                     <svg
