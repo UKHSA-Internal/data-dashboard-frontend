@@ -55,7 +55,7 @@ export async function Trend({ data: { body: heading, ...requestParams } }: Trend
               {t('cms.blocks.trend.v2.value.percentage', { percentage })}
               <span className="govuk-!-font-size-19">{t('cms.blocks.trend.v2.value.symbol')}</span>
             </span>
-            <span className="govuk-body-s mb-0">
+            <span className="govuk-body-s mb-0 max-w-[80%]">
               {t('cms.blocks.trend.v2.alt', {
                 percentage,
                 change,
