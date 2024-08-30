@@ -15,6 +15,14 @@ export class WeatherHealthAlertsMapPage {
     await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
   }
 
+  async hasMapDialog() {
+    await expect(this.page.getByRole('dialog', { name: 'Weather health alerts map' })).toBeVisible()
+  }
+
+  async hasMapLeaflet() {
+    await expect(this.page.getByRole('application')).toBeVisible()
+  }
+
   async hasNoMapButton() {
     await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toBeHidden()
   }
