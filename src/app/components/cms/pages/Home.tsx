@@ -73,7 +73,6 @@ export default async function HomePage() {
                       geography: 'England',
                       geography_type: 'Nation',
                     }}
-                    newLandingPage={newLandingContentEnabled}
                   />
                 </Link>
               </Card>
@@ -120,7 +119,6 @@ export default async function HomePage() {
                       geography: 'England',
                       geography_type: 'Nation',
                     }}
-                    newLandingPage={newLandingContentEnabled}
                   />
                 </Link>
               </Card>
@@ -167,7 +165,6 @@ export default async function HomePage() {
                       geography: 'England',
                       geography_type: 'Nation',
                     }}
-                    newLandingPage={newLandingContentEnabled}
                   />
                 </Link>
               </Card>

@@ -8,10 +8,9 @@ import { getServerTranslation } from '@/app/i18n'
 interface TrendProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof TrendNumber>['value']
-  newLandingPage?: boolean
 }
 
-export async function Trend({ data: { body: heading, ...requestParams }, newLandingPage }: TrendProps) {
+export async function Trend({ data: { body: heading, ...requestParams } }: TrendProps) {
   const { t } = await getServerTranslation('common')
 
   const trend = await getTrends(requestParams)
@@ -39,16 +38,11 @@ export async function Trend({ data: { body: heading, ...requestParams }, newLand
         </div>
         <div
           className={clsx('bg-[6px_center] bg-no-repeat', {
-            'bg-arrow_up_green': isUpPositive && !newLandingPage,
-            'bg-arrow_down_green': isDownPositive && !newLandingPage,
-            'bg-arrow_up_red': isUpNegative && !newLandingPage,
-            'bg-arrow_down_red': isDownNegative && !newLandingPage,
-            'pl-[26px]': isNeutral && !newLandingPage,
-            'bg-alt_arrow_up_green': isUpPositive && newLandingPage,
-            'bg-alt_arrow_down_green': isDownPositive && newLandingPage,
-            'bg-alt_arrow_up_red': isUpNegative && newLandingPage,
-            'bg-alt_arrow_down_red': isDownNegative && newLandingPage,
-            'pl-6': isNeutral && newLandingPage,
+            'bg-alt_arrow_up_green': isUpPositive,
+            'bg-alt_arrow_down_green': isDownPositive,
+            'bg-alt_arrow_up_red': isUpNegative,
+            'bg-alt_arrow_down_red': isDownNegative,
+            'pl-6': isNeutral,
           })}
         >
           <div
