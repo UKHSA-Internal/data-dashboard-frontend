@@ -84,19 +84,9 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                           >
                             {switchBoardLink.title}
                           </Link>
-                          {switchBoardLink.description ? (
-                            <RichText
-                              components={{
-                                p: ({ children }) => (
-                                  <p className="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-0">
-                                    {children}
-                                  </p>
-                                ),
-                              }}
-                            >
-                              {switchBoardLink.description}
-                            </RichText>
-                          ) : null}
+                          <p className="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                            {switchBoardLink.description}
+                          </p>
                         </li>
                       </>
                     )}
