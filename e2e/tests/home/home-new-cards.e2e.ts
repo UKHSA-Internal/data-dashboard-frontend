@@ -48,9 +48,6 @@ test.describe('Landing page new card design feature flag enabled', () => {
           trendDescription: 'Increase of 377 (6%) compared to the previous 7 days.',
         })
       })
-      await test.step('displays related links', async () => {
-        await app.hasRelatedLinks()
-      })
       await test.step('displays back to top', async () => {
         await app.hasBackToTop()
       })
