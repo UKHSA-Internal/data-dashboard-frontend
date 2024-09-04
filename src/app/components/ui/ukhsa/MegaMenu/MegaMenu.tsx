@@ -75,8 +75,11 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                     ))}
                     {/* Hardcoded switchboard link */}
                     {isLastColumn && !isWellKnownEnvironment() && (
-                      <div className="govuk-!-padding-top-5 border-t border-grey-2 md:w-4/6">
-                        <li key={switchBoardLink.slug} className="govuk-!-padding-right-5 govuk-body-s relative">
+                      <>
+                        <li
+                          key={switchBoardLink.slug}
+                          className="govuk-!-padding-right-5 govuk-body-s govuk-!-padding-top-5 relative border-t border-grey-2 md:w-4/6"
+                        >
                           <Link
                             href={switchBoardLink.slug}
                             className={`font-bold after:absolute after:inset-0 after:bg-none after:content-[""]`}
@@ -87,7 +90,7 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                             {switchBoardLink.description}
                           </p>
                         </li>
-                      </div>
+                      </>
                     )}
                   </ul>
                 </div>
