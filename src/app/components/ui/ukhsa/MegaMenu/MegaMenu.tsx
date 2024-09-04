@@ -75,8 +75,7 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                     ))}
                     {/* Hardcoded switchboard link */}
                     {isLastColumn && !isWellKnownEnvironment() && (
-                      <>
-                        <hr className="w-4/6 border-grey-2" />
+                      <div className="govuk-!-padding-top-5 border-t border-grey-2 md:w-4/6">
                         <li key={switchBoardLink.slug} className="govuk-!-padding-right-5 govuk-body-s relative">
                           <Link
                             href={switchBoardLink.slug}
@@ -88,7 +87,7 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                             {switchBoardLink.description}
                           </p>
                         </li>
-                      </>
+                      </div>
                     )}
                   </ul>
                 </div>
