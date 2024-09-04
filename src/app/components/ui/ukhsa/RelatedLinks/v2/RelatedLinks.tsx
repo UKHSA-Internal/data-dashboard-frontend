@@ -41,7 +41,7 @@ export async function RelatedLinks({ children, className, variant, heading }: Re
         })}
       >
         {/* TODO: This should come from CMS */}
-        Learn more about dashboard topics
+        Learn more about UKHSA data dashboard topics
       </h3>
       {variant === 'sidebar' ? (
         <ul className="govuk-list govuk-list--spaced govuk-!-font-size-16">{children}</ul>
