@@ -5,7 +5,7 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { getServerTranslation } from '@/app/i18n'
 
-import { ListItemArrow, ListItemArrowLink } from '../../List/ListItemArrow'
+import { ListItemArrow, ListItemArrowExternalLink } from '../../List/ListItemArrow'
 
 interface RelatedLinksProps {
   children: ReactNode[]
@@ -63,9 +63,9 @@ export function RelatedLink({ title, url, children }: RelatedLinkProps) {
   return (
     <ListItem>
       <ListItemArrow>
-        <ListItemArrowLink href={url} className="govuk-!-margin-bottom-2">
+        <ListItemArrowExternalLink href={url} className="govuk-!-margin-bottom-2">
           {title}
-        </ListItemArrowLink>
+        </ListItemArrowExternalLink>
         {children && <div dangerouslySetInnerHTML={{ __html: children }} className="govuk-body-m break-words" />}
       </ListItemArrow>
     </ListItem>

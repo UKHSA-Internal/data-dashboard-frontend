@@ -31,3 +31,19 @@ export const ListItemArrowLink = ({ href, children, className }: ListItemArrowLi
     </h2>
   )
 }
+
+export const ListItemArrowExternalLink = ({ href, children, className }: ListItemArrowLinkProps) => {
+  return (
+    <h2 className={clsx('govuk-heading-m', className)}>
+      <Link
+        className="govuk-link govuk-link--no-visited-state before:absolute before:inset-0 before:bg-list_item_arrow before:bg-right before:bg-no-repeat after:absolute after:inset-0 hover:before:bg-list_item_arrow_hover"
+        href={href}
+        rel="noreferrer noopener"
+        target="_blank"
+        aria-label={`${children?.toString()} (opens in a new window)`}
+      >
+        {children}
+      </Link>
+    </h2>
+  )
+}
