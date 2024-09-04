@@ -24,31 +24,45 @@ export function MiniMap() {
   console.log('alerts', alerts)
   if (alerts.isLoading || !alerts.data) return null
 
+  const noAlertsIssued = alerts.data.some((alert) => alert.status === 'Green')
+
+  console.log('noAlertsIssued', noAlertsIssued)
+
   return (
     <>
       <div className="flex justify-between">
-        <ul className="govuk-list govuk-!-margin-0 govuk-!-font-size-16">
-          {alerts.data
-            .filter((alert) => alert.status !== 'Green')
-            .map((alert) => {
-              return (
-                <li
-                  key={alert.geography_code}
-                  className={clsx('transition-all duration-150', {
-                    'font-bold': debouncedHoveredRegion === alert.geography_code,
-                    'opacity-30': debouncedHoveredRegion && debouncedHoveredRegion !== alert.geography_code,
-                  })}
-                  onMouseEnter={() => handleMouseEnter(alert.geography_code)}
-                  onMouseLeave={handleMouseLeave}
-                >
-                  <span
-                    className={clsx(`mr-2 inline-block size-2 rounded-full`)}
-                    style={{ background: getCssVariableFromColour(alert.status) }}
-                  />
-                  {alert.geography_name}
-                </li>
-              )
-            })}
+        <ul className="govuk-list govuk-!-margin-0 govuk-!-font-size-16 min-h-[5rem]">
+          {noAlertsIssued ? (
+            <li>
+              <span
+                className={clsx(`mr-2 inline-block size-2 rounded-full`)}
+                style={{ background: getCssVariableFromColour('Green') }}
+              />
+              No alerts issued
+            </li>
+          ) : (
+            alerts.data
+              .filter((alert) => alert.status !== 'Green')
+              .map((alert) => {
+                return (
+                  <li
+                    key={alert.geography_code}
+                    className={clsx('transition-all duration-150', {
+                      'font-bold': debouncedHoveredRegion === alert.geography_code,
+                      'opacity-30': debouncedHoveredRegion && debouncedHoveredRegion !== alert.geography_code,
+                    })}
+                    onMouseEnter={() => handleMouseEnter(alert.geography_code)}
+                    onMouseLeave={handleMouseLeave}
+                  >
+                    <span
+                      className={clsx(`mr-2 inline-block size-2 rounded-full`)}
+                      style={{ background: getCssVariableFromColour(alert.status) }}
+                    />
+                    {alert.geography_name}
+                  </li>
+                )
+              })
+          )}
         </ul>
         <div className="absolute right-0 top-1/2 -translate-y-1/2">
           <svg xmlns="http://www.w3.org/2000/svg" width="272" height="323" fill="none">
