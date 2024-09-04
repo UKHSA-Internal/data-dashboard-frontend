@@ -6,7 +6,7 @@ import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
   file_format: z.enum(['json', 'csv']),
-  x_axis: z.enum(['age', 'geography', 'sex', 'stratum']).optional().nullable(),
+  x_axis: z.enum(['age', 'geography', 'sex', 'stratum', 'date', 'metric']).optional().nullable(),
   plots: z.array(
     z.object({
       topic: Topics,
