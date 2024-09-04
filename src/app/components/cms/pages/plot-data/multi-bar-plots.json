@@ -1,0 +1,734 @@
+{
+  "last_updated": "2023-10-30",
+  "chart": "%3C%3Fxml+version%3D%221.0%22+encoding%3D%22UTF-8%22%3F%3E%0A%3Csvg+class%3D%22main-svg%22+width%3D%22700%22+height%3D%22500%22+style%3D%22%22+viewBox%3D%220+0+700+500%22+xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A+%3Crect+width%3D%22700%22+height%3D%22500%22+fill-opacity%3D%220%22%2F%3E%0A+%3Cdefs+id%3D%22defs-da7f19%22%3E%0A++%3Cg+class%3D%22clips%22%3E%0A+++%3CclipPath+id%3D%22clipda7f19xyplot%22+class%3D%22plotclip%22%3E%0A++++%3Crect+width%3D%22692%22+height%3D%22377%22%2F%3E%0A+++%3C%2FclipPath%3E%0A++%3C%2Fg%3E%0A+%3C%2Fdefs%3E%0A+%3Cg+class%3D%22bglayer%22%3E%0A++%3Crect+class%3D%22bg%22+x%3D%228%22+width%3D%22692%22+height%3D%22377%22+fill-opacity%3D%220%22+stroke-width%3D%220%22%2F%3E%0A+%3C%2Fg%3E%0A+%3Cg+class%3D%22layer-below%22%2F%3E%0A+%3Cg+class%3D%22cartesianlayer%22%3E%0A++%3Cg+class%3D%22subplot+xy%22%3E%0A+++%3Cg+class%3D%22layer-subplot%22%2F%3E%0A+++%3Cg+class%3D%22minor-gridlayer%22%2F%3E%0A+++%3Cg+class%3D%22gridlayer%22%2F%3E%0A+++%3Cg+class%3D%22zerolinelayer%22%3E%0A++++%3Cpath+class%3D%22yzl+zl+crisp%22+transform%3D%22translate%280%2C377%29%22+d%3D%22m8+0h692%22+stroke%3D%22%23fff%22+stroke-width%3D%222px%22%2F%3E%0A+++%3C%2Fg%3E%0A+++%3Cg+class%3D%22layer-between%22%2F%3E%0A+++%3Cg+class%3D%22overplot%22%3E%0A++++%3Cg+class%3D%22xy%22+transform%3D%22translate%288%29%22+clip-path%3D%22url%28%23clipda7f19xyplot%29%22%3E%0A+++++%3Cg+class%3D%22barlayer+mlayer%22%3E%0A++++++%3Cg+class%3D%22trace+bars%22%3E%0A+++++++%3Cg+class%3D%22points%22%3E%0A++++++++%3Cg+class%3D%22point%22+stroke-width%3D%221px%22%3E%0A+++++++++%3Cpath+d%3D%22M-5.41%2C377V275.15H0V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M8.12%2C377V298.65H13.53V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M21.65%2C377V255.56H27.06V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M35.18%2C377V287.46H40.59V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M48.71%2C377V296.42H54.12V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M62.24%2C377V288.02H67.65V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M75.77%2C377V304.81H81.18V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M89.3%2C377V312.09H94.72V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m102.83+377v-60.44h5.42v60.44z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m116.36+377v-60.44h5.42v60.44z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m129.89+377v-70.51h5.42v70.51z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m143.43+377v-55.4h5.41v55.4z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m156.96+377v-76.11h5.41v76.11z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m170.49+377v-87.3h5.41v87.3z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M184.02%2C377V275.71H189.43V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M197.55%2C377V225.91H202.96V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M211.08%2C377V223.11H216.49V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M224.61%2C377V169.38H230.02V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M238.14%2C377V116.22H243.55V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M251.67%2C377V114.54H257.08V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M265.2%2C377V23.33H270.61V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M278.73%2C377V58.02H284.15V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M292.26%2C377V18.85H297.68V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M305.79%2C377V26.68H311.21V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M319.33%2C377V53.55H324.74V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M332.86%2C377V101.67H338.27V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M346.39%2C377V153.72H351.8V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M359.92%2C377V72.57H365.33V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M373.45%2C377V101.67H378.86V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M386.98%2C377V115.1H392.39V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M400.51%2C377V145.32H405.92V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M414.04%2C377V186.73H419.45V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M427.57%2C377V192.33H432.98V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M441.1%2C377V197.37H446.51V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M454.63%2C377V203.52H460.04V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M468.16%2C377V195.13H473.58V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M481.69%2C377V156.51H487.11V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M495.22%2C377V164.91H500.64V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M508.76%2C377V199.04H514.17V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M522.29%2C377V208.56H527.7V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M535.82%2C377V256.68H541.23V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M549.35%2C377V258.92H554.76V377Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m562.88+377v-74.43h5.41v74.43z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m576.41+377v-65.47h5.41v65.47z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m589.94+377v-71.63h5.41v71.63z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m603.47+377v-68.83h5.41v68.83z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m617+377v-77.23h5.41v77.23z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m630.53+377v-47.01h5.41v47.01z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m644.06+377v-47.57h5.41v47.57z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m657.59+377v-57.64h5.42v57.64z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m671.12+377v-48.69h5.42v48.69z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m684.65+377v-35.26h5.42v35.26z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M0%2C377V299.77H5.41V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M13.53%2C377V267.88H18.94V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M27.06%2C377V194.57H32.47V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M40.59%2C377V186.17H46V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M54.12%2C377V159.87H59.54V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M67.65%2C377V171.62H73.07V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M81.18%2C377V89.92H86.6V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M94.72%2C377V85.44H100.13V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M108.25%2C377V133.57H113.66V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M121.78%2C377V180.58H127.19V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M135.31%2C377V171.06H140.72V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M148.84%2C377V186.17H154.25V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M162.37%2C377V194.57H167.78V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M175.9%2C377V178.34H181.31V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M189.43%2C377V182.26H194.84V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M202.96%2C377V189.53H208.37V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M216.49%2C377V251.65H221.9V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M230.02%2C377V187.29H235.43V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M243.55%2C377V205.2H248.97V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M257.08%2C377V229.26H262.5V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M270.61%2C377V269.56H276.03V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M284.15%2C377V268.44H289.56V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M297.68%2C377V266.2H303.09V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m311.21+377v-50.92h5.41v50.92z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m324.74+377v-73.31h5.41v73.31z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m338.27+377v-58.2h5.41v58.2z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m351.8+377v-44.77h5.41v44.77z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m365.33+377v-36.93h5.41v36.93z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m378.86+377v-43.65h5.41v43.65z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M392.39%2C377V305.37H397.8V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m405.92+377v-38.05h5.41v38.05z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m419.45+377v-16.79h5.41v16.79z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M432.98%2C377V357.41H438.4V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m446.51+377v-20.71h5.42v20.71z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m460.04+377v-10.07h5.42v10.07z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m473.58+377v-20.15h5.41v20.15z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m487.11+377v-21.82h5.41v21.82z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m500.64+377v-22.38h5.41v22.38z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m514.17+377v-23.5h5.41v23.5z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m527.7+377v-16.23h5.41v16.23z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m541.23+377v-6.72h5.41v6.72z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m554.76+377v-19.59h5.41v19.59z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22M568.29%2C377V356.29H573.7V377Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m581.82+377v-23.5h5.41v23.5z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m595.35+377v-14.55h5.41v14.55z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m608.88+377v-16.23h5.41v16.23z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m622.41+377v-10.07h5.42v10.07z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m635.94+377v-21.82h5.42v21.82z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m649.47+377v-38.61h5.42v38.61z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m663.01+377v-55.4h5.41v55.4z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m676.54+377v-44.77h5.41v44.77z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A+++++++++%3Cpath+d%3D%22m690.07+377v-76.67h5.41v76.67z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22%2F%3E%0A++++++++%3C%2Fg%3E%0A+++++++%3C%2Fg%3E%0A++++++%3C%2Fg%3E%0A+++++%3C%2Fg%3E%0A++++%3C%2Fg%3E%0A+++%3C%2Fg%3E%0A+++%3Cpath+class%3D%22ylines-above+crisp%22+d%3D%22m0+0%22+fill%3D%22none%22%2F%3E%0A+++%3Cg+class%3D%22xaxislayer-above%22%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%2854.39%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28114.31%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28174.23%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28228.36%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28288.28%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28346.27%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28406.19%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28464.18%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28524.1%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28584.02%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cpath+class%3D%22xtick+ticks+crisp%22+transform%3D%22translate%28642.01%29%22+d%3D%22m0+378v5%22+stroke%3D%22%23444%22+stroke-width%3D%221px%22%2F%3E%0A++++%3Cg+class%3D%22xtick%22+fill%3D%22rgb%28107%2C+114%2C+118%29%22+font-family%3D%22Arial%22+font-size%3D%2212px%22+text-anchor%3D%22middle%22%3E%0A+++++%3Ctext+transform%3D%22translate%2854.39%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EDec+2022%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28114.31%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EJan+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28174.23%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EFeb+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28228.36%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EMar+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28288.28%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EApr+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28346.27%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EMay+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28406.19%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EJun+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28464.18%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EJul+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28524.1%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EAug+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28584.02%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3ESep+2023%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%28642.01%29%22+y%3D%22397.4%22+style%3D%22white-space%3Apre%22%3EOct+2023%3C%2Ftext%3E%0A++++%3C%2Fg%3E%0A+++%3C%2Fg%3E%0A+++%3Cg+class%3D%22yaxislayer-above%22%3E%0A++++%3Cg+class%3D%22ytick%22+fill%3D%22rgb%28107%2C+114%2C+118%29%22+font-family%3D%22Arial%22+font-size%3D%2212px%22+text-anchor%3D%22end%22%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C377%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E0%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C321.04%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E1%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C265.08%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E2%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C209.12%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E3%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C153.16%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E4%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C97.2%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E5%3C%2Ftext%3E%0A+++++%3Ctext+transform%3D%22translate%280%2C41.23%29%22+x%3D%227%22+y%3D%224.199999999999999%22+style%3D%22white-space%3Apre%22%3E6%3C%2Ftext%3E%0A++++%3C%2Fg%3E%0A+++%3C%2Fg%3E%0A++%3C%2Fg%3E%0A+%3C%2Fg%3E%0A+%3Cdefs+id%3D%22topdefs-da7f19%22%3E%0A++%3CclipPath+id%3D%22legendda7f19%22%3E%0A+++%3Crect+width%3D%22279%22+height%3D%2229%22%2F%3E%0A++%3C%2FclipPath%3E%0A+%3C%2Fdefs%3E%0A+%3Cg+class%3D%22layer-above%22%2F%3E%0A+%3Cg+class%3D%22infolayer%22%3E%0A++%3Cg+class%3D%22legend%22+transform%3D%22translate%288%2C471%29%22+pointer-events%3D%22all%22%3E%0A+++%3Crect+class%3D%22bg%22+width%3D%22279%22+height%3D%2229%22+fill-opacity%3D%220%22+shape-rendering%3D%22crispEdges%22+stroke-width%3D%220px%22%2F%3E%0A+++%3Cg+class%3D%22scrollbox%22+transform%3D%22%22+clip-path%3D%22url%28%23legendda7f19%29%22%3E%0A++++%3Cg+class%3D%22groups%22%3E%0A+++++%3Cg+class%3D%22traces%22+transform%3D%22translate%280%2C14.5%29%22%3E%0A++++++%3Ctext+class%3D%22legendtext%22+x%3D%2240%22+y%3D%224.680000000000001%22+fill%3D%22rgb%2842%2C+63%2C+95%29%22+font-family%3D%22%27Open+Sans%27%2C+verdana%2C+arial%2C+sans-serif%22+font-size%3D%2212px%22+style%3D%22white-space%3Apre%22%3EParainfluenza+cases%3C%2Ftext%3E%0A++++++%3Cg+class%3D%22layers%22%3E%0A+++++++%3Cg+class%3D%22legendsymbols%22%3E%0A++++++++%3Cg+class%3D%22legendpoints%22%3E%0A+++++++++%3Cpath+class%3D%22legendundefined%22+transform%3D%22translate%2820%29%22+d%3D%22M6%2C6H-6V-6H6Z%22+fill%3D%22%2328a197%22+stroke%3D%22%2328a197%22+stroke-width%3D%221px%22%2F%3E%0A++++++++%3C%2Fg%3E%0A+++++++%3C%2Fg%3E%0A++++++%3C%2Fg%3E%0A++++++%3Crect+class%3D%22legendtoggle%22+y%3D%22-9.5%22+width%3D%22160.86%22+height%3D%2219%22+fill-opacity%3D%220%22%2F%3E%0A+++++%3C%2Fg%3E%0A+++++%3Cg+class%3D%22traces%22+transform%3D%22translate%28163.36+14.5%29%22%3E%0A++++++%3Ctext+class%3D%22legendtext%22+x%3D%2240%22+y%3D%224.680000000000001%22+fill%3D%22rgb%2842%2C+63%2C+95%29%22+font-family%3D%22%27Open+Sans%27%2C+verdana%2C+arial%2C+sans-serif%22+font-size%3D%2212px%22+style%3D%22white-space%3Apre%22%3EhMPV+cases%3C%2Ftext%3E%0A++++++%3Cg+class%3D%22layers%22%3E%0A+++++++%3Cg+class%3D%22legendsymbols%22%3E%0A++++++++%3Cg+class%3D%22legendpoints%22%3E%0A+++++++++%3Cpath+class%3D%22legendundefined%22+transform%3D%22translate%2820%29%22+d%3D%22M6%2C6H-6V-6H6Z%22+fill%3D%22%23f46a25%22+stroke%3D%22%23f46a25%22+stroke-width%3D%221px%22%2F%3E%0A++++++++%3C%2Fg%3E%0A+++++++%3C%2Fg%3E%0A++++++%3C%2Fg%3E%0A++++++%3Crect+class%3D%22legendtoggle%22+y%3D%22-9.5%22+width%3D%22112.98%22+height%3D%2219%22+fill-opacity%3D%220%22%2F%3E%0A+++++%3C%2Fg%3E%0A++++%3C%2Fg%3E%0A+++%3C%2Fg%3E%0A+++%3Crect+class%3D%22scrollbar%22+width%3D%220%22+height%3D%220%22+rx%3D%2220%22+ry%3D%223%22+fill%3D%22%23808ba4%22%2F%3E%0A++%3C%2Fg%3E%0A+%3C%2Fg%3E%0A%3C%2Fsvg%3E%0A",
+  "alt_text": "There are 2 plots on this chart. The horizontal X-axis is labelled 'date'. Whilst the vertical Y-axis is labelled 'metric'. This is plot number 1 on this chart. This is a colour_2_turquoise solid bar plot. The plot has a label of 'Parainfluenza cases'. This plot shows data for Parainfluenza. Specifically the metric 'parainfluenza_testing_positivityByWeek' for the England area, along with the age banding of 'all' for the gender group of all. This plot shows data from 07 November 2022 to 30 October 2023. It fell from 1.82 on 07 November 2022 to 1.08 on 02 January 2023. It rose from 1.08 on 09 January 2023 to 3.71 on 06 March 2023. It fell from 4.66 on 13 March 2023 to 3.99 on 08 May 2023. It fell from 5.44 on 15 May 2023 to 3.25 on 10 July 2023. It fell from 3.94 on 17 July 2023 to 1.17 on 04 September 2023. And finally. It fell from 1.28 on 11 September 2023 to 0.63 on 30 October 2023. This is plot number 2 on this chart. This is a colour_4_orange solid bar plot. The plot has a label of 'hMPV cases'. This plot shows data for hMPV. Specifically the metric 'hMPV_testing_positivityByWeek' for the England area, along with the age banding of 'all' for the gender group of all. This plot shows data from 07 November 2022 to 30 October 2023. It rose from 1.38 on 07 November 2022 to 4.35 on 02 January 2023. It fell from 3.51 on 09 January 2023 to 3.39 on 06 March 2023. It fell from 3.07 on 13 March 2023 to 0.8 on 08 May 2023. It fell from 0.66 on 15 May 2023 to 0.36 on 10 July 2023. It rose from 0.39 on 17 July 2023 to 0.42 on 04 September 2023. And finally. It rose from 0.26 on 11 September 2023 to 1.37 on 30 October 2023. There is no reporting delay period being tracked for the data on this chart.",
+  "figure": {
+    "data": [
+      {
+        "marker": {
+          "color": "rgba(40, 161, 151, 1)",
+          "line": {
+            "color": "rgba(40, 161, 151, 1)",
+            "width": 1
+          }
+        },
+        "name": "Parainfluenza cases",
+        "showlegend": true,
+        "x": [
+          "2022-11-07",
+          "2022-11-14",
+          "2022-11-21",
+          "2022-11-28",
+          "2022-12-05",
+          "2022-12-12",
+          "2022-12-19",
+          "2022-12-26",
+          "2023-01-02",
+          "2023-01-09",
+          "2023-01-16",
+          "2023-01-23",
+          "2023-01-30",
+          "2023-02-06",
+          "2023-02-13",
+          "2023-02-20",
+          "2023-02-27",
+          "2023-03-06",
+          "2023-03-13",
+          "2023-03-20",
+          "2023-03-27",
+          "2023-04-03",
+          "2023-04-10",
+          "2023-04-17",
+          "2023-04-24",
+          "2023-05-01",
+          "2023-05-08",
+          "2023-05-15",
+          "2023-05-22",
+          "2023-05-29",
+          "2023-06-05",
+          "2023-06-12",
+          "2023-06-19",
+          "2023-06-26",
+          "2023-07-03",
+          "2023-07-10",
+          "2023-07-17",
+          "2023-07-24",
+          "2023-07-31",
+          "2023-08-07",
+          "2023-08-14",
+          "2023-08-21",
+          "2023-08-28",
+          "2023-09-04",
+          "2023-09-11",
+          "2023-09-18",
+          "2023-09-25",
+          "2023-10-02",
+          "2023-10-09",
+          "2023-10-16",
+          "2023-10-23",
+          "2023-10-30"
+        ],
+        "y": [
+          1.82, 1.4, 2.17, 1.6, 1.44, 1.59, 1.29, 1.16, 1.08, 1.08, 1.26, 0.99, 1.36, 1.56, 1.81, 2.7, 2.75, 3.71, 4.66,
+          4.69, 6.32, 5.7, 6.4, 6.26, 5.78, 4.92, 3.99, 5.44, 4.92, 4.68, 4.14, 3.4, 3.3, 3.21, 3.1, 3.25, 3.94, 3.79,
+          3.18, 3.01, 2.15, 2.11, 1.33, 1.17, 1.28, 1.23, 1.38, 0.84, 0.85, 1.03, 0.87, 0.63
+        ],
+        "type": "bar"
+      },
+      {
+        "marker": {
+          "color": "rgba(244, 106, 37, 1)",
+          "line": {
+            "color": "rgba(244, 106, 37, 1)",
+            "width": 1
+          }
+        },
+        "name": "hMPV cases",
+        "showlegend": true,
+        "x": [
+          "2022-11-07",
+          "2022-11-14",
+          "2022-11-21",
+          "2022-11-28",
+          "2022-12-05",
+          "2022-12-12",
+          "2022-12-19",
+          "2022-12-26",
+          "2023-01-02",
+          "2023-01-09",
+          "2023-01-16",
+          "2023-01-23",
+          "2023-01-30",
+          "2023-02-06",
+          "2023-02-13",
+          "2023-02-20",
+          "2023-02-27",
+          "2023-03-06",
+          "2023-03-13",
+          "2023-03-20",
+          "2023-03-27",
+          "2023-04-03",
+          "2023-04-10",
+          "2023-04-17",
+          "2023-04-24",
+          "2023-05-01",
+          "2023-05-08",
+          "2023-05-15",
+          "2023-05-22",
+          "2023-05-29",
+          "2023-06-05",
+          "2023-06-12",
+          "2023-06-19",
+          "2023-06-26",
+          "2023-07-03",
+          "2023-07-10",
+          "2023-07-17",
+          "2023-07-24",
+          "2023-07-31",
+          "2023-08-07",
+          "2023-08-14",
+          "2023-08-21",
+          "2023-08-28",
+          "2023-09-04",
+          "2023-09-11",
+          "2023-09-18",
+          "2023-09-25",
+          "2023-10-02",
+          "2023-10-09",
+          "2023-10-16",
+          "2023-10-23",
+          "2023-10-30"
+        ],
+        "y": [
+          1.38, 1.95, 3.26, 3.41, 3.88, 3.67, 5.13, 5.21, 4.35, 3.51, 3.68, 3.41, 3.26, 3.55, 3.48, 3.35, 2.24, 3.39,
+          3.07, 2.64, 1.92, 1.94, 1.98, 0.91, 1.31, 1.04, 0.8, 0.66, 0.78, 1.28, 0.68, 0.3, 0.35, 0.37, 0.18, 0.36,
+          0.39, 0.4, 0.42, 0.29, 0.12, 0.35, 0.37, 0.42, 0.26, 0.29, 0.18, 0.39, 0.69, 0.99, 0.8, 1.37
+        ],
+        "type": "bar"
+      }
+    ],
+    "layout": {
+      "template": {
+        "data": {
+          "histogram2dcontour": [
+            {
+              "type": "histogram2dcontour",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              },
+              "colorscale": [
+                [0, "#0d0887"],
+                [0.1111111111111111, "#46039f"],
+                [0.2222222222222222, "#7201a8"],
+                [0.3333333333333333, "#9c179e"],
+                [0.4444444444444444, "#bd3786"],
+                [0.5555555555555556, "#d8576b"],
+                [0.6666666666666666, "#ed7953"],
+                [0.7777777777777778, "#fb9f3a"],
+                [0.8888888888888888, "#fdca26"],
+                [1, "#f0f921"]
+              ]
+            }
+          ],
+          "choropleth": [
+            {
+              "type": "choropleth",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              }
+            }
+          ],
+          "histogram2d": [
+            {
+              "type": "histogram2d",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              },
+              "colorscale": [
+                [0, "#0d0887"],
+                [0.1111111111111111, "#46039f"],
+                [0.2222222222222222, "#7201a8"],
+                [0.3333333333333333, "#9c179e"],
+                [0.4444444444444444, "#bd3786"],
+                [0.5555555555555556, "#d8576b"],
+                [0.6666666666666666, "#ed7953"],
+                [0.7777777777777778, "#fb9f3a"],
+                [0.8888888888888888, "#fdca26"],
+                [1, "#f0f921"]
+              ]
+            }
+          ],
+          "heatmap": [
+            {
+              "type": "heatmap",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              },
+              "colorscale": [
+                [0, "#0d0887"],
+                [0.1111111111111111, "#46039f"],
+                [0.2222222222222222, "#7201a8"],
+                [0.3333333333333333, "#9c179e"],
+                [0.4444444444444444, "#bd3786"],
+                [0.5555555555555556, "#d8576b"],
+                [0.6666666666666666, "#ed7953"],
+                [0.7777777777777778, "#fb9f3a"],
+                [0.8888888888888888, "#fdca26"],
+                [1, "#f0f921"]
+              ]
+            }
+          ],
+          "heatmapgl": [
+            {
+              "type": "heatmapgl",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              },
+              "colorscale": [
+                [0, "#0d0887"],
+                [0.1111111111111111, "#46039f"],
+                [0.2222222222222222, "#7201a8"],
+                [0.3333333333333333, "#9c179e"],
+                [0.4444444444444444, "#bd3786"],
+                [0.5555555555555556, "#d8576b"],
+                [0.6666666666666666, "#ed7953"],
+                [0.7777777777777778, "#fb9f3a"],
+                [0.8888888888888888, "#fdca26"],
+                [1, "#f0f921"]
+              ]
+            }
+          ],
+          "contourcarpet": [
+            {
+              "type": "contourcarpet",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              }
+            }
+          ],
+          "contour": [
+            {
+              "type": "contour",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              },
+              "colorscale": [
+                [0, "#0d0887"],
+                [0.1111111111111111, "#46039f"],
+                [0.2222222222222222, "#7201a8"],
+                [0.3333333333333333, "#9c179e"],
+                [0.4444444444444444, "#bd3786"],
+                [0.5555555555555556, "#d8576b"],
+                [0.6666666666666666, "#ed7953"],
+                [0.7777777777777778, "#fb9f3a"],
+                [0.8888888888888888, "#fdca26"],
+                [1, "#f0f921"]
+              ]
+            }
+          ],
+          "surface": [
+            {
+              "type": "surface",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              },
+              "colorscale": [
+                [0, "#0d0887"],
+                [0.1111111111111111, "#46039f"],
+                [0.2222222222222222, "#7201a8"],
+                [0.3333333333333333, "#9c179e"],
+                [0.4444444444444444, "#bd3786"],
+                [0.5555555555555556, "#d8576b"],
+                [0.6666666666666666, "#ed7953"],
+                [0.7777777777777778, "#fb9f3a"],
+                [0.8888888888888888, "#fdca26"],
+                [1, "#f0f921"]
+              ]
+            }
+          ],
+          "mesh3d": [
+            {
+              "type": "mesh3d",
+              "colorbar": {
+                "outlinewidth": 0,
+                "ticks": ""
+              }
+            }
+          ],
+          "scatter": [
+            {
+              "fillpattern": {
+                "fillmode": "overlay",
+                "size": 10,
+                "solidity": 0.2
+              },
+              "type": "scatter"
+            }
+          ],
+          "parcoords": [
+            {
+              "type": "parcoords",
+              "line": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "scatterpolargl": [
+            {
+              "type": "scatterpolargl",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "bar": [
+            {
+              "error_x": {
+                "color": "#2a3f5f"
+              },
+              "error_y": {
+                "color": "#2a3f5f"
+              },
+              "marker": {
+                "line": {
+                  "color": "#E5ECF6",
+                  "width": 0.5
+                },
+                "pattern": {
+                  "fillmode": "overlay",
+                  "size": 10,
+                  "solidity": 0.2
+                }
+              },
+              "type": "bar"
+            }
+          ],
+          "scattergeo": [
+            {
+              "type": "scattergeo",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "scatterpolar": [
+            {
+              "type": "scatterpolar",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "histogram": [
+            {
+              "marker": {
+                "pattern": {
+                  "fillmode": "overlay",
+                  "size": 10,
+                  "solidity": 0.2
+                }
+              },
+              "type": "histogram"
+            }
+          ],
+          "scattergl": [
+            {
+              "type": "scattergl",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "scatter3d": [
+            {
+              "type": "scatter3d",
+              "line": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              },
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "scattermapbox": [
+            {
+              "type": "scattermapbox",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "scatterternary": [
+            {
+              "type": "scatterternary",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "scattercarpet": [
+            {
+              "type": "scattercarpet",
+              "marker": {
+                "colorbar": {
+                  "outlinewidth": 0,
+                  "ticks": ""
+                }
+              }
+            }
+          ],
+          "carpet": [
+            {
+              "aaxis": {
+                "endlinecolor": "#2a3f5f",
+                "gridcolor": "white",
+                "linecolor": "white",
+                "minorgridcolor": "white",
+                "startlinecolor": "#2a3f5f"
+              },
+              "baxis": {
+                "endlinecolor": "#2a3f5f",
+                "gridcolor": "white",
+                "linecolor": "white",
+                "minorgridcolor": "white",
+                "startlinecolor": "#2a3f5f"
+              },
+              "type": "carpet"
+            }
+          ],
+          "table": [
+            {
+              "cells": {
+                "fill": {
+                  "color": "#EBF0F8"
+                },
+                "line": {
+                  "color": "white"
+                }
+              },
+              "header": {
+                "fill": {
+                  "color": "#C8D4E3"
+                },
+                "line": {
+                  "color": "white"
+                }
+              },
+              "type": "table"
+            }
+          ],
+          "barpolar": [
+            {
+              "marker": {
+                "line": {
+                  "color": "#E5ECF6",
+                  "width": 0.5
+                },
+                "pattern": {
+                  "fillmode": "overlay",
+                  "size": 10,
+                  "solidity": 0.2
+                }
+              },
+              "type": "barpolar"
+            }
+          ],
+          "pie": [
+            {
+              "automargin": true,
+              "type": "pie"
+            }
+          ]
+        },
+        "layout": {
+          "autotypenumbers": "strict",
+          "colorway": [
+            "#636efa",
+            "#EF553B",
+            "#00cc96",
+            "#ab63fa",
+            "#FFA15A",
+            "#19d3f3",
+            "#FF6692",
+            "#B6E880",
+            "#FF97FF",
+            "#FECB52"
+          ],
+          "font": {
+            "color": "#2a3f5f"
+          },
+          "hovermode": "closest",
+          "hoverlabel": {
+            "align": "left"
+          },
+          "paper_bgcolor": "white",
+          "plot_bgcolor": "#E5ECF6",
+          "polar": {
+            "bgcolor": "#E5ECF6",
+            "angularaxis": {
+              "gridcolor": "white",
+              "linecolor": "white",
+              "ticks": ""
+            },
+            "radialaxis": {
+              "gridcolor": "white",
+              "linecolor": "white",
+              "ticks": ""
+            }
+          },
+          "ternary": {
+            "bgcolor": "#E5ECF6",
+            "aaxis": {
+              "gridcolor": "white",
+              "linecolor": "white",
+              "ticks": ""
+            },
+            "baxis": {
+              "gridcolor": "white",
+              "linecolor": "white",
+              "ticks": ""
+            },
+            "caxis": {
+              "gridcolor": "white",
+              "linecolor": "white",
+              "ticks": ""
+            }
+          },
+          "coloraxis": {
+            "colorbar": {
+              "outlinewidth": 0,
+              "ticks": ""
+            }
+          },
+          "colorscale": {
+            "sequential": [
+              [0, "#0d0887"],
+              [0.1111111111111111, "#46039f"],
+              [0.2222222222222222, "#7201a8"],
+              [0.3333333333333333, "#9c179e"],
+              [0.4444444444444444, "#bd3786"],
+              [0.5555555555555556, "#d8576b"],
+              [0.6666666666666666, "#ed7953"],
+              [0.7777777777777778, "#fb9f3a"],
+              [0.8888888888888888, "#fdca26"],
+              [1, "#f0f921"]
+            ],
+            "sequentialminus": [
+              [0, "#0d0887"],
+              [0.1111111111111111, "#46039f"],
+              [0.2222222222222222, "#7201a8"],
+              [0.3333333333333333, "#9c179e"],
+              [0.4444444444444444, "#bd3786"],
+              [0.5555555555555556, "#d8576b"],
+              [0.6666666666666666, "#ed7953"],
+              [0.7777777777777778, "#fb9f3a"],
+              [0.8888888888888888, "#fdca26"],
+              [1, "#f0f921"]
+            ],
+            "diverging": [
+              [0, "#8e0152"],
+              [0.1, "#c51b7d"],
+              [0.2, "#de77ae"],
+              [0.3, "#f1b6da"],
+              [0.4, "#fde0ef"],
+              [0.5, "#f7f7f7"],
+              [0.6, "#e6f5d0"],
+              [0.7, "#b8e186"],
+              [0.8, "#7fbc41"],
+              [0.9, "#4d9221"],
+              [1, "#276419"]
+            ]
+          },
+          "xaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": "",
+            "title": {
+              "standoff": 15
+            },
+            "zerolinecolor": "white",
+            "automargin": true,
+            "zerolinewidth": 2
+          },
+          "yaxis": {
+            "gridcolor": "white",
+            "linecolor": "white",
+            "ticks": "",
+            "title": {
+              "standoff": 15
+            },
+            "zerolinecolor": "white",
+            "automargin": true,
+            "zerolinewidth": 2
+          },
+          "scene": {
+            "xaxis": {
+              "backgroundcolor": "#E5ECF6",
+              "gridcolor": "white",
+              "linecolor": "white",
+              "showbackground": true,
+              "ticks": "",
+              "zerolinecolor": "white",
+              "gridwidth": 2
+            },
+            "yaxis": {
+              "backgroundcolor": "#E5ECF6",
+              "gridcolor": "white",
+              "linecolor": "white",
+              "showbackground": true,
+              "ticks": "",
+              "zerolinecolor": "white",
+              "gridwidth": 2
+            },
+            "zaxis": {
+              "backgroundcolor": "#E5ECF6",
+              "gridcolor": "white",
+              "linecolor": "white",
+              "showbackground": true,
+              "ticks": "",
+              "zerolinecolor": "white",
+              "gridwidth": 2
+            }
+          },
+          "shapedefaults": {
+            "line": {
+              "color": "#2a3f5f"
+            }
+          },
+          "annotationdefaults": {
+            "arrowcolor": "#2a3f5f",
+            "arrowhead": 0,
+            "arrowwidth": 1
+          },
+          "geo": {
+            "bgcolor": "white",
+            "landcolor": "#E5ECF6",
+            "subunitcolor": "white",
+            "showland": true,
+            "showlakes": true,
+            "lakecolor": "white"
+          },
+          "title": {
+            "x": 0.05
+          },
+          "mapbox": {
+            "style": "light"
+          }
+        }
+      },
+      "margin": {
+        "l": 0,
+        "r": 0,
+        "b": 0,
+        "t": 0
+      },
+      "xaxis": {
+        "tickfont": {
+          "family": "Arial",
+          "color": "rgba(107, 114, 118, 1)"
+        },
+        "showgrid": false,
+        "zeroline": false,
+        "showline": false,
+        "ticks": "outside",
+        "tickson": "boundaries",
+        "type": "date",
+        "dtick": "M1",
+        "tickformat": "%b %Y",
+        "range": ["2022-11-07", "2023-10-31"]
+      },
+      "yaxis": {
+        "tickfont": {
+          "family": "Arial",
+          "color": "rgba(107, 114, 118, 1)"
+        },
+        "showgrid": false,
+        "showticklabels": true
+      },
+      "legend": {
+        "orientation": "h",
+        "y": -0.25,
+        "x": 0
+      },
+      "paper_bgcolor": "rgba(0, 0, 0, 0)",
+      "plot_bgcolor": "rgba(0, 0, 0, 0)",
+      "showlegend": true,
+      "barmode": "group"
+    }
+  }
+}

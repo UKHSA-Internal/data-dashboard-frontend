@@ -9,6 +9,7 @@ import { clsx } from '@/lib/clsx'
 
 import { ChartRowCard } from '../ChartRowCard/ChartRowCard'
 import { Trend } from '../Trend/v2/Trend'
+import { PlotlyChart } from './PlotlyChart'
 
 export default async function HomePage() {
   const { enabled: heroEnabled } = await getFeatureFlag(flags.landingPageHero)
@@ -19,6 +20,9 @@ export default async function HomePage() {
 
   return (
     <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
+      <PlotlyChart />
+      <br />
+
       {newLandingContentEnabled ? (
         /**
          * New landing page UI for Health topics.
