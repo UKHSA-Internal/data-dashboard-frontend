@@ -2,16 +2,31 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { PageSection, PageSectionWithContents, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import {
+  PageSection,
+  PageSectionWithContents,
+  RelatedLink as RelatedLinkV1,
+  RelatedLinks as RelatedLinksV1,
+  View,
+} from '@/app/components/ui/ukhsa'
+import { flags } from '@/app/constants/flags.constants'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCard } from '@/app/utils/cms.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
+
+import {
+  RelatedLink as RelatedLinkV2,
+  RelatedLinks as RelatedLinksV2,
+} from '../../ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 
 export default async function TopicPage({
   slug,
   searchParams: { areaName, areaType },
 }: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
   const { t } = await getServerTranslation('common')
+
+  const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
 
   const {
     title,
@@ -47,13 +62,24 @@ export default async function TopicPage({
           </PageSection>
         ))}
       </PageSectionWithContents>
-      <RelatedLinks variant="footer">
-        {relatedLinks.map(({ title, body, url, id }) => (
-          <RelatedLink key={id} url={url} title={title}>
-            {body}
-          </RelatedLink>
-        ))}
-      </RelatedLinks>
+
+      {newLandingContentEnabled ? (
+        <RelatedLinksV2 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV2 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV2>
+          ))}
+        </RelatedLinksV2>
+      ) : (
+        <RelatedLinksV1 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV1 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV1>
+          ))}
+        </RelatedLinksV1>
+      )}
     </View>
   )
 }

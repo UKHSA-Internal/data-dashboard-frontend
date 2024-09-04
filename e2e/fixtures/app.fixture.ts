@@ -339,7 +339,7 @@ export class App {
   }
 
   async hasRelatedLinks() {
-    await expect(this.page.getByRole('heading', { name: 'Related Links', level: 2 })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: 'Related content', level: 2 })).toBeVisible()
 
     for (const link of relatedLinksMock) {
       await expect(this.page.getByRole('link', { name: link.title })).toHaveAttribute('href', link.url)

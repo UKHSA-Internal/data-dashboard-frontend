@@ -58,7 +58,7 @@ export class WeatherHealthAlertsParentPage {
   }
 
   async hasRelatedLinks() {
-    await expect(this.page.getByRole('heading', { name: /Related links/, level: 2 })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: /Related content/, level: 2 })).toBeVisible()
     await expect(
       this.page.getByRole('link', { name: 'Cold weather and Health: supporting vulnerable people' })
     ).toHaveAttribute(
