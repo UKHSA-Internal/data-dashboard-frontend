@@ -4,10 +4,11 @@ import Link from 'next/link'
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
+import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 import AlertList from './AlertList'
@@ -110,7 +111,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
         <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
           <RelatedLinks variant="sidebar">
             {relatedLinks.map(({ title, url, id }) => (
-              <RelatedLink key={id} title={title} url={url} />
+              <RelatedSidebarLink key={id} title={title} url={url} />
             ))}
           </RelatedLinks>
         </div>

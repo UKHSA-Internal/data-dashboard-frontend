@@ -1,10 +1,11 @@
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
+import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export const dynamic = 'force-dynamic'
@@ -68,7 +69,7 @@ export default async function WeatherHealthAlerts() {
         <div className="govuk-grid-column-one-third-from-desktop govuk-!-margin-top-6 sticky top-2">
           <RelatedLinks variant="sidebar">
             {relatedLinks.map(({ title, url, id }) => (
-              <RelatedLink key={id} title={title} url={url} />
+              <RelatedSidebarLink key={id} title={title} url={url} />
             ))}
           </RelatedLinks>
         </div>

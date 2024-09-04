@@ -1,6 +1,6 @@
 import Link from 'next/link'
 
-import { Card, RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { Card, RelatedLink as RelatedLinkV1, RelatedLinks as RelatedLinksV1, View } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
 import { getHomePage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
@@ -174,13 +174,16 @@ export default async function HomePage() {
       ) : (
         <>{body.map(renderSection)}</>
       )}
-      <RelatedLinks variant="footer">
-        {relatedLinks.map(({ title, body, url, id }) => (
-          <RelatedLink key={id} url={url} title={title}>
-            {body}
-          </RelatedLink>
-        ))}
-      </RelatedLinks>
+
+      {newLandingContentEnabled ? null : (
+        <RelatedLinksV1 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV1 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV1>
+          ))}
+        </RelatedLinksV1>
+      )}
     </View>
   )
 }
