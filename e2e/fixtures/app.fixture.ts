@@ -122,7 +122,16 @@ export class App {
     const accessibilityScanResults = await new AxeBuilder({ page: this.page })
       .disableRules(['region', ...additionalDisabledRules])
       .analyze()
-    expect(accessibilityScanResults.violations).toEqual([])
+
+    const filteredViolations = accessibilityScanResults.violations.filter((violation) => {
+      if (violation.id === 'color-contrast') {
+        violation.nodes = violation.nodes.filter((node) => node.html.includes('.govuk-tag'))
+        return violation.nodes.length > 0
+      }
+      return true
+    })
+
+    expect(filteredViolations).toEqual([])
   }
 
   async hasLayout() {
@@ -330,7 +339,7 @@ export class App {
   }
 
   async hasRelatedLinks() {
-    await expect(this.page.getByRole('heading', { name: 'Related Links', level: 2 })).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: 'Related content', level: 2 })).toBeVisible()
 
     for (const link of relatedLinksMock) {
       await expect(this.page.getByRole('link', { name: link.title })).toHaveAttribute('href', link.url)

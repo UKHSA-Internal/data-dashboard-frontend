@@ -6,6 +6,7 @@ import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
   file_format: z.enum(['json', 'csv']),
+  x_axis: z.enum(['age', 'geography', 'sex', 'stratum', 'date', 'metric']).optional().nullable(),
   plots: z.array(
     z.object({
       topic: Topics,
@@ -23,10 +24,15 @@ export const requestSchema = z.object({
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getDownloads = async (plots: RequestParams['plots'], format: RequestParams['file_format'] = 'csv') => {
+export const getDownloads = async (
+  plots: RequestParams['plots'],
+  format: RequestParams['file_format'] = 'csv',
+  x_axis: RequestParams['x_axis'] = null
+) => {
   try {
     const body: RequestParams = {
       plots,
+      x_axis,
       file_format: format,
     }
     const { data } = await client<string>(`downloads/v2`, { body })

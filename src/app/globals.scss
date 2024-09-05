@@ -80,7 +80,7 @@ $govuk-page-width: 1400px;
   --colour-turquoise: #{govuk-colour('turquoise')};
 
   // Govuk greys
-  --colour-grey-1: #6f777b;
+  --colour-grey-1: #6b7376;
   --colour-grey-2: #bfc1c3;
   --colour-grey-3: #f3f2f1;
   --colour-grey-4: #f8f8f8;
@@ -114,11 +114,17 @@ $govuk-page-width: 1400px;
   --colour-orange-opaque: #fcdecf;
   --colour-red-opaque: #f5cfc9;
 
-  --colour-offwhite: #bcd3e9;
+  --colour-offwhite: #c1d7eb;
 
   // UKHSA delay period colours
   --colour-delay-blue: #0090c6;
   --colour-delay-blue-opaque: #d2e9f1;
+
+  // UKHSA New Landing Page
+  --colour-chart-background: #f7f7f7;
+  --colour-chart-background-hover: #edf5ff;
+  --colour-red-dark: #ab2b17;
+  --colour-green-dark: #00703c;
 }
 
 .ukhsa-chevron {

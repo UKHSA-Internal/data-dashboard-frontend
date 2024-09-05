@@ -40,8 +40,10 @@ module.exports = {
       },
       offwhite: 'var(--colour-offwhite)',
       red: 'var(--colour-red)',
+      'red-dark': 'var(--colour-red-dark)',
       yellow: 'var(--colour-yellow)',
       green: 'var(--colour-green)',
+      'green-dark': 'var(--colour-green-dark)',
       blue: 'var(--colour-blue)',
       'dark-blue': 'var(--colour-dark-blue)',
       'light-blue': 'var(--colour-light-blue)',
@@ -72,6 +74,10 @@ module.exports = {
         arrow_up_red: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='none'%3E%3Cpath stroke='%23AA2A16' stroke-width='2' d='M6.864 14.364v-12M7.071 1.707.707 8.071M7.207 2.293l6.364 6.364'/%3E%3Cpath stroke='%23AA2A16' stroke-width='1.02' d='m6.485.881 2.121 2.122'/%3E%3C/svg%3E")`,
         arrow_down_green: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='14' fill='none'%3E%3Cpath stroke='%23005A30' stroke-width='2' d='M8 0v12M7.793 12.657l6.364-6.364M7.657 12.071 1.293 5.707'/%3E%3Cpath stroke='%23005A30' stroke-width='1.02' d='m8.379 13.483-2.121-2.122'/%3E%3C/svg%3E")`,
         arrow_down_red: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='14' fill='none'%3E%3Cpath stroke='%23AA2A16' stroke-width='2' d='M8 0v12M7.793 12.657l6.364-6.364M7.657 12.071 1.293 5.707'/%3E%3Cpath stroke='%23AA2A16' stroke-width='1.02' d='m8.379 13.483-2.121-2.122'/%3E%3C/svg%3E")`,
+        alt_arrow_up_green: `url("data:image/svg+xml,%3Csvg width='19' height='18' viewBox='0 0 19 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 18.5L9.87201 1.60558M17.9331 9.85048L9.87201 1.60758L1.63867 10.6095' stroke='%2300703C' stroke-width='2'/%3E%3C/svg%3E%0A")`,
+        alt_arrow_up_red: `url("data:image/svg+xml,%3Csvg width='19' height='18' viewBox='0 0 19 18' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M10 18.5L9.87201 1.60558M17.9331 9.85048L9.87201 1.60758L1.63867 10.6095' stroke='%23AB2B17' stroke-width='2'/%3E%3C/svg%3E%0A")`,
+        alt_arrow_down_green: `url("data:image/svg+xml,%3Csvg width='19' height='19' viewBox='0 0 19 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.93359 0.46875L9.06159 17.3632M1.00052 9.11827L9.06159 17.3612L17.2949 8.35926' stroke='%2300703C' stroke-width='2'/%3E%3C/svg%3E%0A")`,
+        alt_arrow_down_red: `url("data:image/svg+xml,%3Csvg width='19' height='19' viewBox='0 0 19 19' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M8.93359 0.46875L9.06159 17.3632M1.00052 9.11827L9.06159 17.3612L17.2949 8.35926' stroke='%23AA2A16' stroke-width='2'/%3E%3C/svg%3E%0A")`,
         back_to_top: `url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='15' height='15' fill='none'%3E%3Cpath stroke='%231D70B8' stroke-width='2' d='M6.864 14.364v-12m.207-.657L.707 8.071m6.5-5.778 6.364 6.364'/%3E%3Cpath stroke='%231D70B8' stroke-width='1.02' d='m6.485.881 2.121 2.122'/%3E%3C/svg%3E")`,
         dash: `url("data:image/svg+xml,%3Csvg class='nhsuk-icon nhsuk-icon__emdash' xmlns='http://www.w3.org/2000/svg' fill='%23aeb7bd' width='19' height='1' aria-hidden='true'%3E%3Cpath d='M0 0h19v1H0z'%3E%3C/path%3E%3C/svg%3E")`,
         download: `url("data:image/svg+xml,%3Csvg width='16' height='16' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath fill='%23ffffff' d='M7 0h2v11H7zM0 16v-2h16v2z'/%3E%3Cpath fill='%23ffffff' d='M8.414 12.11 7 10.698 11.696 6l1.414 1.414z'/%3E%3Cpath fill='%23ffffff' d='M9 11H7V1h2z'/%3E%3Cpath fill='%23ffffff' d='M3 7.414 4.414 6l4.696 4.696-1.414 1.414z'/%3E%3Cpath fill='%23ffffff' d='M7.168 11.574 7.742 11l.889.889-.574.574z'/%3E%3C/svg%3E")`,
@@ -97,6 +103,9 @@ module.exports = {
       addUtilities({
         // UKHSA Focus utility
         '.ukhsa-focus': {
+          '&:focus': {
+            'box-shadow': 'none',
+          },
           '&:focus:after': {
             '@apply absolute inset-[5px] pointer-events-none z-[1000] content-[""]': {},
             'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0`,

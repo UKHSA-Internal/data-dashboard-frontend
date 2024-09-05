@@ -1,14 +1,15 @@
 import clsx from 'clsx'
-import { ElementType, ReactNode } from 'react'
+import { ReactNode } from 'react'
 
-interface CardProps<Element> {
-  as?: Element
+import { AsChildProps, Slot } from '../Slot/Slot'
+
+type CardProps = AsChildProps<React.HTMLAttributes<HTMLElement>> & {
   children: ReactNode
   className?: string
 }
 
-export function Card<Element extends ElementType = 'div'>({ as, children, className, ...props }: CardProps<Element>) {
-  const Component = as ?? 'div'
+export function Card({ asChild, children, className, ...props }: CardProps) {
+  const Component = asChild ? Slot : 'div'
   return (
     <Component className={clsx('govuk-!-padding-4 bg-grey-3', className)} {...props}>
       {children}

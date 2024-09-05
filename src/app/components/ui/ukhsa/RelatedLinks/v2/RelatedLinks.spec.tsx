@@ -40,6 +40,9 @@ describe('Related links footer variant', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Related content', level: 2 })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Learn more about UKHSA data dashboard topics', level: 3 })
+    ).toBeInTheDocument()
 
     const listItems = screen.getAllByRole('listitem')
 
@@ -129,6 +132,9 @@ describe('Related links sidebar variant', () => {
     )
 
     expect(screen.getByRole('heading', { name: 'Related content', level: 2 })).toBeInTheDocument()
+    expect(
+      screen.getByRole('heading', { name: 'Learn more about UKHSA data dashboard topics', level: 3 })
+    ).toBeInTheDocument()
 
     const listItems = screen.getAllByRole('listitem')
 

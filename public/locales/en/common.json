@@ -13,7 +13,7 @@
   "downloadingBtn": "Downloading...",
   "returnToHomeBtn": "Return to home page",
   "contentsHeading": "Contents",
-  "relatedLinksHeading": "Related links",
+  "relatedLinksHeading": "Related content",
   "backToTop": "Back to top",
   "welcome": "Welcome",
   "pageTitle": "{{title}}",
@@ -39,7 +39,19 @@
         "alt_green_down": "There has been a decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
         "alt_red_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
         "alt_red_down": "There has been an decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
-        "alt_neutral_neutral": "There has been no change compared to the previous 7 days."
+        "alt_neutral_neutral": "There has been no change compared to the previous 7 days.",
+        "v2": {
+          "value": {
+            "percentage": "{{percentage, number}}",
+            "symbol": "%",
+            "change": "{{change}}"
+          },
+          "alt_green_up": "Increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_green_down": "Decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_red_up": "Increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_red_down": "Decrease of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
+          "alt_neutral_neutral": "There has been no change compared to the previous 7 days."
+        }
       },
       "timestamp": {
         "value": "Up to and including {{value, dateShort}}"
@@ -48,14 +60,18 @@
         "toggle": "View data in a tabular format",
         "header": "Date",
         "header_age": "Age",
+        "header_geography": "Geography",
+        "header_sex": "Sex",
         "header_stratum": "Stratum",
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
         "row": "{{value, dateShortest}}",
         "row_plot": "{{value, number}}",
         "row_plot_null": "-",
-        "row_stratum": "{{value}}",
         "row_age": "{{value}}",
+        "row_geography": "{{value}}",
+        "row_sex": "{{value}}",
+        "row_stratum": "{{value}}",
         "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}",
         "timestamp": "Up to and including {{timestamp, dateShort}}"
       },

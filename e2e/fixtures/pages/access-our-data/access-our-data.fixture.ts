@@ -59,7 +59,7 @@ export class AccessOurDataPage {
   }
 
   async hasRelatedLinks() {
-    await expect(this.page.getByRole('heading', { level: 2, name: /Related links/ })).toBeVisible()
+    await expect(this.page.getByRole('heading', { level: 2, name: /Related content/ })).toBeVisible()
     await expect(
       this.page.getByRole('link', { name: 'View swagger documentation (opens in a new window)' })
     ).toBeVisible()

@@ -10,6 +10,9 @@ test.describe('Weather health alerts map display', () => {
     await test.step('dialog is open', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
     await test.step('has all buttons', async () => {
       await weatherHealthAlertsMapPage.hasMapButtons()
     })
@@ -24,6 +27,9 @@ test.describe('Weather health alerts map display', () => {
     })
     await test.step('dialog is open', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
     await test.step('exit map', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Exit map')
@@ -41,6 +47,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
     await test.step('click copyright button', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Copyright information')
@@ -69,6 +78,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('map overlay is open', async () => {
       await weatherHealthAlertsMapPage.hasMapButtons()
     })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
     await test.step('open copyright modal with keyboard', async () => {
       await weatherHealthAlertsMapPage.openCopyrightWithKeyboard()
     })
@@ -93,6 +105,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
     })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
     await test.step('shows all regions initially', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
@@ -116,6 +131,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
     await test.step('map is displaying', async () => {
       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
     await test.step('shows all regions initially', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
@@ -148,6 +166,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
     await test.step('map overlay is open', async () => {
       await weatherHealthAlertsMapPage.hasMapButtons()
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
     await test.step('shows all regions initially', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
@@ -630,9 +651,20 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
 
   test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
-    await test.step('opens cold health alerts overlay', async () => {
+    await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('open the map', async () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
+    })
+    await test.step('check map dialog has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapDialog()
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('check interactive map has choropleth layer', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit map')
@@ -644,9 +676,20 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
   test.use({ viewport: viewports.tablet })
 
   test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
-    await test.step('opens cold health alerts overlay', async () => {
+    await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('open the map', async () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
+    })
+    await test.step('check map dialog has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapDialog()
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('check interactive map has choropleth layer', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit map')
@@ -658,11 +701,22 @@ test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
   test.use({ viewport: viewports.mobile })
 
   test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
-    await test.step('opens cold health alerts overlay', async () => {
+    await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
+    })
+    await test.step('open the map', async () => {
       await weatherHealthAlertsMapPage.openWeatherHealthAlertsMap()
     })
-    await test.step('shows map buttons', async () => {
+    await test.step('check map dialog has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapDialog()
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('check interactive map has choropleth layer', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('shows exit button', async () => {
       await weatherHealthAlertsMapPage.hasButton('Exit map')
     })
   })

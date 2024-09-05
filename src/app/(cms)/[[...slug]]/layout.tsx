@@ -9,6 +9,7 @@ import { Announcement } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { LayoutSideNav } from '@/app/components/ui/ukhsa/Layout/LayoutSideNav'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
+import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { flags } from '@/app/constants/flags.constants'
@@ -97,18 +98,17 @@ export default async function Layout({ children, params }: LayoutProps) {
 
       {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
 
-      <div className="govuk-width-container print:hidden">
-        <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
-          <p className="govuk-phase-banner__content">
-            <strong className="govuk-tag govuk-phase-banner__content__tag">{t('feedbackBannerPhase')}</strong>
+      {!onHomePage ? (
+        <div className="govuk-width-container print:hidden">
+          <PhaseBanner tag={t('feedbackBannerPhase')}>
             <Trans i18nKey="feedbackBanner" t={t}>
               <span className="govuk-phase-banner__text">
                 <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />
               </span>
             </Trans>
-          </p>
+          </PhaseBanner>
         </div>
-      </div>
+      ) : null}
 
       {globalBanner ? (
         <div className="govuk-width-container">
