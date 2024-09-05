@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToMegaMenu } from '@/api/requests/menus/helpers'
 import { RichText } from '@/app/components/cms'
+import { isWellKnownEnvironment } from '@/app/utils/app.utils'
 
 interface MegaMenuProps {
   className?: string
@@ -20,12 +21,19 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
 
   const activeMenu = transformMenuSnippetToMegaMenu(menu)
 
+  const switchBoardLink = {
+    slug: '/switchboard',
+    title: 'Switchboard',
+    description: 'Front-end environment settings',
+  }
+
   return (
     <div className={clsx(className)}>
       {activeMenu.map((columns, rowIndex) => {
         return (
           <div key={rowIndex} data-testid={`mega-menu-row-${rowIndex}`} className="govuk-grid-row">
             {columns.map((column, columnIndex) => {
+              const isLastColumn = columnIndex === columns.length - 1
               return (
                 <div
                   key={columnIndex}
@@ -65,6 +73,25 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                         ) : null}
                       </li>
                     ))}
+                    {/* Hardcoded switchboard link */}
+                    {isLastColumn && !isWellKnownEnvironment() && (
+                      <>
+                        <li
+                          key={switchBoardLink.slug}
+                          className="govuk-!-padding-right-5 govuk-body-s govuk-!-padding-top-5 relative border-t border-grey-2 md:w-4/6"
+                        >
+                          <Link
+                            href={switchBoardLink.slug}
+                            className={`font-bold after:absolute after:inset-0 after:bg-none after:content-[""]`}
+                          >
+                            {switchBoardLink.title}
+                          </Link>
+                          <p className="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-0">
+                            {switchBoardLink.description}
+                          </p>
+                        </li>
+                      </>
+                    )}
                   </ul>
                 </div>
               )
