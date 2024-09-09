@@ -360,7 +360,9 @@ export class HomePage {
     const section = this.page.getByRole('region', { name: 'Weather health alerts' })
     const card = section.getByRole('link', { name })
     const map = card.getByRole('application', { name: 'Map of weather health alerts' })
+    await expect(map).toBeVisible()
     const region = map.getByTestId(`feature-${regionId}`)
+    await expect(region).toBeVisible()
     await region.click()
   }
 }
