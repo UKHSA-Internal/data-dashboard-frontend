@@ -44,7 +44,7 @@ export default async function WeatherHealthAlerts() {
       <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
 
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-two-thirds-from-desktop">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">
             <hr
               className="govuk-section-break govuk-section-break--l govuk-section-break--visible"
@@ -66,7 +66,7 @@ export default async function WeatherHealthAlerts() {
           </div>
         </div>
 
-        <div className="govuk-grid-column-one-third-from-desktop govuk-!-margin-top-6 sticky top-2">
+        <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
           <RelatedLinks variant="sidebar">
             {relatedLinks.map(({ title, url, id }) => (
               <RelatedSidebarLink key={id} title={title} url={url} />
