@@ -1,7 +1,9 @@
+import { viewports } from 'e2e/constants/viewports.constants'
+
 import { test } from '../../fixtures/app.fixture'
 
 test.describe('Landing page new card design feature flags enabled', () => {
-  test.describe('Home page', () => {
+  test.describe('Layout', () => {
     test.beforeEach(async ({ switchboardPage, homePage }) => {
       await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
       await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
@@ -31,8 +33,16 @@ test.describe('Landing page new card design feature flags enabled', () => {
         await app.hasBackToTop()
       })
     })
+  })
 
-    test('Health topics', async ({ homePage }) => {
+  test.describe('Health Topics', () => {
+    test.beforeEach(async ({ switchboardPage, homePage }) => {
+      await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
+      await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
+      await homePage.goto()
+    })
+
+    test('Cards', async ({ homePage }) => {
       await test.step('displays a total of 3 health topic cards', async () => {
         await homePage.hasHealthTopicColumns(['COVID-19', 'Influenza', 'Measles'])
       })
@@ -58,45 +68,80 @@ test.describe('Landing page new card design feature flags enabled', () => {
         })
       })
     })
+  })
 
-    test('Weather health alerts @desktopOnly @tabletOnly', async ({ homePage }) => {
-      await test.step('displays a Weather Health Alerts card', async () => {
-        await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England' })
+  test.describe('Weather health alerts', () => {
+    test.describe('Desktop @desktopOnly', () => {
+      test.use({ viewport: viewports.desktop })
+
+      test.beforeEach(async ({ switchboardPage, homePage }) => {
+        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
+        await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
+        await homePage.goto()
+      })
+
+      test('Card', async ({ homePage }) => {
+        await test.step('displays a Weather Health Alerts card', async () => {
+          await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
+        })
+      })
+
+      test('Open map after clicking a minimap region', async ({ homePage, weatherHealthAlertsMapPage }) => {
+        await test.step('click minimap card', async () => {
+          await homePage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+        })
+        await test.step('shows map', async () => {
+          await weatherHealthAlertsMapPage.hasMapDialog()
+          await weatherHealthAlertsMapPage.hasMapLeaflet()
+        })
+        await test.step('shows regional alert', async () => {
+          await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
+        })
       })
     })
 
-    test('Weather health alerts on mobile @mobileOnly', async ({ homePage }) => {
-      await test.step('displays a Weather Health Alerts card', async () => {
-        await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: false })
+    test.describe('Tablet @tabletOnly', () => {
+      test.use({ viewport: viewports.tablet })
+
+      test.beforeEach(async ({ switchboardPage, homePage }) => {
+        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
+        await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
+        await homePage.goto()
+      })
+
+      test('Card', async ({ homePage }) => {
+        await test.step('displays a Weather Health Alerts card', async () => {
+          await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
+        })
+      })
+
+      test('Open map after clicking a minimap region', async ({ homePage, weatherHealthAlertsMapPage }) => {
+        await test.step('click minimap card', async () => {
+          await homePage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+        })
+        await test.step('shows map', async () => {
+          await weatherHealthAlertsMapPage.hasMapDialog()
+          await weatherHealthAlertsMapPage.hasMapLeaflet()
+        })
+        await test.step('shows regional alert', async () => {
+          await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
+        })
       })
     })
 
-    test('Weather health alerts - open map after clicking the card', async ({
-      homePage,
-      weatherHealthAlertsMapPage,
-    }) => {
-      await test.step('click minimap card', async () => {
-        await homePage.clickMinimapCard('Heat health alerts')
-      })
-      await test.step('shows map', async () => {
-        await weatherHealthAlertsMapPage.hasMapDialog()
-        await weatherHealthAlertsMapPage.hasMapLeaflet()
-      })
-    })
+    test.describe('Mobile @mobileOnly', () => {
+      test.use({ viewport: viewports.mobile })
 
-    test('Weather health alerts - open map after clicking a minimap region @tabletOnly @desktopOnly', async ({
-      homePage,
-      weatherHealthAlertsMapPage,
-    }) => {
-      await test.step('click minimap card', async () => {
-        await homePage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+      test.beforeEach(async ({ switchboardPage, homePage }) => {
+        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
+        await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
+        await homePage.goto()
       })
-      await test.step('shows map', async () => {
-        await weatherHealthAlertsMapPage.hasMapDialog()
-        await weatherHealthAlertsMapPage.hasMapLeaflet()
-      })
-      await test.step('shows regional alert', async () => {
-        await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
+
+      test('Card', async ({ homePage }) => {
+        await test.step('displays a Weather Health Alerts card', async () => {
+          await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: false })
+        })
       })
     })
   })

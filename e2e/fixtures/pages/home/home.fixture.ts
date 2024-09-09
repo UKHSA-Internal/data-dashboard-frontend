@@ -329,7 +329,7 @@ export class HomePage {
     await expect(card.getByText(trendDescription, { exact: true })).toBeVisible()
   }
 
-  async hasWeatherHealthAlertsCard(name: string, { tagline, map }: { tagline: string; map?: boolean }) {
+  async hasWeatherHealthAlertsCard(name: string, { tagline, map = true }: { tagline: string; map?: boolean }) {
     const section = this.page.getByRole('region', { name: 'Weather health alerts' })
     const card = section.getByRole('link', { name })
 
