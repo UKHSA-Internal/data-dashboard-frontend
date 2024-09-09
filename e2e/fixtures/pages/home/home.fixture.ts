@@ -329,7 +329,7 @@ export class HomePage {
     await expect(card.getByText(trendDescription, { exact: true })).toBeVisible()
   }
 
-  async hasWeatherHealthAlertsCard(name: string, { tagline }: { tagline: string }) {
+  async hasWeatherHealthAlertsCard(name: string, { tagline, map }: { tagline: string; map?: boolean }) {
     const section = this.page.getByRole('region', { name: 'Weather health alerts' })
     const card = section.getByRole('link', { name })
 
@@ -337,7 +337,12 @@ export class HomePage {
     await expect(card).toBeVisible()
     await expect(card.getByRole('heading', { name, level: 3 })).toBeVisible()
     await expect(card.getByText(tagline)).toBeVisible()
-    await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeVisible()
+
+    if (map) {
+      await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeVisible()
+    } else {
+      await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeHidden()
+    }
 
     const regions = this.page.getByRole('list', { name: 'Weather health alerts by region' })
     await expect(regions).toBeVisible()

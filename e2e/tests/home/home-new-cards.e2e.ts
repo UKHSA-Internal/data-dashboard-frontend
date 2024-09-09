@@ -59,9 +59,15 @@ test.describe('Landing page new card design feature flags enabled', () => {
       })
     })
 
-    test('Weather health alerts', async ({ homePage }) => {
+    test('Weather health alerts @desktopOnly @tabletOnly', async ({ homePage }) => {
       await test.step('displays a Weather Health Alerts card', async () => {
         await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England' })
+      })
+    })
+
+    test('Weather health alerts on mobile @mobileOnly', async ({ homePage }) => {
+      await test.step('displays a Weather Health Alerts card', async () => {
+        await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: false })
       })
     })
 
@@ -78,7 +84,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
       })
     })
 
-    test('Weather health alerts - open map after clicking a minimap region', async ({
+    test('Weather health alerts - open map after clicking a minimap region @tabletOnly @desktopOnly', async ({
       homePage,
       weatherHealthAlertsMapPage,
     }) => {
