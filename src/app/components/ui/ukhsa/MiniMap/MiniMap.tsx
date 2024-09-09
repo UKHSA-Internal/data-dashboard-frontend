@@ -49,31 +49,38 @@ interface MapRegionProps {
   id: string
   status: HealthAlertStatus
   isHovered: boolean
+  isAnyHovered: boolean
   onMouseEnter: () => void
   onMouseLeave: () => void
   onClick: (event: React.MouseEvent | React.KeyboardEvent) => void
 }
 
-const MapRegion = memo(({ id, status, isHovered, onMouseEnter, onMouseLeave, onClick }: MapRegionProps) => (
-  <>
-    <mask id={`mask-${id}`} fill="#000" maskUnits="userSpaceOnUse">
-      <path fill="#fff" d={regionPaths[id]} />
-    </mask>
-    <path
-      style={{
-        fill: isHovered || !alert ? getCssVariableFromColour(status ?? 'Green') : 'var(--colour-offwhite)',
-      }}
-      className={clsx('pointer-events-auto transition-all duration-150')}
-      data-testid={`feature-${id}`}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
-      onClick={onClick}
-      onKeyDown={onClick}
-      d={regionPaths[id]}
-    />
-    <path stroke="var(--colour-white)" d={regionPaths[id]} mask={`url(#mask-${id})`} />
-  </>
-))
+const MapRegion = memo(
+  ({ id, isHovered, isAnyHovered, status, onMouseEnter, onMouseLeave, onClick }: MapRegionProps) => {
+    const fillColor = isAnyHovered && !isHovered ? 'var(--colour-offwhite)' : getCssVariableFromColour(status)
+
+    return (
+      <>
+        <mask id={`mask-${id}`} fill="#000" maskUnits="userSpaceOnUse">
+          <path fill="#fff" d={regionPaths[id]} />
+        </mask>
+        <path
+          style={{
+            fill: fillColor,
+          }}
+          className={clsx('pointer-events-auto transition-all duration-150')}
+          data-testid={`feature-${id}`}
+          onMouseEnter={onMouseEnter}
+          onMouseLeave={onMouseLeave}
+          onClick={onClick}
+          onKeyDown={onClick}
+          d={regionPaths[id]}
+        />
+        <path stroke="#F7F7F7" d={regionPaths[id]} mask={`url(#mask-${id})`} />
+      </>
+    )
+  }
+)
 
 export function MiniMap(): React.ReactElement | null {
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null)
@@ -142,6 +149,7 @@ export function MiniMap(): React.ReactElement | null {
                 id={alert.geography_code}
                 status={alert.status}
                 isHovered={debouncedHoveredRegion === regionCode}
+                isAnyHovered={debouncedHoveredRegion !== null}
                 onMouseEnter={() => handleMouseEnter(regionCode)}
                 onMouseLeave={handleMouseLeave}
                 onClick={(evt) => {
