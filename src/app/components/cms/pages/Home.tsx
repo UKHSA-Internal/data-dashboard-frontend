@@ -176,8 +176,12 @@ export default async function HomePage() {
           </section>
 
           {weatherHealthSummaryCardEnabled ? (
-            <section className="govuk-!-margin-top-9" data-testid="category" aria-labelledby="category-health-topics">
-              <h2 className="govuk-heading-l govuk-!-margin-bottom-4" id="category-health-topics">
+            <section
+              className="govuk-!-margin-top-9"
+              data-testid="category"
+              aria-labelledby="category-weather-health-alerts"
+            >
+              <h2 className="govuk-heading-l govuk-!-margin-bottom-4" id="category-weather-health-alerts">
                 <Link className="govuk-link--no-visited-state" href="/weather-health-alerts">
                   Weather health alerts
                 </Link>
@@ -186,11 +190,11 @@ export default async function HomePage() {
                 <div className={clsx('mb-3 sm:mb-6 lg:mb-0 lg:w-1/2')}>
                   <Card
                     asChild
-                    aria-labelledby={`chart-row-card-heading-x3`}
+                    aria-labelledby={`chart-row-card-heading-x4`}
                     className="govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
                   >
                     <Link href="/?v=map&type=heat" scroll={false}>
-                      <h3 id="chart-row-card-heading-x3" className="govuk-heading-m mb-1">
+                      <h3 id="chart-row-card-heading-x4" className="govuk-heading-m mb-1">
                         Heat health alerts
                       </h3>
                       <p className="govuk-body-s text-grey-1">Across England</p>

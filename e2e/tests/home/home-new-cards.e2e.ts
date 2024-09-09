@@ -1,14 +1,14 @@
 import { test } from '../../fixtures/app.fixture'
 
-test.describe('Landing page new card design feature flag enabled', () => {
+test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Home page', () => {
-    test('Page layout', async ({ switchboardPage, homePage, app }) => {
-      await test.step('enables feature flag', async () => {
-        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-      })
-      await test.step('loads the page', async () => {
-        await homePage.goto()
-      })
+    test.beforeEach(async ({ switchboardPage, homePage }) => {
+      await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
+      await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
+      await homePage.goto()
+    })
+
+    test('Page layout', async ({ homePage, app }) => {
       await test.step('metadata is correct', async () => {
         await homePage.hasMetadata()
       })
@@ -22,10 +22,19 @@ test.describe('Landing page new card design feature flag enabled', () => {
         await homePage.hasNotLastUpdated()
       })
       await test.step('displays categories', async () => {
-        await homePage.hasCategories(['Health topics'])
+        await homePage.hasCategories(['Health topics', 'Weather health alerts'])
       })
+      await test.step('displays related links', async () => {
+        await app.hasRelatedLinks()
+      })
+      await test.step('displays back to top', async () => {
+        await app.hasBackToTop()
+      })
+    })
+
+    test('Health topics', async ({ homePage }) => {
       await test.step('displays a total of 3 health topic cards', async () => {
-        await homePage.hasHealthTopicColumns(3)
+        await homePage.hasHealthTopicColumns(['COVID-19', 'Influenza', 'Measles'])
       })
       await test.step('displays a COVID-19 health topic card', async () => {
         await homePage.hasHealthTopicCard('COVID-19', {
@@ -48,11 +57,40 @@ test.describe('Landing page new card design feature flag enabled', () => {
           trendDescription: 'Increase of 377 (6%) compared to the previous 7 days.',
         })
       })
-      await test.step('displays related links', async () => {
-        await app.hasRelatedLinks()
+    })
+
+    test('Weather health alerts', async ({ homePage }) => {
+      await test.step('displays a Weather Health Alerts card', async () => {
+        await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England' })
       })
-      await test.step('displays back to top', async () => {
-        await app.hasBackToTop()
+    })
+
+    test('Weather health alerts - open map after clicking the card', async ({
+      homePage,
+      weatherHealthAlertsMapPage,
+    }) => {
+      await test.step('click minimap card', async () => {
+        await homePage.clickMinimapCard('Heat health alerts')
+      })
+      await test.step('shows map', async () => {
+        await weatherHealthAlertsMapPage.hasMapDialog()
+        await weatherHealthAlertsMapPage.hasMapLeaflet()
+      })
+    })
+
+    test('Weather health alerts - open map after clicking a minimap region', async ({
+      homePage,
+      weatherHealthAlertsMapPage,
+    }) => {
+      await test.step('click minimap card', async () => {
+        await homePage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+      })
+      await test.step('shows map', async () => {
+        await weatherHealthAlertsMapPage.hasMapDialog()
+        await weatherHealthAlertsMapPage.hasMapLeaflet()
+      })
+      await test.step('shows regional alert', async () => {
+        await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
       })
     })
   })

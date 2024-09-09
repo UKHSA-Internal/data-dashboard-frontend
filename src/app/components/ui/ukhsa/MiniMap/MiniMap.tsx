@@ -134,6 +134,7 @@ export function MiniMap(): React.ReactElement | null {
       </ul>
       <div>
         <svg
+          role="application"
           aria-label="Map of weather health alerts"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
@@ -161,10 +162,10 @@ export function MiniMap(): React.ReactElement | null {
           })}
         </svg>
       </div>
-      <div className="govuk-!-margin-top-3 flex">
+      <button type="button" className="govuk-!-margin-top-3 flex">
         <RightArrowCircleIcon />
         <div className="govuk-link ml-2 font-bold">Enter Fullscreen</div>
-      </div>
+      </button>
     </>
   )
 }

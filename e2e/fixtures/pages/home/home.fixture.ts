@@ -300,9 +300,19 @@ export class HomePage {
     }
   }
 
-  async hasHealthTopicColumns(total: number) {
+  async hasHealthTopicColumns(columns: string[]) {
     const section = this.page.getByRole('region', { name: 'Health topics' })
-    await expect(await section.getByTestId('chart-row-cards').getByRole('link').count()).toEqual(total)
+    console.log(await section.isVisible())
+
+    await expect(await section.getByTestId('chart-row-cards').getByRole('heading', { level: 3 }).count()).toEqual(
+      columns.length
+    )
+
+    for (const name of columns) {
+      await expect(
+        section.getByTestId('chart-row-cards').getByRole('heading', { level: 3, name }).isVisible
+      ).toBeTruthy()
+    }
   }
 
   async hasHealthTopicCard(
@@ -317,5 +327,35 @@ export class HomePage {
     await expect(card.getByTestId('chart-image')).toBeVisible()
     await expect(card.getByText(trendPercent, { exact: true })).toBeVisible()
     await expect(card.getByText(trendDescription, { exact: true })).toBeVisible()
+  }
+
+  async hasWeatherHealthAlertsCard(name: string, { tagline }: { tagline: string }) {
+    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const card = section.getByRole('link', { name })
+
+    await expect(section).toBeVisible()
+    await expect(card).toBeVisible()
+    await expect(card.getByRole('heading', { name, level: 3 })).toBeVisible()
+    await expect(card.getByText(tagline)).toBeVisible()
+    await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeVisible()
+
+    const regions = this.page.getByRole('list', { name: 'Weather health alerts by region' })
+    await expect(regions).toBeVisible()
+    await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
+    await expect(card.getByRole('button', { name: 'Enter fullscreen' })).toBeVisible()
+  }
+
+  async clickMinimapCard(name: string) {
+    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const card = section.getByRole('link', { name })
+    await card.click()
+  }
+
+  async clickMinimapCardRegionByMap(name: string, regionId: string) {
+    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const card = section.getByRole('link', { name })
+    const map = card.getByRole('application', { name: 'Map of weather health alerts' })
+    const region = map.getByTestId(`feature-${regionId}`)
+    await region.click()
   }
 }
