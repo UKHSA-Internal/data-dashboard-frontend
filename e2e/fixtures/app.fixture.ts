@@ -347,6 +347,10 @@ export class App {
     }
   }
 
+  async hasNotRelatedLinks() {
+    await expect(this.page.getByRole('heading', { name: 'Related content', level: 2 })).toBeHidden()
+  }
+
   async hasBackToTop() {
     await this.page.evaluate(() => window.scrollTo(0, 0))
     await expect(this.backToTop).not.toBeInViewport()

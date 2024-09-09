@@ -7,7 +7,7 @@ import { renderSection } from '@/app/utils/cms.utils'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { clsx } from '@/lib/clsx'
 
-import { MiniMap } from '../../ui/ukhsa/MiniMap/MiniMap'
+import { MiniMapCard } from '../../ui/ukhsa/MiniMap/MiniMapCard'
 import { ChartRowCard } from '../ChartRowCard/ChartRowCard'
 import { Trend } from '../Trend/v2/Trend'
 
@@ -188,19 +188,7 @@ export default async function HomePage() {
               </h2>
               <ChartRowCard>
                 <div className={clsx('mb-3 sm:mb-6 lg:mb-0 lg:w-1/2')}>
-                  <Card
-                    asChild
-                    aria-labelledby={`chart-row-card-heading-x4`}
-                    className="govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
-                  >
-                    <Link href="/?v=map&type=heat" scroll={false}>
-                      <h3 id="chart-row-card-heading-x4" className="govuk-heading-m mb-1">
-                        Heat health alerts
-                      </h3>
-                      <p className="govuk-body-s text-grey-1">Across England</p>
-                      <MiniMap />
-                    </Link>
-                  </Card>
+                  <MiniMapCard />
                 </div>
               </ChartRowCard>
             </section>

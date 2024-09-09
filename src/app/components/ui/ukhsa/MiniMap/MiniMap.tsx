@@ -127,6 +127,7 @@ export function MiniMap(): React.ReactElement | null {
             onMouseLeave={handleMouseLeave}
             onClick={(evt) => {
               evt.preventDefault()
+              evt.stopPropagation()
               handleClick(alert.geography_code)
             }}
           />
@@ -155,6 +156,7 @@ export function MiniMap(): React.ReactElement | null {
                 onMouseLeave={handleMouseLeave}
                 onClick={(evt) => {
                   evt.preventDefault()
+                  evt.stopPropagation()
                   handleClick(regionCode)
                 }}
               />

@@ -24,8 +24,8 @@ test.describe('Landing page new card design feature flags enabled', () => {
       await test.step('displays categories', async () => {
         await homePage.hasCategories(['Health topics', 'Weather health alerts'])
       })
-      await test.step('displays related links', async () => {
-        await app.hasRelatedLinks()
+      await test.step('does not display related links', async () => {
+        await app.hasNotRelatedLinks()
       })
       await test.step('displays back to top', async () => {
         await app.hasBackToTop()
