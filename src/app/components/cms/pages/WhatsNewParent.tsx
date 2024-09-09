@@ -18,18 +18,27 @@ import {
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
-import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { RelatedLink as RelatedLinkV1, RelatedLinks as RelatedLinksV1, View } from '@/app/components/ui/ukhsa'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
+import { flags } from '@/app/constants/flags.constants'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { logger } from '@/lib/logger'
+
+import {
+  RelatedLink as RelatedLinkV2,
+  RelatedLinks as RelatedLinksV2,
+} from '../../ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 
 export default async function WhatsNewParentPage({
   slug,
   searchParams: { page },
 }: PageComponentBaseProps<{ page?: number }>) {
   const { t } = await getServerTranslation('whatsNew')
+
+  const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
 
   const setReturnPath = getReturnPathWithParams()
 
@@ -200,13 +209,23 @@ export default async function WhatsNewParentPage({
         </div>
       </div>
 
-      <RelatedLinks variant="footer">
-        {relatedLinks.map(({ title, body, url, id }) => (
-          <RelatedLink key={id} url={url} title={title}>
-            {body}
-          </RelatedLink>
-        ))}
-      </RelatedLinks>
+      {newLandingContentEnabled ? (
+        <RelatedLinksV2 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV2 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV2>
+          ))}
+        </RelatedLinksV2>
+      ) : (
+        <RelatedLinksV1 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV1 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV1>
+          ))}
+        </RelatedLinksV1>
+      )}
     </View>
   )
 }

@@ -1,9 +1,16 @@
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichTextAutoHeadings } from '@/app/components/cms/RichText/RichTextAutoHeadings'
-import { RelatedLink, RelatedLinks, View } from '@/app/components/ui/ukhsa'
+import { RelatedLink as RelatedLinkV1, RelatedLinks as RelatedLinksV1, View } from '@/app/components/ui/ukhsa'
+import { flags } from '@/app/constants/flags.constants'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
+
+import {
+  RelatedLink as RelatedLinkV2,
+  RelatedLinks as RelatedLinksV2,
+} from '../../ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 
 export default async function CompositePage({ slug }: PageComponentBaseProps) {
   const {
@@ -12,6 +19,8 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     last_published_at: lastUpdated,
     related_links: relatedLinks,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
+
+  const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
@@ -25,13 +34,23 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
         </div>
       </div>
 
-      <RelatedLinks variant="footer">
-        {relatedLinks.map(({ title, body, url, id }) => (
-          <RelatedLink key={id} url={url} title={title}>
-            {body}
-          </RelatedLink>
-        ))}
-      </RelatedLinks>
+      {newLandingContentEnabled ? (
+        <RelatedLinksV2 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV2 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV2>
+          ))}
+        </RelatedLinksV2>
+      ) : (
+        <RelatedLinksV1 variant="footer">
+          {relatedLinks.map(({ title, body, url, id }) => (
+            <RelatedLinkV1 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV1>
+          ))}
+        </RelatedLinksV1>
+      )}
     </View>
   )
 }

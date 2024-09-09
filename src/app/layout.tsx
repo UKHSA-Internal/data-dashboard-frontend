@@ -12,7 +12,6 @@ import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
-import { AWSRum } from './components/ui/ukhsa/AWSRum/AWSRum'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
@@ -38,8 +37,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');",
           }}
         />
-
-        <AWSRum applicationId={process.env.RUM_APPLICATION_ID} identityPoolId={process.env.RUM_IDENTITY_POOL_ID} />
 
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           {t('skipLink')}

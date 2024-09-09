@@ -1,6 +1,6 @@
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
+import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 
 export default async function SidebarView() {
   const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>('access-our-data')
@@ -8,7 +8,7 @@ export default async function SidebarView() {
   return (
     <RelatedLinks variant="sidebar">
       {relatedLinks.map(({ title, url, id }) => (
-        <RelatedLink key={id} url={url} title={title} />
+        <RelatedSidebarLink key={id} url={url} title={title} />
       ))}
     </RelatedLinks>
   )

@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLink, RelatedLinks } from '@/app/components/ui/ukhsa'
+import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 
 import AlertBody from './AlertBody'
 
@@ -34,7 +34,7 @@ export default async function Alert({ params: { weather, region } }: WeatherHeal
         <div className="govuk-grid-column-one-quarter-from-desktop">
           <RelatedLinks variant="sidebar">
             {relatedLinks.map(({ title, url, id }) => (
-              <RelatedLink key={id} title={title} url={url} />
+              <RelatedSidebarLink key={id} title={title} url={url} />
             ))}
           </RelatedLinks>
         </div>
