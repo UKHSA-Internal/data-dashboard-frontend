@@ -302,7 +302,6 @@ export class HomePage {
 
   async hasHealthTopicColumns(columns: string[]) {
     const section = this.page.getByRole('region', { name: 'Health topics' })
-    console.log(await section.isVisible())
 
     await expect(await section.getByTestId('chart-row-cards').getByRole('heading', { level: 3 }).count()).toEqual(
       columns.length
