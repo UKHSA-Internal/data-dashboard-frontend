@@ -7,6 +7,7 @@ import { renderSection } from '@/app/utils/cms.utils'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { clsx } from '@/lib/clsx'
 
+import { MiniMapCard } from '../../ui/ukhsa/MiniMap/MiniMapCard'
 import { ChartRowCard } from '../ChartRowCard/ChartRowCard'
 import { Trend } from '../Trend/v2/Trend'
 
@@ -16,6 +17,7 @@ export default async function HomePage() {
   const { title, body, page_description: description, related_links: relatedLinks } = await getHomePage()
 
   const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
+  const { enabled: weatherHealthSummaryCardEnabled } = await getFeatureFlag(flags.weatherHealthSummaryCard)
 
   return (
     <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
@@ -25,7 +27,6 @@ export default async function HomePage() {
          * This is in progress & still to be hooked up to the CMS in CDD-2156
          */
         <>
-          {' '}
           <section className="govuk-!-margin-top-3" data-testid="category" aria-labelledby="category-health-topics">
             <h2 className="govuk-heading-l govuk-!-margin-bottom-4" id="category-health-topics">
               <a className="govuk-link--no-visited-state" href="/topics">
@@ -173,28 +174,25 @@ export default async function HomePage() {
               </div>
             </ChartRowCard>
           </section>
-          <section
-            className="govuk-!-margin-top-3"
-            data-testid="category"
-            aria-labelledby="category-weather-health-alert"
-          >
-            <h2 className="govuk-heading-l govuk-!-margin-bottom-4" id="category-weather-health-alert">
-              <a className="govuk-link--no-visited-state" href="/weather-health-alerts">
-                Weather health alerts
-              </a>
-            </h2>
-            <ChartRowCard>
-              <div className={clsx('mb-3 sm:mb-6 lg:mb-0 lg:w-1/2')}>
-                <Card
-                  asChild
-                  aria-labelledby={`chart-row-card-heading-x1`}
-                  className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
-                >
-                  Test content
-                </Card>
-              </div>
-            </ChartRowCard>
-          </section>
+
+          {weatherHealthSummaryCardEnabled ? (
+            <section
+              className="govuk-!-margin-top-9"
+              data-testid="category"
+              aria-labelledby="category-weather-health-alerts"
+            >
+              <h2 className="govuk-heading-l govuk-!-margin-bottom-4" id="category-weather-health-alerts">
+                <Link className="govuk-link--no-visited-state" href="/weather-health-alerts">
+                  Weather health alerts
+                </Link>
+              </h2>
+              <ChartRowCard>
+                <div className={clsx('mb-3 sm:mb-6 lg:mb-0 lg:w-1/2')}>
+                  <MiniMapCard />
+                </div>
+              </ChartRowCard>
+            </section>
+          ) : null}
         </>
       ) : (
         <>{body.map(renderSection)}</>

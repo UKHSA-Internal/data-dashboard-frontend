@@ -1435,3 +1435,67 @@ exports[`Checks icons match snapshots HeatHealthAlertYellowIcon matches expected
   </svg>
 </div>
 `;
+
+exports[`Checks icons match snapshots Icon matches expected snapshot 1`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    focusable="false"
+    height="20"
+    viewBox="0 0 20 20"
+    width="20"
+  >
+    <path
+      d="M4.828,11L12.314,18.485L10.899,19.899L1,10L10.899,0.101L12.314,1.515L4.828,9L19,9L19,11L4.828,11Z"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Checks icons match snapshots Icon matches expected snapshot 2`] = `
+<div>
+  <svg
+    aria-hidden="true"
+    height="20"
+    viewBox="0 0 20 20"
+    width="20"
+  >
+    <path
+      d="M4.828 11l7.486 7.485-1.415 1.414L1 10 10.899.101l1.415 1.414L4.828 9H19v2H4.828z"
+      fill="currentColor"
+      stroke="currentColor"
+      stroke-width="0.1"
+    />
+  </svg>
+</div>
+`;
+
+exports[`Checks icons match snapshots Icon matches expected snapshot 3`] = `
+<div>
+  <svg
+    fill="none"
+    height="27"
+    width="27"
+    xmlns="http://www.w3.org/2000/svg"
+  >
+    <circle
+      cx="13.5"
+      cy="13.5"
+      fill="#fff"
+      r="13.5"
+    />
+    <g
+      clip-rule="evenodd"
+      fill="#000"
+      fill-rule="evenodd"
+    >
+      <path
+        d="m17.701 13.526-3.827-3.828L14.973 8.6l4.926 4.926-4.926 4.926-1.099-1.099 3.827-3.827Z"
+      />
+      <path
+        d="M8.363 12.749h9.762v1.554H8.363v-1.554Z"
+      />
+    </g>
+  </svg>
+</div>
+`;

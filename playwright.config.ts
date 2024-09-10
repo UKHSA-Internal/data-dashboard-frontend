@@ -43,11 +43,12 @@ export default defineConfig({
       grepInvert: /@mobileOnly | @tabletOnly/,
     },
 
-    {
-      name: 'firefox',
-      use: { ...devices['Desktop Firefox'] },
-      grepInvert: /@mobileOnly | @tabletOnly/,
-    },
+    /* TODO: CDD-2209: Restore Firefox after investigating Switchboard incompatibility */
+    // {
+    //   name: 'firefox',
+    //   use: { ...devices['Desktop Firefox'] },
+    //   grepInvert: /@mobileOnly | @tabletOnly/,
+    // },
 
     /* Test against mobile viewport. */
     {
