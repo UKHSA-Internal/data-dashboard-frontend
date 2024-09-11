@@ -1,5 +1,6 @@
-import { z, ZodTypeAny } from 'zod'
+import { z, ZodAny } from 'zod'
 
+import { RelatedLinksLayout } from '@/api/models/cms/Page'
 import { bannerTypes } from '@/api/requests/global-banners/getGlobalBanners'
 
 /**
@@ -8,7 +9,7 @@ import { bannerTypes } from '@/api/requests/global-banners/getGlobalBanners'
  */
 
 // TODO: Handle error state
-const baseProps = <S extends ZodTypeAny | undefined>(scenario?: S) => {
+const baseProps = <S extends ZodAny>(scenario?: z.infer<S>) => {
   return z.object({
     status: z.coerce.number(),
     ...(scenario && { scenario }),
@@ -21,6 +22,15 @@ export const switchBoardSchema = z.object({
       list: baseProps(),
       detail: baseProps(),
       scenario: z.enum(['Green', 'RedAmberGreenYellow', 'RedAmber', 'NoAlertsYet']),
+    }),
+    pages: z.object({
+      list: baseProps(),
+      detail: z.object({
+        status: z.coerce.number(),
+        scenario: z.object({
+          relatedLinksLayout: z.enum(['Default', RelatedLinksLayout.Values.Sidebar, RelatedLinksLayout.Values.Footer]),
+        }),
+      }),
     }),
     'global-banners': baseProps(bannerTypes.or(z.literal(''))),
     menus: baseProps(z.enum(['Inactive', 'SideMenu', 'MegaMenu'])),

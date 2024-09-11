@@ -58,6 +58,7 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
       url: '/',
     },
   ],
+  related_links_layout: 'Sidebar',
 }
 
 export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
@@ -99,6 +100,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
     related_links: [],
+    related_links_layout: 'Sidebar',
   },
   {
     id: 33,
@@ -137,6 +139,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
     related_links: [],
+    related_links_layout: 'Sidebar',
   },
   {
     id: 34,
@@ -203,6 +206,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
     related_links: [],
+    related_links_layout: 'Sidebar',
   },
   {
     id: 35,
@@ -239,6 +243,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
     related_links: [],
+    related_links_layout: 'Sidebar',
   },
   {
     id: 36,
@@ -278,5 +283,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     ],
     last_published_at: '2023-08-24T16:53:51.464146+01:00',
     related_links: [],
+    related_links_layout: 'Sidebar',
   },
 ]

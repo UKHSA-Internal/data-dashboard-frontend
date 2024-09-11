@@ -8,7 +8,7 @@ import { View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
+import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 import AlertList from './AlertList'
@@ -64,7 +64,12 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
     ],
   }
 
-  const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
+  const {
+    title,
+    body,
+    related_links: relatedLinks,
+    related_links_layout: relatedLinksLayout,
+  } = await getPageBySlug<PageType.Composite>(weather)
 
   return (
     <View
@@ -108,14 +113,16 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
           </List>
         </div>
 
-        <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
-          <RelatedLinks variant="sidebar">
-            {relatedLinks.map(({ title, url, id }) => (
-              <RelatedSidebarLink key={id} title={title} url={url} />
-            ))}
-          </RelatedLinks>
-        </div>
+        {relatedLinksLayout === 'Sidebar' ? (
+          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
+            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+          </div>
+        ) : null}
       </div>
+
+      {relatedLinksLayout === 'Footer' ? (
+        <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+      ) : null}
     </View>
   )
 }

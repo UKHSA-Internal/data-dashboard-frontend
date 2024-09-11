@@ -127,4 +127,5 @@ export const archiveDataPageMock: PageResponse<PageType.Composite> = {
   ],
   last_published_at: '2024-03-13T11:08:26.858539Z',
   related_links: [],
+  related_links_layout: 'Footer',
 }

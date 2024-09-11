@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 
+import { RichText } from '@/app/components/cms/RichText/RichText'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { getServerTranslation } from '@/app/i18n'
@@ -34,7 +35,7 @@ export async function RelatedLinks({ children, className, variant, heading }: Re
       >
         {heading ? heading : t('relatedLinksHeading')}
       </h2>
-      <h3
+      <div
         className={clsx({
           'govuk-body-m govuk-!-margin-top-2 govuk-!-margin-bottom-7 text-grey-1': variant === 'footer',
           hidden: variant === 'sidebar',
@@ -42,7 +43,7 @@ export async function RelatedLinks({ children, className, variant, heading }: Re
       >
         {/* TODO: This should come from CMS */}
         Learn more about UKHSA data dashboard topics
-      </h3>
+      </div>
       {variant === 'sidebar' ? (
         <ul className="govuk-list govuk-list--spaced govuk-!-font-size-16">{children}</ul>
       ) : (
@@ -63,10 +64,18 @@ export function RelatedLink({ title, url, children }: RelatedLinkProps) {
   return (
     <ListItem>
       <ListItemArrow>
-        <ListItemArrowExternalLink href={url} className="govuk-!-margin-bottom-2">
+        <ListItemArrowExternalLink asChild href={url} className="govuk-!-margin-bottom-2 govuk-body-m">
           {title}
         </ListItemArrowExternalLink>
-        {children && <div dangerouslySetInnerHTML={{ __html: children }} className="govuk-body-m break-words" />}
+        {children && (
+          <RichText
+            components={{
+              p: ({ children }) => <p className="govuk-body-m">{children}</p>,
+            }}
+          >
+            {children}
+          </RichText>
+        )}
       </ListItemArrow>
     </ListItem>
   )

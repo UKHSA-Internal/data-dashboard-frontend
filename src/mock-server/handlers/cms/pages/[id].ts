@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
+import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import {
@@ -59,10 +60,25 @@ export default async function handler(req: Request, res: Response) {
       return res.status(500)
     }
 
+    const {
+      api: {
+        pages: {
+          detail: {
+            status,
+            scenario: { relatedLinksLayout },
+          },
+        },
+      },
+    } = getSwitchBoardState(req.headers.cookie)
+
     const pageId = Number(req.params.id)
 
     if (mockedPageMap[pageId]) {
-      return res.json(mockedPageMap[pageId])
+      return res.status(status).json({
+        ...mockedPageMap[pageId],
+        related_links_layout:
+          relatedLinksLayout === 'Default' ? mockedPageMap[pageId].related_links_layout : relatedLinksLayout,
+      })
     }
   } catch (error) {
     logger.error(error)

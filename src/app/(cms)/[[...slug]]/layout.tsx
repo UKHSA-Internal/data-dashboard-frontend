@@ -37,7 +37,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   return (
     <>
       <header className={clsx('govuk-header border-none', { 'bg-blue': onHomePage })} data-module="govuk-header">
-        <div className="relative ">
+        <div className="relative">
           <div className="govuk-width-container relative flow-root">
             <div className="govuk-header__logo govuk-!-padding-top-2">
               <Link href="/" className="govuk-header__link govuk-header__link--homepage">

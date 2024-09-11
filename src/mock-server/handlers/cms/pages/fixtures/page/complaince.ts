@@ -32,4 +32,5 @@ export const compliancePageMock: PageResponse<PageType.Common> = {
   body: '<h2>Statement of voluntary application of the Code of Practice for Statistics</h2><p>The government’s coronavirus dashboard publishes up-to-date statistics about the coronavirus (COVID-19) pandemic in the UK. These statistics are not classed as official statistics because...</p>',
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
 }

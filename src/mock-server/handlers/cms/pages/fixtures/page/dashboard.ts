@@ -435,5 +435,6 @@ export const dashboardMock: PageResponse<PageType.Home> = {
     },
   ],
   related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
   last_published_at: '2023-05-10T15:18:06.939535+01:00',
 }

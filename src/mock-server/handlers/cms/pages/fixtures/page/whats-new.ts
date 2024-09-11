@@ -33,6 +33,7 @@ export const whatsNewParentMock: PageResponse<PageType.WhatsNewParent> = {
   date_posted: '2023-10-24',
   body: '<p data-block-key="yjvuu">We regularly update the dashboard with new data and features. Here we&#x27;ll show a timeline of changes that have happened outside of the weekly data refresh.</p>',
   related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
   last_published_at: '2023-10-24T16:09:35.359598+01:00',
 }
 
@@ -70,6 +71,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
       text: 'New Feature',
       colour: 'GREY',
     },
+    related_links_layout: 'Footer',
   },
   {
     id: 23,
@@ -104,6 +106,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
       text: 'New Feature',
       colour: 'GREY',
     },
+    related_links_layout: 'Footer',
   },
   {
     id: 24,
@@ -138,6 +141,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
       text: 'Data Issue',
       colour: 'BLUE',
     },
+    related_links_layout: 'Footer',
   },
   // Generate a set of random pages for testing of pagination
   ...Array.from({ length: 30 }).map<PageResponse<PageType.WhatsNewChild>>((item, index) => ({
@@ -173,5 +177,6 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
       text: 'Data Issue',
       colour: 'BLUE',
     },
+    related_links_layout: 'Footer',
   })),
 ]
