@@ -209,6 +209,7 @@ jobs:
         with:
           role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
           architecture: arm64
+          ecr-repository: ukhsa-data-dashboard/front-end
           image-tag: ${{ github.sha }}
 
   ###############################################################################
