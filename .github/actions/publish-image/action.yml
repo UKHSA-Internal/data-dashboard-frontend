@@ -12,6 +12,9 @@ inputs:
   image-tag:
     description: 'The tag to apply to the image'
     required: true
+  ecr-repository:
+    description: 'The name of the ECR to publish the image to'
+    default: data-dashboard/front-end
 
 runs:
   using: 'composite'
@@ -38,7 +41,7 @@ runs:
     - name: Build, tag, and push image to AWS ECR
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        ECR_REPOSITORY: data-dashboard/front-end
+        ECR_REPOSITORY: ${{ inputs.ecr-repository }}
         IMAGE_TAG: ${{ inputs.image-tag }}
       run: |
           docker build --platform linux/${{ inputs.architecture }} -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
