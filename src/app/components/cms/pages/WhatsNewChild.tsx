@@ -4,9 +4,11 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { View } from '@/app/components/ui/ukhsa'
+import { flags } from '@/app/constants/flags.constants'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export default async function WhatsNewChildPage({
   slug,
@@ -20,13 +22,15 @@ export default async function WhatsNewChildPage({
     badge,
     additional_details,
     date_posted,
-    last_published_at: lastUpdated,
+    last_published_at: lastPublishedAt,
+    last_updated_at: lastUpdatedAt,
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
   const backLink = searchParams.returnUrl || extractRootSlug(slug)
+  const { enabled: newTimestampEnabled } = await getFeatureFlag(flags.newTimestamp)
 
   return (
-    <View backLink={backLink} lastUpdated={lastUpdated}>
+    <View backLink={backLink} lastUpdated={newTimestampEnabled ? lastUpdatedAt : lastPublishedAt}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <small className="govuk-caption-m govuk-!-margin-bottom-3">

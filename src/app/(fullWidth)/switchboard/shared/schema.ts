@@ -30,6 +30,7 @@ export const switchBoardSchema = z.object({
     'landing-page-hero': z.enum(['enabled', 'disabled']),
     'landing-page-content': z.enum(['enabled', 'disabled']),
     'weather-health-summary-card': z.enum(['enabled', 'disabled']),
+    'new-timestamp': z.enum(['enabled', 'disabled']),
   }),
 })
 

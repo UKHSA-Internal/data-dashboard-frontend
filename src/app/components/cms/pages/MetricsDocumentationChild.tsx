@@ -3,9 +3,11 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
 import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
+import { flags } from '@/app/constants/flags.constants'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export default async function MetricsChildPage({
   slug,
@@ -19,13 +21,15 @@ export default async function MetricsChildPage({
     metric,
     metric_group: group,
     body,
-    last_published_at,
+    last_published_at: lastPublishedAt,
+    last_updated_at: lastUpdatedAt,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
   const backLink = returnUrl || extractRootSlug(slug)
+  const { enabled: newTimestampEnabled } = await getFeatureFlag(flags.newTimestamp)
 
   return (
-    <View heading={title} lastUpdated={last_published_at} backLink={backLink}>
+    <View heading={title} lastUpdated={newTimestampEnabled ? lastUpdatedAt : lastPublishedAt} backLink={backLink}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>

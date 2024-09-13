@@ -27,6 +27,7 @@ export const weatherHealthAlertsParentMock: PageResponse<PageType.Composite> = {
   },
   seo_change_frequency: 5,
   seo_priority: 0.8,
+  last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'Weather health alerts',
   date_posted: '2024-05-23',
   body: [
@@ -85,6 +86,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
     },
     seo_change_frequency: 5,
     seo_priority: 0.9,
+    last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Cold health alerts',
     date_posted: '2024-05-23',
     body: [
@@ -141,6 +143,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
     },
     seo_change_frequency: 5,
     seo_priority: 0.9,
+    last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Heat health alerts',
     date_posted: '2024-05-23',
     body: [

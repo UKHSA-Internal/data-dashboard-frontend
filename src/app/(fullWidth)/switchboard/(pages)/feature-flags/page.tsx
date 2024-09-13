@@ -15,6 +15,7 @@ export default function SwitchBoard() {
       'landing-page-hero': landingPageHero,
       'landing-page-content': landingPageContent,
       'weather-health-summary-card': weatherHealthSummaryCard,
+      'new-timestamp': newTimestamp,
     },
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
@@ -31,6 +32,7 @@ export default function SwitchBoard() {
               'landing-page-hero': form.get('flags.landingPageHero') as string,
               'landing-page-content': form.get('flags.landingPageContent') as string,
               'weather-health-summary-card': form.get('flags.weatherHealthSummaryCard') as string,
+              'new-timestamp': form.get('flags.newTimestamp') as string,
             }
           )
         }}
@@ -179,6 +181,42 @@ export default function SwitchBoard() {
                 value="disabled"
               />
               <label className="govuk-label govuk-radios__label" htmlFor="flags.weatherHealthSummaryCard.Disabled">
+                Disabled
+              </label>
+            </div>
+          </div>
+
+          <div
+            className="govuk-radios govuk-radios--inline govuk-radios--small govuk-!-margin-top-4"
+            data-module="govuk-radios"
+          >
+            <label className="govuk-label w-full" htmlFor="flags.newTimestamp.Enabled">
+              New timestamp
+            </label>
+            <div className="govuk-radios__item">
+              <input
+                defaultChecked={newTimestamp === 'enabled'}
+                className="govuk-radios__input"
+                id="flags.newTimestamp.Enabled"
+                name="flags.newTimestamp"
+                type="radio"
+                value="enabled"
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor="flags.newTimestamp.Enabled">
+                Enabled
+              </label>
+            </div>
+
+            <div className="govuk-radios__item">
+              <input
+                defaultChecked={newTimestamp === 'disabled'}
+                className="govuk-radios__input"
+                id="flags.newTimestamp.Disabled"
+                name="flags.newTimestamp"
+                type="radio"
+                value="disabled"
+              />
+              <label className="govuk-label govuk-radios__label" htmlFor="flags.newTimestamp.Disabled">
                 Disabled
               </label>
             </div>

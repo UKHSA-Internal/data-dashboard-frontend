@@ -2,8 +2,10 @@ import { Metadata } from 'next'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { flags } from '@/app/constants/flags.constants'
 import { getServerTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
   const {
@@ -19,7 +21,16 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await getServerTranslation('common')
 
-  const { title, body, last_published_at: lastUpdated } = await getPageBySlug<PageType.Composite>(slug)
+  const { enabled: newTimestampEnabled } = await getFeatureFlag(flags.newTimestamp)
+
+  const {
+    title,
+    body,
+    last_published_at: lastPublishedAt,
+    last_updated_at: lastUpdatedAt,
+  } = await getPageBySlug<PageType.Composite>(slug)
+
+  const lastUpdated = newTimestampEnabled ? lastUpdatedAt : lastPublishedAt
 
   return (
     <>

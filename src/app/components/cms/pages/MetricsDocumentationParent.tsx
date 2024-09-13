@@ -82,11 +82,13 @@ export default async function MetricsParentPage({
   const {
     title,
     body,
-    last_published_at: lastUpdated,
+    last_published_at: lastPublishedAt,
+    last_updated_at: lastUpdatedAt,
     related_links: relatedLinks,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
   const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
+  const { enabled: newTimestampEnabled } = await getFeatureFlag(flags.newTimestamp)
 
   const metricsEntries = await getMetricsPages({ search, page })
 
@@ -111,7 +113,7 @@ export default async function MetricsParentPage({
   const setReturnPath = getReturnPathWithParams()
 
   return (
-    <View heading={title} lastUpdated={lastUpdated}>
+    <View heading={title} lastUpdated={newTimestampEnabled ? lastUpdatedAt : lastPublishedAt}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
