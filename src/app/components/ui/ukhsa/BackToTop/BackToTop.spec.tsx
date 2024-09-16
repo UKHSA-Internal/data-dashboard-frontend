@@ -11,15 +11,15 @@ const useWindowScrollMock = jest.mocked(useWindowScroll)
 test('renders a back to top link', async () => {
   useWindowScrollMock.mockReturnValue({ x: 0, y: 100 })
 
-  const { getByRole, getByTestId } = render(<BackToTop label="Back to top" />)
+  const { getByRole, getByTestId } = render(<BackToTop />)
 
   // Verify the rendered content
   expect(getByRole('link', { name: 'Back to top' })).toHaveAttribute('href', '#main-content')
-  expect(getByTestId('up-arrow')).toHaveAttribute('aria-hidden')
+  expect(getByTestId('up-arrow')).toHaveAttribute('aria-hidden', 'true')
 })
 
 test('scrolls to the top when clicking the back to top link', async () => {
-  const { getByRole } = render(<BackToTop label="Back to top" />)
+  const { getByRole } = render(<BackToTop />)
 
   // Mock the window.scrollTo function
   const scrollToMock = jest.fn()
@@ -39,27 +39,31 @@ test('scrolls to the top when clicking the back to top link', async () => {
 test('becomes sticky after scrolling vertically further than 200px', async () => {
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 0 })
 
-  const { getByRole, rerender } = render(<BackToTop label="Back to top" />)
+  const { getByRole, rerender } = render(<BackToTop />)
 
+  // Initially not sticky
   expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('xl:sticky')
 
-  useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 201 })
+  // Update scroll position to beyond 200px
+  useWindowScrollMock.mockReturnValue({ x: 0, y: 201 })
+  rerender(<BackToTop />)
 
-  rerender(<BackToTop label="Back to top" />)
-
+  // Should now be sticky
   expect(getByRole('link', { name: 'Back to top' })).toHaveClass('xl:sticky')
 })
 
 test('becomes not sticky after scrolling vertically below 200px', async () => {
   useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 201 })
 
-  const { getByRole, rerender } = render(<BackToTop label="Back to top" />)
+  const { getByRole, rerender } = render(<BackToTop />)
 
+  // Initially sticky
   expect(getByRole('link', { name: 'Back to top' })).toHaveClass('xl:sticky')
 
-  useWindowScrollMock.mockReturnValueOnce({ x: 0, y: 199 })
+  // Update scroll position to below 200px
+  useWindowScrollMock.mockReturnValue({ x: 0, y: 199 })
+  rerender(<BackToTop />)
 
-  rerender(<BackToTop label="Back to top" />)
-
+  // Should no longer be sticky
   expect(getByRole('link', { name: 'Back to top' })).not.toHaveClass('xl:sticky')
 })
