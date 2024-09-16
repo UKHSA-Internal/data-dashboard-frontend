@@ -57,8 +57,7 @@ export default async function WeatherHealthAlerts() {
                   <ListItem key={childId} spacing="l">
                     <ListItemArrow>
                       <ListItemArrowLink href={`/weather-health-alerts/${meta.slug}`}>{title}</ListItemArrowLink>
-                      {/* TODO: Child page description to come from the CMS in future. CDD-1980 */}
-                      <ListItemArrowParagraph>{`View all ${meta.slug.split('-')[0]} health alerts currently in place in England`}</ListItemArrowParagraph>
+                      <ListItemArrowParagraph>{meta?.search_description}</ListItemArrowParagraph>
                     </ListItemArrow>
                   </ListItem>
                 ))}
