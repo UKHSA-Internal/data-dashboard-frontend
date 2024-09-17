@@ -57,7 +57,7 @@ export default async function WeatherHealthAlerts() {
                   <ListItem key={childId} spacing="l">
                     <ListItemArrow>
                       <ListItemArrowLink href={`/weather-health-alerts/${meta.slug}`}>{title}</ListItemArrowLink>
-                      <ListItemArrowParagraph>{meta.search_description}</ListItemArrowParagraph>
+                      <ListItemArrowParagraph>{meta?.search_description}</ListItemArrowParagraph>
                     </ListItemArrow>
                   </ListItem>
                 ))}
