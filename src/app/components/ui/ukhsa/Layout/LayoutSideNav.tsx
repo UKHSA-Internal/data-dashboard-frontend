@@ -5,11 +5,9 @@ import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { BackToTop } from '@/app/components/ui/ukhsa'
 import { SideNav, SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { flags } from '@/app/constants/flags.constants'
-import { getServerTranslation } from '@/app/i18n'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
-  const { t } = await getServerTranslation('common')
   const sideNav = transformMenuSnippetToSideMenu(await getMenu())
 
   const { enabled: isMegaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
@@ -45,7 +43,7 @@ export const LayoutSideNav = async ({ children }: { children: ReactNode }) => {
           {children}
         </main>
       </div>
-      <BackToTop label={t('backToTop')} className="govuk-!-margin-bottom-4" />
+      <BackToTop className="govuk-!-margin-bottom-4" />
     </>
   )
 }
