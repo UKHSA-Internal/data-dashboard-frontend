@@ -51,6 +51,7 @@ const page = z.object({
     detail_url: z.string(),
     html_url: z.string().nullable(),
     slug: z.string(),
+    search_description: z.string().optional(),
     show_in_menus: z.boolean(),
     first_published_at: z.string().nullable(),
   }),
