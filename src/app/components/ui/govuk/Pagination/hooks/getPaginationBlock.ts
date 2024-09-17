@@ -19,8 +19,8 @@ export function getPaginationBlock({ links }: PaginationBlockProps) {
     return {
       previousText: null,
       previousPageHref: null,
-      nextText: links[1].pageText,
-      nextPageHref: links[1].pageHref,
+      nextText: links[1]?.pageText ?? null,
+      nextPageHref: links[1]?.pageHref ?? null,
     }
   }
 
