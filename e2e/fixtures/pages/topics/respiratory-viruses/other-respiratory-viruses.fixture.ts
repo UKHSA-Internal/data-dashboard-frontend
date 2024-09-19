@@ -33,6 +33,6 @@ export class OtherRespiratoryVirusesPage {
   }
 
   async hasLastUpdated() {
-    await expect(this.page.getByText(/Last updated on Wednesday, 10 May 2023 at 05:27pm/)).toBeVisible()
+    await expect(this.page.getByText(/Last updated on Tuesday, 2 July 2024 at 12:44pm/)).toBeVisible()
   }
 }
