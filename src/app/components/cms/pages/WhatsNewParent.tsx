@@ -45,13 +45,11 @@ export default async function WhatsNewParentPage({
   const {
     title,
     body,
-    last_published_at: lastPublishedAt,
-    last_updated_at: lastUpdatedAt,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
   } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })
 
   const whatsNewEntries = await getWhatsNewPages({ page })
-  const { enabled: newTimestampEnabled } = await getFeatureFlag(flags.newTimestamp)
 
   if (!whatsNewEntries.success) {
     logger.info(whatsNewEntries.error.message)
@@ -97,7 +95,7 @@ export default async function WhatsNewParentPage({
   )
 
   return (
-    <View heading={title} lastUpdated={newTimestampEnabled ? lastUpdatedAt : lastPublishedAt}>
+    <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>

@@ -27,14 +27,12 @@ export default async function TopicPage({
   const { t } = await getServerTranslation('common')
 
   const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
-  const { enabled: newTimestampEnabled } = await getFeatureFlag(flags.newTimestamp)
 
   const {
     title,
     body,
     page_description: description,
-    last_published_at: lastPublishedAt,
-    last_updated_at: lastUpdatedAt,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
@@ -43,7 +41,7 @@ export default async function TopicPage({
     <View
       heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })}
       description={description}
-      lastUpdated={newTimestampEnabled ? lastUpdatedAt : lastPublishedAt}
+      lastUpdated={lastUpdated}
     >
       {enableAreaSelector && (
         <>

@@ -45,17 +45,6 @@ export const featureFlags = {
       description: null,
       impressionData: false,
     },
-    {
-      name: 'new-timestamp',
-      type: 'release',
-      enabled: false,
-      project: 'default',
-      stale: false,
-      strategies: [],
-      variants: [],
-      description: null,
-      impressionData: false,
-    },
   ],
   query: {
     inlineSegmentConstraints: true,
