@@ -27,6 +27,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
   },
   seo_change_frequency: 4,
   seo_priority: 0.8,
+  last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'COVID-19',
   page_description:
     '<p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',

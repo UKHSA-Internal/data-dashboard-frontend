@@ -19,13 +19,13 @@ export default async function MetricsChildPage({
     metric,
     metric_group: group,
     body,
-    last_published_at,
+    last_updated_at: lastUpdated,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
   const backLink = returnUrl || extractRootSlug(slug)
 
   return (
-    <View heading={title} lastUpdated={last_published_at} backLink={backLink}>
+    <View heading={title} lastUpdated={lastUpdated} backLink={backLink}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>

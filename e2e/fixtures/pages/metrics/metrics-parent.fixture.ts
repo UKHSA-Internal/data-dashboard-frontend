@@ -17,7 +17,7 @@ export class MetricsParentPage {
   }
 
   async hasLastUpdated() {
-    await expect(this.page.getByText(/Last updated on Tuesday, 24 October 2023 at 04:09pm/)).toBeVisible()
+    await expect(this.page.getByText(/Last updated on Friday, 15 December 2023 at 02:47pm/)).toBeVisible()
   }
 
   async hasPageContent() {

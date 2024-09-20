@@ -20,7 +20,7 @@ export default async function WhatsNewChildPage({
     badge,
     additional_details,
     date_posted,
-    last_published_at: lastUpdated,
+    last_updated_at: lastUpdated,
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
   const backLink = searchParams.returnUrl || extractRootSlug(slug)

@@ -11,7 +11,7 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
   const {
     title,
     body,
-    last_published_at: lastUpdated,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
@@ -20,10 +20,6 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
-          {relatedLinksLayout === 'Sidebar' ? (
-            <hr className="govuk-section-break govuk-section-break--l govuk-!-margin-top-2 govuk-section-break--visible" />
-          ) : null}
-
           {typeof body === 'string' ? (
             <RichTextAutoHeadings>{body}</RichTextAutoHeadings>
           ) : (

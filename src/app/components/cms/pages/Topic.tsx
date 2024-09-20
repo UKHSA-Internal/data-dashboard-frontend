@@ -20,7 +20,7 @@ export default async function TopicPage({
     title,
     body,
     page_description: description,
-    last_published_at: lastUpdated,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
     enable_area_selector: enableAreaSelector,

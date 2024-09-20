@@ -35,15 +35,14 @@ export async function RelatedLinks({ children, className, variant, heading }: Re
       >
         {heading ? heading : t('relatedLinksHeading')}
       </h2>
-      <div
+      <h3
         className={clsx({
           'govuk-body-m govuk-!-margin-top-2 govuk-!-margin-bottom-7 text-grey-1': variant === 'footer',
           hidden: variant === 'sidebar',
         })}
       >
-        {/* TODO: This should come from CMS */}
-        Learn more about UKHSA data dashboard topics
-      </div>
+        {t('relatedLinksSubHeading')}
+      </h3>
       {variant === 'sidebar' ? (
         <ul className="govuk-list govuk-list--spaced govuk-!-font-size-16">{children}</ul>
       ) : (
@@ -64,13 +63,13 @@ export function RelatedLink({ title, url, children }: RelatedLinkProps) {
   return (
     <ListItem>
       <ListItemArrow>
-        <ListItemArrowExternalLink asChild href={url} className="govuk-!-margin-bottom-2 govuk-body-m">
+        <ListItemArrowExternalLink asChild href={url} className="govuk-!-margin-bottom-2 govuk-heading-l">
           {title}
         </ListItemArrowExternalLink>
         {children && (
           <RichText
             components={{
-              p: ({ children }) => <p className="govuk-body-m">{children}</p>,
+              p: ({ children }) => <p className="govuk-body-m break-words">{children}</p>,
             }}
           >
             {children}
@@ -83,17 +82,24 @@ export function RelatedLink({ title, url, children }: RelatedLinkProps) {
 
 export function RelatedSidebarLink({ title, url, children, className }: RelatedLinkProps) {
   return (
-    <li className={className}>
-      <a
-        href={url}
-        className={'govuk-link govuk-link--no-visited-state'}
-        rel="noreferrer noopener"
-        target="_blank"
-        aria-label={`${title} (opens in a new window)`}
-      >
-        {title}
-      </a>
-      {children && <div dangerouslySetInnerHTML={{ __html: children }} className="break-words" />}
-    </li>
+    <ListItem className={className}>
+      <ListItemArrow>
+        <ListItemArrowExternalLink
+          href={url}
+          className={'govuk-link govuk-heading-s govuk-link--no-visited-state mb-2'}
+        >
+          {title}
+        </ListItemArrowExternalLink>
+        {children && (
+          <RichText
+            components={{
+              p: ({ children }) => <p className="govuk-body-m break-words">{children}</p>,
+            }}
+          >
+            {children}
+          </RichText>
+        )}
+      </ListItemArrow>
+    </ListItem>
   )
 }

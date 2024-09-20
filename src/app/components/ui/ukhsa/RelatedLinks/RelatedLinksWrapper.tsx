@@ -3,10 +3,10 @@ import { RelatedLink as RelatedLinkV1, RelatedLinks as RelatedLinksV1 } from '@/
 import {
   RelatedLink as RelatedLinkV2,
   RelatedLinks as RelatedLinksV2,
+  RelatedSidebarLink as RelatedSidebarLinkV2,
 } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
 import { flags } from '@/app/constants/flags.constants'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
-import { clsx } from '@/lib/clsx'
 
 interface RelatedLinksWrapperProps {
   links: RelatedLinks
@@ -19,26 +19,30 @@ export async function RelatedLinksWrapper({ links, layout }: RelatedLinksWrapper
   const variant = layout === 'Sidebar' ? 'sidebar' : 'footer'
 
   return (
-    <div className={clsx({ 'govuk-row': variant === 'footer' })}>
-      <div className={clsx({ 'govuk-grid-column-three-quarters-from-desktop': variant === 'footer' })}>
-        {newLandingContentEnabled ? (
-          <RelatedLinksV2 variant={variant}>
-            {links.map(({ title, body, url, id }) => (
+    <>
+      {newLandingContentEnabled ? (
+        <RelatedLinksV2 variant={variant}>
+          {links.map(({ title, body, url, id }) =>
+            variant === 'sidebar' ? (
+              <RelatedSidebarLinkV2 key={id} url={url} title={title}>
+                {body}
+              </RelatedSidebarLinkV2>
+            ) : (
               <RelatedLinkV2 key={id} url={url} title={title}>
                 {body}
               </RelatedLinkV2>
-            ))}
-          </RelatedLinksV2>
-        ) : (
-          <RelatedLinksV1 variant={variant}>
-            {links.map(({ title, body, url, id }) => (
-              <RelatedLinkV1 key={id} url={url} title={title}>
-                {body}
-              </RelatedLinkV1>
-            ))}
-          </RelatedLinksV1>
-        )}
-      </div>
-    </div>
+            )
+          )}
+        </RelatedLinksV2>
+      ) : (
+        <RelatedLinksV1 variant={variant}>
+          {links.map(({ title, body, url, id }) => (
+            <RelatedLinkV1 key={id} url={url} title={title}>
+              {body}
+            </RelatedLinkV1>
+          ))}
+        </RelatedLinksV1>
+      )}
+    </>
   )
 }

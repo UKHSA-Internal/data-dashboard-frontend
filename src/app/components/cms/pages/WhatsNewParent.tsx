@@ -38,7 +38,7 @@ export default async function WhatsNewParentPage({
   const {
     title,
     body,
-    last_published_at: lastUpdated,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })

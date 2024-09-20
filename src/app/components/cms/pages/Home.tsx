@@ -34,10 +34,6 @@ export default async function HomePage() {
             'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
           })}
         >
-          {relatedLinksLayout === 'Sidebar' ? (
-            <hr className="govuk-section-break govuk-section-break--l govuk-!-margin-top-3 govuk-section-break--visible" />
-          ) : null}
-
           {newLandingContentEnabled ? (
             /**
              * New landing page UI for Health topics.
@@ -217,7 +213,7 @@ export default async function HomePage() {
         </div>
 
         {relatedLinksLayout === 'Sidebar' ? (
-          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-3 sticky">
+          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
             <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
           </div>
         ) : null}

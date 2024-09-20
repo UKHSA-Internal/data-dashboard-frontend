@@ -20,6 +20,7 @@ type ListItemArrowLinkProps = AsChildProps<React.HTMLAttributes<HTMLAnchorElemen
   children: ReactNode
   href: string
   className?: string
+  isSidebar?: boolean
 }
 
 export const ListItemArrowLink = ({ asChild, href, children, className }: ListItemArrowLinkProps) => {
@@ -37,11 +38,17 @@ export const ListItemArrowLink = ({ asChild, href, children, className }: ListIt
   )
 }
 
-export const ListItemArrowExternalLink = ({ asChild, href, children, className }: ListItemArrowLinkProps) => {
+export const ListItemArrowExternalLink = ({
+  asChild,
+  href,
+  children,
+  className,
+  isSidebar,
+}: ListItemArrowLinkProps) => {
   const Component = asChild ? Slot : 'h2'
 
   return (
-    <Component className={clsx('govuk-heading-m', className)}>
+    <Component className={clsx({ 'govuk-heading-m': !isSidebar, 'govuk-heading-s': isSidebar }, className)}>
       <Link
         className="govuk-link govuk-link--no-visited-state before:absolute before:inset-0 before:bg-list_item_arrow before:bg-right before:bg-no-repeat after:absolute after:inset-0 hover:before:bg-list_item_arrow_hover"
         href={href}

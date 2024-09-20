@@ -72,7 +72,7 @@ export default async function MetricsParentPage({
   const {
     title,
     body,
-    last_published_at: lastUpdated,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })

@@ -19,7 +19,7 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
 export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
   const { t } = await getServerTranslation('common')
 
-  const { title, body, last_published_at: lastUpdated } = await getPageBySlug<PageType.Composite>(slug)
+  const { title, body, last_updated_at: lastUpdated } = await getPageBySlug<PageType.Composite>(slug)
 
   return (
     <>

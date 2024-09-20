@@ -25,6 +25,7 @@ const SharedPageData = z.object({
   id: z.number(),
   title: z.string(),
   last_published_at: z.string(),
+  last_updated_at: z.string(),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout,
   meta: Meta,

@@ -1,16 +1,29 @@
 'use client'
 
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 import { useWindowScroll } from 'react-use'
 
+import { useTranslation } from '@/app/i18n/client'
+
 interface BackToTopProps {
-  label: string
   href?: string
   className?: string
 }
 
-export const BackToTop = ({ label, href = '#main-content', className }: BackToTopProps) => {
+export const BackToTop = ({ href = '#main-content', className }: BackToTopProps) => {
   const { y } = useWindowScroll()
+  const { t } = useTranslation('common')
+
+  const [isSticky, setIsSticky] = useState(false)
+
+  useEffect(() => {
+    if (y > 200) {
+      setIsSticky(true)
+    } else {
+      setIsSticky(false)
+    }
+  }, [y])
 
   return (
     <a
@@ -19,7 +32,7 @@ export const BackToTop = ({ label, href = '#main-content', className }: BackToTo
         className,
         'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 bottom-3 inline-flex items-center print:hidden [&:not(:focus)]:bg-white',
         {
-          'xl:sticky': y > 200,
+          'xl:sticky': isSticky,
         }
       )}
       onClick={(event) => {
@@ -35,7 +48,7 @@ export const BackToTop = ({ label, href = '#main-content', className }: BackToTo
         aria-hidden
         data-testid="up-arrow"
       />
-      {label}
+      {t('backToTop')}
     </a>
   )
 }
