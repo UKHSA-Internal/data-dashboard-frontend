@@ -16,7 +16,7 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
   const {
     title,
     body,
-    last_published_at: lastUpdated,
+    last_updated_at: lastUpdated,
     related_links: relatedLinks,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 

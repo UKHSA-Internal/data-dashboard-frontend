@@ -33,6 +33,6 @@ export class Covid19Page {
   }
 
   async hasLastUpdated() {
-    await expect(this.page.getByText(/Last updated on Tuesday, 21 March 2023 at 10:25am/)).toBeVisible()
+    await expect(this.page.getByText(/Last updated on Tuesday, 2 July 2024 at 12:44pm/)).toBeVisible()
   }
 }
