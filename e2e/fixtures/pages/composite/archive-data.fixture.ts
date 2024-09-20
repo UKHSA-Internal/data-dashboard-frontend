@@ -22,7 +22,7 @@ export class ArchiveDataPage {
   }
 
   async hasLastUpdated() {
-    await expect(this.page.getByText(/Last updated on Wednesday, 13 March 2024 at 11:08am/)).toBeVisible()
+    await expect(this.page.getByText(/Last updated on Tuesday, 2 July 2024 at 12:44pm/)).toBeVisible()
   }
 
   async hasDownloadLinkByHref(href: string) {
