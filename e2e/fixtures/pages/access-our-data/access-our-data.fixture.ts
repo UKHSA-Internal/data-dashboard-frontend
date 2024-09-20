@@ -69,7 +69,7 @@ export class AccessOurDataPage {
   }
 
   async hasLastUpdated() {
-    await expect(this.page.getByText(/Last updated on Thursday, 24 August 2023 at 04:53pm/)).toBeVisible()
+    await expect(this.page.getByText(/Last updated on Tuesday, 2 July 2024 at 12:44pm/)).toBeVisible()
   }
 
   async hasChildHeading(heading: string) {
