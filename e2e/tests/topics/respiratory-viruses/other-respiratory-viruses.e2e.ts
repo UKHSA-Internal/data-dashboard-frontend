@@ -154,7 +154,7 @@ test.describe('Other respiratory viruses page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -163,7 +163,7 @@ test.describe('Other respiratory viruses page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -172,7 +172,7 @@ test.describe('Other respiratory viruses page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
 

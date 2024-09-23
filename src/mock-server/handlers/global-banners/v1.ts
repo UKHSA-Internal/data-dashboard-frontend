@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
+import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import { globalBannerInactive } from './fixtures/global-banner-inactive'
