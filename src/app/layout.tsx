@@ -11,8 +11,10 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner, GoogleTagManager } from './components/ui/ukhsa'
+import { CookieBanner } from './components/ui/ukhsa'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
+import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager/GoogleTagManager'
+import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
 
@@ -28,15 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
       <body className="govuk-template__body">
         <GoogleTagManager />
-        {/* Adds the js-enabled class as a high priority script to prevent flash of unstyled content (fouc)
-        Note: The NextJs <Script /> component using a beforeInteractie strategy is broken in 13.5.3 */}
-        <script
-          id="js-enabled"
-          dangerouslySetInnerHTML={{
-            __html:
-              "document.body.className += ' js-enabled' + ('noModule' in HTMLScriptElement.prototype ? ' govuk-frontend-supported' : '');",
-          }}
-        />
+        <GovUK />
 
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           {t('skipLink')}

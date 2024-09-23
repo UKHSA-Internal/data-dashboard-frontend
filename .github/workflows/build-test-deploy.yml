@@ -179,22 +179,6 @@ jobs:
   # Push image to ECR
   ###############################################################################
 
-  publish-image-with-mutable-tag:
-    name: Publish image to ECR
-    needs: [success-gate]
-    runs-on: ubuntu-latest
-    if: ${{ github.ref == 'refs/heads/main' }}
-
-    steps:
-      - name: Check out code
-        uses: actions/checkout@v4
-      - name: Build and publish docker image
-        uses: ./.github/actions/publish-image
-        with:
-          role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
-          architecture: arm64
-          image-tag: latest-graviton
-
   publish-image:
     name: Publish image to ECR
     needs: [ success-gate ]
