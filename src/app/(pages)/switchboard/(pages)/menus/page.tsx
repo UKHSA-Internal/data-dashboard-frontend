@@ -54,20 +54,6 @@ export default function SwitchBoard() {
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={menus.scenario === 'SideMenu'}
-                className="govuk-radios__input"
-                id="menus.scenario.SideMenu"
-                name="menus.scenario"
-                type="radio"
-                value="SideMenu"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="menus.scenario.SideMenu">
-                Side Menu
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
                 defaultChecked={menus.scenario === 'MegaMenu'}
                 className="govuk-radios__input"
                 id="menus.scenario.MegaMenu"
