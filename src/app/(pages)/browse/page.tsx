@@ -10,10 +10,11 @@ export const metadata: Metadata = {
 }
 
 export default async function Browse() {
-  const menu = transformMenuSnippetToSideMenu(await getMenu())
+  const menu = await getMenu()
+  const transformedMenu = transformMenuSnippetToSideMenu(menu)
 
   const groupedMenu = chunk(
-    menu.flatMap((link) => {
+    transformedMenu.flatMap((link) => {
       if (link.children) return [link, ...link.children]
       return link
     }),
