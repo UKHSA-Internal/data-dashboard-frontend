@@ -295,7 +295,7 @@ test.describe('COVID-19 page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ covid19Page, app }) => {
     await covid19Page.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -304,7 +304,7 @@ test.describe('COVID-19 page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ covid19Page, app }) => {
     await covid19Page.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -313,7 +313,7 @@ test.describe('COVID-19 page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ covid19Page, app }) => {
     await covid19Page.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
 

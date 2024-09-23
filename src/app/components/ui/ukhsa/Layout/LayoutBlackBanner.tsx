@@ -2,25 +2,16 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { getMenu } from '@/api/requests/menus/getMenu'
-import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { Announcement } from '@/app/components/ui/ukhsa'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
-import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
-import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
 
-  const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
-
   const globalBanner = await getGlobalBanner()
-
-  const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
 
   return (
     <>
@@ -50,39 +41,13 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
                 {t('serviceTitle')}
               </Link>
             </div>
-
-            {megaMenuEnabled ? null : (
-              <TopNav megaMenu={megaMenuEnabled}>
-                {mobileNav.map(({ title, slug, children }) => (
-                  <SideNavLink
-                    key={slug}
-                    href={slug}
-                    subMenu={
-                      children && (
-                        <SideNavSubMenu>
-                          {children.map(({ title, slug }) => (
-                            <SideNavSubMenuLink key={slug} href={slug}>
-                              {title}
-                            </SideNavSubMenuLink>
-                          ))}
-                        </SideNavSubMenu>
-                      )
-                    }
-                  >
-                    {title}
-                  </SideNavLink>
-                ))}
-              </TopNav>
-            )}
           </div>
         </div>
       </header>
 
-      {megaMenuEnabled ? (
-        <TopNav megaMenu={megaMenuEnabled}>
-          <MegaMenu />
-        </TopNav>
-      ) : null}
+      <TopNav>
+        <MegaMenu />
+      </TopNav>
 
       <div className="govuk-width-container h-2 bg-blue" />
 

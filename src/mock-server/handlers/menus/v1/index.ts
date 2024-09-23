@@ -1,11 +1,10 @@
 import { Request, Response } from 'express'
 
 import { type Response as Menu } from '@/api/requests/menus/getMenu'
-import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
+import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import { megaMenu } from './fixtures/mega-menu'
-import { sideMenu } from './fixtures/side-menu'
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -19,10 +18,6 @@ export default async function handler(req: Request, res: Response) {
     } = getSwitchBoardState(req.headers.cookie)
 
     const { status, scenario } = menus
-
-    if (scenario === 'SideMenu') {
-      return res.status(status).send(sideMenu)
-    }
 
     if (scenario === 'MegaMenu') {
       return res.status(status).send(megaMenu)
