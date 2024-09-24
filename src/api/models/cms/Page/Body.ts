@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { HealthAlertTypes } from '../../Alerts'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
 
@@ -10,6 +11,12 @@ import { Chart } from './Chart'
 
 export const WithText = z.object({
   body: z.string(),
+})
+
+export const WithWeatherHealthAlertsCard = z.object({
+  title: z.string(),
+  sub_title: z.string(),
+  alert_type: HealthAlertTypes,
 })
 
 export const WithHeadlineNumbersRowCard = z.object({
@@ -52,7 +59,24 @@ export const WithChartCard = z.object({
   }),
 })
 
-export const ChartRowColumns = z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard]))
+export const WithSimplifiedChartCardAndLink = z.object({
+  id: z.string(),
+  type: z.enum(['simplified_chart_with_link']),
+  value: z.object({
+    title: z.string(),
+    sub_title: z.string(),
+    tag_manager_event_id: z.string().nullable(),
+    topic_page: z.number(),
+    x_axis: z.string().nullable(),
+    y_axis: z.string().nullable(),
+    chart: Chart,
+    headline_number_columns: Blocks,
+  }),
+})
+
+export const ChartRowColumns = z.array(
+  z.union([WithChartHeadlineAndTrendCard, WithChartCard, WithSimplifiedChartCardAndLink])
+)
 
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({
@@ -70,6 +94,11 @@ export const CardTypes = z.discriminatedUnion('type', [
     value: z.object({
       columns: ChartRowColumns,
     }),
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('WHA_card'),
+    value: WithWeatherHealthAlertsCard,
     id: z.string(),
   }),
 ])

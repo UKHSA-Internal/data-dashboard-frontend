@@ -12,6 +12,7 @@ export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTy
 
 type PageTypeToDataMap = {
   [PageType.Home]: typeof WithHomeData
+  [PageType.Landing]: typeof WithLandingData
   [PageType.Topic]: typeof WithTopicData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
@@ -38,6 +39,11 @@ const WithHomeData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('home.HomePage'),
   }),
+})
+
+const WithLandingData = SharedPageData.extend({
+  sub_title: z.string(),
+  body: Body,
 })
 
 const WithTopicData = SharedPageData.extend({
