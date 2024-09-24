@@ -216,7 +216,7 @@ test.describe('Influenza page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -225,7 +225,7 @@ test.describe('Influenza page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -234,7 +234,7 @@ test.describe('Influenza page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
 

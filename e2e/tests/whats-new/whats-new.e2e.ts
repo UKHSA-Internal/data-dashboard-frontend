@@ -147,7 +147,7 @@ test.describe("What's new parent page - mobile", () => {
 
   test('displays the navigation on mobile', async ({ whatsNewParentPage, app }) => {
     await whatsNewParentPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -156,7 +156,7 @@ test.describe("What's new parent page - tablet", () => {
 
   test('displays the navigation on tablet', async ({ whatsNewParentPage, app }) => {
     await whatsNewParentPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -165,7 +165,7 @@ test.describe("What's new parent page - desktop", () => {
 
   test('displays the navigation on desktop', async ({ whatsNewParentPage, app }) => {
     await whatsNewParentPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
 
@@ -245,7 +245,7 @@ test.describe("What's new child page - mobile", () => {
 
   test('displays the navigation on mobile', async ({ whatsNewChildPage, app }) => {
     await whatsNewChildPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -254,7 +254,7 @@ test.describe("What's new child page - tablet", () => {
 
   test('displays the navigation on tablet', async ({ whatsNewChildPage, app }) => {
     await whatsNewChildPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -263,6 +263,6 @@ test.describe("What's new child page - desktop", () => {
 
   test('displays the navigation on desktop', async ({ whatsNewChildPage, app }) => {
     await whatsNewChildPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })

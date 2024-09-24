@@ -4,7 +4,7 @@ import { flags } from '@/app/constants/flags.constants'
 
 type Flag = keyof typeof flags
 type FlagStatus = 'Enabled' | 'Disabled'
-type MenuStatus = 'Inactive' | 'SideMenu' | 'MegaMenu'
+type MenuStatus = 'Inactive' | 'MegaMenu'
 
 export class SwitchboardPage {
   readonly page: Page

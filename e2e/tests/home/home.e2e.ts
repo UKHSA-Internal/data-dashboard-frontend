@@ -25,7 +25,7 @@ test.describe('Home page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ homePage, app }) => {
     await homePage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -34,7 +34,7 @@ test.describe('Home page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ homePage, app }) => {
     await homePage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -43,7 +43,7 @@ test.describe('Home page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ homePage, app }) => {
     await homePage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
 
