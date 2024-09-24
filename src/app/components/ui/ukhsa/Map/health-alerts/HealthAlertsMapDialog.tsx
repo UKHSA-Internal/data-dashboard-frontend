@@ -75,6 +75,7 @@ export default function HealthAlertsMapDialog({ featureCollection }: HealthAlert
       <DialogContent
         className="p-0 no-js:hidden"
         fullscreen
+        onInteractOutside={(e) => e.preventDefault()}
         closeButton={
           <DialogClose className="govuk-button govuk-button--secondary ukhsa-map__button absolute z-[1000] inline-flex gap-2">
             <ExitMapIcon />
