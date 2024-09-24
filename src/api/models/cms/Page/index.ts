@@ -1,5 +1,0 @@
-export * from './Body'
-export * from './Chart'
-export * from './Meta'
-export * from './Page'
-export * from './RelatedLinks'
