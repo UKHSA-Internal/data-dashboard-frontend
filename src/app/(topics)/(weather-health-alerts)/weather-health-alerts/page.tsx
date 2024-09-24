@@ -53,12 +53,11 @@ export default async function WeatherHealthAlerts() {
 
             <List aria-label="Weather health alerts">
               {childPages.success &&
-                childPages.data.items.map(({ id: childId, title, meta }) => (
+                childPages.data.items.map(({ id: childId, title, meta: { slug, search_description: description } }) => (
                   <ListItem key={childId} spacing="l">
                     <ListItemArrow>
-                      <ListItemArrowLink href={`/weather-health-alerts/${meta.slug}`}>{title}</ListItemArrowLink>
-                      {/* TODO: Child page description to come from the CMS in future. CDD-1980 */}
-                      <ListItemArrowParagraph>{`View all ${meta.slug.split('-')[0]} health alerts currently in place in England`}</ListItemArrowParagraph>
+                      <ListItemArrowLink href={`/weather-health-alerts/${slug}`}>{title}</ListItemArrowLink>
+                      <ListItemArrowParagraph>{description}</ListItemArrowParagraph>
                     </ListItemArrow>
                   </ListItem>
                 ))}
