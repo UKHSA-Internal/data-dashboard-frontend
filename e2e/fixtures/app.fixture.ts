@@ -249,8 +249,6 @@ export class App {
   }
 
   async clickNav(name: string) {
-    await this.waitForPageLoaded()
-
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
 
