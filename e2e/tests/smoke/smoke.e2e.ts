@@ -61,7 +61,7 @@ test.describe('Smoke tests - no JavaScript @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickNav(decodeURI(page))
+        await app.clickBrowseNav(decodeURI(page))
         await app.hasHeading(decodeURI(page))
       })
     }

@@ -259,6 +259,13 @@ export class App {
     await nav.getByRole('link', { name }).click()
   }
 
+  async clickBrowseNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await expect(this.page.getByRole('heading', { name: 'Browse', level: 1 })).toBeVisible()
+
+    await this.page.getByRole('link', { name }).click()
+  }
+
   async hasHeading(name: string) {
     await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
   }
