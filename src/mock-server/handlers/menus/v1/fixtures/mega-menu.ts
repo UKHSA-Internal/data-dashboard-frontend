@@ -30,16 +30,6 @@ export const megaMenu: Response = {
                     },
                   },
                   {
-                    id: '6b4ad523-72c7-4447-93e2-e31589487012',
-                    type: 'secondary_link',
-                    value: {
-                      body: '<p data-block-key="27vjw">Respiratory syncytial virus (RSV)</p>',
-                      page: 80,
-                      title: 'Respiratory syncytial virus (RSV)',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/respiratory-syncytial-virus-rsv/',
-                    },
-                  },
-                  {
                     id: '79c65515-8f70-446d-8ed8-f49d6ad5cfdb',
                     type: 'secondary_link',
                     value: {
