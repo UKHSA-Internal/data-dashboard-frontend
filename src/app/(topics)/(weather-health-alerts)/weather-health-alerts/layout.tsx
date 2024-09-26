@@ -1,6 +1,6 @@
 import { ReactNode } from 'react'
 
-import { BackToTop } from '@/app/components/ui/ukhsa'
+import { BackToTop } from '@/app/components/ui/ukhsa/BackToTop/BackToTop'
 import LayoutBlackBanner from '@/app/components/ui/ukhsa/Layout/LayoutBlackBanner'
 
 export default async function Layout({ children }: { children: ReactNode }) {

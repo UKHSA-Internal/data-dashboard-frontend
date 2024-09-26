@@ -1,4 +1,4 @@
-import { View } from '@/app/components/ui/ukhsa'
+import { View } from '@/app/components/ui/ukhsa/View/View'
 
 export const dynamic = 'force-dynamic'
 
