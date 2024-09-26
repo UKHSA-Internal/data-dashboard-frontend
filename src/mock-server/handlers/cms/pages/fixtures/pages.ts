@@ -166,6 +166,7 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
         meta: { type, detail_url, html_url, slug, search_description, show_in_menus, first_published_at },
         seo_change_frequency,
         seo_priority,
+        page_description,
         title,
       }) => ({
         id,
@@ -180,6 +181,7 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
         },
         seo_change_frequency,
         seo_priority,
+        page_description,
         title,
       })
     ),
@@ -204,6 +206,7 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
         meta: { type, detail_url, html_url, slug, search_description, show_in_menus, first_published_at },
         seo_change_frequency,
         seo_priority,
+        page_description,
         title,
       }) => ({
         id,
@@ -218,6 +221,7 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
         },
         seo_change_frequency,
         seo_priority,
+        page_description,
         title,
       })
     ),

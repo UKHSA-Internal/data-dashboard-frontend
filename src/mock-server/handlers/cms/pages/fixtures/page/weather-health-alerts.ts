@@ -71,7 +71,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
       slug: 'cold',
       show_in_menus: false,
       seo_title: 'Cold health alerts | UKHSA data dashboard',
-      search_description: 'View all cold health alerts currently in place in England',
+      search_description: 'Cold weather health alerts',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
       parent: {
@@ -86,6 +86,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
     },
     seo_change_frequency: 5,
     seo_priority: 0.9,
+    page_description: 'View all Cold health alerts currently in place in England',
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Cold health alerts',
     date_posted: '2024-05-23',
@@ -128,7 +129,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
       slug: 'heat',
       show_in_menus: false,
       seo_title: 'Heat health alerts | UKHSA data dashboard',
-      search_description: 'View all heat health alerts currently in place in England',
+      search_description: 'Heat weather health alerts',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
       parent: {
@@ -143,6 +144,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
     },
     seo_change_frequency: 5,
     seo_priority: 0.9,
+    page_description: 'View all Heat health alerts currently in place in England',
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Heat health alerts',
     date_posted: '2024-05-23',

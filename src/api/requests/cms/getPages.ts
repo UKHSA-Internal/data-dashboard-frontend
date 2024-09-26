@@ -46,6 +46,7 @@ const page = z.object({
   // We default these with a fallback as to not break the schema.
   seo_change_frequency: z.number().or(fallback(5)),
   seo_priority: z.coerce.number().or(fallback(0.5)),
+  page_description: z.optional(z.string()),
   meta: z.object({
     type: z.string(),
     detail_url: z.string(),
@@ -121,6 +122,8 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
     }
 
     const { data } = await client<PagesResponse>('pages', { searchParams })
+
+    console.log('Get pages data:', data)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

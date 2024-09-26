@@ -53,7 +53,7 @@ export default async function WeatherHealthAlerts() {
 
             <List aria-label="Weather health alerts">
               {childPages.success &&
-                childPages.data.items.map(({ id: childId, title, meta: { slug, search_description: description } }) => (
+                childPages.data.items.map(({ id: childId, title, page_description: description, meta: { slug } }) => (
                   <ListItem key={childId} spacing="l">
                     <ListItemArrow>
                       <ListItemArrowLink href={`/weather-health-alerts/${slug}`}>{title}</ListItemArrowLink>

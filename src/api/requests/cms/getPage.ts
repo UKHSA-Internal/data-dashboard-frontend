@@ -60,6 +60,7 @@ const WithCommonData = SharedPageData.extend({
 
 const WithCompositeData = SharedPageData.extend({
   body: CompositeBody,
+  page_description: z.optional(z.string()),
   meta: Meta.extend({
     type: z.literal('composite.CompositePage'),
   }),
