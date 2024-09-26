@@ -33,12 +33,11 @@ export const initialState: switchBoardSchemaType = {
       status: StatusCodes.OK,
     },
     menus: {
-      scenario: 'SideMenu',
+      scenario: 'MegaMenu',
       status: StatusCodes.OK,
     },
   },
   flags: {
-    'mega-menu': 'disabled',
     'landing-page-hero': 'disabled',
     'landing-page-content': 'disabled',
     'weather-health-summary-card': 'disabled',

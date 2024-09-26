@@ -11,7 +11,7 @@ test.describe('Feature flag enabled', () => {
       await test.step('metadata is correct', async () => {
         await app.hasMetadata({
           title: 'Cold health alerts | UKHSA data dashboard',
-          description: 'Mocked Cold health alerts page description',
+          description: 'View all cold health alerts currently in place in England',
         })
       })
       await test.step('has breadcrumbs', async () => {
@@ -93,7 +93,7 @@ test.describe('Feature flag enabled', () => {
       await test.step('metadata is correct', async () => {
         await app.hasMetadata({
           title: 'Heat health alerts | UKHSA data dashboard',
-          description: 'Mocked Heat health alerts page description',
+          description: 'View all heat health alerts currently in place in England',
         })
       })
       await test.step('has breadcrumbs', async () => {
@@ -254,7 +254,7 @@ test.describe('Feature flag enabled', () => {
       await test.step('metadata is correct', async () => {
         await app.hasMetadata({
           title: 'Heat health alerts | UKHSA data dashboard',
-          description: 'Mocked Heat health alerts page description',
+          description: 'View all heat health alerts currently in place in England',
         })
       })
       await test.step('has breadcrumbs', async () => {
@@ -413,7 +413,7 @@ test.describe('Feature flag enabled', () => {
       await test.step('metadata is correct', async () => {
         await app.hasMetadata({
           title: 'Heat health alerts | UKHSA data dashboard',
-          description: 'Mocked Heat health alerts page description',
+          description: 'View all heat health alerts currently in place in England',
         })
       })
       await test.step('has breadcrumbs', async () => {

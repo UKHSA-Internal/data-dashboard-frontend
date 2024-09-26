@@ -1,12 +1,11 @@
 import { cookies } from 'next/headers'
 
+import { StatusSelect } from '@/app/(pages)/switchboard/components/StatusSelect'
+import { heading } from '@/app/(pages)/switchboard/shared/constants'
+import { getSwitchBoardState, syncState } from '@/app/(pages)/switchboard/shared/state'
 import { Details } from '@/app/components/ui/govuk'
 import { View } from '@/app/components/ui/ukhsa'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
-
-import { StatusSelect } from '../../components/StatusSelect'
-import { heading } from '../../shared/constants'
-import { getSwitchBoardState, syncState } from '../../shared/state'
 
 export default function SwitchBoard() {
   const cookieStore = cookies()

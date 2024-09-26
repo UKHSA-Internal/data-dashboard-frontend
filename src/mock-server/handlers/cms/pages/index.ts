@@ -1,7 +1,7 @@
 import { Request, Response } from 'express'
 
 import { PagesResponse, PageType } from '@/api/requests/cms/getPages'
-import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
+import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import { accessOurDataChildMocks, accessOurDataParentMock } from './fixtures/page/access-our-data'

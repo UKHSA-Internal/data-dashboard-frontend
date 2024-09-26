@@ -2,17 +2,6 @@ export const featureFlags = {
   version: 2,
   features: [
     {
-      name: 'mega-menu',
-      type: 'release',
-      enabled: false,
-      project: 'default',
-      stale: false,
-      strategies: [],
-      variants: [],
-      description: null,
-      impressionData: false,
-    },
-    {
       name: 'landing-page-content',
       type: 'release',
       enabled: false,

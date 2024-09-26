@@ -197,45 +197,8 @@ export class App {
     ).toBeVisible()
   }
 
-  // TODO: Remove below test as part of CDD-2154
-  async hasMobileNav() {
-    await this.waitForPageLoaded()
-
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
-
-    // Open menu
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
-
-    let nav = this.page.getByRole('navigation', { name: 'Menu' })
-
-    // Expect visible items
-    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'About' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: "What's new" })).toBeVisible()
-
-    // Close menu
-    await this.page.getByRole('link', { name: 'Hide navigation menu', expanded: true }).click()
-
-    nav = this.page.getByRole('navigation', { name: 'Menu' })
-
-    // Expect no visible menu items
-    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'About' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: "What's new" })).toBeHidden()
-  }
-
   // TODO: Rename once above test removed in CDD-2154
-  async hasMegaMenuNav() {
+  async hasNav() {
     await this.waitForPageLoaded()
 
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
@@ -281,35 +244,26 @@ export class App {
     await expect(nav.getByRole('link', { name: "What's coming" })).toBeHidden()
   }
 
-  // TODO: Remove after cleanup
-  async clickMobileNav(name: string) {
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
-  }
-
-  // TODO: Rename after cleanup
-  async clickNav(name: string) {
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    await this.page.getByRole('navigation', { name: 'Menu' }).getByRole('link', { name }).click()
-  }
-
-  // TODO: Remove below test as part of CDD-2154
-  async hasDesktopNav() {
-    await expect(this.sideNav.getByRole('link', { name: 'Homepage' })).toBeVisible()
-    await expect(this.sideNav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
-    await expect(this.sideNav.getByRole('link', { name: 'Influenza' })).toBeVisible()
-    await expect(this.sideNav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-    await expect(this.sideNav.getByRole('link', { name: 'Access our data' })).toBeVisible()
-    await expect(this.sideNav.getByRole('link', { name: 'About' })).toBeVisible()
-    await expect(this.sideNav.getByRole('link', { name: "What's new" })).toBeVisible()
-  }
-
-  async hasNotDesktopNav() {
+  async hasNotNav() {
     await expect(this.sideNav).toBeHidden()
   }
 
-  async clickDesktopNav(name: string) {
-    await this.sideNav.getByRole('link', { name }).click()
+  async clickNav(name: string) {
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
+
+    const nav = this.page.getByRole('navigation', { name: 'Menu' })
+
+    await nav.getByRole('link', { name }).click()
+  }
+
+  async clickBrowseNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await expect(this.page.getByRole('heading', { name: 'Browse', level: 1 })).toBeVisible()
+
+    await this.page.getByRole('link', { name }).click()
   }
 
   async hasHeading(name: string) {

@@ -11,7 +11,6 @@ export default function SwitchBoard() {
 
   const {
     flags: {
-      'mega-menu': megaMenu,
       'landing-page-hero': landingPageHero,
       'landing-page-content': landingPageContent,
       'weather-health-summary-card': weatherHealthSummaryCard,
@@ -27,7 +26,6 @@ export default function SwitchBoard() {
           syncState(
             {},
             {
-              'mega-menu': form.get('flags.megaMenu') as string,
               'landing-page-hero': form.get('flags.landingPageHero') as string,
               'landing-page-content': form.get('flags.landingPageContent') as string,
               'weather-health-summary-card': form.get('flags.weatherHealthSummaryCard') as string,
@@ -39,42 +37,6 @@ export default function SwitchBoard() {
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Feature flags</h2>
           </legend>
-
-          <div
-            className="govuk-radios govuk-radios--inline govuk-radios--small govuk-!-margin-top-4"
-            data-module="govuk-radios"
-          >
-            <label className="govuk-label w-full" htmlFor="flags.megaMenu.Enabled">
-              Mega menu
-            </label>
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={megaMenu === 'enabled'}
-                className="govuk-radios__input"
-                id="flags.megaMenu.Enabled"
-                name="flags.megaMenu"
-                type="radio"
-                value="enabled"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.megaMenu.Enabled">
-                Enabled
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={megaMenu === 'disabled'}
-                className="govuk-radios__input"
-                id="flags.megaMenu.Disabled"
-                name="flags.megaMenu"
-                type="radio"
-                value="disabled"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.megaMenu.Disabled">
-                Disabled
-              </label>
-            </div>
-          </div>
 
           <div
             className="govuk-radios govuk-radios--inline govuk-radios--small govuk-!-margin-top-4"

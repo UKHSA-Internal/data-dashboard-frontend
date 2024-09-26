@@ -2,7 +2,7 @@ import { Request, Response } from 'express'
 
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
-import { getSwitchBoardState } from '@/app/(fullWidth)/switchboard/shared/state'
+import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import {

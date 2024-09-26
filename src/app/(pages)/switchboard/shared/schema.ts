@@ -33,10 +33,9 @@ export const switchBoardSchema = z.object({
       }),
     }),
     'global-banners': baseProps(bannerTypes.or(z.literal(''))),
-    menus: baseProps(z.enum(['Inactive', 'SideMenu', 'MegaMenu'])),
+    menus: baseProps(z.enum(['Inactive', 'MegaMenu'])),
   }),
   flags: z.object({
-    'mega-menu': z.enum(['enabled', 'disabled']),
     'landing-page-hero': z.enum(['enabled', 'disabled']),
     'landing-page-content': z.enum(['enabled', 'disabled']),
     'weather-health-summary-card': z.enum(['enabled', 'disabled']),

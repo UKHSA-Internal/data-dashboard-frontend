@@ -3,14 +3,10 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { getMenu } from '@/api/requests/menus/getMenu'
-import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
-import { Announcement } from '@/app/components/ui/ukhsa'
+import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
-import { LayoutSideNav } from '@/app/components/ui/ukhsa/Layout/LayoutSideNav'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
-import { SideNavLink, SideNavSubMenu, SideNavSubMenuLink } from '@/app/components/ui/ukhsa/SideNav/SideNav'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
@@ -25,11 +21,8 @@ interface LayoutProps {
 export default async function Layout({ children, params }: LayoutProps) {
   const { t } = await getServerTranslation('common')
 
-  const mobileNav = transformMenuSnippetToSideMenu(await getMenu())
-
   const globalBanner = await getGlobalBanner()
 
-  const { enabled: megaMenuEnabled } = await getFeatureFlag(flags.megaMenu)
   const { enabled: landingPageHeroEnabled } = await getFeatureFlag(flags.landingPageHero)
 
   const onHomePage = landingPageHeroEnabled && !params?.slug
@@ -63,38 +56,13 @@ export default async function Layout({ children, params }: LayoutProps) {
                 </Link>
               </div>
             )}
-            {megaMenuEnabled ? null : (
-              <TopNav megaMenu={megaMenuEnabled}>
-                {mobileNav.map(({ title, slug, children }) => (
-                  <SideNavLink
-                    key={slug}
-                    href={slug}
-                    subMenu={
-                      children && (
-                        <SideNavSubMenu>
-                          {children.map(({ title, slug }) => (
-                            <SideNavSubMenuLink key={slug} href={slug}>
-                              {title}
-                            </SideNavSubMenuLink>
-                          ))}
-                        </SideNavSubMenu>
-                      )
-                    }
-                  >
-                    {title}
-                  </SideNavLink>
-                ))}
-              </TopNav>
-            )}
           </div>
         </div>
       </header>
 
-      {megaMenuEnabled ? (
-        <TopNav megaMenu={megaMenuEnabled}>
-          <MegaMenu />
-        </TopNav>
-      ) : null}
+      <TopNav>
+        <MegaMenu />
+      </TopNav>
 
       {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
 
@@ -127,7 +95,12 @@ export default async function Layout({ children, params }: LayoutProps) {
       ) : null}
 
       <div className="govuk-width-container">
-        <LayoutSideNav>{children}</LayoutSideNav>
+        <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
+          <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
+            {children}
+          </main>
+        </div>
+        <BackToTop className="govuk-!-margin-bottom-4" />
       </div>
     </>
   )
