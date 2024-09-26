@@ -1,80 +1,69 @@
-import { Metadata } from 'next'
-import Link from 'next/link'
-
-import { HealthAlertTypes } from '@/api/models/Alerts'
-import { PageType } from '@/api/requests/cms/getPages'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
-import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
-import { List } from '@/app/components/ui/ukhsa/List/List'
-import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
-import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
-import { renderCompositeBlock } from '@/app/utils/cms.utils'
-
-import AlertList from './AlertList'
 
 export const dynamic = 'force-dynamic'
 
-export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
-  const {
-    meta: { seo_title: title, search_description: description },
-  } = await getPageBySlug<PageType.Composite>(weather)
+// export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
+//   const {
+//     meta: { seo_title: title, search_description: description },
+//   } = await getPageBySlug<PageType.Composite>(weather)
 
-  return {
-    title,
-    description,
-  }
-}
+//   return {
+//     title,
+//     description,
+//   }
+// }
 
-interface WeatherHealthAlertProps {
-  params: {
-    weather: HealthAlertTypes
-  }
-}
+// interface WeatherHealthAlertProps {
+//   params: {
+//     weather: HealthAlertTypes
+//   }
+// }
 
-export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
-  const { furtherAdviceLinks } = {
-    // Further advice links hardcoded currently
-    furtherAdviceLinks: [
-      {
-        id: 0,
-        name: 'UKHSA Adverse Weather and Health Plan and supporting evidence',
-        link: 'https://www.gov.uk/government/publications/adverse-weather-and-health-plan',
-      },
-      {
-        id: 1,
-        name: 'Find the latest weather forecasts and warnings',
-        link: 'https://www.metoffice.gov.uk/',
-      },
-      {
-        id: 2,
-        name: 'Met Office National Severe Weather Warning Service',
-        link: 'https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings',
-      },
-      {
-        id: 3,
-        name: 'Flood Alerts and Warnings',
-        link: 'https://check-for-flooding.service.gov.uk/alerts-and-warnings',
-      },
-      {
-        id: 4,
-        name: 'Local resilience forums: contact details guidance',
-        link: 'https://www.gov.uk/guidance/local-resilience-forums-contact-details',
-      },
-    ],
-  }
+export default async function WeatherHealthAlert() {
+  // const { furtherAdviceLinks } = {
+  //   // Further advice links hardcoded currently
+  //   furtherAdviceLinks: [
+  //     {
+  //       id: 0,
+  //       name: 'UKHSA Adverse Weather and Health Plan and supporting evidence',
+  //       link: 'https://www.gov.uk/government/publications/adverse-weather-and-health-plan',
+  //     },
+  //     {
+  //       id: 1,
+  //       name: 'Find the latest weather forecasts and warnings',
+  //       link: 'https://www.metoffice.gov.uk/',
+  //     },
+  //     {
+  //       id: 2,
+  //       name: 'Met Office National Severe Weather Warning Service',
+  //       link: 'https://www.metoffice.gov.uk/weather/warnings-and-advice/uk-warnings',
+  //     },
+  //     {
+  //       id: 3,
+  //       name: 'Flood Alerts and Warnings',
+  //       link: 'https://check-for-flooding.service.gov.uk/alerts-and-warnings',
+  //     },
+  //     {
+  //       id: 4,
+  //       name: 'Local resilience forums: contact details guidance',
+  //       link: 'https://www.gov.uk/guidance/local-resilience-forums-contact-details',
+  //     },
+  //   ],
+  // }
 
-  const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
+  // const { title, body, related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
 
   return (
     <View
-      heading={title}
+      // heading={title}
+      heading="WHA L2"
       breadcrumbs={[
         { name: 'Home', link: '/' },
         { name: 'Weather health alerts', link: '/weather-health-alerts' },
       ]}
     >
-      <div className="govuk-grid-row">
+      test content
+      {/* <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
@@ -115,7 +104,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
             ))}
           </RelatedLinks>
         </div>
-      </div>
+      </div> */}
     </View>
   )
 }
