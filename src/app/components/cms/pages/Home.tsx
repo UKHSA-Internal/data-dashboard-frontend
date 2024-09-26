@@ -198,15 +198,17 @@ export default async function HomePage() {
         <>{body.map(renderSection)}</>
       )}
 
-      {newLandingContentEnabled ? null : (
-        <RelatedLinksV1 variant="footer">
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLinkV1 key={id} url={url} title={title}>
-              {body}
-            </RelatedLinkV1>
-          ))}
-        </RelatedLinksV1>
-      )}
+      {relatedLinks ? (
+        newLandingContentEnabled ? null : (
+          <RelatedLinksV1 variant="footer">
+            {relatedLinks.map(({ title, body, url, id }) => (
+              <RelatedLinkV1 key={id} url={url} title={title}>
+                {body}
+              </RelatedLinkV1>
+            ))}
+          </RelatedLinksV1>
+        )
+      ) : null}
     </View>
   )
 }

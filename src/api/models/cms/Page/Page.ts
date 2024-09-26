@@ -9,7 +9,7 @@ export const Page = z.object({
   meta: Meta,
   title: z.string(),
   body: z.array(Body),
-  related_links: z.array(RelatedLink),
+  related_links: z.optional(z.array(RelatedLink)),
   last_published_at: z.string().datetime(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),

@@ -13,7 +13,7 @@ export const WithText = z.object({
   body: z.string(),
 })
 
-export const WithWeatherHealthAlertsCard = z.object({
+export const WithWeatherHealthAlertCard = z.object({
   title: z.string(),
   sub_title: z.string(),
   alert_type: HealthAlertTypes,
@@ -66,11 +66,10 @@ export const WithSimplifiedChartCardAndLink = z.object({
     title: z.string(),
     sub_title: z.string(),
     tag_manager_event_id: z.string().nullable(),
-    topic_page: z.number(),
+    topic_page: z.string(),
     x_axis: z.string().nullable(),
     y_axis: z.string().nullable(),
     chart: Chart,
-    headline_number_columns: Blocks,
   }),
 })
 
@@ -97,8 +96,8 @@ export const CardTypes = z.discriminatedUnion('type', [
     id: z.string(),
   }),
   z.object({
-    type: z.literal('WHA_card'),
-    value: WithWeatherHealthAlertsCard,
+    type: z.literal('weather_health_alert_card'),
+    value: WithWeatherHealthAlertCard,
     id: z.string(),
   }),
 ])
@@ -110,6 +109,7 @@ export const Body = z.array(
     value: z.object({
       heading: z.string(),
       content: z.array(CardTypes),
+      page_link: z.optional(z.nullable(z.string())),
     }),
   })
 )

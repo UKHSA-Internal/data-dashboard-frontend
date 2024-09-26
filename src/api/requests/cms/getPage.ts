@@ -27,7 +27,7 @@ const SharedPageData = z.object({
   title: z.string(),
   last_published_at: z.string(),
   last_updated_at: z.string(),
-  related_links: RelatedLinks,
+  related_links: z.optional(RelatedLinks),
   meta: Meta,
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
@@ -44,6 +44,9 @@ const WithHomeData = SharedPageData.extend({
 const WithLandingData = SharedPageData.extend({
   sub_title: z.string(),
   body: Body,
+  meta: Meta.extend({
+    type: z.literal('landing_page.LandingPage'),
+  }),
 })
 
 const WithTopicData = SharedPageData.extend({
