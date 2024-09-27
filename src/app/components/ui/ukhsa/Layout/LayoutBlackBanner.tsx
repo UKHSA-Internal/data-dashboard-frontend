@@ -2,7 +2,6 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { Announcement } from '@/app/components/ui/ukhsa'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 
@@ -10,6 +9,8 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
 
   const globalBanner = await getGlobalBanner()
+
+  console.log('globalBanner: ', globalBanner)
 
   return (
     <>
@@ -59,15 +60,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
       {globalBanner ? (
         <div className="govuk-width-container">
           <div className="govuk-grid-row">
-            <div className="govuk-grid-column-three-quarters">
-              <Announcement
-                heading={globalBanner.heading}
-                variant={globalBanner.variant}
-                className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
-              >
-                {globalBanner.body}
-              </Announcement>
-            </div>
+            <div className="govuk-grid-column-three-quarters">{globalBanner.body}</div>
           </div>
         </div>
       ) : null}
