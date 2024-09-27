@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
-import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
+const baseUrl = process.env.API_URL ?? ''
 
 export const bannerTypes = z.enum(['Information', 'Warning'])
 
@@ -19,12 +18,13 @@ export type ResponseSchema = z.infer<typeof responseSchema>
 
 export const getGlobalBanners = async () => {
   try {
-    const { data } = await client<z.infer<typeof responseSchema>>('global-banners/v1')
-    return responseSchema.safeParse(data)
+    const req = await fetch(`${baseUrl}/api/global-banners/v1`, {
+      method: 'GET',
+    })
+    const json = await req.json()
+
+    return responseSchema.safeParse(json)
   } catch (error) {
-    if (error instanceof Error) {
-      logger.error(error.message)
-    }
     return responseSchema.safeParse(error)
   }
 }
