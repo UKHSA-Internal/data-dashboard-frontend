@@ -1,7 +1,12 @@
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
+
+import { getServerTranslation } from '@/app/i18n'
 
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
+  const { t } = await getServerTranslation('common')
+
   return (
     <>
       <header className="govuk-header border-none" data-module="govuk-header">
@@ -27,7 +32,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
 
             <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
               <Link href="/" className="govuk-header__link govuk-header__service-name">
-                UKHSA data dashboard
+                {t('serviceTitle')}
               </Link>
             </div>
           </div>
@@ -37,7 +42,12 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
       <div className="govuk-width-container print:hidden">
         <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
           <p className="govuk-phase-banner__content">
-            <strong className="govuk-tag govuk-phase-banner__content__tag">feedback</strong>
+            <strong className="govuk-tag govuk-phase-banner__content__tag">{t('feedbackBannerPhase')}</strong>
+            <Trans i18nKey="feedbackBanner" t={t}>
+              <span className="govuk-phase-banner__text">
+                <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />
+              </span>
+            </Trans>
           </p>
         </div>
       </div>
