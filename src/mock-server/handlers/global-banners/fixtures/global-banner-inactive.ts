@@ -1,5 +1,3 @@
-import { ResponseSchema } from '@/api/requests/global-banners/getGlobalBanners'
-
-export const globalBannerInactive: ResponseSchema = {
+export const globalBannerInactive = {
   active_global_banner: null,
 }

@@ -17,10 +17,6 @@ export const initialState: switchBoardSchemaType = {
       },
       scenario: 'RedAmberGreenYellow',
     },
-    'global-banners': {
-      scenario: 'Information',
-      status: StatusCodes.OK,
-    },
     menus: {
       scenario: 'MegaMenu',
       status: StatusCodes.OK,

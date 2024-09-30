@@ -1,7 +1,5 @@
 import { z, ZodTypeAny } from 'zod'
 
-import { bannerTypes } from '@/api/requests/global-banners/getGlobalBanners'
-
 /**
  * Defines the Zod schema for the switchboard configuration.
  * This schema defines the structure of the switchboard configuration using Zod objects and other validators.
@@ -22,7 +20,6 @@ export const switchBoardSchema = z.object({
       detail: baseProps(),
       scenario: z.enum(['Green', 'RedAmberGreenYellow', 'RedAmber', 'NoAlertsYet']),
     }),
-    'global-banners': baseProps(bannerTypes.or(z.literal(''))),
     menus: baseProps(z.enum(['Inactive', 'MegaMenu'])),
   }),
   flags: z.object({
