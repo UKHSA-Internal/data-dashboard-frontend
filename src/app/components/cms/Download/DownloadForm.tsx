@@ -1,5 +1,5 @@
 'use client'
-
+import fetch from 'cross-fetch'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
 
@@ -36,7 +36,7 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId }: DownloadFormPr
     try {
       const formData = new FormData(event.currentTarget)
 
-      const res = await global.fetch(chartExportApiRoutePath, {
+      const res = await fetch(chartExportApiRoutePath, {
         method: 'post',
         body: formData,
       })

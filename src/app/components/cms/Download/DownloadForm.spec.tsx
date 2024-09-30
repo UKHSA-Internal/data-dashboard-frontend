@@ -1,4 +1,5 @@
 import { userEvent } from '@testing-library/user-event'
+import fetch from 'cross-fetch'
 import React, { ComponentProps } from 'react'
 
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
@@ -9,6 +10,7 @@ import { render, screen, waitFor } from '@/config/test-utils'
 import { DownloadForm } from './DownloadForm'
 
 jest.mock('@/app/utils/download.utils')
+jest.mock('cross-fetch')
 
 const props: ComponentProps<typeof DownloadForm> = {
   chart: [
@@ -162,10 +164,11 @@ describe('DownloadForm', () => {
   })
 
   test('Downloading a csv file for users with JavaScript', async () => {
-    global.fetch = () =>
+    jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
         text: async () => Promise.resolve('mock-download'),
       } as Response)
+    )
 
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
@@ -206,10 +209,11 @@ describe('DownloadForm', () => {
   })
 
   test('Downloading a json file for users with JavaScript', async () => {
-    global.fetch = () =>
+    jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
         text: async () => Promise.resolve('mock-download'),
       } as Response)
+    )
 
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
