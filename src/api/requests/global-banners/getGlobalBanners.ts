@@ -1,9 +1,7 @@
-import axios from 'axios'
 import { z } from 'zod'
 
-import { getApiBaseUrl } from '../helpers'
-
-const baseUrl = getApiBaseUrl()
+import { client } from '@/api/utils/api.utils'
+import { logger } from '@/lib/logger'
 
 export const bannerTypes = z.enum(['Information', 'Warning'])
 
@@ -21,12 +19,12 @@ export type ResponseSchema = z.infer<typeof responseSchema>
 
 export const getGlobalBanners = async () => {
   try {
-    const { data } = await axios.get(`${baseUrl}/api/global-banners/v1`, {
-      method: 'GET',
-    })
-
+    const { data } = await client<z.infer<typeof responseSchema>>('global-banners/v1')
     return responseSchema.safeParse(data)
   } catch (error) {
+    if (error instanceof Error) {
+      logger.error(error.message)
+    }
     return responseSchema.safeParse(error)
   }
 }
