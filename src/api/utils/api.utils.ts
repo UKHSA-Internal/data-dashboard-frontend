@@ -61,7 +61,8 @@ export async function client<T>(
 
         if (type && !type.includes('application/json')) {
           if (type.includes('application/zip')) {
-            const data = await response.blob()
+            const arrayBuffer = await response.arrayBuffer()
+            const data = Buffer.from(arrayBuffer)
             return { data, status, headers }
           }
           const data = await response.text()
