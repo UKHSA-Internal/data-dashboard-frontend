@@ -17,6 +17,7 @@ import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
+import {AWSRum} from "@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum";
 
 // Force all pages to be dynamic (ssr)
 export const dynamic = 'force-dynamic'
@@ -31,6 +32,10 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body className="govuk-template__body">
         <GoogleTagManager />
         <GovUK />
+        <AWSRum
+            applicationId={process.env.RUM_APPLICATION_ID}
+            identityPoolId={process.env.RUM_IDENTITY_POOL_ID}
+        />
 
         <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
           {t('skipLink')}
