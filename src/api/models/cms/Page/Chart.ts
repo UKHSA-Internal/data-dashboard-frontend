@@ -1,8 +1,6 @@
 import { z } from 'zod'
 
-import { ChartLineColours } from '../../ChartLineColours'
-import { ChartLineTypes } from '../../ChartLineTypes'
-import { ChartTypes } from '../../ChartTypes'
+import { ChartLineColours, ChartLineTypes, ChartTypes } from '../../Chart'
 import { Geography } from '../../Geography'
 import { GeographyType } from '../../GeographyType'
 import { Metrics } from '../../Metrics'
