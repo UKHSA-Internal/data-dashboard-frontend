@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
-import { ChartTypes, Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { ChartTypes } from '@/api/models/Chart'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 

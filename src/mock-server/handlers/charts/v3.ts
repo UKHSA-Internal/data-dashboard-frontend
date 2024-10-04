@@ -34,6 +34,10 @@ export default async function handler(req: Request, res: Response) {
         chart: narrowFixture.toString(),
         alt_text: 'Mocked alt text',
         last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: {
+          data: [],
+          layout: {},
+        },
       })
     }
 
@@ -42,6 +46,10 @@ export default async function handler(req: Request, res: Response) {
         chart: wideFixture.toString(),
         alt_text: 'Mocked alt text',
         last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: {
+          data: [],
+          layout: {},
+        },
       })
     }
   } catch (error) {
