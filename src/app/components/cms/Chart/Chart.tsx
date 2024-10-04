@@ -1,6 +1,7 @@
+import Image from 'next/image'
 import { z } from 'zod'
 
-import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { WithChartCard, WithChartHeadlineAndTrendCard, WithSimplifiedChartCardAndLink } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -12,10 +13,13 @@ import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
+  data:
+    | z.infer<typeof WithChartHeadlineAndTrendCard>['value']
+    | z.infer<typeof WithChartCard>['value']
+    | z.infer<typeof WithSimplifiedChartCardAndLink>['value']
 
-  /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
-  size: 'narrow' | 'wide'
+  /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout, or  */
+  size: 'narrow' | 'wide' | 'half' | 'third'
 }
 
 export async function Chart({ data, size }: ChartProps) {
@@ -55,7 +59,32 @@ export async function Chart({ data, size }: ChartProps) {
     )
   }
 
+  // All landing page charts loading small width first
+  const landingChartRequests = [
+    getCharts({
+      plots,
+      x_axis,
+      y_axis,
+      chart_width: chartSizes.third.width,
+      chart_height: chartSizes.third.height,
+    }),
+  ]
+
+  // Wider landing page charts where required
+  if (size === 'half') {
+    landingChartRequests.push(
+      getCharts({
+        plots,
+        x_axis,
+        y_axis,
+        chart_width: chartSizes.half.width,
+        chart_height: chartSizes.half.height,
+      })
+    )
+  }
+
   const [narrowChartResponse, wideChartResponse] = await Promise.all(chartRequests)
+  const [thirdChartResponse, halfChartResponse] = await Promise.all(landingChartRequests)
 
   if (narrowChartResponse.success) {
     const {
@@ -63,6 +92,8 @@ export async function Chart({ data, size }: ChartProps) {
     } = narrowChartResponse
 
     const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
+    const thirdChart = thirdChartResponse && thirdChartResponse.success && thirdChartResponse.data.chart
+    const halfChart = halfChartResponse && halfChartResponse.success && halfChartResponse.data.chart
 
     return (
       <picture data-testid="chart" data-location={areaName}>
@@ -73,9 +104,16 @@ export async function Chart({ data, size }: ChartProps) {
             data-testid="chart-src-min-768"
           />
         )}
-        <img
+        {halfChart && (
+          <source
+            media="(min-width: 768px)"
+            srcSet={`data:image/svg+xml;utf8,${getChartSvg(halfChart)}`}
+            data-testid="chart-src-min-768"
+          />
+        )}
+        <Image
           alt={t('cms.blocks.chart.alt', { body: alt })}
-          src={`data:image/svg+xml;utf8,${getChartSvg(narrowChart)}`}
+          src={`data:image/svg+xml;utf8,${getChartSvg(thirdChart ? thirdChart : narrowChart)}`}
           className="w-full"
         />
       </picture>

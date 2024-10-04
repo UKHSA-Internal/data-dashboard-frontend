@@ -2,28 +2,31 @@ import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
 export const landingPageMock: PageResponse<PageType.Landing> = {
-  id: 231,
+  id: 79,
   meta: {
+    seo_title: 'Home | UKHSA data dashboard',
     search_description: '',
-    seo_title: 'Landing page | UKHSA data dashboard',
-    type: 'landing_page.LandingPage',
-    detail_url: 'https://http:/api/pages/231/',
-    html_url: 'https://http://localhost:3000',
+    type: 'home.LandingPage',
+    detail_url: '/api/pages/79/',
+    html_url: 'http://localhost:3000',
     slug: 'landing-page',
     show_in_menus: false,
-    first_published_at: '2024-09-24T16:40:55.228390+01:00',
+    first_published_at: '2024-09-30T11:41:36.884029+01:00',
     alias_of: null,
     parent: {
-      id: 155,
+      id: 3,
       meta: {
         type: 'home.UKHSARootPage',
-        detail_url: 'https://http:/api/pages/155/',
+        detail_url: '/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
     },
   },
   title: 'Landing page',
+  seo_change_frequency: 5,
+  seo_priority: 0.5,
+  last_updated_at: '2024-09-30T11:41:36.884029+01:00',
   sub_title: 'showing public health data across England',
   body: [
     {
@@ -33,16 +36,16 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
         page_link: null,
         content: [
           {
-            type: 'chart_row_card',
+            type: 'chart_card_section',
             value: {
-              columns: [
+              cards: [
                 {
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'COVID-19',
                     sub_title: 'Cases reported',
                     tag_manager_event_id: '',
-                    topic_page: '/topics/covid-19/',
+                    topic_page: 'http://localhost:3000/topics/covid-19/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
@@ -70,7 +73,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     title: 'Influenza',
                     sub_title: 'Healthcare admission rates',
                     tag_manager_event_id: '',
-                    topic_page: '/topics/influenza/',
+                    topic_page: 'http://localhost:3000/topics/influenza/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
@@ -98,7 +101,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     title: 'RSV',
                     sub_title: 'Healthcare admission rates',
                     tag_manager_event_id: '',
-                    topic_page: '/topics/other-respiratory-viruses/',
+                    topic_page: 'http://localhost:3000/topics/other-respiratory-viruses/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
@@ -132,12 +135,12 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
       type: 'section',
       value: {
         heading: 'Weather health alerts',
-        page_link: '/weather-health-alerts/',
+        page_link: 'http://localhost:3000/weather-health-alerts/',
         content: [
           {
             type: 'weather_health_alert_card',
             value: {
-              title: 'weather health alerts',
+              title: 'Heat health alerts',
               sub_title: 'Across England',
               alert_type: 'heat',
             },
@@ -148,8 +151,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
       id: 'be533e25-ba91-4e86-8a45-1314ed395fb9',
     },
   ],
-  last_updated_at: '2024-09-24T16:40:55.228390+01:00',
-  last_published_at: '2024-09-24T16:40:55.228390+01:00',
-  seo_change_frequency: 5,
-  seo_priority: 0.5,
+  related_links_layout: 'Footer',
+  related_links: [],
+  last_published_at: '2024-09-30T11:41:36.884029+01:00',
 }

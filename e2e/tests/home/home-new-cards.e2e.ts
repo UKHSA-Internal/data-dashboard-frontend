@@ -6,7 +6,6 @@ test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Layout', () => {
     test.beforeEach(async ({ switchboardPage, homePage }) => {
       await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-      await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
       await homePage.goto()
     })
 
@@ -38,7 +37,6 @@ test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Health Topics', () => {
     test.beforeEach(async ({ switchboardPage, homePage }) => {
       await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-      await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
       await homePage.goto()
     })
 
@@ -76,7 +74,6 @@ test.describe('Landing page new card design feature flags enabled', () => {
 
       test.beforeEach(async ({ switchboardPage, homePage }) => {
         await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-        await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
         await homePage.goto()
       })
 
@@ -105,7 +102,6 @@ test.describe('Landing page new card design feature flags enabled', () => {
 
       test.beforeEach(async ({ switchboardPage, homePage }) => {
         await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-        await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
         await homePage.goto()
       })
 
@@ -134,7 +130,6 @@ test.describe('Landing page new card design feature flags enabled', () => {
 
       test.beforeEach(async ({ switchboardPage, homePage }) => {
         await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-        await switchboardPage.setFeatureFlag('weatherHealthSummaryCard', 'Enabled')
         await homePage.goto()
       })
 

@@ -73,10 +73,6 @@ export const WithSimplifiedChartCardAndLink = z.object({
   }),
 })
 
-export const ChartRowColumns = z.array(
-  z.union([WithChartHeadlineAndTrendCard, WithChartCard, WithSimplifiedChartCardAndLink])
-)
-
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('text_card'),
@@ -91,7 +87,14 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('chart_row_card'),
     value: z.object({
-      columns: ChartRowColumns,
+      columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
+    }),
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('chart_card_section'),
+    value: z.object({
+      cards: z.array(WithSimplifiedChartCardAndLink),
     }),
     id: z.string(),
   }),

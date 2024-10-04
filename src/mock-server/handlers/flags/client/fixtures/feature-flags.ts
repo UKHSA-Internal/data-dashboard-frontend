@@ -23,17 +23,6 @@ export const featureFlags = {
       description: null,
       impressionData: false,
     },
-    {
-      name: 'weather-health-summary-card',
-      type: 'release',
-      enabled: false,
-      project: 'default',
-      stale: false,
-      strategies: [],
-      variants: [],
-      description: null,
-      impressionData: false,
-    },
   ],
   query: {
     inlineSegmentConstraints: true,

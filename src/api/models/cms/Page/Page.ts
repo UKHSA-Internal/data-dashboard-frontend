@@ -9,7 +9,9 @@ export const Page = z.object({
   meta: Meta,
   title: z.string(),
   body: z.array(Body),
-  related_links: z.optional(z.array(RelatedLink)),
+  // TODO: related_links_layout should appear on app pages?
+  related_links_layout: z.optional(z.string()),
+  related_links: z.array(RelatedLink),
   last_published_at: z.string().datetime(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),

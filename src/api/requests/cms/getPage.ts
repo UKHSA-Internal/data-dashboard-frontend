@@ -25,12 +25,14 @@ type PageTypeToDataMap = {
 const SharedPageData = z.object({
   id: z.number(),
   title: z.string(),
+  meta: Meta,
+  related_links: RelatedLinks,
   last_published_at: z.string(),
   last_updated_at: z.string(),
-  related_links: z.optional(RelatedLinks),
-  meta: Meta,
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
+  // TODO: Should add this required everywhere and to be either Footer/Sidebar
+  related_links_layout: z.optional(z.string()),
 })
 
 const WithHomeData = SharedPageData.extend({
@@ -45,7 +47,7 @@ const WithLandingData = SharedPageData.extend({
   sub_title: z.string(),
   body: Body,
   meta: Meta.extend({
-    type: z.literal('landing_page.LandingPage'),
+    type: z.literal('home.LandingPage'),
   }),
 })
 
@@ -130,6 +132,7 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
 
 export const responseSchema = z.union([
   WithHomeData,
+  WithLandingData,
   WithTopicData,
   WithCommonData,
   WithCompositeData,

@@ -10,6 +10,7 @@ import {
   covid19PageMock,
   dashboardMock,
   influenzaPageMock,
+  landingPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
@@ -37,6 +38,28 @@ export const pagesWithHomeTypeMock: PagesResponse = {
       seo_change_frequency: dashboardMock.seo_change_frequency,
       seo_priority: dashboardMock.seo_priority,
       title: dashboardMock.title,
+    },
+  ],
+}
+
+export const pagesWithLandingTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: landingPageMock.id,
+      meta: {
+        type: landingPageMock.meta.type,
+        detail_url: landingPageMock.meta.detail_url,
+        html_url: landingPageMock.meta.html_url,
+        slug: landingPageMock.meta.slug,
+        show_in_menus: landingPageMock.meta.show_in_menus,
+        first_published_at: landingPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: landingPageMock.seo_change_frequency,
+      seo_priority: landingPageMock.seo_priority,
+      title: landingPageMock.title,
     },
   ],
 }
@@ -382,6 +405,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
 
 const items = [
   ...pagesWithHomeTypeMock.items,
+  ...pagesWithLandingTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithCompositeTypeMock.items,
   ...pagesWithTopicTypeMock.items,
