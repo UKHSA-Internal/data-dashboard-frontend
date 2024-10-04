@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import { ReactNode } from 'react'
 
+import { RichText } from '@/app/components/cms/RichText/RichText'
 import { getServerTranslation } from '@/app/i18n'
 
 interface RelatedLinksProps {
@@ -48,14 +49,23 @@ export function RelatedLink({ title, url, children, className }: RelatedLinkProp
     <li className={className}>
       <a
         href={url}
-        className={'govuk-link govuk-link--no-visited-state'}
+        className={'govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-1 inline-block'}
         rel="noreferrer noopener"
         target="_blank"
         aria-label={`${title} (opens in a new window)`}
       >
         {title}
       </a>
-      {children && <div dangerouslySetInnerHTML={{ __html: children }} className="break-words" />}
+      {children && (
+        <RichText
+          className="break-words"
+          components={{
+            p: ({ children }) => <p className="govuk-body-s">{children}</p>,
+          }}
+        >
+          {children}
+        </RichText>
+      )}
     </li>
   )
 }

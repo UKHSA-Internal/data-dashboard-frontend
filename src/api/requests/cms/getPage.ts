@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { Topics } from '@/api/models'
-import { Body, CompositeBody, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -27,6 +27,7 @@ const SharedPageData = z.object({
   last_published_at: z.string(),
   last_updated_at: z.string(),
   related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout,
   meta: Meta,
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
