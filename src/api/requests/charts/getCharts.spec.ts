@@ -11,6 +11,20 @@ test('Returns a chart svg and last updated date', async () => {
     chart: 'mocked-chart-svg',
     alt_text: 'alt text',
     last_updated: '123',
+    figure: {
+      data: [
+        {
+          x: [],
+          y: [],
+          showlegend: false,
+          type: 'bar',
+        },
+      ],
+      layout: {
+        xaxis: {},
+        yaxis: {},
+      },
+    },
   }
 
   jest.mocked(client).mockResolvedValueOnce({
@@ -82,6 +96,13 @@ test('Handles API errors when data is missing (400 status code)', async () => {
         path: ['alt_text'],
         message: 'Required',
       },
+      {
+        code: 'invalid_type',
+        expected: 'object',
+        received: 'undefined',
+        path: ['figure'],
+        message: 'Required',
+      },
     ]),
   })
 })
@@ -129,6 +150,13 @@ test('Handles API errors for non-400 error responses', async () => {
         expected: 'string',
         received: 'undefined',
         path: ['alt_text'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'object',
+        received: 'undefined',
+        path: ['figure'],
         message: 'Required',
       },
     ]),
