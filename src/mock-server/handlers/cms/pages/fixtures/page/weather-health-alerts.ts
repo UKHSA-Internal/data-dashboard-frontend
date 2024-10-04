@@ -59,6 +59,7 @@ export const weatherHealthAlertsParentMock: PageResponse<PageType.Composite> = {
       url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
     },
   ],
+  related_links_layout: 'Sidebar',
 }
 
 export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] = [
@@ -118,6 +119,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
+    related_links_layout: 'Sidebar',
   },
   {
     id: 42,
@@ -175,5 +177,6 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
+    related_links_layout: 'Sidebar',
   },
 ]

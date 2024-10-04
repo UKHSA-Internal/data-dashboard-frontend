@@ -33,4 +33,5 @@ export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
   body: '<p>tbc</p>',
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
 }
