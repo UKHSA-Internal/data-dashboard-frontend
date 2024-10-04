@@ -86,6 +86,11 @@ export default function SwitchBoard() {
             </ListItem>
             <ListItem spacing="m">
               <ListItemArrow>
+                <ListItemArrowLink href={`/switchboard/pages`}>Pages</ListItemArrowLink>
+              </ListItemArrow>
+            </ListItem>
+            <ListItem spacing="m">
+              <ListItemArrow>
                 <ListItemArrowLink href={`/switchboard/menus`}>Menus</ListItemArrowLink>
               </ListItemArrow>
             </ListItem>

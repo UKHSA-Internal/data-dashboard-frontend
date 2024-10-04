@@ -12,26 +12,16 @@ import {
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
-import {
-  MetricsCard,
-  RelatedLink as RelatedLinkV1,
-  RelatedLinks as RelatedLinksV1,
-  View,
-} from '@/app/components/ui/ukhsa'
+import { MetricsCard, View } from '@/app/components/ui/ukhsa'
 import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
 import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
 import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
-import { flags } from '@/app/constants/flags.constants'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { logger } from '@/lib/logger'
 
-import {
-  RelatedLink as RelatedLinkV2,
-  RelatedLinks as RelatedLinksV2,
-} from '../../ui/ukhsa/RelatedLinks/v2/RelatedLinks'
+import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 
 interface MetricsParentPageProps {
   searchParams: {
@@ -84,9 +74,8 @@ export default async function MetricsParentPage({
     body,
     last_updated_at: lastUpdated,
     related_links: relatedLinks,
+    related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
-
-  const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
 
   const metricsEntries = await getMetricsPages({ search, page })
 
@@ -150,25 +139,16 @@ export default async function MetricsParentPage({
             </Pagination>
           )}
         </div>
+        {relatedLinksLayout === 'Sidebar' ? (
+          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
+            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+          </div>
+        ) : null}
       </div>
 
-      {newLandingContentEnabled ? (
-        <RelatedLinksV2 variant="footer">
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLinkV2 key={id} url={url} title={title}>
-              {body}
-            </RelatedLinkV2>
-          ))}
-        </RelatedLinksV2>
-      ) : (
-        <RelatedLinksV1 variant="footer">
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLinkV1 key={id} url={url} title={title}>
-              {body}
-            </RelatedLinkV1>
-          ))}
-        </RelatedLinksV1>
-      )}
+      {relatedLinksLayout === 'Footer' ? (
+        <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+      ) : null}
     </View>
   )
 }
