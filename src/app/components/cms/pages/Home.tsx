@@ -32,6 +32,7 @@ export default async function HomePage() {
         <div
           className={clsx({
             'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
+            'govuk-grid-column-full': relatedLinksLayout === 'Footer',
           })}
         >
           {newLandingContentEnabled ? (
