@@ -34,7 +34,12 @@ const getChartsMock = jest.mocked(getCharts)
 test('renders the chart correctly when successful', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart', alt_text: 'alt text for chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: {
+      chart: 'mock-chart',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -90,7 +95,12 @@ test('renders the chart by geography and geography type when both are present in
 
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart', alt_text: 'alt text for chart', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: {
+      chart: 'mock-chart',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -146,6 +156,7 @@ test('full width charts should also have an acompanying narrow version for mobil
       chart: 'mock-chart-narrow',
       alt_text: 'alt text for chart',
       last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
     },
   })
   getChartsMock.mockResolvedValueOnce({
@@ -154,6 +165,7 @@ test('full width charts should also have an acompanying narrow version for mobil
       chart: 'mock-chart-wide',
       alt_text: 'alt text for chart',
       last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
     },
   })
 

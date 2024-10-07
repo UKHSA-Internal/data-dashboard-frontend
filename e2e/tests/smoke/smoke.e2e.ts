@@ -17,7 +17,7 @@ const pagesShownInNavMenu = [
 test.describe('Smoke tests - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('Navigates to each page from the side navigation menu', async ({ app, homePage }) => {
+  test('Navigates to each page from the navigation menu', async ({ app, homePage }) => {
     await test.step('loads the home page', async () => {
       await homePage.goto()
       await homePage.hasHeading()
@@ -61,7 +61,7 @@ test.describe('Smoke tests - no JavaScript @smoke', () => {
 
     for (const page of pagesShownInNavMenu) {
       await test.step(`loads the "${page}" page`, async () => {
-        await app.clickNav(decodeURI(page))
+        await app.clickBrowseNav(decodeURI(page))
         await app.hasHeading(decodeURI(page))
       })
     }

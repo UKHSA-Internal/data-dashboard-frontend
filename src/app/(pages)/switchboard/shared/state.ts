@@ -17,6 +17,17 @@ export const initialState: switchBoardSchemaType = {
       },
       scenario: 'RedAmberGreenYellow',
     },
+    pages: {
+      list: {
+        status: StatusCodes.OK,
+      },
+      detail: {
+        status: StatusCodes.OK,
+        scenario: {
+          relatedLinksLayout: 'Default',
+        },
+      },
+    },
     'global-banners': {
       scenario: 'Information',
       status: StatusCodes.OK,
@@ -30,6 +41,7 @@ export const initialState: switchBoardSchemaType = {
     'landing-page-hero': 'disabled',
     'landing-page-content': 'disabled',
     'weather-health-summary-card': 'disabled',
+    'interactive-charts': 'disabled',
   },
 }
 

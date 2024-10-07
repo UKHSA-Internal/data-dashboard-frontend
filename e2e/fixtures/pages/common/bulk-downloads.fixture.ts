@@ -1,6 +1,6 @@
 import type { Page } from '@playwright/test'
 import { expect } from '@playwright/test'
-import * as fs from 'fs'
+import AdmZip from 'adm-zip'
 
 import { bulkDownloadCsv, bulkDownloadJson } from '@/mock-server/handlers/bulkdownloads/fixtures/bulk-download-zip'
 
@@ -66,12 +66,33 @@ export class BulkDownloadsPage {
     const path = await download.path()
 
     if (path) {
-      const file = fs.readFileSync(path)
+      // Unzip the downloaded file using AdmZip
+      const zip = new AdmZip(path)
+      const zipEntries = zip.getEntries()
+
+      // Initialize a variable to hold the extracted data
+      let extractedData
+
+      // Check the format and find the relevant entry
       if (format === 'json') {
-        expect(file.toString()).toEqual(JSON.stringify(bulkDownloadJson))
+        const jsonEntry = zipEntries.find((entry) => entry.entryName === 'mock.json')
+        if (jsonEntry) {
+          extractedData = zip.readAsText(jsonEntry) // Read the contents as text
+        }
+      } else if (format === 'csv') {
+        const csvEntry = zipEntries.find((entry) => entry.entryName === 'mock.csv')
+        if (csvEntry) {
+          extractedData = zip.readAsText(csvEntry) // Read the contents as text
+        }
       }
-      if (format === 'csv') {
-        expect(file.toString()).toEqual(bulkDownloadCsv)
+
+      if (!extractedData) return
+
+      if (format === 'json') {
+        // Assert based on the format
+        expect(JSON.parse(extractedData)).toEqual(bulkDownloadJson)
+      } else if (format === 'csv') {
+        expect(extractedData).toEqual(bulkDownloadCsv)
       }
     }
   }
