@@ -197,19 +197,17 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
       <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
     )}
 
-    {type === 'internal_page_links' && (
+    {type === 'internal_page_links' && value && value.length > 0 && (
       <List>
         <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-        {value &&
-          value.length > 0 &&
-          value.map(({ id, value }) => (
-            <ListItem key={id} spacing="m">
-              <ListItemArrow>
-                <ListItemArrowLink href={value.page}>{value.title}</ListItemArrowLink>
-                <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
-              </ListItemArrow>
-            </ListItem>
-          ))}
+        {value.map(({ id, value }) => (
+          <ListItem key={id} spacing="m">
+            <ListItemArrow>
+              <ListItemArrowLink href={value.page}>{value.title}</ListItemArrowLink>
+              <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
+            </ListItemArrow>
+          </ListItem>
+        ))}
       </List>
     )}
   </Fragment>
