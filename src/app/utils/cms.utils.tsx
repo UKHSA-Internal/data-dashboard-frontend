@@ -193,5 +193,23 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     {type === 'code_block' && (
       <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
     )}
+
+    {type === 'internal_page_links' && (
+      <ul className="govuk-list govuk-list--spaced govuk-!-font-size-16">
+        {value &&
+          value.length > 0 &&
+          value.map(({ id, value }) => (
+            <li key={id}>
+              <Link
+                href={value.page}
+                className="govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-1 inline-block"
+              >
+                {value.title}
+              </Link>
+              <p className="govuk-body-s">{value.sub_title}</p>
+            </li>
+          ))}
+      </ul>
+    )}
   </Fragment>
 )
