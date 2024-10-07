@@ -7,6 +7,8 @@ import { z } from 'zod'
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import { List } from '@/app/components/ui/ukhsa/List/List'
+import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 
 import {
   AreaSelectorLoader,
@@ -24,6 +26,7 @@ import {
   Timestamp,
   Trend,
 } from '../components/cms'
+import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 
 // TODO: Move this file into cms folder
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
@@ -195,21 +198,19 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'internal_page_links' && (
-      <ul className="govuk-list govuk-list--spaced govuk-!-font-size-16">
+      <List>
+        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
         {value &&
           value.length > 0 &&
           value.map(({ id, value }) => (
-            <li key={id}>
-              <Link
-                href={value.page}
-                className="govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-1 inline-block"
-              >
-                {value.title}
-              </Link>
-              <p className="govuk-body-s">{value.sub_title}</p>
-            </li>
+            <ListItem key={id} spacing="m">
+              <ListItemArrow>
+                <ListItemArrowLink href={value.page}>{value.title}</ListItemArrowLink>
+                <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
+              </ListItemArrow>
+            </ListItem>
           ))}
-      </ul>
+      </List>
     )}
   </Fragment>
 )

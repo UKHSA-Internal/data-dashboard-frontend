@@ -1,11 +1,11 @@
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RichTextAutoHeadings } from '@/app/components/cms/RichText/RichTextAutoHeadings'
 import { View } from '@/app/components/ui/ukhsa'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { RichTextAutoHeadings } from '../RichText/RichTextAutoHeadings'
 
 export default async function CompositePage({ slug }: PageComponentBaseProps) {
   const {
@@ -15,6 +15,9 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
+
+  console.log('Details, title:', title)
+  console.log('Details, body:', body)
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
