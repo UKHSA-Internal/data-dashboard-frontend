@@ -54,7 +54,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -714,7 +714,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -1374,7 +1374,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -2034,7 +2034,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -2694,7 +2694,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -3354,7 +3354,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -4014,7 +4014,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",
@@ -4674,7 +4674,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "https://http://localhost:3000/respiratory-viruses/",
+    "url": "http://localhost:3000/respiratory-viruses/",
   },
   {
     "changeFrequency": "monthly",

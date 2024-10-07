@@ -16,9 +16,6 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 
-  console.log('Details, title:', title)
-  console.log('Details, body:', body)
-
   return (
     <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
