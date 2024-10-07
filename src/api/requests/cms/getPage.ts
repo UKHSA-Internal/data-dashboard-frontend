@@ -27,7 +27,7 @@ const SharedPageData = z.object({
   title: z.string(),
   meta: Meta,
   related_links: RelatedLinks,
-  related_links_layout: RelatedLinksLayout,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
   last_published_at: z.string(),
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
