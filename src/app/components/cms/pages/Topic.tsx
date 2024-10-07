@@ -2,23 +2,13 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import {
-  PageSection,
-  PageSectionWithContents,
-  RelatedLink as RelatedLinkV1,
-  RelatedLinks as RelatedLinksV1,
-  View,
-} from '@/app/components/ui/ukhsa'
-import { flags } from '@/app/constants/flags.constants'
+import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCard } from '@/app/utils/cms.utils'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
+import { clsx } from '@/lib/clsx'
 
-import {
-  RelatedLink as RelatedLinkV2,
-  RelatedLinks as RelatedLinksV2,
-} from '../../ui/ukhsa/RelatedLinks/v2/RelatedLinks'
+import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 
 export default async function TopicPage({
   slug,
@@ -26,14 +16,13 @@ export default async function TopicPage({
 }: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
   const { t } = await getServerTranslation('common')
 
-  const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
-
   const {
     title,
     body,
     page_description: description,
     last_updated_at: lastUpdated,
     related_links: relatedLinks,
+    related_links_layout: relatedLinksLayout,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
@@ -43,43 +32,45 @@ export default async function TopicPage({
       description={description}
       lastUpdated={lastUpdated}
     >
-      {enableAreaSelector && (
-        <>
-          <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
-          <Details
-            open={Boolean(areaType)}
-            label={t('areaSelector.detailsLabel')}
-            className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
-          >
-            <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
-          </Details>
-        </>
-      )}
-      <PageSectionWithContents>
-        {body.map(({ id, value }) => (
-          <PageSection key={id} heading={value.heading}>
-            {value.content.map(renderCard)}
-          </PageSection>
-        ))}
-      </PageSectionWithContents>
+      <div className="govuk-grid-row">
+        <div
+          className={clsx({
+            'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
+            'govuk-grid-column-full': relatedLinksLayout === 'Footer',
+          })}
+        >
+          {enableAreaSelector && (
+            <>
+              <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+              <Details
+                open={Boolean(areaType)}
+                label={t('areaSelector.detailsLabel')}
+                className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+              >
+                <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
+              </Details>
+            </>
+          )}
 
-      {newLandingContentEnabled ? (
-        <RelatedLinksV2 variant="footer">
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLinkV2 key={id} url={url} title={title}>
-              {body}
-            </RelatedLinkV2>
-          ))}
-        </RelatedLinksV2>
-      ) : (
-        <RelatedLinksV1 variant="footer">
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLinkV1 key={id} url={url} title={title}>
-              {body}
-            </RelatedLinkV1>
-          ))}
-        </RelatedLinksV1>
-      )}
+          <PageSectionWithContents>
+            {body.map(({ id, value }) => (
+              <PageSection key={id} heading={value.heading}>
+                {value.content.map(renderCard)}
+              </PageSection>
+            ))}
+          </PageSectionWithContents>
+        </div>
+
+        {relatedLinksLayout === 'Sidebar' ? (
+          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
+            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+          </div>
+        ) : null}
+      </div>
+
+      {relatedLinksLayout === 'Footer' ? (
+        <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+      ) : null}
     </View>
   )
 }

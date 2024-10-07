@@ -59,6 +59,7 @@ export const weatherHealthAlertsParentMock: PageResponse<PageType.Composite> = {
       url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
     },
   ],
+  related_links_layout: 'Sidebar',
 }
 
 export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] = [
@@ -71,7 +72,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
       slug: 'cold',
       show_in_menus: false,
       seo_title: 'Cold health alerts | UKHSA data dashboard',
-      search_description: 'Mocked Cold health alerts page description',
+      search_description: 'View all cold health alerts currently in place in England',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
       parent: {
@@ -118,6 +119,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
+    related_links_layout: 'Sidebar',
   },
   {
     id: 42,
@@ -128,7 +130,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
       slug: 'heat',
       show_in_menus: false,
       seo_title: 'Heat health alerts | UKHSA data dashboard',
-      search_description: 'Mocked Heat health alerts page description',
+      search_description: 'View all heat health alerts currently in place in England',
       first_published_at: '2023-05-12T16:51:07.555450+01:00',
       alias_of: null,
       parent: {
@@ -175,5 +177,6 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
+    related_links_layout: 'Sidebar',
   },
 ]

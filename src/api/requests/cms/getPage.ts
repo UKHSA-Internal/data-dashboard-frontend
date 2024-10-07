@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { Topics } from '@/api/models'
-import { Body, CompositeBody, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -27,12 +27,11 @@ const SharedPageData = z.object({
   title: z.string(),
   meta: Meta,
   related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout,
   last_published_at: z.string(),
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
-  // TODO: Should add this required everywhere and to be either Footer/Sidebar
-  related_links_layout: z.optional(z.string()),
 })
 
 const WithHomeData = SharedPageData.extend({

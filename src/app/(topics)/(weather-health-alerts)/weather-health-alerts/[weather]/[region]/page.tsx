@@ -3,7 +3,7 @@ import { Metadata } from 'next'
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { RelatedLinks, RelatedSidebarLink } from '@/app/components/ui/ukhsa/RelatedLinks/v2/RelatedLinks'
+import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 
 import AlertBody from './AlertBody'
 
@@ -24,21 +24,15 @@ interface WeatherHealthAlertProps {
 }
 
 export default async function Alert({ params: { weather, region } }: WeatherHealthAlertProps) {
-  const { related_links: relatedLinks } = await getPageBySlug<PageType.Composite>(weather)
+  const { related_links: relatedLinks, related_links_layout: relatedLinksLayout } =
+    await getPageBySlug<PageType.Composite>(weather)
 
   return (
     <AlertBody
       weather={weather}
       region={region}
-      relatedLinks={
-        <div className="govuk-grid-column-one-quarter-from-desktop">
-          <RelatedLinks variant="sidebar">
-            {relatedLinks.map(({ title, url, id }) => (
-              <RelatedSidebarLink key={id} title={title} url={url} />
-            ))}
-          </RelatedLinks>
-        </div>
-      }
+      relatedLinks={<RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />}
+      relatedLinksLayout={relatedLinksLayout}
     />
   )
 }

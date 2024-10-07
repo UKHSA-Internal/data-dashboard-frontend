@@ -34,6 +34,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
   title: 'Metrics documentation',
   body: '<p>Here we outline a list of metrics available in the UKHSA data dashboard. Click to view more information about a metric</p>',
   related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
   last_published_at: '2023-10-24T16:09:35.359598+01:00',
 }
 
@@ -104,6 +105,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    related_links_layout: 'Footer',
   },
   {
     id: 27,
@@ -171,6 +173,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    related_links_layout: 'Footer',
   },
   {
     id: 28,
@@ -231,6 +234,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    related_links_layout: 'Footer',
   },
   {
     id: 29,
@@ -290,6 +294,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    related_links_layout: 'Footer',
   },
   {
     id: 30,
@@ -357,6 +362,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    related_links_layout: 'Footer',
   },
 
   // Generate a set of random pages for testing of pagination
@@ -426,5 +432,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    related_links_layout: 'Footer',
   })),
 ]
