@@ -13,7 +13,7 @@ export type RequestParams = z.infer<typeof requestSchema>
 export const postSuggestions = async (suggestions: RequestParams) => {
   try {
     const { status } = await client<Response>('suggestions/v1', {
-      body: suggestions,
+      body: JSON.stringify(suggestions),
       baseUrl: getFeedbackApiBaseUrl(),
     })
     if (status !== 200) {

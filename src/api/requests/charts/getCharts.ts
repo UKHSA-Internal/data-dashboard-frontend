@@ -55,7 +55,7 @@ export const getCharts = async (chart: RequestParams) => {
   }
 
   try {
-    const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body })
+    const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body: JSON.stringify(body) })
 
     return responseSchema.safeParse(data)
   } catch (error) {
