@@ -29,7 +29,7 @@ export const chartSizes = {
     height: 260,
   },
   half: {
-    width: 640,
+    width: 650,
     height: 200,
   },
   third: {

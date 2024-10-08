@@ -187,9 +187,8 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                   </h3>
                   <p className="govuk-body-s mb-1 text-grey-1">{card.value.sub_title}</p>
 
-                  {/* TODO: Call charts endpoint, get line_single_simplified. Pass through colour 'COLOUR_1_DARK_BLUE'  */}
                   <div>
-                    <Chart data={card.value} size={'half'} />
+                    <Chart data={card.value} size={value.cards.length < 3 ? 'half' : 'third'} />
                   </div>
                 </Link>
               </Card>
