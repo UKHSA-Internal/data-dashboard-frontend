@@ -8,7 +8,7 @@ import { logger } from '@/lib/logger'
 export const getHealthAlerts = async (type: HealthAlertTypes) => {
   try {
     const path = isSSR ? `alerts/v1` : `proxy/alerts/v1`
-    const { data } = await client<HealthAlertList>(`${path}/${type}`, { cache: 'no-store' })
+    const { data } = await client<HealthAlertList>(`${path}/${type}`, { cache: 'no-store', next: { revalidate: 0 } })
     return HealthAlertList.safeParse(data)
   } catch (error) {
     logger.error(error)

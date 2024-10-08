@@ -35,7 +35,7 @@ export const getDownloads = async (
       x_axis,
       file_format: format,
     }
-    const { data } = await client<string>(`downloads/v2`, { body: JSON.stringify(body) })
+    const { data } = await client<string>(`downloads/v2`, { body })
 
     return data
   } catch (error) {

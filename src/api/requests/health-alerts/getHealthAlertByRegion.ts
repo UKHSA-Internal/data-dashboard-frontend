@@ -8,7 +8,10 @@ import { logger } from '@/lib/logger'
 export const getHealthAlertByRegion = async (type: HealthAlertTypes, region: string) => {
   try {
     const path = isSSR ? `alerts/v1` : `proxy/alerts/v1`
-    const { data } = await client<HealthAlert>(`${path}/${type}/${region}`, { cache: 'no-store' })
+    const { data } = await client<HealthAlert>(`${path}/${type}/${region}`, {
+      cache: 'no-store',
+      next: { revalidate: 0 },
+    })
     return HealthAlert.safeParse(data)
   } catch (error) {
     logger.error(error)

@@ -3,10 +3,14 @@ import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
-interface Options extends RequestInit {
+// TODO: Refactor to extend RequestInit
+interface Options {
+  body?: unknown
   searchParams?: URLSearchParams
   baseUrl?: string
   headers?: Record<string, string>
+  cache?: RequestInit['cache']
+  next?: { revalidate: number }
 }
 
 /**
@@ -33,9 +37,9 @@ export async function client<T>(
     }
   }
 
-  const fetchOptions: RequestInit = {
+  const fetchOptions: RequestInit & { next: { revalidate: number } } = {
     method: body ? 'POST' : 'GET',
-    body: body ? body : undefined,
+    body: body ? JSON.stringify(body) : undefined,
     next: {
       // Revalidate the cache every 5 minutes
       revalidate: 300,
