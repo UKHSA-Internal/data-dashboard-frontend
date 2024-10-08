@@ -1,5 +1,3 @@
-import fetch from 'cross-fetch'
-
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 
@@ -40,8 +38,8 @@ export async function client<T>(
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     next: {
-      // Disable NextJs router caching
-      revalidate: 0,
+      // Revalidate the cache every 5 minutes
+      revalidate: 300,
     },
     ...customConfig,
     headers: {

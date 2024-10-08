@@ -9,7 +9,6 @@ import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 
 import {
-  AreaSelectorLoader,
   ButtonExternal,
   ButtonInternal,
   Chart,
@@ -24,6 +23,7 @@ import {
   Timestamp,
   Trend,
 } from '../components/cms'
+import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 
 // TODO: Move this file into cms folder
 export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (

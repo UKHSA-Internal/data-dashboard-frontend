@@ -1,5 +1,4 @@
 'use client'
-import fetch from 'cross-fetch'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
 
