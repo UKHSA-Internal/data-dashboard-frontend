@@ -8,6 +8,7 @@ import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { clsx } from '@/lib/clsx'
 
 import { Card } from '../../ui/ukhsa/Card/Card'
+import { MiniMapCard } from '../../ui/ukhsa/MiniMap/MiniMapCard'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { View } from '../../ui/ukhsa/View/View'
 import { ChartRowCard } from '../ChartRowCard/ChartRowCard'
@@ -210,7 +211,9 @@ export default async function HomePage() {
                     </Link>
                   </h2>
                   <ChartRowCard>
-                    <div className={clsx('mb-3 sm:mb-6 lg:mb-0 lg:w-1/2')}>{/* <MiniMapCard /> */}</div>
+                    <div className={clsx('mb-3 sm:mb-6 lg:mb-0 lg:w-1/2')}>
+                      <MiniMapCard />
+                    </div>
                   </ChartRowCard>
                 </section>
               ) : null}
