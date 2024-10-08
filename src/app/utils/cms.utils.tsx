@@ -35,7 +35,7 @@ export const renderSection = ({
   <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
-        <Link href={pageLink ?? ''} className="govuk-link--no-visited-state">
+        <Link href={pageLink} className="govuk-link--no-visited-state">
           {heading}
         </Link>
       ) : (

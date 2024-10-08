@@ -28,7 +28,7 @@ export default function SwitchBoard() {
             {
               'landing-page-hero': form.get('flags.landingPageHero') as string,
               'landing-page-content': form.get('flags.landingPageContent') as string,
-              'weather-health-summary-card': form.get('flags.weatherHealthSummaryCard') as string,
+              'interactive-charts': form.get('flags.interactiveCharts') as string,
             }
           )
         }}
