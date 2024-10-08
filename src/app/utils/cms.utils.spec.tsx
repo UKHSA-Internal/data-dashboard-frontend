@@ -304,7 +304,7 @@ describe('Composite block', () => {
         id: '99c01f1d-0280-4cf4-bd96-39543a6c1ac9',
       })
     )
-    expect(screen.getByText('COVID-19')).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByText('COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.')).toBeInTheDocument()
   })
 })
