@@ -23,10 +23,9 @@ test.describe('Landing page new card design feature flags enabled', () => {
       await test.step('does not display the last updated date', async () => {
         await homePage.hasNotLastUpdated()
       })
-      // await test.step('displays categories', async () => {
-      // await homePage.hasCategories(['Respiratory viruses', 'Weather health alerts'])
-      // await homePage.hasCategories(['Weather health alerts'])
-      // })
+      await test.step('displays sections', async () => {
+        await homePage.hasSection(['Respiratory viruses', 'Weather health alerts'])
+      })
       await test.step('does not display related links', async () => {
         await app.hasNotRelatedLinks()
       })
@@ -46,25 +45,22 @@ test.describe('Landing page new card design feature flags enabled', () => {
       await test.step('displays a total of 3 health topic cards', async () => {
         await homePage.hasHealthTopicColumns(['COVID-19', 'Influenza', 'Measles'])
       })
-      await test.step('displays a COVID-19 health topic card', async () => {
-        await homePage.hasHealthTopicCard('COVID-19', {
-          tagline: 'Positive cases reported',
-          trendPercent: '6%',
-          trendDescription: 'Increase of 377 (6%) compared to the previous 7 days.',
+      await test.step('displays a COVID-19 card', async () => {
+        await homePage.hasLandingPageCard({
+          title: 'COVID-19',
+          sub_title: 'Cases reported',
         })
       })
       await test.step('displays an Influenza health topic card', async () => {
-        await homePage.hasHealthTopicCard('Influenza', {
-          tagline: 'Weekly hospital admission rates',
-          trendPercent: '0.3%',
-          trendDescription: 'Decrease of 5,911 (0.3%) compared to the previous 7 days.',
+        await homePage.hasLandingPageCard({
+          title: 'Influenza',
+          sub_title: 'Healthcare admission rates',
         })
       })
-      await test.step('displays a Measles health topic card', async () => {
-        await homePage.hasHealthTopicCard('Measles', {
-          tagline: 'Positive cases reported',
-          trendPercent: '6%',
-          trendDescription: 'Increase of 377 (6%) compared to the previous 7 days.',
+      await test.step('displays a RSV health topic card', async () => {
+        await homePage.hasLandingPageCard({
+          title: 'RSV',
+          sub_title: 'Healthcare admission rates',
         })
       })
     })

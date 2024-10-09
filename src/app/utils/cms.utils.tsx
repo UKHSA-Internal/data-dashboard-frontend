@@ -35,7 +35,13 @@ export const renderSection = ({
   id,
   value: { heading, content, page_link: pageLink },
 }: z.infer<typeof Body>[number]) => (
-  <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
+  <div
+    key={id}
+    className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
+    data-testid={`section-${kebabCase(heading)}`}
+    role="region"
+    aria-label={heading}
+  >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
         <Link href={pageLink} className="govuk-link--no-visited-state">
@@ -182,13 +188,13 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
               <Card
                 asChild
                 aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
-                className="govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
+                className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
                 <Link href={card.value.topic_page}>
                   <h3 id={`chart-row-card-heading-${snakeCase(card.value.title)}`} className="govuk-heading-m mb-1">
                     {card.value.title}
                   </h3>
-                  <p className="govuk-body-s mb-1 text-grey-1">{card.value.sub_title}</p>
+                  <p className="govuk-body-s mb-3 text-grey-1">{card.value.sub_title}</p>
 
                   <div>
                     <Chart data={card.value} size={value.cards.length < 3 ? 'half' : 'third'} />
@@ -202,7 +208,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
     )}
 
     {type === 'weather_health_alert_card' && (
-      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-1/2">
+      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-1/2" role="region" aria-label="Weather health alerts">
         <MiniMapCard title={value.title} subTitle={value.sub_title} alertType={value.alert_type} />
       </div>
     )}
