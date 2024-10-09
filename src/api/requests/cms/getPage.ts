@@ -66,7 +66,7 @@ const WithCompositeData = SharedPageData.extend({
   }),
   date_posted: z.string(),
   //TODO: Look into page description on all composite pages
-  page_description: z.optional(z.string()),
+  page_description: z.string().nullable().optional(),
 })
 
 const WithWhatsNewParentData = SharedPageData.extend({
