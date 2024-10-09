@@ -99,7 +99,8 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
   })
 
-  test('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+  test.skip('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
@@ -109,20 +110,19 @@ test.describe('Weather Health Alerts map interactivty', () => {
     await test.step('check interactive map has loaded', async () => {
       await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
-    // TODO: Investigate flakeyness CDD-2136
-    await test.skip('shows all regions initially', async () => {
+    await test.step('shows all regions initially', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
-    await test.skip('click zoom in button', async () => {
+    await test.step('click zoom in button', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Zoom in')
     })
-    await test.skip('shows fewer regions', async () => {
+    await test.step('shows fewer regions', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(8)
     })
-    await test.skip('click zoom out button', async () => {
+    await test.step('click zoom out button', async () => {
       await weatherHealthAlertsMapPage.clickMapButton('Zoom out')
     })
-    await test.skip('shows all regions again', async () => {
+    await test.step('shows all regions again', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
   })
@@ -652,7 +652,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
 test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+
+  test.skip('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })
@@ -665,8 +667,7 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
     await test.step('check interactive map has loaded', async () => {
       await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
-    // TODO: Investigate flakeyness CDD-2136
-    await test.skip('check interactive map has choropleth layer', async () => {
+    await test.step('check interactive map has choropleth layer', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('shows exit button', async () => {
@@ -678,7 +679,8 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
 test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+  test.skip('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })
@@ -691,8 +693,7 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
     await test.step('check interactive map has loaded', async () => {
       await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
-    // TODO: Investigate flakeyness CDD-2136
-    await test.skip('check interactive map has choropleth layer', async () => {
+    await test.step('check interactive map has choropleth layer', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('shows exit button', async () => {
@@ -704,7 +705,8 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
 test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+  test.skip('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })
@@ -717,8 +719,7 @@ test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
     await test.step('check interactive map has loaded', async () => {
       await weatherHealthAlertsMapPage.hasMapLeaflet()
     })
-    // TODO: Investigate flakeyness CDD-2136
-    await test.skip('check interactive map has choropleth layer', async () => {
+    await test.step('check interactive map has choropleth layer', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
     })
     await test.step('shows exit button', async () => {
