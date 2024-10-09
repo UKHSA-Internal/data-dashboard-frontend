@@ -8,6 +8,8 @@ import { z } from 'zod'
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import { List } from '@/app/components/ui/ukhsa/List/List'
+import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 
 import {
@@ -26,6 +28,7 @@ import {
   Timestamp,
   Trend,
 } from '../components/cms'
+import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 
 // TODO: Move this file into cms folder
 export const renderSection = ({
@@ -241,6 +244,20 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
 
     {type === 'code_block' && (
       <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
+    )}
+
+    {type === 'internal_page_links' && value && value.length > 0 && (
+      <List>
+        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+        {value.map(({ id, value }) => (
+          <ListItem key={id} spacing="m">
+            <ListItemArrow>
+              <ListItemArrowLink href={value.page}>{value.title}</ListItemArrowLink>
+              <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
+            </ListItemArrow>
+          </ListItem>
+        ))}
+      </List>
     )}
   </Fragment>
 )

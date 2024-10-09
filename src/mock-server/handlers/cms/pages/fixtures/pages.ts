@@ -14,6 +14,7 @@ import {
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
+  respiratoryVirusesMock,
   whatsNewChildMocks,
   whatsNewParentMock,
 } from './page'
@@ -136,7 +137,7 @@ export const pagesWithCommonTypeMock: PagesResponse = {
 
 export const pagesWithCompositeTypeMock: PagesResponse = {
   meta: {
-    total_count: 3 + accessOurDataChildMocks.length,
+    total_count: 4 + accessOurDataChildMocks.length,
   },
   items: [
     {
@@ -183,6 +184,21 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
       seo_change_frequency: accessOurDataParentMock.seo_change_frequency,
       seo_priority: accessOurDataParentMock.seo_priority,
       title: accessOurDataParentMock.title,
+    },
+    {
+      id: respiratoryVirusesMock.id,
+      meta: {
+        type: respiratoryVirusesMock.meta.type,
+        detail_url: respiratoryVirusesMock.meta.detail_url,
+        html_url: respiratoryVirusesMock.meta.html_url,
+        slug: respiratoryVirusesMock.meta.slug,
+        search_description: respiratoryVirusesMock.meta.search_description,
+        show_in_menus: respiratoryVirusesMock.meta.show_in_menus,
+        first_published_at: respiratoryVirusesMock.meta.first_published_at,
+      },
+      seo_change_frequency: respiratoryVirusesMock.seo_change_frequency,
+      seo_priority: respiratoryVirusesMock.seo_priority,
+      title: respiratoryVirusesMock.title,
     },
     ...accessOurDataChildMocks.map(
       ({

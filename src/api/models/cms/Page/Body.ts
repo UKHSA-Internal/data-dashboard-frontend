@@ -163,6 +163,21 @@ export const CompositeBody = z.array(
       }),
       id: z.string(),
     }),
+    z.object({
+      type: z.literal('internal_page_links'),
+      value: z.array(
+        z.object({
+          type: z.literal('page_link'),
+          value: z.object({
+            title: z.string(),
+            sub_title: z.string(),
+            page: z.string(),
+          }),
+          id: z.string(),
+        })
+      ),
+      id: z.string(),
+    }),
   ])
 )
 
