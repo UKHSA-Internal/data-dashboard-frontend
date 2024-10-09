@@ -7,11 +7,14 @@ import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
+// TODO: Refactor to extend RequestInit
 interface Options {
   body?: unknown
   searchParams?: URLSearchParams
   baseUrl?: string
   headers?: Record<string, string>
+  cache?: RequestInit['cache']
+  next?: { revalidate: number }
 }
 
 /**
@@ -46,8 +49,8 @@ export async function client<T>(
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     next: {
-      // Disable NextJs router caching
-      revalidate: 0,
+      // Revalidate the cache every 5 minutes
+      revalidate: 300,
     },
     retries: 3,
     retryDelay: (attempt) => {

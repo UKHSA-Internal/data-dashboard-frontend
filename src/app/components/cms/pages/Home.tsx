@@ -1,30 +1,40 @@
 import Link from 'next/link'
+import { cache } from 'react'
 
-import { Card, View } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
 import { getHomePage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { clsx } from '@/lib/clsx'
 
+import { Card } from '../../ui/ukhsa/Card/Card'
 import { MiniMapCard } from '../../ui/ukhsa/MiniMap/MiniMapCard'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { View } from '../../ui/ukhsa/View/View'
 import { ChartRowCard } from '../ChartRowCard/ChartRowCard'
 import { Trend } from '../Trend/v2/Trend'
 
+const getFlag = cache(getFeatureFlag)
+const getPage = cache(getHomePage)
+
 export default async function HomePage() {
-  const { enabled: heroEnabled } = await getFeatureFlag(flags.landingPageHero)
-
-  const {
-    title,
-    body,
-    page_description: description,
-    related_links: relatedLinks,
-    related_links_layout: relatedLinksLayout,
-  } = await getHomePage()
-
-  const { enabled: newLandingContentEnabled } = await getFeatureFlag(flags.landingPageContent)
-  const { enabled: weatherHealthSummaryCardEnabled } = await getFeatureFlag(flags.weatherHealthSummaryCard)
+  const [
+    { enabled: heroEnabled },
+    { enabled: newLandingContentEnabled },
+    { enabled: weatherHealthSummaryCardEnabled },
+    {
+      title,
+      body,
+      page_description: description,
+      related_links: relatedLinks,
+      related_links_layout: relatedLinksLayout,
+    },
+  ] = await Promise.all([
+    getFlag(flags.landingPageHero),
+    getFlag(flags.landingPageContent),
+    getFlag(flags.weatherHealthSummaryCard),
+    getPage(),
+  ])
 
   return (
     <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
