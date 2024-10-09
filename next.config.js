@@ -5,9 +5,6 @@ dns.setDefaultResultOrder('ipv4first')
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  httpAgentOptions: {
-    keepAlive: false,
-  },
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
   reactStrictMode: true,
