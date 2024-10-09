@@ -30,6 +30,7 @@ FROM base AS runner
 WORKDIR /app
 
 ENV NODE_ENV production
+ENV KEEP_ALIVE_TIMEOUT 61000
 
 # Disable telemetry during runtime
 ENV NEXT_TELEMETRY_DISABLED 1
