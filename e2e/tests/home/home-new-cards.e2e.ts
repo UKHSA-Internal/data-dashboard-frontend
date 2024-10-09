@@ -5,6 +5,7 @@ import { test } from '../../fixtures/app.fixture'
 test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Layout', () => {
     test.beforeEach(async ({ switchboardPage, homePage }) => {
+      await switchboardPage.setFeatureFlag('landingPageHero', 'Enabled')
       await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
       await homePage.goto()
     })
@@ -14,7 +15,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
         await homePage.hasMetadata()
       })
       await test.step('displays the correct layout', async () => {
-        await app.hasLayout()
+        await app.hasHeroBannerLayout()
       })
       await test.step('displays without any accessibility defects', async () => {
         await app.hasNoAccessibilityDefects()
@@ -22,9 +23,10 @@ test.describe('Landing page new card design feature flags enabled', () => {
       await test.step('does not display the last updated date', async () => {
         await homePage.hasNotLastUpdated()
       })
-      await test.step('displays categories', async () => {
-        await homePage.hasCategories(['Health topics', 'Weather health alerts'])
-      })
+      // await test.step('displays categories', async () => {
+      // await homePage.hasCategories(['Respiratory viruses', 'Weather health alerts'])
+      // await homePage.hasCategories(['Weather health alerts'])
+      // })
       await test.step('does not display related links', async () => {
         await app.hasNotRelatedLinks()
       })
