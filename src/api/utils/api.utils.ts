@@ -38,12 +38,20 @@ export async function client<T>(
     }
   }
 
-  const fetchOptions: RequestInit & { next: { revalidate: number } } = {
+  const fetchOptions: RequestInit & {
+    next: { revalidate: number }
+    retries: number
+    retryDelay: (attempt: number) => number
+  } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     next: {
       // Disable NextJs router caching
       revalidate: 0,
+    },
+    retries: 3,
+    retryDelay: (attempt) => {
+      return Math.pow(2, attempt) * 1000 // 1000, 2000, 4000
     },
     ...customConfig,
     headers: {
