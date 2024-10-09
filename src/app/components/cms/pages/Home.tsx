@@ -1,4 +1,4 @@
-import { RelatedLink as RelatedLinkV1, RelatedLinks as RelatedLinksV1, View } from '@/app/components/ui/ukhsa'
+import { View } from '@/app/components/ui/ukhsa'
 import { flags } from '@/app/constants/flags.constants'
 import { getHomePage, getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
@@ -24,16 +24,6 @@ export default async function HomePage() {
   return (
     <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
       {newLandingContentEnabled ? landingBody.map(renderSection) : body.map(renderSection)}
-
-      {newLandingContentEnabled ? null : (
-        <RelatedLinksV1 variant="footer">
-          {relatedLinks.map(({ title, body, url, id }) => (
-            <RelatedLinkV1 key={id} url={url} title={title}>
-              {body}
-            </RelatedLinkV1>
-          ))}
-        </RelatedLinksV1>
-      )}
 
       {relatedLinksLayout === 'Sidebar' && !newLandingContentEnabled ? (
         <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
