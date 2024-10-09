@@ -188,7 +188,6 @@ test.describe('Weather Health Alerts map interactivty', () => {
 // -------------------------------------------------
 
 // test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
-//   test.describe.configure({ mode: 'parallel' })
 
 //   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
 //     await test.step('open weather health alerts page', async () => {
@@ -423,7 +422,6 @@ test.describe('Weather Health Alerts map interactivty', () => {
 // })
 
 // test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopOnly', () => {
-//   test.describe.configure({ mode: 'parallel' })
 
 //   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
 //     await test.step('open weather health alerts page', async () => {
