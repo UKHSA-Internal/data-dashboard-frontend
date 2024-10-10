@@ -159,7 +159,11 @@ export const getPage = async <T extends PageType>(id: number) => {
   try {
     const searchParams = new URLSearchParams()
     searchParams.set('fields', 'html_url')
+
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
+
+    console.log('getPage data', data)
+
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

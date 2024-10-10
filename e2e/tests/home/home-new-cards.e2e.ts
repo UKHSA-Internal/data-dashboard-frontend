@@ -6,7 +6,6 @@ test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Layout', () => {
     test.beforeEach(async ({ switchboardPage, homePage }) => {
       await switchboardPage.setFeatureFlag('landingPageHero', 'Enabled')
-      await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
       await homePage.goto()
     })
 
@@ -36,9 +35,8 @@ test.describe('Landing page new card design feature flags enabled', () => {
   })
 
   test.describe('Health Topics', () => {
-    test.beforeEach(async ({ switchboardPage, homePage }) => {
-      await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-      await homePage.goto()
+    test.beforeEach(async ({ app }) => {
+      await app.goto('landing-page')
     })
 
     test('Cards', async ({ homePage }) => {
@@ -70,8 +68,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
     test.describe('Desktop @desktopOnly', () => {
       test.use({ viewport: viewports.desktop })
 
-      test.beforeEach(async ({ switchboardPage, homePage }) => {
-        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
+      test.beforeEach(async ({ homePage }) => {
         await homePage.goto()
       })
 
@@ -98,9 +95,8 @@ test.describe('Landing page new card design feature flags enabled', () => {
     test.describe('Tablet @tabletOnly', () => {
       test.use({ viewport: viewports.tablet })
 
-      test.beforeEach(async ({ switchboardPage, homePage }) => {
-        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-        await homePage.goto()
+      test.beforeEach(async ({ app }) => {
+        await app.goto('/landing-page')
       })
 
       test('Card', async ({ homePage }) => {
@@ -126,9 +122,8 @@ test.describe('Landing page new card design feature flags enabled', () => {
     test.describe('Mobile @mobileOnly', () => {
       test.use({ viewport: viewports.mobile })
 
-      test.beforeEach(async ({ switchboardPage, homePage }) => {
-        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
-        await homePage.goto()
+      test.beforeEach(async ({ app }) => {
+        await app.goto('/landing-page')
       })
 
       test('Card', async ({ homePage }) => {

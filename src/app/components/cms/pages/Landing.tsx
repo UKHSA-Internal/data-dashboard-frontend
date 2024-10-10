@@ -1,24 +1,14 @@
 import { View } from '@/app/components/ui/ukhsa'
-import { flags } from '@/app/constants/flags.constants'
-import { getHomePage } from '@/app/utils/cms'
+import { getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 
-export default async function HomePage() {
-  const { enabled: heroEnabled } = await getFeatureFlag(flags.landingPageHero)
-
-  const {
-    title,
-    body,
-    page_description: description,
-    related_links: relatedLinks,
-    related_links_layout: relatedLinksLayout,
-  } = await getHomePage()
+export default async function LandingPage() {
+  const { body, related_links_layout: relatedLinksLayout, related_links: relatedLinks } = await getLandingPage()
 
   return (
-    <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
+    <View>
       {body.map(renderSection)}
 
       {relatedLinksLayout === 'Sidebar' && (
@@ -26,6 +16,7 @@ export default async function HomePage() {
           <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
         </div>
       )}
+
       {relatedLinksLayout === 'Footer' && <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />}
     </View>
   )

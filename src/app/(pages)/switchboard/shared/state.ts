@@ -39,7 +39,6 @@ export const initialState: switchBoardSchemaType = {
   },
   flags: {
     'landing-page-hero': 'disabled',
-    'landing-page-content': 'disabled',
     'interactive-charts': 'disabled',
   },
 }

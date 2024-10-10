@@ -5,7 +5,6 @@ test.describe('Landing page hero feature flag enabled', () => {
     test('Page layout', async ({ switchboardPage, homePage, app }) => {
       await test.step('enables feature flag', async () => {
         await switchboardPage.setFeatureFlag('landingPageHero', 'Enabled')
-        await switchboardPage.setFeatureFlag('landingPageContent', 'Enabled')
       })
       await test.step('loads the page', async () => {
         await homePage.goto()
