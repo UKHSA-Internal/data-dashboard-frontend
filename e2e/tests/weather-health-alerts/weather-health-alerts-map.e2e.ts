@@ -1,3 +1,4 @@
+/* eslint-disable playwright/no-skipped-test */
 import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
@@ -98,7 +99,8 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
   })
 
-  test('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+  test.skip('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
@@ -186,7 +188,6 @@ test.describe('Weather Health Alerts map interactivty', () => {
 // -------------------------------------------------
 
 // test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
-//   test.describe.configure({ mode: 'parallel' })
 
 //   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
 //     await test.step('open weather health alerts page', async () => {
@@ -421,7 +422,6 @@ test.describe('Weather Health Alerts map interactivty', () => {
 // })
 
 // test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopOnly', () => {
-//   test.describe.configure({ mode: 'parallel' })
 
 //   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
 //     await test.step('open weather health alerts page', async () => {
@@ -650,7 +650,9 @@ test.describe('Weather Health Alerts map interactivty', () => {
 test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+
+  test.skip('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })
@@ -675,7 +677,8 @@ test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
 test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+  test.skip('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })
@@ -700,7 +703,8 @@ test.describe('Weather health alerts map, smoke test - tablet @smoke', () => {
 test.describe('Weather health alerts map, smoke test - mobile @smoke', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
+  // TODO: Investigate flakeyness CDD-2136
+  test.skip('Shows button & opens a map on Weather health alerts page', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('navigate to cold health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold')
     })

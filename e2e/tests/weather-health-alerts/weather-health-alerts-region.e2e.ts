@@ -117,8 +117,6 @@ const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAl
 
 test.describe('Feature flag enabled', () => {
   test.describe('Weather health alerts region pages', () => {
-    test.describe.configure({ mode: 'parallel' })
-
     for (const { weather, region, status, fid } of cases) {
       const regionDashCase = region.toLowerCase().replaceAll(' ', '-')
 
