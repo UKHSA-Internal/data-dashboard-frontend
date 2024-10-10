@@ -5,17 +5,26 @@ import { getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { getMetricsPages, getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
+import { flags } from '@/app/constants/flags.constants'
 import { getServerTranslation } from '@/app/i18n'
 import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, slug2String, trimTrailingSlash } from '../app.utils'
+import { getFeatureFlag } from '../flags.utils'
 import { getPathSegments } from './slug'
 
 export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
   // Homepage
+  // TODO: Remove on cleanup
   if (pageType === PageType.Home) {
     const pageData: PageResponse<PageType> = await getHomePage()
+    return pageData
+  }
+
+  // Landing page
+  if (pageType === PageType.Landing) {
+    const pageData: PageResponse<PageType> = await getLandingPage()
     return pageData
   }
 
@@ -44,7 +53,7 @@ export async function getPageMetadata(
   const page = searchParams.page ?? 1
   const search = searchParams.search
 
-  const isHomePage = pageType === PageType.Home
+  const isHomePage = pageType === PageType.Home || pageType === PageType.Landing
 
   try {
     const pageData = await validateUrlWithCms(urlSlug, pageType)
@@ -132,7 +141,10 @@ export async function getPageMetadata(
 }
 
 export async function getPageTypeBySlug(slug: Slug) {
-  if (!slug.length) return PageType.Home
+  const { enabled: landingPageEnabled } = await getFeatureFlag(flags.landingPageHero)
+
+  if (!slug.length) return landingPageEnabled ? PageType.Landing : PageType.Home
+
   const page = await getPageBySlug(slug)
   return page.meta.type as PageType
 }
