@@ -19,7 +19,7 @@ describe('getTagVariantFromStatus', () => {
   })
 
   test('returns correct class for Yellow status', () => {
-    expect(getTagVariantFromStatus('Yellow')).toBe('govuk-tag--yellow')
+    expect(getTagVariantFromStatus('Yellow')).toBe('govuk-tag--custard')
   })
 })
 
@@ -33,7 +33,7 @@ describe('getCssVariableFromColour', () => {
   })
 
   test('Returns the correct CSS variable for Yellow', () => {
-    expect(getCssVariableFromColour('Yellow')).toBe('var(--colour-yellow)')
+    expect(getCssVariableFromColour('Yellow')).toBe('var(--colour-custard)')
   })
 
   test('Returns the correct CSS variable for Red', () => {
@@ -51,7 +51,7 @@ describe('getHoverCssVariableFromColour', () => {
   })
 
   test('Returns the correct hover CSS variable for Yellow', () => {
-    expect(getHoverCssVariableFromColour('Yellow')).toBe('var(--colour-yellow-dark)')
+    expect(getHoverCssVariableFromColour('Yellow')).toBe('var(--colour-custard-dark)')
   })
 
   test('Returns the correct hover CSS variable for Red', () => {
@@ -69,7 +69,7 @@ describe('getActiveCssVariableFromColour', () => {
   })
 
   test('Returns the correct active CSS variable for Yellow', () => {
-    expect(getActiveCssVariableFromColour('Yellow')).toBe('var(--colour-yellow-darkest)')
+    expect(getActiveCssVariableFromColour('Yellow')).toBe('var(--colour-custard-darkest)')
   })
 
   test('Returns the correct active CSS variable for Red', () => {
