@@ -20,7 +20,7 @@ export const AlertBanner = ({ level, type, dateFrom, dateTo }: AlertBannerProps)
         `govuk-inset-text govuk-!-padding-top-2 govuk-!-padding-bottom-2 govuk-!-margin-top-0 govuk-!-margin-bottom-4 grid gap-3 sm:grid-cols-[50px_1fr]`,
         {
           'border-green bg-green-opaque': level === 'Green',
-          'border-yellow bg-yellow-opaque': level === 'Yellow',
+          'border-custard bg-yellow-opaque': level === 'Yellow',
           'border-orange bg-orange-opaque': level === 'Amber',
           'border-red bg-red-opaque': level === 'Red',
         }
