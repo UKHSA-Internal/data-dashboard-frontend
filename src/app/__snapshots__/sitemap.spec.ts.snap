@@ -12,7 +12,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -678,7 +678,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -1344,7 +1344,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -2010,7 +2010,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -2676,7 +2676,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -3342,7 +3342,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -4008,7 +4008,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -4674,7 +4674,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
@@ -5340,7 +5340,7 @@ exports[`Sitemap displays correctly 1`] = `
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
-    "url": "http://localhost:3000",
+    "url": "http://localhost:3000/landing-page",
   },
   {
     "changeFrequency": "monthly",
