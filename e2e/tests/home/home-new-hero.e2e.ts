@@ -18,18 +18,22 @@ test.describe('Landing page hero feature flag enabled', () => {
       await test.step('displays without any accessibility defects', async () => {
         await app.hasNoAccessibilityDefects()
       })
-      await test.step('does not display the last updated date', async () => {
-        await homePage.hasNotLastUpdated()
-      })
-      await test.step('displays page sections', async () => {
-        await homePage.hasSectionTitleandSubtitle()
-      })
-      await test.step('Does not display related links', async () => {
-        await app.hasNotRelatedLinks()
-      })
-      await test.step('displays back to top', async () => {
-        await app.hasBackToTop()
-      })
+
+      // Temp remove these, as landing page & hero banner on seperate pages
+      // TODO: add back in, on integration
+
+      // await test.step('does not display the last updated date', async () => {
+      //   await homePage.hasNotLastUpdated()
+      // })
+      // await test.step('displays page sections', async () => {
+      //   await homePage.hasSectionTitleandSubtitle()
+      // })
+      // await test.step('Does not display related links', async () => {
+      //   await app.hasNotRelatedLinks()
+      // })
+      // await test.step('displays back to top', async () => {
+      //   await app.hasBackToTop()
+      // })
     })
   })
 })

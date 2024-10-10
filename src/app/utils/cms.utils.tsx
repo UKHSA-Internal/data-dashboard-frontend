@@ -208,7 +208,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
     )}
 
     {type === 'weather_health_alert_card' && (
-      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-1/2" role="region" aria-label="Weather health alerts">
+      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-1/2">
         <MiniMapCard title={value.title} subTitle={value.sub_title} alertType={value.alert_type} />
       </div>
     )}

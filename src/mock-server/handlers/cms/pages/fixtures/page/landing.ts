@@ -4,8 +4,8 @@ import { PageType } from '@/api/requests/cms/getPages'
 export const landingPageMock: PageResponse<PageType.Landing> = {
   id: 79,
   meta: {
-    seo_title: 'Home | UKHSA data dashboard',
-    search_description: '',
+    seo_title: 'UKHSA data dashboard',
+    search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
     type: 'home.LandingPage',
     detail_url: '/api/pages/79/',
     html_url: 'http://localhost:3000/landing-page',
