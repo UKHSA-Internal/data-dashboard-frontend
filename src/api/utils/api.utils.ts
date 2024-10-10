@@ -1,7 +1,3 @@
-import fetchRetry from 'fetch-retry'
-
-const fetch = fetchRetry(global.fetch)
-
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 

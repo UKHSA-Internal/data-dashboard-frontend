@@ -6,7 +6,6 @@ dns.setDefaultResultOrder('ipv4first')
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   cacheHandler: process.env.NODE_ENV === 'production' ? require.resolve('./cache-handler.mjs') : undefined,
-  cacheMaxMemorySize: 0, // disable default in-memory caching
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
   reactStrictMode: true,

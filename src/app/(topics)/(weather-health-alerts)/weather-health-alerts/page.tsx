@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
@@ -7,8 +9,6 @@ import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
-
-export const dynamic = 'force-dynamic'
 
 export async function generateMetadata() {
   const {
@@ -42,7 +42,9 @@ export default async function WeatherHealthAlerts() {
         </div>
       </div>
 
-      <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      <Suspense>
+        <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      </Suspense>
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
