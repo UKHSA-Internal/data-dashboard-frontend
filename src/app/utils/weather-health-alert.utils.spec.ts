@@ -19,7 +19,7 @@ describe('getTagVariantFromStatus', () => {
   })
 
   test('returns correct class for Yellow status', () => {
-    expect(getTagVariantFromStatus('Yellow')).toBe('govuk-tag--custard')
+    expect(getTagVariantFromStatus('Yellow')).toBe('govuk-tag--yellow')
   })
 })
 
