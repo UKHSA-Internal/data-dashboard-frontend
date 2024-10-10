@@ -1,8 +1,9 @@
-import { CacheHandler } from '@neshca/cache-handler'
-import createLruHandler from '@neshca/cache-handler/local-lru'
-import createRedisHandler from '@neshca/cache-handler/redis-stack'
-import { PHASE_PRODUCTION_BUILD } from 'next/constants'
-import { createClient } from 'redis'
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { CacheHandler } = require('@neshca/cache-handler')
+const createRedisHandler = require('@neshca/cache-handler/redis-stack').default
+const createLruHandler = require('@neshca/cache-handler/local-lru').default
+const { createClient } = require('redis')
+const { PHASE_PRODUCTION_BUILD } = require('next/constants')
 
 /* from https://caching-tools.github.io/next-shared-cache/redis */
 CacheHandler.onCreation(async () => {
@@ -73,4 +74,4 @@ CacheHandler.onCreation(async () => {
   }
 })
 
-export default CacheHandler
+module.exports = CacheHandler
