@@ -30,6 +30,7 @@ import { logger } from '@/lib/logger'
 
 export enum PageType {
   Home = 'home.HomePage',
+  Landing = 'home.LandingPage',
   Common = 'common.CommonPage',
   Composite = 'composite.CompositePage',
   Topic = 'topic.TopicPage',
@@ -42,6 +43,7 @@ export enum PageType {
 const page = z.object({
   id: z.number(),
   title: z.string(),
+  sub_title: z.string().optional().nullable(),
   // Not every request to the `/pages` endpoint has a `?type=PageType` parameter which is needed to expose the two below fields.
   // We default these with a fallback as to not break the schema.
   seo_change_frequency: z.number().or(fallback(5)),

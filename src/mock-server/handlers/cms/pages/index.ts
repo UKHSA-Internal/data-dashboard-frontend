@@ -11,6 +11,7 @@ import {
   pagesWithCommonTypeMock,
   pagesWithCompositeTypeMock,
   pagesWithHomeTypeMock,
+  pagesWithLandingTypeMock,
   pagesWithMetricsChildTypeMock,
   pagesWithMetricsParentTypeMock,
   pagesWithTopicTypeMock,
@@ -21,6 +22,7 @@ import {
 // Contains the `/pages` fixtures for the different cms page types
 export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'home.HomePage': pagesWithHomeTypeMock,
+  'home.LandingPage': pagesWithLandingTypeMock,
   'topic.TopicPage': pagesWithTopicTypeMock,
   'common.CommonPage': pagesWithCommonTypeMock,
   'composite.CompositePage': pagesWithCompositeTypeMock,

@@ -28,6 +28,14 @@ export const chartSizes = {
     width: 1100,
     height: 260,
   },
+  half: {
+    width: 650,
+    height: 200,
+  },
+  third: {
+    width: 400,
+    height: 200,
+  },
 } as const
 
 /**

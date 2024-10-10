@@ -79,20 +79,27 @@ export class HomePage {
     ).toBeVisible()
   }
 
-  async hasSectionHeadingsAndDescription() {
-    const covid19Heading = this.page.getByRole('heading', { name: /COVID-19/, level: 2 })
-    await expect(covid19Heading).toBeVisible()
-    await expect(covid19Heading.getByRole('link', { name: /COVID-19/ })).toHaveAttribute('href', '/topics/covid-19')
-    await expect(
-      this.page.getByText(/Summary of COVID-19 data. For more detailed data, go to the COVID-19 page./)
-    ).toBeVisible()
+  async hasSectionTitleandSubtitle() {
+    await expect(this.page.getByRole('heading', { name: /COVID-19/, level: 3 })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: /COVID-19/ })).toHaveAttribute(
+      'href',
+      'http://localhost:3000/topics/covid-19/'
+    )
+    await expect(this.page.getByText(/Cases reported/)).toBeVisible()
 
-    const influnzaHeading = this.page.getByRole('heading', { name: /Influenza/, level: 2 })
-    await expect(influnzaHeading).toBeVisible()
-    await expect(influnzaHeading.getByRole('link', { name: /Influenza/ })).toHaveAttribute('href', '/topics/influenza')
-    await expect(
-      this.page.getByText(/Summary of influenza data. For more detailed data, go to the influenza page./)
-    ).toBeVisible()
+    await expect(this.page.getByRole('heading', { name: /Influenza/, level: 3 })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: /Influenza/ })).toHaveAttribute(
+      'href',
+      'http://localhost:3000/topics/influenza/'
+    )
+    await expect(this.page.getByLabel('Influenza').getByText(/Healthcare admission rates/)).toBeVisible()
+
+    await expect(this.page.getByRole('heading', { name: /RSV/, level: 3 })).toBeVisible()
+    await expect(this.page.getByRole('link', { name: /RSV/ })).toHaveAttribute(
+      'href',
+      'http://localhost:3000/topics/other-respiratory-viruses/'
+    )
+    await expect(this.page.getByLabel('RSV').getByText(/Healthcare admission rates/)).toBeVisible()
   }
 
   async hasCovid19HeadlineNumbersRowCard() {
@@ -294,6 +301,12 @@ export class HomePage {
     await expect(card.getByRole('button', { name: 'Download' })).toBeVisible()
   }
 
+  async hasSection(sections: string[]) {
+    for (const name of sections) {
+      await expect(this.page.getByRole('heading', { level: 2, name })).toBeVisible()
+    }
+  }
+
   async hasCategories(categories: string[]) {
     for (const name of categories) {
       await expect(this.page.getByRole('region', { name })).toBeVisible()
@@ -301,11 +314,9 @@ export class HomePage {
   }
 
   async hasHealthTopicColumns(columns: string[]) {
-    const section = this.page.getByRole('region', { name: 'Health topics' })
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
 
-    await expect(await section.getByTestId('chart-row-cards').getByRole('heading', { level: 3 }).count()).toEqual(
-      columns.length
-    )
+    await expect(await section.getByRole('heading', { level: 3 }).count()).toEqual(columns.length)
 
     for (const name of columns) {
       await expect(
@@ -314,11 +325,19 @@ export class HomePage {
     }
   }
 
+  async hasLandingPageCard({ title, sub_title }: { title: string; sub_title: string }) {
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const card = section.getByRole('link', { name: title })
+
+    await expect(card.getByRole('heading', { level: 3, name: title })).toBeVisible()
+    await expect(card.getByText(sub_title)).toBeVisible()
+  }
+
   async hasHealthTopicCard(
     name: string,
     { tagline, trendPercent, trendDescription }: { tagline: string; trendPercent: string; trendDescription: string }
   ) {
-    const section = this.page.getByRole('region', { name: 'Health topics' })
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
     const card = section.getByRole('link', { name })
 
     await expect(card.getByRole('heading', { name })).toBeVisible()

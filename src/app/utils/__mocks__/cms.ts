@@ -5,10 +5,19 @@ import type { Body, CardTypes } from '@/api/models/cms/Page'
 
 type PageSection = z.infer<typeof Body>[number]
 
-export const mockSection = Mock.of<PageSection>({
+export const mockSectionNoLink = Mock.of<PageSection>({
   id: 'testId',
   value: {
     heading: 'COVID-19',
+    content: [],
+  },
+})
+
+export const mockSectionWithLink = Mock.of<PageSection>({
+  id: 'testId',
+  value: {
+    heading: 'COVID-19',
+    page_link: 'http://localhost:3000/topics/covid-19',
     content: [],
   },
 })
@@ -17,6 +26,7 @@ export const mockSectionWithLongHeading = Mock.of<PageSection>({
   id: 'testId',
   value: {
     heading: 'Other respiratory viruses',
+    page_link: 'http://localhost:3000/topics/other-respiratory-viruses',
     content: [],
   },
 })
@@ -272,5 +282,15 @@ export const mockChartRowCardWithDualChartCard = Mock.of<CardType>({
         },
       },
     ],
+  },
+})
+
+export const mockWeatherHealthAlertCard = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'weather_health_alert_card',
+  value: {
+    title: 'Heat health alerts',
+    sub_title: 'Across England',
+    alert_type: 'heat',
   },
 })
