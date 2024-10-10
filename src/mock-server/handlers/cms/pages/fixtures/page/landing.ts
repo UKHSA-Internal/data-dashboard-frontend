@@ -8,7 +8,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
     search_description: '',
     type: 'home.LandingPage',
     detail_url: '/api/pages/79/',
-    html_url: 'http://localhost:3000',
+    html_url: 'http://localhost:3000/landing-page',
     slug: 'landing-page',
     show_in_menus: false,
     first_published_at: '2024-09-30T11:41:36.884029+01:00',
