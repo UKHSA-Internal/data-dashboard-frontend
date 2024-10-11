@@ -13,7 +13,7 @@ export const ColdHealthAlertYellowIcon = () => (
       clipRule="evenodd"
       d="M200.404 11.0065C207.954 11.2062 215.121 15.5333 218.885 22.1793L386.879 338.013C393.466 351.194 384.023 369.612 368.037 370H32.0379C17.4302 369.645 6.02855 352.348 13.2066 338.013L181.201 22.1793C183.087 18.7139 185.875 15.8397 189.261 13.8697C192.647 11.8997 196.501 10.9094 200.404 11.0065Z"
       fill="white"
-      stroke="#F1BF0D"
+      stroke="var(--colour-yellow-opaque)"
       strokeWidth="22"
       strokeMiterlimit="1.41421"
       strokeLinejoin="round"
