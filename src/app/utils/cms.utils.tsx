@@ -11,7 +11,6 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 
 import {
-  AreaSelectorLoader,
   ButtonExternal,
   ButtonInternal,
   Chart,
@@ -26,6 +25,7 @@ import {
   Timestamp,
   Trend,
 } from '../components/cms'
+import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 
 // TODO: Move this file into cms folder

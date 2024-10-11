@@ -31,5 +31,3 @@ export async function AreaSelector({ areaType, selectedTopics }: AreaSelectorPro
 
   return <AreaSelectorForm areaType={areaType} areaTypeOptions={areaTypeOptions} areaNameOptions={areaNameOptions} />
 }
-
-export * from './AreaSelectorLoader'

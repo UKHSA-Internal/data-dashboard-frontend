@@ -1,17 +1,16 @@
-import fetchRetry from 'fetch-retry'
-
-const fetch = fetchRetry(global.fetch)
-
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
+// TODO: Refactor to extend RequestInit
 interface Options {
   body?: unknown
   searchParams?: URLSearchParams
   baseUrl?: string
   headers?: Record<string, string>
+  cache?: RequestInit['cache']
+  next?: { revalidate: number }
 }
 
 /**
@@ -39,7 +38,7 @@ export async function client<T>(
   }
 
   const fetchOptions: RequestInit & {
-    next: { revalidate: number }
+    next?: { revalidate: number }
     retries: number
     retryDelay: (attempt: number) => number
   } = {
