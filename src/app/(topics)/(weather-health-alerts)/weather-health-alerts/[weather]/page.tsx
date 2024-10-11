@@ -14,6 +14,8 @@ import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 import AlertList from './AlertList'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const {
     meta: { seo_title: title, search_description: description },

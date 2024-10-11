@@ -9,6 +9,8 @@ interface PathParameters {
   }
 }
 
+export const dynamic = 'force-dynamic'
+
 export async function GET(req: NextRequest, { params: { category } }: PathParameters) {
   if (!category) {
     return new NextResponse('Missing category', {

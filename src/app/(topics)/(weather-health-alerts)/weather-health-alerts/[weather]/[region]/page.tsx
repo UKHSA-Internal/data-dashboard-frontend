@@ -7,6 +7,8 @@ import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/Rela
 
 import AlertBody from './AlertBody'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   return {
     title: `Weather alert for ${region} | UKHSA data dashboard`,

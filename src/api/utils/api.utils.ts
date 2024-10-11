@@ -44,6 +44,10 @@ export async function client<T>(
   } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
+    next: {
+      // Disable NextJs router caching
+      revalidate: 0,
+    },
     retries: 3,
     retryDelay: (attempt) => {
       return Math.pow(2, attempt) * 1000 // 1000, 2000, 4000
@@ -53,13 +57,6 @@ export async function client<T>(
       ...headers,
       ...customConfig.headers,
     },
-  }
-
-  if (!customConfig.cache) {
-    // Revalidate the cache every 5 minutes
-    fetchOptions.next = {
-      revalidate: 300,
-    }
   }
 
   const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`

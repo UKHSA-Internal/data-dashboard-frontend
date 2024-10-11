@@ -10,6 +10,8 @@ import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/
 import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata() {
   const {
     meta: { seo_title: title, search_description: description },
