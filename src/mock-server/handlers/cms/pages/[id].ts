@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
+import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
 import { logger } from '@/lib/logger'
 
 import {
@@ -16,9 +17,11 @@ import {
   covid19PageMock,
   dashboardMock,
   influenzaPageMock,
+  landingPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
+  respiratoryVirusesMock,
   weatherHealthAlertsChildMocks,
   weatherHealthAlertsParentMock,
   whatsNewChildMocks,
@@ -41,6 +44,8 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [metricsParentMock.id]: metricsParentMock,
   [accessOurDataParentMock.id]: accessOurDataParentMock,
   [weatherHealthAlertsParentMock.id]: weatherHealthAlertsParentMock,
+  [landingPageMock.id]: landingPageMock,
+  [respiratoryVirusesMock.id]: respiratoryVirusesMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(metricsChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(accessOurDataChildMocks.map((mock) => [mock.id, mock])),
@@ -59,10 +64,25 @@ export default async function handler(req: Request, res: Response) {
       return res.status(500)
     }
 
+    const {
+      api: {
+        pages: {
+          detail: {
+            status,
+            scenario: { relatedLinksLayout },
+          },
+        },
+      },
+    } = getSwitchBoardState(req.headers.cookie)
+
     const pageId = Number(req.params.id)
 
     if (mockedPageMap[pageId]) {
-      return res.json(mockedPageMap[pageId])
+      return res.status(status).json({
+        ...mockedPageMap[pageId],
+        related_links_layout:
+          relatedLinksLayout === 'Default' ? mockedPageMap[pageId].related_links_layout : relatedLinksLayout,
+      })
     }
   } catch (error) {
     logger.error(error)

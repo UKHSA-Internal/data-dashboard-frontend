@@ -12,7 +12,12 @@ const getChartsMock = jest.mocked(getCharts)
 test('renders the timestamp correctly when successful', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: true,
-    data: { chart: 'mock-chart', alt_text: '', last_updated: '2023-05-10T15:18:06.939535+01:00' },
+    data: {
+      chart: 'mock-chart',
+      alt_text: '',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Timestamp>['data'] = {

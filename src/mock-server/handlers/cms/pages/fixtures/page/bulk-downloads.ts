@@ -48,4 +48,5 @@ export const bulkDownloadsPageMock: PageResponse<PageType.Composite> = {
   ],
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: [],
+  related_links_layout: 'Footer',
 }

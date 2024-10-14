@@ -3,9 +3,10 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
+import { RelatedLinksLayout } from '@/api/models/cms/Page'
 import { AlertBanner } from '@/app/components/ui/ukhsa/AlertBanner/AlertBanner'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import {
@@ -24,9 +25,10 @@ interface AlertProps {
   weather: HealthAlertTypes
   region: string
   relatedLinks: ReactNode
+  relatedLinksLayout: RelatedLinksLayout
 }
 
-export default function AlertBody({ relatedLinks, weather, region }: AlertProps) {
+export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, region }: AlertProps) {
   const { t } = useTranslation(['weatherHealthAlerts', 'common'])
 
   const type: HealthAlertTypes = weather
@@ -119,11 +121,19 @@ export default function AlertBody({ relatedLinks, weather, region }: AlertProps)
             dangerouslySetInnerHTML={{ __html: text }}
           />
 
-          <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+          <Suspense>
+            <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+          </Suspense>
         </div>
 
-        {relatedLinks}
+        {relatedLinksLayout === 'Sidebar' ? (
+          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-7 sticky top-2">
+            {relatedLinks}
+          </div>
+        ) : null}
       </div>
+
+      {relatedLinksLayout === 'Footer' ? relatedLinks : null}
     </div>
   )
 }

@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { Topics } from '@/api/models'
-import { Body, CompositeBody, Meta, RelatedLinks } from '@/api/models/cms/Page'
+import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -12,6 +12,7 @@ export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTy
 
 type PageTypeToDataMap = {
   [PageType.Home]: typeof WithHomeData
+  [PageType.Landing]: typeof WithLandingData
   [PageType.Topic]: typeof WithTopicData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
@@ -24,10 +25,11 @@ type PageTypeToDataMap = {
 const SharedPageData = z.object({
   id: z.number(),
   title: z.string(),
+  meta: Meta,
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
   last_published_at: z.string(),
   last_updated_at: z.string(),
-  related_links: RelatedLinks,
-  meta: Meta,
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
 })
@@ -37,6 +39,14 @@ const WithHomeData = SharedPageData.extend({
   page_description: z.string(),
   meta: Meta.extend({
     type: z.literal('home.HomePage'),
+  }),
+})
+
+const WithLandingData = SharedPageData.extend({
+  sub_title: z.string(),
+  body: Body,
+  meta: Meta.extend({
+    type: z.literal('home.LandingPage'),
   }),
 })
 
@@ -64,6 +74,8 @@ const WithCompositeData = SharedPageData.extend({
     type: z.literal('composite.CompositePage'),
   }),
   date_posted: z.string(),
+  //TODO: Look into page description on all composite pages
+  page_description: z.string().nullable().optional(),
 })
 
 const WithWhatsNewParentData = SharedPageData.extend({
@@ -121,6 +133,7 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
 
 export const responseSchema = z.union([
   WithHomeData,
+  WithLandingData,
   WithTopicData,
   WithCommonData,
   WithCompositeData,
@@ -146,7 +159,9 @@ export const getPage = async <T extends PageType>(id: number) => {
   try {
     const searchParams = new URLSearchParams()
     searchParams.set('fields', 'html_url')
+
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
+
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
