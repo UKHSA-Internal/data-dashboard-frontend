@@ -1,4 +1,5 @@
 import clsx from 'clsx'
+import { snakeCase } from 'lodash'
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -9,6 +10,7 @@ import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
+import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 
 import {
   ButtonExternal,
@@ -29,12 +31,25 @@ import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorL
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 
 // TODO: Move this file into cms folder
-export const renderSection = ({ id, value: { heading, content } }: z.infer<typeof Body>[number]) => (
-  <div key={id} className="govuk-!-margin-bottom-9" data-testid={`section-${kebabCase(heading)}`}>
+export const renderSection = ({
+  id,
+  value: { heading, content, page_link: pageLink },
+}: z.infer<typeof Body>[number]) => (
+  <div
+    key={id}
+    className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
+    data-testid={`section-${kebabCase(heading)}`}
+    role="region"
+    aria-label={heading}
+  >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
-      <Link href={`/topics/${kebabCase(heading)}`} className="govuk-link--no-visited-state">
-        {heading}
-      </Link>
+      {pageLink ? (
+        <Link href={pageLink} className="govuk-link--no-visited-state">
+          {heading}
+        </Link>
+      ) : (
+        heading
+      )}
     </h2>
     {content.map(renderCard)}
   </div>
@@ -156,6 +171,46 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
           )
         })}
       </ChartRowCard>
+    )}
+
+    {type === 'chart_card_section' && (
+      <div
+        className={clsx('mb-3 grid gap-4 sm:mb-6 ', {
+          'md:grid-cols-[1fr_1fr]': value.cards.length <= 2,
+          'lg:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr]': value.cards.length > 2,
+        })}
+      >
+        {value.cards.map((card, index) => {
+          if (index > 2) return
+
+          return (
+            <div key={card.id}>
+              <Card
+                asChild
+                aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
+                className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
+              >
+                <Link href={card.value.topic_page}>
+                  <h3 id={`chart-row-card-heading-${snakeCase(card.value.title)}`} className="govuk-heading-m mb-1">
+                    {card.value.title}
+                  </h3>
+                  <p className="govuk-body-s mb-3 text-grey-1">{card.value.sub_title}</p>
+
+                  <div>
+                    <Chart data={card.value} size={value.cards.length < 3 ? 'half' : 'third'} />
+                  </div>
+                </Link>
+              </Card>
+            </div>
+          )
+        })}
+      </div>
+    )}
+
+    {type === 'weather_health_alert_card' && (
+      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-1/2">
+        <MiniMapCard title={value.title} subTitle={value.sub_title} alertType={value.alert_type} />
+      </div>
     )}
   </div>
 )

@@ -5,6 +5,7 @@ import React, { cache, ComponentType } from 'react'
 import { PageType } from '@/api/requests/cms/getPages'
 import CompositePage from '@/app/components/cms/pages/Composite'
 import HomePage from '@/app/components/cms/pages/Home'
+import LandingPage from '@/app/components/cms/pages/Landing'
 import MetricsChildPage from '@/app/components/cms/pages/MetricsDocumentationChild'
 import MetricsParentPage from '@/app/components/cms/pages/MetricsDocumentationParent'
 import TopicPage from '@/app/components/cms/pages/Topic'
@@ -33,6 +34,7 @@ export async function generateMetadata({
 
 const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = {
   [PageType.Home]: HomePage,
+  [PageType.Landing]: LandingPage,
   [PageType.Common]: CompositePage,
   [PageType.Composite]: CompositePage,
   [PageType.Topic]: TopicPage,
