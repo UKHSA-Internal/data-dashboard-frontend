@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
@@ -42,7 +44,9 @@ export default async function WeatherHealthAlerts() {
         </div>
       </div>
 
-      <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      <Suspense>
+        <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+      </Suspense>
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">

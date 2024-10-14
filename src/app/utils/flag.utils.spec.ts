@@ -46,6 +46,7 @@ describe('getFeatureFlag', () => {
           headers: {
             'x-auth': process.env.FEATURE_FLAGS_AUTH_KEY,
           },
+          next: { revalidate: 0 },
         },
       }
     )
