@@ -36,7 +36,7 @@ export class WeatherHealthAlertsRegionPage {
 
     const alertClasses =
       status === 'Amber'
-        ? 'border-orange bg-orange--opaque'
+        ? 'border-orange bg-orange-opaque'
         : status === 'Yellow'
           ? `border-custard bg-${statusLowercase}-opaque`
           : `border-${statusLowercase} bg-${statusLowercase}-opaque`
