@@ -36,10 +36,10 @@ export class WeatherHealthAlertsRegionPage {
 
     const alertClasses =
       status === 'Amber'
-        ? `border-orange bg-orange-opaque`
+        ? new RegExp(`border-orange bg-orange-opaque`)
         : status === 'Yellow'
-          ? `border-custard bg-${statusLowercase}-opaque`
-          : `border-${statusLowercase} bg-${statusLowercase}-opaque`
+          ? new RegExp(`border-custard bg-${statusLowercase}-opaque`)
+          : new RegExp(`border-${statusLowercase} bg-${statusLowercase}-opaque`)
 
     await expect(banner).toHaveClass(alertClasses)
 
