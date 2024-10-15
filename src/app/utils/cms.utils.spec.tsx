@@ -13,6 +13,7 @@ import {
   mockSectionWithCard,
   mockSectionWithLink,
   mockSectionWithLongHeading,
+  mockSimplifiedChart,
   mockTextCard,
 } from './__mocks__/cms'
 import { renderBlock, renderCard, renderCompositeBlock, renderSection } from './cms.utils'
@@ -180,7 +181,11 @@ describe('Chart row card', () => {
   })
 })
 
-// describe('Chart card section (Simplified chart)', () => {})
+describe('Chart card section (Simplified chart)', () => {
+  render(renderCard(mockSimplifiedChart))
+  expect(screen.getByRole('heading', { level: 3, name: 'Influenza' })).toBeInTheDocument()
+  expect(screen.getByText('Healthcare admission rates')).toBeInTheDocument()
+})
 
 // describe('Weather health alert card', () => {
 //   test('heat health alerts card', () => {

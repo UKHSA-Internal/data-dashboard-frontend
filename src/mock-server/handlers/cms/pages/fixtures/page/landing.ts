@@ -58,6 +58,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                           geography_type: 'Nation',
                           sex: 'all',
                           age: 'all',
+                          date_from: '2023-09-30T11:41:36.884029+01:00',
+                          date_to: '2024-09-30T11:41:36.884029+01:00',
                           stratum: 'default',
                           chart_type: 'line_single_simplified',
                         },

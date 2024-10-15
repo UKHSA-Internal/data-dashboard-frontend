@@ -285,6 +285,42 @@ export const mockChartRowCardWithDualChartCard = Mock.of<CardType>({
   },
 })
 
+export const mockSimplifiedChart = Mock.of<CardType>({
+  type: 'chart_card_section',
+  value: {
+    cards: [
+      {
+        type: 'simplified_chart_with_link',
+        value: {
+          title: 'Influenza',
+          sub_title: 'Healthcare admission rates',
+          tag_manager_event_id: '',
+          topic_page: 'http://localhost:3000/topics/influenza/',
+          x_axis: 'date',
+          y_axis: 'metric',
+          chart: [
+            {
+              type: 'plot',
+              value: {
+                topic: 'Influenza',
+                metric: 'influenza_healthcare_ICUHDUadmissionRateByWeek',
+                geography: 'England',
+                geography_type: 'Nation',
+                sex: 'all',
+                age: 'all',
+                stratum: 'default',
+                chart_type: 'line_single_simplified',
+              },
+              id: '7423460c-aa0c-482d-8fd5-ab9c62396657',
+            },
+          ],
+        },
+        id: 'b7b37be5-8bc0-4f88-8310-7a91430b7993',
+      },
+    ],
+  },
+})
+
 export const mockWeatherHealthAlertCard = Mock.of<CardType>({
   id: 'mockid',
   type: 'weather_health_alert_card',
