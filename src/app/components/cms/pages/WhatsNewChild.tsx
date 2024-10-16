@@ -26,7 +26,7 @@ export default async function WhatsNewChildPage({
   const backLink = searchParams.returnUrl || extractRootSlug(slug)
 
   return (
-    <View backLink={backLink} lastUpdated={lastUpdated}>
+    <View backLink={backLink} lastUpdated={lastUpdated} heading={title}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <small className="govuk-caption-m govuk-!-margin-bottom-3">
@@ -50,17 +50,6 @@ export default async function WhatsNewChildPage({
               />
             </div>
           ) : null}
-
-          <Trans
-            i18nKey="entryTitle"
-            t={t}
-            components={[
-              <h1 className="govuk-heading-xl govuk-!-margin-bottom-6" key={0}>
-                <span className="govuk-visually-hidden" key={0} />
-              </h1>,
-            ]}
-            values={{ value: title }}
-          />
 
           <span className="govuk-visually-hidden">{t('entryDescription')}</span>
           <RichText>{body}</RichText>
