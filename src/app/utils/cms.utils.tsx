@@ -11,6 +11,7 @@ import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
+import { getPathSegments } from '@/app/utils/cms/slug'
 
 import {
   ButtonExternal,
@@ -29,7 +30,6 @@ import {
 } from '../components/cms'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
-import { getPathSegments } from '@/app/utils/cms/slug'
 
 // TODO: Move this file into cms folder
 export const renderSection = ({
