@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 // import { Trans } from 'react-i18next/TransWithoutContext'
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
