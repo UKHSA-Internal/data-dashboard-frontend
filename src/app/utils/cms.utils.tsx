@@ -29,6 +29,7 @@ import {
 } from '../components/cms'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
+import { getPathSegments } from '@/app/utils/cms/slug'
 
 // TODO: Move this file into cms folder
 export const renderSection = ({
@@ -44,7 +45,7 @@ export const renderSection = ({
   >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
-        <Link href={pageLink} className="govuk-link--no-visited-state">
+        <Link href={`/${getPathSegments(pageLink).join('/')}`} className="govuk-link--no-visited-state">
           {heading}
         </Link>
       ) : (
@@ -258,7 +259,7 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
         {value.map(({ id, value }) => (
           <ListItem key={id} spacing="m">
             <ListItemArrow>
-              <ListItemArrowLink href={value.page}>{value.title}</ListItemArrowLink>
+              <ListItemArrowLink href={`/${getPathSegments(value.page).join('/')}`}>{value.title}</ListItemArrowLink>
               <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
             </ListItemArrow>
           </ListItem>

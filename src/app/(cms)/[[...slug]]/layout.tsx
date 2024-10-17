@@ -12,6 +12,8 @@ import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
+import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 interface LayoutProps {
   children: ReactNode
@@ -69,17 +71,17 @@ export default async function Layout({ children, params }: LayoutProps) {
 
       {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
 
-      {/*{!onHomePage ? (*/}
-      {/*  <div className="govuk-width-container print:hidden">*/}
-      {/*    <PhaseBanner tag={t('feedbackBannerPhase')}>*/}
-      {/*      <Trans i18nKey="feedbackBanner" t={t}>*/}
-      {/*        <span className="govuk-phase-banner__text">*/}
-      {/*          <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />*/}
-      {/*        </span>*/}
-      {/*      </Trans>*/}
-      {/*    </PhaseBanner>*/}
-      {/*  </div>*/}
-      {/*) : null}*/}
+      {!onHomePage ? (
+        <div className="govuk-width-container print:hidden">
+          <PhaseBanner tag={t('feedbackBannerPhase')}>
+            <Trans i18nKey="feedbackBanner" t={t}>
+              <span className="govuk-phase-banner__text">
+                <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />
+              </span>
+            </Trans>
+          </PhaseBanner>
+        </div>
+      ) : null}
 
       {globalBanner ? (
         <div className="govuk-width-container">
