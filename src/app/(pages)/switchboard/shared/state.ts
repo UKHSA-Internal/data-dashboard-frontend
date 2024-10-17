@@ -39,8 +39,6 @@ export const initialState: switchBoardSchemaType = {
   },
   flags: {
     'landing-page-hero': 'disabled',
-    'landing-page-content': 'disabled',
-    'weather-health-summary-card': 'disabled',
     'interactive-charts': 'disabled',
   },
 }

@@ -1,5 +1,6 @@
 import { Metadata } from 'next'
 import Link from 'next/link'
+import { Suspense } from 'react'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
@@ -83,7 +84,9 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
         <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
 
-      <HealthAlertsLink type={weather} className="govuk-!-margin-bottom-5" />
+      <Suspense>
+        <HealthAlertsLink type={weather} className="govuk-!-margin-bottom-5" />
+      </Suspense>
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">

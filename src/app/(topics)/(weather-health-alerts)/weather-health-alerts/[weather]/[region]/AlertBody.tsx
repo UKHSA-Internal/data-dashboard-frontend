@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
-import { ReactNode } from 'react'
+import { ReactNode, Suspense } from 'react'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { RelatedLinksLayout } from '@/api/models/cms/Page'
@@ -121,7 +121,9 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
             dangerouslySetInnerHTML={{ __html: text }}
           />
 
-          <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+          <Suspense>
+            <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />
+          </Suspense>
         </div>
 
         {relatedLinksLayout === 'Sidebar' ? (
