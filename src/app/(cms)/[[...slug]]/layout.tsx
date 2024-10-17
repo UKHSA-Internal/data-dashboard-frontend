@@ -1,19 +1,19 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { cache, ReactNode } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 // import { Trans } from 'react-i18next/TransWithoutContext'
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
+import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 // import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
-import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
-import { Trans } from 'react-i18next/TransWithoutContext'
 
 interface LayoutProps {
   children: ReactNode
