@@ -1,5 +1,3 @@
-import { cache } from 'react'
-
 import { flags } from '@/app/constants/flags.constants'
 import { getHomePage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
@@ -8,8 +6,8 @@ import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { View } from '../../ui/ukhsa/View/View'
 
-const getFlag = cache(getFeatureFlag)
-const getPage = cache(getHomePage)
+const getFlag = getFeatureFlag
+const getPage = getHomePage
 
 export default async function HomePage() {
   const [

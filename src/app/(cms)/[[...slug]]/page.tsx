@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import React, { cache, ComponentType } from 'react'
+import React, { ComponentType } from 'react'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import CompositePage from '@/app/components/cms/pages/Composite'
@@ -14,8 +14,8 @@ import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
 
-const getPageType = cache(getPageTypeBySlug)
-const getPageMeta = cache(getPageMetadata)
+const getPageType = getPageTypeBySlug
+const getPageMeta = getPageMetadata
 
 /**
  * Generates metadata for the page based on the dynamic slug.
