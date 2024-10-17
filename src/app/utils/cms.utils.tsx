@@ -45,7 +45,11 @@ export const renderSection = ({
   >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
-        <Link href={`/${getPathSegments(pageLink).join('/')}`} className="govuk-link--no-visited-state">
+        <Link
+          href={`/${getPathSegments(pageLink).join('/')}`}
+          className="govuk-link--no-visited-state"
+          prefetch={false}
+        >
           {heading}
         </Link>
       ) : (
@@ -259,7 +263,9 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
         {value.map(({ id, value }) => (
           <ListItem key={id} spacing="m">
             <ListItemArrow>
-              <ListItemArrowLink href={`/${getPathSegments(value.page).join('/')}`}>{value.title}</ListItemArrowLink>
+              <ListItemArrowLink
+                href={`/${getPathSegments(value.page).join('/')}`}
+              >{value.title}</ListItemArrowLink>
               <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
             </ListItemArrow>
           </ListItem>
