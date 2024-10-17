@@ -191,7 +191,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                 aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
                 className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
-                <Link href={`/${getPathSegments(card.value.topic_page).join('/')}`}>
+                <Link href={`/${getPathSegments(card.value.topic_page).join('/')}`} prefetch={false}>
                   <h3 id={`chart-row-card-heading-${snakeCase(card.value.title)}`} className="govuk-heading-m mb-1">
                     {card.value.title}
                   </h3>
