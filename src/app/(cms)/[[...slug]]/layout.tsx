@@ -1,12 +1,12 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { cache, ReactNode } from 'react'
-import { Trans } from 'react-i18next/TransWithoutContext'
 
+// import { Trans } from 'react-i18next/TransWithoutContext'
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
-import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
+// import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
@@ -69,17 +69,17 @@ export default async function Layout({ children, params }: LayoutProps) {
 
       {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
 
-      {!onHomePage ? (
-        <div className="govuk-width-container print:hidden">
-          <PhaseBanner tag={t('feedbackBannerPhase')}>
-            <Trans i18nKey="feedbackBanner" t={t}>
-              <span className="govuk-phase-banner__text">
-                <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />
-              </span>
-            </Trans>
-          </PhaseBanner>
-        </div>
-      ) : null}
+      {/*{!onHomePage ? (*/}
+      {/*  <div className="govuk-width-container print:hidden">*/}
+      {/*    <PhaseBanner tag={t('feedbackBannerPhase')}>*/}
+      {/*      <Trans i18nKey="feedbackBanner" t={t}>*/}
+      {/*        <span className="govuk-phase-banner__text">*/}
+      {/*          <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />*/}
+      {/*        </span>*/}
+      {/*      </Trans>*/}
+      {/*    </PhaseBanner>*/}
+      {/*  </div>*/}
+      {/*) : null}*/}
 
       {globalBanner ? (
         <div className="govuk-width-container">
