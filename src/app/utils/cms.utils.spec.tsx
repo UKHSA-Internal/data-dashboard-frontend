@@ -45,16 +45,13 @@ describe('Displaying a section from the cms home page', () => {
   test('renders a heading that links to the topic page', () => {
     render(renderSection(mockSectionWithLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'COVID-19' })).toHaveAttribute(
-      'href',
-      'http://localhost:3000/topics/covid-19'
-    )
+    expect(screen.getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
 
     render(renderSection(mockSectionWithLongHeading))
     expect(screen.getByRole('heading', { level: 2, name: 'Other respiratory viruses' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
       'href',
-      'http://localhost:3000/topics/other-respiratory-viruses'
+      '/topics/other-respiratory-viruses'
     )
   })
 
