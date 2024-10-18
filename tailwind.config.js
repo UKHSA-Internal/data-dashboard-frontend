@@ -42,6 +42,7 @@ module.exports = {
       red: 'var(--colour-red)',
       'red-dark': 'var(--colour-red-dark)',
       yellow: 'var(--colour-yellow)',
+      custard: 'var(--colour-custard)',
       green: 'var(--colour-green)',
       'green-dark': 'var(--colour-green-dark)',
       blue: 'var(--colour-blue)',
