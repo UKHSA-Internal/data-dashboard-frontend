@@ -2,7 +2,7 @@
 
 import { Slug } from '@/app/types'
 
-import { extractRootSlug, getPathSegments } from './slug'
+import { extractRootSlug, getPath, getPathSegments } from './slug'
 
 // Define the test suite for the extractRootSlug function
 describe('extractRootSlug', () => {
@@ -67,5 +67,32 @@ describe('getPathSegments', () => {
   test('handle URLs with both query parameters and hash fragments', () => {
     const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/?query=param#fragment'
     expect(getPathSegments(url)).toEqual<Slug>(['access-our-data'])
+  })
+})
+
+describe('getPath', () => {
+  test('handle url with single path segment', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data/'
+    expect(getPath(url)).toEqual<string>('/access-our-data')
+  })
+
+  test('handle url with multiple path segments', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/outbreaks/measles'
+    expect(getPath(url)).toEqual<string>('/outbreaks/measles')
+  })
+
+  test('handle unexpected values', () => {
+    const url = ''
+    expect(getPath(url)).toEqual<string>('/')
+  })
+
+  test('handle URLs without trailing slash', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/access-our-data'
+    expect(getPath(url)).toEqual<string>('/access-our-data')
+  })
+
+  test('handle root URLs', () => {
+    const url = 'https://dev.ukhsa-dashboard.data.gov.uk/'
+    expect(getPath(url)).toEqual<string>('/')
   })
 })
