@@ -12,3 +12,8 @@ export function getPathSegments(url: string): Slug {
   const segments = path.split('/').filter((segment) => segment.length > 0)
   return segments
 }
+
+export function getPath(url: string) {
+  const pathSegments = getPathSegments(url)
+  return `/${pathSegments.join('/')}`
+}
