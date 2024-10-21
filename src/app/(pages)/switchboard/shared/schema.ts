@@ -38,6 +38,7 @@ export const switchBoardSchema = z.object({
   flags: z.object({
     'landing-page-hero': z.enum(['enabled', 'disabled']),
     'interactive-charts': z.enum(['enabled', 'disabled']),
+    'feedback-form': z.enum(['enabled', 'disabled']),
   }),
 })
 
