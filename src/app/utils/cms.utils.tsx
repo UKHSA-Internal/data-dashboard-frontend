@@ -198,7 +198,11 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                   <p className="govuk-body-s mb-3 text-grey-1">{card.value.sub_title}</p>
 
                   <div>
-                    <Chart data={card.value} size={value.cards.length < 3 ? 'half' : 'third'} />
+                    <Chart
+                      enableInteractive={false}
+                      data={card.value}
+                      size={value.cards.length < 3 ? 'half' : 'third'}
+                    />
                   </div>
                 </Link>
               </Card>
