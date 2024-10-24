@@ -9,6 +9,7 @@ import {
   cookiesPageMock,
   covid19PageMock,
   dashboardMock,
+  feedbackMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -63,6 +64,29 @@ export const pagesWithLandingTypeMock: PagesResponse = {
       seo_change_frequency: landingPageMock.seo_change_frequency,
       seo_priority: landingPageMock.seo_priority,
       title: landingPageMock.title,
+    },
+  ],
+}
+
+export const pagesWithFeedbackTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: feedbackMock.id,
+      meta: {
+        type: feedbackMock.meta.type,
+        detail_url: feedbackMock.meta.detail_url,
+        html_url: feedbackMock.meta.html_url,
+        slug: feedbackMock.meta.slug,
+        show_in_menus: feedbackMock.meta.show_in_menus,
+        first_published_at: feedbackMock.meta.first_published_at,
+        search_description: feedbackMock.meta.search_description,
+      },
+      seo_change_frequency: feedbackMock.seo_change_frequency,
+      seo_priority: feedbackMock.seo_priority,
+      title: feedbackMock.title,
     },
   ],
 }

@@ -13,6 +13,7 @@ export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTy
 type PageTypeToDataMap = {
   [PageType.Home]: typeof WithHomeData
   [PageType.Landing]: typeof WithLandingData
+  [PageType.Feedback]: typeof withFeedbackData
   [PageType.Topic]: typeof WithTopicData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
@@ -48,6 +49,32 @@ const WithLandingData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('home.LandingPage'),
   }),
+})
+
+const withFeedbackData = SharedPageData.extend({
+  body: z.string(), //TODO: Look into this, is body required?
+  meta: Meta.extend({
+    type: z.literal('feedback.FormPage'),
+  }),
+  form_fields: z.array(
+    z.object({
+      id: z.number(),
+      meta: z.object({
+        type: z.literal('feedback.FormField'),
+      }),
+      clean_name: z.string(),
+      label: z.string(),
+      field_type: z.union([z.literal('multiline'), z.literal('radio')]),
+      help_text: z.string(),
+      required: z.boolean(),
+      choices: z.string(), //TODO: Check type here
+      default_value: z.string(),
+    })
+  ),
+  confirmation_slug: z.string(),
+  confirmation_panel_title: z.string(),
+  confirmation_panel_text: z.string(),
+  confirmation_body: z.string(),
 })
 
 const WithTopicData = SharedPageData.extend({

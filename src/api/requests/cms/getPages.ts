@@ -31,6 +31,7 @@ import { logger } from '@/lib/logger'
 export enum PageType {
   Home = 'home.HomePage',
   Landing = 'home.LandingPage',
+  Feedback = 'feedback.FormPage',
   Common = 'common.CommonPage',
   Composite = 'composite.CompositePage',
   Topic = 'topic.TopicPage',
