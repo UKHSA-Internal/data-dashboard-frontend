@@ -31,15 +31,21 @@ jest.mock('@/api/requests/charts/getCharts')
 
 const getChartsMock = jest.mocked(getCharts)
 
-test('renders the chart correctly when successful', async () => {
-  getChartsMock.mockResolvedValueOnce({
-    success: true,
-    data: {
-      chart: 'mock-chart',
-      alt_text: 'alt text for chart',
-      last_updated: '2023-05-10T15:18:06.939535+01:00',
-      figure: { data: [], layout: {} },
-    },
+console.error = jest.fn()
+
+const chartDataMocks = ['mock-chart-narrow', 'mock-chart-wide', 'mock-chart-half', 'mock-chart-third']
+
+test('renders a narrow chart correctly', async () => {
+  chartDataMocks.forEach((chart) => {
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: {
+        chart,
+        alt_text: 'alt text for chart',
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: { data: [], layout: {} },
+      },
+    })
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -84,7 +90,7 @@ test('renders the chart correctly when successful', async () => {
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
-    'data:image/svg+xml;utf8,mock-chart'
+    'data:image/svg+xml;utf8,mock-chart-narrow'
   )
 })
 
@@ -93,14 +99,16 @@ test('renders the chart by geography and geography type when both are present in
     .mocked(getSearchParams)
     .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
-  getChartsMock.mockResolvedValueOnce({
-    success: true,
-    data: {
-      chart: 'mock-chart',
-      alt_text: 'alt text for chart',
-      last_updated: '2023-05-10T15:18:06.939535+01:00',
-      figure: { data: [], layout: {} },
-    },
+  chartDataMocks.forEach((chart) => {
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: {
+        chart,
+        alt_text: 'alt text for chart',
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: { data: [], layout: {} },
+      },
+    })
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -145,28 +153,21 @@ test('renders the chart by geography and geography type when both are present in
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
-    'data:image/svg+xml;utf8,mock-chart'
+    'data:image/svg+xml;utf8,mock-chart-narrow'
   )
 })
 
 test('full width charts should also have an acompanying narrow version for mobile viewports', async () => {
-  getChartsMock.mockResolvedValueOnce({
-    success: true,
-    data: {
-      chart: 'mock-chart-narrow',
-      alt_text: 'alt text for chart',
-      last_updated: '2023-05-10T15:18:06.939535+01:00',
-      figure: { data: [], layout: {} },
-    },
-  })
-  getChartsMock.mockResolvedValueOnce({
-    success: true,
-    data: {
-      chart: 'mock-chart-wide',
-      alt_text: 'alt text for chart',
-      last_updated: '2023-05-10T15:18:06.939535+01:00',
-      figure: { data: [], layout: {} },
-    },
+  chartDataMocks.forEach((chart) => {
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: {
+        chart,
+        alt_text: 'alt text for chart',
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: { data: [], layout: {} },
+      },
+    })
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -187,6 +188,38 @@ test('full width charts should also have an acompanying narrow version for mobil
   )
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-wide')
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('media', '(min-width: 768px)')
+})
+
+test('landing page half width charts should also have an acompanying narrow version for mobile viewports', async () => {
+  chartDataMocks.forEach((chart) => {
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: {
+        chart,
+        alt_text: 'alt text for chart',
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: { data: [], layout: {} },
+      },
+    })
+  })
+
+  const data: ComponentProps<typeof Chart>['data'] = {
+    x_axis: null,
+    y_axis: null,
+    chart: [],
+    body: 'COVID-19 chart description.',
+    tag_manager_event_id: '',
+    title: '',
+    headline_number_columns: [],
+  }
+
+  const { getByAltText, getByTestId } = render((await Chart({ data, size: 'half' })) as ReactElement)
+
+  expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
+    'src',
+    'data:image/svg+xml;utf8,mock-chart-half'
+  )
+  expect(getByTestId('chart-src-min-1200')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-third')
 })
 
 test('renders a fallback message when the chart requests fail', async () => {

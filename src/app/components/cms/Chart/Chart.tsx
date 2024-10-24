@@ -1,16 +1,23 @@
+import dynamic from 'next/dynamic'
+import { Suspense } from 'react'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard, WithSimplifiedChartCardAndLink } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
+import { flags } from '@/app/constants/flags.constants'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
+import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
+  /* Enable interactive plotly.js */
+  enableInteractive?: boolean
+
   /* Request metadata from the CMS required to fetch from the headlines api */
   data:
     | z.infer<typeof WithChartHeadlineAndTrendCard>['value']
@@ -21,8 +28,50 @@ interface ChartProps {
   size: 'narrow' | 'wide' | 'half' | 'third'
 }
 
-export async function Chart({ data, size }: ChartProps) {
-  const { t } = await getServerTranslation('common')
+const createStaticChart = ({
+  size,
+  charts: { wideChart, halfChart, thirdChart, narrowChart },
+  areaName,
+  altText,
+}: {
+  size: ChartProps['size']
+  charts: Record<string, string>
+  areaName: string | null
+  altText: string
+}) => {
+  const onLandingPage = size === 'third' || size === 'half'
+
+  return (
+    <picture data-testid="chart" data-location={areaName}>
+      {size === 'wide' && (
+        <source
+          media="(min-width: 768px)"
+          srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
+          data-testid="chart-src-min-768"
+        />
+      )}
+      {size === 'half' && (
+        <source
+          media="(min-width: 1200px)"
+          srcSet={`data:image/svg+xml;utf8,${getChartSvg(halfChart)}`}
+          data-testid="chart-src-min-1200"
+        />
+      )}
+      <img
+        alt={altText}
+        src={`data:image/svg+xml;utf8,${getChartSvg(onLandingPage ? thirdChart : narrowChart)}`}
+        className="w-full"
+      />
+    </picture>
+  )
+}
+
+export async function Chart({ data, size, enableInteractive = true }: ChartProps) {
+  const [{ enabled: interactiveChartsFlagEnabled }, { t }] = await Promise.all([
+    getFeatureFlag(flags.interactiveCharts),
+    getServerTranslation('common'),
+  ])
+
   const { chart, x_axis, y_axis } = data
 
   const pathname = getPathname()
@@ -34,92 +83,68 @@ export async function Chart({ data, size }: ChartProps) {
     geography: areaName ?? plot.value.geography,
   }))
 
-  // Collect all chart svg's mobile first using the narrow aspect ratio
-  const chartRequests = [
-    getCharts({
-      plots,
-      x_axis,
-      y_axis,
-      chart_width: chartSizes.narrow.width,
-      chart_height: chartSizes.narrow.height,
-    }),
+  const request = (chart_width: number, chart_height: number) =>
+    getCharts({ plots, x_axis, y_axis, chart_width, chart_height })
+
+  // Collect all chart svg's for all desired sizes
+  const topicPageRequests = [
+    request(chartSizes.narrow.width, chartSizes.narrow.height),
+    request(chartSizes.wide.width, chartSizes.wide.height),
   ]
 
-  // The concept of a "wide" chart only applies to the desktop viewport
-  if (size === 'wide') {
-    chartRequests.push(
-      getCharts({
-        plots,
-        x_axis,
-        y_axis,
-        chart_width: chartSizes.wide.width,
-        chart_height: chartSizes.wide.height,
-      })
-    )
-  }
-
-  // All landing page charts loading small width first
-  const landingChartRequests = [
-    getCharts({
-      plots,
-      x_axis,
-      y_axis,
-      chart_width: chartSizes.third.width,
-      chart_height: chartSizes.third.height,
-    }),
+  const landingPageRequests = [
+    request(chartSizes.third.width, chartSizes.third.height),
+    request(chartSizes.half.width, chartSizes.half.height),
   ]
 
-  // Wider landing page charts where required
-  if (size === 'half') {
-    landingChartRequests.push(
-      getCharts({
-        plots,
-        x_axis,
-        y_axis,
-        chart_width: chartSizes.half.width,
-        chart_height: chartSizes.half.height,
-      })
-    )
+  const [narrowChartResponse, wideChartResponse] = await Promise.all(topicPageRequests)
+  const [thirdChartResponse, halfChartResponse] = await Promise.all(landingPageRequests)
+
+  if (
+    !narrowChartResponse.success ||
+    !wideChartResponse.success ||
+    !thirdChartResponse.success ||
+    !halfChartResponse.success
+  ) {
+    return <ChartEmpty resetHref={pathname} />
   }
 
-  const [narrowChartResponse, wideChartResponse] = await Promise.all(chartRequests)
-  const [thirdChartResponse, halfChartResponse] = await Promise.all(landingChartRequests)
+  const {
+    data: { alt_text: alt, figure },
+  } = narrowChartResponse
 
-  const onLandingPage = size === 'third' || size === 'half'
+  const staticChart = createStaticChart({
+    size,
+    charts: {
+      wideChart: wideChartResponse.data.chart,
+      thirdChart: thirdChartResponse.data.chart,
+      halfChart: halfChartResponse.data.chart,
+      narrowChart: narrowChartResponse.data.chart,
+    },
+    areaName,
+    altText: t('cms.blocks.chart.alt', { body: alt }),
+  })
 
-  if (narrowChartResponse.success) {
-    const {
-      data: { chart: narrowChart, alt_text: alt },
-    } = narrowChartResponse
+  // Lazy load the interactive chart component (and all associated plotly.js code)
+  const ChartInteractive = dynamic(() => import('../ChartInteractive/ChartInteractive'), {
+    ssr: false,
+    loading: () => staticChart, // Show the static svg chart whilst this chunk is being loaded
+  })
 
-    const wideChart = wideChartResponse && wideChartResponse.success && wideChartResponse.data.chart
-    const thirdChart = (thirdChartResponse && thirdChartResponse.success && thirdChartResponse.data.chart) || ''
-    const halfChart = halfChartResponse && halfChartResponse.success && halfChartResponse.data.chart
-
-    return (
-      <picture data-testid="chart" data-location={areaName}>
-        {wideChart && (
-          <source
-            media="(min-width: 768px)"
-            srcSet={`data:image/svg+xml;utf8,${getChartSvg(wideChart)}`}
-            data-testid="chart-src-min-768"
-          />
-        )}
-        {halfChart && (
-          <source
-            media="(min-width: 1200px)"
-            srcSet={`data:image/svg+xml;utf8,${getChartSvg(halfChart)}`}
-            data-testid="chart-src-min-768"
-          />
-        )}
-        <img
-          alt={t('cms.blocks.chart.alt', { body: alt })}
-          src={`data:image/svg+xml;utf8,${getChartSvg(onLandingPage ? thirdChart : narrowChart)}`}
-          className="w-full"
-        />
-      </picture>
-    )
+  // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
+  // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
+  if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk')) {
+    return staticChart
   }
 
-  return <ChartEmpty resetHref={pathname} />
+  // Show static chart when interactive charts are disabled (i.e. landing page) or when feature flag is off
+  if (!enableInteractive || !interactiveChartsFlagEnabled) {
+    return staticChart
+  }
+
+  return (
+    <Suspense fallback={staticChart}>
+      <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
+    </Suspense>
+  )
 }
