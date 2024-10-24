@@ -141,7 +141,19 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                         </>
                       )}
                       <AreaSelectorLoader>
-                        <Chart data={column.value} size={size} />
+                        <Chart
+                          data={column.value}
+                          sizes={[
+                            {
+                              minWidth: 768,
+                              size,
+                            },
+                            {
+                              default: true,
+                              size: 'narrow',
+                            },
+                          ]}
+                        />
                       </AreaSelectorLoader>
                     </TabsContent>
                     <TabsContent
@@ -198,7 +210,21 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                   <p className="govuk-body-s mb-3 text-grey-1">{card.value.sub_title}</p>
 
                   <div>
-                    <Chart data={card.value} size={value.cards.length < 3 ? 'half' : 'third'} />
+                    <Chart
+                      // Disable on landing page
+                      enableInteractive={false}
+                      data={card.value}
+                      sizes={[
+                        {
+                          minWidth: 1200,
+                          size: value.cards.length < 3 ? 'half' : 'third',
+                        },
+                        {
+                          size: 'third',
+                          default: true,
+                        },
+                      ]}
+                    />
                   </div>
                 </Link>
               </Card>
