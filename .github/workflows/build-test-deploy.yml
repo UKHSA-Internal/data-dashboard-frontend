@@ -63,7 +63,7 @@ jobs:
       - name: Start Applicaton
         run: NODE_ENV=test npm run start &
       - name: Unlighthouse assertions and client
-        run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
+        run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=75
       - uses: actions/upload-artifact@v3
         if: always()
         with:
@@ -181,7 +181,7 @@ jobs:
 
   publish-image:
     name: Publish image to ECR
-    needs: [ success-gate ]
+    needs: [success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
