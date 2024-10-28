@@ -108,9 +108,14 @@ $govuk-page-width: 1400px;
   --colour-yellow-darkest: #{govuk-shade(govuk-colour('yellow'), 45%)};
   --colour-green-darkest: #{govuk-shade(govuk-colour('green'), 45%)};
 
+  // UKHSA New yellow for maps
+  --colour-custard: #F1BF0D; 
+  --colour-custard-dark: #{govuk-shade(#F1BF0D, 15%)};
+  --colour-custard-darkest: #{govuk-shade(#F1BF0D, 45%)};
+
   // UKHSA Alert banner colours
   --colour-green-opaque: #c2ddd0;
-  --colour-yellow-opaque: #fff7c2;
+  --colour-yellow-opaque: #fbefc2;
   --colour-orange-opaque: #fcdecf;
   --colour-red-opaque: #f5cfc9;
 
