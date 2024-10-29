@@ -25,6 +25,7 @@ export default async function HomePage() {
 
   return (
     <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>
+      <h2> Test text Lorem ipsum</h2>
       {body.map(renderSection)}
 
       {relatedLinksLayout === 'Sidebar' && (
