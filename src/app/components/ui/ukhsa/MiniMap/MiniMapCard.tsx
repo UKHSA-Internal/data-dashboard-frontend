@@ -3,10 +3,18 @@
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 
+import { HealthAlertTypes } from '@/api/models/Alerts'
+
 import { Card } from '../Card/Card'
 import { MiniMap } from './MiniMap'
 
-export function MiniMapCard() {
+interface MiniMapCardProps {
+  title: string
+  subTitle: string
+  alertType: HealthAlertTypes
+}
+
+export function MiniMapCard({ title, subTitle, alertType }: MiniMapCardProps) {
   const router = useRouter()
   return (
     <Card
@@ -15,17 +23,17 @@ export function MiniMapCard() {
       className="govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
     >
       <Link
-        href="/weather-health-alerts/heat"
+        href={`/weather-health-alerts/${alertType}`}
         scroll={false}
         onClick={(evt) => {
           evt.preventDefault()
-          router.push('/?v=map&type=heat')
+          router.push(`/?v=map&type=${alertType}`)
         }}
       >
         <h3 id="chart-row-card-heading-x4" className="govuk-heading-m mb-1">
-          Heat health alerts
+          {title}
         </h3>
-        <p className="govuk-body-s text-grey-1">Across England</p>
+        <p className="govuk-body-s text-grey-1">{subTitle}</p>
         <MiniMap />
       </Link>
     </Card>

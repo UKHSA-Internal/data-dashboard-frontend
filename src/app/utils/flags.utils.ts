@@ -38,6 +38,9 @@ export async function getFeatureFlag(name: FeatureFlag) {
       {
         fetchOptions: {
           headers,
+          next: {
+            revalidate: 0,
+          },
         },
       }
     )

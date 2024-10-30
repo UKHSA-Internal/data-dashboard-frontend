@@ -9,6 +9,8 @@ import { logger } from '@/lib/logger'
 const fixturesDirectory = path.resolve(process.cwd(), 'src/mock-server/handlers/charts/fixtures')
 const narrowFixture = fs.readFileSync(path.join(fixturesDirectory, `narrow.svg`))
 const wideFixture = fs.readFileSync(path.join(fixturesDirectory, `wide.svg`))
+const halfFixture = fs.readFileSync(path.join(fixturesDirectory, `half.svg`))
+const thirdFixture = fs.readFileSync(path.join(fixturesDirectory, `third.svg`))
 
 export default async function handler(req: Request, res: Response) {
   try {
@@ -34,6 +36,10 @@ export default async function handler(req: Request, res: Response) {
         chart: narrowFixture.toString(),
         alt_text: 'Mocked alt text',
         last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: {
+          data: [],
+          layout: {},
+        },
       })
     }
 
@@ -42,6 +48,34 @@ export default async function handler(req: Request, res: Response) {
         chart: wideFixture.toString(),
         alt_text: 'Mocked alt text',
         last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: {
+          data: [],
+          layout: {},
+        },
+      })
+    }
+
+    if (chart_height === chartSizes.half.height && chart_width === chartSizes.half.width) {
+      return res.json({
+        chart: halfFixture.toString(),
+        alt_text: 'Mocked alt text',
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: {
+          data: [],
+          layout: {},
+        },
+      })
+    }
+
+    if (chart_height === chartSizes.third.height && chart_width === chartSizes.third.width) {
+      return res.json({
+        chart: thirdFixture.toString(),
+        alt_text: 'Mocked alt text',
+        last_updated: '2023-05-10T15:18:06.939535+01:00',
+        figure: {
+          data: [],
+          layout: {},
+        },
       })
     }
   } catch (error) {

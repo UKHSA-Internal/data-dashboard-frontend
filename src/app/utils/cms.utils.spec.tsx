@@ -9,8 +9,9 @@ import {
   mockChartRowCardWithSingleChartCard,
   mockHeadlineNumbersRowCard,
   mockHeadlineNumbersRowCardWithOneColumn,
-  mockSection,
+  mockSectionNoLink,
   mockSectionWithCard,
+  mockSectionWithLink,
   mockSectionWithLongHeading,
   mockTextCard,
 } from './__mocks__/cms'
@@ -42,7 +43,7 @@ jest.mock('../components/cms', () => ({
 
 describe('Displaying a section from the cms home page', () => {
   test('renders a heading that links to the topic page', () => {
-    render(renderSection(mockSection))
+    render(renderSection(mockSectionWithLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
 
@@ -52,6 +53,11 @@ describe('Displaying a section from the cms home page', () => {
       'href',
       '/topics/other-respiratory-viruses'
     )
+  })
+
+  test('renders a heading with no link', () => {
+    render(renderSection(mockSectionNoLink))
+    expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
   })
 
   test('renders a card', () => {
@@ -171,6 +177,15 @@ describe('Chart row card', () => {
   })
 })
 
+// describe('Chart card section (Simplified chart)', () => {})
+
+// describe('Weather health alert card', () => {
+//   test('heat health alerts card', () => {
+//     render(renderCard(mockWeatherHealthAlertCard))
+//     expect(screen.getByRole('heading', { level: 3, name: 'Heat health alerts' }))
+//   })
+// })
+
 describe('Metrics', () => {
   test('percentage number', () => {
     render(
@@ -231,22 +246,6 @@ describe('Composite block', () => {
     expect(screen.getByText('Mocked richtext component')).toBeInTheDocument()
   })
 
-  test('external button', () => {
-    render(
-      renderCompositeBlock({
-        type: 'external_button',
-        value: {
-          text: 'Download',
-          url: 'http://mockurl/an/external/asset.zip',
-          button_type: 'primary',
-          icon: '',
-        },
-        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
-      })
-    )
-    expect(screen.getByText('Mocked external download button')).toBeInTheDocument()
-  })
-
   test('internal button', () => {
     render(
       renderCompositeBlock({
@@ -261,6 +260,22 @@ describe('Composite block', () => {
       })
     )
     expect(screen.getByText('Mocked internal download button')).toBeInTheDocument()
+  })
+
+  test('external button', () => {
+    render(
+      renderCompositeBlock({
+        type: 'external_button',
+        value: {
+          text: 'Download',
+          url: 'http://mockurl/an/external/asset.zip',
+          button_type: 'primary',
+          icon: '',
+        },
+        id: 'f7631790-5fcf-48c7-8186-dc36050f4d32',
+      })
+    )
+    expect(screen.getByText('Mocked external download button')).toBeInTheDocument()
   })
 
   test('code block', () => {
@@ -284,5 +299,27 @@ describe('Composite block', () => {
       })
     )
     expect(screen.getByText('Mocked code block')).toBeInTheDocument()
+  })
+
+  test('Internal page links', () => {
+    render(
+      renderCompositeBlock({
+        type: 'internal_page_links',
+        value: [
+          {
+            type: 'page_link',
+            value: {
+              title: 'COVID-19',
+              sub_title: 'COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.',
+              page: 'http://localhost:3000/topics/covid-19/',
+            },
+            id: 'c36d19c1-3a5e-4fcf-b696-91468c609369',
+          },
+        ],
+        id: '99c01f1d-0280-4cf4-bd96-39543a6c1ac9',
+      })
+    )
+    expect(screen.getByRole('link', { name: 'COVID-19' })).toBeInTheDocument()
+    expect(screen.getByText('COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.')).toBeInTheDocument()
   })
 })

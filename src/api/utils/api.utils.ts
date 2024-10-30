@@ -3,11 +3,14 @@ import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
+// TODO: Refactor to extend RequestInit
 interface Options {
   body?: unknown
   searchParams?: URLSearchParams
   baseUrl?: string
   headers?: Record<string, string>
+  cache?: RequestInit['cache']
+  next?: { revalidate: number }
 }
 
 /**
@@ -34,12 +37,20 @@ export async function client<T>(
     }
   }
 
-  const fetchOptions: RequestInit & { next: { revalidate: number } } = {
+  const fetchOptions: RequestInit & {
+    next?: { revalidate: number }
+    retries: number
+    retryDelay: (attempt: number) => number
+  } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     next: {
       // Disable NextJs router caching
       revalidate: 0,
+    },
+    retries: 3,
+    retryDelay: (attempt) => {
+      return Math.pow(2, attempt) * 1000 // 1000, 2000, 4000
     },
     ...customConfig,
     headers: {
@@ -59,7 +70,8 @@ export async function client<T>(
 
         if (type && !type.includes('application/json')) {
           if (type.includes('application/zip')) {
-            const data = await response.blob()
+            const arrayBuffer = await response.arrayBuffer()
+            const data = Buffer.from(arrayBuffer)
             return { data, status, headers }
           }
           const data = await response.text()

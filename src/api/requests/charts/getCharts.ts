@@ -1,8 +1,7 @@
 import { z } from 'zod'
 
-import { ChartTypes, FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
-import { ChartLineColours } from '@/api/models/ChartLineColours'
-import { ChartLineTypes } from '@/api/models/ChartLineTypes'
+import { FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
 import { client } from '@/api/utils/api.utils'
 import { chartFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
@@ -38,6 +37,7 @@ export const responseSchema = z.object({
   chart: z.string(),
   last_updated: z.string(),
   alt_text: z.string(),
+  figure: ChartFigure,
 })
 
 export type RequestParams = z.infer<typeof requestSchema>
@@ -56,6 +56,7 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body })
+
     return responseSchema.safeParse(data)
   } catch (error) {
     if (error instanceof Error) {

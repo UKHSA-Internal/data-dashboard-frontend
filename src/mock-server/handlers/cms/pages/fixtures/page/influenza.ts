@@ -614,5 +614,6 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
   enable_area_selector: true,
   selected_topics: ['Influenza'],
   related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
   last_published_at: '2023-05-15T16:26:41.095645+01:00',
 }
