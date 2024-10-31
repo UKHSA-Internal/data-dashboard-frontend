@@ -19,6 +19,7 @@
   "welcome": "Welcome",
   "pageTitle": "{{title}}",
   "pageTitle_withArea": "{{title}} in {{- areaName}}",
+  "entryTitle": "<0>Entry title: </0><1>{{-value}}</1>",
   "cms": {
     "blocks": {
       "headline": {

@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { RichText } from '@/app/components/cms'
 import { getServerTranslation } from '@/app/i18n'
@@ -60,6 +61,14 @@ export async function View({
           })}
         >
           {heading}
+          <span className="govuk-visually-hidden">
+            <Trans
+              i18nKey="entryTitle"
+              t={t}
+              components={[<span key={0} />, <span key={1} />]}
+              values={{ value: heading }}
+            />
+          </span>
         </h1>
       )}
 
