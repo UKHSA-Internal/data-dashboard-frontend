@@ -29,7 +29,6 @@ export const cookiesPageMock: PageResponse<PageType.Common> = {
   seo_priority: 0.5,
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'Cookies',
-  date_posted: '2023-05-12',
   body: '<p data-block-key="4elgr"><a href="/cookie-policy/?change-settings=1">change</a></p>',
   last_published_at: '2023-05-12T16:53:51.464146+01:00',
   related_links: relatedLinksMock,
