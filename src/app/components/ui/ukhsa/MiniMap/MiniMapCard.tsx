@@ -34,7 +34,7 @@ export function MiniMapCard({ title, subTitle, alertType }: MiniMapCardProps) {
           {title}
         </h3>
         <p className="govuk-body-s text-grey-1">{subTitle}</p>
-        <MiniMap />
+        <MiniMap alertType={alertType} />
       </Link>
     </Card>
   )
