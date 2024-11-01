@@ -65,7 +65,9 @@ export async function View({
                 'govuk-!-margin-bottom-2': lastUpdated,
               })}
               key={1}
-            ></h1>,
+            >
+              {heading}
+            </h1>,
           ]}
           values={{ value: heading }}
         />
