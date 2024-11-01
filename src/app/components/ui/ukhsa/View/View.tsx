@@ -58,15 +58,14 @@ export async function View({
           i18nKey="entryTitle"
           t={t}
           components={[
+            <span className="govuk-visually-hidden" key={0} />,
             <h1
               className={clsx('govuk-heading-xl', {
                 'govuk-!-margin-bottom-4': !lastUpdated,
                 'govuk-!-margin-bottom-2': lastUpdated,
               })}
-              key={0}
-            >
-              <span className="govuk-visually-hidden" key={0} />
-            </h1>,
+              key={1}
+            ></h1>,
           ]}
           values={{ value: heading }}
         />
