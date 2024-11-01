@@ -54,22 +54,22 @@ export async function View({
       {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
       {heading && (
-        <h1
-          className={clsx('govuk-heading-xl', {
-            'govuk-!-margin-bottom-4': !lastUpdated,
-            'govuk-!-margin-bottom-2': lastUpdated,
-          })}
-        >
-          {heading}
-          <span className="govuk-visually-hidden">
-            <Trans
-              i18nKey="entryTitle"
-              t={t}
-              components={[<span key={0} />, <span key={1} />]}
-              values={{ value: heading }}
-            />
-          </span>
-        </h1>
+        <Trans
+          i18nKey="entryTitle"
+          t={t}
+          components={[
+            <h1
+              className={clsx('govuk-heading-xl', {
+                'govuk-!-margin-bottom-4': !lastUpdated,
+                'govuk-!-margin-bottom-2': lastUpdated,
+              })}
+              key={0}
+            >
+              <span className="govuk-visually-hidden" key={0} />
+            </h1>,
+          ]}
+          values={{ value: heading }}
+        />
       )}
 
       {lastUpdated && (
