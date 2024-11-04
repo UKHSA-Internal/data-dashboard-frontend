@@ -5,7 +5,7 @@ import { useRouter } from 'next/navigation'
 import React, { memo, useCallback, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
-import { HealthAlertStatus } from '@/api/models/Alerts'
+import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 import RightArrowCircleIcon from '@/app/components/ui/ukhsa/Icons/RightArrowCircle'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { getCssVariableFromColour } from '@/app/utils/weather-health-alert.utils'
@@ -82,9 +82,13 @@ const MapRegion = memo(
   }
 )
 
-export function MiniMap(): React.ReactElement | null {
+interface MiniMapProps {
+  alertType: HealthAlertTypes
+}
+
+export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null {
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null)
-  const alerts = useWeatherHealthAlertList({ type: 'heat' })
+  const alerts = useWeatherHealthAlertList({ type: alertType })
   const router = useRouter()
 
   const [debouncedHoveredRegion] = useDebounceValue(hoveredRegion, 80)
