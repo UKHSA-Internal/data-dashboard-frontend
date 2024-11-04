@@ -1,6 +1,6 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
-import React, { ComponentType } from 'react'
+import { ComponentType } from 'react'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import CompositePage from '@/app/components/cms/pages/Composite'
@@ -53,7 +53,9 @@ const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = 
 
 export default async function Page({ params, searchParams }: { params: PageParams; searchParams: SearchParams }) {
   const { slug = [] } = params
+
   const pageType = await getPageTypeBySlug(slug)
+
   const PageComponent = PageComponents[pageType]
 
   if (!PageComponent) {

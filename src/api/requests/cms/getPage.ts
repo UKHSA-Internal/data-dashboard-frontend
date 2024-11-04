@@ -27,8 +27,6 @@ const SharedPageData = z.object({
   id: z.number(),
   title: z.string(),
   meta: Meta,
-  related_links: RelatedLinks,
-  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
   last_published_at: z.string(),
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
@@ -41,6 +39,8 @@ const WithHomeData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('home.HomePage'),
   }),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -52,10 +52,10 @@ const WithLandingData = SharedPageData.extend({
 })
 
 const withFeedbackData = SharedPageData.extend({
-  body: z.string(), //TODO: Look into this, is body required?
   meta: Meta.extend({
     type: z.literal('feedback.FormPage'),
   }),
+  body: z.string(),
   form_fields: z.array(
     z.object({
       id: z.number(),
@@ -64,10 +64,11 @@ const withFeedbackData = SharedPageData.extend({
       }),
       clean_name: z.string(),
       label: z.string(),
-      field_type: z.union([z.literal('multiline'), z.literal('radio')]),
+      // field_type: z.union([z.literal('multiline'), z.literal('radio')]), // TODO: Add more types
+      field_type: z.string(),
       help_text: z.string(),
       required: z.boolean(),
-      choices: z.string(), //TODO: Check type here
+      choices: z.string(),
       default_value: z.string(),
     })
   ),
@@ -85,6 +86,8 @@ const WithTopicData = SharedPageData.extend({
   }),
   enable_area_selector: z.boolean().or(fallback(false)),
   selected_topics: z.array(Topics).or(fallback([])),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithCommonData = SharedPageData.extend({
@@ -93,6 +96,8 @@ const WithCommonData = SharedPageData.extend({
     type: z.literal('common.CommonPage'),
   }),
   date_posted: z.string(),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithCompositeData = SharedPageData.extend({
@@ -103,6 +108,8 @@ const WithCompositeData = SharedPageData.extend({
   date_posted: z.string(),
   //TODO: Look into page description on all composite pages
   page_description: z.string().nullable().optional(),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithWhatsNewParentData = SharedPageData.extend({
@@ -113,8 +120,9 @@ const WithWhatsNewParentData = SharedPageData.extend({
   date_posted: z.string(),
 })
 
-const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_published_at: true }).extend({
+const WithWhatsNewChildData = SharedPageData.omit({ last_published_at: true }).extend({
   body: z.string(),
+
   meta: Meta.extend({
     type: z.literal('whats_new.WhatsNewChildEntry'),
   }),
@@ -136,7 +144,7 @@ const WithMetricsParentData = SharedPageData.extend({
   }),
 })
 
-const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend({
+const WithMetricsChildData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('metrics_documentation.MetricsDocumentationChildEntry'),
   }),
@@ -161,6 +169,7 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
 export const responseSchema = z.union([
   WithHomeData,
   WithLandingData,
+  withFeedbackData,
   WithTopicData,
   WithCommonData,
   WithCompositeData,

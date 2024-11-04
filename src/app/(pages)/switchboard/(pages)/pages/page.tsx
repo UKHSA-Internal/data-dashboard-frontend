@@ -52,7 +52,7 @@ export default function SwitchBoard() {
 
           <Details label="Related Links" className="govuk-!-margin-top-5">
             <div className="govuk-radios govuk-radios--small" data-module="govuk-radios">
-              <label className="govuk-label w-full" htmlFor="pages.detail.scenario.relatedLinksLayout.Default">
+              {/* <label className="govuk-label w-full" htmlFor="pages.detail.scenario.relatedLinksLayout.Default">
                 Layout
               </label>
               <div className="govuk-radios__item">
@@ -70,7 +70,7 @@ export default function SwitchBoard() {
                 >
                   Default
                 </label>
-              </div>
+              </div> */}
 
               <div className="govuk-radios__item">
                 <input

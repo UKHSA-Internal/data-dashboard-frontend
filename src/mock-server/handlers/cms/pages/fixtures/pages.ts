@@ -471,6 +471,7 @@ const items = [
   ...pagesWithWhatsNewChildTypeMock.items,
   ...pagesWithMetricsParentTypeMock.items,
   ...pagesWithMetricsChildTypeMock.items,
+  ...pagesWithFeedbackTypeMock.items,
 ]
 
 export const allPagesMock: PagesResponse = {

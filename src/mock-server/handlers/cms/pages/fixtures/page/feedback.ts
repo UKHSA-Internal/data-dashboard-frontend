@@ -2,7 +2,7 @@ import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
 export const feedbackMock: PageResponse<PageType.Feedback> = {
-  id: 79,
+  id: 81,
   meta: {
     seo_title: 'Feedback | UKHSA Data Dashboard',
     type: 'feedback.FormPage',
@@ -88,7 +88,5 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
   confirmation_panel_text: 'Thank you for your feedback',
   confirmation_body:
     '<p data-block-key="bguyf">Thank you for giving feedback on the UKHSA data dashboard. We will use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments.</p><p data-block-key="2ao03">The feedback form is intended for feedback on your experience using the dashboard. If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of the <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">UKHSA webpage</a></p>',
-  related_links: [],
-  related_links_layout: 'Footer',
   last_published_at: '2024-03-13T11:08:26.858539Z',
 }
