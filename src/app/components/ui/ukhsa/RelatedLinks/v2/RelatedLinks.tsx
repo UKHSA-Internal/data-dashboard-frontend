@@ -3,7 +3,7 @@ import { ReactNode } from 'react'
 
 import { RichText } from '@/app/components/cms/RichText/RichText'
 import { List } from '@/app/components/ui/ukhsa/List/List'
-import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
+import { ListItem, ListItemExternalLink } from '@/app/components/ui/ukhsa/List/ListItem'
 import { getServerTranslation } from '@/app/i18n'
 
 import { ListItemArrow, ListItemArrowExternalLink } from '../../List/ListItemArrow'
@@ -82,24 +82,19 @@ export function RelatedLink({ title, url, children }: RelatedLinkProps) {
 
 export function RelatedSidebarLink({ title, url, children, className }: RelatedLinkProps) {
   return (
-    <ListItem className={className}>
-      <ListItemArrow>
-        <ListItemArrowExternalLink
-          href={url}
-          className={'govuk-link govuk-heading-s govuk-link--no-visited-state mb-2'}
+    <ListItem className={className} showRule={false}>
+      <ListItemExternalLink href={url} className={'govuk-link govuk-body-s govuk-link--no-visited-state mb-2'}>
+        {title}
+      </ListItemExternalLink>
+      {children && (
+        <RichText
+          components={{
+            p: ({ children }) => <p className="govuk-body-m break-words">{children}</p>,
+          }}
         >
-          {title}
-        </ListItemArrowExternalLink>
-        {children && (
-          <RichText
-            components={{
-              p: ({ children }) => <p className="govuk-body-m break-words">{children}</p>,
-            }}
-          >
-            {children}
-          </RichText>
-        )}
-      </ListItemArrow>
+          {children}
+        </RichText>
+      )}
     </ListItem>
   )
 }
