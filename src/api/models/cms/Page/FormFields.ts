@@ -7,7 +7,7 @@ export const FormField = z.object({
   }),
   clean_name: z.string(),
   label: z.string(),
-  // field_type: z.union([z.literal('multiline'), z.literal('radio')]), // TODO: Add more types from Phill's message
+  //TODO: See CDD-2298 - add additional field types
   field_type: z.string(),
   help_text: z.string(),
   required: z.boolean(),
