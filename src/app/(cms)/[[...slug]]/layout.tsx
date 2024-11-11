@@ -18,9 +18,6 @@ interface LayoutProps {
   params: { slug: string } | null
 }
 
-// const getBanner = cache(getGlobalBanner)
-// const getFlag = cache(getFeatureFlag)
-
 export default async function Layout({ children, params }: LayoutProps) {
   const [{ t }, { enabled: landingPageHeroEnabled }, globalBanner] = await Promise.all([
     getServerTranslation('common'),

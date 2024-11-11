@@ -6,9 +6,6 @@ import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { View } from '../../ui/ukhsa/View/View'
 
-// const getFlag = cache(getFeatureFlag)
-// const getPage = cache(getHomePage)
-
 export default async function HomePage() {
   const [
     { enabled: heroEnabled },
