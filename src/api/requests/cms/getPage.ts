@@ -105,7 +105,6 @@ const WithCompositeData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('composite.CompositePage'),
   }),
-  date_posted: z.string(),
   //TODO: Look into page description on all composite pages
   page_description: z.string().nullable().optional(),
   related_links: RelatedLinks,
@@ -153,7 +152,6 @@ const WithMetricsChildData = SharedPageData.extend({
   topic: z.string(),
   metric: z.string(),
   last_published_at: z.string(),
-  date_posted: z.string(),
   body: z.array(
     z.object({
       id: z.string(),

@@ -21,21 +21,21 @@ export const getTagVariantFromStatus = (status: HealthAlertStatus) => {
 export enum ColourVariableMap {
   Green = 'var(--colour-green)',
   Amber = 'var(--colour-orange)',
-  Yellow = 'var(--colour-yellow)',
+  Yellow = 'var(--colour-custard)',
   Red = 'var(--colour-red)',
 }
 
 export enum HoverColourVariableMap {
   Green = 'var(--colour-green-dark)',
   Amber = 'var(--colour-orange-dark)',
-  Yellow = 'var(--colour-yellow-dark)',
+  Yellow = 'var(--colour-custard-dark)',
   Red = 'var(--colour-red-dark)',
 }
 
 export enum ActiveColourVariableMap {
   Green = 'var(--colour-green-darkest)',
   Amber = 'var(--colour-orange-darkest)',
-  Yellow = 'var(--colour-yellow-darkest)',
+  Yellow = 'var(--colour-custard-darkest)',
   Red = 'var(--colour-red-darkest)',
 }
 

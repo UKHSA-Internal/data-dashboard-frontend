@@ -70,7 +70,8 @@ export default async function WhatsNewParentPage({
 
   // Iterate through the dates and group them by month
   items.forEach((item) => {
-    const month = dayjs(item.date_posted).format('MMMM YYYY')
+    const { date_posted: datePosted } = item
+    const month = dayjs(datePosted).format('MMMM YYYY')
 
     if (!datesByMonth[month]) {
       datesByMonth[month] = []
@@ -118,33 +119,43 @@ export default async function WhatsNewParentPage({
                   </header>
                   <ul className="govuk-list govuk-!-margin-0">
                     {entriesNewest.map((item, entryIndex) => {
+                      const {
+                        id,
+                        date_posted: datePosted,
+                        badge,
+                        meta,
+                        title,
+                        body,
+                        additional_details: additionalDetails,
+                      } = item
+
                       return (
                         <li
-                          key={item.id}
+                          key={id}
                           className={clsx('govuk-body-s govuk-!-margin-top-4', {
                             'govuk-!-margin-bottom-8': entryIndex < entries.length - 1,
                           })}
                         >
                           <h3 className="govuk-heading-s govuk-!-margin-bottom-3">
                             <small className="govuk-caption-m govuk-!-margin-bottom-2">
-                              <time dateTime={item.date_posted}>
+                              <time dateTime={datePosted}>
                                 <Trans
                                   i18nKey="entryDate"
                                   t={t}
                                   components={[<span key={0} className="govuk-visually-hidden" />]}
-                                  values={{ value: item.date_posted }}
+                                  values={{ value: datePosted }}
                                 />
                               </time>
                             </small>
 
                             <div className="flex flex-wrap items-center gap-x-3 gap-y-2 whitespace-nowrap">
-                              {item.badge ? (
-                                <div className={`govuk-tag govuk-tag--${item.badge.colour}`}>
+                              {badge ? (
+                                <div className={`govuk-tag govuk-tag--${badge.colour}`}>
                                   <Trans
                                     i18nKey="entryCategory"
                                     t={t}
                                     components={[<span key={0} className="govuk-visually-hidden" />]}
-                                    values={{ value: item.badge.text }}
+                                    values={{ value: badge.text }}
                                   />
                                 </div>
                               ) : null}
@@ -155,21 +166,21 @@ export default async function WhatsNewParentPage({
                                   <Link
                                     key={0}
                                     className="whitespace-normal"
-                                    href={setReturnPath(`whats-new/${item.meta.slug}`)}
+                                    href={setReturnPath(`whats-new/${meta.slug}`)}
                                   >
                                     <span className="govuk-visually-hidden" key={1} />
                                   </Link>,
                                 ]}
-                                values={{ value: item.title }}
+                                values={{ value: title }}
                               />
                             </div>
                           </h3>
                           <div className="govuk-body-s govuk-!-margin-bottom-0 govuk-!-margin-top-3">
-                            <RichText>{item.body}</RichText>
+                            <RichText>{body}</RichText>
                           </div>
-                          {item.additional_details && (
+                          {additionalDetails && (
                             <Details label={t('additionalInformationLabel')}>
-                              <RichText>{item.additional_details}</RichText>
+                              <RichText>{additionalDetails}</RichText>
                             </Details>
                           )}
                         </li>

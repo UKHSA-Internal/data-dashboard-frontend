@@ -11,6 +11,7 @@ import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
+import { getPath } from '@/app/utils/cms/slug'
 
 import {
   ButtonExternal,
@@ -44,7 +45,7 @@ export const renderSection = ({
   >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
-        <Link href={pageLink} className="govuk-link--no-visited-state">
+        <Link href={getPath(pageLink)} className="govuk-link--no-visited-state">
           {heading}
         </Link>
       ) : (
@@ -190,7 +191,7 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
                 aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
                 className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
-                <Link href={card.value.topic_page}>
+                <Link href={getPath(card.value.topic_page)}>
                   <h3 id={`chart-row-card-heading-${snakeCase(card.value.title)}`} className="govuk-heading-m mb-1">
                     {card.value.title}
                   </h3>
@@ -258,7 +259,7 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
         {value.map(({ id, value }) => (
           <ListItem key={id} spacing="m">
             <ListItemArrow>
-              <ListItemArrowLink href={value.page}>{value.title}</ListItemArrowLink>
+              <ListItemArrowLink href={getPath(value.page)}>{value.title}</ListItemArrowLink>
               <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
             </ListItemArrow>
           </ListItem>
