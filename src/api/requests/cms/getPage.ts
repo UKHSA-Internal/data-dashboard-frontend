@@ -95,7 +95,6 @@ const WithCommonData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('common.CommonPage'),
   }),
-  date_posted: z.string(),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
