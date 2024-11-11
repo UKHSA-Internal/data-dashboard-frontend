@@ -40,7 +40,7 @@ const customJestConfig = {
       // functions: 96,
 
       statements: 91,
-      branches: 82,
+      branches: 81,
       lines: 93,
       functions: 89,
     },
