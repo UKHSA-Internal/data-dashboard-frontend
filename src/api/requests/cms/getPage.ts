@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
+import { FormFields } from '@/api/models/cms/Page/FormFields'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -56,22 +57,7 @@ const withFeedbackData = SharedPageData.extend({
     type: z.literal('feedback.FormPage'),
   }),
   body: z.string(),
-  form_fields: z.array(
-    z.object({
-      id: z.number(),
-      meta: z.object({
-        type: z.literal('feedback.FormField'),
-      }),
-      clean_name: z.string(),
-      label: z.string(),
-      // field_type: z.union([z.literal('multiline'), z.literal('radio')]), // TODO: Add more types
-      field_type: z.string(),
-      help_text: z.string(),
-      required: z.boolean(),
-      choices: z.string(),
-      default_value: z.string(),
-    })
-  ),
+  form_fields: FormFields,
   confirmation_slug: z.string(),
   confirmation_panel_title: z.string(),
   confirmation_panel_text: z.string(),

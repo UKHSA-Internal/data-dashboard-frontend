@@ -17,6 +17,5 @@ export const FormField = z.object({
 
 export type FormField = z.infer<typeof FormField>
 
-// TODO: Remove if not needed
-// export const FormFields = z.array(FormField)
-// export type FormFields = z.infer<typeof FormFields>
+export const FormFields = z.array(FormField)
+export type FormFields = z.infer<typeof FormFields>
