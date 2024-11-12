@@ -15,9 +15,6 @@ import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
 
-// const getPageType = cache(getPageTypeBySlug)
-// const getPageMeta = cache(getPageMetadata)
-
 /**
  * Generates metadata for the page based on the dynamic slug.
  */
