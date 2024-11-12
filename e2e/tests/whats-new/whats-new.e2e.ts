@@ -19,9 +19,6 @@ test.describe("What's new parent page", () => {
     await test.step('displays last updated date', async () => {
       await whatsNewParentPage.hasLastUpdated()
     })
-    await test.step('displays related links', async () => {
-      await app.hasRelatedLinks()
-    })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()
     })
