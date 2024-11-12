@@ -76,7 +76,7 @@ jobs:
         if: always()
         with:
           name: unlighthouse-report
-          path: ./.unlighthouse
+          path: .unlighthouse
           retention-days: 10
 
   slack-notify:

@@ -7,4 +7,12 @@ export default {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],
     timeout: 0,
   },
+  ci: {
+    budget: {
+      performance: 75,
+      accessibility: 100,
+      'best-practices': 90,
+      seo: 90,
+    },
+  },
 }
