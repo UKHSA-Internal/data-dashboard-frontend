@@ -4,11 +4,11 @@ import { View } from '../../ui/ukhsa'
 import Feedback from '../Feedback/Feedback'
 
 export default async function FeedbackPage() {
-  const { title, form_fields } = await getFeedbackPage()
+  const { title, form_fields: formFields } = await getFeedbackPage()
 
   return (
     <View heading={title}>
-      <Feedback formFields={form_fields} />
+      <Feedback formFields={formFields} />
     </View>
   )
 }
