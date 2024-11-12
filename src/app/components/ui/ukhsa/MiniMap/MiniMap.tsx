@@ -105,7 +105,7 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
     (regionId: string) => {
       const url = new URL('/', window.location.origin)
       url.searchParams.set('v', 'map')
-      url.searchParams.set('type', 'heat')
+      url.searchParams.set('type', alertType)
       url.searchParams.set('fid', regionId)
       router.push(url.toString(), { scroll: false })
     },
