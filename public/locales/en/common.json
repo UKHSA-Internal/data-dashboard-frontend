@@ -89,13 +89,6 @@
       }
     }
   },
-  "feedback": {
-    "confirmation": {
-      "title": "Form submitted",
-      "subtitle": "Thank you for your feedback",
-      "message": "<0>Thank you for giving feedback on the UKHSA data dashboard. We'll use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments.</0><1>The feedback form is intended for feedback on your experience using the dashboard. If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of the <0>UKHSA webpage</0></1>"
-    }
-  },
   "cookieBanner": {
     "title": "Cookies on UKHSA data dashboard",
     "body": "<0>We use some essential cookies to make this service work.</0><1>We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements.</1>"

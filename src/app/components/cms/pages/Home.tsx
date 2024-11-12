@@ -1,5 +1,3 @@
-import { cache } from 'react'
-
 import { flags } from '@/app/constants/flags.constants'
 import { getHomePage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
@@ -7,9 +5,6 @@ import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { View } from '../../ui/ukhsa/View/View'
-
-const getFlag = cache(getFeatureFlag)
-const getPage = cache(getHomePage)
 
 export default async function HomePage() {
   const [
@@ -21,7 +16,7 @@ export default async function HomePage() {
       related_links: relatedLinks,
       related_links_layout: relatedLinksLayout,
     },
-  ] = await Promise.all([getFlag(flags.landingPageHero), getPage()])
+  ] = await Promise.all([getFeatureFlag(flags.landingPageHero), getHomePage()])
 
   return (
     <View heading={heroEnabled ? '' : title} description={heroEnabled ? '' : description} showWelcome={!heroEnabled}>

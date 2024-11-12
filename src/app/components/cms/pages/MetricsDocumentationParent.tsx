@@ -21,8 +21,6 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
-import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-
 interface MetricsParentPageProps {
   searchParams: {
     page?: number
@@ -73,8 +71,6 @@ export default async function MetricsParentPage({
     title,
     body,
     last_updated_at: lastUpdated,
-    related_links: relatedLinks,
-    related_links_layout: relatedLinksLayout,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page })
@@ -139,16 +135,7 @@ export default async function MetricsParentPage({
             </Pagination>
           )}
         </div>
-        {relatedLinksLayout === 'Sidebar' ? (
-          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
-            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-          </div>
-        ) : null}
       </div>
-
-      {relatedLinksLayout === 'Footer' ? (
-        <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-      ) : null}
     </View>
   )
 }

@@ -23,9 +23,7 @@ export const initialState: switchBoardSchemaType = {
       },
       detail: {
         status: StatusCodes.OK,
-        scenario: {
-          relatedLinksLayout: 'Default',
-        },
+        scenario: { relatedLinksLayout: 'Footer' },
       },
     },
     'global-banners': {

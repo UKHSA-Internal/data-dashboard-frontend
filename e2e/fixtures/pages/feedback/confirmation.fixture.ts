@@ -25,7 +25,7 @@ export class FeedbackConfirmationPage {
   async hasPageContent() {
     await expect(
       this.page.getByText(
-        /Thank you for giving feedback on the UKHSA data dashboard. We'll use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments./
+        /Thank you for giving feedback on the UKHSA data dashboard. We will use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments./
       )
     ).toBeVisible()
     await expect(
