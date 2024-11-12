@@ -4,7 +4,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 export const feedbackMock: PageResponse<PageType.Feedback> = {
   id: 81,
   meta: {
-    seo_title: 'Feedback | UKHSA Data Dashboard',
+    seo_title: 'Feedback | UKHSA data dashboard',
     type: 'feedback.FormPage',
     detail_url: 'https://localhost/api/pages/79/',
     html_url: 'https://localhost/feedback/',
