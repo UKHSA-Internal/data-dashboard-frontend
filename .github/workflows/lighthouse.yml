@@ -73,12 +73,12 @@ jobs:
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=80
       - name: List files in folder structure
-        run: cat ./.unlighthouse/ci-report.json
+        run: cat ./.unlighthouse/ci-result.json
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: unlighthouse-report
-          path: ./.unlighthouse/ci-report.json
+          path: ./.unlighthouse/ci-result.json
           retention-days: 10
 
   slack-notify:
