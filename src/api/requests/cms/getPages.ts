@@ -31,6 +31,7 @@ import { logger } from '@/lib/logger'
 export enum PageType {
   Home = 'home.HomePage',
   Landing = 'home.LandingPage',
+  Feedback = 'feedback.FormPage',
   Common = 'common.CommonPage',
   Composite = 'composite.CompositePage',
   Topic = 'topic.TopicPage',
@@ -93,7 +94,6 @@ export const metricsChildResponseSchema = responseSchema.extend({
       topic: z.string(),
       metric: z.string(),
       last_published_at: z.string(),
-      date_posted: z.string(),
       body: z.array(
         z.object({
           id: z.string(),

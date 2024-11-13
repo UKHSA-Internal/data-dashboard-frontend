@@ -28,7 +28,7 @@ export const switchBoardSchema = z.object({
       detail: z.object({
         status: z.coerce.number(),
         scenario: z.object({
-          relatedLinksLayout: z.enum(['Default', RelatedLinksLayout.Values.Sidebar, RelatedLinksLayout.Values.Footer]),
+          relatedLinksLayout: z.enum([RelatedLinksLayout.Values.Sidebar, RelatedLinksLayout.Values.Footer]),
         }),
       }),
     }),
@@ -38,6 +38,7 @@ export const switchBoardSchema = z.object({
   flags: z.object({
     'landing-page-hero': z.enum(['enabled', 'disabled']),
     'interactive-charts': z.enum(['enabled', 'disabled']),
+    'feedback-form': z.enum(['enabled', 'disabled']),
   }),
 })
 

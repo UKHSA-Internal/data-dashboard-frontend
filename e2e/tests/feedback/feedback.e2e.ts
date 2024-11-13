@@ -76,7 +76,7 @@ test.describe('Feedback confirmation page', () => {
     await test.step('displays heading', async () => {
       await feedbackConfirmationPage.hasHeading()
     })
-    await test.step('has headings', async () => {
+    await test.step('displays page content', async () => {
       await feedbackConfirmationPage.hasPageContent()
     })
     await test.step('displays the correct layout', async () => {

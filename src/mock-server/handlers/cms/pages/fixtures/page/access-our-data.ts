@@ -29,7 +29,6 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
   seo_priority: 0.5,
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'Access our data',
-  date_posted: '2024-02-14',
   body: [
     {
       type: 'text',
@@ -89,7 +88,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     seo_priority: 0.5,
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Overview',
-    date_posted: '2024-02-14',
     body: [
       {
         type: 'text',
@@ -130,7 +128,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     seo_priority: 0.5,
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'What is an API',
-    date_posted: '2024-02-14',
     body: [
       {
         type: 'text',
@@ -170,7 +167,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     seo_priority: 0.5,
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Getting started',
-    date_posted: '2024-02-14',
     body: [
       {
         type: 'text',
@@ -238,7 +234,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     seo_priority: 0.5,
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'API Authentication',
-    date_posted: '2024-02-14',
     body: [
       {
         type: 'text',
@@ -276,7 +271,6 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     seo_priority: 0.5,
     last_updated_at: '2024-07-02T12:44:54.461914+01:00',
     title: 'Data structure',
-    date_posted: '2024-02-14',
     body: [
       {
         type: 'text',
