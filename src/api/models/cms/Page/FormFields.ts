@@ -3,7 +3,7 @@ import { z } from 'zod'
 export const FormField = z.object({
   id: z.number(),
   meta: z.object({
-    type: z.literal('feedback.FormField'),
+    type: z.literal('forms.FormField'),
   }),
   clean_name: z.string(),
   label: z.string(),

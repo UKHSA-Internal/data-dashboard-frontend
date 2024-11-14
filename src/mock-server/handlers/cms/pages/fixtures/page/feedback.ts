@@ -5,7 +5,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
   id: 81,
   meta: {
     seo_title: 'Feedback | UKHSA data dashboard',
-    type: 'feedback.FormPage',
+    type: 'forms.FormPage',
     detail_url: 'https://localhost/api/pages/79/',
     html_url: 'https://localhost/feedback/',
     slug: 'feedback',
@@ -32,7 +32,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
     {
       id: 1,
       meta: {
-        type: 'feedback.FormField',
+        type: 'forms.FormField',
       },
       clean_name: 'what_was_your_reason_for_visiting_the_dashboard_today',
       label: 'What was your reason for visiting the dashboard today?',
@@ -46,7 +46,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
     {
       id: 2,
       meta: {
-        type: 'feedback.FormField',
+        type: 'forms.FormField',
       },
       clean_name: 'did_you_find_everything_you_were_looking_for',
       label: 'Did you find everything you were looking for?',
@@ -59,7 +59,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
     {
       id: 3,
       meta: {
-        type: 'feedback.FormField',
+        type: 'forms.FormField',
       },
       clean_name: 'how_could_we_improve_your_experience_with_the_dashboard',
       label: 'How could we improve your experience with the dashboard?',
@@ -72,7 +72,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
     {
       id: 4,
       meta: {
-        type: 'feedback.FormField',
+        type: 'forms.FormField',
       },
       clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future',
       label: 'What would you like to see on the dashboard in the future?',

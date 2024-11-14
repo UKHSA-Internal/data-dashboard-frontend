@@ -54,7 +54,7 @@ const WithLandingData = SharedPageData.extend({
 
 const withFeedbackData = SharedPageData.extend({
   meta: Meta.extend({
-    type: z.literal('feedback.FormPage'),
+    type: z.literal('forms.FormPage'),
   }),
   body: z.string(),
   form_fields: FormFields,
