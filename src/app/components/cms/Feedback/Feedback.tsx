@@ -17,7 +17,7 @@ const initialState = {
 interface FeedbackProps {
   formFields: {
     id: number
-    meta: { type: 'feedback.FormField' }
+    meta: { type: 'forms.FormField' }
     clean_name: string
     label: string
     field_type: string
