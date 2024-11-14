@@ -5,7 +5,6 @@ import { test } from '../../fixtures/app.fixture'
 test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Layout', () => {
     test.beforeEach(async ({ switchboardPage, app }) => {
-      await switchboardPage.setFeatureFlag('landingPageHero', 'Enabled')
       await app.goto('/landing-page')
     })
 

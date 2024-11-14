@@ -15,13 +15,6 @@ import { getFeatureFlag } from '../flags.utils'
 import { getPathSegments } from './slug'
 
 export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
-  // Homepage
-  // TODO: Remove on cleanup
-  if (pageType === PageType.Home) {
-    const pageData: PageResponse<PageType> = await getHomePage()
-    return pageData
-  }
-
   // Landing page
   if (pageType === PageType.Landing) {
     const pageData: PageResponse<PageType> = await getLandingPage()
@@ -141,27 +134,10 @@ export async function getPageMetadata(
 }
 
 export async function getPageTypeBySlug(slug: Slug) {
-  const { enabled: landingPageEnabled } = await getFeatureFlag(flags.landingPageHero)
-
-  if (!slug.length) return landingPageEnabled ? PageType.Landing : PageType.Home
+  if (!slug.length) return PageType.Landing
 
   const page = await getPageBySlug(slug)
   return page.meta.type as PageType
-}
-
-export const getHomePage = async () => {
-  try {
-    const pages = await getPagesByContentType(PageType.Home)
-    const matches = pages.items.filter((page) => page.title !== 'UKHSA Dashboard Root')
-    if (!matches || matches.length !== 1) {
-      throw new Error(`No homepage matches found`)
-    }
-    const homePage = await getPageById<PageType.Home>(matches[0].id)
-    return homePage
-  } catch (error) {
-    logger.error(error)
-    notFound()
-  }
 }
 
 export const getLandingPage = async () => {
