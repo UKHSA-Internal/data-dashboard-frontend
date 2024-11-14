@@ -10,7 +10,7 @@ export default function SwitchBoard() {
   const cookieStore = cookies()
 
   const {
-    flags: { 'landing-page-hero': landingPageHero, 'interactive-charts': interactiveCharts },
+    flags: { 'interactive-charts': interactiveCharts, 'feedback-form': feedbackForm },
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
@@ -22,7 +22,6 @@ export default function SwitchBoard() {
           syncState(
             {},
             {
-              'landing-page-hero': form.get('flags.landingPageHero') as string,
               'interactive-charts': form.get('flags.interactiveCharts') as string,
             }
           )
@@ -32,42 +31,6 @@ export default function SwitchBoard() {
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h2 className="govuk-fieldset__heading">Feature flags</h2>
           </legend>
-
-          <div
-            className="govuk-radios govuk-radios--inline govuk-radios--small govuk-!-margin-top-4"
-            data-module="govuk-radios"
-          >
-            <label className="govuk-label w-full" htmlFor="flags.landingPageHero.Enabled">
-              Landing page hero
-            </label>
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={landingPageHero === 'enabled'}
-                className="govuk-radios__input"
-                id="flags.landingPageHero.Enabled"
-                name="flags.landingPageHero"
-                type="radio"
-                value="enabled"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.landingPageHero.Enabled">
-                Enabled
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={landingPageHero === 'disabled'}
-                className="govuk-radios__input"
-                id="flags.landingPageHero.Disabled"
-                name="flags.landingPageHero"
-                type="radio"
-                value="disabled"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.landingPageHero.Disabled">
-                Disabled
-              </label>
-            </div>
-          </div>
 
           <div
             className="govuk-radios govuk-radios--inline govuk-radios--small govuk-!-margin-top-4"
