@@ -27,7 +27,6 @@ import {
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import {
-  getHomePage,
   getPageById,
   getPageMetadata,
   getPagesByContentType,
@@ -319,61 +318,6 @@ describe('getPageTypeBySlug', () => {
       const result = await getPageTypeBySlug(['covid-19'])
 
       expect(result).toEqual(PageType.Topic)
-    })
-  })
-})
-
-describe('getHomePage', () => {
-  describe('Successfully getting the home page from the API', () => {
-    test('returns page successfully', async () => {
-      getPages.mockResolvedValueOnce({
-        status: 200,
-        data: pagesWithHomeTypeMock,
-      })
-      getPage.mockResolvedValueOnce({
-        status: 200,
-        data: dashboardMock,
-      })
-      const result = await getHomePage()
-
-      expect(result).toEqual(dashboardMock)
-    })
-  })
-
-  describe('Failing to get the home page from the API', () => {
-    test('getting the page from the API fails with a server error', async () => {
-      getPages.mockRejectedValueOnce({
-        success: false,
-        data: null,
-        error: 'API call failed',
-      })
-      const result = await getHomePage()
-
-      expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
-      expect(notFound).toHaveBeenCalledTimes(2)
-
-      expect(result).not.toBeDefined()
-    })
-
-    test('getting the page from the API fails due to no home page existing within the root', async () => {
-      getPages.mockResolvedValueOnce({
-        status: 200,
-        data: {
-          ...pagesWithHomeTypeMock,
-          items: [
-            {
-              ...pagesWithHomeTypeMock.items[0],
-              title: 'UKHSA Dashboard Root',
-            },
-          ],
-        },
-      })
-      const result = await getHomePage()
-
-      expect(logger.error).toHaveBeenCalledWith(new Error('No homepage matches found'))
-      expect(notFound).toHaveBeenCalledTimes(1)
-
-      expect(result).not.toBeDefined()
     })
   })
 })
