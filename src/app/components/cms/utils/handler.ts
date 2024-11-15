@@ -13,8 +13,13 @@ interface FormError {
 
 export async function handler(prevState: FormError, formData: FormData) {
   try {
+    console.log('Reached handler')
+    logger.info('Reached handler')
+
     // Validate form request body
     const validatedFields = await feedbackSchema.safeParse(Object.fromEntries(formData))
+
+    console.log('Validation: ', validatedFields.success)
 
     if (!validatedFields.success) {
       // For validation errors, we bypass the database insertion and just redirect
@@ -25,6 +30,7 @@ export async function handler(prevState: FormError, formData: FormData) {
     }
 
     const isEmptySubmission = Array.from(formData.values()).every((value) => value === '')
+    console.log('isEmptySubmission: ', isEmptySubmission)
 
     if (isEmptySubmission) {
       logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
@@ -34,6 +40,8 @@ export async function handler(prevState: FormError, formData: FormData) {
     if (!isEmptySubmission) {
       // Send results to the backend
       const { success } = await postSuggestions(validatedFields.data)
+
+      console.log('success: ', success)
 
       if (!success) {
         return {
@@ -46,6 +54,7 @@ export async function handler(prevState: FormError, formData: FormData) {
     logger.info(`Feedback submitted successfully, redirecting to confirmation`)
     redirect('/feedback/confirmation')
   } catch (error) {
+    console.log('error', error)
     throw error
   }
 }

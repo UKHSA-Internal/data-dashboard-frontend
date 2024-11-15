@@ -35,7 +35,7 @@ import geographies from './handlers/geographies/v2/[topic]'
 import globalBanners from './handlers/global-banners/v1'
 import headlines from './handlers/headlines/v3'
 import menus from './handlers/menus/v1'
-import suggestions from './handlers/suggestions/v1'
+import suggestions from './handlers/suggestions/v2'
 import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v3'
 
@@ -65,7 +65,7 @@ app.post('/api/tables/v4', tables)
 app.post('/api/downloads/v2', downloads)
 
 // Misc endpoints
-app.post('/api/suggestions/v1', suggestions)
+app.post('/api/suggestions/v2', suggestions)
 app.get('/flags/client/features', flags)
 
 app.listen(3005, () => {
