@@ -102,6 +102,8 @@ const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_pu
 
 const WithMetricsParentData = SharedPageData.extend({
   body: z.string(),
+  show_pagination: z.boolean(),
+  pagination_size: z.number(),
   meta: Meta.extend({
     type: z.literal('metrics_documentation.MetricsDocumentationParentPage'),
   }),

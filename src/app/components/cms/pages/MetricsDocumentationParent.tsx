@@ -15,7 +15,6 @@ import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/ge
 import { MetricsCard, View } from '@/app/components/ui/ukhsa'
 import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
 import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
-import { METRICS_DOCUMENTATION_PAGE_SIZE } from '@/app/constants/app.constants'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -37,7 +36,8 @@ export async function generateMetadata({
 
   const {
     meta: { seo_title, search_description },
-  } = await getPageBySlug('metrics-documentation', { type: PageType.MetricsParent })
+    pagination_size: paginationSize,
+  } = await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page })
 
@@ -52,7 +52,7 @@ export async function generateMetadata({
     },
   } = metricsEntries
 
-  const totalPages = Math.ceil(totalItems / METRICS_DOCUMENTATION_PAGE_SIZE) || 1
+  const totalPages = Math.ceil(totalItems / paginationSize) || 1
 
   const title = seo_title.replace(
     '|',
@@ -75,6 +75,8 @@ export default async function MetricsParentPage({
     last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
+    show_pagination: showPagination,
+    pagination_size: paginationSize,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page })
@@ -94,7 +96,7 @@ export default async function MetricsParentPage({
   const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
     initialPage: page ?? 1,
-    initialPageSize: METRICS_DOCUMENTATION_PAGE_SIZE,
+    initialPageSize: paginationSize,
   })
 
   const setReturnPath = getReturnPathWithParams()
@@ -124,7 +126,7 @@ export default async function MetricsParentPage({
           </ul>
           {items.length < 1 && <NoResults />}
 
-          {pages.length > 0 && (
+          {pages.length > 0 && showPagination && (
             <Pagination variant="list-item" className="govuk-!-margin-top-8">
               {previousPageHref && <PaginationPrevious variant="list-item" href={previousPageHref} />}
               <PaginationListItems>

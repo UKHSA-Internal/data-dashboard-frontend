@@ -1,8 +1,9 @@
 import { z } from 'zod'
 
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
-import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
+import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
 
@@ -156,11 +157,16 @@ interface GetMetricsPagesRequestParams {
 }
 
 export const getMetricsPages = async ({ search, page = 1 }: GetMetricsPagesRequestParams) => {
+  const { pagination_size: paginationSize, show_pagination: showPagination } =
+    await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+
+  const metricsDocumentationPageSize = showPagination ? String(paginationSize) : -1
+
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.MetricsChild)
   searchParams.set('fields', '*')
-  searchParams.set('limit', String(METRICS_DOCUMENTATION_PAGE_SIZE))
-  searchParams.set('offset', String(calculatePageOffset(page, METRICS_DOCUMENTATION_PAGE_SIZE)))
+  searchParams.set('limit', String(metricsDocumentationPageSize))
+  searchParams.set('offset', String(calculatePageOffset(page, paginationSize)))
 
   if (search) {
     searchParams.set('search', search)

@@ -28,6 +28,8 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
       title: 'UKHSA Dashboard Root',
     },
   },
+  show_pagination: true,
+  pagination_size: 11,
   seo_change_frequency: 5,
   seo_priority: 0.5,
   last_updated_at: '2023-12-15T14:47:27.346523Z',
