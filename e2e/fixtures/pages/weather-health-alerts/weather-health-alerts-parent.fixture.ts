@@ -25,7 +25,7 @@ export class WeatherHealthAlertsParentPage {
   async hasMapLink() {
     await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toHaveAttribute(
       'href',
-      '?v=map&type=heat'
+      '?v=map&type=cold'
     )
   }
 
