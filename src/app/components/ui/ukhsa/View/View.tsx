@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 import Link from 'next/link'
 import { ReactNode } from 'react'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { RichText } from '@/app/components/cms'
 import { getServerTranslation } from '@/app/i18n'
@@ -53,14 +54,23 @@ export async function View({
       {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
 
       {heading && (
-        <h1
-          className={clsx('govuk-heading-xl', {
-            'govuk-!-margin-bottom-4': !lastUpdated,
-            'govuk-!-margin-bottom-2': lastUpdated,
-          })}
-        >
-          {heading}
-        </h1>
+        <Trans
+          i18nKey="entryTitle"
+          t={t}
+          components={[
+            <span className="govuk-visually-hidden" key={0} />,
+            <h1
+              className={clsx('govuk-heading-xl', {
+                'govuk-!-margin-bottom-4': !lastUpdated,
+                'govuk-!-margin-bottom-2': lastUpdated,
+              })}
+              key={1}
+            >
+              {heading}
+            </h1>,
+          ]}
+          values={{ value: heading }}
+        />
       )}
 
       {lastUpdated && (
