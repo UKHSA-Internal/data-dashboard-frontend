@@ -18,10 +18,10 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
   })
 
   const formData = new FormData()
-  formData.set('improve_experience', 'quality!')
-  formData.set('did_you_find_everything', 'yes')
-  formData.set('reason', 'testing')
-  formData.set('like_to_see', 'nothing')
+  formData.set('how_could_we_improve_your_experience_with_the_dashboard', 'quality!')
+  formData.set('did_you_find_everything_you_were_looking_for', 'yes')
+  formData.set('what_was_your_reason_for_visiting_the_dashboard_today', 'testing')
+  formData.set('what_would_you_like_to_see_on_the_dashboard_in_the_future', 'nothing')
 
   await handler({ message: '', errors: {} }, formData)
 
@@ -31,9 +31,9 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
 
 test('Redirect to confirmation page when no suggestions are provided (form is non-mandatory)', async () => {
   const formData = new FormData()
-  formData.set('improve_experience', '')
-  formData.set('reason', '')
-  formData.set('like_to_see', '')
+  formData.set('how_could_we_improve_your_experience_with_the_dashboard', '')
+  formData.set('what_was_your_reason_for_visiting_the_dashboard_today', '')
+  formData.set('what_would_you_like_to_see_on_the_dashboard_in_the_future', '')
 
   await handler({ message: '', errors: {} }, formData)
 
@@ -50,10 +50,10 @@ test('Redirect to error page when an error with the backend API occurs', async (
   })
 
   const formData = new FormData()
-  formData.set('improve_experience', '')
-  formData.set('did_you_find_everything', 'no')
-  formData.set('reason', '')
-  formData.set('like_to_see', '')
+  formData.set('how_could_we_improve_your_experience_with_the_dashboard', '')
+  formData.set('did_you_find_everything_you_were_looking_for', 'no')
+  formData.set('what_was_your_reason_for_visiting_the_dashboard_today', '')
+  formData.set('what_would_you_like_to_see_on_the_dashboard_in_the_future', '')
 
   const res = await handler({ message: '', errors: {} }, formData)
 
