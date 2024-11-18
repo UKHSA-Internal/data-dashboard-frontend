@@ -23,7 +23,6 @@ export const respiratoryVirusesMock: PageResponse<PageType.Composite> = {
   seo_change_frequency: 5,
   seo_priority: 0.5,
   last_updated_at: '2024-09-29T20:51:56.451450+01:00',
-  date_posted: '2024-09-29',
   body: [
     {
       type: 'internal_page_links',

@@ -176,6 +176,18 @@ export const getLandingPage = async () => {
   }
 }
 
+export const getFeedbackPage = async () => {
+  try {
+    const feedbackPages = await getPagesByContentType(PageType.Feedback)
+    const feedbackPage = await getPageById<PageType.Feedback>(feedbackPages.items[0].id)
+
+    return feedbackPage
+  } catch (error) {
+    logger.error(error)
+    notFound()
+  }
+}
+
 export const getParentPage = async (page: PageResponse<PageType>) => {
   try {
     const parent = await getPage(page.meta.parent.id)

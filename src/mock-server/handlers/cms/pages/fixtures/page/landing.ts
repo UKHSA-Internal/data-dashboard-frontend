@@ -151,7 +151,5 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
       id: 'be533e25-ba91-4e86-8a45-1314ed395fb9',
     },
   ],
-  related_links_layout: 'Footer',
-  related_links: [],
   last_published_at: '2024-09-30T11:41:36.884029+01:00',
 }

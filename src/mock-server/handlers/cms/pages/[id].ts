@@ -16,6 +16,7 @@ import {
   cookiesPageMock,
   covid19PageMock,
   dashboardMock,
+  feedbackMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -46,6 +47,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [weatherHealthAlertsParentMock.id]: weatherHealthAlertsParentMock,
   [landingPageMock.id]: landingPageMock,
   [respiratoryVirusesMock.id]: respiratoryVirusesMock,
+  [feedbackMock.id]: feedbackMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(metricsChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(accessOurDataChildMocks.map((mock) => [mock.id, mock])),
@@ -67,10 +69,7 @@ export default async function handler(req: Request, res: Response) {
     const {
       api: {
         pages: {
-          detail: {
-            status,
-            scenario: { relatedLinksLayout },
-          },
+          detail: { status },
         },
       },
     } = getSwitchBoardState(req.headers.cookie)
@@ -80,8 +79,6 @@ export default async function handler(req: Request, res: Response) {
     if (mockedPageMap[pageId]) {
       return res.status(status).json({
         ...mockedPageMap[pageId],
-        related_links_layout:
-          relatedLinksLayout === 'Default' ? mockedPageMap[pageId].related_links_layout : relatedLinksLayout,
       })
     }
   } catch (error) {

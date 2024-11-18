@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
-import { cache, ReactNode } from 'react'
+import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
@@ -18,14 +18,11 @@ interface LayoutProps {
   params: { slug: string } | null
 }
 
-const getBanner = cache(getGlobalBanner)
-const getFlag = cache(getFeatureFlag)
-
 export default async function Layout({ children, params }: LayoutProps) {
   const [{ t }, { enabled: landingPageHeroEnabled }, globalBanner] = await Promise.all([
     getServerTranslation('common'),
-    getFlag(flags.landingPageHero),
-    getBanner(),
+    getFeatureFlag(flags.landingPageHero),
+    getGlobalBanner(),
   ])
 
   const onHomePage = landingPageHeroEnabled && !params?.slug
