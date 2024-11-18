@@ -94,17 +94,16 @@ export async function getPageMetadata(
       const { pagination_size: paginationSize, show_pagination: showPagination } =
         await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
 
-      let totalPages
-      totalPages = Math.ceil(totalItems / paginationSize) || 1
+      const totalPages = Math.ceil(totalItems / paginationSize) || 1
 
-      if (!showPagination) {
-        totalPages = 1
+      if (showPagination) {
+        title = seoTitle.replace(
+          '|',
+          t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+        )
+      } else {
+        title = seoTitle
       }
-
-      title = seoTitle.replace(
-        '|',
-        t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
-      )
     }
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
