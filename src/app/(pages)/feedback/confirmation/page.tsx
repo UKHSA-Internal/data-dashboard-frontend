@@ -25,7 +25,9 @@ export default async function FeedbackConfirmation() {
             <h1 className="govuk-panel__title">{panelTitle}</h1>
             <div className="govuk-panel__body">{panelText}</div>
           </div>
+
           <RichText>{body}</RichText>
+
           <Link href="/" className="govuk-link--no-visited-state govuk-!-margin-top-2 govuk-body inline-block">
             Return to home page
           </Link>
