@@ -1,16 +1,16 @@
 import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { PageType } from '@/api/requests/cms/getPages'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getServerTranslation } from '@/app/i18n'
 
 import { PhaseBanner } from '../PhaseBanner/PhaseBanner'
 
-export default async function HeroBanner() {
-  const { t } = await getServerTranslation('common')
+interface HeroBannerProps {
+  subTitle: string
+}
 
-  const { sub_title: subTitle } = await getPageBySlug<PageType.Landing>('landing-page')
+export default async function HeroBanner({ subTitle }: HeroBannerProps) {
+  const { t } = await getServerTranslation('common')
 
   return (
     <div className="bg-blue">
