@@ -10,7 +10,7 @@ export default function SwitchBoard() {
   const cookieStore = cookies()
 
   const {
-    flags: { 'interactive-charts': interactiveCharts, 'feedback-form': feedbackForm },
+    flags: { 'interactive-charts': interactiveCharts },
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
