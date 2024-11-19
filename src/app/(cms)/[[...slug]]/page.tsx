@@ -30,7 +30,6 @@ export async function generateMetadata({
 }
 
 const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = {
-  [PageType.Home]: LandingPage,
   [PageType.Landing]: LandingPage,
   [PageType.Feedback]: FeedbackPage,
   [PageType.Common]: CompositePage,

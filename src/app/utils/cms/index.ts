@@ -44,7 +44,7 @@ export async function getPageMetadata(
   const page = searchParams.page ?? 1
   const search = searchParams.search
 
-  const isHomePage = pageType === PageType.Home || pageType === PageType.Landing
+  const isHomePage = pageType === PageType.Landing
 
   try {
     const pageData = await validateUrlWithCms(urlSlug, pageType)
