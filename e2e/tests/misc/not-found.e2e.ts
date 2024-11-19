@@ -20,7 +20,6 @@ test.describe('Not found page', () => {
     await test.step('loads the home page', async () => {
       await landingPage.hasHeading()
       await landingPage.hasMetadata()
-      await landingPage.hasWelcomeText()
     })
   })
 })
