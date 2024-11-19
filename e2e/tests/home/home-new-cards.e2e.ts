@@ -34,7 +34,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
 
   test.describe('Health Topics', () => {
     test.beforeEach(async ({ app }) => {
-      await app.goto('landing-page')
+      await app.goto('/')
     })
 
     test('Cards', async ({ landingPage }) => {
@@ -67,7 +67,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
       test.use({ viewport: viewports.desktop })
 
       test.beforeEach(async ({ app }) => {
-        await app.goto('/landing-page')
+        await app.goto('/')
       })
 
       test('Card', async ({ landingPage }) => {
@@ -94,7 +94,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
       test.use({ viewport: viewports.tablet })
 
       test.beforeEach(async ({ app }) => {
-        await app.goto('/landing-page')
+        await app.goto('/')
       })
 
       test('Card', async ({ landingPage }) => {
@@ -121,7 +121,7 @@ test.describe('Landing page new card design feature flags enabled', () => {
       test.use({ viewport: viewports.mobile })
 
       test.beforeEach(async ({ app }) => {
-        await app.goto('/landing-page')
+        await app.goto('/')
       })
 
       test('Card', async ({ landingPage }) => {
