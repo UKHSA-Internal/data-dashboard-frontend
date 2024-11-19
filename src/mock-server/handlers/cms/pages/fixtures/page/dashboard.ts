@@ -1,8 +1,6 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-import { relatedLinksMock } from '../elements/related-links'
-
 export const dashboardMock: PageResponse<PageType.Landing> = {
   id: 4,
   meta: {

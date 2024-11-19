@@ -8,7 +8,6 @@ import {
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
-  dashboardMock,
   feedbackMock,
   influenzaPageMock,
   landingPageMock,

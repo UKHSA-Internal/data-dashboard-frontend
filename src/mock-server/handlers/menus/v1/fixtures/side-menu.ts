@@ -15,7 +15,7 @@ export const sideMenu: Response = {
                 primary_link: {
                   body: '',
                   page: 4,
-                  title: 'LandingPage',
+                  title: 'Homepage',
                   html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/',
                 },
                 secondary_links: [
