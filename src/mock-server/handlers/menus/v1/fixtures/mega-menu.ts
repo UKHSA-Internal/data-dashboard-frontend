@@ -52,7 +52,7 @@ export const megaMenu: Response = {
                 primary_link: {
                   body: '<p data-block-key="zftwk">The UKHSA data dashboard</p>',
                   page: 76,
-                  title: 'Homepage',
+                  title: 'LandingPage',
                   html_url: 'https://dev.ukhsa-dashboard.data.gov.uk',
                 },
                 secondary_links: [
