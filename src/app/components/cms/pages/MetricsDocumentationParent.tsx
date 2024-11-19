@@ -79,7 +79,7 @@ export default async function MetricsParentPage({
     pagination_size: paginationSize,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page })
+  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
   if (!metricsEntries.success) {
     logger.error(metricsEntries.error.message)

@@ -1,6 +1,5 @@
 import { z } from 'zod'
 
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
@@ -154,13 +153,17 @@ export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 interface GetMetricsPagesRequestParams {
   search: string | undefined
   page: number
+  showPagination?: boolean
+  paginationSize?: number
 }
 
-export const getMetricsPages = async ({ search, page = 1 }: GetMetricsPagesRequestParams) => {
-  const { pagination_size: paginationSize, show_pagination: showPagination } =
-    await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
-
-  const metricsDocumentationPageSize = showPagination ? String(paginationSize) : -1
+export const getMetricsPages = async ({
+  search,
+  page = 1,
+  showPagination,
+  paginationSize = 1,
+}: GetMetricsPagesRequestParams) => {
+  const metricsDocumentationPageSize = showPagination ? paginationSize : -1
 
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.MetricsChild)

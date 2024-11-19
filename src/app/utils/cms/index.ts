@@ -101,8 +101,6 @@ export async function getPageMetadata(
           '|',
           t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
         )
-      } else {
-        title = seoTitle
       }
     }
 
