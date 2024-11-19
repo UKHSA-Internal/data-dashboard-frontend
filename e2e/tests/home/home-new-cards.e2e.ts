@@ -4,13 +4,9 @@ import { test } from '../../fixtures/app.fixture'
 
 test.describe('Landing page new card design feature flags enabled', () => {
   test.describe('Layout', () => {
-    test.beforeEach(async ({ switchboardPage, app }) => {
-      await app.goto('/landing-page')
-    })
-
-    test('Page layout', async ({ homePage, app }) => {
+    test('Page layout', async ({ landingPage, app }) => {
       await test.step('metadata is correct', async () => {
-        await homePage.hasMetadata()
+        await landingPage.hasMetadata()
       })
       // temp remove, as hero banner not on landing page
       // TODO: Add back in on integration
@@ -22,10 +18,10 @@ test.describe('Landing page new card design feature flags enabled', () => {
         // await app.hasNoAccessibilityDefects()
       })
       await test.step('does not display the last updated date', async () => {
-        await homePage.hasNotLastUpdated()
+        await landingPage.hasNotLastUpdated()
       })
       await test.step('displays sections', async () => {
-        await homePage.hasSection(['Respiratory viruses', 'Weather health alerts'])
+        await landingPage.hasSection(['Respiratory viruses', 'Weather health alerts'])
       })
       await test.step('does not display related links', async () => {
         await app.hasNotRelatedLinks()
@@ -41,24 +37,24 @@ test.describe('Landing page new card design feature flags enabled', () => {
       await app.goto('landing-page')
     })
 
-    test('Cards', async ({ homePage }) => {
+    test('Cards', async ({ landingPage }) => {
       await test.step('displays a total of 3 health topic cards', async () => {
-        await homePage.hasHealthTopicColumns(['COVID-19', 'Influenza', 'Measles'])
+        await landingPage.hasHealthTopicColumns(['COVID-19', 'Influenza', 'Measles'])
       })
       await test.step('displays a COVID-19 card', async () => {
-        await homePage.hasLandingPageCard({
+        await landingPage.hasLandingPageCard({
           title: 'COVID-19',
           sub_title: 'Cases reported',
         })
       })
       await test.step('displays an Influenza health topic card', async () => {
-        await homePage.hasLandingPageCard({
+        await landingPage.hasLandingPageCard({
           title: 'Influenza',
           sub_title: 'Healthcare admission rates',
         })
       })
       await test.step('displays a RSV health topic card', async () => {
-        await homePage.hasLandingPageCard({
+        await landingPage.hasLandingPageCard({
           title: 'RSV',
           sub_title: 'Healthcare admission rates',
         })
@@ -74,15 +70,15 @@ test.describe('Landing page new card design feature flags enabled', () => {
         await app.goto('/landing-page')
       })
 
-      test('Card', async ({ homePage }) => {
+      test('Card', async ({ landingPage }) => {
         await test.step('displays a Weather Health Alerts card', async () => {
-          await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
+          await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
         })
       })
 
-      test('Open map after clicking a minimap region', async ({ homePage, weatherHealthAlertsMapPage }) => {
+      test('Open map after clicking a minimap region', async ({ landingPage, weatherHealthAlertsMapPage }) => {
         await test.step('click minimap card', async () => {
-          await homePage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+          await landingPage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
         })
         await test.step('shows map', async () => {
           await weatherHealthAlertsMapPage.hasMapDialog()
@@ -101,15 +97,15 @@ test.describe('Landing page new card design feature flags enabled', () => {
         await app.goto('/landing-page')
       })
 
-      test('Card', async ({ homePage }) => {
+      test('Card', async ({ landingPage }) => {
         await test.step('displays a Weather Health Alerts card', async () => {
-          await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
+          await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
         })
       })
 
-      test('Open map after clicking a minimap region', async ({ homePage, weatherHealthAlertsMapPage }) => {
+      test('Open map after clicking a minimap region', async ({ landingPage, weatherHealthAlertsMapPage }) => {
         await test.step('click minimap card', async () => {
-          await homePage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+          await landingPage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
         })
         await test.step('shows map', async () => {
           await weatherHealthAlertsMapPage.hasMapDialog()
@@ -128,9 +124,9 @@ test.describe('Landing page new card design feature flags enabled', () => {
         await app.goto('/landing-page')
       })
 
-      test('Card', async ({ homePage }) => {
+      test('Card', async ({ landingPage }) => {
         await test.step('displays a Weather Health Alerts card', async () => {
-          await homePage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: false })
+          await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: false })
         })
       })
     })

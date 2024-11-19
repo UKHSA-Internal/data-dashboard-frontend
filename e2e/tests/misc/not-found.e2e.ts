@@ -10,7 +10,7 @@ test.describe('Not found page', () => {
     })
   })
 
-  test('Return to home page', async ({ notFoundPage, homePage }) => {
+  test('Return to home page', async ({ notFoundPage, landingPage }) => {
     await test.step('navigate to an unknown url', async () => {
       await notFoundPage.goto('/some-non-existent-page')
     })
@@ -18,9 +18,9 @@ test.describe('Not found page', () => {
       await notFoundPage.clickReturnToHome()
     })
     await test.step('loads the home page', async () => {
-      await homePage.hasHeading()
-      await homePage.hasMetadata()
-      await homePage.hasWelcomeText()
+      await landingPage.hasHeading()
+      await landingPage.hasMetadata()
+      await landingPage.hasWelcomeText()
     })
   })
 })

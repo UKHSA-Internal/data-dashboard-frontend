@@ -19,8 +19,8 @@ import {
   ErrorPage,
   FeedbackConfirmationPage,
   FeedbackPage,
-  HomePage,
   InfluenzaPage,
+  LandingPage,
   MetricsChildPage,
   MetricsParentPage,
   NotFoundPage,
@@ -39,7 +39,7 @@ type Fixtures = {
   app: App
   switchboardPage: SwitchboardPage
   sitemapPage: SitemapPage
-  homePage: HomePage
+  landingPage: LandingPage
   aboutPage: AboutPage
   archiveDataPage: ArchiveDataPage
   bulkDownloadsPage: BulkDownloadsPage
@@ -510,8 +510,8 @@ export const test = base.extend<Fixtures>({
   switchboardPage: async ({ page }, use) => {
     await use(new SwitchboardPage(page))
   },
-  homePage: async ({ page }, use) => {
-    await use(new HomePage(page))
+  landingPage: async ({ page }, use) => {
+    await use(new LandingPage(page))
   },
   aboutPage: async ({ page }, use) => {
     await use(new AboutPage(page))
