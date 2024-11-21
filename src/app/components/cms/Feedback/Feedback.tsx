@@ -64,8 +64,7 @@ export const renderFormFields = ({
   label,
   field_type: fieldType,
   help_text: helpText,
-  // TODO: Required validation added in ticket CDD-2300
-  // required,
+  required,
   choices,
   // default_value: defaultValue,
 }: z.infer<typeof FormField>) => {
@@ -79,7 +78,7 @@ export const renderFormFields = ({
       {fieldType === 'singleline' && (
         <div className="govuk-form-group govuk-!-margin-bottom-9">
           <h2 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
+            <label className="govuk-label govuk-label--m govuk-error-message" htmlFor={cleanName}>
               {label}
             </label>
           </h2>
@@ -91,7 +90,7 @@ export const renderFormFields = ({
       )}
 
       {fieldType === 'multiline' && (
-        <div className="govuk-form-group govuk-!-margin-bottom-9">
+        <div className={'govuk-form-group' + (required ? '--error ' : null) + 'govuk-!-margin-bottom-9'}>
           <h2 className="govuk-label-wrapper">
             <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
               {label}
@@ -99,6 +98,12 @@ export const renderFormFields = ({
           </h2>
 
           {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
+
+          {required ? (
+            <p id="multiline-error" className="govuk-error-message">
+              <span className="govuk-visually-hidden">Error:</span> {cleanName}
+            </p>
+          ) : null}
 
           <textarea className="govuk-textarea" name={cleanName} id={cleanName} rows={5} />
         </div>
