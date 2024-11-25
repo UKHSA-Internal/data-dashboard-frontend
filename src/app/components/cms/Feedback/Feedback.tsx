@@ -6,12 +6,21 @@ import { useFormState } from 'react-dom'
 import { z } from 'zod'
 
 import { FormField } from '@/api/models/cms/Page/FormFields'
+import EmailField from '@/app/components/cms/Feedback/EmailField'
 
 import { handler } from '../utils/handler'
 
 const initialState = {
   message: '',
   errors: {},
+}
+
+export interface Fieldtype {
+  label: string
+  helpText: string
+  cleanName: string
+  choices?: string
+  defaultValue?: string
 }
 
 interface FeedbackProps {
@@ -44,7 +53,7 @@ export default function Feedback({ formFields }: FeedbackProps) {
     <div className="govuk-grid-row">
       <form className="govuk-grid-column-two-thirds" action={formAction}>
         {formFields.map(renderFormFields)}
-
+        {state.message}
         <div className="govuk-button-group">
           <button className="govuk-button" type="submit">
             Submit
@@ -67,12 +76,11 @@ export const renderFormFields = ({
   // TODO: Required validation added in ticket CDD-2300
   // required,
   choices,
-  // default_value: defaultValue,
 }: z.infer<typeof FormField>) => {
   const choicesList = choices.includes('\r\n') ? choices.split('\r\n') : choices.split(',')
 
   // TODO: Implement default values only for checkboxes
-  // const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')
+  //const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')
 
   return (
     <Fragment key={id}>
@@ -123,6 +131,8 @@ export const renderFormFields = ({
           </div>
         </fieldset>
       )}
+
+      {fieldType === 'email' && <EmailField label={label} helpText={helpText} cleanName={cleanName} />}
     </Fragment>
   )
 }
