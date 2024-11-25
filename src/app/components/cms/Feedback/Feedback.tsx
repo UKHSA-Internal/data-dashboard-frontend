@@ -9,7 +9,10 @@ import { FormField } from '@/api/models/cms/Page/FormFields'
 
 import { handler } from '../utils/handler'
 import CheckboxesField from './CheckboxesField'
+import DropdownField from './DropdownField'
 import EmailField from './EmailField'
+import NumberField from './NumberField'
+import UrlField from './UrlField'
 
 const initialState = {
   message: '',
@@ -138,6 +141,14 @@ export const renderFormFields = ({
 
       {fieldType === 'checkboxes' && (
         <CheckboxesField label={label} helpText={helpText} cleanName={cleanName} defaultValue={defaultValue} />
+      )}
+
+      {fieldType === 'number' && <NumberField label={label} helpText={helpText} cleanName={cleanName} />}
+
+      {fieldType === 'url' && <UrlField label={label} helpText={helpText} cleanName={cleanName} />}
+
+      {fieldType === 'dropdown' && (
+        <DropdownField label={label} helpText={helpText} cleanName={cleanName} choices={choices} />
       )}
     </Fragment>
   )
