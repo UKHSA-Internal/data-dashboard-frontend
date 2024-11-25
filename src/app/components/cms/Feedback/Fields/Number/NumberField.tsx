@@ -1,6 +1,6 @@
 'use client'
 
-import { Fieldtype } from './Feedback'
+import { Fieldtype } from '../../Feedback'
 
 export default function NumberField({ label, helpText, cleanName }: Fieldtype) {
   return (

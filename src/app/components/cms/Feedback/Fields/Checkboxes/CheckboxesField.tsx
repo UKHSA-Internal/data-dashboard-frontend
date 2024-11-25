@@ -1,4 +1,4 @@
-import { Fieldtype } from './Feedback'
+import { Fieldtype } from '../../Feedback'
 
 export default function CheckboxesField({ label, helpText, cleanName, defaultValue = '' }: Fieldtype) {
   const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')

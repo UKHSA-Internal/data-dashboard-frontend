@@ -1,4 +1,4 @@
-import { Fieldtype } from './Feedback'
+import { Fieldtype } from '../../Feedback'
 
 export default function DropdownField({ label, helpText, cleanName, choices = '' }: Fieldtype) {
   const choicesList = choices.includes('\r\n') ? choices.split('\r\n') : choices.split(',')

@@ -1,8 +1,8 @@
 'use client'
 
-import { Fieldtype } from './Feedback'
+import { Fieldtype } from '../../Feedback'
 
-export default function EmailField({ label, helpText, cleanName }: Fieldtype) {
+export default function UrlField({ label, helpText, cleanName }: Fieldtype) {
   return (
     <div className="govuk-form-group govuk-!-margin-bottom-9">
       <h2 className="govuk-label-wrapper">
@@ -10,9 +10,10 @@ export default function EmailField({ label, helpText, cleanName }: Fieldtype) {
           {label}
         </label>
       </h2>
+
       {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
 
-      <input className="govuk-input" name={cleanName} id={cleanName} type="email" />
+      <input className="govuk-input" name={cleanName} id={cleanName} type="text" />
     </div>
   )
 }

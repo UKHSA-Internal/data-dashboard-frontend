@@ -8,11 +8,11 @@ import { z } from 'zod'
 import { FormField } from '@/api/models/cms/Page/FormFields'
 
 import { handler } from '../utils/handler'
-import CheckboxesField from './CheckboxesField'
-import DropdownField from './DropdownField'
-import EmailField from './EmailField'
-import NumberField from './NumberField'
-import UrlField from './UrlField'
+import CheckboxesField from './Fields/Checkboxes/CheckboxesField'
+import DropdownField from './Fields/Dropdown/DropdownField'
+import EmailField from './Fields/Email/EmailField'
+import NumberField from './Fields/Number/NumberField'
+import UrlField from './Fields/Url/UrlField'
 
 const initialState = {
   message: '',
