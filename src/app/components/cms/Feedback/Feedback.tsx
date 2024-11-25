@@ -1,7 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect } from 'react'
 import { useFormState } from 'react-dom'
 import { z } from 'zod'
 
@@ -75,7 +75,7 @@ export const renderErrorSummary = (errors: FieldError[]) => {
           <ul className="govuk-list govuk-error-summary__list">
             {errors.map((item) => {
               return (
-                <li>
+                <li key={item.clean_name}>
                   <a href={'#' + item.clean_name}>{item.label}</a>
                 </li>
               )
@@ -95,7 +95,6 @@ export const renderFormFields = (
     label,
     field_type: fieldType,
     help_text: helpText,
-    required,
     choices,
     // default_value: defaultValue,
   }: z.infer<typeof FormField>

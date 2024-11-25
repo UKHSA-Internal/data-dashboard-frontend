@@ -11,7 +11,7 @@ interface FormError {
   errors: fieldError[]
 }
 
-interface FormFields {
+export interface FormFields {
   id: number
   meta: { type: 'forms.FormField' }
   clean_name: string
@@ -51,7 +51,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
     })
 
     //if there are errors then return errors to the front end
-    if (errors) {
+    if (errors.length > 0) {
       return {
         message: 'Errors have been identified in the form',
         errors: errors,
@@ -70,21 +70,20 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
     }
 
     // No errors - send results to the backend
-    if (!errors) {
+    if (errors.length === 0) {
+      console.log('no errors')
       logger.info(`Feedback submitted successfully, redirecting to confirmation`)
 
-      //const { success } = await postSuggestions(validatedFields.data)
-
-      const success = true
+      const { success } = await postSuggestions(validatedFields.data)
 
       if (!success) {
         return {
           message: 'Unknown error',
-          errors: errors,
+          errors: [],
         }
       }
 
-      //redirect('/feedback/confirmation')
+      redirect('/feedback/confirmation')
     }
 
     // errors - return errors
