@@ -9,7 +9,7 @@ test('Handles successful submission from the api', async () => {
 
   const { success } = await postSuggestions({
     what_was_your_reason_for_visiting_the_dashboard_today: '',
-    did_you_find_everything_you_were_looking_for: 'yes',
+    did_you_find_everything_you_were_looking_for: 'Yes',
     how_could_we_improve_your_experience_with_the_dashboard: '',
     what_would_you_like_to_see_on_the_dashboard_in_the_future: '',
   })
