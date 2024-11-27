@@ -3,6 +3,8 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
@@ -24,6 +26,8 @@ export default async function Layout({ children, params }: LayoutProps) {
     getFeatureFlag(flags.landingPageHero),
     getGlobalBanner(),
   ])
+
+  const { sub_title: subTitle } = await getPageBySlug<PageType.Landing>('landing-page')
 
   const onHomePage = landingPageHeroEnabled && !params?.slug
 
@@ -64,7 +68,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         <MegaMenu />
       </TopNav>
 
-      {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
+      {onHomePage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container h-2 bg-blue" />}
 
       {!onHomePage ? (
         <div className="govuk-width-container print:hidden">
