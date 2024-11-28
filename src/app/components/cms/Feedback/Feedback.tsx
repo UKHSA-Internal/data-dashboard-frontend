@@ -8,10 +8,14 @@ import { z } from 'zod'
 import { FormField } from '@/api/models/cms/Page/FormFields'
 
 import { handler } from '../utils/handler'
+import CheckboxField from './Fields/Checkbox/CheckboxField'
 import CheckboxesField from './Fields/Checkboxes/CheckboxesField'
 import DropdownField from './Fields/Dropdown/DropdownField'
 import EmailField from './Fields/Email/EmailField'
+import MultilineField from './Fields/Multiline/MultilineField'
 import NumberField from './Fields/Number/NumberField'
+import RadioField from './Fields/Radio/RadioField'
+import SinglelineField from './Fields/Singleline/SinglelineField'
 import UrlField from './Fields/Url/UrlField'
 
 const initialState = {
@@ -23,8 +27,9 @@ export interface Fieldtype {
   label: string
   helpText: string
   cleanName: string
-  choices?: string
+  choicesList?: string[]
   defaultValue?: string
+  defaultValuesList?: string[]
 }
 
 interface FeedbackProps {
@@ -83,64 +88,33 @@ export const renderFormFields = ({
   default_value: defaultValue,
 }: z.infer<typeof FormField>) => {
   const choicesList = choices.includes('\r\n') ? choices.split('\r\n') : choices.split(',')
-
-  // TODO: Implement default values only for checkboxes
-  // const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')
+  // Implement default values only for checkboxes
+  const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')
 
   return (
     <Fragment key={id}>
-      {fieldType === 'singleline' && (
-        <div className="govuk-form-group govuk-!-margin-bottom-9">
-          <h2 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
-              {label}
-            </label>
-          </h2>
+      {fieldType === 'singleline' && <SinglelineField label={label} helpText={helpText} cleanName={cleanName} />}
 
-          {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
-
-          <textarea className="govuk-textarea" name={cleanName} id={cleanName} rows={1}></textarea>
-        </div>
-      )}
-
-      {fieldType === 'multiline' && (
-        <div className="govuk-form-group govuk-!-margin-bottom-9">
-          <h2 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
-              {label}
-            </label>
-          </h2>
-
-          {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
-
-          <textarea className="govuk-textarea" name={cleanName} id={cleanName} rows={5} />
-        </div>
-      )}
+      {fieldType === 'multiline' && <MultilineField label={label} helpText={helpText} cleanName={cleanName} />}
 
       {fieldType === 'radio' && (
-        <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
-          <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h2 className="govuk-fieldset__heading">{label}</h2>
-          </legend>
-          <div className="govuk-radios" data-module="govuk-radios">
-            {choicesList.map((choice, key) => {
-              return (
-                <div key={key} className="govuk-radios__item">
-                  <input className="govuk-radios__input" id={cleanName} name={cleanName} type="radio" value={choice} />
-                  <label className="govuk-label govuk-radios__label" htmlFor={cleanName}>
-                    {choice}
-                  </label>
-                </div>
-              )
-            })}
-          </div>
-        </fieldset>
+        <RadioField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />
       )}
 
       {fieldType === 'email' && <EmailField label={label} helpText={helpText} cleanName={cleanName} />}
 
+      {fieldType === 'checkbox' && (
+        <CheckboxField label={label} helpText={helpText} cleanName={cleanName} defaultValue={defaultValue} />
+      )}
+
       {fieldType === 'checkboxes' && (
-        <CheckboxesField label={label} helpText={helpText} cleanName={cleanName} defaultValue={defaultValue} />
+        <CheckboxesField
+          label={label}
+          helpText={helpText}
+          cleanName={cleanName}
+          choicesList={choicesList}
+          defaultValuesList={defaultValuesList}
+        />
       )}
 
       {fieldType === 'number' && <NumberField label={label} helpText={helpText} cleanName={cleanName} />}
@@ -148,7 +122,7 @@ export const renderFormFields = ({
       {fieldType === 'url' && <UrlField label={label} helpText={helpText} cleanName={cleanName} />}
 
       {fieldType === 'dropdown' && (
-        <DropdownField label={label} helpText={helpText} cleanName={cleanName} choices={choices} />
+        <DropdownField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />
       )}
     </Fragment>
   )
