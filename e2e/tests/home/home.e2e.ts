@@ -28,3 +28,22 @@ test.describe('Home page - desktop @desktopOnly', () => {
     await app.hasNav()
   })
 })
+
+test.describe('Home page - no JavaScript', () => {
+  test.use({ javaScriptEnabled: false })
+
+  test('landing page functionality', async ({ landingPage, app }) => {
+    test.info().annotations.push({
+      type: 'issue',
+      description: 'https://digitaltools.phe.org.uk/browse/CDD-1419',
+    })
+
+    await test.step('loads the page', async () => {
+      await landingPage.goto()
+    })
+
+    await test.step('has navigation', async () => {
+      await app.hasNav()
+    })
+  })
+})
