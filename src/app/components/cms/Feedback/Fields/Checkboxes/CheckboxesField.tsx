@@ -1,9 +1,12 @@
 import { Fieldtype } from '../../Feedback'
 
-export default function CheckboxesField({ label, helpText, cleanName, defaultValue = '' }: Fieldtype) {
-  const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')
-  const trimmedValuesList = defaultValuesList.map((value) => value.trim())
-
+export default function CheckboxesField({
+  label,
+  helpText,
+  cleanName,
+  choicesList = [],
+  defaultValuesList = [],
+}: Fieldtype) {
   return (
     <div className="govuk-form-group govuk-!-margin-bottom-9">
       <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
@@ -18,7 +21,7 @@ export default function CheckboxesField({ label, helpText, cleanName, defaultVal
         {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
 
         <div className="govuk-checkboxes" data-module="govuk-checkboxes">
-          {trimmedValuesList.map((defaultVal, key) => {
+          {choicesList.map((choiceVal, key) => {
             const uniqueId = `${cleanName}-${key}` // Generate a unique ID for each checkbox
             return (
               <div key={key} className="govuk-checkboxes__item">
@@ -27,10 +30,11 @@ export default function CheckboxesField({ label, helpText, cleanName, defaultVal
                   id={uniqueId}
                   name={cleanName}
                   type="checkbox"
-                  value={defaultVal}
+                  value={choiceVal}
+                  defaultChecked={defaultValuesList.includes(choiceVal)}
                 />
                 <label className="govuk-label govuk-checkboxes__label" htmlFor={uniqueId}>
-                  {defaultVal}
+                  {choiceVal}
                 </label>
               </div>
             )

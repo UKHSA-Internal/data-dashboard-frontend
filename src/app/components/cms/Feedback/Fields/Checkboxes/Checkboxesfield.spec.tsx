@@ -5,77 +5,85 @@ import CheckboxesField from './CheckboxesField'
 describe('CheckboxesField Component', () => {
   const mockProps = {
     label: 'What would you like to see on the dashboard in the future?',
-    helpText: 'Pick one option from the list.',
-    cleanName: 'what_would_you_like_to_see_on_the_dashboard_in_the_future',
-    defaultValue: 'Option 1, Option 2, Option 3',
+    helpText: 'Pick one or more options from the list.',
+    cleanName: 'dashboard_features',
+    choicesList: ['Choice 1', 'Choice 2', 'Choice 3'],
+    defaultValuesList: ['Choice 1', 'Choice 3'], // The items in the defaultValuesList Choices should be checked by default
   }
 
   it('should render the label correctly', () => {
     render(<CheckboxesField {...mockProps} />)
 
-    const labelElement = screen.getByText(mockProps.label)
-    expect(labelElement).toBeInTheDocument()
+    // Check if the label is rendered correctly
+    expect(screen.getByText(mockProps.label)).toBeInTheDocument()
   })
 
-  it('should render help text if provided', () => {
+  it('should render the help text if provided', () => {
     render(<CheckboxesField {...mockProps} />)
 
-    const helpTextElement = screen.getByText(mockProps.helpText)
-    expect(helpTextElement).toBeInTheDocument()
+    // Check if the help text is rendered
+    expect(screen.getByText(mockProps.helpText)).toBeInTheDocument()
   })
 
   it('should not render help text if not provided', () => {
     render(<CheckboxesField {...{ ...mockProps, helpText: '' }} />)
 
-    const helpTextElement = screen.queryByText(mockProps.helpText)
-    expect(helpTextElement).toBeNull()
+    // Check if help text is not rendered
+    expect(screen.queryByText(mockProps.helpText)).not.toBeInTheDocument()
   })
 
-  it('should render the correct number of checkboxes based on the defaultValue', () => {
+  it('should render the correct number of checkboxes from choicesList', () => {
     render(<CheckboxesField {...mockProps} />)
 
+    // Check if the correct number of checkboxes are rendered
     const checkboxes = screen.getAllByRole('checkbox')
-    expect(checkboxes).toHaveLength(3) // There are 3 choices in the defaultValue
+    expect(checkboxes).toHaveLength(mockProps.choicesList.length)
   })
 
-  it('should render checkboxes with correct labels and values', () => {
+  it('should render checkboxes with the correct values from choicesList', () => {
     render(<CheckboxesField {...mockProps} />)
 
-    // Check that the checkboxes are present
-    const checkboxOption1 = screen.getByLabelText('Option 1')
-    const checkboxOption2 = screen.getByLabelText('Option 2')
-    const checkboxOption3 = screen.getByLabelText('Option 3')
-
-    expect(checkboxOption1).toBeInTheDocument()
-    expect(checkboxOption2).toBeInTheDocument()
-    expect(checkboxOption3).toBeInTheDocument()
-
-    // Check that the checkboxes have the correct value
-    expect(checkboxOption1).toHaveAttribute('value', 'Option 1')
-    expect(checkboxOption2).toHaveAttribute('value', 'Option 2')
-    expect(checkboxOption3).toHaveAttribute('value', 'Option 3')
-  })
-
-  it('should correctly handle defaultValue with newline characters', () => {
-    const propsWithNewline = {
-      ...mockProps,
-      defaultValue: 'Option 1\r\nOption 2\r\nOption 3',
-    }
-
-    render(<CheckboxesField {...propsWithNewline} />)
-
+    // Check if the checkboxes have the correct value attribute
     const checkboxes = screen.getAllByRole('checkbox')
-    expect(checkboxes).toHaveLength(3) // There are 3 options in the defaultValue with newline characters
+    expect(checkboxes[0]).toHaveAttribute('value', mockProps.choicesList[0])
+    expect(checkboxes[1]).toHaveAttribute('value', mockProps.choicesList[1])
+    expect(checkboxes[2]).toHaveAttribute('value', mockProps.choicesList[2])
   })
 
-  it('should correctly render the cleanName in the checkbox inputs', () => {
+  it('should render checkboxes with the correct label associated', () => {
     render(<CheckboxesField {...mockProps} />)
 
+    // Check if the checkboxes have the correct labels
+    expect(screen.getByLabelText(mockProps.choicesList[0])).toBeInTheDocument()
+    expect(screen.getByLabelText(mockProps.choicesList[1])).toBeInTheDocument()
+    expect(screen.getByLabelText(mockProps.choicesList[2])).toBeInTheDocument()
+  })
+
+  it('should render the checkboxes with the correct default checked state', () => {
+    render(<CheckboxesField {...mockProps} />)
+
+    // Check if the checkboxes have the correct default checked state
+    const checkboxes = screen.getAllByRole('checkbox')
+    expect(checkboxes[0]).toBeChecked() // Choice 1 is in defaultValuesList, hence it should be checked
+    expect(checkboxes[1]).not.toBeChecked() // Choice 2 is not in defaultValuesList, so it should not be checked
+    expect(checkboxes[2]).toBeChecked()
+  })
+
+  it('should render unique ids for each checkbox', () => {
+    render(<CheckboxesField {...mockProps} />)
+
+    // Check if each checkbox has a unique id
     const checkboxes = screen.getAllByRole('checkbox')
     checkboxes.forEach((checkbox, index) => {
-      const uniqueId = `${mockProps.cleanName}-${index}` // Match the generated id
-      expect(checkbox).toHaveAttribute('name', mockProps.cleanName)
-      expect(checkbox).toHaveAttribute('id', uniqueId) // Check that the id is unique
+      expect(checkbox).toHaveAttribute('id', `${mockProps.cleanName}-${index}`)
     })
+  })
+
+  it('should not render any checkboxes if choicesList is empty', () => {
+    render(<CheckboxesField {...{ ...mockProps, choicesList: [] }} />)
+
+    // Check if no checkboxes are rendered
+    const checkboxes = screen.queryAllByRole('checkbox')
+    expect(checkboxes).toHaveLength(0)
   })
 })
