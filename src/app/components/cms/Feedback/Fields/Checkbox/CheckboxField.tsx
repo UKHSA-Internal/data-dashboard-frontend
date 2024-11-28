@@ -18,6 +18,9 @@ export default function CheckboxField({ label, helpText, cleanName, defaultValue
           type="checkbox"
           id={cleanName}
         />
+        <label className="govuk-label govuk-checkboxes__label" htmlFor={cleanName}>
+          {cleanName}
+        </label>
       </div>
     </div>
   )
