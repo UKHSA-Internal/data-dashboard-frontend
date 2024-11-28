@@ -15,10 +15,10 @@ export class LandingPage {
   async hasMetadata() {
     const title = await this.page.title()
     await expect(title).toBe('UKHSA data dashboard')
-    // await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
-    //   'content',
-    //   'Overall summary of the respiratory viruses in circulation within the UK'
-    // )
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
+      'content',
+      'Showing public health data across england'
+    )
   }
 
   async hasHeading() {
