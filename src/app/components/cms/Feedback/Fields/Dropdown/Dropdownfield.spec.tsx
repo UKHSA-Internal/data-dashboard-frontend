@@ -7,7 +7,7 @@ describe('Dropdownfield Component', () => {
     label: 'What would you like to see on the dashboard in the future?',
     helpText: 'Pick one option from the list.',
     cleanName: 'what_would_you_like_to_see_on_the_dashboard_in_the_future',
-    choices: 'Option 1, Option 2, Option 3',
+    choicesList: ['Option 1', 'Option 2', 'Option 3'],
   }
 
   it('should render the label correctly', () => {
@@ -38,7 +38,7 @@ describe('Dropdownfield Component', () => {
     expect(defaultOption).toBeInTheDocument()
   })
 
-  it('should render options based on choices string with commas', () => {
+  it('should render options based on choicesList array', () => {
     render(<DropdownField {...mockProps} />)
 
     const options = screen.getAllByRole('option')
@@ -48,12 +48,12 @@ describe('Dropdownfield Component', () => {
     expect(screen.getByText('Option 3')).toBeInTheDocument()
   })
 
-  it('should render options based on choices string with newline', () => {
-    const propsWithNewlineChoices = {
+  it('should render options when choicesList is provided as an array', () => {
+    const propsWithChoicesList = {
       ...mockProps,
-      choices: 'Option 1\r\nOption 2\r\nOption 3',
+      choicesList: ['Option 1', 'Option 2', 'Option 3'],
     }
-    render(<DropdownField {...propsWithNewlineChoices} />)
+    render(<DropdownField {...propsWithChoicesList} />)
 
     const options = screen.getAllByRole('option')
     expect(options).toHaveLength(4) // 3 options + 1 default option
