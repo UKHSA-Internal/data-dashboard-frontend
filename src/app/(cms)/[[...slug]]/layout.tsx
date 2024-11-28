@@ -3,8 +3,6 @@ import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
-import { PageType } from '@/api/requests/cms/getPages'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
@@ -13,6 +11,7 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
+import { getLandingPage } from '@/app/utils/cms'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 interface LayoutProps {
@@ -27,7 +26,7 @@ export default async function Layout({ children, params }: LayoutProps) {
     getGlobalBanner(),
   ])
 
-  const { sub_title: subTitle } = await getPageBySlug<PageType.Landing>('landing-page')
+  const { sub_title: subTitle } = await getLandingPage()
 
   const onHomePage = landingPageHeroEnabled && !params?.slug
 
