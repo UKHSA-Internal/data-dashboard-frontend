@@ -92,8 +92,8 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       field_type: 'checkboxes',
       help_text: 'Select all that apply',
       required: false,
-      choices: '',
-      default_value: 'Improve\r\nModify',
+      choices: 'Improve\r\nModify',
+      default_value: 'Improve',
     },
     {
       id: 6,
