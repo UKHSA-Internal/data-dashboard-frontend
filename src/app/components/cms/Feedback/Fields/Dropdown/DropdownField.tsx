@@ -1,7 +1,6 @@
 import { Fieldtype } from '../../Feedback'
 
-export default function DropdownField({ label, helpText, cleanName, choices = '' }: Fieldtype) {
-  const choicesList = choices.includes('\r\n') ? choices.split('\r\n') : choices.split(',')
+export default function DropdownField({ label, helpText, cleanName, choicesList = [] }: Fieldtype) {
   return (
     <div className="govuk-form-group govuk-!-margin-bottom-9">
       <h2 className="govuk-label-wrapper">
