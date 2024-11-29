@@ -30,7 +30,7 @@ describe('UrlField', () => {
     expect(helpTextElement).toBeInTheDocument()
 
     const inputElement = screen.getByRole('textbox')
-    expect(inputElement).toHaveAttribute('type', 'text')
+    expect(inputElement).toHaveAttribute('type', 'url')
     expect(inputElement).toHaveAttribute('name', cleanName)
     expect(inputElement).toHaveAttribute('id', cleanName)
   })
