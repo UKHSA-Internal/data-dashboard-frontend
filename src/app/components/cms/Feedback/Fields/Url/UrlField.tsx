@@ -13,7 +13,7 @@ export default function UrlField({ label, helpText, cleanName }: Fieldtype) {
 
       {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
 
-      <input className="govuk-input" name={cleanName} id={cleanName} type="text" />
+      <input className="govuk-input" name={cleanName} id={cleanName} type="url" />
     </div>
   )
 }
