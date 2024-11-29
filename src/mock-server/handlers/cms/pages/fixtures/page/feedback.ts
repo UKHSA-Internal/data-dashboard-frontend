@@ -87,7 +87,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       meta: {
         type: 'forms.FormField',
       },
-      clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future',
+      clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future_checkboxes',
       label: 'Select all the options you would you like to see on the dashboard in the future?',
       field_type: 'checkboxes',
       help_text: 'Select all that apply',
@@ -100,7 +100,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       meta: {
         type: 'forms.FormField',
       },
-      clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future',
+      clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future_dropdown',
       label: 'Choose some options you would like to see on the dashboard in the future?',
       field_type: 'dropdown',
       help_text: '',
@@ -152,7 +152,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       meta: {
         type: 'forms.FormField',
       },
-      clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future',
+      clean_name: 'what_would_you_like_to_see_on_the_dashboard_in_the_future_checkbox',
       label: 'Select all the options you would you like to see on the dashboard in the future?',
       field_type: 'checkbox',
       help_text: '',
