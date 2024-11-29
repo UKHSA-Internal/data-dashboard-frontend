@@ -32,6 +32,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
   try {
     const requiredFields: fieldError[] = []
     const errors: fieldError[] = []
+    let isEmptySubmission = false
 
     // Validate form request body
     //for each form field identify fields that are required
@@ -69,9 +70,14 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       redirect('/feedback/confirmation')
     }
 
-    // No errors - send results to the backend
-    if (errors.length === 0) {
-      console.log('no errors')
+    if (requiredFields.length === 0 && errors.length === 0) {
+      isEmptySubmission = Array.from(formData.values()).every((value) => value === '')
+    }
+
+    if (isEmptySubmission) {
+      logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
+      redirect('/feedback/confirmation')
+    } else {
       logger.info(`Feedback submitted successfully, redirecting to confirmation`)
 
       const { success } = await postSuggestions(validatedFields.data)
@@ -87,10 +93,6 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
     }
 
     // errors - return errors
-    return {
-      message: '',
-      errors: errors,
-    }
   } catch (error) {
     throw error
   }
