@@ -11,6 +11,7 @@ import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { flags } from '@/app/constants/flags.constants'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
+import { getLandingPage } from '@/app/utils/cms'
 import { getFeatureFlag } from '@/app/utils/flags.utils'
 
 interface LayoutProps {
@@ -24,6 +25,8 @@ export default async function Layout({ children, params }: LayoutProps) {
     getFeatureFlag(flags.landingPageHero),
     getGlobalBanner(),
   ])
+
+  const { sub_title: subTitle } = await getLandingPage()
 
   const onHomePage = landingPageHeroEnabled && !params?.slug
 
@@ -64,7 +67,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         <MegaMenu />
       </TopNav>
 
-      {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
+      {onHomePage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container h-2 bg-blue" />}
 
       {!onHomePage ? (
         <div className="govuk-width-container print:hidden">
