@@ -45,10 +45,6 @@ test('Redirect to confirmation page when valid suggestions are provided', async 
 })
 
 test('Redirect to confirmation page when no suggestions are provided (form is non-mandatory)', async () => {
-  jest.mocked(client).mockResolvedValueOnce({
-    data: null,
-    status: 200,
-  })
   const formFields: FormFields[] = [
     {
       id: 1,
@@ -71,7 +67,10 @@ test('Redirect to confirmation page when no suggestions are provided (form is no
 
   await handler(formFields, { message: '', errors: [] }, formData)
 
-  expect(logger.info).toHaveBeenNthCalledWith(1, 'Feedback submitted successfully, redirecting to confirmation')
+  expect(logger.info).toHaveBeenNthCalledWith(
+    1,
+    'Empty feedback form submitted, redirecting to confirmation and skipping api request'
+  )
   expect(redirect).toHaveBeenNthCalledWith(1, '/feedback/confirmation')
 })
 
