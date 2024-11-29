@@ -12,7 +12,7 @@ describe('UrlField', () => {
 
     const labelElement = screen.getByLabelText(label)
     expect(labelElement).toBeInTheDocument()
-    expect(labelElement).toHaveAttribute('type', 'text')
+    expect(labelElement).toHaveAttribute('type', 'url')
   })
 
   test('should render the component with a label, helpText, and an email input', () => {
