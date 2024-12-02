@@ -10,18 +10,14 @@ describe('CheckboxField', () => {
     defaultValue: 'true', // Testing with a string value
   }
 
-  test('renders checkbox field with label', () => {
+  test('renders checkbox field with label and help text when provided', () => {
     render(<CheckboxField {...mockProps} />)
 
     // Check if the label is rendered correctly
     const label = screen.getByLabelText(mockProps.label)
     expect(label).toBeInTheDocument()
-  })
 
-  test('renders help text when provided', () => {
-    render(<CheckboxField {...mockProps} />)
-
-    // Check if help text is rendered
+    // Check if the help text is rendered correctly
     const helpText = screen.getByText(mockProps.helpText)
     expect(helpText).toBeInTheDocument()
   })
