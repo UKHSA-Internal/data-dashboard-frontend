@@ -27,7 +27,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
   seo_change_frequency: 5,
   seo_priority: 0.5,
   last_updated_at: '2024-09-30T11:41:36.884029+01:00',
-  sub_title: 'showing public health data across England',
+  sub_title: 'Showing public health data across England',
   body: [
     {
       type: 'section',
