@@ -19,7 +19,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
     parent: {
       id: 3,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },

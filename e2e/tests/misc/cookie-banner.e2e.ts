@@ -5,8 +5,8 @@ import { test } from '../../fixtures/app.fixture'
 test.describe('Cookie banner - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('displays the cookie banner on mobile', async ({ homePage, app }) => {
-    await homePage.goto()
+  test('displays the cookie banner on mobile', async ({ landingPage, app }) => {
+    await landingPage.goto()
     await app.hasCookieBanner()
   })
 })
@@ -14,8 +14,8 @@ test.describe('Cookie banner - mobile @mobileOnly', () => {
 test.describe('Cookie banner - tablet @tabletOnly', () => {
   test.use({ viewport: viewports.tablet })
 
-  test('displays the cookie banner on tablet', async ({ homePage, app }) => {
-    await homePage.goto()
+  test('displays the cookie banner on tablet', async ({ landingPage, app }) => {
+    await landingPage.goto()
     await app.hasCookieBanner()
   })
 })
@@ -23,15 +23,15 @@ test.describe('Cookie banner - tablet @tabletOnly', () => {
 test.describe('Cookie banner - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('displays the cookie banner on desktop', async ({ homePage, app }) => {
-    await homePage.goto()
+  test('displays the cookie banner on desktop', async ({ landingPage, app }) => {
+    await landingPage.goto()
     await app.hasCookieBanner()
   })
 })
 
-test('Does not render the cookie banner if the GDPR cookie is already set', async ({ homePage, app }) => {
+test('Does not render the cookie banner if the GDPR cookie is already set', async ({ landingPage, app }) => {
   await test.step('loads the page', async () => {
-    await homePage.goto()
+    await landingPage.goto()
   })
   await test.step('displays cookie banner', async () => {
     await app.hasCookieBanner()
