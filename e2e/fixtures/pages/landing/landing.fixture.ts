@@ -17,7 +17,7 @@ export class LandingPage {
     await expect(title).toBe('UKHSA data dashboard')
     await expect(this.page.locator('meta[name="description"]')).toHaveAttribute(
       'content',
-      'Showing public health data across england'
+      'Overall summary of the respiratory viruses in circulation within the UK'
     )
   }
 
