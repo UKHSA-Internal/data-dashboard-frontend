@@ -14,8 +14,8 @@ import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
-import { KeyControl } from './shared/controls/KeyControl'
 import { AttributionControl } from './shared/controls/AttributionControl'
+import { KeyControl } from './shared/controls/KeyControl'
 import { ZoomControl } from './shared/controls/ZoomControl'
 import { useMapRef } from './shared/hooks/useMapRef'
 

@@ -51,7 +51,7 @@ export function getActiveCssVariableFromColour(color: keyof typeof ActiveColourV
   return `${ActiveColourVariableMap[color]}`
 }
 
-export function getTextColourCssFromColour(colour: String) {
+export function getTextColourCssFromColour(colour: string) {
   if (colour == 'Yellow') {
     return 'text-black'
   } else {
