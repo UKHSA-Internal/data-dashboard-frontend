@@ -50,3 +50,11 @@ export function getHoverCssVariableFromColour(color: keyof typeof HoverColourVar
 export function getActiveCssVariableFromColour(color: keyof typeof ActiveColourVariableMap) {
   return `${ActiveColourVariableMap[color]}`
 }
+
+export function getTextColourCssFromColour(colour: String) {
+  if (colour == 'Yellow') {
+    return 'text-black'
+  } else {
+    return 'text-white'
+  }
+}

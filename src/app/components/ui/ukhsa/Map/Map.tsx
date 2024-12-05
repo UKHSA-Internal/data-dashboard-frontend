@@ -14,6 +14,7 @@ import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
+import { KeyControl } from './shared/controls/KeyControl'
 import { AttributionControl } from './shared/controls/AttributionControl'
 import { ZoomControl } from './shared/controls/ZoomControl'
 import { useMapRef } from './shared/hooks/useMapRef'
@@ -54,6 +55,7 @@ const Map = ({
       className={clsx('relative h-screen overflow-hidden ukhsa-focus', className)}
       zoomControl={false}
     >
+      <KeyControl position="bottomleft" keyItems={['Green', 'Yellow', 'Amber', 'Red']} />
       <AttributionControl position={attributionControlPosition} />
       <ZoomControl position={zoomControlPosition} />
       {children}

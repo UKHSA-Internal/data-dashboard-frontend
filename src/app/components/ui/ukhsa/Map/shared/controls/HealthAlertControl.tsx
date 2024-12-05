@@ -118,7 +118,7 @@ export default function HealthAlertControl() {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
 
   return (
-    <Control position="topleft">
+    <Control position="bottomleft">
       <Sheet
         open={Boolean(selectedFeatureId)}
         onOpenChange={(open) => {
