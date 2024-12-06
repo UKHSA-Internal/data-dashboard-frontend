@@ -18,6 +18,7 @@ import { AttributionControl } from './shared/controls/AttributionControl'
 import { KeyControl } from './shared/controls/KeyControl'
 import { ZoomControl } from './shared/controls/ZoomControl'
 import { useMapRef } from './shared/hooks/useMapRef'
+import { UKHSALogoLayer } from './shared/layers/UKHSALogoLayer'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -55,6 +56,7 @@ const Map = ({
       className={clsx('relative h-screen overflow-hidden ukhsa-focus', className)}
       zoomControl={false}
     >
+      <UKHSALogoLayer position="topright" />
       <KeyControl position="bottomleft" keyItems={['Green', 'Yellow', 'Amber', 'Red']} />
       <AttributionControl position={attributionControlPosition} />
       <ZoomControl position={zoomControlPosition} />
