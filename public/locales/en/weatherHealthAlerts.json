@@ -4,10 +4,12 @@
     "exitBtn": "Exit map",
     "trigger": "View map of weather health alerts",
     "fatalError": "There is a problem with the map. Please try again later.",
+    "alert": "{{level}} alert",
+    "no-alert": "No alert",
     "alertDialog": {
       "dateKey": "Start",
       "expiryKey": "End",
-      "statusKey": "Colour",
+      "statusKey": "Alert",
       "textKey": "Description",
       "typeKey": "Type",
       "typeValue_heat": "Heat Health Alert",
@@ -18,6 +20,7 @@
       "alertCta": "Go to alert page"
     }
   },
+  "showKeyBtn": "Display Key",
   "updated": "Updated {{value, time}} on {{ value, dateShort }}",
   "weatherAlert": "{{weatherType}}-health alert for {{regionName}}",
   "alertListLabel": "{{type}} health alerts",

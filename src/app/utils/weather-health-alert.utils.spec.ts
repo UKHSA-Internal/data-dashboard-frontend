@@ -3,6 +3,7 @@ import {
   getCssVariableFromColour,
   getHoverCssVariableFromColour,
   getTagVariantFromStatus,
+  getTextColourCssFromColour,
 } from './weather-health-alert.utils'
 
 describe('getTagVariantFromStatus', () => {
@@ -74,5 +75,15 @@ describe('getActiveCssVariableFromColour', () => {
 
   test('Returns the correct active CSS variable for Red', () => {
     expect(getActiveCssVariableFromColour('Red')).toBe('var(--colour-red-darkest)')
+  })
+})
+
+describe('getTextColourCssFromColour', () => {
+  test('Returns the correct CSS property', () => {
+    expect(getTextColourCssFromColour('Yellow')).toBe('text-black')
+  })
+
+  test.each([['Green'], ['Red'], ['Orange']])('Returns the correct CSS property when the input is %s', (colour) => {
+    expect(getTextColourCssFromColour(colour)).toBe('text-white')
   })
 })
