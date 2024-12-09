@@ -12,7 +12,7 @@ interface LogoLayerProps {
 export function UKHSALogoLayer({ position }: LogoLayerProps) {
   return (
     <Control position={position}>
-      <div>
+      <div data-testid="logo-layer">
         <Image src={logo} height="125" alt="Logo for the UK Health Security Agency" />
       </div>
     </Control>
