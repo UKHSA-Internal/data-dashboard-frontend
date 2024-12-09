@@ -139,19 +139,32 @@ export class WeatherHealthAlertsMapPage {
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
   }
 
   async zoomInWithKeyboard() {
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+    await this.page.keyboard.press('Enter')
+  }
+  async zoomOutWithKeyboard() {
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
     await this.page.keyboard.press('Enter')
   }
 
-  async zoomOutWithKeyboard() {
+  async closeKeyWithKeyboard() {
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
+  }
+
+  async openKeyWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
   }
 
