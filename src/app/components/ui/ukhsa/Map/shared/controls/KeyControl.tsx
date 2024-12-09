@@ -38,7 +38,6 @@ export function KeyControl({ position, keyItems }: KeyControlProps) {
       {...clickHandler()}
       data-testid="close-key-button"
     >
-      {/* <span>Close</span> */}
       <svg aria-hidden="true" focusable="false" width="20" height="20" viewBox="0 0 20 20">
         <path d="M10,8.6L15.6,3L17,4.4L11.4,10L17,15.6L15.6,17L10,11.4L4.4,17L3,15.6L8.6,10L3,4.4L4.4,3L10,8.6Z"></path>
       </svg>
@@ -57,7 +56,7 @@ export function KeyControl({ position, keyItems }: KeyControlProps) {
             return (
               <div key={index} className="px-6" style={{ backgroundColor: getCssVariableFromColour(colour) }}>
                 <p className={'text-center govuk-body ' + getTextColourCssFromColour(colour) + ' m-0 capitalize'}>
-                  {t('map.alert', { level: colour.toLowerCase() })}
+                  {colour == 'Green' ? t('map.no-alert') : t('map.alert', { level: colour.toLowerCase() })}
                 </p>
               </div>
             )
