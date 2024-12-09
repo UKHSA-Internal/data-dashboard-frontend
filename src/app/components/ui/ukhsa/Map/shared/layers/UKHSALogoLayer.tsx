@@ -2,8 +2,9 @@
 
 import { ControlPosition } from 'leaflet'
 import Image from 'next/image'
-import logo from 'public/assets/images/UKHSA_Lesser_Arms_Stacked_RGB.png'
 import Control from 'react-leaflet-custom-control'
+
+import logo from '#/assets/images/UKHSA_Lesser_Arms_Stacked_RGB.png'
 
 interface LogoLayerProps {
   position: ControlPosition
@@ -18,4 +19,3 @@ export function UKHSALogoLayer({ position }: LogoLayerProps) {
     </Control>
   )
 }
-;``
