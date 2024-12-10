@@ -8,7 +8,12 @@ import { useDebounceValue } from 'usehooks-ts'
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 import RightArrowCircleIcon from '@/app/components/ui/ukhsa/Icons/RightArrowCircle'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
-import { getCssVariableFromColour } from '@/app/utils/weather-health-alert.utils'
+import { useTranslation } from '@/app/i18n/client'
+import {
+  getCssVariableFromColour,
+  getTailwindBackgroundFromColour,
+  getTextColourCssFromColour,
+} from '@/app/utils/weather-health-alert.utils'
 import { clsx } from '@/lib/clsx'
 
 import { regionPaths } from './constants'
@@ -37,8 +42,9 @@ const AlertListItem = memo(
       onKeyDown={onClick}
     >
       <span
-        className={clsx(`absolute left-0 top-[3px] mr-2 inline-block size-3 rounded-full`)}
-        style={{ background: getCssVariableFromColour(status) }}
+        className={clsx(
+          `absolute left-0 top-[3px] mr-2 inline-block size-3 rounded-full ${getTailwindBackgroundFromColour(status)}`
+        )}
       />
       <span className="ml-5 block">{name}</span>
     </li>
@@ -86,10 +92,20 @@ interface MiniMapProps {
   alertType: HealthAlertTypes
 }
 
+interface AlertObject {
+  slug: string
+  status: HealthAlertStatus
+  geography_name: string
+  geography_code: string
+  refresh_date: string | null
+}
+
 export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null {
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null)
   const alerts = useWeatherHealthAlertList({ type: alertType })
   const router = useRouter()
+
+  const { t } = useTranslation('weatherHealthAlerts')
 
   const [debouncedHoveredRegion] = useDebounceValue(hoveredRegion, 80)
 
@@ -114,28 +130,60 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
 
   if (alerts.isLoading || !alerts.data) return null
 
+  const groupedAlerts = Object.entries(
+    alerts.data.reduce(
+      (statusGrouped, alert) => {
+        const { status } = alert
+        if (!statusGrouped[status]) {
+          statusGrouped[status] = []
+        }
+        statusGrouped[status].push(alert)
+        return statusGrouped
+      },
+      {} as Record<string, AlertObject[]>
+    )
+  ).map(([status, alerts]) => ({
+    status: status as HealthAlertStatus,
+    alerts,
+  }))
+
   return (
     <>
       <ul
         className="govuk-list govuk-!-font-size-16 mb-1 flex max-w-[80%] flex-wrap gap-1"
         aria-label="Weather health alerts by region"
       >
-        {alerts.data.map((alert) => (
-          <AlertListItem
-            key={alert.geography_code}
-            name={alert.geography_name}
-            status={alert.status}
-            isHovered={debouncedHoveredRegion === alert.geography_code}
-            isAnyHovered={debouncedHoveredRegion !== null}
-            onMouseEnter={() => handleMouseEnter(alert.geography_code)}
-            onMouseLeave={handleMouseLeave}
-            onClick={(evt) => {
-              evt.preventDefault()
-              evt.stopPropagation()
-              handleClick(alert.geography_code)
-            }}
-          />
-        ))}
+        {groupedAlerts.map(({ status, alerts }) => {
+          if (alerts.length > 0) {
+            return (
+              <>
+                <li className="m-0 mt-2 w-full">
+                  <div
+                    className={`m-0 w-[100px] text-center ${getTailwindBackgroundFromColour(status)} ${getTextColourCssFromColour(status)}`}
+                  >
+                    {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status })}
+                  </div>
+                </li>
+                {alerts.map((alert) => (
+                  <AlertListItem
+                    key={alert.geography_code}
+                    name={alert.geography_name}
+                    status={alert.status}
+                    isHovered={debouncedHoveredRegion === alert.geography_code}
+                    isAnyHovered={debouncedHoveredRegion !== null}
+                    onMouseEnter={() => handleMouseEnter(alert.geography_code)}
+                    onMouseLeave={handleMouseLeave}
+                    onClick={(evt) => {
+                      evt.preventDefault()
+                      evt.stopPropagation()
+                      handleClick(alert.geography_code)
+                    }}
+                  />
+                ))}
+              </>
+            )
+          }
+        })}
       </ul>
       <div>
         <svg

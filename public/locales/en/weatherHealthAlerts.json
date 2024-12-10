@@ -4,6 +4,8 @@
     "exitBtn": "Exit map",
     "trigger": "View map of weather health alerts",
     "fatalError": "There is a problem with the map. Please try again later.",
+    "alert": "{{level}} alert",
+    "no-alert": "No alert",
     "alertDialog": {
       "dateKey": "Start",
       "expiryKey": "End",
