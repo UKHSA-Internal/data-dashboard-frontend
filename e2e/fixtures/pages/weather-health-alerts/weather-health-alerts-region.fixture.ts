@@ -67,7 +67,7 @@ export class WeatherHealthAlertsRegionPage {
     await expect(wrapper.getByText('Type')).toBeVisible()
     await expect(wrapper.getByText(type)).toBeVisible()
 
-    await expect(wrapper.getByText('Colour')).toBeVisible()
+    await expect(wrapper.getByText('Alert')).toBeVisible()
     await expect(wrapper.getByText(status)).toBeVisible()
 
     await expect(wrapper.getByText('Start')).toBeVisible()
