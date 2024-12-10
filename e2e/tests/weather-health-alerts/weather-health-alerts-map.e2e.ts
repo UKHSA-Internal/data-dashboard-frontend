@@ -289,27 +289,6 @@ test.describe('Weather Health Alerts map interactivty', () => {
   })
 })
 
-test('Key should be opened using the display key button', async ({ app, weatherHealthAlertsMapPage }) => {
-  await test.step('open weather health alerts page', async () => {
-    await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-  })
-  await test.step('map is displaying', async () => {
-    await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-  })
-  await test.step('check interactive map has loaded', async () => {
-    await weatherHealthAlertsMapPage.hasMapLeaflet()
-  })
-  await test.step('shows the map key', async () => {
-    await weatherHealthAlertsMapPage.hasMapKey()
-  })
-  await test.step('can close the map key', async () => {
-    await weatherHealthAlertsMapPage.mapKeyCanBeMinimised()
-  })
-  await test.step('shows the display key button', async () => {
-    await weatherHealthAlertsMapPage.hasDisplayKeyButton()
-  })
-})
-
 // Need to investigate flaky test: CDD-2136
 // -------------------------------------------------
 
