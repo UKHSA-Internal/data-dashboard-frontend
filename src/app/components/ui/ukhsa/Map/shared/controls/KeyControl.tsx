@@ -1,12 +1,13 @@
 'use client'
 
+import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
 import { KeyboardEvent, useState } from 'react'
 import Control from 'react-leaflet-custom-control'
 
 import { HealthAlertStatus } from '@/api/models/Alerts'
 import { useTranslation } from '@/app/i18n/client'
-import { getCssVariableFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 
 interface KeyControlProps {
   position: ControlPosition
@@ -54,7 +55,7 @@ export function KeyControl({ position, keyItems }: KeyControlProps) {
         <div className="m-0 mb-1 grid grid-cols-none gap-2">
           {keyItems.map((colour, index) => {
             return (
-              <div key={index} className="px-6" style={{ backgroundColor: getCssVariableFromColour(colour) }}>
+              <div key={index} className={clsx(`px-6`, getTailwindBackgroundFromColour(colour))}>
                 <p className={'text-center govuk-body ' + getTextColourCssFromColour(colour) + ' m-0 capitalize'}>
                   {colour == 'Green' ? t('map.no-alert') : t('map.alert', { level: colour.toLowerCase() })}
                 </p>
