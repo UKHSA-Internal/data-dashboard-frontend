@@ -61,6 +61,24 @@ describe('getHoverCssVariableFromColour', () => {
 })
 
 describe('getActiveCssVariableFromColour', () => {
+  test('Returns the correct CSS background colour for Green', () => {
+    expect(getActiveCssVariableFromColour('Green')).toBe('bg-green')
+  })
+
+  test('Returns the correct CSS background colour for Amber', () => {
+    expect(getActiveCssVariableFromColour('Amber')).toBe('bg-orange')
+  })
+
+  test('Returns the correct CSS background colour for Yellow', () => {
+    expect(getActiveCssVariableFromColour('Yellow')).toBe('bg-custard')
+  })
+
+  test('Returns the correct CSS background colour for Red', () => {
+    expect(getActiveCssVariableFromColour('Red')).toBe('bg-red')
+  })
+})
+
+describe('getTailwindBackgroundFromColour', () => {
   test('Returns the correct active CSS variable for Green', () => {
     expect(getActiveCssVariableFromColour('Green')).toBe('var(--colour-green-darkest)')
   })
