@@ -29,7 +29,7 @@ const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
   return (
     <div
       className={clsx(
-        `govuk-tag mb-0 h-6 text-center capitalize`,
+        `govuk-tag h-6 items-center text-center capitalize`,
         getTextColourCssFromColour(level),
         getTailwindBackgroundFromColour(level)
       )}
