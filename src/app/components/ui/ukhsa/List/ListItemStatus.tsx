@@ -17,7 +17,11 @@ interface ListItemStatusProps {
 }
 
 export const ListItemStatus = ({ children }: ListItemStatusProps) => {
-  return <div className="relative grid grid-cols-[1fr_70px] gap-2 sm:grid-cols-[50px_1fr_70px]">{children}</div>
+  return (
+    <div className="relative grid grid-cols-[1fr_125px] items-center gap-2 sm:grid-cols-[50px_1fr_125px]">
+      {children}
+    </div>
+  )
 }
 
 interface ListItemStatusIconProps {

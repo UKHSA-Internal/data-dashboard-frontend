@@ -3,6 +3,8 @@ import {
   getCssVariableFromColour,
   getHoverCssVariableFromColour,
   getTagVariantFromStatus,
+  getTailwindBackgroundFromColour,
+  getTextColourCssFromColour,
 } from './weather-health-alert.utils'
 
 describe('getTagVariantFromStatus', () => {
@@ -60,6 +62,24 @@ describe('getHoverCssVariableFromColour', () => {
 })
 
 describe('getActiveCssVariableFromColour', () => {
+  test('Returns the correct CSS background colour for Green', () => {
+    expect(getTailwindBackgroundFromColour('Green')).toBe('bg-green')
+  })
+
+  test('Returns the correct CSS background colour for Amber', () => {
+    expect(getTailwindBackgroundFromColour('Amber')).toBe('bg-orange')
+  })
+
+  test('Returns the correct CSS background colour for Yellow', () => {
+    expect(getTailwindBackgroundFromColour('Yellow')).toBe('bg-custard')
+  })
+
+  test('Returns the correct CSS background colour for Red', () => {
+    expect(getTailwindBackgroundFromColour('Red')).toBe('bg-red')
+  })
+})
+
+describe('getTailwindBackgroundFromColour', () => {
   test('Returns the correct active CSS variable for Green', () => {
     expect(getActiveCssVariableFromColour('Green')).toBe('var(--colour-green-darkest)')
   })
@@ -74,5 +94,15 @@ describe('getActiveCssVariableFromColour', () => {
 
   test('Returns the correct active CSS variable for Red', () => {
     expect(getActiveCssVariableFromColour('Red')).toBe('var(--colour-red-darkest)')
+  })
+})
+
+describe('getTextColourCssFromColour', () => {
+  test('Returns the correct CSS property', () => {
+    expect(getTextColourCssFromColour('Yellow')).toBe('text-black')
+  })
+
+  test.each([['Green'], ['Red'], ['Orange']])('Returns the correct CSS property when the input is %s', (colour) => {
+    expect(getTextColourCssFromColour(colour)).toBe('text-white')
   })
 })
