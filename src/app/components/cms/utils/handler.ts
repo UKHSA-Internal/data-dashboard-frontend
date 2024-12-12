@@ -8,7 +8,7 @@ import { feedbackSchema } from '@/schemas/feedback.schema'
 
 interface FormError {
   message: string
-  errors: fieldError[]
+  errors: FieldError[]
 }
 
 export interface FormFields {
@@ -23,15 +23,15 @@ export interface FormFields {
   default_value: string
 }
 
-interface fieldError {
+interface FieldError {
   clean_name: string
   label: string
 }
 
 export async function handler(formFields: FormFields[], prevState: FormError, formData: FormData) {
   try {
-    const requiredFields: fieldError[] = []
-    const errors: fieldError[] = []
+    const requiredFields: FieldError[] = []
+    const errors: FieldError[] = []
     let isEmptySubmission = false
 
     // Validate form request body
