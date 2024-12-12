@@ -103,6 +103,7 @@ interface AlertObject {
 export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null {
   const [hoveredRegion, setHoveredRegion] = useState<string | null>(null)
   const alerts = useWeatherHealthAlertList({ type: alertType })
+
   const router = useRouter()
 
   const { t } = useTranslation('weatherHealthAlerts')
@@ -118,11 +119,11 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
   }, [])
 
   const handleClick = useCallback(
-    (regionId: string) => {
+    (regionId?: string) => {
       const url = new URL('/', window.location.origin)
       url.searchParams.set('v', 'map')
       url.searchParams.set('type', alertType)
-      url.searchParams.set('fid', regionId)
+      regionId ? url.searchParams.set('fid', regionId) : null
       router.push(url.toString(), { scroll: false })
     },
     [router]
@@ -159,7 +160,7 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
               <>
                 <li className="m-0 mt-2 w-full">
                   <div
-                    className={`m-0 w-[100px] text-center ${getTailwindBackgroundFromColour(status)} ${getTextColourCssFromColour(status)}`}
+                    className={`m-0 w-[100px] text-center capitalize ${getTailwindBackgroundFromColour(status)} ${getTextColourCssFromColour(status)}`}
                   >
                     {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status })}
                   </div>
@@ -216,7 +217,14 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
           })}
         </svg>
       </div>
-      <button type="button" className="govuk-!-margin-top-3 flex">
+      <button
+        type="button"
+        className="govuk-!-margin-top-3 flex"
+        onClick={(evt) => {
+          evt.preventDefault()
+          handleClick()
+        }}
+      >
         <RightArrowCircleIcon />
         <div className="govuk-link ml-2 font-bold">Enter Fullscreen</div>
       </button>
