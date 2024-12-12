@@ -18,7 +18,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
     parent: {
       id: 6,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/6/',
         html_url: null,
       },
