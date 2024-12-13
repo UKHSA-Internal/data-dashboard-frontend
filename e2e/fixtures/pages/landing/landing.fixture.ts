@@ -100,7 +100,7 @@ export class LandingPage {
 
     const regions = this.page.getByRole('list', { name: 'Weather health alerts by region' })
     await expect(regions).toBeVisible()
-    await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
+    await expect(await regions.getByRole('listitem').all()).toHaveLength(13)
     await expect(card.getByRole('button', { name: 'Enter fullscreen' })).toBeVisible()
   }
 
