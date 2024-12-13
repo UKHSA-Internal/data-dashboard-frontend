@@ -12,7 +12,6 @@ import type { PageType } from './getPages'
 export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTypeToDataMap[T]> : never
 
 type PageTypeToDataMap = {
-  [PageType.Home]: typeof WithHomeData
   [PageType.Landing]: typeof WithLandingData
   [PageType.Feedback]: typeof withFeedbackData
   [PageType.Topic]: typeof WithTopicData
@@ -32,16 +31,6 @@ const SharedPageData = z.object({
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
-})
-
-const WithHomeData = SharedPageData.extend({
-  body: Body,
-  page_description: z.string(),
-  meta: Meta.extend({
-    type: z.literal('home.HomePage'),
-  }),
-  related_links: RelatedLinks,
-  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -150,7 +139,6 @@ const WithMetricsChildData = SharedPageData.extend({
 })
 
 export const responseSchema = z.union([
-  WithHomeData,
   WithLandingData,
   withFeedbackData,
   WithTopicData,
