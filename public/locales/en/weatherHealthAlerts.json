@@ -9,7 +9,7 @@
     "alertDialog": {
       "dateKey": "Start",
       "expiryKey": "End",
-      "statusKey": "Colour",
+      "statusKey": "Alert",
       "textKey": "Description",
       "typeKey": "Type",
       "typeValue_heat": "Heat Health Alert",
@@ -20,6 +20,7 @@
       "alertCta": "Go to alert page"
     }
   },
+  "showKeyBtn": "Display Key",
   "updated": "Updated {{value, time}} on {{ value, dateShort }}",
   "weatherAlert": "{{weatherType}}-health alert for {{regionName}}",
   "alertListLabel": "{{type}} health alerts",

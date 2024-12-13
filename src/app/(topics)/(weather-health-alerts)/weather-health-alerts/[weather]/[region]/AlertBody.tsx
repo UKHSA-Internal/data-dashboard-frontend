@@ -18,7 +18,7 @@ import {
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
-import { getTagVariantFromStatus } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 import { logger } from '@/lib/logger'
 
 interface AlertProps {
@@ -100,9 +100,15 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
                 </SummaryListRow>
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
-                  <SummaryListValue>
-                    <div className={clsx(`govuk-tag capitalize`, getTagVariantFromStatus(status))}>{status}</div>
-                  </SummaryListValue>
+                  <div
+                    className={clsx(
+                      `govuk-tag mb-0 px-2 text-center capitalize`,
+                      getTextColourCssFromColour(status),
+                      getTailwindBackgroundFromColour(status)
+                    )}
+                  >
+                    {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status.toLowerCase() })}
+                  </div>
                 </SummaryListRow>
                 <SummaryListRow>
                   <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
