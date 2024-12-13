@@ -18,7 +18,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
     parent: {
       id: 109,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/109/',
         html_url: null,
       },
