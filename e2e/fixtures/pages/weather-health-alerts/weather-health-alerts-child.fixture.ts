@@ -56,12 +56,13 @@ export class WeatherHealthAlertsChildPage {
     await expect(await regions.getByRole('listitem').all()).toHaveLength(9)
 
     for (let i = 0; i < alertList.length; i++) {
+      const expectedStatus = alertList[i].status === 'Green' ? 'No alert' : `${alertList[i].status.toLowerCase()} alert`
       const listItem = regions.getByRole('listitem').nth(i)
       await expect(listItem).toBeVisible()
 
       await expect(listItem.getByRole('heading', { level: 2, name: alertList[i].region })).toBeVisible()
       await expect(listItem.getByText(alertList[i].updated)).toBeVisible()
-      await expect(listItem.getByText(alertList[i].status, { exact: true })).toBeVisible()
+      await expect(listItem.getByText(expectedStatus, { exact: true })).toBeVisible()
 
       //TODO: Need to implement tags for mobile vs desktop tags CDD-2024
       // if (this.isMobile) {

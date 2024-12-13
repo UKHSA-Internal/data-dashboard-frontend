@@ -17,6 +17,12 @@ test.describe('Weather health alerts map display', () => {
     await test.step('has all buttons', async () => {
       await weatherHealthAlertsMapPage.hasMapButtons()
     })
+    await test.step('has map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
+    })
+    await test.step('has UKHSA logo overlay', async () => {
+      await weatherHealthAlertsMapPage.hasUKHSALogo()
+    })
   })
 
   test('Map overlay opens and can exit back to previous page', async ({ app, weatherHealthAlertsMapPage }) => {
@@ -180,6 +186,105 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
     await test.step('shows fewer regions after pan', async () => {
       await weatherHealthAlertsMapPage.hasHighlightedRegions(7)
+    })
+  })
+
+  test('Key should be visible and closable with Mouse', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('shows the map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
+    })
+    await test.step('can close the map key', async () => {
+      await weatherHealthAlertsMapPage.mapKeyCanBeMinimised()
+    })
+    await test.step('shows the display key button', async () => {
+      await weatherHealthAlertsMapPage.hasDisplayKeyButton()
+    })
+  })
+
+  test('Key should be visible and closable with Keyboard', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('shows the map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
+    })
+    await test.step('can close the map key', async () => {
+      await weatherHealthAlertsMapPage.closeKeyWithKeyboard()
+    })
+    await test.step('shows the display key button', async () => {
+      await weatherHealthAlertsMapPage.hasDisplayKeyButton()
+    })
+  })
+
+  test('Key should be opened using the display key button with Mouse', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('shows the map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
+    })
+    await test.step('can close the map key', async () => {
+      await weatherHealthAlertsMapPage.mapKeyCanBeMinimised()
+    })
+    await test.step('shows the display key button', async () => {
+      await weatherHealthAlertsMapPage.hasDisplayKeyButton()
+    })
+    await test.step('click the display key button', async () => {
+      await weatherHealthAlertsMapPage.clickDisplayKeyButton()
+    })
+    await test.step('should display the map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
+    })
+  })
+
+  test('Key should be opened using the display key button with Keyboard', async ({
+    app,
+    weatherHealthAlertsMapPage,
+  }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('check interactive map has loaded', async () => {
+      await weatherHealthAlertsMapPage.hasMapLeaflet()
+    })
+    await test.step('shows the map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
+    })
+    await test.step('can close the map key', async () => {
+      await weatherHealthAlertsMapPage.closeKeyWithKeyboard()
+    })
+    await test.step('shows the display key button', async () => {
+      await weatherHealthAlertsMapPage.hasDisplayKeyButton()
+    })
+    await test.step('click the display key button', async () => {
+      await weatherHealthAlertsMapPage.openKeyWithKeyboard()
+    })
+    await test.step('should display the map key', async () => {
+      await weatherHealthAlertsMapPage.hasMapKey()
     })
   })
 })
