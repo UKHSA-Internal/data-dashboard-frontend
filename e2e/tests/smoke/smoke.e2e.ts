@@ -17,10 +17,10 @@ const pagesShownInNavMenu = [
 test.describe('Smoke tests - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
 
-  test('Navigates to each page from the navigation menu', async ({ app, homePage }) => {
-    await test.step('loads the home page', async () => {
-      await homePage.goto()
-      await homePage.hasHeading()
+  test('Navigates to each page from the navigation menu', async ({ app, landingPage }) => {
+    await test.step('loads the landing page', async () => {
+      await landingPage.goto()
+      await landingPage.hasHeading()
     })
 
     for (const page of pagesShownInNavMenu) {
@@ -35,10 +35,10 @@ test.describe('Smoke tests - desktop @smoke', () => {
 test.describe('Smoke tests - mobile @smoke', () => {
   test.use({ viewport: viewports.mobile })
 
-  test('Navigates to each page from the dropdown mobile navigation menu', async ({ app, homePage }) => {
-    await test.step('loads the home page', async () => {
-      await homePage.goto()
-      await homePage.hasHeading()
+  test('Navigates to each page from the dropdown mobile navigation menu', async ({ app, landingPage }) => {
+    await test.step('loads the landing page', async () => {
+      await landingPage.goto()
+      await landingPage.hasHeading()
     })
 
     for (const page of pagesShownInNavMenu) {
@@ -53,10 +53,10 @@ test.describe('Smoke tests - mobile @smoke', () => {
 test.describe('Smoke tests - no JavaScript @smoke', () => {
   test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
 
-  test('Navigates to each page from the side navigation menu', async ({ app, homePage }) => {
-    await test.step('loads the home page', async () => {
-      await homePage.goto()
-      await homePage.hasHeading()
+  test('Navigates to each page from the side navigation menu', async ({ app, landingPage }) => {
+    await test.step('loads the landing page', async () => {
+      await landingPage.goto()
+      await landingPage.hasHeading()
     })
 
     for (const page of pagesShownInNavMenu) {
