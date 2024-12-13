@@ -62,7 +62,7 @@ export class WeatherHealthAlertsChildPage {
 
       await expect(listItem.getByRole('heading', { level: 2, name: alertList[i].region })).toBeVisible()
       await expect(listItem.getByText(alertList[i].updated)).toBeVisible()
-      await expect(listItem.getByText(`${expectedStatus}`, { exact: true })).toBeVisible()
+      await expect(listItem.getByText(expectedStatus, { exact: true })).toBeVisible()
 
       //TODO: Need to implement tags for mobile vs desktop tags CDD-2024
       // if (this.isMobile) {
