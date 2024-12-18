@@ -4,9 +4,10 @@ import clsx from 'clsx'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 import { useTranslation } from '@/app/i18n/client'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 
 interface ListItemStatusTagProps {
-  level: HealthAlertStatus | 'No alerts'
+  level: HealthAlertStatus
   region: string
   type: HealthAlertTypes
 }
@@ -14,11 +15,11 @@ interface ListItemStatusTagProps {
 const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
   const { t } = useTranslation('weatherHealthAlerts')
 
-  function getStatusKey(level: HealthAlertStatus | 'No alerts') {
+  function getStatusKey(level: HealthAlertStatus) {
     switch (level) {
       case 'Amber':
         return 'Amber'
-      case 'No alerts':
+      case 'Green':
         return 'None'
       default:
         return 'Initial'
@@ -27,15 +28,14 @@ const ListItemStatusTag = ({ level, region, type }: ListItemStatusTagProps) => {
 
   return (
     <div
-      className={clsx('govuk-!-margin-right-0 govuk-phase-banner__content__tag m-auto capitalize', {
-        'govuk-tag govuk-tag--green': level === 'Green',
-        'govuk-tag govuk-tag--yellow': level === 'Yellow',
-        'govuk-tag govuk-tag--orange': level === 'Amber',
-        'govuk-tag govuk-tag--red': level === 'Red',
-      })}
+      className={clsx(
+        `govuk-tag h-6 items-center text-center capitalize`,
+        getTextColourCssFromColour(level),
+        getTailwindBackgroundFromColour(level)
+      )}
       aria-label={t('statusLabel', { context: getStatusKey(level), level, type, region })}
     >
-      {level}
+      {level == 'Green' ? t('map.no-alert') : t('map.alert', { level: level.toLowerCase() })}
     </div>
   )
 }

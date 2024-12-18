@@ -20,7 +20,7 @@ import UrlField from './Fields/Url/UrlField'
 
 const initialState = {
   message: '',
-  errors: {},
+  errors: [],
 }
 
 export interface Fieldtype {
@@ -30,6 +30,35 @@ export interface Fieldtype {
   choicesList?: string[]
   defaultValue?: string
   defaultValuesList?: string[]
+  fieldHasError?: boolean
+}
+
+interface FieldError {
+  clean_name: string
+  label: string
+}
+
+export const renderErrorSummary = (errors: FieldError[]) => {
+  return (
+    <div className="govuk-error-summary" data-module="govuk-error-summary">
+      <div role="alert">
+        <h2 className="govuk-error-summary__title">
+          <span className="govuk-visually-hidden">Error:</span>The following form fields have errors:{' '}
+        </h2>
+        <div className="govuk-error-summary__body">
+          <ul className="govuk-list govuk-error-summary__list">
+            {errors.map((item) => {
+              return (
+                <li key={item.clean_name}>
+                  <a href={'#' + item.clean_name}>{item.label}</a>
+                </li>
+              )
+            })}
+          </ul>
+        </div>
+      </div>
+    </div>
+  )
 }
 
 interface FeedbackProps {
@@ -47,7 +76,7 @@ interface FeedbackProps {
 }
 
 export default function Feedback({ formFields }: FeedbackProps) {
-  const [state, formAction] = useFormState(handler, initialState)
+  const [state, formAction] = useFormState(handler.bind(null, formFields), initialState)
 
   useEffect(() => {
     if (state.message) {
@@ -60,8 +89,9 @@ export default function Feedback({ formFields }: FeedbackProps) {
 
   return (
     <div className="govuk-grid-row">
+      {state.errors.length > 0 ? renderErrorSummary(state.errors) : null}
       <form className="govuk-grid-column-two-thirds" action={formAction}>
-        {formFields.map(renderFormFields)}
+        {formFields.map(renderFormFields.bind(null, state.errors))}
 
         <div className="govuk-button-group">
           <button className="govuk-button" type="submit">
@@ -76,29 +106,46 @@ export default function Feedback({ formFields }: FeedbackProps) {
   )
 }
 
-export const renderFormFields = ({
-  id,
-  clean_name: cleanName,
-  label,
-  field_type: fieldType,
-  help_text: helpText,
-  // TODO: Required validation added in ticket CDD-2300
-  // required,
-  choices,
-  default_value: defaultValue,
-}: z.infer<typeof FormField>) => {
+export const renderFormFields = (
+  errors: FieldError[],
+  {
+    id,
+    clean_name: cleanName,
+    label,
+    field_type: fieldType,
+    help_text: helpText,
+    // TODO: Required validation added in ticket CDD-2300
+    // required,
+    choices,
+    default_value: defaultValue,
+  }: z.infer<typeof FormField>
+) => {
   const choicesList = choices.includes('\r\n') ? choices.split('\r\n') : choices.split(',')
-  // Implement default values only for checkboxes
+
+  // TODO: Implement default values only for checkboxes
   const defaultValuesList = defaultValue.includes('\r\n') ? defaultValue.split('\r\n') : defaultValue.split(',')
+
+  // Checks if any errors are present, type conversion to boolean
+  const fieldHasError = !!errors.find(({ clean_name }) => clean_name === cleanName)
 
   return (
     <Fragment key={id}>
-      {fieldType === 'singleline' && <SinglelineField label={label} helpText={helpText} cleanName={cleanName} />}
+      {fieldType === 'singleline' && (
+        <SinglelineField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
+      )}
 
-      {fieldType === 'multiline' && <MultilineField label={label} helpText={helpText} cleanName={cleanName} />}
+      {fieldType === 'multiline' && (
+        <MultilineField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
+      )}
 
       {fieldType === 'radio' && (
-        <RadioField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />
+        <RadioField
+          label={label}
+          helpText={helpText}
+          cleanName={cleanName}
+          choicesList={choicesList}
+          fieldHasError={fieldHasError}
+        />
       )}
 
       {fieldType === 'email' && <EmailField label={label} helpText={helpText} cleanName={cleanName} />}

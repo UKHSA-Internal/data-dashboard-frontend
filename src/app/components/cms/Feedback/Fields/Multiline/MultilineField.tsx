@@ -1,8 +1,10 @@
 'use client'
 
+import clsx from 'clsx'
+
 import { Fieldtype } from '../../Feedback'
 
-export default function MultilineField({ label, helpText, cleanName }: Fieldtype) {
+export default function MultilineField({ label, helpText, cleanName, fieldHasError }: Fieldtype) {
   return (
     <div className="govuk-form-group govuk-!-margin-bottom-9">
       <h2 className="govuk-label-wrapper">
@@ -13,7 +15,18 @@ export default function MultilineField({ label, helpText, cleanName }: Fieldtype
 
       {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
 
-      <textarea className="govuk-textarea" name={cleanName} id={cleanName} rows={5} />
+      {fieldHasError ? (
+        <p id="multiline-error" className="govuk-error-message">
+          <span className="govuk-visually-hidden">Error:</span> Please enter a value as this field is required
+        </p>
+      ) : null}
+
+      <textarea
+        className={clsx('govuk-textarea govuk-!-margin-bottom-9', { 'govuk-textarea--error': fieldHasError })}
+        name={cleanName}
+        id={cleanName}
+        rows={5}
+      />
     </div>
   )
 }
