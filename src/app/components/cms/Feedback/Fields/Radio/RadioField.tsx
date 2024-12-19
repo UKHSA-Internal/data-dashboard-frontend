@@ -21,8 +21,6 @@ export default function RadioField({ label, helpText, cleanName, choicesList = [
         ) : null}
 
         <div className="govuk-radios" data-module="govuk-radios">
-          {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
-
           {choicesList.map((choice, key) => {
             return (
               <div key={key} className="govuk-radios__item">
