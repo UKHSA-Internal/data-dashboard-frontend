@@ -30,12 +30,15 @@ import {
 } from '../components/cms'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
+import { setDefaultAutoSelectFamily } from 'net'
+import { getPathname } from '../hooks/getPathname'
 
 // TODO: Move this file into cms folder
-export const renderSection = ({
-  id,
-  value: { heading, content, page_link: pageLink },
-}: z.infer<typeof Body>[number]) => (
+export const renderSection = (
+  { id, value: { heading, content, page_link: pageLink }, type }: z.infer<typeof Body>[number],
+  showMore?: string,
+  section?: string
+) => (
   <div
     key={id}
     className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
@@ -52,11 +55,14 @@ export const renderSection = ({
         heading
       )}
     </h2>
-    {content.map(renderCard)}
+    {console.log('test', kebabCase(heading.toLowerCase()))}
+    {kebabCase(heading.toLowerCase()) === section
+      ? content.map(({ id, value, type }) => renderCard({ type, value, id }, heading, showMore))
+      : content.map(({ id, value, type }) => renderCard({ type, value, id }, heading))}
   </div>
 )
 
-export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
+export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>, heading: string, showMore?: string) => (
   <div key={id}>
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
@@ -182,7 +188,16 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
         })}
       >
         {value.cards.map((card, index) => {
-          if (index > 2) return
+          if (index == 3 && showMore !== 'true') {
+            console.log('heading:', kebabCase(heading))
+            return (
+              <div key={index}>
+                <a href={getPathname() + '?section=' + kebabCase(heading) + '&showMore=true'}>stuff</a>
+              </div>
+            )
+          }
+
+          if (index > 3 && showMore !== 'true') return
 
           return (
             <div key={card.id}>
