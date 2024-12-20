@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { snakeCase } from 'lodash'
+import { camelCase, snakeCase } from 'lodash'
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -36,8 +36,7 @@ import { getPathname } from '../hooks/getPathname'
 // TODO: Move this file into cms folder
 export const renderSection = (
   { id, value: { heading, content, page_link: pageLink }, type }: z.infer<typeof Body>[number],
-  showMore?: string,
-  section?: string
+  showMoreSections: string[]
 ) => (
   <div
     key={id}
@@ -55,14 +54,49 @@ export const renderSection = (
         heading
       )}
     </h2>
-    {console.log('test', kebabCase(heading.toLowerCase()))}
-    {kebabCase(heading.toLowerCase()) === section
-      ? content.map(({ id, value, type }) => renderCard({ type, value, id }, heading, showMore))
-      : content.map(({ id, value, type }) => renderCard({ type, value, id }, heading))}
+    {showMoreSections.includes(kebabCase(heading)) ? (
+      <Link href={getShowLessURL(showMoreSections, kebabCase(heading))}>Show Less</Link>
+    ) : null}
+    {content.map(({ id, value, type }) => renderCard({ type, value, id }, heading, showMoreSections))}
   </div>
 )
 
-export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>, heading: string, showMore?: string) => (
+export const createURL = (paramSections: string[]): string => {
+  let query = getPathname() + '?'
+
+  paramSections.map((section, index) => {
+    if (index > 0) {
+      query = query + `&section=${section}`
+    } else {
+      query = query + `section=${section}`
+    }
+  })
+
+  return query
+}
+
+export const getShowMoreURL = (showMoreSections: string[], heading: string) => {
+  let paramSections: string[] = showMoreSections.slice()
+
+  paramSections.push(heading)
+
+  return createURL(paramSections)
+}
+
+export const getShowLessURL = (showMoreSections: string[], heading: string) => {
+  let paramSections: string[] = showMoreSections.slice()
+
+  const sectionIndex = paramSections.indexOf(heading)
+  paramSections.splice(sectionIndex, 1)
+
+  return createURL(paramSections)
+}
+
+export const renderCard = (
+  { id, type, value }: z.infer<typeof CardTypes>,
+  heading: string,
+  showMoreSections: string[]
+) => (
   <div key={id}>
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
@@ -188,16 +222,21 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>, headi
         })}
       >
         {value.cards.map((card, index) => {
-          if (index == 3 && showMore !== 'true') {
+          if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
             console.log('heading:', kebabCase(heading))
             return (
               <div key={index}>
-                <a href={getPathname() + '?section=' + kebabCase(heading) + '&showMore=true'}>stuff</a>
+                <Link
+                  className="govuk-link--no-visited-state bg-arrow_down_blue bg-no-repeat"
+                  href={getShowMoreURL(showMoreSections, kebabCase(heading))}
+                >
+                  <span className="pl-4">Show More</span>
+                </Link>
               </div>
             )
           }
 
-          if (index > 3 && showMore !== 'true') return
+          if (index > 3 && !showMoreSections.includes(kebabCase(heading))) return
 
           return (
             <div key={card.id}>
