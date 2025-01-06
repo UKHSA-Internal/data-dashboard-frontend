@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { camelCase, snakeCase } from 'lodash'
+import { snakeCase } from 'lodash'
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
 import { Fragment } from 'react'
@@ -30,12 +30,11 @@ import {
 } from '../components/cms'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
-import { setDefaultAutoSelectFamily } from 'net'
 import { getPathname } from '../hooks/getPathname'
 
 // TODO: Move this file into cms folder
 export const renderSection = (
-  { id, value: { heading, content, page_link: pageLink }, type }: z.infer<typeof Body>[number],
+  { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number],
   showMoreSections: string[]
 ) => (
   <div
@@ -55,7 +54,7 @@ export const renderSection = (
       )}
     </h2>
 
-    {content.map(({ id, value, type }) => renderCard({ type, value, id }, heading, showMoreSections))}
+    {content.map(renderCard.bind(null, heading, showMoreSections))}
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
         className="govuk-link--no-visited-state bg-arrow_up_blue bg-no-repeat"
@@ -82,7 +81,7 @@ export const createURL = (paramSections: string[]): string => {
 }
 
 export const getShowMoreURL = (showMoreSections: string[], heading: string) => {
-  let paramSections: string[] = showMoreSections.slice()
+  const paramSections: string[] = showMoreSections.slice()
 
   paramSections.push(heading)
 
@@ -90,7 +89,7 @@ export const getShowMoreURL = (showMoreSections: string[], heading: string) => {
 }
 
 export const getShowLessURL = (showMoreSections: string[], heading: string) => {
-  let paramSections: string[] = showMoreSections.slice()
+  const paramSections: string[] = showMoreSections.slice()
 
   const sectionIndex = paramSections.indexOf(heading)
   paramSections.splice(sectionIndex, 1)
@@ -99,9 +98,9 @@ export const getShowLessURL = (showMoreSections: string[], heading: string) => {
 }
 
 export const renderCard = (
-  { id, type, value }: z.infer<typeof CardTypes>,
   heading: string,
-  showMoreSections: string[]
+  showMoreSections: string[],
+  { type, value, id }: z.infer<typeof CardTypes>
 ) => (
   <div key={id}>
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}

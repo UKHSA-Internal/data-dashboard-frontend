@@ -3,10 +3,7 @@ import { PageComponentBaseProps } from '@/app/types'
 import { getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 
-export default async function LandingPage({
-  slug,
-  searchParams: { section },
-}: PageComponentBaseProps<{ section?: string }>) {
+export default async function LandingPage({ searchParams: { section } }: PageComponentBaseProps<{ section?: string }>) {
   let processedSectionParams: string[] = []
 
   if (section) {
@@ -14,11 +11,11 @@ export default async function LandingPage({
   }
   const { body } = await getLandingPage()
 
-  return <View>{body.map(({ id, value, type }) => renderSection({ id, value, type }, processedSectionParams))}</View>
+  return <View>{body.map(({ id, value }) => renderSection({ id, value }, processedSectionParams))}</View>
 }
 
-const processedParams = (v: string | string[]) => {
+const processedParams = (value: string | string[]) => {
   const emptyArray: string[] = []
 
-  return emptyArray.concat(v).map((section) => section.toLowerCase())
+  return emptyArray.concat(value).map((section) => section.toLowerCase())
 }
