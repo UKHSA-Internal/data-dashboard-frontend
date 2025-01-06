@@ -12,6 +12,7 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
+import { getShowLessURL, getShowMoreURL } from '@/app/utils/show-more.utils'
 
 import {
   ButtonExternal,
@@ -30,7 +31,6 @@ import {
 } from '../components/cms'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
-import { getPathname } from '../hooks/getPathname'
 
 // TODO: Move this file into cms folder
 export const renderSection = (
@@ -65,37 +65,6 @@ export const renderSection = (
     ) : null}
   </div>
 )
-
-export const createURL = (paramSections: string[]): string => {
-  let query = getPathname() + '?'
-
-  paramSections.map((section, index) => {
-    if (index > 0) {
-      query = query + `&section=${section}`
-    } else {
-      query = query + `section=${section}`
-    }
-  })
-
-  return query
-}
-
-export const getShowMoreURL = (showMoreSections: string[], heading: string) => {
-  const paramSections: string[] = showMoreSections.slice()
-
-  paramSections.push(heading)
-
-  return createURL(paramSections)
-}
-
-export const getShowLessURL = (showMoreSections: string[], heading: string) => {
-  const paramSections: string[] = showMoreSections.slice()
-
-  const sectionIndex = paramSections.indexOf(heading)
-  paramSections.splice(sectionIndex, 1)
-
-  return createURL(paramSections)
-}
 
 export const renderCard = (
   heading: string,
