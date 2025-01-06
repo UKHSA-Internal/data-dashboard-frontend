@@ -134,7 +134,7 @@ jobs:
     name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
