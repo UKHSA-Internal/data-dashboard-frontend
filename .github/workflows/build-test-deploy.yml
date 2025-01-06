@@ -134,7 +134,7 @@ jobs:
     name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
     timeout-minutes: 60
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
       matrix:
@@ -200,15 +200,15 @@ jobs:
   # Deploy
   ###############################################################################
 
-#  trigger-deployments:
-#    name: Trigger deployments
-#    needs: [publish-image]
-#    runs-on: ubuntu-latest
-#    if: ${{ github.ref == 'refs/heads/main' }}
-#
-#    steps:
-#      - name: Check out code
-#        uses: actions/checkout@v4
-#      - uses: ./.github/actions/trigger-deployments
-#        with:
-#          token: ${{ secrets.DEPLOYMENT_TRIGGER_TOKEN }}
+  trigger-deployments:
+    name: Trigger deployments
+    needs: [publish-image]
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - uses: ./.github/actions/trigger-deployments
+        with:
+          token: ${{ secrets.DEPLOYMENT_TRIGGER_TOKEN }}
