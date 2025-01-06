@@ -69,6 +69,14 @@ export class LandingPage {
     await expect(card.getByText(sub_title)).toBeVisible()
   }
 
+  async hasNoLandingPageCard({ title, sub_title }: { title: string; sub_title: string }) {
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const card = section.getByRole('link', { name: title })
+
+    await expect(card.getByRole('heading', { level: 3, name: title })).toBeHidden()
+    await expect(card.getByText(sub_title)).toBeHidden()
+  }
+
   async hasShowMoreButton() {
     const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
     const showMoreButton = section.getByRole('link', { name: 'Show More' })
@@ -81,6 +89,24 @@ export class LandingPage {
     const showMoreButton = section.getByRole('link', { name: 'Show More' })
 
     await expect(showMoreButton).toBeHidden()
+  }
+  async hasShowLessButton() {
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const showLessButton = section.getByRole('link', { name: 'Show Less' })
+
+    await expect(showLessButton).toBeVisible()
+  }
+
+  async clickShowMoreButton() {
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const showMoreButton = section.getByRole('link', { name: 'Show More' })
+    await showMoreButton.click()
+  }
+
+  async clickShowLessButton() {
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const showLessButton = section.getByRole('link', { name: 'Show Less' })
+    await showLessButton.click()
   }
 
   async hasHealthTopicCard(

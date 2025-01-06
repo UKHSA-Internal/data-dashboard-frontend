@@ -77,6 +77,79 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     await landingPage.hasNoShowMoreButton()
   })
 
+  test('expands the region charts after clicking showMore button', async ({ landingPage }) => {
+    await test.step('click show more button', async () => {
+      await landingPage.clickShowMoreButton()
+    })
+    await test.step('All charts', async () => {
+      await landingPage.hasLandingPageCard({
+        title: 'COVID-19',
+        sub_title: 'Cases Reported',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'Influenza',
+        sub_title: 'Healthcare admission rates',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'Respiratory syncytial virus (RSV)',
+        sub_title: 'Healthcare admission rates',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'COVID-19 v2',
+        sub_title: 'Testing Positivity',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'Influenza v2',
+        sub_title: 'Testing Positivity',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'Respiratory syncytial virus (RSV) v2',
+        sub_title: 'Testing Positivity',
+      })
+    })
+    await test.step('displays show less button once expanded', async () => {
+      await landingPage.hasShowLessButton()
+    })
+  })
+
+  test('minimises the region charts after clicking showLess button', async ({ landingPage }) => {
+    await test.step('click show more button', async () => {
+      await landingPage.clickShowMoreButton()
+    })
+    await test.step('displays show less button once expanded', async () => {
+      await landingPage.hasShowLessButton()
+    })
+    await test.step('click show more button', async () => {
+      await landingPage.clickShowLessButton()
+    })
+    await test.step('All charts', async () => {
+      await landingPage.hasLandingPageCard({
+        title: 'COVID-19',
+        sub_title: 'Cases Reported',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'Influenza',
+        sub_title: 'Healthcare admission rates',
+      })
+      await landingPage.hasLandingPageCard({
+        title: 'Respiratory syncytial virus (RSV)',
+        sub_title: 'Healthcare admission rates',
+      })
+      await landingPage.hasNoLandingPageCard({
+        title: 'COVID-19 v2',
+        sub_title: 'Testing Positivity',
+      })
+      await landingPage.hasNoLandingPageCard({
+        title: 'Influenza v2',
+        sub_title: 'Testing Positivity',
+      })
+      await landingPage.hasNoLandingPageCard({
+        title: 'Respiratory syncytial virus (RSV) v2',
+        sub_title: 'Testing Positivity',
+      })
+    })
+  })
+
   test('displays the Weather health alerts header', async ({ landingPage }) => {
     await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
   })

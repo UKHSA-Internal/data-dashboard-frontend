@@ -248,7 +248,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   id: 'c49837c7-f173-4e92-bbfd-7e36fc496738',
                   type: 'simplified_chart_with_link',
                   value: {
-                    title: 'Influenza',
+                    title: 'Influenza v2',
                     sub_title: 'Testing positivity',
                     tag_manager_event_id: '',
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/influenza/',
@@ -279,7 +279,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   id: 'c51e15a5-1e99-497b-8ae4-c57978e71a08',
                   type: 'simplified_chart_with_link',
                   value: {
-                    title: 'Respiratory syncytial virus (RSV)',
+                    title: 'Respiratory syncytial virus (RSV) v2',
                     sub_title: 'Testing positivity',
                     tag_manager_event_id: '',
                     topic_page:
@@ -311,7 +311,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   id: 'aa584788-3d7e-465f-8c34-cacef4fb4e7e',
                   type: 'simplified_chart_with_link',
                   value: {
-                    title: 'COVID-19',
+                    title: 'COVID-19 v2',
                     sub_title: 'Testing positivity',
                     tag_manager_event_id: '',
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
