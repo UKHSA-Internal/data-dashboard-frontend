@@ -34,8 +34,8 @@ import { getPathname } from '../hooks/getPathname'
 
 // TODO: Move this file into cms folder
 export const renderSection = (
-  { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number],
-  showMoreSections: string[]
+  showMoreSections: string[],
+  { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number]
 ) => (
   <div
     key={id}
@@ -228,7 +228,6 @@ export const renderCard = (
       >
         {value.cards.map((card, index) => {
           if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
-            console.log('heading:', kebabCase(heading))
             return (
               <div key={index}>
                 <Link

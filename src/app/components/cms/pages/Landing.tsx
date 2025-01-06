@@ -11,7 +11,7 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
   }
   const { body } = await getLandingPage()
 
-  return <View>{body.map(({ id, value }) => renderSection({ id, value }, processedSectionParams))}</View>
+  return <View>{body.map(renderSection.bind(null, processedSectionParams))}</View>
 }
 
 const processedParams = (value: string | string[]) => {
