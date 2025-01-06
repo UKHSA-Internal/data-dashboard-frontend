@@ -40,7 +40,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
             value: {
               cards: [
                 {
-                  id: '89cbe0f2-0022-49e9-ae41-b0326782d41d',
+                  id: '19fb0ff3-a9e7-4aa0-a146-8ddeef50b006',
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'Measles',
@@ -71,10 +71,10 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   },
                 },
                 {
-                  id: '89cbe0f2-0022-49e9-ae41-b0326782d41d',
+                  id: 'a9f28d2e-f959-4c5b-a7a0-f02ad8a26bb8',
                   type: 'simplified_chart_with_link',
                   value: {
-                    title: 'Laziness',
+                    title: 'Measles v2',
                     sub_title: 'Cases by week of symptom onset',
                     tag_manager_event_id: '',
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/outbreaks/measles/',
@@ -102,7 +102,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   },
                 },
                 {
-                  id: '89cbe0f2-0022-49e9-ae41-b0326782d41d',
+                  id: '1cf80d65-4dda-4eb5-b6c5-a4c36385e817',
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'Problems',
@@ -133,7 +133,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   },
                 },
                 {
-                  id: '89cbe0f2-0022-49e9-ae41-b0326782d41d',
+                  id: '746fcd95-8d76-40fc-a5dc-35a034c957eb',
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'The Giggles',
@@ -164,10 +164,10 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   },
                 },
                 {
-                  id: '89cbe0f2-0022-49e9-ae41-b0326782d41d',
+                  id: '5f90a7a7-f935-4ea8-b10e-daebfe3fc198',
                   type: 'simplified_chart_with_link',
                   value: {
-                    title: 'Polio',
+                    title: 'Puppies',
                     sub_title: 'Cases by week of symptom onset',
                     tag_manager_event_id: '',
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/outbreaks/measles/',

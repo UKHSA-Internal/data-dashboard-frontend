@@ -54,10 +54,16 @@ export const renderSection = (
         heading
       )}
     </h2>
-    {showMoreSections.includes(kebabCase(heading)) ? (
-      <Link href={getShowLessURL(showMoreSections, kebabCase(heading))}>Show Less</Link>
-    ) : null}
+
     {content.map(({ id, value, type }) => renderCard({ type, value, id }, heading, showMoreSections))}
+    {showMoreSections.includes(kebabCase(heading)) ? (
+      <Link
+        className="govuk-link--no-visited-state bg-arrow_up_blue bg-no-repeat"
+        href={getShowLessURL(showMoreSections, kebabCase(heading))}
+      >
+        <span className="pl-4">Show Less</span>
+      </Link>
+    ) : null}
   </div>
 )
 
