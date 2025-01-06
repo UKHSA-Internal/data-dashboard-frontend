@@ -20,13 +20,13 @@ test.describe('Landing page - tablet @tabletOnly', () => {
 
   test('Card', async ({ landingPage }) => {
     await test.step('displays a Weather Health Alerts card', async () => {
-      await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
+      await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
     })
   })
 
   test('Open map after clicking a minimap region', async ({ landingPage, weatherHealthAlertsMapPage }) => {
     await test.step('click minimap card', async () => {
-      await landingPage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+      await landingPage.clickMinimapCardRegionByMap('Cold health alerts', 'E12000004')
     })
     await test.step('shows map', async () => {
       await weatherHealthAlertsMapPage.hasMapDialog()
@@ -64,18 +64,18 @@ test.describe('Landing page - desktop @desktopOnly', () => {
       sub_title: 'Healthcare admission rates',
     })
     await landingPage.hasLandingPageCard({
-      title: 'RSV',
+      title: 'Respiratory syncytial virus (RSV)',
       sub_title: 'Healthcare admission rates',
     })
   })
 
   test('displays the Weather health alerts header', async ({ landingPage }) => {
-    await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Across England', map: true })
+    await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
   })
 
   test('Open map after clicking a minimap region', async ({ landingPage, weatherHealthAlertsMapPage }) => {
     await test.step('click minimap card', async () => {
-      await landingPage.clickMinimapCardRegionByMap('Heat health alerts', 'E12000004')
+      await landingPage.clickMinimapCardRegionByMap('Cold health alerts', 'E12000004')
     })
     await test.step('shows map', async () => {
       await weatherHealthAlertsMapPage.hasMapDialog()

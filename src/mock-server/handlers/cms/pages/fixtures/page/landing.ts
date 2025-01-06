@@ -217,7 +217,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'Influenza',
-                    sub_title: 'Testing positivity',
+                    sub_title: 'Healthcare admission rates',
                     tag_manager_event_id: '',
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/influenza/',
                     x_axis: 'date',
@@ -248,7 +248,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'Respiratory syncytial virus (RSV)',
-                    sub_title: 'Testing positivity',
+                    sub_title: 'Healthcare admission rates',
                     tag_manager_event_id: '',
                     topic_page:
                       'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/respiratory-syncytial-virus-rsv/',
@@ -280,7 +280,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   type: 'simplified_chart_with_link',
                   value: {
                     title: 'COVID-19',
-                    sub_title: 'Testing positivity',
+                    sub_title: 'Cases Reported',
                     tag_manager_event_id: '',
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
                     x_axis: 'date',

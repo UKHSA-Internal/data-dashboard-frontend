@@ -84,7 +84,7 @@ export class LandingPage {
   }
 
   async hasWeatherHealthAlertsCard(name: string, { tagline, map = true }: { tagline: string; map?: boolean }) {
-    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const section = this.page.getByRole('region', { name: 'Weather and climate risks' })
     const card = section.getByRole('link', { name })
 
     await expect(section).toBeVisible()
@@ -105,13 +105,13 @@ export class LandingPage {
   }
 
   async clickMinimapCard(name: string) {
-    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const section = this.page.getByRole('region', { name: 'Weather and climate risks' })
     const card = section.getByRole('link', { name })
     await card.click()
   }
 
   async clickMinimapCardRegionByMap(name: string, regionId: string) {
-    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const section = this.page.getByRole('region', { name: 'Weather and climate risks' })
     const card = section.getByRole('link', { name })
     const map = card.getByRole('application', { name: 'Map of weather health alerts' })
     await expect(map).toBeVisible()
