@@ -69,6 +69,20 @@ export class LandingPage {
     await expect(card.getByText(sub_title)).toBeVisible()
   }
 
+  async hasShowMoreButton() {
+    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const showMoreButton = section.getByRole('link', { name: 'Show More' })
+
+    await expect(showMoreButton).toBeVisible()
+  }
+
+  async hasNoShowMoreButton() {
+    const section = this.page.getByRole('region', { name: 'Outbreaks' })
+    const showMoreButton = section.getByRole('link', { name: 'Show More' })
+
+    await expect(showMoreButton).toBeHidden()
+  }
+
   async hasHealthTopicCard(
     name: string,
     { tagline, trendPercent, trendDescription }: { tagline: string; trendPercent: string; trendDescription: string }

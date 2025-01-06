@@ -69,6 +69,14 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     })
   })
 
+  test('displays the showMore button with more than 3 charts', async ({ landingPage }) => {
+    await landingPage.hasShowMoreButton()
+  })
+
+  test('doesnt display the showMore button with 3 or less charts', async ({ landingPage }) => {
+    await landingPage.hasNoShowMoreButton()
+  })
+
   test('displays the Weather health alerts header', async ({ landingPage }) => {
     await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
   })
