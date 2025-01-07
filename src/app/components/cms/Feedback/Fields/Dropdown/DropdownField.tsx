@@ -19,7 +19,8 @@ export default function DropdownField({ label, helpText, cleanName, fieldHasErro
 
       {fieldHasError ? (
         <p id="multiline-error" className="govuk-error-message">
-          <span className="govuk-visually-hidden">Error:</span> Please select a value as this field is required
+          <span className="govuk-visually-hidden">Error:</span> Please select a value from the dropdown as this field is
+          required
         </p>
       ) : null}
 

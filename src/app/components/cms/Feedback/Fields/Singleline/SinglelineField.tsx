@@ -20,7 +20,7 @@ export default function SinglelineField({ label, helpText, cleanName, fieldHasEr
 
       {fieldHasError ? (
         <p id="multiline-error" className="govuk-error-message">
-          <span className="govuk-visually-hidden">Error:</span> Please select a value as this field is required
+          <span className="govuk-visually-hidden">Error:</span> Please enter a value as this field is required
         </p>
       ) : null}
 
