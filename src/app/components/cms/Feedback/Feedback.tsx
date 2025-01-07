@@ -128,8 +128,6 @@ export const renderFormFields = (
   // Checks if any errors are present, type conversion to boolean
   const fieldHasError = !!errors.find(({ clean_name }) => clean_name === cleanName)
 
-  console.log('Fields with errors', errors)
-
   return (
     <Fragment key={id}>
       {fieldType === 'singleline' && (
