@@ -1,18 +1,30 @@
+import clsx from 'clsx'
+
 import { Fieldtype } from '../../Feedback'
 
-export default function DropdownField({ label, helpText, cleanName, choicesList = [] }: Fieldtype) {
+export default function DropdownField({ label, helpText, cleanName, fieldHasError, choicesList = [] }: Fieldtype) {
+  console.log('Dropdown Error: ', fieldHasError)
   return (
-    <div className="govuk-form-group govuk-!-margin-bottom-9">
+    <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
       <h2 className="govuk-label-wrapper">
-        <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
+        <label
+          className={clsx('govuk-label govuk-label--m', { 'govuk-error-message': fieldHasError })}
+          htmlFor={cleanName}
+        >
           {label}
         </label>
       </h2>
 
       {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
 
+      {fieldHasError ? (
+        <p id="multiline-error" className="govuk-error-message">
+          <span className="govuk-visually-hidden">Error:</span> Please select a value as this field is required
+        </p>
+      ) : null}
+
       <select className="govuk-select" id={cleanName} name={cleanName} aria-describedby={helpText}>
-        <option value="choose an option" data-testid="submit-button">
+        <option value="" data-testid="submit-button">
           Choose an option
         </option>
         {choicesList.map((choice, key) => {
