@@ -16,10 +16,10 @@ export default function CheckboxField({ label, helpText, cleanName, defaultValue
       <div className="govuk-checkboxes__item">
         <input
           className="govuk-checkboxes__input"
+          id={cleanName}
           name={cleanName}
           value={defaultValue}
           type="checkbox"
-          id={cleanName}
         />
         <label
           className={clsx('govuk-label govuk-checkboxes__label', { 'govuk-error-message': fieldHasError })}

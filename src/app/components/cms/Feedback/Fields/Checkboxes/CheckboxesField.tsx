@@ -32,7 +32,7 @@ export default function CheckboxesField({
           </p>
         ) : null}
 
-        <div className="govuk-checkboxes" data-module="govuk-checkboxes">
+        <div className="govuk-checkboxes" data-module="govuk-checkboxes" id={cleanName}>
           {choicesList.map((choiceVal, key) => {
             const uniqueId = `${cleanName}-${key}` // Generate a unique ID for each checkbox
             return (

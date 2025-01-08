@@ -3,7 +3,6 @@ import clsx from 'clsx'
 import { Fieldtype } from '../../Feedback'
 
 export default function DropdownField({ label, helpText, cleanName, fieldHasError, choicesList = [] }: Fieldtype) {
-  console.log('Dropdown Error: ', fieldHasError)
   return (
     <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
       <h2 className="govuk-label-wrapper">
