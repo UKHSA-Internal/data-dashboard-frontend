@@ -212,7 +212,7 @@ export const renderCard = (
           if (index > 3 && !showMoreSections.includes(kebabCase(heading))) return
 
           return (
-            <div key={card.id}>
+            <div key={card.id} data-testid="card-wrapper">
               <Card
                 asChild
                 aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}

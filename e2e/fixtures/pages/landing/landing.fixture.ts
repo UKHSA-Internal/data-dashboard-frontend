@@ -77,6 +77,13 @@ export class LandingPage {
     await expect(card.getByText(sub_title)).toBeHidden()
   }
 
+  async hasXCardsInSection(section: string, expectedNumberOfCards: number) {
+    const selectedSection = this.page.getByRole('region', { name: section })
+    const cardCount = await selectedSection.getByTestId('card-wrapper').count()
+
+    expect(cardCount).toBe(expectedNumberOfCards)
+  }
+
   async hasShowMoreButton() {
     const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
     const showMoreButton = section.getByRole('link', { name: 'Show More' })
