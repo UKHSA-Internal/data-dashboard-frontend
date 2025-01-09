@@ -57,7 +57,7 @@ export const renderSection = (
     {content.map(renderCard.bind(null, heading, showMoreSections))}
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
-        className="govuk-link--no-visited-state bg-arrow_up_blue bg-no-repeat"
+        className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
         href={getShowLessURL(showMoreSections, kebabCase(heading))}
       >
         <span className="pl-4">Show Less</span>
@@ -200,7 +200,7 @@ export const renderCard = (
             return (
               <div key={index}>
                 <Link
-                  className="govuk-link--no-visited-state bg-arrow_down_blue bg-no-repeat"
+                  className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat"
                   href={getShowMoreURL(showMoreSections, kebabCase(heading))}
                 >
                   <span className="pl-4">Show More</span>
