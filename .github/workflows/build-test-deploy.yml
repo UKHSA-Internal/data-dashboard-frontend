@@ -64,12 +64,13 @@ jobs:
         run: NODE_ENV=test npm run start &
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: unlighthouse-report
           path: ./.unlighthouse
           retention-days: 10
+          overwrite: true
 
   ###############################################################################
   # Code quality checks
@@ -157,7 +158,7 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
@@ -181,7 +182,7 @@ jobs:
 
   publish-image:
     name: Publish image to ECR
-    needs: [ success-gate ]
+    needs: [success-gate]
     runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
