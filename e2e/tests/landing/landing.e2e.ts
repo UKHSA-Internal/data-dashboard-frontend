@@ -117,9 +117,10 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     await test.step('click show more button', async () => {
       await landingPage.clickShowMoreButton()
     })
-    await landingPage.hasXCardsInSection('Respiratory viruses', 6)
+
     await test.step('displays show less button once expanded', async () => {
       await landingPage.hasShowLessButton()
+      await landingPage.hasXCardsInSection('Respiratory viruses', 6)
     })
     await test.step('click show more button', async () => {
       await landingPage.clickShowLessButton()
