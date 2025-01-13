@@ -1,7 +1,5 @@
 import clsx from 'clsx'
-import Link from 'next/link'
 import { ReactNode } from 'react'
-import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { RichText } from '@/app/components/cms'
 import { getServerTranslation } from '@/app/i18n'
@@ -18,26 +16,26 @@ interface PageProps {
 }
 
 export async function View({
-  heading,
-  showWelcome,
+  // heading,
+  // showWelcome,
   children,
   description,
   lastUpdated,
-  backLink,
+  // backLink,
   className,
-  breadcrumbs,
+  // breadcrumbs,
 }: PageProps) {
   const { t } = await getServerTranslation('common')
 
   return (
     <div className={clsx('w-full', className)}>
-      {backLink && (
+      {/* {backLink && (
         <Link href={backLink} className="govuk-back-link">
           {t('backLink')}
         </Link>
-      )}
+      )} */}
 
-      {breadcrumbs && (
+      {/* {breadcrumbs && (
         <div className="govuk-breadcrumbs govuk-!-margin-top-2">
           <ol className="govuk-breadcrumbs__list" aria-label="breadcrumbs">
             {breadcrumbs.map(({ name, link }, key) => (
@@ -49,11 +47,11 @@ export async function View({
             ))}
           </ol>
         </div>
-      )}
+      )} */}
 
-      {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
+      {/* {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>} */}
 
-      {heading && (
+      {/* {heading && (
         <Trans
           i18nKey="entryTitle"
           t={t}
@@ -71,7 +69,7 @@ export async function View({
           ]}
           values={{ value: heading }}
         />
-      )}
+      )} */}
 
       {lastUpdated && (
         <p className="govuk-!-margin-bottom-6 govuk-body-s">{t('lastUpdated', { value: new Date(lastUpdated) })}</p>
