@@ -58,4 +58,13 @@ describe('RadioField Component', () => {
     const radioButtons = screen.queryAllByRole('radio')
     expect(radioButtons).toHaveLength(0)
   })
+
+  it('should render the error message text if the field is required and not completed', () => {
+    render(<RadioField {...{ ...mockProps, choicesList: [], fieldHasError: true }} />)
+
+    const expectedErrorText = 'Please enter a value as this field is required'
+
+    // Check if no radio buttons are rendered
+    expect(screen.getByText(expectedErrorText)).toBeInTheDocument()
+  })
 })

@@ -86,4 +86,13 @@ describe('CheckboxesField Component', () => {
     const checkboxes = screen.queryAllByRole('checkbox')
     expect(checkboxes).toHaveLength(0)
   })
+
+  it('should render the error message text if the field is required and not completed', () => {
+    render(<CheckboxesField {...{ ...mockProps, fieldHasError: true }} />)
+
+    const expectedErrorText = 'Please select at least one of the below options'
+
+    // Check if no radio buttons are rendered
+    expect(screen.getByText(expectedErrorText)).toBeInTheDocument()
+  })
 })

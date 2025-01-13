@@ -6,7 +6,7 @@ import { Fieldtype } from '../../Feedback'
 
 export default function MultilineField({ label, helpText, cleanName, fieldHasError }: Fieldtype) {
   return (
-    <div className="govuk-form-group govuk-!-margin-bottom-9">
+    <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
       <h2 className="govuk-label-wrapper">
         <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
           {label}

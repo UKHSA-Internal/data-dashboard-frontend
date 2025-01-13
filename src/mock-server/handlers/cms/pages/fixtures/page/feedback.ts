@@ -158,7 +158,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       help_text: '',
       required: false,
       choices: '',
-      default_value: '',
+      default_value: 'true',
     },
   ],
   confirmation_slug: 'confirmation',
