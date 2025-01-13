@@ -75,6 +75,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
   })
 
   test('doesnt display the showMore button with 3 or less charts', async ({ landingPage }) => {
+    await landingPage.hasXCardsInSection('Outbreaks', 3)
     await landingPage.hasNoShowMoreButton()
   })
 
@@ -82,7 +83,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     await test.step('click show more button', async () => {
       await landingPage.clickShowMoreButton()
     })
-    await test.step('All charts', async () => {
+    await test.step('Shows all charts', async () => {
       await landingPage.hasLandingPageCard({
         title: 'COVID-19',
         sub_title: 'Cases Reported',
@@ -122,10 +123,10 @@ test.describe('Landing page - desktop @desktopOnly', () => {
       await landingPage.hasShowLessButton()
       await landingPage.hasXCardsInSection('Respiratory viruses', 6)
     })
-    await test.step('click show more button', async () => {
+    await test.step('click show less button', async () => {
       await landingPage.clickShowLessButton()
     })
-    await test.step('All charts', async () => {
+    await test.step('Shows only first three charts', async () => {
       await landingPage.hasLandingPageCard({
         title: 'COVID-19',
         sub_title: 'Cases Reported',
