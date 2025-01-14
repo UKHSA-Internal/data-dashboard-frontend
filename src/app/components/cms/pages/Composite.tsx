@@ -4,9 +4,9 @@ import { View } from '@/app/components/ui/ukhsa'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-import { Heading } from '../../ui/ukhsa/Heading/Heading'
-import { LastUpdated } from '../../ui/ukhsa/LastUpdated/LastUpdated'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 import { RichTextAutoHeadings } from '../RichText/RichTextAutoHeadings'
 
 export default async function CompositePage({ slug }: PageComponentBaseProps) {

@@ -5,8 +5,8 @@ import { heading } from '@/app/(pages)/switchboard/shared/constants'
 import { getSwitchBoardState, syncState } from '@/app/(pages)/switchboard/shared/state'
 import { Details } from '@/app/components/ui/govuk'
 import { View } from '@/app/components/ui/ukhsa'
-import { BackLink } from '@/app/components/ui/ukhsa/BackLink/Backlink'
-import { Heading } from '@/app/components/ui/ukhsa/Heading/Heading'
+import { BackLink } from '@/app/components/ui/ukhsa/View/BackLink/Backlink'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
 export default function SwitchBoard() {

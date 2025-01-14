@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
-import { Heading } from '@/app/components/ui/ukhsa/Heading/Heading'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 export const dynamic = 'auto'
 
 export default async function Layout({

@@ -8,9 +8,9 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
 
-import { BackLink } from '../../ui/ukhsa/BackLink/Backlink'
-import { Heading } from '../../ui/ukhsa/Heading/Heading'
-import { LastUpdated } from '../../ui/ukhsa/LastUpdated/LastUpdated'
+import { BackLink } from '../../ui/ukhsa/View/BackLink/Backlink'
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 export default async function WhatsNewChildPage({
   slug,

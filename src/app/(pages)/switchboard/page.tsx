@@ -1,11 +1,11 @@
 import Link from 'next/link'
 
 import { View } from '@/app/components/ui/ukhsa'
-import { Description } from '@/app/components/ui/ukhsa/Description/Description'
-import { Heading } from '@/app/components/ui/ukhsa/Heading/Heading'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
+import { Description } from '@/app/components/ui/ukhsa/View/Description/Description'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 
 import { heading, wellKnownEnvironments } from './shared/constants'
 

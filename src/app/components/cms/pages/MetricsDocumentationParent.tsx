@@ -21,8 +21,8 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
-import { Heading } from '../../ui/ukhsa/Heading/Heading'
-import { LastUpdated } from '../../ui/ukhsa/LastUpdated/LastUpdated'
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 interface MetricsParentPageProps {
   searchParams: {
