@@ -1,10 +1,10 @@
 import clsx from 'clsx'
-import { Trans } from 'react-i18next'
+import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { getServerTranslation } from '@/app/i18n'
 
 interface HeadingProps {
-  lastUpdated: string
+  lastUpdated?: string
   heading: string
 }
 

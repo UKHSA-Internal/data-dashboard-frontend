@@ -1,6 +1,8 @@
 import Link from 'next/link'
 
 import { View } from '@/app/components/ui/ukhsa'
+import { Description } from '@/app/components/ui/ukhsa/Description/Description'
+import { Heading } from '@/app/components/ui/ukhsa/Heading/Heading'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
@@ -12,7 +14,9 @@ const description =
 
 export default function SwitchBoard() {
   return (
-    <View heading={heading} className="govuk-!-margin-top-5" description={description}>
+    <View className="govuk-!-margin-top-5">
+      <Heading heading={heading} />
+      <Description description={description} />
       <div className="govuk-grid-row govuk-!-margin-top-7">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <h2 className="govuk-heading-m">Well-Known Environments</h2>
