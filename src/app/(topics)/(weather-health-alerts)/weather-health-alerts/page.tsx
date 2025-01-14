@@ -3,6 +3,8 @@ import { Suspense } from 'react'
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
+import { Breadcrumbs } from '@/app/components/ui/ukhsa/Breadcrumbs/Breadcrumbs'
+import { Heading } from '@/app/components/ui/ukhsa/Heading/Heading'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
@@ -37,7 +39,9 @@ export default async function WeatherHealthAlerts() {
   const childPages = await getPages({ child_of: id.toString() })
 
   return (
-    <View heading={title} breadcrumbs={[{ name: 'Home', link: '/' }]}>
+    <View>
+      <Breadcrumbs breadcrumbs={[{ name: 'Home', link: '/' }]} />
+      <Heading heading={title} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">{body.map(renderCompositeBlock)}</div>

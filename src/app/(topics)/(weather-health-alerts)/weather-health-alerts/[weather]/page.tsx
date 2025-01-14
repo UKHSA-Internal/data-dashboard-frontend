@@ -6,6 +6,8 @@ import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
+import { Breadcrumbs } from '@/app/components/ui/ukhsa/Breadcrumbs/Breadcrumbs'
+import { Heading } from '@/app/components/ui/ukhsa/Heading/Heading'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
@@ -73,13 +75,14 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
   } = await getPageBySlug<PageType.Composite>(weather)
 
   return (
-    <View
-      heading={title}
-      breadcrumbs={[
-        { name: 'Home', link: '/' },
-        { name: 'Weather health alerts', link: '/weather-health-alerts' },
-      ]}
-    >
+    <View>
+      <Breadcrumbs
+        breadcrumbs={[
+          { name: 'Home', link: '/' },
+          { name: 'Weather health alerts', link: '/weather-health-alerts' },
+        ]}
+      />
+      <Heading heading={title} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">{body.map(renderCompositeBlock)}</div>
       </div>
