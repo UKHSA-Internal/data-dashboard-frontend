@@ -12,6 +12,10 @@ export const requestSchema = z.object({
   chart_width: z.number(),
   x_axis: z.string().nullable().optional(),
   y_axis: z.string().nullable().optional(),
+  x_axis_title: z.string().nullable().optional(),
+  y_axis_title: z.string().nullable().optional(),
+  y_axis_minimum_value: z.number().nullable().optional(),
+  y_axis_maximum_value: z.number().nullable().optional(),
   plots: z.array(
     z.object({
       topic: Topics,
