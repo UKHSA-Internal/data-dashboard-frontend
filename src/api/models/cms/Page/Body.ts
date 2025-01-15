@@ -56,6 +56,8 @@ export const WithChartCard = z.object({
     tag_manager_event_id: z.string().nullable(),
     x_axis: z.string().nullable(),
     y_axis: z.string().nullable(),
+    x_axis_title: z.string().nullable().optional(),
+    y_axis_title: z.string().nullable().optional(),
     y_axis_minimum_value: z.number().nullable().optional(),
     y_axis_maximum_value: z.number().nullable().optional(),
   }),
