@@ -91,7 +91,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       label: 'Select all the options you would you like to see on the dashboard in the future?',
       field_type: 'checkboxes',
       help_text: 'Select all that apply',
-      required: false,
+      required: true,
       choices: 'Improve\r\nModify',
       default_value: 'Improve',
     },
