@@ -79,6 +79,12 @@ export const WithSimplifiedChartCardAndLink = z.object({
   }),
 })
 
+export const ChartSchemas = z.discriminatedUnion('type', [
+  WithChartHeadlineAndTrendCard,
+  WithChartCard,
+  WithSimplifiedChartCardAndLink,
+])
+
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('text_card'),
