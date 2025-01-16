@@ -62,6 +62,8 @@ export async function Chart({ data, size }: ChartProps) {
         plots,
         x_axis,
         y_axis,
+        y_axis_minimum_value: yAxisMinimum,
+        y_axis_maximum_value: yAxisMaximum,
         chart_width: chartSizes.wide.width,
         chart_height: chartSizes.wide.height,
       })
@@ -74,6 +76,8 @@ export async function Chart({ data, size }: ChartProps) {
       plots,
       x_axis,
       y_axis,
+      y_axis_minimum_value: yAxisMinimum,
+      y_axis_maximum_value: yAxisMaximum,
       chart_width: chartSizes.third.width,
       chart_height: chartSizes.third.height,
     }),
@@ -86,6 +90,8 @@ export async function Chart({ data, size }: ChartProps) {
         plots,
         x_axis,
         y_axis,
+        y_axis_minimum_value: yAxisMinimum,
+        y_axis_maximum_value: yAxisMaximum,
         chart_width: chartSizes.half.width,
         chart_height: chartSizes.half.height,
       })
