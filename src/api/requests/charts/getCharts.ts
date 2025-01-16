@@ -47,7 +47,17 @@ export const responseSchema = z.object({
 export type RequestParams = z.infer<typeof requestSchema>
 
 export const getCharts = async (chart: RequestParams) => {
-  const { plots, x_axis, y_axis, chart_width, chart_height } = chart
+  const {
+    plots,
+    x_axis,
+    y_axis,
+    chart_width,
+    chart_height,
+    x_axis_title,
+    y_axis_title,
+    y_axis_maximum_value,
+    y_axis_minimum_value,
+  } = chart
 
   const body: RequestParams = {
     plots: plots.map((plot) => plot),
@@ -56,6 +66,10 @@ export const getCharts = async (chart: RequestParams) => {
     chart_height,
     x_axis,
     y_axis,
+    x_axis_title,
+    y_axis_title,
+    y_axis_minimum_value,
+    y_axis_maximum_value,
   }
 
   try {
