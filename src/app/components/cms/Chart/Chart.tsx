@@ -23,8 +23,8 @@ export async function Chart({ data, size }: ChartProps) {
 
   let yAxisMinimum = null
   let yAxisMaximum = null
-  let xAxisTitle = null
-  let yAxisTitle = null
+  let xAxisTitle = ''
+  let yAxisTitle = ''
 
   if ('y_axis_minimum_value' in data) {
     yAxisMinimum = data.y_axis_minimum_value
@@ -33,10 +33,10 @@ export async function Chart({ data, size }: ChartProps) {
     yAxisMaximum = data.y_axis_maximum_value
   }
   if ('x_axis_title' in data) {
-    xAxisTitle = data.x_axis_title
+    xAxisTitle = data.x_axis_title || ''
   }
   if ('y_axis_title' in data) {
-    yAxisTitle = data.y_axis_title
+    yAxisTitle = data.y_axis_title || ''
   }
 
   const { chart, x_axis, y_axis } = data

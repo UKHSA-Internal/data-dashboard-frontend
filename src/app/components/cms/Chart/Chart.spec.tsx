@@ -45,8 +45,8 @@ test('renders the chart correctly when successful', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
-    x_axis_title: null,
-    y_axis_title: null,
+    x_axis_title: '',
+    y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
     chart: [
@@ -84,8 +84,8 @@ test('renders the chart correctly when successful', async () => {
     ],
     x_axis: null,
     y_axis: null,
-    x_axis_title: null,
-    y_axis_title: null,
+    x_axis_title: '',
+    y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
   })
@@ -114,8 +114,8 @@ test('renders the chart by geography and geography type when both are present in
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
-    x_axis_title: null,
-    y_axis_title: null,
+    x_axis_title: '',
+    y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
     chart: [
@@ -153,8 +153,8 @@ test('renders the chart by geography and geography type when both are present in
     ],
     x_axis: null,
     y_axis: null,
-    x_axis_title: null,
-    y_axis_title: null,
+    x_axis_title: '',
+    y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
   })
@@ -260,8 +260,8 @@ test('Fallback message with escaped characters', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
-    x_axis_title: null,
-    y_axis_title: null,
+    x_axis_title: '',
+    y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
     chart: [],
