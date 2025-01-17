@@ -50,7 +50,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     x_axis: 'date',
                     y_axis: 'metric',
                     y_axis_minimum_value: 1000,
-                    y_axis_maximum_value: 7000,
+                    
                     chart: [
                       {
                         type: 'plot',
