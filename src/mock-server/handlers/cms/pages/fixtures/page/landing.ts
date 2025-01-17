@@ -49,8 +49,6 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/outbreaks/measles/',
                     x_axis: 'date',
                     y_axis: 'metric',
-                    y_axis_minimum_value: 1000,
-                    
                     chart: [
                       {
                         type: 'plot',
