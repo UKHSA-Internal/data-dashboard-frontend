@@ -1,12 +1,11 @@
-import React, { useState as useStateMock, useCallback as useCallbackMock } from 'react'
+import userEvent from '@testing-library/user-event'
+import React from 'react'
+import { useDebounceValue } from 'usehooks-ts'
 
+import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { render } from '@/config/test-utils'
 
 import { MiniMap } from './MiniMap'
-import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
-import { useTranslation as useTranslationMock } from '@/app/i18n/client'
-import { useDebounceValue as useDebounceValueMock } from 'usehooks-ts'
-import userEvent from '@testing-library/user-event'
 
 jest.mock('react', () => ({
   ...jest.requireActual('react'),
@@ -23,9 +22,8 @@ jest.mock('@/app/hooks/queries/useWeatherHealthAlertList', () => jest.fn())
 jest.mock('@/app/i18n/client', () => ({
   ...jest.requireActual('@/app/i18n/client'),
   useTranslation: () => {
-    const enFile = jest.requireActual('./mockData/weatherHealthAlerts.json')
     return {
-      t: (stringKey: string, parameters) => translationFunction(stringKey, parameters),
+      t: (stringKey: string, parameters: { level: string }) => translationFunction(stringKey, parameters),
       i18n: {
         language: 'en',
         addResourceBundle: () => jest.fn(),
@@ -36,15 +34,14 @@ jest.mock('@/app/i18n/client', () => ({
 }))
 
 jest.mock('usehooks-ts', () => ({
-  ...jest.requireActual('usehooks-ts'),
   useDebounceValue: jest.fn(),
 }))
 
-const translationFunction = (x, y) => {
-  if (x === 'map.no-alert') {
+const translationFunction = (stringKey: string, options: { level: string }) => {
+  if (stringKey === 'map.no-alert') {
     return 'No alert'
   } else {
-    return `${y.level} alert`
+    return `${options.level} alert`
   }
 }
 
@@ -118,14 +115,14 @@ const mockAlertData = {
 
 describe('MiniMap', () => {
   const setMockState = jest.fn()
-  const setCallbackState = jest.fn()
   const regionId = jest.fn()
-  const mockTranslation = jest.fn((x, y) => translationFunction(x, y))
   const mockPush = jest.fn()
 
   const mockHandleClick = jest.fn()
   const mockHandleMouseLeave = jest.fn()
   const mockHandleMouseEnter = jest.fn()
+  const mockUseWeatherHealthAlertList = useWeatherHealthAlertList as jest.Mock
+  const mockUseDebounceValue = useDebounceValue as jest.Mock
 
   const useStateMock = jest.requireMock('react').useState
   const useCallbackMock = jest.requireMock('react').useCallback
@@ -141,15 +138,11 @@ describe('MiniMap', () => {
 
   test('returns null when no alerts data is provided', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => false)
-    useDebounceValueMock.mockImplementation(() => 'string')
+    mockUseWeatherHealthAlertList.mockReturnValueOnce(() => {})
+    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
-    const { getByText, container } = render(
-      await MiniMap({
-        alertType: 'heat',
-      })
-    )
+    const { container } = render(<MiniMap alertType="cold" />)
 
     expect(container).toBeEmptyDOMElement()
   })
@@ -157,30 +150,22 @@ describe('MiniMap', () => {
   test('returns null when alerts data isLoading is True', async () => {
     const mockAlertData = { isLoading: true }
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
+    mockUseWeatherHealthAlertList.mockReturnValueOnce(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
-    const { getByText, container } = render(
-      await MiniMap({
-        alertType: 'heat',
-      })
-    )
+    const { container } = render(<MiniMap alertType="cold" />)
 
     expect(container).toBeEmptyDOMElement()
   })
 
   test('renders minimap regional key with provided alert Data ', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
-    const { getByLabelText, getByText } = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const { getByLabelText, getByText } = render(<MiniMap alertType="cold" />)
 
     expect(getByLabelText('Weather health alerts by region')).toBeVisible()
     expect(getByText('Red alert')).toBeVisible()
@@ -202,15 +187,11 @@ describe('MiniMap', () => {
 
   test('renders minimap headers with correct classes and colours', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
-    const { getByLabelText, getByText } = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const { getByText } = render(<MiniMap alertType="cold" />)
 
     // Headers should be rendered with appropriate classes
     expect(getByText('Red alert')).toHaveAttribute('class', 'm-0 w-[100px] text-center capitalize bg-red text-white')
@@ -227,9 +208,9 @@ describe('MiniMap', () => {
 
   test(' when the minimap region key is rendered, a user can select region and navigate to full map page with region selected', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
-    useCallbackMock.mockImplementation((fn) => {
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation((fn: jest.Mock<void, void[], void>) => {
       if (fn === mockHandleClick) {
         return mockHandleClick
       }
@@ -242,11 +223,7 @@ describe('MiniMap', () => {
       return fn
     })
 
-    const page = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const page = render(<MiniMap alertType="cold" />)
     await userEvent.click(page.getByText('North West'))
     expect(mockPush).toHaveBeenCalledWith(expect.stringContaining('/?v=map&type=cold&fid=E12000002'), { scroll: false })
 
@@ -255,24 +232,20 @@ describe('MiniMap', () => {
 
   test('renders the minimap svg next to the minimap regional key', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
-    const { getByLabelText, getByText } = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const { getByLabelText } = render(<MiniMap alertType="cold" />)
 
     expect(getByLabelText('Map of weather health alerts')).toBeVisible()
   })
 
   test(' when the minimap is rendered, a user can select region and navigate to full map page with region selected', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
-    useCallbackMock.mockImplementation((fn) => {
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation((fn: jest.Mock<void, void[], void>) => {
       if (fn === mockHandleClick) {
         return mockHandleClick
       }
@@ -285,20 +258,16 @@ describe('MiniMap', () => {
       return fn
     })
 
-    const page = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const page = render(<MiniMap alertType="cold" />)
     await userEvent.hover(page.getByRole('listitem', { name: 'North West: Amber alert' }))
-    expect(useDebounceValueMock).toHaveBeenCalledTimes(1)
+    expect(mockUseDebounceValue).toHaveBeenCalledTimes(1)
   })
 
   test(' when the minimap is rendered, a user can select region and navigate to full map page with region selected', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
-    useCallbackMock.mockImplementation((fn) => {
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation((fn: jest.Mock<void, void[], void>) => {
       if (fn === mockHandleClick) {
         return mockHandleClick
       }
@@ -308,11 +277,8 @@ describe('MiniMap', () => {
       return fn
     })
 
-    const page = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const page = render(<MiniMap alertType="cold" />)
+
     await userEvent.click(page.getByTestId('feature-E12000002'))
     expect(mockPush).toHaveBeenCalledWith(expect.stringContaining('/?v=map&type=cold&fid=E12000002'), { scroll: false })
     expect(mockPush).toHaveBeenCalledTimes(1)
@@ -320,24 +286,20 @@ describe('MiniMap', () => {
 
   test('renders the "Enter Fullscreen" button', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
-    const { getByRole } = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const { getByRole } = render(<MiniMap alertType="cold" />)
 
     expect(getByRole('button', { name: 'Enter Fullscreen' })).toBeVisible()
   })
 
   test('When the "Enter Fullscreen" button is clicked it should navigate to the full map screen', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
-    useWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    useDebounceValueMock.mockImplementation(() => 'string')
-    useCallbackMock.mockImplementation((fn) => {
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation((fn: jest.Mock<void, void[], void>) => {
       if (fn === mockHandleClick) {
         return mockHandleClick
       }
@@ -347,11 +309,8 @@ describe('MiniMap', () => {
       return fn
     })
 
-    const page = render(
-      await MiniMap({
-        alertType: 'cold',
-      })
-    )
+    const page = render(<MiniMap alertType="cold" />)
+
     await userEvent.click(page.getByRole('button', { name: 'Enter Fullscreen' }))
     expect(useCallbackMock).toHaveBeenCalled()
     expect(mockPush).toHaveBeenCalledWith(expect.stringContaining('/?v=map&type=cold'), { scroll: false })

@@ -108,8 +108,6 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
 
   const { t } = useTranslation('weatherHealthAlerts')
 
-  console.log('t: ', t)
-
   const [debouncedHoveredRegion] = useDebounceValue(hoveredRegion, 80)
 
   const handleMouseEnter = useCallback((region: string) => {
@@ -132,8 +130,6 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
   )
 
   if (alerts.isLoading || !alerts.data) return null
-
-  console.log('alertsData: ', JSON.stringify(alerts.data))
 
   const groupedAlerts = Object.entries(
     alerts.data.reduce(
