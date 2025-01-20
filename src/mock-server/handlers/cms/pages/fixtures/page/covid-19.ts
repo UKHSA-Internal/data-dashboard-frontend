@@ -33,188 +33,6 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
     '<p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
   body: [
     {
-      type: "section",
-      value: {
-          heading: "Headlines",
-          content: [
-              {
-                  type: "headline_numbers_row_card",
-                  value: {
-                      columns: [
-                          {
-                              type: "column",
-                              value: {
-                                  title: "Cases",
-                                  date_prefix: "Up to",
-                                  rows: [
-                                      {
-                                          "type": "headline_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_cases_7DayTotals",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "Weekly"
-                                          },
-                                          "id": "c0e44b81-ce1e-4849-8942-80113dbfda4a"
-                                      },
-                                      {
-                                          "type": "trend_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_cases_7DayChange",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "7 days",
-                                              "percentage_metric": "COVID-19_headline_cases_7DayPercentChange"
-                                          },
-                                          "id": "d61cbd89-479e-4494-9bf6-715ce18168a9"
-                                      }
-                                  ]
-                              },
-                              "id": "5897a989-0caf-4162-bf66-6448d67aeff3"
-                          },
-                          {
-                              "type": "column",
-                              "value": {
-                                  "title": "Deaths",
-                                  "date_prefix": "Up to",
-                                  "rows": [
-                                      {
-                                          "type": "headline_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_ONSdeaths_7DayTotals",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "Weekly"
-                                          },
-                                          "id": "462d2334-5f89-4e58-aef0-60768a302fa2"
-                                      },
-                                      {
-                                          "type": "trend_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_ONSdeaths_7DayChange",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "7 days",
-                                              "percentage_metric": "COVID-19_headline_ONSdeaths_7DayPercentChange"
-                                          },
-                                          "id": "0fa65e06-e3eb-440d-a2db-fd9e32fd55f7"
-                                      }
-                                  ]
-                              },
-                              "id": "9362f06a-58ed-488a-bf7e-c1eedfdb09ff"
-                          },
-                          {
-                              "type": "column",
-                              "value": {
-                                  "title": "Healthcare",
-                                  "date_prefix": "Up to",
-                                  "rows": [
-                                      {
-                                          "type": "headline_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_cases_7DayTotals",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "Patients admitted"
-                                          },
-                                          "id": "20b42af9-68cc-499d-832d-31991a819c31"
-                                      },
-                                      {
-                                          "type": "trend_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_cases_7DayChange",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "7 days",
-                                              "percentage_metric": "COVID-19_headline_cases_7DayPercentChange"
-                                          },
-                                          "id": "a1a8402e-c6f8-40f4-a9de-dc6477b9bdcb"
-                                      }
-                                  ]
-                              },
-                              "id": "94da4b1f-ed5d-421c-9db4-00f666c8a8e7"
-                          },
-                          {
-                              "type": "column",
-                              "value": {
-                                  "title": "Vaccines",
-                                  "date_prefix": "Up to",
-                                  "rows": [
-                                      {
-                                          "type": "percentage_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_cases_7DayPercentChange",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "00-04",
-                                              "stratum": "default",
-                                              "body": "Spring booster uptake"
-                                          },
-                                          "id": "13878e99-2dc8-4bd5-912f-405074f11762"
-                                      }
-                                  ]
-                              },
-                              "id": "0806e555-91e8-4739-9391-4020484f85ae"
-                          },
-                          {
-                              "type": "column",
-                              "value": {
-                                  "title": "Testing",
-                                  "date_prefix": "Up to",
-                                  "rows": [
-                                      {
-                                          "type": "percentage_number",
-                                          "value": {
-                                              "topic": "COVID-19",
-                                              "metric": "COVID-19_headline_positivity_latest",
-                                              "geography": "England",
-                                              "geography_type": "Nation",
-                                              "sex": "all",
-                                              "age": "all",
-                                              "stratum": "default",
-                                              "body": "Virus tests positivity"
-                                          },
-                                          "id": "5d9d02e1-3f5d-45e8-9991-ad0122bb836d"
-                                      }
-                                  ]
-                              },
-                              "id": "34752769-ec63-4ed9-bcb0-521513df6c65"
-                          }
-                      ]
-                  },
-                  "id": "000e07aa-6799-4f50-bb0c-db2218829395"
-              }
-          ]
-      },
-      "id": "3873a214-6c74-433b-b33b-d0998cab3b5d"
-  },
-  {    
       type: 'section',
       value: {
         heading: 'Cases',
@@ -229,6 +47,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Cases by specimen date',
                     body: 'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.',
                     tag_manager_event_id: 'cases_by_specimen_date',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -269,6 +88,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: '7-day case rates by specimen date',
                     body: 'Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown.',
                     tag_manager_event_id: '7day_case_rates_by_specimen_date',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -301,6 +121,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Case rates by age',
                     body: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
                     tag_manager_event_id: 'case_rates_by_age',
+                    date_prefix: 'Date prefix test',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [
@@ -350,6 +171,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Daily deaths with COVID-19 on the death certificate by date of death',
                     body: 'Daily numbers of deaths of people whose death certificate mentioned COVID-19 as one of the causes, and 7-day rolling average. Because of the time it takes for deaths to be registered, there is a lag in reporting of at least 11 days, and data are not shown for the 14 days before the most recent reported date as they are considered incomplete. Data are shown by date of death.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -418,6 +240,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Bar chart with overlaying line comparing patients \r\nadmitted to hospital with COVID-19',
                     body: 'Daily and total numbers of COVID-19 patients admitted to hospital. The overlaying line shows the 7-day average.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -450,6 +273,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Patients in hospital',
                     body: 'Daily count of confirmed COVID-19 patients in hospital at 8am. The overlaying line shows the 7-day average.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -490,6 +314,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Admissions rate by age',
                     body: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people, since the start of the pandemic. There are fewer people in the oldest age group so the rates show the relative impact on different age groups.',
                     tag_manager_event_id: 'admissions_rate_by_age',
+                    date_prefix: 'Date prefix test',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [
@@ -522,6 +347,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Patients in mechanical ventilation beds',
                     body: 'Daily count of COVID-19 patients in mechanical ventilation beds, and 7-day rolling average. Data are not updated every day.',
                     tag_manager_event_id: null,
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -571,6 +397,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Total daily number of PCR tests reported',
                     body: 'The daily number of new polymerase chain reaction (PCR) tests reported. Data is shown by specimen date (the date the sample was collected from the person).',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -603,6 +430,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Weekly positivity of people receiving a PCR test',
                     body: 'The percentage positivity of people who received a polymerase chain reaction (PCR) and had at least one positive COVID-19 PCR test result in the same 7 days. Data is shown by specimen date (the date the sample was collected). People tested more than once in the period are only counted once in the denominator. People with more than one positive result in the period are only included once in the numerator.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -652,6 +480,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'People aged 50 and over who have received autumn booster vaccinations, by vaccination date',
                     body: 'The number of people aged 50 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -684,6 +513,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Autumn booster vaccination uptake (50+), by vaccination date',
                     body: 'The percentage of people aged 50 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 50 and over on the National Immunisation Management Service (NIMS) database.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -876,6 +706,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'People aged 75 and over who have received spring booster vaccinations, by vaccination date',
                     body: 'The number of people aged 75 and over who have received a spring booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -908,6 +739,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Spring booster vaccination uptake (75+), by vaccination date',
                     body: 'The percentage of people aged 75 and over who have received a spring booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [

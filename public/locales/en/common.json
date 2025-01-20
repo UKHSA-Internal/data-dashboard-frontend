@@ -26,8 +26,7 @@
     "blocks": {
       "headline": {
         "heading": "{{heading}}",
-        "value": "{{value, number}}",
-        "date": "Up to {{value, dateShortest}}"
+        "value": "{{value, number}}"
       },
       "percentage": {
         "heading": "{{heading}}",
@@ -58,7 +57,7 @@
         }
       },
       "timestamp": {
-        "value": "Up to and including {{value, dateShort}}"
+        "value": "{{prefix}} {{value, dateShortest}}"
       },
       "table": {
         "toggle": "View data in a tabular format",
@@ -76,8 +75,7 @@
         "row_geography": "{{value}}",
         "row_sex": "{{value}}",
         "row_stratum": "{{value}}",
-        "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}",
-        "timestamp": "Up to and including {{timestamp, dateShort}}"
+        "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}"
       },
       "download": {
         "heading": "Download data",

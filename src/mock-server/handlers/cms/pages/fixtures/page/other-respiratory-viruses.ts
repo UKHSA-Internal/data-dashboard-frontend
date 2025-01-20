@@ -48,6 +48,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       'Line chart comparing RSV hospital (ICU or HDU) admission rates of positive cases per 100,000 population reported through SARI Watch, England',
                     body: 'RSV SARI Watch surveillance has run from week 40 to week 20. In the 2022 to 2023 season onwards this was extended to run throughout the year, to allow for surveillance of out-of-season trends.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -88,6 +89,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Bar chart comparing RSV hospital admissions count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -120,6 +122,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Bar chart comparing weekly RSV ICU/HDU admissions count by week',
                     body: 'Weekly admission rates of patients admitted to ICU/HDU with RSV as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -169,6 +172,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Adenovirus test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with Adenovirus as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -201,6 +205,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Adenovirus test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Adenovirus per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -317,6 +322,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing hMPV test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with hMPV as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -349,6 +355,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing hMPV test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for hMPV per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -465,6 +472,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Parainfluenza test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with Parainfluenza as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -497,6 +505,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Parainfluenza test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Parainfluenza per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -613,6 +622,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Rhinovirus test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with Rhinovirus as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -645,6 +655,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Rhinovirus test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Rhinovirus per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -761,6 +772,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing RSV test positivity count by week',
                     body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -793,6 +805,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing RSV test positivity count by week broken down by age',
                     body: 'Age breakdown of people testing positive for Rhinovirus per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Date prefix test',
                     x_axis: null,
                     y_axis: null,
                     chart: [

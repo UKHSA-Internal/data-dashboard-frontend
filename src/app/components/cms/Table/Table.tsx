@@ -23,7 +23,7 @@ interface TableProps {
   size: 'narrow' | 'wide'
 }
 
-export async function Table({ data: { chart, y_axis, x_axis, title, body }, size }: TableProps) {
+export async function Table({ data: { chart, y_axis, x_axis, title, body, date_prefix }, size }: TableProps) {
   const { t } = await getServerTranslation('common')
 
   const pathname = getPathname()
@@ -66,7 +66,9 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
-          <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
+          <p className="govuk-!-margin-0">
+            {t('cms.blocks.timestamp.value', { prefix: date_prefix, value: timestamp })}
+          </p>
           {hasReportingDelayPeriod && (
             <>
               <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">

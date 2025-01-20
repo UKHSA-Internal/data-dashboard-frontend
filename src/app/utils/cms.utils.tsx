@@ -243,11 +243,11 @@ export const renderCard = (
   </div>
 )
 
-export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number]) => (
+export const renderBlock = ({ id, type, value, date_prefix }: z.infer<typeof Blocks>[number]) => (
   <div key={id}>
-    {type === 'percentage_number' && <Percentage data={value} />}
-    {type === 'headline_number' && <Headline data={value} />}
-    {type === 'trend_number' && <Trend data={value} />}
+    {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} />}
+    {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} />}
+    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} />}
   </div>
 )
 

@@ -8,9 +8,10 @@ import { getServerTranslation } from '@/app/i18n'
 interface TrendProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof TrendNumber>['value']
+  datePrefix: string
 }
 
-export async function Trend({ data: { body: heading, ...requestParams } }: TrendProps) {
+export async function Trend({ data: { body: heading, ...requestParams }, datePrefix }: TrendProps) {
   const { t } = await getServerTranslation('common')
 
   const trend = await getTrends(requestParams)
@@ -28,7 +29,7 @@ export async function Trend({ data: { body: heading, ...requestParams } }: Trend
       <>
         <div>{t('cms.blocks.percentage.heading', { heading: heading || '\u00A0' })}</div>
         <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
-          {t('cms.blocks.headline.date', { value: date })}
+          {t('cms.blocks.timestamp.value', { prefix: datePrefix, value: date })}
         </div>
         <div
           className={clsx('govuk-tag mt-[2px] whitespace-nowrap bg-[6px_center] bg-no-repeat', {

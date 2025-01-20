@@ -15,7 +15,6 @@ import {
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
-  dashboardMock,
   feedbackMock,
   influenzaPageMock,
   landingPageMock,
@@ -31,7 +30,6 @@ import {
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
-  [dashboardMock.id]: dashboardMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
   [compliancePageMock.id]: compliancePageMock,

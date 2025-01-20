@@ -62,6 +62,7 @@ test('renders the chart correctly when successful', async () => {
     tag_manager_event_id: '',
     title: '',
     headline_number_columns: [],
+    date_prefix: '',
   }
 
   const { getByAltText } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
@@ -123,6 +124,7 @@ test('renders the chart by geography and geography type when both are present in
     tag_manager_event_id: '',
     title: '',
     headline_number_columns: [],
+    date_prefix: '',
   }
 
   const { getByAltText } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
@@ -177,6 +179,7 @@ test('full width charts should also have an acompanying narrow version for mobil
     tag_manager_event_id: '',
     title: '',
     headline_number_columns: [],
+    date_prefix: '',
   }
 
   const { getByAltText, getByTestId } = render((await Chart({ data, size: 'wide' })) as ReactElement)
@@ -215,6 +218,7 @@ test('renders a fallback message when the chart requests fail', async () => {
     title: 'Cases by specimen date',
     headline_number_columns: [],
     tag_manager_event_id: '',
+    date_prefix: '',
   }
 
   const { getByText, getByRole } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
@@ -249,6 +253,7 @@ test('Fallback message with escaped characters', async () => {
     tag_manager_event_id: '',
     title: 'Cases by specimen date',
     headline_number_columns: [],
+    date_prefix: '',
   }
 
   const { getByText } = render((await Chart({ data, size: 'narrow' })) as ReactElement)

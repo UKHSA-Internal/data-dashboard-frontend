@@ -13,6 +13,7 @@ export const HeadlineNumber = z.object({
     body: z.string(),
   }),
   id: z.string(),
+  date_prefix: z.string(),
 })
 
 export const TrendNumber = z.object({
@@ -21,6 +22,7 @@ export const TrendNumber = z.object({
     body: z.string(),
   }),
   id: z.string(),
+  date_prefix: z.string(),
 })
 
 export const PercentageNumber = z.object({
@@ -29,6 +31,7 @@ export const PercentageNumber = z.object({
     body: z.string(),
   }),
   id: z.string(),
+  date_prefix: z.string(),
 })
 
 export const Blocks = z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber, PercentageNumber]))

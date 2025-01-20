@@ -120,6 +120,7 @@ const mockData: ComponentProps<typeof Table>['data'] = {
   headline_number_columns: [],
   title: 'Table Title ABC/XYZ',
   body: 'Table Body',
+  date_prefix: 'Up to and including',
 }
 
 const mockSize = 'narrow'
