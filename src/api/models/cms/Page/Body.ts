@@ -59,6 +59,10 @@ export const WithChartCard = z.object({
     date_prefix: z.string(),
     x_axis: z.string().nullable(),
     y_axis: z.string().nullable(),
+    x_axis_title: z.string().optional(),
+    y_axis_title: z.string().optional(),
+    y_axis_minimum_value: z.number().nullable().optional(),
+    y_axis_maximum_value: z.number().nullable().optional(),
   }),
 })
 
@@ -71,10 +75,20 @@ export const WithSimplifiedChartCardAndLink = z.object({
     tag_manager_event_id: z.string().nullable(),
     topic_page: z.string(),
     x_axis: z.string().nullable(),
+    x_axis_title: z.string().optional(),
+    y_axis_title: z.string().optional(),
     y_axis: z.string().nullable(),
+    y_axis_minimum_value: z.number().nullable().optional(),
+    y_axis_maximum_value: z.number().nullable().optional(),
     chart: Chart,
   }),
 })
+
+export const ChartSchemas = z.discriminatedUnion('type', [
+  WithChartHeadlineAndTrendCard,
+  WithChartCard,
+  WithSimplifiedChartCardAndLink,
+])
 
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({
