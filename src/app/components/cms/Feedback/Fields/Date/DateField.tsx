@@ -12,7 +12,7 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
           </h2>
           {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
         </legend>
-        <div className="govuk-date-input" id="passport-issued">
+        <div className="govuk-date-input" id={cleanName}>
           <div className="govuk-date-input__item">
             <div className="govuk-form-group">
               <label className="govuk-label govuk-date-input__label" htmlFor="day">
@@ -21,7 +21,7 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
               <input
                 className="govuk-input govuk-date-input__input govuk-input--width-2"
                 id="day"
-                name="day"
+                name={`${cleanName}-day`}
                 type="number"
                 inputMode="numeric"
               />
@@ -35,7 +35,7 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
               <input
                 className="govuk-input govuk-date-input__input govuk-input--width-2"
                 id="month"
-                name="month"
+                name={`${cleanName}-month`}
                 type="number"
                 inputMode="numeric"
               />
@@ -49,7 +49,7 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
               <input
                 className="govuk-input govuk-date-input__input govuk-input--width-4"
                 id="year"
-                name="year"
+                name={`${cleanName}-year`}
                 type="number"
                 inputMode="numeric"
               />
