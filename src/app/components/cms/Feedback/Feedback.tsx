@@ -10,6 +10,7 @@ import { FormField } from '@/api/models/cms/Page/FormFields'
 import { handler } from '../utils/handler'
 import CheckboxField from './Fields/Checkbox/CheckboxField'
 import CheckboxesField from './Fields/Checkboxes/CheckboxesField'
+import DateField from './Fields/Date/DateField'
 import DropdownField from './Fields/Dropdown/DropdownField'
 import EmailField from './Fields/Email/EmailField'
 import MultilineField from './Fields/Multiline/MultilineField'
@@ -167,6 +168,8 @@ export const renderFormFields = (
       {fieldType === 'number' && <NumberField label={label} helpText={helpText} cleanName={cleanName} />}
 
       {fieldType === 'url' && <UrlField label={label} helpText={helpText} cleanName={cleanName} />}
+
+      {fieldType === 'date' && <DateField label={label} helpText={helpText} cleanName={cleanName} />}
 
       {fieldType === 'dropdown' && (
         <DropdownField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />
