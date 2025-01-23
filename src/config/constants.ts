@@ -1,4 +1,9 @@
 /**
+ * Checks to see if running the Authenticated version of the data dashboard
+ */
+export const authEnabled = process.env.AUTH_ENABLED === 'true'
+
+/**
  * The default cache revalidation interval (10 minutes)
  * Can be overridden per request
  */

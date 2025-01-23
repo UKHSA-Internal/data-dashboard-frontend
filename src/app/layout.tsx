@@ -10,6 +10,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
+import { authEnabled } from '@/config/constants'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner } from './components/ui/ukhsa'
@@ -18,6 +19,8 @@ import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
+
+export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')

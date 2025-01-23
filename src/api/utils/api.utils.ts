@@ -1,6 +1,6 @@
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
-import { cacheRevalidationInterval } from '@/config/constants'
+import { authEnabled, cacheRevalidationInterval } from '@/config/constants'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -38,12 +38,14 @@ export async function client<T>(
     }
   }
 
-  const fetchOptions: RequestInit = {
+  const fetchOptions: RequestInit & { next?: { revalidate: number } } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     next: {
-      revalidate: customConfig.next?.revalidate ?? cacheRevalidationInterval,
+      // The public dashboard is behind a CDN so doesn't rely on any Next.js caching
+      // However, the auth instance is not so we rely on Next.js caching for unauthenticated requests
+      revalidate: authEnabled ? customConfig.next?.revalidate ?? cacheRevalidationInterval : 0,
     },
     headers: {
       ...headers,

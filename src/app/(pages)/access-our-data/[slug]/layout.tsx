@@ -3,7 +3,9 @@ import { ReactNode } from 'react'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
-export const dynamic = 'auto'
+import { authEnabled } from '@/config/constants'
+
+export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
 
 export default async function Layout({
   children,
