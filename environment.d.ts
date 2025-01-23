@@ -1,5 +1,6 @@
 declare namespace NodeJS {
   interface ProcessEnv {
+    AUTH_ENABLED: 'true' | 'false'
     NEXT_REVALIDATE_TIME: string
     BASE_URL: string
     API_URL: string

@@ -1,4 +1,10 @@
 /**
+ * The default cache revalidation interval (10 minutes)
+ * Can be overridden per request
+ */
+export const cacheRevalidationInterval = 600
+
+/**
  * The NextJS Api Route path for chart download
  */
 export const chartExportApiRoutePath = '/api/download/chart'

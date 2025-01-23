@@ -3,8 +3,11 @@ const dns = require('dns')
 
 dns.setDefaultResultOrder('ipv4first')
 
+const sharedCache = process.env.NODE_ENV === 'production' && process.env.AUTH_ENABLED === 'true'
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+  cacheHandler: sharedCache ? require.resolve('./cache-handler.mjs') : undefined,
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
   reactStrictMode: true,

@@ -1,5 +1,6 @@
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
+import { cacheRevalidationInterval } from '@/config/constants'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -37,22 +38,13 @@ export async function client<T>(
     }
   }
 
-  const fetchOptions: RequestInit & {
-    next?: { revalidate: number }
-    retries: number
-    retryDelay: (attempt: number) => number
-  } = {
+  const fetchOptions: RequestInit = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
-    next: {
-      // Disable NextJs router caching
-      revalidate: 0,
-    },
-    retries: 3,
-    retryDelay: (attempt) => {
-      return Math.pow(2, attempt) * 1000 // 1000, 2000, 4000
-    },
     ...customConfig,
+    next: {
+      revalidate: customConfig.next?.revalidate ?? cacheRevalidationInterval,
+    },
     headers: {
       ...headers,
       ...customConfig.headers,

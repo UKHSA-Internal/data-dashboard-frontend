@@ -12,8 +12,6 @@ import { Breadcrumbs } from '@/app/components/ui/ukhsa/View/Breadcrumbs/Breadcru
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-export const dynamic = 'force-dynamic'
-
 export async function generateMetadata() {
   const {
     meta: { seo_title: title, search_description: description },

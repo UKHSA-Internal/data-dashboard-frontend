@@ -7,8 +7,6 @@ import { logger } from '@/lib/logger'
 
 import { getSiteUrl, toSlug } from './utils/app.utils'
 
-export const dynamic = 'force-dynamic'
-
 export const changeFrequencyMap: Record<number, MetadataRoute.Sitemap[number]['changeFrequency']> = {
   1: 'always',
   2: 'hourly',
