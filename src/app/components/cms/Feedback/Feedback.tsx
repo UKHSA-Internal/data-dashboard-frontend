@@ -171,6 +171,8 @@ export const renderFormFields = (
 
       {fieldType === 'date' && <DateField label={label} helpText={helpText} cleanName={cleanName} />}
 
+      {fieldType === 'datetime' && <DateField label={label} helpText={helpText} cleanName={cleanName} />}
+
       {fieldType === 'dropdown' && (
         <DropdownField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />
       )}
