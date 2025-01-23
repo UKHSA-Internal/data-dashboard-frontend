@@ -3,6 +3,8 @@ import { Fieldtype } from '../../Feedback'
 export default function DateField({ label, helpText, cleanName }: Fieldtype) {
   return (
     <div className="govuk-form-group">
+      {/*Hidden input field for collecting date in format dd-mm-yyyy*/}
+      <input className="govuk-visually-hidden" name={cleanName} id={cleanName} type="text" />
       <fieldset className="govuk-fieldset" role="group">
         <legend className="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h2 className="govuk-label-wrapper">
