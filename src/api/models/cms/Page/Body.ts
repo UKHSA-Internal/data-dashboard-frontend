@@ -19,7 +19,7 @@ export const WithWeatherHealthAlertCard = z.object({
   alert_type: HealthAlertTypes,
 })
 
-export const WithHeadlineNumbersRowCard = z.object({
+const WithHeadlineNumbersRowCard = z.object({
   columns: z.array(
     z.object({
       id: z.string(),
@@ -32,16 +32,23 @@ export const WithHeadlineNumbersRowCard = z.object({
   ),
 })
 
+const chartCardValues = z.object({
+  title: z.string(),
+  chart: Chart,
+  body: z.string(),
+  tag_manager_event_id: z.string().nullable(),
+  x_axis: z.string().nullable(),
+  y_axis: z.string().nullable(),
+  x_axis_title: z.string().optional(),
+  y_axis_title: z.string().optional(),
+  y_axis_minimum_value: z.number().nullable().optional(),
+  y_axis_maximum_value: z.number().nullable().optional(),
+})
+
 export const WithChartHeadlineAndTrendCard = z.object({
-  type: z.literal('chart_with_headline_and_trend_card'),
   id: z.string(),
-  value: z.object({
-    title: z.string(),
-    body: z.string(),
-    chart: Chart,
-    tag_manager_event_id: z.string().nullable(),
-    x_axis: z.string().nullable(),
-    y_axis: z.string().nullable(),
+  type: z.literal('chart_with_headline_and_trend_card'),
+  value: chartCardValues.extend({
     headline_number_columns: Blocks,
   }),
 })
@@ -49,39 +56,21 @@ export const WithChartHeadlineAndTrendCard = z.object({
 export const WithChartCard = z.object({
   id: z.string(),
   type: z.enum(['chart_card', 'headline_chart_card']),
-  value: z.object({
-    title: z.string(),
-    body: z.string(),
-    chart: Chart,
-    tag_manager_event_id: z.string().nullable(),
-    x_axis: z.string().nullable(),
-    y_axis: z.string().nullable(),
-    x_axis_title: z.string().optional(),
-    y_axis_title: z.string().optional(),
-    y_axis_minimum_value: z.number().nullable().optional(),
-    y_axis_maximum_value: z.number().nullable().optional(),
-  }),
+  value: chartCardValues,
 })
 
 export const WithSimplifiedChartCardAndLink = z.object({
   id: z.string(),
   type: z.enum(['simplified_chart_with_link']),
-  value: z.object({
-    title: z.string(),
-    sub_title: z.string(),
-    tag_manager_event_id: z.string().nullable(),
-    topic_page: z.string(),
-    x_axis: z.string().nullable(),
-    x_axis_title: z.string().optional(),
-    y_axis_title: z.string().optional(),
-    y_axis: z.string().nullable(),
-    y_axis_minimum_value: z.number().nullable().optional(),
-    y_axis_maximum_value: z.number().nullable().optional(),
-    chart: Chart,
-  }),
+  value: chartCardValues
+    .extend({
+      sub_title: z.string(),
+      topic_page: z.string(),
+    })
+    .omit({ body: true }),
 })
 
-export const ChartSchemas = z.discriminatedUnion('type', [
+export const ChartCardSchemas = z.discriminatedUnion('type', [
   WithChartHeadlineAndTrendCard,
   WithChartCard,
   WithSimplifiedChartCardAndLink,
