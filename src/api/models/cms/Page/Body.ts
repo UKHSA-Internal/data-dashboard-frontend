@@ -26,6 +26,7 @@ const WithHeadlineNumbersRowCard = z.object({
       type: z.literal('column'),
       value: z.object({
         title: z.string(),
+        date_prefix: z.string(),
         rows: Blocks,
       }),
     })
