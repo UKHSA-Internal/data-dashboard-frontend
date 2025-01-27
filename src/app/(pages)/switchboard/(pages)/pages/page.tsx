@@ -5,8 +5,6 @@ import { heading } from '@/app/(pages)/switchboard/shared/constants'
 import { getSwitchBoardState, syncState } from '@/app/(pages)/switchboard/shared/state'
 import { Details } from '@/app/components/ui/govuk'
 import { View } from '@/app/components/ui/ukhsa'
-import { BackLink } from '@/app/components/ui/ukhsa/View/BackLink/Backlink'
-import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
 export default function SwitchBoard() {
@@ -17,9 +15,7 @@ export default function SwitchBoard() {
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
-    <View className="govuk-!-margin-top-5">
-      <BackLink backlink="/switchboard" />
-      <Heading heading={heading} />
+    <View heading={heading} className="govuk-!-margin-top-5" backLink="/switchboard">
       <form
         className="govuk-!-margin-top-3"
         action={async (form) => {
