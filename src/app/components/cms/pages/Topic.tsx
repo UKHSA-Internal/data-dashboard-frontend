@@ -9,9 +9,6 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import { Description } from '../../ui/ukhsa/View/Description/Description'
-import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
-import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 export default async function TopicPage({
   slug,
@@ -30,10 +27,11 @@ export default async function TopicPage({
     selected_topics: selectedTopics,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
   return (
-    <View>
-      <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
-      <LastUpdated lastUpdated={lastUpdated} />
-      <Description description={description} />
+    <View
+      heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })}
+      description={description}
+      lastUpdated={lastUpdated}
+    >
       <div className="govuk-grid-row">
         <div
           className={clsx({

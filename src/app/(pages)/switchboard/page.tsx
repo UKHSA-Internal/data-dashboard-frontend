@@ -4,8 +4,6 @@ import { View } from '@/app/components/ui/ukhsa'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink } from '@/app/components/ui/ukhsa/List/ListItemArrow'
-import { Description } from '@/app/components/ui/ukhsa/View/Description/Description'
-import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 
 import { heading, wellKnownEnvironments } from './shared/constants'
 
@@ -14,9 +12,7 @@ const description =
 
 export default function SwitchBoard() {
   return (
-    <View className="govuk-!-margin-top-5">
-      <Heading heading={heading} />
-      <Description description={description} />
+    <View heading={heading} className="govuk-!-margin-top-5" description={description}>
       <div className="govuk-grid-row govuk-!-margin-top-7">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <h2 className="govuk-heading-m">Well-Known Environments</h2>

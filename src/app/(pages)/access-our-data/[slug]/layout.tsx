@@ -2,7 +2,6 @@ import { ReactNode } from 'react'
 
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { View } from '@/app/components/ui/ukhsa'
-import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 export const dynamic = 'auto'
 
 export default async function Layout({
@@ -19,8 +18,7 @@ export default async function Layout({
   const { title } = await getPageBySlug('access-our-data')
 
   return (
-    <View>
-      <Heading heading={title} />
+    <View heading={title}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">{parent}</div>
       </div>
