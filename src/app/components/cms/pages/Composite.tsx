@@ -5,6 +5,8 @@ import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 import { RichTextAutoHeadings } from '../RichText/RichTextAutoHeadings'
 
 export default async function CompositePage({ slug }: PageComponentBaseProps) {
@@ -17,7 +19,9 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 
   return (
-    <View heading={title} lastUpdated={lastUpdated}>
+    <View>
+      <Heading heading={title} />
+      <LastUpdated lastUpdated={lastUpdated} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           {typeof body === 'string' ? (
