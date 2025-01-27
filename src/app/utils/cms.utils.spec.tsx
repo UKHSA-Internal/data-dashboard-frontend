@@ -1,9 +1,11 @@
 import { ComponentProps } from 'react'
 
+import { getShowMoreURL } from '@/app/utils/show-more.utils'
 import { render, screen, within } from '@/config/test-utils'
 
 import { ChartRowCardHeader } from '../components/cms'
 import {
+  mockChartCardSectionWithSixCards,
   mockChartRowCardWithChartHeadlineAndTrendCard,
   mockChartRowCardWithDualChartCard,
   mockChartRowCardWithSingleChartCard,
@@ -39,6 +41,12 @@ jest.mock('../components/cms', () => ({
   ButtonInternal: () => <div>Mocked internal download button</div>,
   RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
+}))
+
+//Mock the getShowLessURL and getShowMoreURL
+jest.mock('@/app/utils/show-more.utils', () => ({
+  getShowMoreURL: jest.fn(),
+  getShowLessURL: jest.fn(),
 }))
 
 describe('Displaying a section from the cms home page', () => {
@@ -174,6 +182,14 @@ describe('Chart row card', () => {
     const article2 = screen.getByRole('article', { name: 'Chart heading 2' })
     expect(article1.parentElement).toHaveClass('lg:w-1/2')
     expect(article2.parentElement).toHaveClass('lg:w-1/2')
+  })
+
+  test('if more than 3 cards are provided then expect "Show More" link to be present', () => {
+    const mockGetShowMoreURL = getShowMoreURL as jest.MockedFunction<typeof getShowMoreURL>
+    mockGetShowMoreURL.mockImplementation((sections, heading) => `/mock-url/${heading}`)
+    render(renderCard('', [], mockChartCardSectionWithSixCards))
+    const showMoreButton = screen.getByRole('link', { name: 'Show More' })
+    expect(showMoreButton).toBeInTheDocument()
   })
 })
 

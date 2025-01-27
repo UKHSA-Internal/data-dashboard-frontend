@@ -1,0 +1,30 @@
+{
+  "map": {
+    "title": "Weather health alerts map",
+    "exitBtn": "Exit map",
+    "trigger": "View map of weather health alerts",
+    "fatalError": "There is a problem with the map. Please try again later.",
+    "alert": "{{level}} alert",
+    "no-alert": "No alert",
+    "alertDialog": {
+      "dateKey": "Start",
+      "expiryKey": "End",
+      "statusKey": "Alert",
+      "textKey": "Description",
+      "typeKey": "Type",
+      "typeValue_heat": "Heat Health Alert",
+      "typeValue_cold": "Cold Health Alert",
+      "firstPublished": "{{value, dateShort}} at {{value, time}}",
+      "expiryDate": "{{value, dateShort}} at {{value, time}}",
+      "lastUpdated": "{{value, date}} at {{value, time}}",
+      "alertCta": "Go to alert page"
+    }
+  },
+  "showKeyBtn": "Display Key",
+  "updated": "Updated {{value, time}} on {{ value, dateShort }}",
+  "weatherAlert": "{{weatherType}}-health alert for {{regionName}}",
+  "alertListLabel": "{{type}} health alerts",
+  "statusLabel_Initial": "There is currently a {{level}} {{type}} alert status for {{region}}",
+  "statusLabel_Amber": "There is currently an {{level}} {{type}} alert status for {{region}}",
+  "statusLabel_None": "There are currently no alerts for {{region}}"
+}
