@@ -22,7 +22,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - name: Install
-        run: npm ci --no-audit --no-fund
+        run: npm config set legacy-peer-deps true && npm ci --no-audit --no-fund
 
   # TODO: Playwright currently needs a local instance of the app to initialise correctly
   # We should tweak this to not need this so the below job can be removed.
