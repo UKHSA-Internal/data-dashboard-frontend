@@ -1,6 +1,6 @@
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
-import { authEnabled, cacheRevalidationInterval } from '@/config/constants'
+import { authEnabled, cacheFetchTags, cacheRevalidationInterval } from '@/config/constants'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -8,6 +8,7 @@ import { getApiBaseUrl } from '../requests/helpers'
 interface Options {
   body?: unknown
   searchParams?: URLSearchParams
+  isPublic?: boolean
   baseUrl?: string
   headers?: Record<string, string>
   cache?: RequestInit['cache']
@@ -22,7 +23,15 @@ interface Options {
 
 export async function client<T>(
   endpoint: string,
-  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {}
+  {
+    body,
+    // Defaulting all requests to public (non-authenticated) for now.
+    // This may change to an opt-in approach as we build out the authenticated dashboard.
+    isPublic = true,
+    searchParams,
+    baseUrl = getApiBaseUrl(),
+    ...customConfig
+  }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
@@ -38,14 +47,15 @@ export async function client<T>(
     }
   }
 
-  const fetchOptions: RequestInit & { next?: { revalidate: number } } = {
+  const fetchOptions: RequestInit & { next?: { revalidate: number; tags: string[] } } = {
     method: body ? 'POST' : 'GET',
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     next: {
       // The public dashboard is behind a CDN so doesn't rely on any Next.js caching
       // However, the auth instance is not so we rely on Next.js caching for unauthenticated requests
-      revalidate: authEnabled ? customConfig.next?.revalidate ?? cacheRevalidationInterval : 0,
+      revalidate: authEnabled && isPublic ? customConfig.next?.revalidate ?? cacheRevalidationInterval : 0,
+      tags: authEnabled && isPublic ? [cacheFetchTags.public] : [],
     },
     headers: {
       ...headers,

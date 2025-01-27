@@ -6,8 +6,19 @@ In our public data dashboard, we deploy a fully dynamic Next.js application with
 
 For the upcoming authenticated version of the application, CDN-based caching is unsuitable due to the dynamic nature of user-specific authenticated pages and data. To address this, we will disable the CDN for the authenticated instance and leverage Next.js’s granular caching capabilities:
 
-- **Unauthenticated content**: Cached using Next.js’s built-in caching mechanisms.
-- **Authenticated content**: Fully dynamic and uncached.
+Public App vs. Authenticated App
+
+The caching strategy should look like this:
+
+Public App:
+
+- No Next.js caching: Completely dynamic, with no reliance on Redis or Next.js cache handlers.
+- Relies entirely on CDN caching for performance and cache invalidation.
+
+Authenticated App:
+
+- Redis for shared caching: Use a centralised Redis cache for fetch requests shared across app instances behind the load balancer.
+- No route segment caching: Routes remain dynamic, but fetch caching is optimised with Redis.
 
 ---
 
