@@ -29,6 +29,7 @@ import {
   Timestamp,
   Trend,
 } from '../components/cms'
+import About from '../components/cms/About/About'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 
@@ -110,7 +111,7 @@ export const renderCard = (
                 className="ukhsa-chart-card flex flex-col gap-6"
               >
                 <article>
-                  <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
+                  <ChartRowCardHeader id={column.id} title={column.value.title}>
                     <Timestamp data={column.value} size={size} />
                   </ChartRowCardHeader>
                   <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
@@ -131,6 +132,11 @@ export const renderCard = (
                       <TabsTrigger asChild value="download">
                         <Link href={`#download-${kebabCase(column.value.title)}`}>
                           <span>Download</span>
+                        </Link>
+                      </TabsTrigger>
+                      <TabsTrigger asChild value="about">
+                        <Link href={`#about-${kebabCase(column.value.title)}`}>
+                          <span>About</span>
                         </Link>
                       </TabsTrigger>
                     </TabsList>
@@ -178,6 +184,15 @@ export const renderCard = (
                         Download
                       </span>
                       <Download data={column.value} />
+                    </TabsContent>
+                    <TabsContent value="about" className="min-h-[var(--ukhsa-chart-card-tab-min-height)]">
+                      <span
+                        className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                        id={`about-${kebabCase(column.value.title)}`}
+                      >
+                        About
+                      </span>
+                      <About description={column.value.body} />
                     </TabsContent>
                   </Tabs>
                 </article>

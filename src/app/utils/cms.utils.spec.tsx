@@ -25,15 +25,15 @@ jest.mock('../components/cms', () => ({
   ...jest.requireActual('../components/cms'),
   Timestamp: () => <div>Up to and including 27 September 2023</div>,
   Download: () => <div>Mocked download</div>,
+  About: () => <div>Mocked About</div>,
   Table: () => <div>Mocked table</div>,
   Chart: () => <div>Mocked chart</div>,
   Percentage: () => <div>Mocked percentage number</div>,
   Headline: () => <div>Mocked headline number</div>,
   Trend: () => <div>Mocked trend number</div>,
-  ChartRowCardHeader: ({ title, description, children, id }: ComponentProps<typeof ChartRowCardHeader>) => (
+  ChartRowCardHeader: ({ title, children, id }: ComponentProps<typeof ChartRowCardHeader>) => (
     <header>
       <h3 id={`chart-row-card-heading-${id}`}>{title}</h3>
-      <p>{description}</p>
       {children}
     </header>
   ),
