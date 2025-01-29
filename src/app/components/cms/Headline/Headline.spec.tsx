@@ -19,7 +19,7 @@ describe('Data request is successful', () => {
   }
 
   test('renders a heading, date and number', async () => {
-    const { getByText } = render((await Headline({ data })) as ReactElement)
+    const { getByText } = render((await Headline({ data, datePrefix: 'Up to' })) as ReactElement)
     const headingElement = getByText('Test Heading')
     const dateElement = getByText('Up to 3 Nov 2023')
     const valueElement = getByText('24,000')
@@ -30,8 +30,8 @@ describe('Data request is successful', () => {
   })
 
   test('hides the date within chart cards', async () => {
-    const { getByText } = render((await Headline({ data })) as ReactElement)
-    const dateElement = getByText('Up to 3 Nov 2023')
+    const { getByText } = render((await Headline({ data, datePrefix: 'Headline prefix' })) as ReactElement)
+    const dateElement = getByText('Headline prefix 3 Nov 2023')
     expect(dateElement).toHaveClass('[.ukhsa-chart-card_&]:hidden')
   })
 })
@@ -57,7 +57,7 @@ describe('Data request is unsuccessful', () => {
       body: 'Test Heading',
     }
 
-    const { container } = render((await Headline({ data })) as ReactElement)
+    const { container } = render((await Headline({ data, datePrefix: '' })) as ReactElement)
 
     expect(container.firstChild).toBeNull()
   })

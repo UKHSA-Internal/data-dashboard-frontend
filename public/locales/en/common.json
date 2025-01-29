@@ -58,7 +58,7 @@
         }
       },
       "timestamp": {
-        "value": "Up to and including {{value, dateShort}}"
+        "value": "{{prefix}} {{value, dateShortest}}"
       },
       "table": {
         "toggle": "View data in a tabular format",
