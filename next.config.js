@@ -8,6 +8,7 @@ const sharedCache = process.env.NODE_ENV === 'production'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   cacheHandler: sharedCache ? require.resolve('./cache-handler.mjs') : undefined,
+  cacheMaxMemorySize: 0, // Disable default in-memory caching
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
   reactStrictMode: true,
