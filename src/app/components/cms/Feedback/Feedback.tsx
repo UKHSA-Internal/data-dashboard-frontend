@@ -167,11 +167,13 @@ export const renderFormFields = (
 
       {fieldType === 'number' && <NumberField label={label} helpText={helpText} cleanName={cleanName} />}
 
-      {fieldType === 'url' && <UrlField label={label} helpText={helpText} cleanName={cleanName} />}
+      {fieldType === 'url' && (
+        <UrlField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
+      )}
 
-      {fieldType === 'date' && <DateField label={label} helpText={helpText} cleanName={cleanName} />}
-
-      {fieldType === 'datetime' && <DateField label={label} helpText={helpText} cleanName={cleanName} />}
+      {fieldType === 'date' && (
+        <DateField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
+      )}
 
       {fieldType === 'dropdown' && (
         <DropdownField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />

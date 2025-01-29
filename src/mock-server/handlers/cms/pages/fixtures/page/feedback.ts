@@ -169,7 +169,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       label: 'Enter a memorable date',
       field_type: 'date',
       help_text: 'For example, 31 3 1980',
-      required: false,
+      required: true,
       choices: '',
       default_value: '',
     },
