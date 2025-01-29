@@ -18,16 +18,16 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
 
 Before you begin, ensure you have the following installed:
 
-- Node.js version 20.17.0 or later
+- Node.js version 22.13.1 or later
 
 ## Getting Started
 
 ### Initial Setup
 
 1. **Install Dependencies**
-   - In order to use some old test depenencies we need to set legacy-peer-dependencies to true with the following command:
-     `npm config set legacy-peer-deps true`
+
    - Install node modules : `npm install`
+
 2. **Environment Variables:**  
    Create a `.env.local` file at the root of your project directory. Use the example below as a reference for the required environment variables:
 
