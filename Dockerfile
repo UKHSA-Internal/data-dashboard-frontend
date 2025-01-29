@@ -5,9 +5,6 @@ FROM base AS deps
 RUN apk add --no-cache libc6-compat
 WORKDIR /app
 
-# configure package manager to allow legacy peer dependencies
-RUN npm config set legacy-peer-deps true
-
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json ./
 RUN \

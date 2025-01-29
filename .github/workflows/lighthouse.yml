@@ -37,7 +37,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - name: Install
-        run: npm config set legacy-peer-deps true && npm ci --no-audit --no-fund
+        run: npm ci --no-audit --no-fund
 
   lighthouse:
     name: Lighthouse
