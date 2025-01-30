@@ -6,8 +6,6 @@ import { postSuggestions } from '@/api/requests/suggestions/postSuggestions'
 import { logger } from '@/lib/logger'
 import { feedbackSchema } from '@/schemas/feedback.schema'
 
-import { updateMemorableDate } from './updatedate'
-
 interface FormError {
   message: string
   errors: FieldError[]
@@ -53,7 +51,8 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       }
     })
 
-    formData = updateMemorableDate(formData)
+    //TODO: Remove console log statement, after review
+    //formData = updateMemorableDate(formData)
 
     //if there are errors then return errors to the front end
     if (errors.length > 0) {

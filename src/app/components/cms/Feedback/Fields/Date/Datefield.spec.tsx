@@ -64,9 +64,9 @@ describe('DateField component', () => {
     expect(monthInput).toHaveAttribute('id', 'month')
     expect(yearInput).toHaveAttribute('id', 'year')
 
-    expect(dayInput).toHaveAttribute('name', 'dob-day')
-    expect(monthInput).toHaveAttribute('name', 'dob-month')
-    expect(yearInput).toHaveAttribute('name', 'dob-year')
+    expect(dayInput).toHaveAttribute('name', 'day')
+    expect(monthInput).toHaveAttribute('name', 'month')
+    expect(yearInput).toHaveAttribute('name', 'year')
 
     expect(dayInput).toHaveAttribute('type', 'number')
     expect(monthInput).toHaveAttribute('type', 'number')

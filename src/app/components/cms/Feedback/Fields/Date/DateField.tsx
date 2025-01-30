@@ -1,12 +1,43 @@
 import clsx from 'clsx'
+import { useEffect, useState } from 'react'
 
 import { Fieldtype } from '../../Feedback'
 
+interface DateData {
+  day: string
+  month: string
+  year: string
+}
+
 export default function DateField({ label, helpText, cleanName, fieldHasError }: Fieldtype) {
+  const [hiddenDateInput, setHiddenDateInput] = useState<string>('')
+  const [dateData, setDateData] = useState<DateData>({
+    day: '',
+    month: '',
+    year: '',
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setDateData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  useEffect(() => {
+    if (dateData.day && dateData.month && dateData.year) {
+      setHiddenDateInput(`${dateData.day}-${dateData.month}-${dateData.year}`)
+    } else {
+      setHiddenDateInput('')
+    }
+  }, [dateData])
+
   return (
     <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
-      {/*Hidden input field for collecting date in format dd-mm-yyyy*/}
-      <input className="govuk-visually-hidden" name={cleanName} id={cleanName} type="text" />
+      {/* Hidden input field for collecting date in format dd-mm-yyyy */}
+      <input className="govuk-visually-hidden" name={cleanName} type="text" value={hiddenDateInput} />
       <fieldset className="govuk-fieldset" role="group">
         <legend className="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h2 className="govuk-label-wrapper">
@@ -22,7 +53,7 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
 
         {fieldHasError ? (
           <p id="multiline-error" className="govuk-error-message">
-            <span className="govuk-visually-hidden">Error:</span> Please select at least one of the below options
+            <span className="govuk-visually-hidden">Error:</span> Please enter a valid date
           </p>
         ) : null}
 
@@ -33,9 +64,13 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
                 Day
               </label>
               <input
-                className="govuk-input govuk-date-input__input govuk-input--width-2"
+                className={clsx('govuk-input govuk-date-input__input govuk-input--width-2', {
+                  'govuk-textarea--error': fieldHasError,
+                })}
                 id="day"
-                name={`${cleanName}-day`}
+                name="day" // Bind name directly to the key
+                value={dateData.day} // Bind to dateData.day
+                onChange={handleChange}
                 type="number"
                 inputMode="numeric"
               />
@@ -47,9 +82,13 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
                 Month
               </label>
               <input
-                className="govuk-input govuk-date-input__input govuk-input--width-2"
+                className={clsx('govuk-input govuk-date-input__input govuk-input--width-2', {
+                  'govuk-textarea--error': fieldHasError,
+                })}
                 id="month"
-                name={`${cleanName}-month`}
+                name="month"
+                value={dateData.month}
+                onChange={handleChange}
                 type="number"
                 inputMode="numeric"
               />
@@ -61,9 +100,13 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
                 Year
               </label>
               <input
-                className="govuk-input govuk-date-input__input govuk-input--width-4"
+                className={clsx('govuk-input govuk-date-input__input govuk-input--width-4', {
+                  'govuk-textarea--error': fieldHasError,
+                })}
                 id="year"
-                name={`${cleanName}-year`}
+                name="year"
+                value={dateData.year}
+                onChange={handleChange}
                 type="number"
                 inputMode="numeric"
               />
