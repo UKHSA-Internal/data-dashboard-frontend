@@ -71,5 +71,12 @@ describe('DateField component', () => {
     expect(dayInput).toHaveAttribute('type', 'number')
     expect(monthInput).toHaveAttribute('type', 'number')
     expect(yearInput).toHaveAttribute('type', 'number')
+
+    expect(dayInput).toHaveAttribute('min', '1')
+    expect(dayInput).toHaveAttribute('max', '31')
+    expect(monthInput).toHaveAttribute('min', '1')
+    expect(monthInput).toHaveAttribute('max', '12')
+    expect(yearInput).toHaveAttribute('min', '1900')
+    expect(yearInput).toHaveAttribute('max', '2100')
   })
 })

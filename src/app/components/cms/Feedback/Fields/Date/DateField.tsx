@@ -73,6 +73,8 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
                 onChange={handleChange}
                 type="number"
                 inputMode="numeric"
+                min={1}
+                max={31}
               />
             </div>
           </div>
@@ -91,6 +93,8 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
                 onChange={handleChange}
                 type="number"
                 inputMode="numeric"
+                min={1}
+                max={12}
               />
             </div>
           </div>
@@ -109,6 +113,8 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
                 onChange={handleChange}
                 type="number"
                 inputMode="numeric"
+                min={1900}
+                max={2100}
               />
             </div>
           </div>

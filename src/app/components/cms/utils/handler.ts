@@ -54,6 +54,8 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
     //TODO: Remove console log statement, after review
     //formData = updateMemorableDate(formData)
 
+    console.log('Form data, ', formData)
+
     //if there are errors then return errors to the front end
     if (errors.length > 0) {
       return {
