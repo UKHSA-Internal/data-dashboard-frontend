@@ -9,7 +9,7 @@ const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
 >(({ className, children, activationMode = 'manual', ...props }, ref) => (
-  <TabsPrimitive.Root ref={ref} activationMode={activationMode} className={clsx('', className)} {...props}>
+  <TabsPrimitive.Root ref={ref} activationMode={activationMode} className={clsx('', className)} {...props}>             
     {children}
   </TabsPrimitive.Root>
 ))
