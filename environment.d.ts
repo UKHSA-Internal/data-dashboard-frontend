@@ -2,6 +2,9 @@ declare namespace NodeJS {
   interface ProcessEnv {
     API_KEY: string
     API_URL: string
+    AUTH_CLIENT_ID: string
+    AUTH_CLIENT_SECRET: string
+    AUTH_ISSUER: string
     AUTH_ENABLED: 'true' | 'false'
     AUTH_CLIENT_ID: string
     AUTH_CLIENT_SECRET: string

@@ -26,6 +26,7 @@ export const TopNav = ({ children, avatar = null }: { children: ReactNode; avata
   return (
     <div ref={topNavRef} className="print:hidden">
       <div className="govuk-width-container relative">
+        {login}
         <Link
           className={clsx(
             'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse group absolute -top-7 right-0 z-10 flex h-7 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none md:-top-8 md:h-8',
