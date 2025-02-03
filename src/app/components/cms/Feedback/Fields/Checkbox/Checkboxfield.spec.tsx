@@ -64,4 +64,13 @@ describe('CheckboxField', () => {
     // Ensure the checkbox input value matches defaultValue prop
     expect(checkbox).toHaveAttribute('value', mockProps.defaultValue)
   })
+
+  it('should render the error message text if the field is required and not completed', () => {
+    render(<CheckboxField {...{ ...mockProps, fieldHasError: true }} />)
+
+    const expectedErrorText = 'Please check this field as it is required'
+
+    // Check if no radio buttons are rendered
+    expect(screen.getByText(expectedErrorText)).toBeInTheDocument()
+  })
 })
