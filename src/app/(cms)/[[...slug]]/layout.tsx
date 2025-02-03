@@ -5,6 +5,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
+import LoginButton from '@/app/components/ui/ukhsa/LoginButton/LoginButton'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
@@ -57,7 +58,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       </header>
 
-      <TopNav>
+      <TopNav login={<LoginButton />}>
         <MegaMenu />
       </TopNav>
 

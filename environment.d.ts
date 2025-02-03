@@ -2,6 +2,9 @@ declare namespace NodeJS {
   interface ProcessEnv {
     API_KEY: string
     API_URL: string
+    AUTH_CLIENT_ID: string
+    AUTH_CLIENT_SECRET: string
+    AUTH_ISSUER: string
     AUTH_ENABLED: 'true' | 'false'
     BASE_URL: string
     ESRI_API_KEY: string
@@ -11,6 +14,7 @@ declare namespace NodeJS {
     FEATURE_FLAGS_AUTH_KEY: string
     FEEDBACK_API_URL: string
     GOOGLE_TAG_MANAGER_ID: string
+    NEXT_REVALIDATE_TIME: string
     PUBLIC_API_URL: string
     REDIS_HOST: string
     REVALIDATE_SECRET: string
