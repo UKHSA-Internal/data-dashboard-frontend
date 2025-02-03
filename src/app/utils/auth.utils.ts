@@ -4,7 +4,9 @@ import { getServerSession } from 'next-auth'
 import CognitoProvider from 'next-auth/providers/cognito'
 
 export const config = {
+  debug: Boolean(Number(process.env.AUTH_DEBUG)),
   secret: process.env.AUTH_SECRET,
+  session: { strategy: 'jwt' },
   providers: [
     CognitoProvider({
       clientId: process.env.AUTH_CLIENT_ID,
