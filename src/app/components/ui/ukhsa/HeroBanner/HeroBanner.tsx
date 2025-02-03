@@ -5,20 +5,22 @@ import { getServerTranslation } from '@/app/i18n'
 
 import { PhaseBanner } from '../PhaseBanner/PhaseBanner'
 
-export default async function HeroBanner() {
-  const { t } = await getServerTranslation()
+interface HeroBannerProps {
+  subTitle: string
+}
+
+export default async function HeroBanner({ subTitle }: HeroBannerProps) {
+  const { t } = await getServerTranslation('common')
 
   return (
     <div className="bg-blue">
       <div className="govuk-width-container govuk-!-padding-bottom-6 bg-blue" data-testid="ukhsa-hero-banner">
         <h1 className="govuk-heading-xl govuk-!-padding-top-7 govuk-!-margin-bottom-4 text-white">
-          UKHSA data dashboard
+          {t('heroBannerTitle')}
         </h1>
-        <h2 className="govuk-heading-xl govuk-!-margin-bottom-3 text-offwhite">
-          Showing public health data across England
-        </h2>
+        <h2 className="govuk-heading-xl govuk-!-margin-bottom-3 text-offwhite">{subTitle}</h2>
         <Link className="govuk-body-s text-grey-4 focus:text-black" href="/about">
-          What is the UKHSA data dashboard?
+          {t('heroBannerAboutLink')}
         </Link>
       </div>
 

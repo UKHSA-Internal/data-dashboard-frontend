@@ -12,10 +12,11 @@ export type RequestParams = z.infer<typeof requestSchema>
 
 export const postSuggestions = async (suggestions: RequestParams) => {
   try {
-    const { status } = await client<Response>('suggestions/v1', {
+    const { status } = await client<Response>('suggestions/v2', {
       body: suggestions,
       baseUrl: getFeedbackApiBaseUrl(),
     })
+
     if (status !== 200) {
       throw new Error('Failed to submit, invalid status code')
     }

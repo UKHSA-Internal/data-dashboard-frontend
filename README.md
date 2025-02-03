@@ -4,11 +4,15 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
 
 ## Table of Contents
 
-- [Prerequisites](#prerequisites)
-- [Getting Started](#getting-started)
-- [Deployment](#deployment)
-- [Styling](#styling)
-- [Environments](#environments)
+- [UKHSA Data Dashboard Frontend Documentation](#ukhsa-data-dashboard-frontend-documentation)
+  - [Table of Contents](#table-of-contents)
+  - [Prerequisites](#prerequisites)
+  - [Getting Started](#getting-started)
+    - [Initial Setup](#initial-setup)
+    - [Local Development](#local-development)
+  - [Deployment](#deployment)
+  - [Styling](#styling)
+  - [Environments](#environments)
 
 ## Prerequisites
 
@@ -20,7 +24,11 @@ Before you begin, ensure you have the following installed:
 
 ### Initial Setup
 
-1. **Environment Variables:**  
+1. **Install Dependencies**
+   - In order to use some old test depenencies we need to set legacy-peer-dependencies to true with the following command:
+     `npm config set legacy-peer-deps true`
+   - Install node modules : `npm install`
+2. **Environment Variables:**  
    Create a `.env.local` file at the root of your project directory. Use the example below as a reference for the required environment variables:
 
    ```
@@ -31,7 +39,7 @@ Before you begin, ensure you have the following installed:
    GOOGLE_TAG_MANAGER_ID=GTM-W39KF5J2
    ```
 
-2. **Development Server:**  
+3. **Development Server:**  
    Start the Next.js development server by running the following command in your terminal:
 
    ```bash

@@ -37,7 +37,7 @@ jobs:
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - name: Install
-        run: npm ci --no-audit --no-fund
+        run: npm config set legacy-peer-deps true && npm ci --no-audit --no-fund
 
   lighthouse:
     name: Lighthouse
@@ -71,12 +71,13 @@ jobs:
       - uses: ./.github/actions/install-cache
 
       - name: Unlighthouse assertions and client
-        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=75
+        run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=80
+
       - uses: actions/upload-artifact@v3
         if: always()
         with:
           name: unlighthouse-report
-          path: ./.unlighthouse
+          path: ./.unlighthouse/ci-result.json
           retention-days: 10
 
   slack-notify:

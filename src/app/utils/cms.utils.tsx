@@ -12,6 +12,7 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
+import { getShowLessURL, getShowMoreURL } from '@/app/utils/show-more.utils'
 
 import {
   ButtonExternal,
@@ -32,10 +33,10 @@ import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorL
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 
 // TODO: Move this file into cms folder
-export const renderSection = ({
-  id,
-  value: { heading, content, page_link: pageLink },
-}: z.infer<typeof Body>[number]) => (
+export const renderSection = (
+  showMoreSections: string[],
+  { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number]
+) => (
   <div
     key={id}
     className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
@@ -52,11 +53,24 @@ export const renderSection = ({
         heading
       )}
     </h2>
-    {content.map(renderCard)}
+
+    {content.map(renderCard.bind(null, heading, showMoreSections))}
+    {showMoreSections.includes(kebabCase(heading)) ? (
+      <Link
+        className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
+        href={getShowLessURL(showMoreSections, kebabCase(heading))}
+      >
+        <span className="pl-4">Show Less</span>
+      </Link>
+    ) : null}
   </div>
 )
 
-export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
+export const renderCard = (
+  heading: string,
+  showMoreSections: string[],
+  { type, value, id }: z.infer<typeof CardTypes>
+) => (
   <div key={id}>
     {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
 
@@ -194,10 +208,23 @@ export const renderCard = ({ id, type, value }: z.infer<typeof CardTypes>) => (
         })}
       >
         {value.cards.map((card, index) => {
-          if (index > 2) return
+          if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
+            return (
+              <div key={index}>
+                <Link
+                  className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat"
+                  href={getShowMoreURL(showMoreSections, kebabCase(heading))}
+                >
+                  <span className="pl-4">Show More</span>
+                </Link>
+              </div>
+            )
+          }
+
+          if (index > 3 && !showMoreSections.includes(kebabCase(heading))) return
 
           return (
-            <div key={card.id}>
+            <div key={card.id} data-testid="card-wrapper">
               <Card
                 asChild
                 aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}

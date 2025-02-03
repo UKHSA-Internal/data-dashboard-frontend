@@ -55,7 +55,7 @@ export default async function TopicPage({
           <PageSectionWithContents>
             {body.map(({ id, value }) => (
               <PageSection key={id} heading={value.heading}>
-                {value.content.map(renderCard)}
+                {value.content.map(renderCard.bind(null, value.heading, []))}
               </PageSection>
             ))}
           </PageSectionWithContents>

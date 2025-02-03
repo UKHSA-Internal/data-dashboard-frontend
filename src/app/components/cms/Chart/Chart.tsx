@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
-import { WithChartCard, WithChartHeadlineAndTrendCard, WithSimplifiedChartCardAndLink } from '@/api/models/cms/Page'
+import { ChartSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { flags } from '@/app/constants/flags.constants'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
@@ -26,10 +26,8 @@ interface ChartProps {
    * Chart configuration data containing metadata required to fetch chart visuals
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
-  data:
-    | z.infer<typeof WithChartHeadlineAndTrendCard>['value']
-    | z.infer<typeof WithChartCard>['value']
-    | z.infer<typeof WithSimplifiedChartCardAndLink>['value']
+  /* Request metadata from the CMS required to fetch from the headlines api */
+  data: z.infer<typeof ChartSchemas>['value']
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
@@ -102,6 +100,24 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     getServerTranslation('common'),
   ])
 
+  let yAxisMinimum = null
+  let yAxisMaximum = null
+  let xAxisTitle = ''
+  let yAxisTitle = ''
+
+  if ('y_axis_minimum_value' in data) {
+    yAxisMinimum = data.y_axis_minimum_value
+  }
+  if ('y_axis_maximum_value' in data) {
+    yAxisMaximum = data.y_axis_maximum_value
+  }
+  if ('x_axis_title' in data) {
+    xAxisTitle = data.x_axis_title || ''
+  }
+  if ('y_axis_title' in data) {
+    yAxisTitle = data.y_axis_title || ''
+  }
+
   const { chart, x_axis, y_axis } = data
 
   const pathname = getPathname()
@@ -118,12 +134,16 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
       plots,
       x_axis,
       y_axis,
+      x_axis_title: xAxisTitle,
+      y_axis_title: yAxisTitle,
+      y_axis_maximum_value: yAxisMaximum,
+      y_axis_minimum_value: yAxisMinimum,
       chart_width: chartSizes[chart.size].width,
       chart_height: chartSizes[chart.size].height,
     })
   )
 
-  // Collect all chart svg's for all desired sizes
+  // Lazy load the interactive chart component (and all associated plotly.js code)
   const resolvedRequests = await Promise.all(requests)
 
   // Pick out the default chart (mobile-first)
@@ -153,7 +173,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
-  if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk')) {
+  if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
     return staticChart
   }
 

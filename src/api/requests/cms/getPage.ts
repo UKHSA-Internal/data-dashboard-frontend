@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
+import { FormFields } from '@/api/models/cms/Page/FormFields'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -11,8 +12,8 @@ import type { PageType } from './getPages'
 export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTypeToDataMap[T]> : never
 
 type PageTypeToDataMap = {
-  [PageType.Home]: typeof WithHomeData
   [PageType.Landing]: typeof WithLandingData
+  [PageType.Feedback]: typeof withFeedbackData
   [PageType.Topic]: typeof WithTopicData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
@@ -26,20 +27,10 @@ const SharedPageData = z.object({
   id: z.number(),
   title: z.string(),
   meta: Meta,
-  related_links: RelatedLinks,
-  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
   last_published_at: z.string(),
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
-})
-
-const WithHomeData = SharedPageData.extend({
-  body: Body,
-  page_description: z.string(),
-  meta: Meta.extend({
-    type: z.literal('home.HomePage'),
-  }),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -50,6 +41,18 @@ const WithLandingData = SharedPageData.extend({
   }),
 })
 
+const withFeedbackData = SharedPageData.extend({
+  meta: Meta.extend({
+    type: z.literal('forms.FormPage'),
+  }),
+  body: z.string(),
+  form_fields: FormFields,
+  confirmation_slug: z.string(),
+  confirmation_panel_title: z.string(),
+  confirmation_panel_text: z.string(),
+  confirmation_body: z.string(),
+})
+
 const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
@@ -58,6 +61,8 @@ const WithTopicData = SharedPageData.extend({
   }),
   enable_area_selector: z.boolean().or(fallback(false)),
   selected_topics: z.array(Topics).or(fallback([])),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithCommonData = SharedPageData.extend({
@@ -65,7 +70,8 @@ const WithCommonData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('common.CommonPage'),
   }),
-  date_posted: z.string(),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithCompositeData = SharedPageData.extend({
@@ -73,9 +79,10 @@ const WithCompositeData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('composite.CompositePage'),
   }),
-  date_posted: z.string(),
   //TODO: Look into page description on all composite pages
   page_description: z.string().nullable().optional(),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const WithWhatsNewParentData = SharedPageData.extend({
@@ -86,8 +93,9 @@ const WithWhatsNewParentData = SharedPageData.extend({
   date_posted: z.string(),
 })
 
-const WithWhatsNewChildData = SharedPageData.omit({ related_links: true, last_published_at: true }).extend({
+const WithWhatsNewChildData = SharedPageData.omit({ last_published_at: true }).extend({
   body: z.string(),
+
   meta: Meta.extend({
     type: z.literal('whats_new.WhatsNewChildEntry'),
   }),
@@ -109,7 +117,7 @@ const WithMetricsParentData = SharedPageData.extend({
   }),
 })
 
-const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend({
+const WithMetricsChildData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('metrics_documentation.MetricsDocumentationChildEntry'),
   }),
@@ -118,7 +126,6 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
   topic: z.string(),
   metric: z.string(),
   last_published_at: z.string(),
-  date_posted: z.string(),
   body: z.array(
     z.object({
       id: z.string(),
@@ -132,8 +139,8 @@ const WithMetricsChildData = SharedPageData.omit({ related_links: true }).extend
 })
 
 export const responseSchema = z.union([
-  WithHomeData,
   WithLandingData,
+  withFeedbackData,
   WithTopicData,
   WithCommonData,
   WithCompositeData,

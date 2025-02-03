@@ -23,9 +23,7 @@ export const initialState: switchBoardSchemaType = {
       },
       detail: {
         status: StatusCodes.OK,
-        scenario: {
-          relatedLinksLayout: 'Default',
-        },
+        scenario: { relatedLinksLayout: 'Footer' },
       },
     },
     'global-banners': {
@@ -38,8 +36,8 @@ export const initialState: switchBoardSchemaType = {
     },
   },
   flags: {
-    'landing-page-hero': 'disabled',
     'interactive-charts': 'disabled',
+    'feedback-form': 'disabled',
   },
 }
 

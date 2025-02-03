@@ -1,9 +1,11 @@
 import { ComponentProps } from 'react'
 
+import { getShowMoreURL } from '@/app/utils/show-more.utils'
 import { render, screen, within } from '@/config/test-utils'
 
 import { ChartRowCardHeader } from '../components/cms'
 import {
+  mockChartCardSectionWithSixCards,
   mockChartRowCardWithChartHeadlineAndTrendCard,
   mockChartRowCardWithDualChartCard,
   mockChartRowCardWithSingleChartCard,
@@ -41,13 +43,19 @@ jest.mock('../components/cms', () => ({
   CodeBlock: () => <div>Mocked code block</div>,
 }))
 
+//Mock the getShowLessURL and getShowMoreURL
+jest.mock('@/app/utils/show-more.utils', () => ({
+  getShowMoreURL: jest.fn(),
+  getShowLessURL: jest.fn(),
+}))
+
 describe('Displaying a section from the cms home page', () => {
   test('renders a heading that links to the topic page', () => {
-    render(renderSection(mockSectionWithLink))
+    render(renderSection([], mockSectionWithLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
 
-    render(renderSection(mockSectionWithLongHeading))
+    render(renderSection([], mockSectionWithLongHeading))
     expect(screen.getByRole('heading', { level: 2, name: 'Other respiratory viruses' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
       'href',
@@ -56,19 +64,19 @@ describe('Displaying a section from the cms home page', () => {
   })
 
   test('renders a heading with no link', () => {
-    render(renderSection(mockSectionNoLink))
+    render(renderSection([], mockSectionNoLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
   })
 
   test('renders a card', () => {
-    render(renderSection(mockSectionWithCard))
+    render(renderSection([], mockSectionWithCard))
     expect(screen.getByText('This is some cms content')).toBeInTheDocument()
   })
 })
 
 describe('Text card', () => {
   test('text card displays correctly', () => {
-    render(renderCard(mockTextCard))
+    render(renderCard('Text card heading', [], mockTextCard))
     expect(screen.getByRole('heading', { level: 3, name: 'Text card heading' })).toBeInTheDocument()
     expect(screen.getByText('Text card body')).toBeInTheDocument()
   })
@@ -76,7 +84,7 @@ describe('Text card', () => {
 
 describe('Headline numbers row card', () => {
   test('displays a row of columns containing a heading and metric data', () => {
-    render(renderCard(mockHeadlineNumbersRowCard))
+    render(renderCard('', [], mockHeadlineNumbersRowCard))
 
     expect(screen.getByTestId('headline-row')).toHaveClass('ukhsa-headline-numbers-row-card')
 
@@ -110,12 +118,12 @@ describe('Headline numbers row card', () => {
   })
 
   test('displays five columns on desktop devices when the default amount of columns (5) is set', () => {
-    render(renderCard(mockHeadlineNumbersRowCard))
+    render(renderCard('', [], mockHeadlineNumbersRowCard))
     expect(screen.getByTestId('headline-row').firstChild).toHaveClass('md:grid-cols-5')
   })
 
   test('displays a mobile first in a two column layout, then a three-col layout for larger devices', () => {
-    render(renderCard(mockHeadlineNumbersRowCardWithOneColumn))
+    render(renderCard('', [], mockHeadlineNumbersRowCardWithOneColumn))
     const gridRow = screen.getByTestId('headline-row').firstChild
     expect(gridRow).toHaveClass('grid-cols-2 sm:grid-cols-3')
     expect(gridRow).not.toHaveClass('md:grid-cols-5')
@@ -124,7 +132,7 @@ describe('Headline numbers row card', () => {
 
 describe('Chart row card', () => {
   test('chart card displays correctly', () => {
-    render(renderCard(mockChartRowCardWithSingleChartCard))
+    render(renderCard('', [], mockChartRowCardWithSingleChartCard))
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
@@ -153,7 +161,7 @@ describe('Chart row card', () => {
   })
 
   test('chart card with headline and trend', () => {
-    render(renderCard(mockChartRowCardWithChartHeadlineAndTrendCard))
+    render(renderCard('', [], mockChartRowCardWithChartHeadlineAndTrendCard))
 
     // Heading and description
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
@@ -163,17 +171,25 @@ describe('Chart row card', () => {
   })
 
   test('chart card in a full width column', () => {
-    render(renderCard(mockChartRowCardWithSingleChartCard))
+    render(renderCard('', [], mockChartRowCardWithSingleChartCard))
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
     expect(article.parentElement).toHaveClass('lg:w-full')
   })
 
   test('chart cards in two columns', () => {
-    render(renderCard(mockChartRowCardWithDualChartCard))
+    render(renderCard('', [], mockChartRowCardWithDualChartCard))
     const article1 = screen.getByRole('article', { name: 'Chart heading 1' })
     const article2 = screen.getByRole('article', { name: 'Chart heading 2' })
     expect(article1.parentElement).toHaveClass('lg:w-1/2')
     expect(article2.parentElement).toHaveClass('lg:w-1/2')
+  })
+
+  test('if more than 3 cards are provided then expect "Show More" link to be present', () => {
+    const mockGetShowMoreURL = getShowMoreURL as jest.MockedFunction<typeof getShowMoreURL>
+    mockGetShowMoreURL.mockImplementation((sections, heading) => `/mock-url/${heading}`)
+    render(renderCard('', [], mockChartCardSectionWithSixCards))
+    const showMoreButton = screen.getByRole('link', { name: 'Show More' })
+    expect(showMoreButton).toBeInTheDocument()
   })
 })
 

@@ -4,8 +4,6 @@ import { sample } from 'lodash'
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-import { relatedLinksMock } from '../elements'
-
 export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
   id: 25,
   meta: {
@@ -21,7 +19,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
     parent: {
       id: 3,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
@@ -33,8 +31,6 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
   last_updated_at: '2023-12-15T14:47:27.346523Z',
   title: 'Metrics documentation',
   body: '<p>Here we outline a list of metrics available in the UKHSA data dashboard. Click to view more information about a metric</p>',
-  related_links: relatedLinksMock,
-  related_links_layout: 'Footer',
   last_published_at: '2023-10-24T16:09:35.359598+01:00',
 }
 
@@ -67,7 +63,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     page_description: 'This metric shows the count of reported new cases in the last 7 days.',
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
     title: 'New cases 7 days sum',
-    date_posted: '2023-12-07',
     metric: 'COVID-new_cases_7days_sum',
     topic: 'COVID-19',
     metric_group: 'cases',
@@ -105,7 +100,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    related_links_layout: 'Footer',
   },
   {
     id: 27,
@@ -135,7 +129,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     page_description: 'Percentage change between number of deaths by COVID-19 over the last 7 days vs the previous 7',
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
     title: 'Headline ONS deaths 7 day percent change',
-    date_posted: '2023-12-07',
     metric: 'new_deaths_7days_change_percentage',
     topic: 'COVID-19',
     metric_group: 'deaths',
@@ -173,7 +166,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    related_links_layout: 'Footer',
   },
   {
     id: 28,
@@ -204,7 +196,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
       'This metric shows the average number of beds occupied by confirmed COVID-19 patients over the latest 7 days.',
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
     title: 'Covid occupied beds latest',
-    date_posted: '2023-12-07',
     metric: 'covid_occupied_beds_latest',
     topic: 'COVID-19',
     metric_group: 'healthcare',
@@ -234,7 +225,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    related_links_layout: 'Footer',
   },
   {
     id: 29,
@@ -264,7 +254,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     page_description: 'Count of new confirmed positive and negative COVID-19 PCR test results over 7 days',
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
     title: 'New pcr tests daily',
-    date_posted: '2023-12-07',
     metric: 'new_pcr_tests_daily',
     topic: 'COVID-19',
     metric_group: 'testing',
@@ -294,7 +283,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    related_links_layout: 'Footer',
   },
   {
     id: 30,
@@ -324,7 +312,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     page_description: 'This metric shows the percentage of reported new cases in the last 7 days.',
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
     title: 'New cases 7 days percent',
-    date_posted: '2023-12-07',
     metric: 'COVID-new_cases_7days_percent',
     topic: 'COVID-19',
     metric_group: 'cases',
@@ -362,7 +349,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    related_links_layout: 'Footer',
   },
 
   // Generate a set of random pages for testing of pagination
@@ -394,7 +380,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     page_description: faker.lorem.paragraph(),
     last_published_at: '2023-10-24T16:09:35.359598+01:00',
     title: `Metrics child mock ${index + 1}`,
-    date_posted: '2023-12-07',
     metric: 'new_pcr_tests_daily',
     topic: sample(['COVID-19', 'Influenza']) || 'COVID-19',
     metric_group: sample(['cases', 'healthcare', 'testing', 'deaths', 'vaccinations']) || 'cases',
@@ -432,6 +417,5 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    related_links_layout: 'Footer',
   })),
 ]

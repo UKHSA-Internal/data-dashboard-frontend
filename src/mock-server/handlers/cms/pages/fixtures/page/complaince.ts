@@ -18,7 +18,7 @@ export const compliancePageMock: PageResponse<PageType.Common> = {
     parent: {
       id: 3,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
@@ -29,7 +29,6 @@ export const compliancePageMock: PageResponse<PageType.Common> = {
   seo_priority: 0.5,
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'Compliance',
-  date_posted: '2023-08-24',
   body: '<h2>Statement of voluntary application of the Code of Practice for Statistics</h2><p>The government’s coronavirus dashboard publishes up-to-date statistics about the coronavirus (COVID-19) pandemic in the UK. These statistics are not classed as official statistics because...</p>',
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: relatedLinksMock,

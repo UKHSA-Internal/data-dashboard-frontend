@@ -18,7 +18,7 @@ export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
     parent: {
       id: 3,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
@@ -29,7 +29,6 @@ export const accessibilityStatementPageMock: PageResponse<PageType.Common> = {
   seo_priority: 0.5,
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'Accessibility statement',
-  date_posted: '2023-08-24',
   body: '<p>tbc</p>',
   last_published_at: '2023-08-24T16:53:51.464146+01:00',
   related_links: relatedLinksMock,

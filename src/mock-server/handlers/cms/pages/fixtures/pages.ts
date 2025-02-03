@@ -8,7 +8,7 @@ import {
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
-  dashboardMock,
+  feedbackMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -20,29 +20,6 @@ import {
 } from './page'
 import { accessOurDataChildMocks, accessOurDataParentMock } from './page/access-our-data'
 import { weatherHealthAlertsChildMocks, weatherHealthAlertsParentMock } from './page/weather-health-alerts'
-
-export const pagesWithHomeTypeMock: PagesResponse = {
-  meta: {
-    total_count: 1,
-  },
-  items: [
-    {
-      id: dashboardMock.id,
-      meta: {
-        type: dashboardMock.meta.type,
-        detail_url: dashboardMock.meta.detail_url,
-        html_url: dashboardMock.meta.html_url,
-        slug: dashboardMock.meta.slug,
-        search_description: dashboardMock.meta.search_description,
-        show_in_menus: dashboardMock.meta.show_in_menus,
-        first_published_at: dashboardMock.meta.first_published_at,
-      },
-      seo_change_frequency: dashboardMock.seo_change_frequency,
-      seo_priority: dashboardMock.seo_priority,
-      title: dashboardMock.title,
-    },
-  ],
-}
 
 export const pagesWithLandingTypeMock: PagesResponse = {
   meta: {
@@ -63,6 +40,29 @@ export const pagesWithLandingTypeMock: PagesResponse = {
       seo_change_frequency: landingPageMock.seo_change_frequency,
       seo_priority: landingPageMock.seo_priority,
       title: landingPageMock.title,
+    },
+  ],
+}
+
+export const pagesWithFeedbackTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: feedbackMock.id,
+      meta: {
+        type: feedbackMock.meta.type,
+        detail_url: feedbackMock.meta.detail_url,
+        html_url: feedbackMock.meta.html_url,
+        slug: feedbackMock.meta.slug,
+        show_in_menus: feedbackMock.meta.show_in_menus,
+        first_published_at: feedbackMock.meta.first_published_at,
+        search_description: feedbackMock.meta.search_description,
+      },
+      seo_change_frequency: feedbackMock.seo_change_frequency,
+      seo_priority: feedbackMock.seo_priority,
+      title: feedbackMock.title,
     },
   ],
 }
@@ -418,7 +418,6 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       topic,
       metric,
       last_published_at,
-      date_posted,
       body,
     }) => ({
       id,
@@ -431,14 +430,12 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       topic,
       metric,
       last_published_at,
-      date_posted,
       body,
     })
   ),
 }
 
 const items = [
-  ...pagesWithHomeTypeMock.items,
   ...pagesWithLandingTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithCompositeTypeMock.items,
@@ -447,6 +444,7 @@ const items = [
   ...pagesWithWhatsNewChildTypeMock.items,
   ...pagesWithMetricsParentTypeMock.items,
   ...pagesWithMetricsChildTypeMock.items,
+  ...pagesWithFeedbackTypeMock.items,
 ]
 
 export const allPagesMock: PagesResponse = {
