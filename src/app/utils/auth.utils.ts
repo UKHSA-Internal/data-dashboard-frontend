@@ -8,7 +8,7 @@ export const config = {
     CognitoProvider({
       clientId: process.env.AUTH_CLIENT_ID,
       clientSecret: process.env.AUTH_CLIENT_SECRET,
-      issuer: process.env.AUTH_ISSUER,
+      issuer: process.env.AUTH_CLIENT_URL,
     }),
   ],
   callbacks: {
