@@ -27,7 +27,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
     options.splice(optionIndex, 1)
 
     options.map((option) => {
-      var nonSelectedContent = document.getElementById(`${option.value}-${chartIdentifier}-content`)
+      const nonSelectedContent = document.getElementById(`${option.value}-${chartIdentifier}-content`)
       if (nonSelectedContent) {
         nonSelectedContent.setAttribute('data-state', 'inactive')
       }
@@ -52,8 +52,10 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
       className={className}
       role="tab"
     >
-      {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps) => (
-        <option value={value}>{displayText}</option>
+      {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
+        <option key={index} value={value}>
+          {displayText}
+        </option>
       ))}
     </select>
   )

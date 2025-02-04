@@ -131,32 +131,21 @@ export const renderCard = (
                             </span>
                           </Link>
                         </TabsTrigger>
-                        <TabsTrigger
-                          asChild
-                          value="download"
-                          className="hidden sm:block"
-                          id={`#download-${kebabCase(column.value.title)}-trigger`}
-                        >
+                        <TabsTrigger asChild value="download" className="hidden sm:block">
                           <Link href={`#download-${kebabCase(column.value.title)}`}>
                             <span>Download</span>
                           </Link>
                         </TabsTrigger>
-                        <TabsTrigger
-                          asChild
-                          value="about"
-                          className="hidden sm:block"
-                          id={`#about-${kebabCase(column.value.title)}-trigger`}
-                        >
+                        <TabsTrigger asChild value="about" className="hidden sm:block">
                           <Link href={`#about-${kebabCase(column.value.title)}`}>
                             <span>About</span>
                           </Link>
                         </TabsTrigger>
-                        <TabsTrigger asChild value="dropdown" id={`#dropdown-${kebabCase(column.value.title)}-trigger`}>
-                          <DropdownTab
-                            className="govuk-select block sm:hidden"
-                            chartIdentifier={kebabCase(column.value.title)}
-                          />
-                        </TabsTrigger>
+
+                        <DropdownTab
+                          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+                          chartIdentifier={kebabCase(column.value.title)}
+                        />
                       </TabsList>
                       <TabsContent
                         value="chart"
