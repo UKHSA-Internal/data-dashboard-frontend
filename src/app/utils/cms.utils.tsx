@@ -163,13 +163,12 @@ export const renderCard = (
                             <span>About</span>
                           </Link>
                         </TabsTrigger>
-
-                        <DropdownTab
-                          aria-label="Select for selecting chart content"
-                          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-                          chartIdentifier={kebabCase(column.value.title)}
-                        />
                       </TabsList>
+                      <DropdownTab
+                        aria-label="Select for selecting chart content"
+                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+                        chartIdentifier={kebabCase(column.value.title)}
+                      />
                       <TabsContent
                         value="chart"
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"

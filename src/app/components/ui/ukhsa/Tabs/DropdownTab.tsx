@@ -51,6 +51,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
       onChange={onChangeFunction}
       className={className}
       data-testid="DropdownSelect"
+      aria-label="Label for the select element"
     >
       {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
         <option key={`option-${index}`} value={value}>
