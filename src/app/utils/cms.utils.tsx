@@ -150,6 +150,7 @@ export const renderCard = (
                         />
                       </TabsList>
                       <TabsContent
+                        aria-hidden
                         value="chart"
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
                         data-type="chart"
@@ -177,6 +178,7 @@ export const renderCard = (
                         </AreaSelectorLoader>
                       </TabsContent>
                       <TabsContent
+                        aria-hidden
                         value="table"
                         className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] min-h-[var(--ukhsa-chart-card-tab-min-height)] overflow-y-auto no-js:mb-4"
                         id={`table-${kebabCase(column.value.title)}-content`}
@@ -190,6 +192,7 @@ export const renderCard = (
                         <Table data={column.value} size={size} />
                       </TabsContent>
                       <TabsContent
+                        aria-hidden
                         value="download"
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
                         id={`download-${kebabCase(column.value.title)}-content`}
@@ -203,6 +206,7 @@ export const renderCard = (
                         <Download data={column.value} />
                       </TabsContent>
                       <TabsContent
+                        aria-hidden
                         value="about"
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
                         id={`about-${kebabCase(column.value.title)}-content`}

@@ -40,7 +40,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
   }
 
   const onChangeFunction = async (optionSelected: ChangeEvent<HTMLSelectElement>) => {
-    optionSelected.preventDefault
+    optionSelected.preventDefault()
     await displayCorrespondingContent(optionSelected.target.value)
   }
 
@@ -53,7 +53,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
       role="tab"
     >
       {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
-        <option key={index} value={value}>
+        <option key={`option-${index}`} value={value}>
           {displayText}
         </option>
       ))}

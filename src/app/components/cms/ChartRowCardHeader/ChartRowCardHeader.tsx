@@ -8,7 +8,7 @@ interface ChartRowCardHeaderProps {
   id: string
 }
 
-export async function ChartRowCardHeader({ children, id, title }: ChartRowCardHeaderProps) {
+export async function ChartRowCardHeader({ children, id, title }: Readonly<ChartRowCardHeaderProps>) {
   const [, areaName] = getAreaSelector()
 
   return (
