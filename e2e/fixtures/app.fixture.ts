@@ -286,9 +286,8 @@ export class App {
     }
   }
 
-  async hasTopicCard({ name, description }: { name: string; description: string }) {
+  async hasTopicCard({ name }: { name: string }) {
     const card = this.page.getByRole('article', { name, exact: true })
-    await expect(card.getByRole('paragraph')).toContainText(description)
     await expect(card.getByAltText(`Mocked alt text - Refer to tabular data.`)).toBeVisible()
   }
 

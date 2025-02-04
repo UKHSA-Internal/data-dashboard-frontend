@@ -50,7 +50,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
       defaultValue={`#chart-${chartIdentifier}`}
       onChange={onChangeFunction}
       className={className}
-      role="tab"
+      data-testid="DropdownSelect"
     >
       {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
         <option key={`option-${index}`} value={value}>
