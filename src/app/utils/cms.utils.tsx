@@ -38,6 +38,7 @@ export const renderSection = (
   { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number]
 ) => (
   <div
+    id={kebabCase(heading)}
     key={id}
     className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
     data-testid={`section-${kebabCase(heading)}`}
