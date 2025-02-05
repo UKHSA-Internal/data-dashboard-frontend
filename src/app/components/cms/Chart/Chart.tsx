@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { ChartSchemas } from '@/api/models/cms/Page'
+import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -12,7 +12,7 @@ import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof ChartSchemas>['value']
+  data: z.infer<typeof ChartCardSchemas>['value']
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout, or half/third layouts for landiing page  */
   size: 'narrow' | 'wide' | 'half' | 'third'
