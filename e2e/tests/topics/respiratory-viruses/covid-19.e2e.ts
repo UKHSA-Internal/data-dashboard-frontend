@@ -218,6 +218,62 @@ test.describe('COVID-19 page - mobile @mobileOnly', () => {
     await covid19Page.goto()
     await app.hasNav()
   })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(
+        [
+          'cases-by-specimen-date',
+          '7-day-case-rates-by-specimen-date',
+          'case-rates-by-age',
+          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
+          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
+          'patients-in-hospital',
+          'admissions-rate-by-age',
+          'patients-in-mechanical-ventilation-beds',
+          'total-daily-number-of-pcr-tests-reported',
+          'weekly-positivity-of-people-receiving-a-pcr-test',
+          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
+          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
+          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
+          'spring-booster-vaccination-uptake-75-by-vaccination-date',
+        ],
+        'csv',
+        'mobile'
+      )
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(
+        [
+          'cases-by-specimen-date',
+          '7-day-case-rates-by-specimen-date',
+          'case-rates-by-age',
+          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
+          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
+          'patients-in-hospital',
+          'admissions-rate-by-age',
+          'patients-in-mechanical-ventilation-beds',
+          'total-daily-number-of-pcr-tests-reported',
+          'weekly-positivity-of-people-receiving-a-pcr-test',
+          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
+          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
+          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
+          'spring-booster-vaccination-uptake-75-by-vaccination-date',
+        ],
+        'json',
+        'mobile'
+      )
+    })
+  })
 })
 
 test.describe('COVID-19 page - tablet @tabletOnly', () => {
@@ -250,7 +306,8 @@ test.describe('COVID-19 page - tablet @tabletOnly', () => {
           'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
           'spring-booster-vaccination-uptake-75-by-vaccination-date',
         ],
-        'csv'
+        'csv',
+        'tablet'
       )
     })
   })
@@ -277,7 +334,8 @@ test.describe('COVID-19 page - tablet @tabletOnly', () => {
           'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
           'spring-booster-vaccination-uptake-75-by-vaccination-date',
         ],
-        'json'
+        'json',
+        'tablet'
       )
     })
   })
@@ -313,7 +371,8 @@ test.describe('COVID-19 page - desktop @desktopOnly', () => {
           'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
           'spring-booster-vaccination-uptake-75-by-vaccination-date',
         ],
-        'csv'
+        'csv',
+        'desktop'
       )
     })
   })
@@ -340,7 +399,8 @@ test.describe('COVID-19 page - desktop @desktopOnly', () => {
           'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
           'spring-booster-vaccination-uptake-75-by-vaccination-date',
         ],
-        'json'
+        'json',
+        'desktop'
       )
     })
   })
@@ -371,7 +431,8 @@ test.describe('COVID-19 page - no JS', () => {
           'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
           'spring-booster-vaccination-uptake-75-by-vaccination-date',
         ],
-        'csv'
+        'csv',
+        'desktop'
       )
     })
   })
@@ -398,7 +459,8 @@ test.describe('COVID-19 page - no JS', () => {
           'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
           'spring-booster-vaccination-uptake-75-by-vaccination-date',
         ],
-        'json'
+        'json',
+        'desktop'
       )
     })
   })

@@ -171,6 +171,45 @@ test.describe('Influenza page - mobile @mobileOnly', () => {
     await influenzaPage.goto()
     await app.hasNav()
   })
+  test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(
+        [
+          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-icu-admission-rates-by-age',
+          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+        ],
+        'json',
+        'mobile'
+      )
+    })
+  })
+
+  test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(
+        [
+          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+          'line-chart-comparing-influenza-icu-admission-rates-by-age',
+          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+        ],
+        'csv',
+        'mobile'
+      )
+    })
+  })
 })
 
 test.describe('Influenza page - tablet @tabletOnly', () => {
@@ -195,7 +234,8 @@ test.describe('Influenza page - tablet @tabletOnly', () => {
           'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
           'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
         ],
-        'json'
+        'json',
+        'tablet'
       )
     })
   })
@@ -214,7 +254,8 @@ test.describe('Influenza page - tablet @tabletOnly', () => {
           'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
           'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
         ],
-        'csv'
+        'csv',
+        'tablet'
       )
     })
   })
@@ -242,7 +283,8 @@ test.describe('Influenza page - desktop @desktopOnly', () => {
           'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
           'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
         ],
-        'json'
+        'json',
+        'desktop'
       )
     })
   })
@@ -261,7 +303,8 @@ test.describe('Influenza page - desktop @desktopOnly', () => {
           'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
           'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
         ],
-        'csv'
+        'csv',
+        'desktop'
       )
     })
   })
@@ -284,7 +327,8 @@ test.describe('Influenza page - no JS', () => {
           'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
           'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
         ],
-        'csv'
+        'csv',
+        'desktop'
       )
     })
   })
@@ -303,7 +347,8 @@ test.describe('Influenza page - no JS', () => {
           'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
           'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
         ],
-        'json'
+        'json',
+        'desktop'
       )
     })
   })

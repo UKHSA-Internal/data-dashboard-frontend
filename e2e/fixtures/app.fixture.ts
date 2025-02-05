@@ -367,11 +367,15 @@ export class App {
 
   // Chart downloads
 
-  async canDownloadChart(cards: string[], format: 'csv' | 'json') {
+  async canDownloadChart(cards: string[], format: 'csv' | 'json', device: 'desktop' | 'mobile' | 'tablet') {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
-      await card.getByRole('tab', { name: 'Download' }).click()
+      if (device === 'mobile') {
+        await card.getByTestId('DropdownSelect').selectOption('Download')
+      } else {
+        await card.getByRole('tab', { name: 'Download' }).click()
+      }
 
       await card.getByLabel(format.toUpperCase()).click()
 
