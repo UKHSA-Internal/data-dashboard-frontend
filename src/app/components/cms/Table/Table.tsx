@@ -23,6 +23,22 @@ interface TableProps {
   size: 'narrow' | 'wide'
 }
 
+// To receieve axis title, chart.label, & fallback text
+const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
+  if (chartLabel) {
+    console.log('Chart label')
+    return chartLabel
+  }
+
+  if (axisTitle) {
+    console.log('Axis title')
+    return axisTitle
+  }
+
+  console.log('fallback')
+  return fallback
+}
+
 export async function Table({ data: { chart, y_axis, x_axis, title, body }, size }: TableProps) {
   const { t } = await getServerTranslation('common')
 
@@ -91,11 +107,13 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {t('cms.blocks.table.header', {
+                        {/* {t('cms.blocks.table.header', {
                           context:
                             columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
                           value: column.header,
-                        })}
+                        })} */}
+
+                        {getColumnHeader('', '', 'Fallback')}
                       </th>
                     )
                   })}

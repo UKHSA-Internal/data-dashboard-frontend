@@ -47,9 +47,11 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     title: 'Cases by specimen date',
                     body: 'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.',
                     tag_manager_event_id: 'cases_by_specimen_date',
-                    date_prefix: 'Up to',
+                    date_prefix: 'Test date prefix',
                     x_axis: null,
+                    // x_axis_title: 'Test X axis title',
                     y_axis: null,
+                    // y_axis_title: 'Test Y axis title',
                     chart: [
                       {
                         type: 'plot',
