@@ -1,27 +1,21 @@
-import { cache } from 'react'
-
 import { View } from '@/app/components/ui/ukhsa'
+import { PageComponentBaseProps } from '@/app/types'
 import { getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 
-import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+export default async function LandingPage({ searchParams: { section } }: PageComponentBaseProps<{ section?: string }>) {
+  let processedSectionParams: string[] = []
 
-const getPage = cache(getLandingPage)
+  if (section) {
+    processedSectionParams = processedParams(section)
+  }
+  const { body } = await getLandingPage()
 
-export default async function LandingPage() {
-  const { body, related_links_layout: relatedLinksLayout, related_links: relatedLinks } = await getPage()
+  return <View>{body.map(renderSection.bind(null, processedSectionParams))}</View>
+}
 
-  return (
-    <View>
-      {body.map(renderSection)}
+const processedParams = (value: string | string[]) => {
+  const emptyArray: string[] = []
 
-      {relatedLinksLayout === 'Sidebar' && (
-        <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
-          <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-        </div>
-      )}
-
-      {relatedLinksLayout === 'Footer' && <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />}
-    </View>
-  )
+  return emptyArray.concat(value).map((section) => section.toLowerCase())
 }

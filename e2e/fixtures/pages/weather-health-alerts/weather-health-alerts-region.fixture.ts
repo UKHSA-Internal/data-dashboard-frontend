@@ -64,11 +64,13 @@ export class WeatherHealthAlertsRegionPage {
   async hasAlertSummaryList({ type, status, start, end }: SummaryList) {
     const wrapper = this.page.getByLabel('Alert details')
 
+    const expectedStatus = status === 'Green' ? 'No alert' : `${status.toLowerCase()} alert`
+
     await expect(wrapper.getByText('Type')).toBeVisible()
     await expect(wrapper.getByText(type)).toBeVisible()
 
-    await expect(wrapper.getByText('Colour')).toBeVisible()
-    await expect(wrapper.getByText(status)).toBeVisible()
+    await expect(wrapper.getByText('Alert', { exact: true })).toBeVisible()
+    await expect(wrapper.getByText(expectedStatus)).toBeVisible()
 
     await expect(wrapper.getByText('Start')).toBeVisible()
     await expect(wrapper.getByText(start)).toBeVisible()

@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { WithChartCard, WithChartHeadlineAndTrendCard, WithSimplifiedChartCardAndLink } from '@/api/models/cms/Page'
+import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -12,10 +12,7 @@ import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data:
-    | z.infer<typeof WithChartHeadlineAndTrendCard>['value']
-    | z.infer<typeof WithChartCard>['value']
-    | z.infer<typeof WithSimplifiedChartCardAndLink>['value']
+  data: z.infer<typeof ChartCardSchemas>['value']
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout, or half/third layouts for landiing page  */
   size: 'narrow' | 'wide' | 'half' | 'third'
@@ -23,6 +20,25 @@ interface ChartProps {
 
 export async function Chart({ data, size }: ChartProps) {
   const { t } = await getServerTranslation('common')
+
+  let yAxisMinimum = null
+  let yAxisMaximum = null
+  let xAxisTitle = ''
+  let yAxisTitle = ''
+
+  if ('y_axis_minimum_value' in data) {
+    yAxisMinimum = data.y_axis_minimum_value
+  }
+  if ('y_axis_maximum_value' in data) {
+    yAxisMaximum = data.y_axis_maximum_value
+  }
+  if ('x_axis_title' in data) {
+    xAxisTitle = data.x_axis_title || ''
+  }
+  if ('y_axis_title' in data) {
+    yAxisTitle = data.y_axis_title || ''
+  }
+
   const { chart, x_axis, y_axis } = data
 
   const pathname = getPathname()
@@ -40,6 +56,10 @@ export async function Chart({ data, size }: ChartProps) {
       plots,
       x_axis,
       y_axis,
+      x_axis_title: xAxisTitle,
+      y_axis_title: yAxisTitle,
+      y_axis_maximum_value: yAxisMaximum,
+      y_axis_minimum_value: yAxisMinimum,
       chart_width: chartSizes.narrow.width,
       chart_height: chartSizes.narrow.height,
     }),
@@ -52,6 +72,10 @@ export async function Chart({ data, size }: ChartProps) {
         plots,
         x_axis,
         y_axis,
+        x_axis_title: xAxisTitle,
+        y_axis_title: yAxisTitle,
+        y_axis_maximum_value: yAxisMaximum,
+        y_axis_minimum_value: yAxisMinimum,
         chart_width: chartSizes.wide.width,
         chart_height: chartSizes.wide.height,
       })
@@ -64,6 +88,10 @@ export async function Chart({ data, size }: ChartProps) {
       plots,
       x_axis,
       y_axis,
+      x_axis_title: xAxisTitle,
+      y_axis_title: yAxisTitle,
+      y_axis_maximum_value: yAxisMaximum,
+      y_axis_minimum_value: yAxisMinimum,
       chart_width: chartSizes.third.width,
       chart_height: chartSizes.third.height,
     }),
@@ -76,6 +104,10 @@ export async function Chart({ data, size }: ChartProps) {
         plots,
         x_axis,
         y_axis,
+        x_axis_title: xAxisTitle,
+        y_axis_title: yAxisTitle,
+        y_axis_maximum_value: yAxisMaximum,
+        y_axis_minimum_value: yAxisMinimum,
         chart_width: chartSizes.half.width,
         chart_height: chartSizes.half.height,
       })

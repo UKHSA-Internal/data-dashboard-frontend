@@ -52,26 +52,6 @@ export default function SwitchBoard() {
 
           <Details label="Related Links" className="govuk-!-margin-top-5">
             <div className="govuk-radios govuk-radios--small" data-module="govuk-radios">
-              <label className="govuk-label w-full" htmlFor="pages.detail.scenario.relatedLinksLayout.Default">
-                Layout
-              </label>
-              <div className="govuk-radios__item">
-                <input
-                  defaultChecked={pages.detail.scenario.relatedLinksLayout === 'Default'}
-                  className="govuk-radios__input"
-                  id="pages.detail.scenario.relatedLinksLayout.Default"
-                  name="pages.detail.scenario.relatedLinksLayout"
-                  type="radio"
-                  value="Default"
-                />
-                <label
-                  className="govuk-label govuk-radios__label"
-                  htmlFor="pages.detail.scenario.relatedLinksLayout.Default"
-                >
-                  Default
-                </label>
-              </div>
-
               <div className="govuk-radios__item">
                 <input
                   defaultChecked={pages.detail.scenario.relatedLinksLayout === 'Sidebar'}

@@ -8,6 +8,8 @@
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
   "feedbackBannerPhase": "Beta",
+  "heroBannerTitle": "UKHSA data dashboard",
+  "heroBannerAboutLink": "What is the UKHSA data dashboard?",
   "backLink": "Back",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
@@ -19,6 +21,7 @@
   "welcome": "Welcome",
   "pageTitle": "{{title}}",
   "pageTitle_withArea": "{{title}} in {{- areaName}}",
+  "entryTitle": "<0>Entry title: </0><1>{{- value}}</1>",
   "cms": {
     "blocks": {
       "headline": {
@@ -55,7 +58,7 @@
         }
       },
       "timestamp": {
-        "value": "Up to and including {{value, dateShort}}"
+        "value": "{{prefix}} {{value, dateShortest}}"
       },
       "table": {
         "toggle": "View data in a tabular format",
@@ -87,13 +90,6 @@
       "chart": {
         "alt": "{{- body}} - Refer to tabular data."
       }
-    }
-  },
-  "feedback": {
-    "confirmation": {
-      "title": "Form submitted",
-      "subtitle": "Thank you for your feedback",
-      "message": "<0>Thank you for giving feedback on the UKHSA data dashboard. We'll use your comments to help us continually improve the service. We will not be able to get in touch with you about your comments.</0><1>The feedback form is intended for feedback on your experience using the dashboard. If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of the <0>UKHSA webpage</0></1>"
     }
   },
   "cookieBanner": {

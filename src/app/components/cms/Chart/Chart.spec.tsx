@@ -45,6 +45,10 @@ test('renders the chart correctly when successful', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    x_axis_title: '',
+    y_axis_title: '',
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
     chart: [
       {
         id: '',
@@ -60,6 +64,7 @@ test('renders the chart correctly when successful', async () => {
     ],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
+    date_prefix: 'Up to',
     title: '',
     headline_number_columns: [],
   }
@@ -78,8 +83,12 @@ test('renders the chart correctly when successful', async () => {
         geography_type: 'UKHSA Region',
       },
     ],
+    x_axis_title: '',
+    y_axis_title: '',
     x_axis: null,
     y_axis: null,
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -106,6 +115,10 @@ test('renders the chart by geography and geography type when both are present in
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    x_axis_title: '',
+    y_axis_title: '',
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
     chart: [
       {
         id: '',
@@ -121,6 +134,7 @@ test('renders the chart by geography and geography type when both are present in
     ],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
+    date_prefix: 'Up to',
     title: '',
     headline_number_columns: [],
   }
@@ -141,6 +155,10 @@ test('renders the chart by geography and geography type when both are present in
     ],
     x_axis: null,
     y_axis: null,
+    x_axis_title: '',
+    y_axis_title: '',
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -175,6 +193,7 @@ test('full width charts should also have an acompanying narrow version for mobil
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
+    date_prefix: 'Up to',
     title: '',
     headline_number_columns: [],
   }
@@ -215,6 +234,7 @@ test('renders a fallback message when the chart requests fail', async () => {
     title: 'Cases by specimen date',
     headline_number_columns: [],
     tag_manager_event_id: '',
+    date_prefix: 'Up to',
   }
 
   const { getByText, getByRole } = render((await Chart({ data, size: 'narrow' })) as ReactElement)
@@ -244,9 +264,14 @@ test('Fallback message with escaped characters', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    x_axis_title: '',
+    y_axis_title: '',
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
+    date_prefix: 'Up to',
     title: 'Cases by specimen date',
     headline_number_columns: [],
   }
