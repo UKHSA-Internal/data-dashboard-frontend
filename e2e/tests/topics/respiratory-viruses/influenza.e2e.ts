@@ -65,6 +65,7 @@ test.describe('Influenza page', () => {
   })
 
   test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
+    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await influenzaPage.goto()
     })
@@ -84,6 +85,7 @@ test.describe('Influenza page', () => {
   })
 
   test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
+    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await influenzaPage.goto()
     })

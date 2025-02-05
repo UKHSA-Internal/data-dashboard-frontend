@@ -323,6 +323,7 @@ test.describe('COVID-19 page - no JS', () => {
   })
 
   test('Downloads json charts', async ({ covid19Page, app }) => {
+    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await covid19Page.goto()
     })

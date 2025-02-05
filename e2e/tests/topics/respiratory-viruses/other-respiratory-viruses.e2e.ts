@@ -84,6 +84,7 @@ test.describe('Other respiratory viruses page', () => {
   })
 
   test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
+    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })
@@ -108,6 +109,7 @@ test.describe('Other respiratory viruses page', () => {
   })
 
   test('Downloads a json version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
+    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })
