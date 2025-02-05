@@ -82,9 +82,26 @@ test.describe('Other respiratory viruses page', () => {
       await app.hasBackToTop()
     })
   })
+})
+
+test.describe('Other respiratory viruses page - mobile @mobileOnly', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
+    await app.hasNav()
+  })
+})
+
+test.describe('Other respiratory viruses page - tablet @tabletOnly', () => {
+  test.use({ viewport: viewports.tablet })
+
+  test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
+    await otherRespiratoryVirusesPage.goto()
+    await app.hasNav()
+  })
 
   test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
-    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })
@@ -109,7 +126,6 @@ test.describe('Other respiratory viruses page', () => {
   })
 
   test('Downloads a json version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
-    test.use({ viewport: viewports.desktop })
     await test.step('loads the page', async () => {
       await otherRespiratoryVirusesPage.goto()
     })
@@ -134,30 +150,60 @@ test.describe('Other respiratory viruses page', () => {
   })
 })
 
-test.describe('Other respiratory viruses page - mobile @mobileOnly', () => {
-  test.use({ viewport: viewports.mobile })
-
-  test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
-    await otherRespiratoryVirusesPage.goto()
-    await app.hasNav()
-  })
-})
-
-test.describe('Other respiratory viruses page - tablet @tabletOnly', () => {
-  test.use({ viewport: viewports.tablet })
-
-  test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
-    await otherRespiratoryVirusesPage.goto()
-    await app.hasNav()
-  })
-})
-
 test.describe('Other respiratory viruses page - desktop @desktopOnly', () => {
   test.use({ viewport: viewports.desktop })
 
   test('displays the navigation on desktop', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
     await app.hasNav()
+  })
+
+  test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
+    await test.step('loads the page', async () => {
+      await otherRespiratoryVirusesPage.goto()
+    })
+    await app.canDownloadChart(
+      [
+        'line-chart-comparing-rsv-hospital-icu-or-hdu-admission-rates-of-positive-cases-per-100-000-population-reported-through-sari-watch-england',
+        'bar-chart-comparing-rsv-hospital-admissions-count-by-week',
+        'bar-chart-comparing-weekly-rsv-icu-hdu-admissions-count-by-week',
+        'line-chart-comparing-adenovirus-test-positivity-count-by-week',
+        'line-chart-comparing-adenovirus-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-h-mpv-test-positivity-count-by-week',
+        'line-chart-comparing-h-mpv-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-parainfluenza-test-positivity-count-by-week',
+        'line-chart-comparing-parainfluenza-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-rhinovirus-test-positivity-count-by-week',
+        'line-chart-comparing-rhinovirus-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-rsv-test-positivity-count-by-week',
+        'line-chart-comparing-rsv-test-positivity-count-by-week-broken-down-by-age',
+      ],
+      'csv'
+    )
+  })
+
+  test('Downloads a json version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
+    await test.step('loads the page', async () => {
+      await otherRespiratoryVirusesPage.goto()
+    })
+    await app.canDownloadChart(
+      [
+        'line-chart-comparing-rsv-hospital-icu-or-hdu-admission-rates-of-positive-cases-per-100-000-population-reported-through-sari-watch-england',
+        'bar-chart-comparing-rsv-hospital-admissions-count-by-week',
+        'bar-chart-comparing-weekly-rsv-icu-hdu-admissions-count-by-week',
+        'line-chart-comparing-adenovirus-test-positivity-count-by-week',
+        'line-chart-comparing-adenovirus-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-h-mpv-test-positivity-count-by-week',
+        'line-chart-comparing-h-mpv-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-parainfluenza-test-positivity-count-by-week',
+        'line-chart-comparing-parainfluenza-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-rhinovirus-test-positivity-count-by-week',
+        'line-chart-comparing-rhinovirus-test-positivity-count-by-week-broken-down-by-age',
+        'line-chart-comparing-rsv-test-positivity-count-by-week',
+        'line-chart-comparing-rsv-test-positivity-count-by-week-broken-down-by-age',
+      ],
+      'json'
+    )
   })
 })
 

@@ -119,11 +119,10 @@ export const renderCard = (
                       <Timestamp data={column.value} size={size} />
                     </ChartRowCardHeader>
                     <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
-                      <TabsList>
+                      <TabsList className="hidden no-js:block sm:block">
                         <TabsTrigger
                           asChild
                           value="chart"
-                          className="hidden sm:block"
                           aria-controls={`chart-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#chart-${kebabCase(column.value.title)}`}>
@@ -133,7 +132,6 @@ export const renderCard = (
                         <TabsTrigger
                           asChild
                           value="table"
-                          className="hidden sm:block"
                           aria-controls={`table-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#table-${kebabCase(column.value.title)}`}>
@@ -146,7 +144,6 @@ export const renderCard = (
                         <TabsTrigger
                           asChild
                           value="download"
-                          className="hidden sm:block"
                           aria-controls={`download-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#download-${kebabCase(column.value.title)}`}>
@@ -156,7 +153,6 @@ export const renderCard = (
                         <TabsTrigger
                           asChild
                           value="about"
-                          className="hidden sm:block"
                           aria-controls={`about-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#about-${kebabCase(column.value.title)}`}>
@@ -166,7 +162,7 @@ export const renderCard = (
                       </TabsList>
                       <DropdownTab
                         aria-label="Select for selecting chart content"
-                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 no-js:hidden sm:hidden"
                         chartIdentifier={kebabCase(column.value.title)}
                       />
                       <TabsContent
