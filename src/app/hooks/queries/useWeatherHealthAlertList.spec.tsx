@@ -1,12 +1,11 @@
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { renderHook } from '@testing-library/react-hooks'
 import { ReactElement, ReactNode } from 'react'
 import { ZodError } from 'zod'
 
 import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { toSlug } from '@/app/utils/app.utils'
-import { waitFor } from '@/config/test-utils'
+import { renderHook, waitFor } from '@/config/test-utils'
 import { fixtures } from '@/mock-server/handlers/alerts/v1/fixtures/list'
 
 jest.mock('@/api/requests/health-alerts/getHealthAlerts', () => ({

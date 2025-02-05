@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
-import { ChartSchemas } from '@/api/models/cms/Page'
+import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { flags } from '@/app/constants/flags.constants'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
@@ -27,7 +27,7 @@ interface ChartProps {
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof ChartSchemas>['value']
+  data: z.infer<typeof ChartCardSchemas>['value']
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a

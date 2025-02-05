@@ -66,6 +66,7 @@ export const mockHeadlineNumbersRowCard = Mock.of<CardType>({
         type: 'column',
         value: {
           title: 'Cases',
+          date_prefix: 'Up to',
           rows: [
             {
               type: 'headline_number',
@@ -94,6 +95,7 @@ export const mockHeadlineNumbersRowCard = Mock.of<CardType>({
         type: 'column',
         value: {
           title: 'Deaths',
+          date_prefix: 'Up to',
           rows: [
             {
               type: 'headline_number',
@@ -122,6 +124,7 @@ export const mockHeadlineNumbersRowCard = Mock.of<CardType>({
         type: 'column',
         value: {
           title: 'Healthcare',
+          date_prefix: 'Up to',
           rows: [
             {
               type: 'headline_number',
@@ -150,6 +153,7 @@ export const mockHeadlineNumbersRowCard = Mock.of<CardType>({
         type: 'column',
         value: {
           title: 'Vaccines',
+          date_prefix: 'Up to',
           rows: [
             {
               type: 'headline_number',
@@ -168,6 +172,7 @@ export const mockHeadlineNumbersRowCard = Mock.of<CardType>({
         type: 'column',
         value: {
           title: 'Testing',
+          date_prefix: 'Up to',
           rows: [
             {
               type: 'percentage_number',
@@ -195,6 +200,7 @@ export const mockHeadlineNumbersRowCardWithOneColumn = Mock.of<CardType>({
         type: 'column',
         value: {
           title: 'Cases',
+          date_prefix: 'Up to',
           rows: [
             {
               type: 'headline_number',

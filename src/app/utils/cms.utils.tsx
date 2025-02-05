@@ -38,6 +38,7 @@ export const renderSection = (
   { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number]
 ) => (
   <div
+    id={kebabCase(heading)}
     key={id}
     className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
     data-testid={`section-${kebabCase(heading)}`}
@@ -84,7 +85,9 @@ export const renderCard = (
           {value.columns.map((column) => (
             <div key={column.id} data-testid={`headline-column-${kebabCase(column.value.title)}`}>
               <h3 className="govuk-body-m mb-2 text-dark-grey md:mb-3">{column.value.title}</h3>
-              <div className="flex flex-col gap-y-2 md:gap-y-4">{column.value.rows.map(renderBlock)}</div>
+              <div className="flex flex-col gap-y-2 md:gap-y-4">
+                {column.value.rows.map((row) => renderBlock({ ...row, date_prefix: column.value.date_prefix }))}
+              </div>
             </div>
           ))}
         </div>
@@ -149,7 +152,9 @@ export const renderCard = (
                         <>
                           <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
                             <div className="flex items-start gap-2">
-                              {column.value.headline_number_columns.map(renderBlock)}
+                              {column.value.headline_number_columns.map((headline_number_columns) =>
+                                renderBlock({ ...headline_number_columns, date_prefix: column.value.date_prefix })
+                              )}
                             </div>
                           </div>
                         </>
@@ -269,11 +274,16 @@ export const renderCard = (
   </div>
 )
 
-export const renderBlock = ({ id, type, value }: z.infer<typeof Blocks>[number]) => (
+export const renderBlock = ({
+  id,
+  type,
+  value,
+  date_prefix,
+}: z.infer<typeof Blocks>[number] & { date_prefix: string }) => (
   <div key={id}>
-    {type === 'percentage_number' && <Percentage data={value} />}
-    {type === 'headline_number' && <Headline data={value} />}
-    {type === 'trend_number' && <Trend data={value} />}
+    {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} />}
+    {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} />}
+    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} />}
   </div>
 )
 
