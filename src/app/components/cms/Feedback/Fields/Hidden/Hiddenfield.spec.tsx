@@ -14,5 +14,6 @@ describe('HiddenField component', () => {
     expect(inputElement).toHaveAttribute('id', cleanName)
     expect(inputElement).toHaveAttribute('value', cleanName)
     expect(inputElement).toHaveClass('govuk-visually-hidden')
+    expect(inputElement).toHaveAttribute('aria-label', 'Unused Hidden Date Input')
   })
 })
