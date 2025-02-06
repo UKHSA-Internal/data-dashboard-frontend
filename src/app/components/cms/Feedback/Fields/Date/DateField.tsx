@@ -9,7 +9,7 @@ interface DateData {
   year: string
 }
 
-export default function DateField({ label, helpText, cleanName, fieldHasError }: Fieldtype) {
+export default function DateField({ label, helpText, cleanName, fieldHasError }: Readonly<Fieldtype>) {
   const [hiddenDateInput, setHiddenDateInput] = useState<string>('')
   const [dateData, setDateData] = useState<DateData>({
     day: '',
