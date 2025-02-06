@@ -190,7 +190,7 @@ test('renders the chart by geography and geography type when both are present in
 })
 
 test('full width charts should also have an acompanying narrow version for mobile viewports', async () => {
-  ;['mock-chart-wide', 'mock-chart-narrow'].forEach((chart) => {
+  ['mock-chart-wide', 'mock-chart-narrow'].forEach((chart) => {
     getChartsMock.mockResolvedValueOnce({
       success: true,
       data: {
