@@ -37,7 +37,13 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
   return (
     <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
       {/* Hidden input field for collecting date in format dd-mm-yyyy */}
-      <input className="govuk-visually-hidden" name={cleanName} type="text" value={hiddenDateInput} />
+      <input
+        aria-label="Unused Hidden Date Input"
+        className="govuk-visually-hidden"
+        name={cleanName}
+        type="text"
+        value={hiddenDateInput}
+      />
       <fieldset className="govuk-fieldset" role="group">
         <legend className="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h2 className="govuk-label-wrapper">
