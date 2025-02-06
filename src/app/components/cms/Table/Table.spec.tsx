@@ -117,6 +117,7 @@ const mockData: ComponentProps<typeof Table>['data'] = {
   y_axis: 'y-axis',
   x_axis: 'x-axis',
   tag_manager_event_id: '',
+  date_prefix: 'Up to and including',
   headline_number_columns: [],
   title: 'Table Title ABC/XYZ',
   body: 'Table Body',

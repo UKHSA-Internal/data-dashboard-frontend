@@ -70,4 +70,13 @@ describe('Dropdownfield Component', () => {
     expect(selectElement).toHaveAttribute('name', 'what_would_you_like_to_see_on_the_dashboard_in_the_future')
     expect(selectElement).toHaveAttribute('id', 'what_would_you_like_to_see_on_the_dashboard_in_the_future')
   })
+
+  it('should render the error message text if the field is required and not completed', () => {
+    render(<DropdownField {...{ ...mockProps, fieldHasError: true }} />)
+
+    const expectedErrorText = 'Please select a value from the dropdown as this field is required'
+
+    // Check if no radio buttons are rendered
+    expect(screen.getByText(expectedErrorText)).toBeInTheDocument()
+  })
 })

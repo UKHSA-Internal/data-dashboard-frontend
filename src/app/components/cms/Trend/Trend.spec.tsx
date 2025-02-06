@@ -32,7 +32,7 @@ describe('Data request is successful', () => {
       },
     })
 
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(getByText('There has been an increase of 592 (3%) compared to the previous 7 days.')).toBeInTheDocument()
   })
@@ -52,7 +52,7 @@ describe('Data request is successful', () => {
       },
     })
 
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(getByText('There has been a decrease of -592 (-3%) compared to the previous 7 days.')).toBeInTheDocument()
   })
@@ -72,7 +72,7 @@ describe('Data request is successful', () => {
       },
     })
 
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(getByText('There has been an increase of 592 (3%) compared to the previous 7 days.')).toBeInTheDocument()
   })
@@ -92,7 +92,7 @@ describe('Data request is successful', () => {
       },
     })
 
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(getByText('There has been an decrease of -592 (-3%) compared to the previous 7 days.')).toBeInTheDocument()
   })
@@ -112,7 +112,7 @@ describe('Data request is successful', () => {
       },
     })
 
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(getByText('There has been no change compared to the previous 7 days.')).toBeInTheDocument()
   })
@@ -132,7 +132,7 @@ describe('Data request is successful', () => {
       },
     })
 
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(
       getByText('There has been an decrease of -592.12 (3.68%) compared to the previous 7 days.')
@@ -153,7 +153,7 @@ describe('Data request is successful', () => {
         direction: 'down',
       },
     })
-    const { getByText } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { getByText } = render((await Trend({ data: mockRequestData, datePrefix: 'Up to' })) as ReactElement)
     const dateElement = getByText('Up to 3 Nov 2023')
     expect(dateElement).toHaveClass('[.ukhsa-chart-card_&]:hidden')
   })
@@ -174,7 +174,7 @@ describe('Data request is unsuccessful', () => {
       ]),
     })
 
-    const { container } = render((await Trend({ data: mockRequestData })) as ReactElement)
+    const { container } = render((await Trend({ data: mockRequestData, datePrefix: '' })) as ReactElement)
 
     expect(container.firstChild).toBeNull()
   })

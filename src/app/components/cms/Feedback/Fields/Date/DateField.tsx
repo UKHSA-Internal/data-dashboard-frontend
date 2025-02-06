@@ -1,19 +1,68 @@
+import clsx from 'clsx'
+import { useEffect, useState } from 'react'
+
 import { Fieldtype } from '../../Feedback'
 
-export default function DateField({ label, helpText, cleanName }: Fieldtype) {
+interface DateData {
+  day: string
+  month: string
+  year: string
+}
+
+export default function DateField({ label, helpText, cleanName, fieldHasError }: Readonly<Fieldtype>) {
+  const [hiddenDateInput, setHiddenDateInput] = useState<string>('')
+  const [dateData, setDateData] = useState<DateData>({
+    day: '',
+    month: '',
+    year: '',
+  })
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target
+
+    setDateData((prev) => ({
+      ...prev,
+      [name]: value,
+    }))
+  }
+
+  useEffect(() => {
+    if (dateData.day && dateData.month && dateData.year) {
+      setHiddenDateInput(`${dateData.day}-${dateData.month}-${dateData.year}`)
+    } else {
+      setHiddenDateInput('')
+    }
+  }, [dateData])
+
   return (
-    <div className="govuk-form-group">
-      {/*Hidden input field for collecting date in format dd-mm-yyyy*/}
-      <input className="govuk-visually-hidden" name={cleanName} id={cleanName} type="text" />
+    <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
+      {/* Hidden input field for collecting date in format dd-mm-yyyy */}
+      <input
+        aria-label="Unused Hidden Date Input"
+        className="govuk-visually-hidden"
+        name={cleanName}
+        type="text"
+        value={hiddenDateInput}
+      />
       <fieldset className="govuk-fieldset" role="group">
         <legend className="govuk-fieldset__legend govuk-fieldset__legend--l">
           <h2 className="govuk-label-wrapper">
-            <label className="govuk-label govuk-label--m" htmlFor={cleanName}>
+            <label
+              className={clsx('govuk-label govuk-label--m', { 'govuk-error-message': fieldHasError })}
+              htmlFor={cleanName}
+            >
               {label}
             </label>
           </h2>
           {helpText.length > 0 ? <div className="govuk-hint">{helpText}</div> : null}
         </legend>
+
+        {fieldHasError ? (
+          <p id="multiline-error" className="govuk-error-message">
+            <span className="govuk-visually-hidden">Error:</span> Please enter a valid date
+          </p>
+        ) : null}
+
         <div className="govuk-date-input" id={cleanName}>
           <div className="govuk-date-input__item">
             <div className="govuk-form-group">
@@ -21,11 +70,17 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
                 Day
               </label>
               <input
-                className="govuk-input govuk-date-input__input govuk-input--width-2"
+                className={clsx('govuk-input govuk-date-input__input govuk-input--width-2', {
+                  'govuk-textarea--error': fieldHasError,
+                })}
                 id="day"
-                name={`${cleanName}-day`}
+                name="day" // Bind name directly to the key
+                value={dateData.day} // Bind to dateData.day
+                onChange={handleChange}
                 type="number"
                 inputMode="numeric"
+                min={1}
+                max={31}
               />
             </div>
           </div>
@@ -35,11 +90,17 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
                 Month
               </label>
               <input
-                className="govuk-input govuk-date-input__input govuk-input--width-2"
+                className={clsx('govuk-input govuk-date-input__input govuk-input--width-2', {
+                  'govuk-textarea--error': fieldHasError,
+                })}
                 id="month"
-                name={`${cleanName}-month`}
+                name="month"
+                value={dateData.month}
+                onChange={handleChange}
                 type="number"
                 inputMode="numeric"
+                min={1}
+                max={12}
               />
             </div>
           </div>
@@ -49,11 +110,17 @@ export default function DateField({ label, helpText, cleanName }: Fieldtype) {
                 Year
               </label>
               <input
-                className="govuk-input govuk-date-input__input govuk-input--width-4"
+                className={clsx('govuk-input govuk-date-input__input govuk-input--width-4', {
+                  'govuk-textarea--error': fieldHasError,
+                })}
                 id="year"
-                name={`${cleanName}-year`}
+                name="year"
+                value={dateData.year}
+                onChange={handleChange}
                 type="number"
                 inputMode="numeric"
+                min={1900}
+                max={2100}
               />
             </div>
           </div>
