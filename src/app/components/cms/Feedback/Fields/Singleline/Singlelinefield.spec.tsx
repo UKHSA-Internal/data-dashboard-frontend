@@ -43,4 +43,13 @@ describe('SinglelineField', () => {
     expect(textarea).toHaveAttribute('id', mockProps.cleanName)
     expect(textarea).toHaveAttribute('rows', '1') // Ensure rows attribute is set to 1
   })
+
+  it('should render the error message text if the field is required and not completed', () => {
+    render(<SinglelineField {...{ ...mockProps, fieldHasError: true }} />)
+
+    const expectedErrorText = 'Please enter a value as this field is required'
+
+    // Check if no radio buttons are rendered
+    expect(screen.getByText(expectedErrorText)).toBeInTheDocument()
+  })
 })

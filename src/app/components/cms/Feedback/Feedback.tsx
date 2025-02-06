@@ -149,10 +149,18 @@ export const renderFormFields = (
         />
       )}
 
-      {fieldType === 'email' && <EmailField label={label} helpText={helpText} cleanName={cleanName} />}
+      {fieldType === 'email' && (
+        <EmailField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
+      )}
 
       {fieldType === 'checkbox' && (
-        <CheckboxField label={label} helpText={helpText} cleanName={cleanName} defaultValue={defaultValue} />
+        <CheckboxField
+          label={label}
+          helpText={helpText}
+          cleanName={cleanName}
+          defaultValue={defaultValue}
+          fieldHasError={fieldHasError}
+        />
       )}
 
       {fieldType === 'checkboxes' && (
@@ -162,10 +170,13 @@ export const renderFormFields = (
           cleanName={cleanName}
           choicesList={choicesList}
           defaultValuesList={defaultValuesList}
+          fieldHasError={fieldHasError}
         />
       )}
 
-      {fieldType === 'number' && <NumberField label={label} helpText={helpText} cleanName={cleanName} />}
+      {fieldType === 'number' && (
+        <NumberField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
+      )}
 
       {fieldType === 'url' && (
         <UrlField label={label} helpText={helpText} cleanName={cleanName} fieldHasError={fieldHasError} />
@@ -176,7 +187,13 @@ export const renderFormFields = (
       )}
 
       {fieldType === 'dropdown' && (
-        <DropdownField label={label} helpText={helpText} cleanName={cleanName} choicesList={choicesList} />
+        <DropdownField
+          label={label}
+          helpText={helpText}
+          cleanName={cleanName}
+          choicesList={choicesList}
+          fieldHasError={fieldHasError}
+        />
       )}
     </Fragment>
   )
