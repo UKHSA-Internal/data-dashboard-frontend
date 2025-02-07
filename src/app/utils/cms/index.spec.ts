@@ -40,6 +40,7 @@ const getPages = jest.mocked(client)
 
 beforeEach(() => {
   jest.clearAllMocks()
+  console.error = jest.fn()
 })
 
 describe('validateUrlWithCms', () => {
