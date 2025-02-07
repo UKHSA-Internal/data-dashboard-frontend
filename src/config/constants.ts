@@ -60,3 +60,8 @@ export const chartSizes = {
  * The default file format in which charts are displayed as
  */
 export const chartFormat = 'svg'
+
+/**
+ * Default Auth Provider
+ */
+export const defaultAuthProvider = 'cognito'
