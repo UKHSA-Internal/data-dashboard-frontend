@@ -1,20 +1,36 @@
-import { auth } from '@/app/utils/auth.utils'
+import { auth, signIn, signOut } from '@/auth'
+import { defaultAuthProvider } from '@/config/constants'
 
 export default async function LoginButton() {
   const session = await auth()
-  console.log('session: ', session)
+
   if (session) {
     return (
       <>
         Signed in as {session?.user?.email} <br />
-        <a href="/api/auth/signout">Sign out</a>
+        <form
+          action={async () => {
+            'use server'
+            await signOut()
+          }}
+        >
+          <button type="submit">Sign out</button>
+        </form>
       </>
     )
   }
+
   return (
     <>
       Not signed in <br />
-      <a href="/api/auth/signin">Sign in</a>
+      <form
+        action={async () => {
+          'use server'
+          await signIn(defaultAuthProvider)
+        }}
+      >
+        <button type="submit">Sign in</button>
+      </form>
     </>
   )
 }
