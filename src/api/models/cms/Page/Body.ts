@@ -61,7 +61,7 @@ export const WithChartCard = z.object({
   value: chartCardValues,
 })
 
-export const WithSimplifiedChartCardAndLink = z.object({
+const WithSimplifiedChartCardAndLink = z.object({
   id: z.string(),
   type: z.enum(['simplified_chart_with_link']),
   value: chartCardValues
