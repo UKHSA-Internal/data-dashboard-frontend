@@ -46,6 +46,32 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Cases by specimen date',
                     body: 'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.',
+                    contextual_urls: [
+                      {
+                        type: 'contextual_url',
+                        value: {
+                          url_display_text: 'Link 1',
+                          url: 'https://www.google.com',
+                        },
+                        id: 'd3fef747-7c5b-46d2-9ea0-da08ee98164d',
+                      },
+                      {
+                        type: 'contextual_url',
+                        value: {
+                          url_display_text: 'Google Page',
+                          url: 'https://www.google.com',
+                        },
+                        id: '46ce6b14-ace8-46f0-af98-ee69afc79382',
+                      },
+                      {
+                        type: 'contextual_url',
+                        value: {
+                          url_display_text: 'Link 2',
+                          url: 'https://www.google.com',
+                        },
+                        id: '45cc9523-d471-473a-af16-4bdbb9618071',
+                      },
+                    ],
                     tag_manager_event_id: 'cases_by_specimen_date',
                     date_prefix: 'Up to',
                     x_axis: null,
