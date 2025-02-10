@@ -24,7 +24,7 @@ describe('DropdownTab Component', () => {
         chartIdentifier={chartIdentifier}
       />
     )
-    expect(screen.getByTestId('DropdownSelect')).toBeInTheDocument()
+    expect(screen.getByRole('combobox')).toBeInTheDocument()
   })
 
   it('renders all dropdown options', () => {
@@ -48,7 +48,7 @@ describe('DropdownTab Component', () => {
       />
     )
 
-    const dropdown = screen.getByTestId('DropdownSelect') as HTMLSelectElement
+    const dropdown = screen.getByRole('combobox') as HTMLSelectElement
     fireEvent.change(dropdown, { target: { value: 'table' } })
 
     expect(document.getElementById(`chart-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
@@ -63,7 +63,7 @@ describe('DropdownTab Component', () => {
       />
     )
 
-    fireEvent.change(screen.getByTestId('DropdownSelect'), { target: { value: 'download' } })
+    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'download' } })
 
     expect(document.getElementById(`chart-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
     expect(document.getElementById(`table-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
