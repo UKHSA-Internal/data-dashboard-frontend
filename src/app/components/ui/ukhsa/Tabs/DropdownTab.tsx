@@ -50,7 +50,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
       defaultValue={`#chart-${chartIdentifier}`}
       onChange={onChangeFunction}
       className={className}
-      aria-label="Label for the select element"
+      aria-label={`${chartIdentifier} select element`}
     >
       {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
         <option key={`option-${index}`} value={value}>

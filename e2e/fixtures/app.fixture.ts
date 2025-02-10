@@ -372,7 +372,7 @@ export class App {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
       if (device === 'mobile') {
-        await card.getByTestId('DropdownSelect').selectOption('Download')
+        await card.getByRole('combobox', { name: `${name} select element` }).selectOption('Download')
       } else {
         await card.getByRole('tab', { name: 'Download' }).click()
       }
