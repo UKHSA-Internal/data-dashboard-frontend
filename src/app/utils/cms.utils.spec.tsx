@@ -213,6 +213,7 @@ describe('Metrics', () => {
           body: 'Virus tests positivity',
         },
         id: '36746bcd-1dce-4e5e-81f8-60c8b9994540',
+        date_prefix: '',
       })
     )
     expect(screen.getByText('Mocked percentage number')).toBeInTheDocument()
@@ -228,6 +229,7 @@ describe('Metrics', () => {
           body: 'Autumn booster',
         },
         id: 'ae3344f7-5b23-4977-bea9-2e1ccd84eb50',
+        date_prefix: '',
       })
     )
     expect(screen.getByText('Mocked headline number')).toBeInTheDocument()
@@ -244,6 +246,7 @@ describe('Metrics', () => {
           percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
         },
         id: '8c42a86e-f675-41d0-a65a-633c20ac98e3',
+        date_prefix: '',
       })
     )
     expect(screen.getByText('Mocked trend number')).toBeInTheDocument()
