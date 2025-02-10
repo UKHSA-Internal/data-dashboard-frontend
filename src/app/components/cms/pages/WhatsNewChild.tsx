@@ -8,6 +8,10 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
 
+import { BackLink } from '../../ui/ukhsa/View/BackLink/Backlink'
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
 export default async function WhatsNewChildPage({
   slug,
   searchParams,
@@ -26,7 +30,10 @@ export default async function WhatsNewChildPage({
   const backLink = searchParams.returnUrl || extractRootSlug(slug)
 
   return (
-    <View backLink={backLink} lastUpdated={lastUpdated} heading={title}>
+    <View>
+      <BackLink backlink={backLink} />
+      <Heading heading={title} />
+      <LastUpdated lastUpdated={lastUpdated} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <small className="govuk-caption-m govuk-!-margin-bottom-3">
