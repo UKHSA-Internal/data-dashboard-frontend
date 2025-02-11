@@ -5,22 +5,26 @@ interface AboutProps {
   contextualUrls?: ContextualUrl
 }
 
-const About = ({ description, contextualUrls }: AboutProps) => {
-  const displayLinks = () => {
-    if (contextualUrls) {
-      return contextualUrls.map((option, index) => (
-        <a key={`about-link-${index}`} href={option.value.url} target="_blank">
-          <li>{option.value.url_display_text}</li>
-        </a>
-      ))
-    }
+const displayLinks = (contextualUrls: ContextualUrl) => {
+  if (contextualUrls) {
+    return contextualUrls.map((option, index) => (
+      <a key={`about-link-${index}`} href={option.value.url} target="_blank">
+        <li className="govuk-link">{option.value.url_display_text}</li>
+      </a>
+    ))
   }
+}
 
+const About = ({ description, contextualUrls }: AboutProps) => {
   return (
     <div>
       <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
-      <p>Further information links:</p>
-      <ul>{displayLinks()}</ul>
+      {contextualUrls ? (
+        <div>
+          <h2 className="default-govuk-header mb-2 font-bold">Further information links:</h2>
+          <ul>{displayLinks(contextualUrls)}</ul>
+        </div>
+      ) : null}
     </div>
   )
 }
