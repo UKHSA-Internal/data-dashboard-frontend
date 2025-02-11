@@ -3,6 +3,60 @@ import 'next-auth/jwt'
 import NextAuth from 'next-auth'
 import type { Provider } from 'next-auth/providers'
 import Cognito from 'next-auth/providers/cognito'
+import { z } from 'zod'
+
+const wellKnownEndpointsSchema = z.object({ token_endpoint: z.string(), revocation_endpoint: z.string() })
+
+export async function revokeAndSignOut() {
+  try {
+    const session = await auth()
+
+    if (!session?.refreshToken) {
+      return { error: 'No refresh token available' }
+    }
+
+    console.log('User refresh token:', session.refreshToken)
+
+    // Fetch the OIDC configuration to get the revocation endpoint
+    const wellKnownResponse = await fetch(`${process.env.AUTH_CLIENT_URL}/.well-known/openid-configuration`)
+    const wellKnownEndpoints = await wellKnownEndpointsSchema.parseAsync(await wellKnownResponse.json())
+
+    console.log('Revocation endpoint:', wellKnownEndpoints.revocation_endpoint)
+
+    // Send a revoke request to Cognito
+    const revokeResponse = await fetch(wellKnownEndpoints.revocation_endpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${process.env.AUTH_CLIENT_ID}:${process.env.AUTH_CLIENT_SECRET}`).toString(
+          'base64'
+        )}`,
+      },
+      body: new URLSearchParams({
+        token: session.refreshToken,
+        token_type_hint: 'refresh_token',
+        client_id: process.env.AUTH_CLIENT_ID!,
+        client_secret: process.env.AUTH_CLIENT_SECRET!,
+      }).toString(),
+    })
+
+    if (!revokeResponse.ok) {
+      const errorData = await revokeResponse.json()
+      console.error('Error revoking token:', errorData)
+      return { error: 'Failed to revoke token', details: errorData }
+    }
+
+    console.log('Token successfully revoked')
+
+    // Call NextAuth's signOut method
+    await signOut()
+
+    return { success: true, message: 'Successfully signed out and revoked token' }
+  } catch (error) {
+    console.error('Unexpected error in revoke handler:', error)
+    return { error: 'Internal Server Error' }
+  }
+}
 
 const providers: Provider[] = [
   Cognito({
