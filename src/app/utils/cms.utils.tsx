@@ -119,7 +119,7 @@ export const renderCard = (
                     <ChartRowCardHeader id={column.id} title={column.value.title}>
                       <Timestamp data={column.value} size={size} />
                     </ChartRowCardHeader>
-                    <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
+                    <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
                       <TabsList className="hidden no-js:block sm:block">
                         <TabsTrigger
                           asChild

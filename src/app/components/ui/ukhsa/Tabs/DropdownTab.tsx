@@ -1,5 +1,7 @@
 'use client'
-import { ChangeEvent } from 'react'
+import React, { ChangeEvent } from 'react'
+
+import { TabsContext } from './Tabs'
 
 interface DropdownProps {
   className: string
@@ -12,6 +14,11 @@ interface DropdownOptionsProps {
 }
 
 const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
+  const context = React.useContext(TabsContext)
+  if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
+
+  const [, setSelectedTab] = context
+
   const dropdownOptions: DropdownOptionsProps[] = [
     { value: 'chart', displayText: 'Chart' },
     { value: 'table', displayText: 'Tabular Data' },
@@ -19,29 +26,9 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
     { value: 'about', displayText: 'About' },
   ]
 
-  const displayCorrespondingContent = async (selectedValue: string) => {
-    // create a new array with from the original dropDown options. this prevents the splice from altering the original array data.
-    const options = dropdownOptions.slice()
-    // find the index of the selectedValue and remove the selectedValue object from the array.
-    const optionIndex = options.findIndex((option) => option.value === selectedValue)
-    options.splice(optionIndex, 1)
-
-    options.map((option) => {
-      const nonSelectedContent = document.getElementById(`${option.value}-${chartIdentifier}-content`)
-      if (nonSelectedContent) {
-        nonSelectedContent.setAttribute('data-state', 'inactive')
-      }
-    })
-
-    const selectedContent = document.getElementById(`${selectedValue}-${chartIdentifier}-content`)
-    if (selectedContent) {
-      selectedContent.setAttribute('data-state', 'active')
-    }
-  }
-
   const onChangeFunction = async (optionSelected: ChangeEvent<HTMLSelectElement>) => {
     optionSelected.preventDefault()
-    await displayCorrespondingContent(optionSelected.target.value)
+    setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
   }
 
   return (

@@ -4,7 +4,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import clsx from 'clsx'
 import * as React from 'react'
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 
 function useTabContent(initialValue = 'chart') {
   const [selectedTab, setSelectedTab] = useState(initialValue)
@@ -22,14 +22,22 @@ function useTabContent(initialValue = 'chart') {
   return [selectedTab, updateTab] as const
 }
 
+export const TabsContext = React.createContext<ReturnType<typeof useTabContent> | null>(null)
+
 const Tabs = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Root>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Root>
->(({ className, children, activationMode = 'manual', ...props }, ref) => (
-  <TabsPrimitive.Root ref={ref} activationMode={activationMode} className={clsx('', className)} {...props}>
-    {children}
-  </TabsPrimitive.Root>
-))
+>(({ className, children, activationMode = 'manual', ...props }, ref) => {
+  const tabContentState = useTabContent(props.defaultValue)
+
+  return (
+    <TabsContext.Provider value={tabContentState}>
+      <TabsPrimitive.Root ref={ref} activationMode={activationMode} className={clsx('', className)} {...props}>
+        {children}
+      </TabsPrimitive.Root>
+    </TabsContext.Provider>
+  )
+})
 
 const TabsList = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.List>,
@@ -43,7 +51,10 @@ const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-  const [selectedTab, setSelectedTab] = useTabContent()
+  const context = React.useContext(TabsContext)
+  if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
+
+  const [, setSelectedTab] = context
 
   return (
     <TabsPrimitive.Trigger
@@ -85,8 +96,12 @@ const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
   React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
 >(({ className, ...props }, ref) => {
-  const [selectedTab, setSelectedTab] = useTabContent()
+  const context = React.useContext(TabsContext)
+  if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
 
+  const [selectedTab] = context
+
+  console.log(selectedTab)
   return (
     <TabsPrimitive.Content
       forceMount
