@@ -3,9 +3,6 @@ import 'next-auth/jwt'
 import NextAuth from 'next-auth'
 import type { Provider } from 'next-auth/providers'
 import Cognito from 'next-auth/providers/cognito'
-import { z } from 'zod'
-
-const wellKnownEndpointsSchema = z.object({ token_endpoint: z.string(), revocation_endpoint: z.string() })
 
 export async function revokeAndSignOut() {
   try {
@@ -15,16 +12,8 @@ export async function revokeAndSignOut() {
       return { error: 'No refresh token available' }
     }
 
-    console.log('User refresh token:', session.refreshToken)
-
-    // Fetch the OIDC configuration to get the revocation endpoint
-    const wellKnownResponse = await fetch(`${process.env.AUTH_CLIENT_URL}/.well-known/openid-configuration`)
-    const wellKnownEndpoints = await wellKnownEndpointsSchema.parseAsync(await wellKnownResponse.json())
-
-    console.log('Revocation endpoint:', wellKnownEndpoints.revocation_endpoint)
-
     // Send a revoke request to Cognito
-    const revokeResponse = await fetch(wellKnownEndpoints.revocation_endpoint, {
+    const revokeResponse = await fetch(`${process.env.AUTH_DOMAIN}/oauth2/revoke`, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/x-www-form-urlencoded',
