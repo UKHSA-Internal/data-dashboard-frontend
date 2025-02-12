@@ -47,14 +47,12 @@ export async function revokeAndSignOut() {
 
     console.log('Token successfully revoked')
 
-    // Call NextAuth's signOut method
-    await signOut()
-
-    return { success: true, message: 'Successfully signed out and revoked token' }
+    // return { success: true, message: 'Successfully signed out and revoked token' }
   } catch (error) {
     console.error('Unexpected error in revoke handler:', error)
-    return { error: 'Internal Server Error' }
   }
+
+  await signOut()
 }
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
@@ -98,6 +96,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       session.error = token.error
+      session.refreshToken = token.refresh_token
       return session
     },
   },

@@ -30,7 +30,7 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
         client_id: process.env.AUTH_CLIENT_ID!,
         client_secret: process.env.AUTH_CLIENT_SECRET!,
         grant_type: 'refresh_token',
-        refresh_token: token?.refresh_token!,
+        refresh_token: token?.refresh_token ?? '',
       }),
     })
 
@@ -61,12 +61,12 @@ export const config = {
 
 const SECURE_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https://')
 const SESSION_COOKIE = SECURE_COOKIE ? '__Secure-authjs.session-token' : 'authjs.session-token'
-const SESSION_TIMEOUT = 5 * 60 // 5 minutes (in seconds)
-const SIGNIN_SUB_URL = '/api/auth/'
+// const SESSION_TIMEOUT = 5 * 60 // 5 minutes (in seconds)
+const SIGNIN_SUB_URL = '/api/auth/signin'
 const TOKEN_REFRESH_BUFFER_SECONDS = 30 // 30 seconds
 
 function signOut(request: NextRequest) {
-  const response = NextResponse.redirect(new URL('/api/auth/signin', request.url))
+  const response = NextResponse.redirect(new URL(SIGNIN_SUB_URL, request.url))
 
   request.cookies.getAll().forEach((cookie) => {
     if (cookie.name.includes('authjs.session-token')) response.cookies.delete(cookie.name)
@@ -77,10 +77,14 @@ function signOut(request: NextRequest) {
 
 function shouldUpdateToken(token: JWT) {
   const timeInSeconds = Math.floor(Date.now() / 1000)
-  console.log('⁇ Should Update ??', timeInSeconds >= token?.expires_at - TOKEN_REFRESH_BUFFER_SECONDS)
-  return timeInSeconds >= token?.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
+  console.log(
+    '⁇ Should Update ??',
+    token?.expires_at && timeInSeconds >= token?.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
+  )
+  return token?.expires_at && timeInSeconds >= token?.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
 }
 
+// https://github.com/nextauthjs/next-auth/issues/8254#issuecomment-1690474377
 export const middleware: NextMiddleware = async (request: NextRequest) => {
   if (process.env.AUTH_ENABLED !== 'true') {
     return NextResponse.next()
