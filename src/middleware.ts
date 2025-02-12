@@ -1,16 +1,11 @@
 import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server'
 import { encode, getToken, type JWT } from 'next-auth/jwt'
-import { z } from 'zod'
-
-const wellKnownEndpointsSchema = z.object({
-  token_endpoint: z.string(),
-  revocation_endpoint: z.string(),
-})
 
 let isRefreshing = false
 
 export async function refreshAccessToken(token: JWT): Promise<JWT> {
   if (isRefreshing) {
+    console.log('🔁 Already refreshing; returning existing token.')
     return token
   }
 
@@ -18,12 +13,17 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
   isRefreshing = true
 
   try {
-    console.log('⏳ Fetching OIDC well-known endpoints...')
-    const wkeResponse = await fetch(`${process.env.AUTH_CLIENT_URL}/.well-known/openid-configuration`)
-    const { token_endpoint: tokenEndpoint } = await wellKnownEndpointsSchema.parse(await wkeResponse.json())
-    console.log('🔄 Refreshing access token via endpoint:', tokenEndpoint)
+    console.log('🔄 Refreshing access token via endpoint:', `${process.env.AUTH_DOMAIN}/oauth2/token`)
 
-    const response = await fetch(tokenEndpoint, {
+    // Log current token expiry (human-readable)
+    if (token.expires_at) {
+      console.log(
+        `🕗 Current token expiry: ${token.expires_at} (unix:seconds) =>`,
+        new Date(token.expires_at * 1000).toUTCString()
+      )
+    }
+
+    const response = await fetch(`${process.env.AUTH_DOMAIN}/oauth2/token`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
       body: new URLSearchParams({
@@ -36,22 +36,44 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
 
     const tokensOrError = await response.json()
     if (!response.ok) {
-      console.log('❌ Error')
+      console.log('❌ Error response from token endpoint:', tokensOrError)
       throw new Error(`Token refresh failed with status: ${response.status}`)
     }
 
-    return {
+    // Calculate new expiry in seconds
+    const newExpiresAt = tokensOrError?.expires_in + timeInSeconds
+    console.log(
+      '🕗 New expires_in:',
+      tokensOrError?.expires_in,
+      'seconds => newExpiresAt:',
+      newExpiresAt,
+      '=>',
+      new Date(newExpiresAt * 1000).toUTCString()
+    )
+
+    const newToken = {
       ...token,
       access_token: tokensOrError?.access_token ?? token?.access_token,
-      expires_at: tokensOrError?.expires_in + timeInSeconds,
+      expires_at: newExpiresAt,
       refresh_token: tokensOrError?.refresh_token ?? token?.refresh_token,
     }
+
+    // Log final token info
+    console.log('✅ Token refreshed successfully!', {
+      old_exp: token.expires_at,
+      old_exp_readable: token.expires_at ? new Date(token.expires_at * 1000).toUTCString() : undefined,
+      new_exp: newToken.expires_at,
+      new_exp_readable: new Date(newToken.expires_at * 1000).toUTCString(),
+    })
+
+    return newToken
   } catch (e) {
     console.error('Error refreshing token in middleware:', e)
   } finally {
     isRefreshing = false
   }
 
+  // If something goes wrong, return the old token so we at least have something
   return token
 }
 
@@ -61,15 +83,16 @@ export const config = {
 
 const SECURE_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https://')
 const SESSION_COOKIE = SECURE_COOKIE ? '__Secure-authjs.session-token' : 'authjs.session-token'
-// const SESSION_TIMEOUT = 5 * 60 // 5 minutes (in seconds)
 const SIGNIN_SUB_URL = '/api/auth/signin'
-const TOKEN_REFRESH_BUFFER_SECONDS = 30 // 30 seconds
+const TOKEN_REFRESH_BUFFER_SECONDS = 30
 
 function signOut(request: NextRequest) {
   const response = NextResponse.redirect(new URL(SIGNIN_SUB_URL, request.url))
 
   request.cookies.getAll().forEach((cookie) => {
-    if (cookie.name.includes('authjs.session-token')) response.cookies.delete(cookie.name)
+    if (cookie.name.includes('authjs.session-token')) {
+      response.cookies.delete(cookie.name)
+    }
   })
 
   return response
@@ -77,11 +100,24 @@ function signOut(request: NextRequest) {
 
 function shouldUpdateToken(token: JWT) {
   const timeInSeconds = Math.floor(Date.now() / 1000)
+  const isExpiring = token?.expires_at && timeInSeconds >= token.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
+
   console.log(
-    '⁇ Should Update ??',
-    token?.expires_at && timeInSeconds >= token?.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
+    '🔔 Should Update ??',
+    isExpiring,
+    '=> Now:',
+    timeInSeconds,
+    '(',
+    new Date(timeInSeconds * 1000).toUTCString(),
+    ')',
+    'expires_at:',
+    token.expires_at,
+    '(',
+    token.expires_at ? new Date(token.expires_at * 1000).toUTCString() : 'N/A',
+    ')'
   )
-  return token?.expires_at && timeInSeconds >= token?.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
+
+  return isExpiring
 }
 
 // https://github.com/nextauthjs/next-auth/issues/8254#issuecomment-1690474377
@@ -99,13 +135,24 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
 
   if (!token) return signOut(request)
 
-  // TODO: Refactor this x-url legacy hack out
+  // Add x-url header for debugging or legacy usage
   const requestHeaders = new Headers(request.headers)
   requestHeaders.set('x-url', request.url)
   const response = NextResponse.next({ request: { headers: requestHeaders } })
 
   if (shouldUpdateToken(token)) {
+    console.log('♻️ Token is expiring soon - refreshing...')
     const newToken = await refreshAccessToken(token)
+
+    // Log the old vs new token expiry (human readable)
+    console.log('⚠️ Old expiry:', {
+      old_exp: token.expires_at,
+      old_exp_hr: token.expires_at ? new Date(token.expires_at * 1000).toUTCString() : undefined,
+    })
+    console.log('✅ New expiry:', {
+      new_exp: newToken.expires_at,
+      new_exp_hr: new Date(newToken.expires_at! * 1000).toUTCString(),
+    })
 
     const newSessionToken = await encode({
       salt: SESSION_COOKIE,
@@ -113,15 +160,14 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       token: {
         ...token,
         ...newToken,
-        exp: newToken.exp,
+        exp: newToken.expires_at, // keep exp in sync
       },
-      maxAge: 30 * 24 * 60 * 60, // TODO: Constant
+      maxAge: 30 * 24 * 60 * 60, // e.g. 30 days
     })
 
-    const size = 3933 // maximum size of each chunk
+    // We'll chunk the token in pieces if it's large
+    const size = 3933
     const regex = new RegExp('.{1,' + size + '}', 'g')
-
-    // split the string into an array of strings
     const tokenChunks = newSessionToken.match(regex)
 
     if (tokenChunks) {
