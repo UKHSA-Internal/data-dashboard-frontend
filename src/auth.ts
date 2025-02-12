@@ -49,7 +49,8 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   session: {
     strategy: 'jwt',
   },
-  useSecureCookies: false,
+  trustHost: true,
+  useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://'),
   providers: [
     Cognito({
       clientId: process.env.AUTH_CLIENT_ID,
