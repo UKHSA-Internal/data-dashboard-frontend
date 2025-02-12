@@ -15,7 +15,7 @@ interface DropdownOptionsProps {
 
 const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
   const context = React.useContext(TabsContext)
-  if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
+  if (!context) throw new Error('DropdownTab must be used within the <Tabs/> component')
 
   const [, setSelectedTab] = context
 

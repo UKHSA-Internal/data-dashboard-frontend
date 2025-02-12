@@ -4,19 +4,15 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import clsx from 'clsx'
 import * as React from 'react'
-import { useEffect, useState } from 'react'
+import { useRef, useState } from 'react'
 
-function useTabContent(initialValue = 'chart') {
+export function useTabContent(initialValue = 'chart') {
   const [selectedTab, setSelectedTab] = useState(initialValue)
-  const [tabChangeTrigger, setTabChangeTrigger] = useState(0)
-
-  useEffect(() => {
-    console.log(`Tab changed to: ${selectedTab}`)
-  }, [tabChangeTrigger])
+  const tabChangeTrigger = useRef(0)
 
   const updateTab = (newTab: string) => {
     setSelectedTab(newTab)
-    setTabChangeTrigger((prev) => prev + 1)
+    tabChangeTrigger.current += 1
   }
 
   return [selectedTab, updateTab] as const
@@ -100,8 +96,6 @@ const TabsContent = React.forwardRef<
   if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
 
   const [selectedTab] = context
-
-  console.log(selectedTab)
   return (
     <TabsPrimitive.Content
       forceMount

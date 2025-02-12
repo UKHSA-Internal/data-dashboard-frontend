@@ -1,17 +1,40 @@
 import userEvent from '@testing-library/user-event'
 import Link from 'next/link'
-import React from 'react'
+import React, { act } from 'react'
 
-import { createEvent, fireEvent, render, screen } from '@/config/test-utils'
+import { createEvent, fireEvent, render, renderHook, screen } from '@/config/test-utils'
 
-import { Tabs, TabsContent, TabsList, TabsTrigger } from './Tabs'
+import { Tabs, TabsContent, TabsContext, TabsList, TabsTrigger, useTabContent } from './Tabs'
+
+describe('useTabContent Hook', () => {
+  it('should initialize with the provided default value', () => {
+    const { result } = renderHook(() => useTabContent('chart-123'))
+
+    expect(result.current[0]).toBe('chart-123')
+  })
+
+  it('should update selectedTab when setSelectedTab is called', () => {
+    const { result } = renderHook(() => useTabContent('chart-default'))
+
+    //Calls the setSelectedTab argument returned from the useTabContent hook
+    act(() => {
+      result.current[1]('chart-new')
+    })
+
+    expect(result.current[0]).toBe('chart-new')
+  })
+})
 
 describe('Tabs', () => {
   test('renders a list of tabs', () => {
+    const mockSetSelectedTab = jest.fn()
+
     render(
-      <Tabs>
-        <TabsList />
-      </Tabs>
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs>
+          <TabsList />
+        </Tabs>
+      </TabsContext.Provider>
     )
     const tabsElement = screen.getByRole('tablist')
     expect(tabsElement).toBeInTheDocument()
@@ -47,15 +70,19 @@ describe('Tabs', () => {
 
 describe('Opening a new tab', () => {
   test('using a mouse', async () => {
-    render(
-      <Tabs defaultValue="tab-1">
-        <TabsList>
-          <TabsTrigger value="tab-1">Trigger 1</TabsTrigger>
-          <TabsTrigger value="tab-2">Trigger 2</TabsTrigger>
-        </TabsList>
-        <TabsContent value="tab-1">Content 1</TabsContent>
-        <TabsContent value="tab-2">Content 2</TabsContent>
-      </Tabs>
+    const mockSetSelectedTab = jest.fn()
+
+    const screen = render(
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs defaultValue="tab-1">
+          <TabsList>
+            <TabsTrigger value="tab-1">Trigger 1</TabsTrigger>
+            <TabsTrigger value="tab-2">Trigger 2</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab-1">Content 1</TabsContent>
+          <TabsContent value="tab-2">Content 2</TabsContent>
+        </Tabs>
+      </TabsContext.Provider>
     )
 
     expect(screen.getByRole('tab', { name: /Trigger 1/i })).toHaveAttribute('aria-selected', 'true')
@@ -70,15 +97,18 @@ describe('Opening a new tab', () => {
   })
 
   test('using a keyboard', async () => {
+    const mockSetSelectedTab = jest.fn()
     render(
-      <Tabs defaultValue="tab-1">
-        <TabsList>
-          <TabsTrigger value="tab-1">Trigger 1</TabsTrigger>
-          <TabsTrigger value="tab-2">Trigger 2</TabsTrigger>
-        </TabsList>
-        <TabsContent value="tab-1">Content 1</TabsContent>
-        <TabsContent value="tab-2">Content 2</TabsContent>
-      </Tabs>
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs defaultValue="tab-1">
+          <TabsList>
+            <TabsTrigger value="tab-1">Trigger 1</TabsTrigger>
+            <TabsTrigger value="tab-2">Trigger 2</TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab-1">Content 1</TabsContent>
+          <TabsContent value="tab-2">Content 2</TabsContent>
+        </Tabs>
+      </TabsContext.Provider>
     )
 
     await userEvent.keyboard('{tab}')
@@ -104,19 +134,22 @@ describe('Opening a new tab', () => {
 
 describe('Composing the tabs to support a url based non-javascript fallback', () => {
   test('renders the tabs with hrefs', async () => {
+    const mockSetSelectedTab = jest.fn()
     render(
-      <Tabs defaultValue="tab-1">
-        <TabsList>
-          <TabsTrigger asChild value="tab-1">
-            <Link href="#tab-1">Trigger 1</Link>
-          </TabsTrigger>
-          <TabsTrigger asChild value="tab-2">
-            <Link href="#tab-2">Trigger 2</Link>
-          </TabsTrigger>
-        </TabsList>
-        <TabsContent value="tab-1">Content 1</TabsContent>
-        <TabsContent value="tab-2">Content 2</TabsContent>
-      </Tabs>
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs defaultValue="tab-1">
+          <TabsList>
+            <TabsTrigger asChild value="tab-1">
+              <Link href="#tab-1">Trigger 1</Link>
+            </TabsTrigger>
+            <TabsTrigger asChild value="tab-2">
+              <Link href="#tab-2">Trigger 2</Link>
+            </TabsTrigger>
+          </TabsList>
+          <TabsContent value="tab-1">Content 1</TabsContent>
+          <TabsContent value="tab-2">Content 2</TabsContent>
+        </Tabs>
+      </TabsContext.Provider>
     )
 
     // Tab triggers should render as links
@@ -129,14 +162,17 @@ describe('Composing the tabs to support a url based non-javascript fallback', ()
   })
 
   test('prevents default link click behaviour', async () => {
+    const mockSetSelectedTab = jest.fn()
     render(
-      <Tabs defaultValue="tab-1">
-        <TabsList>
-          <TabsTrigger asChild value="tab-1">
-            <Link href="#tab-1">Trigger 1</Link>
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs defaultValue="tab-1">
+          <TabsList>
+            <TabsTrigger asChild value="tab-1">
+              <Link href="#tab-1">Trigger 1</Link>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </TabsContext.Provider>
     )
     const event = createEvent.click(screen.getByRole('tab', { name: 'Trigger 1' }))
     event.preventDefault = jest.fn()
@@ -147,14 +183,17 @@ describe('Composing the tabs to support a url based non-javascript fallback', ()
   })
 
   test('prevents default link spacebar keydown behaviour', async () => {
+    const mockSetSelectedTab = jest.fn()
     render(
-      <Tabs defaultValue="tab-1">
-        <TabsList>
-          <TabsTrigger asChild value="tab-1">
-            <Link href="#tab-1">Trigger 1</Link>
-          </TabsTrigger>
-        </TabsList>
-      </Tabs>
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs defaultValue="tab-1">
+          <TabsList>
+            <TabsTrigger asChild value="tab-1">
+              <Link href="#tab-1">Trigger 1</Link>
+            </TabsTrigger>
+          </TabsList>
+        </Tabs>
+      </TabsContext.Provider>
     )
     const event = createEvent.keyDown(screen.getByRole('tab', { name: 'Trigger 1' }), {
       key: ' ',
