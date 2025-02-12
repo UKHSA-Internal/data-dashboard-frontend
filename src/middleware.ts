@@ -108,7 +108,7 @@ function shouldUpdateToken(token: JWT) {
   const isExpiring = token?.expires_at && timeInSeconds >= token.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
 
   console.log(
-    '🔔 Should Update ??',
+    '🔔 Access Token needs updating ?',
     isExpiring,
     '=> Now:',
     timeInSeconds,
@@ -176,16 +176,22 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
 
     console.log('✅ Cookie Set:', response.headers.get('Set-Cookie'))
 
-    // // We'll chunk the token in pieces if it's large
-    // const size = 3933
-    // const regex = new RegExp('.{1,' + size + '}', 'g')
-    // const tokenChunks = newSessionToken.match(regex)
+    const CHUNK_SIZE = 3000 // Keep it well under 4KB
+    const chunks = newSessionToken.match(new RegExp(`.{1,${CHUNK_SIZE}}`, 'g'))
 
-    // if (tokenChunks) {
-    //   tokenChunks.forEach((tokenChunk, index) => {
-    //     response.cookies.set(`${SESSION_COOKIE}.${index}`, tokenChunk)
-    //   })
-    // }
+    if (chunks) {
+      console.log(`🔹 Storing token in ${chunks.length} chunks`)
+      chunks.forEach((chunk, index) => {
+        response.cookies.set(`${SESSION_COOKIE}.${index}`, chunk, {
+          httpOnly: true,
+          secure: SECURE_COOKIE,
+          sameSite: 'lax',
+          path: '/',
+        })
+      })
+    }
+
+    console.log('✅ Token chunks stored in cookies.')
   }
 
   return response
