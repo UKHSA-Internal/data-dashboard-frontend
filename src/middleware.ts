@@ -78,7 +78,12 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 
 export const config = {
-  matcher: ['/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt).*)'],
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 }
 
 const SECURE_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https://')
@@ -136,9 +141,8 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
   if (!token) return signOut(request)
 
   // Add x-url header for debugging or legacy usage
-  const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('x-url', request.url)
-  const response = NextResponse.next({ request: { headers: requestHeaders } })
+  const response = NextResponse.next()
+  response.headers.set('x-url', request.url)
 
   if (shouldUpdateToken(token)) {
     console.log('♻️ Token is expiring soon - refreshing...')
@@ -165,16 +169,23 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       maxAge: 30 * 24 * 60 * 60, // e.g. 30 days
     })
 
-    // We'll chunk the token in pieces if it's large
-    const size = 3933
-    const regex = new RegExp('.{1,' + size + '}', 'g')
-    const tokenChunks = newSessionToken.match(regex)
+    console.log('🔑 New Session Token:', newSessionToken)
 
-    if (tokenChunks) {
-      tokenChunks.forEach((tokenChunk, index) => {
-        response.cookies.set(`${SESSION_COOKIE}.${index}`, tokenChunk)
-      })
-    }
+    // ✅ Force Set-Cookie in headers (Middleware workaround)
+    response.headers.set('Set-Cookie', `${SESSION_COOKIE}=${newSessionToken}; Path=/; HttpOnly; Secure; SameSite=Lax;`)
+
+    console.log('✅ Cookie Set:', response.headers.get('Set-Cookie'))
+
+    // // We'll chunk the token in pieces if it's large
+    // const size = 3933
+    // const regex = new RegExp('.{1,' + size + '}', 'g')
+    // const tokenChunks = newSessionToken.match(regex)
+
+    // if (tokenChunks) {
+    //   tokenChunks.forEach((tokenChunk, index) => {
+    //     response.cookies.set(`${SESSION_COOKIE}.${index}`, tokenChunk)
+    //   })
+    // }
   }
 
   return response
