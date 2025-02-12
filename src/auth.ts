@@ -48,14 +48,12 @@ export async function revokeAndSignOut() {
 
     console.log('Token successfully revoked')
 
-    // Call NextAuth's signOut method
-    await signOut()
-
-    return { success: true, message: 'Successfully signed out and revoked token' }
+    // return { success: true, message: 'Successfully signed out and revoked token' }
   } catch (error) {
     console.error('Unexpected error in revoke handler:', error)
-    return { error: 'Internal Server Error' }
   }
+
+  await signOut()
 }
 
 const providers: Provider[] = [
