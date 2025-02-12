@@ -21,7 +21,7 @@ const About = ({ description, contextualUrls }: AboutProps) => {
       <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
       {contextualUrls ? (
         <div>
-          <h2 className="default-govuk-header mb-2 font-bold">Further information links:</h2>
+          <h2 className="default-govuk-header mb-2 font-bold">Related Links:</h2>
           <ul>{displayLinks(contextualUrls)}</ul>
         </div>
       ) : null}
