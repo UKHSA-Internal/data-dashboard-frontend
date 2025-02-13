@@ -1,6 +1,6 @@
 'use client'
 import kebabCase from 'lodash/kebabCase'
-import React, { ChangeEvent } from 'react'
+import React from 'react'
 
 import { TabsContext } from './Tabs'
 
@@ -23,16 +23,14 @@ const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
     { value: 'about', displayText: 'About' },
   ]
 
-  const onChangeFunction = async (optionSelected: ChangeEvent<HTMLSelectElement>) => {
-    optionSelected.preventDefault()
-    setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
-  }
-
   return (
     <select
       id={`ukhsa-chart-dropdown-${chartIdentifier}`}
       defaultValue={`chart-${chartIdentifier}`}
-      onChange={onChangeFunction}
+      onChange={(optionSelected) => {
+        optionSelected.preventDefault()
+        setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
+      }}
       className={className}
       aria-label={`Choose display option for ${chartTitle}`}
     >
