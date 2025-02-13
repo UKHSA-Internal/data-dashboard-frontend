@@ -1,11 +1,12 @@
 'use client'
+import kebabCase from 'lodash/kebabCase'
 import React, { ChangeEvent } from 'react'
 
 import { TabsContext } from './Tabs'
 
 interface DropdownProps {
   className: string
-  chartIdentifier: string
+  chartTitle: string
 }
 
 interface DropdownOptionsProps {
@@ -13,7 +14,8 @@ interface DropdownOptionsProps {
   displayText: string
 }
 
-const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
+const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
+  const chartIdentifier = kebabCase(chartTitle)
   const context = React.useContext(TabsContext)
   if (!context) throw new Error('DropdownTab must be used within the <Tabs/> component')
 
@@ -37,7 +39,7 @@ const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
       defaultValue={`#chart-${chartIdentifier}`}
       onChange={onChangeFunction}
       className={className}
-      aria-label={`${chartIdentifier} select element`}
+      aria-label={`Choose display option for ${chartTitle}`}
     >
       {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
         <option key={`option-${index}`} value={value}>

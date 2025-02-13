@@ -6,15 +6,15 @@ import DropdownTab from './DropdownTab'
 import { Tabs, TabsContext } from './Tabs'
 
 describe('DropdownTab Component', () => {
-  const chartIdentifier = 'test-chart'
+  const chartTitle = 'Test chart'
 
   beforeEach(() => {
     // Set up DOM elements that will be manipulated
     document.body.innerHTML = `
-      <div id="chart-${chartIdentifier}-content" data-state="active"></div>
-      <div id="table-${chartIdentifier}-content" data-state="inactive"></div>
-      <div id="download-${chartIdentifier}-content" data-state="inactive"></div>
-      <div id="about-${chartIdentifier}-content" data-state="inactive"></div>
+      <div id="chart-${chartTitle}-content" data-state="active"></div>
+      <div id="table-${chartTitle}-content" data-state="inactive"></div>
+      <div id="download-${chartTitle}-content" data-state="inactive"></div>
+      <div id="about-${chartTitle}-content" data-state="inactive"></div>
     `
   })
 
@@ -23,7 +23,7 @@ describe('DropdownTab Component', () => {
       render(
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartIdentifier={chartIdentifier}
+          chartTitle={chartTitle}
         />
       )
     ).toThrow('DropdownTab must be used within the <Tabs/> component')
@@ -34,7 +34,7 @@ describe('DropdownTab Component', () => {
       <Tabs>
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartIdentifier={chartIdentifier}
+          chartTitle={chartTitle}
         />
       </Tabs>
     )
@@ -46,7 +46,7 @@ describe('DropdownTab Component', () => {
       <Tabs>
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartIdentifier={chartIdentifier}
+          chartTitle={chartTitle}
         />
       </Tabs>
     )
@@ -63,7 +63,7 @@ describe('DropdownTab Component', () => {
         <Tabs>
           <DropdownTab
             className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-            chartIdentifier={chartIdentifier}
+            chartTitle={chartTitle}
           />
         </Tabs>
       </TabsContext.Provider>
@@ -72,8 +72,8 @@ describe('DropdownTab Component', () => {
     const dropdown = screen.getByRole('combobox') as HTMLSelectElement
     fireEvent.change(dropdown, { target: { value: 'table' } })
     waitFor(() => {
-      expect(document.getElementById(`chart-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
-      expect(document.getElementById(`table-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'active')
+      expect(document.getElementById(`chart-${chartTitle}-content`)).toHaveAttribute('data-state', 'inactive')
+      expect(document.getElementById(`table-${chartTitle}-content`)).toHaveAttribute('data-state', 'active')
     })
   })
 })
