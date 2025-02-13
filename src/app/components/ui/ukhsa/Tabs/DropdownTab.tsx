@@ -9,11 +9,6 @@ interface DropdownProps {
   chartTitle: string
 }
 
-interface DropdownOptionsProps {
-  value: string
-  displayText: string
-}
-
 const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
   const chartIdentifier = kebabCase(chartTitle)
   const context = React.useContext(TabsContext)
@@ -21,7 +16,7 @@ const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
 
   const [, setSelectedTab] = context
 
-  const dropdownOptions: DropdownOptionsProps[] = [
+  const dropdownOptions = [
     { value: 'chart', displayText: 'Chart' },
     { value: 'table', displayText: 'Tabular Data' },
     { value: 'download', displayText: 'Download' },
@@ -35,13 +30,13 @@ const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
 
   return (
     <select
-      id={`#dropdown-${chartIdentifier}`}
-      defaultValue={`#chart-${chartIdentifier}`}
+      id={`ukhsa-chart-dropdown-${chartIdentifier}`}
+      defaultValue={`chart-${chartIdentifier}`}
       onChange={onChangeFunction}
       className={className}
       aria-label={`Choose display option for ${chartTitle}`}
     >
-      {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
+      {dropdownOptions.map(({ value, displayText }, index) => (
         <option key={`option-${index}`} value={value}>
           {displayText}
         </option>
