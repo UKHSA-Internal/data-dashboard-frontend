@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, Locator, Page, test as base } from '@playwright/test'
 import * as fs from 'fs'
-import { kebabCase } from 'lodash'
+import { kebabCase, lowerCase } from 'lodash'
 
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
@@ -372,7 +372,9 @@ export class App {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
       if (device === 'mobile') {
-        await card.getByRole('combobox', { name: `${name} select element` }).selectOption('Download')
+        await card
+          .getByRole('combobox', { name: `Choose display option for ${lowerCase(name)}` })
+          .selectOption('Download')
       } else {
         await card.getByRole('tab', { name: 'Download' }).click()
       }

@@ -1,5 +1,5 @@
 'use client'
-import kebabCase from 'lodash/kebabCase'
+import { kebabCase, lowerCase } from 'lodash'
 import React from 'react'
 
 import { TabsContext } from './Tabs'
@@ -32,7 +32,7 @@ const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
         setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
       }}
       className={className}
-      aria-label={`Choose display option for ${chartTitle}`}
+      aria-label={`Choose display option for ${lowerCase(chartTitle)}`}
     >
       {dropdownOptions.map(({ value, displayText }, index) => (
         <option key={`option-${index}`} value={value}>
