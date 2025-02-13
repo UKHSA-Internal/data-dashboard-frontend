@@ -73,4 +73,21 @@ describe('MiniMapCard Component', () => {
     const card = screen.getByRole('link')
     expect(card).toHaveAttribute('aria-labelledby', 'chart-row-card-heading-x4')
   })
+
+  it('applies the correct CSS classes to minimap card', () => {
+    const title = 'Cold Health Alert'
+    const subTitle = 'Freezing temperatures expected'
+    const alertType = 'cold'
+
+    const { container } = render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
+
+    const card = container.querySelector('a') // The Card is a link
+
+    expect(card).toHaveClass(
+      'govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card bg-[var(--colour-chart-background)]'
+    )
+    expect(card).toHaveClass(
+      'no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]'
+    )
+  })
 })
