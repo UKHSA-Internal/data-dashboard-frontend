@@ -22,7 +22,7 @@ jobs:
 
   install:
     name: Install
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -33,7 +33,7 @@ jobs:
   build:
     name: Build
     needs: [install]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -49,7 +49,7 @@ jobs:
   lighthouse:
     name: Lighthouse
     needs: [build]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -79,7 +79,7 @@ jobs:
   quality-checks:
     name: Lint
     needs: [build]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -95,7 +95,7 @@ jobs:
   typescript:
     name: TypeScript
     needs: [build]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -112,7 +112,7 @@ jobs:
     name: Unit tests
     permissions: write-all
     needs: [build]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -135,7 +135,7 @@ jobs:
     name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
     timeout-minutes: 60
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-latest
     strategy:
       fail-fast: false
       matrix:
@@ -172,7 +172,7 @@ jobs:
   success-gate:
     name: Build Success Check
     needs: [unit-tests, quality-checks, typescript, lighthouse, e2e-tests]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'
 
