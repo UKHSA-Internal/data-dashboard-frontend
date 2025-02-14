@@ -69,6 +69,7 @@ const TabsTrigger = React.forwardRef<
               keyCode: 13,
             })
           )
+          setSelectedTab(props.value)
         }
       }}
       ref={ref}
