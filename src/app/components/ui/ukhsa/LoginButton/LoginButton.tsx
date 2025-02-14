@@ -1,4 +1,5 @@
-import { auth, revokeAndSignOut, signIn, signOut } from '@/auth'
+import { signOut } from '@/api/requests/auth/signOut'
+import { auth, signIn } from '@/auth'
 import { defaultAuthProvider } from '@/config/constants'
 
 export default async function LoginButton() {
@@ -15,14 +16,6 @@ export default async function LoginButton() {
           }}
         >
           <button type="submit">Sign out</button>
-        </form>
-        <form
-          action={async () => {
-            'use server'
-            await revokeAndSignOut()
-          }}
-        >
-          <button type="submit">Sign out and revoke</button>
         </form>
       </>
     )

@@ -3,47 +3,6 @@ import 'next-auth/jwt'
 import NextAuth from 'next-auth'
 import Cognito from 'next-auth/providers/cognito'
 
-export async function revokeAndSignOut() {
-  try {
-    const session = await auth()
-
-    if (!session?.refreshToken) {
-      return { error: 'No refresh token available' }
-    }
-
-    // Send a revoke request to Cognito
-    const revokeResponse = await fetch(`${process.env.AUTH_DOMAIN}/oauth2/revoke`, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded',
-        Authorization: `Basic ${Buffer.from(`${process.env.AUTH_CLIENT_ID}:${process.env.AUTH_CLIENT_SECRET}`).toString(
-          'base64'
-        )}`,
-      },
-      body: new URLSearchParams({
-        token: session.refreshToken,
-        token_type_hint: 'refresh_token',
-        client_id: process.env.AUTH_CLIENT_ID!,
-        client_secret: process.env.AUTH_CLIENT_SECRET!,
-      }).toString(),
-    })
-
-    if (!revokeResponse.ok) {
-      const errorData = await revokeResponse.json()
-      console.error('Error revoking token:', errorData)
-      return { error: 'Failed to revoke token', details: errorData }
-    }
-
-    console.log('Token successfully revoked')
-
-    // return { success: true, message: 'Successfully signed out and revoked token' }
-  } catch (error) {
-    console.error('Unexpected error in revoke handler:', error)
-  }
-
-  await signOut()
-}
-
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
@@ -57,7 +16,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.AUTH_CLIENT_SECRET,
       issuer: process.env.AUTH_CLIENT_URL,
       profile(profile) {
-        console.log('profile: ', profile)
         return {
           id: profile.sub,
           name: profile.name ?? profile.preferred_username,
