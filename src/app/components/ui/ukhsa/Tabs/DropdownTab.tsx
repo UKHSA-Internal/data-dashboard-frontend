@@ -2,6 +2,8 @@
 import { kebabCase, lowerCase } from 'lodash'
 import React from 'react'
 
+import { useTranslation } from '@/app/i18n/client'
+
 import { TabsContext } from './Tabs'
 
 interface DropdownProps {
@@ -12,15 +14,16 @@ interface DropdownProps {
 const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
   const chartIdentifier = kebabCase(chartTitle)
   const context = React.useContext(TabsContext)
+  const { t } = useTranslation('common')
   if (!context) throw new Error('DropdownTab must be used within the <Tabs/> component')
 
   const [, setSelectedTab] = context
 
   const dropdownOptions = [
-    { value: 'chart', displayText: 'Chart' },
-    { value: 'table', displayText: 'Tabular Data' },
-    { value: 'download', displayText: 'Download' },
-    { value: 'about', displayText: 'About' },
+    { value: 'chart', displayText: t('cms.dropdown.chartLabel') },
+    { value: 'table', displayText: t('cms.dropdown.tableLabel') },
+    { value: 'download', displayText: t('cms.dropdown.downloadLabel') },
+    { value: 'about', displayText: t('cms.dropdown.aboutLabel') },
   ]
 
   return (
@@ -32,7 +35,7 @@ const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
         setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
       }}
       className={className}
-      aria-label={`Choose display option for ${lowerCase(chartTitle)}`}
+      aria-label={t('cms.dropdown.selectLabel', { chartTitle: lowerCase(chartTitle) })}
     >
       {dropdownOptions.map(({ value, displayText }, index) => (
         <option key={`option-${index}`} value={value}>
