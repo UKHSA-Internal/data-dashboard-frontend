@@ -42,16 +42,19 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       const partialMatch = process.env.AUTH_DOMAIN
       await page.waitForURL(new RegExp(partialMatch), { timeout: 5000 })
 
-      // Cognito UI - OOTB hosted sign in form has multiple elements with the same id on the page! Make sure to select the first found elements
-      await page
-        .locator('#signInFormUsername')
-        .first()
-        .fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
-      await page
-        .locator('#signInFormPassword')
-        .first()
-        .fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
-      await page.getByRole('button', { name: 'submit' }).first().click()
+      // Cognito UI
+      // The hosted sign in form has multiple elements with the same id on the page for different viewports.
+      // The only way to select the correct element is via keyboard!
+      await page.keyboard.press('Tab')
+      await page.keyboard.type(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
+
+      await page.keyboard.press('Tab')
+      await page.keyboard.type(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
+
+      await page.keyboard.press('Tab')
+      await page.keyboard.press('Tab')
+      await page.keyboard.press('Enter')
+
       await page.context().storageState({ path: storagePath })
 
       console.log('✅ Authentication session saved!')
