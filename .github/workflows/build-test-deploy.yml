@@ -4,9 +4,15 @@ on:
   push:
     branches:
       - main
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
   pull_request:
     branches:
       - '*'
+    paths-ignore:
+      - '**/*.md'
+      - 'docs/**'
 
 env:
   AWS_REGION: 'eu-west-2'
@@ -36,7 +42,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
@@ -53,7 +58,6 @@ jobs:
     if: false # Temporarily disabled due to config overriding CLI params and running against production
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Start mock server
@@ -83,7 +87,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Quality check
@@ -99,7 +102,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: TypeScript Compilation
@@ -116,7 +118,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Unit tests
@@ -135,7 +136,7 @@ jobs:
   e2e-tests-public:
     name: Playwright (Public) (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
-    timeout-minutes: 60
+    timeout-minutes: 20
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -143,7 +144,6 @@ jobs:
         shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
 
@@ -184,7 +184,7 @@ jobs:
   e2e-tests-non-public:
     name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
-    timeout-minutes: 60
+    timeout-minutes: 20
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -192,7 +192,6 @@ jobs:
         shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
 
