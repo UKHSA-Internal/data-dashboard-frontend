@@ -1,0 +1,4 @@
+- auth fixture (dependant on AUTH_ENABLED env var)
+- Github actions pipeline duplicates entire test suite with AUTH_ENABLED set to true
+  - secrets are injected from Github secrets and point to a persisted WKE environment
+  - we should ideally run these against an ephemeral environment (for the life time of the cd/cd run)
