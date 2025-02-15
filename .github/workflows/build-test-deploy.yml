@@ -171,7 +171,7 @@ jobs:
           PLAYWRIGHT_AUTH_USER_USERNAME: ${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
@@ -227,7 +227,7 @@ jobs:
           DOTENV_CONFIG_PATH: .env.local
 
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
