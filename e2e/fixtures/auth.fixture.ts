@@ -37,10 +37,11 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       await page.goto('/')
 
       // Dashboard Sign in link
-      await page.getByRole('button', { name: 'Sign in' }).click()
+      await page.getByRole('button', { name: 'Sign in' }).click({ timeout: 10000 })
 
       // Cognito UI
-      await page.waitForLoadState('load', { timeout: 10000 })
+      // eslint-disable-next-line playwright/no-wait-for-selector
+      await page.waitForSelector('input[id="signInFormUsername"]', { timeout: 10000 })
       await page.getByRole('textbox', { name: 'name@host.com' }).fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
       await page.getByRole('textbox', { name: 'Password' }).fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
       await page.getByRole('button', { name: 'submit' }).click()
