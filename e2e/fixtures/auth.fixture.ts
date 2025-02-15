@@ -1,4 +1,4 @@
-import { Cookie, test as base } from '@playwright/test'
+import { Cookie, expect, test as base } from '@playwright/test'
 import fs from 'fs'
 
 type AuthFixtures = {
@@ -36,7 +36,12 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       console.log('🔐 No valid auth session found. Logging in...')
       await page.goto('/')
 
+      // Dashboard Sign in link
       await page.getByRole('button', { name: 'Sign in' }).click()
+
+      // Cognito UI
+      // eslint-disable-next-line playwright/no-standalone-expect
+      await expect(page.getByText('Sign in with your email and password')).toBeVisible()
       await page.getByRole('textbox', { name: 'name@host.com' }).fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
       await page.getByRole('textbox', { name: 'Password' }).fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
       await page.getByRole('button', { name: 'submit' }).click()
