@@ -1,5 +1,4 @@
 export default {
-  site: 'https://ukhsa-dashboard.data.gov.uk',
   scanner: {
     exclude: ['/healthcare-associated-infections-hcai/healthcare-associated-infections/'],
   },
