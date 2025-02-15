@@ -44,11 +44,11 @@ export const AuthFixtures = base.extend<AuthFixtures>({
 
       // Cognito UI - OOTB hosted sign in form has multiple elements with the same id on the page! Make sure to select the first found elements
       await page
-        .getByRole('textbox', { name: 'name@host.com' })
+        .locator('#signInFormUsername')
         .first()
         .fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
       await page
-        .getByRole('textbox', { name: 'Password' })
+        .locator('#signInFormPassword')
         .first()
         .fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
       await page.getByRole('button', { name: 'submit' }).first().click()
