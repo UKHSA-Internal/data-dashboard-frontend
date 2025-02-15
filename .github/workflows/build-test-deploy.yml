@@ -159,6 +159,17 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        env:
+          AUTH_ENABLED: true
+          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          AUTH_CLIENT_SECRET: ${{ secrets.AUTH_CLIENT_SECRET }}
+          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          PLAYWRIGHT_AUTH_USER_PASSWORD: ${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}
+          PLAYWRIGHT_AUTH_USER_USERNAME: ${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}
+
       - uses: actions/upload-artifact@v4
         if: always()
         with:

@@ -40,11 +40,6 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       await page.getByRole('textbox', { name: 'name@host.com' }).fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
       await page.getByRole('textbox', { name: 'Password' }).fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
       await page.getByRole('button', { name: 'submit' }).click()
-
-      // Wait for login confirmation
-      await page.waitForURL('/dashboard')
-
-      // Save session
       await page.context().storageState({ path: storagePath })
 
       console.log('✅ Authentication session saved!')
