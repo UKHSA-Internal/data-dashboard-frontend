@@ -40,7 +40,7 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
-        run: NODE_ENV=test npm run build
+        run: NODE_ENV=test BASE_URL=http://localhost:3000 npm run build
 
   ###############################################################################
   # Lighthouse checks
@@ -61,7 +61,7 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
       - name: Start Applicaton
-        run: NODE_ENV=test npm run start &
+        run: NODE_ENV=test BASE_URL=http://localhost:3000 npm run start &
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
       - uses: actions/upload-artifact@v4
