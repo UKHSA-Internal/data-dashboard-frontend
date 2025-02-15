@@ -39,6 +39,9 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       // Dashboard Sign in link
       await page.getByRole('button', { name: 'Sign in' }).click({ timeout: 10000 })
 
+      const partialMatch = process.env.AUTH_DOMAIN
+      await page.waitForURL(new RegExp(partialMatch), { timeout: 5000 })
+
       // Cognito UI - OOTB hosted sign in form has multiple elements with the same id on the page! Make sure to select the first found elements
       await page
         .getByRole('textbox', { name: 'name@host.com' })
