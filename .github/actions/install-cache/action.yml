@@ -11,4 +11,5 @@ runs:
       with:
         path: |
           node_modules
+          ~/.npm
         key: dependencies-${{ hashFiles('package-lock.json') }}
