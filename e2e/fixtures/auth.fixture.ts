@@ -39,12 +39,16 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       // Dashboard Sign in link
       await page.getByRole('button', { name: 'Sign in' }).click({ timeout: 10000 })
 
-      // Cognito UI
-      // eslint-disable-next-line playwright/no-wait-for-selector
-      await page.waitForSelector('input[id="signInFormUsername"]', { timeout: 10000 })
-      await page.getByRole('textbox', { name: 'name@host.com' }).fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
-      await page.getByRole('textbox', { name: 'Password' }).fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
-      await page.getByRole('button', { name: 'submit' }).click()
+      // Cognito UI - OOTB hosted sign in form has multiple elements with the same id on the page! Make sure to select the first found elements
+      await page
+        .getByRole('textbox', { name: 'name@host.com' })
+        .first()
+        .fill(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
+      await page
+        .getByRole('textbox', { name: 'Password' })
+        .first()
+        .fill(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
+      await page.getByRole('button', { name: 'submit' }).first().click()
       await page.context().storageState({ path: storagePath })
 
       console.log('✅ Authentication session saved!')
