@@ -129,11 +129,11 @@ jobs:
           title: Unit tests coverage
 
   ##############################################################################
-  # Playwright e2e tests
+  # Playwright tests - Public - (fully mocked backend)
   ##############################################################################
 
   e2e-tests:
-    name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
+    name: Playwright (Public) (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
     timeout-minutes: 60
     runs-on: ubuntu-22.04
@@ -166,13 +166,61 @@ jobs:
           path: playwright-report/
           retention-days: 10
 
+  ##############################################################################
+  # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
+  ##############################################################################
+
+  e2e-tests-non-public:
+    name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
+    needs: [build]
+    timeout-minutes: 60
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
+
+      - name: Start mock server
+        run: npm run dev:mock-server &
+
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+
+      - name: Run Playwright tests
+        env:
+          AUTH_ENABLED: true
+          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          AUTH_CLIENT_SECRET: ${{ secrets.AUTH_CLIENT_SECRET }}
+          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          PLAYWRIGHT_AUTH_USER_PASSWORD: ${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}
+          PLAYWRIGHT_AUTH_USER_USERNAME: ${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}
+        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
+          path: playwright-report/
+          retention-days: 10
+
   ###############################################################################
   # Success gate
   ###############################################################################
 
   success-gate:
     name: Build Success Check
-    needs: [unit-tests, quality-checks, typescript, e2e-tests]
+    needs: [unit-tests, quality-checks, typescript, e2e-tests, e2e-tests-non-public]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'

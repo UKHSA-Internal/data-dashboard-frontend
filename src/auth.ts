@@ -1,7 +1,24 @@
 import 'next-auth/jwt'
 
 import NextAuth from 'next-auth'
+import type { Provider } from 'next-auth/providers'
 import Cognito from 'next-auth/providers/cognito'
+
+const providers: Provider[] = [
+  Cognito({
+    clientId: process.env.AUTH_CLIENT_ID,
+    clientSecret: process.env.AUTH_CLIENT_SECRET,
+    issuer: process.env.AUTH_CLIENT_URL,
+    profile(profile) {
+      return {
+        id: profile.sub,
+        name: profile.name ?? profile.preferred_username,
+        email: profile.email,
+        image: profile.picture ?? null,
+      }
+    },
+  }),
+]
 
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
@@ -10,21 +27,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   trustHost: true,
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://'),
-  providers: [
-    Cognito({
-      clientId: process.env.AUTH_CLIENT_ID,
-      clientSecret: process.env.AUTH_CLIENT_SECRET,
-      issuer: process.env.AUTH_CLIENT_URL,
-      profile(profile) {
-        return {
-          id: profile.sub,
-          name: profile.name ?? profile.preferred_username,
-          email: profile.email,
-          image: profile.picture ?? null,
-        }
-      },
-    }),
-  ],
+  providers,
   callbacks: {
     async jwt({ token, account }) {
       //   console.log('user', user)

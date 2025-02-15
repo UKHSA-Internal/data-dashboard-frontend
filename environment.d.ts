@@ -6,8 +6,6 @@ declare namespace NodeJS {
     AUTH_DOMAIN: string
     AUTH_ISSUER: string
     AUTH_SECRET: string
-    NEXTAUTH_URL: string
-    NEXT_REVALIDATE_TIME: string
     BASE_URL: string
     ESRI_API_KEY: string
     ESRI_CLIENT_ID: string
@@ -16,7 +14,10 @@ declare namespace NodeJS {
     FEATURE_FLAGS_AUTH_KEY: string
     FEEDBACK_API_URL: string
     GOOGLE_TAG_MANAGER_ID: string
+    NEXTAUTH_URL: string
     NEXT_REVALIDATE_TIME: string
+    PLAYWRIGHT_AUTH_USER_USERNAME: string
+    PLAYWRIGHT_AUTH_USER_PASSWORD: string
     PUBLIC_API_URL: string
     REDIS_HOST: string
     REVALIDATE_SECRET: string
