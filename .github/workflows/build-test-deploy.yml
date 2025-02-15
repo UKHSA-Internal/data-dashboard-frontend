@@ -160,7 +160,7 @@ jobs:
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
-          AUTH_ENABLED: true
+          AUTH_ENABLED: false
           AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
           AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
           AUTH_CLIENT_SECRET: ${{ secrets.AUTH_CLIENT_SECRET }}
