@@ -204,7 +204,7 @@ jobs:
   trigger-deployments:
     name: Trigger deployments
     needs: [publish-image]
-    runs-on: ubuntu-22.04-arm
+    runs-on: ubuntu-latest
     if: ${{ github.ref == 'refs/heads/main' }}
 
     steps:
