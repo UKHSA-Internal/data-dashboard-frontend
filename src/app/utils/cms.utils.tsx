@@ -163,7 +163,7 @@ export const renderCard = (
                       </TabsList>
                       <DropdownTab
                         aria-label="Select for selecting chart content"
-                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-r-[5px] border-mid-grey border-r-transparent py-0 pl-2 no-js:hidden sm:hidden"
+                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
                         chartTitle={column.value.title}
                       />
                       <TabsContent
