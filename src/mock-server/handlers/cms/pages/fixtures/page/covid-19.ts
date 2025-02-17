@@ -49,9 +49,9 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     tag_manager_event_id: 'cases_by_specimen_date',
                     date_prefix: 'Test date prefix',
                     x_axis: null,
-                    // x_axis_title: 'Test X axis title',
+                    x_axis_title: 'Test X axis title',
                     y_axis: null,
-                    // y_axis_title: 'Test Y axis title',
+                    y_axis_title: 'Test Y axis title',
                     chart: [
                       {
                         type: 'plot',
@@ -64,9 +64,9 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          label: 'teshjkfdsjk',
                           age: '',
                           sex: null,
-                          label: '',
                           line_colour: '',
                           line_type: '',
                         },
