@@ -119,11 +119,11 @@ export const renderCard = (
                     <ChartRowCardHeader id={column.id} title={column.value.title}>
                       <Timestamp data={column.value} size={size} />
                     </ChartRowCardHeader>
-                    <Tabs defaultValue="chart" className="govuk-!-margin-bottom-0">
+                    <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
                       <TabsList className="hidden no-js:block sm:block">
                         <TabsTrigger
                           asChild
-                          value="chart"
+                          value={`${kebabCase(column.value.title)}-chart`}
                           aria-controls={`chart-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#chart-${kebabCase(column.value.title)}`}>
@@ -132,7 +132,7 @@ export const renderCard = (
                         </TabsTrigger>
                         <TabsTrigger
                           asChild
-                          value="table"
+                          value={`${kebabCase(column.value.title)}-table`}
                           aria-controls={`table-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#table-${kebabCase(column.value.title)}`}>
@@ -144,7 +144,7 @@ export const renderCard = (
                         </TabsTrigger>
                         <TabsTrigger
                           asChild
-                          value="download"
+                          value={`${kebabCase(column.value.title)}-download`}
                           aria-controls={`download-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#download-${kebabCase(column.value.title)}`}>
@@ -153,7 +153,7 @@ export const renderCard = (
                         </TabsTrigger>
                         <TabsTrigger
                           asChild
-                          value="about"
+                          value={`${kebabCase(column.value.title)}-about`}
                           aria-controls={`about-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#about-${kebabCase(column.value.title)}`}>
@@ -163,11 +163,11 @@ export const renderCard = (
                       </TabsList>
                       <DropdownTab
                         aria-label="Select for selecting chart content"
-                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 no-js:hidden sm:hidden"
-                        chartIdentifier={kebabCase(column.value.title)}
+                        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
+                        chartTitle={column.value.title}
                       />
                       <TabsContent
-                        value="chart"
+                        value={`${kebabCase(column.value.title)}-chart`}
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
                         data-type="chart"
                         id={`chart-${kebabCase(column.value.title)}-content`}
@@ -206,7 +206,7 @@ export const renderCard = (
                         </AreaSelectorLoader>
                       </TabsContent>
                       <TabsContent
-                        value="table"
+                        value={`${kebabCase(column.value.title)}-table`}
                         className="max-h-[var(--ukhsa-chart-card-table-scroll-height)] min-h-[var(--ukhsa-chart-card-tab-min-height)] overflow-y-auto no-js:mb-4"
                         id={`table-${kebabCase(column.value.title)}-content`}
                       >
@@ -219,7 +219,7 @@ export const renderCard = (
                         <Table data={column.value} size={size} />
                       </TabsContent>
                       <TabsContent
-                        value="download"
+                        value={`${kebabCase(column.value.title)}-download`}
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
                         id={`download-${kebabCase(column.value.title)}-content`}
                       >
@@ -232,7 +232,7 @@ export const renderCard = (
                         <Download data={column.value} />
                       </TabsContent>
                       <TabsContent
-                        value="about"
+                        value={`${kebabCase(column.value.title)}-about`}
                         className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
                         id={`about-${kebabCase(column.value.title)}-content`}
                       >

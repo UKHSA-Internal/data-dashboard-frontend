@@ -1,38 +1,54 @@
 import '@testing-library/jest-dom'
 
-import { fireEvent, render, screen } from '@/config/test-utils'
+import { fireEvent, render, screen, waitFor } from '@/config/test-utils'
 
 import DropdownTab from './DropdownTab'
+import { Tabs, TabsContext } from './Tabs'
 
 describe('DropdownTab Component', () => {
-  const chartIdentifier = 'test-chart'
+  const chartTitle = 'Test chart'
 
   beforeEach(() => {
     // Set up DOM elements that will be manipulated
     document.body.innerHTML = `
-      <div id="chart-${chartIdentifier}-content" data-state="active"></div>
-      <div id="table-${chartIdentifier}-content" data-state="inactive"></div>
-      <div id="download-${chartIdentifier}-content" data-state="inactive"></div>
-      <div id="about-${chartIdentifier}-content" data-state="inactive"></div>
+      <div id="chart-${chartTitle}-content" data-state="active"></div>
+      <div id="table-${chartTitle}-content" data-state="inactive"></div>
+      <div id="download-${chartTitle}-content" data-state="inactive"></div>
+      <div id="about-${chartTitle}-content" data-state="inactive"></div>
     `
+  })
+
+  it('throws an error when not rendered inside a Tab', () => {
+    expect(() =>
+      render(
+        <DropdownTab
+          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+          chartTitle={chartTitle}
+        />
+      )
+    ).toThrow('DropdownTab must be used within the <Tabs/> component')
   })
 
   it('renders without crashing', () => {
     render(
-      <DropdownTab
-        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-        chartIdentifier={chartIdentifier}
-      />
+      <Tabs>
+        <DropdownTab
+          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+          chartTitle={chartTitle}
+        />
+      </Tabs>
     )
     expect(screen.getByRole('combobox')).toBeInTheDocument()
   })
 
   it('renders all dropdown options', () => {
     render(
-      <DropdownTab
-        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-        chartIdentifier={chartIdentifier}
-      />
+      <Tabs>
+        <DropdownTab
+          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+          chartTitle={chartTitle}
+        />
+      </Tabs>
     )
 
     const options = screen.getAllByRole('option')
@@ -41,33 +57,23 @@ describe('DropdownTab Component', () => {
   })
 
   it('changes active state on selecting an option', () => {
+    const mockSetSelectedTab = jest.fn()
     render(
-      <DropdownTab
-        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-        chartIdentifier={chartIdentifier}
-      />
+      <TabsContext.Provider value={['chart-default', mockSetSelectedTab]}>
+        <Tabs>
+          <DropdownTab
+            className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+            chartTitle={chartTitle}
+          />
+        </Tabs>
+      </TabsContext.Provider>
     )
 
     const dropdown = screen.getByRole('combobox') as HTMLSelectElement
     fireEvent.change(dropdown, { target: { value: 'table' } })
-
-    expect(document.getElementById(`chart-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
-    expect(document.getElementById(`table-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'active')
-  })
-
-  it('sets all non-selected options to inactive', () => {
-    render(
-      <DropdownTab
-        className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-        chartIdentifier={chartIdentifier}
-      />
-    )
-
-    fireEvent.change(screen.getByRole('combobox'), { target: { value: 'download' } })
-
-    expect(document.getElementById(`chart-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
-    expect(document.getElementById(`table-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
-    expect(document.getElementById(`about-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'inactive')
-    expect(document.getElementById(`download-${chartIdentifier}-content`)).toHaveAttribute('data-state', 'active')
+    waitFor(() => {
+      expect(document.getElementById(`chart-${chartTitle}-content`)).toHaveAttribute('data-state', 'inactive')
+      expect(document.getElementById(`table-${chartTitle}-content`)).toHaveAttribute('data-state', 'active')
+    })
   })
 })

@@ -1,58 +1,43 @@
 'use client'
-import { ChangeEvent } from 'react'
+import { kebabCase, lowerCase } from 'lodash'
+import React from 'react'
+
+import { useTranslation } from '@/app/i18n/client'
+
+import { TabsContext } from './Tabs'
 
 interface DropdownProps {
   className: string
-  chartIdentifier: string
+  chartTitle: string
 }
 
-interface DropdownOptionsProps {
-  value: string
-  displayText: string
-}
+const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
+  const chartIdentifier = kebabCase(chartTitle)
+  const context = React.useContext(TabsContext)
+  const { t } = useTranslation('common')
+  if (!context) throw new Error('DropdownTab must be used within the <Tabs/> component')
 
-const DropdownTab = ({ className, chartIdentifier }: DropdownProps) => {
-  const dropdownOptions: DropdownOptionsProps[] = [
-    { value: 'chart', displayText: 'Chart' },
-    { value: 'table', displayText: 'Tabular Data' },
-    { value: 'download', displayText: 'Download' },
-    { value: 'about', displayText: 'About' },
+  const [, setSelectedTab] = context
+
+  const dropdownOptions = [
+    { value: 'chart', displayText: t('cms.dropdown.chartLabel') },
+    { value: 'table', displayText: t('cms.dropdown.tableLabel') },
+    { value: 'download', displayText: t('cms.dropdown.downloadLabel') },
+    { value: 'about', displayText: t('cms.dropdown.aboutLabel') },
   ]
-
-  const displayCorrespondingContent = async (selectedValue: string) => {
-    // create a new array with from the original dropDown options. this prevents the splice from altering the original array data.
-    const options = dropdownOptions.slice()
-    // find the index of the selectedValue and remove the selectedValue object from the array.
-    const optionIndex = options.findIndex((option) => option.value === selectedValue)
-    options.splice(optionIndex, 1)
-
-    options.map((option) => {
-      const nonSelectedContent = document.getElementById(`${option.value}-${chartIdentifier}-content`)
-      if (nonSelectedContent) {
-        nonSelectedContent.setAttribute('data-state', 'inactive')
-      }
-    })
-
-    const selectedContent = document.getElementById(`${selectedValue}-${chartIdentifier}-content`)
-    if (selectedContent) {
-      selectedContent.setAttribute('data-state', 'active')
-    }
-  }
-
-  const onChangeFunction = async (optionSelected: ChangeEvent<HTMLSelectElement>) => {
-    optionSelected.preventDefault()
-    await displayCorrespondingContent(optionSelected.target.value)
-  }
 
   return (
     <select
-      id={`#dropdown-${chartIdentifier}`}
-      defaultValue={`#chart-${chartIdentifier}`}
-      onChange={onChangeFunction}
+      id={`ukhsa-chart-dropdown-${chartIdentifier}`}
+      defaultValue={`chart-${chartIdentifier}`}
+      onChange={(optionSelected) => {
+        optionSelected.preventDefault()
+        setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
+      }}
       className={className}
-      aria-label={`${chartIdentifier} select element`}
+      aria-label={t('cms.dropdown.selectLabel', { chartTitle: lowerCase(chartTitle) })}
     >
-      {dropdownOptions.map(({ value, displayText }: DropdownOptionsProps, index) => (
+      {dropdownOptions.map(({ value, displayText }, index) => (
         <option key={`option-${index}`} value={value}>
           {displayText}
         </option>
