@@ -409,7 +409,7 @@ describe('MiniMap', () => {
 
     render(<MiniMap alertType="cold" />)
 
-    // Loop through each region in mockGreenAlertData and perform the check for each
+    // Loop through each region in mockGreenAlertData and ensure links to pages in list
     for (const alert of mockGreenAlertData.data) {
       const regionName = alert.geography_name
       const expectedUrl = `/?v=map&type=cold&fid=${alert.geography_code}`
@@ -417,6 +417,20 @@ describe('MiniMap', () => {
       const alertItem = screen.getByRole('listitem', { name: `${regionName}: Green alert` })
 
       await userEvent.click(alertItem)
+      expect(mockPush).toHaveBeenCalledWith(expect.stringContaining(expectedUrl), { scroll: false })
+      expect(mockPush).toHaveBeenCalledTimes(1)
+      jest.clearAllMocks()
+    }
+
+    // Loop through each region in mockGreenAlertData and ensure links to pages in map
+
+    for (const alert of mockGreenAlertData.data) {
+      const expectedUrl = `/?v=map&type=cold&fid=${alert.geography_code}`
+
+      const map = screen.getByRole('application', { name: 'Map of weather health alerts' })
+      expect(map).toBeVisible()
+
+      await userEvent.click(screen.getByTestId(`feature-${alert.geography_code}`))
       expect(mockPush).toHaveBeenCalledWith(expect.stringContaining(expectedUrl), { scroll: false })
       expect(mockPush).toHaveBeenCalledTimes(1)
       jest.clearAllMocks()
