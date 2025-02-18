@@ -7,6 +7,9 @@ import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
+import { authEnabled } from '@/config/constants'
+
+import UserAvatar from '../UserAvatar/UserAvatar'
 
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
@@ -45,7 +48,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <TopNav>
+      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
         <MegaMenu />
       </TopNav>
 
