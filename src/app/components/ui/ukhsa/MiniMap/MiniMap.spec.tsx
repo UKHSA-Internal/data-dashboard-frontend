@@ -3,7 +3,7 @@ import React from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
-import { render } from '@/config/test-utils'
+import { render, screen } from '@/config/test-utils'
 
 import { MiniMap } from './MiniMap'
 
@@ -75,6 +75,46 @@ const mockAlertData = {
       refresh_date: '2024-05-07 12:00:00',
       slug: 'east-midlands',
     },
+    {
+      status: 'Green',
+      geography_name: 'West Midlands',
+      geography_code: 'E12000005',
+      refresh_date: '2024-05-07 12:00:00',
+      slug: 'west-midlands',
+    },
+    {
+      status: 'Green',
+      geography_name: 'East of England',
+      geography_code: 'E12000006',
+      refresh_date: '2024-05-07 12:00:00',
+      slug: 'east-of-england',
+    },
+    {
+      status: 'Green',
+      geography_name: 'London',
+      geography_code: 'E12000007',
+      refresh_date: '2024-05-07 12:00:00',
+      slug: 'london',
+    },
+    {
+      status: 'Green',
+      geography_name: 'South East',
+      geography_code: 'E12000008',
+      refresh_date: '2024-05-07 12:00:00',
+      slug: 'south-east',
+    },
+    {
+      status: 'Green',
+      geography_name: 'South West',
+      geography_code: 'E12000009',
+      refresh_date: '2024-05-07 12:00:00',
+      slug: 'south-west',
+    },
+  ],
+}
+
+const mockGreenAlertData = {
+  data: [
     {
       status: 'Green',
       geography_name: 'West Midlands',
@@ -293,6 +333,40 @@ describe('MiniMap', () => {
     const { getByRole } = render(<MiniMap alertType="cold" />)
 
     expect(getByRole('button', { name: 'Enter Fullscreen' })).toBeVisible()
+  })
+
+  test('All green - returns just green status', async () => {
+    useStateMock.mockImplementationOnce(() => [null, setMockState])
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation(regionId, [])
+
+    const { getByText } = render(<MiniMap alertType="cold" />)
+
+    expect(getByText('No alert')).toBeVisible()
+    //query for green alert data
+    const londonAlert = screen.getByLabelText('London: Green alert')
+    const southEastAlert = screen.getByLabelText('South East: Green alert')
+    const southWestAlert = screen.getByLabelText('South West: Green alert')
+    const eastOfEnglandAlert = screen.getByLabelText('East of England: Green alert')
+    const westMidlandsAlert = screen.getByLabelText('West Midlands: Green alert')
+
+    //query for other status colours
+    const northEastAlert = screen.queryByLabelText('North East: Red alert')
+    const northWestAlert = screen.queryByLabelText('North West: Amber alert')
+    const yorkshireAndTheHumberAlert = screen.queryByLabelText('Yorkshire and The Humber: Yellow alert')
+    const eastMidlandsAlert = screen.queryByLabelText('East Midlands: Yellow alert')
+
+    expect(londonAlert).toBeInTheDocument()
+    expect(southEastAlert).toBeInTheDocument()
+    expect(southWestAlert).toBeInTheDocument()
+    expect(eastOfEnglandAlert).toBeInTheDocument()
+    expect(westMidlandsAlert).toBeInTheDocument()
+
+    expect(northEastAlert).not.toBeInTheDocument()
+    expect(northWestAlert).not.toBeInTheDocument()
+    expect(yorkshireAndTheHumberAlert).not.toBeInTheDocument()
+    expect(eastMidlandsAlert).not.toBeInTheDocument()
   })
 
   test('When the "Enter Fullscreen" button is clicked it should navigate to the full map screen', async () => {
