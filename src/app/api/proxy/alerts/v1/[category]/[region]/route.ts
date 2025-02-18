@@ -10,8 +10,6 @@ interface PathParameters {
   }
 }
 
-export const dynamic = 'force-dynamic'
-
 export async function GET(req: NextRequest, { params: { category, region } }: PathParameters) {
   if (!category || !region) {
     return new NextResponse('Missing category and/or region', {
