@@ -335,40 +335,6 @@ describe('MiniMap', () => {
     expect(getByRole('button', { name: 'Enter Fullscreen' })).toBeVisible()
   })
 
-  test('All green - returns just green status', async () => {
-    useStateMock.mockImplementationOnce(() => [null, setMockState])
-    mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
-    mockUseDebounceValue.mockImplementation(() => [])
-    useCallbackMock.mockImplementation(regionId, [])
-
-    const { getByText } = render(<MiniMap alertType="cold" />)
-
-    expect(getByText('No alert')).toBeVisible()
-    //query for green alert data
-    const londonAlert = screen.getByLabelText('London: Green alert')
-    const southEastAlert = screen.getByLabelText('South East: Green alert')
-    const southWestAlert = screen.getByLabelText('South West: Green alert')
-    const eastOfEnglandAlert = screen.getByLabelText('East of England: Green alert')
-    const westMidlandsAlert = screen.getByLabelText('West Midlands: Green alert')
-
-    //query for other status colours
-    const northEastAlert = screen.queryByLabelText('North East: Red alert')
-    const northWestAlert = screen.queryByLabelText('North West: Amber alert')
-    const yorkshireAndTheHumberAlert = screen.queryByLabelText('Yorkshire and The Humber: Yellow alert')
-    const eastMidlandsAlert = screen.queryByLabelText('East Midlands: Yellow alert')
-
-    expect(londonAlert).toBeInTheDocument()
-    expect(southEastAlert).toBeInTheDocument()
-    expect(southWestAlert).toBeInTheDocument()
-    expect(eastOfEnglandAlert).toBeInTheDocument()
-    expect(westMidlandsAlert).toBeInTheDocument()
-
-    expect(northEastAlert).not.toBeInTheDocument()
-    expect(northWestAlert).not.toBeInTheDocument()
-    expect(yorkshireAndTheHumberAlert).not.toBeInTheDocument()
-    expect(eastMidlandsAlert).not.toBeInTheDocument()
-  })
-
   test('When the "Enter Fullscreen" button is clicked it should navigate to the full map screen', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
     mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
@@ -389,5 +355,100 @@ describe('MiniMap', () => {
     expect(useCallbackMock).toHaveBeenCalled()
     expect(mockPush).toHaveBeenCalledWith(expect.stringContaining('/?v=map&type=cold'), { scroll: false })
     expect(mockPush).toHaveBeenCalledTimes(1)
+  })
+
+  test('All green - returns just green status', async () => {
+    useStateMock.mockImplementationOnce(() => [null, setMockState])
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation(regionId, [])
+
+    const { getByText } = render(<MiniMap alertType="cold" />)
+
+    expect(getByText('No alert')).toBeVisible()
+    //query for green alert data
+    const london = screen.getByText('London')
+    const southEast = screen.getByText('South East')
+    const southWest = screen.getByText('South West')
+    const eastOfEngland = screen.getByText('East of England')
+    const westMidlands = screen.getByText('West Midlands')
+
+    //other status colours
+    const northEastAlert = screen.queryByLabelText('North East: Red alert')
+    const northWestAlert = screen.queryByLabelText('North West: Amber alert')
+    const yorkshireAndTheHumberAlert = screen.queryByLabelText('Yorkshire and The Humber: Yellow alert')
+    const eastMidlandsAlert = screen.queryByLabelText('East Midlands: Yellow alert')
+
+    expect(london).toBeVisible()
+    expect(southEast).toBeVisible()
+    expect(southWest).toBeVisible()
+    expect(eastOfEngland).toBeVisible()
+    expect(westMidlands).toBeVisible()
+
+    expect(northEastAlert).not.toBeInTheDocument()
+    expect(northWestAlert).not.toBeInTheDocument()
+    expect(yorkshireAndTheHumberAlert).not.toBeInTheDocument()
+    expect(eastMidlandsAlert).not.toBeInTheDocument()
+
+    expect(getByText('West Midlands')).toBeVisible()
+  })
+
+  test('test links to pages for all green status in lists and maps for all regions', async () => {
+    useStateMock.mockImplementationOnce(() => [null, setMockState])
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation((fn: jest.Mock<void, void[], void>) => {
+      if (fn === mockHandleClick) {
+        return mockHandleClick
+      }
+      if (fn === mockHandleMouseLeave) {
+        return mockHandleMouseLeave
+      }
+      return fn
+    })
+
+    render(<MiniMap alertType="cold" />)
+
+    // Loop through each region in mockGreenAlertData and perform the check for each
+    for (const alert of mockGreenAlertData.data) {
+      const regionName = alert.geography_name
+      const expectedUrl = `/?v=map&type=cold&fid=${alert.geography_code}`
+
+      const alertItem = screen.getByRole('listitem', { name: `${regionName}: Green alert` })
+
+      await userEvent.click(alertItem)
+      expect(mockPush).toHaveBeenCalledWith(expect.stringContaining(expectedUrl), { scroll: false })
+      expect(mockPush).toHaveBeenCalledTimes(1)
+      jest.clearAllMocks()
+    }
+  })
+
+  test('R, A, Y, G - shows all statuses, and just those regions within; Has links to pages both', async () => {
+    useStateMock.mockImplementationOnce(() => [null, setMockState])
+    mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
+    mockUseDebounceValue.mockImplementation(() => [])
+    useCallbackMock.mockImplementation((fn: jest.Mock) => {
+      if (fn === mockHandleClick) {
+        return mockHandleClick
+      }
+      if (fn === mockHandleMouseLeave) {
+        return mockHandleMouseLeave
+      }
+      return fn
+    })
+
+    const { getByText } = render(<MiniMap alertType="cold" />)
+
+    expect(getByText('North East')).toBeVisible()
+    expect(getByText('Red alert')).toBeVisible()
+
+    expect(getByText('North West')).toBeVisible()
+    expect(getByText('Amber alert')).toBeVisible()
+
+    expect(getByText('Yorkshire and The Humber')).toBeVisible()
+    expect(getByText('Yellow alert')).toBeVisible()
+
+    expect(getByText('West Midlands')).toBeVisible()
+    expect(getByText('No alert')).toBeVisible()
   })
 })
