@@ -11,8 +11,9 @@ import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/Rela
 import { Breadcrumbs } from '@/app/components/ui/ukhsa/View/Breadcrumbs/Breadcrumbs'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { authEnabled } from '@/config/constants'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
 
 export async function generateMetadata() {
   const {
