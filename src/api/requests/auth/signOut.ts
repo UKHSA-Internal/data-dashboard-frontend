@@ -3,12 +3,12 @@ import { logger } from '@/lib/logger'
 
 import { getAuthApiBaseUrl } from '../helpers'
 
-export async function signOut() {
+export async function signOut(options?: { redirectTo?: string | undefined; redirect?: true | undefined }) {
   try {
     const session = await auth()
 
     if (!session?.refreshToken) {
-      return { error: 'No refresh token available' }
+      throw { error: 'No refresh token available' }
     }
 
     const revokeResponse = await fetch(`${getAuthApiBaseUrl()}/revoke`, {
@@ -36,5 +36,5 @@ export async function signOut() {
     logger.error('Unexpected error in revoke handler:', error)
   }
 
-  await nextAuthSignOut()
+  await nextAuthSignOut(options)
 }
