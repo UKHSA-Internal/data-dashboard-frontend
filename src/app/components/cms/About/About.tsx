@@ -19,7 +19,7 @@ const About = ({ description, contextualUrls }: AboutProps) => {
   return (
     <div>
       <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
-      {contextualUrls ? (
+      {contextualUrls && contextualUrls.length > 0 ? (
         <div>
           <h2 className="default-govuk-header mb-2 font-bold">Related Links:</h2>
           <ul>{displayLinks(contextualUrls)}</ul>
