@@ -1,15 +1,15 @@
-import { ContextualUrl } from '@/api/models/cms/Page/Body'
+import { ChartRelatedLink } from '@/api/models/cms/Page/Body'
 
 interface AboutProps {
   description: string
-  contextualUrls?: ContextualUrl
+  contextualUrls?: ChartRelatedLink
 }
 
-const displayLinks = (contextualUrls: ContextualUrl) => {
+const displayLinks = (contextualUrls: ChartRelatedLink) => {
   if (contextualUrls) {
     return contextualUrls.map((option, index) => (
-      <a key={`about-link-${index}`} href={option.value.url} target="_blank">
-        <li className="govuk-link">{option.value.url_display_text}</li>
+      <a key={`about-link-${index}`} href={option.value.link} target="_blank">
+        <li className="govuk-link">{option.value.link_display_text}</li>
       </a>
     ))
   }

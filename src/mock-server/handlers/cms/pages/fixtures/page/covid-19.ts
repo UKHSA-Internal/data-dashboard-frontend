@@ -46,28 +46,28 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Cases by specimen date',
                     body: 'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.',
-                    contextual_urls: [
+                    related_links: [
                       {
-                        type: 'contextual_url',
+                        type: 'related_link',
                         value: {
-                          url_display_text: 'Link 1',
-                          url: 'https://www.google.com',
+                          link_display_text: 'Link 1',
+                          link: 'https://www.google.com',
                         },
                         id: 'd3fef747-7c5b-46d2-9ea0-da08ee98164d',
                       },
                       {
-                        type: 'contextual_url',
+                        type: 'related_link',
                         value: {
-                          url_display_text: 'Google Page',
-                          url: 'https://www.google.com',
+                          link_display_text: 'Google Page',
+                          link: 'https://www.google.com',
                         },
                         id: '46ce6b14-ace8-46f0-af98-ee69afc79382',
                       },
                       {
-                        type: 'contextual_url',
+                        type: 'related_link',
                         value: {
-                          url_display_text: 'Link 2',
-                          url: 'https://www.google.com',
+                          link_display_text: 'Link 2',
+                          link: 'https://www.google.com',
                         },
                         id: '45cc9523-d471-473a-af16-4bdbb9618071',
                       },
@@ -113,6 +113,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: '7-day case rates by specimen date',
                     body: 'Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown.',
+                    related_links: [],
                     tag_manager_event_id: '7day_case_rates_by_specimen_date',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -146,6 +147,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Case rates by age',
                     body: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
+                    related_links: [],
                     tag_manager_event_id: 'case_rates_by_age',
                     date_prefix: 'Up to',
                     x_axis: 'stratum',
@@ -196,6 +198,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Daily deaths with COVID-19 on the death certificate by date of death',
                     body: 'Daily numbers of deaths of people whose death certificate mentioned COVID-19 as one of the causes, and 7-day rolling average. Because of the time it takes for deaths to be registered, there is a lag in reporting of at least 11 days, and data are not shown for the 14 days before the most recent reported date as they are considered incomplete. Data are shown by date of death.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -265,6 +268,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Bar chart with overlaying line comparing patients \r\nadmitted to hospital with COVID-19',
                     body: 'Daily and total numbers of COVID-19 patients admitted to hospital. The overlaying line shows the 7-day average.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -298,6 +302,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Patients in hospital',
                     body: 'Daily count of confirmed COVID-19 patients in hospital at 8am. The overlaying line shows the 7-day average.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -339,6 +344,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Admissions rate by age',
                     body: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people, since the start of the pandemic. There are fewer people in the oldest age group so the rates show the relative impact on different age groups.',
+                    related_links: [],
                     tag_manager_event_id: 'admissions_rate_by_age',
                     date_prefix: 'Up to',
                     x_axis: 'stratum',
@@ -372,6 +378,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Patients in mechanical ventilation beds',
                     body: 'Daily count of COVID-19 patients in mechanical ventilation beds, and 7-day rolling average. Data are not updated every day.',
+                    related_links: [],
                     tag_manager_event_id: null,
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -422,6 +429,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Total daily number of PCR tests reported',
                     body: 'The daily number of new polymerase chain reaction (PCR) tests reported. Data is shown by specimen date (the date the sample was collected from the person).',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -455,6 +463,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Weekly positivity of people receiving a PCR test',
                     body: 'The percentage positivity of people who received a polymerase chain reaction (PCR) and had at least one positive COVID-19 PCR test result in the same 7 days. Data is shown by specimen date (the date the sample was collected). People tested more than once in the period are only counted once in the denominator. People with more than one positive result in the period are only included once in the numerator.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -505,6 +514,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'People aged 50 and over who have received autumn booster vaccinations, by vaccination date',
                     body: 'The number of people aged 50 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -538,6 +548,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Autumn booster vaccination uptake (50+), by vaccination date',
                     body: 'The percentage of people aged 50 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 50 and over on the National Immunisation Management Service (NIMS) database.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -731,6 +742,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'People aged 75 and over who have received spring booster vaccinations, by vaccination date',
                     body: 'The number of people aged 75 and over who have received a spring booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,
@@ -764,6 +776,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Spring booster vaccination uptake (75+), by vaccination date',
                     body: 'The percentage of people aged 75 and over who have received a spring booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.',
+                    related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
                     x_axis: null,

@@ -13,18 +13,18 @@ export const WithText = z.object({
   body: z.string(),
 })
 
-export const ContextualUrl = z.array(
+export const ChartRelatedLinks = z.array(
   z.object({
-    type: z.literal('contextual_url'),
+    type: z.literal('related_link'),
     id: z.string(),
     value: z.object({
-      url: z.string(),
-      url_display_text: z.string(),
+      link: z.string(),
+      link_display_text: z.string(),
     }),
   })
 )
 
-export type ContextualUrl = z.infer<typeof ContextualUrl>
+export type ChartRelatedLink = z.infer<typeof ChartRelatedLinks>
 
 export const WithWeatherHealthAlertCard = z.object({
   title: z.string(),
@@ -50,7 +50,7 @@ const chartCardValues = z.object({
   title: z.string(),
   chart: Chart,
   body: z.string(),
-  contextual_urls: ContextualUrl.optional(),
+  related_links: ChartRelatedLinks.optional(),
   tag_manager_event_id: z.string().nullable(),
   x_axis: z.string().nullable(),
   y_axis: z.string().nullable(),

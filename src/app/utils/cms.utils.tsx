@@ -242,7 +242,7 @@ export const renderCard = (
                         >
                           About
                         </span>
-                        <About description={column.value.body} contextualUrls={column.value.contextual_urls} />
+                        <About description={column.value.body} contextualUrls={column.value.related_links} />
                       </TabsContent>
                     </Tabs>
                   </article>
