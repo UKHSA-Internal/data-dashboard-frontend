@@ -1,5 +1,6 @@
 import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server'
 
+import { auth } from './auth'
 import { validateAndRenewSession } from './lib/auth/middleware'
 
 export const config = {
@@ -13,11 +14,21 @@ export const config = {
 
 export const middleware: NextMiddleware = async (request: NextRequest) => {
   const response = NextResponse.next()
+  const pathname = request.nextUrl.pathname
 
   // Add x-url header for debugging or legacy usage
   response.headers.set('x-url', request.url)
 
   if (process.env.AUTH_ENABLED === 'true') {
+    // Filter out next-auth API requests
+    if (request.nextUrl.pathname.startsWith('/api/auth/')) {
+      return response
+    }
+
+    const token = await auth()
+    if (!token && !pathname.includes('/start')) {
+      return NextResponse.redirect(new URL('/start', request.url))
+    }
     return await validateAndRenewSession(request, response)
   }
 

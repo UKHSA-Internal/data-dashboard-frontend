@@ -12,7 +12,7 @@ export default async function UserSignOut() {
       className="inline-flex items-center gap-3"
       action={async () => {
         'use server'
-        await signOut()
+        await signOut({ redirectTo: '/start?logout=success' })
       }}
     >
       <button className="govuk-button mb-0" type="submit">
