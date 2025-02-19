@@ -3,11 +3,12 @@ import { MetadataRoute } from 'next'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
+import { authEnabled } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, toSlug } from './utils/app.utils'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
 
 export const changeFrequencyMap: Record<number, MetadataRoute.Sitemap[number]['changeFrequency']> = {
   1: 'always',
