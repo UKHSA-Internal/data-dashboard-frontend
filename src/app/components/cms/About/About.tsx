@@ -2,7 +2,7 @@ import { ChartRelatedLink } from '@/api/models/cms/Page/Body'
 
 interface AboutProps {
   description: string
-  contextualUrls?: ChartRelatedLink
+  relatedLinks?: ChartRelatedLink
 }
 
 const displayLinks = (contextualUrls: ChartRelatedLink) => {
@@ -15,14 +15,14 @@ const displayLinks = (contextualUrls: ChartRelatedLink) => {
   }
 }
 
-const About = ({ description, contextualUrls }: AboutProps) => {
+const About = ({ description, relatedLinks }: AboutProps) => {
   return (
     <div>
       <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
-      {contextualUrls && contextualUrls.length > 0 ? (
+      {relatedLinks && relatedLinks.length > 0 ? (
         <div>
           <h2 className="default-govuk-header mb-2 font-bold">Related Links:</h2>
-          <ul>{displayLinks(contextualUrls)}</ul>
+          <ul>{displayLinks(relatedLinks)}</ul>
         </div>
       ) : null}
     </div>
