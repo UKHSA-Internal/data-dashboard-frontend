@@ -14,7 +14,7 @@ export async function ChartRowCardHeader({ children, id, title, description }: R
 
   return (
     <header>
-      <h3 id={`chart-row-card-heading-${id}`} className="default-govuk-header mb-2 font-bold">
+      <h3 id={`chart-row-card-heading-${id}`} className="govuk-body-m mb-2 text-dark-grey">
         {title} {areaName && `(${areaName})`}
       </h3>
       <p className="govuk-heading-s govuk-!-margin-bottom-2 pt-0">{description}</p>

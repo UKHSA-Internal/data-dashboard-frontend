@@ -242,7 +242,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Bar chart with overlaying line comparing patients \r\nadmitted to hospital with COVID-19',
-                    sub_title: '',
+                    sub_title: 'Sample subtitle',
                     body: 'Daily and total numbers of COVID-19 patients admitted to hospital. The overlaying line shows the 7-day average.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
