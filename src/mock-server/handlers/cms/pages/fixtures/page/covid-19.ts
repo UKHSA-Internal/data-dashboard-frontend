@@ -488,6 +488,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'People aged 50 and over who have received autumn booster vaccinations, by vaccination date',
+                    sub_title: '',
                     body: 'The number of people aged 50 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',

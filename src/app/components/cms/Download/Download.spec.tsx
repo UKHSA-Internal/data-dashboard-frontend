@@ -69,6 +69,7 @@ const props: ComponentProps<typeof Download> = {
     headline_number_columns: [],
     title: 'Table Title',
     body: 'Table Body',
+    sub_title: '',
   },
 }
 

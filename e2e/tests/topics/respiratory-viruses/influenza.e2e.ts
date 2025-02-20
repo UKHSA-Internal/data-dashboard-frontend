@@ -35,24 +35,33 @@ test.describe('Influenza page', () => {
     await test.step('displays chart cards for "Healthcare"', async () => {
       await app.hasTopicCard({
         name: 'Line chart with overlaying line comparing hospital admission rates of patients admitted to hospital with Influenza',
+        description:
+          'Weekly admissions rates of patients admitted to hospital with Influenza as a weekly time series, shown as the rate per 100,000 people.',
       })
       await app.hasTopicCard({
         name: 'Line chart comparing Influenza hospital admission rates by age',
+        description: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people.',
       })
       await app.hasTopicCard({
         name: 'Line chart with overlaying line comparing ICU admission rates of patients admitted to hospital with Influenza',
+        description:
+          'Weekly admissions rates of patients admitted to ICU with Influenza as a weekly time series, shown as the rate per 100,000 people.',
       })
       await app.hasTopicCard({
         name: 'Line chart comparing Influenza ICU admission rates by age',
+        description: 'Age breakdown of people admitted to ICU, shown as the rate per 100,000 people.',
       })
     })
     await test.step('displays chart cards for "Testing"', async () => {
       7
       await app.hasTopicCard({
         name: 'Bar chart with overlaying line comparing positivity for Influenza tests',
+        description:
+          'Weekly admissions rates of patients admitted to hospital with Influenza as a weekly time series, shown as the rate per 100,000 people.',
       })
       await app.hasTopicCard({
         name: 'Line chart comparing weekly positivity for Influenza tests by age',
+        description: 'Weekly time series of positivity for people testing positive for Influenza broken down by age.',
       })
     })
 
