@@ -1,0 +1,25 @@
+@@ -1,22 +1,9 @@
+ interface AboutProps {
+   description: string
+-  contextual_urls: { urlDisplayText: string; url: string }[]
+ }
+ 
+-const About = ({ description, contextual_urls }: AboutProps) => {
+-  return (
+-    <div>
+-      <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
+-      <p>Further information links:</p>
+-      <ul>
+-        {contextual_urls.map((url) => (
+-          <a href={url.url}>
+-            <li>{url.urlDisplayText}</li>
+-          </a>
+-        ))}
+-      </ul>
+-    </div>
+-  )
++const About = ({ description }: AboutProps) => {
++  return <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
+ }
+ 
+ export default About

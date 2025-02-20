@@ -35,6 +35,7 @@ const WithHeadlineNumbersRowCard = z.object({
 
 const chartCardValues = z.object({
   title: z.string(),
+  sub_title: z.string(),
   chart: Chart,
   body: z.string(),
   tag_manager_event_id: z.string().nullable(),
