@@ -114,43 +114,7 @@ const mockAlertData = {
 }
 
 const mockGreenAlertData = {
-  data: [
-    {
-      status: 'Green',
-      geography_name: 'West Midlands',
-      geography_code: 'E12000005',
-      refresh_date: '2024-05-07 12:00:00',
-      slug: 'west-midlands',
-    },
-    {
-      status: 'Green',
-      geography_name: 'East of England',
-      geography_code: 'E12000006',
-      refresh_date: '2024-05-07 12:00:00',
-      slug: 'east-of-england',
-    },
-    {
-      status: 'Green',
-      geography_name: 'London',
-      geography_code: 'E12000007',
-      refresh_date: '2024-05-07 12:00:00',
-      slug: 'london',
-    },
-    {
-      status: 'Green',
-      geography_name: 'South East',
-      geography_code: 'E12000008',
-      refresh_date: '2024-05-07 12:00:00',
-      slug: 'south-east',
-    },
-    {
-      status: 'Green',
-      geography_name: 'South West',
-      geography_code: 'E12000009',
-      refresh_date: '2024-05-07 12:00:00',
-      slug: 'south-west',
-    },
-  ],
+  data: mockAlertData.data.filter((alert) => alert.status === 'Green'),
 }
 
 describe('MiniMap', () => {
@@ -360,7 +324,7 @@ describe('MiniMap', () => {
   test('All green - returns just green status', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
     mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
-    mockUseDebounceValue.mockImplementation(() => [])
+    // mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
     const { getByText } = render(<MiniMap alertType="cold" />)
@@ -396,7 +360,6 @@ describe('MiniMap', () => {
   test('test links to pages for all green status in lists and maps for all regions', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
     mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
-    mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation((fn: jest.Mock<void, void[], void>) => {
       if (fn === mockHandleClick) {
         return mockHandleClick
@@ -440,16 +403,6 @@ describe('MiniMap', () => {
   test('R, A, Y, G - shows all statuses, and just those regions within; Has links to pages both', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
     mockUseWeatherHealthAlertList.mockImplementation(() => mockAlertData)
-    mockUseDebounceValue.mockImplementation(() => [])
-    useCallbackMock.mockImplementation((fn: jest.Mock) => {
-      if (fn === mockHandleClick) {
-        return mockHandleClick
-      }
-      if (fn === mockHandleMouseLeave) {
-        return mockHandleMouseLeave
-      }
-      return fn
-    })
 
     const { getByText } = render(<MiniMap alertType="cold" />)
 
