@@ -7,82 +7,56 @@ jest.mock('./MiniMap', () => ({
   MiniMap: jest.fn(() => <div>MiniMap Mock Component</div>),
 }))
 
+const renderMinimapComponent = (type: 'heat' | 'cold') => {
+  const title = `${type} Health Alert`
+  const subTitle = `${type} temperatures expected`
+  const alertType = type
+
+  const { container } = render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
+  return {
+    container,
+  }
+}
+
 describe('MiniMapCard Component', () => {
   it('renders the heading with the correct title text', () => {
-    const title = 'Heat Health Alert'
-    const subTitle = 'High temperatures expected'
-    const alertType = 'heat'
-
-    render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
+    renderMinimapComponent('heat')
     const heading = screen.getByRole('heading', { level: 3 })
-    expect(heading).toHaveTextContent('Heat Health Alert')
+    expect(heading).toHaveTextContent('heat Health Alert')
   })
 
   it('renders the subtitle correctly', () => {
-    const title = 'Cold Health Alert'
-    const subTitle = 'Freezing temperatures expected'
-    const alertType = 'cold'
-
-    render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
-    const subtitle = screen.getByText('Freezing temperatures expected')
+    renderMinimapComponent('cold')
+    const subtitle = screen.getByText('cold temperatures expected')
     expect(subtitle).toBeInTheDocument()
   })
 
   it('links to the correct summary page based on alertType (heat)', () => {
-    const title = 'Heat Health Alert'
-    const subTitle = 'High temperatures expected'
-    const alertType = 'heat'
-
-    render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
+    renderMinimapComponent('heat')
     const link = screen.getByRole('link')
     expect(link).toHaveAttribute('href', '/weather-health-alerts/heat')
   })
 
   it('links to the correct summary page based on alertType (cold)', () => {
-    const title = 'Cold Health Alert'
-    const subTitle = 'Freezing temperatures expected'
-    const alertType = 'cold'
-
-    render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
+    renderMinimapComponent('cold')
     const link = screen.getByRole('link')
     expect(link).toHaveAttribute('href', '/weather-health-alerts/cold')
   })
 
   it('renders the MiniMap component with the correct alertType', () => {
-    const title = 'Cold Health Alert'
-    const subTitle = 'Freezing temperatures expected'
-    const alertType = 'cold'
-
-    render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
-    // Ensure <MiniMap /> is rndered (mocked as 'MiniMap Mock Component')
+    renderMinimapComponent('cold')
     expect(screen.getByText('MiniMap Mock Component')).toBeInTheDocument()
   })
 
   it('has the correct aria-labelledby attribute for accessibility', () => {
-    const title = 'Heat Health Alert'
-    const subTitle = 'High temperatures expected'
-    const alertType = 'heat'
-
-    render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
+    renderMinimapComponent('heat')
     const card = screen.getByRole('link')
     expect(card).toHaveAttribute('aria-labelledby', 'chart-row-card-heading-x4')
   })
 
   it('applies the correct CSS classes to minimap card', () => {
-    const title = 'Cold Health Alert'
-    const subTitle = 'Freezing temperatures expected'
-    const alertType = 'cold'
-
-    const { container } = render(<MiniMapCard title={title} subTitle={subTitle} alertType={alertType} />)
-
+    const { container } = renderMinimapComponent('heat')
     const card = container.querySelector('a') // The Card is a link
-
     expect(card).toHaveClass(
       'govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card bg-[var(--colour-chart-background)]'
     )
