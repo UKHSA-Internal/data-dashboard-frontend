@@ -31,9 +31,10 @@ jest.mock('../components/cms', () => ({
   Percentage: () => <div>Mocked percentage number</div>,
   Headline: () => <div>Mocked headline number</div>,
   Trend: () => <div>Mocked trend number</div>,
-  ChartRowCardHeader: ({ title, children, id }: ComponentProps<typeof ChartRowCardHeader>) => (
+  ChartRowCardHeader: ({ title, description, children, id }: ComponentProps<typeof ChartRowCardHeader>) => (
     <header>
       <h3 id={`chart-row-card-heading-${id}`}>{title}</h3>
+      <p>{description}</p>
       {children}
     </header>
   ),
