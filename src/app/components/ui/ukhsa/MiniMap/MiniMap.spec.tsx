@@ -324,7 +324,6 @@ describe('MiniMap', () => {
   test('All green - returns just green status', async () => {
     useStateMock.mockImplementationOnce(() => [null, setMockState])
     mockUseWeatherHealthAlertList.mockImplementation(() => mockGreenAlertData)
-    // mockUseDebounceValue.mockImplementation(() => [])
     useCallbackMock.mockImplementation(regionId, [])
 
     const { getByText } = render(<MiniMap alertType="cold" />)
