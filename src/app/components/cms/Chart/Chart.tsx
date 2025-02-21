@@ -5,12 +5,10 @@ import { z } from 'zod'
 
 import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { flags } from '@/app/constants/flags.constants'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
@@ -95,10 +93,7 @@ const createStaticChart = ({
 }
 
 export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
-  const [{ enabled: interactiveChartsFlagEnabled }, { t }] = await Promise.all([
-    getFeatureFlag(flags.interactiveCharts),
-    getServerTranslation('common'),
-  ])
+  const { t } = await getServerTranslation('common')
 
   let yAxisMinimum = null
   let yAxisMaximum = null
@@ -177,8 +172,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     return staticChart
   }
 
-  // Show static chart when interactive charts are disabled (i.e. landing page) or when feature flag is off
-  if (!enableInteractive || !interactiveChartsFlagEnabled) {
+  // Show static chart when interactive charts are disabled (i.e. landing page)
+  if (!enableInteractive) {
     return staticChart
   }
 

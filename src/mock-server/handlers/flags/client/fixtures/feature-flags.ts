@@ -13,7 +13,7 @@ export const featureFlags = {
       impressionData: false,
     },
     {
-      name: 'interactive-charts',
+      name: 'example-flag',
       type: 'release',
       enabled: false,
       project: 'default',
