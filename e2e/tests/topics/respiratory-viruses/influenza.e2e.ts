@@ -73,44 +73,6 @@ test.describe('Influenza page', () => {
     })
   })
 
-  test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
-    await test.step('loads the page', async () => {
-      await influenzaPage.goto()
-    })
-    await test.step('downloads charts', async () => {
-      await app.canDownloadChart(
-        [
-          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-icu-admission-rates-by-age',
-          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-        ],
-        'csv'
-      )
-    })
-  })
-
-  test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
-    await test.step('loads the page', async () => {
-      await influenzaPage.goto()
-    })
-    await test.step('downloads charts', async () => {
-      await app.canDownloadChart(
-        [
-          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-icu-admission-rates-by-age',
-          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-        ],
-        'json'
-      )
-    })
-  })
-
   test('Area selection already chosen upon visiting the page', async ({ influenzaPage, app }) => {
     await test.step('loads the page', async () => {
       await app.goto('/topics/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
@@ -211,12 +173,38 @@ test.describe('Influenza page', () => {
   })
 })
 
+const chartIdentifiers = [
+  'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+  'line-chart-comparing-influenza-hospital-admission-rates-by-age',
+  'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
+  'line-chart-comparing-influenza-icu-admission-rates-by-age',
+  'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
+  'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
+]
+
 test.describe('Influenza page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
     await app.hasNav()
+  })
+  test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'mobile')
+    })
+  })
+
+  test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'mobile')
+    })
   })
 })
 
@@ -227,6 +215,24 @@ test.describe('Influenza page - tablet @tabletOnly', () => {
     await influenzaPage.goto()
     await app.hasNav()
   })
+
+  test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'tablet')
+    })
+  })
+
+  test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'tablet')
+    })
+  })
 })
 
 test.describe('Influenza page - desktop @desktopOnly', () => {
@@ -235,6 +241,40 @@ test.describe('Influenza page - desktop @desktopOnly', () => {
   test('displays the navigation on desktop', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
     await app.hasNav()
+  })
+
+  test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'desktop')
+    })
+  })
+
+  test('downloads a csv version of each chart', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'desktop')
+    })
+  })
+  test('Navigates through the chart tabs using Enter Key on keyboard', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('tabs through the tabs and navigates to the download content with Enter Key on keyboard', async () => {
+      await app.navigateChartTabsByKeyboardAndSelectWithEnterKey(chartIdentifiers)
+    })
+  })
+  test('Navigates through the chart tabs using Space Key on keyboard', async ({ influenzaPage, app }) => {
+    await test.step('loads the page', async () => {
+      await influenzaPage.goto()
+    })
+    await test.step('tabs through the tabs and navigates to the download content with Space Key on keyboard', async () => {
+      await app.navigateChartTabsByKeyboardAndSelectWithSpaceKey(chartIdentifiers)
+    })
   })
 })
 
@@ -246,17 +286,7 @@ test.describe('Influenza page - no JS', () => {
       await influenzaPage.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChart(
-        [
-          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-icu-admission-rates-by-age',
-          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-        ],
-        'csv'
-      )
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'desktop')
     })
   })
 
@@ -265,17 +295,7 @@ test.describe('Influenza page - no JS', () => {
       await influenzaPage.goto()
     })
     await test.step('downloads a json version of each chart', async () => {
-      await app.canDownloadChart(
-        [
-          'line-chart-with-overlaying-line-comparing-hospital-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-hospital-admission-rates-by-age',
-          'line-chart-with-overlaying-line-comparing-icu-admission-rates-of-patients-admitted-to-hospital-with-influenza',
-          'line-chart-comparing-influenza-icu-admission-rates-by-age',
-          'bar-chart-with-overlaying-line-comparing-positivity-for-influenza-tests',
-          'line-chart-comparing-weekly-positivity-for-influenza-tests-by-age',
-        ],
-        'json'
-      )
+      await app.canDownloadChart(chartIdentifiers, 'json', 'desktop')
     })
   })
 
