@@ -101,7 +101,7 @@ export const renderCard = (
         <ChartRowCard>
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
-            const noBody = !column.value.body ? true : column.value.body.length > 0 ? false : true
+            const noAbout = !column.value.about ? true : column.value.about.length > 0 ? false : true
             return (
               <div
                 key={column.id}
@@ -117,7 +117,7 @@ export const renderCard = (
                   className="ukhsa-chart-card flex flex-col gap-6"
                 >
                   <article>
-                    <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.sub_title}>
+                    <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
                       <Timestamp data={column.value} size={size} />
                     </ChartRowCardHeader>
                     <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
@@ -152,7 +152,7 @@ export const renderCard = (
                             <span>Download</span>
                           </Link>
                         </TabsTrigger>
-                        {noBody ? null : (
+                        {noAbout ? null : (
                           <TabsTrigger
                             asChild
                             value={`${kebabCase(column.value.title)}-about`}
@@ -234,7 +234,7 @@ export const renderCard = (
                         </span>
                         <Download data={column.value} />
                       </TabsContent>
-                      {noBody ? null : (
+                      {noAbout ? null : (
                         <TabsContent
                           value={`${kebabCase(column.value.title)}-about`}
                           className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
@@ -246,7 +246,7 @@ export const renderCard = (
                           >
                             About
                           </span>
-                          <About description={column.value.body} />
+                          <About description={column.value.about} />
                         </TabsContent>
                       )}
                     </Tabs>

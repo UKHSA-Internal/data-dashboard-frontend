@@ -56,10 +56,10 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                   type: 'chart_with_headline_and_trend_card',
                   value: {
                     title: 'Cases',
-                    sub_title: '',
                     body: 'Positive tests reported in England',
                     tag_manager_event_id: 'positive_tests_reported_in_england',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -111,10 +111,10 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                   type: 'chart_with_headline_and_trend_card',
                   value: {
                     title: 'Deaths',
-                    sub_title: '',
                     body: 'Deaths with COVID-19 on the death certificate in England',
                     tag_manager_event_id: 'deaths_with_covid-19_on_death_certificate',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -191,10 +191,10 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                   type: 'chart_with_headline_and_trend_card',
                   value: {
                     title: 'Healthcare',
-                    sub_title: '',
                     body: 'Weekly hospital admission rates for Influenza',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -236,10 +236,10 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                   type: 'chart_with_headline_and_trend_card',
                   value: {
                     title: 'Testing',
-                    sub_title: '',
                     body: 'Weekly positivity',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [

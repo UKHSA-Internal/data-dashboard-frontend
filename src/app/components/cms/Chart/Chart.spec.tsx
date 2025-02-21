@@ -69,7 +69,7 @@ test('renders a narrow chart correctly', async () => {
     date_prefix: 'Up to',
     title: '',
     headline_number_columns: [],
-    sub_title: '',
+    about: '',
   }
 
   const { getByAltText } = render(
@@ -150,7 +150,7 @@ test('renders the chart by geography and geography type when both are present in
     date_prefix: 'Up to',
     title: '',
     headline_number_columns: [],
-    sub_title: '',
+    about: '',
   }
 
   const { getByAltText } = render(
@@ -213,7 +213,7 @@ test('full width charts should also have an acompanying narrow version for mobil
     date_prefix: 'Up to',
     title: '',
     headline_number_columns: [],
-    sub_title: '',
+    about: '',
   }
 
   const { getByAltText, getByTestId } = render(
@@ -262,7 +262,7 @@ test('landing page half width charts should also have an acompanying third width
     title: '',
     headline_number_columns: [],
     date_prefix: '',
-    sub_title: '',
+    about: '',
   }
 
   const { getByAltText, getByTestId } = render(
@@ -315,7 +315,7 @@ test('renders a fallback message when the chart requests fail', async () => {
     headline_number_columns: [],
     tag_manager_event_id: '',
     date_prefix: 'Up to',
-    sub_title: '',
+    about: '',
   }
 
   const { getByText, getByRole } = render(
@@ -365,7 +365,7 @@ test('Fallback message with escaped characters', async () => {
     date_prefix: 'Up to',
     title: 'Cases by specimen date',
     headline_number_columns: [],
-    sub_title: '',
+    about: '',
   }
 
   const { getByText } = render(

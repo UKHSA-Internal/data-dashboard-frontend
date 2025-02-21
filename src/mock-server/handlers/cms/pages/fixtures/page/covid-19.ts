@@ -45,10 +45,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Cases by specimen date',
-                    sub_title: '',
                     body: 'Number of cases by specimen date. Data for the last 5 days, highlighted in grey, are incomplete.',
                     tag_manager_event_id: 'cases_by_specimen_date',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -87,10 +87,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: '7-day case rates by specimen date',
-                    sub_title: '',
                     body: 'Rate of cases per 100,000 people in the rolling 7-day period ending on the dates shown.',
                     tag_manager_event_id: '7day_case_rates_by_specimen_date',
                     date_prefix: 'Up to',
+                    about: '',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -121,10 +121,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Case rates by age',
-                    sub_title: '',
                     body: '',
                     tag_manager_event_id: 'case_rates_by_age',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [
@@ -172,10 +172,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Daily deaths with COVID-19 on the death certificate by date of death',
-                    sub_title: '',
                     body: 'Daily numbers of deaths of people whose death certificate mentioned COVID-19 as one of the causes, and 7-day rolling average. Because of the time it takes for deaths to be registered, there is a lag in reporting of at least 11 days, and data are not shown for the 14 days before the most recent reported date as they are considered incomplete. Data are shown by date of death.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -242,10 +242,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Bar chart with overlaying line comparing patients \r\nadmitted to hospital with COVID-19',
-                    sub_title: 'Sample subtitle',
                     body: 'Daily and total numbers of COVID-19 patients admitted to hospital. The overlaying line shows the 7-day average.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -276,10 +276,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Patients in hospital',
-                    sub_title: '',
                     body: 'Daily count of confirmed COVID-19 patients in hospital at 8am. The overlaying line shows the 7-day average.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -318,10 +318,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Admissions rate by age',
-                    sub_title: '',
                     body: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people, since the start of the pandemic. There are fewer people in the oldest age group so the rates show the relative impact on different age groups.',
                     tag_manager_event_id: 'admissions_rate_by_age',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [
@@ -352,10 +352,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Patients in mechanical ventilation beds',
-                    sub_title: '',
                     body: 'Daily count of COVID-19 patients in mechanical ventilation beds, and 7-day rolling average. Data are not updated every day.',
                     tag_manager_event_id: null,
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -403,10 +403,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Total daily number of PCR tests reported',
-                    sub_title: '',
                     body: 'The daily number of new polymerase chain reaction (PCR) tests reported. Data is shown by specimen date (the date the sample was collected from the person).',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -437,10 +437,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Weekly positivity of people receiving a PCR test',
-                    sub_title: '',
                     body: 'The percentage positivity of people who received a polymerase chain reaction (PCR) and had at least one positive COVID-19 PCR test result in the same 7 days. Data is shown by specimen date (the date the sample was collected). People tested more than once in the period are only counted once in the denominator. People with more than one positive result in the period are only included once in the numerator.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -488,10 +488,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'People aged 50 and over who have received autumn booster vaccinations, by vaccination date',
-                    sub_title: '',
                     body: 'The number of people aged 50 and over who have received an autumn booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -522,10 +522,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Autumn booster vaccination uptake (50+), by vaccination date',
-                    sub_title: '',
                     body: 'The percentage of people aged 50 and over who have received an autumn booster COVID-19 vaccination. The denominator is the number of people aged 50 and over on the National Immunisation Management Service (NIMS) database.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -716,10 +716,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'People aged 75 and over who have received spring booster vaccinations, by vaccination date',
-                    sub_title: '',
                     body: 'The number of people aged 75 and over who have received a spring booster COVID-19 vaccination. Data for the latest 2 days, marked in grey, are incomplete. Data are shown by date of vaccination.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -750,10 +750,10 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Spring booster vaccination uptake (75+), by vaccination date',
-                    sub_title: '',
                     body: 'The percentage of people aged 75 and over who have received a spring booster COVID-19 vaccination. The denominator is the number of people aged 75 and over on the National Immunisation Management Service (NIMS) database.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
