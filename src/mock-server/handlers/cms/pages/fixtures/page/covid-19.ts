@@ -117,7 +117,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '7day_case_rates_by_specimen_date',
                     date_prefix: 'Up to',
-                    about: '',
+                    about: 'This is some sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -149,10 +149,35 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                   value: {
                     title: 'Case rates by age',
                     body: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
-                    related_links: [],
+                    related_links: [
+                      {
+                        type: 'related_link',
+                        value: {
+                          link_display_text: 'Link 1',
+                          link: 'https://www.google.com',
+                        },
+                        id: 'd3fef747-7c5b-46d2-9ea0-da08ee98164d',
+                      },
+                      {
+                        type: 'related_link',
+                        value: {
+                          link_display_text: 'Google Page',
+                          link: 'https://www.google.com',
+                        },
+                        id: '46ce6b14-ace8-46f0-af98-ee69afc79382',
+                      },
+                      {
+                        type: 'related_link',
+                        value: {
+                          link_display_text: 'Link 2',
+                          link: 'https://www.google.com',
+                        },
+                        id: '45cc9523-d471-473a-af16-4bdbb9618071',
+                      },
+                    ],
                     tag_manager_event_id: 'case_rates_by_age',
                     date_prefix: 'Up to',
-                    about: 'Sample about text',
+                    about: '',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [

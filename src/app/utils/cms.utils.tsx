@@ -102,6 +102,11 @@ export const renderCard = (
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
             const noAbout = !column.value.about ? true : column.value.about.length > 0 ? false : true
+            const noRelatedLinks = !column.value.related_links
+              ? true
+              : column.value.related_links.length > 0
+                ? false
+                : true
             return (
               <div
                 key={column.id}
@@ -152,7 +157,7 @@ export const renderCard = (
                             <span>Download</span>
                           </Link>
                         </TabsTrigger>
-                        {noAbout ? null : (
+                        {noAbout && noRelatedLinks ? null : (
                           <TabsTrigger
                             asChild
                             value={`${kebabCase(column.value.title)}-about`}
@@ -234,7 +239,7 @@ export const renderCard = (
                         </span>
                         <Download data={column.value} />
                       </TabsContent>
-                      {noAbout ? null : (
+                      {noAbout && noRelatedLinks ? null : (
                         <TabsContent
                           value={`${kebabCase(column.value.title)}-about`}
                           className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
