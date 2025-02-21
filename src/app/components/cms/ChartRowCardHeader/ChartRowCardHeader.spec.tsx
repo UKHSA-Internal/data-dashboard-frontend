@@ -12,9 +12,16 @@ jest.mock('@/app/hooks/getAreaSelector', () => ({
 const getAreaSelectorMock = jest.mocked(getAreaSelector)
 
 describe('ChartRowCardHeader', () => {
+  test('renders correctly with props', async () => {
+    getAreaSelectorMock.mockReturnValue([])
+    render(await ChartRowCardHeader({ id: '1', title: 'Sample Title', description: 'Sample Description' }))
+    expect(screen.getByRole('heading', { level: 3, name: 'Sample Title' })).toBeInTheDocument()
+    expect(screen.getByText('Sample Description')).toBeInTheDocument()
+  })
+
   test('displays a location when set', async () => {
     getAreaSelectorMock.mockReturnValue([null, 'Test Area'])
-    render(await ChartRowCardHeader({ id: '1', title: 'Title' }))
+    render(await ChartRowCardHeader({ id: '1', title: 'Title', description: 'Description' }))
     expect(screen.getByRole('heading', { level: 3, name: 'Title (Test Area)' })).toBeInTheDocument()
   })
 
@@ -23,6 +30,7 @@ describe('ChartRowCardHeader', () => {
       await ChartRowCardHeader({
         id: '1',
         title: 'Title',
+        description: 'Description',
         children: <div>Child Element</div>,
       })
     )
@@ -34,8 +42,10 @@ describe('ChartRowCardHeader', () => {
       await ChartRowCardHeader({
         id: '1',
         title: 'Title',
+        description: 'Description',
       })
     )
-    expect(screen.getByRole('heading', { level: 3 })).toHaveClass('font-bold default-govuk-header mb-2')
+    expect(screen.getByText('Description')).toHaveClass('govuk-heading-s govuk-!-margin-bottom-2 pt-0')
+    expect(screen.getByRole('heading', { level: 3 })).toHaveClass('govuk-body-m mb-2 text-dark-grey')
   })
 })

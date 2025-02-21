@@ -74,6 +74,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     ],
                     tag_manager_event_id: 'cases_by_specimen_date',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -116,6 +117,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '7day_case_rates_by_specimen_date',
                     date_prefix: 'Up to',
+                    about: '',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -150,6 +152,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: 'case_rates_by_age',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [
@@ -201,6 +204,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -271,6 +275,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -305,6 +310,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -347,6 +353,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: 'admissions_rate_by_age',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: 'stratum',
                     y_axis: 'metric',
                     chart: [
@@ -381,6 +388,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: null,
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -432,6 +440,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -466,6 +475,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -517,6 +527,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -551,6 +562,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -745,6 +757,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -779,6 +792,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [

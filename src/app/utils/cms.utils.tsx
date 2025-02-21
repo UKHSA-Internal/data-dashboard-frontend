@@ -101,6 +101,7 @@ export const renderCard = (
         <ChartRowCard>
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
+            const noAbout = !column.value.about ? true : column.value.about.length > 0 ? false : true
             return (
               <div
                 key={column.id}
@@ -116,7 +117,7 @@ export const renderCard = (
                   className="ukhsa-chart-card flex flex-col gap-6"
                 >
                   <article>
-                    <ChartRowCardHeader id={column.id} title={column.value.title}>
+                    <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
                       <Timestamp data={column.value} size={size} />
                     </ChartRowCardHeader>
                     <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
@@ -151,15 +152,17 @@ export const renderCard = (
                             <span>Download</span>
                           </Link>
                         </TabsTrigger>
-                        <TabsTrigger
-                          asChild
-                          value={`${kebabCase(column.value.title)}-about`}
-                          aria-controls={`about-${kebabCase(column.value.title)}-content`}
-                        >
-                          <Link href={`#about-${kebabCase(column.value.title)}`}>
-                            <span>About</span>
-                          </Link>
-                        </TabsTrigger>
+                        {noAbout ? null : (
+                          <TabsTrigger
+                            asChild
+                            value={`${kebabCase(column.value.title)}-about`}
+                            aria-controls={`about-${kebabCase(column.value.title)}-content`}
+                          >
+                            <Link href={`#about-${kebabCase(column.value.title)}`}>
+                              <span>About</span>
+                            </Link>
+                          </TabsTrigger>
+                        )}
                       </TabsList>
                       <DropdownTab
                         aria-label="Select for selecting chart content"
@@ -231,19 +234,21 @@ export const renderCard = (
                         </span>
                         <Download data={column.value} />
                       </TabsContent>
-                      <TabsContent
-                        value={`${kebabCase(column.value.title)}-about`}
-                        className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
-                        id={`about-${kebabCase(column.value.title)}-content`}
-                      >
-                        <span
-                          className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
-                          id={`about-${kebabCase(column.value.title)}`}
+                      {noAbout ? null : (
+                        <TabsContent
+                          value={`${kebabCase(column.value.title)}-about`}
+                          className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
+                          id={`about-${kebabCase(column.value.title)}-content`}
                         >
-                          About
-                        </span>
-                        <About description={column.value.body} relatedLinks={column.value.related_links} />
-                      </TabsContent>
+                          <span
+                            className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                            id={`about-${kebabCase(column.value.title)}`}
+                          >
+                            About
+                          </span>
+                          <About description={column.value.about} relatedLinks={column.value.related_links} />
+                        </TabsContent>
+                      )}
                     </Tabs>
                   </article>
                 </Card>
