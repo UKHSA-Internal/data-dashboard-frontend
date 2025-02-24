@@ -9,9 +9,10 @@ import { TabsContext } from './Tabs'
 interface DropdownProps {
   className: string
   chartTitle: string
+  noAbout: boolean
 }
 
-const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
+const DropdownTab = ({ className, chartTitle, noAbout }: DropdownProps) => {
   const chartIdentifier = kebabCase(chartTitle)
   const context = React.useContext(TabsContext)
   const { t } = useTranslation('common')
@@ -23,8 +24,9 @@ const DropdownTab = ({ className, chartTitle }: DropdownProps) => {
     { value: 'chart', displayText: t('cms.dropdown.chartLabel') },
     { value: 'table', displayText: t('cms.dropdown.tableLabel') },
     { value: 'download', displayText: t('cms.dropdown.downloadLabel') },
-    { value: 'about', displayText: t('cms.dropdown.aboutLabel') },
   ]
+
+  noAbout ? null : dropdownOptions.push({ value: 'about', displayText: t('cms.dropdown.aboutLabel') })
 
   return (
     <select

@@ -24,6 +24,7 @@ describe('DropdownTab Component', () => {
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
           chartTitle={chartTitle}
+          noAbout={false}
         />
       )
     ).toThrow('DropdownTab must be used within the <Tabs/> component')
@@ -35,6 +36,7 @@ describe('DropdownTab Component', () => {
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
           chartTitle={chartTitle}
+          noAbout={false}
         />
       </Tabs>
     )
@@ -47,6 +49,7 @@ describe('DropdownTab Component', () => {
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
           chartTitle={chartTitle}
+          noAbout={false}
         />
       </Tabs>
     )
@@ -54,6 +57,22 @@ describe('DropdownTab Component', () => {
     const options = screen.getAllByRole('option')
     expect(options).toHaveLength(4)
     expect(options.map((option) => option.textContent)).toEqual(['Chart', 'Tabular Data', 'Download', 'About'])
+  })
+
+  it('renders only 3 dropdown options when no about is true', () => {
+    render(
+      <Tabs>
+        <DropdownTab
+          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+          chartTitle={chartTitle}
+          noAbout={true}
+        />
+      </Tabs>
+    )
+
+    const options = screen.getAllByRole('option')
+    expect(options).toHaveLength(3)
+    expect(options.map((option) => option.textContent)).toEqual(['Chart', 'Tabular Data', 'Download'])
   })
 
   it('changes active state on selecting an option', () => {
@@ -64,6 +83,7 @@ describe('DropdownTab Component', () => {
           <DropdownTab
             className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
             chartTitle={chartTitle}
+            noAbout={false}
           />
         </Tabs>
       </TabsContext.Provider>

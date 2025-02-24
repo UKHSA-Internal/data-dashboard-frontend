@@ -48,6 +48,6 @@ describe('ChartRowCardHeader', () => {
     expect(screen.getByText('Description')).toHaveClass(
       'govuk-body-s italic govuk-!-margin-bottom-2 pt-0 text-dark-grey'
     )
-    expect(screen.getByRole('heading', { level: 3 })).toHaveClass('default-govuk-header mb-2 font-bold')
+    expect(screen.getByRole('heading', { level: 3 })).toHaveClass('govuk-heading-m mb-2 font-bold')
   })
 })
