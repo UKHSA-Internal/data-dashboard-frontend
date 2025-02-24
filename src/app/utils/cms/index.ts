@@ -94,7 +94,6 @@ export async function getPageMetadata(
       const whatsNewEntries = await getWhatsNewPages({ page })
 
       if (!whatsNewEntries.success) {
-        console.log('I GOT HERE YAAAAY!!!')
         logger.error(whatsNewEntries.error.message)
         return notFound()
       }
