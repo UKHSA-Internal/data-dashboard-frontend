@@ -229,7 +229,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     related_links: [],
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
-                    about: 'Sample about text',
+                    about: '',
                     x_axis: null,
                     y_axis: null,
                     chart: [
