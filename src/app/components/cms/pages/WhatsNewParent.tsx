@@ -24,6 +24,9 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
 export default async function WhatsNewParentPage({
   slug,
   searchParams: { page },
@@ -32,14 +35,8 @@ export default async function WhatsNewParentPage({
 
   const setReturnPath = getReturnPathWithParams()
 
-  // const {
-  //   meta: { seo_title, search_description },
-  //   pagination_size: paginationSize,
-  //   show_pagination: showPagination
-  // }
-
   const {
-    meta: { seo_title },
+    title,
     body,
     last_updated_at: lastUpdated,
     show_pagination: showPagination,
@@ -64,21 +61,6 @@ export default async function WhatsNewParentPage({
       meta: { total_count: totalItems },
     },
   } = whatsNewEntries
-
-  // if (!whatsNewEntries.success) {
-  //   logger.info(whatsNewEntries.message)
-  //   return redirect('/error')
-  // }
-
-  const {
-    data: {
-      meta: { total_count: totalEntries },
-    },
-  } = whatsNewEntries
-
-  const totalPages = Math.ceil(totalEntries / paginationSize) || 1
-
-  const title = seo_title.replace('|', t('documentTitlePagination', { page, totalPages }))
 
   const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
@@ -108,7 +90,9 @@ export default async function WhatsNewParentPage({
   )
 
   return (
-    <View heading={title} lastUpdated={lastUpdated}>
+    <View>
+      <Heading heading={title} />
+      <LastUpdated lastUpdated={lastUpdated} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
