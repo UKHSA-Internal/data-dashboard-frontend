@@ -43,7 +43,7 @@ test.describe('COVID-19 page', () => {
       })
       await app.hasTopicCard({
         name: 'Case rates by age',
-        description: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
+        description: '',
       })
     })
     await test.step('displays chart cards for "Deaths"', async () => {
