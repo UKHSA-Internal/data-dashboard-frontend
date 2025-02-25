@@ -36,8 +36,7 @@ export const initialState: switchBoardSchemaType = {
     },
   },
   flags: {
-    'interactive-charts': 'disabled',
-    'feedback-form': 'disabled',
+    'example-flag': 'disabled',
   },
 }
 

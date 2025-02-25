@@ -1,3 +1,3 @@
 export const flags = {
-  interactiveCharts: 'interactive-charts',
+  exampleFlag: 'example-flag',
 }
