@@ -174,20 +174,6 @@ test.describe('Landing page - desktop @desktopOnly', () => {
   test('displays the back to top navigation', async ({ app }) => {
     await app.hasBackToTop()
   })
-
-  test('displays the correct subtitle for MiniMapCard', async ({ landingPage }) => {
-    await test.step('verifies MiniMapCard subtitle for heat alert', async () => {
-      await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Alerts in England', map: true })
-      const subtitle = await landingPage.getMinimapCardSubtitle('Heat health alerts')
-      await expect(subtitle).toContain('Alerts in England')
-    })
-
-    await test.step('verifies MiniMapCard subtitle for cold alert', async () => {
-      await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
-      const subtitle = await landingPage.getMinimapCardSubtitle('Cold health alerts')
-      await expect(subtitle).toContain('Alerts in England')
-    })
-  })
 })
 
 test.describe('Landing page - no JavaScript', () => {

@@ -165,8 +165,4 @@ export class LandingPage {
     await expect(region).toBeVisible()
     await region.click()
   }
-
-  async getMinimapCardSubtitle(title: string) {
-    return this.page.locator(`p:has-text("${title}")`)
-  }
 }
