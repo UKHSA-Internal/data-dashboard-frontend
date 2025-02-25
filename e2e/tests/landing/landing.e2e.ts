@@ -9,16 +9,6 @@ test.describe('Landing page - mobile @mobileOnly', () => {
     await landingPage.goto()
     await app.hasNav()
   })
-
-  test('displays the correct title and subtitle in MiniMapCard', async ({ landingPage }) => {
-    await landingPage.goto()
-    await test.step('Check for the title in MiniMapCard', async () => {
-      await landingPage.hasMiniMapCardTitle('heat Health Alert')
-    })
-    await test.step('Check for the subtitle in MiniMapCard', async () => {
-      await landingPage.hasMiniMapCardSubtitle('heat temperatures expected')
-    })
-  })
 })
 
 test.describe('Landing page - tablet @tabletOnly', () => {
@@ -26,16 +16,6 @@ test.describe('Landing page - tablet @tabletOnly', () => {
 
   test.beforeEach(async ({ landingPage }) => {
     await landingPage.goto()
-  })
-
-  test('displays the correct title and subtitle in MiniMapCard (cold)', async ({ landingPage }) => {
-    await landingPage.hasMiniMapCardTitle('cold Health Alert')
-    await landingPage.hasMiniMapCardSubtitle('cold temperatures expected')
-  })
-
-  test('navigates to the correct alert summary page when MiniMapCard is clicked (cold)', async ({ landingPage }) => {
-    await landingPage.clickMiniMapCardLink('cold')
-    await landingPage.urlContains('/weather-health-alerts/cold')
   })
 
   test('Card', async ({ landingPage }) => {
@@ -193,6 +173,20 @@ test.describe('Landing page - desktop @desktopOnly', () => {
 
   test('displays the back to top navigation', async ({ app }) => {
     await app.hasBackToTop()
+  })
+
+  test('displays the correct subtitle for MiniMapCard', async ({ landingPage }) => {
+    await test.step('verifies MiniMapCard subtitle for heat alert', async () => {
+      await landingPage.hasWeatherHealthAlertsCard('Heat health alerts', { tagline: 'Alerts in England', map: true })
+      const subtitle = await landingPage.getMinimapCardSubtitle('Heat health alerts')
+      await expect(subtitle).toContain('Alerts in England')
+    })
+
+    await test.step('verifies MiniMapCard subtitle for cold alert', async () => {
+      await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
+      const subtitle = await landingPage.getMinimapCardSubtitle('Cold health alerts')
+      await expect(subtitle).toContain('Alerts in England')
+    })
   })
 })
 
