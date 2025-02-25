@@ -8,9 +8,12 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { Breadcrumbs } from '@/app/components/ui/ukhsa/View/Breadcrumbs/Breadcrumbs'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { authEnabled } from '@/config/constants'
 
-export const dynamic = 'force-dynamic'
+export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
 
 export async function generateMetadata() {
   const {
@@ -37,7 +40,9 @@ export default async function WeatherHealthAlerts() {
   const childPages = await getPages({ child_of: id.toString() })
 
   return (
-    <View heading={title} breadcrumbs={[{ name: 'Home', link: '/' }]}>
+    <View>
+      <Breadcrumbs breadcrumbs={[{ name: 'Home', link: '/' }]} />
+      <Heading heading={title} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">{body.map(renderCompositeBlock)}</div>
