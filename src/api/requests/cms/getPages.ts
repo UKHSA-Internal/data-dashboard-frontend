@@ -56,12 +56,14 @@ const page = z.object({
     show_in_menus: z.boolean(),
     first_published_at: z.string().nullable(),
   }),
-  //show_pagination: z.boolean(),
-  //Pagination_size: z.number()
+  show_pagination: z.boolean().optional(),
+  Pagination_size: z.number().optional(),
 })
 
 export const responseSchema = z.object({
   items: z.array(page),
+  show_pagination: z.number().optional(),
+  pagination_size: z.boolean().optional(),
   meta: z.object({
     total_count: z.number(),
   }),
