@@ -39,8 +39,8 @@ const DropdownTab = ({ className, chartTitle, noAbout }: DropdownProps) => {
       className={className}
       aria-label={t('cms.dropdown.selectLabel', { chartTitle: lowerCase(chartTitle) })}
     >
-      {dropdownOptions.map(({ value, displayText }, index) => (
-        <option key={`option-${index}`} value={value}>
+      {dropdownOptions.map(({ value, displayText }) => (
+        <option key={`option-${value}`} value={value}>
           {displayText}
         </option>
       ))}
