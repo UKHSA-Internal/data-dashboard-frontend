@@ -230,6 +230,7 @@ export const mockChartRowCardWithSingleChartCard = Mock.of<CardType>({
         value: {
           title: 'Chart heading 1',
           body: 'Chart description 1',
+          about: 'Sample About Field',
           x_axis: '',
           y_axis: '',
         },

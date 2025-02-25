@@ -43,7 +43,7 @@ test.describe('COVID-19 page', () => {
       })
       await app.hasTopicCard({
         name: 'Case rates by age',
-        description: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
+        description: '',
       })
     })
     await test.step('displays chart cards for "Deaths"', async () => {
@@ -114,60 +114,6 @@ test.describe('COVID-19 page', () => {
     })
     await test.step('displays back to top', async () => {
       await app.hasBackToTop()
-    })
-  })
-
-  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
-    await test.step('loads the page', async () => {
-      await covid19Page.goto()
-    })
-    await test.step('downloads charts', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'csv'
-      )
-    })
-  })
-
-  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
-    await test.step('loads the page', async () => {
-      await covid19Page.goto()
-    })
-    await test.step('downloads charts', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'json'
-      )
     })
   })
 
@@ -290,12 +236,47 @@ test.describe('COVID-19 page', () => {
   })
 })
 
+const chartIdentifiers = [
+  'cases-by-specimen-date',
+  '7-day-case-rates-by-specimen-date',
+  'case-rates-by-age',
+  'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
+  'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
+  'patients-in-hospital',
+  'admissions-rate-by-age',
+  'patients-in-mechanical-ventilation-beds',
+  'total-daily-number-of-pcr-tests-reported',
+  'weekly-positivity-of-people-receiving-a-pcr-test',
+  'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
+  'autumn-booster-vaccination-uptake-50-by-vaccination-date',
+  'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
+  'spring-booster-vaccination-uptake-75-by-vaccination-date',
+]
+
 test.describe('COVID-19 page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ covid19Page, app }) => {
     await covid19Page.goto()
     await app.hasNav()
+  })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'mobile')
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'mobile')
+    })
   })
 })
 
@@ -306,6 +287,24 @@ test.describe('COVID-19 page - tablet @tabletOnly', () => {
     await covid19Page.goto()
     await app.hasNav()
   })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'tablet')
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'tablet')
+    })
+  })
 })
 
 test.describe('COVID-19 page - desktop @desktopOnly', () => {
@@ -314,6 +313,40 @@ test.describe('COVID-19 page - desktop @desktopOnly', () => {
   test('displays the navigation on desktop', async ({ covid19Page, app }) => {
     await covid19Page.goto()
     await app.hasNav()
+  })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'desktop')
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'desktop')
+    })
+  })
+  test('Navigates through the chart tabs using Enter Key on keyboard', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('tabs through the tabs and navigates to the download content with Enter Key on keyboard', async () => {
+      await app.navigateChartTabsByKeyboardAndSelectWithEnterKey(chartIdentifiers)
+    })
+  })
+  test('Navigates through the chart tabs using Space Key on keyboard', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('tabs through the tabs and navigates to the download content with Space Key on keyboard', async () => {
+      await app.navigateChartTabsByKeyboardAndSelectWithSpaceKey(chartIdentifiers)
+    })
   })
 })
 
@@ -325,25 +358,7 @@ test.describe('COVID-19 page - no JS', () => {
       await covid19Page.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'csv'
-      )
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'desktop')
     })
   })
 
@@ -352,25 +367,7 @@ test.describe('COVID-19 page - no JS', () => {
       await covid19Page.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'json'
-      )
+      await app.canDownloadChart(chartIdentifiers, 'json', 'desktop')
     })
   })
 
