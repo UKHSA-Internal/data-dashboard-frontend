@@ -165,4 +165,31 @@ export class LandingPage {
     await expect(region).toBeVisible()
     await region.click()
   }
+
+  async hasMiniMapCardTitle(title: string) {
+    const section = await this.getSection('Weather and climate risks')
+    const card = section.getByRole('link', { name: title })
+
+    await expect(card.getByRole('heading', { level: 3, name: title })).toBeVisible()
+  }
+
+  async hasMiniMapCardSubtitle(subtitle: string) {
+    const section = await this.getSection('Weather and climate risks')
+    const card = section.getByRole('link', { name: subtitle })
+
+    await expect(card.getByText(subtitle)).toBeVisible()
+  }
+
+  async clickMiniMapCardLink(title: string) {
+    const section = await this.getSection('Weather and climate risks')
+    const card = section.getByRole('link', { name: title })
+
+    await expect(card).toBeVisible()
+    await card.click()
+  }
+
+  async urlContains(expectedUrlFragment: string) {
+    const currentUrl = this.page.url()
+    expect(currentUrl).toContain(expectedUrlFragment)
+  }
 }
