@@ -60,6 +60,7 @@ export const renderSection = (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
         href={getShowLessURL(showMoreSections, kebabCase(heading))}
+        prefetch
       >
         <span className="pl-4">Show Less</span>
       </Link>
@@ -219,6 +220,7 @@ export const renderCard = (
                 <Link
                   className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat"
                   href={getShowMoreURL(showMoreSections, kebabCase(heading))}
+                  prefetch
                 >
                   <span className="pl-4">Show More</span>
                 </Link>
@@ -235,7 +237,7 @@ export const renderCard = (
                 aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
                 className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
               >
-                <Link href={getPath(card.value.topic_page)}>
+                <Link href={getPath(card.value.topic_page)} prefetch>
                   <h3 id={`chart-row-card-heading-${snakeCase(card.value.title)}`} className="govuk-heading-m mb-1">
                     {card.value.title}
                   </h3>
