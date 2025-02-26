@@ -87,6 +87,8 @@ const WithCompositeData = SharedPageData.extend({
 
 const WithWhatsNewParentData = SharedPageData.extend({
   body: z.string(),
+  show_pagination: z.boolean(),
+  pagination_size: z.number(),
   meta: Meta.extend({
     type: z.literal('whats_new.WhatsNewParentPage'),
   }),

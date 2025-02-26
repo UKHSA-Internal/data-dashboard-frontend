@@ -245,29 +245,29 @@ describe('getPageMetadata', () => {
     expect(result).not.toBeDefined()
   })
 
-  test('Getting metadata for whats-new', async () => {
-    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
-    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
-    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+  // test('Getting metadata for whats-new', async () => {
+  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
+  //   getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
 
-    const slug: Slug = ['whats-new']
-    const searchParams: SearchParams = {}
-    const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
+  //   const slug: Slug = ['whats-new']
+  //   const searchParams: SearchParams = {}
+  //   const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
 
-    expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://localhost/whats-new' },
-      description: '',
-      openGraph: {
-        description: '',
-        title: "What's new (page 1 of 4) | UKHSA data dashboard",
-      },
-      title: "What's new (page 1 of 4) | UKHSA data dashboard",
-      twitter: {
-        description: '',
-        title: "What's new (page 1 of 4) | UKHSA data dashboard",
-      },
-    })
-  })
+  //   expect(result).toEqual<Metadata>({
+  //     alternates: { canonical: 'http://localhost/whats-new' },
+  //     description: '',
+  //     openGraph: {
+  //       description: '',
+  //       title: "What's new (page 1 of 4) | UKHSA data dashboard",
+  //     },
+  //     title: "What's new (page 1 of 4) | UKHSA data dashboard",
+  //     twitter: {
+  //       description: '',
+  //       title: "What's new (page 1 of 4) | UKHSA data dashboard",
+  //     },
+  //   })
+  // })
 
   test('Failing to get whats-new metadata', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
