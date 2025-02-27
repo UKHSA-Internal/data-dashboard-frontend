@@ -182,6 +182,8 @@ export const getMetricsPages = async ({
   searchParams.set('fields', '*')
   searchParams.set('limit', String(metricsDocumentationPageSize))
   searchParams.set('offset', String(calculatePageOffset(page, paginationSize)))
+  searchParams.set('limit', String(metricsDocumentationPageSize))
+  searchParams.set('offset', String(calculatePageOffset(page, paginationSize)))
 
   if (search) {
     searchParams.set('search', search)
