@@ -7,7 +7,7 @@ describe('About', () => {
   test('renders about text in the content', async () => {
     const description: string = 'Test string'
 
-    const { getByText } = render(await About({ description }))
+    const { getByText } = render(<About description={description} />)
 
     expect(getByText(description)).toBeInTheDocument()
   })
@@ -26,10 +26,10 @@ describe('About', () => {
 
     const description: string = 'Test string'
 
-    const { getByText, getByRole } = render(await About({ description, relatedLinks: testRelatedLinks }))
+    const { getByText, getByRole } = render(<About description={description} relatedLinks={testRelatedLinks} />)
 
     expect(getByText(description)).toBeInTheDocument()
-    expect(getByRole('heading', { name: 'Related Links:' })).toBeInTheDocument()
+    expect(getByRole('heading', { name: 'Related Links' })).toBeInTheDocument()
     expect(getByRole('link', { name: 'Link 1' })).toBeInTheDocument()
   })
 
@@ -38,7 +38,7 @@ describe('About', () => {
 
     const description: string = 'Test string'
 
-    const { getByText } = render(await About({ description, relatedLinks: testRelatedLinks }))
+    const { getByText } = render(<About description={description} relatedLinks={testRelatedLinks} />)
 
     expect(getByText(description)).toBeInTheDocument()
   })
