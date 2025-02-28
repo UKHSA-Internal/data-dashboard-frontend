@@ -2,7 +2,7 @@ import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 
 import { getPage, PageResponse } from '@/api/requests/cms/getPage'
-import { getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
+import { getMetricsPages, getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getServerTranslation } from '@/app/i18n'
 import { SearchParams, Slug } from '@/app/types'
@@ -40,7 +40,7 @@ export async function getPageMetadata(
   const { t } = await getServerTranslation('common')
 
   const page = searchParams.page ?? 1
-  //const search = searchParams.search
+  const search = searchParams.search
 
   const isLandingPage = pageType === PageType.Landing
 
@@ -66,32 +66,32 @@ export async function getPageMetadata(
     }
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
-    // if (pageType === PageType.MetricsParent) {
-    //   const metricsEntries = await getMetricsPages({ search, page })
+    if (pageType === PageType.MetricsParent) {
+      const metricsEntries = await getMetricsPages({ search, page })
 
-    //   if (!metricsEntries.success) {
-    //     logger.info(metricsEntries.error.message)
-    //     return notFound()
-    //   }
+      if (!metricsEntries.success) {
+        logger.info(metricsEntries.error.message)
+        return notFound()
+      }
 
-    //   const {
-    //     data: {
-    //       meta: { total_count: totalItems },
-    //     },
-    //   } = metricsEntries
+      // const {
+      //   data: {
+      //     meta: { total_count: totalItems },
+      //   },
+      // } = metricsEntries
 
-    //   const { pagination_size: paginationSize, show_pagination: showPagination } =
-    //     await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+      const { pagination_size: paginationSize, show_pagination: showPagination } =
+        await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
 
-    //   const totalPages = Math.ceil(totalItems / paginationSize) || 1
+      const totalPages = Math.ceil(55 / paginationSize) || 1
 
-    //   if (showPagination) {
-    //     title = seoTitle.replace(
-    //       '|',
-    //       t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
-    //     )
-    //   }
-    // }
+      if (showPagination) {
+        title = seoTitle.replace(
+          '|',
+          t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+        )
+      }
+    }
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.WhatsNewParent) {
