@@ -151,7 +151,10 @@ export class LandingPage {
     await expect(card.getByRole('button', { name: 'Enter fullscreen' })).toBeVisible()
   }
 
-  async hasWeatherHealthAlertsPage(name: string, { tagline, map = true }: { tagline: string; map?: boolean }) {
+  async navigatesToWeatherHealthAlertsPageOnClick(
+    name: string,
+    { tagline, map = true }: { tagline: string; map?: boolean }
+  ) {
     const section = this.page.getByRole('link', { name: 'Weather and climate risks' })
     const card = this.page.getByRole('link', { name })
 
