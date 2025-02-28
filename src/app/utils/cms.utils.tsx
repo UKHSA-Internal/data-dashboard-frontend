@@ -101,12 +101,8 @@ export const renderCard = (
         <ChartRowCard>
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
-            const noAbout = !column.value.about ? true : column.value.about.length > 0 ? false : true
-            const noRelatedLinks = !column.value.related_links
-              ? true
-              : column.value.related_links.length > 0
-                ? false
-                : true
+            const noAbout = !column.value.about || column.value.about.length === 0
+            const noRelatedLinks = !column.value.related_links || column.value.related_links.length === 0
             return (
               <div
                 key={column.id}
