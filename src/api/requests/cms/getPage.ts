@@ -83,6 +83,8 @@ const WithCompositeData = SharedPageData.extend({
   page_description: z.string().nullable().optional(),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+  show_pagination: z.boolean(),
+  pagination_size: z.number(),
 })
 
 const WithWhatsNewParentData = SharedPageData.extend({
