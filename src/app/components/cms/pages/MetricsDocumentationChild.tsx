@@ -7,6 +7,10 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
 
+import { BackLink } from '../../ui/ukhsa/View/BackLink/Backlink'
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
 export default async function MetricsChildPage({
   slug,
   searchParams: { returnUrl },
@@ -25,7 +29,10 @@ export default async function MetricsChildPage({
   const backLink = returnUrl || extractRootSlug(slug)
 
   return (
-    <View heading={title} lastUpdated={lastUpdated} backLink={backLink}>
+    <View>
+      <BackLink backlink={backLink} />
+      <Heading heading={title} />
+      <LastUpdated lastUpdated={lastUpdated} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>

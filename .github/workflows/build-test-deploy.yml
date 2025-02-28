@@ -50,6 +50,7 @@ jobs:
     name: Lighthouse
     needs: [build]
     runs-on: ubuntu-latest
+    if: false # Temporarily disabled due to config overriding CLI params and running against production
     steps:
       - uses: actions/checkout@v3
       - uses: ./.github/actions/setup-node
@@ -171,7 +172,7 @@ jobs:
 
   success-gate:
     name: Build Success Check
-    needs: [unit-tests, quality-checks, typescript, lighthouse, e2e-tests]
+    needs: [unit-tests, quality-checks, typescript, e2e-tests]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'

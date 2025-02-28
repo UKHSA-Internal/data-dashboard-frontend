@@ -20,6 +20,9 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
 
+import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
 interface MetricsParentPageProps {
   searchParams: {
     page?: number
@@ -98,7 +101,9 @@ export default async function MetricsParentPage({
   const setReturnPath = getReturnPathWithParams()
 
   return (
-    <View heading={title} lastUpdated={lastUpdated}>
+    <View>
+      <Heading heading={title} />
+      <LastUpdated lastUpdated={lastUpdated} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
