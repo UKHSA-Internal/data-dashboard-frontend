@@ -89,6 +89,9 @@
       },
       "chart": {
         "alt": "{{- body}} - Refer to tabular data."
+      },
+      "about": {
+        "relatedLinks": "Related Links"
       }
     },
     "dropdown": {
