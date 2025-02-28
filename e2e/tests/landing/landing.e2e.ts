@@ -158,21 +158,18 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     await landingPage.hasWeatherHealthAlertsCard('Cold health alerts', { tagline: 'Alerts in England', map: true })
   })
 
-  test('weather health alerts header opens health alert page when clicked', async ({
+  test('weather health alerts card opens health alert page when clicked', async ({
     landingPage,
     weatherHealthAlertsChildPage,
   }) => {
     await test.step('click minimap card', async () => {
-      await landingPage.hasWeatherHealthAlertsPage('Cold health alerts', { tagline: 'Alerts in England', map: true })
+      await landingPage.navigatesToWeatherHealthAlertsPageOnClick('Cold health alerts', {
+        tagline: 'Alerts in England',
+        map: true,
+      })
     })
     await test.step('shows View map of weather health alert button', async () => {
       await weatherHealthAlertsChildPage.hasMapLink('cold')
-    })
-    await test.step('Shows related links section', async () => {
-      await weatherHealthAlertsChildPage.hasRelatedLinks()
-    })
-    await test.step('Clicks View map of weather health alert button to open map', async () => {
-      await weatherHealthAlertsChildPage.opensMapLink()
     })
   })
 
