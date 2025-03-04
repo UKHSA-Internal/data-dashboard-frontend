@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic'
+import dynamicComponent from 'next/dynamic'
 import { z } from 'zod'
 
 import { Body } from '@/api/models/cms/Page'
@@ -11,7 +11,7 @@ interface DynamicRenderSectionProps {
   sectionData: z.infer<typeof Body>[number]
 }
 
-const DynamicRenderSection = dynamic<DynamicRenderSectionProps>(() =>
+const DynamicRenderSection = dynamicComponent<DynamicRenderSectionProps>(() =>
   import('@/app/utils/cms.utils').then((mod) => {
     return ({ processedParams, sectionData }: DynamicRenderSectionProps) => {
       return mod.renderSection(processedParams, sectionData)

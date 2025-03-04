@@ -4,13 +4,14 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 
 import './globals.scss'
 
-import dynamic from 'next/dynamic'
+import dynamicComponent from 'next/dynamic'
 import { cookies } from 'next/headers'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
+import { authEnabled } from '@/config/constants'
 
 import { Footer } from './components/ui/govuk'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
@@ -19,9 +20,9 @@ import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
 
-// export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
+export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
 
-const DynamicCookieBanner = dynamic(() => import('./components/ui/ukhsa').then((mod) => mod.CookieBanner), {
+const DynamicCookieBanner = dynamicComponent(() => import('./components/ui/ukhsa').then((mod) => mod.CookieBanner), {
   ssr: true,
 })
 
