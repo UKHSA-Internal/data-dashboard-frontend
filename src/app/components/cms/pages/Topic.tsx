@@ -1,4 +1,4 @@
-import dynamic from 'next/dynamic'
+import dynamicComponent from 'next/dynamic'
 import { z } from 'zod'
 
 import { CardTypes } from '@/api/models/cms/Page'
@@ -21,7 +21,7 @@ interface DynamicRenderCardProps {
   cardData: z.infer<typeof CardTypes>
 }
 
-const DynamicRenderCard = dynamic<DynamicRenderCardProps>(() =>
+const DynamicRenderCard = dynamicComponent<DynamicRenderCardProps>(() =>
   import('@/app/utils/cms.utils').then((mod) => {
     return ({ heading, cardData }: DynamicRenderCardProps) => {
       return mod.renderCard(heading, [], cardData)
