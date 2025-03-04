@@ -1,3 +1,7 @@
+import dynamic from 'next/dynamic'
+import { z } from 'zod'
+
+import { CardTypes } from '@/api/models/cms/Page'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -5,13 +9,25 @@ import { Details } from '@/app/components/ui/govuk'
 import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
-import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
+interface DynamicRenderCardProps {
+  heading: string
+  cardData: z.infer<typeof CardTypes>
+}
+
+const DynamicRenderCard = dynamic<DynamicRenderCardProps>(() =>
+  import('@/app/utils/cms.utils').then((mod) => {
+    return ({ heading, cardData }: DynamicRenderCardProps) => {
+      return mod.renderCard(heading, [], cardData)
+    }
+  })
+)
 
 export default async function TopicPage({
   slug,
@@ -57,7 +73,9 @@ export default async function TopicPage({
           <PageSectionWithContents>
             {body.map(({ id, value }) => (
               <PageSection key={id} heading={value.heading}>
-                {value.content.map(renderCard.bind(null, value.heading, []))}
+                {value.content.map((cardData, index) => (
+                  <DynamicRenderCard key={index} heading={value.heading} cardData={cardData} />
+                ))}
               </PageSection>
             ))}
           </PageSectionWithContents>
