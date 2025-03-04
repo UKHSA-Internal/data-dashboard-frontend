@@ -4,23 +4,26 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 
 import './globals.scss'
 
+import dynamic from 'next/dynamic'
 import { cookies } from 'next/headers'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
-import { authEnabled } from '@/config/constants'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner } from './components/ui/ukhsa'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager/GoogleTagManager'
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
 
-export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
+// export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
+
+const DynamicCookieBanner = dynamic(() => import('./components/ui/ukhsa').then((mod) => mod.CookieBanner), {
+  ssr: true,
+})
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
@@ -38,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           {t('skipLink')}
         </a>
         <Suspense fallback={null}>
-          <CookieBanner
+          <DynamicCookieBanner
             cookie={cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value}
             title={t('cookieBanner.title')}
             body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
