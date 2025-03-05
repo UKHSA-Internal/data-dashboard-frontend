@@ -62,6 +62,7 @@ export const renderSection = (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
         href={getShowLessURL(showMoreSections, kebabCase(heading))}
+        prefetch
       >
         <span className="pl-4">Show Less</span>
       </Link>
