@@ -45,6 +45,7 @@ const chartCardValues = z.object({
   y_axis_minimum_value: z.number().nullable().optional(),
   y_axis_maximum_value: z.number().nullable().optional(),
   date_prefix: z.string(),
+  about: z.string(),
 })
 
 export const WithChartHeadlineAndTrendCard = z.object({
@@ -69,7 +70,7 @@ const WithSimplifiedChartCardAndLink = z.object({
       sub_title: z.string(),
       topic_page: z.string(),
     })
-    .omit({ body: true, date_prefix: true }),
+    .omit({ body: true, date_prefix: true, about: true }),
 })
 
 export const ChartCardSchemas = z.discriminatedUnion('type', [
