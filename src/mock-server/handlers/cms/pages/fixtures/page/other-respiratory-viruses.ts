@@ -49,6 +49,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'RSV SARI Watch surveillance has run from week 40 to week 20. In the 2022 to 2023 season onwards this was extended to run throughout the year, to allow for surveillance of out-of-season trends.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -90,6 +91,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -123,6 +125,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admission rates of patients admitted to ICU/HDU with RSV as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -173,6 +176,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with Adenovirus as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -206,6 +210,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Age breakdown of people testing positive for Adenovirus per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -323,6 +328,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with hMPV as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -356,6 +362,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Age breakdown of people testing positive for hMPV per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -473,6 +480,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with Parainfluenza as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -506,6 +514,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Age breakdown of people testing positive for Parainfluenza per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -623,6 +632,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with Rhinovirus as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -656,6 +666,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Age breakdown of people testing positive for Rhinovirus per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -773,6 +784,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with RSV as a weekly time series.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -806,6 +818,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                     body: 'Age breakdown of people testing positive for Rhinovirus per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
