@@ -23,7 +23,19 @@ interface TableProps {
   size: 'narrow' | 'wide'
 }
 
-export async function Table({ data: { chart, y_axis, x_axis, title, body }, size }: TableProps) {
+// To receieve axis title, chart.label, & fallback text
+const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
+  if (chartLabel) return chartLabel
+
+  if (axisTitle) return axisTitle
+
+  return fallback
+}
+
+export async function Table({
+  data: { chart, y_axis, x_axis, x_axis_title, y_axis_title, title, body },
+  size,
+}: TableProps) {
   const { t } = await getServerTranslation('common')
 
   const pathname = getPathname()
@@ -84,6 +96,13 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                 <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
                   {columns.map((column, columnIndex) => {
                     incrementingColumnId += 1
+                    const chartLabel = columnIndex === 0 ? '' : chart[groupIndex]?.value?.label ?? ''
+                    const axisTitle = columnIndex === 0 ? x_axis_title ?? '' : y_axis_title ?? ''
+                    const columnHeader = t('cms.blocks.table.header', {
+                      context:
+                        columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
+                      value: column.header,
+                    })
                     return (
                       <th
                         id={`${kebabCase(title)}-col-${incrementingColumnId}`}
@@ -91,11 +110,7 @@ export async function Table({ data: { chart, y_axis, x_axis, title, body }, size
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {t('cms.blocks.table.header', {
-                          context:
-                            columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
-                          value: column.header,
-                        })}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader)}
                       </th>
                     )
                   })}
