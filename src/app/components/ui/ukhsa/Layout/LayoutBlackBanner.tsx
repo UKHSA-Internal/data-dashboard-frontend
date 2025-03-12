@@ -11,7 +11,7 @@ import { getServerTranslation } from '@/app/i18n'
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
 
-  const globalBanner = await getGlobalBanner()
+  const globalBanners = await getGlobalBanner()
 
   return (
     <>
@@ -64,21 +64,23 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
         </div>
       </div>
 
-      {globalBanner ? (
-        <div className="govuk-width-container">
-          <div className="govuk-grid-row">
-            <div className="govuk-grid-column-three-quarters">
-              <Announcement
-                heading={globalBanner.heading}
-                variant={globalBanner.variant}
-                className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
-              >
-                {globalBanner.body}
-              </Announcement>
+      {!globalBanners || globalBanners.length <= 0
+        ? console.log('no banners: ', globalBanners)
+        : globalBanners.map(({ title: heading, banner_type: variant, body }, index) => (
+            <div key={index} className="govuk-width-container">
+              <div className="govuk-grid-row">
+                <div className="govuk-grid-column-three-quarters">
+                  <Announcement
+                    heading={heading}
+                    variant={variant}
+                    className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
+                  >
+                    {body}
+                  </Announcement>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ) : null}
+          ))}
 
       <div className="govuk-width-container">{children}</div>
     </>

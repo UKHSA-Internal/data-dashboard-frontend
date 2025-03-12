@@ -35,7 +35,7 @@ describe('getGlobalBanner', () => {
     ])
   })
 
-  test('returns null when no banner is active', async () => {
+  test('returns empty array when no banner is active', async () => {
     clientMock.mockResolvedValueOnce({
       data: {
         active_global_banners: [],
