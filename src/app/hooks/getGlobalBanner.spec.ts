@@ -13,28 +13,32 @@ describe('getGlobalBanner', () => {
   test('returns banner data when request is successful', async () => {
     clientMock.mockResolvedValueOnce({
       data: {
-        active_global_banner: {
-          title: 'Test Banner',
-          banner_type: 'Information',
-          body: 'This is a test banner',
-        },
+        active_global_banners: [
+          {
+            title: 'Test Banner',
+            banner_type: 'Information',
+            body: 'This is a test banner',
+          },
+        ],
       },
       status: 200,
     })
 
     const { result } = renderHook(() => getGlobalBanner())
 
-    expect(await result.current).toEqual({
-      heading: 'Test Banner',
-      variant: 'Information',
-      body: 'This is a test banner',
-    })
+    expect(await result.current).toEqual([
+      {
+        title: 'Test Banner',
+        banner_type: 'Information',
+        body: 'This is a test banner',
+      },
+    ])
   })
 
   test('returns null when no banner is active', async () => {
     clientMock.mockResolvedValueOnce({
       data: {
-        active_global_banner: null,
+        active_global_banners: [],
       },
       status: 200,
     })
