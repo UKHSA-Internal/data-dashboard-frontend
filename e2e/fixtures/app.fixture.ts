@@ -1,7 +1,7 @@
 import AxeBuilder from '@axe-core/playwright'
 import { expect, Locator, Page } from '@playwright/test'
 import * as fs from 'fs'
-import { kebabCase } from 'lodash'
+import { kebabCase, lowerCase } from 'lodash'
 
 import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
@@ -369,11 +369,17 @@ export class App {
 
   // Chart downloads
 
-  async canDownloadChart(cards: string[], format: 'csv' | 'json') {
+  async canDownloadChart(cards: string[], format: 'csv' | 'json', device: 'desktop' | 'mobile' | 'tablet') {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
-      await card.getByRole('tab', { name: 'Download' }).click()
+      if (device === 'mobile') {
+        await card
+          .getByRole('combobox', { name: `Choose display option for '${lowerCase(name)}' data` })
+          .selectOption('Download')
+      } else {
+        await card.getByRole('tab', { name: 'Download' }).click()
+      }
 
       await card.getByLabel(format.toUpperCase()).click()
 
@@ -399,6 +405,34 @@ export class App {
           expect(file.toString()).toEqual(JSON.stringify(downloadsJsonFixture))
         }
       }
+    }
+  }
+
+  async navigateChartTabsByKeyboardAndSelectWithEnterKey(cards: string[]) {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
+
+      await card.getByRole('tab', { name: 'Chart' }).click()
+
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Enter')
+
+      await expect(card.getByText(/Download data/)).toBeVisible()
+    }
+  }
+
+  async navigateChartTabsByKeyboardAndSelectWithSpaceKey(cards: string[]) {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
+
+      await card.getByRole('tab', { name: 'Chart' }).click()
+
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Space')
+
+      await expect(card.getByText(/Download data/)).toBeVisible()
     }
   }
 
