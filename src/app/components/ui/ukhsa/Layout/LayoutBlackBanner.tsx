@@ -65,7 +65,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
       </div>
 
       {!globalBanners || globalBanners.length <= 0
-        ? console.log('no banners: ', globalBanners)
+        ? null
         : globalBanners.map(({ title: heading, banner_type: variant, body }, index) => (
             <div key={index} className="govuk-width-container">
               <div className="govuk-grid-row">

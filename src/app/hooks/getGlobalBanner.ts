@@ -9,15 +9,11 @@ import { getGlobalBanners } from '@/api/requests/global-banners/getGlobalBanners
 export const getGlobalBanner = async () => {
   const globalBannerRequest = await getGlobalBanners()
 
-  console.log(globalBannerRequest)
-
   if (!globalBannerRequest.success) return null
 
   const {
     data: { active_global_banners: globalBanners },
   } = globalBannerRequest
-
-  console.log('Global Banners: ', globalBanners)
 
   if (!globalBanners || globalBanners.length == 0) return null
 
