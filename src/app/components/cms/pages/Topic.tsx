@@ -15,8 +15,8 @@ import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 export default async function TopicPage({
   slug,
-  searchParams: { areaName, areaType },
-}: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
+  searchParams: { areaName, areaType, timeseriesFilter = '' },
+}: PageComponentBaseProps<{ areaType?: string; areaName?: string; timeseriesFilter?: string }>) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -57,7 +57,7 @@ export default async function TopicPage({
           <PageSectionWithContents>
             {body.map(({ id, value }) => (
               <PageSection key={id} heading={value.heading}>
-                {value.content.map(renderCard.bind(null, value.heading, []))}
+                {value.content.map(renderCard.bind(null, value.heading, [], timeseriesFilter))}
               </PageSection>
             ))}
           </PageSectionWithContents>

@@ -55,7 +55,7 @@ export const renderSection = (
       )}
     </h2>
 
-    {content.map(renderCard.bind(null, heading, showMoreSections))}
+    {content.map(renderCard.bind(null, heading, showMoreSections, ''))}
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
@@ -70,6 +70,7 @@ export const renderSection = (
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
+  timeseriesFilter: string,
   { type, value, id }: z.infer<typeof CardTypes>
 ) => (
   <div key={id}>
