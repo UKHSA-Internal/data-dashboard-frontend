@@ -25,6 +25,7 @@ jest.mock('../components/cms', () => ({
   ...jest.requireActual('../components/cms'),
   Timestamp: () => <div>Up to and including 27 September 2023</div>,
   Download: () => <div>Mocked download</div>,
+  About: () => <div>Mocked About</div>,
   Table: () => <div>Mocked table</div>,
   Chart: () => <div>Mocked chart</div>,
   Percentage: () => <div>Mocked percentage number</div>,
@@ -76,7 +77,7 @@ describe('Displaying a section from the cms home page', () => {
 
 describe('Text card', () => {
   test('text card displays correctly', () => {
-    render(renderCard('Text card heading', [], mockTextCard))
+    render(renderCard('Text card heading', [], '', mockTextCard))
     expect(screen.getByRole('heading', { level: 3, name: 'Text card heading' })).toBeInTheDocument()
     expect(screen.getByText('Text card body')).toBeInTheDocument()
   })
@@ -84,7 +85,7 @@ describe('Text card', () => {
 
 describe('Headline numbers row card', () => {
   test('displays a row of columns containing a heading and metric data', () => {
-    render(renderCard('', [], mockHeadlineNumbersRowCard))
+    render(renderCard('', [], '', mockHeadlineNumbersRowCard))
 
     expect(screen.getByTestId('headline-row')).toHaveClass('ukhsa-headline-numbers-row-card')
 
@@ -118,12 +119,12 @@ describe('Headline numbers row card', () => {
   })
 
   test('displays five columns on desktop devices when the default amount of columns (5) is set', () => {
-    render(renderCard('', [], mockHeadlineNumbersRowCard))
+    render(renderCard('', [], '', mockHeadlineNumbersRowCard))
     expect(screen.getByTestId('headline-row').firstChild).toHaveClass('md:grid-cols-5')
   })
 
   test('displays a mobile first in a two column layout, then a three-col layout for larger devices', () => {
-    render(renderCard('', [], mockHeadlineNumbersRowCardWithOneColumn))
+    render(renderCard('', [], '', mockHeadlineNumbersRowCardWithOneColumn))
     const gridRow = screen.getByTestId('headline-row').firstChild
     expect(gridRow).toHaveClass('grid-cols-2 sm:grid-cols-3')
     expect(gridRow).not.toHaveClass('md:grid-cols-5')
@@ -132,7 +133,7 @@ describe('Headline numbers row card', () => {
 
 describe('Chart row card', () => {
   test('chart card displays correctly', () => {
-    render(renderCard('', [], mockChartRowCardWithSingleChartCard))
+    render(renderCard('', [], '', mockChartRowCardWithSingleChartCard))
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
@@ -150,18 +151,20 @@ describe('Chart row card', () => {
     expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
     expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('aria-selected', 'false')
 
     // Tabs panel
-    expect(screen.getByRole('tabpanel', { name: 'Chart' })).toHaveAttribute('data-state', 'active')
-    expect(screen.getByRole('tabpanel', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
-    expect(screen.getByRole('tabpanel', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('data-state', 'active')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('data-state', 'inactive')
 
     // Chart
     expect(screen.getByText('Mocked chart')).toBeVisible()
   })
 
   test('chart card with headline and trend', () => {
-    render(renderCard('', [], mockChartRowCardWithChartHeadlineAndTrendCard))
+    render(renderCard('', [], '', mockChartRowCardWithChartHeadlineAndTrendCard))
 
     // Heading and description
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
@@ -171,13 +174,13 @@ describe('Chart row card', () => {
   })
 
   test('chart card in a full width column', () => {
-    render(renderCard('', [], mockChartRowCardWithSingleChartCard))
+    render(renderCard('', [], '', mockChartRowCardWithSingleChartCard))
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
     expect(article.parentElement).toHaveClass('lg:w-full')
   })
 
   test('chart cards in two columns', () => {
-    render(renderCard('', [], mockChartRowCardWithDualChartCard))
+    render(renderCard('', [], '', mockChartRowCardWithDualChartCard))
     const article1 = screen.getByRole('article', { name: 'Chart heading 1' })
     const article2 = screen.getByRole('article', { name: 'Chart heading 2' })
     expect(article1.parentElement).toHaveClass('lg:w-1/2')
@@ -187,7 +190,7 @@ describe('Chart row card', () => {
   test('if more than 3 cards are provided then expect "Show More" link to be present', () => {
     const mockGetShowMoreURL = getShowMoreURL as jest.MockedFunction<typeof getShowMoreURL>
     mockGetShowMoreURL.mockImplementation((sections, heading) => `/mock-url/${heading}`)
-    render(renderCard('', [], mockChartCardSectionWithSixCards))
+    render(renderCard('', [], '', mockChartCardSectionWithSixCards))
     const showMoreButton = screen.getByRole('link', { name: 'Show More' })
     expect(showMoreButton).toBeInTheDocument()
   })

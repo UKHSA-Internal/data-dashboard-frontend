@@ -5,13 +5,11 @@ import { z } from 'zod'
 
 import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { flags } from '@/app/constants/flags.constants'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { toSlug } from '@/app/utils/app.utils'
 import { getChartSvg } from '@/app/utils/chart.utils'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
 import { chartSizes } from '@/config/constants'
 
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
@@ -97,10 +95,7 @@ const createStaticChart = ({
 }
 
 export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
-  const [{ enabled: interactiveChartsFlagEnabled }, { t }] = await Promise.all([
-    getFeatureFlag(flags.interactiveCharts),
-    getServerTranslation('common'),
-  ])
+  const { t } = await getServerTranslation('common')
 
   let yAxisMinimum = null
   let yAxisMaximum = null
@@ -185,7 +180,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page) or when feature flag is off
-  if (!enableInteractive || !interactiveChartsFlagEnabled) {
+  if (!enableInteractive) {
     return (
       <>
         <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />
