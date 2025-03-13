@@ -168,7 +168,6 @@ export const getPage = async <T extends PageType>(id: number) => {
     searchParams.set('fields', 'html_url')
 
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
-
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

@@ -16,6 +16,7 @@ export const requestSchema = z.object({
   y_axis_title: z.string().optional(),
   y_axis_minimum_value: z.number().nullable().optional(),
   y_axis_maximum_value: z.number().nullable().optional(),
+  show_timeseries_filters: z.boolean().optional(),
   plots: z.array(
     z.object({
       topic: Topics,
@@ -57,6 +58,7 @@ export const getCharts = async (chart: RequestParams) => {
     y_axis_title,
     y_axis_maximum_value,
     y_axis_minimum_value,
+    show_timeseries_filters,
   } = chart
 
   const body: RequestParams = {
@@ -70,6 +72,7 @@ export const getCharts = async (chart: RequestParams) => {
     y_axis_title,
     y_axis_minimum_value,
     y_axis_maximum_value,
+    show_timeseries_filters,
   }
 
   try {

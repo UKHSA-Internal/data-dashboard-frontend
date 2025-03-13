@@ -59,6 +59,7 @@ const chartCardValues = z.object({
   y_axis_minimum_value: z.number().nullable().optional(),
   y_axis_maximum_value: z.number().nullable().optional(),
   date_prefix: z.string(),
+  show_timeseries_filters: z.boolean().optional(),
   about: z.string(),
 })
 

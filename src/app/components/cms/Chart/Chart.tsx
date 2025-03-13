@@ -97,6 +97,9 @@ const createStaticChart = ({
 export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
+  // console.log('Chart data')
+  // console.dir(data)
+
   let yAxisMinimum = null
   let yAxisMaximum = null
   let xAxisTitle = ''
@@ -140,6 +143,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     })
   )
 
+  console.dir(data)
+
   // Lazy load the interactive chart component (and all associated plotly.js code)
   const resolvedRequests = await Promise.all(requests)
 
@@ -148,7 +153,14 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   // Check the default chart & any additional charts have correctly returned responses
   if (!defaultChartResponse || resolvedRequests.some((request) => !request.success)) {
-    return <ChartEmpty resetHref={pathname} />
+    return (
+      <>
+        {/* Remove below line */}
+        <div>Empty chart issue</div>
+        {/*  */}
+        <ChartEmpty resetHref={pathname} />
+      </>
+    )
   }
 
   const { alt_text: alt, figure } = defaultChartResponse
@@ -173,25 +185,21 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
     return (
       <>
-        <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />
+        {data.show_timeseries_filters && (
+          <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />
+        )}
         {staticChart}
       </>
     )
   }
 
-  // Show static chart when interactive charts are disabled (i.e. landing page) or when feature flag is off
-  if (!enableInteractive) {
-    return (
-      <>
-        <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />
-        {staticChart}
-      </>
-    )
-  }
+  // Show static chart when interactive charts are disabled (i.e. landing page)
+  if (!enableInteractive) return staticChart
 
   return (
     <>
-      <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />
+      <div>Filter: {data.show_timeseries_filters}</div>
+      {data.show_timeseries_filters && <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />}
       <Suspense fallback={staticChart}>
         <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
       </Suspense>

@@ -197,6 +197,8 @@ export const renderCard = (
                           </>
                         )}
                         <AreaSelectorLoader>
+                          <div>Timeseries: {column.value.show_timeseries_filters?.toString()}</div>
+                          <div>Date prefix: {column.value.date_prefix}</div>
                           <Chart
                             data={column.value}
                             sizes={[

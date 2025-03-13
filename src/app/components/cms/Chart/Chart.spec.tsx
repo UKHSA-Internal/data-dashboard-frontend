@@ -51,6 +51,7 @@ test('renders a narrow chart correctly', async () => {
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    show_timeseries_filters: false,
     chart: [
       {
         id: '',
@@ -132,6 +133,7 @@ test('renders the chart by geography and geography type when both are present in
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    show_timeseries_filters: false,
     chart: [
       {
         id: '',
@@ -183,6 +185,7 @@ test('renders the chart by geography and geography type when both are present in
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    show_timeseries_filters: false,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -207,6 +210,7 @@ test('full width charts should also have an acompanying narrow version for mobil
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    show_timeseries_filters: false,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
@@ -256,6 +260,7 @@ test('landing page half width charts should also have an acompanying third width
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    show_timeseries_filters: false,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
@@ -309,6 +314,7 @@ test('renders a fallback message when the chart requests fail', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    show_timeseries_filters: false,
     chart: [],
     body: 'COVID-19 chart description.',
     title: 'Cases by specimen date',
@@ -359,6 +365,7 @@ test('Fallback message with escaped characters', async () => {
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    show_timeseries_filters: false,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
