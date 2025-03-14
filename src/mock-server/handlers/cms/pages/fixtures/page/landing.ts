@@ -157,7 +157,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     title: 'Influenza',
                     sub_title: 'Healthcare admission rates',
                     tag_manager_event_id: '',
-                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/influenza/',
+                    topic_page: 'http://localhost:3000/topics/influenza/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
@@ -188,8 +188,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     title: 'Respiratory syncytial virus (RSV)',
                     sub_title: 'Healthcare admission rates',
                     tag_manager_event_id: '',
-                    topic_page:
-                      'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/respiratory-syncytial-virus-rsv/',
+                    topic_page: 'http://localhost:3000/topics/respiratory-syncytial-virus-rsv/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
@@ -220,7 +219,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     title: 'COVID-19',
                     sub_title: 'Cases Reported',
                     tag_manager_event_id: '',
-                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
+                    topic_page: 'http://localhost:3000/topics/covid-19/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
@@ -251,7 +250,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     title: 'Influenza v2',
                     sub_title: 'Testing positivity',
                     tag_manager_event_id: '',
-                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/influenza/',
+                    topic_page: 'http://localhost:3000/topics/influenza/',
                     x_axis: 'date',
                     y_axis: 'metric',
                     chart: [
