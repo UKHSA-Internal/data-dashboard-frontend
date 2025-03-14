@@ -25,6 +25,11 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       return response
     }
 
+    // Ensure the health check endpoint is always reachable
+    if (request.nextUrl.pathname.startsWith('/api/health/')) {
+      return response
+    }
+
     const token = await auth()
     if (!token && !pathname.includes('/start')) {
       return NextResponse.redirect(new URL('/start', request.url))
