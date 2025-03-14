@@ -26,7 +26,7 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
     }
 
     // Ensure the health check endpoint is always reachable
-    if (request.nextUrl.pathname.startsWith('/api/health/')) {
+    if (request.nextUrl.pathname.startsWith('/api/health')) {
       return response
     }
 
