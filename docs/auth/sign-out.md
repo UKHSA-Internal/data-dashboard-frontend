@@ -1,0 +1,2 @@
+- token revocation
+- authjs signOut (cookie deletion)
