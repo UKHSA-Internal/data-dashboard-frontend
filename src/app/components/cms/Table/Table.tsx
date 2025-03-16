@@ -91,18 +91,31 @@ export async function Table({
 
         <tbody className="govuk-table__body">
           {groups.map(({ columns, data }, groupIndex) => {
+            let labelIndex = 0
+
             return (
               <Fragment key={groupIndex}>
                 <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
                   {columns.map((column, columnIndex) => {
+                    // For multu-column tables, working out which label to get
+                    labelIndex = groupIndex * (columns.length - 1) + columnIndex - 1
+
+                    // In cases where there are 2 columns all table,
+                    // but the last row only has one, an exception is needed here
+                    if (groupIndex == groups.length - 1) {
+                      const previousColLength = groups[groupIndex - 1]?.columns?.length - 1
+                      labelIndex = groupIndex * previousColLength + columnIndex - 1
+                    }
+
                     incrementingColumnId += 1
-                    const chartLabel = columnIndex === 0 ? '' : chart[groupIndex]?.value?.label ?? ''
+                    const chartLabel = columnIndex === 0 ? '' : chart[labelIndex]?.value?.label ?? ''
                     const axisTitle = columnIndex === 0 ? x_axis_title ?? '' : y_axis_title ?? ''
                     const columnHeader = t('cms.blocks.table.header', {
                       context:
                         columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
                       value: column.header,
                     })
+
                     return (
                       <th
                         id={`${kebabCase(title)}-col-${incrementingColumnId}`}
