@@ -25,7 +25,6 @@ interface TableProps {
 
 // To receieve axis title, chart.label, & fallback text
 const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
-  console.log(`getColumnHeader, ChartLabel: ${chartLabel}, axisTitle: ${axisTitle}, fallback: ${fallback}`)
   if (chartLabel) return chartLabel
 
   if (axisTitle) return axisTitle
@@ -94,25 +93,19 @@ export async function Table({
           {groups.map(({ columns, data }, groupIndex) => {
             let labelIndex = 0
 
-            console.log('Label index 1: ', labelIndex)
-
             return (
               <Fragment key={groupIndex}>
                 <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
                   {columns.map((column, columnIndex) => {
                     // For multu-column tables, working out which label to get
                     labelIndex = groupIndex * (columns.length - 1) + columnIndex - 1
-                    console.log('Label index 2: ', labelIndex)
 
                     // In cases where there are 2 columns all table,
                     // but the last row only has one, an exception is needed here
                     if (groups.length > 1 && groupIndex == groups.length - 1) {
                       const previousColLength = groups[groupIndex - 1]?.columns?.length - 1
                       labelIndex = groupIndex * previousColLength + columnIndex - 1
-                      console.log('Label index 3: ', labelIndex)
                     }
-
-                    console.log(`group index: ${groupIndex}, column index: ${columnIndex}, labelIndex 4: ${labelIndex}`)
 
                     incrementingColumnId += 1
                     const chartLabel = columnIndex === 0 ? '' : chart[labelIndex]?.value?.label ?? ''
