@@ -295,3 +295,44 @@ test('table data containing reporting lag peroid', async () => {
   expect(rows[1].getAttribute('aria-label')).toBeNull()
   expect(rows[2].getAttribute('aria-label')).toContain('Reporting delay period')
 })
+
+describe('Table headings display as expected', () => {
+  test('fallback headings', async () => {
+    const { getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Date')
+    expect(headers[1]).toHaveTextContent('Amount')
+  })
+
+  test('x & y axis titles', async () => {
+    const xyMockData = { ...mockData, x_axis_title: 'Test x axis title', y_axis_title: 'Puppies' }
+    const { getAllByRole } = render((await Table({ data: xyMockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Test x axis title')
+    expect(headers[1]).toHaveTextContent('Puppies')
+  })
+
+  test('label override axis titles', async () => {
+    const labelMockData: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      chart: [
+        {
+          ...mockData.chart[0],
+          value: {
+            ...mockData.chart[0].value,
+            label: 'Label override',
+          },
+        },
+      ],
+      x_axis_title: 'Test x axis title',
+      y_axis_title: 'Puppies',
+    }
+    const { getAllByRole } = render((await Table({ data: labelMockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Test x axis title')
+    expect(headers[1]).toHaveTextContent('Label override')
+  })
+})

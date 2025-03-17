@@ -76,7 +76,9 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     date_prefix: 'Up to',
                     about: 'Sample about text',
                     x_axis: null,
+                    x_axis_title: 'Test X axis title',
                     y_axis: null,
+                    y_axis_title: 'Test Y axis title',
                     chart: [
                       {
                         type: 'plot',
@@ -89,9 +91,9 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                           stratum: '',
                           geography: '',
                           geography_type: '',
+                          label: 'teshjkfdsjk',
                           age: '',
                           sex: null,
-                          label: '',
                           line_colour: '',
                           line_type: '',
                         },
