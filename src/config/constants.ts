@@ -70,3 +70,4 @@ export const defaultAuthProvider = 'cognito'
  * Redirect path after successful sign out
  */
 export const authSignOutRedirectionPath = '/start?logout=success'
+
