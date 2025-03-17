@@ -8,7 +8,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/111/',
-    html_url: 'http://localhost/topics/influenza/',
+    html_url: 'http://localhost/respiratory-viruses/influenza/',
     slug: 'influenza',
     show_in_menus: true,
     seo_title: 'Influenza | UKHSA data dashboard',

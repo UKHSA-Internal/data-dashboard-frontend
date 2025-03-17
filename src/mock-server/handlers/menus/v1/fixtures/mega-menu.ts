@@ -16,7 +16,7 @@ export const megaMenu: Response = {
                   body: '<p data-block-key="zftwk">COVID-19 respiratory infection statistics</p>',
                   page: 77,
                   title: 'COVID-19',
-                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/covid-19/',
+                  html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
                 },
                 secondary_links: [
                   {
@@ -26,7 +26,7 @@ export const megaMenu: Response = {
                       body: '<p data-block-key="27vjw">Flu ICU and HDU admissions and other statistics</p>',
                       page: 78,
                       title: 'Influenza',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/influenza/',
+                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/influenza/',
                     },
                   },
                   {
@@ -36,7 +36,8 @@ export const megaMenu: Response = {
                       body: '<p data-block-key="27vjw">Other common respiratory viruses including adenovirus, hMPV &amp; parainfluenza</p>',
                       page: 79,
                       title: 'Other respiratory viruses',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
+                      html_url:
+                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
                   //
@@ -47,7 +48,8 @@ export const megaMenu: Response = {
                       body: '<p data-block-key="27vjw">Respiratory syncytial virus (RSV) and other statistics</p>',
                       page: 79,
                       title: 'Respiratory syncytial virus (RSV)',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
+                      html_url:
+                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
                   {
@@ -57,7 +59,8 @@ export const megaMenu: Response = {
                       body: '<p data-block-key="27vjw">Healthcare-associated infections (HCAI) and other statistics</p>',
                       page: 79,
                       title: 'Healthcare-associated infections (HCAI)',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
+                      html_url:
+                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
                   {
@@ -67,7 +70,8 @@ export const megaMenu: Response = {
                       body: '<p data-block-key="27vjw">Antimicrobial resistance (AMR) and other statistics</p>',
                       page: 79,
                       title: 'Antimicrobial resistance (AMR)',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
+                      html_url:
+                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
                   {
@@ -77,7 +81,8 @@ export const megaMenu: Response = {
                       body: '<p data-block-key="27vjw">Syndromic surveillance and other statistics</p>',
                       page: 79,
                       title: 'Syndromic surveillance',
-                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/topics/other-respiratory-viruses/',
+                      html_url:
+                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
                 ],

@@ -86,38 +86,38 @@ describe('Mega Menu Transformations', () => {
           links: [
             {
               title: 'COVID-19',
-              slug: '/topics/covid-19',
+              slug: '/respiratory-viruses/covid-19',
               description: '<p data-block-key="zftwk">COVID-19 respiratory infection statistics</p>',
             },
             {
               title: 'Influenza',
-              slug: '/topics/influenza',
+              slug: '/respiratory-viruses/influenza',
               description: '<p data-block-key="27vjw">Flu ICU and HDU admissions and other statistics</p>',
             },
             {
               title: 'Other respiratory viruses',
-              slug: '/topics/other-respiratory-viruses',
+              slug: '/respiratory-viruses/other-respiratory-viruses',
               description:
                 '<p data-block-key="27vjw">Other common respiratory viruses including adenovirus, hMPV &amp; parainfluenza</p>',
             },
             {
               title: 'Respiratory syncytial virus (RSV)',
-              slug: '/topics/other-respiratory-viruses',
+              slug: '/respiratory-viruses/other-respiratory-viruses',
               description: '<p data-block-key="27vjw">Respiratory syncytial virus (RSV) and other statistics</p>',
             },
             {
               title: 'Healthcare-associated infections (HCAI)',
-              slug: '/topics/other-respiratory-viruses',
+              slug: '/respiratory-viruses/other-respiratory-viruses',
               description: '<p data-block-key="27vjw">Healthcare-associated infections (HCAI) and other statistics</p>',
             },
             {
               title: 'Antimicrobial resistance (AMR)',
-              slug: '/topics/other-respiratory-viruses',
+              slug: '/respiratory-viruses/other-respiratory-viruses',
               description: '<p data-block-key="27vjw">Antimicrobial resistance (AMR) and other statistics</p>',
             },
             {
               title: 'Syndromic surveillance',
-              slug: '/topics/other-respiratory-viruses',
+              slug: '/respiratory-viruses/other-respiratory-viruses',
               description: '<p data-block-key="27vjw">Syndromic surveillance and other statistics</p>',
             },
           ],
