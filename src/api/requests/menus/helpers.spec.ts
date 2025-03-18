@@ -108,7 +108,7 @@ describe('Mega Menu Transformations', () => {
             {
               title: 'Healthcare-associated infections (HCAI)',
               slug: '/respiratory-viruses/other-respiratory-viruses',
-              description: '<p data-block-key="27vjw">Healthcare-associated infections (HCAI) and other statistics</p>',
+              description: '<p data-block-key="27vjw">Health-associated infections (HCAI) and other statistics</p>',
             },
             {
               title: 'Antimicrobial resistance (AMR)',

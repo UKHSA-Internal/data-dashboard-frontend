@@ -56,7 +56,7 @@ export const megaMenu: Response = {
                     id: '79c65515-8f70-446d-8ed8-f49d6ad5cfdb',
                     type: 'secondary_link',
                     value: {
-                      body: '<p data-block-key="27vjw">Healthcare-associated infections (HCAI) and other statistics</p>',
+                      body: '<p data-block-key="27vjw">Health-associated infections (HCAI) and other statistics</p>',
                       page: 79,
                       title: 'Healthcare-associated infections (HCAI)',
                       html_url:
