@@ -9,7 +9,7 @@ export class OtherRespiratoryVirusesPage {
   }
 
   async goto() {
-    await this.page.goto('/topics/other-respiratory-viruses')
+    await this.page.goto('/respiratory-viruses/other-respiratory-viruses')
   }
 
   async hasMetadata() {

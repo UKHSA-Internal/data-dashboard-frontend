@@ -40,51 +40,6 @@ export const megaMenu: Response = {
                         'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
-                  //
-                  {
-                    id: '79c65515-8f70-446d-8ed8-f49d6ad5cfdb',
-                    type: 'secondary_link',
-                    value: {
-                      body: '<p data-block-key="27vjw">Respiratory syncytial virus (RSV) and other statistics</p>',
-                      page: 79,
-                      title: 'Respiratory syncytial virus (RSV)',
-                      html_url:
-                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
-                    },
-                  },
-                  {
-                    id: '79c65515-8f70-446d-8ed8-f49d6ad5cfdb',
-                    type: 'secondary_link',
-                    value: {
-                      body: '<p data-block-key="27vjw">Health-associated infections (HCAI) and other statistics</p>',
-                      page: 79,
-                      title: 'Healthcare-associated infections (HCAI)',
-                      html_url:
-                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
-                    },
-                  },
-                  {
-                    id: '79c65515-8f70-446d-8ed8-f49d6ad5cfdb',
-                    type: 'secondary_link',
-                    value: {
-                      body: '<p data-block-key="27vjw">Antimicrobial resistance (AMR) and other statistics</p>',
-                      page: 79,
-                      title: 'Antimicrobial resistance (AMR)',
-                      html_url:
-                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
-                    },
-                  },
-                  {
-                    id: '79c65515-8f70-446d-8ed8-f49d6ad5cfdb',
-                    type: 'secondary_link',
-                    value: {
-                      body: '<p data-block-key="27vjw">Syndromic surveillance and other statistics</p>',
-                      page: 79,
-                      title: 'Syndromic surveillance',
-                      html_url:
-                        'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
-                    },
-                  },
                 ],
               },
               heading: 'Respiratory viruses',
