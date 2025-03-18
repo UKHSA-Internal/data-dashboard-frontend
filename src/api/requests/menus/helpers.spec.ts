@@ -100,26 +100,6 @@ describe('Mega Menu Transformations', () => {
               description:
                 '<p data-block-key="27vjw">Other common respiratory viruses including adenovirus, hMPV &amp; parainfluenza</p>',
             },
-            {
-              title: 'Respiratory syncytial virus (RSV)',
-              slug: '/respiratory-viruses/other-respiratory-viruses',
-              description: '<p data-block-key="27vjw">Respiratory syncytial virus (RSV) and other statistics</p>',
-            },
-            {
-              title: 'Healthcare-associated infections (HCAI)',
-              slug: '/respiratory-viruses/other-respiratory-viruses',
-              description: '<p data-block-key="27vjw">Health-associated infections (HCAI) and other statistics</p>',
-            },
-            {
-              title: 'Antimicrobial resistance (AMR)',
-              slug: '/respiratory-viruses/other-respiratory-viruses',
-              description: '<p data-block-key="27vjw">Antimicrobial resistance (AMR) and other statistics</p>',
-            },
-            {
-              title: 'Syndromic surveillance',
-              slug: '/respiratory-viruses/other-respiratory-viruses',
-              description: '<p data-block-key="27vjw">Syndromic surveillance and other statistics</p>',
-            },
           ],
         },
         {
