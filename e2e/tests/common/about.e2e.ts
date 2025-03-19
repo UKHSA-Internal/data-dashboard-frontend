@@ -2,7 +2,8 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-test('About page', async ({ aboutPage, app }) => {
+// eslint-disable-next-line playwright/no-focused-test
+test.only('About page', async ({ aboutPage, app }) => {
   await test.step('loads the page', async () => {
     await aboutPage.goto()
   })

@@ -1,5 +1,5 @@
 import AxeBuilder from '@axe-core/playwright'
-import { expect, Locator, Page, test as base } from '@playwright/test'
+import { expect, Locator, Page } from '@playwright/test'
 import * as fs from 'fs'
 import { kebabCase, lowerCase } from 'lodash'
 
@@ -7,6 +7,7 @@ import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elem
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-json'
 
+import { AuthFixtures } from './auth.fixture'
 import {
   AboutPage,
   AccessibilityStatementPage,
@@ -534,7 +535,7 @@ export class App {
   }
 }
 
-export const test = base.extend<Fixtures>({
+export const test = AuthFixtures.extend<Fixtures>({
   app: async ({ page }, use) => {
     await use(new App(page))
   },

@@ -8,9 +8,11 @@ import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
+import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { getLandingPage } from '@/app/utils/cms'
+import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   children: ReactNode
@@ -57,7 +59,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       </header>
 
-      <TopNav>
+      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
         <MegaMenu />
       </TopNav>
 
