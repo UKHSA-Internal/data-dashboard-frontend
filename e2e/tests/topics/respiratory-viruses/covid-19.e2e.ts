@@ -164,7 +164,7 @@ test.describe('COVID-19 page', () => {
     await test.step('choose an area type', async () => {
       await app.selectAreaSelectorDropdownOption('Area type', 'Nation')
       await app.checkAreaSelectorInputMatchesValue('Area type', 'Nation')
-      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19?areaType=Nation`)
     })
     await test.step('area name dropdown list is populated', async () => {
       await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
@@ -172,7 +172,7 @@ test.describe('COVID-19 page', () => {
     await test.step('choose an area name', async () => {
       await app.selectAreaSelectorDropdownOption('Area name', 'England')
       await app.checkAreaSelectorInputMatchesValue('Area name', 'England')
-      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation&areaName=England`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19?areaType=Nation&areaName=England`)
     })
     await test.step('document title shows the selected location', async () => {
       await app.hasDocumentTitle('COVID-19 in England | UKHSA data dashboard')
@@ -200,7 +200,7 @@ test.describe('COVID-19 page', () => {
     })
     await test.step('click reset link', async () => {
       await app.clickAreaSelectorResetLink()
-      await app.waitForUrl(`${baseURL}/topics/covid-19`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19`)
     })
     await test.step('check the area selector is closed', async () => {
       await app.checkAreaSelectorFormIsActive(false)
