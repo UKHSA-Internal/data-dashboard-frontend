@@ -79,7 +79,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     x_axis_title: 'Test X axis title',
                     y_axis: null,
                     y_axis_title: 'Test Y axis title',
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -123,7 +123,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'This is some sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -184,7 +184,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: '',
                     x_axis: 'stratum',
                     y_axis: 'metric',
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -237,7 +237,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: '',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -309,7 +309,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -345,7 +345,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -389,7 +389,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: 'stratum',
                     y_axis: 'metric',
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -425,7 +425,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -478,7 +478,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -514,7 +514,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -567,7 +567,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -603,7 +603,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -799,7 +799,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',
@@ -835,7 +835,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
-                    show_timeseries_filters: true,
+                    show_timeseries_filter: true,
                     chart: [
                       {
                         type: 'plot',

@@ -25,8 +25,6 @@ export const getPageBySlug = async <T extends PageType>(slugParam: string | Slug
         // Once we have a match, use the id to fetch the single page
         const page = await getPage<T>(matchedPage.id)
 
-        console.log('Getpagebyslug match', page.data?.body[2])
-
         if (page.success) {
           return page.data as PageResponse<T>
         }

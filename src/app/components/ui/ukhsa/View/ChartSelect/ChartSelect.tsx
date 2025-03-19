@@ -1,6 +1,6 @@
 'use client'
 
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 
 import { toSlug } from '@/app/utils/app.utils'
 
@@ -39,9 +39,33 @@ interface ChartSelectProps {
 
 const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
   const router = useRouter()
+  const searchParams = useSearchParams()
 
+  const setFilterParams = (newFilter: string) => {
+    let filters = getFilters()
+
+    const [filterName, filterValue] = newFilter.split('|')
+
+    // Remove existing filters with the same name
+    filters = filters.filter((filter) => !filter.startsWith(filterName))
+
+    // Only add the new filter if the value is not 'all'
+    if (filterValue !== 'all') {
+      filters.push(newFilter)
+    }
+
+    return `?timeseriesFilter=${filters.join(';')}`
+  }
+
+  // Handle update of select component
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    router.push(event.target.value)
+    console.log('Handle change called', setFilterParams(event.target.value))
+    router.push(setFilterParams(event.target.value))
+  }
+
+  // Get list of timeseries filters for different charts
+  const getFilters = () => {
+    return searchParams.get('timeseriesFilter')?.split(';') ?? []
   }
 
   return (
@@ -51,11 +75,7 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
       </label>
       <select className="govuk-select" id={chartId} onChange={handleChange}>
         {getSelectOptions(timespan.years).map((selectOption) => (
-          <option
-            key={selectOption}
-            selected={selectOption === 'All'}
-            value={`?timeseriesFilter=${chartId}|${toSlug(selectOption)};`}
-          >
+          <option key={selectOption} selected={selectOption === 'All'} value={`${chartId}|${toSlug(selectOption)}`}>
             {selectOption}
           </option>
         ))}

@@ -102,6 +102,10 @@ export const renderCard = (
       {type === 'chart_row_card' && (
         <ChartRowCard>
           {value.columns.map((column) => {
+            // console.log('Column data:')
+            // console.dir(column)
+            // console.log('===========')
+
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
             const noAbout = !column.value.about || column.value.about.length === 0
             const noRelatedLinks = !column.value.related_links || column.value.related_links.length === 0
@@ -197,8 +201,6 @@ export const renderCard = (
                           </>
                         )}
                         <AreaSelectorLoader>
-                          <div>Timeseries: {column.value.show_timeseries_filters?.toString()}</div>
-                          <div>Date prefix: {column.value.date_prefix}</div>
                           <Chart
                             data={column.value}
                             sizes={[

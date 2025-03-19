@@ -9,7 +9,7 @@ import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { toSlug } from '@/app/utils/app.utils'
-import { getChartSvg } from '@/app/utils/chart.utils'
+import { getChartSvg, getChartTimespan } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
@@ -97,9 +97,6 @@ const createStaticChart = ({
 export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
-  // console.log('Chart data')
-  // console.dir(data)
-
   let yAxisMinimum = null
   let yAxisMaximum = null
   let xAxisTitle = ''
@@ -143,8 +140,6 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     })
   )
 
-  console.dir(data)
-
   // Lazy load the interactive chart component (and all associated plotly.js code)
   const resolvedRequests = await Promise.all(requests)
 
@@ -153,14 +148,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   // Check the default chart & any additional charts have correctly returned responses
   if (!defaultChartResponse || resolvedRequests.some((request) => !request.success)) {
-    return (
-      <>
-        {/* Remove below line */}
-        <div>Empty chart issue</div>
-        {/*  */}
-        <ChartEmpty resetHref={pathname} />
-      </>
-    )
+    return <ChartEmpty resetHref={pathname} />
   }
 
   const { alt_text: alt, figure } = defaultChartResponse
@@ -185,8 +173,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
     return (
       <>
-        {data.show_timeseries_filters && (
-          <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />
+        {data.show_timeseries_filter && (
+          <ChartSelect timespan={getChartTimespan(data.chart)} chartId={toSlug(data.title)} />
         )}
         {staticChart}
       </>
@@ -198,8 +186,9 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   return (
     <>
-      <div>Filter: {data.show_timeseries_filters}</div>
-      {data.show_timeseries_filters && <ChartSelect timespan={{ years: 2, months: 6 }} chartId={toSlug(data.title)} />}
+      {data.show_timeseries_filter && (
+        <ChartSelect timespan={getChartTimespan(data.chart)} chartId={toSlug(data.title)} />
+      )}
       <Suspense fallback={staticChart}>
         <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
       </Suspense>
