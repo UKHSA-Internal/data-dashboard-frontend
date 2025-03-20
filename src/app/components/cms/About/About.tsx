@@ -26,7 +26,7 @@ const About = ({ description, relatedLinks }: AboutProps) => {
 
   return (
     <div>
-      <p className="govuk-!-margin-bottom-2 pt-0">{description}</p>
+      <p className="govuk-!-margin-bottom-2 whitespace-pre-wrap pt-0">{description}</p>
       {relatedLinks && relatedLinks.length > 0 ? (
         <div>
           <h2 className="default-govuk-header mb-2 font-bold">{t('cms.blocks.about.relatedLinks')}</h2>
