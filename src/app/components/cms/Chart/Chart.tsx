@@ -9,7 +9,7 @@ import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { toSlug } from '@/app/utils/app.utils'
-import { getChartSvg, getChartTimespan } from '@/app/utils/chart.utils'
+import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
@@ -48,6 +48,8 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
+
+  timeseriesFilter: string
 }
 
 const createStaticChart = ({
@@ -94,8 +96,11 @@ const createStaticChart = ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
   const { t } = await getServerTranslation('common')
+
+  const filteredData = getFilteredData(data, timeseriesFilter)
+  console.log('Filtered data', filteredData)
 
   let yAxisMinimum = null
   let yAxisMaximum = null
