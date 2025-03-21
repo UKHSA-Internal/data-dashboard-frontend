@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { getToken, type JWT } from 'next-auth/jwt'
-import { encode } from 'next-auth/jwt'
+import { encode, getToken, type JWT } from 'next-auth/jwt'
 
 import { refreshAccessToken } from '@/api/requests/auth/refreshAccessToken'
+import { logger } from '@/lib/logger'
 
 const AUTH_SECRET = process.env.AUTH_SECRET!
 const SECURE_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https://')
@@ -11,11 +11,9 @@ const TOKEN_REFRESH_BUFFER_SECONDS = 30
 
 function shouldUpdateToken(token: JWT) {
   const timeInSeconds = Math.floor(Date.now() / 1000)
-  const isExpiring = token?.expires_at && timeInSeconds >= token.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
-  return isExpiring
+  return token?.expires_at && timeInSeconds >= token.expires_at - TOKEN_REFRESH_BUFFER_SECONDS
 }
 
-// https://github.com/nextauthjs/next-auth/issues/8254#issuecomment-1690474377
 export async function validateAndRenewSession(req: NextRequest, res: NextResponse) {
   const token = await getToken({
     req,
@@ -24,12 +22,11 @@ export async function validateAndRenewSession(req: NextRequest, res: NextRespons
     salt: SESSION_COOKIE,
   })
 
-  if (!token) {
-    // await signOut()
-    return res
-  }
+  if (!token) return res
 
   if (shouldUpdateToken(token)) {
+    logger.info(`Token is expiring soon (exp: ${token.expires_at}); triggering refresh.`)
+
     const newToken = await refreshAccessToken(token)
 
     const newSessionToken = await encode({
@@ -42,15 +39,20 @@ export async function validateAndRenewSession(req: NextRequest, res: NextRespons
       },
     })
 
-    // Store token in cookies
-    res.headers.set('Set-Cookie', `${SESSION_COOKIE}=${newSessionToken}; Path=/; HttpOnly; Secure; SameSite=Lax;`)
+    // Store token in cookie
+    res.cookies.set(SESSION_COOKIE, newSessionToken, {
+      httpOnly: true,
+      secure: SECURE_COOKIE,
+      sameSite: 'lax',
+      path: '/',
+    })
 
-    // Handle large tokens by splitting into chunks if needed
+    // Chunking for large cookie support
     const CHUNK_SIZE = 3000
     const chunks = newSessionToken.match(new RegExp(`.{1,${CHUNK_SIZE}}`, 'g'))
 
-    if (chunks) {
-      console.log(`🔹 Storing token in ${chunks.length} chunks`)
+    if (chunks && chunks.length > 1) {
+      logger.info(`Storing token in ${chunks.length} chunks`)
       chunks.forEach((chunk, index) => {
         res.cookies.set(`${SESSION_COOKIE}.${index}`, chunk, {
           httpOnly: true,
@@ -60,8 +62,6 @@ export async function validateAndRenewSession(req: NextRequest, res: NextRespons
         })
       })
     }
-
-    return res
   }
 
   return res

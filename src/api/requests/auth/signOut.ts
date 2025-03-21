@@ -3,12 +3,13 @@ import { logger } from '@/lib/logger'
 
 import { getAuthApiBaseUrl } from '../helpers'
 
-export async function signOut(options?: { redirectTo?: string | undefined; redirect?: true | undefined }) {
+export async function signOut(options?: { redirectTo?: string; redirect?: true }) {
   try {
     const session = await auth()
 
     if (!session?.refreshToken) {
-      throw { error: 'No refresh token available' }
+      logger.warn('No refresh token available in session. Skipping Cognito revoke.')
+      return await nextAuthSignOut(options)
     }
 
     const revokeResponse = await fetch(`${getAuthApiBaseUrl()}/revoke`, {
@@ -21,7 +22,6 @@ export async function signOut(options?: { redirectTo?: string | undefined; redir
       },
       body: new URLSearchParams({
         token: session.refreshToken,
-        token_type_hint: 'refresh_token',
         client_id: process.env.AUTH_CLIENT_ID!,
         client_secret: process.env.AUTH_CLIENT_SECRET!,
       }).toString(),
@@ -32,9 +32,11 @@ export async function signOut(options?: { redirectTo?: string | undefined; redir
       logger.error('Error revoking token:', errorData)
       return { error: 'Failed to revoke token', details: errorData }
     }
+
+    logger.info('Successfully revoked Cognito token')
   } catch (error) {
     logger.error('Unexpected error in revoke handler:', error)
   }
 
-  await nextAuthSignOut(options)
+  return await nextAuthSignOut(options)
 }
