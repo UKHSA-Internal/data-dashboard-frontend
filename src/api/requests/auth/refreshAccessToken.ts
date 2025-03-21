@@ -8,7 +8,7 @@ let isRefreshing = false
 
 export async function refreshAccessToken(token: JWT): Promise<JWT> {
   if (isRefreshing) {
-    console.log('🔁 Already refreshing; returning existing token.')
+    console.log('Already refreshing; returning existing token.')
     return token
   }
 
@@ -16,14 +16,17 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
   isRefreshing = true
 
   try {
-    console.log('🔄 Refreshing access token via endpoint:', `${process.env.AUTH_DOMAIN}/oauth2/token`)
+    console.log('Refreshing access token via endpoint:', `${process.env.AUTH_DOMAIN}/oauth2/token`)
 
-    if (!token.refresh_token) return token
+    if (!token.refresh_token) {
+      logger.warn('No refresh_token available. Skipping refresh.')
+      return token
+    }
 
     // Log current token expiry (human-readable)
     if (token.expires_at) {
       console.log(
-        `🕗 Current token expiry: ${token.expires_at} (unix:seconds) =>`,
+        `Current token expiry: ${token.expires_at} (unix:seconds) =>`,
         new Date(token.expires_at * 1000).toUTCString()
       )
     }
@@ -48,7 +51,7 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
     // Calculate new expiry in seconds
     const newExpiresAt = tokensOrError?.expires_in + timeInSeconds
     console.log(
-      '🕗 New expires_in:',
+      'New expires_in:',
       tokensOrError?.expires_in,
       'seconds => newExpiresAt:',
       newExpiresAt,
@@ -63,7 +66,7 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
       refresh_token: tokensOrError?.refresh_token ?? token?.refresh_token,
     }
 
-    console.log('✅ Token refreshed successfully!', {
+    console.log('Token refreshed successfully!', {
       old_exp: token.expires_at,
       old_exp_readable: token.expires_at ? new Date(token.expires_at * 1000).toUTCString() : undefined,
       new_exp: newToken.expires_at,
@@ -72,7 +75,7 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
 
     return newToken
   } catch (error) {
-    logger.error('Error refreshing token in middleware:', error instanceof Error ? error.message : error)
+    logger.error('Error refreshing token:', error instanceof Error ? error.message : error)
   } finally {
     isRefreshing = false
   }

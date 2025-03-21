@@ -36,7 +36,7 @@ import {
   WhatsNewParentPage,
 } from './index'
 
-type Fixtures = {
+export type Fixtures = {
   app: App
   switchboardPage: SwitchboardPage
   sitemapPage: SitemapPage
