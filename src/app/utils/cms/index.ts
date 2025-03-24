@@ -82,16 +82,23 @@ export async function getPageMetadata(
         },
       } = metricsEntries
 
-      const { pagination_size: paginationSize, show_pagination: showPagination } =
-        await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+      try {
+        const { pagination_size: paginationSize, show_pagination: showPagination } = {
+          pagination_size: 10,
+          show_pagination: true,
+        }
+        //await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
 
-      const totalPages = Math.ceil(totalItems / paginationSize) || 1
+        const totalPages = Math.ceil(totalItems / paginationSize) || 1
 
-      if (showPagination) {
-        title = seoTitle.replace(
-          '|',
-          t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
-        )
+        if (showPagination) {
+          title = seoTitle.replace(
+            '|',
+            t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+          )
+        }
+      } catch (error) {
+        console.log('Error', error)
       }
     }
 

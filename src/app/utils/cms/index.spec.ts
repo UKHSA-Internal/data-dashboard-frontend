@@ -202,31 +202,31 @@ describe('getPageMetadata', () => {
   })
 
   //TODO: Fix failing test CDD-2182.
-  // test('Getting metadata for metrics-documentation', async () => {
-  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
-  //   getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
-  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+  test('Getting metadata for metrics-documentation', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
 
-  //   const slug: Slug = ['metrics-documentation']
-  //   const searchParams: SearchParams = {
-  //     search: 'covid-19',
-  //   }
-  //   const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {
+      search: 'covid-19',
+    }
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
 
-  //   expect(result).toEqual<Metadata>({
-  //     alternates: { canonical: 'http://localhost/metrics-documentation' },
-  //     description: '',
-  //     openGraph: {
-  //       description: '',
-  //       title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
-  //     },
-  //     title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
-  //     twitter: {
-  //       description: '',
-  //       title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
-  //     },
-  //   })
-  // })
+    expect(result).toEqual<Metadata>({
+      alternates: { canonical: 'http://localhost/metrics-documentation' },
+      description: '',
+      openGraph: {
+        description: '',
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      },
+      title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      twitter: {
+        description: '',
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+      },
+    })
+  })
 
   test('Failing to get metrics metadata', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
