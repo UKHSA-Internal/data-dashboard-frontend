@@ -1,4 +1,22 @@
 /**
+ * Checks to see if running the Authenticated version of the data dashboard
+ */
+export const authEnabled = process.env.AUTH_ENABLED === 'true'
+
+/**
+ * The default cache revalidation interval (10 minutes)
+ * Can be overridden per request
+ */
+export const cacheRevalidationInterval = 600
+
+/**
+ * Associated fetch tags for the Next.js data cache
+ */
+export const cacheFetchTags = {
+  public: 'public',
+}
+
+/**
  * The NextJS Api Route path for chart download
  */
 export const chartExportApiRoutePath = '/api/download/chart'
@@ -42,3 +60,8 @@ export const chartSizes = {
  * The default file format in which charts are displayed as
  */
 export const chartFormat = 'svg'
+
+/**
+ * Default Auth Provider
+ */
+export const defaultAuthProvider = 'cognito'
