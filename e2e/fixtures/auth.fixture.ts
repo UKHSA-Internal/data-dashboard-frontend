@@ -37,7 +37,7 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       await page.goto('/')
 
       // Dashboard Sign in link
-      await page.getByRole('button', { name: 'Sign in' }).click({ timeout: 10000 })
+      await page.getByRole('button', { name: 'Start now' }).click({ timeout: 10000 })
 
       const partialMatch = process.env.AUTH_DOMAIN
       await page.waitForURL(new RegExp(partialMatch), { timeout: 5000 })
@@ -54,6 +54,9 @@ export const AuthFixtures = base.extend<AuthFixtures>({
       await page.keyboard.press('Tab')
       await page.keyboard.press('Tab')
       await page.keyboard.press('Enter')
+
+      // eslint-disable-next-line playwright/no-networkidle
+      await page.waitForLoadState('networkidle')
 
       await page.context().storageState({ path: storagePath })
 
