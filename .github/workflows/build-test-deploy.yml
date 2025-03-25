@@ -153,16 +153,6 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
-        env:
-          AUTH_ENABLED: false
-          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
-          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
-          AUTH_CLIENT_SECRET: ${{ secrets.AUTH_CLIENT_SECRET }}
-          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
-          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
-          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
-          PLAYWRIGHT_AUTH_USER_PASSWORD: ${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}
-          PLAYWRIGHT_AUTH_USER_USERNAME: ${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -210,13 +200,9 @@ jobs:
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
           echo "PLAYWRIGHT_AUTH_USER_PASSWORD=${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}" >> .env.local
           echo "PLAYWRIGHT_AUTH_USER_USERNAME=${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}" >> .env.local
-      - name: Debug .env.local
-        run: cat .env.local
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
-        env:
-          DOTENV_CONFIG_PATH: .env.local
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
