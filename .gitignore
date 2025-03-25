@@ -12,6 +12,7 @@
 /playwright/.cache/
 junit.xml
 .unlighthouse
+/e2e/storage/auth.json
 
 # next.js
 /.next/

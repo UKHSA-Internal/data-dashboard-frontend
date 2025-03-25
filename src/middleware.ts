@@ -2,6 +2,7 @@ import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server
 
 import { auth } from './auth'
 import { validateAndRenewSession } from './lib/auth/middleware'
+import { logger } from './lib/logger'
 
 export const config = {
   matcher: [
@@ -30,11 +31,16 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       return response
     }
 
-    const token = await auth()
-    if (!token && !pathname.includes('/start')) {
+    try {
+      const token = await auth()
+      if (!token && !pathname.includes('/start')) {
+        return NextResponse.redirect(new URL('/start', request.url))
+      }
+      return await validateAndRenewSession(request, response)
+    } catch (error) {
+      logger.error('Auth middleware error:', error)
       return NextResponse.redirect(new URL('/start', request.url))
     }
-    return await validateAndRenewSession(request, response)
   }
 
   return response
