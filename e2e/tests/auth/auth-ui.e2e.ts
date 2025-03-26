@@ -21,7 +21,7 @@ test.describe('Logged in', () => {
     test.skip(!authEnabled, 'Skipping auth UI tests when auth is disabled')
 
     await authStartPage.goto()
-    await authStartPage.redirectedDueToLoggedIn()
+    await authStartPage.isRedirectedDueToLoggedIn()
 
     await landingPage.hasHeading()
     await landingPage.hasMetadata()

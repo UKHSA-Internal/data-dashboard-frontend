@@ -45,7 +45,7 @@ export class AuthStartPage {
     }
   }
 
-  async redirectedDueToLoggedIn() {
+  async isRedirectedDueToLoggedIn() {
     await expect(this.page.waitForURL('/')).toBeTruthy()
   }
 

@@ -562,10 +562,6 @@ export class App {
   async submitAreaSelectorForm() {
     await this.page.getByRole('form', { name: 'Area selector' }).getByRole('button', { name: 'Update' }).click()
   }
-
-  async checkAuthAvatarIsVisible() {
-    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
-  }
 }
 
 export const test = AuthSetupFixtures.extend<Fixtures>({
