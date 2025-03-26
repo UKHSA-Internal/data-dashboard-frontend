@@ -37,9 +37,12 @@ export const TopNav = ({ children, avatar = null }: { children: ReactNode; avata
           href="/browse"
           aria-expanded={menuOpen}
           aria-controls="ukhsa-topnav"
-          aria-label={`${menuOpen ? 'Hide' : 'Show'} navigation menu`}
         >
-          <span className="inline-flex items-center gap-2">Menu {avatar}</span>
+          <span className="inline-flex items-center gap-2">
+            <span aria-hidden>Menu</span>
+            <span className="sr-only">{menuOpen ? 'Hide' : 'Show'} navigation menu</span>
+            {avatar}
+          </span>
         </Link>
       </div>
       <nav

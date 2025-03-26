@@ -36,6 +36,7 @@
     "cookies-next": "^4.1.1",
     "cross-fetch": "^4.0.0",
     "dayjs": "^1.11.10",
+    "dotenv": "^16.4.7",
     "govuk-frontend": "^5.3.0",
     "http-status-codes": "^2.3.0",
     "i18next": "^23.11.1",
@@ -67,7 +68,7 @@
   "devDependencies": {
     "@axe-core/playwright": "^4.9.0",
     "@faker-js/faker": "^8.4.1",
-    "@playwright/test": "^1.43.1",
+    "@playwright/test": "^1.51.1",
     "@tanstack/eslint-plugin-query": "^5.59.1",
     "@testing-library/jest-dom": "^6.4.2",
     "@testing-library/react": "^15.0.0",
