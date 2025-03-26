@@ -26,55 +26,44 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
     async ({ page, authEnabled, startLoggedOut }, use) => {
       const storagePath = 'e2e/storage/auth.json'
 
-      // If auth is disabled or we want to start logged out, clear any existing auth state
+      // For tests that should start logged out or when auth is disabled
       if (!authEnabled || startLoggedOut) {
-        if (fs.existsSync(storagePath)) {
-          fs.unlinkSync(storagePath)
-        }
+        await page.context().clearCookies()
         return await use()
       }
 
-      // Check if auth session exists and is still valid
+      // Try to restore auth state from storage
       if (fs.existsSync(storagePath)) {
-        const storageState = JSON.parse(fs.readFileSync(storagePath, 'utf-8'))
-        const cookies = (storageState.cookies as Cookie[]) || []
-        const hasValidSession = cookies.some(
-          (cookie) => cookie.name.includes('authjs.session-token') && cookie.expires > Date.now() / 1000
-        )
+        try {
+          const storageState = JSON.parse(fs.readFileSync(storagePath, 'utf-8'))
+          const cookies = (storageState.cookies as Cookie[]) || []
 
-        if (hasValidSession) {
-          return await use()
+          if (cookies.length > 0) {
+            await page.context().addCookies(cookies)
+            return await use()
+          }
+        } catch (error) {
+          console.log('❌ Error reading storage state:', error)
         }
       }
 
-      console.log('🔐 No valid auth session found. Logging in...')
+      // Perform login if needed
       await page.goto('/')
+      await page.getByRole('button', { name: 'Start now' }).click()
+      await page.waitForURL(new RegExp(process.env.AUTH_DOMAIN || ''), { timeout: 5000 })
 
-      // Dashboard Sign in link
-      await page.getByRole('button', { name: 'Start now' }).click({ timeout: 10000 })
-
-      const partialMatch = process.env.AUTH_DOMAIN
-      await page.waitForURL(new RegExp(partialMatch), { timeout: 5000 })
-
-      // Cognito UI
-      // The hosted sign in form has multiple elements with the same id on the page for different viewports.
-      // The only way to select the correct element is via keyboard!
       await page.keyboard.press('Tab')
       await page.keyboard.type(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
-
       await page.keyboard.press('Tab')
       await page.keyboard.type(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
-
       await page.keyboard.press('Tab')
       await page.keyboard.press('Tab')
       await page.keyboard.press('Enter')
 
       // eslint-disable-next-line playwright/no-networkidle
       await page.waitForLoadState('networkidle')
-
       await page.context().storageState({ path: storagePath })
 
-      console.log('✅ Authentication session saved!')
       await use()
     },
     { auto: true },
