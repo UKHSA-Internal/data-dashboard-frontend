@@ -25,11 +25,13 @@ export default async function UserAvatar() {
   }
 
   if (session) {
+    const initials = getInitials((session.user?.name || session.user?.email) ?? '')
+
     return (
-      <Avatar className="govuk-!-font-size-14 size-6 text-blue">
-        <AvatarFallback className="bg-offwhite text-blue">
-          {/* @TODO: Clean up types */}
-          {getInitials((session.user?.name || session.user?.email) ?? '')}
+      <Avatar id="user-avatar" className="govuk-!-font-size-14 size-6 text-blue">
+        <span className="sr-only">&ndash; Logged in as {session.user?.name || session.user?.email}</span>
+        <AvatarFallback className="bg-offwhite text-blue" aria-hidden>
+          {initials}
         </AvatarFallback>
       </Avatar>
     )

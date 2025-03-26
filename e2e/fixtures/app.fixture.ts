@@ -7,12 +7,13 @@ import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elem
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
 import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-json'
 
-import { AuthFixtures } from './auth.fixture'
+import { AuthSetupFixtures } from './auth/auth-setup.fixture'
 import {
   AboutPage,
   AccessibilityStatementPage,
   AccessOurDataPage,
   ArchiveDataPage,
+  AuthStartPage,
   BrowsePage,
   BulkDownloadsPage,
   CompliancePage,
@@ -38,6 +39,7 @@ import {
 
 type Fixtures = {
   app: App
+  authStartPage: AuthStartPage
   switchboardPage: SwitchboardPage
   sitemapPage: SitemapPage
   landingPage: LandingPage
@@ -77,8 +79,12 @@ export class App {
   readonly footer: Locator
   readonly cookieBanner: Locator
   readonly areaSelector: Locator
+  readonly authEnabled: boolean
+  readonly authUserName: string
+  readonly menuLinkClosed: Locator
+  readonly menuLinkOpen: Locator
 
-  constructor(page: Page) {
+  constructor(page: Page, authEnabled: boolean, authUserName: string) {
     this.page = page
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
@@ -90,6 +96,18 @@ export class App {
     this.footer = this.page.getByRole('contentinfo')
     this.cookieBanner = this.page.getByRole('region', { name: 'Cookies on the UKHSA data dashboard' })
     this.areaSelector = this.page.getByRole('form', { name: 'Area selector' })
+    this.authEnabled = authEnabled
+    this.authUserName = authUserName
+    this.menuLinkClosed = this.page.getByRole('link', {
+      name: this.authEnabled ? `Show navigation menu – Logged in as ${this.authUserName}` : 'Show navigation menu',
+      exact: true,
+      expanded: false,
+    })
+    this.menuLinkOpen = this.page.getByRole('link', {
+      name: this.authEnabled ? `Hide navigation menu – Logged in as ${this.authUserName}` : 'Hide navigation menu',
+      exact: true,
+      expanded: true,
+    })
   }
 
   async goto(path: string) {
@@ -202,47 +220,58 @@ export class App {
   async hasNav() {
     await this.waitForPageLoaded()
 
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
+    await expect(this.menuLinkClosed).toBeVisible()
 
     // Open menu
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await this.menuLinkClosed.click()
 
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
+    await expect(this.menuLinkOpen).toBeVisible()
 
-    let nav = this.page.getByRole('navigation', { name: 'Menu' })
-
-    // Expect visible items
-    await expect(nav.getByRole('heading', { name: 'Respiratory viruses' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeVisible()
-
-    await expect(nav.getByRole('heading', { name: 'Services and information' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'About' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Metrics documentation' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Weather health alerts' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeVisible()
-
-    await expect(nav.getByRole('link', { name: "What's new" })).toBeVisible()
-    await expect(nav.getByRole('link', { name: "What's coming" })).toBeVisible()
+    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toMatchAriaSnapshot(`
+      - navigation "Menu":
+        ${this.authEnabled ? '- button "Sign out"' : ''}
+        - heading "Respiratory viruses" [level=3]
+        - list:
+          - listitem:
+            - link "COVID-19"
+            - paragraph: COVID-19 respiratory infection statistics
+          - listitem:
+            - link "Influenza"
+            - paragraph: Flu ICU and HDU admissions and other statistics
+          - listitem:
+            - link "Other respiratory viruses"
+            - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
+        - heading "Services and information" [level=3]
+        - list:
+          - listitem:
+            - link "Homepage"
+            - paragraph: The UKHSA data dashboard
+          - listitem:
+            - link "About"
+            - paragraph: About the dashboard
+          - listitem:
+            - link "Metrics documentation"
+            - paragraph: See all available metrics
+          - listitem:
+            - link "Weather health alerts"
+            - paragraph: Weather health alerting system provided by UKHSA
+          - listitem:
+            - link "Access our data"
+            - paragraph: API developer's guide
+        - list:
+          - listitem:
+            - link "What's new"
+          - listitem:
+            - link "What's coming"
+          - listitem:
+            - link "Switchboard"
+            - paragraph: Front-end environment settings
+  `)
 
     // Close menu
-    await this.page.getByRole('link', { name: 'Hide navigation menu', expanded: true }).click()
+    await this.menuLinkOpen.click()
 
-    nav = this.page.getByRole('navigation', { name: 'Menu' })
-
-    // Expect no visible menu items
-    await expect(nav.getByRole('heading', { name: 'Respiratory viruses' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'COVID-19' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Influenza' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Other respiratory viruses' })).toBeHidden()
-    await expect(nav.getByRole('heading', { name: 'Services and information' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Homepage' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'Access our data' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: 'About' })).toBeHidden()
-    await expect(nav.getByRole('link', { name: "What's new" })).toBeHidden()
-    await expect(nav.getByRole('link', { name: "What's coming" })).toBeHidden()
+    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toBeHidden()
   }
 
   async hasNotNav() {
@@ -533,11 +562,18 @@ export class App {
   async submitAreaSelectorForm() {
     await this.page.getByRole('form', { name: 'Area selector' }).getByRole('button', { name: 'Update' }).click()
   }
+
+  async checkAuthAvatarIsVisible() {
+    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
+  }
 }
 
-export const test = AuthFixtures.extend<Fixtures>({
-  app: async ({ page }, use) => {
-    await use(new App(page))
+export const test = AuthSetupFixtures.extend<Fixtures>({
+  app: async ({ page, authEnabled, authUserName }, use) => {
+    await use(new App(page, authEnabled, authUserName))
+  },
+  authStartPage: async ({ page, authEnabled, authUserName }, use) => {
+    await use(new AuthStartPage(page, authEnabled, authUserName))
   },
   sitemapPage: async ({ page }, use) => {
     await use(new SitemapPage(page))

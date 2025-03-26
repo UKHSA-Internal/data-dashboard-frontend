@@ -1,4 +1,5 @@
 export * from './pages/access-our-data/access-our-data.fixture'
+export * from './pages/auth/auth-start.fixture'
 export * from './pages/common/about.fixture'
 export * from './pages/common/accessibility-statement.fixture'
 export * from './pages/common/bulk-downloads.fixture'

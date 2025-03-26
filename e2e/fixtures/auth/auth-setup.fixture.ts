@@ -1,22 +1,36 @@
 import { Cookie, test as base } from '@playwright/test'
 import fs from 'fs'
 
-type AuthFixtures = {
+type AuthSetupFixtures = {
   authEnabled: boolean
+  authUserName: string
   setupAuth: void
+  startLoggedOut: boolean
 }
 
-export const AuthFixtures = base.extend<AuthFixtures>({
+export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
   authEnabled: async ({}, use) => {
     const isAuthEnabled = process.env.AUTH_ENABLED === 'true'
     await use(isAuthEnabled)
   },
 
+  authUserName: async ({}, use) => {
+    await use(process.env.PLAYWRIGHT_AUTH_USER_USERNAME)
+  },
+
+  startLoggedOut: async ({}, use) => {
+    await use(false) // Default to logged in state
+  },
+
   setupAuth: [
-    async ({ page, authEnabled }, use) => {
+    async ({ page, authEnabled, startLoggedOut }, use) => {
       const storagePath = 'e2e/storage/auth.json'
 
-      if (!authEnabled) {
+      // If auth is disabled or we want to start logged out, clear any existing auth state
+      if (!authEnabled || startLoggedOut) {
+        if (fs.existsSync(storagePath)) {
+          fs.unlinkSync(storagePath)
+        }
         return await use()
       }
 
