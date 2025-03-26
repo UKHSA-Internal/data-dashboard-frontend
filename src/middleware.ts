@@ -17,13 +17,13 @@ export const config = {
 }
 
 export const middleware: NextMiddleware = async (request: NextRequest) => {
-  const response = NextResponse.next()
+  let response = NextResponse.next()
   const pathname = request.nextUrl.pathname
 
   // Add x-url header for debugging or legacy usage
   response.headers.set('x-url', request.url)
 
-  // Non-Public (Auth) redirects
+  // Handle auth first if enabled
   if (process.env.AUTH_ENABLED === 'true') {
     // Filter out next-auth API requests
     if (request.nextUrl.pathname.startsWith('/api/auth/')) {
@@ -40,7 +40,7 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       if (!token && !pathname.includes('/start')) {
         return NextResponse.redirect(new URL('/start', request.url))
       }
-      return await validateAndRenewSession(request, response)
+      response = await validateAndRenewSession(request, response)
     } catch (error) {
       logger.error('Auth middleware error:', error)
       return NextResponse.redirect(new URL('/start', request.url))
