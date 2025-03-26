@@ -7,6 +7,11 @@ declare namespace NodeJS {
     AUTH_CLIENT_SECRET: string
     AUTH_DOMAIN: string
     AUTH_ISSUER: string
+    AUTH_ENABLED: 'true' | 'false'
+    AUTH_CLIENT_ID: string
+    AUTH_CLIENT_SECRET: string
+    AUTH_DOMAIN: string
+    AUTH_ISSUER: string
     AUTH_SECRET: string
     BASE_URL: string
     ESRI_API_KEY: string

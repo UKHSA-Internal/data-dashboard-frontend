@@ -4,6 +4,47 @@ import NextAuth from 'next-auth'
 import type { Provider } from 'next-auth/providers'
 import Cognito from 'next-auth/providers/cognito'
 
+export async function revokeAndSignOut() {
+  try {
+    const session = await auth()
+
+    if (!session?.refreshToken) {
+      return { error: 'No refresh token available' }
+    }
+
+    // Send a revoke request to Cognito
+    const revokeResponse = await fetch(`${process.env.AUTH_DOMAIN}/oauth2/revoke`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded',
+        Authorization: `Basic ${Buffer.from(`${process.env.AUTH_CLIENT_ID}:${process.env.AUTH_CLIENT_SECRET}`).toString(
+          'base64'
+        )}`,
+      },
+      body: new URLSearchParams({
+        token: session.refreshToken,
+        token_type_hint: 'refresh_token',
+        client_id: process.env.AUTH_CLIENT_ID!,
+        client_secret: process.env.AUTH_CLIENT_SECRET!,
+      }).toString(),
+    })
+
+    if (!revokeResponse.ok) {
+      const errorData = await revokeResponse.json()
+      console.error('Error revoking token:', errorData)
+      return { error: 'Failed to revoke token', details: errorData }
+    }
+
+    console.log('Token successfully revoked')
+
+    // return { success: true, message: 'Successfully signed out and revoked token' }
+  } catch (error) {
+    console.error('Unexpected error in revoke handler:', error)
+  }
+
+  await signOut()
+}
+
 const providers: Provider[] = [
   Cognito({
     clientId: process.env.AUTH_CLIENT_ID,
