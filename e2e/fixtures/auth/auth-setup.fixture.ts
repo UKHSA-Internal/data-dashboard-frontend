@@ -40,7 +40,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
 
           if (cookies.length > 0) {
             await page.context().addCookies(cookies)
-            return await use()
+            return use()
           }
         } catch (error) {
           console.log('❌ Error reading storage state:', error)
