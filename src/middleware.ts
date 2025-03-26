@@ -23,6 +23,30 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
   // Add x-url header for debugging or legacy usage
   response.headers.set('x-url', request.url)
 
+  // Non-Public (Auth) redirects
+  if (process.env.AUTH_ENABLED === 'true') {
+    // Filter out next-auth API requests
+    if (request.nextUrl.pathname.startsWith('/api/auth/')) {
+      return response
+    }
+
+    // Ensure the health check endpoint is always reachable
+    if (request.nextUrl.pathname.startsWith('/api/health')) {
+      return response
+    }
+
+    try {
+      const token = await auth()
+      if (!token && !pathname.includes('/start')) {
+        return NextResponse.redirect(new URL('/start', request.url))
+      }
+      return await validateAndRenewSession(request, response)
+    } catch (error) {
+      logger.error('Auth middleware error:', error)
+      return NextResponse.redirect(new URL('/start', request.url))
+    }
+  }
+
   // Access our data redirects
   if (request.nextUrl.pathname === '/access-our-data') {
     try {
@@ -47,30 +71,6 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       notFound()
     } catch (error) {
       notFound()
-    }
-  }
-
-  // Non-Public (Auth) redirects
-  if (process.env.AUTH_ENABLED === 'true') {
-    // Filter out next-auth API requests
-    if (request.nextUrl.pathname.startsWith('/api/auth/')) {
-      return response
-    }
-
-    // Ensure the health check endpoint is always reachable
-    if (request.nextUrl.pathname.startsWith('/api/health')) {
-      return response
-    }
-
-    try {
-      const token = await auth()
-      if (!token && !pathname.includes('/start')) {
-        return NextResponse.redirect(new URL('/start', request.url))
-      }
-      return await validateAndRenewSession(request, response)
-    } catch (error) {
-      logger.error('Auth middleware error:', error)
-      return NextResponse.redirect(new URL('/start', request.url))
     }
   }
 
