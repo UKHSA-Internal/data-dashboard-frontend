@@ -85,6 +85,40 @@ export async function refreshAccessToken(token: JWT): Promise<JWT> {
 }
 ```
 
+## Token Refresh Flow
+
+[View this diagram in Mermaid Live Editor](https://mermaid.live/edit#pako:eNqNVE1v4jAQ_SuWT7tSQElIoORQaUW5rLRdqbSqtOLiTYZgkdis4_BRxH_fsZ1QCqRqDigZvzfz5o2ZA01lBjShFfyrQaTwwFmuWDkXBJ81U5qnfM2EJi8VqOvoI-z0j1ovr08mMhdcS3dgyL37-xadkBnPBeGCKFO20g7VHiOyYSfktwkQ8yMVf2OaywtSg-whyVRJyBNkXEGqyZZfMSfYbIeiLuAtUdNdumQiBwsjC6nIs1yBqK4UnaVPU6gqh_NQ40JBtWw_p7s1V_uremd2aamAaFvE2Pbz9fkCfWrffIHAMTANGamwKPbTgKUGIjegbPfepTgucrJWiEkNE_XJWmG8w68nNwTnclPGKfykjwcw183I90i6hHRFwLRuPXc0VmjnCqk0LwqyYQXP3FFHv0Uhtx-vBBQVNElsejhLYPK37lu1hG0YL9jfAt5BXXNvexawJcwN9Kzj9rk5_8cLiuek7TuLvlNf1hnO0pjmzDbVb5T9kjUnez56UHI3frzJXFxYfjv3rJk4KIWkb006a_rUhL6f1RNNNnyhHi1BlYxnuHMOJjyneF9LmNMEXzOmVnM6F0fEsVrL2V6kNNGqBo8qWedLmiwYyvdobU1pttUpipvnj5RlS8FNgH-cX27D2UVnITQ50B1Noqh_N44G4Wg8iKJo4MexR_c06UV-2I_iyA-COAj9YRgcPfpmswb90PfD8Si8C0aDOB4ORh7NlemlkYgdgprIWmiaDOPjf4wdwz4)
+
+```mermaid
+sequenceDiagram
+    participant User
+    participant NextAuth
+    participant Cognito
+    User->>NextAuth: Sign in request
+    NextAuth->>Cognito: OAuth Authorization request
+    Cognito-->>User: Redirect with Authorization Code
+    User->>NextAuth: Authorization Code
+    NextAuth->>Cognito: Exchange Code for Tokens
+    Cognito-->>NextAuth: Access Token, Refresh Token, Expiry
+    NextAuth->>NextAuth: Store tokens in JWT
+    NextAuth-->>User: Authenticated session
+    Note over User,NextAuth: Accessing protected resources
+    User->>NextAuth: Request with session token
+    NextAuth->>NextAuth: Decode JWT, check expiration
+    alt Token still valid
+        NextAuth-->>User: Allow request
+    else Token expired
+        alt Refresh token available
+            NextAuth->>Cognito: Request new access token
+            Cognito-->>NextAuth: New access token, expiry
+            NextAuth->>NextAuth: Update JWT with new token
+            NextAuth-->>User: Allow request
+        else Refresh token missing or invalid
+            NextAuth-->>User: Session error (RefreshTokenError)
+        end
+    end
+```
+
 ## Security Considerations
 
 1. **Token Storage**
