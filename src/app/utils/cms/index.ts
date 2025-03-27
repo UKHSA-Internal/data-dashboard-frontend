@@ -83,11 +83,10 @@ export async function getPageMetadata(
       } = metricsEntries
 
       try {
-        const { pagination_size: paginationSize, show_pagination: showPagination } = {
-          pagination_size: 10,
-          show_pagination: true,
-        }
-        //await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+        const { pagination_size: paginationSize, show_pagination: showPagination } =
+          await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], {
+            type: PageType.MetricsParent,
+          })
 
         const totalPages = Math.ceil(totalItems / paginationSize) || 1
 

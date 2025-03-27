@@ -206,6 +206,8 @@ describe('getPageMetadata', () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
 
     const slug: Slug = ['metrics-documentation']
     const searchParams: SearchParams = {
