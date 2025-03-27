@@ -134,7 +134,6 @@ test('renders the chart by geography and geography type when both are present in
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
-    show_timeseries_filter: false,
     chart: [
       {
         id: '',
@@ -187,7 +186,6 @@ test('renders the chart by geography and geography type when both are present in
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
-    show_timeseries_filter: false,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
