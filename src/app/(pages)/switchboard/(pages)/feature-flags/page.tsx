@@ -12,7 +12,7 @@ export default function SwitchBoard() {
   const cookieStore = cookies()
 
   const {
-    flags: { 'interactive-charts': interactiveCharts },
+    flags: { 'example-flag': exampleFlag },
   } = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
 
   return (
@@ -26,7 +26,7 @@ export default function SwitchBoard() {
           syncState(
             {},
             {
-              'interactive-charts': form.get('flags.interactiveCharts') as string,
+              'example-flag': form.get('flags.exampleFlag') as string,
             }
           )
         }}
@@ -40,33 +40,33 @@ export default function SwitchBoard() {
             className="govuk-radios govuk-radios--inline govuk-radios--small govuk-!-margin-top-4"
             data-module="govuk-radios"
           >
-            <label className="govuk-label w-full" htmlFor="flags.interactiveCharts.Enabled">
-              Interactive charts
+            <label className="govuk-label w-full" htmlFor="flags.exampleFlag.Enabled">
+              Example flag
             </label>
             <div className="govuk-radios__item">
               <input
-                defaultChecked={interactiveCharts === 'enabled'}
+                defaultChecked={exampleFlag === 'enabled'}
                 className="govuk-radios__input"
-                id="flags.interactiveCharts.Enabled"
-                name="flags.interactiveCharts"
+                id="flags.exampleFlag.Enabled"
+                name="flags.exampleFlag"
                 type="radio"
                 value="enabled"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.interactiveCharts.Enabled">
+              <label className="govuk-label govuk-radios__label" htmlFor="flags.exampleFlag.Enabled">
                 Enabled
               </label>
             </div>
 
             <div className="govuk-radios__item">
               <input
-                defaultChecked={interactiveCharts === 'disabled'}
+                defaultChecked={exampleFlag === 'disabled'}
                 className="govuk-radios__input"
-                id="flags.interactiveCharts.Disabled"
-                name="flags.interactiveCharts"
+                id="flags.exampleFlag.Disabled"
+                name="flags.exampleFlag"
                 type="radio"
                 value="disabled"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor="flags.interactiveCharts.Disabled">
+              <label className="govuk-label govuk-radios__label" htmlFor="flags.exampleFlag.Disabled">
                 Disabled
               </label>
             </div>

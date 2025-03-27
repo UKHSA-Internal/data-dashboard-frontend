@@ -1,7 +1,6 @@
 export default {
-  site: 'https://ukhsa-dashboard.data.gov.uk',
   scanner: {
-    exclude: ['/healthcare-associated-infections-hcai/healthcare-associated-infections/'],
+    exclude: ['/healthcare-associated-infections-hcai/healthcare-associated-infections/', '/respiratory-viruses/*'],
   },
   puppeteerOptions: {
     args: ['--no-sandbox', '--disable-setuid-sandbox'],

@@ -55,6 +55,8 @@ export async function getPageMetadata(
       meta: { seo_title: seoTitle, search_description: description },
     } = pageData
 
+    console.log('PageData', pageData);
+
     let title = seoTitle ?? pageTitle
 
     if (pageType === PageType.Topic) {
@@ -82,9 +84,12 @@ export async function getPageMetadata(
 
       try {
         const { pagination_size: paginationSize, show_pagination: showPagination } =
-          await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+          await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], {
+            type: PageType.MetricsParent,
+          })
 
         const totalPages = Math.ceil(totalItems / paginationSize) || 1
+
         if (showPagination) {
           title = seoTitle.replace(
             '|',
@@ -92,7 +97,7 @@ export async function getPageMetadata(
           )
         }
       } catch (error) {
-        logger.error(error)
+        console.log('Error', error)
       }
     }
 

@@ -45,7 +45,9 @@ describe('ChartRowCardHeader', () => {
         description: 'Description',
       })
     )
-    expect(screen.getByRole('heading', { level: 3 })).toHaveClass('govuk-body-m mb-2 text-dark-grey')
-    expect(screen.getByText('Description')).toHaveClass('govuk-heading-s govuk-!-margin-bottom-2 pt-0')
+    expect(screen.getByText('Description')).toHaveClass(
+      'govuk-body-s italic govuk-!-margin-bottom-2 pt-0 text-dark-grey'
+    )
+    expect(screen.getByRole('heading', { level: 3 })).toHaveClass('govuk-heading-m mb-2 font-bold')
   })
 })

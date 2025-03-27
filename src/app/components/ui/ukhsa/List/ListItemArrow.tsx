@@ -31,6 +31,7 @@ export const ListItemArrowLink = ({ asChild, href, children, className }: ListIt
       <Link
         className="govuk-link govuk-link--no-visited-state before:absolute before:inset-0 before:bg-list_item_arrow before:bg-right before:bg-no-repeat after:absolute after:inset-0 hover:before:bg-list_item_arrow_hover"
         href={href}
+        prefetch
       >
         {children}
       </Link>
@@ -55,6 +56,7 @@ export const ListItemArrowExternalLink = ({
         rel="noreferrer noopener"
         target="_blank"
         aria-label={`${children?.toString()} (opens in a new window)`}
+        prefetch
       >
         {children}
       </Link>
