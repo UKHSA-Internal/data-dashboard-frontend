@@ -201,7 +201,6 @@ describe('getPageMetadata', () => {
     })
   })
 
-  //TODO: Fix failing test CDD-2182.
   test('Getting metadata for metrics-documentation', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
