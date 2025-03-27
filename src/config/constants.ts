@@ -60,3 +60,14 @@ export const chartSizes = {
  * The default file format in which charts are displayed as
  */
 export const chartFormat = 'svg'
+
+/**
+ * Default Auth Provider
+ */
+export const defaultAuthProvider = 'cognito'
+
+/**
+ * Redirect path after successful sign out
+ */
+export const authSignOutRedirectionPath = '/start?logout=success'
+
