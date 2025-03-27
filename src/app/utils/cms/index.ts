@@ -80,16 +80,19 @@ export async function getPageMetadata(
         },
       } = metricsEntries
 
-      const { pagination_size: paginationSize, show_pagination: showPagination } =
-        await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+      try {
+        const { pagination_size: paginationSize, show_pagination: showPagination } =
+          await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
 
-      const totalPages = Math.ceil(totalItems / paginationSize) || 1
-
-      if (showPagination) {
-        title = seoTitle.replace(
-          '|',
-          t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
-        )
+        const totalPages = Math.ceil(totalItems / paginationSize) || 1
+        if (showPagination) {
+          title = seoTitle.replace(
+            '|',
+            t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+          )
+        }
+      } catch (error) {
+        logger.error(error)
       }
     }
 
@@ -108,12 +111,14 @@ export async function getPageMetadata(
         },
       } = whatsNewEntries
 
-      const { pagination_size: paginationSize, show_pagination: showPagination } =
-        await getPageBySlug<PageType.WhatsNewParent>(['whats-new'], { type: PageType.WhatsNewParent })
-
-      const totalPages = Math.ceil(totalItems / paginationSize) || 1
-
-      title = showPagination ? seoTitle.replace('|', t('documentTitlePagination', { page, totalPages })) : seoTitle
+      try {
+        const { pagination_size: paginationSize, show_pagination: showPagination } =
+          await getPageBySlug<PageType.WhatsNewParent>(['whats-new'], { type: PageType.WhatsNewParent })
+        const totalPages = Math.ceil(totalItems / paginationSize) || 1
+        title = showPagination ? seoTitle.replace('|', t('documentTitlePagination', { page, totalPages })) : seoTitle
+      } catch (error) {
+        logger.error(error)
+      }
     }
 
     return {

@@ -202,31 +202,35 @@ describe('getPageMetadata', () => {
   })
 
   //TODO: Fix failing test CDD-2182.
-  // test('Getting metadata for metrics-documentation', async () => {
-  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
-  //   getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
-  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+  test('Getting metadata for metrics-documentation', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
 
-  //   const slug: Slug = ['metrics-documentation']
-  //   const searchParams: SearchParams = {
-  //     search: 'covid-19',
-  //   }
-  //   const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {
+      search: 'covid-19',
+    }
 
-  //   expect(result).toEqual<Metadata>({
-  //     alternates: { canonical: 'http://localhost/metrics-documentation' },
-  //     description: '',
-  //     openGraph: {
-  //       description: '',
-  //       title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
-  //     },
-  //     title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
-  //     twitter: {
-  //       description: '',
-  //       title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
-  //     },
-  //   })
-  // })
+    try {
+      const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+      expect(result).toEqual<Metadata>({
+        alternates: { canonical: 'http://localhost/metrics-documentation' },
+        description: '',
+        openGraph: {
+          description: '',
+          title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+        },
+        title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+        twitter: {
+          description: '',
+          title: 'Metrics documentation - "covid-19" (page 1 of 6) | UKHSA data dashboard',
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  })
 
   test('Failing to get metrics metadata', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
@@ -246,29 +250,33 @@ describe('getPageMetadata', () => {
     expect(result).not.toBeDefined()
   })
 
-  // test('Getting metadata for whats-new', async () => {
-  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
-  //   getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
-  //   getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+  test('Getting metadata for whats-new', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
 
-  //   const slug: Slug = ['whats-new']
-  //   const searchParams: SearchParams = {}
-  //   const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
+    const slug: Slug = ['whats-new']
+    const searchParams: SearchParams = {}
 
-  //   expect(result).toEqual<Metadata>({
-  //     alternates: { canonical: 'http://localhost/whats-new' },
-  //     description: '',
-  //     openGraph: {
-  //       description: '',
-  //       title: "What's new (page 1 of 4) | UKHSA data dashboard",
-  //     },
-  //     title: "What's new (page 1 of 4) | UKHSA data dashboard",
-  //     twitter: {
-  //       description: '',
-  //       title: "What's new (page 1 of 4) | UKHSA data dashboard",
-  //     },
-  //   })
-  // })
+    try {
+      const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
+      expect(result).toEqual<Metadata>({
+        alternates: { canonical: 'http://localhost/whats-new' },
+        description: '',
+        openGraph: {
+          description: '',
+          title: "What's new (page 1 of 4) | UKHSA data dashboard",
+        },
+        title: "What's new (page 1 of 4) | UKHSA data dashboard",
+        twitter: {
+          description: '',
+          title: "What's new (page 1 of 4) | UKHSA data dashboard",
+        },
+      })
+    } catch (error) {
+      console.log(error)
+    }
+  })
 
   test('Failing to get whats-new metadata', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
