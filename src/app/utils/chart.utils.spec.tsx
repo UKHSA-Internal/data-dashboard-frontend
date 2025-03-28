@@ -74,22 +74,3 @@ describe('Get timespan between dates for chart', () => {
     expect(timespan).toEqual({ years: 2, months: 1 })
   })
 })
-
-// describe('Get filtered data function', () => {
-//     test('no filter provided', () => {
-//         const data = {
-//             title: 'title',
-//             type: 'chart_with_headline_and_trend_card',
-//             id: 'test',
-//             value: {
-//                 topic: 'test',
-//                 metric: 'test',
-//                 chart_type: 'test',
-//                 date_from: '2024-02-01',
-//                 date_to: '2025-03-01',
-//             }
-//         }
-
-//         const filteredData = getFilteredData(data, null)
-//     })
-// })
