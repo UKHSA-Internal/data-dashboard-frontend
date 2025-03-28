@@ -13,7 +13,7 @@ To address this, we added a direct token revocation request to Cognito's `/revok
 
 Our current sign out flow:
 
-1. Revokes the refresh token with Cognito
+1. Revokes the access token and refresh token with Cognito
 2. Clears NextAuth.js session and cookies
 3. Redirects to the start page
 
