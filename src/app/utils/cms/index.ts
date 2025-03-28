@@ -25,8 +25,10 @@ export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
   } = pageData
 
   const cmsSlug = getPathSegments(url ?? '')
+  console.log('Error Source is ======= ', slug2String(cmsSlug) !== slug2String(urlSlug))
 
   if (slug2String(cmsSlug) !== slug2String(urlSlug)) {
+    logger.error(`Page not found from getPathSegments: ${slug2String(cmsSlug)} !== ${slug2String(urlSlug)}`)
     return notFound()
   }
   return pageData
@@ -55,7 +57,7 @@ export async function getPageMetadata(
       meta: { seo_title: seoTitle, search_description: description },
     } = pageData
 
-    console.log('PageData', pageData);
+    //console.log('PageData', pageData);
 
     let title = seoTitle ?? pageTitle
 
@@ -72,7 +74,7 @@ export async function getPageMetadata(
       const metricsEntries = await getMetricsPages({ search, page })
 
       if (!metricsEntries.success) {
-        logger.info(metricsEntries.error.message)
+        logger.info('Error here from MetricsEntries', metricsEntries.error.message)
         return notFound()
       }
 
@@ -106,7 +108,7 @@ export async function getPageMetadata(
       const whatsNewEntries = await getWhatsNewPages({ page })
 
       if (!whatsNewEntries.success) {
-        logger.error(whatsNewEntries.error.message)
+        logger.error('Error here from whatsNewEntries', whatsNewEntries.error.message)
         return notFound()
       }
 
@@ -122,7 +124,7 @@ export async function getPageMetadata(
         const totalPages = Math.ceil(totalItems / paginationSize) || 1
         title = showPagination ? seoTitle.replace('|', t('documentTitlePagination', { page, totalPages })) : seoTitle
       } catch (error) {
-        logger.error(error)
+        logger.error('Error here from GET PAGINATION SIZE', error)
       }
     }
 
@@ -142,7 +144,7 @@ export async function getPageMetadata(
       },
     }
   } catch (error) {
-    logger.error(error)
+    logger.error('Error here from getPageMetadata', error)
     notFound()
   }
 }
