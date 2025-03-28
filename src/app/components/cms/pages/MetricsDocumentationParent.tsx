@@ -38,9 +38,10 @@ export async function generateMetadata({
   const {
     meta: { seo_title, search_description },
     pagination_size: paginationSize,
-  } = await getPageBySlug<PageType.MetricsParent>('metrics-documentation', { type: PageType.MetricsParent })
+    show_pagination: showPagination,
+  } = await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page })
+  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
   if (!metricsEntries.success) {
     logger.info(metricsEntries.error.message)

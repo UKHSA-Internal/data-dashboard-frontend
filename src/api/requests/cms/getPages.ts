@@ -163,7 +163,7 @@ export const getMetricsPages = async ({
   showPagination,
   paginationSize = 1,
 }: GetMetricsPagesRequestParams) => {
-  const metricsDocumentationPageSize = showPagination ? paginationSize : -1
+  const metricsDocumentationPageSize = showPagination ? paginationSize : 1
 
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.MetricsChild)
