@@ -19,15 +19,14 @@ import { logger } from '@/lib/logger'
 import { getAuthApiBaseUrl } from '../helpers'
 
 export async function signOut(options?: { redirectTo?: string; redirect?: true }) {
+  const session = await auth()
+
+  if (!session?.refreshToken) {
+    logger.warn('No refresh token available during sign out')
+    return nextAuthSignOut(options)
+  }
+
   try {
-    const session = await auth()
-
-    if (!session?.refreshToken) {
-      logger.warn('No refresh token available during sign out')
-      await nextAuthSignOut(options)
-      return
-    }
-
     const revokeResponse = await fetch(`${getAuthApiBaseUrl()}/revoke`, {
       method: 'POST',
       headers: {
@@ -46,15 +45,12 @@ export async function signOut(options?: { redirectTo?: string; redirect?: true }
 
     if (!revokeResponse.ok) {
       const errorData = await revokeResponse.json()
-      logger.error('Error revoking token:', errorData)
-      throw new Error('Failed to revoke token')
+      logger.error(`Error revoking token: ${JSON.stringify(errorData)}`)
     }
-
-    // Only proceed with NextAuth sign out if token revocation was successful
-    await nextAuthSignOut(options)
   } catch (error) {
-    logger.error('Error during sign out:', error)
-    // Even if there's an error, try to clear the NextAuth session
-    await nextAuthSignOut(options)
+    logger.error(`Error during token revocation: ${error instanceof Error ? error.message : String(error)}`)
   }
+
+  // Always attempt to clear NextAuth session, regardless of token revocation success
+  return nextAuthSignOut(options)
 }

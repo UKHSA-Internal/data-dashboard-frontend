@@ -1,17 +1,20 @@
+import type { Session } from 'next-auth'
+
 import { auth, signOut as nextAuthSignOut } from '@/auth'
 import { logger } from '@/lib/logger'
 
-import { getAuthApiBaseUrl } from '../../helpers'
-import { signOut } from '../signOut'
+import { getAuthApiBaseUrl } from '../helpers'
+import { signOut } from './signOut'
 
+// Mock dependencies
 jest.mock('@/auth')
 jest.mock('@/lib/logger')
-jest.mock('../../helpers')
+jest.mock('../helpers')
 
 describe('signOut', () => {
   const mockSession = {
     refreshToken: 'mock-refresh-token',
-  }
+  } satisfies Partial<Session>
 
   const mockOptions = {
     redirectTo: '/test',
@@ -20,14 +23,15 @@ describe('signOut', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-    ;(getAuthApiBaseUrl as jest.Mock).mockReturnValue('https://test-cognito.com')
+    jest.mocked(getAuthApiBaseUrl).mockReturnValue('https://test-cognito.com')
     process.env.AUTH_CLIENT_ID = 'test-client-id'
     process.env.AUTH_CLIENT_SECRET = 'test-client-secret'
   })
 
   it('should successfully revoke token and clear NextAuth session', async () => {
     // Mock successful auth session
-    ;(auth as jest.Mock).mockResolvedValue(mockSession)
+    const mockedAuth = jest.mocked(auth) as unknown as jest.MockedFunction<() => Promise<Session>>
+    mockedAuth.mockResolvedValue(mockSession as Session)
 
     // Mock successful fetch response
     global.fetch = jest.fn().mockResolvedValue({
@@ -56,7 +60,8 @@ describe('signOut', () => {
 
   it('should handle missing refresh token gracefully', async () => {
     // Mock session without refresh token
-    ;(auth as jest.Mock).mockResolvedValue({})
+    const mockedAuth = jest.mocked(auth) as unknown as jest.MockedFunction<() => Promise<Session>>
+    mockedAuth.mockResolvedValue({} as Session)
 
     await signOut(mockOptions)
 
@@ -72,7 +77,8 @@ describe('signOut', () => {
 
   it('should handle token revocation failure gracefully', async () => {
     // Mock successful auth session
-    ;(auth as jest.Mock).mockResolvedValue(mockSession)
+    const mockedAuth = jest.mocked(auth) as unknown as jest.MockedFunction<() => Promise<Session>>
+    mockedAuth.mockResolvedValue(mockSession as Session)
 
     // Mock failed fetch response
     const mockError = { error: 'Revocation failed' }
@@ -84,7 +90,7 @@ describe('signOut', () => {
     await signOut(mockOptions)
 
     // Verify error was logged
-    expect(logger.error).toHaveBeenCalledWith('Error revoking token:', mockError)
+    expect(logger.error).toHaveBeenCalledWith(`Error revoking token: ${JSON.stringify(mockError)}`)
 
     // Verify NextAuth signOut was still called
     expect(nextAuthSignOut).toHaveBeenCalledWith(mockOptions)
@@ -92,7 +98,8 @@ describe('signOut', () => {
 
   it('should handle fetch errors gracefully', async () => {
     // Mock successful auth session
-    ;(auth as jest.Mock).mockResolvedValue(mockSession)
+    const mockedAuth = jest.mocked(auth) as unknown as jest.MockedFunction<() => Promise<Session>>
+    mockedAuth.mockResolvedValue(mockSession as Session)
 
     // Mock fetch error
     const mockError = new Error('Network error')
@@ -101,7 +108,7 @@ describe('signOut', () => {
     await signOut(mockOptions)
 
     // Verify error was logged
-    expect(logger.error).toHaveBeenCalledWith('Error during sign out:', mockError)
+    expect(logger.error).toHaveBeenCalledWith(`Error during token revocation: ${mockError.message}`)
 
     // Verify NextAuth signOut was still called
     expect(nextAuthSignOut).toHaveBeenCalledWith(mockOptions)
@@ -109,7 +116,8 @@ describe('signOut', () => {
 
   it('should work without options', async () => {
     // Mock successful auth session
-    ;(auth as jest.Mock).mockResolvedValue(mockSession)
+    const mockedAuth = jest.mocked(auth) as unknown as jest.MockedFunction<() => Promise<Session>>
+    mockedAuth.mockResolvedValue(mockSession as Session)
 
     // Mock successful fetch response
     global.fetch = jest.fn().mockResolvedValue({
