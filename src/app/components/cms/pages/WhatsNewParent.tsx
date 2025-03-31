@@ -19,14 +19,10 @@ import {
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
 import { View } from '@/app/components/ui/ukhsa'
-import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { logger } from '@/lib/logger'
-
-import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
-import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 export default async function WhatsNewParentPage({
   slug,
@@ -37,12 +33,14 @@ export default async function WhatsNewParentPage({
   const setReturnPath = getReturnPathWithParams()
 
   const {
-    title,
+    meta: { seo_title },
     body,
     last_updated_at: lastUpdated,
+    show_pagination: showPagination,
+    pagination_size: paginationSize,
   } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })
 
-  const whatsNewEntries = await getWhatsNewPages({ page })
+  const whatsNewEntries = await getWhatsNewPages({ page, showPagination, paginationSize })
 
   if (!whatsNewEntries.success) {
     logger.info(whatsNewEntries.error.message)
@@ -61,10 +59,20 @@ export default async function WhatsNewParentPage({
     },
   } = whatsNewEntries
 
+  const {
+    data: {
+      meta: { total_count: totalEntries },
+    },
+  } = whatsNewEntries
+
+  const totalPages = Math.ceil(totalEntries / paginationSize) || 1
+
+  const title = seo_title.replace('|', t('documentTitlePagination', { page, totalPages }))
+
   const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
     initialPage: page ?? 1,
-    initialPageSize: WHATS_NEW_PAGE_SIZE,
+    initialPageSize: paginationSize,
   })
 
   type Page = SafeParseSuccess<WhatsNewPagesResponse>['data']['items']
@@ -89,9 +97,7 @@ export default async function WhatsNewParentPage({
   )
 
   return (
-    <View>
-      <Heading heading={title} />
-      <LastUpdated lastUpdated={lastUpdated} />
+    <View heading={title} lastUpdated={lastUpdated}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
@@ -197,7 +203,7 @@ export default async function WhatsNewParentPage({
             })}
           </ul>
 
-          {pages.length > 0 && (
+          {pages.length > 0 && showPagination && (
             <Pagination variant="list-item" className="govuk-!-margin-top-8">
               {previousPageHref && <PaginationPrevious variant="list-item" href={previousPageHref} />}
 

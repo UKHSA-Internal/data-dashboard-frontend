@@ -2,7 +2,6 @@ import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
-import { WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
 
@@ -131,13 +130,22 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
 
 export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
 
-export const getWhatsNewPages = async ({ page = 1 }: { page: number | undefined }) => {
+export const getWhatsNewPages = async ({
+  page = 1,
+  showPagination,
+  paginationSize = 1,
+}: {
+  page: number | undefined
+  showPagination?: boolean
+  paginationSize?: number
+}) => {
+  const whatsNewPageSize = showPagination ? paginationSize : 1000 // set large value for when pagination is disabled
   const searchParams = new URLSearchParams()
   searchParams.set('type', PageType.WhatsNewChild)
   searchParams.set('fields', '*')
   searchParams.set('order', '-date_posted')
-  searchParams.set('limit', String(WHATS_NEW_PAGE_SIZE))
-  searchParams.set('offset', String(calculatePageOffset(page, WHATS_NEW_PAGE_SIZE)))
+  searchParams.set('limit', String(whatsNewPageSize))
+  searchParams.set('offset', String(calculatePageOffset(page, paginationSize)))
 
   try {
     const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams })
