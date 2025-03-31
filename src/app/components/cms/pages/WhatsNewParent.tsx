@@ -33,7 +33,7 @@ export default async function WhatsNewParentPage({
   const setReturnPath = getReturnPathWithParams()
 
   const {
-    meta: { seo_title },
+    title,
     body,
     last_updated_at: lastUpdated,
     show_pagination: showPagination,
@@ -58,16 +58,6 @@ export default async function WhatsNewParentPage({
       meta: { total_count: totalItems },
     },
   } = whatsNewEntries
-
-  const {
-    data: {
-      meta: { total_count: totalEntries },
-    },
-  } = whatsNewEntries
-
-  const totalPages = Math.ceil(totalEntries / paginationSize) || 1
-
-  const title = seo_title.replace('|', t('documentTitlePagination', { page, totalPages }))
 
   const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
