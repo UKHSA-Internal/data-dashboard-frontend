@@ -26,7 +26,7 @@ export const whatsNewParentMock: PageResponse<PageType.WhatsNewParent> = {
     },
   },
   show_pagination: true,
-  pagination_size: 20,
+  pagination_size: 10,
   seo_change_frequency: 4,
   seo_priority: 0.7,
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
