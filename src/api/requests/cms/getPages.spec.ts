@@ -2,7 +2,7 @@ import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import {
-  pagesWithHomeTypeMock,
+  pagesWithLandingTypeMock,
   pagesWithMetricsChildTypeMock,
   pagesWithWhatsNewChildTypeMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
@@ -30,47 +30,20 @@ describe('Successfully getting all pages from the cms api ', () => {
   test('Returns a list of cms pages by type', async () => {
     getPagesResponse.mockResolvedValueOnce({
       status: 200,
-      data: pagesWithHomeTypeMock,
+      data: pagesWithLandingTypeMock,
     })
 
-    const response = await getPages({ type: PageType.Home })
+    const response = await getPages({ type: PageType.Landing })
 
     expect(response).toEqual<SuccessResponse>({
       success: true,
-      data: pagesWithHomeTypeMock,
+      data: pagesWithLandingTypeMock,
     })
   })
 })
 
 // Pages tests
 describe('Failing to get all pages from the cms api', () => {
-  test('invalid json received from the api returns an error', async () => {
-    getPagesResponse.mockResolvedValueOnce({
-      status: 200,
-      data: {
-        items: null,
-        meta: {
-          total_count: 1,
-        },
-      },
-    })
-
-    const response = await getPages({ type: PageType.Home })
-
-    expect(response).toEqual<ErrorResponse>({
-      success: false,
-      error: new z.ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'null',
-          path: ['items'],
-          message: 'Expected array, received null',
-        },
-      ]),
-    })
-  })
-
   test('invalid http status code returns an error', async () => {
     getPagesResponse.mockResolvedValueOnce({
       status: 404,

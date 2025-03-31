@@ -19,7 +19,7 @@ import { mapQueryKeys } from '@/app/constants/map.constants'
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import { useTranslation } from '@/app/i18n/client'
 import { toSlug } from '@/app/utils/app.utils'
-import { getTagVariantFromStatus } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 import { clsx } from '@/lib/clsx'
 
 const DialogSkeleton = () => (
@@ -73,8 +73,14 @@ const AlertDialogContent = () => {
             <SummaryListRow>
               <SummaryListKey>{t('map.alertDialog.statusKey')}</SummaryListKey>
               <SummaryListValue>
-                <div className={clsx(`govuk-tag capitalize`, getTagVariantFromStatus(status))}>
-                  {status.toLowerCase()}
+                <div
+                  className={clsx(
+                    `govuk-tag capitalize`,
+                    getTextColourCssFromColour(status),
+                    getTailwindBackgroundFromColour(status)
+                  )}
+                >
+                  {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status.toLowerCase() })}
                 </div>
               </SummaryListValue>
             </SummaryListRow>
@@ -118,7 +124,7 @@ export default function HealthAlertControl() {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
 
   return (
-    <Control position="topleft">
+    <Control position="bottomleft">
       <Sheet
         open={Boolean(selectedFeatureId)}
         onOpenChange={(open) => {

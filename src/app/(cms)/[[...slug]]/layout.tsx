@@ -8,10 +8,11 @@ import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
-import { flags } from '@/app/constants/flags.constants'
+import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { getFeatureFlag } from '@/app/utils/flags.utils'
+import { getLandingPage } from '@/app/utils/cms'
+import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   children: ReactNode
@@ -19,17 +20,15 @@ interface LayoutProps {
 }
 
 export default async function Layout({ children, params }: LayoutProps) {
-  const [{ t }, { enabled: landingPageHeroEnabled }, globalBanner] = await Promise.all([
-    getServerTranslation('common'),
-    getFeatureFlag(flags.landingPageHero),
-    getGlobalBanner(),
-  ])
+  const [{ t }, globalBanner] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
 
-  const onHomePage = landingPageHeroEnabled && !params?.slug
+  const onLandingPage = !params?.slug
+
+  const { sub_title: subTitle } = await getLandingPage()
 
   return (
     <>
-      <header className={clsx('govuk-header border-none', { 'bg-blue': onHomePage })} data-module="govuk-header">
+      <header className={clsx('govuk-header border-none', { 'bg-blue': onLandingPage })} data-module="govuk-header">
         <div className="relative">
           <div className="govuk-width-container relative flow-root">
             <div className="govuk-header__logo govuk-!-padding-top-2">
@@ -49,7 +48,7 @@ export default async function Layout({ children, params }: LayoutProps) {
                 </svg>
               </Link>
             </div>
-            {onHomePage ? null : (
+            {onLandingPage ? null : (
               <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
                 <Link href="/" className="govuk-header__link govuk-header__service-name">
                   {t('serviceTitle')}
@@ -60,13 +59,13 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       </header>
 
-      <TopNav>
+      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
         <MegaMenu />
       </TopNav>
 
-      {onHomePage ? <HeroBanner /> : <div className="govuk-width-container h-2 bg-blue" />}
+      {onLandingPage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container h-2 bg-blue" />}
 
-      {!onHomePage ? (
+      {!onLandingPage ? (
         <div className="govuk-width-container print:hidden">
           <PhaseBanner tag={t('feedbackBannerPhase')}>
             <Trans i18nKey="feedbackBanner" t={t}>

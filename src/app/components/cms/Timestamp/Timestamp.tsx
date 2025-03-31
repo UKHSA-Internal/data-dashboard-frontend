@@ -21,7 +21,7 @@ interface TimestampProps {
 export async function Timestamp({ data, size }: TimestampProps) {
   const { t } = await getServerTranslation('common')
 
-  const { chart, x_axis, y_axis } = data
+  const { chart, x_axis, y_axis, date_prefix: datePrefix } = data
 
   const plots = chart.map((plot) => plot.value)
 
@@ -40,7 +40,7 @@ export async function Timestamp({ data, size }: TimestampProps) {
 
     return (
       <h4 className="govuk-body-s govuk-!-margin-bottom-0 text-dark-grey">
-        {t('cms.blocks.timestamp.value', { value: lastUpdated })}
+        {t('cms.blocks.timestamp.value', { prefix: datePrefix, value: lastUpdated })}
       </h4>
     )
   }

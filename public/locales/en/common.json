@@ -8,6 +8,8 @@
   "lastUpdated": "Last updated on {{value, date}} at {{value, time}}",
   "feedbackBanner": "<0>This is a new service - your <0>feedback</0> will help us to improve it.</0>",
   "feedbackBannerPhase": "Beta",
+  "heroBannerTitle": "UKHSA data dashboard",
+  "heroBannerAboutLink": "What is the UKHSA data dashboard?",
   "backLink": "Back",
   "downloadBtn": "Download",
   "downloadingBtn": "Downloading...",
@@ -56,7 +58,7 @@
         }
       },
       "timestamp": {
-        "value": "Up to and including {{value, dateShort}}"
+        "value": "{{prefix}} {{value, dateShortest}}"
       },
       "table": {
         "toggle": "View data in a tabular format",
@@ -87,7 +89,17 @@
       },
       "chart": {
         "alt": "{{- body}} - Refer to tabular data."
+      },
+      "about": {
+        "relatedLinks": "Related Links"
       }
+    },
+    "dropdown": {
+      "chartLabel": "Chart",
+      "downloadLabel": "Download",
+      "tableLabel": "Tabular Data",
+      "aboutLabel": "About",
+      "selectLabel": "Choose display option for '{{chartTitle}}' data"
     }
   },
   "cookieBanner": {

@@ -13,35 +13,59 @@ export const WithText = z.object({
   body: z.string(),
 })
 
+export const ChartRelatedLinks = z.array(
+  z.object({
+    type: z.literal('related_link'),
+    id: z.string(),
+    value: z.object({
+      link: z.string(),
+      link_display_text: z.string(),
+    }),
+  })
+)
+
+export type ChartRelatedLink = z.infer<typeof ChartRelatedLinks>
+
 export const WithWeatherHealthAlertCard = z.object({
   title: z.string(),
   sub_title: z.string(),
   alert_type: HealthAlertTypes,
 })
 
-export const WithHeadlineNumbersRowCard = z.object({
+const WithHeadlineNumbersRowCard = z.object({
   columns: z.array(
     z.object({
       id: z.string(),
       type: z.literal('column'),
       value: z.object({
         title: z.string(),
+        date_prefix: z.string(),
         rows: Blocks,
       }),
     })
   ),
 })
 
+const chartCardValues = z.object({
+  title: z.string(),
+  chart: Chart,
+  body: z.string(),
+  related_links: ChartRelatedLinks.optional(),
+  tag_manager_event_id: z.string().nullable(),
+  x_axis: z.string().nullable(),
+  y_axis: z.string().nullable(),
+  x_axis_title: z.string().optional(),
+  y_axis_title: z.string().optional(),
+  y_axis_minimum_value: z.number().nullable().optional(),
+  y_axis_maximum_value: z.number().nullable().optional(),
+  date_prefix: z.string(),
+  about: z.string(),
+})
+
 export const WithChartHeadlineAndTrendCard = z.object({
-  type: z.literal('chart_with_headline_and_trend_card'),
   id: z.string(),
-  value: z.object({
-    title: z.string(),
-    body: z.string(),
-    chart: Chart,
-    tag_manager_event_id: z.string().nullable(),
-    x_axis: z.string().nullable(),
-    y_axis: z.string().nullable(),
+  type: z.literal('chart_with_headline_and_trend_card'),
+  value: chartCardValues.extend({
     headline_number_columns: Blocks,
   }),
 })
@@ -49,29 +73,25 @@ export const WithChartHeadlineAndTrendCard = z.object({
 export const WithChartCard = z.object({
   id: z.string(),
   type: z.enum(['chart_card', 'headline_chart_card']),
-  value: z.object({
-    title: z.string(),
-    body: z.string(),
-    chart: Chart,
-    tag_manager_event_id: z.string().nullable(),
-    x_axis: z.string().nullable(),
-    y_axis: z.string().nullable(),
-  }),
+  value: chartCardValues,
 })
 
-export const WithSimplifiedChartCardAndLink = z.object({
+const WithSimplifiedChartCardAndLink = z.object({
   id: z.string(),
   type: z.enum(['simplified_chart_with_link']),
-  value: z.object({
-    title: z.string(),
-    sub_title: z.string(),
-    tag_manager_event_id: z.string().nullable(),
-    topic_page: z.string(),
-    x_axis: z.string().nullable(),
-    y_axis: z.string().nullable(),
-    chart: Chart,
-  }),
+  value: chartCardValues
+    .extend({
+      sub_title: z.string(),
+      topic_page: z.string(),
+    })
+    .omit({ body: true, date_prefix: true, about: true }),
 })
+
+export const ChartCardSchemas = z.discriminatedUnion('type', [
+  WithChartHeadlineAndTrendCard,
+  WithChartCard,
+  WithSimplifiedChartCardAndLink,
+])
 
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({

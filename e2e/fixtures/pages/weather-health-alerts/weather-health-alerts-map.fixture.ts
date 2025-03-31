@@ -34,6 +34,28 @@ export class WeatherHealthAlertsMapPage {
     await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
   }
 
+  async hasMapKey() {
+    await expect(this.page.getByTestId('map-key')).toBeVisible()
+  }
+
+  async hasUKHSALogo() {
+    await expect(this.page.getByTestId('logo-layer')).toBeVisible()
+  }
+
+  async hasDisplayKeyButton() {
+    await expect(this.page.getByRole('button', { name: 'Display key' })).toBeVisible()
+  }
+
+  async mapKeyCanBeMinimised() {
+    await expect(this.page.getByTestId('close-key-button')).toBeVisible()
+    await this.page.getByTestId('close-key-button').click()
+  }
+
+  async clickDisplayKeyButton() {
+    await expect(this.page.getByRole('button', { name: 'Display key' })).toBeVisible()
+    await this.page.getByRole('button', { name: 'Display key' }).click()
+  }
+
   async hasButton(name: ButtonNames) {
     await expect(this.page.getByRole('button', { name })).toBeVisible()
   }
@@ -117,19 +139,32 @@ export class WeatherHealthAlertsMapPage {
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
   }
 
   async zoomInWithKeyboard() {
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Enter')
+    await this.page.keyboard.press('Enter')
+  }
+  async zoomOutWithKeyboard() {
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
     await this.page.keyboard.press('Enter')
   }
 
-  async zoomOutWithKeyboard() {
+  async closeKeyWithKeyboard() {
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
+  }
+
+  async openKeyWithKeyboard() {
+    await this.page.keyboard.press('Tab')
+    await this.page.keyboard.press('Tab')
     await this.page.keyboard.press('Enter')
   }
 

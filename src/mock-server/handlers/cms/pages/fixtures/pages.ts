@@ -8,7 +8,6 @@ import {
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
-  dashboardMock,
   feedbackMock,
   influenzaPageMock,
   landingPageMock,
@@ -21,29 +20,6 @@ import {
 } from './page'
 import { accessOurDataChildMocks, accessOurDataParentMock } from './page/access-our-data'
 import { weatherHealthAlertsChildMocks, weatherHealthAlertsParentMock } from './page/weather-health-alerts'
-
-export const pagesWithHomeTypeMock: PagesResponse = {
-  meta: {
-    total_count: 1,
-  },
-  items: [
-    {
-      id: dashboardMock.id,
-      meta: {
-        type: dashboardMock.meta.type,
-        detail_url: dashboardMock.meta.detail_url,
-        html_url: dashboardMock.meta.html_url,
-        slug: dashboardMock.meta.slug,
-        search_description: dashboardMock.meta.search_description,
-        show_in_menus: dashboardMock.meta.show_in_menus,
-        first_published_at: dashboardMock.meta.first_published_at,
-      },
-      seo_change_frequency: dashboardMock.seo_change_frequency,
-      seo_priority: dashboardMock.seo_priority,
-      title: dashboardMock.title,
-    },
-  ],
-}
 
 export const pagesWithLandingTypeMock: PagesResponse = {
   meta: {
@@ -460,7 +436,6 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
 }
 
 const items = [
-  ...pagesWithHomeTypeMock.items,
   ...pagesWithLandingTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithCompositeTypeMock.items,

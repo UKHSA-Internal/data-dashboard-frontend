@@ -1,14 +1,12 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-import { relatedLinksMock } from '../elements/related-links'
-
-export const dashboardMock: PageResponse<PageType.Home> = {
+export const dashboardMock: PageResponse<PageType.Landing> = {
   id: 4,
   meta: {
     seo_title: 'UKHSA data dashboard',
     search_description: 'Overall summary of the respiratory viruses in circulation within the UK',
-    type: 'home.HomePage',
+    type: 'home.LandingPage',
     detail_url: 'http://localhost/api/pages/4/',
     html_url: 'http://localhost/',
     slug: 'dashboard',
@@ -18,7 +16,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
     parent: {
       id: 3,
       meta: {
-        type: 'home.HomePage',
+        type: 'home.LandingPage',
         detail_url: 'http://localhost:3000/api/pages/3/',
         html_url: null,
       },
@@ -29,8 +27,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
   seo_priority: 1,
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'UKHSA data dashboard',
-  page_description:
-    '<p data-block-key="sud2w">The UKHSA data dashboard shows public health data across England. It builds on the success and is an iteration of the <a href="https://coronavirus.data.gov.uk/">COVID-19 in the UK dashboard</a>.</p><p data-block-key="dj8jt">Initially, the dashboard presents data on respiratory viruses. In the future, it will grow to present a wider range of data on public health topics in line with the remit of the UKHSA. Find out more <a id="8" linktype="page">about the UKHSA data dashboard</a>.</p><p data-block-key="21gee"><b>The UKHSA data dashboard is still undergoing statistical review. For reporting and analytical purposes, use the</b> <a href="https://coronavirus.data.gov.uk/"><b>COVID-19 dashboard</b></a><b> and the</b> <a href="https://www.gov.uk/government/statistics/national-flu-and-covid-19-surveillance-reports-2023-to-2024-season"><b>weekly surveillance report</b></a><b>.</b></p>',
+  sub_title: '',
   body: [
     {
       type: 'section',
@@ -47,128 +44,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
           {
             type: 'headline_numbers_row_card',
             value: {
-              columns: [
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Cases',
-                    rows: [
-                      {
-                        type: 'headline_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_newcases_7daytotals',
-                          body: 'Weekly',
-                        },
-                        id: 'eff08341-7bfa-4a3b-b013-527e7b954ce8',
-                      },
-                      {
-                        type: 'trend_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_newcases_7daychange',
-                          body: 'Last 7 days',
-                          percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
-                        },
-                        id: 'a57a4ad5-6b52-45a6-acfd-2fe208cb5617',
-                      },
-                    ],
-                  },
-                  id: 'ff081d2a-e235-4bc2-9b09-220f8fe20494',
-                },
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Deaths',
-                    rows: [
-                      {
-                        type: 'headline_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_ONSdeaths_7daytotals',
-                          body: 'Weekly',
-                        },
-                        id: '2e403485-030c-4122-86be-5827a095f30d',
-                      },
-                      {
-                        type: 'trend_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_ONSdeaths_7daychange',
-                          body: 'Last 7 days',
-                          percentage_metric: 'COVID-19_headline_ONSdeaths_7daypercentchange',
-                        },
-                        id: 'ea8603ca-7b4d-4ef5-a8b1-f27a565938b5',
-                      },
-                    ],
-                  },
-                  id: '530cf367-092c-40d1-9129-c2274c7836b9',
-                },
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Healthcare',
-                    rows: [
-                      {
-                        type: 'headline_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_7DayAdmissions',
-                          body: 'Patients admitted',
-                        },
-                        id: '2f49a215-02e7-4ded-94b1-1a0c2933708b',
-                      },
-                      {
-                        type: 'trend_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_7DayAdmisionsChange',
-                          body: 'Last 7 days',
-                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
-                        },
-                        id: '6c09d01e-82c5-425f-aa07-1bdd22d1eaa8',
-                      },
-                    ],
-                  },
-                  id: 'fad2e89a-8a65-44a8-b962-9df59169c0af',
-                },
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Vaccines',
-                    rows: [
-                      {
-                        type: 'headline_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_totalvaccines_spring23',
-                          body: 'Autumn booster',
-                        },
-                        id: 'ae3344f7-5b23-4977-bea9-2e1ccd84eb50',
-                      },
-                    ],
-                  },
-                  id: '93b6367b-fbb3-47e8-96db-f724d947fa00',
-                },
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Testing',
-                    rows: [
-                      {
-                        type: 'percentage_number',
-                        value: {
-                          topic: 'COVID-19',
-                          metric: 'COVID-19_headline_positivity_latest',
-                          body: 'Virus tests positivity',
-                        },
-                        id: '36746bcd-1dce-4e5e-81f8-60c8b9994540',
-                      },
-                    ],
-                  },
-                  id: '1e3bf214-88e4-4cf4-9b78-3ad7eabb2eaa',
-                },
-              ],
+              columns: [],
             },
             id: 'e285caf4-ae79-4c76-bcb7-426d6e66cb8a',
           },
@@ -182,6 +58,8 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                     title: 'Cases',
                     body: 'Positive tests reported in England',
                     tag_manager_event_id: 'positive_tests_reported_in_england',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -235,6 +113,8 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                     title: 'Deaths',
                     body: 'Deaths with COVID-19 on the death certificate in England',
                     tag_manager_event_id: 'deaths_with_covid-19_on_death_certificate',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -302,50 +182,7 @@ export const dashboardMock: PageResponse<PageType.Home> = {
             },
             id: '53fcc358-f10d-411d-9bd0-9acb3c4d3aae',
           },
-          {
-            type: 'headline_numbers_row_card',
-            value: {
-              columns: [
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Healthcare',
-                    rows: [
-                      {
-                        type: 'headline_number',
-                        value: {
-                          topic: 'Influenza',
-                          metric: 'influenza_headline_ICUHDUadmissionrateLatest',
-                          body: 'Hospital admission rate (per 100,000)',
-                        },
-                        id: '0520e9d6-794f-4616-b217-f5ec884a86d8',
-                      },
-                    ],
-                  },
-                  id: '0da002a7-d985-417c-b75c-9a4c8a77fa8e',
-                },
-                {
-                  type: 'column',
-                  value: {
-                    title: 'Testing',
-                    rows: [
-                      {
-                        type: 'percentage_number',
-                        value: {
-                          topic: 'Influenza',
-                          metric: 'influenza_headline_positivityLatest',
-                          body: 'Virus tests positivity',
-                        },
-                        id: '36ec8822-56e2-4513-ac8f-969e84f0d5e8',
-                      },
-                    ],
-                  },
-                  id: 'e57ed33f-658a-40be-bfdb-6fa12ee62512',
-                },
-              ],
-            },
-            id: '06e1f087-dc2c-42ea-873f-0b1fb1f1b12e',
-          },
+
           {
             type: 'chart_row_card',
             value: {
@@ -356,6 +193,8 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                     title: 'Healthcare',
                     body: 'Weekly hospital admission rates for Influenza',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -399,6 +238,8 @@ export const dashboardMock: PageResponse<PageType.Home> = {
                     title: 'Testing',
                     body: 'Weekly positivity',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: '',
                     y_axis: '',
                     chart: [
@@ -435,7 +276,5 @@ export const dashboardMock: PageResponse<PageType.Home> = {
       id: '4c03dd17-a62b-4102-a938-557c60d38d9a',
     },
   ],
-  related_links: relatedLinksMock,
-  related_links_layout: 'Footer',
   last_published_at: '2023-05-10T15:18:06.939535+01:00',
 }

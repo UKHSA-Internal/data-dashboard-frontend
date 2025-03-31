@@ -20,9 +20,9 @@ describe('Data request is successful', () => {
   test('renders a heading, date and percentage', async () => {
     getHeadlinesMock.mockResolvedValueOnce({ success: true, data: { value: 50.5, period_end: '2023-11-03' } })
 
-    const { getByText } = render((await Percentage({ data })) as ReactElement)
+    const { getByText } = render((await Percentage({ data, datePrefix: 'Date prefix test' })) as ReactElement)
     const headingElement = getByText('Test Heading')
-    const dateElement = getByText('Up to 3 Nov 2023')
+    const dateElement = getByText('Date prefix test 3 Nov 2023')
     const valueElement = getByText('50.5%')
 
     expect(headingElement).toBeInTheDocument()
@@ -33,7 +33,7 @@ describe('Data request is successful', () => {
   test('formats the percentage to two decimal places', async () => {
     getHeadlinesMock.mockResolvedValueOnce({ success: true, data: { value: 55.3846, period_end: '2023-11-03' } })
 
-    const { getByText } = render((await Percentage({ data })) as ReactElement)
+    const { getByText } = render((await Percentage({ data, datePrefix: '' })) as ReactElement)
     const headingElement = getByText('Test Heading')
     const valueElement = getByText('55.38%')
 
@@ -44,7 +44,7 @@ describe('Data request is successful', () => {
   test('hides the date within chart cards', async () => {
     getHeadlinesMock.mockResolvedValueOnce({ success: true, data: { value: 50.5, period_end: '2023-11-03' } })
 
-    const { getByText } = render((await Percentage({ data })) as ReactElement)
+    const { getByText } = render((await Percentage({ data, datePrefix: 'Up to' })) as ReactElement)
     const dateElement = getByText('Up to 3 Nov 2023')
     expect(dateElement).toHaveClass('[.ukhsa-chart-card_&]:hidden')
   })
@@ -71,7 +71,7 @@ describe('Data request is unsuccessful', () => {
       body: 'Test Heading',
     }
 
-    const { container } = render((await Percentage({ data })) as ReactElement)
+    const { container } = render((await Percentage({ data, datePrefix: '' })) as ReactElement)
 
     expect(container.firstChild).toBeNull()
   })

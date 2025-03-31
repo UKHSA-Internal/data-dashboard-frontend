@@ -2,7 +2,18 @@ export const featureFlags = {
   version: 2,
   features: [
     {
-      name: 'landing-page-hero',
+      name: 'mock-feature-flag',
+      type: 'release',
+      enabled: false,
+      project: 'default',
+      stale: false,
+      strategies: [],
+      variants: [],
+      description: null,
+      impressionData: false,
+    },
+    {
+      name: 'example-flag',
       type: 'release',
       enabled: false,
       project: 'default',

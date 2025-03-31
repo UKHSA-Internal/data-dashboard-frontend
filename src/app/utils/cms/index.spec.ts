@@ -18,7 +18,7 @@ import {
 } from '@/mock-server/handlers/cms/pages/fixtures/page'
 import {
   pagesWithCompositeTypeMock,
-  pagesWithHomeTypeMock,
+  pagesWithLandingTypeMock,
   pagesWithMetricsChildTypeMock,
   pagesWithMetricsParentTypeMock,
   pagesWithTopicTypeMock,
@@ -27,7 +27,6 @@ import {
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import {
-  getHomePage,
   getPageById,
   getPageMetadata,
   getPagesByContentType,
@@ -41,13 +40,14 @@ const getPages = jest.mocked(client)
 
 beforeEach(() => {
   jest.clearAllMocks()
+  console.error = jest.fn()
 })
 
 describe('validateUrlWithCms', () => {
-  test('Homepage url', async () => {
+  test('Landing page url', async () => {
     getPages.mockResolvedValueOnce({
       status: 200,
-      data: pagesWithHomeTypeMock,
+      data: pagesWithLandingTypeMock,
     })
     getPage.mockResolvedValueOnce({
       status: 200,
@@ -55,9 +55,9 @@ describe('validateUrlWithCms', () => {
     })
 
     const slug: Slug = []
-    const result = await validateUrlWithCms(slug, PageType.Home)
+    const result = await validateUrlWithCms(slug, PageType.Landing)
 
-    expect(result).toEqual<PageResponse<PageType.Home>>(dashboardMock)
+    expect(result).toEqual<PageResponse<PageType.Landing>>(dashboardMock)
   })
 
   test('Root level page', async () => {
@@ -118,10 +118,10 @@ describe('validateUrlWithCms', () => {
 })
 
 describe('getPageMetadata', () => {
-  test('Getting metadata for the home page', async () => {
+  test('Getting metadata for the Landing page', async () => {
     getPages.mockResolvedValueOnce({
       status: 200,
-      data: pagesWithHomeTypeMock,
+      data: pagesWithLandingTypeMock,
     })
     getPage.mockResolvedValueOnce({
       status: 200,
@@ -130,7 +130,7 @@ describe('getPageMetadata', () => {
 
     const slug: Slug = []
     const searchParams: SearchParams = {}
-    const result = await getPageMetadata(slug, searchParams, PageType.Home)
+    const result = await getPageMetadata(slug, searchParams, PageType.Landing)
 
     expect(result).toEqual<Metadata>({
       alternates: { canonical: 'http://localhost' },
@@ -323,61 +323,6 @@ describe('getPageTypeBySlug', () => {
   })
 })
 
-describe('getHomePage', () => {
-  describe('Successfully getting the home page from the API', () => {
-    test('returns page successfully', async () => {
-      getPages.mockResolvedValueOnce({
-        status: 200,
-        data: pagesWithHomeTypeMock,
-      })
-      getPage.mockResolvedValueOnce({
-        status: 200,
-        data: dashboardMock,
-      })
-      const result = await getHomePage()
-
-      expect(result).toEqual(dashboardMock)
-    })
-  })
-
-  describe('Failing to get the home page from the API', () => {
-    test('getting the page from the API fails with a server error', async () => {
-      getPages.mockRejectedValueOnce({
-        success: false,
-        data: null,
-        error: 'API call failed',
-      })
-      const result = await getHomePage()
-
-      expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
-      expect(notFound).toHaveBeenCalledTimes(2)
-
-      expect(result).not.toBeDefined()
-    })
-
-    test('getting the page from the API fails due to no home page existing within the root', async () => {
-      getPages.mockResolvedValueOnce({
-        status: 200,
-        data: {
-          ...pagesWithHomeTypeMock,
-          items: [
-            {
-              ...pagesWithHomeTypeMock.items[0],
-              title: 'UKHSA Dashboard Root',
-            },
-          ],
-        },
-      })
-      const result = await getHomePage()
-
-      expect(logger.error).toHaveBeenCalledWith(new Error('No homepage matches found'))
-      expect(notFound).toHaveBeenCalledTimes(1)
-
-      expect(result).not.toBeDefined()
-    })
-  })
-})
-
 describe('getParentPage', () => {
   describe('Successfully getting the parent page for a given page', () => {
     test('returns page successfully', async () => {
@@ -403,12 +348,12 @@ describe('getPagesByContentType', () => {
     test('returns page successfully', async () => {
       getPages.mockResolvedValueOnce({
         status: 200,
-        data: pagesWithHomeTypeMock,
+        data: pagesWithLandingTypeMock,
       })
 
-      const result = await getPagesByContentType(PageType.Home)
+      const result = await getPagesByContentType(PageType.Landing)
 
-      expect(result).toEqual(pagesWithHomeTypeMock)
+      expect(result).toEqual(pagesWithLandingTypeMock)
     })
   })
 
@@ -420,7 +365,7 @@ describe('getPagesByContentType', () => {
         error: 'API call failed',
       })
 
-      const result = await getPagesByContentType(PageType.Home)
+      const result = await getPagesByContentType(PageType.Landing)
 
       expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
       expect(notFound).toHaveBeenCalledTimes(1)

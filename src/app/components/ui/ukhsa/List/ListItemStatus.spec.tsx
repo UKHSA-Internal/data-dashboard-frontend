@@ -84,18 +84,15 @@ describe('renders correct tag', () => {
   test('renders green tag', () => {
     const { getByText } = render(<ListItemStatusTag type="heat" level="Green" region="East of England" />)
 
-    expect(getByText('Green')).toHaveClass('govuk-tag--green')
-    expect(getByText('Green')).toHaveAttribute(
-      'aria-label',
-      'There is currently a Green heat alert status for East of England'
-    )
+    expect(getByText('No alert')).toHaveClass('bg-green')
+    expect(getByText('No alert')).toHaveAttribute('aria-label', 'There are currently no alerts for East of England')
   })
 
   test('renders yellow tag', () => {
     const { getByText } = render(<ListItemStatusTag type="heat" level="Yellow" region="South East" />)
 
-    expect(getByText('Yellow')).toHaveClass('govuk-tag--yellow')
-    expect(getByText('Yellow')).toHaveAttribute(
+    expect(getByText('yellow alert')).toHaveClass('bg-custard')
+    expect(getByText('yellow alert')).toHaveAttribute(
       'aria-label',
       'There is currently a Yellow heat alert status for South East'
     )
@@ -104,8 +101,8 @@ describe('renders correct tag', () => {
   test('renders amber tag', () => {
     const { getByText } = render(<ListItemStatusTag type="cold" level="Amber" region="West Midlands" />)
 
-    expect(getByText('Amber')).toHaveClass('govuk-tag--orange')
-    expect(getByText('Amber')).toHaveAttribute(
+    expect(getByText('amber alert')).toHaveClass('bg-orange')
+    expect(getByText('amber alert')).toHaveAttribute(
       'aria-label',
       'There is currently an Amber cold alert status for West Midlands'
     )
@@ -114,17 +111,10 @@ describe('renders correct tag', () => {
   test('renders red tag', () => {
     const { getByText } = render(<ListItemStatusTag type="cold" level="Red" region="East Midlands" />)
 
-    expect(getByText('Red')).toHaveClass('govuk-tag--red')
-    expect(getByText('Red')).toHaveAttribute(
+    expect(getByText('red alert')).toHaveClass('bg-red')
+    expect(getByText('red alert')).toHaveAttribute(
       'aria-label',
       'There is currently a Red cold alert status for East Midlands'
     )
-  })
-
-  test('renders no alerts tag', () => {
-    const { getByText } = render(<ListItemStatusTag type="heat" level="No alerts" region="London" />)
-
-    expect(getByText('No alerts')).not.toHaveClass('govuk-tag')
-    expect(getByText('No alerts')).toHaveAttribute('aria-label', 'There are currently no alerts for London')
   })
 })

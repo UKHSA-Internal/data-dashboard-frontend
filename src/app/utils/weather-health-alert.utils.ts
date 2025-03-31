@@ -25,6 +25,13 @@ export enum ColourVariableMap {
   Red = 'var(--colour-red)',
 }
 
+export enum ColourBackgroundMap {
+  Green = 'bg-green',
+  Amber = 'bg-orange',
+  Yellow = 'bg-custard',
+  Red = 'bg-red',
+}
+
 export enum HoverColourVariableMap {
   Green = 'var(--colour-green-dark)',
   Amber = 'var(--colour-orange-dark)',
@@ -41,6 +48,18 @@ export enum ActiveColourVariableMap {
 
 export function getCssVariableFromColour(color: keyof typeof ColourVariableMap) {
   return ColourVariableMap[color]
+}
+
+export function getTailwindBackgroundFromColour(color: keyof typeof ColourBackgroundMap) {
+  return ColourBackgroundMap[color]
+}
+
+export function getTextColourCssFromColour(colour: string) {
+  if (colour == 'Yellow') {
+    return 'text-black'
+  } else {
+    return 'text-white'
+  }
 }
 
 export function getHoverCssVariableFromColour(color: keyof typeof HoverColourVariableMap) {

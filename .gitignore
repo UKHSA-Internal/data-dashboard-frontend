@@ -12,6 +12,7 @@
 /playwright/.cache/
 junit.xml
 .unlighthouse
+/e2e/storage/auth.json
 
 # next.js
 /.next/
@@ -38,4 +39,3 @@ yarn-error.log*
 
 # typescript
 *.tsbuildinfo
-next-env.d.ts

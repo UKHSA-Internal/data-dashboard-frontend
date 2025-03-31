@@ -73,7 +73,7 @@ jobs:
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=80
 
-      - uses: actions/upload-artifact@v3
+      - uses: actions/upload-artifact@v4
         if: always()
         with:
           name: unlighthouse-report
@@ -104,7 +104,7 @@ jobs:
         if: ${{ needs.lighthouse.result == 'failure' }}
         with:
           status: failure
-          notification_title: ':warning: {workflow} score has dropped below 80% :warning:'
+          notification_title: ':warning: {workflow} threshold has dropped :warning:'
           message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
           mention_groups: ${{ vars.SLACK_MENTION_USERS }}
           mention_groups_when: 'failure,warnings'

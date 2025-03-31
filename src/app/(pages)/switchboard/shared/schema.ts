@@ -36,9 +36,7 @@ export const switchBoardSchema = z.object({
     menus: baseProps(z.enum(['Inactive', 'MegaMenu'])),
   }),
   flags: z.object({
-    'landing-page-hero': z.enum(['enabled', 'disabled']),
-    'interactive-charts': z.enum(['enabled', 'disabled']),
-    'feedback-form': z.enum(['enabled', 'disabled']),
+    'example-flag': z.enum(['enabled', 'disabled']),
   }),
 })
 
