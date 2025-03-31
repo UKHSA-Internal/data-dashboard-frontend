@@ -65,9 +65,11 @@ const props: ComponentProps<typeof Download> = {
     y_axis: 'y-axis',
     x_axis: 'x-axis',
     tag_manager_event_id: '',
+    date_prefix: 'Up to',
     headline_number_columns: [],
     title: 'Table Title',
     body: 'Table Body',
+    about: '',
   },
 }
 

@@ -117,9 +117,11 @@ const mockData: ComponentProps<typeof Table>['data'] = {
   y_axis: 'y-axis',
   x_axis: 'x-axis',
   tag_manager_event_id: '',
+  date_prefix: 'Up to and including',
   headline_number_columns: [],
   title: 'Table Title ABC/XYZ',
   body: 'Table Body',
+  about: '',
 }
 
 const mockSize = 'narrow'
@@ -292,4 +294,132 @@ test('table data containing reporting lag peroid', async () => {
   const rows = getAllByRole('row')
   expect(rows[1].getAttribute('aria-label')).toBeNull()
   expect(rows[2].getAttribute('aria-label')).toContain('Reporting delay period')
+})
+
+describe('Table headings display as expected', () => {
+  test('fallback headings', async () => {
+    const { getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Date')
+    expect(headers[1]).toHaveTextContent('Amount')
+  })
+
+  test('x & y axis titles', async () => {
+    const xyMockData = { ...mockData, x_axis_title: 'Test x axis title', y_axis_title: 'Puppies' }
+    const { getAllByRole } = render((await Table({ data: xyMockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Test x axis title')
+    expect(headers[1]).toHaveTextContent('Puppies')
+  })
+
+  test('label override axis titles', async () => {
+    const labelMockData: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      chart: [
+        {
+          ...mockData.chart[0],
+          value: {
+            ...mockData.chart[0].value,
+            label: 'Label override',
+          },
+        },
+      ],
+      x_axis_title: 'Test x axis title',
+      y_axis_title: 'Puppies',
+    }
+    const { getAllByRole } = render((await Table({ data: labelMockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Test x axis title')
+    expect(headers[1]).toHaveTextContent('Label override')
+  })
+
+  test('Table headers for multi-column tables', async () => {
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+        {
+          reference: '2022-11-30',
+          values: [
+            {
+              label: 'Plot1',
+              value: 9360.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+        {
+          reference: '2023-01-31',
+          values: [
+            {
+              label: 'Plot2',
+              value: 12345.6666,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+        {
+          reference: '2022-02-28',
+          values: [
+            {
+              label: 'Plot2',
+              value: 600.049,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+        {
+          reference: '2022-02-28',
+          values: [
+            {
+              label: 'Plot2',
+              value: 8392.6,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const multiColMockData: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      chart: [
+        {
+          ...mockData.chart[0],
+          value: {
+            ...mockData.chart[0]?.value,
+            label: 'First label override',
+          },
+        },
+        {
+          ...mockData.chart[1],
+          value: {
+            ...mockData.chart[1]?.value,
+            label: 'Second label override',
+          },
+        },
+      ],
+      x_axis_title: 'Test x axis title',
+      y_axis_title: 'Puppies',
+    }
+
+    const { getAllByRole } = render((await Table({ data: multiColMockData, size: mockSize })) as ReactElement)
+
+    const headers = getAllByRole('columnheader')
+    expect(headers[0]).toHaveTextContent('Test x axis title')
+    expect(headers[1]).toHaveTextContent('First label override')
+    expect(headers[2]).toHaveTextContent('Second label override')
+  })
 })

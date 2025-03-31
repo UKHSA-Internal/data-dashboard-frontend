@@ -2,7 +2,7 @@
 'use client'
 
 import { useRouter } from 'next/navigation'
-import React, { memo, useCallback, useState } from 'react'
+import React, { Fragment, memo, useCallback, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
@@ -126,24 +126,22 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
       regionId ? url.searchParams.set('fid', regionId) : null
       router.push(url.toString(), { scroll: false })
     },
-    [router]
+    [router, alertType]
   )
 
   if (alerts.isLoading || !alerts.data) return null
 
   const groupedAlerts = Object.entries(
-    alerts.data.reduce(
-      (statusGrouped, alert) => {
-        const { status } = alert
-        if (!statusGrouped[status]) {
-          statusGrouped[status] = []
-        }
-        statusGrouped[status].push(alert)
-        return statusGrouped
-      },
-      {} as Record<string, AlertObject[]>
-    )
-  ).map(([status, alerts]) => ({
+    alerts.data.reduce<Record<string, AlertObject[]>>((statusGrouped, alert) => {
+      const { status } = alert
+      if (!statusGrouped[status]) {
+        statusGrouped[status] = []
+      }
+      statusGrouped[status].push(alert)
+      return statusGrouped
+    }, {})
+  ).map(([status, alerts], idx) => ({
+    id: `group-${idx}`,
     status: status as HealthAlertStatus,
     alerts,
   }))
@@ -154,10 +152,10 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
         className="govuk-list govuk-!-font-size-16 mb-1 flex max-w-[80%] flex-wrap gap-1"
         aria-label="Weather health alerts by region"
       >
-        {groupedAlerts.map(({ status, alerts }) => {
+        {groupedAlerts.map(({ status, alerts, id }) => {
           if (alerts.length > 0) {
             return (
-              <>
+              <Fragment key={id}>
                 <li className="m-0 mt-2 w-full">
                   <div
                     className={`m-0 w-[100px] text-center capitalize ${getTailwindBackgroundFromColour(status)} ${getTextColourCssFromColour(status)}`}
@@ -181,7 +179,7 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
                     }}
                   />
                 ))}
-              </>
+              </Fragment>
             )
           }
         })}

@@ -12,6 +12,16 @@ export class LandingPage {
     await this.page.goto('/')
   }
 
+  private async getSection(sectionName: string) {
+    return this.page.getByRole('region', { name: sectionName })
+  }
+
+  private async getButtonInSection(sectionName: string, linkName: string) {
+    const section = await this.getSection(sectionName)
+
+    return section.getByRole('link', { name: linkName })
+  }
+
   async hasMetadata() {
     const title = await this.page.title()
     await expect(title).toBe('UKHSA data dashboard')
@@ -50,7 +60,7 @@ export class LandingPage {
   }
 
   async hasHealthTopicColumns(columns: string[]) {
-    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
+    const section = await this.getSection('Respiratory viruses')
 
     await expect(await section.getByRole('heading', { level: 3 }).count()).toEqual(columns.length)
 
@@ -62,19 +72,56 @@ export class LandingPage {
   }
 
   async hasLandingPageCard({ title, sub_title }: { title: string; sub_title: string }) {
-    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
-    const card = section.getByRole('link', { name: title })
+    const card = await this.getButtonInSection('Respiratory viruses', title)
 
-    await expect(card.getByRole('heading', { level: 3, name: title })).toBeVisible()
+    await expect(card.getByRole('heading', { level: 3, name: title, exact: true })).toBeVisible()
     await expect(card.getByText(sub_title)).toBeVisible()
+  }
+
+  async hasNoLandingPageCard({ title, sub_title }: { title: string; sub_title: string }) {
+    const card = await this.getButtonInSection('Respiratory viruses', title)
+
+    await expect(card.getByRole('heading', { level: 3, name: title, exact: true })).toBeHidden()
+    await expect(card.getByText(sub_title)).toBeHidden()
+  }
+
+  async hasXCardsInSection(section: string, expectedNumberOfCards: number) {
+    const selectedSection = await this.getSection('Respiratory viruses')
+    const cardCount = await selectedSection.getByTestId('card-wrapper').count()
+
+    expect(cardCount).toBe(expectedNumberOfCards)
+  }
+
+  async hasShowMoreButton() {
+    const showMoreButton = await this.getButtonInSection('Respiratory viruses', 'Show More')
+    await expect(showMoreButton).toBeVisible()
+  }
+
+  async hasNoShowMoreButton() {
+    const showMoreButton = await this.getButtonInSection('Outbreaks', 'Show More')
+    await expect(showMoreButton).toBeHidden()
+  }
+  async hasShowLessButton() {
+    const showLessButton = await this.getButtonInSection('Respiratory viruses', 'Show Less')
+    await expect(showLessButton).toBeVisible()
+  }
+
+  async clickShowMoreButton() {
+    const showMoreButton = await this.getButtonInSection('Respiratory viruses', 'Show More')
+
+    await showMoreButton.click()
+  }
+
+  async clickShowLessButton() {
+    const showLessButton = await this.getButtonInSection('Respiratory viruses', 'Show Less')
+    await showLessButton.click()
   }
 
   async hasHealthTopicCard(
     name: string,
     { tagline, trendPercent, trendDescription }: { tagline: string; trendPercent: string; trendDescription: string }
   ) {
-    const section = this.page.getByRole('region', { name: 'Respiratory viruses' })
-    const card = section.getByRole('link', { name })
+    const card = await this.getButtonInSection('Respiratory viruses', name)
 
     await expect(card.getByRole('heading', { name })).toBeVisible()
     await expect(card.getByText(tagline)).toBeVisible()
@@ -84,7 +131,7 @@ export class LandingPage {
   }
 
   async hasWeatherHealthAlertsCard(name: string, { tagline, map = true }: { tagline: string; map?: boolean }) {
-    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
+    const section = this.page.getByRole('region', { name: 'Weather and climate risks' })
     const card = section.getByRole('link', { name })
 
     await expect(section).toBeVisible()
@@ -104,15 +151,35 @@ export class LandingPage {
     await expect(card.getByRole('button', { name: 'Enter fullscreen' })).toBeVisible()
   }
 
+  async navigatesToWeatherHealthAlertsPageOnClick(
+    name: string,
+    { tagline, map = true }: { tagline: string; map?: boolean }
+  ) {
+    const section = this.page.getByRole('link', { name: 'Weather and climate risks' })
+    const card = this.page.getByRole('link', { name })
+
+    await expect(section).toBeVisible()
+    await expect(card).toBeVisible()
+    await expect(card.getByRole('heading', { name, level: 3 })).toBeVisible()
+    await expect(card.getByText(tagline)).toBeVisible()
+
+    if (map) {
+      await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeVisible()
+    } else {
+      await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeHidden()
+    }
+
+    await section.click()
+  }
+
   async clickMinimapCard(name: string) {
-    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
-    const card = section.getByRole('link', { name })
+    const card = await this.getButtonInSection('Weather and climate risks', name)
     await card.click()
   }
 
   async clickMinimapCardRegionByMap(name: string, regionId: string) {
-    const section = this.page.getByRole('region', { name: 'Weather health alerts' })
-    const card = section.getByRole('link', { name })
+    const card = await this.getButtonInSection('Weather and climate risks', name)
+
     const map = card.getByRole('application', { name: 'Map of weather health alerts' })
     await expect(map).toBeVisible()
     const region = map.getByTestId(`feature-${regionId}`)

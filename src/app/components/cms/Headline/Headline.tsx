@@ -7,9 +7,10 @@ import { getServerTranslation } from '@/app/i18n'
 interface HeadlineProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof HeadlineNumber>['value']
+  datePrefix: string
 }
 
-export async function Headline({ data: { body: heading, ...requestParams } }: HeadlineProps) {
+export async function Headline({ data: { body: heading, ...requestParams }, datePrefix }: HeadlineProps) {
   const { t } = await getServerTranslation('common')
 
   const headline = await getHeadlines(requestParams)
@@ -23,7 +24,7 @@ export async function Headline({ data: { body: heading, ...requestParams } }: He
       <div>
         <div>{t('cms.blocks.headline.heading', { heading })}</div>
         <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
-          {t('cms.blocks.headline.date', { value: date })}
+          {t('cms.blocks.timestamp.value', { prefix: datePrefix, value: date })}
         </div>
         <div className="govuk-body-l govuk-!-margin-bottom-0">{t('cms.blocks.headline.value', { value })}</div>
       </div>

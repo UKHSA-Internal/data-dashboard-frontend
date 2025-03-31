@@ -48,6 +48,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       'Line chart with overlaying line comparing hospital admission rates of patients admitted to hospital with Influenza',
                     body: 'Weekly admissions rates of patients admitted to hospital with Influenza as a weekly time series, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -78,8 +80,10 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Line chart comparing Influenza hospital admission rates by age',
+                    about: 'Sample about text',
                     body: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -254,6 +258,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                       'Line chart with overlaying line comparing ICU admission rates of patients admitted to hospital with Influenza',
                     body: 'Weekly admissions rates of patients admitted to ICU with Influenza as a weekly time series, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -286,6 +292,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing Influenza ICU admission rates by age',
                     body: 'Age breakdown of people admitted to ICU, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -468,6 +476,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     title: 'Bar chart with overlaying line comparing positivity for Influenza tests',
                     body: 'Weekly admissions rates of patients admitted to hospital with Influenza as a weekly time series, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -500,6 +510,8 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     title: 'Line chart comparing weekly positivity for Influenza \r\ntests by age',
                     body: 'Weekly time series of positivity for people testing positive for Influenza broken down by age.',
                     tag_manager_event_id: '',
+                    date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [

@@ -58,7 +58,7 @@
         }
       },
       "timestamp": {
-        "value": "Up to and including {{value, dateShort}}"
+        "value": "{{prefix}} {{value, dateShortest}}"
       },
       "table": {
         "toggle": "View data in a tabular format",
@@ -89,7 +89,17 @@
       },
       "chart": {
         "alt": "{{- body}} - Refer to tabular data."
+      },
+      "about": {
+        "relatedLinks": "Related Links"
       }
+    },
+    "dropdown": {
+      "chartLabel": "Chart",
+      "downloadLabel": "Download",
+      "tableLabel": "Tabular Data",
+      "aboutLabel": "About",
+      "selectLabel": "Choose display option for '{{chartTitle}}' data"
     }
   },
   "cookieBanner": {
