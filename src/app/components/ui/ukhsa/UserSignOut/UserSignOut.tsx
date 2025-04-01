@@ -1,5 +1,6 @@
+import { signOut } from '@/api/requests/auth/signOut'
 import { getServerTranslation } from '@/app/i18n'
-import { auth, signOut } from '@/auth'
+import { auth } from '@/auth'
 import { authSignOutRedirectionPath } from '@/config/constants'
 
 export default async function UserSignOut() {
