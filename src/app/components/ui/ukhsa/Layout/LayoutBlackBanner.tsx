@@ -5,8 +5,10 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { Announcement } from '@/app/components/ui/ukhsa'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
+import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
+import { authEnabled } from '@/config/constants'
 
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
@@ -45,7 +47,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
         </div>
       </header>
 
-      <TopNav>
+      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
         <MegaMenu />
       </TopNav>
 

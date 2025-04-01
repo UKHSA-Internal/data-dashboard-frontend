@@ -36,7 +36,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
@@ -53,7 +52,6 @@ jobs:
     if: false # Temporarily disabled due to config overriding CLI params and running against production
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Start mock server
@@ -83,7 +81,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Quality check
@@ -99,7 +96,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: TypeScript Compilation
@@ -116,7 +112,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Unit tests
@@ -129,13 +124,13 @@ jobs:
           title: Unit tests coverage
 
   ##############################################################################
-  # Playwright e2e tests
+  # Playwright tests - Public - (fully mocked backend)
   ##############################################################################
 
-  e2e-tests:
-    name: Playwright tests (${{ matrix.shard }}/${{ strategy.job-total }})
+  e2e-tests-public:
+    name: Playwright (Public) (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
-    timeout-minutes: 60
+    timeout-minutes: 20
     runs-on: ubuntu-22.04
     strategy:
       fail-fast: false
@@ -143,7 +138,6 @@ jobs:
         shard: [1, 2, 3]
     steps:
       - uses: actions/checkout@v3
-      - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
 
@@ -159,10 +153,61 @@ jobs:
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+
       - uses: actions/upload-artifact@v4
-        if: always()
+        if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
+          path: playwright-report/
+          retention-days: 10
+
+  ##############################################################################
+  # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
+  ##############################################################################
+
+  e2e-tests-non-public:
+    name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
+    needs: [build]
+    timeout-minutes: 20
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1, 2, 3]
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
+
+      - name: Start mock server
+        run: npm run dev:mock-server &
+
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+
+      - name: Create .env.local
+        run: |
+          echo "AUTH_ENABLED=true" >> .env.local
+          echo "AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}" >> .env.local
+          echo "AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" >> .env.local
+          echo "AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}" >> .env.local
+          echo "AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}" >> .env.local
+          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
+          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
+          echo "PLAYWRIGHT_AUTH_USER_PASSWORD=${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}" >> .env.local
+          echo "PLAYWRIGHT_AUTH_USER_USERNAME=${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}" >> .env.local
+
+      - name: Run Playwright tests
+        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+
+      - uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
           retention-days: 10
 
@@ -172,7 +217,7 @@ jobs:
 
   success-gate:
     name: Build Success Check
-    needs: [unit-tests, quality-checks, typescript, e2e-tests]
+    needs: [unit-tests, quality-checks, typescript, e2e-tests-public, e2e-tests-non-public]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'
