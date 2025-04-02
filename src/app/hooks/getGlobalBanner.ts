@@ -12,16 +12,10 @@ export const getGlobalBanner = async () => {
   if (!globalBannerRequest.success) return null
 
   const {
-    data: { active_global_banner: globalBanner },
+    data: { active_global_banners: globalBanners },
   } = globalBannerRequest
 
-  if (!globalBanner) return null
+  if (!globalBanners || globalBanners.length == 0) return null
 
-  const { title: heading, banner_type: variant, body } = globalBanner
-
-  return {
-    heading,
-    variant,
-    body,
-  }
+  return globalBanners
 }
