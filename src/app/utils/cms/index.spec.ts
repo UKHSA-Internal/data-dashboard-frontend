@@ -205,6 +205,8 @@ describe('getPageMetadata', () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
 
     const slug: Slug = ['metrics-documentation']
     const searchParams: SearchParams = {
@@ -249,6 +251,8 @@ describe('getPageMetadata', () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
 
     const slug: Slug = ['whats-new']
     const searchParams: SearchParams = {}
