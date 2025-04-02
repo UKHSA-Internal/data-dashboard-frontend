@@ -218,7 +218,6 @@ jobs:
   success-gate:
     name: Build Success Check
     needs: [unit-tests, quality-checks, typescript, e2e-tests-public]
-    # needs: [unit-tests, quality-checks, typescript, e2e-tests-public, e2e-tests-non-public]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'
