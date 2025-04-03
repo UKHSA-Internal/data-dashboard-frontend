@@ -8,9 +8,11 @@ import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
+import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { getLandingPage } from '@/app/utils/cms'
+import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   children: ReactNode
@@ -18,7 +20,7 @@ interface LayoutProps {
 }
 
 export default async function Layout({ children, params }: LayoutProps) {
-  const [{ t }, globalBanner] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
+  const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
 
   const onLandingPage = !params?.slug
 
@@ -57,7 +59,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       </header>
 
-      <TopNav>
+      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
         <MegaMenu />
       </TopNav>
 
@@ -75,21 +77,23 @@ export default async function Layout({ children, params }: LayoutProps) {
         </div>
       ) : null}
 
-      {globalBanner ? (
-        <div className="govuk-width-container">
-          <div className="govuk-grid-row">
-            <div className="govuk-grid-column-three-quarters">
-              <Announcement
-                heading={globalBanner.heading}
-                variant={globalBanner.variant}
-                className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
-              >
-                {globalBanner.body}
-              </Announcement>
+      {!globalBanners || globalBanners.length <= 0
+        ? null
+        : globalBanners.map(({ title: heading, banner_type: variant, body }, index) => (
+            <div key={index} className="govuk-width-container">
+              <div className="govuk-grid-row">
+                <div className="govuk-grid-column-three-quarters">
+                  <Announcement
+                    heading={heading}
+                    variant={variant}
+                    className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
+                  >
+                    {body}
+                  </Announcement>
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-      ) : null}
+          ))}
 
       <div className="govuk-width-container">
         <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
