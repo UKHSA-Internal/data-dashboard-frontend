@@ -1,9 +1,8 @@
-const baseUrl = process.env.API_URL ?? ''
-const feedbackApiBaseUrl = process.env.FEEDBACK_API_URL ?? ''
+export const getApiBaseUrl = () => `${process.env.API_URL ?? ''}/api`
 
-export const getApiBaseUrl = () => `${baseUrl}/api`
+export const getFeedbackApiBaseUrl = () => `${process.env.FEEDBACK_API_URL ?? ''}/api`
 
-export const getFeedbackApiBaseUrl = () => `${feedbackApiBaseUrl}/api`
+export const getAuthApiBaseUrl = () => `${process.env.AUTH_DOMAIN ?? ''}/oauth2`
 
 export const getCmsApiPath = () => {
   return `${getApiBaseUrl()}/pages`

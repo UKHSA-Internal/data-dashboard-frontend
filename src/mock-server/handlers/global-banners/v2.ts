@@ -5,6 +5,7 @@ import { logger } from '@/lib/logger'
 
 import { globalBannerInactive } from './fixtures/global-banner-inactive'
 import { globalBannerInformation } from './fixtures/global-banner-information'
+import { globalBannerMultiple } from './fixtures/global-banner-multiple'
 import { globalBannerWarning } from './fixtures/global-banner-warning'
 
 export default async function handler(req: Request, res: Response) {
@@ -26,6 +27,10 @@ export default async function handler(req: Request, res: Response) {
 
     if (scenario === 'Warning') {
       return res.status(status).send(globalBannerWarning)
+    }
+
+    if (scenario === 'Multiple') {
+      return res.status(status).send(globalBannerMultiple)
     }
 
     return res.status(status).send(globalBannerInactive)
