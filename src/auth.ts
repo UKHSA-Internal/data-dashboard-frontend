@@ -24,6 +24,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',
+    maxAge: 60 * 5,
   },
   trustHost: true,
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://'),
