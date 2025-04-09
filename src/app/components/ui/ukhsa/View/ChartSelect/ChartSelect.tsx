@@ -67,7 +67,19 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
 
     setSelectedFiltersList(filters)
 
-    return `?timeseriesFilter=${filters.join(';')}`
+    // Filter out any empty strings before joining
+    const validFilters = filters.filter((filter) => filter.length > 0)
+
+    const currentParams = new URLSearchParams(searchParams.toString())
+
+    if (validFilters.length > 0) {
+      currentParams.set('timeseriesFilter', validFilters.join(';'))
+    } else {
+      currentParams.delete('timeseriesFilter')
+    }
+
+    // Return the updated URL with all parameters preserved
+    return `?${currentParams.toString()}`
   }
 
   // Get list of timeseries filters for different charts
@@ -77,7 +89,7 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
 
   // Handle update of select component
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    router.push(setFilterParams(event.target.value))
+    router.replace(setFilterParams(event.target.value), { scroll: false })
   }
 
   // Turn slug back into string for matching against select component
