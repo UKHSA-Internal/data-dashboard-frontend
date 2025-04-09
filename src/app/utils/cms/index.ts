@@ -4,7 +4,6 @@ import { notFound } from 'next/navigation'
 import { getPage, PageResponse } from '@/api/requests/cms/getPage'
 import { getMetricsPages, getPages, getWhatsNewPages, PagesResponse, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { METRICS_DOCUMENTATION_PAGE_SIZE, WHATS_NEW_PAGE_SIZE } from '@/app/constants/app.constants'
 import { getServerTranslation } from '@/app/i18n'
 import { SearchParams, Slug } from '@/app/types'
 import { logger } from '@/lib/logger'
@@ -30,7 +29,6 @@ export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
   if (slug2String(cmsSlug) !== slug2String(urlSlug)) {
     return notFound()
   }
-
   return pageData
 }
 
@@ -82,12 +80,23 @@ export async function getPageMetadata(
         },
       } = metricsEntries
 
-      const totalPages = Math.ceil(totalItems / METRICS_DOCUMENTATION_PAGE_SIZE) || 1
+      try {
+        const { pagination_size: paginationSize, show_pagination: showPagination } =
+          await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], {
+            type: PageType.MetricsParent,
+          })
 
-      title = seoTitle.replace(
-        '|',
-        t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
-      )
+        const totalPages = Math.ceil(totalItems / paginationSize) || 1
+
+        if (showPagination) {
+          title = seoTitle.replace(
+            '|',
+            t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+          )
+        }
+      } catch (error) {
+        console.log('Error', error)
+      }
     }
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
@@ -105,9 +114,15 @@ export async function getPageMetadata(
         },
       } = whatsNewEntries
 
-      const totalPages = Math.ceil(totalItems / WHATS_NEW_PAGE_SIZE) || 1
+      try {
+        const { pagination_size: paginationSize, show_pagination: showPagination } =
+          await getPageBySlug<PageType.WhatsNewParent>(['whats-new'], { type: PageType.WhatsNewParent })
 
-      title = seoTitle.replace('|', t('documentTitlePagination', { page, totalPages }))
+        const totalPages = Math.ceil(totalItems / paginationSize) || 1
+        title = showPagination ? seoTitle.replace('|', t('documentTitlePagination', { page, totalPages })) : seoTitle
+      } catch (error) {
+        logger.error(error)
+      }
     }
 
     return {
