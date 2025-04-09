@@ -9,7 +9,7 @@ export class Covid19Page {
   }
 
   async goto() {
-    await this.page.goto('/topics/covid-19')
+    await this.page.goto('/respiratory-viruses/covid-19')
   }
 
   async hasMetadata() {
