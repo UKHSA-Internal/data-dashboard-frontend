@@ -8,7 +8,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/8/',
-    html_url: 'http://localhost/topics/covid-19/',
+    html_url: 'http://localhost/respiratory-viruses/covid-19/',
     slug: 'covid-19',
     show_in_menus: true,
     seo_title: 'COVID-19 | UKHSA data dashboard',
