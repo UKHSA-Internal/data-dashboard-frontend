@@ -126,7 +126,7 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
       regionId ? url.searchParams.set('fid', regionId) : null
       router.push(url.toString(), { scroll: false })
     },
-    [router]
+    [router, alertType]
   )
 
   if (alerts.isLoading || !alerts.data) return null

@@ -25,6 +25,7 @@ jest.mock('../components/cms', () => ({
   ...jest.requireActual('../components/cms'),
   Timestamp: () => <div>Up to and including 27 September 2023</div>,
   Download: () => <div>Mocked download</div>,
+  About: () => <div>Mocked About</div>,
   Table: () => <div>Mocked table</div>,
   Chart: () => <div>Mocked chart</div>,
   Percentage: () => <div>Mocked percentage number</div>,
@@ -150,11 +151,13 @@ describe('Chart row card', () => {
     expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
     expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
     expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('aria-selected', 'false')
 
     // Tabs panel
-    expect(screen.getByRole('tabpanel', { name: 'Chart' })).toHaveAttribute('data-state', 'active')
-    expect(screen.getByRole('tabpanel', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
-    expect(screen.getByRole('tabpanel', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('data-state', 'active')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('data-state', 'inactive')
 
     // Chart
     expect(screen.getByText('Mocked chart')).toBeVisible()

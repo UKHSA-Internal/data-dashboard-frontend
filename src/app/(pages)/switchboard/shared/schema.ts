@@ -32,12 +32,11 @@ export const switchBoardSchema = z.object({
         }),
       }),
     }),
-    'global-banners': baseProps(bannerTypes.or(z.literal(''))),
+    'global-banners': baseProps(bannerTypes.or(z.literal('Multiple')).or(z.literal(''))),
     menus: baseProps(z.enum(['Inactive', 'MegaMenu'])),
   }),
   flags: z.object({
-    'interactive-charts': z.enum(['enabled', 'disabled']),
-    'feedback-form': z.enum(['enabled', 'disabled']),
+    'example-flag': z.enum(['enabled', 'disabled']),
   }),
 })
 

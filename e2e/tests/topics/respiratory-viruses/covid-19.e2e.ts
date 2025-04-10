@@ -43,7 +43,7 @@ test.describe('COVID-19 page', () => {
       })
       await app.hasTopicCard({
         name: 'Case rates by age',
-        description: 'Rates per 100,000 people of the total number of cases since the start of the pandemic, by age.',
+        description: '',
       })
     })
     await test.step('displays chart cards for "Deaths"', async () => {
@@ -117,63 +117,9 @@ test.describe('COVID-19 page', () => {
     })
   })
 
-  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
-    await test.step('loads the page', async () => {
-      await covid19Page.goto()
-    })
-    await test.step('downloads charts', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'csv'
-      )
-    })
-  })
-
-  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
-    await test.step('loads the page', async () => {
-      await covid19Page.goto()
-    })
-    await test.step('downloads charts', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'json'
-      )
-    })
-  })
-
   test('Area selection already chosen upon visiting the page', async ({ covid19Page, app }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -218,7 +164,7 @@ test.describe('COVID-19 page', () => {
     await test.step('choose an area type', async () => {
       await app.selectAreaSelectorDropdownOption('Area type', 'Nation')
       await app.checkAreaSelectorInputMatchesValue('Area type', 'Nation')
-      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19?areaType=Nation`)
     })
     await test.step('area name dropdown list is populated', async () => {
       await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
@@ -226,7 +172,7 @@ test.describe('COVID-19 page', () => {
     await test.step('choose an area name', async () => {
       await app.selectAreaSelectorDropdownOption('Area name', 'England')
       await app.checkAreaSelectorInputMatchesValue('Area name', 'England')
-      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation&areaName=England`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19?areaType=Nation&areaName=England`)
     })
     await test.step('document title shows the selected location', async () => {
       await app.hasDocumentTitle('COVID-19 in England | UKHSA data dashboard')
@@ -241,7 +187,7 @@ test.describe('COVID-19 page', () => {
 
   test('Area selection is reset', async ({ covid19Page, app, baseURL }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -254,7 +200,7 @@ test.describe('COVID-19 page', () => {
     })
     await test.step('click reset link', async () => {
       await app.clickAreaSelectorResetLink()
-      await app.waitForUrl(`${baseURL}/topics/covid-19`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19`)
     })
     await test.step('check the area selector is closed', async () => {
       await app.checkAreaSelectorFormIsActive(false)
@@ -273,7 +219,7 @@ test.describe('COVID-19 page', () => {
   test('Area selection for a location with special characters', async ({ covid19Page, app }) => {
     await test.step('loads the page', async () => {
       await app.goto(
-        '/topics/covid-19?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
+        '/respiratory-viruses/covid-19?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
       )
     })
     await test.step('check the area selector is open by default', async () => {
@@ -290,12 +236,47 @@ test.describe('COVID-19 page', () => {
   })
 })
 
+const chartIdentifiers = [
+  'cases-by-specimen-date',
+  '7-day-case-rates-by-specimen-date',
+  'case-rates-by-age',
+  'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
+  'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
+  'patients-in-hospital',
+  'admissions-rate-by-age',
+  'patients-in-mechanical-ventilation-beds',
+  'total-daily-number-of-pcr-tests-reported',
+  'weekly-positivity-of-people-receiving-a-pcr-test',
+  'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
+  'autumn-booster-vaccination-uptake-50-by-vaccination-date',
+  'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
+  'spring-booster-vaccination-uptake-75-by-vaccination-date',
+]
+
 test.describe('COVID-19 page - mobile @mobileOnly', () => {
   test.use({ viewport: viewports.mobile })
 
   test('displays the navigation on mobile', async ({ covid19Page, app }) => {
     await covid19Page.goto()
     await app.hasNav()
+  })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'mobile')
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'mobile')
+    })
   })
 })
 
@@ -306,6 +287,24 @@ test.describe('COVID-19 page - tablet @tabletOnly', () => {
     await covid19Page.goto()
     await app.hasNav()
   })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'tablet')
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'tablet')
+    })
+  })
 })
 
 test.describe('COVID-19 page - desktop @desktopOnly', () => {
@@ -314,6 +313,40 @@ test.describe('COVID-19 page - desktop @desktopOnly', () => {
   test('displays the navigation on desktop', async ({ covid19Page, app }) => {
     await covid19Page.goto()
     await app.hasNav()
+  })
+
+  test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'desktop')
+    })
+  })
+
+  test('Downloads a json version of each chart', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('downloads charts', async () => {
+      await app.canDownloadChart(chartIdentifiers, 'json', 'desktop')
+    })
+  })
+  test('Navigates through the chart tabs using Enter Key on keyboard', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('tabs through the tabs and navigates to the download content with Enter Key on keyboard', async () => {
+      await app.navigateChartTabsByKeyboardAndSelectWithEnterKey(chartIdentifiers)
+    })
+  })
+  test('Navigates through the chart tabs using Space Key on keyboard', async ({ covid19Page, app }) => {
+    await test.step('loads the page', async () => {
+      await covid19Page.goto()
+    })
+    await test.step('tabs through the tabs and navigates to the download content with Space Key on keyboard', async () => {
+      await app.navigateChartTabsByKeyboardAndSelectWithSpaceKey(chartIdentifiers)
+    })
   })
 })
 
@@ -325,25 +358,7 @@ test.describe('COVID-19 page - no JS', () => {
       await covid19Page.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'csv'
-      )
+      await app.canDownloadChart(chartIdentifiers, 'csv', 'desktop')
     })
   })
 
@@ -352,31 +367,13 @@ test.describe('COVID-19 page - no JS', () => {
       await covid19Page.goto()
     })
     await test.step('downloads a csv version of each chart', async () => {
-      await app.canDownloadChart(
-        [
-          'cases-by-specimen-date',
-          '7-day-case-rates-by-specimen-date',
-          'case-rates-by-age',
-          'daily-deaths-with-covid-19-on-the-death-certificate-by-date-of-death',
-          'bar-chart-with-overlaying-line-comparing-patients-admitted-to-hospital-with-covid-19',
-          'patients-in-hospital',
-          'admissions-rate-by-age',
-          'patients-in-mechanical-ventilation-beds',
-          'total-daily-number-of-pcr-tests-reported',
-          'weekly-positivity-of-people-receiving-a-pcr-test',
-          'people-aged-50-and-over-who-have-received-autumn-booster-vaccinations-by-vaccination-date',
-          'autumn-booster-vaccination-uptake-50-by-vaccination-date',
-          'people-aged-75-and-over-who-have-received-spring-booster-vaccinations-by-vaccination-date',
-          'spring-booster-vaccination-uptake-75-by-vaccination-date',
-        ],
-        'json'
-      )
+      await app.canDownloadChart(chartIdentifiers, 'json', 'desktop')
     })
   })
 
   test('Area selection already chosen upon visiting the page', async ({ covid19Page, app }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -426,7 +423,7 @@ test.describe('COVID-19 page - no JS', () => {
       await app.submitAreaSelectorForm()
     })
     await test.step('resets the url', async () => {
-      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19?areaType=Nation`)
     })
     await test.step('area name dropdown list is populated', async () => {
       await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
@@ -439,7 +436,7 @@ test.describe('COVID-19 page - no JS', () => {
       await app.submitAreaSelectorForm()
     })
     await test.step('resets the url', async () => {
-      await app.waitForUrl(`${baseURL}/topics/covid-19?areaType=Nation&areaName=England`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19?areaType=Nation&areaName=England`)
     })
     await test.step('document title shows the selected location', async () => {
       await app.hasDocumentTitle('COVID-19 in England | UKHSA data dashboard')
@@ -454,7 +451,7 @@ test.describe('COVID-19 page - no JS', () => {
 
   test('Area selection is reset', async ({ covid19Page, app, baseURL }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -469,7 +466,7 @@ test.describe('COVID-19 page - no JS', () => {
       await app.clickAreaSelectorResetLink()
     })
     await test.step('resets the url', async () => {
-      await app.waitForUrl(`${baseURL}/topics/covid-19`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/covid-19`)
     })
     await test.step('check the area selector is closed', async () => {
       await app.checkAreaSelectorFormIsActive(false)

@@ -180,14 +180,14 @@ describe('getPageMetadata', () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithTopicTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: covid19PageMock })
 
-    const slug: Slug = ['topics', 'covid-19']
+    const slug: Slug = ['respiratory-viruses', 'covid-19']
     const searchParams: SearchParams = {
       areaName: 'England',
     }
     const result = await getPageMetadata(slug, searchParams, PageType.Topic)
 
     expect(result).toEqual<Metadata>({
-      alternates: { canonical: 'http://localhost/topics/covid-19' },
+      alternates: { canonical: 'http://localhost/respiratory-viruses/covid-19' },
       description: 'Overall summary of COVID-19 in circulation within the UK',
       openGraph: {
         description: 'Overall summary of COVID-19 in circulation within the UK',
@@ -205,6 +205,8 @@ describe('getPageMetadata', () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
 
     const slug: Slug = ['metrics-documentation']
     const searchParams: SearchParams = {
@@ -249,6 +251,8 @@ describe('getPageMetadata', () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
 
     const slug: Slug = ['whats-new']
     const searchParams: SearchParams = {}

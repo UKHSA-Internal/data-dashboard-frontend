@@ -25,6 +25,7 @@ import {
   respiratoryVirusesMock,
   weatherHealthAlertsChildMocks,
   weatherHealthAlertsParentMock,
+  whatsComingPageMock,
   whatsNewChildMocks,
   whatsNewParentMock,
 } from './fixtures/page'
@@ -38,6 +39,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [archiveDataPageMock.id]: archiveDataPageMock,
   [bulkDownloadsPageMock.id]: bulkDownloadsPageMock,
   [aboutPageMock.id]: aboutPageMock,
+  [whatsComingPageMock.id]: whatsComingPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,
   [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,

@@ -8,7 +8,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/111/',
-    html_url: 'http://localhost/topics/influenza/',
+    html_url: 'http://localhost/respiratory-viruses/influenza/',
     slug: 'influenza',
     show_in_menus: true,
     seo_title: 'Influenza | UKHSA data dashboard',
@@ -49,6 +49,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with Influenza as a weekly time series, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -79,6 +80,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                   type: 'chart_card',
                   value: {
                     title: 'Line chart comparing Influenza hospital admission rates by age',
+                    about: 'Sample about text',
                     body: 'Age breakdown of people admitted to hospital, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
@@ -257,6 +259,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to ICU with Influenza as a weekly time series, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -290,6 +293,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     body: 'Age breakdown of people admitted to ICU, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -473,6 +477,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly admissions rates of patients admitted to hospital with Influenza as a weekly time series, shown as the rate per 100,000 people.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [
@@ -506,6 +511,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
                     body: 'Weekly time series of positivity for people testing positive for Influenza broken down by age.',
                     tag_manager_event_id: '',
                     date_prefix: 'Up to',
+                    about: 'Sample about text',
                     x_axis: null,
                     y_axis: null,
                     chart: [

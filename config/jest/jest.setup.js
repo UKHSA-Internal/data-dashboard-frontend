@@ -1,6 +1,11 @@
 import '@testing-library/jest-dom'
 import 'whatwg-fetch'
 
+import { TextDecoder, TextEncoder } from 'util'
+
+global.TextEncoder = TextEncoder
+global.TextDecoder = TextDecoder
+
 /**
  * Mocking external modules and dependencies to isolate them from the tests:
  * 1. '@/lib/logger': Replaces actual logging with mock functions.

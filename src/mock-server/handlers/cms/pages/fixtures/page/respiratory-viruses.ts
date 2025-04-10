@@ -32,7 +32,7 @@ export const respiratoryVirusesMock: PageResponse<PageType.Composite> = {
           value: {
             title: 'COVID-19',
             sub_title: 'COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.',
-            page: 'http://localhost:3000/topics/covid-19/',
+            page: 'http://localhost:3000/respiratory-viruses/covid-19/',
           },
           id: 'c36d19c1-3a5e-4fcf-b696-91468c609369',
         },
@@ -41,7 +41,7 @@ export const respiratoryVirusesMock: PageResponse<PageType.Composite> = {
           value: {
             title: 'Influenza',
             sub_title: 'Influenza (commonly known as flu) is a respiratory infection.',
-            page: 'http://localhost:3000/topics/influenza/',
+            page: 'http://localhost:3000/respiratory-viruses/influenza/',
           },
           id: 'b3375764-0829-494e-9060-a65df5dd53bd',
         },
@@ -50,7 +50,7 @@ export const respiratoryVirusesMock: PageResponse<PageType.Composite> = {
           value: {
             title: 'Other respiratory viruses',
             sub_title: 'RSV is one of the common viruses that cause coughs and colds in winter.',
-            page: 'http://localhost:3000/topics/other-respiratory-viruses/',
+            page: 'http://localhost:3000/respiratory-viruses/other-respiratory-viruses/',
           },
           id: 'd7104a96-3066-4139-80b4-9a4dfb2ed2f9',
         },

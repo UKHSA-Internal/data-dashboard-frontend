@@ -1,25 +1,56 @@
 import { notFound } from 'next/navigation'
-import type { NextRequest } from 'next/server'
-import { NextResponse } from 'next/server'
+import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server'
 
 import { getPages } from './api/requests/cms/getPages'
 import { getPageBySlug } from './api/requests/getPageBySlug'
+import { auth } from './auth'
+import { validateAndRenewSession } from './lib/auth/middleware'
+import { logger } from './lib/logger'
 
-/**
- * This file contains Next.js middleware.
- * Due to testing complexities, it's excluded from Jest coverage.
- * Ensure Playwright tests cover middleware behavior.
- */
-
-const paths = {
-  accessOurData: 'access-our-data',
+export const config = {
+  matcher: [
+    // Skip Next.js internals and all static files, unless found in search params
+    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
+    // Always run for API routes
+    '/(api|trpc)(.*)',
+  ],
 }
 
-export async function middleware(request: NextRequest) {
-  // Access our data redirects/rewrites
-  if (request.nextUrl.pathname === `/${paths.accessOurData}`) {
+export const middleware: NextMiddleware = async (request: NextRequest) => {
+  let response = NextResponse.next()
+  const pathname = request.nextUrl.pathname
+
+  // Add x-url header for debugging or legacy usage
+  response.headers.set('x-url', request.url)
+
+  // Handle auth first if enabled
+  if (process.env.AUTH_ENABLED === 'true') {
+    // Filter out next-auth API requests
+    if (request.nextUrl.pathname.startsWith('/api/auth/')) {
+      return response
+    }
+
+    // Ensure the health check endpoint is always reachable
+    if (request.nextUrl.pathname.startsWith('/api/health')) {
+      return response
+    }
+
     try {
-      const { id } = await getPageBySlug(paths.accessOurData)
+      const token = await auth()
+      if (!token && !pathname.includes('/start')) {
+        return NextResponse.redirect(new URL('/start', request.url))
+      }
+      response = await validateAndRenewSession(request, response)
+    } catch (error) {
+      logger.error('Auth middleware error:', error)
+      return NextResponse.redirect(new URL('/start', request.url))
+    }
+  }
+
+  // Access our data redirects
+  if (request.nextUrl.pathname === '/access-our-data') {
+    try {
+      const { id } = await getPageBySlug('access-our-data')
 
       const pages = await getPages({ child_of: id.toString() })
 
@@ -35,7 +66,7 @@ export async function middleware(request: NextRequest) {
           },
         } = pages
 
-        return NextResponse.rewrite(new URL(`/${paths.accessOurData}/${slug}`, request.url))
+        return NextResponse.rewrite(new URL(`/access-our-data/${slug}`, request.url))
       }
       notFound()
     } catch (error) {
@@ -43,14 +74,5 @@ export async function middleware(request: NextRequest) {
     }
   }
 
-  // Store current request url in a custom header, which you can read later
-  const requestHeaders = new Headers(request.headers)
-  requestHeaders.set('x-url', request.url)
-
-  return NextResponse.next({
-    request: {
-      // Apply new request headers
-      headers: requestHeaders,
-    },
-  })
+  return response
 }
