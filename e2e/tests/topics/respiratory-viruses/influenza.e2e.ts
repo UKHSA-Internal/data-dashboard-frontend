@@ -75,7 +75,7 @@ test.describe('Influenza page', () => {
 
   test('Area selection already chosen upon visiting the page', async ({ influenzaPage, app }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -120,7 +120,7 @@ test.describe('Influenza page', () => {
     await test.step('choose an area type', async () => {
       await app.selectAreaSelectorDropdownOption('Area type', 'Nation')
       await app.checkAreaSelectorInputMatchesValue('Area type', 'Nation')
-      await app.waitForUrl(`${baseURL}/topics/influenza?areaType=Nation`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/influenza?areaType=Nation`)
     })
     await test.step('area name dropdown list is populated', async () => {
       await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
@@ -128,7 +128,7 @@ test.describe('Influenza page', () => {
     await test.step('choose an area name', async () => {
       await app.selectAreaSelectorDropdownOption('Area name', 'England')
       await app.checkAreaSelectorInputMatchesValue('Area name', 'England')
-      await app.waitForUrl(`${baseURL}/topics/influenza?areaType=Nation&areaName=England`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/influenza?areaType=Nation&areaName=England`)
     })
     await test.step('document title shows the selected location', async () => {
       await app.hasDocumentTitle('Influenza in England | UKHSA data dashboard')
@@ -143,7 +143,7 @@ test.describe('Influenza page', () => {
 
   test('Area selection is reset', async ({ influenzaPage, app, baseURL }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -156,7 +156,7 @@ test.describe('Influenza page', () => {
     })
     await test.step('click reset link', async () => {
       await app.clickAreaSelectorResetLink()
-      await app.waitForUrl(`${baseURL}/topics/influenza`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/influenza`)
     })
     await test.step('check the area selector is closed', async () => {
       await app.checkAreaSelectorFormIsActive(false)
@@ -301,7 +301,7 @@ test.describe('Influenza page - no JS', () => {
 
   test('Area selection already chosen upon visiting the page', async ({ influenzaPage, app }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -351,7 +351,7 @@ test.describe('Influenza page - no JS', () => {
       await app.submitAreaSelectorForm()
     })
     await test.step('resets the url', async () => {
-      await app.waitForUrl(`${baseURL}/topics/influenza?areaType=Nation`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/influenza?areaType=Nation`)
     })
     await test.step('area name dropdown list is populated', async () => {
       await app.checkAreaSelectorDropdownOptions('Area name', ['England'])
@@ -364,7 +364,7 @@ test.describe('Influenza page - no JS', () => {
       await app.submitAreaSelectorForm()
     })
     await test.step('resets the url', async () => {
-      await app.waitForUrl(`${baseURL}/topics/influenza?areaType=Nation&areaName=England`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/influenza?areaType=Nation&areaName=England`)
     })
     await test.step('document title shows the selected location', async () => {
       await app.hasDocumentTitle('Influenza in England | UKHSA data dashboard')
@@ -379,7 +379,7 @@ test.describe('Influenza page - no JS', () => {
 
   test('Area selection is reset', async ({ influenzaPage, app, baseURL }) => {
     await test.step('loads the page', async () => {
-      await app.goto('/topics/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
+      await app.goto('/respiratory-viruses/influenza?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
@@ -394,7 +394,7 @@ test.describe('Influenza page - no JS', () => {
       await app.clickAreaSelectorResetLink()
     })
     await test.step('resets the url', async () => {
-      await app.waitForUrl(`${baseURL}/topics/influenza`)
+      await app.waitForUrl(`${baseURL}/respiratory-viruses/influenza`)
     })
     await test.step('check the area selector is closed', async () => {
       await app.checkAreaSelectorFormIsActive(false)
