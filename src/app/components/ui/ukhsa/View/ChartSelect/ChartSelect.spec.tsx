@@ -71,7 +71,10 @@ describe('ChartSelect Component', () => {
       const select = screen.getByRole('combobox')
       fireEvent.change(select, { target: { value: 'test-chart|1-month' } })
 
-      expect(mockRouter.replace).toHaveBeenCalledWith('?timeseriesFilter=test-chart|1-month', { scroll: false })
+      const expectedParams = new URLSearchParams()
+      expectedParams.set('timeseriesFilter', 'test-chart|1-month')
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
 
     test('preserves existing URL parameters when updating filter', () => {
@@ -83,10 +86,10 @@ describe('ChartSelect Component', () => {
       const select = screen.getByRole('combobox')
       fireEvent.change(select, { target: { value: 'test-chart|1-month' } })
 
-      expect(mockRouter.replace).toHaveBeenCalledWith(
-        '?areaType=Nation&areaName=England&timeseriesFilter=test-chart|1-month',
-        { scroll: false }
-      )
+      const expectedParams = new URLSearchParams('areaType=Nation&areaName=England')
+      expectedParams.set('timeseriesFilter', 'test-chart|1-month')
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
 
     test('removes filter when selecting "All"', () => {
@@ -98,7 +101,8 @@ describe('ChartSelect Component', () => {
       const select = screen.getByRole('combobox')
       fireEvent.change(select, { target: { value: 'test-chart|all' } })
 
-      expect(mockRouter.replace).toHaveBeenCalledWith('?', { scroll: false })
+      const expectedParams = new URLSearchParams()
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
 
     test('handles multiple filters correctly', () => {
@@ -110,9 +114,11 @@ describe('ChartSelect Component', () => {
       const select = screen.getByRole('combobox')
       fireEvent.change(select, { target: { value: 'test-chart|1-month' } })
 
-      expect(mockRouter.replace).toHaveBeenCalledWith('?timeseriesFilter=other-chart|3-months;test-chart|1-month', {
-        scroll: false,
-      })
+      // Create expected URLSearchParams to handle encoding
+      const expectedParams = new URLSearchParams()
+      expectedParams.set('timeseriesFilter', 'other-chart|3-months;test-chart|1-month')
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
   })
 
