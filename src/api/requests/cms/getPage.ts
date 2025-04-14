@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { FormFields } from '@/api/models/cms/Page/FormFields'
+import { Announcements } from '@/api/models/cms/Page/Announcements'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -63,6 +64,7 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+  announcements: Announcements.or(fallback([])),
 })
 
 const WithCommonData = SharedPageData.extend({
