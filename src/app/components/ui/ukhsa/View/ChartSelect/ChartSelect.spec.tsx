@@ -92,7 +92,20 @@ describe('ChartSelect Component', () => {
       expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
 
-    test('removes filter when selecting "All"', () => {
+    test('removes filter when selecting "All" with other URL params', () => {
+      const existingParams = new URLSearchParams('areaType=Nation&timeseriesFilter=test-chart|1-month')
+      ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
+
+      render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
+
+      const select = screen.getByRole('combobox')
+      fireEvent.change(select, { target: { value: 'test-chart|all' } })
+
+      const expectedParams = new URLSearchParams('areaType=Nation')
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
+    })
+
+    test('removes filter when selecting "All" with no other URL params', () => {
       const existingParams = new URLSearchParams('timeseriesFilter=test-chart|1-month')
       ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
 
@@ -106,7 +119,7 @@ describe('ChartSelect Component', () => {
     })
 
     test('handles multiple filters correctly', () => {
-      const existingParams = new URLSearchParams('timeseriesFilter=other-chart|3-months')
+      const existingParams = new URLSearchParams('areaType=Nation&timeseriesFilter=other-chart|3-months')
       ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
 
       render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
@@ -114,9 +127,38 @@ describe('ChartSelect Component', () => {
       const select = screen.getByRole('combobox')
       fireEvent.change(select, { target: { value: 'test-chart|1-month' } })
 
-      // Create expected URLSearchParams to handle encoding
-      const expectedParams = new URLSearchParams()
+      const expectedParams = new URLSearchParams('areaType=Nation')
       expectedParams.set('timeseriesFilter', 'other-chart|3-months;test-chart|1-month')
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
+    })
+
+    test('replaces existing filter for same chart', () => {
+      const existingParams = new URLSearchParams('areaType=Nation&timeseriesFilter=test-chart|3-months')
+      ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
+
+      render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
+
+      const select = screen.getByRole('combobox')
+      fireEvent.change(select, { target: { value: 'test-chart|1-month' } })
+
+      const expectedParams = new URLSearchParams('areaType=Nation')
+      expectedParams.set('timeseriesFilter', 'test-chart|1-month')
+
+      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
+    })
+
+    test('handles empty filters correctly', () => {
+      const existingParams = new URLSearchParams('areaType=Nation&timeseriesFilter=')
+      ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
+
+      render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
+
+      const select = screen.getByRole('combobox')
+      fireEvent.change(select, { target: { value: 'test-chart|1-month' } })
+
+      const expectedParams = new URLSearchParams('areaType=Nation')
+      expectedParams.set('timeseriesFilter', 'test-chart|1-month')
 
       expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
@@ -133,8 +175,15 @@ describe('ChartSelect Component', () => {
       expect(select.value).toBe('test-chart|1-month')
     })
 
-    test('initializes with "All" selected when no filter in URL', () => {
-      render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
+    test('initializes with "1 Year" selected when no filter in URL and timespan >= 2 years', () => {
+      render(<ChartSelect timespan={{ years: 2, months: 0 }} chartId="test-chart" />)
+
+      const select = screen.getByRole('combobox') as HTMLSelectElement
+      expect(select.value).toBe('test-chart|1-year')
+    })
+
+    test('initializes with "All" selected when no filter in URL and timespan < 2 years', () => {
+      render(<ChartSelect timespan={{ years: 1, months: 6 }} chartId="test-chart" />)
 
       const select = screen.getByRole('combobox') as HTMLSelectElement
       expect(select.value).toBe('test-chart|all')

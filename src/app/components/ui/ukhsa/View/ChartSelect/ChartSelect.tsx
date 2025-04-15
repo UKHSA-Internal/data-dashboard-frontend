@@ -54,31 +54,26 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
 
   const setFilterParams = (newFilter: string) => {
     let filters = getFilters()
-
     const [filterName, filterValue] = newFilter.split('|')
 
-    // Remove existing filters with the same name
+    // Remove existing filters with the same name and add new one if not 'all'
     filters = filters.filter((filter) => !filter.startsWith(filterName))
-
-    // Only add the new filter if the value is not 'all'
     if (filterValue !== 'all') {
       filters.push(newFilter)
     }
 
     setSelectedFiltersList(filters)
 
-    // Filter out any empty strings before joining
-    const validFilters = filters.filter((filter) => filter.length > 0)
-
     const currentParams = new URLSearchParams(searchParams.toString())
 
+    // Update or remove timeseriesFilter based on remaining filters
+    const validFilters = filters.filter((filter) => filter.length > 0)
     if (validFilters.length > 0) {
       currentParams.set('timeseriesFilter', validFilters.join(';'))
     } else {
       currentParams.delete('timeseriesFilter')
     }
 
-    // Return the updated URL with all parameters preserved
     return `?${currentParams.toString()}`
   }
 
@@ -103,7 +98,6 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
     return `${amount} ${formattedUnit}`
   }
 
-  // Sort out default value for select component (if filter in URL params)
   const getCurrentFilterValue = () => {
     const currentFilter = selectedFiltersList.find((filter) => filter.startsWith(`${chartId}|`))
 
@@ -112,7 +106,8 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
       return formatTimeString(filterValue)
     }
 
-    return 'All'
+    // Default to "1 Year" if timespan is 2 years or more, otherwise "All"
+    return timespan.years >= 2 ? '1 Year' : 'All'
   }
 
   return (
