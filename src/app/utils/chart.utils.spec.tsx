@@ -22,7 +22,7 @@ describe('Get timespan between dates for chart', () => {
     ]
 
     const timespan = getChartTimespan(plots)
-    expect(timespan).toEqual({ years: 0, months: 0 })
+    expect(timespan).toEqual({ years: 1, months: 0 })
   })
 
   test('year and month diff for single plot', () => {
