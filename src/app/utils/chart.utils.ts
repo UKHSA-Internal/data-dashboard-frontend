@@ -110,3 +110,40 @@ export const getFilteredData = (data: z.infer<typeof ChartCardSchemas>['value'],
     }
   })
 }
+
+export const getSelectOptions = (years: number): Array<string> => {
+  if (years < 1) return ['all']
+
+  if (years >= 1 && years < 2) return ['1-month', '3-months', '6-months', 'all']
+
+  if (years >= 2 && years < 3) return ['1-month', '3-months', '6-months', '1-year', 'all']
+
+  if (years >= 3 && years < 4) return ['3-months', '6-months', '1-year', '2-years', 'all']
+
+  if (years >= 4 && years < 5) return ['6-months', '1-year', '2-years', '3-years', 'all']
+
+  if (years >= 5 && years < 6) return ['6-months', '1-year', '2-years', '3-years', '4-years', 'all']
+
+  if (years >= 6 && years < 10) return ['1-year', '2-years', '3-years', '4-years', '5-years', 'all']
+
+  if (years >= 10 && years < 15) return ['1-year', '2-years', '3-years', '5-years', '7-years', 'all']
+
+  if (years >= 15 && years < 20) return ['1-year', '2-years', '5-years', '10-years', 'all']
+
+  if (years >= 20 && years < 25) return ['1-year', '2-years', '5-years', '10-years', '15-years', 'all']
+
+  if (years >= 25 && years < 30) return ['1-year', '2-years', '10-years', '15-years', '20-years', 'all']
+
+  if (years >= 30 && years < 35) return ['1-year', '2-years', '10-years', '15-years', '20-years', 'all']
+
+  return ['all']
+}
+
+export const formatTimeString = (timeString: string) => {
+  if (timeString === 'all') return 'All'
+
+  const [amount, unit] = timeString.split('-')
+  const capitalizedUnit = unit.charAt(0).toUpperCase() + unit.slice(1)
+
+  return `${amount} ${capitalizedUnit}`
+}

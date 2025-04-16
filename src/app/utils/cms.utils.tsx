@@ -209,7 +209,7 @@ export const renderCard = (
                                 size: 'narrow',
                               },
                             ]}
-                            timeseriesFilter={timeseriesFilter}
+                            // timeseriesFilter={timeseriesFilter}
                           />
                         </AreaSelectorLoader>
                       </TabsContent>
@@ -314,7 +314,7 @@ export const renderCard = (
                             default: true,
                           },
                         ]}
-                        timeseriesFilter={timeseriesFilter}
+                        //  timeseriesFilter={timeseriesFilter}
                       />
                     </div>
                   </Link>

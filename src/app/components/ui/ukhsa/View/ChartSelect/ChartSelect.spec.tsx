@@ -1,8 +1,10 @@
+import userEvent from '@testing-library/user-event'
 import { useRouter, useSearchParams } from 'next/navigation'
 
+import { getSelectOptions } from '@/app/utils/chart.utils'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
-import ChartSelect, { getSelectOptions } from './ChartSelect'
+import ChartSelect from './ChartSelect'
 
 // Mock the next/navigation hooks
 jest.mock('next/navigation', () => ({
@@ -15,6 +17,22 @@ const mockRouter = {
 }
 
 const mockSearchParams = new URLSearchParams()
+
+// Mock the useChartFilterState hook
+jest.mock('@/app/hooks/useChartFilterState', () => ({
+  useChartFilterState: (chartId: string, timespan: { years: number; months: number }) => {
+    // Mock sessionStorage
+    const mockStorage: Record<string, string> = {}
+    const storageKey = `chart-filter-${chartId}`
+
+    return [
+      mockStorage[storageKey] || (timespan.years >= 2 ? '1-year' : 'all'),
+      (value: string) => {
+        mockStorage[storageKey] = value
+      },
+    ]
+  },
+}))
 
 describe('ChartSelect Component', () => {
   beforeEach(() => {
@@ -188,5 +206,46 @@ describe('ChartSelect Component', () => {
       const select = screen.getByRole('combobox') as HTMLSelectElement
       expect(select.value).toBe('test-chart|all')
     })
+  })
+
+  test('renders with correct initial value based on timespan', () => {
+    render(<ChartSelect timespan={{ years: 2, months: 0 }} chartId="test-chart" />)
+
+    const select = screen.getByRole('combobox') as HTMLSelectElement
+    expect(select.value).toBe('test-chart|1-year')
+  })
+
+  test('renders with "all" selected when timespan is less than 2 years', () => {
+    render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
+
+    const select = screen.getByRole('combobox') as HTMLSelectElement
+    expect(select.value).toBe('test-chart|all')
+  })
+
+  test('updates selected value when changed', async () => {
+    render(<ChartSelect timespan={{ years: 2, months: 0 }} chartId="test-chart" />)
+
+    const select = screen.getByRole('combobox')
+    await userEvent.selectOptions(select, 'test-chart|3-months')
+
+    expect(select).toHaveValue('test-chart|3-months')
+  })
+
+  test('renders correct options based on timespan', () => {
+    render(<ChartSelect timespan={{ years: 2, months: 0 }} chartId="test-chart" />)
+
+    const options = screen.getAllByRole('option')
+    expect(options).toHaveLength(5) // 1-month, 3-months, 6-months, 1-year, all
+    expect(options[0]).toHaveValue('test-chart|1-month')
+    expect(options[3]).toHaveValue('test-chart|1-year')
+    expect(options[4]).toHaveValue('test-chart|all')
+  })
+
+  test('renders with correct GOV.UK classes', () => {
+    render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
+
+    expect(screen.getByRole('combobox')).toHaveClass('govuk-select')
+    expect(screen.getByText('Filter data by')).toHaveClass('govuk-label')
+    expect(screen.getByRole('combobox').parentElement).toHaveClass('govuk-form-group')
   })
 })

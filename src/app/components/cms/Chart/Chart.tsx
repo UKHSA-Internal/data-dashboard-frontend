@@ -7,6 +7,7 @@ import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
+import { useReadChartFilters } from '@/app/hooks/useChartFilter'
 import { getServerTranslation } from '@/app/i18n'
 import { toSlug } from '@/app/utils/app.utils'
 import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
@@ -48,8 +49,6 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
-
-  timeseriesFilter: string
 }
 
 const createStaticChart = ({
@@ -96,8 +95,11 @@ const createStaticChart = ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
+  const chartFilters = useReadChartFilters()
+  const chartId = toSlug(data.chart[0].value.metric)
+  const timeseriesFilter = chartFilters[chartId] ? `${chartId}|${chartFilters[chartId]}` : undefined
 
   let chartData = data
 
