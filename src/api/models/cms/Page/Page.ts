@@ -1,9 +1,9 @@
 import { z } from 'zod'
 
+import { Announcements } from './Announcements'
 import { Body } from './Body'
 import { Meta } from './Meta'
 import { RelatedLink } from './RelatedLinks'
-import { Announcements } from './Announcements'
 
 export const Page = z.object({
   id: z.number(),

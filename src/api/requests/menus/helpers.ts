@@ -1,4 +1,4 @@
-import { getPath, getPathSegments } from '@/app/utils/cms/slug'
+import { getPath } from '@/app/utils/cms/slug'
 
 import { getMenu } from './getMenu'
 
