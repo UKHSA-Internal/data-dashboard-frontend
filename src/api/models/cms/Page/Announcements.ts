@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+const BannerTypeSchema = z.enum(['Warning', 'Information'])
+
 const Badge = z.object({
   id: z.number(),
   meta: z.object({
@@ -15,9 +17,9 @@ const Announcement = z.object({
   title: z.string(),
   badge: Badge,
   body: z.string(),
-  banner_type: z.string(),
+  banner_type: BannerTypeSchema,
   is_active: z.boolean(),
 })
 
 export const Announcements = z.array(Announcement)
-export type Announcements = z.infer<typeof Announcements> 
+export type Announcements = z.infer<typeof Announcements>

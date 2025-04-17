@@ -627,5 +627,23 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
   selected_topics: ['Influenza'],
   related_links: relatedLinksMock,
   related_links_layout: 'Footer',
+  announcements: [
+    {
+      id: 1,
+      meta: {
+        type: 'whats_new.WhatsNewParentPageAnnouncement',
+      },
+      title: 'Announcement title',
+      body: 'Announcement body',
+      badge: {
+        id: 1,
+        meta: {
+          type: 'badge.Badge',
+        },
+      },
+      banner_type: 'Warning',
+      is_active: true,
+    },
+  ],
   last_published_at: '2023-05-15T16:26:41.095645+01:00',
 }
