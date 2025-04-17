@@ -49,6 +49,10 @@ interface ChartProps {
       }
   >
 
+  /**
+   * Defines the value of the URL parameter 'timeseriesFilter' for use in filtering chart data
+   * Defaults to show all content if no filter present
+   */
   timeseriesFilter: string
 }
 

@@ -5,7 +5,7 @@ import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
 
-export const getChartTimespan = (plots: Chart) => {
+export const getChartTimespan = (plots: Chart): { years: number; months: number } => {
   if (!plots?.length) return { years: 0, months: 0 }
 
   let maxMonths = 0
@@ -63,7 +63,10 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
   return `${year}-${month}-${day}`
 }
 
-export const getFilteredData = (data: z.infer<typeof ChartCardSchemas>['value'], timeseriesFilter: string) => {
+export const getFilteredData = (
+  data: z.infer<typeof ChartCardSchemas>['value'],
+  timeseriesFilter: string
+): Chart | undefined => {
   if (!timeseriesFilter) return
 
   // Get timeseriesFilter URL parameters
