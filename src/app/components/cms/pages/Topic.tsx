@@ -2,7 +2,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import { Announcement, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCard } from '@/app/utils/cms.utils'
@@ -28,9 +28,27 @@ export default async function TopicPage({
     related_links_layout: relatedLinksLayout,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
+    announcements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
+
+  const hasAnnouncements = announcements && announcements.length > 0
+
   return (
     <View>
+      {hasAnnouncements &&
+        announcements.map((announcement) => {
+          return (
+            <Announcement
+              key={announcement.id}
+              variant={announcement.banner_type}
+              heading={announcement.title}
+              className={clsx({ 'govuk-!-margin-bottom-4': hasAnnouncements })}
+            >
+              {announcement.body}
+            </Announcement>
+          )
+        })}
+
       <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
       <LastUpdated lastUpdated={lastUpdated} />
       <Description description={description} />
