@@ -20,10 +20,13 @@ const providers: Provider[] = [
   }),
 ]
 
+const oneDay = 60 * 60 * 24
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',
+    maxAge: oneDay,
   },
   trustHost: true,
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://'),
