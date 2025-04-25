@@ -1,9 +1,6 @@
-import { Key } from 'react'
-
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { Announcement, View } from '@/app/components/ui/ukhsa'
-import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBanner'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '@/app/components/ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -22,25 +19,9 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     announcements,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 
-  const hasAnnouncements = announcements && announcements.length > 0
-
   return (
     <View>
-      {hasAnnouncements && // Render announcements if they exist
-        announcements.map(
-          (announcement: { id: Key | null | undefined; banner_type: BannerVariant; title: string; body: string }) => {
-            return (
-              <Announcement
-                key={announcement.id}
-                variant={announcement.banner_type}
-                heading={announcement.title}
-                className="govuk-!-margin-bottom-4"
-              >
-                {announcement.body}
-              </Announcement>
-            )
-          }
-        )}
+      <Announcements announcements={announcements} />
 
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />

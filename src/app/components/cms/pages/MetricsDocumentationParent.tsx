@@ -1,6 +1,5 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
-import { Key } from 'react'
 
 import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
@@ -13,8 +12,7 @@ import {
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
-import { Announcement, MetricsCard, View } from '@/app/components/ui/ukhsa'
-import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBanner'
+import { Announcements, MetricsCard, View } from '@/app/components/ui/ukhsa'
 import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
 import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
@@ -82,7 +80,6 @@ export default async function MetricsParentPage({
     announcements,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
-  const hasAnnouncements = announcements && announcements.length > 0
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
   if (!metricsEntries.success) {
@@ -107,21 +104,7 @@ export default async function MetricsParentPage({
 
   return (
     <View>
-      {hasAnnouncements &&
-        announcements.map(
-          (announcement: { id: Key | null | undefined; banner_type: BannerVariant; title: string; body: string }) => {
-            return (
-              <Announcement
-                key={announcement.id}
-                variant={announcement.banner_type}
-                heading={announcement.title}
-                className="govuk-!-margin-bottom-4"
-              >
-                {announcement.body}
-              </Announcement>
-            )
-          }
-        )}
+      <Announcements announcements={announcements} />
 
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
