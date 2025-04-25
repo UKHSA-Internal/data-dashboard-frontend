@@ -1,9 +1,11 @@
+import { Key } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcement, View } from '@/app/components/ui/ukhsa'
+import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
@@ -25,12 +27,30 @@ export default async function WhatsNewChildPage({
     additional_details,
     date_posted: datePosted,
     last_updated_at: lastUpdated,
+    announcements,
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
+  const hasAnnouncements = announcements && announcements.length > 0
   const backLink = searchParams.returnUrl || extractRootSlug(slug)
 
   return (
     <View>
+      {hasAnnouncements &&
+        announcements.map(
+          (announcement: { id: Key | null | undefined; banner_type: BannerVariant; title: string; body: string }) => {
+            return (
+              <Announcement
+                key={announcement.id}
+                variant={announcement.banner_type}
+                heading={announcement.title}
+                className="govuk-!-margin-bottom-4"
+              >
+                {announcement.body}
+              </Announcement>
+            )
+          }
+        )}
+
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />

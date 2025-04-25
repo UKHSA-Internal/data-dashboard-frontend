@@ -32,6 +32,7 @@ const SharedPageData = z.object({
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
+  announcements: Announcements.or(fallback([])).optional(),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -64,7 +65,6 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
-  announcements: Announcements.or(fallback([])),
 })
 
 const WithCommonData = SharedPageData.extend({

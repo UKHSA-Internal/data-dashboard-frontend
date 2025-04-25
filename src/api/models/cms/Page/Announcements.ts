@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
-const BannerTypeSchema = z.enum(['Warning', 'Information'])
+import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBanner'
+
+const BannerTypeSchema = z.enum(['Warning', 'Information']) as z.ZodType<BannerVariant>
 
 const Badge = z.object({
   id: z.number(),

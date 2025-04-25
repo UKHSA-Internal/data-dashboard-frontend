@@ -3,6 +3,7 @@ import dayjs from 'dayjs'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
+import { Key } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 import { SafeParseSuccess } from 'zod'
 
@@ -18,7 +19,8 @@ import {
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcement, View } from '@/app/components/ui/ukhsa'
+import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBanner'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -38,8 +40,10 @@ export default async function WhatsNewParentPage({
     last_updated_at: lastUpdated,
     show_pagination: showPagination,
     pagination_size: paginationSize,
+    announcements,
   } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })
 
+  const hasAnnouncements = announcements && announcements.length > 0
   const whatsNewEntries = await getWhatsNewPages({ page, showPagination, paginationSize })
 
   if (!whatsNewEntries.success) {
@@ -88,6 +92,22 @@ export default async function WhatsNewParentPage({
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
+      {hasAnnouncements &&
+        announcements.map(
+          (announcement: { id: Key | null | undefined; banner_type: BannerVariant; title: string; body: string }) => {
+            return (
+              <Announcement
+                key={announcement.id}
+                variant={announcement.banner_type}
+                heading={announcement.title}
+                className="govuk-!-margin-bottom-4"
+              >
+                {announcement.body}
+              </Announcement>
+            )
+          }
+        )}
+
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>

@@ -1,7 +1,10 @@
+import { Key } from 'react'
+
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import { Announcement, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBanner'
 import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -24,12 +27,30 @@ export default async function MetricsChildPage({
     metric_group: group,
     body,
     last_updated_at: lastUpdated,
+    announcements,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
+  const hasAnnouncements = announcements && announcements.length > 0
   const backLink = returnUrl || extractRootSlug(slug)
 
   return (
     <View>
+      {hasAnnouncements &&
+        announcements.map(
+          (announcement: { id: Key | null | undefined; banner_type: BannerVariant; title: string; body: string }) => {
+            return (
+              <Announcement
+                key={announcement.id}
+                variant={announcement.banner_type}
+                heading={announcement.title}
+                className="govuk-!-margin-bottom-4"
+              >
+                {announcement.body}
+              </Announcement>
+            )
+          }
+        )}
+
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
