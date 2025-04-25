@@ -14,7 +14,7 @@ const Badge = z.object({
 const Announcement = z.object({
   id: z.number(),
   meta: z.object({
-    type: z.literal('whats_new.WhatsNewParentPageAnnouncement'),
+    type: z.string(),
   }),
   title: z.string(),
   badge: Badge,
