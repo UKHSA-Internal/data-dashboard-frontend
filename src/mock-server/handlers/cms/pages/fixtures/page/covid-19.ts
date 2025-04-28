@@ -48,22 +48,6 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
       banner_type: 'Warning',
       is_active: true,
     },
-    {
-      id: 2,
-      meta: {
-        type: 'whats_new.WhatsNewParentPageAnnouncement',
-      },
-      title: 'Weekly Surveillance Report',
-      badge: {
-        id: 2,
-        meta: {
-          type: 'whats_new.Badge',
-        },
-      },
-      body: '<p data-block-key="5uznk">The latest weekly surveillance report for COVID-19 is now available. Key findings include trends in case rates and hospital admissions.</p>',
-      banner_type: 'Information',
-      is_active: true,
-    },
   ],
   body: [
     {
