@@ -42,12 +42,6 @@ export const aboutPageMock: PageResponse<PageType.Common> = {
       },
       title: 'Single page announcement',
       body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.',
-      badge: {
-        id: 1,
-        meta: {
-          type: 'badge.Badge',
-        },
-      },
       banner_type: 'Warning',
       is_active: true,
     },

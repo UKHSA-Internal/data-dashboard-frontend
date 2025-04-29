@@ -4,20 +4,12 @@ import { BannerVariant } from '@/app/components/ui/ukhsa/GlobalBanner/GlobalBann
 
 const BannerTypeSchema = z.enum(['Warning', 'Information']) as z.ZodType<BannerVariant>
 
-const Badge = z.object({
-  id: z.number(),
-  meta: z.object({
-    type: z.string(),
-  }),
-})
-
 const Announcement = z.object({
   id: z.number(),
   meta: z.object({
     type: z.string(),
   }),
   title: z.string(),
-  badge: Badge,
   body: z.string(),
   banner_type: BannerTypeSchema,
   is_active: z.boolean(),

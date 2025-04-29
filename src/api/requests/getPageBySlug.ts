@@ -18,12 +18,14 @@ export const getPageBySlug = async <T extends PageType>(slugParam: string | Slug
     // Find the CMS page within the list that matches the provided slug
     if (pages.success) {
       const { items } = pages.data
+      console.log('page data: ', items)
 
       const matchedPage = items.find(({ meta }) => meta.slug === slug)
 
       if (matchedPage) {
         // Once we have a match, use the id to fetch the single page
         const page = await getPage<T>(matchedPage.id)
+        console.log('page:', page)
 
         if (page.success) {
           return page.data as PageResponse<T>

@@ -29,7 +29,7 @@ export default async function WhatsNewChildPage({
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
   const backLink = searchParams.returnUrl || extractRootSlug(slug)
-
+  console.log('whats new child announcements: ', announcements)
   return (
     <View>
       <Announcements announcements={announcements} />

@@ -174,6 +174,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         url: 'https://assets.publishing.service.gov.uk/media/653f84ff80884d0013f71d1b/User-guide-impact-based-weather-and-health-alerting-system.pdf',
       },
     ],
+    announcements: [],
     related_links_layout: 'Sidebar',
   },
 ]

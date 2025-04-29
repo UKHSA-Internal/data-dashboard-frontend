@@ -942,12 +942,6 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
       },
       title: 'Announcement title',
       body: 'Announcement body',
-      badge: {
-        id: 1,
-        meta: {
-          type: 'badge.Badge',
-        },
-      },
       banner_type: 'Warning',
       is_active: true,
     },

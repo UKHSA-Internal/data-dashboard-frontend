@@ -110,12 +110,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         },
         title: 'Single page announcement',
         body: 'Metrics child announcement, this is a test',
-        badge: {
-          id: 1,
-          meta: {
-            type: 'badge.Badge',
-          },
-        },
         banner_type: 'Warning',
         is_active: true,
       },
