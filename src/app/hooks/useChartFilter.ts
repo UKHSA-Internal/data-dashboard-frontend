@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react'
 
 import { Timespan } from '@/app/types/chart'
@@ -7,7 +9,6 @@ export const useReadChartFilters = () => {
   const [filters, setFilters] = useState<Record<string, string>>({})
 
   useEffect(() => {
-    // Get all filters from session storage
     const allFilters: Record<string, string> = {}
     for (let i = 0; i < sessionStorage.length; i++) {
       const key = sessionStorage.key(i)

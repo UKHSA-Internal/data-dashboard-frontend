@@ -17,9 +17,9 @@ import { getShowLessURL, getShowMoreURL } from '@/app/utils/show-more.utils'
 import {
   ButtonExternal,
   ButtonInternal,
-  Chart,
   ChartRowCard,
   ChartRowCardHeader,
+  ChartWrapper,
   CodeBlock,
   Download,
   Headline,
@@ -197,7 +197,7 @@ export const renderCard = (
                           </>
                         )}
                         <AreaSelectorLoader>
-                          <Chart
+                          <ChartWrapper
                             data={column.value}
                             sizes={[
                               {
@@ -209,7 +209,6 @@ export const renderCard = (
                                 size: 'narrow',
                               },
                             ]}
-                            // timeseriesFilter={timeseriesFilter}
                           />
                         </AreaSelectorLoader>
                       </TabsContent>
@@ -300,7 +299,7 @@ export const renderCard = (
                     <p className="govuk-body-s mb-3 text-grey-1">{card.value.sub_title}</p>
 
                     <div>
-                      <Chart
+                      <ChartWrapper
                         // Disable on landing page
                         enableInteractive={false}
                         data={card.value}
@@ -314,7 +313,6 @@ export const renderCard = (
                             default: true,
                           },
                         ]}
-                        //  timeseriesFilter={timeseriesFilter}
                       />
                     </div>
                   </Link>

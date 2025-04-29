@@ -7,13 +7,10 @@ import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
-import { useReadChartFilters } from '@/app/hooks/useChartFilter'
 import { getServerTranslation } from '@/app/i18n'
-import { toSlug } from '@/app/utils/app.utils'
-import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
+import { getChartSvg, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
-import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
@@ -49,6 +46,11 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
+
+  /**
+   * Optional filter string passed from client component
+   */
+  timeseriesFilter?: string
 }
 
 const createStaticChart = ({
@@ -95,11 +97,8 @@ const createStaticChart = ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
   const { t } = await getServerTranslation('common')
-  const chartFilters = useReadChartFilters()
-  const chartId = toSlug(data.chart[0].value.metric)
-  const timeseriesFilter = chartFilters[chartId] ? `${chartId}|${chartFilters[chartId]}` : undefined
 
   let chartData = data
 
@@ -194,27 +193,15 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
-    return (
-      <>
-        {data.show_timeseries_filter && (
-          <ChartSelect timespan={getChartTimespan(data.chart)} chartId={toSlug(data.chart[0].value.metric)} />
-        )}
-        {staticChart}
-      </>
-    )
+    return staticChart
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page)
   if (!enableInteractive) return staticChart
 
   return (
-    <>
-      {data.show_timeseries_filter && (
-        <ChartSelect timespan={getChartTimespan(data.chart)} chartId={toSlug(data.chart[0].value.metric)} />
-      )}
-      <Suspense fallback={staticChart}>
-        <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
-      </Suspense>
-    </>
+    <Suspense fallback={staticChart}>
+      <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
+    </Suspense>
   )
 }
