@@ -4,7 +4,7 @@ import { ControlPosition } from 'leaflet'
 import Image from 'next/image'
 import Control from 'react-leaflet-custom-control'
 
-import logo from '#/assets/images/UKHSA_Lesser_Arms_Stacked_RGB.png'
+import logo from '#/assets/images/ukhsa_lesser_arms_stacked_logo.png'
 
 interface LogoLayerProps {
   position: ControlPosition
