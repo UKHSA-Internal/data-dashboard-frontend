@@ -21,7 +21,7 @@ import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlert
 import { useTranslation } from '@/app/i18n/client'
 import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 import { logger } from '@/lib/logger'
-import riskMatrix from '#/assets/images/Risk_Matrix.png'
+import riskMatrix from '#/assets/images/risk-matrix.png'
 
 interface AlertProps {
   weather: HealthAlertTypes

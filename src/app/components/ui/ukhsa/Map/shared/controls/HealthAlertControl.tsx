@@ -22,7 +22,7 @@ import { useTranslation } from '@/app/i18n/client'
 import { toSlug } from '@/app/utils/app.utils'
 import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 import { clsx } from '@/lib/clsx'
-import riskMatrix from '#/assets/images/Risk_Matrix.png'
+import riskMatrix from '#/assets/images/risk-matrix.png'
 
 const DialogSkeleton = () => (
   <div className="govuk-!-padding-4 mt-[70px] flex flex-col gap-4">
