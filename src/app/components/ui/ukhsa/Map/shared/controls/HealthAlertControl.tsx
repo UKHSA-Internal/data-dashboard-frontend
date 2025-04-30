@@ -22,7 +22,6 @@ import { useTranslation } from '@/app/i18n/client'
 import { toSlug } from '@/app/utils/app.utils'
 import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 import { clsx } from '@/lib/clsx'
-import riskMatrix from '#/assets/images/risk-matrix.png'
 
 const DialogSkeleton = () => (
   <div className="govuk-!-padding-4 mt-[70px] flex flex-col gap-4">
@@ -129,7 +128,11 @@ const AlertDialogContent = () => {
             <>
               <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
               <div className="pb-3">
-                <Image src={riskMatrix} height="500" alt="Logo for the UK Health Security Agency" />
+                <Image
+                  src={'/assets/images/risk-matrix.png'}
+                  height="500"
+                  alt="Logo for the UK Health Security Agency"
+                />
               </div>
             </>
           )}

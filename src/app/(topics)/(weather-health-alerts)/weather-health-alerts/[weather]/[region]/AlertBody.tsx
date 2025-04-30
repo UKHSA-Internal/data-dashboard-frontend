@@ -21,7 +21,6 @@ import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlert
 import { useTranslation } from '@/app/i18n/client'
 import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
 import { logger } from '@/lib/logger'
-import riskMatrix from '#/assets/images/risk-matrix.png'
 
 interface AlertProps {
   weather: HealthAlertTypes
@@ -151,7 +150,11 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
             <>
               <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
               <div className="pb-5">
-                <Image src={riskMatrix} height="500" alt="Logo for the UK Health Security Agency" />
+                <Image
+                  src={'/assets/images/risk-matrix.png'}
+                  height="500"
+                  alt="Logo for the UK Health Security Agency"
+                />
               </div>
             </>
           )}
