@@ -13,7 +13,8 @@ export function UKHSALogoLayer({ position }: LogoLayerProps) {
       <div data-testid="logo-layer">
         <img
           src={'/assets/images/ukhsa_lesser_arms_stacked_logo.png'}
-          height="125"
+          height={'125px'}
+          width={'125px'}
           alt="Logo for the UK Health Security Agency"
         />
       </div>
