@@ -1,7 +1,6 @@
 'use client'
 
 import { ControlPosition } from 'leaflet'
-import Image from 'next/image'
 import Control from 'react-leaflet-custom-control'
 
 interface LogoLayerProps {
@@ -12,7 +11,7 @@ export function UKHSALogoLayer({ position }: LogoLayerProps) {
   return (
     <Control position={position}>
       <div data-testid="logo-layer">
-        <Image
+        <img
           src={'/assets/images/ukhsa_lesser_arms_stacked_logo.png'}
           height="125"
           alt="Logo for the UK Health Security Agency"

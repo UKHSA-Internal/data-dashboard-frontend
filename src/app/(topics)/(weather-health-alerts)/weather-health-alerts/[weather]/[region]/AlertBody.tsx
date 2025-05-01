@@ -1,7 +1,6 @@
 'use client'
 
 import clsx from 'clsx'
-import Image from 'next/image'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ReactNode, Suspense } from 'react'
@@ -150,7 +149,7 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
             <>
               <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
               <div className="pb-5">
-                <Image
+                <img
                   src={'/assets/images/risk-matrix.png'}
                   height="500"
                   alt="Risk Matrix for the Weather Health Alert risk score metric."

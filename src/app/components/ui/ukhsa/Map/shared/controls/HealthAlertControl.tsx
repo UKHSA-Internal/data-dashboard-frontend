@@ -1,6 +1,5 @@
 'use client'
 
-import Image from 'next/image'
 import Link from 'next/link'
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs'
 import { Suspense } from 'react'
@@ -128,7 +127,7 @@ const AlertDialogContent = () => {
             <>
               <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
               <div className="pb-3">
-                <Image
+                <img
                   src={'/assets/images/risk-matrix.png'}
                   height="500"
                   alt="Risk Matrix for the Weather Health Alert risk score metric."
