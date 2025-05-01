@@ -153,7 +153,7 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
                 <Image
                   src={'/assets/images/risk-matrix.png'}
                   height="500"
-                  alt="Logo for the UK Health Security Agency"
+                  alt="Risk Matrix for the Weather Health Alert risk score metric."
                 />
               </div>
             </>
