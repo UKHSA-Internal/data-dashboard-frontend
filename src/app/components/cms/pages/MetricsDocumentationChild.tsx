@@ -24,14 +24,14 @@ export default async function MetricsChildPage({
     metric_group: group,
     body,
     last_updated_at: lastUpdated,
-    announcements,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
   const backLink = returnUrl || extractRootSlug(slug)
 
   return (
     <View>
-      <Announcements announcements={announcements} />
+      <Announcements announcements={activeAnnouncements} />
 
       <BackLink backlink={backLink} />
       <Heading heading={title} />

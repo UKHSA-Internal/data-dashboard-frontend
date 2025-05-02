@@ -38,7 +38,7 @@ export default async function WhatsNewParentPage({
     last_updated_at: lastUpdated,
     show_pagination: showPagination,
     pagination_size: paginationSize,
-    announcements,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })
 
   const whatsNewEntries = await getWhatsNewPages({ page, showPagination, paginationSize })
@@ -89,7 +89,7 @@ export default async function WhatsNewParentPage({
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
-      <Announcements announcements={announcements} />
+      <Announcements announcements={activeAnnouncements} />
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">

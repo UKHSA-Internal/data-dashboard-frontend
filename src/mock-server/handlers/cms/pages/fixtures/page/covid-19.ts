@@ -31,16 +31,12 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
   title: 'COVID-19',
   page_description:
     '<p data-block-key="sud2w">Data and insights from the UKHSA on COVID-19. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency">See the simple summary for England (opens in a new tab).</a></p>',
-  announcements: [
+  active_announcements: [
     {
       id: 1,
-      meta: {
-        type: 'whats_new.WhatsNewParentPageAnnouncement',
-      },
       title: 'COVID-19 Data Update',
       body: '<p data-block-key="5uznk">We have updated our COVID-19 data reporting to include new metrics and improved visualization tools. Please review the changes and provide feedback.</p>',
       banner_type: 'Warning',
-      is_active: true,
     },
   ],
   body: [

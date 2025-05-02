@@ -28,12 +28,12 @@ export default async function TopicPage({
     related_links_layout: relatedLinksLayout,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
-    announcements,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
   return (
     <View>
-      <Announcements announcements={announcements} />
+      <Announcements announcements={activeAnnouncements} />
 
       <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
       <LastUpdated lastUpdated={lastUpdated} />

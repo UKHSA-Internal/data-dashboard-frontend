@@ -102,16 +102,12 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
-    announcements: [
+    active_announcements: [
       {
         id: 1,
-        meta: {
-          type: 'metrics_documentation.MetricsDocumentationChildAnnouncement',
-        },
         title: 'Single page announcement',
         body: 'Metrics child announcement, this is a test',
         banner_type: 'Warning',
-        is_active: true,
       },
     ],
   },

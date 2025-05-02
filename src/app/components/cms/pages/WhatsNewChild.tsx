@@ -25,13 +25,13 @@ export default async function WhatsNewChildPage({
     additional_details,
     date_posted: datePosted,
     last_updated_at: lastUpdated,
-    announcements,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.WhatsNewChild>(slug, { type: PageType.WhatsNewChild, fields: '*' })
 
   const backLink = searchParams.returnUrl || extractRootSlug(slug)
   return (
     <View>
-      <Announcements announcements={announcements} />
+      <Announcements announcements={activeAnnouncements} />
 
       <BackLink backlink={backLink} />
       <Heading heading={title} />

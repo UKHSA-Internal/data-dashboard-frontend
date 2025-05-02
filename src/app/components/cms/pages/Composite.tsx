@@ -16,12 +16,12 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
-    announcements,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 
   return (
     <View>
-      <Announcements announcements={announcements} />
+      <Announcements announcements={activeAnnouncements} />
 
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />

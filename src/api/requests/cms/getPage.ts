@@ -32,7 +32,7 @@ const SharedPageData = z.object({
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
-  announcements: Announcements.or(fallback([])).optional(),
+  active_announcements: Announcements.or(fallback([])).optional(),
 })
 
 const WithLandingData = SharedPageData.extend({

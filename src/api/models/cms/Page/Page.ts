@@ -16,7 +16,7 @@ export const Page = z.object({
   last_published_at: z.string().datetime(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
-  announcements: z.optional(Announcements),
+  active_announcements: z.optional(Announcements),
 })
 
 export type Page = z.infer<typeof Page>

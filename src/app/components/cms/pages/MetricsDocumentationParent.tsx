@@ -77,7 +77,7 @@ export default async function MetricsParentPage({
     last_updated_at: lastUpdated,
     show_pagination: showPagination,
     pagination_size: paginationSize,
-    announcements,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
@@ -104,7 +104,7 @@ export default async function MetricsParentPage({
 
   return (
     <View>
-      <Announcements announcements={announcements} />
+      <Announcements announcements={activeAnnouncements} />
 
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
