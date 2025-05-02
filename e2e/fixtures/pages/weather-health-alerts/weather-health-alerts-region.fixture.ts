@@ -72,11 +72,15 @@ export class WeatherHealthAlertsRegionPage {
     await expect(wrapper.getByText('Alert', { exact: true })).toBeVisible()
     await expect(wrapper.getByText(expectedStatus)).toBeVisible()
 
-    await expect(wrapper.getByText('Start')).toBeVisible()
-    await expect(wrapper.getByText(start)).toBeVisible()
+    if (start) {
+      await expect(wrapper.getByText('Start')).toBeVisible()
+      await expect(wrapper.getByText(start)).toBeVisible()
+    }
 
-    await expect(wrapper.getByText('End')).toBeVisible()
-    await expect(wrapper.getByText(end)).toBeVisible()
+    if (end) {
+      await expect(wrapper.getByText('End')).toBeVisible()
+      await expect(wrapper.getByText(end)).toBeVisible()
+    }
   }
 
   async hasBodyContent(bodyText: string) {
@@ -93,6 +97,10 @@ export class WeatherHealthAlertsRegionPage {
 
   async opensMapLink() {
     await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
+
+    await expect(this.page.getByRole('button', { name: 'Close' })).toBeVisible()
+
+    await this.page.getByRole('button', { name: 'Close' }).click()
 
     await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
 
