@@ -129,7 +129,8 @@ const AlertDialogContent = () => {
               <div className="pb-3">
                 <img
                   src={'/assets/images/risk-matrix.png'}
-                  height="500"
+                  height={'350'}
+                  width={'350'}
                   alt="Risk Matrix for the Weather Health Alert risk score metric."
                 />
               </div>

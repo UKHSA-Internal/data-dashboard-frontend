@@ -151,7 +151,8 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
               <div className="pb-5">
                 <img
                   src={'/assets/images/risk-matrix.png'}
-                  height="500"
+                  height={'450'}
+                  width={'450'}
                   alt="Risk Matrix for the Weather Health Alert risk score metric."
                 />
               </div>
