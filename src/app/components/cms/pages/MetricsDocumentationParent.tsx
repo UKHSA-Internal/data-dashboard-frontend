@@ -104,10 +104,9 @@ export default async function MetricsParentPage({
 
   return (
     <View>
-      <Announcements announcements={activeAnnouncements} />
-
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>

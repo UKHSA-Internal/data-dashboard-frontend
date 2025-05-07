@@ -1,4 +1,4 @@
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { PageComponentBaseProps } from '@/app/types'
 import { getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
@@ -9,9 +9,14 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
   if (section) {
     processedSectionParams = processedParams(section)
   }
-  const { body } = await getLandingPage()
+  const { body, active_announcements: activeAnnouncements } = await getLandingPage()
 
-  return <View>{body.map(renderSection.bind(null, processedSectionParams))}</View>
+  return (
+    <View>
+      <Announcements announcements={activeAnnouncements} />
+      {body.map(renderSection.bind(null, processedSectionParams))}
+    </View>
+  )
 }
 
 const processedParams = (value: string | string[]) => {

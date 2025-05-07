@@ -33,10 +33,9 @@ export default async function TopicPage({
 
   return (
     <View>
-      <Announcements announcements={activeAnnouncements} />
-
       <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
       <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
       <Description description={description} />
       <div className="govuk-grid-row">
         <div

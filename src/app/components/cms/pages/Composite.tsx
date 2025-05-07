@@ -21,10 +21,9 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
 
   return (
     <View>
-      <Announcements announcements={activeAnnouncements} />
-
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           {typeof body === 'string' ? (

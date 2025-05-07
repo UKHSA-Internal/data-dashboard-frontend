@@ -31,11 +31,10 @@ export default async function MetricsChildPage({
 
   return (
     <View>
-      <Announcements announcements={activeAnnouncements} />
-
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>
