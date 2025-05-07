@@ -934,5 +934,13 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
   selected_topics: ['Adenovirus', 'hMPV', 'Parainfluenza', 'Rhinovirus'],
   related_links: relatedLinksMock,
   related_links_layout: 'Footer',
+  active_announcements: [
+    {
+      id: 1,
+      title: 'Announcement title',
+      body: 'Announcement body',
+      banner_type: 'Warning',
+    },
+  ],
   last_published_at: '2023-05-10T17:27:37.116337+01:00',
 }

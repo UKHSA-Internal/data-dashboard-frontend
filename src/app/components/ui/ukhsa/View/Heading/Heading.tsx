@@ -6,9 +6,10 @@ import { getServerTranslation } from '@/app/i18n'
 interface HeadingProps {
   lastUpdated?: string
   heading: string
+  className?: string
 }
 
-export const Heading = async ({ lastUpdated, heading }: HeadingProps) => {
+export const Heading = async ({ lastUpdated, heading, className }: HeadingProps) => {
   const { t } = await getServerTranslation('common')
 
   return (
@@ -18,7 +19,7 @@ export const Heading = async ({ lastUpdated, heading }: HeadingProps) => {
       components={[
         <span className="govuk-visually-hidden" key={0} />,
         <h1
-          className={clsx('govuk-heading-xl', {
+          className={clsx('govuk-heading-xl', className, {
             'govuk-!-margin-bottom-4': !lastUpdated,
             'govuk-!-margin-bottom-2': lastUpdated,
           })}

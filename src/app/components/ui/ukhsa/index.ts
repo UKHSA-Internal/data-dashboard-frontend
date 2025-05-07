@@ -1,4 +1,5 @@
 export * from './Announcement/Announcement'
+export * from './Announcements/Announcements'
 export * from './BackToTop/BackToTop'
 export * from './BrowseCard/BrowseCard'
 export * from './Card/Card'

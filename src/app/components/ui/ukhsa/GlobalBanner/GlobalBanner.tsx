@@ -2,8 +2,10 @@ import clsx from 'clsx'
 
 import { RichText } from '@/app/components/cms'
 
+export type BannerVariant = 'Information' | 'Warning'
+
 interface GlobalBannerProps {
-  variant: 'Information' | 'Warning'
+  variant: BannerVariant
   heading: string
   children: string
   className?: string

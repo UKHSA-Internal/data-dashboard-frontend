@@ -18,7 +18,7 @@ import {
   PaginationPrevious,
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -38,6 +38,7 @@ export default async function WhatsNewParentPage({
     last_updated_at: lastUpdated,
     show_pagination: showPagination,
     pagination_size: paginationSize,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.WhatsNewParent>(slug, { type: PageType.WhatsNewParent })
 
   const whatsNewEntries = await getWhatsNewPages({ page, showPagination, paginationSize })
@@ -88,6 +89,8 @@ export default async function WhatsNewParentPage({
 
   return (
     <View heading={title} lastUpdated={lastUpdated}>
+      <Announcements announcements={activeAnnouncements} />
+
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>

@@ -1,12 +1,12 @@
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
+import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '@/app/components/ui/ukhsa/View/LastUpdated/LastUpdated'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
-import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 import { RichTextAutoHeadings } from '../RichText/RichTextAutoHeadings'
 
 export default async function CompositePage({ slug }: PageComponentBaseProps) {
@@ -16,12 +16,14 @@ export default async function CompositePage({ slug }: PageComponentBaseProps) {
     last_updated_at: lastUpdated,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Common | PageType.Composite>(slug)
 
   return (
     <View>
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           {typeof body === 'string' ? (

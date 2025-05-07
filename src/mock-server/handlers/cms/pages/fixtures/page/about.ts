@@ -34,4 +34,12 @@ export const aboutPageMock: PageResponse<PageType.Common> = {
   last_published_at: '2023-05-12T14:40:33.168212+01:00',
   related_links: relatedLinksMock,
   related_links_layout: 'Footer',
+  active_announcements: [
+    {
+      id: 1,
+      title: 'Single page announcement',
+      body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.',
+      banner_type: 'Warning',
+    },
+  ],
 }

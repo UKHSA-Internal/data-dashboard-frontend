@@ -1,7 +1,7 @@
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
-import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -24,6 +24,7 @@ export default async function MetricsChildPage({
     metric_group: group,
     body,
     last_updated_at: lastUpdated,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
   const backLink = returnUrl || extractRootSlug(slug)
@@ -33,6 +34,7 @@ export default async function MetricsChildPage({
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <PageSectionWithContents>

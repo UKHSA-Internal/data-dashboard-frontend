@@ -1,7 +1,7 @@
 import { ReactNode } from 'react'
 
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { authEnabled } from '@/config/constants'
 
@@ -18,11 +18,12 @@ export default async function Layout({
   sidebar: ReactNode
   pagination: ReactNode
 }) {
-  const { title } = await getPageBySlug('access-our-data')
+  const { title, active_announcements: activeAnnouncements } = await getPageBySlug('access-our-data')
 
   return (
     <View>
       <Heading heading={title} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">{parent}</div>
       </div>
