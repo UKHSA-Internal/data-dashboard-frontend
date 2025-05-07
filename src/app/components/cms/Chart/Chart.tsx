@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import kebabCase from 'lodash/kebabCase'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { z } from 'zod'
@@ -102,6 +103,7 @@ const createStaticChart = ({
 
 export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
   const { t } = await getServerTranslation('common')
+  const chartId = toSlug(data.chart[0].value.metric)
 
   let chartData = data
 
@@ -198,9 +200,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
     return (
       <>
-        {data.show_timeseries_filter && (
-          <ChartSelect timespan={getChartTimespan(data.chart)} chartId={toSlug(data.chart[0].value.metric)} />
-        )}
+        {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
         {staticChart}
       </>
     )
@@ -211,12 +211,15 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
 
   return (
     <>
-      {data.show_timeseries_filter && (
-        <ChartSelect timespan={getChartTimespan(data.chart)} chartId={toSlug(data.chart[0].value.metric)} />
-      )}
+      {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
       <Suspense fallback={staticChart}>
         <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
       </Suspense>
+      <br />
+      <noscript>
+        One year of data currently shown, to see additional content please{' '}
+        <a href={`#download-${kebabCase(data.title)}`}>download</a> the data set
+      </noscript>
     </>
   )
 }

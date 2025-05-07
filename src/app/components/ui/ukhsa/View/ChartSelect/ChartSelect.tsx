@@ -3,6 +3,7 @@
 import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 
+import { useTimeseriesFilterUpdater } from '@/app/hooks/useTimeseriesFilter'
 import { toSlug } from '@/app/utils/app.utils'
 
 export const getSelectOptions = (years: number): Array<string> => {
@@ -42,6 +43,8 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
   const router = useRouter()
   const searchParams = useSearchParams()
 
+  const { setFilter } = useTimeseriesFilterUpdater()
+
   // Initialize state with current filters
   const [selectedFiltersList, setSelectedFiltersList] = useState<string[]>(
     () => searchParams.get('timeseriesFilter')?.split(';') || []
@@ -63,6 +66,7 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
     // Only add the new filter if the value is not 'all'
     if (filterValue !== 'all') {
       filters.push(newFilter)
+      setFilter(newFilter)
     }
 
     setSelectedFiltersList(filters)
