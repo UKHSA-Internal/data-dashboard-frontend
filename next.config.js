@@ -3,7 +3,7 @@ const dns = require('dns')
 
 dns.setDefaultResultOrder('ipv4first')
 
-const sharedCache = process.env.NODE_ENV === 'production'
+const sharedCache = process.env.CACHING_V2_ENABLED === 'true'
 
 /** @type {import('next').NextConfig} */
 const nextConfig = {

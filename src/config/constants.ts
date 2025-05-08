@@ -4,10 +4,28 @@
 export const authEnabled = process.env.AUTH_ENABLED === 'true'
 
 /**
- * The default cache revalidation interval (10 minutes)
+ * Checks to see if ISR caching is enabled
+ * Note that this is currently under development and should **not** be used in production
+ */
+export const ISRCachingEnabled = process.env.CACHING_V2_ENABLED === 'true'
+
+/**
+ * Checks to see if Next.js caching is enabled
+ */
+export const cachingEnabled = authEnabled || ISRCachingEnabled
+
+/**
+ * The default cache revalidation interval (30 days)
+ *  for the public app when ISR caching is enabled
  * Can be overridden per request
  */
-export const cacheRevalidationInterval = 600
+export const publicCacheRevalidationInterval = 2592000
+
+/**
+ * The default cache revalidation interval (10 minutes) for the authenticated app
+ * Can be overridden per request
+ */
+export const nonPublicCacheRevalidationInterval = 600
 
 /**
  * Associated fetch tags for the Next.js data cache
@@ -70,4 +88,3 @@ export const defaultAuthProvider = 'cognito'
  * Redirect path after successful sign out
  */
 export const authSignOutRedirectionPath = '/start?logout=success'
-

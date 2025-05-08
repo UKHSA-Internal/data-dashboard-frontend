@@ -1,7 +1,5 @@
-import { revalidateTag } from 'next/cache'
+import { revalidatePath } from 'next/cache'
 import { NextRequest, NextResponse } from 'next/server'
-
-import { cacheFetchTags } from '@/config/constants'
 
 export async function POST(req: NextRequest) {
   try {
@@ -13,7 +11,7 @@ export async function POST(req: NextRequest) {
       return new Response(JSON.stringify({ message: 'Invalid secret' }), { status: 401 })
     }
 
-    revalidateTag(cacheFetchTags.public)
+    revalidatePath('/', 'layout')
 
     return NextResponse.json({ revalidated: true, now: Date.now() })
   } catch (err) {
