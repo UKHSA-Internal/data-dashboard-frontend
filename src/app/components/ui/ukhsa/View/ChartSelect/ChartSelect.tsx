@@ -98,6 +98,8 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
 
   // Turn slug back into string for matching against select component
   const formatTimeString = (timeString: string) => {
+    if (timeString === 'all') return 'All'
+
     const [amount, unit] = timeString.split('-')
     const capitalizedUnit = unit.charAt(0).toUpperCase() + unit.slice(1)
 

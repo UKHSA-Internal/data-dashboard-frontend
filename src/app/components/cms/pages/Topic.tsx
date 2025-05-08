@@ -5,9 +5,12 @@ import { Details } from '@/app/components/ui/govuk'
 import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
+import { toSlug } from '@/app/utils/app.utils'
+import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
+import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -29,50 +32,82 @@ export default async function TopicPage({
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
-  return (
-    <View>
-      <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
-      <LastUpdated lastUpdated={lastUpdated} />
-      <Description description={description} />
-      <div className="govuk-grid-row">
-        <div
-          className={clsx({
-            'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
-            'govuk-grid-column-full': relatedLinksLayout === 'Footer',
-          })}
-        >
-          {enableAreaSelector && (
-            <>
-              <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
-              <Details
-                open={Boolean(areaType)}
-                label={t('areaSelector.detailsLabel')}
-                className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
-              >
-                <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
-              </Details>
-            </>
-          )}
 
-          <PageSectionWithContents>
-            {body.map(({ id, value }) => (
-              <PageSection key={id} heading={value.heading}>
-                {value.content.map(renderCard.bind(null, value.heading, [], timeseriesFilter))}
-              </PageSection>
-            ))}
-          </PageSectionWithContents>
+  let chartFilters = ''
+
+  body.map(({ value }) => {
+    if (value.content) {
+      value.content.map((content) => {
+        if (content.type === 'chart_row_card' && content.value.columns) {
+          content.value.columns.map((column) => {
+            const chartId = toSlug(column.value.chart[0].value.metric)
+
+            const timespan = getChartTimespan(column.value.chart)
+            const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
+
+            chartFilters += `${chartId}|${valueToAdd};`
+          })
+        }
+      })
+    }
+  })
+
+  console.log('All chart filters:', chartFilters)
+
+  // TODO: Here filter out existing filters, so that don't update one that has been changed in select filter
+  // TODO: Could also look at filtering out any that are 12m or less..? Not necessary to show here then
+
+  const currentParams = new URLSearchParams('')
+  currentParams.set('timeseriesFilter', chartFilters)
+  const newRoute = `?${currentParams.toString()}`
+
+  return (
+    <>
+      <RedirectHandler newRoute={newRoute} />
+      <View>
+        <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
+        <LastUpdated lastUpdated={lastUpdated} />
+        <Description description={description} />
+        <div className="govuk-grid-row">
+          <div
+            className={clsx({
+              'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
+              'govuk-grid-column-full': relatedLinksLayout === 'Footer',
+            })}
+          >
+            {enableAreaSelector && (
+              <>
+                <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+                <Details
+                  open={Boolean(areaType)}
+                  label={t('areaSelector.detailsLabel')}
+                  className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+                >
+                  <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
+                </Details>
+              </>
+            )}
+
+            <PageSectionWithContents>
+              {body.map(({ id, value }) => (
+                <PageSection key={id} heading={value.heading}>
+                  {value.content.map(renderCard.bind(null, value.heading, [], timeseriesFilter))}
+                </PageSection>
+              ))}
+            </PageSectionWithContents>
+          </div>
+
+          {relatedLinksLayout === 'Sidebar' ? (
+            <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
+              <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+            </div>
+          ) : null}
         </div>
 
-        {relatedLinksLayout === 'Sidebar' ? (
-          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
-            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-          </div>
+        {relatedLinksLayout === 'Footer' ? (
+          <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
         ) : null}
-      </div>
-
-      {relatedLinksLayout === 'Footer' ? (
-        <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-      ) : null}
-    </View>
+      </View>
+    </>
   )
 }
