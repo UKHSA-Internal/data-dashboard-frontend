@@ -8,10 +8,6 @@ export const getChartSvg = (encodedSvg: string) =>
 export const getChartTimespan = (plots: Chart): { years: number; months: number } => {
   if (!plots?.length) return { years: 0, months: 0 }
 
-  console.log('--------------------')
-  console.log('plots', plots)
-  console.log('--------------------')
-
   let maxMonths = 0
 
   // Check each plot, get the largest difference for use in select component
@@ -41,8 +37,6 @@ export const getChartTimespan = (plots: Chart): { years: number; months: number 
 
 const subtractFromDate = (toSubtract: string, date: Date = new Date()): string => {
   const [amount, unit] = toSubtract.split('-')
-
-  console.log('Unit to subtract', toSubtract)
 
   const newDate = new Date(date)
 

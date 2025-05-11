@@ -5,14 +5,14 @@ import { useRouter } from 'next/navigation'
 import { useEffect } from 'react'
 
 interface RedirectHandlerProps {
-  newRoute: string
+  newRoute?: string
 }
 
 const RedirectHandler = ({ newRoute }: RedirectHandlerProps) => {
   const router = useRouter()
 
   useEffect(() => {
-    router.replace(newRoute)
+    newRoute && router.replace(newRoute, { scroll: false })
   }, [newRoute, router])
 
   return null // This component doesn't render anything

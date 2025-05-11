@@ -33,7 +33,7 @@ export default async function TopicPage({
     selected_topics: selectedTopics,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
-  let chartFilters = ''
+  let newChartFilters = ''
 
   body.map(({ value }) => {
     if (value.content) {
@@ -42,24 +42,40 @@ export default async function TopicPage({
           content.value.columns.map((column) => {
             const chartId = toSlug(column.value.chart[0].value.metric)
 
+            const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
+
+            if (existingFilter) {
+              console.log('Filter already exists: ', existingFilter)
+              newChartFilters += `${existingFilter};`
+              return
+            }
+
+            console.log("Filter doesn't exist: ", chartId)
+
             const timespan = getChartTimespan(column.value.chart)
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
 
-            chartFilters += `${chartId}|${valueToAdd};`
+            newChartFilters += `${chartId}|${valueToAdd};`
           })
         }
       })
     }
   })
 
-  console.log('All chart filters:', chartFilters)
+  console.log('All chart filters:', newChartFilters)
 
-  // TODO: Here filter out existing filters, so that don't update one that has been changed in select filter
   // TODO: Could also look at filtering out any that are 12m or less..? Not necessary to show here then
 
-  const currentParams = new URLSearchParams('')
-  currentParams.set('timeseriesFilter', chartFilters)
-  const newRoute = `?${currentParams.toString()}`
+  let newRoute
+
+  console.log(`newChartFilters: ${newChartFilters}, timeseriesFilter: ${timeseriesFilter}`)
+  console.log('Same as each other?', (newChartFilters == timeseriesFilter).toString())
+
+  if (newChartFilters !== timeseriesFilter) {
+    const newParams = new URLSearchParams('')
+    newParams.set('timeseriesFilter', newChartFilters)
+    newRoute = `?${newParams.toString()}`
+  }
 
   return (
     <>
