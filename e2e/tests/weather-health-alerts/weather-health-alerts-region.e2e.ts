@@ -136,23 +136,33 @@ test.describe('Feature flag enabled', () => {
         await test.step('has heading', async () => {
           await app.hasHeading(`${weather}-health alert for ${region}`)
         })
-        await test.step('has last updated', async () => {
-          await weatherHealthAlertsRegionPage.hasLastUpdated()
-        })
+
         // eslint-disable-next-line playwright/no-conditional-in-test
+        if (status === 'Green') {
+          await test.step('has summary list', async () => {
+            await weatherHealthAlertsRegionPage.hasAlertSummaryList({
+              type: `${weather === 'cold' ? 'Cold' : 'Heat'} Health Alert`,
+              status,
+            })
+          })
+        }
         if (status !== 'Green') {
+          await test.step('has last updated', async () => {
+            await weatherHealthAlertsRegionPage.hasLastUpdated()
+          })
           await test.step('has alert banner', async () => {
             await weatherHealthAlertsRegionPage.hasAlertBanner(weather, status)
           })
-        }
-        await test.step('has summary list', async () => {
-          await weatherHealthAlertsRegionPage.hasAlertSummaryList({
-            type: `${weather === 'cold' ? 'Cold' : 'Heat'} Health Alert`,
-            start: '6 May 2024 at 12:00pm',
-            end: '8 May 2024 at 12:00pm',
-            status,
+          await test.step('has summary list', async () => {
+            await weatherHealthAlertsRegionPage.hasAlertSummaryList({
+              type: `${weather === 'cold' ? 'Cold' : 'Heat'} Health Alert`,
+              start: '6 May 2024 at 12:00pm',
+              end: '8 May 2024 at 12:00pm',
+              status,
+            })
           })
-        })
+        }
+
         await test.step('has body content', async () => {
           await weatherHealthAlertsRegionPage.hasBodyContent(
             'Severe impacts are expected across the health and social care sector due to forecast weather conditions'
