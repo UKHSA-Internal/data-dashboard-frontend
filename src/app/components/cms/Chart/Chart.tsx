@@ -103,7 +103,7 @@ const createStaticChart = ({
 
 export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
   const { t } = await getServerTranslation('common')
-  const chartId = toSlug(data.chart[0].value.metric)
+  const chartId = data.chart[0]?.value?.metric ? toSlug(data.chart[0].value.metric) : ''
 
   let chartData = data
 
