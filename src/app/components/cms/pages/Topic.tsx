@@ -45,12 +45,9 @@ export default async function TopicPage({
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
 
             if (existingFilter) {
-              console.log('Filter already exists: ', existingFilter)
               newChartFilters += `${existingFilter};`
               return
             }
-
-            console.log("Filter doesn't exist: ", chartId)
 
             const timespan = getChartTimespan(column.value.chart)
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
@@ -62,14 +59,7 @@ export default async function TopicPage({
     }
   })
 
-  console.log('All chart filters:', newChartFilters)
-
-  // TODO: Could also look at filtering out any that are 12m or less..? Not necessary to show here then
-
   let newRoute
-
-  console.log(`newChartFilters: ${newChartFilters}, timeseriesFilter: ${timeseriesFilter}`)
-  console.log('Same as each other?', (newChartFilters == timeseriesFilter).toString())
 
   if (newChartFilters !== timeseriesFilter) {
     const newParams = new URLSearchParams('')
