@@ -45,12 +45,9 @@ export default async function TopicPage({
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
 
             if (existingFilter) {
-              console.log('Filter already exists: ', existingFilter)
               newChartFilters += `${existingFilter};`
               return
             }
-
-            console.log("Filter doesn't exist: ", chartId)
 
             const timespan = getChartTimespan(column.value.chart)
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'

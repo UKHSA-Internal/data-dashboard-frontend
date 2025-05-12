@@ -1,7 +1,6 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useRouter } from 'next/navigation'
 
 import { useTimeseriesFilterUpdater } from '@/app/hooks/useTimeseriesFilter'
 import { toSlug } from '@/app/utils/app.utils'
@@ -41,54 +40,25 @@ interface ChartSelectProps {
 
 const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
   const router = useRouter()
-  const searchParams = useSearchParams()
 
-  const { setFilter } = useTimeseriesFilterUpdater()
-
-  // Initialize state with current filters
-  const [selectedFiltersList, setSelectedFiltersList] = useState<string[]>(
-    () => searchParams.get('timeseriesFilter')?.split(';') || []
-  )
-
-  // Update state with URL updates
-  useEffect(() => {
-    setSelectedFiltersList(searchParams.get('timeseriesFilter')?.split(';') || [])
-  }, [searchParams])
+  const { setFilter, getAllFilters } = useTimeseriesFilterUpdater()
 
   const setFilterParams = (newFilter: string) => {
-    let filters = getFilters()
+    let filters = getAllFilters()
 
-    const [filterName, filterValue] = newFilter.split('|')
+    const [filterName] = newFilter.split('|')
 
     // Remove existing filters with the same name
     filters = filters.filter((filter) => !filter.startsWith(filterName))
 
-    // Only add the new filter if the value is not 'all'
-    if (filterValue !== 'all') {
-      filters.push(newFilter)
-      setFilter(newFilter)
-    }
+    filters.push(newFilter)
 
-    setSelectedFiltersList(filters)
+    const filtersToUpdate = new URLSearchParams('')
 
-    // Filter out any empty strings before joining
-    const validFilters = filters.filter((filter) => filter.length > 0)
+    filtersToUpdate.set('timeseriesFilter', filters.join(';'))
 
-    const currentParams = new URLSearchParams(searchParams.toString())
-
-    if (validFilters.length > 0) {
-      currentParams.set('timeseriesFilter', validFilters.join(';'))
-    } else {
-      currentParams.delete('timeseriesFilter')
-    }
-
-    // Return the updated URL with all parameters preserved
-    return `?${currentParams.toString()}`
-  }
-
-  // Get list of timeseries filters for different charts
-  const getFilters = () => {
-    return searchParams.get('timeseriesFilter')?.split(';') ?? []
+    setFilter(filters.toString())
+    return `?${filtersToUpdate.toString()}`
   }
 
   // Handle update of select component
@@ -111,7 +81,7 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
 
   // Sort out default value for select component (if filter in URL params)
   const getCurrentFilterValue = () => {
-    const currentFilter = selectedFiltersList.find((filter) => filter.startsWith(`${chartId}|`))
+    const currentFilter = getAllFilters().find((filter) => filter.startsWith(`${chartId}|`))
 
     if (currentFilter) {
       const [, filterValue] = currentFilter.split('|')
