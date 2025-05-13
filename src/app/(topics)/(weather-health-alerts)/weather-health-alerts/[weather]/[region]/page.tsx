@@ -9,6 +9,7 @@ import { cachingEnabled } from '@/config/constants'
 import AlertBody from './AlertBody'
 
 export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
+export const revalidate = 60
 
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   return {

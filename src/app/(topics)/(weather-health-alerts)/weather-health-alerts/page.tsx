@@ -14,6 +14,7 @@ import { renderCompositeBlock } from '@/app/utils/cms.utils'
 import { cachingEnabled } from '@/config/constants'
 
 export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
+export const revalidate = 60
 
 export async function generateMetadata() {
   const {
