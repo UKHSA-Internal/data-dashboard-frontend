@@ -58,16 +58,13 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
   const setFilterParams = (newFilter: string) => {
     let filters = getFilters()
 
-    const [filterName, filterValue] = newFilter.split('|')
+    const [filterName] = newFilter.split('|')
 
     // Remove existing filters with the same name
     filters = filters.filter((filter) => !filter.startsWith(filterName))
 
-    // Only add the new filter if the value is not 'all'
-    if (filterValue !== 'all') {
-      filters.push(newFilter)
-      setFilter(newFilter)
-    }
+    filters.push(newFilter)
+    setFilter(newFilter)
 
     setSelectedFiltersList(filters)
 
