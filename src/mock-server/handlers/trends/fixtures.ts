@@ -39,11 +39,11 @@ type Fixtures = Record<Topics, Record<string, z.infer<typeof responseSchema>>>
 
 export const fixtures: Fixtures = {
   'COVID-19': {
-    'COVID-19_headline_newcases_7daypercentchange': {
-      metric_name: 'COVID-19_headline_newcases_7daychange',
+    'COVID-19_headline_cases_7DayPercentChange': {
+      metric_name: 'COVID-19_headline_cases_7DayChange',
       metric_value: -592,
       metric_period_end: '2023-11-04',
-      percentage_metric_name: 'COVID-19_headline_newcases_7daypercentchange',
+      percentage_metric_name: 'COVID-19_headline_cases_7DayPercentChange',
       percentage_metric_value: -3.0,
       percentage_metric_period_end: '2023-11-04',
       colour: 'green',
@@ -54,7 +54,7 @@ export const fixtures: Fixtures = {
       metric_value: 21,
       metric_period_end: '2023-11-04',
       percentage_metric_name: 'COVID-19_headline_ONSdeaths_7daypercentchange',
-      percentage_metric_value: -5.0,
+      percentage_metric_value: -5,
       percentage_metric_period_end: '2023-11-04',
       colour: 'green',
       direction: 'down',

@@ -43,6 +43,188 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
     {
       type: 'section',
       value: {
+        heading: 'Headlines',
+        content: [
+          {
+            type: 'headline_numbers_row_card',
+            value: {
+              columns: [
+                {
+                  type: 'column',
+                  value: {
+                    title: 'Cases',
+                    date_prefix: 'Up to cases',
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_newcases_7daytotals',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Weekly',
+                        },
+                        id: 'c0e44b81-ce1e-4849-8942-80113dbfda4a',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_cases_7DayChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: '7 days',
+                          percentage_metric: 'COVID-19_headline_cases_7DayPercentChange',
+                        },
+                        id: 'd61cbd89-479e-4494-9bf6-715ce18168a9',
+                      },
+                    ],
+                  },
+                  id: '5897a989-0caf-4162-bf66-6448d67aeff3',
+                },
+                {
+                  type: 'column',
+                  value: {
+                    title: 'Deaths',
+                    date_prefix: 'Up to deaths',
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_ONSdeaths_7DayTotals',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Weekly',
+                        },
+                        id: '462d2334-5f89-4e58-aef0-60768a302fa2',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_ONSdeaths_7DayChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: '7 days',
+                          percentage_metric: 'COVID-19_headline_ONSdeaths_7DayPercentChange',
+                        },
+                        id: '0fa65e06-e3eb-440d-a2db-fd9e32fd55f7',
+                      },
+                    ],
+                  },
+                  id: '9362f06a-58ed-488a-bf7e-c1eedfdb09ff',
+                },
+                {
+                  type: 'column',
+                  value: {
+                    title: 'Healthcare',
+                    date_prefix: 'Up to',
+                    rows: [
+                      {
+                        type: 'headline_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayAdmissions',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Patients admitted',
+                        },
+                        id: '20b42af9-68cc-499d-832d-31991a819c31',
+                      },
+                      {
+                        type: 'trend_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayAdmissionsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: '7 days',
+                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                        },
+                        id: 'a1a8402e-c6f8-40f4-a9de-dc6477b9bdcb',
+                      },
+                    ],
+                  },
+                  id: '94da4b1f-ed5d-421c-9db4-00f666c8a8e7',
+                },
+                {
+                  type: 'column',
+                  value: {
+                    title: 'Vaccines',
+                    date_prefix: 'Up to',
+                    rows: [
+                      {
+                        type: 'percentage_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_vaccines_autumn23Uptake',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Spring booster uptake',
+                        },
+                        id: '13878e99-2dc8-4bd5-912f-405074f11762',
+                      },
+                    ],
+                  },
+                  id: '0806e555-91e8-4739-9391-4020484f85ae',
+                },
+                {
+                  type: 'column',
+                  value: {
+                    title: 'Testing',
+                    date_prefix: 'Up to',
+                    rows: [
+                      {
+                        type: 'percentage_number',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_positivity_latest',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Virus tests positivity',
+                        },
+                        id: '5d9d02e1-3f5d-45e8-9991-ad0122bb836d',
+                      },
+                    ],
+                  },
+                  id: '34752769-ec63-4ed9-bcb0-521513df6c65',
+                },
+              ],
+            },
+            id: '000e07aa-6799-4f50-bb0c-db2218829395',
+          },
+        ],
+      },
+      id: '3873a214-6c74-433b-b33b-d0998cab3b5d',
+    },
+    {
+      type: 'section',
+      value: {
         heading: 'Cases',
         content: [
           {
