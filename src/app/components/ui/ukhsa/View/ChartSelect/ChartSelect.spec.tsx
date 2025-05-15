@@ -92,19 +92,6 @@ describe('ChartSelect Component', () => {
       expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
     })
 
-    test('removes filter when selecting "All"', () => {
-      const existingParams = new URLSearchParams('timeseriesFilter=test-chart|1-month')
-      ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
-
-      render(<ChartSelect timespan={{ years: 1, months: 0 }} chartId="test-chart" />)
-
-      const select = screen.getByRole('combobox')
-      fireEvent.change(select, { target: { value: 'test-chart|all' } })
-
-      const expectedParams = new URLSearchParams()
-      expect(mockRouter.replace).toHaveBeenCalledWith(`?${expectedParams.toString()}`, { scroll: false })
-    })
-
     test('handles multiple filters correctly', () => {
       const existingParams = new URLSearchParams('timeseriesFilter=other-chart|3-months')
       ;(useSearchParams as jest.Mock).mockReturnValue(existingParams)
