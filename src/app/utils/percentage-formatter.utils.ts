@@ -1,6 +1,7 @@
-const percentageFormatter = (value: number, decimals: number = 1): string => {
+const percentageFormatter = (value: number, minDecimals: number = 1, maxDecimals: number = 2): string => {
   const percentageFormat = new Intl.NumberFormat('en-GB', {
-    minimumFractionDigits: decimals,
+    minimumFractionDigits: minDecimals,
+    maximumFractionDigits: maxDecimals,
   })
 
   return percentageFormat.format(value)

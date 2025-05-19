@@ -70,7 +70,7 @@
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
         "row": "{{value, dateShortest}}",
-        "row_plot": "{{value, number}}",
+        "row_plot": "{{value, number2DP}}",
         "row_plot_null": "-",
         "row_age": "{{value}}",
         "row_geography": "{{value}}",
