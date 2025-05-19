@@ -4,7 +4,6 @@ import { z } from 'zod'
 import { TrendNumber } from '@/api/models/cms/Page/Blocks'
 import { getTrends } from '@/api/requests/trends/getTrends'
 import { getServerTranslation } from '@/app/i18n'
-import percentageFormatter from '@/app/utils/percentage-formatter.utils'
 
 interface TrendProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
@@ -25,8 +24,6 @@ export async function Trend({ data: { body: heading, ...requestParams }, datePre
       metric_period_end: date,
       percentage_metric_value: percentage,
     } = trend.data
-
-    const formattedPercentage = percentageFormatter(percentage)
 
     return (
       <>
@@ -59,7 +56,7 @@ export async function Trend({ data: { body: heading, ...requestParams }, datePre
           </span>
 
           <span className="govuk-body-s govuk-!-margin-bottom-0 text-inherit">
-            {t('cms.blocks.trend.value.percentage', { percentage: formattedPercentage })}
+            {t('cms.blocks.trend.value.percentage', { percentage })}
           </span>
         </div>
       </>

@@ -31,12 +31,12 @@
       },
       "percentage": {
         "heading": "{{heading}}",
-        "value": "{{value}}%"
+        "value": "{{value, number1DP}}%"
       },
       "trend": {
         "heading": "{{heading}}",
         "value": {
-          "percentage": "({{percentage}}%)",
+          "percentage": "({{percentage, number1DP}}%)",
           "change": "{{change}}"
         },
         "alt_green_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
