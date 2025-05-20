@@ -22,8 +22,8 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
   const { t } = useTranslation('metrics')
 
   const [searchInputValue, setSearchInputValue] = useState(value)
-  const [filerCategoryValue, setfilerCategoryValue] = useState([])
-  const [filerTopicsValue, setfilerTopicsValue] = useState([])
+  const [filerCategoryValue, setfilerCategoryValue] = useState<string[]>([])
+  const [filerTopicsValue, setfilerTopicsValue] = useState<string[]>([])
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
   const [debouncedCategoryValue] = useDebounceValue(filerCategoryValue, DEBOUNCE_MILLISECONDS)
   const [debouncedTopicsValue] = useDebounceValue(filerTopicsValue, DEBOUNCE_MILLISECONDS)
@@ -87,7 +87,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
                 fieldHasError={false}
                 style={{ display: 'flex', flexWrap: 'wrap' }}
                 onChange={(checkedValues) => {
-                  setfilerCategoryValue(checkedValues)
+                  setfilerCategoryValue(checkedValues as string[]);
                 }}
               />
               <CheckboxesField
@@ -99,7 +99,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
                 fieldHasError={false}
                 style={{ display: 'flex', flexWrap: 'wrap' }}
                 onChange={(checkedValues) => {
-                  setfilerTopicsValue(checkedValues)
+                  setfilerTopicsValue(checkedValues as string[])
                 }}
               />
             </details>
