@@ -29,6 +29,9 @@ test.describe('Other respiratory viruses page', () => {
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
     })
+    await test.step('displays an announcement', async () => {
+      await app.hasAnnouncement('Warning', 'Announcement title', 'Announcement body')
+    })
     await test.step('displays without any accessibility defects', async () => {
       await app.hasNoAccessibilityDefects()
     })

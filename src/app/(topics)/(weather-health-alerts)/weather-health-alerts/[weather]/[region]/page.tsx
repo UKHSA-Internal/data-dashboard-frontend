@@ -4,11 +4,11 @@ import { HealthAlertTypes } from '@/api/models/Alerts'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import { authEnabled } from '@/config/constants'
+import { cachingEnabled } from '@/config/constants'
 
 import AlertBody from './AlertBody'
 
-export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
+export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
 
 export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
   return {

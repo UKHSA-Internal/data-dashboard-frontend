@@ -2,7 +2,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { toSlug } from '@/app/utils/app.utils'
@@ -31,6 +31,7 @@ export default async function TopicPage({
     related_links_layout: relatedLinksLayout,
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
   let newChartFilters = ''
@@ -73,6 +74,7 @@ export default async function TopicPage({
       <View>
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
+        <Announcements announcements={activeAnnouncements} />
         <Description description={description} />
         <div className="govuk-grid-row">
           <div
