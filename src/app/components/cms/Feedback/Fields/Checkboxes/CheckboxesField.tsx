@@ -1,6 +1,7 @@
 import clsx from 'clsx'
 
 import { Fieldtype } from '../../Feedback'
+import { useState } from 'react'
 
 export default function CheckboxesField({
   label,
@@ -9,7 +10,19 @@ export default function CheckboxesField({
   fieldHasError,
   choicesList = [],
   defaultValuesList = [],
-}: Fieldtype) {
+  style = {},
+  onChange = () => {},
+}: Fieldtype& { onChange?: (values: string[]) => void }) {
+  const [selectedValues, setSelectedValues] = useState<string[]>(defaultValuesList)
+
+  const handleCheckboxChange = (value: string, isChecked: boolean) => {
+    let updatedValues = isChecked
+      ? [...selectedValues, value]
+      : selectedValues.filter((v) => v !== value)
+
+    setSelectedValues(updatedValues)
+    onChange(updatedValues) // Return checked values to parent
+  }
   return (
     <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
       <fieldset className="govuk-fieldset govuk-!-margin-bottom-9">
@@ -32,7 +45,7 @@ export default function CheckboxesField({
           </p>
         ) : null}
 
-        <div className="govuk-checkboxes" data-module="govuk-checkboxes" id={cleanName}>
+        <div className="govuk-checkboxes" data-module="govuk-checkboxes" id={cleanName} style={style}>  
           {choicesList.map((choiceVal, key) => {
             const uniqueId = `${cleanName}-${key}` // Generate a unique ID for each checkbox
             return (
@@ -44,6 +57,7 @@ export default function CheckboxesField({
                   type="checkbox"
                   value={choiceVal}
                   defaultChecked={defaultValuesList.includes(choiceVal)}
+                  onChange={(e) => handleCheckboxChange(choiceVal, e.target.checked)}
                 />
                 <label className="govuk-label govuk-checkboxes__label" htmlFor={uniqueId}>
                   {choiceVal}

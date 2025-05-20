@@ -32,6 +32,8 @@ export interface Fieldtype {
   defaultValue?: string
   defaultValuesList?: string[]
   fieldHasError?: boolean
+  style?: React.CSSProperties
+  onChange?: (values: string[]) => void
 }
 
 interface FieldError {

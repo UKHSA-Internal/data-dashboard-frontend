@@ -160,6 +160,8 @@ export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
 interface GetMetricsPagesRequestParams {
   search: string | undefined
+  category: string | undefined
+  topic: string | undefined
   page: number
   showPagination?: boolean
   paginationSize?: number
@@ -170,6 +172,8 @@ export const getMetricsPages = async ({
   page = 1,
   showPagination,
   paginationSize = 1,
+  category,
+  topic,
 }: GetMetricsPagesRequestParams) => {
   const metricsDocumentationPageSize = showPagination ? paginationSize : 1000 // set large value for when pagination is disabled
 
@@ -181,6 +185,12 @@ export const getMetricsPages = async ({
 
   if (search) {
     searchParams.set('search', search)
+  }
+  if (category) {
+    searchParams.set('category', category)
+  }
+  if (topic) {
+    searchParams.set('topics', topic)
   }
 
   try {

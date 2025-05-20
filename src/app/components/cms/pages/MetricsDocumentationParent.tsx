@@ -27,11 +27,13 @@ interface MetricsParentPageProps {
   searchParams: {
     page?: number
     search?: string
+    category?: string
+    topics?: string
   }
 }
 
 export async function generateMetadata({
-  searchParams: { search = '', page = 1 },
+  searchParams: { search = '', page = 1, category = '', topics = '' },
 }: MetricsParentPageProps): Promise<Metadata> {
   const { t } = await getServerTranslation('metrics')
 
@@ -41,7 +43,7 @@ export async function generateMetadata({
     show_pagination: showPagination,
   } = await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
+  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize, category, topics })
 
   if (!metricsEntries.success) {
     logger.info(metricsEntries.error.message)
@@ -69,8 +71,8 @@ export async function generateMetadata({
 
 export default async function MetricsParentPage({
   slug,
-  searchParams: { search, page = 1 },
-}: PageComponentBaseProps<{ search: string; page: number }>) {
+  searchParams: { search, page = 1, category , topic  },
+}: PageComponentBaseProps<{ search: string; page: number, category: string; topic: string }>) {  
   const {
     title,
     body,
@@ -79,7 +81,7 @@ export default async function MetricsParentPage({
     pagination_size: paginationSize,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
+  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize, category, topic})
 
   if (!metricsEntries.success) {
     logger.error(metricsEntries.error.message)
@@ -92,7 +94,7 @@ export default async function MetricsParentPage({
       meta: { total_count: totalItems },
     },
   } = metricsEntries
-
+  console.log(metricsEntries.data);
   const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
     totalItems,
     initialPage: page ?? 1,

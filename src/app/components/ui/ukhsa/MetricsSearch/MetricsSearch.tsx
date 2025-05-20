@@ -4,8 +4,11 @@ import Link from 'next/link'
 import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
-
+import CheckboxesField from '../../../cms/Feedback/Fields/Checkboxes/CheckboxesField'
 import { useTranslation } from '@/app/i18n/client'
+import { Details } from '@/app/components/ui/govuk'
+import { AreaSelector } from '@/app/components/cms'
+
 
 const DEBOUNCE_MILLISECONDS = 300
 
@@ -19,14 +22,22 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
   const { t } = useTranslation('metrics')
 
   const [searchInputValue, setSearchInputValue] = useState(value)
+  const [filerCategoryValue, setfilerCategoryValue] = useState([])
+  const [filerTopicsValue, setfilerTopicsValue] = useState([])
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
+  const [debouncedCategoryValue] = useDebounceValue(filerCategoryValue, DEBOUNCE_MILLISECONDS)
+  const [debouncedTopicsValue] = useDebounceValue(filerTopicsValue, DEBOUNCE_MILLISECONDS)
+
 
   useEffect(() => {
     const url = new URL(window.location.href)
     url.searchParams.set('search', debouncedSearchValue)
+    url.searchParams.set('category', debouncedCategoryValue.join(','))
+    url.searchParams.set('topic', debouncedTopicsValue.join(','))
+    
     router.replace(url.toString())
     // eslint-disable-next-line react-hooks/exhaustive-deps -- router is omitted as it causes infinite redirects
-  }, [debouncedSearchValue])
+  }, [debouncedSearchValue, debouncedCategoryValue, debouncedTopicsValue])
 
   return (
     <form method="GET" action={'/metrics-documentation'} aria-label="Metrics search">
@@ -61,6 +72,37 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
             >
               {t('metricsSearch.clearText')}
             </Link>
+            <details className="govuk-details">
+              <summary className="govuk-details__summary">
+                <span className="govuk-details__summary-text">
+                  Show Filters
+                </span>
+              </summary>
+              <CheckboxesField
+                label={'Metric Category'}
+                helpText={''}
+                cleanName={'Metric Category'}
+                choicesList={["Cases", "Deaths", "Vaccinations", "Testing", "Healthcare"]}
+                defaultValuesList={[]}
+                fieldHasError={false}
+                style={{ display: 'flex', flexWrap: 'wrap' }}
+                onChange={(checkedValues) => {
+                  setfilerCategoryValue(checkedValues)
+                }}
+              />
+              <CheckboxesField
+                label={'Topics'}
+                helpText={''}
+                cleanName={'Topics'}
+                choicesList={["COVID-19", "Influenza", "Other Respiratory Viruses"]}
+                defaultValuesList={[]}
+                fieldHasError={false}
+                style={{ display: 'flex', flexWrap: 'wrap' }}
+                onChange={(checkedValues) => {
+                  setfilerTopicsValue(checkedValues)
+                }}
+              />
+            </details>
           </div>
         </div>
       </div>
