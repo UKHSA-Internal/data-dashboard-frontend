@@ -28,12 +28,12 @@ interface MetricsParentPageProps {
     page?: number
     search?: string
     category?: string
-    topics?: string
+    topic?: string
   }
 }
 
 export async function generateMetadata({
-  searchParams: { search = '', page = 1, category = '', topics = '' },
+  searchParams: { search = '', page = 1, category = '', topic = '' },
 }: MetricsParentPageProps): Promise<Metadata> {
   const { t } = await getServerTranslation('metrics')
 
@@ -43,7 +43,7 @@ export async function generateMetadata({
     show_pagination: showPagination,
   } = await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize, category, topics })
+  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize, category, topic })
 
   if (!metricsEntries.success) {
     logger.info(metricsEntries.error.message)
