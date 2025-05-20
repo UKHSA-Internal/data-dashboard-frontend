@@ -6,7 +6,7 @@ import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 import CheckboxesField from '../../../cms/Feedback/Fields/Checkboxes/CheckboxesField'
 import { useTranslation } from '@/app/i18n/client'
-
+import { Details} from '@/app/components/ui/govuk'
 
 const DEBOUNCE_MILLISECONDS = 300
 
@@ -70,12 +70,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
             >
               {t('metricsSearch.clearText')}
             </Link>
-            <details className="govuk-details">
-              <summary className="govuk-details__summary">
-                <span className="govuk-details__summary-text">
-                  Show Filters
-                </span>
-              </summary>
+            <Details label = {'Show Filters'}>
               <CheckboxesField
                 label={'Metric Category'}
                 helpText={''}
@@ -100,7 +95,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
                   setfilerTopicsValue(checkedValues as string[])
                 }}
               />
-            </details>
+            </Details>
           </div>
         </div>
       </div>
