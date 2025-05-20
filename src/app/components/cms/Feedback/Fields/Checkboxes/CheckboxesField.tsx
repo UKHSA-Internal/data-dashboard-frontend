@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-
 import { useState } from 'react'
+
 import { Fieldtype } from '../../Feedback'
 
 export default function CheckboxesField({
