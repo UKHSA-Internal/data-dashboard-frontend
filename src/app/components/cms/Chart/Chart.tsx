@@ -13,6 +13,7 @@ import { toSlug } from '@/app/utils/app.utils'
 import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
+import ChartNoScript from '../../ui/ukhsa/ChartNoScript/ChartNoScript'
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
@@ -215,11 +216,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
       <Suspense fallback={staticChart}>
         <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
       </Suspense>
-      <br />
-      <noscript>
-        One year of data currently shown, to see additional content please{' '}
-        <a href={`#download-${kebabCase(data.title)}`}>download</a> the data set
-      </noscript>
+      {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
     </>
   )
 }
