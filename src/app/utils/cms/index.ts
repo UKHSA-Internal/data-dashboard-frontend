@@ -34,13 +34,15 @@ export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
 
 export async function getPageMetadata(
   urlSlug: Slug,
-  searchParams: SearchParams<{ page: number; search: string; areaName: string; areaType: string }>,
+  searchParams: SearchParams<{ page: number; search: string; areaName: string; areaType: string, category: string; topic: string }>,  
   pageType: PageType
 ): Promise<Metadata> {
   const { t } = await getServerTranslation('common')
 
   const page = searchParams.page ?? 1
   const search = searchParams.search
+  const category = searchParams.category
+  const topic = searchParams.topic
 
   const isLandingPage = pageType === PageType.Landing
 
@@ -67,7 +69,7 @@ export async function getPageMetadata(
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.MetricsParent) {
-      const metricsEntries = await getMetricsPages({ search, page })
+      const metricsEntries = await getMetricsPages({ search, page, category, topic })
 
       if (!metricsEntries.success) {
         logger.info(metricsEntries.error.message)
