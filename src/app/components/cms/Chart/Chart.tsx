@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import kebabCase from 'lodash/kebabCase'
 import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { z } from 'zod'
@@ -8,9 +9,12 @@ import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartSvg } from '@/app/utils/chart.utils'
+import { toSlug } from '@/app/utils/app.utils'
+import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
+import ChartNoScript from '../../ui/ukhsa/ChartNoScript/ChartNoScript'
+import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
@@ -46,6 +50,12 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
+
+  /**
+   * Defines the value of the URL parameter 'timeseriesFilter' for use in filtering chart data
+   * Defaults to show all content if no filter present
+   */
+  timeseriesFilter: string
 }
 
 const createStaticChart = ({
@@ -92,51 +102,71 @@ const createStaticChart = ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
   const { t } = await getServerTranslation('common')
+  const chartId = data.chart[0]?.value?.metric ? toSlug(data.chart[0].value.metric) : ''
+
+  let chartData = data
+
+  if (timeseriesFilter) {
+    // Nullcheck
+    const filteredData = getFilteredData(data, timeseriesFilter)?.filter(
+      (item): item is NonNullable<typeof item> => item !== null
+    )
+
+    if (filteredData) {
+      chartData = {
+        ...data,
+        chart: filteredData,
+      }
+    }
+  }
 
   let yAxisMinimum = null
   let yAxisMaximum = null
   let xAxisTitle = ''
   let yAxisTitle = ''
 
-  if ('y_axis_minimum_value' in data) {
-    yAxisMinimum = data.y_axis_minimum_value
+  if ('y_axis_minimum_value' in chartData) {
+    yAxisMinimum = chartData.y_axis_minimum_value
   }
-  if ('y_axis_maximum_value' in data) {
-    yAxisMaximum = data.y_axis_maximum_value
+  if ('y_axis_maximum_value' in chartData) {
+    yAxisMaximum = chartData.y_axis_maximum_value
   }
-  if ('x_axis_title' in data) {
-    xAxisTitle = data.x_axis_title || ''
+  if ('x_axis_title' in chartData) {
+    xAxisTitle = chartData.x_axis_title || ''
   }
-  if ('y_axis_title' in data) {
-    yAxisTitle = data.y_axis_title || ''
+  if ('y_axis_title' in chartData) {
+    yAxisTitle = chartData.y_axis_title || ''
   }
 
-  const { chart, x_axis, y_axis } = data
+  const { chart, x_axis, y_axis } = chartData
 
   const pathname = getPathname()
   const [areaType, areaName] = getAreaSelector()
 
   const plots = chart.map((plot) => ({
-    ...plot.value,
-    geography_type: areaType ?? plot.value.geography_type,
-    geography: areaName ?? plot.value.geography,
+    ...plot?.value,
+
+    geography_type: areaType ?? plot?.value.geography_type,
+    geography: areaName ?? plot?.value.geography,
   }))
 
-  const requests = sizes.map((chart) =>
-    getCharts({
-      plots,
-      x_axis,
-      y_axis,
-      x_axis_title: xAxisTitle,
-      y_axis_title: yAxisTitle,
-      y_axis_maximum_value: yAxisMaximum,
-      y_axis_minimum_value: yAxisMinimum,
-      chart_width: chartSizes[chart.size].width,
-      chart_height: chartSizes[chart.size].height,
-    })
-  )
+  const requests =
+    plots &&
+    sizes.map((chart) =>
+      getCharts({
+        plots,
+        x_axis,
+        y_axis,
+        x_axis_title: xAxisTitle,
+        y_axis_title: yAxisTitle,
+        y_axis_maximum_value: yAxisMaximum,
+        y_axis_minimum_value: yAxisMinimum,
+        chart_width: chartSizes[chart.size].width,
+        chart_height: chartSizes[chart.size].height,
+      })
+    )
 
   // Lazy load the interactive chart component (and all associated plotly.js code)
   const resolvedRequests = await Promise.all(requests)
@@ -169,17 +199,24 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
-    return staticChart
+    return (
+      <>
+        {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
+        {staticChart}
+      </>
+    )
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page)
-  if (!enableInteractive) {
-    return staticChart
-  }
+  if (!enableInteractive) return staticChart
 
   return (
-    <Suspense fallback={staticChart}>
-      <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
-    </Suspense>
+    <>
+      {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
+      <Suspense fallback={staticChart}>
+        <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
+      </Suspense>
+      {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
+    </>
   )
 }
