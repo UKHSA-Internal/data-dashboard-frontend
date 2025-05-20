@@ -16,9 +16,9 @@ export default function CheckboxesField({
   const [selectedValues, setSelectedValues] = useState<string[]>(defaultValuesList)
 
   const handleCheckboxChange = (value: string, isChecked: boolean) => {
-    let updatedValues = isChecked
+    const updatedValues = isChecked
       ? [...selectedValues, value]
-      : selectedValues.filter((v) => v !== value)
+      : selectedValues.filter((val) => val !== value)
 
     setSelectedValues(updatedValues)
     onChange(updatedValues) // Return checked values to parent

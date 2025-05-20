@@ -6,8 +6,6 @@ import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 import CheckboxesField from '../../../cms/Feedback/Fields/Checkboxes/CheckboxesField'
 import { useTranslation } from '@/app/i18n/client'
-import { Details } from '@/app/components/ui/govuk'
-import { AreaSelector } from '@/app/components/cms'
 
 
 const DEBOUNCE_MILLISECONDS = 300
