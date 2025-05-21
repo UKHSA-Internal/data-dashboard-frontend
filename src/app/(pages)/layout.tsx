@@ -1,8 +1,15 @@
 import { ReactNode } from 'react'
 
 import { BackToTop } from '@/app/components/ui/ukhsa'
+import { authEnabled } from '@/config/constants'
 
 import LayoutBlackBanner from '../components/ui/ukhsa/Layout/LayoutBlackBanner'
+
+export function generateMetadata() {
+  return {
+    robots: authEnabled ? 'noindex, nofollow' : undefined,
+  }
+}
 
 export default async function Layout({ children }: { children: ReactNode }) {
   return (

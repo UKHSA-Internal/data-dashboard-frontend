@@ -5,6 +5,12 @@ import { BackToTop } from '@/app/components/ui/ukhsa'
 import LayoutBlackBanner from '@/app/components/ui/ukhsa/Layout/LayoutBlackBanner'
 import { authEnabled } from '@/config/constants'
 
+export function generateMetadata() {
+  return {
+    robots: authEnabled ? 'noindex, nofollow' : undefined,
+  }
+}
+
 export default async function Layout({ children }: { children: ReactNode }) {
   if (!authEnabled) return notFound()
 
