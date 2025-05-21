@@ -19,6 +19,12 @@ interface LayoutProps {
   params: { slug: string } | null
 }
 
+export function generateMetadata() {
+  return {
+    robots: authEnabled ? 'noindex, nofollow' : undefined,
+  }
+}
+
 export default async function Layout({ children, params }: LayoutProps) {
   const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
 
