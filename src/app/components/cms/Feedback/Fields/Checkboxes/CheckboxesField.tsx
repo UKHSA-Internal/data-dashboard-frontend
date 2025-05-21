@@ -10,8 +10,8 @@ export default function CheckboxesField({
   fieldHasError,
   choicesList = [],
   defaultValuesList = [],
-  style = {},
   onChange = () => {},
+  classNames,
 }: Fieldtype& { onChange?: (values: string[]) => void }) {
   const [selectedValues, setSelectedValues] = useState<string[]>(defaultValuesList)
 
@@ -45,7 +45,7 @@ export default function CheckboxesField({
           </p>
         ) : null}
 
-        <div className="govuk-checkboxes" data-module="govuk-checkboxes" id={cleanName} style={style}>  
+        <div className={classNames && classNames + " govuk-checkboxes"} data-module="govuk-checkboxes" id={cleanName} >  
           {choicesList.map((choiceVal, key) => {
             const uniqueId = `${cleanName}-${key}` // Generate a unique ID for each checkbox
             return (

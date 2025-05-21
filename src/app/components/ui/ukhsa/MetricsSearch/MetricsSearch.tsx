@@ -32,9 +32,9 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
 
   useEffect(() => {
     const url = new URL(window.location.href)
-    url.searchParams.set('search', debouncedSearchValue)
-    url.searchParams.set('category', debouncedCategoryValue.join(','))
-    url.searchParams.set('topic', debouncedTopicsValue.join(','))
+    url.searchParams.set('search', debouncedSearchValue);
+    (debouncedCategoryValue && debouncedCategoryValue.length > 0)  ? url.searchParams.set('categoryFilter', debouncedCategoryValue.join(',')): url.searchParams.delete('categoryFilter'); 
+    (debouncedTopicsValue && debouncedTopicsValue.length > 0) ? url.searchParams.set('topicFilter', debouncedTopicsValue.join(',')) : url.searchParams.delete('topicFilter');
     
     router.replace(url.toString())
     // eslint-disable-next-line react-hooks/exhaustive-deps -- router is omitted as it causes infinite redirects
@@ -81,7 +81,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
                 choicesList={["Cases", "Deaths", "Vaccinations", "Testing", "Healthcare"]}
                 defaultValuesList={[]}
                 fieldHasError={false}
-                style={{ display: 'flex', flexWrap: 'wrap' }}
+                classNames={'flex flex-wrap '}
                 onChange={(checkedValues) => {
                   setfilerCategoryValue(checkedValues as string[]);
                 }}
@@ -93,7 +93,7 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
                 choicesList={["COVID-19", "Influenza", "Other Respiratory Viruses"]}
                 defaultValuesList={[]}
                 fieldHasError={false}
-                style={{ display: 'flex', flexWrap: 'wrap' }}
+                classNames={'flex flex-wrap '}
                 onChange={(checkedValues) => {
                   setfilerTopicsValue(checkedValues as string[])
                 }}
