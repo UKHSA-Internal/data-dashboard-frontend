@@ -160,8 +160,8 @@ export type MetricsPagesResponse = z.infer<typeof metricsChildResponseSchema>
 
 interface GetMetricsPagesRequestParams {
   search: string | undefined
-  categoryFilter: string | undefined
-  topicFilter: string | undefined
+  categoryFilter?: string
+  topicFilter?: string
   page: number
   showPagination?: boolean
   paginationSize?: number
