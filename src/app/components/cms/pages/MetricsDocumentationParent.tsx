@@ -71,8 +71,8 @@ export async function generateMetadata({
 
 export default async function MetricsParentPage({
   slug,
-  searchParams: { search, page = 1, category , topic  },
-}: PageComponentBaseProps<{ search: string; page: number, category: string; topic: string }>) {  
+  searchParams: { search, page = 1, categoryFilter , topicFilter  },
+}: PageComponentBaseProps<{ search: string; page: number, categoryFilter: string; topicFilter: string }>) {  
   const {
     title,
     body,
@@ -82,7 +82,7 @@ export default async function MetricsParentPage({
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize, category, topic})
+  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize, categoryFilter, topicFilter})
 
   if (!metricsEntries.success) {
     logger.error(metricsEntries.error.message)
