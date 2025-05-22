@@ -41,6 +41,9 @@ export default async function TopicPage({
       value.content.map((content) => {
         if (content.type === 'chart_row_card' && content.value.columns) {
           content.value.columns.map((column) => {
+            if (!column.value.show_timeseries_filter) return
+
+            // Check timeseries enabled
             const chartId = toSlug(column.value.chart[0].value.metric)
 
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
