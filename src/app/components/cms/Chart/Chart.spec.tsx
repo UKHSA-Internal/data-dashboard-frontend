@@ -83,6 +83,7 @@ test('renders a narrow chart correctly', async () => {
         },
       ],
       timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -165,6 +166,7 @@ test('renders the chart by geography and geography type when both are present in
         },
       ],
       timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -234,6 +236,7 @@ test('full width charts should also have an acompanying narrow version for mobil
         },
       ],
       timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -285,6 +288,7 @@ test('landing page half width charts should also have an acompanying third width
         },
       ],
       timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -336,6 +340,7 @@ test('renders a fallback message when the chart requests fail', async () => {
         },
       ],
       timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -388,6 +393,7 @@ test('Fallback message with escaped characters', async () => {
         },
       ],
       timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
