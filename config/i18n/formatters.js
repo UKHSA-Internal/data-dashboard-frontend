@@ -19,6 +19,10 @@ module.exports = (value, format) => {
   if (format === 'dateShortest') return dayjs(value).format('D MMM YYYY')
   if (format === 'time') return dayjs(value).format('hh:mma')
   if (format === 'number') return value.toLocaleString('en-GB', { maximumFractionDigits: 2 })
+  if (format === 'number1DP')
+    return value.toLocaleString('en-GB', { minimumFractionDigits: 1, maximumFractionDigits: 1 })
+  if (format === 'number2DP')
+    return value.toLocaleString('en-GB', { minimumFractionDigits: 2, maximumFractionDigits: 2 })
   if (format === 'lowerCaseFirstLetter') return value.charAt(0).toLowerCase() + value.slice(1)
   return value
 }

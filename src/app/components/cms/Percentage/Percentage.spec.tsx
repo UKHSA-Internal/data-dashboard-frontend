@@ -35,7 +35,7 @@ describe('Data request is successful', () => {
 
     const { getByText } = render((await Percentage({ data, datePrefix: '' })) as ReactElement)
     const headingElement = getByText('Test Heading')
-    const valueElement = getByText('55.38%')
+    const valueElement = getByText('55.4%')
 
     expect(headingElement).toBeInTheDocument()
     expect(valueElement).toBeInTheDocument()
