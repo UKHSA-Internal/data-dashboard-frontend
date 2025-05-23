@@ -47,7 +47,7 @@ export default async function TopicPage({
             // Check timeseries enabled per chart
             if (!column.value.show_timeseries_filter) return
 
-            const chartId = `chartCard${chartCounter}`
+            const chartId = `${value.heading}${chartCounter}`
 
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
 
@@ -108,7 +108,7 @@ export default async function TopicPage({
               {body.map(({ id, value }) => (
                 <PageSection key={id} heading={value.heading}>
                   {value.content.map((item) =>
-                    renderCard(value.heading, [], timeseriesFilter, item, `chartCard${chartCardCounter++}`)
+                    renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
                   )}
                 </PageSection>
               ))}
