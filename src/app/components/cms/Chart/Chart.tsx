@@ -9,7 +9,6 @@ import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { toSlug } from '@/app/utils/app.utils'
 import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
@@ -56,6 +55,11 @@ interface ChartProps {
    * Defaults to show all content if no filter present
    */
   timeseriesFilter: string
+
+  /**
+   * The ID of the chart card for use in filtering chart data
+   */
+  chartId: string
 }
 
 const createStaticChart = ({
@@ -102,15 +106,14 @@ const createStaticChart = ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter, chartId }: ChartProps) {
   const { t } = await getServerTranslation('common')
-  const chartId = data.chart[0]?.value?.metric ? toSlug(data.chart[0].value.metric) : ''
 
   let chartData = data
 
   if (timeseriesFilter) {
     // Nullcheck
-    const filteredData = getFilteredData(data, timeseriesFilter)?.filter(
+    const filteredData = getFilteredData(data, timeseriesFilter, chartId)?.filter(
       (item): item is NonNullable<typeof item> => item !== null
     )
 
