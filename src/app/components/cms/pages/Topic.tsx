@@ -5,7 +5,6 @@ import { Details } from '@/app/components/ui/govuk'
 import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
-import { toSlug } from '@/app/utils/app.utils'
 import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
@@ -36,15 +35,19 @@ export default async function TopicPage({
 
   let newChartFilters = ''
 
+  let chartCounter = 0
+
   body.map(({ value }) => {
     if (value.content) {
       value.content.map((content) => {
         if (content.type === 'chart_row_card' && content.value.columns) {
           content.value.columns.map((column) => {
+            chartCounter++
+
             // Check timeseries enabled per chart
             if (!column.value.show_timeseries_filter) return
 
-            const chartId = toSlug(column.value.chart[0].value.metric)
+            const chartId = `${value.heading}${chartCounter}`
 
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
 
@@ -70,6 +73,8 @@ export default async function TopicPage({
     newParams.set('timeseriesFilter', newChartFilters)
     newRoute = `?${newParams.toString()}`
   }
+
+  let chartCardCounter = 0
 
   return (
     <>
@@ -102,7 +107,9 @@ export default async function TopicPage({
             <PageSectionWithContents>
               {body.map(({ id, value }) => (
                 <PageSection key={id} heading={value.heading}>
-                  {value.content.map(renderCard.bind(null, value.heading, [], timeseriesFilter))}
+                  {value.content.map((item) =>
+                    renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                  )}
                 </PageSection>
               ))}
             </PageSectionWithContents>

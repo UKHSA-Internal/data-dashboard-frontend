@@ -65,7 +65,8 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
 
 export const getFilteredData = (
   data: z.infer<typeof ChartCardSchemas>['value'],
-  timeseriesFilter: string
+  timeseriesFilter: string,
+  chartId: string
 ): Chart | undefined => {
   if (!timeseriesFilter) return
 
@@ -77,7 +78,7 @@ export const getFilteredData = (
     }) ?? []
 
   return data.chart.map((plot) => {
-    const matchingFilter = filters.find((filter) => filter.plotId.toLowerCase() === plot.value.metric.toLowerCase())
+    const matchingFilter = filters.find((filter) => filter.plotId.toLowerCase() === chartId.toLowerCase())
 
     if (!matchingFilter) return plot
 
