@@ -7,6 +7,7 @@ export function extractRootSlug(slug: Slug) {
 
 export function getPathSegments(url: string): Slug {
   if (!url) return []
+
   const urlObj = new URL(url)
   const path = urlObj.pathname
   const segments = path.split('/').filter((segment) => segment.length > 0)

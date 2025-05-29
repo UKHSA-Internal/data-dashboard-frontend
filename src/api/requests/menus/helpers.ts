@@ -1,4 +1,4 @@
-import { getPathSegments } from '@/app/utils/cms/slug'
+import { getPath } from '@/app/utils/cms/slug'
 
 import { getMenu } from './getMenu'
 
@@ -36,10 +36,10 @@ export function transformMenuSnippetToSideMenu(response: MenuResponse): MenuLink
 
       const menuLink: MenuLink = {
         title: primaryLink.title,
-        slug: `/${getPathSegments(primaryLink.html_url).join('/')}`,
+        slug: getPath(primaryLink.html_url),
         children: secondaryLinks.map((link) => ({
           title: link.value.title,
-          slug: `/${getPathSegments(link.value.html_url).join('/')}`,
+          slug: getPath(link.value.html_url),
         })),
       }
 
@@ -75,7 +75,7 @@ const parseLink = (link: UnparsedLink) => {
   const { title, html_url: url, body } = link
   return {
     title: title,
-    slug: `/${getPathSegments(url).join('/')}`,
+    slug: getPath(url),
     description: body,
   }
 }

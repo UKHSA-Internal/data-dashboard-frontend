@@ -2,7 +2,7 @@ import { Suspense } from 'react'
 
 import { getPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { View } from '@/app/components/ui/ukhsa'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
 import HealthAlertsLink from '@/app/components/ui/ukhsa/Links/HealthAlertsLink/HealthAlertsLink'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItem } from '@/app/components/ui/ukhsa/List/ListItem'
@@ -11,9 +11,9 @@ import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/Rela
 import { Breadcrumbs } from '@/app/components/ui/ukhsa/View/Breadcrumbs/Breadcrumbs'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
-import { authEnabled } from '@/config/constants'
+import { cachingEnabled } from '@/config/constants'
 
-export const dynamic = authEnabled ? 'auto' : 'force-dynamic'
+export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
 
 export async function generateMetadata() {
   const {
@@ -33,6 +33,7 @@ export default async function WeatherHealthAlerts() {
     body,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
+    active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Composite>('weather-health-alerts', {
     type: PageType.Composite,
   })
@@ -43,6 +44,7 @@ export default async function WeatherHealthAlerts() {
     <View>
       <Breadcrumbs breadcrumbs={[{ name: 'Home', link: '/' }]} />
       <Heading heading={title} />
+      <Announcements announcements={activeAnnouncements} />
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <div className="govuk-body">{body.map(renderCompositeBlock)}</div>
