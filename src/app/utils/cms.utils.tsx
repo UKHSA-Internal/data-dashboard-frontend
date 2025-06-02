@@ -57,7 +57,7 @@ export const renderSection = (
       )}
     </h2>
 
-    {content.map(renderCard.bind(null, heading, showMoreSections))}
+    {content.map((item) => renderCard(heading, showMoreSections, '', item))}
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
@@ -73,7 +73,9 @@ export const renderSection = (
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
-  { type, value, id }: z.infer<typeof CardTypes>
+  timeseriesFilter: string,
+  { type, value, id }: z.infer<typeof CardTypes>,
+  chartId?: string
 ) => {
   return (
     <div key={id}>
@@ -208,6 +210,8 @@ export const renderCard = (
                                 size: 'narrow',
                               },
                             ]}
+                            timeseriesFilter={timeseriesFilter}
+                            chartId={chartId ?? ''}
                           />
                         </AreaSelectorLoader>
                       </TabsContent>
@@ -312,6 +316,8 @@ export const renderCard = (
                             default: true,
                           },
                         ]}
+                        timeseriesFilter={timeseriesFilter}
+                        chartId={chartId ?? ''}
                       />
                     </div>
                   </Link>

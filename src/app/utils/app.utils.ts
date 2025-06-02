@@ -10,7 +10,6 @@ export const isProd = () => global.window && window.location.hostname === SITE_U
 /**
  * Converts a string into a snake-case slug format
  */
-
 export const toSlug = (text: string | null) => {
   if (!text) return ''
   return text
@@ -43,3 +42,14 @@ export const getSiteUrl = () => {
 export const slug2String = (slug: string[]): string => slug.join('/')
 
 export const trimTrailingSlash = (url: string) => url.replace(/\/$/, '')
+
+export const getTimespan = (startDate: Date, endDate: Date): { years: number; months: number } => {
+  const yearDiff = endDate.getFullYear() - startDate.getFullYear()
+  const monthDiff = endDate.getMonth() - startDate.getMonth()
+
+  const totalMonths = yearDiff * 12 + monthDiff
+  const years = Math.floor(totalMonths / 12)
+  const months = totalMonths % 12
+
+  return { years, months }
+}

@@ -164,16 +164,6 @@ export class App {
       this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
     ).toBeVisible()
 
-    // Announcement
-    const infoBanner = this.page.getByRole('status')
-    await expect(infoBanner.getByText('Information', { exact: true })).toBeVisible()
-    await expect(infoBanner.getByText('This is an information level site wide banner. Puppies are cute')).toBeVisible()
-    await expect(
-      infoBanner.getByText(
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.'
-      )
-    ).toBeVisible()
-
     // Footer
     await expect(this.footer.getByText(/All content is available under the/)).toBeVisible()
     await expect(this.footer.getByText(/Open Government Licence v3.0/)).toBeVisible()
@@ -185,6 +175,15 @@ export class App {
     await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
+  }
+
+  async hasAnnouncement(type: 'Information' | 'Warning', title: string, body: string) {
+    const infoBanner = this.page.getByRole(type === 'Information' ? 'status' : 'alert')
+    await expect(
+      infoBanner.getByText(type === 'Information' ? 'Information' : 'Warning', { exact: true })
+    ).toBeVisible()
+    await expect(infoBanner.getByText(title)).toBeVisible()
+    await expect(infoBanner.getByText(body)).toBeVisible()
   }
 
   async hasHeroBannerLayout() {

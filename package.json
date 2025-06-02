@@ -43,7 +43,7 @@
     "leaflet": "^1.9.4",
     "lodash": "^4.17.21",
     "next": "^14.2.25",
-    "next-auth": "^5.0.0-beta.25",
+    "next-auth": "5.0.0-beta.25",
     "nuqs": "^1.17.2",
     "pino": "^8.20.0",
     "plotly.js": "^2.35.3",
@@ -61,6 +61,7 @@
     "react-use": "^17.5.0",
     "rehype-raw": "^6.1.1",
     "rehype-slug": "^5.1.0",
+    "sharp": "^0.34.1",
     "tailwind-merge": "^2.5.2",
     "usehooks-ts": "^3.1.0",
     "zod": "^3.22.4"
