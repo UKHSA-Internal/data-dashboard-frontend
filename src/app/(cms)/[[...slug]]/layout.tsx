@@ -26,7 +26,8 @@ export function generateMetadata() {
 }
 
 export default async function Layout({ children, params }: LayoutProps) {
-  const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
+  const [{ t }, globalBanners] : any = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
+
 
   const onLandingPage = !params?.slug
 
