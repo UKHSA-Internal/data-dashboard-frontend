@@ -10,7 +10,6 @@ import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
-import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL, getShowMoreURL } from '@/app/utils/show-more.utils'
 
@@ -32,6 +31,8 @@ import {
 import About from '../components/cms/About/About'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
+import MapTab from '../components/ui/ukhsa/MapTab/MapTab'
+import { MiniMapCard } from '../components/ui/ukhsa/MiniMap/MiniMapCard'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
 
 // TODO: Move this file into cms folder
@@ -137,6 +138,15 @@ export const renderCard = (
                         </TabsTrigger>
                         <TabsTrigger
                           asChild
+                          value={`${kebabCase(column.value.title)}-map`}
+                          aria-controls={`map-${kebabCase(column.value.title)}-map`}
+                        >
+                          <Link href={`#map-${kebabCase(column.value.title)}`}>
+                            <span>Map</span>
+                          </Link>
+                        </TabsTrigger>
+                        <TabsTrigger
+                          asChild
                           value={`${kebabCase(column.value.title)}-table`}
                           aria-controls={`table-${kebabCase(column.value.title)}-content`}
                         >
@@ -214,6 +224,16 @@ export const renderCard = (
                             chartId={chartId ?? ''}
                           />
                         </AreaSelectorLoader>
+                      </TabsContent>
+                      <TabsContent
+                        value={`${kebabCase(column.value.title)}-map`}
+                        id={`map-${kebabCase(column.value.title)}-content`}
+                      >
+                        <span
+                          className="govuk-heading-m govuk-!-margin-top-3 js:hidden"
+                          id={`map-${kebabCase(column.value.title)}`}
+                        ></span>
+                        <MapTab />
                       </TabsContent>
                       <TabsContent
                         value={`${kebabCase(column.value.title)}-table`}

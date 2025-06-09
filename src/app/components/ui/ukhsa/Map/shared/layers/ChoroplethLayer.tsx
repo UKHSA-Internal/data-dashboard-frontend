@@ -137,10 +137,18 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         mouseover: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
+          console.log('Feature information:', JSON.stringify(feature))
 
           const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
           const hoverColour = getHoverCssVariableFromColour(colour)
           layer.setStyle({ fillColor: hoverColour })
+          layer
+            .bindTooltip(`<h1>ToolTip Example</h1><b>Region</b>: London<br /><b>Vaccine Uptake</b>:${'>'}95</>`, {
+              permanent: false,
+              opacity: 1,
+              direction: 'center',
+            })
+            .openTooltip()
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
