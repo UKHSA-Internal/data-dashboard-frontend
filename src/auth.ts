@@ -31,6 +31,11 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   trustHost: true,
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://'),
   providers,
+  pages: {
+    error: '/auth/error',
+    signOut: '/auth/signout',
+    signIn: '/auth/signin',
+  },
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
