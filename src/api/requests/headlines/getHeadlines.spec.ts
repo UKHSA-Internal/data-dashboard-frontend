@@ -30,7 +30,7 @@ test('Returns a COVID-19 headline value', async () => {
     success: true,
     data: {
       value: 24298,
-      period_end: '2023-11-03',
+      period_end: '2025-11-03',
     },
   })
 })

@@ -31,12 +31,12 @@
       },
       "percentage": {
         "heading": "{{heading}}",
-        "value": "{{value, number}}%"
+        "value": "{{value, number1DP}}%"
       },
       "trend": {
         "heading": "{{heading}}",
         "value": {
-          "percentage": "({{percentage, number}}%)",
+          "percentage": "({{percentage, number1DP}}%)",
           "change": "{{change}}"
         },
         "alt_green_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
@@ -70,7 +70,7 @@
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
         "row": "{{value, dateShortest}}",
-        "row_plot": "{{value, number}}",
+        "row_plot": "{{value, number2DP}}",
         "row_plot_null": "-",
         "row_age": "{{value}}",
         "row_geography": "{{value}}",
