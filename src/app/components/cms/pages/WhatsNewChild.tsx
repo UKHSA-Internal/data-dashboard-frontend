@@ -16,7 +16,7 @@ export default async function WhatsNewChildPage({
   slug,
   searchParams,
 }: PageComponentBaseProps<{ returnUrl?: string }>) {
-  const { t } = await getServerTranslation('whatsNew')
+  const { t } = await getServerTranslation('whatsNew')  as any;
 
   const {
     title,

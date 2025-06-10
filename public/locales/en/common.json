@@ -22,6 +22,11 @@
   "pageTitle": "{{title}}",
   "pageTitle_withArea": "{{title}} in {{- areaName}}",
   "entryTitle": "<0>Entry title: </0><1>{{- value}}</1>",
+  "monthHeader": "<0>List of changes in the month of</0> {{value}}",
+  "entryDate": "<0>Entry date: </0>{{value, dateShort}}",
+  "entryCategory": "<0>Entry category: </0><1>{{value}}</1>",
+  "entryDescription": "Entry description: ",
+  "additionalInformationLabel": "Additional information",
   "cms": {
     "blocks": {
       "headline": {

@@ -28,7 +28,7 @@ export default async function WhatsNewParentPage({
   slug,
   searchParams: { page },
 }: PageComponentBaseProps<{ page?: number }>) {
-  const { t } = await getServerTranslation('whatsNew')
+  const { t } = await getServerTranslation('whatsNew') as any;
 
   const setReturnPath = getReturnPathWithParams()
 
