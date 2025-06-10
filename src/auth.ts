@@ -9,6 +9,7 @@ const providers: Provider[] = [
     clientId: process.env.AUTH_CLIENT_ID,
     clientSecret: process.env.AUTH_CLIENT_SECRET,
     issuer: process.env.AUTH_CLIENT_URL,
+    checks: ['pkce', 'state', 'nonce'],
     profile(profile) {
       return {
         id: profile.sub,
@@ -54,6 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       session.error = token.error
+      session.accessToken = token.access_token
       session.refreshToken = token.refresh_token
       return session
     },
