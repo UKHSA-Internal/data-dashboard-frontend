@@ -17,36 +17,9 @@ const initI18next = async (lng, ns) => {
 export async function getServerTranslation(ns, options = { lng: 'en' }) {
   const i18nextInstance = await initI18next(options.lng, ns);
 
-  // Create a fixed t function
-  const fixedT = i18nextInstance.getFixedT(options.lng, Array.isArray(ns) ? ns[0] : ns, options.keyPrefix);
-
-  // Create a wrapper to decode HTML entities
-  function decodeHTMLEntities(str) {
-    if (!str || typeof str !== 'string') return str;
-    const txt = typeof window !== 'undefined' ? document.createElement('textarea') : null;
-
-    if (txt) {
-      txt.innerHTML = str;
-      return txt.value;
-    } else {
-      // Fallback for SSR (basic decoding of common entities)
-      return str
-        .replace(/&gt;/g, '>')
-        .replace(/&lt;/g, '<')
-        .replace(/&amp;/g, '&')
-        .replace(/&quot;/g, '"')
-        .replace(/&#39;/g, "'");
-    }
-  }
-
-  // Wrap the t function to decode HTML entities
-  const t = ((...args) => {
-    const result = fixedT(...args);
-    return decodeHTMLEntities(result);
-  });
 
   return {
-    t,
+    t:i18nextInstance.getFixedT(options.lng, Array.isArray(ns) ? ns[0] : ns, options.keyPrefix),
     i18n: i18nextInstance,
   };
 }
