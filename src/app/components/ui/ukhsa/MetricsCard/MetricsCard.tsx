@@ -19,7 +19,7 @@ interface MetricsCardProps {
 }
 
 export async function MetricsCard({ title, href, description, group, topic, metric }: MetricsCardProps) {
-  const { t } = await getServerTranslation('metrics')
+  const { t } = await getServerTranslation('metrics')  as any;
 
   return (
     <li className="govuk-summary-card">

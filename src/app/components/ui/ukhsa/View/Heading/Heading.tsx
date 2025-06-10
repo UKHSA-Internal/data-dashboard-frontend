@@ -10,7 +10,7 @@ interface HeadingProps {
 }
 
 export const Heading = async ({ lastUpdated, heading, className }: HeadingProps) => {
-  const { t } = await getServerTranslation('common')
+  const { t } = await getServerTranslation('common')  as any;
 
   return (
     <Trans

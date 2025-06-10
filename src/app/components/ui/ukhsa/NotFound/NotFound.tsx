@@ -4,7 +4,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getServerTranslation } from '@/app/i18n'
 
 const NotFound = async () => {
-  const { t } = await getServerTranslation('errors')
+  const { t } = await getServerTranslation('errors')  as any;
 
   return (
     <div className="govuk-width-container">

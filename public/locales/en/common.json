@@ -27,6 +27,13 @@
   "entryCategory": "<0>Entry category: </0><1>{{value}}</1>",
   "entryDescription": "Entry description: ",
   "additionalInformationLabel": "Additional information",
+  "noResults": "<0>There are no matching results</0><1>Improve your search results by:</1><2><0>removing filters</0><1>double-checking your spelling</1><2>using fewer keywords</2><3>searching for something less specific</3></2>",
+  "metricTitle": "<0><0>Metric title: </0>{{value}}</0>",
+  "metricDescription": "<0><0>Metric description: </0>{{value}}</0>",
+  "pageNotFound": {
+    "heading": "Page not found",
+    "body": "<0>Please try again later.</0><1>If you need to get in touch with UK Health Security Agency, you can find contact information at the bottom of the <0>UKHSA webpage</0>"
+  },
   "cms": {
     "blocks": {
       "headline": {

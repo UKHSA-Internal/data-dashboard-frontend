@@ -27,7 +27,7 @@ export async function View({
   className,
   breadcrumbs,
 }: PageProps) {
-  const { t } = await getServerTranslation('common')
+  const { t } = await getServerTranslation('common')  as any;
 
   return (
     <div className={clsx('w-full', className)}>

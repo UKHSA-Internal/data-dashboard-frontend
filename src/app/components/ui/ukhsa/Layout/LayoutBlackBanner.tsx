@@ -11,7 +11,7 @@ import { getServerTranslation } from '@/app/i18n'
 import { authEnabled } from '@/config/constants'
 
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
-  const { t } = await getServerTranslation('common')
+  const { t } = await getServerTranslation('common') as any;
 
   const globalBanners = await getGlobalBanner()
 

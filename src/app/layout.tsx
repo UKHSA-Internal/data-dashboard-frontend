@@ -23,7 +23,7 @@ import { Providers } from './providers'
 export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const { t } = await getServerTranslation('common')
+  const { t } = await getServerTranslation('common') as any;
 
   const cookieStore = cookies()
 

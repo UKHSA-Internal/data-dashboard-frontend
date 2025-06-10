@@ -3,7 +3,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getServerTranslation } from '@/app/i18n'
 
 export default async function NoResults() {
-  const { t } = await getServerTranslation('metrics')
+  const { t } = await getServerTranslation('metrics') as any;
 
   return (
     <Trans

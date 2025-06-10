@@ -10,7 +10,7 @@ interface HeroBannerProps {
 }
 
 export default async function HeroBanner({ subTitle }: HeroBannerProps) {
-  const { t } = await getServerTranslation('common')
+  const { t } = await getServerTranslation('common')  as any;
 
   return (
     <div className="bg-blue">
