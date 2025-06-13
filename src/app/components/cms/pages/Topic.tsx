@@ -70,7 +70,12 @@ export default async function TopicPage({
 
   if (newChartFilters !== timeseriesFilter) {
     const newParams = new URLSearchParams('')
-    newParams.set('timeseriesFilter', newChartFilters)
+    if (newChartFilters !== '') {
+      newParams.set('timeseriesFilter', newChartFilters)
+    } else {
+      newParams.delete('timeseriesFilter')
+    }
+
     newRoute = `?${newParams.toString()}`
   }
 

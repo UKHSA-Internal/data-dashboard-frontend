@@ -33,7 +33,10 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
 
     try {
       const token = await auth()
-      if (!token && !pathname.includes('/start')) {
+      const excludePaths = ['/start', '/auth/error', '/auth/signin', '/auth/signout']
+
+      // Check if the pathname is in the exclude list
+      if (!token && !excludePaths.some((path) => pathname.includes(path))) {
         return NextResponse.redirect(new URL('/start', request.url))
       }
       response = await validateAndRenewSession(request, response)
