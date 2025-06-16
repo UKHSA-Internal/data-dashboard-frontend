@@ -8,7 +8,7 @@
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
 import { ComponentProps, useRef } from 'react'
-import { GeoJSON, useMapEvents } from 'react-leaflet'
+import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { HealthAlertStatus } from '@/api/models/Alerts'
 import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
@@ -95,7 +95,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   featureColours,
   data,
   theme = defaultTheme,
-  className = 'transition-all duration-150',
+  className = 'transition-all duration-150 !outline-none',
   ...rest
 }: ChoroplethProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
@@ -103,6 +103,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   const featuresRef = useRef<Array<Feature>>([])
 
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
+  const map = useMap()
 
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
@@ -118,6 +119,9 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           if (layer.feature.id) {
             clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
+          const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
+
+          map.setView(latlng, 8)
 
           // Prevent map click events from firing
           Leaflet.DomEvent.stopPropagation(event)

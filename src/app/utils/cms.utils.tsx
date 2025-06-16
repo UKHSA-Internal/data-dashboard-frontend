@@ -227,6 +227,7 @@ export const renderCard = (
                       </TabsContent>
                       <TabsContent
                         value={`${kebabCase(column.value.title)}-map`}
+                        className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
                         id={`map-${kebabCase(column.value.title)}-content`}
                       >
                         <span
