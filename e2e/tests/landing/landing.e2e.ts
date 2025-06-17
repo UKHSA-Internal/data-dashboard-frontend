@@ -163,7 +163,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     weatherHealthAlertsChildPage,
   }) => {
     await test.step('click minimap card', async () => {
-      await landingPage.navigatesToWeatherHealthAlertsPageOnClick('Heat health alerts', {
+      await landingPage.navigatesToWeatherHealthAlertsPageOnClick('Cold health alerts', {
         tagline: 'Alerts in England',
         map: true,
       })
