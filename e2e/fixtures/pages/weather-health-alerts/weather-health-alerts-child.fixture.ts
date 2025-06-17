@@ -39,7 +39,7 @@ export class WeatherHealthAlertsChildPage {
     console.log(`weather param ${weather} is currently hardcoded as heat`)
     await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toHaveAttribute(
       'href',
-      `?v=map&type=heat`
+      `?v=map&type=${weather}`
     )
   }
 
