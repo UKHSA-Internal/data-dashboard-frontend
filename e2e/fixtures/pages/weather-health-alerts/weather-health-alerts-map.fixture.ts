@@ -103,11 +103,15 @@ export class WeatherHealthAlertsMapPage {
     await expect(wrapper.getByText('Colour')).toBeVisible()
     await expect(wrapper.getByText(status)).toBeVisible()
 
-    await expect(wrapper.getByText('Start')).toBeVisible()
-    await expect(wrapper.getByText(start)).toBeVisible()
+    if (start) {
+      await expect(wrapper.getByText('Start')).toBeVisible()
+      await expect(wrapper.getByText(start)).toBeVisible()
+    }
 
-    await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
-    await expect(wrapper.getByText(end)).toBeVisible()
+    if (end) {
+      await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
+      await expect(wrapper.getByText(end)).toBeVisible()
+    }
   }
 
   async hasHighlightedRegions(regionCount: number) {
