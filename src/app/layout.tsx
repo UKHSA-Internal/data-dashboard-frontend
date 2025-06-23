@@ -28,7 +28,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const cookieStore = cookies()
 
   return (
-    <html lang="en" className={`govuk-template ${font.variable} font-sans`}>
+    <html lang="en" className={`govuk-template ${font.variable} font-sans govuk-template--rebranded`}>
       <body className="govuk-template__body">
         <GoogleTagManager />
         <GovUK />
