@@ -8,7 +8,7 @@
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
 import { ComponentProps, useRef } from 'react'
-import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
+import { GeoJSON, useMapEvents } from 'react-leaflet'
 
 import { HealthAlertStatus } from '@/api/models/Alerts'
 import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
@@ -81,7 +81,7 @@ interface GeoJSONLayer<T extends LayerWithFeature> extends GeoJSONOptions {
 
 const defaultTheme = {
   weight: 2,
-  color: 'rgb(255,255,255,1)',
+  color: 'rgba(255, 255, 255, 1)',
   fillOpacity: 1,
 } as const
 
@@ -95,7 +95,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   featureColours,
   data,
   theme = defaultTheme,
-  className = 'transition-all duration-150 !outline-none',
+  className = 'transition-all duration-150',
   ...rest
 }: ChoroplethProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
@@ -103,7 +103,6 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   const featuresRef = useRef<Array<Feature>>([])
 
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
-  const map = useMap()
 
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
@@ -119,9 +118,6 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           if (layer.feature.id) {
             clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
-          const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
-
-          map.setView(latlng, 8)
 
           // Prevent map click events from firing
           Leaflet.DomEvent.stopPropagation(event)
@@ -141,22 +137,15 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         mouseover: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
-          console.log('Feature information:', JSON.stringify(feature))
 
           const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
           const hoverColour = getHoverCssVariableFromColour(colour)
           layer.setStyle({ fillColor: hoverColour })
-          layer
-            .bindTooltip(`<h1>ToolTip Example</h1><b>Region</b>: London<br /><b>Vaccine Uptake</b>:${'>'}95</>`, {
-              permanent: false,
-              opacity: 1,
-              direction: 'center',
-            })
-            .openTooltip()
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
+
           const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
           layer.setStyle({
             fillColor: getCssVariableFromColour(colour),
