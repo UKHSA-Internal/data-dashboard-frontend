@@ -11,6 +11,9 @@ import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { SelectedFilter } from '../../ui/ukhsa/SelectedFilters/SelectedFilter/SelectedFilter'
+import { SelectedFilters } from '../../ui/ukhsa/SelectedFilters/SelectedFilters'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -80,6 +83,15 @@ export default async function TopicPage({
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
+
+        <StaticFilter>
+          <SelectedFilters>
+            <SelectedFilter name='6-in-1' />
+            <SelectedFilter name='East midlands' />
+            <SelectedFilter name='Nottingham' />
+          </SelectedFilters>
+        </StaticFilter>
+
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
         <Announcements announcements={activeAnnouncements} />
