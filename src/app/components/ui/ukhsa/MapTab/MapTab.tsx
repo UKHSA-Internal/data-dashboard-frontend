@@ -6,7 +6,7 @@ import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
 import { parseAsStringLiteral, useQueryState } from 'nuqs'
 import { ComponentProps, ReactNode, useMemo } from 'react'
-import { CircleMarker, MapContainer, Tooltip } from 'react-leaflet'
+import { CircleMarker, MapContainer, Tooltip, useMap } from 'react-leaflet'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { center, mapId, mapQueryKeys, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
@@ -14,11 +14,15 @@ import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlert
 
 import { AttributionControl } from '../Map/shared/controls/AttributionControl'
 import { ZoomControl } from '../Map/shared/controls/ZoomControl'
-import featureCollection from '../Map/shared/data/geojson/ukhsa-regions'
+import localAuthoritiesFeatureCollection from '../Map/shared/data/geojson/local-authorities'
 import { useMapRef } from '../Map/shared/hooks/useMapRef'
 import BaseLayer from '../Map/shared/layers/BaseLayer'
 import ChoroplethLayer from '../Map/shared/layers/ChoroplethLayer'
 import { UKHSALogoLayer } from '../Map/shared/layers/UKHSALogoLayer'
+import regionFeatureCollection from '../Map/shared/data/geojson/ukhsa-regions'
+import countriesFeatureCollection from '../Map/shared/data/geojson/countries'
+import MultiLayerControl from '../Map/shared/controls/MultiLayerControl'
+import CoverLayer from '../Map/shared/layers/CoverLayer'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -51,24 +55,13 @@ const Map = ({
     parseAsStringLiteral<HealthAlertTypes>(['heat', 'cold']).withDefault('heat')
   )
 
-  const alertsQuery = useWeatherHealthAlertList({ type })
-
-  const choroplethLayer = useMemo(() => {
-    if (!alertsQuery.data) return
-    return (
-      <ChoroplethLayer
-        data={featureCollection}
-        featureColours={Object.fromEntries(alertsQuery.data.map((alert) => [alert.geography_code, alert.status]))}
-      />
-    )
-  }, [featureCollection, alertsQuery.data])
-
   return (
     <MapContainer
       {...options}
       id={mapId}
       minZoom={minZoom}
       maxZoom={maxZoom}
+      zoom={6}
       ref={ref}
       className={clsx('relative h-[80vh] overflow-hidden ukhsa-focus', className)}
       zoomControl={false}
@@ -77,15 +70,7 @@ const Map = ({
       <AttributionControl position={attributionControlPosition} />
       <ZoomControl position={zoomControlPosition} />
       <BaseLayer />
-      <CircleMarker center={[51.51, -0.12]} pathOptions={{ color: 'red' }} radius={20}>
-        <Tooltip>
-          <h1>ToolTip Example</h1>
-          <b>Region</b>: London
-          <br />
-          <b>Vaccine Uptake</b>:{'>'}95
-        </Tooltip>
-      </CircleMarker>
-      {choroplethLayer}
+      <CoverLayer />
       {children}
     </MapContainer>
   )
