@@ -19,7 +19,6 @@ import {
 } from '@/app/utils/weather-health-alert.utils'
 
 import { Feature } from '../data/geojson/ukhsa-regions'
-import { Feature as localAuthorities } from '../data/geojson/local-authorities'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 
 /**
@@ -40,7 +39,7 @@ interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
   /**
    * Colours mapping object to associate a particular region id with one of the four available colours
    */
-  featureColours?: Record<string, HealthAlertStatus>
+  featureColours: Record<string, HealthAlertStatus>
 
   /**
    * The ID of the selected feature.
@@ -82,8 +81,7 @@ interface GeoJSONLayer<T extends LayerWithFeature> extends GeoJSONOptions {
 
 const defaultTheme = {
   weight: 2,
-  color: 'rgb(21, 22, 21)',
-  fillColor: 'rgba(135, 231, 250, 0.5)',
+  color: 'rgb(255,255,255,1)',
   fillOpacity: 1,
 } as const
 
@@ -97,7 +95,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
   featureColours,
   data,
   theme = defaultTheme,
-  className = 'transition-all duration-150 outline-none',
+  className = 'transition-all duration-150 !outline-none',
   ...rest
 }: ChoroplethProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
@@ -145,9 +143,9 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           if (clickedFeatureIdRef.current === layer.feature.id) return
           console.log('Feature information:', JSON.stringify(feature))
 
-          // const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
-          // const hoverColour = getHoverCssVariableFromColour(colour)
-          //layer.setStyle({ fillColor: hoverColour })
+          const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
+          const hoverColour = getHoverCssVariableFromColour(colour)
+          layer.setStyle({ fillColor: hoverColour })
           layer
             .bindTooltip(`<h1>ToolTip Example</h1><b>Region</b>: London<br /><b>Vaccine Uptake</b>:${'>'}95</>`, {
               permanent: false,
@@ -158,12 +156,12 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
-          // if (clickedFeatureIdRef.current === layer.feature.id) return
-          // const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
-          // layer.setStyle({
-          //   fillColor: getCssVariableFromColour(colour),
-          //   fillOpacity: theme.fillOpacity,
-          // })
+          if (clickedFeatureIdRef.current === layer.feature.id) return
+          const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
+          layer.setStyle({
+            fillColor: getCssVariableFromColour(colour),
+            fillOpacity: theme.fillOpacity,
+          })
         },
       })
     },
@@ -207,7 +205,7 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
           }
 
           // Apply custom colours if the feature ID is present in the featureColours map
-          if (featureColours && currentFeatureId in featureColours) {
+          if (currentFeatureId in featureColours) {
             const colour = featureColours[currentFeatureId]
             if (isSelected) {
               style.fillColor = getActiveCssVariableFromColour(colour)
