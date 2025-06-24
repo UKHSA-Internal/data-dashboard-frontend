@@ -76,7 +76,7 @@ const createStaticChart = ({
   return (
     <picture data-testid="chart" data-location={areaName}>
       {sizes.map((size, index) => {
-        const chartSvg = charts[index].success ? charts[index].data.chart : null
+        const chartSvg = charts[index].data?.chart
 
         if (chartSvg) {
           if (size.minWidth) {
