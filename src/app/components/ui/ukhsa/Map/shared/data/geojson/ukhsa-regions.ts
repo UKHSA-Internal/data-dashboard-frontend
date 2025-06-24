@@ -18,7 +18,7 @@ export type Feature = FeatureCollection['features'][number]
 // If the GeoJSON data ever changes, it's likely to be provided using the "OSGB 1936" coordinate system.
 // Leaflet requires a WGS 84 coordinate system. Use the convert here https://mygeodata.cloud/conversion
 
-const featureCollection: FeatureCollection = {
+const regionFeatureCollection: FeatureCollection = {
   type: 'FeatureCollection',
   features: [
     {
@@ -5376,4 +5376,4 @@ const featureCollection: FeatureCollection = {
   ],
 }
 
-export default featureCollection
+export default regionFeatureCollection
