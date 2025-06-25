@@ -76,7 +76,12 @@ const createStaticChart = ({
   return (
     <picture data-testid="chart" data-location={areaName}>
       {sizes.map((size, index) => {
-        const chartSvg = charts[index].data?.chart
+        const chartResult = charts[index]
+        let chartSvg: string | undefined = undefined
+
+        if (chartResult.success) {
+          chartSvg = chartResult.data.chart
+        }
 
         if (chartSvg) {
           if (size.minWidth) {
@@ -175,7 +180,8 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   const resolvedRequests = await Promise.all(requests)
 
   // Pick out the default chart (mobile-first)
-  const defaultChartResponse = resolvedRequests[resolvedRequests.length - 1].data
+  const defaultChartResult = resolvedRequests[resolvedRequests.length - 1]
+  const defaultChartResponse = defaultChartResult.success ? defaultChartResult.data : undefined
 
   // Check the default chart & any additional charts have correctly returned responses
   if (!defaultChartResponse || resolvedRequests.some((request) => !request.success)) {

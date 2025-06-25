@@ -156,7 +156,7 @@ describe('Mega Menu Transformations', () => {
   })
 
   test('return an empty array if success is false', () => {
-    const unsuccessfulResponse = Mock.of<Response>({ success: false, data: undefined })
+    const unsuccessfulResponse = Mock.of<Response>({ success: false, error: undefined })
     const result = transformMenuSnippetToMegaMenu(unsuccessfulResponse)
     expect(result).toEqual([])
   })

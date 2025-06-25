@@ -47,8 +47,9 @@ async function getAllCmsPages() {
           lastModified: new Date(),
         })
       }
+    } else {
+      logger.error(pageByType.error)
     }
-    logger.error(pageByType.error)
   }
 
   return sitemap
