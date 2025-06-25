@@ -7,7 +7,7 @@ interface SelectedFiltersProps {
 export function SelectedFilters({children}: SelectedFiltersProps) {
     return (
         <div className="flex flex-wrap">
-            <h2 className="govuk-heading-s w-full">Selected Filters:</h2>
+            <h2 className="govuk-heading-s w-full govuk-!-margin-bottom-1">Selected Filters</h2> {/*TODO: i18n for text*/}
             {children}
         </div>
     )

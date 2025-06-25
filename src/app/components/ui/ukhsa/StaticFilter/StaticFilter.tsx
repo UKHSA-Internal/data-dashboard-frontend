@@ -33,7 +33,7 @@ export function StaticFilter({href = '#filter', className, children}: StaticFilt
         href={href}
         className={clsx(
           className,
-          'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 sticky bottom-3 float-right inline-flex items-center border-[3px] border-grey-2 bg-grey-2 text-black no-underline shadow-none outline-[3px] outline-yellow focus:border-black',
+          'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 sticky bottom-3 float-right inline-flex items-center bg-black text-white no-underline shadow-none ukhsa-focus focus:bg-yellow focus:text-black',
           {
             // 'sticky': isSticky,
             // 'hidden': !isSticky,
