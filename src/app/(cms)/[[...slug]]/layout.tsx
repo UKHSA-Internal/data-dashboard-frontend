@@ -36,7 +36,7 @@ export default async function Layout({ children, params }: LayoutProps) {
       <header className="govuk-header border-none bg-blue" data-module="govuk-header">
         <div className="relative">
           <div className="govuk-width-container relative flow-root">
-            <div className="govuk-header__logo govuk-!-padding-top-2">
+            <div className="govuk-header__logo govuk-!-padding-top-3">
               <Link href="/" className="govuk-header__link govuk-header__link--homepage">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -67,7 +67,7 @@ export default async function Layout({ children, params }: LayoutProps) {
               </Link>
             </div>
             {onLandingPage ? null : (
-              <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
+              <div className="govuk-header__content inline w-auto sm:w-5/12">
                 <Link href="/" className="govuk-header__link govuk-header__service-name">
                   {t('serviceTitle')}
                 </Link>
@@ -81,7 +81,7 @@ export default async function Layout({ children, params }: LayoutProps) {
         <MegaMenu />
       </TopNav>
 
-      {onLandingPage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container h-2 bg-blue" />}
+      {onLandingPage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container bg-blue" />}
 
       {!onLandingPage ? (
         <div className="govuk-width-container print:hidden">

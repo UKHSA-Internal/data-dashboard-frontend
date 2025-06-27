@@ -51,7 +51,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
               </Link>
             </div>
 
-            <div className="govuk-header__content govuk-!-padding-top-2 inline w-auto sm:w-5/12">
+            <div className="govuk-header__content inline w-auto sm:w-5/12">
               <Link href="/" className="govuk-header__link govuk-header__service-name">
                 {t('serviceTitle')}
               </Link>
@@ -64,7 +64,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
         <MegaMenu />
       </TopNav>
 
-      <div className="govuk-width-container h-2 bg-blue" />
+      <div className="govuk-width-container bg-blue" />
 
       <div className="govuk-width-container print:hidden">
         <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
