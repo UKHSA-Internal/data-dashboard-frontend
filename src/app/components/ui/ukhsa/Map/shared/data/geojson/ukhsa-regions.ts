@@ -11,7 +11,7 @@ export interface FeatureProperties {
   GlobalID: string
 }
 
-export type FeatureCollection = GeoJSON.FeatureCollection<GeoJSON.Geometry, FeatureProperties>
+export type FeatureCollection = GeoJSON.FeatureCollection<GeoJSON.Geometry, FeatureProperties> & { name: string }
 
 export type Feature = FeatureCollection['features'][number]
 
@@ -20,6 +20,7 @@ export type Feature = FeatureCollection['features'][number]
 
 const regionFeatureCollection: FeatureCollection = {
   type: 'FeatureCollection',
+  name: 'Regions',
   features: [
     {
       type: 'Feature',

@@ -148,7 +148,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       switch (level) {
         case 'local-authorities':
           console.log('Setting new data for local-authorities')
-          newData = localAuthoritiesFeatureCollection
+          newData = [regionFeatureCollection, localAuthoritiesFeatureCollection]
           break
         case 'regions':
           console.log('Setting new data for regions')
@@ -199,6 +199,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
       featuresRef.current = [...featuresRef.current, feature]
+      console.log('layer information', layer)
 
       layer.on({
         add: (event) => {
@@ -285,15 +286,84 @@ const CoverLayer = <T extends LayerWithFeature>({
   }
 
   const getCurrentData = () => {
-    console.log('getting current data')
-    console.log(geoJsonData)
     return geoJsonData
   }
 
-  return (
-    <>
-      {screenReaderText}
-      <MapEvents />
+  function getRandomInt(): number {
+    return Math.floor(Math.random() * 6)
+  }
+
+  function getLocalAuthorityShadedColour(number: number) {
+    let colour
+    switch (number) {
+      case 1:
+        colour = 'rgb(86, 163, 241)'
+        return colour
+      case 2:
+        colour = 'rgb(139, 165, 237)'
+        return colour
+      case 3:
+        colour = 'rgb(93, 158, 236)'
+        return colour
+      case 4:
+        colour = 'rgb(255, 255, 255)'
+        return colour
+      case 5:
+        colour = 'rgb(240, 25, 25)'
+        return colour
+      default:
+        return colour
+    }
+  }
+
+  const getStyleForFeatureCollection = (feature: any, featureCollection: any) => {
+    if (!feature || !feature.id) return {}
+
+    // Base style
+    const style: Leaflet.PathOptions = {
+      ...theme,
+      className,
+    }
+
+    const number: number = getRandomInt()
+    const colour = getLocalAuthorityShadedColour(number)
+    // Apply different styling based on feature collection name
+    if (featureCollection.name === 'Local Authorities') {
+      style.fillColor = colour
+      style.fillOpacity = 0.75
+      style.color = 'rgba(34, 111, 226)'
+      style.weight = 1
+    } else if (featureCollection.name === 'Regions') {
+      style.fillColor = 'rgba(99, 232, 89, 0)'
+      style.fillOpacity = 0
+      style.color = 'rgb(0, 0, 0)'
+      style.weight = 5
+    }
+
+    if (featureCollection.name === 'Local Authorities') {
+      console.log('localAuthority styles loaded: ', style)
+    }
+
+    if (featureCollection.name === 'Regions') {
+      console.log('Regions styles loaded: ', style)
+    }
+    return style
+  }
+
+  const renderGeoJsonLayers = () => {
+    const geoJsonFeatures = getCurrentData()
+    if (Array.isArray(geoJsonFeatures)) {
+      return geoJsonFeatures.map((featureCollection, index) => (
+        <GeoJSON
+          key={`geojson-${dataLevel}-${renderKey}-${index}`}
+          data={featureCollection}
+          {...defaultOptions}
+          style={(feature) => getStyleForFeatureCollection(feature, featureCollection)}
+          {...rest}
+        />
+      ))
+    }
+    return (
       <GeoJSON
         key={`geojson-${dataLevel}-${renderKey}`}
         data={getCurrentData()}
@@ -325,6 +395,14 @@ const CoverLayer = <T extends LayerWithFeature>({
         }}
         {...rest}
       />
+    )
+  }
+
+  return (
+    <>
+      {screenReaderText}
+      <MapEvents />
+      {renderGeoJsonLayers()}
     </>
   )
 }
