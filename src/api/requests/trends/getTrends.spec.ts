@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
@@ -8,8 +8,8 @@ import { getTrends, responseSchema } from './getTrends'
 
 const getTrendsMock = jest.mocked(client)
 
-type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
-type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
+type SuccessResponse = z.SafeParseReturnType<z.infer<typeof responseSchema>, z.infer<typeof responseSchema>>
+type ErrorResponse = z.SafeParseReturnType<z.infer<typeof responseSchema>, z.infer<typeof responseSchema>>
 
 beforeEach(() => jest.clearAllMocks())
 

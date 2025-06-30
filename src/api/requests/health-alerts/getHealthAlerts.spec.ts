@@ -1,4 +1,5 @@
 import { SafeParseError, SafeParseSuccess, ZodError } from 'zod'
+import { z } from 'zod'
 
 import { HealthAlertList } from '@/api/models/Alerts'
 import { client } from '@/api/utils/api.utils'
@@ -24,10 +25,10 @@ describe('Successfully getting a list of health alerts from the API', () => {
 
     const result = await getHealthAlerts('heat')
 
-    expect(result).toEqual<SafeParseSuccess<HealthAlertList>>({
-      data: fixture,
-      success: true,
-    })
+      expect(result).toEqual<SafeParseSuccess<HealthAlertList>>({
+        data: fixture,
+        success: true,
+      })
   })
 })
 

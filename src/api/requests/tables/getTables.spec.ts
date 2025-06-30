@@ -12,11 +12,10 @@ import {
 
 import { getTables, responseSchema } from './getTables'
 
-type Response = z.infer<typeof responseSchema>
-type SuccessResponse = z.SafeParseSuccess<Response>
-type ErrorResponse = z.SafeParseError<Response>
+type ResponseSchema = z.infer<typeof responseSchema>
+type Response = z.SafeParseReturnType<ResponseSchema, ResponseSchema>
 
-const getTablesResponseMocks: Array<[Topics, Metrics, Response]> = [
+const getTablesResponseMocks: Array<[Topics, Metrics, ResponseSchema]> = [
   ['COVID-19', 'COVID-19_cases_casesByDay', cases_casesByDay],
   ['COVID-19', 'COVID-19_deaths_ONSRollingMean', deaths_ONSRollingMean],
   ['Influenza', 'influenza_healthcare_ICUHDUadmissionrateByWeek', healthcare_ICUHDUadmissionrateByWeek],
@@ -30,7 +29,7 @@ test.each(getTablesResponseMocks)(
 
     const result = await getTables({ plots: [{ topic, metric }] })
 
-    expect(result).toEqual<SuccessResponse>({ success: true, data })
+    expect(result).toEqual<Response>({ success: true, data })
   }
 )
 
@@ -51,7 +50,7 @@ test('Handles invalid json received from the api', async () => {
     y_axis: 'stratum',
   })
 
-  expect(result).toEqual<ErrorResponse>({
+  expect(result).toEqual<Response>({
     success: false,
     error: new z.ZodError([
       {
@@ -81,7 +80,7 @@ test('Handles generic http error', async () => {
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 
-  expect(result).toEqual<ErrorResponse>({
+  expect(result).toEqual<Response>({
     success: false,
     error: new z.ZodError([
       {

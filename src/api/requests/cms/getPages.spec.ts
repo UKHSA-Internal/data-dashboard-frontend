@@ -16,9 +16,8 @@ import {
   whatsNewResponseSchema,
 } from './getPages'
 
-type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
-type WhatsNewSuccessResponse = z.SafeParseSuccess<z.infer<typeof whatsNewResponseSchema>>
-type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
+type Response = z.SafeParseReturnType<z.infer<typeof responseSchema>, z.infer<typeof responseSchema>>
+type WhatsNewResponse = z.SafeParseReturnType<z.infer<typeof whatsNewResponseSchema>, z.infer<typeof whatsNewResponseSchema>>
 
 const getPagesResponse = jest.mocked(client)
 
@@ -35,7 +34,7 @@ describe('Successfully getting all pages from the cms api ', () => {
 
     const response = await getPages({ type: PageType.Landing })
 
-    expect(response).toEqual<SuccessResponse>({
+    expect(response).toEqual<Response>({
       success: true,
       data: pagesWithLandingTypeMock,
     })
@@ -52,7 +51,7 @@ describe('Failing to get all pages from the cms api', () => {
 
     const result = await getPages({ type: PageType.Common })
 
-    expect(result).toEqual<ErrorResponse>({
+    expect(result).toEqual<Response>({
       success: false,
       error: new z.ZodError([
         {
@@ -84,7 +83,7 @@ describe("Successfully getting all What's new child pages from the cms api", () 
 
     const response = await getWhatsNewPages({ page: 1 })
 
-    expect(response).toEqual<WhatsNewSuccessResponse>({
+    expect(response).toEqual<WhatsNewResponse>({
       success: true,
       data: {
         meta: {
@@ -116,7 +115,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const response = await getWhatsNewPages({ page: 1 })
 
-    expect(response).toEqual<ErrorResponse>({
+    expect(response).toEqual<Response>({
       success: false,
       error: new z.ZodError([
         {
@@ -138,7 +137,7 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const result = await getWhatsNewPages({ page: 1 })
 
-    expect(result).toEqual<ErrorResponse>({
+    expect(result).toEqual<Response>({
       success: false,
       error: new z.ZodError([
         {
@@ -170,7 +169,7 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
 
     const response = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(response).toEqual<SuccessResponse>({
+    expect(response).toEqual<Response>({
       success: true,
       data: pagesWithMetricsChildTypeMock,
     })
@@ -184,7 +183,7 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
 
     const response = await getMetricsPages({ search: 'test', page: 1 })
 
-    expect(response).toEqual<SuccessResponse>({
+    expect(response).toEqual<Response>({
       success: true,
       data: pagesWithMetricsChildTypeMock,
     })
@@ -205,7 +204,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     const response = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(response).toEqual<ErrorResponse>({
+    expect(response).toEqual<Response>({
       success: false,
       error: new z.ZodError([
         {
@@ -227,7 +226,7 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     const result = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(result).toEqual<ErrorResponse>({
+    expect(result).toEqual<Response>({
       success: false,
       error: new z.ZodError([
         {

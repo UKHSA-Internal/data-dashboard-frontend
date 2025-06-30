@@ -1,4 +1,4 @@
-import z from 'zod'
+import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
@@ -8,8 +8,7 @@ import { getHeadlines, responseSchema } from './getHeadlines'
 
 const getHeadlinesMock = jest.mocked(client)
 
-type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
-type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
+type Response = z.SafeParseReturnType<z.infer<typeof responseSchema>, z.infer<typeof responseSchema>>
 
 beforeEach(() => jest.clearAllMocks())
 
@@ -26,7 +25,7 @@ test('Returns a COVID-19 headline value', async () => {
     metric: 'new_cases_7days_sum',
   })
 
-  expect(result).toEqual<SuccessResponse>({
+  expect(result).toEqual<Response>({
     success: true,
     data: {
       value: 24298,
@@ -48,7 +47,7 @@ test('Returns an Influenza headline value', async () => {
     metric: 'weekly_positivity_latest',
   })
 
-  expect(result).toEqual<SuccessResponse>({
+  expect(result).toEqual<Response>({
     success: true,
     data: {
       value: 0.2558,
@@ -70,7 +69,7 @@ test('Handles invalid json received from the api', async () => {
     metric: 'new_cases_7days_sum',
   })
 
-  expect(result).toEqual<ErrorResponse>({
+  expect(result).toEqual<Response>({
     success: false,
     error: new z.ZodError([
       {
@@ -106,7 +105,7 @@ test('Handles generic http errors', async () => {
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 
-  expect(result).toEqual<ErrorResponse>({
+  expect(result).toEqual<Response>({
     success: false,
     error: new z.ZodError([
       {

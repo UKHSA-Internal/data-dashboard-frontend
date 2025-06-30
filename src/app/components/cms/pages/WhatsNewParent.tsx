@@ -4,7 +4,7 @@ import { kebabCase } from 'lodash'
 import Link from 'next/link'
 import { notFound, redirect } from 'next/navigation'
 import { Trans } from 'react-i18next/TransWithoutContext'
-import { SafeParseSuccess } from 'zod'
+import { z } from 'zod'
 
 import { getWhatsNewPages, PageType, WhatsNewPagesResponse } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
@@ -66,7 +66,7 @@ export default async function WhatsNewParentPage({
     initialPageSize: paginationSize,
   })
 
-  type Page = SafeParseSuccess<WhatsNewPagesResponse>['data']['items']
+  type Page = z.SafeParseReturnType<WhatsNewPagesResponse, WhatsNewPagesResponse>["data"]["items"]
 
   const datesByMonth: Record<string, Page> = {}
 

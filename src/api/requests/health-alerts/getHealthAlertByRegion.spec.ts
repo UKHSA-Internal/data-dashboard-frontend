@@ -1,4 +1,4 @@
-import { SafeParseError, SafeParseSuccess, ZodError } from 'zod'
+import { z } from 'zod'
 
 import { HealthAlert } from '@/api/models/Alerts'
 import { client } from '@/api/utils/api.utils'
@@ -22,10 +22,10 @@ describe('Successfully getting a health alert from the API', () => {
 
     const result = await getHealthAlertByRegion('heat', 'mockRegionId')
 
-    expect(result).toEqual<SafeParseSuccess<HealthAlert>>({
-      data: alertRegionFixture,
-      success: true,
-    })
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data).toEqual(alertRegionFixture)
+    }
   })
 
   test('returns a cold alert object for the region', async () => {
@@ -36,10 +36,10 @@ describe('Successfully getting a health alert from the API', () => {
 
     const result = await getHealthAlertByRegion('cold', 'mockRegionId')
 
-    expect(result).toEqual<SafeParseSuccess<HealthAlert>>({
-      data: alertRegionFixture,
-      success: true,
-    })
+    expect(result.success).toBe(true)
+    if (result.success) {
+      expect(result.data).toEqual(alertRegionFixture)
+    }
   })
 })
 
@@ -53,10 +53,10 @@ describe('Failing to get a health alert from the API', () => {
 
     const result = await getHealthAlertByRegion('cold', 'mockRegionId')
 
-    expect(result).toEqual<SafeParseError<HealthAlert>>({
-      error: expect.any(ZodError),
-      success: false,
-    })
+    expect(result.success).toBe(false)
+    if (!result.success) {
+      expect(result.error).toBeInstanceOf(z.ZodError)
+    }
 
     expect(logger.error).toHaveBeenNthCalledWith(1, {
       status: 500,
