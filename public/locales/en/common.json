@@ -122,6 +122,7 @@
   "oneYearNoScript": "Up to one year of data currently shown, there may be additional content. To see this please <1>download</1> the full data set",
   "globalFilter": {
     "showFilters": "Show filters",
-    "hideFilters": "Hide filters"
+    "hideFilters": "Hide filters",
+    "globalFilterTitle": "Selected filters"
   }
 }
