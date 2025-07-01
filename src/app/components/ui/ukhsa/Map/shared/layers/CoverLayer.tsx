@@ -148,6 +148,10 @@ const CoverLayer = <T extends LayerWithFeature>({
       switch (level) {
         case 'local-authorities':
           console.log('Setting new data for local-authorities')
+          const englishLocalAuthorityFeatures = localAuthoritiesFeatureCollection.features.filter((feature) =>
+            feature.properties.LAD24CD.startsWith('E')
+          )
+          localAuthoritiesFeatureCollection.features = englishLocalAuthorityFeatures
           newData = [regionFeatureCollection, localAuthoritiesFeatureCollection]
           break
         case 'regions':
