@@ -23,6 +23,7 @@ import {
   CodeBlock,
   Download,
   Headline,
+  MapTab,
   Percentage,
   RichText,
   Table,
@@ -32,7 +33,6 @@ import {
 import About from '../components/cms/About/About'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
-import MapTab from '../components/ui/ukhsa/MapTab/MapTab'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
 
 // TODO: Move this file into cms folder

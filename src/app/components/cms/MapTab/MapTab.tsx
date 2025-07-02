@@ -9,11 +9,11 @@ import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
-import { AttributionControl } from '../Map/shared/controls/AttributionControl'
-import { ZoomControl } from '../Map/shared/controls/ZoomControl'
-import { useMapRef } from '../Map/shared/hooks/useMapRef'
-import BaseLayer from '../Map/shared/layers/BaseLayer'
-import { UKHSALogoLayer } from '../Map/shared/layers/UKHSALogoLayer'
+import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
+import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
+import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
+import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
+import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -34,7 +34,7 @@ interface MapTabProps {
   className?: string
 }
 
-const MapTab = ({
+export const MapTab = ({
   children,
   className,
   options: { attributionControlPosition, zoomControlPosition, ...options } = mapDefaults,
@@ -60,5 +60,3 @@ const MapTab = ({
     </MapContainer>
   )
 }
-
-export default MapTab
