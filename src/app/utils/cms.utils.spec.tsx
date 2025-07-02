@@ -11,6 +11,7 @@ import {
   mockChartRowCardWithSingleChartCard,
   mockHeadlineNumbersRowCard,
   mockHeadlineNumbersRowCardWithOneColumn,
+  mockLinkedMapCard,
   mockSectionNoLink,
   mockSectionWithCard,
   mockSectionWithLink,
@@ -129,6 +130,38 @@ describe('Headline numbers row card', () => {
     const gridRow = screen.getByTestId('headline-row').firstChild
     expect(gridRow).toHaveClass('grid-cols-2 sm:grid-cols-3')
     expect(gridRow).not.toHaveClass('md:grid-cols-5')
+  })
+})
+describe('Linked Map Card', () => {
+  test('linked Map card displays correctly', () => {
+    render(renderCard('', [], '', mockLinkedMapCard))
+
+    expect(screen.getAllByRole('article')).toHaveLength(1)
+
+    const article = screen.getByRole('article', { name: 'Chart heading 1' })
+    expect(article).toBeInTheDocument()
+    expect(article).toHaveClass('ukhsa-chart-card')
+
+    // Heading and description
+    expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
+    expect(within(article).getByText('Chart description 1')).toBeInTheDocument()
+    expect(within(article).getByText('Up to and including 27 September 2023')).toBeInTheDocument()
+
+    // Tabs list
+    expect(screen.getByRole('tablist')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Map' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('aria-selected', 'false')
+
+    // Tabs panel
+    expect(screen.getByRole('tab', { name: 'Map' })).toHaveAttribute('data-state', 'active')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('data-state', 'inactive')
+
+    // Chart
+    expect(screen.getByText('Mocked Map')).toBeVisible()
   })
 })
 
