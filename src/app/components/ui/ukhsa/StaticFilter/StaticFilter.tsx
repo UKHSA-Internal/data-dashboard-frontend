@@ -13,19 +13,19 @@ interface StaticFilterProps {
 }
 
 export function StaticFilter({ href = '#filter', className, children }: StaticFilterProps) {
-  const { y } = useWindowScroll()
+  const { y: horizontalWindowPosition } = useWindowScroll()
   const { t } = useTranslation('common')
 
   const [isSticky, setIsSticky] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    if (y > 200) {
+    if (horizontalWindowPosition > 200) {
       setIsSticky(true)
     } else {
       setIsSticky(false)
     }
-  }, [y])
+  }, [horizontalWindowPosition])
 
   return (
     <>
