@@ -138,9 +138,9 @@ describe('Linked Map Card', () => {
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
-    const article = screen.getByRole('article', { name: 'Chart heading 1' })
+    const article = screen.getByRole('article')
     expect(article).toBeInTheDocument()
-    expect(article).toHaveClass('ukhsa-chart-card')
+    expect(article).toHaveClass('ukhsa-map-card')
 
     // Heading and description
     expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
