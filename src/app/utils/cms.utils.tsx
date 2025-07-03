@@ -23,6 +23,7 @@ import {
   CodeBlock,
   Download,
   Headline,
+  MapRowCard,
   MapTab,
   Percentage,
   RichText,
@@ -267,7 +268,7 @@ export const renderCard = (
       )}
 
       {type === 'linked_map_card' && (
-        <ChartRowCard>
+        <MapRowCard>
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
             const noAbout = !column.value.about || column.value.about.length === 0
@@ -279,12 +280,12 @@ export const renderCard = (
                   'lg:w-full': value.columns.length === 1,
                   'lg:w-1/2': value.columns.length === 2,
                 })}
-                data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
+                data-testid={`map-row-card-${kebabCase(column.value.title)}`}
               >
                 <Card
                   asChild
-                  aria-labelledby={`chart-row-card-heading-${column.id}`}
-                  className="ukhsa-chart-card flex flex-col gap-6"
+                  aria-labelledby={`map-row-card-heading-${column.id}`}
+                  className="ukhsa-map-card flex flex-col gap-6"
                 >
                   <article>
                     <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
@@ -295,7 +296,7 @@ export const renderCard = (
                         <TabsTrigger
                           asChild
                           value={`${kebabCase(column.value.title)}-map`}
-                          aria-controls={`map-${kebabCase(column.value.title)}-map`}
+                          aria-controls={`map-${kebabCase(column.value.title)}-content`}
                         >
                           <Link href={`#map-${kebabCase(column.value.title)}`}>
                             <span>Map</span>
@@ -335,7 +336,7 @@ export const renderCard = (
                         )}
                       </TabsList>
                       <DropdownTab
-                        aria-label="Select for selecting chart content"
+                        aria-label="Select for selecting card content"
                         className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
                         chartTitle={column.value.title}
                         noAbout={noAbout}
@@ -398,7 +399,7 @@ export const renderCard = (
               </div>
             )
           })}
-        </ChartRowCard>
+        </MapRowCard>
       )}
 
       {type === 'chart_card_section' && (
