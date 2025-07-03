@@ -85,6 +85,15 @@ export default async function TopicPage({
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
+        {/* Example, do not un-comment  */}
+        {/* <StaticFilter>
+          <SelectedFilters>
+            <SelectedFilter name='6-in-1' />
+            <SelectedFilter name='East midlands' />
+            <SelectedFilter name='Nottingham' />
+          </SelectedFilters>
+        </StaticFilter> */}
+
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
         <Announcements announcements={activeAnnouncements} />
