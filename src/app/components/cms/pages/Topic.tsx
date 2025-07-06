@@ -2,7 +2,14 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import {
+  Announcements,
+  PageSection,
+  PageSectionWithContents,
+  SelectedFilters,
+  TopicBodyContextProvider,
+  View,
+} from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -12,6 +19,7 @@ import { clsx } from '@/lib/clsx'
 import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -33,12 +41,12 @@ export default async function TopicPage({
     selected_topics: selectedTopics,
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
-  
+
   let newChartFilters = ''
 
   let chartCounter = 0
 
-  const showFilterBanner = false;
+  const showFilterBanner = false
 
   body.map(({ value }) => {
     if (value.content) {
@@ -88,21 +96,6 @@ export default async function TopicPage({
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
-        {/* Example, do not un-comment  */}
-        {showFilterBanner && (
-          <FilterBanner
-            message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
-            showIcon={true}
-          />
-        )}
-        {/* <StaticFilter>
-          <SelectedFilters>
-            <SelectedFilter name='6-in-1' />
-            <SelectedFilter name='East midlands' />
-            <SelectedFilter name='Nottingham' />
-          </SelectedFilters>
-        </StaticFilter> */}
-
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
         <Announcements announcements={activeAnnouncements} />
@@ -127,15 +120,28 @@ export default async function TopicPage({
               </>
             )}
 
-            <PageSectionWithContents>
-              {body.map(({ id, value }) => (
-                <PageSection key={id} heading={value.heading}>
-                  {value.content.map((item) =>
-                    renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                  )}
-                </PageSection>
-              ))}
-            </PageSectionWithContents>
+            <TopicBodyContextProvider>
+              {/* Example, do not un-comment  */}
+              {showFilterBanner && (
+                <FilterBanner
+                  message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
+                  showIcon={true}
+                />
+              )}
+              <StaticFilter>
+                <SelectedFilters />
+              </StaticFilter>
+
+              <PageSectionWithContents>
+                {body.map(({ id, value }) => (
+                  <PageSection key={id} heading={value.heading}>
+                    {value.content.map((item) =>
+                      renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                    )}
+                  </PageSection>
+                ))}
+              </PageSectionWithContents>
+            </TopicBodyContextProvider>
           </div>
 
           {relatedLinksLayout === 'Sidebar' ? (
