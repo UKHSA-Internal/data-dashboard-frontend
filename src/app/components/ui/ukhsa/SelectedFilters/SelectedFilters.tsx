@@ -24,7 +24,8 @@ export function SelectedFilters() {
         <button
           key={filter}
           onClick={() => removeFilter(filter)}
-          className="govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-2 relative border-DEFAULT border-black bg-white text-black no-underline ukhsa-focus"
+          // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
+          className="govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-2 relative border-DEFAULT border-[1px] border-black bg-white text-black no-underline ukhsa-focus"
         >
           {filter}
           <span className="govuk-!-margin-left-2 inline-block">
