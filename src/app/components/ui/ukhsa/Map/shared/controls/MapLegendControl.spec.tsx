@@ -177,7 +177,7 @@ describe('MapLegendControl', () => {
 
       const legendContainer = container.firstChild as HTMLElement
       expect(legendContainer).toHaveClass(
-        'transform -translate-y-100 bg-white rounded shadow-lg px-4 py-3 flex flex-col z-[1000] min-w-[280px] max-w-[100%] sm:min-w-[400px] md:min-w-[600px]'
+        'z-[1000] flex min-w-[280px] max-w-full bg-white rounded shadow-lg px-4 py-3  sm:min-w-[400px] md:min-w-[600px]'
       )
     })
 
