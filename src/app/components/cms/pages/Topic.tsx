@@ -6,7 +6,7 @@ import {
   Announcements,
   PageSection,
   PageSectionWithContents,
-  // SelectedFilters,
+  SelectedFilters,
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
@@ -19,7 +19,7 @@ import { clsx } from '@/lib/clsx'
 import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
