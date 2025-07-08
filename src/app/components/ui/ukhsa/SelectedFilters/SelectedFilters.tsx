@@ -15,11 +15,21 @@ export function SelectedFilters() {
     throw new Error('SelectedFilters must be used within TopicBodyContextProvider')
   }
 
-  const [selectedFilters, { removeFilter }] = context
+  const [selectedFilters, { removeFilter, clearFilters }] = context
 
   return (
-    <div className="flex flex-wrap">
-      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{t('globalFilter.globalFilterTitle')}</h2>
+    <div className="relative flex flex-wrap">
+      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{`${t('globalFilter.globalFilterTitle')} (${selectedFilters.length})`}</h2>
+      <button
+        onClick={() => clearFilters()}
+        className="govuk-body-xs govuk-!-margin-[-2px] govuk-link absolute right-0 text-blue underline"
+      >
+        Clear filter selection
+        <span className="govuk-!-margin-left-2 inline-block">
+          <CrossIcon colour="var(--colour-blue)" />
+        </span>
+      </button>
+
       {selectedFilters.map((filter) => (
         <button
           key={filter}
