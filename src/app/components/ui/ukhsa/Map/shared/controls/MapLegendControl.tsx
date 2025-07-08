@@ -126,7 +126,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
     return (
       <div
         className="
-        -translate-y-100 z-[1000]
+        z-[1000]
         flex min-w-[280px] max-w-full
         flex-col rounded
         bg-white px-4
