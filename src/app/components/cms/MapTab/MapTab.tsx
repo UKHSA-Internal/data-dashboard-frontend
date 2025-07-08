@@ -51,22 +51,24 @@ export const MapTab = ({
   ]
 
   return (
-    <MapContainer
-      {...options}
-      id={mapId}
-      minZoom={minZoom}
-      maxZoom={maxZoom}
-      zoom={6}
-      ref={ref}
-      className={clsx('relative h-[80vh] overflow-hidden ukhsa-focus', className)}
-      zoomControl={false}
-    >
-      <UKHSALogoLayer position="topright" />
-      <AttributionControl position={attributionControlPosition} />
-      <ZoomControl position={zoomControlPosition} />
-      <BaseLayer />
-      <MapLegendControl position="bottomleft" legendItems={legendItems} />
-      {children}
-    </MapContainer>
+    <>
+      <MapContainer
+        {...options}
+        id={mapId}
+        minZoom={minZoom}
+        maxZoom={maxZoom}
+        zoom={6}
+        ref={ref}
+        className={clsx('relative h-[70vh] overflow-hidden ukhsa-focus', className)}
+        zoomControl={false}
+      >
+        <UKHSALogoLayer position="topright" />
+        <AttributionControl position={attributionControlPosition} />
+        <ZoomControl position={zoomControlPosition} />
+        <BaseLayer />
+        {children}
+      </MapContainer>
+      <MapLegendControl legendItems={legendItems} />
+    </>
   )
 }

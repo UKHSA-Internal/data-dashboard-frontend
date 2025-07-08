@@ -119,14 +119,14 @@ describe('MapTab', () => {
     render(<MapTab />)
 
     const mapContainer = screen.getByTestId('map-container')
-    expect(mapContainer).toHaveClass('relative h-[80vh] overflow-hidden ukhsa-focus')
+    expect(mapContainer).toHaveClass('relative h-[70vh] overflow-hidden ukhsa-focus')
   })
 
   test('merges custom className with default classes', () => {
     render(<MapTab className="custom-class" />)
 
     const mapContainer = screen.getByTestId('map-container')
-    expect(mapContainer).toHaveClass('relative h-[80vh] overflow-hidden ukhsa-focus custom-class')
+    expect(mapContainer).toHaveClass('relative h-[70vh] overflow-hidden ukhsa-focus custom-class')
   })
 
   test('applies correct map ID from constants', () => {

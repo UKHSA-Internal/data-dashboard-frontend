@@ -13,7 +13,7 @@ interface LegendItemProps {
 }
 
 interface LegendControlProps {
-  position: ControlPosition
+  position?: ControlPosition
   legendItems: LegendItemProps[]
 }
 
@@ -91,7 +91,13 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
   const renderParallelKey = (legendItems: LegendItemProps[]) => {
     const reversedLegendItems = [...legendItems].reverse()
     return (
-      <div className="m-2 bg-white p-2" data-testid="map-key">
+      <div
+        className="border-gray-300 fixed bottom-4 left-1/2 z-[1000]
+          m-2 max-w-sm -translate-x-1/2
+          rounded border bg-white p-3 shadow-lg
+          md:relative md:bottom-auto md:left-auto md:transform-none"
+        data-testid="map-key"
+      >
         <div className="flex items-center justify-between">
           <p className="govuk-heading-m m-0 mb-1">Key</p>
           {renderCloseButton()}
@@ -114,5 +120,46 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
     )
   }
 
-  return <Control position={position}>{showKey ? renderParallelKey(legendItems) : renderKeyButton()}</Control>
+  const renderLegend = () => {
+    const reversedLegendItems = [...legendItems].reverse()
+
+    return (
+      <div
+        className="
+        -translate-y-100 z-[1000]
+        flex min-w-[280px] max-w-full
+        flex-col rounded
+        bg-white px-4
+        py-3
+        shadow-lg sm:min-w-[400px]
+        md:min-w-[600px]
+      "
+      >
+        {/* Header for the legend component*/}
+        <div className="mb-3 flex items-center justify-between">
+          <h3 className="text-lg m-0 font-semibold">Key</h3>
+        </div>
+
+        {/* Horizontal legend bar */}
+        <div className="flex w-full overflow-hidden">
+          {reversedLegendItems.map((legendItem, index) => (
+            <div key={`${legendItem.title}-${index}`} className="flex flex-1 flex-col">
+              {/* Color segment */}
+              <div className={clsx('h-4 w-full', getBackgroundColour(legendItem.colour))} />
+              {/* Text label below */}
+              <div className="border-gray-300 border-r bg-white p-2 text-center last:border-r-0">
+                <p className="text-sm m-0 text-black">{legendItem.title}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+    )
+  }
+
+  if (position) {
+    return <Control position={position}>{showKey ? renderParallelKey(legendItems) : renderKeyButton()}</Control>
+  } else {
+    return renderLegend()
+  }
 }
