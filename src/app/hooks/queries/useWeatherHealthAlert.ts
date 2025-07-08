@@ -15,7 +15,7 @@ export default function useWeatherHealthAlert({ type, regionId }: WeatherHealthA
     select(data) {
       if (data.success) {
         const {
-          geography_name: regionName,
+          geography: regionName,
           status,
           text,
           risk_score: riskScore,

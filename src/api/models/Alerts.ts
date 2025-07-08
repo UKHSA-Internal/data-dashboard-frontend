@@ -13,7 +13,7 @@ export const HealthAlert = z.object({
   period_start: z.string().nullable(),
   period_end: z.string().nullable(),
   refresh_date: z.string().nullable(),
-  geography_name: z.string(),
+  geography: z.string(),
   geography_code: z.string(),
 })
 
