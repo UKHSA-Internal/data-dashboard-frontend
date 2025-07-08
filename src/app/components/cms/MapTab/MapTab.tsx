@@ -10,6 +10,7 @@ import { MapContainer } from 'react-leaflet'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
+import { MapLegendControl } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
@@ -41,6 +42,14 @@ export const MapTab = ({
 }: MapTabProps) => {
   const ref = useMapRef()
 
+  const legendItems = [
+    { colour: 'dark-purple', title: 'over 95%' },
+    { colour: 'dark-blue', title: '90% - 95%' },
+    { colour: 'light-blue', title: '85% - 90%' },
+    { colour: 'purple', title: '80% - 85%' },
+    { colour: 'pink', title: 'under 80%' },
+  ]
+
   return (
     <MapContainer
       {...options}
@@ -56,6 +65,7 @@ export const MapTab = ({
       <AttributionControl position={attributionControlPosition} />
       <ZoomControl position={zoomControlPosition} />
       <BaseLayer />
+      <MapLegendControl position="bottomleft" legendItems={legendItems} />
       {children}
     </MapContainer>
   )

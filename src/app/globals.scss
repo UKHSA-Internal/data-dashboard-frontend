@@ -63,6 +63,7 @@ $govuk-page-width: 1400px;
   --colour-dark-blue: #{govuk-colour('dark-blue')};
   --colour-light-blue: #{govuk-colour('light-blue')};
   --colour-purple: #{govuk-colour('purple')};
+  --colour-dark-purple: #540d36;
 
   --colour-black: #{govuk-colour('black')};
   --colour-dark-grey: #{govuk-colour('dark-grey')};
@@ -109,9 +110,9 @@ $govuk-page-width: 1400px;
   --colour-green-darkest: #{govuk-shade(govuk-colour('green'), 45%)};
 
   // UKHSA New yellow for maps
-  --colour-custard: #F1BF0D; 
-  --colour-custard-dark: #{govuk-shade(#F1BF0D, 15%)};
-  --colour-custard-darkest: #{govuk-shade(#F1BF0D, 45%)};
+  --colour-custard: #f1bf0d;
+  --colour-custard-dark: #{govuk-shade(#f1bf0d, 15%)};
+  --colour-custard-darkest: #{govuk-shade(#f1bf0d, 45%)};
 
   // UKHSA Alert banner colours
   --colour-green-opaque: #c2ddd0;
@@ -190,6 +191,10 @@ $govuk-page-width: 1400px;
       background-color: var(--colour-white) !important;
     }
   }
+}
+
+.striped-background {
+  background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
 }
 
 .leaflet-container {
