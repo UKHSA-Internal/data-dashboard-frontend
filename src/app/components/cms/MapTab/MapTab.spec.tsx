@@ -68,6 +68,10 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/AttributionControl', () => ({
   ),
 }))
 
+jest.mock('../../ui/ukhsa/Map/shared/controls/MapLegendControl', () => ({
+  MapLegendControl: ({ position }: MockLayerProps) => <div data-testid="map-legend-control" data-position={position} />,
+}))
+
 jest.mock('../../ui/ukhsa/Map/shared/controls/ZoomControl', () => ({
   ZoomControl: ({ position }: MockLayerProps) => <div data-testid="zoom-control" data-position={position} />,
 }))
@@ -106,6 +110,7 @@ describe('MapTab', () => {
     expect(screen.getByTestId('map-container')).toBeInTheDocument()
     expect(screen.getByTestId('ukhsa-logo-layer')).toBeInTheDocument()
     expect(screen.getByTestId('attribution-control')).toBeInTheDocument()
+    expect(screen.getByTestId('map-legend-control')).toBeInTheDocument()
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
     expect(screen.getByTestId('base-layer')).toBeInTheDocument()
   })
