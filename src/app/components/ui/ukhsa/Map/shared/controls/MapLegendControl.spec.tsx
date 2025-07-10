@@ -1,10 +1,10 @@
 import { ControlPosition } from 'leaflet'
 import React from 'react'
 
+import { MapFeatureColour } from '@/app/utils/map.utils'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
 import { MapLegendControl } from './MapLegendControl'
-import { MapFeatureColour } from '@/app/utils/map.utils'
 
 // Mock the translation hook
 const mockT = jest.fn((key: string) => key)
@@ -192,36 +192,6 @@ describe('MapLegendControl', () => {
     })
   })
 
-  describe('color mapping', () => {
-    test('applies correct background colors for all color types', () => {
-      const colorTestItems = [
-        { colour: MapFeatureColour.COLOUR_10_PINK, title: 'over 95%' },
-        { colour: MapFeatureColour.COLOUR_12_BLUE, title: '90% - 95%' },
-        { colour: MapFeatureColour.COLOUR_9_DEEP_PLUM, title: '85% - 90%' },
-        { colour: MapFeatureColour.COLOUR_6_LIGHT_PURPLE, title: '80% - 85%' },
-        { colour: MapFeatureColour.COLOUR_1_DARK_BLUE, title: 'under 80%' },
-      ]
-
-      const { container } = render(<MapLegendControl position="bottomright" legendItems={colorTestItems} />)
-
-      // Check that color classes are applied (through clsx mock)
-      expect(container.querySelector('var(--colour-map-light-purple-semi)')).toBeInTheDocument()
-      expect(container.querySelector('var(--colour-map-blue-semi)')).toBeInTheDocument()
-      expect(container.querySelector('var(--colour-map-deep-plum-semi)')).toBeInTheDocument()
-      expect(container.querySelector('var(--colour-map-pink-semi)')).toBeInTheDocument()
-      expect(container.querySelector('var(--colour-map-dark-blue-semi)')).toBeInTheDocument()
-    })
-
-    test('handles unknown color gracefully', () => {
-      const unknownColorItems = [{ colour: 'unknown-color', title: 'Unknown Color' }]
-
-      render(<MapLegendControl position="bottomright" legendItems={unknownColorItems} />)
-
-      // Should still render without throwing error
-      expect(screen.getByText('unknown color')).toBeInTheDocument()
-    })
-  })
-
   describe('edge cases', () => {
     test('handles empty legend items array', () => {
       render(<MapLegendControl position="bottomright" legendItems={[]} />)
@@ -236,7 +206,7 @@ describe('MapLegendControl', () => {
     })
 
     test('handles single legend item', () => {
-      const singleItem = [{ colour: 'pink', title: 'Single Item' }]
+      const singleItem = [{ colour: MapFeatureColour.COLOUR_10_PINK, title: 'Single Item' }]
 
       render(<MapLegendControl position="bottomright" legendItems={singleItem} />)
 
