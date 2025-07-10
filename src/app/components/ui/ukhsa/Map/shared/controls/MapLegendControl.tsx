@@ -6,7 +6,7 @@ import { KeyboardEvent, useState } from 'react'
 import Control from 'react-leaflet-custom-control'
 
 import { useTranslation } from '@/app/i18n/client'
-import { MapFeatureColour, getCssVariableFromColour, getTailwindBackgroundFromColour } from '@/app/utils/map.utils'
+import { getCssVariableFromColour, getTailwindBackgroundFromColour, MapFeatureColour } from '@/app/utils/map.utils'
 
 interface LegendItemProps {
   colour: MapFeatureColour

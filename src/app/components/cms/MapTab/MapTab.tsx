@@ -8,6 +8,7 @@ import { ComponentProps, ReactNode } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
 import { MapLegendControl } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
@@ -15,7 +16,6 @@ import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
-import { MapFeatureColour } from '@/app/utils/map.utils'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
