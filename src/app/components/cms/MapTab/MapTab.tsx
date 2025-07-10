@@ -16,6 +16,7 @@ import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
+import CoverLayer from '../../ui/ukhsa/Map/shared/layers/CoverLayer'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -67,6 +68,7 @@ export const MapTab = ({
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <BaseLayer />
+        <CoverLayer />
         {children}
       </MapContainer>
       <MapLegendControl legendItems={legendItems} />
