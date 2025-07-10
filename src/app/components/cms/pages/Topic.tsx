@@ -14,6 +14,10 @@ import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWra
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
+import { SelectedFilters } from '../../ui/ukhsa/SelectedFilters/SelectedFilters'
+import { SelectedFilter } from '../../ui/ukhsa/SelectedFilters/SelectedFilter/SelectedFilter'
+import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 
 export default async function TopicPage({
   slug,
@@ -32,10 +36,12 @@ export default async function TopicPage({
     selected_topics: selectedTopics,
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
-
+  
   let newChartFilters = ''
 
   let chartCounter = 0
+
+  let showFilterBanner = true;
 
   body.map(({ value }) => {
     if (value.content) {
@@ -80,19 +86,26 @@ export default async function TopicPage({
   }
 
   let chartCardCounter = 0
+  
 
   return (
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
         {/* Example, do not un-comment  */}
-        {/* <StaticFilter>
+        {showFilterBanner && (
+          <FilterBanner
+            message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
+            showIcon={true}
+          />
+        )}
+        <StaticFilter>
           <SelectedFilters>
             <SelectedFilter name='6-in-1' />
             <SelectedFilter name='East midlands' />
             <SelectedFilter name='Nottingham' />
           </SelectedFilters>
-        </StaticFilter> */}
+        </StaticFilter>
 
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
