@@ -4,6 +4,7 @@ import React from 'react'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
 import { MapLegendControl } from './MapLegendControl'
+import { MapFeatureColour } from '@/app/utils/map.utils'
 
 // Mock the translation hook
 const mockT = jest.fn((key: string) => key)
@@ -41,9 +42,9 @@ jest.mock('clsx', () => ({
 
 describe('MapLegendControl', () => {
   const mockLegendItems = [
-    { colour: 'pink', title: 'Low Risk' },
-    { colour: 'light-blue', title: 'Medium Risk' },
-    { colour: 'dark-purple', title: 'High Risk' },
+    { colour: MapFeatureColour.COLOUR_10_PINK, title: 'Low Risk' },
+    { colour: MapFeatureColour.COLOUR_10_PINK, title: 'Medium Risk' },
+    { colour: MapFeatureColour.COLOUR_10_PINK, title: 'High Risk' },
   ]
 
   beforeEach(() => {
@@ -194,21 +195,21 @@ describe('MapLegendControl', () => {
   describe('color mapping', () => {
     test('applies correct background colors for all color types', () => {
       const colorTestItems = [
-        { colour: 'pink', title: 'Pink Item' },
-        { colour: 'light-blue', title: 'Light Blue Item' },
-        { colour: 'dark-purple', title: 'Dark Purple Item' },
-        { colour: 'purple', title: 'Purple Item' },
-        { colour: 'dark-blue', title: 'Dark Blue Item' },
+        { colour: MapFeatureColour.COLOUR_10_PINK, title: 'over 95%' },
+        { colour: MapFeatureColour.COLOUR_12_BLUE, title: '90% - 95%' },
+        { colour: MapFeatureColour.COLOUR_9_DEEP_PLUM, title: '85% - 90%' },
+        { colour: MapFeatureColour.COLOUR_6_LIGHT_PURPLE, title: '80% - 85%' },
+        { colour: MapFeatureColour.COLOUR_1_DARK_BLUE, title: 'under 80%' },
       ]
 
       const { container } = render(<MapLegendControl position="bottomright" legendItems={colorTestItems} />)
 
       // Check that color classes are applied (through clsx mock)
-      expect(container.querySelector('.bg-pink')).toBeInTheDocument()
-      expect(container.querySelector('.bg-light-blue')).toBeInTheDocument()
-      expect(container.querySelector('.bg-dark-purple')).toBeInTheDocument()
-      expect(container.querySelector('.bg-light-purple')).toBeInTheDocument()
-      expect(container.querySelector('.bg-dark-blue')).toBeInTheDocument()
+      expect(container.querySelector('var(--colour-map-light-purple-semi)')).toBeInTheDocument()
+      expect(container.querySelector('var(--colour-map-blue-semi)')).toBeInTheDocument()
+      expect(container.querySelector('var(--colour-map-deep-plum-semi)')).toBeInTheDocument()
+      expect(container.querySelector('var(--colour-map-pink-semi)')).toBeInTheDocument()
+      expect(container.querySelector('var(--colour-map-dark-blue-semi)')).toBeInTheDocument()
     })
 
     test('handles unknown color gracefully', () => {

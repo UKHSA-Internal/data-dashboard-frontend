@@ -6,9 +6,10 @@ import { KeyboardEvent, useState } from 'react'
 import Control from 'react-leaflet-custom-control'
 
 import { useTranslation } from '@/app/i18n/client'
+import { MapFeatureColour, getCssVariableFromColour, getTailwindBackgroundFromColour } from '@/app/utils/map.utils'
 
 interface LegendItemProps {
-  colour: string
+  colour: MapFeatureColour
   title: string
 }
 
@@ -20,21 +21,6 @@ interface LegendControlProps {
 export function MapLegendControl({ position, legendItems }: LegendControlProps) {
   const { t } = useTranslation('map')
   const [showKey, setShowKey] = useState(true)
-
-  const getBackgroundColour = (colour: string) => {
-    switch (colour) {
-      case 'pink':
-        return 'bg-pink'
-      case 'light-blue':
-        return 'bg-light-blue'
-      case 'dark-purple':
-        return 'bg-dark-purple'
-      case 'purple':
-        return 'bg-light-purple'
-      case 'dark-blue':
-        return 'bg-dark-blue'
-    }
-  }
 
   function clickHandler() {
     return {
@@ -74,7 +60,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
           {legendItems.map((legendItem, index) => {
             return (
               <div key={`${legendItem.title}-` + index} className="flex">
-                <div className={clsx('size-14 flex-none bg-black px-2', getBackgroundColour(legendItem.colour))}>
+                <div className={clsx('size-14 flex-none bg-black px-2', getCssVariableFromColour(legendItem.colour))}>
                   &nbsp;
                 </div>
                 <div key={index} className={clsx(`flex-auto px-5`, 'bg-white')}>
@@ -106,7 +92,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
           {reversedLegendItems.map((legendItem, index) => {
             return (
               <div key={`${legendItem.title}-` + index} className="flex-auto">
-                <div className={clsx('size-14 flex-none bg-black px-2', getBackgroundColour(legendItem.colour))}>
+                <div className={clsx('size-14 flex-none bg-black px-2', getCssVariableFromColour(legendItem.colour))}>
                   &nbsp;
                 </div>
                 <div key={index} className={clsx(`flex-none px-2`, 'bg-white')}>
@@ -145,7 +131,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
           {reversedLegendItems.map((legendItem, index) => (
             <div key={`${legendItem.title}-${index}`} className="flex flex-1 flex-col">
               {/* Color segment */}
-              <div className={clsx('h-4 w-full', getBackgroundColour(legendItem.colour))} />
+              <div className={clsx('h-4 w-full', getTailwindBackgroundFromColour(legendItem.colour))} />
               {/* Text label below */}
               <div className="border-gray-300 border-r bg-white p-2 text-center last:border-r-0">
                 <p className="text-sm m-0 text-black">{legendItem.title}</p>
