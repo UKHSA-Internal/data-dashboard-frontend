@@ -113,6 +113,13 @@ export const CardTypes = z.discriminatedUnion('type', [
     id: z.string(),
   }),
   z.object({
+    type: z.literal('linked_map_card'),
+    value: z.object({
+      columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
+    }),
+    id: z.string(),
+  }),
+  z.object({
     type: z.literal('chart_card_section'),
     value: z.object({
       cards: z.array(WithSimplifiedChartCardAndLink),
