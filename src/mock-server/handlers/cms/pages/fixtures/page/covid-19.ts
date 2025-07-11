@@ -228,7 +228,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
         heading: 'Cases',
         content: [
           {
-            type: 'chart_row_card',
+            type: 'linked_map_card',
             value: {
               columns: [
                 {

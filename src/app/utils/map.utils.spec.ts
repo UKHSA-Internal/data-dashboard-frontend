@@ -5,7 +5,7 @@ import {
   getTagVariantFromStatus,
   getTailwindBackgroundFromColour,
   getTextColourCssFromColour,
-} from './weather-health-alert.utils'
+} from './map.utils'
 
 describe('getTagVariantFromStatus', () => {
   test('returns correct class for Amber status', () => {
