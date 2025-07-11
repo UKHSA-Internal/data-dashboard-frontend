@@ -67,7 +67,7 @@ export default async function Layout({ children, params }: LayoutProps) {
               </Link>
             </div>
             {onLandingPage ? null : (
-              <div className="govuk-header__content inline w-auto sm:w-5/12">
+              <div className="govuk-header__content inline w-auto sm:w-5/12 text-center">
                 <Link href="/" className="govuk-header__link govuk-header__service-name">
                   {t('serviceTitle')}
                 </Link>
