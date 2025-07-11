@@ -56,6 +56,7 @@ module.exports = {
       white: 'var(--colour-white)',
       'light-purple': 'var(--colour-light-purple)',
       'bright-purple': 'var(--colour-bright-purple)',
+      'dark-purple': 'var(--colour-dark-purple)',
       pink: 'var(--colour-pink)',
       'light-pink': 'var(--colour-light-pink)',
       orange: 'var(--colour-orange)',
