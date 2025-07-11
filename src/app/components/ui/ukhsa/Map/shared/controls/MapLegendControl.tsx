@@ -8,17 +8,19 @@ import Control from 'react-leaflet-custom-control'
 import { useTranslation } from '@/app/i18n/client'
 import { getCssVariableFromColour, getTailwindBackgroundFromColour, MapFeatureColour } from '@/app/utils/map.utils'
 
-interface LegendItemProps {
+export interface ThresholdItemProps {
   colour: MapFeatureColour
-  title: string
+  label: string
+  boundary_minimum_value: number
+  boundary_maximum_value: number
 }
 
 interface LegendControlProps {
   position?: ControlPosition
-  legendItems: LegendItemProps[]
+  thresholdData: ThresholdItemProps[]
 }
 
-export function MapLegendControl({ position, legendItems }: LegendControlProps) {
+export function MapLegendControl({ position, thresholdData }: LegendControlProps) {
   const { t } = useTranslation('map')
   const [showKey, setShowKey] = useState(true)
 
@@ -49,7 +51,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
     </button>
   )
 
-  const renderKey = (legendItems: LegendItemProps[]) => {
+  const renderKey = (legendItems: ThresholdItemProps[]) => {
     return (
       <div className="m-2 bg-white p-2" data-testid="map-key">
         <div className="flex items-center justify-between">
@@ -59,12 +61,12 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
         <div className="m-0 mb-1 grid grid-cols-none gap-2">
           {legendItems.map((legendItem, index) => {
             return (
-              <div key={`${legendItem.title}-` + index} className="flex">
+              <div key={`${legendItem.label}-` + index} className="flex">
                 <div className={clsx('size-14 flex-none bg-black px-2', getCssVariableFromColour(legendItem.colour))}>
                   &nbsp;
                 </div>
                 <div key={index} className={clsx(`flex-auto px-5`, 'bg-white')}>
-                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.title.toLowerCase()}</p>
+                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label.toLowerCase()}</p>
                 </div>
               </div>
             )
@@ -74,7 +76,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
     )
   }
 
-  const renderParallelKey = (legendItems: LegendItemProps[]) => {
+  const renderParallelKey = (legendItems: ThresholdItemProps[]) => {
     const reversedLegendItems = [...legendItems].reverse()
     return (
       <div
@@ -91,12 +93,12 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
         <div className="m-0 mb-1 flex">
           {reversedLegendItems.map((legendItem, index) => {
             return (
-              <div key={`${legendItem.title}-` + index} className="flex-auto">
+              <div key={`${legendItem.label}-` + index} className="flex-auto">
                 <div className={clsx('size-14 flex-none bg-black px-2', getCssVariableFromColour(legendItem.colour))}>
                   &nbsp;
                 </div>
                 <div key={index} className={clsx(`flex-none px-2`, 'bg-white')}>
-                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.title.toLowerCase()}</p>
+                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label.toLowerCase()}</p>
                 </div>
               </div>
             )
@@ -107,8 +109,6 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
   }
 
   const renderLegend = () => {
-    const reversedLegendItems = [...legendItems].reverse()
-
     return (
       <div
         className="
@@ -128,13 +128,13 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
 
         {/* Horizontal legend bar */}
         <div className="flex w-full overflow-hidden">
-          {reversedLegendItems.map((legendItem, index) => (
-            <div key={`${legendItem.title}-${index}`} className="flex flex-1 flex-col">
+          {thresholdData.map((legendItem, index) => (
+            <div key={`${legendItem.label}-${index}`} className="flex flex-1 flex-col">
               {/* Color segment */}
               <div className={clsx('h-4 w-full', getTailwindBackgroundFromColour(legendItem.colour))} />
               {/* Text label below */}
               <div className="border-gray-300 border-r bg-white p-2 text-center last:border-r-0">
-                <p className="text-sm m-0 text-black">{legendItem.title}</p>
+                <p className="text-sm m-0 text-black">{legendItem.label}</p>
               </div>
             </div>
           ))}
@@ -144,7 +144,7 @@ export function MapLegendControl({ position, legendItems }: LegendControlProps) 
   }
 
   if (position) {
-    return <Control position={position}>{showKey ? renderParallelKey(legendItems) : renderKeyButton()}</Control>
+    return <Control position={position}>{showKey ? renderParallelKey(thresholdData) : renderKeyButton()}</Control>
   } else {
     return renderLegend()
   }

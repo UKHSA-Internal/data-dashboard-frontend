@@ -13,6 +13,7 @@ import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 import { HealthAlertStatus } from '@/api/models/Alerts'
 import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
 import {
+  MapFeatureColour,
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
   getHoverCssVariableFromColour,
@@ -24,6 +25,8 @@ import localAuthoritiesFeatureCollection, {
 } from '../data/geojson/local-authorities'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
+import { englishLocalAuthorityDataMock } from '../mockData/localAuthorityThresholdMock'
+import { ThresholdItemProps } from '../controls/MapLegendControl'
 
 /**
  * Extracted type of props that GeoJSON component accepts.
@@ -34,6 +37,7 @@ export type GeoJSONProps = ComponentProps<typeof GeoJSON>
  * Props specific to the Choropleth component.
  */
 interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
+  dataThresholds: ThresholdItemProps[]
   /**
    * Optional prop to override the data received by the underlying GeoJSON component from react-leaflet.
    * By default, this component automatically populates UKHSA-specific regional boundary data.
@@ -117,6 +121,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   lowZoomThreshold = 6,
   mediumZoomThreshold = 7,
   highZoomThreshold = 8,
+  dataThresholds: thresholdData,
   ...rest
 }: ChoroplethProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
@@ -125,6 +130,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   const [dataLevel, setDataLevel] = useState<DataLevel>('countries')
   const [geoJsonData, setGeoJsonData] = useState<any>(countriesFeatureCollection)
   const [renderKey, setRenderKey] = useState(0)
+  const activeTooltipLayerRef: { current: T | null } = useRef(null)
 
   const featuresRef = useRef<Array<LocalAuthoritiesFeature & RegionFeature & CountriesFeature>>([])
 
@@ -133,15 +139,12 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   const getDataLevel = useCallback(
     (zoom: number): DataLevel => {
-      if (zoom >= highZoomThreshold) return 'local-authorities'
-      if (zoom >= mediumZoomThreshold) return 'regions'
-      return 'countries'
+      return 'local-authorities'
     },
     [highZoomThreshold, mediumZoomThreshold]
   )
 
   const loadGeoJsonData = useCallback(async (level: DataLevel) => {
-    console.log('Loading new geojson data for data level:', level)
     try {
       let newData
 
@@ -158,13 +161,9 @@ const CoverLayer = <T extends LayerWithFeature>({
           console.log('Setting new data for regions')
           newData = regionFeatureCollection
           break
-        case 'countries':
-          console.log('Setting new data for countries')
-          newData = countriesFeatureCollection
-          break
         default:
-          console.log('Setting default data for countries')
-          newData = countriesFeatureCollection
+          console.log('Setting default data for regions')
+          newData = regionFeatureCollection
           break
       }
 
@@ -178,7 +177,8 @@ const CoverLayer = <T extends LayerWithFeature>({
       setGeoJsonData(countriesFeatureCollection)
     }
   }, [])
-  const geoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
+
+  const geoJsonFeatureId = 'LAD24CD' satisfies keyof LocalAuthoritiesFeature['properties']
 
   useEffect(() => {
     if (map) {
@@ -203,7 +203,6 @@ const CoverLayer = <T extends LayerWithFeature>({
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
       featuresRef.current = [...featuresRef.current, feature]
-      console.log('layer information', layer)
 
       layer.on({
         add: (event) => {
@@ -217,46 +216,67 @@ const CoverLayer = <T extends LayerWithFeature>({
           }
           const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
 
-          map.setView(latlng, 7)
+          if (map.getZoom() < 8) {
+            map.setView(latlng, 8)
+          }
 
           // Prevent map click events from firing
           Leaflet.DomEvent.stopPropagation(event)
 
+          // Close any existing tooltip from previous feature
+          if (activeTooltipLayerRef.current && activeTooltipLayerRef.current !== layer) {
+            activeTooltipLayerRef.current.closeTooltip().unbindTooltip()
+          }
+
           // Fire the callback prop if provided
           setSelectedFeatureId((featureId) => {
             const feature = event.target.feature
-            if (feature.id == featureId) {
-              // Clicked same feature
+            const currentFeatureId = feature.properties[geoJsonFeatureId]
+
+            if (currentFeatureId === featureId) {
+              // Clicked same feature - close tooltip and deselect
+              if (activeTooltipLayerRef.current) {
+                activeTooltipLayerRef.current.closeTooltip().unbindTooltip()
+                activeTooltipLayerRef.current = null
+              }
               return null
             } else {
-              // Clicked new feature
-              return feature.properties[geoJsonFeatureId]
+              // Clicked new feature - create and open tooltip
+              const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+              activeTooltipLayerRef.current = layer
+                .bindTooltip(
+                  `<h1></h1><b>Local Authority</b>: ${feature.properties['LAD24NM']}<br /><b>Vaccine Uptake</b>:${featureData?.metric_value}</>`,
+                  {
+                    permanent: true, // This keeps it open while moving cursor
+                    opacity: 1,
+                    direction: 'center',
+                  }
+                )
+                .openTooltip()
+
+              return currentFeatureId
             }
           })
         },
         mouseover: () => {
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
-
-          // const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
-          // const hoverColour = getHoverCssVariableFromColour(colour)
-          //layer.setStyle({ fillColor: hoverColour })
-          layer
-            .bindTooltip(`<h1>ToolTip Example</h1><b>Region</b>: London<br /><b>Vaccine Uptake</b>:${'>'}95</>`, {
-              permanent: false,
-              opacity: 1,
-              direction: 'center',
-            })
-            .openTooltip()
+          const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+          if (!featureData) return
+          const colour = getThresholdColour(featureData)
+          const hoverColour = getHoverCssVariableFromColour(colour as MapFeatureColour)
+          layer.setStyle({ fillColor: hoverColour })
         },
         mouseout: () => {
           // Skip hover styles if this feature is already active/clicked
-          // if (clickedFeatureIdRef.current === layer.feature.id) return
-          // const colour = featureColours[feature.properties[geoJsonFeatureId]] as HealthAlertStatus
-          // layer.setStyle({
-          //   fillColor: getCssVariableFromColour(colour),
-          //   fillOpacity: theme.fillOpacity,
-          // })
+          if (clickedFeatureIdRef.current === layer.feature.id) return
+          const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+          if (!featureData) return
+          const colour = getThresholdColour(featureData)
+          layer.setStyle({
+            fillColor: getCssVariableFromColour(colour as MapFeatureColour),
+            fillOpacity: theme.fillOpacity,
+          })
         },
       })
     },
@@ -279,8 +299,6 @@ const CoverLayer = <T extends LayerWithFeature>({
         const newZoom = map.getZoom()
         const newDataLevel = getDataLevel(newZoom)
 
-        console.log('newZoom: ', newZoom)
-
         if (newDataLevel !== dataLevel) {
           setDataLevel(newDataLevel)
         }
@@ -293,31 +311,48 @@ const CoverLayer = <T extends LayerWithFeature>({
     return geoJsonData
   }
 
-  function getRandomInt(): number {
-    return Math.floor(Math.random() * 6)
+  const getFeatureData = (featureId: any) => {
+    return englishLocalAuthorityDataMock.find((element) => element.geography_code === featureId)
   }
 
-  function getLocalAuthorityShadedColour(number: number) {
-    let colour
-    switch (number) {
-      case 1:
-        colour = 'rgb(86, 163, 241)'
-        return colour
-      case 2:
-        colour = 'rgb(139, 165, 237)'
-        return colour
-      case 3:
-        colour = 'rgb(93, 158, 236)'
-        return colour
-      case 4:
-        colour = 'rgb(255, 255, 255)'
-        return colour
-      case 5:
-        colour = 'rgb(240, 25, 25)'
-        return colour
-      default:
-        return colour
-    }
+  const getThresholdColour = (featureData: any): MapFeatureColour | undefined => {
+    const processedMetricValue = (featureData.metric_value / 100).toFixed(2)
+    // console.log('processed value: ', processedMetricValue)
+
+    let thresholdColour
+    thresholdData.forEach((threshold: any) => {
+      if (
+        processedMetricValue >= threshold.boundary_minimum_value &&
+        processedMetricValue <= threshold.boundary_maximum_value
+      ) {
+        // console.log(`${processedMetricValue} is in threshold boundary: ${threshold.label}`)
+        // console.log('thresholdColour: ', threshold.colour)
+        // console.log('Selected: ', selectedFeatureId)
+        thresholdColour = threshold.colour
+      }
+    })
+
+    return thresholdColour
+  }
+
+  const getFeatureThresholdData = (featureData: any): MapFeatureColour | undefined => {
+    const processedMetricValue = (featureData.metric_value / 100).toFixed(2)
+    // console.log('processed value: ', processedMetricValue)
+
+    let featureThresholdData
+    thresholdData.forEach((threshold: any) => {
+      if (
+        processedMetricValue >= threshold.boundary_minimum_value &&
+        processedMetricValue <= threshold.boundary_maximum_value
+      ) {
+        // console.log(`${processedMetricValue} is in threshold boundary: ${threshold.label}`)
+        // console.log('thresholdColour: ', threshold.colour)
+        // console.log('Selected: ', selectedFeatureId)
+        featureThresholdData = threshold
+      }
+    })
+
+    return featureThresholdData
   }
 
   const getStyleForFeatureCollection = (feature: any, featureCollection: any) => {
@@ -329,12 +364,24 @@ const CoverLayer = <T extends LayerWithFeature>({
       className,
     }
 
-    const number: number = getRandomInt()
-    const colour = getLocalAuthorityShadedColour(number)
+    // find feature data
+    const featureData = getFeatureData(feature.properties[geoJsonFeatureId])
+
+    const currentFeatureId = feature.properties[geoJsonFeatureId]
+    const isSelected = selectedFeatureId == currentFeatureId
+
     // Apply different styling based on feature collection name
     if (featureCollection.name === 'Local Authorities') {
-      style.fillColor = colour
-      style.fillOpacity = 0.75
+      if (featureData) {
+        const colour = getThresholdColour(featureData)
+        console.log('isSelected:', isSelected)
+        if (isSelected) {
+          style.fillColor = getActiveCssVariableFromColour(colour as MapFeatureColour)
+        } else {
+          style.fillColor = getCssVariableFromColour(colour as MapFeatureColour)
+        }
+      }
+      style.fillOpacity = 1
       style.color = 'rgba(34, 111, 226)'
       style.weight = 1
     } else if (featureCollection.name === 'Regions') {
@@ -376,25 +423,11 @@ const CoverLayer = <T extends LayerWithFeature>({
           // If the feature or its ID is not available, return an empty style
           if (!feature || !feature.id) return {}
 
-          const currentFeatureId = feature.properties[geoJsonFeatureId]
-          // const isSelected = selectedFeatureId == currentFeatureId
-
           // Define the base style for the feature
           const style: Leaflet.PathOptions = {
             ...theme,
             className,
           }
-
-          // Apply custom colours if the feature ID is present in the featureColours map
-          // if (featureColours && currentFeatureId in featureColours) {
-          //   const colour = featureColours[currentFeatureId]
-          //   if (isSelected) {
-          //     style.fillColor = getActiveCssVariableFromColour(colour)
-          //   } else {
-          //     style.fillColor = getCssVariableFromColour(colour)
-          //   }
-          // }
-
           return style
         }}
         {...rest}

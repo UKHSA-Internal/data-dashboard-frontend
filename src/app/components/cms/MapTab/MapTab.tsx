@@ -11,12 +11,13 @@ import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.const
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
-import { MapLegendControl } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 import CoverLayer from '../../ui/ukhsa/Map/shared/layers/CoverLayer'
+import { Threshold } from 'plotly.js'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -52,6 +53,39 @@ export const MapTab = ({
     { colour: MapFeatureColour.COLOUR_1_DARK_BLUE, title: 'under 80%' },
   ]
 
+  const thresholdData: ThresholdItemProps[] = [
+    {
+      colour: 'COLOUR_4_ORANGE' as MapFeatureColour,
+      label: 'less than 65%',
+      boundary_minimum_value: 0.0,
+      boundary_maximum_value: 0.64,
+    },
+    {
+      colour: 'COLOUR_12_BLUE' as MapFeatureColour,
+      label: '65% - 74%',
+      boundary_minimum_value: 0.65,
+      boundary_maximum_value: 0.74,
+    },
+    {
+      colour: 'COLOUR_10_PINK' as MapFeatureColour,
+      label: '75% - 84%',
+      boundary_minimum_value: 0.75,
+      boundary_maximum_value: 0.84,
+    },
+    {
+      colour: 'COLOUR_9_DEEP_PLUM' as MapFeatureColour,
+      label: '85% - 95%',
+      boundary_minimum_value: 0.85,
+      boundary_maximum_value: 0.95,
+    },
+    {
+      colour: 'COLOUR_2_TURQUOISE' as MapFeatureColour,
+      label: 'over 95%',
+      boundary_minimum_value: 0.96,
+      boundary_maximum_value: 1,
+    },
+  ]
+
   return (
     <>
       <MapContainer
@@ -68,10 +102,10 @@ export const MapTab = ({
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <BaseLayer />
-        <CoverLayer />
+        <CoverLayer dataThresholds={thresholdData} />
         {children}
       </MapContainer>
-      <MapLegendControl legendItems={legendItems} />
+      <MapLegendControl thresholdData={thresholdData} />
     </>
   )
 }

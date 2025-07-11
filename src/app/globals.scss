@@ -83,6 +83,7 @@ $govuk-page-width: 1400px;
   // Extended Map Colours - introduced as part of the COVER work
   // Solid colors (alpha: 1)
   --colour-map-dark-blue: rgba(18, 67, 109, 1);
+  --colour-map-turquoise: rgba(40, 161, 151, 1);
   --colour-map-dark-pink: rgba(128, 22, 80, 1);
   --colour-map-orange: rgba(244, 106, 37, 1);
   --colour-map-dark-grey: rgba(61, 61, 61, 1);
@@ -97,6 +98,7 @@ $govuk-page-width: 1400px;
 
   // semi-transparent colors (alpha: 0.5)
   --colour-map-dark-blue-semi: rgba(18, 67, 109, 0.5);
+  --colour-map-turquoise-semi: rgba(40, 161, 151, 0.5);
   --colour-map-dark-pink-semi: rgba(128, 22, 80, 0.5);
   --colour-map-orange-semi: rgba(244, 106, 37, 0.5);
   --colour-map-dark-grey-semi: rgba(61, 61, 61, 0.5);
@@ -111,6 +113,7 @@ $govuk-page-width: 1400px;
 
   // hover colours (alpha:0.75)
   --colour-map-dark-blue-hover: rgba(18, 67, 109, 0.75);
+  --colour-map-turquoise-hover: rgba(40, 161, 151, 0.75);
   --colour-map-dark-pink-hover: rgba(128, 22, 80, 0.75);
   --colour-map-orange-hover: rgba(244, 106, 37, 0.75);
   --colour-map-dark-grey-hover: rgba(61, 61, 61, 0.75);
