@@ -1,40 +1,55 @@
-import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
-import { FilterBanner } from './FilterBanner';
+import { render, screen } from '@testing-library/react'
 
+import '@testing-library/jest-dom'
+
+import { FilterBanner } from './FilterBanner'
+ 
+// Mock translation hook
+
+jest.mock('@/app/i18n/client', () => ({
+
+  useTranslation: () => ({
+
+    t: (key: string) => key, // basic mock
+
+  }),
+
+}))
+ 
 describe('FilterBanner', () => {
-    const defaultProps = {
-        filters: [
-            { label: 'Status', value: 'Active', onRemove: jest.fn() },
-            { label: 'Type', value: 'Internal', onRemove: jest.fn() },
-        ],
-        onClearAll: jest.fn(),
-    };
 
-    it('renders all filters', () => {
-        render(<FilterBanner message={''} {...defaultProps} />);
-        expect(screen.getByText('Status:')).toBeInTheDocument();
-        expect(screen.getByText('Active')).toBeInTheDocument();
-        expect(screen.getByText('Type:')).toBeInTheDocument();
-        expect(screen.getByText('Internal')).toBeInTheDocument();
-    });
+  it('renders the banner with the provided message', () => {
 
-    it('calls onRemove when a filter remove button is clicked', () => {
-        render(<FilterBanner message={''} {...defaultProps} />);
-        const removeButtons = screen.getAllByLabelText(/Remove filter/i);
-        fireEvent.click(removeButtons[0]);
-        expect(defaultProps.filters[0].onRemove).toHaveBeenCalled();
-    });
+    const testMessage = '<strong>Test banner message</strong>'
 
-    it('calls onClearAll when Clear All is clicked', () => {
-        render(<FilterBanner message={''} {...defaultProps} />);
-        const clearAllButton = screen.getByRole('button', { name: /Clear All/i });
-        fireEvent.click(clearAllButton);
-        expect(defaultProps.onClearAll).toHaveBeenCalled();
-    });
+    render(<FilterBanner message={testMessage} />)
+ 
+    // Check if the HTML content is rendered
 
-    it('does not render if there are no filters', () => {
-        const { container } = render(<FilterBanner message={''}/>);
-        expect(container).toBeEmptyDOMElement();
-    });
-});
+    expect(screen.getByText('Test banner message')).toBeInTheDocument()
+
+    expect(screen.getByRole('img', { hidden: true })).toBeInTheDocument() // matches SVG
+
+  })
+ 
+  it('renders the icon and correct classes', () => {
+
+    const testMessage = 'Simple message'
+
+    const { container } = render(<FilterBanner message={testMessage} />)
+ 
+    // Check for the SVG element
+
+    const svg = container.querySelector('svg')
+
+    expect(svg).toBeInTheDocument()
+ 
+    // Check for banner styling
+
+    expect(container.firstChild).toHaveClass('flex', 'bg-blue', 'text-white')
+
+  })
+
+})
+
+ 

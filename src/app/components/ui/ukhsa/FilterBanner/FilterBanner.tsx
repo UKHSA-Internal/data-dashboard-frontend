@@ -1,8 +1,8 @@
-'use client'
-import { ReactNode } from 'react'
+// 'use client'
+// import { ReactNode } from 'react'
 
-import { useTranslation } from '@/app/i18n/client'
-import { client } from '@/api/utils/api.utils'
+// import { useTranslation } from '@/app/i18n/client'
+// import { client } from '@/api/utils/api.utils'
 
 interface FilterBannerProps {
     message: string
@@ -10,7 +10,7 @@ interface FilterBannerProps {
 }
 
 export function FilterBanner({ message , showIcon}: FilterBannerProps) {
-    const { t } = useTranslation('common')
+    // const { t } = useTranslation('common')
     return (
         <div className="flex flex-wrap bg-blue h-8 items-center text-white govuk-!-padding-3">
             {showIcon && <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" viewBox="0 0 36 36" fill="none">
