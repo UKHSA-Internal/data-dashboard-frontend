@@ -20,7 +20,7 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
       <header className="govuk-header border-none bg-blue" data-module="govuk-header">
         <div className="relative ">
           <div className="govuk-width-container relative flow-root">
-            <div className="govuk-header__logo govuk-!-padding-top-2">
+            <div className="govuk-header__logo">
               <Link href="/" className="govuk-header__link govuk-header__link--homepage">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -51,8 +51,8 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
               </Link>
             </div>
 
-            <div className="govuk-header__content inline w-auto sm:w-5/12">
-              <Link href="/" className="govuk-header__link govuk-header__service-name">
+            <div className="float-left inline w-auto sm:w-5/12 text-center" >
+              <Link href="/" className="govuk-header__link govuk-header__service-name govuk-!-margin-3">
                 {t('serviceTitle')}
               </Link>
             </div>
