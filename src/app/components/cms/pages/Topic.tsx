@@ -14,9 +14,9 @@ import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWra
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
-import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
-import { SelectedFilters } from '../../ui/ukhsa/SelectedFilters/SelectedFilters'
-import { SelectedFilter } from '../../ui/ukhsa/SelectedFilters/SelectedFilter/SelectedFilter'
+// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
+// import { SelectedFilters } from '../../ui/ukhsa/SelectedFilters/SelectedFilters'
+// import { SelectedFilter } from '../../ui/ukhsa/SelectedFilters/SelectedFilter/SelectedFilter'
 import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 
 export default async function TopicPage({
@@ -41,7 +41,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  let showFilterBanner = true;
+  const showFilterBanner = false;
 
   body.map(({ value }) => {
     if (value.content) {
@@ -99,13 +99,13 @@ export default async function TopicPage({
             showIcon={true}
           />
         )}
-        <StaticFilter>
+        {/* <StaticFilter>
           <SelectedFilters>
             <SelectedFilter name='6-in-1' />
             <SelectedFilter name='East midlands' />
             <SelectedFilter name='Nottingham' />
           </SelectedFilters>
-        </StaticFilter>
+        </StaticFilter> */}
 
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />

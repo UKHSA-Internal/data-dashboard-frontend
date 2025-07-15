@@ -1,8 +1,8 @@
-'use client'
+// 'use client'
 import { ReactNode } from 'react'
 
 import { useTranslation } from '@/app/i18n/client'
-import { client } from '@/api/utils/api.utils'
+// import { client } from '@/api/utils/api.utils'
 
 interface SelectedFiltersProps {
   children?: ReactNode
