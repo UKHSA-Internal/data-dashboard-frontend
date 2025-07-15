@@ -245,7 +245,11 @@ const CoverLayer = <T extends LayerWithFeature>({
               const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
-                  `<h1></h1><b>Local Authority</b>: ${feature.properties['LAD24NM']}<br /><b>Vaccine Uptake</b>:${featureData?.metric_value}</>`,
+                  `
+                  <h1></h1><b>Local Authority</b>: ${feature.properties['LAD24NM']}
+                  <br />
+                  <b>Vaccine Uptake</b>:${featureData?.metric_value}</>
+                  `,
                   {
                     permanent: true, // This keeps it open while moving cursor
                     opacity: 1,
