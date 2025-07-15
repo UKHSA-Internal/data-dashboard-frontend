@@ -27,7 +27,7 @@ describe('FilterBanner', () => {
 
     expect(container.firstChild).toHaveClass(
 
-      'flex flex-wrap bg-blue h-8 items-center text-white govuk-!-padding-3'
+      'govuk-!-padding-3 flex bg-blue text-white'
 
     )
 
