@@ -1,4 +1,3 @@
-
 interface FilterBannerProps {
     message: string
     showIcon?: boolean

@@ -14,9 +14,6 @@ import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWra
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
-// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
-// import { SelectedFilters } from '../../ui/ukhsa/SelectedFilters/SelectedFilters'
-// import { SelectedFilter } from '../../ui/ukhsa/SelectedFilters/SelectedFilter/SelectedFilter'
 import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 
 export default async function TopicPage({
@@ -86,7 +83,6 @@ export default async function TopicPage({
   }
 
   let chartCardCounter = 0
-  
 
   return (
     <>
