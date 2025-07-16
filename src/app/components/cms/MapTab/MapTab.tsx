@@ -18,6 +18,7 @@ import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 import CoverLayer from '../../ui/ukhsa/Map/shared/layers/CoverLayer'
 import { Threshold } from 'plotly.js'
+import { postMapData } from '@/api/requests/cover-maps/postMaps'
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -85,6 +86,37 @@ export const MapTab = ({
       boundary_maximum_value: 1,
     },
   ]
+
+  const request = {
+    date_from: '2023-10-30',
+    date_to: '2023-10-31',
+    parameters: {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
+      topic: 'COVID-19',
+      metric: 'COVID-19_deaths_ONSByWeek',
+      stratum: 'default',
+      age: 'all',
+      sex: 'all',
+      geography_type: 'Lower Tier Local Authority',
+      geographies: [],
+    },
+    accompanying_points: [
+      {
+        label_prefix: 'Rate of cases in England: ',
+        label_suffix: '',
+        parameters: {
+          metric: 'COVID-19_cases_rateRollingMean',
+          geography_type: 'Nation',
+          geography: 'England',
+        },
+      },
+    ],
+  }
+
+  const mapData = postMapData(request)
+
+  console.log('receivedMapData: ', mapData)
 
   return (
     <>
