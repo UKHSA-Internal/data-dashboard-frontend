@@ -38,7 +38,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = true;
+  const showFilterBanner = false;
 
   body.map(({ value }) => {
     if (value.content) {
