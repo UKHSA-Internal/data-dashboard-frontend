@@ -1,3 +1,5 @@
+'use client'
+
 import CrossIcon from '../../Icons/CrossIcon'
 
 interface SelectedFilterProps {
