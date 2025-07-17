@@ -17,8 +17,7 @@ import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 import CoverLayer from '../../ui/ukhsa/Map/shared/layers/CoverLayer'
-import { Threshold } from 'plotly.js'
-import { postMapData } from '@/api/requests/cover-maps/postMaps'
+
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -114,10 +113,14 @@ export const MapTab = ({
     ],
   }
 
-  const mapData = postMapData(request)
+  const mapData = useMapData(request)
 
-  console.log('receivedMapData: ', mapData)
+  const coverLayer = useMemo(() => {
+    if (!mapQuery.data) return
+    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
+  }, [thresholdData, mapQuery.data])
 
+  console.log('mapData tab: ', mapData)
   return (
     <>
       <MapContainer
@@ -134,7 +137,7 @@ export const MapTab = ({
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <BaseLayer />
-        <CoverLayer dataThresholds={thresholdData} />
+        {coverLayer}
         {children}
       </MapContainer>
       <MapLegendControl thresholdData={thresholdData} />

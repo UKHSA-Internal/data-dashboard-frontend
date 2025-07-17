@@ -25,7 +25,6 @@ import localAuthoritiesFeatureCollection, {
 } from '../data/geojson/local-authorities'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
-import { englishLocalAuthorityDataMock } from '../mockData/localAuthorityThresholdMock'
 import { ThresholdItemProps } from '../controls/MapLegendControl'
 
 /**
@@ -36,7 +35,8 @@ export type GeoJSONProps = ComponentProps<typeof GeoJSON>
 /**
  * Props specific to the Choropleth component.
  */
-interface ChoroplethProps extends Omit<GeoJSONProps, 'data'> {
+interface CoverLayerProps extends Omit<GeoJSONProps, 'data'> {
+  mapData: MapDataList
   dataThresholds: ThresholdItemProps[]
   /**
    * Optional prop to override the data received by the underlying GeoJSON component from react-leaflet.
@@ -122,9 +122,12 @@ const CoverLayer = <T extends LayerWithFeature>({
   mediumZoomThreshold = 7,
   highZoomThreshold = 8,
   dataThresholds: thresholdData,
+  mapData,
   ...rest
-}: ChoroplethProps) => {
+}: CoverLayerProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
+
+  console.log('mapData: ', mapData)
 
   // State for zoom-dependent data loading
   const [dataLevel, setDataLevel] = useState<DataLevel>('countries')
@@ -150,7 +153,6 @@ const CoverLayer = <T extends LayerWithFeature>({
 
       switch (level) {
         case 'local-authorities':
-          console.log('Setting new data for local-authorities')
           const englishLocalAuthorityFeatures = localAuthoritiesFeatureCollection.features.filter((feature) =>
             feature.properties.LAD24CD.startsWith('E')
           )
@@ -316,7 +318,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   }
 
   const getFeatureData = (featureId: any) => {
-    return englishLocalAuthorityDataMock.find((element) => element.geography_code === featureId)
+    return mapData.find((element) => element.geography_code === featureId)
   }
 
   const getThresholdColour = (featureData: any): MapFeatureColour | undefined => {
