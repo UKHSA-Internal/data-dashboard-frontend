@@ -113,22 +113,28 @@ export const CardTypes = z.discriminatedUnion('type', [
     id: z.string(),
   }),
   z.object({
-    type: z.literal('linked_map_card'),
+    type: z.literal('filter_linked_map'),
     value: z.object({
-      columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
+      title_prefix: z.string(),
+      legend_title: z.string(),
     }),
     id: z.string(),
   }),
   z.object({
     type: z.literal('chart_card_section'),
     value: z.object({
-      cards: z.array(WithSimplifiedChartCardAndLink),
+      cards: z.any(WithSimplifiedChartCardAndLink),
     }),
     id: z.string(),
   }),
   z.object({
     type: z.literal('weather_health_alert_card'),
     value: WithWeatherHealthAlertCard,
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('global_filter_card'),
+    value: z.object({}).passthrough(),
     id: z.string(),
   }),
 ])

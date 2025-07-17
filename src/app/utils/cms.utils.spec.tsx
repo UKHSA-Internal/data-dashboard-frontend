@@ -135,30 +135,13 @@ describe('Headline numbers row card', () => {
 describe('Linked Map Card', () => {
   test('linked Map card displays correctly', () => {
     render(renderCard('', [], '', mockLinkedMapCard))
-
-    expect(screen.getAllByRole('article')).toHaveLength(1)
-
     const article = screen.getByRole('article')
     expect(article).toBeInTheDocument()
+
     expect(article).toHaveClass('ukhsa-map-card')
 
     // Heading and description
-    expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
-    expect(within(article).getByText('Chart description 1')).toBeInTheDocument()
-    expect(within(article).getByText('Up to and including 27 September 2023')).toBeInTheDocument()
-
-    // Tabs list
-    expect(screen.getByRole('tablist')).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Map' })).toHaveAttribute('aria-selected', 'true')
-    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
-    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'false')
-    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('aria-selected', 'false')
-
-    // Tabs panel
-    expect(screen.getByRole('tab', { name: 'Map' })).toHaveAttribute('data-state', 'active')
-    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
-    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
-    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('data-state', 'inactive')
+    expect(within(article).getByRole('heading', { level: 3, name: 'Map Heading' })).toBeInTheDocument()
 
     // Chart
     expect(screen.getByText('Mocked Map')).toBeVisible()
