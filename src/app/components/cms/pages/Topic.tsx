@@ -9,6 +9,7 @@ import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
+import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
@@ -32,10 +33,12 @@ export default async function TopicPage({
     selected_topics: selectedTopics,
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
-
+  
   let newChartFilters = ''
 
   let chartCounter = 0
+
+  const showFilterBanner = false;
 
   body.map(({ value }) => {
     if (value.content) {
@@ -86,6 +89,12 @@ export default async function TopicPage({
       <RedirectHandler newRoute={newRoute} />
       <View>
         {/* Example, do not un-comment  */}
+        {showFilterBanner && (
+          <FilterBanner
+            message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
+            showIcon={true}
+          />
+        )}
         {/* <StaticFilter>
           <SelectedFilters>
             <SelectedFilter name='6-in-1' />

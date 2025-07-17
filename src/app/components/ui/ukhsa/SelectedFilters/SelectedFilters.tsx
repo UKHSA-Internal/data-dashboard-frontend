@@ -10,7 +10,7 @@ export function SelectedFilters({ children }: SelectedFiltersProps) {
   const { t } = useTranslation('common')
   return (
     <div className="flex flex-wrap">
-      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{t('globalFilterTitle')}</h2>
+      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{t('globalFilter.globalFilterTitle')}</h2>
       {children}
     </div>
   )
