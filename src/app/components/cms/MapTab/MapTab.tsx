@@ -1,10 +1,10 @@
 'use client'
 
 import 'leaflet/dist/leaflet.css'
-
+import dynamic from 'next/dynamic'
 import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
-import { ComponentProps, ReactNode } from 'react'
+import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
@@ -14,10 +14,17 @@ import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/Attributi
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
-import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
-import CoverLayer from '../../ui/ukhsa/Map/shared/layers/CoverLayer'
+import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 
+const { BaseLayer, CoverLayer } = {
+  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
+    ssr: false,
+  }),
+  CoverLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/CoverLayer'), {
+    ssr: false,
+  }),
+}
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -116,9 +123,9 @@ export const MapTab = ({
   const mapData = useMapData(request)
 
   const coverLayer = useMemo(() => {
-    if (!mapQuery.data) return
+    if (!mapData.data) return
     return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
-  }, [thresholdData, mapQuery.data])
+  }, [thresholdData, mapData.data])
 
   console.log('mapData tab: ', mapData)
   return (

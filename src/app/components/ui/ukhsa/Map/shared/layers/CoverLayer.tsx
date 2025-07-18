@@ -102,7 +102,7 @@ interface GeoJSONLayer<T extends LayerWithFeature> extends GeoJSONOptions {
 const defaultTheme = {
   weight: 2,
   color: 'rgb(21, 22, 21)',
-  fillColor: 'rgba(135, 231, 250, 0.5)',
+  fillColor: 'rgba(62, 62, 62, 0.8)',
   fillOpacity: 1,
 } as const
 
@@ -318,7 +318,8 @@ const CoverLayer = <T extends LayerWithFeature>({
   }
 
   const getFeatureData = (featureId: any) => {
-    return mapData.find((element) => element.geography_code === featureId)
+    if (!mapData) return
+    return mapData.data.find((element) => element.geography_code === featureId)
   }
 
   const getThresholdColour = (featureData: any): MapFeatureColour | undefined => {
@@ -388,7 +389,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         }
       }
       style.fillOpacity = 1
-      style.color = 'rgba(34, 111, 226)'
+      style.color = 'rgb(255, 255, 255)'
       style.weight = 1
     } else if (featureCollection.name === 'Regions') {
       style.fillColor = 'rgba(99, 232, 89, 0)'
