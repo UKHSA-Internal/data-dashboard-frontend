@@ -13,7 +13,7 @@ import {
   getCssVariableFromColour,
   getTailwindBackgroundFromColour,
   getTextColourCssFromColour,
-} from '@/app/utils/weather-health-alert.utils'
+} from '@/app/utils/map.utils'
 import { clsx } from '@/lib/clsx'
 
 import { regionPaths } from './constants'

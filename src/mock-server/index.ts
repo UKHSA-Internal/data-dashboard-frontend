@@ -38,6 +38,7 @@ import menus from './handlers/menus/v1'
 import suggestions from './handlers/suggestions/v2'
 import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v3'
+import maps from './handlers/maps/v1/v1'
 
 const app = express()
 
@@ -63,6 +64,7 @@ app.get('/api/menus/v1', menus)
 app.post('/api/charts/v3', charts)
 app.post('/api/tables/v4', tables)
 app.post('/api/downloads/v2', downloads)
+app.post('/api/maps/v1', maps)
 
 // Misc endpoints
 app.post('/api/suggestions/v2', suggestions)

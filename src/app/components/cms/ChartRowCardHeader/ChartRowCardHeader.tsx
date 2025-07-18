@@ -5,7 +5,7 @@ import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 interface ChartRowCardHeaderProps {
   children?: ReactNode
   title: string
-  description: string
+  description?: string
   id: string
 }
 
@@ -17,7 +17,9 @@ export async function ChartRowCardHeader({ children, id, title, description }: R
       <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
         {title} {areaName && `(${areaName})`}
       </h3>
-      <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
+      {description ? (
+        <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
+      ) : null}
       {children}
     </header>
   )
