@@ -124,7 +124,7 @@ module.exports = {
             'box-shadow': 'none',
           },
           '&:focus:after': {
-            '@apply absolute inset-[5px] pointer-events-none z-[1000] content-[""]': {},
+            '@apply absolute inset-0 pointer-events-none z-[1000] content-[""]': {},
             'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0`,
             outline: '3px solid rgba(0, 0, 0, 0)',
           },
