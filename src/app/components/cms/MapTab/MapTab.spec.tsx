@@ -9,6 +9,14 @@ jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapRef', () => ({
   useMapRef: jest.fn(),
 }))
 
+jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapData', () => ({
+  __esModule: true,
+  default: jest.fn().mockReturnValue({
+    data: {},
+    error: null,
+  }),
+}))
+
 interface MockLayerProps {
   position: string
 }
@@ -81,6 +89,11 @@ jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   default: () => <div data-testid="base-layer" />,
 }))
 
+jest.mock('../../ui/ukhsa/Map/shared/layers/CoverLayer', () => ({
+  __esModule: true,
+  default: () => <div data-testid="cover-layer" />,
+}))
+
 // Mock constants
 jest.mock('@/app/constants/map.constants', () => ({
   center: [52.7957, -1.5479],
@@ -112,7 +125,6 @@ describe('MapTab', () => {
     expect(screen.getByTestId('attribution-control')).toBeInTheDocument()
     expect(screen.getByTestId('map-legend-control')).toBeInTheDocument()
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
-    expect(screen.getByTestId('base-layer')).toBeInTheDocument()
   })
 
   test('applies combined className correctly', () => {

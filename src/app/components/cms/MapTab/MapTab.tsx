@@ -127,7 +127,6 @@ export const MapTab = ({
     return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
   }, [thresholdData, mapData.data])
 
-  console.log('mapData tab: ', mapData)
   return (
     <>
       <MapContainer
