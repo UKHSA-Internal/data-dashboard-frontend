@@ -3,10 +3,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 import { test } from '../../fixtures/app.fixture'
 
 const pagesShownInNavMenu = [
-  'COVID-19',
-  'Influenza',
-  'Respiratory syncytial virus (RSV)',
-  'Other respiratory viruses',
+  'Respiratory viruses',
   'About',
   'Metrics documentation',
   "What's new",
