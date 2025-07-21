@@ -1,5 +1,5 @@
 /**
- * Choropleth wrapper around the react-leaflet GeoJSON component
+ * Cover wrapper around the react-leaflet GeoJSON component
  * Ensure to import this component dynamically in Next.js to optimise loading.
  */
 
@@ -10,7 +10,7 @@ import { parseAsString, useQueryState } from 'nuqs'
 import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
-import { HealthAlertStatus } from '@/api/models/Alerts'
+import { MapDataList } from '@/api/models/Maps'
 import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
 import {
   MapFeatureColour,
@@ -26,6 +26,8 @@ import localAuthoritiesFeatureCollection, {
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
 import { ThresholdItemProps } from '../controls/MapLegendControl'
+
+/* eslint-disable @typescript-eslint/no-explicit-any*/
 
 /**
  * Extracted type of props that GeoJSON component accepts.
@@ -43,11 +45,6 @@ interface CoverLayerProps extends Omit<GeoJSONProps, 'data'> {
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
   data?: GeoJSONProps['data']
-
-  /**
-   * Colours mapping object to associate a particular region id with one of the four available colours
-   */
-  featureColours?: Record<string, HealthAlertStatus>
 
   /**
    * The ID of the selected feature.
@@ -68,18 +65,6 @@ interface CoverLayerProps extends Omit<GeoJSONProps, 'data'> {
    * Optional class name to attach to each feature.
    */
   className?: string
-
-  /**
-   * Initial Zoom Level
-   */
-  initialZoom?: number
-
-  /**
-   * Zoom level thresholds for different data levels
-   */
-  lowZoomThreshold?: number
-  mediumZoomThreshold?: number
-  highZoomThreshold?: number
 }
 
 interface CustomLeafletEvent extends LeafletMouseEvent {
@@ -117,17 +102,11 @@ type DataLevel = 'countries' | 'regions' | 'local-authorities'
 const CoverLayer = <T extends LayerWithFeature>({
   theme = defaultTheme,
   className = 'transition-all duration-150 outline-none',
-  initialZoom = 5,
-  lowZoomThreshold = 6,
-  mediumZoomThreshold = 7,
-  highZoomThreshold = 8,
   dataThresholds: thresholdData,
   mapData,
   ...rest
 }: CoverLayerProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
-
-  console.log('mapData: ', mapData)
 
   // State for zoom-dependent data loading
   const [dataLevel, setDataLevel] = useState<DataLevel>('countries')
@@ -140,12 +119,9 @@ const CoverLayer = <T extends LayerWithFeature>({
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
   const map = useMap()
 
-  const getDataLevel = useCallback(
-    (zoom: number): DataLevel => {
-      return 'local-authorities'
-    },
-    [highZoomThreshold, mediumZoomThreshold]
-  )
+  const getDataLevel = useCallback(() => {
+    return 'local-authorities'
+  })
 
   const loadGeoJsonData = useCallback(async (level: DataLevel) => {
     try {
@@ -185,7 +161,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   useEffect(() => {
     if (map) {
       const currentZoom = map.getZoom()
-      const initialDataLevel = getDataLevel(currentZoom)
+      const initialDataLevel = getDataLevel()
       setDataLevel(initialDataLevel)
       loadGeoJsonData(initialDataLevel)
     }
@@ -303,7 +279,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       },
       zoomend() {
         const newZoom = map.getZoom()
-        const newDataLevel = getDataLevel(newZoom)
+        const newDataLevel = getDataLevel()
 
         if (newDataLevel !== dataLevel) {
           setDataLevel(newDataLevel)
@@ -319,12 +295,11 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   const getFeatureData = (featureId: any) => {
     if (!mapData) return
-    return mapData.data.find((element) => element.geography_code === featureId)
+    return mapData.data.find((element: any) => element.geography_code === featureId)
   }
 
   const getThresholdColour = (featureData: any): MapFeatureColour | undefined => {
     const processedMetricValue = (featureData.metric_value / 100).toFixed(2)
-    // console.log('processed value: ', processedMetricValue)
 
     let thresholdColour
     thresholdData.forEach((threshold: any) => {
@@ -332,34 +307,11 @@ const CoverLayer = <T extends LayerWithFeature>({
         processedMetricValue >= threshold.boundary_minimum_value &&
         processedMetricValue <= threshold.boundary_maximum_value
       ) {
-        // console.log(`${processedMetricValue} is in threshold boundary: ${threshold.label}`)
-        // console.log('thresholdColour: ', threshold.colour)
-        // console.log('Selected: ', selectedFeatureId)
         thresholdColour = threshold.colour
       }
     })
 
     return thresholdColour
-  }
-
-  const getFeatureThresholdData = (featureData: any): MapFeatureColour | undefined => {
-    const processedMetricValue = (featureData.metric_value / 100).toFixed(2)
-    // console.log('processed value: ', processedMetricValue)
-
-    let featureThresholdData
-    thresholdData.forEach((threshold: any) => {
-      if (
-        processedMetricValue >= threshold.boundary_minimum_value &&
-        processedMetricValue <= threshold.boundary_maximum_value
-      ) {
-        // console.log(`${processedMetricValue} is in threshold boundary: ${threshold.label}`)
-        // console.log('thresholdColour: ', threshold.colour)
-        // console.log('Selected: ', selectedFeatureId)
-        featureThresholdData = threshold
-      }
-    })
-
-    return featureThresholdData
   }
 
   const getStyleForFeatureCollection = (feature: any, featureCollection: any) => {

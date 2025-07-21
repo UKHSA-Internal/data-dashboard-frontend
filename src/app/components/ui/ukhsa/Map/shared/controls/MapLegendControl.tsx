@@ -66,7 +66,7 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
                   &nbsp;
                 </div>
                 <div key={index} className={clsx(`flex-auto px-5`, 'bg-white')}>
-                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label.toLowerCase()}</p>
+                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label}</p>
                 </div>
               </div>
             )
@@ -98,7 +98,7 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
                   &nbsp;
                 </div>
                 <div key={index} className={clsx(`flex-none px-2`, 'bg-white')}>
-                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label.toLowerCase()}</p>
+                  <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label}</p>
                 </div>
               </div>
             )
@@ -108,7 +108,7 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
     )
   }
 
-  const renderLegend = () => {
+  const renderLegend = (thresholdData: ThresholdItemProps[]) => {
     return (
       <div
         className="
@@ -128,7 +128,7 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
 
         {/* Horizontal legend bar */}
         <div className="flex w-full overflow-hidden">
-          {thresholdData.map((legendItem, index) => (
+          {thresholdData.map((legendItem: ThresholdItemProps, index: number) => (
             <div key={`${legendItem.label}-${index}`} className="flex flex-1 flex-col">
               {/* Color segment */}
               <div className={clsx('h-4 w-full', getTailwindBackgroundFromColour(legendItem.colour))} />
@@ -146,6 +146,6 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
   if (position) {
     return <Control position={position}>{showKey ? renderParallelKey(thresholdData) : renderKeyButton()}</Control>
   } else {
-    return renderLegend()
+    return renderLegend(thresholdData)
   }
 }
