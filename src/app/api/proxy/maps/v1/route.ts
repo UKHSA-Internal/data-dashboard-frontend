@@ -2,10 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { MapRequestParams, postMapData } from '@/api/requests/cover-maps/postMaps'
 
-interface PathParameters {
-  body: MapRequestParams
-}
-
 export async function POST(req: NextRequest) {
   const body: MapRequestParams = await req.json()
 

@@ -34,11 +34,11 @@ import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
 import globalBanners from './handlers/global-banners/v2'
 import headlines from './handlers/headlines/v3'
+import maps from './handlers/maps/v1/v1'
 import menus from './handlers/menus/v1'
 import suggestions from './handlers/suggestions/v2'
 import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v3'
-import maps from './handlers/maps/v1/v1'
 
 const app = express()
 

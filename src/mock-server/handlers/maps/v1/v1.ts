@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import { logger } from '@/lib/logger'
+
 import { defaultData } from './fixtures'
 
 export default async function handler(req: Request, res: Response) {
