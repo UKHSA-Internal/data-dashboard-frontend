@@ -11,21 +11,21 @@ import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
-import { geoJsonFeatureId, mapQueryKeys } from '@/app/constants/map.constants'
+import { mapQueryKeys } from '@/app/constants/map.constants'
 import {
-  MapFeatureColour,
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
   getHoverCssVariableFromColour,
+  MapFeatureColour,
 } from '@/app/utils/map.utils'
 
-import regionFeatureCollection, { Feature as RegionFeature } from '../data/geojson/ukhsa-regions'
+import { ThresholdItemProps } from '../controls/MapLegendControl'
+import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
 import localAuthoritiesFeatureCollection, {
   Feature as LocalAuthoritiesFeature,
 } from '../data/geojson/local-authorities'
+import regionFeatureCollection, { Feature as RegionFeature } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
-import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
-import { ThresholdItemProps } from '../controls/MapLegendControl'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
@@ -119,9 +119,11 @@ const CoverLayer = <T extends LayerWithFeature>({
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
   const map = useMap()
 
+  console.log('Map data:', mapData)
+
   const getDataLevel = useCallback(() => {
     return 'local-authorities'
-  })
+  }, [])
 
   const loadGeoJsonData = useCallback(async (level: DataLevel) => {
     try {
@@ -160,7 +162,6 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   useEffect(() => {
     if (map) {
-      const currentZoom = map.getZoom()
       const initialDataLevel = getDataLevel()
       setDataLevel(initialDataLevel)
       loadGeoJsonData(initialDataLevel)
@@ -278,7 +279,6 @@ const CoverLayer = <T extends LayerWithFeature>({
         updateScreenReaderText()
       },
       zoomend() {
-        const newZoom = map.getZoom()
         const newDataLevel = getDataLevel()
 
         if (newDataLevel !== dataLevel) {
@@ -295,7 +295,8 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   const getFeatureData = (featureId: any) => {
     if (!mapData) return
-    return mapData.data.find((element: any) => element.geography_code === featureId)
+    console.log('mapData: ', mapData)
+    return mapData.find((element: any) => element.geography_code === featureId)
   }
 
   const getThresholdColour = (featureData: any): MapFeatureColour | undefined => {

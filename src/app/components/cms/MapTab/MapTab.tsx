@@ -1,9 +1,10 @@
 'use client'
 
 import 'leaflet/dist/leaflet.css'
-import dynamic from 'next/dynamic'
+
 import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
+import dynamic from 'next/dynamic'
 import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
@@ -13,9 +14,9 @@ import { MapFeatureColour } from '@/app/utils/map.utils'
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
+import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
-import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 
 const { BaseLayer, CoverLayer } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
@@ -51,14 +52,6 @@ export const MapTab = ({
   options: { attributionControlPosition, zoomControlPosition, ...options } = mapDefaults,
 }: MapTabProps) => {
   const ref = useMapRef()
-
-  const legendItems = [
-    { colour: MapFeatureColour.COLOUR_10_PINK, title: 'over 95%' },
-    { colour: MapFeatureColour.COLOUR_12_BLUE, title: '90% - 95%' },
-    { colour: MapFeatureColour.COLOUR_9_DEEP_PLUM, title: '85% - 90%' },
-    { colour: MapFeatureColour.COLOUR_6_LIGHT_PURPLE, title: '80% - 85%' },
-    { colour: MapFeatureColour.COLOUR_1_DARK_BLUE, title: 'under 80%' },
-  ]
 
   const thresholdData: ThresholdItemProps[] = [
     {
@@ -124,7 +117,7 @@ export const MapTab = ({
 
   const coverLayer = useMemo(() => {
     if (!mapData.data) return
-    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
+    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data.data} />
   }, [thresholdData, mapData.data])
 
   return (

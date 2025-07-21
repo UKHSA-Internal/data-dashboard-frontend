@@ -1,7 +1,7 @@
 import { useSuspenseQuery } from '@tanstack/react-query'
+
+import { MapDataRequest } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
-import { MapDataResponse, MapDataRequest } from '@/api/models/Maps'
-import { toSlug } from '@/app/utils/app.utils'
 
 export default function useMapData(request: MapDataRequest) {
   return useSuspenseQuery({
@@ -11,6 +11,7 @@ export default function useMapData(request: MapDataRequest) {
       if (data.success) {
         return data.data
       }
+      return undefined
     },
   })
 }

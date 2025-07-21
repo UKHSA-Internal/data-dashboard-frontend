@@ -1,11 +1,9 @@
-import { SafeParseError, SafeParseSuccess, z } from 'zod'
+import { z } from 'zod'
 
+import { MapDataResponse } from '@/api/models/Maps'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
-import { MapDataList, MapDataResponse } from '@/api/models/Maps'
-
-export type GetMapDataResponse = SafeParseError<MapDataList> | SafeParseSuccess<MapDataList>
 
 export const MapRequestParams = z.object({
   date_from: z.string(),
@@ -41,12 +39,12 @@ export type MapRequestParams = z.infer<typeof MapRequestParams>
 export const postMapData = async (request: MapRequestParams) => {
   try {
     const path = isSSR ? `maps/v1` : `proxy/maps/v1`
-    const { data } = await client<MapDataList>(`${path}`, {
+    const { data } = await client<MapDataResponse>(`${path}`, {
       body: request,
     })
     return MapDataResponse.safeParse(data)
   } catch (error) {
     logger.error(error)
-    return MapDataList.safeParse(error)
+    return MapDataResponse.safeParse({ data: [], latest_date: '' })
   }
 }
