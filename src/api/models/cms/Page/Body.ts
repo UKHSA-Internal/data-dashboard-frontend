@@ -123,7 +123,7 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('chart_card_section'),
     value: z.object({
-      cards: z.any(WithSimplifiedChartCardAndLink),
+      cards: z.array(WithSimplifiedChartCardAndLink),
     }),
     id: z.string(),
   }),
