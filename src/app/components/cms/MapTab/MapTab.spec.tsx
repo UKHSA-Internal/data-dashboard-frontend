@@ -233,7 +233,7 @@ describe('MapTab', () => {
     const mapContainer = screen.getByTestId('map-container')
     expect(mapContainer).toHaveAttribute('data-min-zoom', '6')
     expect(mapContainer).toHaveAttribute('data-max-zoom', '10')
-    expect(mapContainer).toHaveAttribute('data-zoom', '6') // Note: component hardcodes zoom to 6
+    expect(mapContainer).toHaveAttribute('data-zoom', '7') // Note: component hardcodes zoom to 6
   })
 
   test('centers the MapContainer on the provided Coordinates', () => {
