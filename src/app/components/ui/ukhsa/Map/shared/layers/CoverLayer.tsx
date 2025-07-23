@@ -119,8 +119,6 @@ const CoverLayer = <T extends LayerWithFeature>({
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
   const map = useMap()
 
-  console.log('Map data:', mapData)
-
   const getDataLevel = useCallback(() => {
     return 'local-authorities'
   }, [])
@@ -295,7 +293,6 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   const getFeatureData = (featureId: any) => {
     if (!mapData) return
-    console.log('mapData: ', mapData)
     return mapData.find((element: any) => element.geography_code === featureId)
   }
 
@@ -334,7 +331,6 @@ const CoverLayer = <T extends LayerWithFeature>({
     if (featureCollection.name === 'Local Authorities') {
       if (featureData) {
         const colour = getThresholdColour(featureData)
-        console.log('isSelected:', isSelected)
         if (isSelected) {
           style.fillColor = getActiveCssVariableFromColour(colour as MapFeatureColour)
         } else {
@@ -349,14 +345,6 @@ const CoverLayer = <T extends LayerWithFeature>({
       style.fillOpacity = 0
       style.color = 'rgb(0, 0, 0)'
       style.weight = 5
-    }
-
-    if (featureCollection.name === 'Local Authorities') {
-      console.log('localAuthority styles loaded: ', style)
-    }
-
-    if (featureCollection.name === 'Regions') {
-      console.log('Regions styles loaded: ', style)
     }
     return style
   }
