@@ -34,6 +34,7 @@ import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
 import globalBanners from './handlers/global-banners/v2'
 import headlines from './handlers/headlines/v3'
+import maps from './handlers/maps/v1/v1'
 import menus from './handlers/menus/v1'
 import suggestions from './handlers/suggestions/v2'
 import tables from './handlers/tables/v4'
@@ -63,6 +64,7 @@ app.get('/api/menus/v1', menus)
 app.post('/api/charts/v3', charts)
 app.post('/api/tables/v4', tables)
 app.post('/api/downloads/v2', downloads)
+app.post('/api/maps/v1', maps)
 
 // Misc endpoints
 app.post('/api/suggestions/v2', suggestions)

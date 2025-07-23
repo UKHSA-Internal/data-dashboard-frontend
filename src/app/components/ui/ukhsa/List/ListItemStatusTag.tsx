@@ -4,7 +4,7 @@ import clsx from 'clsx'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 import { useTranslation } from '@/app/i18n/client'
-import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/map.utils'
 
 interface ListItemStatusTagProps {
   level: HealthAlertStatus

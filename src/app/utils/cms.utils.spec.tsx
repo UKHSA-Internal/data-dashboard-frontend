@@ -11,6 +11,7 @@ import {
   mockChartRowCardWithSingleChartCard,
   mockHeadlineNumbersRowCard,
   mockHeadlineNumbersRowCardWithOneColumn,
+  mockLinkedMapCard,
   mockSectionNoLink,
   mockSectionWithCard,
   mockSectionWithLink,
@@ -28,6 +29,7 @@ jest.mock('../components/cms', () => ({
   About: () => <div>Mocked About</div>,
   Table: () => <div>Mocked table</div>,
   Chart: () => <div>Mocked chart</div>,
+  MapTab: () => <div>Mocked Map</div>,
   Percentage: () => <div>Mocked percentage number</div>,
   Headline: () => <div>Mocked headline number</div>,
   Trend: () => <div>Mocked trend number</div>,
@@ -128,6 +130,21 @@ describe('Headline numbers row card', () => {
     const gridRow = screen.getByTestId('headline-row').firstChild
     expect(gridRow).toHaveClass('grid-cols-2 sm:grid-cols-3')
     expect(gridRow).not.toHaveClass('md:grid-cols-5')
+  })
+})
+describe('Linked Map Card', () => {
+  test('linked Map card displays correctly', () => {
+    render(renderCard('', [], '', mockLinkedMapCard))
+    const article = screen.getByRole('article')
+    expect(article).toBeInTheDocument()
+
+    expect(article).toHaveClass('ukhsa-map-card')
+
+    // Heading and description
+    expect(within(article).getByRole('heading', { level: 3, name: 'Map Heading' })).toBeInTheDocument()
+
+    // Chart
+    expect(screen.getByText('Mocked Map')).toBeVisible()
   })
 })
 

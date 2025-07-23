@@ -19,7 +19,7 @@ import { mapQueryKeys } from '@/app/constants/map.constants'
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import { useTranslation } from '@/app/i18n/client'
 import { toSlug } from '@/app/utils/app.utils'
-import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/map.utils'
 import { clsx } from '@/lib/clsx'
 
 const DialogSkeleton = () => (
