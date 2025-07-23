@@ -4,17 +4,28 @@ import 'leaflet/dist/leaflet.css'
 
 import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
-import { ComponentProps, ReactNode } from 'react'
+import dynamic from 'next/dynamic'
+import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
-import { MapLegendControl } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
+import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
-import BaseLayer from '../../ui/ukhsa/Map/shared/layers/BaseLayer'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
+
+const { BaseLayer, CoverLayer } = {
+  BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
+    ssr: false,
+  }),
+  CoverLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/CoverLayer'), {
+    ssr: false,
+  }),
+}
 
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
@@ -42,13 +53,72 @@ export const MapTab = ({
 }: MapTabProps) => {
   const ref = useMapRef()
 
-  const legendItems = [
-    { colour: 'dark-purple', title: 'over 95%' },
-    { colour: 'dark-blue', title: '90% - 95%' },
-    { colour: 'light-blue', title: '85% - 90%' },
-    { colour: 'purple', title: '80% - 85%' },
-    { colour: 'pink', title: 'under 80%' },
+  const thresholdData: ThresholdItemProps[] = [
+    {
+      colour: 'COLOUR_4_ORANGE' as MapFeatureColour,
+      label: 'less than 65%',
+      boundary_minimum_value: 0.0,
+      boundary_maximum_value: 0.64,
+    },
+    {
+      colour: 'COLOUR_12_BLUE' as MapFeatureColour,
+      label: '65% - 74%',
+      boundary_minimum_value: 0.65,
+      boundary_maximum_value: 0.74,
+    },
+    {
+      colour: 'COLOUR_10_PINK' as MapFeatureColour,
+      label: '75% - 84%',
+      boundary_minimum_value: 0.75,
+      boundary_maximum_value: 0.84,
+    },
+    {
+      colour: 'COLOUR_9_DEEP_PLUM' as MapFeatureColour,
+      label: '85% - 95%',
+      boundary_minimum_value: 0.85,
+      boundary_maximum_value: 0.95,
+    },
+    {
+      colour: 'COLOUR_2_TURQUOISE' as MapFeatureColour,
+      label: 'over 95%',
+      boundary_minimum_value: 0.96,
+      boundary_maximum_value: 1,
+    },
   ]
+
+  const request = {
+    date_from: '2023-10-30',
+    date_to: '2023-10-31',
+    parameters: {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
+      topic: 'COVID-19',
+      metric: 'COVID-19_deaths_ONSByWeek',
+      stratum: 'default',
+      age: 'all',
+      sex: 'all',
+      geography_type: 'Lower Tier Local Authority',
+      geographies: [],
+    },
+    accompanying_points: [
+      {
+        label_prefix: 'Rate of cases in England: ',
+        label_suffix: '',
+        parameters: {
+          metric: 'COVID-19_cases_rateRollingMean',
+          geography_type: 'Nation',
+          geography: 'England',
+        },
+      },
+    ],
+  }
+
+  const mapData = useMapData(request)
+
+  const coverLayer = useMemo(() => {
+    if (!mapData.data) return
+    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data.data} />
+  }, [thresholdData, mapData.data])
 
   return (
     <>
@@ -66,9 +136,10 @@ export const MapTab = ({
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <BaseLayer />
+        {coverLayer}
         {children}
       </MapContainer>
-      <MapLegendControl legendItems={legendItems} />
+      <MapLegendControl thresholdData={thresholdData} />
     </>
   )
 }

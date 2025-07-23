@@ -1,6 +1,7 @@
 import { ControlPosition } from 'leaflet'
 import React from 'react'
 
+import { MapFeatureColour } from '@/app/utils/map.utils'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
 import { MapLegendControl } from './MapLegendControl'
@@ -41,9 +42,24 @@ jest.mock('clsx', () => ({
 
 describe('MapLegendControl', () => {
   const mockLegendItems = [
-    { colour: 'pink', title: 'Low Risk' },
-    { colour: 'light-blue', title: 'Medium Risk' },
-    { colour: 'dark-purple', title: 'High Risk' },
+    {
+      colour: MapFeatureColour.COLOUR_10_PINK,
+      label: 'Low Risk',
+      boundary_minimum_value: 0,
+      boundary_maximum_value: 0.33,
+    },
+    {
+      colour: MapFeatureColour.COLOUR_10_PINK,
+      label: 'Medium Risk',
+      boundary_minimum_value: 0.34,
+      boundary_maximum_value: 0.66,
+    },
+    {
+      colour: MapFeatureColour.COLOUR_10_PINK,
+      label: 'High Risk',
+      boundary_minimum_value: 0.67,
+      boundary_maximum_value: 1,
+    },
   ]
 
   beforeEach(() => {
@@ -52,7 +68,7 @@ describe('MapLegendControl', () => {
 
   describe('when provided a position prop (Control mode)', () => {
     test('renders correctly with position and shows key by default', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       expect(screen.getByTestId('custom-control')).toBeInTheDocument()
       expect(screen.getByTestId('map-key')).toBeInTheDocument()
@@ -60,14 +76,14 @@ describe('MapLegendControl', () => {
     })
 
     test('applies correct position to Control component', () => {
-      render(<MapLegendControl position="topleft" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="topleft" thresholdData={mockLegendItems} />)
 
       const control = screen.getByTestId('custom-control')
       expect(control).toHaveAttribute('data-position', 'topleft')
     })
 
     test('shows display key button when key is hidden', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       // Click close button to hide key
       const closeButton = screen.getByTestId('close-key-button')
@@ -78,7 +94,7 @@ describe('MapLegendControl', () => {
     })
 
     test('toggles between key and display button on click', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       // Initially shows key
       expect(screen.getByTestId('map-key')).toBeInTheDocument()
@@ -101,27 +117,27 @@ describe('MapLegendControl', () => {
     })
 
     test('renders all legend items with correct colors and titles', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
-      expect(screen.getByText('low risk')).toBeInTheDocument()
-      expect(screen.getByText('medium risk')).toBeInTheDocument()
-      expect(screen.getByText('high risk')).toBeInTheDocument()
+      expect(screen.getByText('Low Risk')).toBeInTheDocument()
+      expect(screen.getByText('Medium Risk')).toBeInTheDocument()
+      expect(screen.getByText('High Risk')).toBeInTheDocument()
     })
 
     test('legend items are rendered in reverse order', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       const legendContainer = screen.getByTestId('map-key')
       const legendTexts = legendContainer.querySelectorAll('p.govuk-body')
 
       // Should be reversed: High Risk, Medium Risk, Low Risk
-      expect(legendTexts[0]).toHaveTextContent('high risk')
-      expect(legendTexts[1]).toHaveTextContent('medium risk')
-      expect(legendTexts[2]).toHaveTextContent('low risk')
+      expect(legendTexts[0]).toHaveTextContent('High Risk')
+      expect(legendTexts[1]).toHaveTextContent('Medium Risk')
+      expect(legendTexts[2]).toHaveTextContent('Low Risk')
     })
 
     test('close button has correct styling and SVG icon', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       const closeButton = screen.getByTestId('close-key-button')
       expect(closeButton).toHaveClass(
@@ -138,7 +154,7 @@ describe('MapLegendControl', () => {
     test('handles keyboard events on buttons', () => {
       const consoleSpy = jest.spyOn(console, 'log').mockImplementation()
 
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       const closeButton = screen.getByTestId('close-key-button')
       fireEvent.keyDown(closeButton, { key: 'Enter' })
@@ -151,7 +167,7 @@ describe('MapLegendControl', () => {
 
   describe('when position is not applied (Legend mode)', () => {
     test('renders legend when no position provided', () => {
-      render(<MapLegendControl position={null as unknown as ControlPosition} legendItems={mockLegendItems} />)
+      render(<MapLegendControl position={null as unknown as ControlPosition} thresholdData={mockLegendItems} />)
 
       expect(screen.queryByTestId('custom-control')).not.toBeInTheDocument()
       expect(screen.getByText('Key')).toBeInTheDocument()
@@ -162,7 +178,7 @@ describe('MapLegendControl', () => {
     })
 
     test('renders horizontal legend bar below the map container', () => {
-      render(<MapLegendControl position={null as unknown as ControlPosition} legendItems={mockLegendItems} />)
+      render(<MapLegendControl position={null as unknown as ControlPosition} thresholdData={mockLegendItems} />)
 
       // Should have legend items in reverse order
       expect(screen.getByText('High Risk')).toBeInTheDocument()
@@ -172,7 +188,7 @@ describe('MapLegendControl', () => {
 
     test('Uses applicable styling', () => {
       const { container } = render(
-        <MapLegendControl position={null as unknown as ControlPosition} legendItems={mockLegendItems} />
+        <MapLegendControl position={null as unknown as ControlPosition} thresholdData={mockLegendItems} />
       )
 
       const legendContainer = container.firstChild as HTMLElement
@@ -182,7 +198,7 @@ describe('MapLegendControl', () => {
     })
 
     test('renders items with different structure', () => {
-      render(<MapLegendControl position={null as unknown as ControlPosition} legendItems={mockLegendItems} />)
+      render(<MapLegendControl position={null as unknown as ControlPosition} thresholdData={mockLegendItems} />)
 
       // In legend mode, titles are not lowercased
       expect(screen.getByText('High Risk')).toBeInTheDocument()
@@ -191,39 +207,9 @@ describe('MapLegendControl', () => {
     })
   })
 
-  describe('color mapping', () => {
-    test('applies correct background colors for all color types', () => {
-      const colorTestItems = [
-        { colour: 'pink', title: 'Pink Item' },
-        { colour: 'light-blue', title: 'Light Blue Item' },
-        { colour: 'dark-purple', title: 'Dark Purple Item' },
-        { colour: 'purple', title: 'Purple Item' },
-        { colour: 'dark-blue', title: 'Dark Blue Item' },
-      ]
-
-      const { container } = render(<MapLegendControl position="bottomright" legendItems={colorTestItems} />)
-
-      // Check that color classes are applied (through clsx mock)
-      expect(container.querySelector('.bg-pink')).toBeInTheDocument()
-      expect(container.querySelector('.bg-light-blue')).toBeInTheDocument()
-      expect(container.querySelector('.bg-dark-purple')).toBeInTheDocument()
-      expect(container.querySelector('.bg-light-purple')).toBeInTheDocument()
-      expect(container.querySelector('.bg-dark-blue')).toBeInTheDocument()
-    })
-
-    test('handles unknown color gracefully', () => {
-      const unknownColorItems = [{ colour: 'unknown-color', title: 'Unknown Color' }]
-
-      render(<MapLegendControl position="bottomright" legendItems={unknownColorItems} />)
-
-      // Should still render without throwing error
-      expect(screen.getByText('unknown color')).toBeInTheDocument()
-    })
-  })
-
   describe('edge cases', () => {
     test('handles empty legend items array', () => {
-      render(<MapLegendControl position="bottomright" legendItems={[]} />)
+      render(<MapLegendControl position="bottomright" thresholdData={[]} />)
 
       expect(screen.getByTestId('map-key')).toBeInTheDocument()
       expect(screen.getByText('Key')).toBeInTheDocument()
@@ -235,18 +221,25 @@ describe('MapLegendControl', () => {
     })
 
     test('handles single legend item', () => {
-      const singleItem = [{ colour: 'pink', title: 'Single Item' }]
+      const singleItem = [
+        {
+          colour: MapFeatureColour.COLOUR_10_PINK,
+          label: 'Single Item',
+          boundary_minimum_value: 0,
+          boundary_maximum_value: 1,
+        },
+      ]
 
-      render(<MapLegendControl position="bottomright" legendItems={singleItem} />)
+      render(<MapLegendControl position="bottomright" thresholdData={singleItem} />)
 
-      expect(screen.getByText('single item')).toBeInTheDocument()
+      expect(screen.getByText('Single Item')).toBeInTheDocument()
     })
 
     test('works with different control positions', () => {
       const positions: ControlPosition[] = ['topleft', 'topright', 'bottomleft', 'bottomright']
 
       positions.forEach((position) => {
-        const { unmount } = render(<MapLegendControl position={position} legendItems={mockLegendItems} />)
+        const { unmount } = render(<MapLegendControl position={position} thresholdData={mockLegendItems} />)
 
         const control = screen.getByTestId('custom-control')
         expect(control).toHaveAttribute('data-position', position)
@@ -261,7 +254,7 @@ describe('MapLegendControl', () => {
       // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { useTranslation } = require('@/app/i18n/client')
 
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       expect(useTranslation).toHaveBeenCalledWith('map')
     })
@@ -269,14 +262,14 @@ describe('MapLegendControl', () => {
 
   describe('user accessibility', () => {
     test('legend heading is properly marked up', () => {
-      render(<MapLegendControl position={null as unknown as ControlPosition} legendItems={mockLegendItems} />)
+      render(<MapLegendControl position={null as unknown as ControlPosition} thresholdData={mockLegendItems} />)
 
       const heading = screen.getByRole('heading', { level: 3 })
       expect(heading).toHaveTextContent('Key')
     })
 
     test('close button SVG has proper accessibility attributes', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       const closeButton = screen.getByTestId('close-key-button')
       const svg = closeButton.querySelector('svg')
@@ -286,7 +279,7 @@ describe('MapLegendControl', () => {
     })
 
     test('buttons are keyboard accessible', () => {
-      render(<MapLegendControl position="bottomright" legendItems={mockLegendItems} />)
+      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
 
       const closeButton = screen.getByTestId('close-key-button')
       expect(closeButton.tagName.toLowerCase()).toBe('button')

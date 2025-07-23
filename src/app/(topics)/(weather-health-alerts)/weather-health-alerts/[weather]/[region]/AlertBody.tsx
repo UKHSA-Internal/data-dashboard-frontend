@@ -18,7 +18,7 @@ import {
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
-import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/map.utils'
 import { logger } from '@/lib/logger'
 
 interface AlertProps {
