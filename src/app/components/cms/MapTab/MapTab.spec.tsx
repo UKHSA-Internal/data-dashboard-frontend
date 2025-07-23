@@ -84,6 +84,12 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/ZoomControl', () => ({
   ZoomControl: ({ position }: MockLayerProps) => <div data-testid="zoom-control" data-position={position} />,
 }))
 
+jest.mock('../../ui/ukhsa/Map/shared/controls/FullscreenControl', () => ({
+  FullscreenControl: ({ position }: MockLayerProps) => (
+    <div data-testid="fullscreen-control" data-position={position} />
+  ),
+}))
+
 jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="base-layer" />,
@@ -125,6 +131,7 @@ describe('MapTab', () => {
     expect(screen.getByTestId('attribution-control')).toBeInTheDocument()
     expect(screen.getByTestId('map-legend-control')).toBeInTheDocument()
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
+    expect(screen.getByTestId('fullscreen-control')).toBeInTheDocument()
   })
 
   test('applies combined className correctly', () => {
@@ -153,6 +160,7 @@ describe('MapTab', () => {
 
     expect(screen.getByTestId('attribution-control')).toHaveAttribute('data-position', 'bottomright')
     expect(screen.getByTestId('zoom-control')).toHaveAttribute('data-position', 'bottomright')
+    expect(screen.getByTestId('fullscreen-control')).toHaveAttribute('data-position', 'bottomright')
   })
 
   test('applies custom layer positions when provided', () => {
@@ -161,6 +169,7 @@ describe('MapTab', () => {
         options={{
           attributionControlPosition: 'topleft',
           zoomControlPosition: 'topright',
+          fullscreenControlPosition: 'bottomleft',
           scrollWheelZoom: false,
         }}
       />
@@ -168,6 +177,7 @@ describe('MapTab', () => {
 
     expect(screen.getByTestId('attribution-control')).toHaveAttribute('data-position', 'topleft')
     expect(screen.getByTestId('zoom-control')).toHaveAttribute('data-position', 'topright')
+    expect(screen.getByTestId('fullscreen-control')).toHaveAttribute('data-position', 'bottomleft')
   })
 
   test('UKHSA logo layer is positioned correctly', () => {
@@ -182,6 +192,7 @@ describe('MapTab', () => {
         options={{
           scrollWheelZoom: false,
           attributionControlPosition: 'bottomright',
+          fullscreenControlPosition: 'bottomright',
           zoomControlPosition: 'bottomright',
         }}
       />
@@ -212,6 +223,7 @@ describe('MapTab', () => {
     expect(mapContainer).toContainElement(screen.getByTestId('ukhsa-logo-layer'))
     expect(mapContainer).toContainElement(screen.getByTestId('attribution-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('zoom-control'))
+    expect(mapContainer).toContainElement(screen.getByTestId('fullscreen-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('base-layer'))
   })
 
@@ -221,7 +233,7 @@ describe('MapTab', () => {
     const mapContainer = screen.getByTestId('map-container')
     expect(mapContainer).toHaveAttribute('data-min-zoom', '6')
     expect(mapContainer).toHaveAttribute('data-max-zoom', '10')
-    expect(mapContainer).toHaveAttribute('data-zoom', '6') // Note: component hardcodes zoom to 6
+    expect(mapContainer).toHaveAttribute('data-zoom', '7') // Note: component hardcodes zoom to 6
   })
 
   test('centers the MapContainer on the provided Coordinates', () => {

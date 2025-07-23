@@ -12,6 +12,7 @@ import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.const
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
+import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
@@ -30,6 +31,7 @@ const { BaseLayer, CoverLayer } = {
 interface DefaultOptions extends ComponentProps<typeof MapContainer> {
   zoomControlPosition: ControlPosition
   attributionControlPosition: ControlPosition
+  fullscreenControlPosition: ControlPosition
 }
 
 const mapDefaults: DefaultOptions = {
@@ -38,6 +40,7 @@ const mapDefaults: DefaultOptions = {
   scrollWheelZoom: true,
   attributionControlPosition: 'bottomright',
   zoomControlPosition: 'bottomright',
+  fullscreenControlPosition: 'bottomright',
 }
 
 interface MapTabProps {
@@ -49,7 +52,7 @@ interface MapTabProps {
 export const MapTab = ({
   children,
   className,
-  options: { attributionControlPosition, zoomControlPosition, ...options } = mapDefaults,
+  options: { attributionControlPosition, zoomControlPosition, fullscreenControlPosition, ...options } = mapDefaults,
 }: MapTabProps) => {
   const ref = useMapRef()
 
@@ -127,7 +130,7 @@ export const MapTab = ({
         id={mapId}
         minZoom={minZoom}
         maxZoom={maxZoom}
-        zoom={6}
+        zoom={7}
         ref={ref}
         className={clsx('relative h-[70vh] overflow-hidden ukhsa-focus', className)}
         zoomControl={false}
@@ -135,6 +138,7 @@ export const MapTab = ({
         <UKHSALogoLayer position="topright" />
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
+        <FullscreenControl position={fullscreenControlPosition} />
         <BaseLayer />
         {coverLayer}
         {children}
