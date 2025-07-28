@@ -115,8 +115,8 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('filter_linked_map'),
     value: z.object({
-      title_prefix: z.string(),
-      legend_title: z.string(),
+      title_prefix: z.optional(z.string()),
+      legend_title: z.optional(z.string()),
     }),
     id: z.string(),
   }),
