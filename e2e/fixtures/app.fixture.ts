@@ -280,10 +280,9 @@ export class App {
   async clickNav(name: string) {
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
-
     const nav = this.page.getByRole('navigation', { name: 'Menu' })
+
+    await expect(nav).toBeVisible()
 
     await nav.getByRole('link', { name }).click()
   }
