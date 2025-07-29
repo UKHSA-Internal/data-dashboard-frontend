@@ -40,7 +40,7 @@ export const TopNav = ({ children, avatar = null }: { children: ReactNode; avata
         >
           <span className="inline-flex items-center gap-2">
             <span aria-hidden>Menu</span>
-            <span className="sr-only">{menuOpen ? 'Hide' : 'Show'} navigation menu</span>
+            <span className="sr-only">{menuOpen ? 'Hide navigation menu' : 'Show navigation menu'}</span>
             {avatar}
           </span>
         </Link>
