@@ -137,6 +137,23 @@ export const CardTypes = z.discriminatedUnion('type', [
     value: z.object({}).passthrough(),
     id: z.string(),
   }),
+  z.object({
+    type: z.literal('filter_linked_sub_plot_chart_template'),
+    value: z.object({
+      title_prefix: z.string(),
+      legend_title: z.string(),
+      target_threshold: z.number(),
+    }),
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('filter_linked_time_series_chart_template'),
+    value: z.object({
+      title_prefix: z.string(),
+      legend_title: z.string(),
+    }),
+    id: z.string(),
+  }),
 ])
 
 export const Body = z.array(
