@@ -23,6 +23,8 @@ import {
   CodeBlock,
   Download,
   Headline,
+  MapRowCard,
+  MapTab,
   Percentage,
   RichText,
   Table,
@@ -34,6 +36,7 @@ import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorL
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
 export const renderSection = (
   showMoreSections: string[],
@@ -265,6 +268,17 @@ export const renderCard = (
         </ChartRowCard>
       )}
 
+      {type === 'filter_linked_map' && (
+        <MapRowCard>
+          <div key={id} className={clsx('mb-3 sm:mb-6 lg:mb-0', 'lg:w-full')}>
+            <article className={'ukhsa-map-card'}>
+              <ChartRowCardHeader id={`map-row-heading-${id}`} title={value.title_prefix ? value.title_prefix : ''} />
+              <MapTab />
+            </article>
+          </div>
+        </MapRowCard>
+      )}
+
       {type === 'chart_card_section' && (
         <div
           className={clsx('mb-3 grid gap-4 sm:mb-6 ', {
@@ -272,7 +286,7 @@ export const renderCard = (
             'lg:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr]': value.cards.length > 2,
           })}
         >
-          {value.cards.map((card, index) => {
+          {value.cards.map((card: any, index: any) => {
             if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
               return (
                 <div key={index}>
@@ -377,7 +391,7 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
 
     {type === 'code_block' && (
       <>
-        {value.heading && (<h4 className="govuk-heading-m">{value.heading}</h4>)}
+        {value.heading && <h4 className="govuk-heading-m">{value.heading}</h4>}
         <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
       </>
     )}
