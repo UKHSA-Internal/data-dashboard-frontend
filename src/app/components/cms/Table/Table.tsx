@@ -129,7 +129,7 @@ export async function Table({
                   })}
                 </tr>
 
-                {data.map((item, key) => {
+                {data.map((item, key, array) => {
                   return (
                     <tr
                       key={key}
@@ -151,6 +151,7 @@ export async function Table({
                                   'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
                                   'border-b-0': !item.inReportingDelay && nextItemHasDelay,
                                   'border-t-0': !item.inReportingDelay && previousItemHasDelay,
+                                  'border-b-3 border-black': key + 1 === array.length,
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
@@ -161,12 +162,13 @@ export async function Table({
                             ) : (
                               <td
                                 headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
-                                className={clsx('govuk-table__cell', {
+                                className={clsx('govuk-table__cell table-column', {
                                   'bg-delay-blue-opaque': item.inReportingDelay,
                                   'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
                                   'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
                                   'border-b-0': !item.inReportingDelay && nextItemHasDelay,
                                   'border-t-0': !item.inReportingDelay && previousItemHasDelay,
+                                  'border-b-3 border-black': key + 1 === array.length,
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
