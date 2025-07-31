@@ -6,6 +6,7 @@ import {
   Announcements,
   PageSection,
   PageSectionWithContents,
+  SelectedFilters,
   // SelectedFilters,
   TopicBodyContextProvider,
   View,
@@ -23,6 +24,10 @@ import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWra
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
+import { TimePeriod } from '@/api/models/cms/Page/Body'
+import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
+import { TimePeriodDropdown } from '../../ui/ukhsa/TimePeriodDropdown/TimePeriodDropdown'
 
 export default async function TopicPage({
   slug,
@@ -47,6 +52,7 @@ export default async function TopicPage({
   let chartCounter = 0
 
   const showFilterBanner = false
+  let extractedTimePeriods: TimePeriod[] = []
 
   body.map(({ value }) => {
     if (value.content) {
@@ -71,6 +77,15 @@ export default async function TopicPage({
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
 
             newChartFilters += `${chartId}|${valueToAdd};`
+          })
+        }
+        if (content.type === 'global_filter_card' && content.value.time_range) {
+          console.log('time_periods: ', content.value.time_range.time_periods)
+          extractedTimePeriods = content.value.time_range.time_periods
+        }
+        if (content.type === 'global_filter_card' && content.value.rows) {
+          content.value.rows.map((items) => {
+            console.log('items: ', items.value.filters)
           })
         }
       })
@@ -121,6 +136,7 @@ export default async function TopicPage({
             )}
 
             <TopicBodyContextProvider>
+              <TimePeriodsHandler timePeriods={extractedTimePeriods} />
               {/* Example, do not un-comment  */}
               {showFilterBanner && (
                 <FilterBanner
@@ -128,20 +144,21 @@ export default async function TopicPage({
                   showIcon={true}
                 />
               )}
-              {/*<StaticFilter>
+              <StaticFilter>
                 <SelectedFilters />
-              </StaticFilter> */}
-
-              <PageSectionWithContents>
-                {body.map(({ id, value }) => (
-                  <PageSection key={id} heading={value.heading}>
-                    {value.content.map((item) =>
-                      renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                    )}
-                  </PageSection>
-                ))}
-              </PageSectionWithContents>
+                <TimePeriodDropdown className="govuk-!-margin-bottom-4" />
+              </StaticFilter>
             </TopicBodyContextProvider>
+
+            <PageSectionWithContents>
+              {body.map(({ id, value }) => (
+                <PageSection key={id} heading={value.heading}>
+                  {value.content.map((item) =>
+                    renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                  )}
+                </PageSection>
+              ))}
+            </PageSectionWithContents>
           </div>
 
           {relatedLinksLayout === 'Sidebar' ? (
