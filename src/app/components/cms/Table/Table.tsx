@@ -145,13 +145,14 @@ export async function Table({
                           <Fragment key={columnIndex}>
                             {columnIndex === 0 ? (
                               <th
+                                style={{ borderBottom: '0.5px solid #b1b4b6' }}
                                 className={clsx('govuk-table__header font-normal', {
                                   'bg-delay-blue-opaque': item.inReportingDelay,
                                   'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
                                   'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
                                   'border-b-0': !item.inReportingDelay && nextItemHasDelay,
                                   'border-t-0': !item.inReportingDelay && previousItemHasDelay,
-                                  'border-b-3 border-black': key + 1 === array.length,
+                                  'border-b-2 border-black': key + 1 === array.length,
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
@@ -161,14 +162,15 @@ export async function Table({
                               </th>
                             ) : (
                               <td
+                                style={{ borderBottom: '0.5px solid #b1b4b6' }}
                                 headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
-                                className={clsx('govuk-table__cell table-column', {
+                                className={clsx('govuk-table__cell', {
                                   'bg-delay-blue-opaque': item.inReportingDelay,
                                   'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
                                   'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
                                   'border-b-0': !item.inReportingDelay && nextItemHasDelay,
                                   'border-t-0': !item.inReportingDelay && previousItemHasDelay,
-                                  'border-b-3 border-black': key + 1 === array.length,
+                                  'border-b-2 border-black': key + 1 === array.length,
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
