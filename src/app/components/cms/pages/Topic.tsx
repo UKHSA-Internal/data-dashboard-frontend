@@ -79,10 +79,12 @@ export default async function TopicPage({
             newChartFilters += `${chartId}|${valueToAdd};`
           })
         }
+        // abstract out available time periods
         if (content.type === 'global_filter_card' && content.value.time_range) {
           console.log('time_periods: ', content.value.time_range.time_periods)
           extractedTimePeriods = content.value.time_range.time_periods
         }
+        // abstract out the other information received from the global filter card
         if (content.type === 'global_filter_card' && content.value.rows) {
           content.value.rows.map((items) => {
             console.log('items: ', items.value.filters)
@@ -148,17 +150,17 @@ export default async function TopicPage({
                 <SelectedFilters />
                 <TimePeriodDropdown className="govuk-!-margin-bottom-4" />
               </StaticFilter>
-            </TopicBodyContextProvider>
 
-            <PageSectionWithContents>
-              {body.map(({ id, value }) => (
-                <PageSection key={id} heading={value.heading}>
-                  {value.content.map((item) =>
-                    renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                  )}
-                </PageSection>
-              ))}
-            </PageSectionWithContents>
+              <PageSectionWithContents>
+                {body.map(({ id, value }) => (
+                  <PageSection key={id} heading={value.heading}>
+                    {value.content.map((item) =>
+                      renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                    )}
+                  </PageSection>
+                ))}
+              </PageSectionWithContents>
+            </TopicBodyContextProvider>
           </div>
 
           {relatedLinksLayout === 'Sidebar' ? (
