@@ -13,12 +13,12 @@ describe('useTopicBodyFilters', () => {
   })
 
   it('initializes with custom filters', () => {
-    const { result } = renderHook(() => useTopicBodyFilters(['North East', 'East Midlands']))
+    const { result } = renderHook(() => useTopicBodyFilters())
     expect(result.current[0]).toEqual(['North East', 'East Midlands'])
   })
 
   it('updateFilters sets new filters', async () => {
-    const { result } = renderHook(() => useTopicBodyFilters(['North East', 'East Midlands']))
+    const { result } = renderHook(() => useTopicBodyFilters())
     await act(async () => {
       result.current[1].updateFilters(['South East', 'South West'])
     })
@@ -26,7 +26,7 @@ describe('useTopicBodyFilters', () => {
   })
 
   it('addFilter adds a filter if not present', async () => {
-    const { result } = renderHook(() => useTopicBodyFilters(['North East', 'East Midlands']))
+    const { result } = renderHook(() => useTopicBodyFilters())
     await act(async () => {
       result.current[1].addFilter('South East')
     })
@@ -34,7 +34,7 @@ describe('useTopicBodyFilters', () => {
   })
 
   it('addFilter does not add duplicates', async () => {
-    const { result } = renderHook(() => useTopicBodyFilters(['North East', 'East Midlands']))
+    const { result } = renderHook(() => useTopicBodyFilters())
     await act(async () => {
       result.current[1].addFilter('North East')
     })
@@ -42,15 +42,15 @@ describe('useTopicBodyFilters', () => {
   })
 
   it('removeFilter removes a filter', async () => {
-    const { result } = renderHook(() => useTopicBodyFilters(['South East', 'South West']))
+    const { result } = renderHook(() => useTopicBodyFilters())
     await act(async () => {
-      result.current[1].removeFilter('South East')
+      result.current[1].removeFilter('South East')```
     })
     expect(result.current[0]).toEqual(['South West'])
   })
 
   it('clearFilters removes all filters', async () => {
-    const { result } = renderHook(() => useTopicBodyFilters(['South East', 'South West']))
+    const { result } = renderHook(() => useTopicBodyFilters())
     await act(async () => {
       result.current[1].clearFilters()
     })

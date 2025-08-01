@@ -1,7 +1,7 @@
 'use client'
 
 import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
-import { TimePeriod } from '@/api/models/cms/Page/Body'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 interface TimePeriodDropdownProps {
   className?: string

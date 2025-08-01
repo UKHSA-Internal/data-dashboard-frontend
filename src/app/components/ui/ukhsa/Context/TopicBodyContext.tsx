@@ -1,6 +1,6 @@
 'use client'
 
-import { TimePeriod } from '@/api/models/cms/Page/Body'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import * as React from 'react'
 import { useState } from 'react'
 
@@ -29,8 +29,9 @@ const initialState: TopicBodyState = {
   selectedTimePeriod: null,
 }
 
-export function useTopicBodyFilters() {
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(initialState.selectedFilters)
+export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
+  const providedState = topicBodyState ? topicBodyState : initialState
+  const [selectedFilters, setSelectedFilters] = useState<string[]>(providedState.selectedFilters)
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
 

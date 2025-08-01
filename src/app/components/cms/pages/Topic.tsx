@@ -148,7 +148,6 @@ export default async function TopicPage({
               )}
               <StaticFilter>
                 <SelectedFilters />
-                <TimePeriodDropdown className="govuk-!-margin-bottom-4" />
               </StaticFilter>
 
               <PageSectionWithContents>
