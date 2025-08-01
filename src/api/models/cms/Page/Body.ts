@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { HealthAlertTypes } from '../../Alerts'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
+import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
 
 /**
  * Body Discriminated Union Types
@@ -94,21 +95,6 @@ export const ChartCardSchemas = z.discriminatedUnion('type', [
   WithSimplifiedChartCardAndLink,
 ])
 
-const TimePeriodSchema = z.object({
-  id: z.string(),
-  value: z.object({
-    label: z.string(),
-    date_from: z.string(),
-    date_to: z.string(),
-  }),
-  type: z.literal('time_period'),
-})
-
-const TimeRangeSchema = z.object({
-  title: z.string(),
-  time_periods: z.array(TimePeriodSchema),
-})
-
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('text_card'),
@@ -149,12 +135,10 @@ export const CardTypes = z.discriminatedUnion('type', [
   }),
   z.object({
     type: z.literal('global_filter_card'),
-    value: z
-      .object({
-        time_range: TimeRangeSchema,
-        rows: z.array(z.object({}).passthrough()),
-      })
-      .passthrough(),
+    value: z.object({
+      time_range: TimeRangeSchema,
+      rows: GlobalFilterRow,
+    }),
     id: z.string(),
   }),
   z.object({
@@ -251,8 +235,5 @@ export const CompositeBody = z.array(
     }),
   ])
 )
-
-export type TimePeriod = z.infer<typeof TimePeriodSchema>
-export type TimeRange = z.infer<typeof TimeRangeSchema>
 
 export type CompositeBody = z.infer<typeof CompositeBody>
