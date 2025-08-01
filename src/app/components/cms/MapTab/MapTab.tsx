@@ -18,6 +18,7 @@ import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
+import { YearSelectControl } from '../../ui/ukhsa/Map/shared/controls/YearSelectControl'
 
 const { BaseLayer, CoverLayer } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
@@ -136,6 +137,7 @@ export const MapTab = ({
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
+        <YearSelectControl position="topleft" className="p-2`" />
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <FullscreenControl position={fullscreenControlPosition} />

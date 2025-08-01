@@ -14,7 +14,6 @@ export const TimePeriodsHandler = ({ timePeriods }: TimePeriodsHandlerProps) => 
 
   useEffect(() => {
     if (timePeriods.length > 0) {
-      console.log('Setting time periods:', timePeriods)
       setTimePeriods(timePeriods)
     }
   }, [timePeriods, setTimePeriods])

@@ -34,8 +34,6 @@ export const TimePeriodDropdown = ({
     if (selectedPeriod) {
       setSelectedTimePeriod(selectedPeriod)
       onChange?.(selectedPeriod)
-
-      console.log('Selected time period:', selectedPeriod)
     }
   }
 
@@ -47,7 +45,7 @@ export const TimePeriodDropdown = ({
   return (
     <div className={`govuk-form-group ${className}`}>
       <label className="govuk-label govuk-label--s" htmlFor="time-period-select">
-        Select time period
+        Year selection
       </label>
       <select
         id="time-period-select"
