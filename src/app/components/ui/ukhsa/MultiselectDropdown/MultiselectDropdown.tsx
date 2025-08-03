@@ -24,9 +24,6 @@ export function MultiselectDropdown({ name }: MultiselectDropdownProps) {
   }
 
   const handleKeyDown = ({ event, source, index }: { event: React.KeyboardEvent; source: string; index: number }) => {
-    console.log('Keydown')
-    console.log(`Event: ${event}, Source: ${source}, index: ${index}, Key: ${event.key}`)
-
     switch (source) {
       case 'button':
         if (event.key === ' ' || event.key === 'Enter') {
