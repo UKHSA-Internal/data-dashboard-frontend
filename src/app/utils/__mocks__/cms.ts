@@ -291,6 +291,14 @@ export const mockChartRowCardWithDualChartCard = Mock.of<CardType>({
     ],
   },
 })
+export const mockLinkedMapCard = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'filter_linked_map',
+  value: {
+    title_prefix: 'Map Heading',
+    legend_title: 'Level of Coverage',
+  },
+})
 
 export const mockWeatherHealthAlertCard = Mock.of<CardType>({
   id: 'mockid',
