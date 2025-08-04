@@ -13,7 +13,8 @@ export const TimePeriodsHandler = ({ timePeriods }: TimePeriodsHandlerProps) => 
   const { setTimePeriods } = actions
 
   useEffect(() => {
-    if (timePeriods.length > 0) {
+    // Handle undefined, null, or invalid timePeriods
+    if (timePeriods && Array.isArray(timePeriods) && timePeriods.length > 0) {
       setTimePeriods(timePeriods)
     }
   }, [timePeriods, setTimePeriods])
