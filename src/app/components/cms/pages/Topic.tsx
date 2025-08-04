@@ -7,7 +7,6 @@ import {
   Announcements,
   PageSection,
   PageSectionWithContents,
-  SelectedFilters,
   // SelectedFilters,
   TopicBodyContextProvider,
   View,
@@ -19,10 +18,9 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
-import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
+// import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 // import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -50,7 +48,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = false
+  // const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
 
   body.map(({ value }) => {
@@ -138,7 +136,7 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
-              {/* Example, do not un-comment  */}
+              {/* Example, do not un-comment 
               {showFilterBanner && (
                 <FilterBanner
                   message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
@@ -147,7 +145,7 @@ export default async function TopicPage({
               )}
               <StaticFilter>
                 <SelectedFilters />
-              </StaticFilter>
+              </StaticFilter> */}
 
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (
