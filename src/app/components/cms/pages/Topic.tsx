@@ -25,9 +25,8 @@ import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
-import { TimePeriod } from '@/api/models/cms/Page/Body'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
-import { TimePeriodDropdown } from '../../ui/ukhsa/TimePeriodDropdown/TimePeriodDropdown'
 
 export default async function TopicPage({
   slug,
