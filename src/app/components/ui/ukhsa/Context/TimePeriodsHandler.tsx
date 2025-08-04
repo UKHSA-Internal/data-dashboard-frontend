@@ -18,6 +18,5 @@ export const TimePeriodsHandler = ({ timePeriods }: TimePeriodsHandlerProps) => 
     }
   }, [timePeriods, setTimePeriods])
 
-  // This component doesn't render anything visible
   return null
 }
