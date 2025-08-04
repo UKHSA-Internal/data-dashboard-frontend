@@ -14,11 +14,11 @@ import { MapFeatureColour } from '@/app/utils/map.utils'
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
 import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { YearSelectControl } from '../../ui/ukhsa/Map/shared/controls/YearSelectControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
-import { YearSelectControl } from '../../ui/ukhsa/Map/shared/controls/YearSelectControl'
 
 const { BaseLayer, CoverLayer } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {

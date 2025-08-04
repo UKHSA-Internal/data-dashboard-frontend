@@ -1,10 +1,13 @@
-import { render, renderHook, waitFor } from '@/config/test-utils'
-import { ReactNode, useEffect } from 'react'
 import { faker } from '@faker-js/faker'
-import { TimePeriodsHandler } from './TimePeriodsHandler'
-import { TopicBodyContextProvider, useTopicBody, TopicBodyContext } from './TopicBodyContext'
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { ReactNode, useEffect } from 'react'
 
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { render, waitFor } from '@/config/test-utils'
+
+import { TimePeriodsHandler } from './TimePeriodsHandler'
+import { TopicBodyContextProvider, useTopicBody } from './TopicBodyContext'
+
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // Mock data for testing
 const mockTimePeriods: TimePeriod[] = [
   {

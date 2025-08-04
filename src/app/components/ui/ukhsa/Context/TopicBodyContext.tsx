@@ -1,8 +1,9 @@
 'use client'
 
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import * as React from 'react'
 import { useState } from 'react'
+
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 export interface TopicBodyState {
   selectedFilters: string[]
