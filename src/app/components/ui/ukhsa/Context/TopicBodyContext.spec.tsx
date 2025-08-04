@@ -1,17 +1,10 @@
-import React from 'react'
+import { faker } from '@faker-js/faker'
+import React, { ReactNode } from 'react'
 
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { act, render, renderHook } from '@/config/test-utils'
 
-import { ReactNode } from 'react'
-import {
-  TopicBodyContextProvider,
-  useTopicBody,
-  useTopicBodyFilters,
-  TopicBodyState,
-  TopicBodyActions,
-} from './TopicBodyContext'
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-import { faker } from '@faker-js/faker'
+import { TopicBodyContextProvider, TopicBodyState, useTopicBody, useTopicBodyFilters } from './TopicBodyContext'
 
 // Mock data for testing
 const mockTimePeriods: TimePeriod[] = [
@@ -126,7 +119,7 @@ describe('TopicBodyContext', () => {
       // Assert
       const [state] = result.current
       expect(state.selectedFilters).toEqual(['Leicester', 'London', '6-in-1'])
-      expect(state.selectedFilters.filter((f) => f === existingFilter)).toHaveLength(1)
+      expect(state.selectedFilters.filter((filter) => filter === existingFilter)).toHaveLength(1)
     })
 
     test('should remove filter correctly', () => {

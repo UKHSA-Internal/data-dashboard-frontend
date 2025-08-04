@@ -11,10 +11,6 @@ export function SelectedFilters() {
   const { t } = useTranslation('common')
   const [state, actions] = useTopicBody()
 
-  if (!state) {
-    throw new Error('SelectedFilters must be used within TopicBodyContextProvider')
-  }
-
   const { removeFilter, clearFilters } = actions
 
   return (

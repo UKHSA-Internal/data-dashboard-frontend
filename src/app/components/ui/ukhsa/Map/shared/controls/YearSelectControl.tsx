@@ -1,9 +1,8 @@
 'use client'
 
 import { ControlPosition } from 'leaflet'
-import { useEffect, useMemo, useState } from 'react'
-import { useMap } from 'react-leaflet'
 import Control from 'react-leaflet-custom-control'
+
 import { TimePeriodDropdown } from '../../../TimePeriodDropdown/TimePeriodDropdown'
 
 interface YearSelectControlProps {

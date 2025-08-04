@@ -1,8 +1,7 @@
-import { render } from '@/config/test-utils'
-import { faker } from '@faker-js/faker'
-import { YearSelectControl } from './YearSelectControl'
 import { TopicBodyContextProvider } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { render } from '@/config/test-utils'
+
+import { YearSelectControl } from './YearSelectControl'
 
 // Mock react-leaflet and react-leaflet-custom-control
 jest.mock('react-leaflet', () => ({
@@ -29,19 +28,6 @@ jest.mock('../../../TimePeriodDropdown/TimePeriodDropdown', () => ({
     </div>
   ),
 }))
-
-// Mock data for context
-const mockTimePeriods: TimePeriod[] = [
-  {
-    type: 'time_period',
-    value: {
-      label: '2023-2024',
-      date_from: '2023-04-01',
-      date_to: '2024-03-31',
-    },
-    id: faker.string.uuid(),
-  },
-]
 
 // Test wrapper with context
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
@@ -176,8 +162,8 @@ describe('YearSelectControl', () => {
       )
 
       // Assert
-      const controlElement = container.querySelector('[data-testid="leaflet-control"]')
-      const dropdownElement = container.querySelector('[data-testid="time-period-dropdown"]')
+      const controlElement = container.querySelector('[data-testid="leaflet-control"]') as HTMLElement
+      const dropdownElement = container.querySelector('[data-testid="time-period-dropdown"]') as HTMLElement
 
       expect(controlElement).toBeInTheDocument()
       expect(dropdownElement).toBeInTheDocument()

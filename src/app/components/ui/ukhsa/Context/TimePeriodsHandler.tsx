@@ -1,8 +1,9 @@
 'use client'
 
-import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { useEffect } from 'react'
+
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
 
 interface TimePeriodsHandlerProps {
   timePeriods: TimePeriod[]
