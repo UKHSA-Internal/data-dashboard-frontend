@@ -130,5 +130,15 @@ export const GlobalFilterRow = z.array(
 
 export type TimePeriod = z.infer<typeof TimePeriodSchema>
 export type TimeRange = z.infer<typeof TimeRangeSchema>
-export type Vaccination = z.infer<typeof VaccinationSchema>
-export type VaccinationId = Vaccination['id']
+export type GeographyFilter = z.infer<typeof GeographyFilter>
+export type ThresholdFilter = z.infer<typeof ThresholdFilter>
+export type Parameter = z.infer<typeof Parameter>
+export type DataFilterParameters = z.infer<typeof DataFilterParameters>
+export type AccompanyingPoint = z.infer<typeof AccompanyingPoint>
+export type DataFilter = z.infer<typeof DataFilter>
+export type GeographyFilters = z.infer<typeof GeographyFilters>
+export type DataFilters = z.infer<typeof DataFilters>
+export type ThresholdFilters = z.infer<typeof ThresholdFilters>
+export type GlobalFilters = z.infer<typeof GlobalFilters>
+export type GlobalFilterRowItem = z.infer<typeof GlobalFilterRowItem>
+export type GlobalFilterRow = z.infer<typeof GlobalFilterRow>

@@ -1,4 +1,4 @@
-import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -51,7 +51,9 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedTimePeriods: TimePeriod[] = []
-  const extractedVaccination: Vaccination[] = []
+  let thresholdFilters: ThresholdFilters = {} as ThresholdFilters
+  let geographyFilters: GeographyFilters = {} as GeographyFilters
+  let dataFilters: DataFilters = {} as DataFilters
 
   body.map(({ value }) => {
     if (value.content) {
@@ -87,6 +89,24 @@ export default async function TopicPage({
         if (content.type === 'global_filter_card' && content.value.rows) {
           content.value.rows.map((items) => {
             console.log('items: ', items.value.filters)
+            const filters = items.value.filters
+            filters.map((filter) => {
+              if (filter.type === 'geography_filters') {
+                //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a gerography-filter type
+                geographyFilters = filter.value
+                console.log('geographyFilters: ', geographyFilters)
+              }
+              if (filter.type === 'threshold_filters') {
+                //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a threshold-filters type
+                thresholdFilters = filter.value
+                console.log('thresholdFilters: ', thresholdFilters)
+              }
+              if (filter.type === 'data_filters') {
+                //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a data-filters type
+                dataFilters = filter.value
+                console.log('dataFilters: ', dataFilters)
+              }
+            })
           })
         }
       })
