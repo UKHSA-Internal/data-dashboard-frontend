@@ -5,7 +5,7 @@ import 'leaflet/dist/leaflet.css'
 import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
 import dynamic from 'next/dynamic'
-import { ComponentProps, ReactNode, useMemo } from 'react'
+import { ComponentProps, ReactNode, useEffect, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
@@ -123,6 +123,27 @@ export const MapTab = ({
     if (!mapData.data) return
     return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data.data} />
   }, [thresholdData, mapData.data])
+
+  useEffect(() => {
+    console.log('MapTab mounted')
+
+    return () => {
+      console.log('MapTab unmounted - this is when Leaflet might be causing issues')
+
+      // Simple cleanup without reload
+      if (typeof window !== 'undefined') {
+        // Clear any Leaflet global references
+        setTimeout(() => {
+          console.log('Attempting Leaflet cleanup...')
+          delete (window as any).L
+
+          // Remove leaflet classes that might persist
+          document.body.classList.remove('leaflet-drag-target')
+          document.documentElement.classList.remove('leaflet-drag-target')
+        }, 100)
+      }
+    }
+  }, [])
 
   return (
     <>
