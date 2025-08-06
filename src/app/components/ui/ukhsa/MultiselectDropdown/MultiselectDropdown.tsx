@@ -60,6 +60,12 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
       .map((_, index) => checkboxRefs.current[index] || React.createRef())
   }, [flatFocusableList])
 
+  useEffect(() => {
+    if (open && checkboxRefs.current[0]?.current) {
+      checkboxRefs.current[0].current.focus()
+    }
+  }, [open])
+
   function toggleDropdown() {
     setOpen((open) => !open)
   }
@@ -205,7 +211,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                       id={`ukhsa-checkbox-group-${groupIndex}`}
                       type="checkbox"
                       checked={group.children.every((child) => selectedOptions.includes(child))}
-                      tabIndex={0}
+                      tabIndex={-1}
                       ref={checkboxRefs.current[groupFlatIndex]}
                       onChange={() => {
                         if (typeof groupIndex === 'number') handleGroupSelect(groupIndex)
@@ -234,7 +240,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                       >
                         <input
                           className="govuk-checkboxes__input py-0 pl-4"
-                          tabIndex={0}
+                          tabIndex={-1}
                           name={child}
                           id={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
                           type="checkbox"
@@ -269,7 +275,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
               >
                 <input
                   className="govuk-checkboxes__input py-0 pl-4"
-                  tabIndex={0}
+                  tabIndex={-1}
                   name={option}
                   id={`ukhsa-checkbox-${option}`}
                   type="checkbox"
