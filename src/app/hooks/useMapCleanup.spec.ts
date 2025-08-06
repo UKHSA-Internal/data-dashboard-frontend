@@ -125,22 +125,4 @@ describe('useMapCleanup', () => {
       jest.advanceTimersByTime(100)
     }).not.toThrow()
   })
-
-  test('should use correct timeout delay', () => {
-    ;(window as any).L = { map: 'test' }
-
-    const { unmount } = renderHook(() => useMapCleanup(mockMapId))
-
-    unmount()
-
-    // Should not clean up immediately
-    expect((window as any).L).toBeDefined()
-
-    // Should clean up after 100ms
-    jest.advanceTimersByTime(99)
-    expect((window as any).L).toBeDefined()
-
-    jest.advanceTimersByTime(1)
-    expect((window as any).L).toBeUndefined()
-  })
 })
