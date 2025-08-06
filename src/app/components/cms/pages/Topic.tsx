@@ -1,3 +1,4 @@
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -16,7 +17,8 @@ import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
-import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
+import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
+// import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 // import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
@@ -46,7 +48,8 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = false
+  // const showFilterBanner = false
+  let extractedTimePeriods: TimePeriod[] = []
 
   body.map(({ value }) => {
     if (value.content) {
@@ -71,6 +74,17 @@ export default async function TopicPage({
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
 
             newChartFilters += `${chartId}|${valueToAdd};`
+          })
+        }
+        // abstract out available time periods
+        if (content.type === 'global_filter_card' && content.value.time_range) {
+          console.log('time_periods: ', content.value.time_range.time_periods)
+          extractedTimePeriods = content.value.time_range.time_periods
+        }
+        // abstract out the other information received from the global filter card
+        if (content.type === 'global_filter_card' && content.value.rows) {
+          content.value.rows.map((items) => {
+            console.log('items: ', items.value.filters)
           })
         }
       })
@@ -121,14 +135,15 @@ export default async function TopicPage({
             )}
 
             <TopicBodyContextProvider>
-              {/* Example, do not un-comment  */}
+              <TimePeriodsHandler timePeriods={extractedTimePeriods} />
+              {/* Example, do not un-comment 
               {showFilterBanner && (
                 <FilterBanner
                   message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
                   showIcon={true}
                 />
               )}
-              {/*<StaticFilter>
+              <StaticFilter>
                 <SelectedFilters />
               </StaticFilter> */}
 
