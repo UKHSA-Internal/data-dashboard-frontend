@@ -6,8 +6,8 @@ import {
   Announcements,
   PageSection,
   PageSectionWithContents,
+  SelectedFilters,
   TopicBodyContextProvider,
-  // SelectedFilters
   View,
 } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
@@ -16,9 +16,10 @@ import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
+import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -119,10 +120,10 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               {/* Example, do not un-comment  */}
-              {/* <StaticFilter>
+              <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
-              </StaticFilter> */}
+              </StaticFilter>
 
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (

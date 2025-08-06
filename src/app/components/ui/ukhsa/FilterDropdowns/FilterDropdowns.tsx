@@ -22,6 +22,16 @@ export function FilterDropdowns() {
           <MultiselectDropdown name="Local Authority" />
         </div>
       </div>
+
+      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-2 w-full">Vaccination and Coverage</h2>
+      <div className="-mx-2 flex flex-wrap">
+        <div className="w-1/2 px-2">
+          <MultiselectDropdown name="Select vaccination" nestedMultiselect />
+        </div>
+        <div className="w-1/2 px-2">
+          <MultiselectDropdown name="Select level of coverage %" nestedMultiselect />
+        </div>
+      </div>
     </div>
   )
 }

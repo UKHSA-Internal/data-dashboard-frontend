@@ -3,21 +3,62 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
+type FlatOption = string
+type GroupedOption = { title: string; children: string[] }
+type Options = FlatOption[] | GroupedOption[]
+
 interface MultiselectDropdownProps {
   name: string
+  nestedMultiselect?: boolean
 }
 
-export function MultiselectDropdown({ name }: MultiselectDropdownProps) {
+export function MultiselectDropdown({ name, nestedMultiselect = false }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
 
   // TODO: Get options from CMS
-  const [options] = useState<Array<string>>(['test1', 'test2', 'test3'])
-  const [selectedOptions] = useState<Array<string>>(['test2'])
+  const [options] = useState<Options>(
+    nestedMultiselect
+      ? [
+          { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
+          { title: 'Group 2', children: ['child4', 'child5'] },
+        ]
+      : ['test1', 'test2', 'test3', 'test4']
+  )
+
+  const [selectedOptions, setSelectedOptions] = useState<Array<string>>([])
+
+  const flatFocusableList = React.useMemo(() => {
+    if (!nestedMultiselect)
+      return (options as FlatOption[]).map((option, i) => ({
+        type: 'option',
+        groupIndex: undefined,
+        childIndex: undefined,
+        flatIndex: i,
+      }))
+
+    const list: Array<{
+      type: 'group' | 'child'
+      groupIndex: number | undefined
+      childIndex: number | undefined
+      flatIndex: number
+    }> = []
+    let flatIndex = 0
+
+    ;(options as GroupedOption[]).forEach((group, groupIndex) => {
+      list.push({ type: 'group', groupIndex, childIndex: undefined, flatIndex: flatIndex++ })
+      group.children.forEach((_, childIndex) => {
+        list.push({ type: 'child', groupIndex, childIndex, flatIndex: flatIndex++ })
+      })
+    })
+    return list
+  }, [options, nestedMultiselect])
 
   useEffect(() => {
-    checkboxRefs.current = options.map((_, index) => checkboxRefs.current[index] || React.createRef())
-  }, [options])
+    checkboxRefs.current = Array(flatFocusableList.length)
+      .fill(null)
+      .map((_, index) => checkboxRefs.current[index] || React.createRef())
+  }, [flatFocusableList])
 
   function toggleDropdown() {
     setOpen((open) => !open)
@@ -47,22 +88,30 @@ export function MultiselectDropdown({ name }: MultiselectDropdownProps) {
         }
         break
 
-      case 'input':
+      case 'option':
         if (event.key === ' ' || event.key === 'Enter') {
           event.preventDefault()
-          const checkbox = event.target as HTMLInputElement
-          checkbox.checked = !checkbox.checked
-          handleOptionSelect(index) // your function to update selected state
+          const currentItem = flatFocusableList[index]
+          if (currentItem.type === 'group') {
+            if (typeof currentItem.groupIndex === 'number') {
+              handleGroupSelect(currentItem.groupIndex)
+            }
+          } else if (currentItem.type === 'child') {
+            if (typeof currentItem.groupIndex === 'number' && typeof currentItem.childIndex === 'number') {
+              handleOptionSelect(currentItem.groupIndex, currentItem.childIndex)
+            }
+          } else {
+            handleOptionSelect(index)
+          }
         } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
           event.preventDefault()
-          const total = options.length
+          const total = flatFocusableList.length
           let newIndex
           if (event.key === 'ArrowDown') {
             newIndex = (index + 1) % total
           } else {
             newIndex = (index - 1 + total) % total
           }
-
           const nextRef = checkboxRefs.current[newIndex]?.current ?? null
           if (nextRef) {
             nextRef.focus()
@@ -75,8 +124,36 @@ export function MultiselectDropdown({ name }: MultiselectDropdownProps) {
     }
   }
 
-  function handleOptionSelect(index: number) {
-    console.log('Index:', index)
+  function handleOptionSelect(groupIndexOrIndex: number, childIndex?: number) {
+    if (nestedMultiselect) {
+      const group = (options as GroupedOption[])[groupIndexOrIndex]
+      if (!group || childIndex === undefined) return
+      const selectedChild = group.children[childIndex]
+      setSelectedOptions((prev) =>
+        prev.includes(selectedChild) ? prev.filter((opt) => opt !== selectedChild) : [...prev, selectedChild]
+      )
+    } else {
+      const option = (options as FlatOption[])[groupIndexOrIndex]
+      setSelectedOptions((prev) => (prev.includes(option) ? prev.filter((opt) => opt !== option) : [...prev, option]))
+    }
+  }
+
+  function handleGroupSelect(groupIndex: number) {
+    const group = (options as GroupedOption[])[groupIndex]
+    const allSelected = group.children.every((child) => selectedOptions.includes(child))
+    setSelectedOptions((prev) => {
+      if (allSelected) {
+        // Deselect all children
+        return prev.filter((opt) => !group.children.includes(opt))
+      } else {
+        // Select all children (add those not already present)
+        const newSelected = [...prev]
+        group.children.forEach((child) => {
+          if (!newSelected.includes(child)) newSelected.push(child)
+        })
+        return newSelected
+      }
+    })
   }
 
   return (
@@ -88,7 +165,7 @@ export function MultiselectDropdown({ name }: MultiselectDropdownProps) {
         onKeyDown={(event) => handleKeyDown({ event, source: 'button', index: 0 })}
         // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value, tailwindcss/no-custom-classname
         className={clsx(
-          'ukhsa-dropdown govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-2 relative w-full border-[1px] border-black bg-white text-left text-black no-underline ukhsa-focus before:border-black',
+          'ukhsa-dropdown govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-1 relative w-full border-[1px] border-black bg-white text-left text-black no-underline ukhsa-focus before:border-black',
           { open: open }
         )}
       >
@@ -99,38 +176,114 @@ export function MultiselectDropdown({ name }: MultiselectDropdownProps) {
         tabIndex={-1}
         // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
         className={clsx(
-          'absolute z-[1] flex h-[134px] w-[300px] flex-col border-[1px] border-grey-4 bg-white shadow-md',
+          'absolute z-[1] flex max-h-[214px] w-[300px] flex-col overflow-y-auto border-[1px] border-grey-4 bg-white p-2 shadow-md',
           {
             block: open,
             hidden: !open,
           }
         )}
       >
-        {options.map((option, index) => (
-          <div
-            key={index}
-            role="option"
-            aria-selected={selectedOptions.includes(option)}
-            tabIndex={-1}
-            onClick={() => handleOptionSelect(index)}
-            onKeyDown={(event) => handleKeyDown({ event, source: 'option', index: 0 })}
-            className={'govuk-checkboxes govuk-checkboxes--small relative flex'}
-          >
-            <input
-              className="govuk-checkboxes__input"
-              tabIndex={-1}
-              name={option}
-              id={`ukhsa-checkbox-${option}`}
-              type="checkbox"
-              value={option}
-              ref={checkboxRefs.current[index]}
-              onKeyDown={(event) => handleKeyDown({ event, source: 'input', index })}
-            />
-            <label className="govuk-label govuk-checkboxes__label" htmlFor={`ukhsa-checkbox-${option}`}>
-              {option}
-            </label>
-          </div>
-        ))}
+        <div className="pb-0 text-grey-2">Select one or more</div>
+
+        {nestedMultiselect
+          ? // Nested multiselect rendering
+            (options as GroupedOption[]).map((group: GroupedOption, groupIndex: number) => {
+              // Find flat index for group
+              const groupFlatIndex =
+                flatFocusableList.find((item) => item.type === 'group' && item.groupIndex === groupIndex)?.flatIndex ??
+                0
+              return (
+                <div key={groupIndex}>
+                  <div
+                    className={clsx('govuk-checkboxes govuk-checkboxes--small flex items-center px-0 font-bold')}
+                    role="option"
+                    aria-selected={group.children.every((child) => selectedOptions.includes(child))}
+                  >
+                    <input
+                      className="govuk-checkboxes__input py-0 pl-4"
+                      name={group.title}
+                      id={`ukhsa-checkbox-group-${groupIndex}`}
+                      type="checkbox"
+                      checked={group.children.every((child) => selectedOptions.includes(child))}
+                      tabIndex={0}
+                      ref={checkboxRefs.current[groupFlatIndex]}
+                      onChange={() => {
+                        if (typeof groupIndex === 'number') handleGroupSelect(groupIndex)
+                      }}
+                      onKeyDown={(event) => handleKeyDown({ event, source: 'option', index: groupFlatIndex })}
+                    />
+                    <label
+                      className="govuk-label govuk-checkboxes__label relative py-0 before:left-[-32px] before:top-0 after:left-[-26px] after:top-[8px]"
+                      htmlFor={`ukhsa-checkbox-group-${groupIndex}`}
+                    >
+                      {group.title}
+                    </label>
+                  </div>
+                  {group.children.map((child: string, childIndex: number) => {
+                    const childFlatIndex =
+                      flatFocusableList.find(
+                        (item) =>
+                          item.type === 'child' && item.groupIndex === groupIndex && item.childIndex === childIndex
+                      )?.flatIndex ?? 0
+                    return (
+                      <div
+                        key={childIndex}
+                        role="option"
+                        aria-selected={selectedOptions.includes(child)}
+                        className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0 pl-4'}
+                      >
+                        <input
+                          className="govuk-checkboxes__input py-0 pl-4"
+                          tabIndex={0}
+                          name={child}
+                          id={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
+                          type="checkbox"
+                          value={child}
+                          ref={checkboxRefs.current[childFlatIndex]}
+                          checked={selectedOptions.includes(child)}
+                          onChange={() => {
+                            if (typeof groupIndex === 'number' && typeof childIndex === 'number')
+                              handleOptionSelect(groupIndex, childIndex)
+                          }}
+                          onKeyDown={(event) => handleKeyDown({ event, source: 'option', index: childFlatIndex })}
+                        />
+                        <label
+                          className="govuk-label govuk-checkboxes__label relative py-0 before:left-[-32px] before:top-0 after:left-[-26px] after:top-[8px]"
+                          htmlFor={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
+                        >
+                          {child}
+                        </label>
+                      </div>
+                    )
+                  })}
+                </div>
+              )
+            })
+          : // Render single depth of options
+            (options as FlatOption[]).map((option: FlatOption, index: number) => (
+              <div
+                key={index}
+                role="option"
+                aria-selected={selectedOptions.includes(option)}
+                className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0'}
+              >
+                <input
+                  className="govuk-checkboxes__input py-0 pl-4"
+                  tabIndex={0}
+                  name={option}
+                  id={`ukhsa-checkbox-${option}`}
+                  type="checkbox"
+                  value={option}
+                  ref={checkboxRefs.current[index]}
+                  checked={selectedOptions.includes(option)}
+                  onChange={() => handleOptionSelect(index)}
+                  onKeyDown={(event) => handleKeyDown({ event, source: 'option', index })}
+                />
+                <label className="govuk-label govuk-checkboxes__label py-0" htmlFor={`ukhsa-checkbox-${option}`}>
+                  {option}
+                </label>
+              </div>
+            ))}
       </div>
     </div>
   )
