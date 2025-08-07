@@ -88,7 +88,6 @@ export default async function TopicPage({
         // abstract out the other information received from the global filter card
         if (content.type === 'global_filter_card' && content.value.rows) {
           content.value.rows.map((items) => {
-            console.log('items: ', items.value.filters)
             const filters = items.value.filters
             filters.map((filter) => {
               if (filter.type === 'geography_filters') {
@@ -157,11 +156,20 @@ export default async function TopicPage({
             )}
 
             <TopicBodyContextProvider>
-              <TimePeriodsHandler timePeriods={extractedTimePeriods} />
-              <VaccinationsHandler vaccinations={extractedVaccination} />
-              {/* Example, do not un-comment */}
-              <FilterBanners />
-              {/* <StaticFilter>
+              <TimePeriodsHandler
+                timePeriods={extractedTimePeriods}
+                geographyFilters={geographyFilters}
+                thresholdFilters={thresholdFilters}
+                dataFilters={dataFilters}
+              />
+              {/* Example, do not un-comment 
+              {showFilterBanner && (
+                <FilterBanner
+                  message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
+                  showIcon={true}
+                />
+              )}
+              {/*<StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
               </StaticFilter> */}

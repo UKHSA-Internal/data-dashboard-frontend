@@ -1,7 +1,11 @@
 import { faker } from '@faker-js/faker'
 import React, { ReactNode } from 'react'
 
+<<<<<<< HEAD
 import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
+=======
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+>>>>>>> 23123e47 (Update to handle and store filter content in state)
 import { act, render, renderHook } from '@/config/test-utils'
 
 import { TopicBodyContextProvider, TopicBodyState, useTopicBody, useTopicBodyFilters } from './TopicBodyContext'
@@ -66,8 +70,9 @@ describe('TopicBodyContext', () => {
         ],
         timePeriods: mockTimePeriods,
         selectedTimePeriod: mockTimePeriods[0],
-        vaccinations: mockVaccinations,
-        selectedVaccination: mockVaccinations[0].id,
+        dataFilters: {} as DataFilters,
+        geographyFilters: {} as GeographyFilters,
+        thresholdFilters: {} as ThresholdFilters,
       }
 
       const { result } = renderHook(() => useTopicBodyFilters(customState))

@@ -1,6 +1,7 @@
 import { ReactNode } from 'react'
 
-import { fireEvent, render } from '@/config/test-utils'
+import { DataFilters, GeographyFilters, ThresholdFilters } from '@/api/models/cms/Page/GlobalFilter'
+import { fireEvent, render, waitFor } from '@/config/test-utils'
 
 import { TopicBodyActions, TopicBodyContext, TopicBodyState } from '../Context/TopicBodyContext'
 import { SelectedFilters } from './SelectedFilters'
@@ -44,6 +45,9 @@ const MockContextProvider = ({
     removeFilter: jest.fn(),
     clearFilters: jest.fn(),
     setTimePeriods: jest.fn(),
+    setDataFilters: jest.fn(),
+    setGeographyFilters: jest.fn(),
+    setThresholdFilters: jest.fn(),
     setSelectedTimePeriod: jest.fn(),
     clearTimePeriods: jest.fn(),
     setVaccinations: jest.fn(),
@@ -55,6 +59,9 @@ const MockContextProvider = ({
   const state: TopicBodyState = {
     selectedFilters,
     timePeriods: [],
+    dataFilters: {} as DataFilters,
+    geographyFilters: {} as GeographyFilters,
+    thresholdFilters: {} as ThresholdFilters,
     selectedTimePeriod: null,
     vaccinations: [],
     selectedVaccination: null,

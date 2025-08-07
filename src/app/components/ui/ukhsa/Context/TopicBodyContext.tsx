@@ -3,16 +3,14 @@
 import * as React from 'react'
 import { useState } from 'react'
 
-import { TimePeriod, Vaccination, VaccinationId } from '@/api/models/cms/Page/GlobalFilter'
-
-export interface FilterOption {
-  id: string
-  label: string
-}
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 export interface TopicBodyState {
   selectedFilters: FilterOption[]
   timePeriods: TimePeriod[]
+  dataFilters: DataFilters
+  geographyFilters: GeographyFilters
+  thresholdFilters: ThresholdFilters
   selectedTimePeriod: TimePeriod | null
   vaccinations: Vaccination[]
   selectedVaccination: string | null
@@ -30,15 +28,17 @@ export interface TopicBodyActions {
   setSelectedTimePeriod: (timePeriod: TimePeriod | null) => void
   clearTimePeriods: () => void
 
-  //Vaccination actions
-  setVaccinations: (vaccinations: Vaccination[]) => void
-  setSelectedVaccination: (vaccination: VaccinationId | null) => void
-  clearVaccinations: () => void
+  setDataFilters: (dataFilters: DataFilters) => void
+  setGeographyFilters: (geographyFilters: GeographyFilters) => void
+  setThresholdFilters: (thresholdFilters: ThresholdFilters) => void
 }
 
 const initialState: TopicBodyState = {
   selectedFilters: [],
   timePeriods: [],
+  dataFilters: {} as DataFilters,
+  geographyFilters: {} as GeographyFilters,
+  thresholdFilters: {} as ThresholdFilters,
   selectedTimePeriod: null,
   vaccinations: [],
   selectedVaccination: null,
@@ -48,6 +48,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const providedState = topicBodyState ? topicBodyState : initialState
   const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>(providedState.selectedFilters)
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
+  const [geographyFilters, setGeographyFiltersState] = useState<GeographyFilters>({} as GeographyFilters)
+  const [dataFilters, setDataFiltersState] = useState<DataFilters>({} as DataFilters)
+  const [thresholdFilters, setThresholdFiltersState] = useState<ThresholdFilters>({} as ThresholdFilters)
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
   const [vaccinations, setVaccinationsState] = useState<Vaccination[]>([])
   const [selectedVaccination, setSelectedVaccinationState] = useState<VaccinationId | null>(null)
@@ -79,6 +82,18 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     }
   }
 
+  const setGeographyFilters = (newGeographyFilters: GeographyFilters) => {
+    setGeographyFiltersState(newGeographyFilters)
+  }
+
+  const setDataFilters = (newDataFilters: DataFilters) => {
+    setDataFiltersState(newDataFilters)
+  }
+
+  const setThresholdFilters = (newThresholdFilters: ThresholdFilters) => {
+    setThresholdFiltersState(newThresholdFilters)
+  }
+
   const setSelectedTimePeriod = (timePeriod: TimePeriod | null) => {
     setSelectedTimePeriodState(timePeriod)
   }
@@ -107,6 +122,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const state: TopicBodyState = {
     selectedFilters,
     timePeriods,
+    dataFilters,
+    geographyFilters,
+    thresholdFilters,
     selectedTimePeriod,
     vaccinations,
     selectedVaccination: null,
@@ -118,6 +136,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     removeFilter,
     clearFilters,
     setTimePeriods,
+    setGeographyFilters,
+    setDataFilters,
+    setThresholdFilters,
     setSelectedTimePeriod,
     clearTimePeriods,
     setVaccinations,

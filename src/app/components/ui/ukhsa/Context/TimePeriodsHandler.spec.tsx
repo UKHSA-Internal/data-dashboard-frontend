@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import { ReactNode, useEffect } from 'react'
 
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { render, waitFor } from '@/config/test-utils'
 
 import { TimePeriodsHandler } from './TimePeriodsHandler'
@@ -29,6 +29,183 @@ const mockTimePeriods: TimePeriod[] = [
     id: faker.string.uuid(),
   },
 ]
+
+const mockDataFilters: DataFilters = {
+  label: 'label',
+  data_filters: [
+    {
+      type: 'data_filter',
+      value: {
+        label: 'MMR1 (2 years)',
+        colour: 'COLOUR_1_DARK_BLUE',
+        parameters: {
+          theme: {
+            label: '',
+            value: 'immunisations',
+          },
+          sub_theme: {
+            label: '',
+            value: 'childhood-vaccines',
+          },
+          topic: {
+            label: '',
+            value: 'MMR1',
+          },
+          stratum: {
+            label: '2 years',
+            value: '24m',
+          },
+          metric: {
+            label: '',
+            value: 'MMR1_coverage_coverageByYear',
+          },
+          age: {
+            label: '',
+            value: 'all',
+          },
+          sex: {
+            label: '',
+            value: 'all',
+          },
+        },
+        accompanying_points: [
+          {
+            type: 'accompanying_point',
+            value: {
+              label_prefix: 'Country level of coverage',
+              label_suffix: '%',
+              parameters: [
+                {
+                  type: 'geography_type',
+                  value: {
+                    label: '',
+                    value: 'Nation',
+                  },
+                  id: '8ed98517-38ba-4b7b-91d8-05f4864be648',
+                },
+                {
+                  type: 'geography',
+                  value: {
+                    label: '',
+                    value: 'England',
+                  },
+                  id: 'deb5c0e4-2512-409d-9342-a3f2169041a4',
+                },
+              ],
+            },
+            id: 'ab8e4f2f-d62b-411c-adff-8a9bb0aa8ac7',
+          },
+        ],
+      },
+      id: '119e270f-2759-44a0-969a-1651407a109a',
+    },
+    {
+      type: 'data_filter',
+      value: {
+        label: 'MMR1 (5 years)',
+        colour: 'COLOUR_2_TURQUOISE',
+        parameters: {
+          theme: {
+            label: '',
+            value: 'immunisations',
+          },
+          sub_theme: {
+            label: '',
+            value: 'childhood-vaccines',
+          },
+          topic: {
+            label: '',
+            value: 'MMR1',
+          },
+          stratum: {
+            label: '5 years',
+            value: '5y',
+          },
+          metric: {
+            label: '',
+            value: 'MMR1_coverage_coverageByYear',
+          },
+          age: {
+            label: '',
+            value: 'all',
+          },
+          sex: {
+            label: '',
+            value: 'all',
+          },
+        },
+        accompanying_points: [
+          {
+            type: 'accompanying_point',
+            value: {
+              label_prefix: 'Country level of coverage',
+              label_suffix: '%',
+              parameters: [
+                {
+                  type: 'geography_type',
+                  value: {
+                    label: '',
+                    value: 'Nation',
+                  },
+                  id: '3ddf0ee5-6ce7-4fc8-82c8-b3d489d5d167',
+                },
+                {
+                  type: 'geography',
+                  value: {
+                    label: '',
+                    value: 'England',
+                  },
+                  id: '50456b18-438d-4571-86bb-3bff9387f568',
+                },
+              ],
+            },
+            id: '2bc2d44e-7425-4ce8-a703-e6269936ec39',
+          },
+        ],
+      },
+      id: '01627419-571a-4ea7-ba9a-c77cf354d582',
+    },
+  ],
+  categories_to_group_by: [
+    {
+      type: 'category',
+      value: {
+        data_category: 'data_category',
+      },
+      id: faker.string.uuid(),
+    },
+  ],
+}
+
+const mockGeographyFilters: GeographyFilters = {
+  geography_types: [
+    {
+      type: 'geography_filter',
+      value: {
+        label: 'Geography Filter',
+        colour: '',
+        geography_type: 'geography_filter',
+      },
+      id: faker.string.uuid(),
+    },
+  ],
+}
+
+const mockThresholdFilters: ThresholdFilters = {
+  label: 'Threshold Filter',
+  thresholds: [
+    {
+      type: 'threshold',
+      value: {
+        label: 'Threshold Filter',
+        colour: '',
+        boundary_maximum_value: 20,
+        boundary_minimum_value: 0,
+      },
+      id: faker.string.uuid(),
+    },
+  ],
+}
 
 const emptyTimePeriods: TimePeriod[] = []
 
@@ -70,7 +247,12 @@ describe('TimePeriodsHandler', () => {
       // Arrange & Act
       const { container } = render(
         <TestWrapper>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapper>
       )
 
@@ -84,7 +266,14 @@ describe('TimePeriodsHandler', () => {
 
       // Act & Assert
       expect(() => {
-        render(<TimePeriodsHandler timePeriods={mockTimePeriods} />)
+        render(
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
+        )
       }).toThrow('useTopicBody must be used within a TopicBodyContextProvider')
 
       consoleError.mockRestore()
@@ -94,7 +283,12 @@ describe('TimePeriodsHandler', () => {
       // Arrange & Act
       const { container } = render(
         <TestWrapper>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapper>
       )
 
@@ -114,7 +308,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -136,7 +335,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={emptyTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={emptyTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -157,7 +361,12 @@ describe('TimePeriodsHandler', () => {
 
       const { rerender } = render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={emptyTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={emptyTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -169,7 +378,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       rerender(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -201,7 +415,12 @@ describe('TimePeriodsHandler', () => {
 
       const { rerender } = render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -213,7 +432,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       rerender(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={newTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={newTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -232,7 +456,12 @@ describe('TimePeriodsHandler', () => {
 
       const { rerender } = render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -244,7 +473,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       rerender(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={emptyTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={emptyTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -279,7 +513,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={malformedTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={malformedTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -299,7 +538,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={undefined as any} />
+          <TimePeriodsHandler
+            timePeriods={undefined as any}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -341,7 +585,12 @@ describe('TimePeriodsHandler', () => {
       // Act
       render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={incompleteTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={incompleteTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -376,7 +625,12 @@ describe('TimePeriodsHandler', () => {
 
       const { rerender } = render(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
           <TestComponent shouldAddFilter={false} />
         </TestWrapperWithState>
       )
@@ -389,7 +643,12 @@ describe('TimePeriodsHandler', () => {
       // Act - Trigger the filter addition
       rerender(
         <TestWrapperWithState onStateChange={onStateChange}>
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
           <TestComponent shouldAddFilter={true} />
         </TestWrapperWithState>
       )
@@ -427,7 +686,12 @@ describe('TimePeriodsHandler', () => {
       const { rerender } = render(
         <TestWrapperWithState onStateChange={onStateChange}>
           <TestComponent shouldUpdateFilters={false} />
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
@@ -435,7 +699,12 @@ describe('TimePeriodsHandler', () => {
       rerender(
         <TestWrapperWithState onStateChange={onStateChange}>
           <TestComponent shouldUpdateFilters={true} />
-          <TimePeriodsHandler timePeriods={mockTimePeriods} />
+          <TimePeriodsHandler
+            timePeriods={mockTimePeriods}
+            dataFilters={mockDataFilters}
+            geographyFilters={mockGeographyFilters}
+            thresholdFilters={mockThresholdFilters}
+          />
         </TestWrapperWithState>
       )
 
