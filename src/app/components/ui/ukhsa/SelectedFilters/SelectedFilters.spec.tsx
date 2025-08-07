@@ -4,6 +4,15 @@ import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { useTranslation } from '@/app/i18n/client'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
+import { DataFilters, GeographyFilters, ThresholdFilters } from '@/api/models/cms/Page/GlobalFilter'
+import { fireEvent, render, waitFor } from '@/config/test-utils'
+
+import {
+  TopicBodyActions,
+  TopicBodyContext,
+  TopicBodyContextProvider,
+  TopicBodyState,
+} from '../Context/TopicBodyContext'
 import { SelectedFilters } from './SelectedFilters'
 
 // Mock the translation hook
@@ -39,9 +48,48 @@ jest.mock('../Icons/CrossIcon', () => {
   }
 })
 
-// Type the mocked hooks for better TypeScript support
-const mockUseTranslation = useTranslation as jest.MockedFunction<typeof useTranslation>
-const mockUseSelectedFilters = useSelectedFilters as jest.MockedFunction<typeof useSelectedFilters>
+// Test wrapper with real context provider
+const TestWrapper = ({ children }: { children: ReactNode }) => (
+  <TopicBodyContextProvider>{children}</TopicBodyContextProvider>
+)
+
+// Mock context provider for specific test scenarios
+const MockContextProvider = ({
+  children,
+  selectedFilters = [],
+  mockActions = {},
+}: {
+  children: ReactNode
+  selectedFilters?: string[]
+  mockActions?: Partial<TopicBodyActions>
+}) => {
+  const defaultActions: TopicBodyActions = {
+    updateFilters: jest.fn(),
+    addFilter: jest.fn(),
+    removeFilter: jest.fn(),
+    clearFilters: jest.fn(),
+    setTimePeriods: jest.fn(),
+    setDataFilters: jest.fn(),
+    setGeographyFilters: jest.fn(),
+    setThresholdFilters: jest.fn(),
+    setSelectedTimePeriod: jest.fn(),
+    clearTimePeriods: jest.fn(),
+    ...mockActions,
+  }
+
+  const state: TopicBodyState = {
+    selectedFilters,
+    timePeriods: [],
+    dataFilters: {} as DataFilters,
+    geographyFilters: {} as GeographyFilters,
+    thresholdFilters: {} as ThresholdFilters,
+    selectedTimePeriod: null,
+  }
+
+  const contextValue = [state, defaultActions] as const
+
+  return <TopicBodyContext.Provider value={contextValue}>{children}</TopicBodyContext.Provider>
+}
 
 describe('SelectedFilters', () => {
   const mockTranslation = jest.fn()
