@@ -11,7 +11,7 @@ import {
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
-import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
+// import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -48,7 +48,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = false
+  // const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
   let thresholdFilters: ThresholdFilters = {} as ThresholdFilters
   let geographyFilters: GeographyFilters = {} as GeographyFilters

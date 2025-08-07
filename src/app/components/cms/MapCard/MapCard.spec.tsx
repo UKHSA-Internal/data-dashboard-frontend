@@ -160,7 +160,7 @@ describe('MapCard', () => {
           thresholds: [
             {
               value: {
-                colour: '#ff0000',
+                colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
                 boundary_minimum_value: 0,
                 boundary_maximum_value: 10,
                 label: 'Low',
@@ -168,7 +168,7 @@ describe('MapCard', () => {
             },
             {
               value: {
-                colour: '#ffff00',
+                colour: 'MAP_COLOUR_2_LIGHT_GREEN',
                 boundary_minimum_value: 11,
                 boundary_maximum_value: 20,
                 label: 'Medium',
@@ -176,7 +176,7 @@ describe('MapCard', () => {
             },
             {
               value: {
-                colour: '#00ff00',
+                colour: 'MAP_COLOUR_3_TURQUOISE',
                 boundary_minimum_value: 21,
                 boundary_maximum_value: 100,
                 label: 'High',
