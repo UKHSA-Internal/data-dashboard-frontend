@@ -1072,7 +1072,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E07000137',
       geography_type: 'Lower Tier Local Authority',
       geography: 'East Lindsey',
-      metric_value: 1,
+      metric_value: 93.6,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -1592,7 +1592,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E06000019',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Herefordshire, County of',
-      metric_value: 1,
+      metric_value: 82.5,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3620,7 +3620,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E08000030',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Walsall',
-      metric_value: 1,
+      metric_value: 0.89,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3698,7 +3698,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E07000216',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Waverley',
-      metric_value: 0,
+      metric_value: 78.2,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3776,7 +3776,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E07000142',
       geography_type: 'Lower Tier Local Authority',
       geography: 'West Lindsey',
-      metric_value: 1,
+      metric_value: 73.7,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3854,7 +3854,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E06000054',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Wiltshire',
-      metric_value: 3,
+      metric_value: 97.9,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3893,7 +3893,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E08000015',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Wirral',
-      metric_value: 2,
+      metric_value: 58.7,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3945,7 +3945,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E07000237',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Worcester',
-      metric_value: 0,
+      metric_value: 67.3,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3971,7 +3971,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E07000238',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Wychavon',
-      metric_value: 0,
+      metric_value: 83.7,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -3997,7 +3997,7 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E07000239',
       geography_type: 'Lower Tier Local Authority',
       geography: 'Wyre Forest',
-      metric_value: 0,
+      metric_value: 90.7,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
@@ -4010,12 +4010,12 @@ export const defaultData: MapDataResponse = {
       geography_code: 'E06000014',
       geography_type: 'Lower Tier Local Authority',
       geography: 'York',
-      metric_value: 2,
+      metric_value: 89.2,
       accompanying_points: [
         {
           label_prefix: 'Rate of cases in England:',
           label_suffix: '',
-          metric_value: 11.37,
+          metric_value: 0.89,
         },
       ],
     },

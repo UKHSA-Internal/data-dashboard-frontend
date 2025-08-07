@@ -85,6 +85,7 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   }
 
   const setThresholdFilters = (newThresholdFilters: ThresholdFilters) => {
+    console.log('newThresholdFilters', newThresholdFilters)
     setThresholdFiltersState(newThresholdFilters)
   }
 
