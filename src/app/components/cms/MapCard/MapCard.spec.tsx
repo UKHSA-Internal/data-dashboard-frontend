@@ -2,6 +2,7 @@ import React from 'react'
 
 import { render, screen } from '@/config/test-utils'
 
+import { TopicBodyContextProvider } from '../../ui/ukhsa'
 import MapCard from './MapCard'
 
 // Mock the useMapRef hook
@@ -130,7 +131,11 @@ describe('MapCard', () => {
   })
 
   test('renders all child layers correctly with default props', () => {
-    render(<MapCard />)
+    render(
+      <TopicBodyContextProvider>
+        <MapCard />
+      </TopicBodyContextProvider>
+    )
 
     expect(screen.getByTestId('map-container')).toBeInTheDocument()
     expect(screen.getByTestId('ukhsa-logo-layer')).toBeInTheDocument()

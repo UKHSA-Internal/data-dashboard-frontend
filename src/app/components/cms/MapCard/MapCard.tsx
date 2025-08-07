@@ -62,8 +62,6 @@ export default function MapCard({
 
   const { thresholdFilters } = state
 
-  console.log('loaded threshold filter: ', JSON.stringify(thresholdFilters))
-
   const thresholdData: ThresholdItemProps[] = thresholdFilters.thresholds.map((threshold) => {
     return {
       colour: threshold.value.colour as MapFeatureColour,
@@ -72,8 +70,6 @@ export default function MapCard({
       label: threshold.value.label,
     }
   })
-
-  console.log('new threshold data: ', JSON.stringify(thresholdData))
 
   const request = {
     date_from: '2023-10-30',

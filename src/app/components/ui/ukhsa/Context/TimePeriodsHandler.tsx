@@ -21,12 +21,6 @@ export const TimePeriodsHandler = ({
   const [, actions] = useTopicBody()
   const { setTimePeriods, setDataFilters, setThresholdFilters, setGeographyFilters } = actions
 
-  console.log('entered timePeriodsHandler')
-  console.log('timePeriods', timePeriods)
-  console.log('thresholdFilters', thresholdFilters)
-  console.log('dataFilters', dataFilters)
-  console.log('geographyFilters', geographyFilters)
-
   useEffect(() => {
     // Handle undefined, null, or invalid timePeriods
     if (timePeriods && Array.isArray(timePeriods) && timePeriods.length > 0) {
@@ -46,10 +40,8 @@ export const TimePeriodsHandler = ({
     }
   }, [geographyFilters, setGeographyFilters])
   useEffect(() => {
-    console.log('thresholdFilters in useEffect', thresholdFilters)
     // Handle undefined, null, or invalid timePeriods
     if (thresholdFilters) {
-      console.log('thresholdFilters', thresholdFilters)
       setThresholdFilters(thresholdFilters)
     }
   }, [thresholdFilters, setThresholdFilters])
