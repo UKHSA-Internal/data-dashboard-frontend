@@ -2,7 +2,7 @@ import React from 'react'
 
 import { render, screen } from '@/config/test-utils'
 
-import { TopicBodyContextProvider } from '../../ui/ukhsa'
+import { useTopicBody } from '../../ui/ukhsa/Context/TopicBodyContext'
 import MapCard from './MapCard'
 
 // Mock the useMapRef hook
@@ -16,6 +16,13 @@ jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapData', () => ({
     data: {},
     error: null,
   }),
+}))
+
+jest.mock('../../ui/ukhsa/Context/TopicBodyContext', () => ({
+  TopicBodyContextProvider: ({ children }: { children: React.ReactNode }) => (
+    <div data-testid="topic-body-provider">{children}</div>
+  ),
+  useTopicBody: jest.fn(),
 }))
 
 interface MockLayerProps {
@@ -123,17 +130,71 @@ jest.mock('clsx', () => ({
   default: jest.fn((...args) => args.filter(Boolean).join(' ')),
 }))
 
+interface MockThreshold {
+  value: {
+    colour: string
+    boundary_minimum_value: number
+    boundary_maximum_value: number
+    label: string
+  }
+}
+
+interface MockTopicBodyState {
+  thresholdFilters: {
+    thresholds: MockThreshold[]
+  }
+}
+
+const mockUseTopicBody = useTopicBody as jest.MockedFunction<typeof useTopicBody>
+
 describe('MapCard', () => {
+  beforeEach(() => {
+    // Setup default mock data for useTopicBody
+
+    mockUseTopicBody.mockReturnValue([
+      //@ts-expect-error - Only needs threshold filters to be mocked rather than all of state.
+      {
+        thresholdFilters: {
+          thresholds: [
+            {
+              value: {
+                colour: '#ff0000',
+                boundary_minimum_value: 0,
+                boundary_maximum_value: 10,
+                label: 'Low',
+              },
+            },
+            {
+              value: {
+                colour: '#ffff00',
+                boundary_minimum_value: 11,
+                boundary_maximum_value: 20,
+                label: 'Medium',
+              },
+            },
+            {
+              value: {
+                colour: '#00ff00',
+                boundary_minimum_value: 21,
+                boundary_maximum_value: 100,
+                label: 'High',
+              },
+            },
+          ],
+        },
+      } as MockTopicBodyState,
+      // Add the second element if useTopicBody returns a tuple (state setter function)
+      //@ts-expect-error - Does not need all of state to be mocked
+      jest.fn(),
+    ])
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   test('renders all child layers correctly with default props', () => {
-    render(
-      <TopicBodyContextProvider>
-        <MapCard />
-      </TopicBodyContextProvider>
-    )
+    render(<MapCard />)
 
     expect(screen.getByTestId('map-container')).toBeInTheDocument()
     expect(screen.getByTestId('ukhsa-logo-layer')).toBeInTheDocument()
