@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
+import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
@@ -57,38 +58,22 @@ export default function MapCard({
 }: MapCardProps) {
   const ref = useMapRef()
 
-  const thresholdData: ThresholdItemProps[] = [
-    {
-      colour: 'MAP_COLOUR_1_LIGHT_YELLOW' as MapFeatureColour,
-      label: 'less than 65%',
-      boundary_minimum_value: 0.0,
-      boundary_maximum_value: 0.64,
-    },
-    {
-      colour: 'MAP_COLOUR_2_LIGHT_GREEN' as MapFeatureColour,
-      label: '65% - 74%',
-      boundary_minimum_value: 0.65,
-      boundary_maximum_value: 0.74,
-    },
-    {
-      colour: 'MAP_COLOUR_3_TURQUOISE' as MapFeatureColour,
-      label: '75% - 84%',
-      boundary_minimum_value: 0.75,
-      boundary_maximum_value: 0.84,
-    },
-    {
-      colour: 'MAP_COLOUR_4_BLUE' as MapFeatureColour,
-      label: '85% - 95%',
-      boundary_minimum_value: 0.85,
-      boundary_maximum_value: 0.95,
-    },
-    {
-      colour: 'MAP_COLOUR_5_DARK_BLUE' as MapFeatureColour,
-      label: 'over 95%',
-      boundary_minimum_value: 0.96,
-      boundary_maximum_value: 1,
-    },
-  ]
+  const [state] = useTopicBody()
+
+  const { thresholdFilters } = state
+
+  console.log('loaded threshold filter: ', JSON.stringify(thresholdFilters))
+
+  const thresholdData: ThresholdItemProps[] = thresholdFilters.thresholds.map((threshold) => {
+    return {
+      colour: threshold.value.colour as MapFeatureColour,
+      boundary_minimum_value: threshold.value.boundary_minimum_value,
+      boundary_maximum_value: threshold.value.boundary_maximum_value,
+      label: threshold.value.label,
+    }
+  })
+
+  console.log('new threshold data: ', JSON.stringify(thresholdData))
 
   const request = {
     date_from: '2023-10-30',

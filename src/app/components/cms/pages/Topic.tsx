@@ -82,7 +82,6 @@ export default async function TopicPage({
         }
         // abstract out available time periods
         if (content.type === 'global_filter_card' && content.value.time_range) {
-          console.log('time_periods: ', content.value.time_range.time_periods)
           extractedTimePeriods = content.value.time_range.time_periods
         }
         // abstract out the other information received from the global filter card
@@ -93,17 +92,14 @@ export default async function TopicPage({
               if (filter.type === 'geography_filters') {
                 //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a gerography-filter type
                 geographyFilters = filter.value
-                console.log('geographyFilters: ', geographyFilters)
               }
               if (filter.type === 'threshold_filters') {
                 //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a threshold-filters type
                 thresholdFilters = filter.value
-                console.log('thresholdFilters: ', thresholdFilters)
               }
               if (filter.type === 'data_filters') {
                 //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a data-filters type
                 dataFilters = filter.value
-                console.log('dataFilters: ', dataFilters)
               }
             })
           })
