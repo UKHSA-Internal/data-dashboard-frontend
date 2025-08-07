@@ -1,13 +1,10 @@
-// 'use client'
-
 import React from 'react'
 
 import { MultiselectDropdown } from '@/app/components/ui/ukhsa'
-// import { useTranslation } from '@/app/i18n/client'
+
+//TODO: Headers and content to come from CMS
 
 export function FilterDropdowns() {
-  // const { t } = useTranslation('common')
-
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 bg-grey-2">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">Area</h2>
