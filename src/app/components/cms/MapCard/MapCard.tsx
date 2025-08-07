@@ -45,17 +45,17 @@ const mapDefaults: DefaultOptions = {
   fullscreenControlPosition: 'bottomright',
 }
 
-interface MapTabProps {
+interface MapCardProps {
   children?: ReactNode
   options?: DefaultOptions
   className?: string
 }
 
-export const MapTab = ({
+export default function MapCard({
   children,
   className,
   options: { attributionControlPosition, zoomControlPosition, fullscreenControlPosition, ...options } = mapDefaults,
-}: MapTabProps) => {
+}: MapCardProps) {
   const ref = useMapRef()
 
   useMapCleanup(mapId)
