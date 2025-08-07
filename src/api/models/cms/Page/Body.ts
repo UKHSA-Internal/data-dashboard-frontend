@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { HealthAlertTypes } from '../../Alerts'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
+import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
 
 /**
  * Body Discriminated Union Types
@@ -134,7 +135,10 @@ export const CardTypes = z.discriminatedUnion('type', [
   }),
   z.object({
     type: z.literal('global_filter_card'),
-    value: z.object({}).passthrough(),
+    value: z.object({
+      time_range: TimeRangeSchema,
+      rows: GlobalFilterRow,
+    }),
     id: z.string(),
   }),
   z.object({

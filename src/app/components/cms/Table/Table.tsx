@@ -129,7 +129,7 @@ export async function Table({
                   })}
                 </tr>
 
-                {data.map((item, key) => {
+                {data.map((item, key, array) => {
                   return (
                     <tr
                       key={key}
@@ -151,6 +151,8 @@ export async function Table({
                                   'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
                                   'border-b-0': !item.inReportingDelay && nextItemHasDelay,
                                   'border-t-0': !item.inReportingDelay && previousItemHasDelay,
+                                  'border-b-2 border-black': key + 1 === array.length,
+                                  'border-b-[0.5px]': !(key + 1 === array.length),
                                 })}
                               >
                                 {t('cms.blocks.table.row', {
@@ -167,6 +169,8 @@ export async function Table({
                                   'border-b-2 border-b-delay-blue': item.inReportingDelay && !nextItemHasDelay,
                                   'border-b-0': !item.inReportingDelay && nextItemHasDelay,
                                   'border-t-0': !item.inReportingDelay && previousItemHasDelay,
+                                  'border-b-2 border-black': key + 1 === array.length,
+                                  'border-b-[0.5px]': !(key + 1 === array.length),
                                 })}
                               >
                                 {t('cms.blocks.table.row', {

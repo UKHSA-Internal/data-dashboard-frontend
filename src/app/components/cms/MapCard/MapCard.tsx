@@ -14,6 +14,7 @@ import { MapFeatureColour } from '@/app/utils/map.utils'
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
 import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { YearSelectControl } from '../../ui/ukhsa/Map/shared/controls/YearSelectControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
@@ -43,17 +44,17 @@ const mapDefaults: DefaultOptions = {
   fullscreenControlPosition: 'bottomright',
 }
 
-interface MapTabProps {
+interface MapCardProps {
   children?: ReactNode
   options?: DefaultOptions
   className?: string
 }
 
-export const MapTab = ({
+export default function MapCard({
   children,
   className,
   options: { attributionControlPosition, zoomControlPosition, fullscreenControlPosition, ...options } = mapDefaults,
-}: MapTabProps) => {
+}: MapCardProps) {
   const ref = useMapRef()
 
   const thresholdData: ThresholdItemProps[] = [
@@ -136,6 +137,7 @@ export const MapTab = ({
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
+        <YearSelectControl position="topleft" className="p-2`" />
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <FullscreenControl position={fullscreenControlPosition} />

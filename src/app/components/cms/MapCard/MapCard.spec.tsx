@@ -2,7 +2,7 @@ import React from 'react'
 
 import { render, screen } from '@/config/test-utils'
 
-import { MapTab } from './MapTab'
+import MapCard from './MapCard'
 
 // Mock the useMapRef hook
 jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapRef', () => ({
@@ -90,6 +90,12 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/FullscreenControl', () => ({
   ),
 }))
 
+jest.mock('../../ui/ukhsa/Map/shared/controls/YearSelectControl', () => ({
+  YearSelectControl: ({ position }: MockLayerProps) => (
+    <div data-testid="year-select-control" data-position={position} />
+  ),
+}))
+
 jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="base-layer" />,
@@ -118,13 +124,13 @@ jest.mock('clsx', () => ({
   default: jest.fn((...args) => args.filter(Boolean).join(' ')),
 }))
 
-describe('MapTab', () => {
+describe('MapCard', () => {
   afterEach(() => {
     jest.clearAllMocks()
   })
 
   test('renders all child layers correctly with default props', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     expect(screen.getByTestId('map-container')).toBeInTheDocument()
     expect(screen.getByTestId('ukhsa-logo-layer')).toBeInTheDocument()
@@ -132,31 +138,32 @@ describe('MapTab', () => {
     expect(screen.getByTestId('map-legend-control')).toBeInTheDocument()
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
     expect(screen.getByTestId('fullscreen-control')).toBeInTheDocument()
+    expect(screen.getByTestId('year-select-control')).toBeInTheDocument()
   })
 
   test('applies combined className correctly', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     const mapContainer = screen.getByTestId('map-container')
     expect(mapContainer).toHaveClass('relative h-[70vh] overflow-hidden ukhsa-focus')
   })
 
   test('merges custom className with default classes', () => {
-    render(<MapTab className="custom-class" />)
+    render(<MapCard className="custom-class" />)
 
     const mapContainer = screen.getByTestId('map-container')
     expect(mapContainer).toHaveClass('relative h-[70vh] overflow-hidden ukhsa-focus custom-class')
   })
 
   test('applies correct map ID from constants', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     const mapContainer = screen.getByTestId('map-container')
     expect(mapContainer).toHaveAttribute('id', 'viewport')
   })
 
   test('sets correct control positions with default options', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     expect(screen.getByTestId('attribution-control')).toHaveAttribute('data-position', 'bottomright')
     expect(screen.getByTestId('zoom-control')).toHaveAttribute('data-position', 'bottomright')
@@ -165,7 +172,7 @@ describe('MapTab', () => {
 
   test('applies custom layer positions when provided', () => {
     render(
-      <MapTab
+      <MapCard
         options={{
           attributionControlPosition: 'topleft',
           zoomControlPosition: 'topright',
@@ -181,14 +188,14 @@ describe('MapTab', () => {
   })
 
   test('UKHSA logo layer is positioned correctly', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     expect(screen.getByTestId('ukhsa-logo-layer')).toHaveAttribute('data-position', 'topright')
   })
 
   test('passes through custom MapContainer options', () => {
     render(
-      <MapTab
+      <MapCard
         options={{
           scrollWheelZoom: false,
           attributionControlPosition: 'bottomright',
@@ -204,10 +211,10 @@ describe('MapTab', () => {
 
   test('renders MapContainer with child components', () => {
     render(
-      <MapTab>
+      <MapCard>
         <div data-testid="child-1">First Child</div>
         <div data-testid="child-2">Second Child</div>
-      </MapTab>
+      </MapCard>
     )
 
     expect(screen.getByTestId('child-1')).toBeInTheDocument()
@@ -215,7 +222,7 @@ describe('MapTab', () => {
   })
 
   test('correctly renders with all specified layers', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     const mapContainer = screen.getByTestId('map-container')
 
@@ -224,11 +231,12 @@ describe('MapTab', () => {
     expect(mapContainer).toContainElement(screen.getByTestId('attribution-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('zoom-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('fullscreen-control'))
+    expect(mapContainer).toContainElement(screen.getByTestId('year-select-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('base-layer'))
   })
 
   test('applies correct zoom constraints from constants', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     const mapContainer = screen.getByTestId('map-container')
     expect(mapContainer).toHaveAttribute('data-min-zoom', '6')
@@ -237,7 +245,7 @@ describe('MapTab', () => {
   })
 
   test('centers the MapContainer on the provided Coordinates', () => {
-    render(<MapTab />)
+    render(<MapCard />)
 
     const mapContainer = screen.getByTestId('map-container')
     // Center prop would be passed to MapContainer - we can test this was called correctly

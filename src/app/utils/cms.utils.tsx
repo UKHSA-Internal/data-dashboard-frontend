@@ -23,8 +23,8 @@ import {
   CodeBlock,
   Download,
   Headline,
+  MapCardWrapper,
   MapRowCard,
-  MapTab,
   Percentage,
   RichText,
   Table,
@@ -273,7 +273,7 @@ export const renderCard = (
           <div key={id} className={clsx('mb-3 sm:mb-6 lg:mb-0', 'lg:w-full')}>
             <article className={'ukhsa-map-card'}>
               <ChartRowCardHeader id={`map-row-heading-${id}`} title={value.title_prefix ? value.title_prefix : ''} />
-              <MapTab />
+              <MapCardWrapper />
             </article>
           </div>
         </MapRowCard>

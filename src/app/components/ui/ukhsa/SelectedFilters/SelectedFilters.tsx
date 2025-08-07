@@ -4,22 +4,18 @@ import * as React from 'react'
 
 import { useTranslation } from '@/app/i18n/client'
 
-import { TopicBodyContext } from '../Context/TopicBodyContext'
+import { useTopicBody } from '../Context/TopicBodyContext'
 import CrossIcon from '../Icons/CrossIcon'
 
 export function SelectedFilters() {
   const { t } = useTranslation('common')
-  const context = React.useContext(TopicBodyContext)
+  const [state, actions] = useTopicBody()
 
-  if (!context) {
-    throw new Error('SelectedFilters must be used within TopicBodyContextProvider')
-  }
-
-  const [selectedFilters, { removeFilter, clearFilters }] = context
+  const { removeFilter, clearFilters } = actions
 
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 relative flex flex-wrap bg-grey-4">
-      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{`${t('globalFilter.globalFilterTitle')} (${selectedFilters.length})`}</h2>
+      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{`${t('globalFilter.globalFilterTitle')} (${state.selectedFilters.length})`}</h2>
       <button
         onClick={() => clearFilters()}
         className="govuk-body-xs govuk-!-margin-[-2px] govuk-link absolute right-0 text-blue underline"
@@ -31,7 +27,7 @@ export function SelectedFilters() {
       </button>
 
       <div>
-        {selectedFilters.map((filter) => (
+        {state.selectedFilters.map((filter) => (
           <button
             key={filter}
             onClick={() => removeFilter(filter)}
