@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import React, { ReactNode } from 'react'
 
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { act, render, renderHook } from '@/config/test-utils'
 
 import { TopicBodyContextProvider, TopicBodyState, useTopicBody, useTopicBodyFilters } from './TopicBodyContext'
@@ -52,6 +52,9 @@ describe('TopicBodyContext', () => {
         selectedFilters: ['Custom', 'Filters'],
         timePeriods: mockTimePeriods,
         selectedTimePeriod: mockTimePeriods[0],
+        dataFilters: {} as DataFilters,
+        geographyFilters: {} as GeographyFilters,
+        thresholdFilters: {} as ThresholdFilters,
       }
 
       // Act

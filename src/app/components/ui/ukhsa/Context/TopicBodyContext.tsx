@@ -3,11 +3,14 @@
 import * as React from 'react'
 import { useState } from 'react'
 
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 export interface TopicBodyState {
   selectedFilters: string[]
   timePeriods: TimePeriod[]
+  dataFilters: DataFilters
+  geographyFilters: GeographyFilters
+  thresholdFilters: ThresholdFilters
   selectedTimePeriod: TimePeriod | null
 }
 
@@ -22,11 +25,18 @@ export interface TopicBodyActions {
   setTimePeriods: (timePeriods: TimePeriod[]) => void
   setSelectedTimePeriod: (timePeriod: TimePeriod | null) => void
   clearTimePeriods: () => void
+
+  setDataFilters: (dataFilters: DataFilters) => void
+  setGeographyFilters: (geographyFilters: GeographyFilters) => void
+  setThresholdFilters: (thresholdFilters: ThresholdFilters) => void
 }
 
 const initialState: TopicBodyState = {
   selectedFilters: ['Leicester', 'London', '6-in-1'],
   timePeriods: [],
+  dataFilters: {} as DataFilters,
+  geographyFilters: {} as GeographyFilters,
+  thresholdFilters: {} as ThresholdFilters,
   selectedTimePeriod: null,
 }
 
@@ -34,6 +44,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const providedState = topicBodyState ? topicBodyState : initialState
   const [selectedFilters, setSelectedFilters] = useState<string[]>(providedState.selectedFilters)
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
+  const [geographyFilters, setGeographyFiltersState] = useState<GeographyFilters>({} as GeographyFilters)
+  const [dataFilters, setDataFiltersState] = useState<DataFilters>({} as DataFilters)
+  const [thresholdFilters, setThresholdFiltersState] = useState<ThresholdFilters>({} as ThresholdFilters)
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
 
   const updateFilters = (newFilters: string[]) => {
@@ -63,6 +76,18 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     }
   }
 
+  const setGeographyFilters = (newGeographyFilters: GeographyFilters) => {
+    setGeographyFiltersState(newGeographyFilters)
+  }
+
+  const setDataFilters = (newDataFilters: DataFilters) => {
+    setDataFiltersState(newDataFilters)
+  }
+
+  const setThresholdFilters = (newThresholdFilters: ThresholdFilters) => {
+    setThresholdFiltersState(newThresholdFilters)
+  }
+
   const setSelectedTimePeriod = (timePeriod: TimePeriod | null) => {
     setSelectedTimePeriodState(timePeriod)
   }
@@ -75,6 +100,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const state: TopicBodyState = {
     selectedFilters,
     timePeriods,
+    dataFilters,
+    geographyFilters,
+    thresholdFilters,
     selectedTimePeriod,
   }
 
@@ -84,6 +112,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     removeFilter,
     clearFilters,
     setTimePeriods,
+    setGeographyFilters,
+    setDataFilters,
+    setThresholdFilters,
     setSelectedTimePeriod,
     clearTimePeriods,
   }

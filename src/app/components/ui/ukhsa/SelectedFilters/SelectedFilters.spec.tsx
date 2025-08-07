@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { DataFilters, GeographyFilters, ThresholdFilters } from '@/api/models/cms/Page/GlobalFilter'
 import { fireEvent, render, waitFor } from '@/config/test-utils'
 
 import {
@@ -54,6 +55,9 @@ const MockContextProvider = ({
     removeFilter: jest.fn(),
     clearFilters: jest.fn(),
     setTimePeriods: jest.fn(),
+    setDataFilters: jest.fn(),
+    setGeographyFilters: jest.fn(),
+    setThresholdFilters: jest.fn(),
     setSelectedTimePeriod: jest.fn(),
     clearTimePeriods: jest.fn(),
     ...mockActions,
@@ -62,6 +66,9 @@ const MockContextProvider = ({
   const state: TopicBodyState = {
     selectedFilters,
     timePeriods: [],
+    dataFilters: {} as DataFilters,
+    geographyFilters: {} as GeographyFilters,
+    thresholdFilters: {} as ThresholdFilters,
     selectedTimePeriod: null,
   }
 
