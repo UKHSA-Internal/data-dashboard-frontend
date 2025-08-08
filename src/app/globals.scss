@@ -179,6 +179,28 @@ $govuk-page-width: 1400px;
   --colour-green-dark: #00703c;
 }
 
+.ukhsa-dropdown {
+  &:before {
+    content: '';
+    height: 10px;
+    width: 10px;
+    transform: rotate(45deg);
+    border-bottom: 2px solid var(--colour-black);
+    border-right: 2px solid var(--colour-black);
+    display: inline-block;
+    transition: transform 0.2s ease;
+    margin: 0 10px 2px 4px;
+  }
+
+  &.open {
+    &:before {
+      transform: rotate(225deg) translate(-1px, -3px);
+      margin-bottom: 0;
+      border-color: var(--colour-blue);
+    }
+  }
+}
+
 .ukhsa-chevron {
   &:before {
     content: '';

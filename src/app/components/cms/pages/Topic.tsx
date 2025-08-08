@@ -11,6 +11,7 @@ import {
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
+import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -18,7 +19,6 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
-// import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 // import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
@@ -48,7 +48,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  // const showFilterBanner = false
+  const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
 
   body.map(({ value }) => {
@@ -136,15 +136,16 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
-              {/* Example, do not un-comment 
+              {/* Example, do not un-comment */}
               {showFilterBanner && (
                 <FilterBanner
                   message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
                   showIcon={true}
                 />
               )}
-              <StaticFilter>
+              {/*<StaticFilter>
                 <SelectedFilters />
+                <FilterDropdowns />
               </StaticFilter> */}
 
               <PageSectionWithContents>
