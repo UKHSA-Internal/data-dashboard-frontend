@@ -2,15 +2,18 @@
 
 import * as React from 'react'
 import { useState } from 'react'
+import dataMockJson from 'src/app/components/ui/ukhsa/VaccinationDropdown/data.json'
 
 import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
+
+dataMockJson as Vaccination[]
 
 export interface TopicBodyState {
   selectedFilters: string[]
   timePeriods: TimePeriod[]
   selectedTimePeriod: TimePeriod | null
   vaccinations: Vaccination[]
-  selectedVaccination: Vaccination | null
+  selectedVaccination: string | null
 }
 
 export interface TopicBodyActions {
@@ -27,7 +30,7 @@ export interface TopicBodyActions {
 
   //Vaccination actions
   setVaccinations: (vaccinations: Vaccination[]) => void
-  setSelectedVaccination: (vaccination: Vaccination | null) => void
+  setSelectedVaccination: (vaccination: Vaccination['id'] | null) => void
   clearVaccinations: () => void
 }
 
@@ -45,7 +48,7 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
   const [vaccinations, setVaccinationsState] = useState<Vaccination[]>([])
-  const [selectedVaccination, setSelectedVaccinationState] = useState<Vaccination | null>(null)
+  const [selectedVaccination, setSelectedVaccinationState] = useState<Vaccination['id'] | null>(null)
 
   const updateFilters = (newFilters: string[]) => {
     setSelectedFilters(newFilters)
@@ -86,14 +89,13 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const setVaccinations = (newVaccinations: Vaccination[]) => {
     setVaccinationsState(newVaccinations)
 
-    // Optionally auto-select the first time period or most recent one
     if (newVaccinations.length > 0 && !selectedVaccination) {
-      setSelectedVaccinationState(newVaccinations[0])
+      setSelectedVaccinationState(newVaccinations[0].id)
     }
   }
 
-  const setSelectedVaccination = (vaccination: Vaccination | null) => {
-    setSelectedVaccinationState(vaccination)
+  const setSelectedVaccination = (vaccinationId: Vaccination['id'] | null) => {
+    setSelectedVaccinationState(vaccinationId)
   }
 
   const clearVaccinations = () => {

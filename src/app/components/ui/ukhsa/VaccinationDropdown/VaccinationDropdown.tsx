@@ -1,15 +1,18 @@
 'use client'
 
+import clsx from 'clsx'
 import { useState } from 'react'
-import dataMock from 'src/app/components/ui/ukhsa/VaccinationDropdown/data.json'
+import dataMockJson from 'src/app/components/ui/ukhsa/VaccinationDropdown/data.json'
 
 import { Vaccination } from '@/api/models/cms/Page/GlobalFilter'
+
+const dataMock = dataMockJson as Vaccination[]
 
 interface VaccinationDropdownProps {
   className?: string
   placeholder?: string
   disabled?: boolean
-  onChange?: (selectedVaccination: Vaccination | null) => void
+  onChange?: (selectedVaccination: Vaccination['id'] | null) => void
 }
 
 export const VaccinationDropdown = ({
@@ -18,10 +21,7 @@ export const VaccinationDropdown = ({
   disabled = false,
   onChange,
 }: VaccinationDropdownProps) => {
-  //   const [state, actions] = useTopicBody()
-  //   const { vaccinations } = state
-
-  const [selectedVaccination, setSelectedVaccination] = useState<Vaccination | null>(null)
+  const [selectedVaccination, setSelectedVaccination] = useState<Vaccination['id'] | null>(null)
 
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedVaccineId = event.target.value
@@ -34,24 +34,31 @@ export const VaccinationDropdown = ({
 
     const selectedVaccinationValue = dataMock.find((vaccine) => vaccine.id === selectedVaccineId)
     if (selectedVaccinationValue) {
-      setSelectedVaccination(selectedVaccinationValue)
-      onChange?.(selectedVaccinationValue)
+      setSelectedVaccination(selectedVaccinationValue['id'])
+      onChange?.(selectedVaccinationValue['id'])
     }
   }
+
+  // useEffect(() => {
+  //   if (selectedVaccination && !dataMock.find((v) => v.id === selectedVaccination)) {
+  //     setSelectedVaccination(null)
+  //     onChange?.(null)
+  //   }
+  // }, [selectedVaccination])
 
   if (dataMock.length === 0) {
     return null
   }
 
   return (
-    <div className={`govuk-form-group ${className}`}>
+    <div className={clsx('govuk-form-group', className)}>
       <label className="govuk-label govuk-label--s" htmlFor="vaccination-select">
         Vaccine Selection
       </label>
       <select
         id="vaccination-select"
         className="govuk-select"
-        value={selectedVaccination?.id || ''}
+        value={selectedVaccination ? selectedVaccination : ''}
         onChange={handleSelectionChange}
         disabled={disabled}
       >
