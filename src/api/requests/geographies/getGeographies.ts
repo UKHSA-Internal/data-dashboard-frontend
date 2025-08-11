@@ -32,15 +32,6 @@ type GeographyParams = {
   geography_type?: GeographyType
 }
 
-export const getGeographiesV2 = async (topic: Topics) => {
-  try {
-    const { data } = await client<z.infer<typeof responseSchema>>(`geographies/v2/${topic}`)
-    return responseSchema.safeParse(data)
-  } catch (error) {
-    logger.error(error)
-    return responseSchema.safeParse(error)
-  }
-}
 export const getGeographies = async (params: GeographyParams) => {
   try {
     if (params.topic && params.geography_type) {
