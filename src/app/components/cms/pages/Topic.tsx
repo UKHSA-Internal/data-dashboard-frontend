@@ -139,7 +139,6 @@ export default async function TopicPage({
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
               <VaccinationsHandler vaccinations={extractedVaccination} />
-
               {/* Example, do not un-comment */}
               {showFilterBanner && (
                 <FilterBanner
