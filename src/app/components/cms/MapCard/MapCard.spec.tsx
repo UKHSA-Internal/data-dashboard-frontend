@@ -96,6 +96,11 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/YearSelectControl', () => ({
   ),
 }))
 
+jest.mock('../../ui/ukhsa/Map/shared/controls/VaccinationSelectControl', () => ({
+  YearSelectControl: ({ position }: MockLayerProps) => (
+    <div data-testid="vaccination-select-control" data-position={position} />
+  ),
+}))
 jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="base-layer" />,
@@ -139,6 +144,7 @@ describe('MapCard', () => {
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
     expect(screen.getByTestId('fullscreen-control')).toBeInTheDocument()
     expect(screen.getByTestId('year-select-control')).toBeInTheDocument()
+    expect(screen.getByTestId('vaccination-select-control')).toBeInTheDocument()
   })
 
   test('applies combined className correctly', () => {
@@ -233,6 +239,7 @@ describe('MapCard', () => {
     expect(mapContainer).toContainElement(screen.getByTestId('fullscreen-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('year-select-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('base-layer'))
+    expect(mapContainer).toContainElement(screen.getByTestId('vaccination-select-control'))
   })
 
   test('applies correct zoom constraints from constants', () => {

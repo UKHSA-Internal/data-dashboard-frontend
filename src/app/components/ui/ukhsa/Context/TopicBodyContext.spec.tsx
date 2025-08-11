@@ -326,7 +326,7 @@ describe('TopicBodyContext', () => {
       // Assert
       const [state] = result.current
       expect(state.vaccinations).toEqual(mockVaccinations)
-      expect(state.selectedVaccination).toEqual(mockVaccinations[0])
+      expect(state.selectedVaccination).toEqual(mockVaccinations[0].id)
     })
 
     test('should set vaccinations without changing selected if one already selected', () => {
@@ -349,7 +349,7 @@ describe('TopicBodyContext', () => {
       // Assert
       const [state] = result.current
       expect(state.vaccinations).toEqual(mockVaccinations)
-      expect(state.selectedVaccination).toEqual(mockVaccinations[1])
+      expect(state.selectedVaccination).toEqual(mockVaccinations[1].id)
     })
 
     test('should set vaccinations with an empty array', () => {
