@@ -51,7 +51,7 @@ export const VaccinationDropdown = ({
       <select
         id="vaccination-select"
         className="govuk-select"
-        value={selectedVaccination ? selectedVaccination : ''}
+        value={selectedVaccination ?? ''}
         onChange={handleSelectionChange}
         disabled={disabled}
         data-testid="vaccination-select-control"

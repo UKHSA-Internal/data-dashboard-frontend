@@ -10,10 +10,12 @@ interface VaccinationSelectControlProps {
   className?: string
 }
 
-export function VaccinationSelectControl({ position, className }: VaccinationSelectControlProps) {
+export function VaccinationSelectControl({ position, className = '' }: VaccinationSelectControlProps) {
   return (
     <Control position={position}>
-      <VaccinationDropdown className={className} />
+      <div data-testid="vaccination-select-control">
+        <VaccinationDropdown className={className} />
+      </div>
     </Control>
   )
 }
