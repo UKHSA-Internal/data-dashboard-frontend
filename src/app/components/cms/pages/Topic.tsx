@@ -11,6 +11,7 @@ import {
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
+import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -49,7 +50,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  // const showFilterBanner = false
+  const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
   const extractedVaccination: Vaccination[] = []
 
@@ -139,16 +140,16 @@ export default async function TopicPage({
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
               <VaccinationsHandler vaccinations={extractedVaccination} />
-
-              {/* Example, do not un-comment 
+              {/* Example, do not un-comment */}
               {showFilterBanner && (
                 <FilterBanner
                   message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
                   showIcon={true}
                 />
               )}
-              <StaticFilter>
+              {/*<StaticFilter>
                 <SelectedFilters />
+                <FilterDropdowns />
               </StaticFilter> */}
 
               <PageSectionWithContents>

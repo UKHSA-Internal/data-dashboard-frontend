@@ -17,7 +17,7 @@ export async function GET(req: NextRequest, { params: { category } }: PathParame
   }
 
   const proxiedResponse = await getHealthAlerts(category)
-  
+
   if (proxiedResponse.success) {
     return NextResponse.json(proxiedResponse.data)
   }

@@ -14,7 +14,7 @@ export function SelectedFilters() {
   const { removeFilter, clearFilters } = actions
 
   return (
-    <div className="relative flex flex-wrap">
+    <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 relative flex flex-wrap bg-grey-4">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{`${t('globalFilter.globalFilterTitle')} (${state.selectedFilters.length})`}</h2>
       <button
         onClick={() => clearFilters()}
@@ -26,19 +26,21 @@ export function SelectedFilters() {
         </span>
       </button>
 
-      {state.selectedFilters.map((filter) => (
-        <button
-          key={filter}
-          onClick={() => removeFilter(filter)}
-          // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
-          className="govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-2 relative border-[1px] border-black bg-white text-black no-underline ukhsa-focus"
-        >
-          {filter}
-          <span className="govuk-!-margin-left-2 inline-block">
-            <CrossIcon />
-          </span>
-        </button>
-      ))}
+      <div>
+        {state.selectedFilters.map((filter) => (
+          <button
+            key={filter}
+            onClick={() => removeFilter(filter)}
+            // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
+            className="govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-2 relative border-[1px] border-black bg-white text-black no-underline ukhsa-focus"
+          >
+            {filter}
+            <span className="govuk-!-margin-left-2 inline-block">
+              <CrossIcon />
+            </span>
+          </button>
+        ))}
+      </div>
     </div>
   )
 }

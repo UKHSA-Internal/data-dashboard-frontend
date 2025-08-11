@@ -30,8 +30,7 @@ export function StaticFilter({ href = '#filter', className, children }: StaticFi
   return (
     <>
       <div
-        className={clsx('bg-grey-3', {
-          'govuk-!-padding-3': isVisible,
+        className={clsx({
           'h-0 m-0 overflow-hidden govuk-!-padding-0': !isVisible,
         })}
       >
