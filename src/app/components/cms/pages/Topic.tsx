@@ -1,4 +1,4 @@
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -18,6 +18,7 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
+import { VaccinationsHandler } from '../../ui/ukhsa/Context/VaccinationsHandler'
 // import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
@@ -50,6 +51,7 @@ export default async function TopicPage({
 
   // const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
+  const extractedVaccination: Vaccination[] = []
 
   body.map(({ value }) => {
     if (value.content) {
@@ -136,6 +138,8 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
+              <VaccinationsHandler vaccinations={extractedVaccination} />
+
               {/* Example, do not un-comment 
               {showFilterBanner && (
                 <FilterBanner

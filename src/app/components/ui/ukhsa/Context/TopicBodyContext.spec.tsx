@@ -1,7 +1,7 @@
 import { faker } from '@faker-js/faker'
 import React, { ReactNode } from 'react'
 
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
 import { act, render, renderHook } from '@/config/test-utils'
 
 import { TopicBodyContextProvider, TopicBodyState, useTopicBody, useTopicBodyFilters } from './TopicBodyContext'
@@ -28,6 +28,19 @@ const mockTimePeriods: TimePeriod[] = [
   },
 ]
 
+const mockVaccinations: Vaccination[] = [
+  {
+    id: 'covid19_dose1',
+    label: 'COVID-19 Vaccine (1st Dose)',
+    category: 'COVID-19',
+  },
+  {
+    id: 'covid19_dose2',
+    label: 'COVID-19 Vaccine (2nd Dose)',
+    category: 'COVID-19',
+  },
+]
+
 // Wrapper component for testing context
 const TestWrapper = ({ children }: { children: ReactNode }) => (
   <TopicBodyContextProvider>{children}</TopicBodyContextProvider>
@@ -44,6 +57,8 @@ describe('TopicBodyContext', () => {
       expect(state.selectedFilters).toEqual(['Leicester', 'London', '6-in-1'])
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
+      expect(state.vaccinations).toEqual([])
+      expect(state.selectedVaccination).toBeNull()
     })
 
     test('should initialize with provided state', () => {
@@ -52,6 +67,8 @@ describe('TopicBodyContext', () => {
         selectedFilters: ['Custom', 'Filters'],
         timePeriods: mockTimePeriods,
         selectedTimePeriod: mockTimePeriods[0],
+        vaccinations: [],
+        selectedVaccination: null,
       }
 
       // Act
@@ -290,6 +307,121 @@ describe('TopicBodyContext', () => {
       const [state] = result.current
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
+    })
+  })
+
+  describe('Vaccination actions', () => {
+    test('should set vaccinations and auto-select the first one when none selected', () => {
+      // Arrange
+      const { result } = renderHook(() => useTopicBodyFilters(), {
+        wrapper: TestWrapper,
+      })
+
+      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.setVaccinations(mockVaccinations)
+      })
+
+      // Assert
+      const [state] = result.current
+      expect(state.vaccinations).toEqual(mockVaccinations)
+      expect(state.selectedVaccination).toEqual(mockVaccinations[0])
+    })
+
+    test('should set vaccinations without changing selected if one already selected', () => {
+      // Arrange
+      const { result } = renderHook(() => useTopicBodyFilters(), {
+        wrapper: TestWrapper,
+      })
+
+      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.setSelectedVaccination(mockVaccinations[1])
+      })
+
+      act(() => {
+        const [, actions] = result.current
+        actions.setVaccinations(mockVaccinations)
+      })
+
+      // Assert
+      const [state] = result.current
+      expect(state.vaccinations).toEqual(mockVaccinations)
+      expect(state.selectedVaccination).toEqual(mockVaccinations[1])
+    })
+
+    test('should set vaccinations with an empty array', () => {
+      // Arrange
+      const { result } = renderHook(() => useTopicBodyFilters(), {
+        wrapper: TestWrapper,
+      })
+
+      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.setVaccinations([])
+      })
+
+      // Assert
+      const [state] = result.current
+      expect(state.vaccinations).toEqual([])
+      expect(state.selectedVaccination).toBeNull()
+    })
+
+    test('should set selected vaccination', () => {
+      // Arrange
+      const { result } = renderHook(() => useTopicBodyFilters(), {
+        wrapper: TestWrapper,
+      })
+
+      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.setSelectedVaccination(mockVaccinations[1])
+      })
+
+      // Assert
+      const [state] = result.current
+      expect(state.selectedVaccination).toEqual(mockVaccinations[1])
+    })
+
+    test('should set selected vaccination to null', () => {
+      // Arrange
+      const { result } = renderHook(() => useTopicBodyFilters(), {
+        wrapper: TestWrapper,
+      })
+
+      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.setSelectedVaccination(mockVaccinations[0])
+        actions.setSelectedVaccination(null)
+      })
+
+      // Assert
+      const [state] = result.current
+      expect(state.selectedVaccination).toBeNull()
+    })
+
+    test('should clear vaccinations and selected vaccination', () => {
+      // Arrange
+      const { result } = renderHook(() => useTopicBodyFilters(), {
+        wrapper: TestWrapper,
+      })
+
+      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.setVaccinations(mockVaccinations)
+        actions.clearVaccinations()
+      })
+
+      // Assert
+      const [state] = result.current
+      expect(state.vaccinations).toEqual([])
+      expect(state.selectedVaccination).toBeNull()
     })
   })
 
