@@ -20,7 +20,6 @@ import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
 import { VaccinationsHandler } from '../../ui/ukhsa/Context/VaccinationsHandler'
-// import { FilterBanner } from '../../ui/ukhsa/FilterBanner/FilterBanner'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 // import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
@@ -140,6 +139,7 @@ export default async function TopicPage({
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
               <VaccinationsHandler vaccinations={extractedVaccination} />
+
               {/* Example, do not un-comment */}
               {showFilterBanner && (
                 <FilterBanner
