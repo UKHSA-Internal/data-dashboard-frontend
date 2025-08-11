@@ -131,3 +131,4 @@ export const GlobalFilterRow = z.array(
 export type TimePeriod = z.infer<typeof TimePeriodSchema>
 export type TimeRange = z.infer<typeof TimeRangeSchema>
 export type Vaccination = z.infer<typeof VaccinationSchema>
+export type VaccinationId = Vaccination['id']

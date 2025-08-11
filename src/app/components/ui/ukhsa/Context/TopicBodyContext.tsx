@@ -2,11 +2,8 @@
 
 import * as React from 'react'
 import { useState } from 'react'
-import dataMockJson from 'src/app/components/ui/ukhsa/VaccinationDropdown/data.json'
 
-import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
-
-dataMockJson as Vaccination[]
+import { TimePeriod, Vaccination, VaccinationId } from '@/api/models/cms/Page/GlobalFilter'
 
 export interface TopicBodyState {
   selectedFilters: string[]
@@ -30,7 +27,7 @@ export interface TopicBodyActions {
 
   //Vaccination actions
   setVaccinations: (vaccinations: Vaccination[]) => void
-  setSelectedVaccination: (vaccination: Vaccination['id'] | null) => void
+  setSelectedVaccination: (vaccination: VaccinationId | null) => void
   clearVaccinations: () => void
 }
 
@@ -48,7 +45,7 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
   const [vaccinations, setVaccinationsState] = useState<Vaccination[]>([])
-  const [selectedVaccination, setSelectedVaccinationState] = useState<Vaccination['id'] | null>(null)
+  const [selectedVaccination, setSelectedVaccinationState] = useState<VaccinationId | null>(null)
 
   const updateFilters = (newFilters: string[]) => {
     setSelectedFilters(newFilters)

@@ -9,7 +9,6 @@ import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
-import { useMapCleanup } from '@/app/hooks/useMapCleanup'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
@@ -57,8 +56,6 @@ export default function MapCard({
   options: { attributionControlPosition, zoomControlPosition, fullscreenControlPosition, ...options } = mapDefaults,
 }: MapCardProps) {
   const ref = useMapRef()
-
-  useMapCleanup(mapId)
 
   const thresholdData: ThresholdItemProps[] = [
     {

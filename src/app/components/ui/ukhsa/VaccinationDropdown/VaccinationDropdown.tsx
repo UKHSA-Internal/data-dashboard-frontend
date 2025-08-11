@@ -4,7 +4,7 @@ import clsx from 'clsx'
 import { useState } from 'react'
 import dataMockJson from 'src/app/components/ui/ukhsa/VaccinationDropdown/data.json'
 
-import { Vaccination } from '@/api/models/cms/Page/GlobalFilter'
+import { Vaccination, VaccinationId } from '@/api/models/cms/Page/GlobalFilter'
 
 const dataMock = dataMockJson as Vaccination[]
 
@@ -12,7 +12,7 @@ interface VaccinationDropdownProps {
   className?: string
   placeholder?: string
   disabled?: boolean
-  onChange?: (selectedVaccination: Vaccination['id'] | null) => void
+  onChange?: (selectedVaccination: VaccinationId | null) => void
 }
 
 export const VaccinationDropdown = ({
@@ -21,7 +21,7 @@ export const VaccinationDropdown = ({
   disabled = false,
   onChange,
 }: VaccinationDropdownProps) => {
-  const [selectedVaccination, setSelectedVaccination] = useState<Vaccination['id'] | null>(null)
+  const [selectedVaccination, setSelectedVaccination] = useState<VaccinationId | null>(null)
 
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedVaccineId = event.target.value
@@ -38,13 +38,6 @@ export const VaccinationDropdown = ({
       onChange?.(selectedVaccinationValue['id'])
     }
   }
-
-  // useEffect(() => {
-  //   if (selectedVaccination && !dataMock.find((v) => v.id === selectedVaccination)) {
-  //     setSelectedVaccination(null)
-  //     onChange?.(null)
-  //   }
-  // }, [selectedVaccination])
 
   if (dataMock.length === 0) {
     return null
