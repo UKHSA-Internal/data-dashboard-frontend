@@ -1,0 +1,36 @@
+import React from 'react'
+
+import { MultiselectDropdown } from '@/app/components/ui/ukhsa'
+
+//TODO: Headers and content to come from CMS
+
+export function FilterDropdowns() {
+  return (
+    <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 bg-grey-2">
+      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">Area</h2>
+      <div className="-mx-2 flex flex-wrap">
+        <div className="w-1/3 px-2">
+          <MultiselectDropdown name="Country" />
+        </div>
+        <div className="w-1/3 px-2">
+          <MultiselectDropdown name="Region" />
+        </div>
+        <div className="w-1/3 px-2">
+          <MultiselectDropdown name="Local Authority" />
+        </div>
+      </div>
+
+      <h2 className="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-2 w-full">Vaccination and Coverage</h2>
+      <div className="-mx-2 flex flex-wrap">
+        <div className="w-1/2 px-2">
+          <MultiselectDropdown name="Select vaccination" nestedMultiselect />
+        </div>
+        <div className="w-1/2 px-2">
+          <MultiselectDropdown name="Select level of coverage %" nestedMultiselect />
+        </div>
+      </div>
+    </div>
+  )
+}
+
+export default FilterDropdowns
