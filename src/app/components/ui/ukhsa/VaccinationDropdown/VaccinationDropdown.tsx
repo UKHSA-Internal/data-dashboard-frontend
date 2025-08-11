@@ -54,6 +54,7 @@ export const VaccinationDropdown = ({
         value={selectedVaccination ? selectedVaccination : ''}
         onChange={handleSelectionChange}
         disabled={disabled}
+        data-testid="vaccination-select-control"
       >
         <option value="">{placeholder}</option>
         {dataMock.map((vaccine) => (
