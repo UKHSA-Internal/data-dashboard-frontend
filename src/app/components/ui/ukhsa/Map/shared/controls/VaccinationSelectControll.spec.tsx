@@ -73,7 +73,7 @@ describe('VaccinationSelectControl', () => {
       const { getByTestId } = render(<VaccinationSelectControl position="topright" />)
 
       expect(getByTestId('vaccination-dropdown')).toBeInTheDocument()
-      expect(getByTestId('vaccination-dropdown')).not.toHaveAttribute('class')
+      expect(getByTestId('vaccination-dropdown')).toHaveAttribute('class')
     })
 
     test('should render with multiple CSS classes', () => {
