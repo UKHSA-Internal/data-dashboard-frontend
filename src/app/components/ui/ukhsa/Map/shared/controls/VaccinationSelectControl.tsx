@@ -12,10 +12,8 @@ interface VaccinationSelectControlProps {
 
 export function VaccinationSelectControl({ position, className }: VaccinationSelectControlProps) {
   return (
-    <div style={{ position: 'absolute', marginLeft: '107%' }}>
-      <Control position={position}>
-        <VaccinationDropdown className={className} />
-      </Control>
-    </div>
+    <Control position={position}>
+      <VaccinationDropdown className={className} />
+    </Control>
   )
 }

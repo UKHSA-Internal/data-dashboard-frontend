@@ -97,7 +97,7 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/YearSelectControl', () => ({
 }))
 
 jest.mock('../../ui/ukhsa/Map/shared/controls/VaccinationSelectControl', () => ({
-  YearSelectControl: ({ position }: MockLayerProps) => (
+  VaccinationSelectControl: ({ position }: MockLayerProps) => (
     <div data-testid="vaccination-select-control" data-position={position} />
   ),
 }))
@@ -220,11 +220,13 @@ describe('MapCard', () => {
       <MapCard>
         <div data-testid="child-1">First Child</div>
         <div data-testid="child-2">Second Child</div>
+        <div data-testid="child-3">Third Child</div>
       </MapCard>
     )
 
     expect(screen.getByTestId('child-1')).toBeInTheDocument()
     expect(screen.getByTestId('child-2')).toBeInTheDocument()
+    expect(screen.getByTestId('child-3')).toBeInTheDocument()
   })
 
   test('correctly renders with all specified layers', () => {
