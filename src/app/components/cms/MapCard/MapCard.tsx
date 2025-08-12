@@ -12,10 +12,9 @@ import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.const
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
+import { CoverControl } from '../../ui/ukhsa/Map/shared/controls/CoverControl'
 import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
-import { VaccinationSelectControl } from '../../ui/ukhsa/Map/shared/controls/VaccinationSelectControl'
-import { YearSelectControl } from '../../ui/ukhsa/Map/shared/controls/YearSelectControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
@@ -138,8 +137,7 @@ export default function MapCard({
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
-        <YearSelectControl position="topleft" className="p-2`" />
-        <VaccinationSelectControl position="topleft" className="p-2`" />
+        <CoverControl position="topleft" className="gap-1 p-2 sm:flex" />
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <FullscreenControl position={fullscreenControlPosition} />

@@ -1,7 +1,7 @@
 import { TopicBodyContextProvider } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
 import { render } from '@/config/test-utils'
 
-import { YearSelectControl } from './YearSelectControl'
+import { CoverControl } from './CoverControl'
 
 // Mock react-leaflet and react-leaflet-custom-control
 jest.mock('react-leaflet', () => ({
@@ -29,18 +29,27 @@ jest.mock('../../../TimePeriodDropdown/TimePeriodDropdown', () => ({
   ),
 }))
 
+// Mock VaccinationDropdown
+jest.mock('../../../VaccinationDropdown/VaccinationDropdown', () => ({
+  VaccinationDropdown: ({ className }: { className?: string }) => (
+    <div data-testid="vaccination-dropdown" className={className}>
+      Vaccination Dropdown
+    </div>
+  ),
+}))
+
 // Test wrapper with context
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
   <TopicBodyContextProvider>{children}</TopicBodyContextProvider>
 )
 
-describe('YearSelectControl', () => {
+describe('CoverControl', () => {
   describe('Component rendering', () => {
     test('should render control with default position', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="topright" />
+          <CoverControl position="topright" />
         </TestWrapper>
       )
 
@@ -48,13 +57,14 @@ describe('YearSelectControl', () => {
       expect(getByTestId('leaflet-control')).toBeInTheDocument()
       expect(getByTestId('leaflet-control')).toHaveAttribute('data-position', 'topright')
       expect(getByTestId('time-period-dropdown')).toBeInTheDocument()
+      expect(getByTestId('vaccination-dropdown')).toBeInTheDocument()
     })
 
     test('should render control with topleft position', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="topleft" />
+          <CoverControl position="topleft" />
         </TestWrapper>
       )
 
@@ -67,7 +77,7 @@ describe('YearSelectControl', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="bottomright" />
+          <CoverControl position="bottomright" />
         </TestWrapper>
       )
 
@@ -80,7 +90,7 @@ describe('YearSelectControl', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="bottomleft" />
+          <CoverControl position="bottomleft" />
         </TestWrapper>
       )
 
@@ -98,25 +108,27 @@ describe('YearSelectControl', () => {
       // Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="topright" className={testClassName} />
+          <CoverControl position="topright" className={testClassName} />
         </TestWrapper>
       )
 
       // Assert
-      expect(getByTestId('time-period-dropdown')).toHaveClass(testClassName)
+      expect(getByTestId('cover-control')).toHaveClass(testClassName)
     })
 
     test('should render without className when not provided', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="topright" />
+          <CoverControl position="topright" />
         </TestWrapper>
       )
 
       // Assert
       expect(getByTestId('time-period-dropdown')).toBeInTheDocument()
       expect(getByTestId('time-period-dropdown')).not.toHaveAttribute('class')
+      expect(getByTestId('vaccination-dropdown')).toBeInTheDocument()
+      expect(getByTestId('vaccination-dropdown')).not.toHaveAttribute('class')
     })
 
     test('should render with multiple CSS classes', () => {
@@ -126,14 +138,14 @@ describe('YearSelectControl', () => {
       // Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="topright" className={testClassName} />
+          <CoverControl position="topright" className={testClassName} />
         </TestWrapper>
       )
 
       // Assert
-      expect(getByTestId('time-period-dropdown')).toHaveClass('class-one')
-      expect(getByTestId('time-period-dropdown')).toHaveClass('class-two')
-      expect(getByTestId('time-period-dropdown')).toHaveClass('custom-style')
+      expect(getByTestId('cover-control')).toHaveClass('class-one')
+      expect(getByTestId('cover-control')).toHaveClass('class-two')
+      expect(getByTestId('cover-control')).toHaveClass('custom-style')
     })
   })
 
@@ -142,7 +154,7 @@ describe('YearSelectControl', () => {
       // Arrange & Act
       const { getByTestId } = render(
         <TestWrapper>
-          <YearSelectControl position="topright" className="test-class" />
+          <CoverControl position="topright" className="test-class" />
         </TestWrapper>
       )
 
@@ -157,17 +169,20 @@ describe('YearSelectControl', () => {
       // Arrange & Act
       const { container } = render(
         <TestWrapper>
-          <YearSelectControl position="topright" />
+          <CoverControl position="topright" />
         </TestWrapper>
       )
 
       // Assert
       const controlElement = container.querySelector('[data-testid="leaflet-control"]') as HTMLElement
       const dropdownElement = container.querySelector('[data-testid="time-period-dropdown"]') as HTMLElement
+      const vaccinationDropdownElement = container.querySelector('[data-testid="vaccination-dropdown"]') as HTMLElement
 
       expect(controlElement).toBeInTheDocument()
       expect(dropdownElement).toBeInTheDocument()
       expect(controlElement).toContainElement(dropdownElement)
+      expect(vaccinationDropdownElement).toBeInTheDocument()
+      expect(controlElement).toContainElement(vaccinationDropdownElement)
     })
   })
 })

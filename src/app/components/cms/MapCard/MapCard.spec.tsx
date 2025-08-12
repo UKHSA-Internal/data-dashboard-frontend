@@ -90,17 +90,10 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/FullscreenControl', () => ({
   ),
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/YearSelectControl', () => ({
-  YearSelectControl: ({ position }: MockLayerProps) => (
-    <div data-testid="year-select-control" data-position={position} />
-  ),
+jest.mock('../../ui/ukhsa/Map/shared/controls/CoverControl', () => ({
+  CoverControl: ({ position }: MockLayerProps) => <div data-testid="cover-control" data-position={position} />,
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/VaccinationSelectControl', () => ({
-  VaccinationSelectControl: ({ position }: MockLayerProps) => (
-    <div data-testid="vaccination-select-control" data-position={position} />
-  ),
-}))
 jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="base-layer" />,
@@ -143,8 +136,7 @@ describe('MapCard', () => {
     expect(screen.getByTestId('map-legend-control')).toBeInTheDocument()
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
     expect(screen.getByTestId('fullscreen-control')).toBeInTheDocument()
-    expect(screen.getByTestId('year-select-control')).toBeInTheDocument()
-    expect(screen.getByTestId('vaccination-select-control')).toBeInTheDocument()
+    expect(screen.getByTestId('cover-control')).toBeInTheDocument()
   })
 
   test('applies combined className correctly', () => {
@@ -239,9 +231,8 @@ describe('MapCard', () => {
     expect(mapContainer).toContainElement(screen.getByTestId('attribution-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('zoom-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('fullscreen-control'))
-    expect(mapContainer).toContainElement(screen.getByTestId('year-select-control'))
+    expect(mapContainer).toContainElement(screen.getByTestId('cover-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('base-layer'))
-    expect(mapContainer).toContainElement(screen.getByTestId('vaccination-select-control'))
   })
 
   test('applies correct zoom constraints from constants', () => {
