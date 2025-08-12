@@ -38,10 +38,8 @@ export const getGeographies = async (params: GeographyParams) => {
       throw new Error('Only one of topic or geography_type can be provided')
     }
     if (params.topic) {
-      console.log('retrieving topic geographies')
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(`geographies/v3?topic=${params.topic}`)
-        console.log('topic data', data)
         return responseSchema.safeParse(data)
       } catch (error) {
         logger.error(error)
