@@ -137,7 +137,7 @@ export default function MapCard({
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
-        <CoverControl position="topleft" className="gap-1 p-2 sm:flex" />
+        <CoverControl position="topleft" className="gap-2 p-2 sm:flex" />
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <FullscreenControl position={fullscreenControlPosition} />
