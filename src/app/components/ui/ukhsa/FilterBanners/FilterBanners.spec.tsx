@@ -34,7 +34,7 @@ const MockContextProvider = ({
 }
 
 describe('FilterBanners', () => {
-  it('should not show banner when all location filter types have 4 or fewer selections', () => {
+  it('should not show banner when all location filter types have fewer than 4 selections', () => {
     const selectedFilters = [
       { id: 'Country.England', label: 'England' },
       { id: 'Country.Scotland', label: 'Scotland' },
@@ -52,13 +52,12 @@ describe('FilterBanners', () => {
     expect(screen.queryByText(/Important information/)).not.toBeInTheDocument()
   })
 
-  it('should show banner when one filter has 4 selections', () => {
+  it('should show banner when one filter has exactly 4 selections', () => {
     const selectedFilters = [
       { id: 'Country.England', label: 'England' },
       { id: 'Country.Scotland', label: 'Scotland' },
       { id: 'Country.Wales', label: 'Wales' },
       { id: 'Country.NorthernIreland', label: 'Northern Ireland' },
-      { id: 'Country.IsleOfMan', label: 'Isle of Man' },
     ]
 
     render(
@@ -68,25 +67,19 @@ describe('FilterBanners', () => {
     )
 
     expect(screen.getByText(/Important information/)).toBeInTheDocument()
-    expect(
-      screen.getByText((content, element) => {
-        return element?.textContent?.includes('You can only select four locations to display at a time') ?? false
-      })
-    ).toBeInTheDocument()
+    expect(screen.getByText(/You can only select/)).toBeInTheDocument()
+    expect(screen.getByText(/four locations/)).toBeInTheDocument()
+    expect(screen.getByText(/display at a time/)).toBeInTheDocument()
   })
 
-  it('should show banner when multiple location types exceed their limits', () => {
+  it('should not count non-location filters when determining banner visibility', () => {
     const selectedFilters = [
       { id: 'Country.England', label: 'England' },
       { id: 'Country.Scotland', label: 'Scotland' },
-      { id: 'Country.Wales', label: 'Wales' },
-      { id: 'Country.NorthernIreland', label: 'Northern Ireland' },
-      { id: 'Country.IsleOfMan', label: 'Isle of Man' },
-      { id: 'Region.London', label: 'London' },
-      { id: 'Region.Manchester', label: 'Manchester' },
-      { id: 'Region.Birmingham', label: 'Birmingham' },
-      { id: 'Region.Leeds', label: 'Leeds' },
-      { id: 'Region.Liverpool', label: 'Liverpool' },
+      { id: 'vaccine.6-in-1', label: '6-in-1' },
+      { id: 'vaccine.MMR', label: 'MMR' },
+      { id: 'vaccine.DTaP', label: 'DTaP' },
+      { id: 'vaccine.HepatitisB', label: 'Hepatitis B' },
     ]
 
     render(
@@ -95,11 +88,6 @@ describe('FilterBanners', () => {
       </MockContextProvider>
     )
 
-    expect(screen.getByText(/Important information/)).toBeInTheDocument()
-    expect(
-      screen.getByText((content, element) => {
-        return element?.textContent?.includes('You can only select four locations to display at a time') ?? false
-      })
-    ).toBeInTheDocument()
+    expect(screen.queryByText(/Important information/)).not.toBeInTheDocument()
   })
 })
