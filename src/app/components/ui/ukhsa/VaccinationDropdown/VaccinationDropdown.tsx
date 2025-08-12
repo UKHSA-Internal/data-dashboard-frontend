@@ -44,7 +44,7 @@ export const VaccinationDropdown = ({
   }
 
   return (
-    <div className={clsx('govuk-form-group', className)}>
+    <div className={clsx('govuk-form-group govuk-!-padding-left-2', className)}>
       <label className="govuk-label govuk-label--s" htmlFor="vaccination-select">
         Vaccine Selection
       </label>
