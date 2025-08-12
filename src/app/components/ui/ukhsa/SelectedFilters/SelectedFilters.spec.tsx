@@ -45,7 +45,7 @@ const MockContextProvider = ({
   mockActions = {},
 }: {
   children: ReactNode
-  selectedFilters?: string[]
+  selectedFilters?: Array<{ id: string; label: string }>
   mockActions?: Partial<TopicBodyActions>
 }) => {
   const defaultActions: TopicBodyActions = {
@@ -87,7 +87,7 @@ describe('SelectedFilters', () => {
 
     test('should render with single selected filter', () => {
       // Arrange
-      const selectedFilters = ['Test Filter']
+      const selectedFilters = [{ id: 'filter.Test Filter', label: 'Test Filter' }]
 
       // Act
       const { getByRole, getByText } = render(
@@ -104,7 +104,11 @@ describe('SelectedFilters', () => {
 
     test('should render with multiple selected filters', () => {
       // Arrange
-      const selectedFilters = ['Filter 1', 'Filter 2', 'Filter 3']
+      const selectedFilters = [
+        { id: 'filter.Filter 1', label: 'Filter 1' },
+        { id: 'filter.Filter 2', label: 'Filter 2' },
+        { id: 'filter.Filter 3', label: 'Filter 3' },
+      ]
 
       // Act
       const { getByRole, getByText } = render(
@@ -137,7 +141,10 @@ describe('SelectedFilters', () => {
     test('should call removeFilter when individual filter button is clicked', () => {
       // Arrange
       const mockRemoveFilter = jest.fn()
-      const selectedFilters = ['Test Filter', 'Another Filter']
+      const selectedFilters = [
+        { id: 'filter.Test Filter', label: 'Test Filter' },
+        { id: 'filter.Another Filter', label: 'Another Filter' },
+      ]
 
       const { getByText } = render(
         <MockContextProvider selectedFilters={selectedFilters} mockActions={{ removeFilter: mockRemoveFilter }}>
@@ -149,14 +156,18 @@ describe('SelectedFilters', () => {
       fireEvent.click(getByText('Test Filter'))
 
       // Assert
-      expect(mockRemoveFilter).toHaveBeenCalledWith('Test Filter')
+      expect(mockRemoveFilter).toHaveBeenCalledWith('filter.Test Filter')
       expect(mockRemoveFilter).toHaveBeenCalledTimes(1)
     })
 
     test('should call removeFilter for correct filter when multiple filters present', () => {
       // Arrange
       const mockRemoveFilter = jest.fn()
-      const selectedFilters = ['Filter A', 'Filter B', 'Filter C']
+      const selectedFilters = [
+        { id: 'filter.Filter A', label: 'Filter A' },
+        { id: 'filter.Filter B', label: 'Filter B' },
+        { id: 'filter.Filter C', label: 'Filter C' },
+      ]
 
       const { getByText } = render(
         <MockContextProvider selectedFilters={selectedFilters} mockActions={{ removeFilter: mockRemoveFilter }}>
@@ -168,15 +179,19 @@ describe('SelectedFilters', () => {
       fireEvent.click(getByText('Filter B'))
 
       // Assert
-      expect(mockRemoveFilter).toHaveBeenCalledWith('Filter B')
-      expect(mockRemoveFilter).not.toHaveBeenCalledWith('Filter A')
-      expect(mockRemoveFilter).not.toHaveBeenCalledWith('Filter C')
+      expect(mockRemoveFilter).toHaveBeenCalledWith('filter.Filter B')
+      expect(mockRemoveFilter).not.toHaveBeenCalledWith('filter.Filter A')
+      expect(mockRemoveFilter).not.toHaveBeenCalledWith('filter.Filter C')
     })
 
     test('should handle filter names with special characters', () => {
       // Arrange
       const mockRemoveFilter = jest.fn()
-      const selectedFilters = ['Filter & Special', 'Filter (with) brackets', 'Filter-with-dashes']
+      const selectedFilters = [
+        { id: 'filter.Filter & Special', label: 'Filter & Special' },
+        { id: 'filter.Filter (with) brackets', label: 'Filter (with) brackets' },
+        { id: 'filter.Filter-with-dashes', label: 'Filter-with-dashes' },
+      ]
 
       const { getByText } = render(
         <MockContextProvider selectedFilters={selectedFilters} mockActions={{ removeFilter: mockRemoveFilter }}>
@@ -188,7 +203,7 @@ describe('SelectedFilters', () => {
       fireEvent.click(getByText('Filter & Special'))
 
       // Assert
-      expect(mockRemoveFilter).toHaveBeenCalledWith('Filter & Special')
+      expect(mockRemoveFilter).toHaveBeenCalledWith('filter.Filter & Special')
     })
   })
 
@@ -196,7 +211,10 @@ describe('SelectedFilters', () => {
     test('should call clearFilters when clear button is clicked', () => {
       // Arrange
       const mockClearFilters = jest.fn()
-      const selectedFilters = ['Filter 1', 'Filter 2']
+      const selectedFilters = [
+        { id: 'filter.Filter 1', label: 'Filter 1' },
+        { id: 'filter.Filter 2', label: 'Filter 2' },
+      ]
 
       const { getByRole } = render(
         <MockContextProvider selectedFilters={selectedFilters} mockActions={{ clearFilters: mockClearFilters }}>
@@ -233,7 +251,10 @@ describe('SelectedFilters', () => {
   describe('UI elements and styling', () => {
     test('should render cross icons for individual filters', () => {
       // Arrange
-      const selectedFilters = ['Filter 1', 'Filter 2']
+      const selectedFilters = [
+        { id: 'filter.Filter 1', label: 'Filter 1' },
+        { id: 'filter.Filter 2', label: 'Filter 2' },
+      ]
 
       // Act
       const { getAllByTestId } = render(
@@ -250,7 +271,7 @@ describe('SelectedFilters', () => {
     test('should render blue cross icon for clear button', () => {
       // Arrange & Act
       const { getAllByTestId } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
+        <MockContextProvider selectedFilters={[{ id: 'filter.Test Filter', label: 'Test Filter' }]}>
           <SelectedFilters />
         </MockContextProvider>
       )
@@ -263,7 +284,7 @@ describe('SelectedFilters', () => {
 
     test('should have correct CSS classes on filter buttons', () => {
       // Arrange
-      const selectedFilters = ['Test Filter']
+      const selectedFilters = [{ id: 'filter.Test Filter', label: 'Test Filter' }]
 
       // Act
       const { getByText } = render(
@@ -285,7 +306,7 @@ describe('SelectedFilters', () => {
     test('should have correct CSS classes on clear button', () => {
       // Arrange & Act
       const { getByRole } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
+        <MockContextProvider selectedFilters={[{ id: 'filter.Test Filter', label: 'Test Filter' }]}>
           <SelectedFilters />
         </MockContextProvider>
       )
@@ -306,7 +327,7 @@ describe('SelectedFilters', () => {
     test('should have proper heading structure', () => {
       // Arrange & Act
       const { getByRole } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
+        <MockContextProvider selectedFilters={[{ id: 'filter.Test Filter', label: 'Test Filter' }]}>
           <SelectedFilters />
         </MockContextProvider>
       )
@@ -319,7 +340,10 @@ describe('SelectedFilters', () => {
 
     test('should have clickable buttons for all interactive elements', () => {
       // Arrange
-      const selectedFilters = ['Filter 1', 'Filter 2']
+      const selectedFilters = [
+        { id: 'filter.Filter 1', label: 'Filter 1' },
+        { id: 'filter.Filter 2', label: 'Filter 2' },
+      ]
 
       // Act
       const { getAllByRole } = render(
@@ -360,7 +384,7 @@ describe('SelectedFilters', () => {
     test('should use translated title text', () => {
       // Arrange & Act
       const { getByRole } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
+        <MockContextProvider selectedFilters={[{ id: 'filter.Test Filter', label: 'Test Filter' }]}>
           <SelectedFilters />
         </MockContextProvider>
       )

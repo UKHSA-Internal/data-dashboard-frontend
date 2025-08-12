@@ -3,6 +3,8 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
+
 type FlatOption = string
 type GroupedOption = { title: string; children: string[] }
 type Options = FlatOption[] | GroupedOption[]
@@ -15,6 +17,9 @@ interface MultiselectDropdownProps {
 export function MultiselectDropdown({ name, nestedMultiselect = false }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
+  const [state, actions] = useTopicBody()
+  const { selectedFilters } = state
+  const { addFilter, removeFilter, updateFilters } = actions
 
   // TODO: Get options from CMS
   const [options] = useState<Options>(
@@ -26,7 +31,16 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
       : ['test1', 'test2', 'test3', 'test4']
   )
 
-  const [selectedOptions, setSelectedOptions] = useState<Array<string>>([])
+  const createFilterOption = (optionValue: string) => ({
+    id: `${name}.${optionValue}`,
+    label: optionValue,
+  })
+
+  const isFilterSelected = (optionValue: string) => {
+    const filterId = `${name}.${optionValue}`
+    const isSelected = selectedFilters.some((filter) => filter.id === filterId)
+    return isSelected
+  }
 
   const flatFocusableList = React.useMemo(() => {
     if (!nestedMultiselect)
@@ -135,31 +149,56 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
       const group = (options as GroupedOption[])[groupIndexOrIndex]
       if (!group || childIndex === undefined) return
       const selectedChild = group.children[childIndex]
-      setSelectedOptions((prev) =>
-        prev.includes(selectedChild) ? prev.filter((opt) => opt !== selectedChild) : [...prev, selectedChild]
-      )
+      const filterOption = createFilterOption(selectedChild)
+
+      if (isFilterSelected(selectedChild)) {
+        removeFilter(filterOption.id)
+      } else {
+        addFilter(filterOption)
+      }
     } else {
       const option = (options as FlatOption[])[groupIndexOrIndex]
-      setSelectedOptions((prev) => (prev.includes(option) ? prev.filter((opt) => opt !== option) : [...prev, option]))
+      const filterOption = createFilterOption(option)
+
+      if (isFilterSelected(option)) {
+        removeFilter(filterOption.id)
+      } else {
+        addFilter(filterOption)
+      }
     }
   }
 
   function handleGroupSelect(groupIndex: number) {
     const group = (options as GroupedOption[])[groupIndex]
-    const allSelected = group.children.every((child) => selectedOptions.includes(child))
-    setSelectedOptions((prev) => {
-      if (allSelected) {
-        // Deselect all children
-        return prev.filter((opt) => !group.children.includes(opt))
-      } else {
-        // Select all children (add those not already present)
-        const newSelected = [...prev]
-        group.children.forEach((child) => {
-          if (!newSelected.includes(child)) newSelected.push(child)
-        })
-        return newSelected
-      }
+    const allSelected = group.children.every((child) => isFilterSelected(child))
+
+    console.log('Group selection:', {
+      groupIndex,
+      groupTitle: group.title,
+      allSelected,
+      currentSelectedFilters: selectedFilters,
+      groupChildren: group.children,
     })
+
+    if (allSelected) {
+      // Deselect all children in this group
+      const updatedFilters = selectedFilters.filter((filter) => {
+        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        return !groupChildIds.includes(filter.id)
+      })
+      console.log('Deselecting group, updated filters:', updatedFilters)
+      updateFilters(updatedFilters)
+    } else {
+      // Select all children in this group (including those already selected)
+      const groupFilters = group.children.map((child) => createFilterOption(child))
+      const nonGroupFilters = selectedFilters.filter((filter) => {
+        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        return !groupChildIds.includes(filter.id)
+      })
+      const updatedFilters = [...nonGroupFilters, ...groupFilters]
+      console.log('Selecting group, updated filters:', updatedFilters)
+      updateFilters(updatedFilters)
+    }
   }
 
   return (
@@ -203,14 +242,14 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                   <div
                     className={clsx('govuk-checkboxes govuk-checkboxes--small flex items-center px-0 font-bold')}
                     role="option"
-                    aria-selected={group.children.every((child) => selectedOptions.includes(child))}
+                    aria-selected={group.children.every((child) => isFilterSelected(child))}
                   >
                     <input
                       className="govuk-checkboxes__input py-0 pl-4"
                       name={group.title}
                       id={`ukhsa-checkbox-group-${groupIndex}`}
                       type="checkbox"
-                      checked={group.children.every((child) => selectedOptions.includes(child))}
+                      checked={group.children.every((child) => isFilterSelected(child))}
                       tabIndex={-1}
                       ref={checkboxRefs.current[groupFlatIndex]}
                       onChange={() => {
@@ -235,7 +274,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                       <div
                         key={childIndex}
                         role="option"
-                        aria-selected={selectedOptions.includes(child)}
+                        aria-selected={isFilterSelected(child)}
                         className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0 pl-4'}
                       >
                         <input
@@ -246,7 +285,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                           type="checkbox"
                           value={child}
                           ref={checkboxRefs.current[childFlatIndex]}
-                          checked={selectedOptions.includes(child)}
+                          checked={isFilterSelected(child)}
                           onChange={() => {
                             if (typeof groupIndex === 'number' && typeof childIndex === 'number')
                               handleOptionSelect(groupIndex, childIndex)
@@ -270,7 +309,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
               <div
                 key={index}
                 role="option"
-                aria-selected={selectedOptions.includes(option)}
+                aria-selected={isFilterSelected(option)}
                 className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0'}
               >
                 <input
@@ -281,7 +320,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                   type="checkbox"
                   value={option}
                   ref={checkboxRefs.current[index]}
-                  checked={selectedOptions.includes(option)}
+                  checked={isFilterSelected(option)}
                   onChange={() => handleOptionSelect(index)}
                   onKeyDown={(event) => handleKeyDown({ event, source: 'option', index })}
                 />
