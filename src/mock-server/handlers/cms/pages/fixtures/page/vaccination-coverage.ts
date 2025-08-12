@@ -272,7 +272,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: 'Under 80%',
-                                colour: 'COLOUR_1_DARK_BLUE',
+                                colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
                                 boundary_minimum_value: 0,
                                 boundary_maximum_value: 0.8,
                               },
@@ -282,7 +282,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: '80-85%',
-                                colour: 'COLOUR_2_TURQUOISE',
+                                colour: 'MAP_COLOUR_2_LIGHT_GREEN',
                                 boundary_minimum_value: 0.81,
                                 boundary_maximum_value: 0.85,
                               },
@@ -292,7 +292,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: '85-90%',
-                                colour: 'COLOUR_3_DARK_PINK',
+                                colour: 'MAP_COLOUR_3_TURQUOISE',
                                 boundary_minimum_value: 0.86,
                                 boundary_maximum_value: 0.9,
                               },
@@ -302,7 +302,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: '90-95%',
-                                colour: 'COLOUR_4_ORANGE',
+                                colour: 'MAP_COLOUR_4_BLUE',
                                 boundary_minimum_value: 0.91,
                                 boundary_maximum_value: 0.95,
                               },
@@ -312,7 +312,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: 'Over 95%',
-                                colour: 'COLOUR_5_DARK_GREY',
+                                colour: 'MAP_COLOUR_5_DARK_BLUE',
                                 boundary_minimum_value: 0.96,
                                 boundary_maximum_value: 1,
                               },
