@@ -82,48 +82,27 @@ $govuk-page-width: 1400px;
 
   // Extended Map Colours - introduced as part of the COVER work
   // Solid colors (alpha: 1)
-  --colour-map-dark-blue: rgba(18, 67, 109, 1);
-  --colour-map-turquoise: rgba(40, 161, 151, 1);
-  --colour-map-dark-pink: rgba(128, 22, 80, 1);
-  --colour-map-orange: rgba(244, 106, 37, 1);
-  --colour-map-dark-grey: rgba(61, 61, 61, 1);
-  --colour-map-light-purple: rgba(162, 133, 209, 1);
-  --colour-map-burgundy: rgba(84, 13, 52, 1);
-  --colour-map-mustard: rgba(194, 132, 0, 1);
-  --colour-map-deep-plum: rgba(51, 25, 77, 1);
-  --colour-map-pink: rgba(229, 102, 183, 1);
-  --colour-map-khaki: rgba(71, 71, 0, 1);
-  --colour-map-blue: rgba(0, 157, 214, 1);
+  --colour-map-dark-blue: rgba(8, 104, 172, 1);
+  --colour-map-turquoise: rgba(123, 204, 196, 1);
+  --colour-map-blue: rgba(67, 162, 202, 1);
+  --colour-map-light-green: rgba(186, 228, 188, 1);
+  --colour-map-light-yellow: rgba(240, 249, 232, 1);
   --colour-map-white: rgba(255, 255, 255, 1);
 
   // semi-transparent colors (alpha: 0.5)
-  --colour-map-dark-blue-semi: rgba(18, 67, 109, 0.5);
-  --colour-map-turquoise-semi: rgba(40, 161, 151, 0.5);
-  --colour-map-dark-pink-semi: rgba(128, 22, 80, 0.5);
-  --colour-map-orange-semi: rgba(244, 106, 37, 0.5);
-  --colour-map-dark-grey-semi: rgba(61, 61, 61, 0.5);
-  --colour-map-light-purple-semi: rgba(162, 133, 209, 0.5);
-  --colour-map-burgundy-semi: rgba(84, 13, 52, 0.5);
-  --colour-map-mustard-semi: rgba(194, 132, 0, 0.5);
-  --colour-map-deep-plum-semi: rgba(51, 25, 77, 0.5);
-  --colour-map-pink-semi: rgba(229, 102, 183, 0.5);
-  --colour-map-khaki-semi: rgba(71, 71, 0, 0.5);
-  --colour-map-blue-semi: rgba(0, 157, 214, 0.5);
+  --colour-map-dark-blue-semi: rgba(8, 104, 172, 0.5);
+  --colour-map-turquoise-semi: rgba(123, 204, 196, 0.5);
+  --colour-map-blue-semi: rgba(67, 162, 202, 0.5);
+  --colour-map-light-green-semi: rgba(186, 228, 188, 0.5);
+  --colour-map-light-yellow-semi: rgba(240, 249, 232, 0.5);
   --colour-map-white-semi: rgba(255, 255, 255, 0.5);
 
   // hover colours (alpha:0.75)
-  --colour-map-dark-blue-hover: rgba(18, 67, 109, 0.75);
-  --colour-map-turquoise-hover: rgba(40, 161, 151, 0.75);
-  --colour-map-dark-pink-hover: rgba(128, 22, 80, 0.75);
-  --colour-map-orange-hover: rgba(244, 106, 37, 0.75);
-  --colour-map-dark-grey-hover: rgba(61, 61, 61, 0.75);
-  --colour-map-light-purple-hover: rgba(162, 133, 209, 0.75);
-  --colour-map-burgundy-hover: rgba(84, 13, 52, 0.75);
-  --colour-map-mustard-hover: rgba(194, 132, 0, 0.75);
-  --colour-map-deep-plum-hover: rgba(51, 25, 77, 0.75);
-  --colour-map-pink-hover: rgba(229, 102, 183, 0.75);
-  --colour-map-khaki-hover: rgba(71, 71, 0, 0.75);
-  --colour-map-blue-hover: rgba(0, 157, 214, 0.75);
+  --colour-map-dark-blue-hover: rgba(8, 104, 172, 0.75);
+  --colour-map-turquoise-hover: rgba(123, 204, 196, 0.75);
+  --colour-map-blue-hover: rgba(67, 162, 202, 0.75);
+  --colour-map-light-green-hover: rgba(186, 228, 188, 0.75);
+  --colour-map-light-yellow-hover: rgba(240, 249, 232, 0.75);
   --colour-map-white-hover: rgba(255, 255, 255, 0.75);
 
   // Govuk greys

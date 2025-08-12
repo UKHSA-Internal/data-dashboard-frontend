@@ -43,19 +43,19 @@ jest.mock('clsx', () => ({
 describe('MapLegendControl', () => {
   const mockLegendItems = [
     {
-      colour: MapFeatureColour.COLOUR_10_PINK,
+      colour: MapFeatureColour.MAP_COLOUR_1_LIGHT_YELLOW,
       label: 'Low Risk',
       boundary_minimum_value: 0,
       boundary_maximum_value: 0.33,
     },
     {
-      colour: MapFeatureColour.COLOUR_10_PINK,
+      colour: MapFeatureColour.MAP_COLOUR_1_LIGHT_YELLOW,
       label: 'Medium Risk',
       boundary_minimum_value: 0.34,
       boundary_maximum_value: 0.66,
     },
     {
-      colour: MapFeatureColour.COLOUR_10_PINK,
+      colour: MapFeatureColour.MAP_COLOUR_1_LIGHT_YELLOW,
       label: 'High Risk',
       boundary_minimum_value: 0.67,
       boundary_maximum_value: 1,
@@ -223,7 +223,7 @@ describe('MapLegendControl', () => {
     test('handles single legend item', () => {
       const singleItem = [
         {
-          colour: MapFeatureColour.COLOUR_10_PINK,
+          colour: MapFeatureColour.MAP_COLOUR_1_LIGHT_YELLOW,
           label: 'Single Item',
           boundary_minimum_value: 0,
           boundary_maximum_value: 1,

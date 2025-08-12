@@ -59,31 +59,31 @@ export default function MapCard({
 
   const thresholdData: ThresholdItemProps[] = [
     {
-      colour: 'COLOUR_4_ORANGE' as MapFeatureColour,
+      colour: 'MAP_COLOUR_1_LIGHT_YELLOW' as MapFeatureColour,
       label: 'less than 65%',
       boundary_minimum_value: 0.0,
       boundary_maximum_value: 0.64,
     },
     {
-      colour: 'COLOUR_12_BLUE' as MapFeatureColour,
+      colour: 'MAP_COLOUR_2_LIGHT_GREEN' as MapFeatureColour,
       label: '65% - 74%',
       boundary_minimum_value: 0.65,
       boundary_maximum_value: 0.74,
     },
     {
-      colour: 'COLOUR_10_PINK' as MapFeatureColour,
+      colour: 'MAP_COLOUR_3_TURQUOISE' as MapFeatureColour,
       label: '75% - 84%',
       boundary_minimum_value: 0.75,
       boundary_maximum_value: 0.84,
     },
     {
-      colour: 'COLOUR_9_DEEP_PLUM' as MapFeatureColour,
+      colour: 'MAP_COLOUR_4_BLUE' as MapFeatureColour,
       label: '85% - 95%',
       boundary_minimum_value: 0.85,
       boundary_maximum_value: 0.95,
     },
     {
-      colour: 'COLOUR_2_TURQUOISE' as MapFeatureColour,
+      colour: 'MAP_COLOUR_5_DARK_BLUE' as MapFeatureColour,
       label: 'over 95%',
       boundary_minimum_value: 0.96,
       boundary_maximum_value: 1,
