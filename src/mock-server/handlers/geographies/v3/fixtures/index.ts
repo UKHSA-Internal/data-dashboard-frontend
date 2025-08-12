@@ -1,4 +1,5 @@
-export * from './localAuthorities'
+export * from './lowerTierLocalAuthorities'
 export * from './nations'
 export * from './regions'
 export * from './unitedKingdom'
+export * from './upperTierLocalAuthorities'

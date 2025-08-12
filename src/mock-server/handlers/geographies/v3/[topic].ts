@@ -3,12 +3,19 @@ import { Request, Response } from 'express'
 import type { GeographyType, Topics } from '@/api/models'
 import { logger } from '@/lib/logger'
 
-import { mockLocalAuthorities, mockNations, mockRegions, mockUnitedKingdom } from './fixtures'
+import {
+  mockLowerTierLocalAuthorities,
+  mockNations,
+  mockRegions,
+  mockUnitedKingdom,
+  mockUpperTierLocalAuthorities,
+} from './fixtures'
 
 type MockedTopics = Extract<Topics, 'COVID-19'> | Extract<Topics, 'Influenza'>
 type MockedGeographyTypes =
   | Extract<GeographyType, 'Region'>
   | Extract<GeographyType, 'Lower Tier Local Authority'>
+  | Extract<GeographyType, 'Upper Tier Local Authority'>
   | Extract<GeographyType, 'Nation'>
   | Extract<GeographyType, 'United Kingdom'>
 
@@ -19,7 +26,7 @@ export const geographyMock = [
   },
   {
     geography_type: 'Upper Tier Local Authority',
-    geographies: mockLocalAuthorities,
+    geographies: mockUpperTierLocalAuthorities,
   },
   {
     geography_type: 'Region',
@@ -28,6 +35,10 @@ export const geographyMock = [
   {
     geography_type: 'United Kingdom',
     geographies: mockUnitedKingdom,
+  },
+  {
+    geography_type: 'Lower Tier Local Authority',
+    geographies: mockLowerTierLocalAuthorities,
   },
 ]
 
@@ -46,6 +57,7 @@ const geographyTypeMocks: Record<
   'Upper Tier Local Authority': geographyMock[1],
   Region: geographyMock[2],
   'United Kingdom': geographyMock[3],
+  'Lower Tier Local Authority': geographyMock[4],
 }
 
 export default async function handler(req: Request, res: Response) {

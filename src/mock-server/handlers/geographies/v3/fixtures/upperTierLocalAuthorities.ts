@@ -1,4 +1,4 @@
-export const mockLocalAuthorities = [
+export const mockUpperTierLocalAuthorities = [
   {
     name: 'Barking and Dagenham',
     geography_code: 'E09000002',
