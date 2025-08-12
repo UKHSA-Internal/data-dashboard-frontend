@@ -5,13 +5,13 @@ import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import {
   Announcements,
+  FilterBanners,
   PageSection,
   PageSectionWithContents,
   SelectedFilters,
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
-import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import FilterDropdowns from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -49,7 +49,6 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
 
   body.map(({ value }) => {
@@ -137,13 +136,7 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
-              {/* Example, do not un-comment */}
-              {showFilterBanner && (
-                <FilterBanner
-                  message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
-                  showIcon={true}
-                />
-              )}
+              <FilterBanners />
               <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />

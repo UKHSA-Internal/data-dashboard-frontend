@@ -12,9 +12,10 @@ type Options = FlatOption[] | GroupedOption[]
 interface MultiselectDropdownProps {
   name: string
   nestedMultiselect?: boolean
+  selectionLimit?: number
 }
 
-export function MultiselectDropdown({ name, nestedMultiselect = false }: MultiselectDropdownProps) {
+export function MultiselectDropdown({ name, nestedMultiselect = false, selectionLimit = 4 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const [state, actions] = useTopicBody()
@@ -28,7 +29,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
           { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
           { title: 'Group 2', children: ['child4', 'child5'] },
         ]
-      : ['test1', 'test2', 'test3', 'test4']
+      : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
   )
 
   const createFilterOption = (optionValue: string) => ({
@@ -40,6 +41,16 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
     const filterId = `${name}.${optionValue}`
     const isSelected = selectedFilters.some((filter) => filter.id === filterId)
     return isSelected
+  }
+
+  const isOptionDisabled = (optionValue: string) => {
+    if (nestedMultiselect) return false
+    if (isFilterSelected(optionValue)) return false
+
+    const currentSelectionCount = selectedFilters.filter((filter) => filter.id.startsWith(`${name}.`)).length
+
+    // Disable if we've reached the limit
+    return currentSelectionCount >= selectionLimit
   }
 
   const flatFocusableList = React.useMemo(() => {
@@ -121,6 +132,11 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
               handleOptionSelect(currentItem.groupIndex, currentItem.childIndex)
             }
           } else {
+            // Check if disabled before handling
+            if (!nestedMultiselect) {
+              const option = (options as FlatOption[])[index]
+              if (isOptionDisabled(option)) return
+            }
             handleOptionSelect(index)
           }
         } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
@@ -158,6 +174,8 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
       }
     } else {
       const option = (options as FlatOption[])[groupIndexOrIndex]
+      if (isOptionDisabled(option)) return
+
       const filterOption = createFilterOption(option)
 
       if (isFilterSelected(option)) {
@@ -186,7 +204,6 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
         const groupChildIds = group.children.map((child) => `${name}.${child}`)
         return !groupChildIds.includes(filter.id)
       })
-      console.log('Deselecting group, updated filters:', updatedFilters)
       updateFilters(updatedFilters)
     } else {
       // Select all children in this group (including those already selected)
@@ -196,7 +213,6 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
         return !groupChildIds.includes(filter.id)
       })
       const updatedFilters = [...nonGroupFilters, ...groupFilters]
-      console.log('Selecting group, updated filters:', updatedFilters)
       updateFilters(updatedFilters)
     }
   }
@@ -305,30 +321,39 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
               )
             })
           : // Render single depth of options
-            (options as FlatOption[]).map((option: FlatOption, index: number) => (
-              <div
-                key={index}
-                role="option"
-                aria-selected={isFilterSelected(option)}
-                className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0'}
-              >
-                <input
-                  className="govuk-checkboxes__input py-0 pl-4"
-                  tabIndex={-1}
-                  name={option}
-                  id={`ukhsa-checkbox-${option}`}
-                  type="checkbox"
-                  value={option}
-                  ref={checkboxRefs.current[index]}
-                  checked={isFilterSelected(option)}
-                  onChange={() => handleOptionSelect(index)}
-                  onKeyDown={(event) => handleKeyDown({ event, source: 'option', index })}
-                />
-                <label className="govuk-label govuk-checkboxes__label py-0" htmlFor={`ukhsa-checkbox-${option}`}>
-                  {option}
-                </label>
-              </div>
-            ))}
+            (options as FlatOption[]).map((option: FlatOption, index: number) => {
+              const isDisabled = isOptionDisabled(option)
+              return (
+                <div
+                  key={index}
+                  role="option"
+                  aria-selected={isFilterSelected(option)}
+                  className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0'}
+                >
+                  <input
+                    className="govuk-checkboxes__input py-0 pl-4"
+                    tabIndex={-1}
+                    name={option}
+                    id={`ukhsa-checkbox-${option}`}
+                    type="checkbox"
+                    value={option}
+                    ref={checkboxRefs.current[index]}
+                    checked={isFilterSelected(option)}
+                    disabled={isDisabled}
+                    onChange={() => handleOptionSelect(index)}
+                    onKeyDown={(event) => handleKeyDown({ event, source: 'option', index })}
+                  />
+                  <label
+                    className={clsx('govuk-label govuk-checkboxes__label py-0', {
+                      'govuk-checkboxes__label--disabled': isDisabled,
+                    })}
+                    htmlFor={`ukhsa-checkbox-${option}`}
+                  >
+                    {option}
+                  </label>
+                </div>
+              )
+            })}
       </div>
     </div>
   )

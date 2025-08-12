@@ -143,6 +143,36 @@ describe('flat multiselect component', () => {
     fireEvent.keyDown(checkboxes[1], { key: ' ' })
     expect(checkboxes[1]).toBeChecked()
   })
+
+  it('enforces selection limit for single depth filters', () => {
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} selectionLimit={2} />
+      </MockContextProvider>
+    )
+
+    const button = screen.getByRole('button', { name })
+    fireEvent.click(button)
+    const checkboxes = screen.getAllByRole('checkbox')
+
+    // Select first two options
+    fireEvent.click(checkboxes[0])
+    fireEvent.click(checkboxes[1])
+
+    expect(checkboxes[0]).toBeChecked()
+    expect(checkboxes[1]).toBeChecked()
+
+    // Third and fourth options should be disabled
+    expect(checkboxes[2]).toBeDisabled()
+    expect(checkboxes[3]).toBeDisabled()
+
+    // Deselect one option
+    fireEvent.click(checkboxes[0])
+    expect(checkboxes[0]).not.toBeChecked()
+
+    // Third option should now be enabled
+    expect(checkboxes[2]).not.toBeDisabled()
+  })
 })
 
 describe('nested multiselect', () => {
