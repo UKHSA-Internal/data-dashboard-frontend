@@ -3,7 +3,14 @@
 import * as React from 'react'
 import { useState } from 'react'
 
-import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilters,
+  GeographyFilters,
+  ThresholdFilters,
+  TimePeriod,
+  GeographyFilter,
+} from '@/api/models/cms/Page/GlobalFilter'
+import { GeographyResponse } from '@/api/requests/geographies/getGeographies'
 
 export interface TopicBodyState {
   selectedFilters: string[]
@@ -12,6 +19,9 @@ export interface TopicBodyState {
   geographyFilters: GeographyFilters
   thresholdFilters: ThresholdFilters
   selectedTimePeriod: TimePeriod | null
+  geographyAreas: Map<string, GeographyResponse>
+  geographyAreasLoading: boolean
+  geographyAreasError: string | null
 }
 
 export interface TopicBodyActions {
@@ -29,6 +39,11 @@ export interface TopicBodyActions {
   setDataFilters: (dataFilters: DataFilters) => void
   setGeographyFilters: (geographyFilters: GeographyFilters) => void
   setThresholdFilters: (thresholdFilters: ThresholdFilters) => void
+  setGeographyAreas: (geographyType: string, areas: GeographyResponse) => void
+  setGeographyAreasLoading: (loading: boolean) => void
+  setGeographyAreasError: (error: string | null) => void
+  clearGeographyAreas: () => void
+  getGeographyAreasByType: (geographyType: string) => GeographyResponse
 }
 
 const initialState: TopicBodyState = {
@@ -38,6 +53,9 @@ const initialState: TopicBodyState = {
   geographyFilters: {} as GeographyFilters,
   thresholdFilters: {} as ThresholdFilters,
   selectedTimePeriod: null,
+  geographyAreas: new Map(),
+  geographyAreasLoading: false,
+  geographyAreasError: null,
 }
 
 export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
@@ -48,6 +66,10 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const [dataFilters, setDataFiltersState] = useState<DataFilters>({} as DataFilters)
   const [thresholdFilters, setThresholdFiltersState] = useState<ThresholdFilters>({} as ThresholdFilters)
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
+
+  const [geographyAreas, setGeographyAreasMap] = useState<Map<string, GeographyResponse>>(new Map())
+  const [geographyAreasLoading, setGeographyAreasLoadingState] = useState<boolean>(false)
+  const [geographyAreasError, setGeographyAreasErrorState] = useState<string | null>(null)
 
   const updateFilters = (newFilters: string[]) => {
     setSelectedFilters(newFilters)
@@ -85,7 +107,6 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   }
 
   const setThresholdFilters = (newThresholdFilters: ThresholdFilters) => {
-    console.log('newThresholdFilters', newThresholdFilters)
     setThresholdFiltersState(newThresholdFilters)
   }
 
@@ -98,6 +119,31 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     setSelectedTimePeriodState(null)
   }
 
+  const setGeographyAreas = (geographyType: string, areas: GeographyResponse) => {
+    setGeographyAreasMap((prevMap) => {
+      const newMap = new Map(prevMap)
+      newMap.set(geographyType, areas)
+      return newMap
+    })
+  }
+
+  const setGeographyAreasLoading = (loading: boolean) => {
+    setGeographyAreasLoadingState(loading)
+  }
+
+  const setGeographyAreasError = (error: string | null) => {
+    setGeographyAreasErrorState(error)
+  }
+
+  const clearGeographyAreas = () => {
+    setGeographyAreasMap(new Map())
+    setGeographyAreasErrorState(null)
+  }
+
+  const getGeographyAreasByType = (geographyType: string): GeographyResponse => {
+    return geographyAreas.get(geographyType) || []
+  }
+
   const state: TopicBodyState = {
     selectedFilters,
     timePeriods,
@@ -105,6 +151,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     geographyFilters,
     thresholdFilters,
     selectedTimePeriod,
+    geographyAreas,
+    geographyAreasLoading,
+    geographyAreasError,
   }
 
   const actions: TopicBodyActions = {
@@ -118,6 +167,11 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     setThresholdFilters,
     setSelectedTimePeriod,
     clearTimePeriods,
+    setGeographyAreas,
+    setGeographyAreasLoading,
+    setGeographyAreasError,
+    clearGeographyAreas,
+    getGeographyAreasByType,
   }
 
   return [state, actions] as const

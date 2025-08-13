@@ -4,6 +4,7 @@ import { useEffect } from 'react'
 
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
+import { useGeographyAreasFetcher } from '@/app/hooks/useGeographyAreasFetcher'
 
 interface TimePeriodsHandlerProps {
   timePeriods: TimePeriod[]
@@ -19,7 +20,21 @@ export const TimePeriodsHandler = ({
   geographyFilters,
 }: TimePeriodsHandlerProps) => {
   const [, actions] = useTopicBody()
-  const { setTimePeriods, setDataFilters, setThresholdFilters, setGeographyFilters } = actions
+  const {
+    setTimePeriods,
+    setDataFilters,
+    setThresholdFilters,
+    setGeographyFilters,
+    setGeographyAreas,
+    setGeographyAreasLoading,
+    setGeographyAreasError,
+  } = actions
+
+  const { fetchGeographyAreas } = useGeographyAreasFetcher({
+    setGeographyAreas,
+    setGeographyAreasLoading,
+    setGeographyAreasError,
+  })
 
   useEffect(() => {
     // Handle undefined, null, or invalid timePeriods
@@ -45,6 +60,14 @@ export const TimePeriodsHandler = ({
       setThresholdFilters(thresholdFilters)
     }
   }, [thresholdFilters, setThresholdFilters])
+
+  useEffect(() => {
+    if (geographyFilters?.geography_types && geographyFilters.geography_types.length > 0) {
+      const geographyTypes = geographyFilters.geography_types.map((geographyType) => geographyType.value.geography_type)
+
+      fetchGeographyAreas(geographyTypes)
+    }
+  }, [])
 
   return null
 }
