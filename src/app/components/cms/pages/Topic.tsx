@@ -110,7 +110,7 @@ export default async function TopicPage({
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
-        {title === 'Childhood vaccinations' && (
+        {slug[1] === 'childhood-vaccinations' && (
           <img
             className="float-right"
             src={'/assets/images/accredited-official-statistics-logo.svg'}
