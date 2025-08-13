@@ -2,17 +2,10 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import {
-  Announcements,
-  FilterBanners,
-  PageSection,
-  PageSectionWithContents,
-  //SelectedFilters,
-  View,
-} from '@/app/components/ui/ukhsa'
+import { Announcements, PageSection, PageSectionWithContents, SelectedFilters, View } from '@/app/components/ui/ukhsa'
+import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
+import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
 import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
-// import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
-// import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -22,6 +15,7 @@ import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -48,7 +42,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  // const showFilterBanner = false
+  const showFilterBanner = false
   let extractedGlobalFilterContent = {} as ExtractedFilters
 
   body.map(({ value }) => {
@@ -129,16 +123,16 @@ export default async function TopicPage({
 
             <GlobalFilterProvider filters={extractedGlobalFilterContent}>
               {/* Example, do not un-comment  */}
-              {/* {showFilterBanner && (
+              {showFilterBanner && (
                 <FilterBanner
                   message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
                   showIcon={true}
                 />
-              )} */}
-              {/* <StaticFilter>
+              )}
+              <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
-              </StaticFilter> */}
+              </StaticFilter>
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (
                   <PageSection key={id} heading={value.heading}>
