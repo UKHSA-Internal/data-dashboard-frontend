@@ -1,4 +1,3 @@
-import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -8,21 +7,19 @@ import {
   FilterBanners,
   PageSection,
   PageSectionWithContents,
-  // SelectedFilters,
-  TopicBodyContextProvider,
+  //SelectedFilters,
   View,
 } from '@/app/components/ui/ukhsa'
+import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
+// import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
 // import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
+import { extractDataFromGlobalFilter, ExtractedFilters } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
-import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
-import { VaccinationsHandler } from '../../ui/ukhsa/Context/VaccinationsHandler'
-// import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
-// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
@@ -52,10 +49,7 @@ export default async function TopicPage({
   let chartCounter = 0
 
   // const showFilterBanner = false
-  let extractedTimePeriods: TimePeriod[] = []
-  let thresholdFilters: ThresholdFilters = {} as ThresholdFilters
-  let geographyFilters: GeographyFilters = {} as GeographyFilters
-  let dataFilters: DataFilters = {} as DataFilters
+  let extractedGlobalFilterContent = {} as ExtractedFilters
 
   body.map(({ value }) => {
     if (value.content) {
@@ -83,28 +77,8 @@ export default async function TopicPage({
           })
         }
         // abstract out available time periods
-        if (content.type === 'global_filter_card' && content.value.time_range) {
-          extractedTimePeriods = content.value.time_range.time_periods
-        }
-        // abstract out the other information received from the global filter card
-        if (content.type === 'global_filter_card' && content.value.rows) {
-          content.value.rows.map((items) => {
-            const filters = items.value.filters
-            filters.map((filter) => {
-              if (filter.type === 'geography_filters') {
-                //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a gerography-filter type
-                geographyFilters = filter.value
-              }
-              if (filter.type === 'threshold_filters') {
-                //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a threshold-filters type
-                thresholdFilters = filter.value
-              }
-              if (filter.type === 'data_filters') {
-                //@ts-expect-error - Errors due to a union however because of the filter on type the only possible type is a data-filters type
-                dataFilters = filter.value
-              }
-            })
-          })
+        if (content.type === 'global_filter_card') {
+          extractedGlobalFilterContent = extractDataFromGlobalFilter(content)
         }
       })
     }
@@ -153,25 +127,18 @@ export default async function TopicPage({
               </>
             )}
 
-            <TopicBodyContextProvider>
-              <TimePeriodsHandler
-                timePeriods={extractedTimePeriods}
-                geographyFilters={geographyFilters}
-                thresholdFilters={thresholdFilters}
-                dataFilters={dataFilters}
-              />
-              {/* Example, do not un-comment 
-              {showFilterBanner && (
+            <GlobalFilterProvider filters={extractedGlobalFilterContent}>
+              {/* Example, do not un-comment  */}
+              {/* {showFilterBanner && (
                 <FilterBanner
                   message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
                   showIcon={true}
                 />
-              )}
-              {/*<StaticFilter>
+              )} */}
+              {/* <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
               </StaticFilter> */}
-
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (
                   <PageSection key={id} heading={value.heading}>
@@ -181,7 +148,7 @@ export default async function TopicPage({
                   </PageSection>
                 ))}
               </PageSectionWithContents>
-            </TopicBodyContextProvider>
+            </GlobalFilterProvider>
           </div>
 
           {relatedLinksLayout === 'Sidebar' ? (

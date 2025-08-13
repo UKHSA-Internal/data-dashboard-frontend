@@ -1,8 +1,8 @@
 import React from 'react'
 
+import { useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { render, screen } from '@/config/test-utils'
 
-import { useTopicBody } from '../../ui/ukhsa/Context/TopicBodyContext'
 import MapCard from './MapCard'
 
 // Mock the useMapRef hook
@@ -18,11 +18,10 @@ jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapData', () => ({
   }),
 }))
 
-jest.mock('../../ui/ukhsa/Context/TopicBodyContext', () => ({
-  TopicBodyContextProvider: ({ children }: { children: React.ReactNode }) => (
-    <div data-testid="topic-body-provider">{children}</div>
-  ),
-  useTopicBody: jest.fn(),
+jest.mock('@/app/hooks/globalFilterHooks', () => ({
+  useThresholdFilters: jest.fn().mockReturnValue({
+    thresholds: [],
+  }),
 }))
 
 interface MockLayerProps {
@@ -130,63 +129,45 @@ jest.mock('clsx', () => ({
   default: jest.fn((...args) => args.filter(Boolean).join(' ')),
 }))
 
-interface MockThreshold {
-  value: {
-    colour: string
-    boundary_minimum_value: number
-    boundary_maximum_value: number
-    label: string
-  }
-}
-
-interface MockTopicBodyState {
-  thresholdFilters: {
-    thresholds: MockThreshold[]
-  }
-}
-
-const mockUseTopicBody = useTopicBody as jest.MockedFunction<typeof useTopicBody>
+const mockUseThresholdFilters = useThresholdFilters as jest.MockedFunction<typeof useThresholdFilters>
 
 describe('MapCard', () => {
   beforeEach(() => {
-    // Setup default mock data for useTopicBody
-
-    mockUseTopicBody.mockReturnValue([
-      //@ts-expect-error - Only needs threshold filters to be mocked rather than all of state.
-      {
-        thresholdFilters: {
-          thresholds: [
-            {
-              value: {
-                colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
-                boundary_minimum_value: 0,
-                boundary_maximum_value: 10,
-                label: 'Low',
-              },
-            },
-            {
-              value: {
-                colour: 'MAP_COLOUR_2_LIGHT_GREEN',
-                boundary_minimum_value: 11,
-                boundary_maximum_value: 20,
-                label: 'Medium',
-              },
-            },
-            {
-              value: {
-                colour: 'MAP_COLOUR_3_TURQUOISE',
-                boundary_minimum_value: 21,
-                boundary_maximum_value: 100,
-                label: 'High',
-              },
-            },
-          ],
+    mockUseThresholdFilters.mockReturnValue({
+      label: 'Threshold values',
+      thresholds: [
+        {
+          id: '1',
+          value: {
+            colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+            boundary_minimum_value: 0,
+            boundary_maximum_value: 10,
+            label: 'Low',
+          },
+          type: 'threshold',
         },
-      } as MockTopicBodyState,
-      // Add the second element if useTopicBody returns a tuple (state setter function)
-      //@ts-expect-error - Does not need all of state to be mocked
-      jest.fn(),
-    ])
+        {
+          id: '2',
+          value: {
+            colour: 'MAP_COLOUR_2_LIGHT_GREEN',
+            boundary_minimum_value: 11,
+            boundary_maximum_value: 20,
+            label: 'Medium',
+          },
+          type: 'threshold',
+        },
+        {
+          id: '3',
+          value: {
+            colour: 'MAP_COLOUR_3_TURQUOISE',
+            boundary_minimum_value: 21,
+            boundary_maximum_value: 100,
+            label: 'High',
+          },
+          type: 'threshold',
+        },
+      ],
+    })
   })
 
   afterEach(() => {

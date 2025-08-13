@@ -8,8 +8,8 @@ import dynamic from 'next/dynamic'
 import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
-import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
@@ -58,11 +58,9 @@ export default function MapCard({
 }: MapCardProps) {
   const ref = useMapRef()
 
-  const [state] = useTopicBody()
+  const thresholdFilters = useThresholdFilters()
 
-  const { thresholdFilters } = state
-
-  const thresholdData: ThresholdItemProps[] = thresholdFilters.thresholds.map((threshold) => {
+  const thresholdData: ThresholdItemProps[] = thresholdFilters!.thresholds.map((threshold) => {
     return {
       colour: threshold.value.colour as MapFeatureColour,
       boundary_minimum_value: threshold.value.boundary_minimum_value,
