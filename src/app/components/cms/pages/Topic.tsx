@@ -110,6 +110,14 @@ export default async function TopicPage({
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
+        {title === 'Childhood vaccinations' && (
+          <img
+            className="float-right"
+            src={'/assets/images/accredited-official-statistics-logo.svg'}
+            height={'70px'}
+            width={'70px'}
+          />
+        )}
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
         <Announcements announcements={activeAnnouncements} />
