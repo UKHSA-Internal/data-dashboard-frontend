@@ -190,14 +190,6 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
     const group = (options as GroupedOption[])[groupIndex]
     const allSelected = group.children.every((child) => isFilterSelected(child))
 
-    console.log('Group selection:', {
-      groupIndex,
-      groupTitle: group.title,
-      allSelected,
-      currentSelectedFilters: selectedFilters,
-      groupChildren: group.children,
-    })
-
     if (allSelected) {
       // Deselect all children in this group
       const updatedFilters = selectedFilters.filter((filter) => {

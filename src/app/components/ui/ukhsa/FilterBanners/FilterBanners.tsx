@@ -9,11 +9,21 @@ export function FilterBanners() {
   const [state] = useTopicBody()
   const { selectedFilters } = state
 
-  const countryFilters = selectedFilters.filter((filter) => filter.id.startsWith('Country.'))
-  const regionFilters = selectedFilters.filter((filter) => filter.id.startsWith('Region.'))
-  const localAuthorityFilters = selectedFilters.filter((filter) => filter.id.startsWith('Local Authority.'))
+  // Group filters
+  const filterGroups = selectedFilters.reduce(
+    (groups, filter) => {
+      const prefix = filter.id.split('.')[0]
+      if (!groups[prefix]) {
+        groups[prefix] = []
+      }
+      groups[prefix].push(filter)
+      return groups
+    },
+    {} as Record<string, typeof selectedFilters>
+  )
 
-  const showFilterBanner = countryFilters.length > 3 || regionFilters.length > 3 || localAuthorityFilters.length > 3
+  // Check if any filter group has more than 3 items
+  const showFilterBanner = Object.values(filterGroups).some((group) => group.length > 3)
 
   if (!showFilterBanner) {
     return null

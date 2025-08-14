@@ -18,7 +18,7 @@ export function SelectedFilters() {
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{`${t('globalFilter.globalFilterTitle')} (${state.selectedFilters.length})`}</h2>
       <button
         onClick={() => clearFilters()}
-        className="govuk-body-xs govuk-!-margin-[-2px] govuk-link absolute right-0 text-blue underline"
+        className="govuk-body-xs govuk-!-margin-[-2px] govuk-link absolute right-3 text-blue underline"
       >
         Clear filter selection
         <span className="govuk-!-margin-left-2 inline-block">

@@ -30,11 +30,7 @@ export interface TopicBodyActions {
 }
 
 const initialState: TopicBodyState = {
-  selectedFilters: [
-    { id: 'location.Leicester', label: 'Leicester' },
-    { id: 'location.London', label: 'London' },
-    { id: 'vaccine.6-in-1', label: '6-in-1' },
-  ],
+  selectedFilters: [],
   timePeriods: [],
   selectedTimePeriod: null,
 }
