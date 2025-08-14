@@ -1,5 +1,11 @@
 import { CardTypes } from '@/api/models/cms/Page/Body'
-import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilters,
+  GeographyFilters,
+  ThresholdFilters,
+  TimePeriod,
+  GeographyFilter,
+} from '@/api/models/cms/Page/GlobalFilter'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 export interface ExtractedFilters {
   timePeriods: TimePeriod[]
@@ -13,7 +19,6 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
   let thresholdFilters: ThresholdFilters | null = null
   let dataFilters: DataFilters | null = null
   let timePeriods: TimePeriod[] = []
-
   // Extracts each of the filter types that are provided in the rows
   if (content.type === 'global_filter_card' && content.value.rows) {
     content.value.rows.forEach((row: any) => {
@@ -43,4 +48,9 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
     thresholdFilters,
     dataFilters,
   }
+}
+
+export function extractGeographyIdFromGeographyFilter(geographyFilter: GeographyFilters | null): string[] {
+  if (!geographyFilter) return []
+  return geographyFilter.geography_types.map((filter) => filter.value.geography_type)
 }

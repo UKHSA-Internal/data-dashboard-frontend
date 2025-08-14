@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { GeographyType, Topics } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
+import { isSSR } from '@/app/utils/app.utils'
 
 export const responseSchema = z.array(
   z.object({
@@ -36,24 +37,23 @@ export type GeographyParams = {
 
 export const getGeographies = async (params: GeographyParams) => {
   try {
+    const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
       throw new Error('Only one of topic or geography_type can be provided')
     }
     if (params.topic) {
       try {
-        const { data } = await client<z.infer<typeof responseSchema>>(`geographies/v3?topic=${params.topic}`)
+        const { data } = await client<z.infer<typeof responseSchema>>(`${path}?topic=${params.topic}`)
         return responseSchema.safeParse(data)
       } catch (error) {
         logger.error(error)
-
         return responseSchema.safeParse(error)
       }
     }
     if (params.geography_type) {
       try {
-        const { data } = await client<z.infer<typeof responseSchema>>(
-          `geographies/v3?geography_type=${params.geography_type}`
-        )
+        const { data } = await client<z.infer<typeof responseSchema>>(`${path}?geography_type=${params.geography_type}`)
+
         return responseSchema.safeParse(data)
       } catch (error) {
         logger.error(error)

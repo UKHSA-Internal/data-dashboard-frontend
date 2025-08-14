@@ -1,8 +1,11 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useState, useEffect } from 'react'
 
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+
+import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
+import { getGeographies, GeographyResponse } from '@/api/requests/geographies/getGeographies'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -24,6 +27,9 @@ export interface GlobalFilterProviderProps {
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
   selectedFilters: FilterOption[]
+  geographyAreas: Map<string, GeographyResponse>
+  geographyAreasLoading: boolean
+  geographyAreasError: string | null
 }
 
 // Global Filter Action Interface
@@ -48,13 +54,49 @@ export const GlobalFilterContext = createContext<GlobalFilterContextValue | null
 export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProviderProps) => {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<TimePeriod | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([])
+  const [geographyAreas, setGeographyAreas] = useState<Map<string, GeographyResponse>>(new Map())
+  const [geographyAreasLoading, setGeographyAreasLoading] = useState<boolean>(false)
+  const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
+
+  const fetchGeographyData = async () => {
+    let geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
+    try {
+      setGeographyAreasLoading(true)
+      const responses = await Promise.all(
+        geographyTypes.map((geographyTypes) =>
+          getGeographies({
+            geography_type: geographyTypes,
+          })
+        )
+      )
+      const newGeographyAreas = new Map(geographyAreas)
+      console.log('responses: ', responses)
+      responses.forEach((response: GeographyResponse) => {
+        newGeographyAreas.set(response.id, response)
+      })
+      setGeographyAreas(newGeographyAreas)
+    } catch (error: any) {
+      setGeographyAreasError('Error fetching geography data: ' + error.message || 'Unknown error')
+    } finally {
+      setGeographyAreasLoading(false)
+    }
+  }
+
+  useEffect(() => {
+    if (!filters.geographyFilters) return
+    fetchGeographyData()
+  }, [filters.geographyFilters])
 
   const state: GlobalFilterState = {
     ...filters,
     selectedTimePeriod,
     selectedFilters,
+    geographyAreas,
+    geographyAreasLoading,
+    geographyAreasError,
   }
   const actions: GlobalFilterActions = {
+    //Time Period Actions
     setSelectedTimePeriod: (timePeriod: TimePeriod | null) => {
       setSelectedTimePeriod(timePeriod)
     },
@@ -73,6 +115,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     clearFilters: () => {
       setSelectedFilters([])
     },
+
+    //Load Geography Areas.
   }
 
   const contextValue: GlobalFilterContextValue = {
