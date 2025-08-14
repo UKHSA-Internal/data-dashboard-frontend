@@ -1,11 +1,5 @@
 import { CardTypes } from '@/api/models/cms/Page/Body'
-import {
-  DataFilters,
-  GeographyFilters,
-  ThresholdFilters,
-  TimePeriod,
-  GeographyFilter,
-} from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 export interface ExtractedFilters {
   timePeriods: TimePeriod[]
