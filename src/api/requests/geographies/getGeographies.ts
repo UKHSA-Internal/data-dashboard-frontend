@@ -27,7 +27,9 @@ export const responseSchema = z.array(
   })
 )
 
-type GeographyParams = {
+export type GeographyResponse = z.infer<typeof responseSchema>
+
+export type GeographyParams = {
   topic?: Topics
   geography_type?: GeographyType
 }
