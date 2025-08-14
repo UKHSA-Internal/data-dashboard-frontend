@@ -1,11 +1,10 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState, useEffect } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-
+import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
-import { getGeographies, GeographyResponse } from '@/api/requests/geographies/getGeographies'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -27,7 +26,7 @@ export interface GlobalFilterProviderProps {
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
   selectedFilters: FilterOption[]
-  geographyAreas: Map<string, GeographyResponse>
+  geographyAreas: Map<string, GeographiesSchema>
   geographyAreasLoading: boolean
   geographyAreasError: string | null
 }
@@ -54,12 +53,12 @@ export const GlobalFilterContext = createContext<GlobalFilterContextValue | null
 export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProviderProps) => {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<TimePeriod | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([])
-  const [geographyAreas, setGeographyAreas] = useState<Map<string, GeographyResponse>>(new Map())
+  const [geographyAreas, setGeographyAreas] = useState<Map<string, GeographiesSchema>>(new Map())
   const [geographyAreasLoading, setGeographyAreasLoading] = useState<boolean>(false)
   const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
 
   const fetchGeographyData = async () => {
-    let geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
+    const geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
     try {
       setGeographyAreasLoading(true)
       const responses = await Promise.all(
@@ -70,13 +69,23 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         )
       )
       const newGeographyAreas = new Map(geographyAreas)
-      console.log('responses: ', responses)
-      responses.forEach((response: GeographyResponse) => {
-        newGeographyAreas.set(response.id, response)
+
+      responses.forEach((response) => {
+        const geographyAreaData = response.data
+
+        if (!geographyAreaData) {
+          throw new Error('No data returned from API')
+        }
+
+        geographyAreaData.forEach((geographyArea: GeographyObject) => {
+          console.log('geographyArea: ', geographyArea)
+          newGeographyAreas.set(geographyArea.geography_type, geographyArea.geographies)
+        })
       })
+      console.log('newGeographyAreas: ', newGeographyAreas)
       setGeographyAreas(newGeographyAreas)
-    } catch (error: any) {
-      setGeographyAreasError('Error fetching geography data: ' + error.message || 'Unknown error')
+    } catch (error) {
+      setGeographyAreasError('Error fetching geography data: ' + error || 'Unknown error')
     } finally {
       setGeographyAreasLoading(false)
     }

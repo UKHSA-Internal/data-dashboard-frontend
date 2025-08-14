@@ -2,32 +2,36 @@ import { z } from 'zod'
 
 import { GeographyType, Topics } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
 import { isSSR } from '@/app/utils/app.utils'
+import { logger } from '@/lib/logger'
 
-export const responseSchema = z.array(
+export const geographiesSchema = z.array(
   z.object({
-    geography_type: z.string(),
-    geographies: z.array(
-      z.object({
-        name: z.string(),
-        geography_code: z.string().optional(),
-        relationships: z
-          .array(
-            z
-              .object({
-                name: z.string().optional().nullable(),
-                geography_code: z.string().optional().nullable(),
-                geography_type: z.string().optional(),
-              })
-              .optional()
-          )
-          .nullable(),
-      })
-    ),
+    name: z.string(),
+    geography_code: z.string().optional(),
+    relationships: z
+      .array(
+        z
+          .object({
+            name: z.string().optional().nullable(),
+            geography_code: z.string().optional().nullable(),
+            geography_type: z.string().optional(),
+          })
+          .optional()
+      )
+      .nullable(),
   })
 )
 
+export const responseObject = z.object({
+  geography_type: z.string(),
+  geographies: geographiesSchema,
+})
+
+export const responseSchema = z.array(responseObject)
+
+export type GeographiesSchema = z.infer<typeof geographiesSchema>
+export type GeographyObject = z.infer<typeof responseObject>
 export type GeographyResponse = z.infer<typeof responseSchema>
 
 export type GeographyParams = {
