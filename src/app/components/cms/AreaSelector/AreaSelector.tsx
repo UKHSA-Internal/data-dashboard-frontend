@@ -10,7 +10,7 @@ interface AreaSelectorProps {
 }
 
 export async function AreaSelector({ areaType, selectedTopics }: AreaSelectorProps) {
-  const geographiesResponse = await getGeographies(selectedTopics[0])
+  const geographiesResponse = await getGeographies({ topic: selectedTopics[0] })
 
   // Don't show the area selector if we fail to get the geography types
   if (!geographiesResponse.success) {

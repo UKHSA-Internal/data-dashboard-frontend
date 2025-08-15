@@ -32,6 +32,7 @@ import page from './handlers/cms/pages/[id]'
 import downloads from './handlers/downloads/v2'
 import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
+import geographiesv3 from './handlers/geographies/v3/[topic]'
 import globalBanners from './handlers/global-banners/v2'
 import headlines from './handlers/headlines/v3'
 import maps from './handlers/maps/v1/v1'
@@ -55,6 +56,7 @@ app.get('/api/headlines/v3', headlines)
 app.get('/api/trends/v3', trends)
 app.get('/api/bulkdownloads/v1', bulkDownloads)
 app.get('/api/geographies/v2/:topic', geographies)
+app.get('/api/geographies/v3/:topic', geographiesv3)
 app.get('/api/global-banners/v2', globalBanners)
 app.get('/api/alerts/v1/:category', alertList)
 app.get('/api/alerts/v1/:category/:region', alertDetail)
