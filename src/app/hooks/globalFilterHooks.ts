@@ -1,9 +1,5 @@
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-<<<<<<< HEAD
 import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
-=======
-import { useGlobalFilters } from '@/app/context/globalFilterContext'
->>>>>>> 661a3569 (CDD-2718: rewrite state)
 
 export function useTimePeriods(): TimePeriod[] | null {
   const { state } = useGlobalFilters()
