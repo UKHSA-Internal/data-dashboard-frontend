@@ -5,8 +5,10 @@ import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import {
   Announcements,
+  FilterBanners,
   PageSection,
   PageSectionWithContents,
+  SelectedFilters,
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
@@ -17,8 +19,10 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
+import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -132,11 +136,11 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
-              {/* <FilterBanners /> */}
-              {/* <StaticFilter>
+              <FilterBanners />
+              <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
-              </StaticFilter> */}
+              </StaticFilter>
 
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (

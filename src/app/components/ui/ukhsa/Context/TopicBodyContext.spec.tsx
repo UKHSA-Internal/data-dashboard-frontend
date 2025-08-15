@@ -37,11 +37,7 @@ describe('TopicBodyContext', () => {
       const { result } = renderHook(() => useTopicBodyFilters())
       const [state] = result.current
 
-      expect(state.selectedFilters).toEqual([
-        { id: 'location.Leicester', label: 'Leicester' },
-        { id: 'location.London', label: 'London' },
-        { id: 'vaccine.6-in-1', label: '6-in-1' },
-      ])
+      expect(state.selectedFilters).toEqual([])
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
     })
@@ -101,12 +97,7 @@ describe('TopicBodyContext', () => {
 
       const [state] = result.current
       expect(state.selectedFilters).toContainEqual(newFilter)
-      expect(state.selectedFilters).toEqual([
-        { id: 'location.Leicester', label: 'Leicester' },
-        { id: 'location.London', label: 'London' },
-        { id: 'vaccine.6-in-1', label: '6-in-1' },
-        newFilter,
-      ])
+      expect(state.selectedFilters).toEqual([newFilter])
     })
 
     test('should not add duplicate filter', () => {
@@ -121,11 +112,7 @@ describe('TopicBodyContext', () => {
       })
 
       const [state] = result.current
-      expect(state.selectedFilters).toEqual([
-        { id: 'location.Leicester', label: 'Leicester' },
-        { id: 'location.London', label: 'London' },
-        { id: 'vaccine.6-in-1', label: '6-in-1' },
-      ])
+      expect(state.selectedFilters).toEqual([existingFilter])
       expect(state.selectedFilters.filter((filter) => filter.id === existingFilter.id)).toHaveLength(1)
     })
 
@@ -133,6 +120,16 @@ describe('TopicBodyContext', () => {
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
+
+      act(() => {
+        const [, actions] = result.current
+        actions.updateFilters([
+          { id: 'location.Leicester', label: 'Leicester' },
+          { id: 'location.London', label: 'London' },
+          { id: 'vaccine.6-in-1', label: '6-in-1' },
+        ])
+      })
+
       const filterToRemove = 'location.London'
 
       act(() => {
@@ -152,6 +149,16 @@ describe('TopicBodyContext', () => {
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
+
+      act(() => {
+        const [, actions] = result.current
+        actions.updateFilters([
+          { id: 'location.Leicester', label: 'Leicester' },
+          { id: 'location.London', label: 'London' },
+          { id: 'vaccine.6-in-1', label: '6-in-1' },
+        ])
+      })
+
       const nonExistentFilter = 'NonExistent'
 
       act(() => {
@@ -349,6 +356,15 @@ describe('TopicBodyContext', () => {
     test('should handle time period operations with filter operations', () => {
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
+      })
+
+      act(() => {
+        const [, actions] = result.current
+        actions.updateFilters([
+          { id: 'location.Leicester', label: 'Leicester' },
+          { id: 'location.London', label: 'London' },
+          { id: 'vaccine.6-in-1', label: '6-in-1' },
+        ])
       })
 
       act(() => {
