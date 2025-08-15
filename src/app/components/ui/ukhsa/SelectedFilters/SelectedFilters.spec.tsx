@@ -103,9 +103,14 @@ describe('SelectedFilters', () => {
   })
 
   describe('when filters are selected', () => {
-    const selectedFilters = ['Time Period: 2024-Q1', 'Geography: England', 'Data: COVID-19']
+    const selectedFilters = [
+      { id: 'Time Period: 2024-Q1', label: 'Time Period: 2024-Q1' },
+      { id: 'Geography: England', label: 'Geography: England' },
+      { id: 'Data: COVID-19', label: 'Data: COVID-19' },
+    ]
 
     beforeEach(() => {
+      jest.clearAllMocks()
       mockUseSelectedFilters.mockReturnValue({
         selectedFilters,
         removeFilter: mockRemoveFilter,
@@ -123,7 +128,7 @@ describe('SelectedFilters', () => {
       render(<SelectedFilters />)
 
       selectedFilters.forEach((filter) => {
-        expect(screen.getByRole('button', { name: new RegExp(filter, 'i') })).toBeInTheDocument()
+        expect(screen.getByRole('button', { name: new RegExp(filter.label, 'i') })).toBeInTheDocument()
       })
     })
 
@@ -167,7 +172,7 @@ describe('SelectedFilters', () => {
   describe('accessibility', () => {
     beforeEach(() => {
       mockUseSelectedFilters.mockReturnValue({
-        selectedFilters: ['Test Filter'],
+        selectedFilters: [{ id: 'Test Filter', label: 'test filter' }],
         removeFilter: mockRemoveFilter,
         clearFilters: mockClearFilters,
       })
@@ -195,7 +200,11 @@ describe('SelectedFilters', () => {
   describe('edge cases', () => {
     it('should handle empty string filters', () => {
       mockUseSelectedFilters.mockReturnValue({
-        selectedFilters: ['', 'Valid Filter', ''],
+        selectedFilters: [
+          { id: '', label: '' },
+          { id: 'Valid Filter', label: 'Valid Filter' },
+          { id: '', label: '' },
+        ],
         removeFilter: mockRemoveFilter,
         clearFilters: mockClearFilters,
       })
@@ -209,7 +218,9 @@ describe('SelectedFilters', () => {
     })
 
     it('should handle very long filter names', () => {
-      const longFilterName = 'This is a very long filter name that might cause layout issues in the UI'
+      const longFilterName = [
+        { id: 'Long Filter Name', label: 'This is a very long filter name that might cause layout issues in the UI' },
+      ]
 
       mockUseSelectedFilters.mockReturnValue({
         selectedFilters: [longFilterName],
