@@ -118,7 +118,10 @@ describe('VaccinationSelectHandler', () => {
     )
 
     await waitFor(() => {
-      expect(capturedState.selectedFilters).toEqual(['abc', 'xyz'])
+      expect(capturedState.selectedFilters).toEqual([
+        { id: 'abc', label: 'abc' },
+        { id: 'xyz', label: 'xyz' },
+      ])
       expect(capturedState.vaccinations).toEqual(mockVaccinations)
     })
   })
