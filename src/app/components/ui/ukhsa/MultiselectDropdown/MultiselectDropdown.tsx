@@ -3,6 +3,8 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
+import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
+
 type FlatOption = string
 type GroupedOption = { title: string; children: string[] }
 type Options = FlatOption[] | GroupedOption[]
@@ -10,11 +12,15 @@ type Options = FlatOption[] | GroupedOption[]
 interface MultiselectDropdownProps {
   name: string
   nestedMultiselect?: boolean
+  selectionLimit?: number
 }
 
-export function MultiselectDropdown({ name, nestedMultiselect = false }: MultiselectDropdownProps) {
+export function MultiselectDropdown({ name, nestedMultiselect = false, selectionLimit = 4 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
+  const [state, actions] = useTopicBody()
+  const { selectedFilters } = state
+  const { addFilter, removeFilter, updateFilters } = actions
 
   // TODO: Get options from CMS
   const [options] = useState<Options>(
@@ -23,10 +29,29 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
           { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
           { title: 'Group 2', children: ['child4', 'child5'] },
         ]
-      : ['test1', 'test2', 'test3', 'test4']
+      : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
   )
 
-  const [selectedOptions, setSelectedOptions] = useState<Array<string>>([])
+  const createFilterOption = (optionValue: string) => ({
+    id: `${name}.${optionValue}`,
+    label: optionValue,
+  })
+
+  const isFilterSelected = (optionValue: string) => {
+    const filterId = `${name}.${optionValue}`
+    const isSelected = selectedFilters.some((filter) => filter.id === filterId)
+    return isSelected
+  }
+
+  const isOptionDisabled = (optionValue: string) => {
+    if (nestedMultiselect) return false
+    if (isFilterSelected(optionValue)) return false
+
+    const currentSelectionCount = selectedFilters.filter((filter) => filter.id.startsWith(`${name}.`)).length
+
+    // Disable if we've reached the limit
+    return currentSelectionCount >= selectionLimit
+  }
 
   const flatFocusableList = React.useMemo(() => {
     if (!nestedMultiselect)
@@ -107,6 +132,11 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
               handleOptionSelect(currentItem.groupIndex, currentItem.childIndex)
             }
           } else {
+            // Check if disabled before handling
+            if (!nestedMultiselect) {
+              const option = (options as FlatOption[])[index]
+              if (isOptionDisabled(option)) return
+            }
             handleOptionSelect(index)
           }
         } else if (event.key === 'ArrowDown' || event.key === 'ArrowUp') {
@@ -135,31 +165,48 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
       const group = (options as GroupedOption[])[groupIndexOrIndex]
       if (!group || childIndex === undefined) return
       const selectedChild = group.children[childIndex]
-      setSelectedOptions((prev) =>
-        prev.includes(selectedChild) ? prev.filter((opt) => opt !== selectedChild) : [...prev, selectedChild]
-      )
+      const filterOption = createFilterOption(selectedChild)
+
+      if (isFilterSelected(selectedChild)) {
+        removeFilter(filterOption.id)
+      } else {
+        addFilter(filterOption)
+      }
     } else {
       const option = (options as FlatOption[])[groupIndexOrIndex]
-      setSelectedOptions((prev) => (prev.includes(option) ? prev.filter((opt) => opt !== option) : [...prev, option]))
+      if (isOptionDisabled(option)) return
+
+      const filterOption = createFilterOption(option)
+
+      if (isFilterSelected(option)) {
+        removeFilter(filterOption.id)
+      } else {
+        addFilter(filterOption)
+      }
     }
   }
 
   function handleGroupSelect(groupIndex: number) {
     const group = (options as GroupedOption[])[groupIndex]
-    const allSelected = group.children.every((child) => selectedOptions.includes(child))
-    setSelectedOptions((prev) => {
-      if (allSelected) {
-        // Deselect all children
-        return prev.filter((opt) => !group.children.includes(opt))
-      } else {
-        // Select all children (add those not already present)
-        const newSelected = [...prev]
-        group.children.forEach((child) => {
-          if (!newSelected.includes(child)) newSelected.push(child)
-        })
-        return newSelected
-      }
-    })
+    const allSelected = group.children.every((child) => isFilterSelected(child))
+
+    if (allSelected) {
+      // Deselect all children in this group
+      const updatedFilters = selectedFilters.filter((filter) => {
+        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        return !groupChildIds.includes(filter.id)
+      })
+      updateFilters(updatedFilters)
+    } else {
+      // Select all children in this group (including those already selected)
+      const groupFilters = group.children.map((child) => createFilterOption(child))
+      const nonGroupFilters = selectedFilters.filter((filter) => {
+        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        return !groupChildIds.includes(filter.id)
+      })
+      const updatedFilters = [...nonGroupFilters, ...groupFilters]
+      updateFilters(updatedFilters)
+    }
   }
 
   return (
@@ -203,14 +250,14 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                   <div
                     className={clsx('govuk-checkboxes govuk-checkboxes--small flex items-center px-0 font-bold')}
                     role="option"
-                    aria-selected={group.children.every((child) => selectedOptions.includes(child))}
+                    aria-selected={group.children.every((child) => isFilterSelected(child))}
                   >
                     <input
                       className="govuk-checkboxes__input py-0 pl-4"
                       name={group.title}
                       id={`ukhsa-checkbox-group-${groupIndex}`}
                       type="checkbox"
-                      checked={group.children.every((child) => selectedOptions.includes(child))}
+                      checked={group.children.every((child) => isFilterSelected(child))}
                       tabIndex={-1}
                       ref={checkboxRefs.current[groupFlatIndex]}
                       onChange={() => {
@@ -235,7 +282,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                       <div
                         key={childIndex}
                         role="option"
-                        aria-selected={selectedOptions.includes(child)}
+                        aria-selected={isFilterSelected(child)}
                         className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0 pl-4'}
                       >
                         <input
@@ -246,7 +293,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
                           type="checkbox"
                           value={child}
                           ref={checkboxRefs.current[childFlatIndex]}
-                          checked={selectedOptions.includes(child)}
+                          checked={isFilterSelected(child)}
                           onChange={() => {
                             if (typeof groupIndex === 'number' && typeof childIndex === 'number')
                               handleOptionSelect(groupIndex, childIndex)
@@ -266,30 +313,39 @@ export function MultiselectDropdown({ name, nestedMultiselect = false }: Multise
               )
             })
           : // Render single depth of options
-            (options as FlatOption[]).map((option: FlatOption, index: number) => (
-              <div
-                key={index}
-                role="option"
-                aria-selected={selectedOptions.includes(option)}
-                className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0'}
-              >
-                <input
-                  className="govuk-checkboxes__input py-0 pl-4"
-                  tabIndex={-1}
-                  name={option}
-                  id={`ukhsa-checkbox-${option}`}
-                  type="checkbox"
-                  value={option}
-                  ref={checkboxRefs.current[index]}
-                  checked={selectedOptions.includes(option)}
-                  onChange={() => handleOptionSelect(index)}
-                  onKeyDown={(event) => handleKeyDown({ event, source: 'option', index })}
-                />
-                <label className="govuk-label govuk-checkboxes__label py-0" htmlFor={`ukhsa-checkbox-${option}`}>
-                  {option}
-                </label>
-              </div>
-            ))}
+            (options as FlatOption[]).map((option: FlatOption, index: number) => {
+              const isDisabled = isOptionDisabled(option)
+              return (
+                <div
+                  key={index}
+                  role="option"
+                  aria-selected={isFilterSelected(option)}
+                  className={'govuk-checkboxes govuk-checkboxes--small relative flex px-0'}
+                >
+                  <input
+                    className="govuk-checkboxes__input py-0 pl-4"
+                    tabIndex={-1}
+                    name={option}
+                    id={`ukhsa-checkbox-${option}`}
+                    type="checkbox"
+                    value={option}
+                    ref={checkboxRefs.current[index]}
+                    checked={isFilterSelected(option)}
+                    disabled={isDisabled}
+                    onChange={() => handleOptionSelect(index)}
+                    onKeyDown={(event) => handleKeyDown({ event, source: 'option', index })}
+                  />
+                  <label
+                    className={clsx('govuk-label govuk-checkboxes__label py-0', {
+                      'govuk-checkboxes__label--disabled': isDisabled,
+                    })}
+                    htmlFor={`ukhsa-checkbox-${option}`}
+                  >
+                    {option}
+                  </label>
+                </div>
+              )
+            })}
       </div>
     </div>
   )

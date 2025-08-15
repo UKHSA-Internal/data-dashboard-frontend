@@ -367,7 +367,7 @@ describe('TimePeriodsHandler', () => {
 
         useEffect(() => {
           if (shouldAddFilter) {
-            actions.addFilter('TestFilter')
+            actions.addFilter({ id: 'filter.TestFilter', label: 'TestFilter' })
           }
         }, [shouldAddFilter]) // Use a boolean prop as dependency instead
 
@@ -398,7 +398,7 @@ describe('TimePeriodsHandler', () => {
       await waitFor(() => {
         expect(capturedState.timePeriods).toEqual(mockTimePeriods)
         expect(capturedState.selectedTimePeriod).toEqual(mockTimePeriods[0])
-        expect(capturedState.selectedFilters).toContain('TestFilter')
+        expect(capturedState.selectedFilters).toContainEqual({ id: 'filter.TestFilter', label: 'TestFilter' })
       })
     })
 
@@ -414,7 +414,10 @@ describe('TimePeriodsHandler', () => {
 
         useEffect(() => {
           if (shouldUpdateFilters) {
-            actions.updateFilters(['ExistingFilter1', 'ExistingFilter2'])
+            actions.updateFilters([
+              { id: 'filter.ExistingFilter1', label: 'ExistingFilter1' },
+              { id: 'filter.ExistingFilter2', label: 'ExistingFilter2' },
+            ])
           }
         }, [shouldUpdateFilters])
 
@@ -438,7 +441,10 @@ describe('TimePeriodsHandler', () => {
 
       // Assert
       await waitFor(() => {
-        expect(capturedState.selectedFilters).toEqual(['ExistingFilter1', 'ExistingFilter2'])
+        expect(capturedState.selectedFilters).toEqual([
+          { id: 'filter.ExistingFilter1', label: 'ExistingFilter1' },
+          { id: 'filter.ExistingFilter2', label: 'ExistingFilter2' },
+        ])
         expect(capturedState.timePeriods).toEqual(mockTimePeriods)
         expect(capturedState.selectedTimePeriod).toEqual(mockTimePeriods[0])
       })

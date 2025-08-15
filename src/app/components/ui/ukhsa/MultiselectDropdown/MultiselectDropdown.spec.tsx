@@ -1,20 +1,67 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import { fireEvent, render, screen } from '@/config/test-utils'
 
+import { TopicBodyActions, TopicBodyContext, TopicBodyState } from '../Context/TopicBodyContext'
 import { MultiselectDropdown } from './MultiselectDropdown'
+
+const MockContextProvider = ({
+  children,
+  selectedFilters = [],
+  mockActions = {},
+}: {
+  children: React.ReactNode
+  selectedFilters?: Array<{ id: string; label: string }>
+  mockActions?: Partial<TopicBodyActions>
+}) => {
+  const [filters, setFilters] = useState<Array<{ id: string; label: string }>>(selectedFilters)
+
+  const defaultActions: TopicBodyActions = {
+    updateFilters: jest.fn((newFilters) => setFilters(newFilters)),
+    addFilter: jest.fn((filter) => setFilters((prev) => [...prev, filter])),
+    removeFilter: jest.fn((filterId) => setFilters((prev) => prev.filter((filter) => filter.id !== filterId))),
+    clearFilters: jest.fn(() => setFilters([])),
+    setTimePeriods: jest.fn(),
+    setSelectedTimePeriod: jest.fn(),
+    clearTimePeriods: jest.fn(),
+    setVaccinations: jest.fn(),
+    setSelectedVaccination: jest.fn(),
+    clearVaccinations: jest.fn(),
+    ...mockActions,
+  }
+
+  const state: TopicBodyState = {
+    selectedFilters: filters,
+    timePeriods: [],
+    selectedTimePeriod: null,
+    vaccinations: [],
+    selectedVaccination: null,
+  }
+
+  const contextValue = [state, defaultActions] as const
+
+  return <TopicBodyContext.Provider value={contextValue}>{children}</TopicBodyContext.Provider>
+}
 
 describe('flat multiselect component', () => {
   const name = 'Test Dropdown'
 
   it('renders the dropdown button', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     expect(screen.getByRole('button', { name })).toBeInTheDocument()
   })
 
   it('opens and closes the dropdown on click', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
@@ -24,7 +71,11 @@ describe('flat multiselect component', () => {
   })
 
   it('opens the dropdown with keyboard (Enter/Space)', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     const button = screen.getByRole('button', { name })
     fireEvent.keyDown(button, { key: 'Enter' })
@@ -35,7 +86,11 @@ describe('flat multiselect component', () => {
   })
 
   it('focuses first option on ArrowDown from button', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     const button = screen.getByRole('button', { name })
     fireEvent.keyDown(button, { key: 'ArrowDown' })
@@ -45,7 +100,11 @@ describe('flat multiselect component', () => {
   })
 
   it('focuses last option on ArrowUp from button', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     const button = screen.getByRole('button', { name })
     fireEvent.keyDown(button, { key: 'ArrowDown' }) // Opens dropdown
@@ -55,7 +114,11 @@ describe('flat multiselect component', () => {
   })
 
   it('cycles through options with ArrowDown/ArrowUp', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
@@ -68,22 +131,63 @@ describe('flat multiselect component', () => {
   })
 
   it('toggles option selection with Space/Enter', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} />
+      </MockContextProvider>
+    )
 
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
     const checkboxes = screen.getAllByRole('checkbox')
     checkboxes[0].focus()
+    expect(document.activeElement).toBe(checkboxes[0])
     expect(checkboxes[0]).not.toBeChecked()
-    fireEvent.keyDown(checkboxes[0], { key: ' ' })
+    fireEvent.keyDown(checkboxes[0], { key: 'ArrowDown' })
+    expect(document.activeElement).toBe(checkboxes[1])
+    fireEvent.keyDown(checkboxes[1], { key: ' ' })
+    expect(checkboxes[1]).toBeChecked()
+  })
+
+  it('enforces selection limit for single depth filters', () => {
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} selectionLimit={2} />
+      </MockContextProvider>
+    )
+
+    const button = screen.getByRole('button', { name })
+    fireEvent.click(button)
+    const checkboxes = screen.getAllByRole('checkbox')
+
+    // Select first two options
+    fireEvent.click(checkboxes[0])
+    fireEvent.click(checkboxes[1])
+
     expect(checkboxes[0]).toBeChecked()
+    expect(checkboxes[1]).toBeChecked()
+
+    // Third and fourth options should be disabled
+    expect(checkboxes[2]).toBeDisabled()
+    expect(checkboxes[3]).toBeDisabled()
+
+    // Deselect one option
+    fireEvent.click(checkboxes[0])
+    expect(checkboxes[0]).not.toBeChecked()
+
+    // Third option should now be enabled
+    expect(checkboxes[2]).not.toBeDisabled()
   })
 })
 
 describe('nested multiselect', () => {
   const name = 'Nested Dropdown'
   function setup() {
-    render(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} nestedMultiselect={true} />
+      </MockContextProvider>
+    )
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
     return { button }
@@ -173,7 +277,11 @@ describe('nested multiselect', () => {
   })
 
   it('focuses first option when dropdown opens', () => {
-    render(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+    render(
+      <MockContextProvider>
+        <MultiselectDropdown name={name} nestedMultiselect={true} />
+      </MockContextProvider>
+    )
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
     const checkboxes = screen.getAllByRole('checkbox')
@@ -182,10 +290,12 @@ describe('nested multiselect', () => {
 
   it('multiple dropdowns: tab moves between buttons, not options', () => {
     render(
-      <>
-        <MultiselectDropdown name="Dropdown 1" nestedMultiselect={true} />
-        <MultiselectDropdown name="Dropdown 2" nestedMultiselect={true} />
-      </>
+      <MockContextProvider>
+        <>
+          <MultiselectDropdown name="Dropdown 1" nestedMultiselect={true} />
+          <MultiselectDropdown name="Dropdown 2" nestedMultiselect={true} />
+        </>
+      </MockContextProvider>
     )
     const buttons = screen.getAllByRole('button')
     buttons[0].focus()

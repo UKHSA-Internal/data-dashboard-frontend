@@ -5,13 +5,13 @@ import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import {
   Announcements,
+  FilterBanners,
   PageSection,
   PageSectionWithContents,
   // SelectedFilters,
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
-import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -20,9 +20,10 @@ import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
 import { VaccinationsHandler } from '../../ui/ukhsa/Context/VaccinationsHandler'
+// import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
+// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -49,7 +50,6 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = false
   let extractedTimePeriods: TimePeriod[] = []
   const extractedVaccination: Vaccination[] = []
 
@@ -140,13 +140,8 @@ export default async function TopicPage({
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
               <VaccinationsHandler vaccinations={extractedVaccination} />
               {/* Example, do not un-comment */}
-              {showFilterBanner && (
-                <FilterBanner
-                  message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
-                  showIcon={true}
-                />
-              )}
-              {/*<StaticFilter>
+              <FilterBanners />
+              {/* <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
               </StaticFilter> */}

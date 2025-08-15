@@ -6,7 +6,6 @@ import { act, render, renderHook } from '@/config/test-utils'
 
 import { TopicBodyContextProvider, TopicBodyState, useTopicBody, useTopicBodyFilters } from './TopicBodyContext'
 
-// Mock data for testing
 const mockTimePeriods: TimePeriod[] = [
   {
     type: 'time_period',
@@ -47,14 +46,12 @@ const TestWrapper = ({ children }: { children: ReactNode }) => (
 )
 
 describe('TopicBodyContext', () => {
-  describe('useTopicBodyFilters hook', () => {
+  describe('Initial state', () => {
     test('should initialize with default state', () => {
-      // Arrange & Act
       const { result } = renderHook(() => useTopicBodyFilters())
       const [state] = result.current
 
-      // Assert
-      expect(state.selectedFilters).toEqual(['Leicester', 'London', '6-in-1'])
+      expect(state.selectedFilters).toEqual([])
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
       expect(state.vaccinations).toEqual([])
@@ -62,21 +59,24 @@ describe('TopicBodyContext', () => {
     })
 
     test('should initialize with provided state', () => {
-      // Arrange
       const customState: TopicBodyState = {
-        selectedFilters: ['Custom', 'Filters'],
+        selectedFilters: [
+          { id: 'custom.Custom', label: 'Custom' },
+          { id: 'custom.Filters', label: 'Filters' },
+        ],
         timePeriods: mockTimePeriods,
         selectedTimePeriod: mockTimePeriods[0],
         vaccinations: mockVaccinations,
         selectedVaccination: mockVaccinations[0].id,
       }
 
-      // Act
       const { result } = renderHook(() => useTopicBodyFilters(customState))
       const [state] = result.current
 
-      // Assert
-      expect(state.selectedFilters).toEqual(['Custom', 'Filters'])
+      expect(state.selectedFilters).toEqual([
+        { id: 'custom.Custom', label: 'Custom' },
+        { id: 'custom.Filters', label: 'Filters' },
+      ])
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
     })
@@ -84,111 +84,124 @@ describe('TopicBodyContext', () => {
 
   describe('Filter actions', () => {
     test('should update filters correctly', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
-      const newFilters = ['Filter1', 'Filter2', 'Filter3']
+      const newFilters = [
+        { id: 'filter.Filter1', label: 'Filter1' },
+        { id: 'filter.Filter2', label: 'Filter2' },
+        { id: 'filter.Filter3', label: 'Filter3' },
+      ]
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.updateFilters(newFilters)
       })
 
-      // Assert
       const [state] = result.current
       expect(state.selectedFilters).toEqual(newFilters)
     })
 
     test('should add filter when not already present', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
-      const newFilter = 'NewFilter'
+      const newFilter = { id: 'filter.NewFilter', label: 'NewFilter' }
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.addFilter(newFilter)
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).toContain(newFilter)
-      expect(state.selectedFilters).toEqual(['Leicester', 'London', '6-in-1', newFilter])
+      expect(state.selectedFilters).toContainEqual(newFilter)
+      expect(state.selectedFilters).toEqual([newFilter])
     })
 
     test('should not add duplicate filter', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
-      const existingFilter = 'Leicester'
+      const existingFilter = { id: 'location.Leicester', label: 'Leicester' }
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.addFilter(existingFilter)
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).toEqual(['Leicester', 'London', '6-in-1'])
-      expect(state.selectedFilters.filter((filter) => filter === existingFilter)).toHaveLength(1)
+      expect(state.selectedFilters).toEqual([existingFilter])
+      expect(state.selectedFilters.filter((filter) => filter.id === existingFilter.id)).toHaveLength(1)
     })
 
     test('should remove filter correctly', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
-      const filterToRemove = 'London'
 
-      // Act
+      act(() => {
+        const [, actions] = result.current
+        actions.updateFilters([
+          { id: 'location.Leicester', label: 'Leicester' },
+          { id: 'location.London', label: 'London' },
+          { id: 'vaccine.6-in-1', label: '6-in-1' },
+        ])
+      })
+
+      const filterToRemove = 'location.London'
+
       act(() => {
         const [, actions] = result.current
         actions.removeFilter(filterToRemove)
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).not.toContain(filterToRemove)
-      expect(state.selectedFilters).toEqual(['Leicester', '6-in-1'])
+      expect(state.selectedFilters).not.toContainEqual({ id: 'location.London', label: 'London' })
+      expect(state.selectedFilters).toEqual([
+        { id: 'location.Leicester', label: 'Leicester' },
+        { id: 'vaccine.6-in-1', label: '6-in-1' },
+      ])
     })
 
     test('should handle removing non-existent filter gracefully', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
+
+      act(() => {
+        const [, actions] = result.current
+        actions.updateFilters([
+          { id: 'location.Leicester', label: 'Leicester' },
+          { id: 'location.London', label: 'London' },
+          { id: 'vaccine.6-in-1', label: '6-in-1' },
+        ])
+      })
+
       const nonExistentFilter = 'NonExistent'
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.removeFilter(nonExistentFilter)
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).toEqual(['Leicester', 'London', '6-in-1'])
+      expect(state.selectedFilters).toEqual([
+        { id: 'location.Leicester', label: 'Leicester' },
+        { id: 'location.London', label: 'London' },
+        { id: 'vaccine.6-in-1', label: '6-in-1' },
+      ])
     })
 
     test('should clear all filters', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.clearFilters()
       })
 
-      // Assert
       const [state] = result.current
       expect(state.selectedFilters).toEqual([])
     })
@@ -196,30 +209,25 @@ describe('TopicBodyContext', () => {
 
   describe('Time period actions', () => {
     test('should set time periods and auto-select first one when none selected', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setTimePeriods(mockTimePeriods)
       })
 
-      // Assert
       const [state] = result.current
       expect(state.timePeriods).toEqual(mockTimePeriods)
       expect(state.selectedTimePeriod).toEqual(mockTimePeriods[0])
     })
 
     test('should set time periods without changing selected when one already selected', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setSelectedTimePeriod(mockTimePeriods[1])
@@ -230,80 +238,67 @@ describe('TopicBodyContext', () => {
         actions.setTimePeriods(mockTimePeriods)
       })
 
-      // Assert
       const [state] = result.current
       expect(state.timePeriods).toEqual(mockTimePeriods)
       expect(state.selectedTimePeriod).toEqual(mockTimePeriods[1])
     })
 
     test('should set time periods with empty array', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setTimePeriods([])
       })
 
-      // Assert
       const [state] = result.current
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
     })
 
     test('should set selected time period', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
       const selectedPeriod = mockTimePeriods[1]
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setSelectedTimePeriod(selectedPeriod)
       })
 
-      // Assert
       const [state] = result.current
       expect(state.selectedTimePeriod).toEqual(selectedPeriod)
     })
 
     test('should set selected time period to null', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setSelectedTimePeriod(mockTimePeriods[0])
         actions.setSelectedTimePeriod(null)
       })
 
-      // Assert
       const [state] = result.current
       expect(state.selectedTimePeriod).toBeNull()
     })
 
     test('should clear time periods and selected time period', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setTimePeriods(mockTimePeriods)
         actions.clearTimePeriods()
       })
 
-      // Assert
       const [state] = result.current
       expect(state.timePeriods).toEqual([])
       expect(state.selectedTimePeriod).toBeNull()
@@ -369,12 +364,10 @@ describe('TopicBodyContext', () => {
 
   describe('Context provider and consumer', () => {
     test('should provide context value correctly', () => {
-      // Arrange & Act
       const { result } = renderHook(() => useTopicBody(), {
         wrapper: TestWrapper,
       })
 
-      // Assert
       expect(result.current).toBeDefined()
       expect(result.current).toHaveLength(2)
 
@@ -393,59 +386,65 @@ describe('TopicBodyContext', () => {
     })
 
     test('should throw error when useTopicBody is used outside provider', () => {
-      // Arrange & Act & Assert
       expect(() => {
         renderHook(() => useTopicBody())
       }).toThrow('useTopicBody must be used within a TopicBodyContextProvider')
     })
 
     test('should render children correctly', () => {
-      // Arrange
       const TestChild = () => <div data-testid="test-child">Test Child</div>
 
-      // Act
       const { getByTestId } = render(
         <TopicBodyContextProvider>
           <TestChild />
         </TopicBodyContextProvider>
       )
 
-      // Assert
       expect(getByTestId('test-child')).toBeInTheDocument()
     })
   })
 
   describe('Complex scenarios', () => {
     test('should handle multiple filter operations in sequence', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
-        actions.addFilter('NewFilter1')
-        actions.addFilter('NewFilter2')
-        actions.removeFilter('London')
-        actions.updateFilters(['FinalFilter1', 'FinalFilter2'])
+        actions.addFilter({ id: 'filter.NewFilter1', label: 'NewFilter1' })
+        actions.addFilter({ id: 'filter.NewFilter2', label: 'NewFilter2' })
+        actions.removeFilter('location.London')
+        actions.updateFilters([
+          { id: 'filter.FinalFilter1', label: 'FinalFilter1' },
+          { id: 'filter.FinalFilter2', label: 'FinalFilter2' },
+        ])
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).toEqual(['FinalFilter1', 'FinalFilter2'])
+      expect(state.selectedFilters).toEqual([
+        { id: 'filter.FinalFilter1', label: 'FinalFilter1' },
+        { id: 'filter.FinalFilter2', label: 'FinalFilter2' },
+      ])
     })
 
     test('should handle time period operations with filter operations', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act
       act(() => {
         const [, actions] = result.current
-        actions.addFilter('TestFilter')
+        actions.updateFilters([
+          { id: 'location.Leicester', label: 'Leicester' },
+          { id: 'location.London', label: 'London' },
+          { id: 'vaccine.6-in-1', label: '6-in-1' },
+        ])
+      })
+
+      act(() => {
+        const [, actions] = result.current
+        actions.addFilter({ id: 'filter.TestFilter', label: 'TestFilter' })
       })
 
       act(() => {
@@ -460,23 +459,24 @@ describe('TopicBodyContext', () => {
 
       act(() => {
         const [, actions] = result.current
-        actions.removeFilter('Leicester')
+        actions.removeFilter('location.Leicester')
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).toEqual(['London', '6-in-1', 'TestFilter'])
+      expect(state.selectedFilters).toEqual([
+        { id: 'location.London', label: 'London' },
+        { id: 'vaccine.6-in-1', label: '6-in-1' },
+        { id: 'filter.TestFilter', label: 'TestFilter' },
+      ])
       expect(state.timePeriods).toEqual(mockTimePeriods)
       expect(state.selectedTimePeriod).toEqual(mockTimePeriods[1])
     })
 
     test('should maintain state consistency after clearing and setting again', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
 
-      // Act - Split into multiple act blocks to ensure state updates properly
       act(() => {
         const [, actions] = result.current
         actions.setTimePeriods(mockTimePeriods)
@@ -494,7 +494,7 @@ describe('TopicBodyContext', () => {
 
       act(() => {
         const [, actions] = result.current
-        actions.addFilter('NewFilter')
+        actions.addFilter({ id: 'filter.NewFilter', label: 'NewFilter' })
       })
 
       act(() => {
@@ -502,9 +502,8 @@ describe('TopicBodyContext', () => {
         actions.setTimePeriods([mockTimePeriods[0]])
       })
 
-      // Assert
       const [state] = result.current
-      expect(state.selectedFilters).toEqual(['NewFilter'])
+      expect(state.selectedFilters).toEqual([{ id: 'filter.NewFilter', label: 'NewFilter' }])
       expect(state.timePeriods).toEqual([mockTimePeriods[0]])
       expect(state.selectedTimePeriod).toEqual(mockTimePeriods[0])
     })
@@ -512,38 +511,32 @@ describe('TopicBodyContext', () => {
 
   describe('State immutability', () => {
     test('should not mutate original filters array when adding filter', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
       const originalFilters = result.current[0].selectedFilters
 
-      // Act
       act(() => {
         const [, actions] = result.current
-        actions.addFilter('NewFilter')
+        actions.addFilter({ id: 'filter.NewFilter', label: 'NewFilter' })
       })
 
-      // Assert
       const [newState] = result.current
       expect(originalFilters).not.toBe(newState.selectedFilters)
-      expect(originalFilters).not.toContain('NewFilter')
+      expect(originalFilters).not.toContainEqual({ id: 'filter.NewFilter', label: 'NewFilter' })
     })
 
     test('should not mutate time periods array when setting', () => {
-      // Arrange
       const { result } = renderHook(() => useTopicBodyFilters(), {
         wrapper: TestWrapper,
       })
       const periodsToSet = [...mockTimePeriods]
 
-      // Act
       act(() => {
         const [, actions] = result.current
         actions.setTimePeriods(periodsToSet)
       })
 
-      // Assert
       const [state] = result.current
       expect(state.timePeriods).toEqual(periodsToSet)
     })

@@ -5,8 +5,13 @@ import { useState } from 'react'
 
 import { TimePeriod, Vaccination, VaccinationId } from '@/api/models/cms/Page/GlobalFilter'
 
+export interface FilterOption {
+  id: string
+  label: string
+}
+
 export interface TopicBodyState {
-  selectedFilters: string[]
+  selectedFilters: FilterOption[]
   timePeriods: TimePeriod[]
   selectedTimePeriod: TimePeriod | null
   vaccinations: Vaccination[]
@@ -15,9 +20,9 @@ export interface TopicBodyState {
 
 export interface TopicBodyActions {
   // Filter actions
-  updateFilters: (newFilters: string[]) => void
-  addFilter: (filter: string) => void
-  removeFilter: (filterName: string) => void
+  updateFilters: (newFilters: FilterOption[]) => void
+  addFilter: (filter: FilterOption) => void
+  removeFilter: (filterId: string) => void
   clearFilters: () => void
 
   // Time period actions
@@ -32,7 +37,7 @@ export interface TopicBodyActions {
 }
 
 const initialState: TopicBodyState = {
-  selectedFilters: ['Leicester', 'London', '6-in-1'],
+  selectedFilters: [],
   timePeriods: [],
   selectedTimePeriod: null,
   vaccinations: [],
@@ -41,24 +46,24 @@ const initialState: TopicBodyState = {
 
 export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const providedState = topicBodyState ? topicBodyState : initialState
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(providedState.selectedFilters)
+  const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>(providedState.selectedFilters)
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
   const [vaccinations, setVaccinationsState] = useState<Vaccination[]>([])
   const [selectedVaccination, setSelectedVaccinationState] = useState<VaccinationId | null>(null)
 
-  const updateFilters = (newFilters: string[]) => {
+  const updateFilters = (newFilters: FilterOption[]) => {
     setSelectedFilters(newFilters)
   }
 
-  const addFilter = (filter: string) => {
-    if (!selectedFilters.includes(filter)) {
+  const addFilter = (filter: FilterOption) => {
+    if (!selectedFilters.some((existingFilter) => existingFilter.id === filter.id)) {
       setSelectedFilters([...selectedFilters, filter])
     }
   }
 
-  const removeFilter = (filterName: string) => {
-    setSelectedFilters(selectedFilters.filter((filter) => filter !== filterName))
+  const removeFilter = (filterId: string) => {
+    setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
   }
 
   const clearFilters = () => {
