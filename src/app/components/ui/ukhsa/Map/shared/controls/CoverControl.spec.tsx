@@ -1,4 +1,5 @@
-import { TopicBodyContextProvider } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
+import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
+import { ExtractedFilters } from '@/app/utils/global-filter-content-parser'
 import { render } from '@/config/test-utils'
 
 import { CoverControl } from './CoverControl'
@@ -40,7 +41,7 @@ jest.mock('../../../VaccinationDropdown/VaccinationDropdown', () => ({
 
 // Test wrapper with context
 const TestWrapper = ({ children }: { children: React.ReactNode }) => (
-  <TopicBodyContextProvider>{children}</TopicBodyContextProvider>
+  <GlobalFilterProvider filters={{} as ExtractedFilters}>{children}</GlobalFilterProvider>
 )
 
 describe('CoverControl', () => {

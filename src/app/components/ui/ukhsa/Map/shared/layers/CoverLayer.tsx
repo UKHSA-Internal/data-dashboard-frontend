@@ -136,11 +136,9 @@ const CoverLayer = <T extends LayerWithFeature>({
           newData = [regionFeatureCollection, localAuthoritiesFeatureCollection]
           break
         case 'regions':
-          console.log('Setting new data for regions')
           newData = regionFeatureCollection
           break
         default:
-          console.log('Setting default data for regions')
           newData = regionFeatureCollection
           break
       }

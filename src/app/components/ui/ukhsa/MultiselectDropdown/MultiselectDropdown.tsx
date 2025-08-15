@@ -3,7 +3,7 @@
 import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
-import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
+import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 
 type FlatOption = string
 type GroupedOption = { title: string; children: string[] }
@@ -18,9 +18,7 @@ interface MultiselectDropdownProps {
 export function MultiselectDropdown({ name, nestedMultiselect = false, selectionLimit = 4 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
-  const [state, actions] = useTopicBody()
-  const { selectedFilters } = state
-  const { addFilter, removeFilter, updateFilters } = actions
+  const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
   // TODO: Get options from CMS
   const [options] = useState<Options>(
@@ -39,7 +37,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
 
   const isFilterSelected = (optionValue: string) => {
     const filterId = `${name}.${optionValue}`
-    const isSelected = selectedFilters.some((filter) => filter.id === filterId)
+    const isSelected = selectedFilters!.some((filter) => filter.id === filterId)
     return isSelected
   }
 
@@ -47,7 +45,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
     if (nestedMultiselect) return false
     if (isFilterSelected(optionValue)) return false
 
-    const currentSelectionCount = selectedFilters.filter((filter) => filter.id.startsWith(`${name}.`)).length
+    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`${name}.`)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
@@ -192,7 +190,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
 
     if (allSelected) {
       // Deselect all children in this group
-      const updatedFilters = selectedFilters.filter((filter) => {
+      const updatedFilters = selectedFilters!.filter((filter) => {
         const groupChildIds = group.children.map((child) => `${name}.${child}`)
         return !groupChildIds.includes(filter.id)
       })
@@ -200,7 +198,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
     } else {
       // Select all children in this group (including those already selected)
       const groupFilters = group.children.map((child) => createFilterOption(child))
-      const nonGroupFilters = selectedFilters.filter((filter) => {
+      const nonGroupFilters = selectedFilters!.filter((filter) => {
         const groupChildIds = group.children.map((child) => `${name}.${child}`)
         return !groupChildIds.includes(filter.id)
       })

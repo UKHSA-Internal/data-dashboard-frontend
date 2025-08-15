@@ -1,4 +1,3 @@
-import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -8,22 +7,21 @@ import {
   FilterBanners,
   PageSection,
   PageSectionWithContents,
-  // SelectedFilters,
-  TopicBodyContextProvider,
+  SelectedFilters,
   View,
 } from '@/app/components/ui/ukhsa'
+import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
+import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
+import { extractDataFromGlobalFilter, ExtractedFilters } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
-import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
-import { VaccinationsHandler } from '../../ui/ukhsa/Context/VaccinationsHandler'
-// import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
-// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -50,8 +48,7 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  let extractedTimePeriods: TimePeriod[] = []
-  const extractedVaccination: Vaccination[] = []
+  let extractedGlobalFilterContent = {} as ExtractedFilters
 
   body.map(({ value }) => {
     if (value.content) {
@@ -79,15 +76,8 @@ export default async function TopicPage({
           })
         }
         // abstract out available time periods
-        if (content.type === 'global_filter_card' && content.value.time_range) {
-          console.log('time_periods: ', content.value.time_range.time_periods)
-          extractedTimePeriods = content.value.time_range.time_periods
-        }
-        // abstract out the other information received from the global filter card
-        if (content.type === 'global_filter_card' && content.value.rows) {
-          content.value.rows.map((items) => {
-            console.log('items: ', items.value.filters)
-          })
+        if (content.type === 'global_filter_card') {
+          extractedGlobalFilterContent = extractDataFromGlobalFilter(content)
         }
       })
     }
@@ -136,16 +126,13 @@ export default async function TopicPage({
               </>
             )}
 
-            <TopicBodyContextProvider>
-              <TimePeriodsHandler timePeriods={extractedTimePeriods} />
-              <VaccinationsHandler vaccinations={extractedVaccination} />
-              {/* Example, do not un-comment */}
+            <GlobalFilterProvider filters={extractedGlobalFilterContent}>
+              {/* Example, do not un-comment  */}
               <FilterBanners />
-              {/* <StaticFilter>
+              <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
-              </StaticFilter> */}
-
+              </StaticFilter>
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (
                   <PageSection key={id} heading={value.heading}>
@@ -155,7 +142,7 @@ export default async function TopicPage({
                   </PageSection>
                 ))}
               </PageSectionWithContents>
-            </TopicBodyContextProvider>
+            </GlobalFilterProvider>
           </div>
 
           {relatedLinksLayout === 'Sidebar' ? (

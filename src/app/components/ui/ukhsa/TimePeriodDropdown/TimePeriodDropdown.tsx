@@ -1,6 +1,6 @@
 'use client'
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-import { useTopicBody } from '@/app/components/ui/ukhsa/Context/TopicBodyContext'
+import { useGlobalFilters } from '@/app/context/globalFilterContext'
 
 interface TimePeriodDropdownProps {
   className?: string
@@ -15,7 +15,7 @@ export const TimePeriodDropdown = ({
   disabled = false,
   onChange,
 }: TimePeriodDropdownProps) => {
-  const [state, actions] = useTopicBody()
+  const { state, actions } = useGlobalFilters()
   const { timePeriods, selectedTimePeriod } = state
   const { setSelectedTimePeriod } = actions
 
@@ -28,7 +28,7 @@ export const TimePeriodDropdown = ({
       return
     }
 
-    const selectedPeriod = timePeriods.find((period) => period.value.label === selectedLabel)
+    const selectedPeriod = timePeriods!.find((period) => period.value.label === selectedLabel)
 
     if (selectedPeriod) {
       setSelectedTimePeriod(selectedPeriod)
@@ -37,7 +37,7 @@ export const TimePeriodDropdown = ({
   }
 
   // Don't render if no time periods available
-  if (timePeriods.length === 0) {
+  if (timePeriods!.length === 0) {
     return null
   }
 
@@ -54,7 +54,7 @@ export const TimePeriodDropdown = ({
         disabled={disabled}
       >
         <option value="">{placeholder}</option>
-        {timePeriods.map((period) => (
+        {timePeriods!.map((period) => (
           <option key={`selected dropdown: ${period.value.label}`} value={period.value.label}>
             {period.value.label}
           </option>

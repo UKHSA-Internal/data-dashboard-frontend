@@ -2,28 +2,28 @@
 
 import React from 'react'
 
-import { useTopicBody } from '../Context/TopicBodyContext'
+import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+
 import { FilterBanner } from '../FilterBanner/FilterBanner'
 
 export function FilterBanners() {
-  const [state] = useTopicBody()
-  const { selectedFilters } = state
+  const { selectedFilters } = useSelectedFilters()
 
   // Group filters
-  const filterGroups = selectedFilters.reduce(
+  const filterGroups = selectedFilters!.reduce(
     (groups, filter) => {
       const prefix = filter.id.split('.')[0]
       if (!groups[prefix]) {
         groups[prefix] = []
       }
-      groups[prefix].push(filter)
+      groups[prefix]!.push(filter)
       return groups
     },
     {} as Record<string, typeof selectedFilters>
   )
 
   // Check if any filter group has more than 3 items
-  const showFilterBanner = Object.values(filterGroups).some((group) => group.length > 3)
+  const showFilterBanner = Object.values(filterGroups).some((group) => group!.length > 3)
 
   if (!showFilterBanner) {
     return null
