@@ -46,6 +46,9 @@ const MockContextProvider = ({
     setTimePeriods: jest.fn(),
     setSelectedTimePeriod: jest.fn(),
     clearTimePeriods: jest.fn(),
+    setVaccinations: jest.fn(),
+    setSelectedVaccination: jest.fn(),
+    clearVaccinations: jest.fn(),
     ...mockActions,
   }
 
@@ -53,6 +56,8 @@ const MockContextProvider = ({
     selectedFilters,
     timePeriods: [],
     selectedTimePeriod: null,
+    vaccinations: [],
+    selectedVaccination: null,
   }
 
   const contextValue = [state, defaultActions] as const

@@ -114,6 +114,12 @@ const GlobalFilterRowItem = z.object({
   filters: z.array(GlobalFilters),
 })
 
+const VaccinationSchema = z.object({
+  id: z.string(),
+  label: z.string(),
+  category: z.string(),
+})
+
 export const GlobalFilterRow = z.array(
   z.object({
     type: z.literal('row'),
@@ -124,3 +130,5 @@ export const GlobalFilterRow = z.array(
 
 export type TimePeriod = z.infer<typeof TimePeriodSchema>
 export type TimeRange = z.infer<typeof TimeRangeSchema>
+export type Vaccination = z.infer<typeof VaccinationSchema>
+export type VaccinationId = Vaccination['id']

@@ -1,4 +1,4 @@
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { TimePeriod, Vaccination } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -8,7 +8,7 @@ import {
   FilterBanners,
   PageSection,
   PageSectionWithContents,
-  SelectedFilters,
+  // SelectedFilters,
   TopicBodyContextProvider,
   View,
 } from '@/app/components/ui/ukhsa'
@@ -19,10 +19,11 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { clsx } from '@/lib/clsx'
 
 import { TimePeriodsHandler } from '../../ui/ukhsa/Context/TimePeriodsHandler'
-import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
+import { VaccinationsHandler } from '../../ui/ukhsa/Context/VaccinationsHandler'
+// import FilterDropdowns from '../../ui/ukhsa/FilterDropdowns/FilterDropdowns'
+// import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -50,6 +51,7 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedTimePeriods: TimePeriod[] = []
+  const extractedVaccination: Vaccination[] = []
 
   body.map(({ value }) => {
     if (value.content) {
@@ -136,11 +138,13 @@ export default async function TopicPage({
 
             <TopicBodyContextProvider>
               <TimePeriodsHandler timePeriods={extractedTimePeriods} />
+              <VaccinationsHandler vaccinations={extractedVaccination} />
+              {/* Example, do not un-comment */}
               <FilterBanners />
-              <StaticFilter>
+              {/* <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
-              </StaticFilter>
+              </StaticFilter> */}
 
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (

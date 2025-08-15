@@ -3,7 +3,7 @@
 import * as React from 'react'
 import { useState } from 'react'
 
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { TimePeriod, Vaccination, VaccinationId } from '@/api/models/cms/Page/GlobalFilter'
 
 export interface FilterOption {
   id: string
@@ -14,6 +14,8 @@ export interface TopicBodyState {
   selectedFilters: FilterOption[]
   timePeriods: TimePeriod[]
   selectedTimePeriod: TimePeriod | null
+  vaccinations: Vaccination[]
+  selectedVaccination: string | null
 }
 
 export interface TopicBodyActions {
@@ -27,12 +29,19 @@ export interface TopicBodyActions {
   setTimePeriods: (timePeriods: TimePeriod[]) => void
   setSelectedTimePeriod: (timePeriod: TimePeriod | null) => void
   clearTimePeriods: () => void
+
+  //Vaccination actions
+  setVaccinations: (vaccinations: Vaccination[]) => void
+  setSelectedVaccination: (vaccination: VaccinationId | null) => void
+  clearVaccinations: () => void
 }
 
 const initialState: TopicBodyState = {
   selectedFilters: [],
   timePeriods: [],
   selectedTimePeriod: null,
+  vaccinations: [],
+  selectedVaccination: null,
 }
 
 export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
@@ -40,6 +49,8 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
   const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>(providedState.selectedFilters)
   const [timePeriods, setTimePeriodsState] = useState<TimePeriod[]>([])
   const [selectedTimePeriod, setSelectedTimePeriodState] = useState<TimePeriod | null>(null)
+  const [vaccinations, setVaccinationsState] = useState<Vaccination[]>([])
+  const [selectedVaccination, setSelectedVaccinationState] = useState<VaccinationId | null>(null)
 
   const updateFilters = (newFilters: FilterOption[]) => {
     setSelectedFilters(newFilters)
@@ -77,10 +88,28 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     setSelectedTimePeriodState(null)
   }
 
+  const setVaccinations = (newVaccinations: Vaccination[]) => {
+    setVaccinationsState(newVaccinations)
+
+    if (newVaccinations.length > 0 && !selectedVaccination) {
+      setSelectedVaccinationState(newVaccinations[0].id)
+    }
+  }
+
+  const setSelectedVaccination = (vaccinationId: Vaccination['id'] | null) => {
+    setSelectedVaccinationState(vaccinationId)
+  }
+
+  const clearVaccinations = () => {
+    setVaccinationsState([])
+    setSelectedVaccinationState(null)
+  }
   const state: TopicBodyState = {
     selectedFilters,
     timePeriods,
     selectedTimePeriod,
+    vaccinations,
+    selectedVaccination: null,
   }
 
   const actions: TopicBodyActions = {
@@ -91,6 +120,9 @@ export function useTopicBodyFilters(topicBodyState?: TopicBodyState) {
     setTimePeriods,
     setSelectedTimePeriod,
     clearTimePeriods,
+    setVaccinations,
+    setSelectedVaccination,
+    clearVaccinations,
   }
 
   return [state, actions] as const
