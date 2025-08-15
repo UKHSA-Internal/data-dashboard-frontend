@@ -1,5 +1,5 @@
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-import { useGlobalFilters } from '@/app/context/globalFilterContext'
+import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
 
 export function useTimePeriods(): TimePeriod[] | null {
   const { state } = useGlobalFilters()
@@ -13,7 +13,6 @@ export function useGeographyFilters(): GeographyFilters | null {
 
 export function useThresholdFilters(): ThresholdFilters | null {
   const { state } = useGlobalFilters()
-  console.log(state)
   return state.thresholdFilters
 }
 
@@ -23,10 +22,10 @@ export function useDataFilters(): DataFilters | null {
 }
 
 export function useSelectedFilters(): {
-  selectedFilters: string[] | null
-  updateFilters: (newFilters: string[]) => void
-  addFilter: (filter: string) => void
-  removeFilter: (filterName: string) => void
+  selectedFilters: FilterOption[] | null
+  updateFilters: (newFilters: FilterOption[]) => void
+  addFilter: (filter: FilterOption) => void
+  removeFilter: (filterId: string) => void
   clearFilters: () => void
 } {
   const { state, actions } = useGlobalFilters()

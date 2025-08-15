@@ -142,3 +142,4 @@ export type ThresholdFilters = z.infer<typeof ThresholdFilters>
 export type GlobalFilters = z.infer<typeof GlobalFilters>
 export type GlobalFilterRowItem = z.infer<typeof GlobalFilterRowItem>
 export type GlobalFilterRow = z.infer<typeof GlobalFilterRow>
+export type Vaccination = z.infer<typeof VaccinationSchema>

@@ -11,38 +11,43 @@ interface InitialGlobalFilterState {
   dataFilters: DataFilters | null
 }
 
+export interface FilterOption {
+  id: string
+  label: string
+}
+
 export interface GlobalFilterProviderProps {
   children: ReactNode
   filters: InitialGlobalFilterState
 }
 
-interface GlobalFilterState extends InitialGlobalFilterState {
+export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
-  selectedFilters: string[]
+  selectedFilters: FilterOption[]
 }
 
 // Global Filter Action Interface
 export interface GlobalFilterActions {
   setSelectedTimePeriod: (selectedTimePeriod: TimePeriod | null) => void
-  updateFilters: (newFilters: string[]) => void
-  addFilter: (filter: string) => void
-  removeFilter: (filterName: string) => void
+  updateFilters: (newFilters: FilterOption[]) => void
+  addFilter: (filter: FilterOption) => void
+  removeFilter: (filterId: string) => void
   clearFilters: () => void
 }
 
 //Interface for the global filter context
-interface GlobalFilterContextValue {
+export interface GlobalFilterContextValue {
   state: GlobalFilterState
   actions: GlobalFilterActions
 }
 
 //Creates the Global Filter Context
-const GlobalFilterContext = createContext<GlobalFilterContextValue | null>(null)
+export const GlobalFilterContext = createContext<GlobalFilterContextValue | null>(null)
 
 //global filter Provider
 export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProviderProps) => {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<TimePeriod | null>(null)
-  const [selectedFilters, setSelectedFilters] = useState<string[]>(['Leicester', 'London', '6-in-1'])
+  const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([])
 
   const state: GlobalFilterState = {
     ...filters,
@@ -54,16 +59,16 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedTimePeriod(timePeriod)
     },
     //Filter selection actions
-    updateFilters: (newFilters: string[]) => {
+    updateFilters: (newFilters: FilterOption[]) => {
       setSelectedFilters(newFilters)
     },
-    addFilter: (filter: string) => {
-      if (!selectedFilters.includes(filter)) {
+    addFilter: (filter: FilterOption) => {
+      if (!selectedFilters.some((existingFilter) => existingFilter.id === filter.id)) {
         setSelectedFilters([...selectedFilters, filter])
       }
     },
-    removeFilter: (filterName: string) => {
-      setSelectedFilters(selectedFilters.filter((filter) => filter !== filterName))
+    removeFilter: (filterId: string) => {
+      setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
     },
     clearFilters: () => {
       setSelectedFilters([])

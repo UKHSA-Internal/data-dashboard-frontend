@@ -2,8 +2,14 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { Announcements, PageSection, PageSectionWithContents, SelectedFilters, View } from '@/app/components/ui/ukhsa'
-import { FilterBanner } from '@/app/components/ui/ukhsa/FilterBanner/FilterBanner'
+import {
+  Announcements,
+  FilterBanners,
+  PageSection,
+  PageSectionWithContents,
+  SelectedFilters,
+  View,
+} from '@/app/components/ui/ukhsa'
 import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
 import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
@@ -42,7 +48,6 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
-  const showFilterBanner = false
   let extractedGlobalFilterContent = {} as ExtractedFilters
 
   body.map(({ value }) => {
@@ -123,12 +128,7 @@ export default async function TopicPage({
 
             <GlobalFilterProvider filters={extractedGlobalFilterContent}>
               {/* Example, do not un-comment  */}
-              {showFilterBanner && (
-                <FilterBanner
-                  message="&nbsp;&nbsp;<b>Import information :</b> You can only select <b>four locations </b> to display at a time."
-                  showIcon={true}
-                />
-              )}
+              <FilterBanners />
               <StaticFilter>
                 <SelectedFilters />
                 <FilterDropdowns />
