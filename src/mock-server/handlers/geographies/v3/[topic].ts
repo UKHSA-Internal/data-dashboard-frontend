@@ -61,7 +61,6 @@ const geographyTypeMocks: Record<
 }
 
 export default async function handler(req: Request, res: Response) {
-  console.log('request query: ', req.query)
   try {
     if (req.method !== 'GET') {
       logger.error(`Unsupported request method ${req.method}`)

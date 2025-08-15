@@ -13,7 +13,8 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
   let thresholdFilters: ThresholdFilters | null = null
   let dataFilters: DataFilters | null = null
   let timePeriods: TimePeriod[] = []
-  // Extracts each of the filter types that are provided in the rows
+
+  // Usage: Extracts each of the filter types that are provided in the rows
   if (content.type === 'global_filter_card' && content.value.rows) {
     content.value.rows.forEach((row: any) => {
       row.value.filters?.forEach((filter: any) => {
@@ -31,7 +32,8 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
       })
     })
   }
-  // Time Period Extraction
+
+  // Usage: Time Period Extraction
   if (content.type === 'global_filter_card' && content.value.time_range) {
     timePeriods = content.value.time_range.time_periods
   }
@@ -43,7 +45,7 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
     dataFilters,
   }
 }
-
+/* Usage: This function is used to retrieve each of the geography types that are present in the provided geography filters */
 export function extractGeographyIdFromGeographyFilter(geographyFilter: GeographyFilters | null): string[] {
   if (!geographyFilter) return []
   return geographyFilter.geography_types.map((filter) => filter.value.geography_type)

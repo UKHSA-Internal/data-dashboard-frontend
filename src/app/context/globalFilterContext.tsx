@@ -58,8 +58,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
 
   const fetchGeographyData = async () => {
-    const geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
     try {
+      const geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
       setGeographyAreasLoading(true)
       const responses = await Promise.all(
         geographyTypes.map((geographyTypes) =>
@@ -78,11 +78,9 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         }
 
         geographyAreaData.forEach((geographyArea: GeographyObject) => {
-          console.log('geographyArea: ', geographyArea)
           newGeographyAreas.set(geographyArea.geography_type, geographyArea.geographies)
         })
       })
-      console.log('newGeographyAreas: ', newGeographyAreas)
       setGeographyAreas(newGeographyAreas)
     } catch (error) {
       setGeographyAreasError('Error fetching geography data: ' + error || 'Unknown error')
@@ -91,6 +89,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     }
   }
 
+  /* Usage: When the geographyFilters are updated this will trigger this use effect 
+  to load the most recent list of geography areas for each of the geography filters */
   useEffect(() => {
     if (!filters.geographyFilters) return
     fetchGeographyData()
@@ -109,6 +109,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     setSelectedTimePeriod: (timePeriod: TimePeriod | null) => {
       setSelectedTimePeriod(timePeriod)
     },
+
     //Filter selection actions
     updateFilters: (newFilters: FilterOption[]) => {
       setSelectedFilters(newFilters)
@@ -124,8 +125,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     clearFilters: () => {
       setSelectedFilters([])
     },
-
-    //Load Geography Areas.
   }
 
   const contextValue: GlobalFilterContextValue = {
