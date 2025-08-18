@@ -1,0 +1,52 @@
+[
+  {
+    "id": "covid19_dose1",
+    "label": "COVID-19 Vaccine (1st Dose)",
+    "category": "COVID-19"
+  },
+  {
+    "id": "covid19_dose2",
+    "label": "COVID-19 Vaccine (2nd Dose)",
+    "category": "COVID-19"
+  },
+  {
+    "id": "covid19_booster",
+    "label": "COVID-19 Booster Dose",
+    "category": "COVID-19"
+  },
+  {
+    "id": "influenza",
+    "label": "Influenza (Flu) Vaccine",
+    "category": "Seasonal"
+  },
+  {
+    "id": "mmr",
+    "label": "MMR (Measles, Mumps, Rubella)",
+    "category": "Routine"
+  },
+  {
+    "id": "tdap",
+    "label": "Tetanus (Tdap)",
+    "category": "Routine"
+  },
+  {
+    "id": "hepatitis_b",
+    "label": "Hepatitis B",
+    "category": "Routine"
+  },
+  {
+    "id": "hpv",
+    "label": "HPV (Human Papillomavirus)",
+    "category": "Routine"
+  },
+  {
+    "id": "polio",
+    "label": "Polio Vaccine",
+    "category": "Routine"
+  },
+  {
+    "id": "bcg",
+    "label": "BCG (Tuberculosis)",
+    "category": "Routine"
+  }
+]

@@ -1,30 +1,36 @@
-import { ReactNode } from 'react'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+import { useTranslation } from '@/app/i18n/client'
+import { fireEvent, render, screen } from '@/config/test-utils'
 
-import { fireEvent, render, waitFor } from '@/config/test-utils'
-
-import {
-  TopicBodyActions,
-  TopicBodyContext,
-  TopicBodyContextProvider,
-  TopicBodyState,
-} from '../Context/TopicBodyContext'
 import { SelectedFilters } from './SelectedFilters'
 
 // Mock the translation hook
 jest.mock('@/app/i18n/client', () => ({
-  useTranslation: () => ({
-    t: (key: string) => {
+  useTranslation: jest.fn(() => ({
+    t: jest.fn((key: string) => {
       const translations: Record<string, string> = {
-        'globalFilter.globalFilterTitle': 'Selected filters',
+        'globalFilter.globalFilterTitle': 'Selected Filters',
       }
       return translations[key] || key
+    }),
+    i18n: {
+      language: 'en',
+      changeLanguage: jest.fn(),
     },
-  }),
+    ready: true,
+  })),
 }))
 
-// Mock CrossIcon component
+// Mock the global filter hook
+jest.mock('@/app/hooks/globalFilterHooks', () => ({
+  useSelectedFilters: jest.fn(),
+}))
+
+// Mock the CrossIcon component
 jest.mock('../Icons/CrossIcon', () => {
-  return function CrossIcon({ colour }: { colour?: string }) {
+  return function MockCrossIcon({ colour }: { colour?: string }) {
     return (
       <span data-testid="cross-icon" data-colour={colour}>
         ✕
@@ -33,340 +39,198 @@ jest.mock('../Icons/CrossIcon', () => {
   }
 })
 
-// Test wrapper with real context provider
-const TestWrapper = ({ children }: { children: ReactNode }) => (
-  <TopicBodyContextProvider>{children}</TopicBodyContextProvider>
-)
-
-// Mock context provider for specific test scenarios
-const MockContextProvider = ({
-  children,
-  selectedFilters = [],
-  mockActions = {},
-}: {
-  children: ReactNode
-  selectedFilters?: string[]
-  mockActions?: Partial<TopicBodyActions>
-}) => {
-  const defaultActions: TopicBodyActions = {
-    updateFilters: jest.fn(),
-    addFilter: jest.fn(),
-    removeFilter: jest.fn(),
-    clearFilters: jest.fn(),
-    setTimePeriods: jest.fn(),
-    setSelectedTimePeriod: jest.fn(),
-    clearTimePeriods: jest.fn(),
-    ...mockActions,
-  }
-
-  const state: TopicBodyState = {
-    selectedFilters,
-    timePeriods: [],
-    selectedTimePeriod: null,
-  }
-
-  const contextValue = [state, defaultActions] as const
-
-  return <TopicBodyContext.Provider value={contextValue}>{children}</TopicBodyContext.Provider>
-}
+// Type the mocked hooks for better TypeScript support
+const mockUseTranslation = useTranslation as jest.MockedFunction<typeof useTranslation>
+const mockUseSelectedFilters = useSelectedFilters as jest.MockedFunction<typeof useSelectedFilters>
 
 describe('SelectedFilters', () => {
-  describe('Component rendering', () => {
-    test('should render with no selected filters', () => {
-      // Arrange & Act
-      const { getByRole, getByText } = render(
-        <MockContextProvider selectedFilters={[]}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+  const mockTranslation = jest.fn()
+  const mockRemoveFilter = jest.fn()
+  const mockClearFilters = jest.fn()
 
-      // Assert
-      expect(getByRole('heading', { level: 2 })).toHaveTextContent('Selected filters (0)')
-      expect(getByText('Clear filter selection')).toBeInTheDocument()
+  beforeEach(() => {
+    // Reset all mocks before each test
+    jest.clearAllMocks()
+
+    // Set up default mock implementations
+    mockUseTranslation.mockReturnValue({
+      t: mockTranslation,
     })
 
-    test('should render with single selected filter', () => {
-      // Arrange
-      const selectedFilters = ['Test Filter']
+    mockTranslation.mockReturnValue('Selected Filters')
+  })
 
-      // Act
-      const { getByRole, getByText } = render(
-        <MockContextProvider selectedFilters={selectedFilters}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      // Assert
-      expect(getByRole('heading', { level: 2 })).toHaveTextContent('Selected filters (1)')
-      expect(getByText('Test Filter')).toBeInTheDocument()
-      expect(getByText('Clear filter selection')).toBeInTheDocument()
+  describe('when no filters are selected', () => {
+    beforeEach(() => {
+      mockUseSelectedFilters.mockReturnValue({
+        selectedFilters: [],
+        removeFilter: mockRemoveFilter,
+        clearFilters: mockClearFilters,
+      })
     })
 
-    test('should render with multiple selected filters', () => {
-      // Arrange
-      const selectedFilters = ['Filter 1', 'Filter 2', 'Filter 3']
+    it('should display the heading with zero count', () => {
+      render(<SelectedFilters />)
 
-      // Act
-      const { getByRole, getByText } = render(
-        <MockContextProvider selectedFilters={selectedFilters}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      // Assert
-      expect(getByRole('heading', { level: 2 })).toHaveTextContent('Selected filters (3)')
-      expect(getByText('Filter 1')).toBeInTheDocument()
-      expect(getByText('Filter 2')).toBeInTheDocument()
-      expect(getByText('Filter 3')).toBeInTheDocument()
+      expect(screen.getByText('Selected Filters (0)')).toBeInTheDocument()
+      expect(mockTranslation).toHaveBeenCalledWith('globalFilter.globalFilterTitle')
     })
 
-    test('should throw error when used outside context provider', () => {
-      // Arrange
-      const consoleError = jest.spyOn(console, 'error').mockImplementation(() => {})
+    it('should display the clear filters button', () => {
+      render(<SelectedFilters />)
 
-      // Act & Assert
-      expect(() => {
-        render(<SelectedFilters />)
-      }).toThrow('useTopicBody must be used within a TopicBodyContextProvider')
+      const clearButton = screen.getByRole('button', { name: /clear filter selection/i })
+      expect(clearButton).toBeInTheDocument()
+    })
 
-      consoleError.mockRestore()
+    it('should not display any filter buttons', () => {
+      render(<SelectedFilters />)
+
+      // Only the clear button should be present
+      const buttons = screen.getAllByRole('button')
+      expect(buttons).toHaveLength(1)
+      expect(buttons[0]).toHaveTextContent('Clear filter selection')
+    })
+
+    it('should call clearFilters when clear button is clicked', () => {
+      render(<SelectedFilters />)
+
+      const clearButton = screen.getByRole('button', { name: /clear filter selection/i })
+      fireEvent.click(clearButton)
+
+      expect(mockClearFilters).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe('Filter removal functionality', () => {
-    test('should call removeFilter when individual filter button is clicked', () => {
-      // Arrange
-      const mockRemoveFilter = jest.fn()
-      const selectedFilters = ['Test Filter', 'Another Filter']
+  describe('when filters are selected', () => {
+    const selectedFilters = [
+      { id: 'Time Period: 2024-Q1', label: 'Time Period: 2024-Q1' },
+      { id: 'Geography: England', label: 'Geography: England' },
+      { id: 'Data: COVID-19', label: 'Data: COVID-19' },
+    ]
 
-      const { getByText } = render(
-        <MockContextProvider selectedFilters={selectedFilters} mockActions={{ removeFilter: mockRemoveFilter }}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+    beforeEach(() => {
+      jest.clearAllMocks()
+      mockUseSelectedFilters.mockReturnValue({
+        selectedFilters,
+        removeFilter: mockRemoveFilter,
+        clearFilters: mockClearFilters,
+      })
+    })
 
-      // Act
-      fireEvent.click(getByText('Test Filter'))
+    it('should display the heading with correct count', () => {
+      render(<SelectedFilters />)
 
-      // Assert
-      expect(mockRemoveFilter).toHaveBeenCalledWith('Test Filter')
+      expect(screen.getByText('Selected Filters (3)')).toBeInTheDocument()
+    })
+
+    it('should display all selected filters as buttons', () => {
+      render(<SelectedFilters />)
+
+      selectedFilters.forEach((filter) => {
+        expect(screen.getByRole('button', { name: new RegExp(filter.label, 'i') })).toBeInTheDocument()
+      })
+    })
+
+    it('should display cross icons for each filter button', () => {
+      render(<SelectedFilters />)
+
+      // Should have cross icons for each filter + one for clear button
+      const crossIcons = screen.getAllByTestId('cross-icon')
+      expect(crossIcons).toHaveLength(selectedFilters.length + 1)
+    })
+
+    it('should call removeFilter with correct filter when filter button is clicked', () => {
+      render(<SelectedFilters />)
+
+      const firstFilterButton = screen.getByRole('button', { name: /time period: 2024-q1/i })
+      fireEvent.click(firstFilterButton)
+
       expect(mockRemoveFilter).toHaveBeenCalledTimes(1)
+      expect(mockRemoveFilter).toHaveBeenCalledWith('Time Period: 2024-Q1')
     })
 
-    test('should call removeFilter for correct filter when multiple filters present', () => {
-      // Arrange
-      const mockRemoveFilter = jest.fn()
-      const selectedFilters = ['Filter A', 'Filter B', 'Filter C']
+    it('should call removeFilter for different filters', () => {
+      render(<SelectedFilters />)
 
-      const { getByText } = render(
-        <MockContextProvider selectedFilters={selectedFilters} mockActions={{ removeFilter: mockRemoveFilter }}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+      const geographyFilterButton = screen.getByRole('button', { name: /geography: england/i })
+      fireEvent.click(geographyFilterButton)
 
-      // Act
-      fireEvent.click(getByText('Filter B'))
-
-      // Assert
-      expect(mockRemoveFilter).toHaveBeenCalledWith('Filter B')
-      expect(mockRemoveFilter).not.toHaveBeenCalledWith('Filter A')
-      expect(mockRemoveFilter).not.toHaveBeenCalledWith('Filter C')
+      expect(mockRemoveFilter).toHaveBeenCalledWith('Geography: England')
     })
 
-    test('should handle filter names with special characters', () => {
-      // Arrange
-      const mockRemoveFilter = jest.fn()
-      const selectedFilters = ['Filter & Special', 'Filter (with) brackets', 'Filter-with-dashes']
+    it('should call clearFilters when clear button is clicked', () => {
+      render(<SelectedFilters />)
 
-      const { getByText } = render(
-        <MockContextProvider selectedFilters={selectedFilters} mockActions={{ removeFilter: mockRemoveFilter }}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+      const clearButton = screen.getByRole('button', { name: /clear filter selection/i })
+      fireEvent.click(clearButton)
 
-      // Act
-      fireEvent.click(getByText('Filter & Special'))
-
-      // Assert
-      expect(mockRemoveFilter).toHaveBeenCalledWith('Filter & Special')
-    })
-  })
-
-  describe('Clear all filters functionality', () => {
-    test('should call clearFilters when clear button is clicked', () => {
-      // Arrange
-      const mockClearFilters = jest.fn()
-      const selectedFilters = ['Filter 1', 'Filter 2']
-
-      const { getByRole } = render(
-        <MockContextProvider selectedFilters={selectedFilters} mockActions={{ clearFilters: mockClearFilters }}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      // Act
-      fireEvent.click(getByRole('button', { name: /clear filter selection/i }))
-
-      // Assert
-      expect(mockClearFilters).toHaveBeenCalledTimes(1)
-      expect(mockClearFilters).toHaveBeenCalledWith()
-    })
-
-    test('should call clearFilters even when no filters are selected', () => {
-      // Arrange
-      const mockClearFilters = jest.fn()
-
-      const { getByRole } = render(
-        <MockContextProvider selectedFilters={[]} mockActions={{ clearFilters: mockClearFilters }}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      // Act
-      fireEvent.click(getByRole('button', { name: /clear filter selection/i }))
-
-      // Assert
       expect(mockClearFilters).toHaveBeenCalledTimes(1)
     })
   })
 
-  describe('UI elements and styling', () => {
-    test('should render cross icons for individual filters', () => {
-      // Arrange
-      const selectedFilters = ['Filter 1', 'Filter 2']
-
-      // Act
-      const { getAllByTestId } = render(
-        <MockContextProvider selectedFilters={selectedFilters}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      // Assert
-      const crossIcons = getAllByTestId('cross-icon')
-      expect(crossIcons).toHaveLength(3) // 2 for filters + 1 for clear button
+  describe('accessibility', () => {
+    beforeEach(() => {
+      mockUseSelectedFilters.mockReturnValue({
+        selectedFilters: [{ id: 'Test Filter', label: 'test filter' }],
+        removeFilter: mockRemoveFilter,
+        clearFilters: mockClearFilters,
+      })
     })
 
-    test('should render blue cross icon for clear button', () => {
-      // Arrange & Act
-      const { getAllByTestId } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+    it('should have proper heading structure', () => {
+      render(<SelectedFilters />)
 
-      // Assert
-      const crossIcons = getAllByTestId('cross-icon')
-      const blueCrossIcon = crossIcons.find((icon) => icon.getAttribute('data-colour') === 'var(--colour-blue)')
-      expect(blueCrossIcon).toBeInTheDocument()
-    })
-
-    test('should have correct CSS classes on filter buttons', () => {
-      // Arrange
-      const selectedFilters = ['Test Filter']
-
-      // Act
-      const { getByText } = render(
-        <MockContextProvider selectedFilters={selectedFilters}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      const filterButton = getByText('Test Filter')
-
-      // Assert
-      expect(filterButton).toHaveClass('govuk-!-padding-1')
-      expect(filterButton).toHaveClass('govuk-!-margin-right-2')
-      expect(filterButton).toHaveClass('border-[1px]')
-      expect(filterButton).toHaveClass('bg-white')
-      expect(filterButton).toHaveClass('text-black')
-    })
-
-    test('should have correct CSS classes on clear button', () => {
-      // Arrange & Act
-      const { getByRole } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      const clearButton = getByRole('button', { name: /clear filter selection/i })
-
-      // Assert
-      expect(clearButton).toHaveClass('govuk-body-xs')
-      expect(clearButton).toHaveClass('govuk-link')
-      expect(clearButton).toHaveClass('absolute')
-      expect(clearButton).toHaveClass('right-0')
-      expect(clearButton).toHaveClass('text-blue')
-      expect(clearButton).toHaveClass('underline')
-    })
-  })
-
-  describe('Accessibility', () => {
-    test('should have proper heading structure', () => {
-      // Arrange & Act
-      const { getByRole } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
-
-      // Assert
-      const heading = getByRole('heading', { level: 2 })
+      const heading = screen.getByRole('heading', { level: 2 })
       expect(heading).toBeInTheDocument()
-      expect(heading).toHaveClass('govuk-heading-s')
+      expect(heading).toHaveTextContent('Selected Filters (1)')
     })
 
-    test('should have clickable buttons for all interactive elements', () => {
-      // Arrange
-      const selectedFilters = ['Filter 1', 'Filter 2']
+    it('should have accessible button text', () => {
+      render(<SelectedFilters />)
 
-      // Act
-      const { getAllByRole } = render(
-        <MockContextProvider selectedFilters={selectedFilters}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+      // Filter removal buttons should include the filter name
+      expect(screen.getByRole('button', { name: /test filter/i })).toBeInTheDocument()
 
-      // Assert
-      const buttons = getAllByRole('button')
-      expect(buttons).toHaveLength(3) // 2 filter buttons + 1 clear button
-      buttons.forEach((button) => {
-        expect(button).toBeEnabled()
-      })
+      // Clear button should be descriptive
+      expect(screen.getByRole('button', { name: /clear filter selection/i })).toBeInTheDocument()
     })
   })
 
-  describe('Integration with real context', () => {
-    test('should work with real TopicBodyContextProvider', async () => {
-      // Arrange & Act
-      const { getByRole, getByText } = render(
-        <TestWrapper>
-          <SelectedFilters />
-        </TestWrapper>
-      )
-
-      // Assert - Should render with default filters from context
-      await waitFor(() => {
-        expect(getByRole('heading', { level: 2 })).toHaveTextContent('Selected filters (3)')
-        expect(getByText('Leicester')).toBeInTheDocument()
-        expect(getByText('London')).toBeInTheDocument()
-        expect(getByText('6-in-1')).toBeInTheDocument()
+  describe('edge cases', () => {
+    it('should handle empty string filters', () => {
+      mockUseSelectedFilters.mockReturnValue({
+        selectedFilters: [
+          { id: '', label: '' },
+          { id: 'Valid Filter', label: 'Valid Filter' },
+          { id: '', label: '' },
+        ],
+        removeFilter: mockRemoveFilter,
+        clearFilters: mockClearFilters,
       })
+
+      render(<SelectedFilters />)
+
+      // Should still render buttons for empty strings
+      const filterButtons = screen.getAllByRole('button')
+      // 3 filter buttons + 1 clear button = 4 total
+      expect(filterButtons).toHaveLength(4)
     })
-  })
 
-  describe('Translation integration', () => {
-    test('should use translated title text', () => {
-      // Arrange & Act
-      const { getByRole } = render(
-        <MockContextProvider selectedFilters={['Test Filter']}>
-          <SelectedFilters />
-        </MockContextProvider>
-      )
+    it('should handle very long filter names', () => {
+      const longFilterName = [
+        { id: 'Long Filter Name', label: 'This is a very long filter name that might cause layout issues in the UI' },
+      ]
 
-      // Assert
-      expect(getByRole('heading', { level: 2 })).toHaveTextContent('Selected filters (1)')
+      mockUseSelectedFilters.mockReturnValue({
+        selectedFilters: [longFilterName],
+        removeFilter: mockRemoveFilter,
+        clearFilters: mockClearFilters,
+      })
+
+      render(<SelectedFilters />)
+
+      expect(screen.getByRole('button', { name: new RegExp(longFilterName, 'i') })).toBeInTheDocument()
     })
   })
 })

@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { render, screen } from '@/config/test-utils'
 
 import MapCard from './MapCard'
@@ -14,6 +15,12 @@ jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapData', () => ({
   default: jest.fn().mockReturnValue({
     data: {},
     error: null,
+  }),
+}))
+
+jest.mock('@/app/hooks/globalFilterHooks', () => ({
+  useThresholdFilters: jest.fn().mockReturnValue({
+    thresholds: [],
   }),
 }))
 
@@ -90,10 +97,8 @@ jest.mock('../../ui/ukhsa/Map/shared/controls/FullscreenControl', () => ({
   ),
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/YearSelectControl', () => ({
-  YearSelectControl: ({ position }: MockLayerProps) => (
-    <div data-testid="year-select-control" data-position={position} />
-  ),
+jest.mock('../../ui/ukhsa/Map/shared/controls/CoverControl', () => ({
+  CoverControl: ({ position }: MockLayerProps) => <div data-testid="cover-control" data-position={position} />,
 }))
 
 jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
@@ -124,7 +129,47 @@ jest.mock('clsx', () => ({
   default: jest.fn((...args) => args.filter(Boolean).join(' ')),
 }))
 
+const mockUseThresholdFilters = useThresholdFilters as jest.MockedFunction<typeof useThresholdFilters>
+
 describe('MapCard', () => {
+  beforeEach(() => {
+    mockUseThresholdFilters.mockReturnValue({
+      label: 'Threshold values',
+      thresholds: [
+        {
+          id: '1',
+          value: {
+            colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+            boundary_minimum_value: 0,
+            boundary_maximum_value: 10,
+            label: 'Low',
+          },
+          type: 'threshold',
+        },
+        {
+          id: '2',
+          value: {
+            colour: 'MAP_COLOUR_2_LIGHT_GREEN',
+            boundary_minimum_value: 11,
+            boundary_maximum_value: 20,
+            label: 'Medium',
+          },
+          type: 'threshold',
+        },
+        {
+          id: '3',
+          value: {
+            colour: 'MAP_COLOUR_3_TURQUOISE',
+            boundary_minimum_value: 21,
+            boundary_maximum_value: 100,
+            label: 'High',
+          },
+          type: 'threshold',
+        },
+      ],
+    })
+  })
+
   afterEach(() => {
     jest.clearAllMocks()
   })
@@ -138,7 +183,7 @@ describe('MapCard', () => {
     expect(screen.getByTestId('map-legend-control')).toBeInTheDocument()
     expect(screen.getByTestId('zoom-control')).toBeInTheDocument()
     expect(screen.getByTestId('fullscreen-control')).toBeInTheDocument()
-    expect(screen.getByTestId('year-select-control')).toBeInTheDocument()
+    expect(screen.getByTestId('cover-control')).toBeInTheDocument()
   })
 
   test('applies combined className correctly', () => {
@@ -214,11 +259,13 @@ describe('MapCard', () => {
       <MapCard>
         <div data-testid="child-1">First Child</div>
         <div data-testid="child-2">Second Child</div>
+        <div data-testid="child-3">Third Child</div>
       </MapCard>
     )
 
     expect(screen.getByTestId('child-1')).toBeInTheDocument()
     expect(screen.getByTestId('child-2')).toBeInTheDocument()
+    expect(screen.getByTestId('child-3')).toBeInTheDocument()
   })
 
   test('correctly renders with all specified layers', () => {
@@ -231,7 +278,7 @@ describe('MapCard', () => {
     expect(mapContainer).toContainElement(screen.getByTestId('attribution-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('zoom-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('fullscreen-control'))
-    expect(mapContainer).toContainElement(screen.getByTestId('year-select-control'))
+    expect(mapContainer).toContainElement(screen.getByTestId('cover-control'))
     expect(mapContainer).toContainElement(screen.getByTestId('base-layer'))
   })
 

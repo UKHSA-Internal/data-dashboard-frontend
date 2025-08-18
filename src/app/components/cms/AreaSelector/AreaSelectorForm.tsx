@@ -58,6 +58,7 @@ export function AreaSelectorForm({ areaTypeOptions, areaNameOptions }: AreaSelec
       method="get"
       className="flex flex-wrap items-end justify-center gap-3 sm:flex-nowrap sm:justify-start sm:gap-4"
       aria-label="Area selector"
+      data-testid="Area selector"
     >
       <div className="flex w-full gap-3 sm:max-w-xl sm:gap-4">
         <div className="govuk-form-group mb-0 w-1/2">

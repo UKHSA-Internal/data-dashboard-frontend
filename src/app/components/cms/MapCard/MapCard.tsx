@@ -9,12 +9,13 @@ import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
+import { CoverControl } from '../../ui/ukhsa/Map/shared/controls/CoverControl'
 import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
-import { YearSelectControl } from '../../ui/ukhsa/Map/shared/controls/YearSelectControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
 import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
@@ -57,38 +58,16 @@ export default function MapCard({
 }: MapCardProps) {
   const ref = useMapRef()
 
-  const thresholdData: ThresholdItemProps[] = [
-    {
-      colour: 'MAP_COLOUR_1_LIGHT_YELLOW' as MapFeatureColour,
-      label: 'less than 65%',
-      boundary_minimum_value: 0.0,
-      boundary_maximum_value: 0.64,
-    },
-    {
-      colour: 'MAP_COLOUR_2_LIGHT_GREEN' as MapFeatureColour,
-      label: '65% - 74%',
-      boundary_minimum_value: 0.65,
-      boundary_maximum_value: 0.74,
-    },
-    {
-      colour: 'MAP_COLOUR_3_TURQUOISE' as MapFeatureColour,
-      label: '75% - 84%',
-      boundary_minimum_value: 0.75,
-      boundary_maximum_value: 0.84,
-    },
-    {
-      colour: 'MAP_COLOUR_4_BLUE' as MapFeatureColour,
-      label: '85% - 95%',
-      boundary_minimum_value: 0.85,
-      boundary_maximum_value: 0.95,
-    },
-    {
-      colour: 'MAP_COLOUR_5_DARK_BLUE' as MapFeatureColour,
-      label: 'over 95%',
-      boundary_minimum_value: 0.96,
-      boundary_maximum_value: 1,
-    },
-  ]
+  const thresholdFilters = useThresholdFilters()
+
+  const thresholdData: ThresholdItemProps[] = thresholdFilters!.thresholds.map((threshold) => {
+    return {
+      colour: threshold.value.colour as MapFeatureColour,
+      boundary_minimum_value: threshold.value.boundary_minimum_value,
+      boundary_maximum_value: threshold.value.boundary_maximum_value,
+      label: threshold.value.label,
+    }
+  })
 
   const request = {
     date_from: '2023-10-30',
@@ -137,7 +116,7 @@ export default function MapCard({
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
-        <YearSelectControl position="topleft" className="p-2`" />
+        <CoverControl position="topleft" className="gap-2 p-2 sm:flex" />
         <AttributionControl position={attributionControlPosition} />
         <ZoomControl position={zoomControlPosition} />
         <FullscreenControl position={fullscreenControlPosition} />

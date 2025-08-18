@@ -1,10 +1,56 @@
 import React from 'react'
 
+import { FilterOption } from '@/app/context/globalFilterContext'
+import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
 import { MultiselectDropdown } from './MultiselectDropdown'
 
+// Mock the useSelectedFilters hook
+jest.mock('@/app/hooks/globalFilterHooks', () => ({
+  useSelectedFilters: jest.fn(),
+}))
+
+interface MockFilterFunctions {
+  updateFilters: jest.MockedFunction<(newFilters: FilterOption[]) => void>
+  addFilter: jest.MockedFunction<(filter: FilterOption) => void>
+  removeFilter: jest.MockedFunction<(filterId: string) => void>
+  clearFilters: jest.MockedFunction<() => void>
+}
+
+const mockUseSelectedFilters = useSelectedFilters as jest.MockedFunction<typeof useSelectedFilters>
+
 describe('flat multiselect component', () => {
+  let mockSelectedFilters: FilterOption[] = []
+  let mockFunctions: MockFilterFunctions
+
+  beforeEach(() => {
+    mockSelectedFilters = []
+    jest.clearAllMocks()
+
+    mockFunctions = {
+      updateFilters: jest.fn((newFilters: Array<{ id: string; label: string }>) => {
+        mockSelectedFilters = newFilters
+      }),
+      addFilter: jest.fn((filter: { id: string; label: string }) => {
+        if (!mockSelectedFilters.some((selectedFilter) => selectedFilter.id === filter.id)) {
+          mockSelectedFilters = [...mockSelectedFilters, filter]
+        }
+      }),
+      removeFilter: jest.fn((filterId: string) => {
+        mockSelectedFilters = mockSelectedFilters.filter((filter) => filter.id !== filterId)
+      }),
+      clearFilters: jest.fn(() => {
+        mockSelectedFilters = []
+      }),
+    }
+
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+  })
+
   const name = 'Test Dropdown'
 
   it('renders the dropdown button', () => {
@@ -68,25 +114,145 @@ describe('flat multiselect component', () => {
   })
 
   it('toggles option selection with Space/Enter', () => {
-    render(<MultiselectDropdown name={name} />)
+    const { rerender } = render(<MultiselectDropdown name={name} />)
 
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
-    const checkboxes = screen.getAllByRole('checkbox')
+
+    let checkboxes = screen.getAllByRole('checkbox')
     checkboxes[0].focus()
+    expect(document.activeElement).toBe(checkboxes[0])
     expect(checkboxes[0]).not.toBeChecked()
-    fireEvent.keyDown(checkboxes[0], { key: ' ' })
+
+    fireEvent.keyDown(checkboxes[0], { key: 'ArrowDown' })
+    expect(document.activeElement).toBe(checkboxes[1])
+
+    // Trigger the space key event
+    fireEvent.keyDown(checkboxes[1], { key: ' ' })
+
+    // Verify the mock was called
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Test Dropdown.test2',
+      label: 'test2',
+    })
+
+    // Update the mock with the new state
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+
+    // Re-render the component to reflect the state change
+    rerender(<MultiselectDropdown name={name} />)
+
+    // Get fresh checkbox references after re-render
+    checkboxes = screen.getAllByRole('checkbox')
+    expect(checkboxes[1]).toBeChecked()
+  })
+
+  it('enforces selection limit for single depth filters', () => {
+    const { rerender } = render(<MultiselectDropdown name={name} selectionLimit={2} />)
+
+    const button = screen.getByRole('button', { name })
+    fireEvent.click(button)
+
+    let checkboxes = screen.getAllByRole('checkbox')
+
+    // Select first option
+    fireEvent.click(checkboxes[0])
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Test Dropdown.test1',
+      label: 'test1',
+    })
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} selectionLimit={2} />)
+
+    checkboxes = screen.getAllByRole('checkbox')
+
+    // Select second option
+    fireEvent.click(checkboxes[1])
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Test Dropdown.test2',
+      label: 'test2',
+    })
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} selectionLimit={2} />)
+
+    checkboxes = screen.getAllByRole('checkbox')
+
     expect(checkboxes[0]).toBeChecked()
+    expect(checkboxes[1]).toBeChecked()
+
+    // Third and fourth options should be disabled
+    expect(checkboxes[2]).toBeDisabled()
+    expect(checkboxes[3]).toBeDisabled()
+
+    // Deselect one option
+    fireEvent.click(checkboxes[0])
+    expect(mockFunctions.removeFilter).toHaveBeenCalledWith('Test Dropdown.test1')
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} selectionLimit={2} />)
+
+    checkboxes = screen.getAllByRole('checkbox')
+
+    expect(checkboxes[0]).not.toBeChecked()
+    // Third option should now be enabled
+    expect(checkboxes[2]).not.toBeDisabled()
   })
 })
 
 describe('nested multiselect', () => {
+  let mockSelectedFilters: Array<{ id: string; label: string }> = []
+  let mockFunctions: MockFilterFunctions
+
+  beforeEach(() => {
+    mockSelectedFilters = []
+    jest.clearAllMocks()
+
+    mockFunctions = {
+      updateFilters: jest.fn((newFilters: Array<{ id: string; label: string }>) => {
+        mockSelectedFilters = newFilters
+      }),
+      addFilter: jest.fn((filter: { id: string; label: string }) => {
+        if (!mockSelectedFilters.some((selectedFilter) => selectedFilter.id === filter.id)) {
+          mockSelectedFilters = [...mockSelectedFilters, filter]
+        }
+      }),
+      removeFilter: jest.fn((filterId: string) => {
+        mockSelectedFilters = mockSelectedFilters.filter((filter) => filter.id !== filterId)
+      }),
+      clearFilters: jest.fn(() => {
+        mockSelectedFilters = []
+      }),
+    }
+
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+  })
+
   const name = 'Nested Dropdown'
   function setup() {
-    render(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+    const renderResult = render(<MultiselectDropdown name={name} nestedMultiselect={true} />)
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
-    return { button }
+    return { button, ...renderResult }
   }
 
   it('renders group and child options', () => {
@@ -118,38 +284,174 @@ describe('nested multiselect', () => {
   })
 
   it('space/enter toggles group selection (selects/deselects all children)', () => {
-    setup()
-    const groupCheckbox = screen.getByLabelText('Group 1')
-    const child1 = screen.getByLabelText('child1')
-    const child2 = screen.getByLabelText('child2')
+    const { rerender } = setup()
+
+    let groupCheckbox = screen.getByLabelText('Group 1')
+    let child1 = screen.getByLabelText('child1')
+    let child2 = screen.getByLabelText('child2')
+    let child3 = screen.getByLabelText('child3')
+
     expect(child1).not.toBeChecked()
     expect(child2).not.toBeChecked()
+    expect(child3).not.toBeChecked()
+
     groupCheckbox.focus()
     fireEvent.keyDown(groupCheckbox, { key: ' ' })
+
+    // Verify the updateFilters was called with all children
+    expect(mockFunctions.updateFilters).toHaveBeenCalledWith([
+      { id: 'Nested Dropdown.child1', label: 'child1' },
+      { id: 'Nested Dropdown.child2', label: 'child2' },
+      { id: 'Nested Dropdown.child3', label: 'child3' },
+    ])
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh references after re-render
+    groupCheckbox = screen.getByLabelText('Group 1')
+    child1 = screen.getByLabelText('child1')
+    child2 = screen.getByLabelText('child2')
+    child3 = screen.getByLabelText('child3')
+
     expect(child1).toBeChecked()
     expect(child2).toBeChecked()
+    expect(child3).toBeChecked()
+    expect(groupCheckbox).toBeChecked()
+
+    // Test deselecting all
+    groupCheckbox.focus()
     fireEvent.keyDown(groupCheckbox, { key: ' ' })
+
+    // Verify updateFilters was called to remove all group children
+    expect(mockFunctions.updateFilters).toHaveBeenLastCalledWith([])
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh references
+    child1 = screen.getByLabelText('child1')
+    child2 = screen.getByLabelText('child2')
+    child3 = screen.getByLabelText('child3')
+
     expect(child1).not.toBeChecked()
     expect(child2).not.toBeChecked()
+    expect(child3).not.toBeChecked()
   })
 
   it('space/enter toggles individual child selection', () => {
-    setup()
-    const child1 = screen.getByLabelText('child1')
+    const { rerender } = setup()
+
+    let child1 = screen.getByLabelText('child1')
+
     child1.focus()
     fireEvent.keyDown(child1, { key: ' ' })
+
+    // Verify addFilter was called
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Nested Dropdown.child1',
+      label: 'child1',
+    })
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh reference
+    child1 = screen.getByLabelText('child1')
     expect(child1).toBeChecked()
+
+    // Test deselecting
+    child1.focus()
     fireEvent.keyDown(child1, { key: ' ' })
+
+    // Verify removeFilter was called
+    expect(mockFunctions.removeFilter).toHaveBeenCalledWith('Nested Dropdown.child1')
+
+    // Update mock and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh reference
+    child1 = screen.getByLabelText('child1')
     expect(child1).not.toBeChecked()
   })
 
   it('selecting all children checks the group', () => {
-    setup()
-    const groupCheckbox = screen.getByLabelText('Group 1')
+    const { rerender } = setup()
+
+    let groupCheckbox = screen.getByLabelText('Group 1')
     const child1 = screen.getByLabelText('child1')
+    let child2 = screen.getByLabelText('child2')
+    let child3 = screen.getByLabelText('child3')
+
+    // Select first child
     fireEvent.click(child1)
-    fireEvent.click(screen.getByLabelText('child2'))
-    fireEvent.click(screen.getByLabelText('child3'))
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Nested Dropdown.child1',
+      label: 'child1',
+    })
+
+    // Update and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh references
+    groupCheckbox = screen.getByLabelText('Group 1')
+    child2 = screen.getByLabelText('child2')
+    child3 = screen.getByLabelText('child3')
+
+    // Select second child
+    fireEvent.click(child2)
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Nested Dropdown.child2',
+      label: 'child2',
+    })
+
+    // Update and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh references
+    groupCheckbox = screen.getByLabelText('Group 1')
+    child3 = screen.getByLabelText('child3')
+
+    // Select third child
+    fireEvent.click(child3)
+    expect(mockFunctions.addFilter).toHaveBeenCalledWith({
+      id: 'Nested Dropdown.child3',
+      label: 'child3',
+    })
+
+    // Update and re-render
+    mockUseSelectedFilters.mockReturnValue({
+      selectedFilters: mockSelectedFilters,
+      ...mockFunctions,
+    })
+    rerender(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+
+    // Get fresh reference and verify group is checked
+    groupCheckbox = screen.getByLabelText('Group 1')
     expect(groupCheckbox).toBeChecked()
   })
 
