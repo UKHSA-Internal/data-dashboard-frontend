@@ -4,8 +4,8 @@ import { client } from '@/api/utils/api.utils'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { render, screen, within } from '@/config/test-utils'
 import { logger } from '@/lib/logger'
-import { geographyMock } from '@/mock-server/handlers/geographies/v2/[topic]'
-import { mockNations } from '@/mock-server/handlers/geographies/v2/fixtures'
+import { geographyMock } from '@/mock-server/handlers/geographies/v3/[topic]'
+import { mockNations } from '@/mock-server/handlers/geographies/v3/fixtures'
 
 import { AreaSelector } from './AreaSelector'
 

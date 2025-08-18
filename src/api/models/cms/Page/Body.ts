@@ -236,4 +236,5 @@ export const CompositeBody = z.array(
   ])
 )
 
+export type CardTypes = z.infer<typeof CardTypes>
 export type CompositeBody = z.infer<typeof CompositeBody>

@@ -20,7 +20,7 @@ export function StaticFilter({ href = '#filter', className, children }: StaticFi
   const [isVisible, setIsVisible] = useState(true)
 
   useEffect(() => {
-    if (horizontalWindowPosition > 200) {
+    if (horizontalWindowPosition >= 200) {
       setIsSticky(true)
     } else {
       setIsSticky(false)
@@ -40,7 +40,7 @@ export function StaticFilter({ href = '#filter', className, children }: StaticFi
         href={href}
         className={clsx(
           className,
-          'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 sticky bottom-3 float-right inline-flex items-center bg-black text-white no-underline shadow-none ukhsa-focus focus:bg-yellow focus:text-black',
+          'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 bottom-3 float-right inline-flex items-center bg-black text-white no-underline shadow-none ukhsa-focus focus:bg-yellow focus:text-black',
           {
             // 'hidden': !isSticky,
             sticky: isSticky,
