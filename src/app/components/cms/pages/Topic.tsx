@@ -2,15 +2,7 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import {
-  Announcements,
-  FilterBanners,
-  PageSection,
-  PageSectionWithContents,
-  SelectedFilters,
-  View,
-} from '@/app/components/ui/ukhsa'
-import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
+import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
 import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -21,7 +13,6 @@ import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import StaticFilter from '../../ui/ukhsa/StaticFilter/StaticFilter'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -127,12 +118,6 @@ export default async function TopicPage({
             )}
 
             <GlobalFilterProvider filters={extractedGlobalFilterContent}>
-              {/* Example, do not un-comment  */}
-              <FilterBanners />
-              <StaticFilter>
-                <SelectedFilters />
-                <FilterDropdowns />
-              </StaticFilter>
               <PageSectionWithContents>
                 {body.map(({ id, value }) => (
                   <PageSection key={id} heading={value.heading}>

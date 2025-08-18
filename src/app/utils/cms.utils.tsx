@@ -7,7 +7,17 @@ import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
-import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import {
+  Card,
+  FilterBanners,
+  SelectedFilters,
+  StaticFilter,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/ukhsa'
+import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
@@ -266,6 +276,16 @@ export const renderCard = (
             )
           })}
         </ChartRowCard>
+      )}
+
+      {type === 'global_filter_card' && (
+        <>
+          <FilterBanners />
+          <StaticFilter>
+            <SelectedFilters />
+            <FilterDropdowns />
+          </StaticFilter>
+        </>
       )}
 
       {type === 'filter_linked_map' && (
