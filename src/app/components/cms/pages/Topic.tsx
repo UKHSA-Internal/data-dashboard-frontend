@@ -13,10 +13,10 @@ import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import TableData from '../../ui/ukhsa/Table/TableData'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
-
 export default async function TopicPage({
   slug,
   searchParams: { areaName, areaType, timeseriesFilter = '' },
@@ -40,6 +40,11 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
+
+  const sampleData = [
+    { id: 1, name: 'John Doe', role: 'Developer' },
+    { id: 2, name: 'Jane Smith', role: 'Designer' },
+  ]
 
   body.map(({ value }) => {
     if (value.content) {
@@ -140,6 +145,7 @@ export default async function TopicPage({
         {relatedLinksLayout === 'Footer' ? (
           <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
         ) : null}
+        <TableData data={sampleData}></TableData>
       </View>
     </>
   )
