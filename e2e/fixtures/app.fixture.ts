@@ -511,18 +511,18 @@ export class App {
 
   async checkAreaSelectorFormIsActive(isActive = true) {
     if (isActive) {
-      await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeVisible({ timeout: 10000 })
+      await expect(this.page.getByTestId('Area selector')).toBeVisible({ timeout: 10000 })
     } else {
-      await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeHidden({ timeout: 10000 })
+      await expect(this.page.getByTestId('Area selector')).toBeHidden({ timeout: 10000 })
     }
   }
 
   async checkAreaSelectorInputMatchesValue(label: 'Area type' | 'Area name', expectedValue: string) {
-    await expect(this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label)).toHaveValue(expectedValue)
+    await expect(this.page.getByTestId('Area selector').getByLabel(label)).toHaveValue(expectedValue)
   }
 
   async checkAreaSelectorDropdownOptions(label: 'Area type' | 'Area name', expectedOptions: Array<string>) {
-    const input = this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label)
+    const input = this.page.getByTestId('Area selector').getByLabel(label)
 
     // Placeholder option
     await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('disabled')
@@ -536,11 +536,11 @@ export class App {
   }
 
   async checkAreaSelectorAreaNameIsDisabled() {
-    await expect(this.page.getByRole('form', { name: 'Area selector' }).getByLabel('Area name')).toBeDisabled()
+    await expect(this.page.getByTestId('Area selector').getByLabel('Area name')).toBeDisabled()
   }
 
   async selectAreaSelectorDropdownOption(label: 'Area type' | 'Area name', selectedOption: string) {
-    await this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label).selectOption(selectedOption)
+    await this.page.getByTestId('Area selector').getByLabel(label).selectOption(selectedOption)
   }
 
   async checkAreaSelectorChartsRefreshedForLocation(location: string) {
@@ -554,11 +554,11 @@ export class App {
   }
 
   async clickAreaSelectorResetLink() {
-    await this.page.getByRole('form', { name: 'Area selector' }).getByRole('link', { name: 'Reset' }).click()
+    await this.page.getByTestId('Area selector').getByRole('link', { name: 'Reset' }).click()
   }
 
   async submitAreaSelectorForm() {
-    await this.page.getByRole('form', { name: 'Area selector' }).getByRole('button', { name: 'Update' }).click()
+    await this.page.getByTestId('Area selector').getByRole('button', { name: 'Update' }).click()
   }
 }
 
