@@ -11,6 +11,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
+import { postMapData } from '@/api/requests/cover-maps/postMaps'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -36,6 +37,9 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   geographyAreasLoading: boolean
   geographyAreasError: string | null
   selectedVaccination: DataFilter | null
+  mapData: Map<string, GeographiesSchema> | null
+  mapDataLoading: boolean
+  mapDataError: string | null
 }
 
 // Global Filter Action Interface
@@ -65,6 +69,9 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [geographyAreasLoading, setGeographyAreasLoading] = useState<boolean>(false)
   const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
   const [selectedVaccination, setSelectedVaccination] = useState<DataFilter | null>(null)
+  const [mapData, setMapData] = useState<Map<string, GeographiesSchema>>(null)
+  const [mapDataLoading, setMapDataLoading] = useState<boolean>(false)
+  const [mapDataError, setMapDataError] = useState<string | null>(null)
 
   const fetchGeographyData = async () => {
     try {
@@ -98,12 +105,61 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     }
   }
 
+  const fetchMapData = async () => {
+    const request = {
+      date_from: '2023-10-30',
+      date_to: '2023-10-31',
+      parameters: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
+        topic: 'COVID-19',
+        metric: 'COVID-19_deaths_ONSByWeek',
+        stratum: 'default',
+        age: 'all',
+        sex: 'all',
+        geography_type: 'Lower Tier Local Authority',
+        geographies: [],
+      },
+      accompanying_points: [
+        {
+          label_prefix: 'Rate of cases in England: ',
+          label_suffix: '',
+          parameters: {
+            metric: 'COVID-19_cases_rateRollingMean',
+            geography_type: 'Nation',
+            geography: 'England',
+          },
+        },
+      ],
+    }
+    console.log('Fetching Map Data')
+
+    try {
+      setMapDataLoading(true)
+      const response = await postMapData(request)
+
+      console.log('Map Data Response', response.data)
+
+      setMapData(response)
+    } catch (error) {
+      console.log('Map Data Error: ', error)
+      setMapDataError('Error fetching geography data: ' + error || 'Unknown error')
+    } finally {
+      setMapDataLoading(false)
+    }
+  }
+
   /* Usage: When the geographyFilters are updated this will trigger this use effect 
   to load the most recent list of geography areas for each of the geography filters */
   useEffect(() => {
     if (!filters.geographyFilters) return
     fetchGeographyData()
   }, [filters.geographyFilters])
+
+  useEffect(() => {
+    if (!selectedVaccination || !selectedTimePeriod) return
+    fetchMapData()
+  }, [selectedVaccination, selectedTimePeriod])
 
   const state: GlobalFilterState = {
     ...filters,
@@ -113,6 +169,9 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     geographyAreasLoading,
     geographyAreasError,
     selectedVaccination,
+    mapData,
+    mapDataLoading,
+    mapDataError,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions

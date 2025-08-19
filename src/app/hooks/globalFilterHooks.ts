@@ -75,3 +75,17 @@ export function useVaccinationState(): {
     setSelectedVaccination: actions.setSelectedVaccination,
   }
 }
+
+export function useMapData(): {
+  mapData: Map<string, GeographiesSchema>
+  mapDataLoading: boolean
+  mapDataError: string | null
+} {
+  const { state } = useGlobalFilters()
+
+  return {
+    mapData: state.mapData,
+    mapDataLoading: state.mapDataLoading,
+    mapDataError: state.mapDataError,
+  }
+}
