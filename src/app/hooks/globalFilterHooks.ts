@@ -1,4 +1,11 @@
-import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilter,
+  DataFilters,
+  GeographyFilters,
+  ThresholdFilters,
+  TimePeriod,
+} from '@/api/models/cms/Page/GlobalFilter'
+import { GeographiesSchema } from '@/api/requests/geographies/getGeographies'
 import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
 
 export function useTimePeriods(): TimePeriod[] | null {
@@ -36,5 +43,35 @@ export function useSelectedFilters(): {
     addFilter: actions.addFilter,
     removeFilter: actions.removeFilter,
     clearFilters: actions.clearFilters,
+  }
+}
+
+export function useGeographyState(): {
+  geographyAreas: Map<string, GeographiesSchema>
+  geographyAreasLoading: boolean
+  geographyAreasError: string | null
+} {
+  const { state } = useGlobalFilters()
+
+  return {
+    geographyAreas: state.geographyAreas,
+    geographyAreasLoading: state.geographyAreasLoading,
+    geographyAreasError: state.geographyAreasError,
+  }
+}
+
+export function useVaccinationState(): {
+  vaccinationList: DataFilter[] | null
+  selectedVaccination: DataFilter | null
+  setSelectedVaccination: (vaccination: DataFilter | null) => void
+} {
+  const { state, actions } = useGlobalFilters()
+
+  const vaccinationList: DataFilter[] | null = state.dataFilters?.data_filters ?? null
+
+  return {
+    vaccinationList,
+    selectedVaccination: state.selectedVaccination,
+    setSelectedVaccination: actions.setSelectedVaccination,
   }
 }
