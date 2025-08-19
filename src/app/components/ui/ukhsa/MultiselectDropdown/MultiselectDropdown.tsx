@@ -5,7 +5,7 @@ import React, { useEffect, useRef, useState } from 'react'
 
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 
-type FlatOption = string
+type FlatOption = { id: string; name: string }
 type GroupedOption = { title: string; children: string[] }
 type Options = FlatOption[] | GroupedOption[]
 
@@ -13,30 +13,43 @@ interface MultiselectDropdownProps {
   name: string
   nestedMultiselect?: boolean
   selectionLimit?: number
+  data?: any
 }
 
-export function MultiselectDropdown({ name, nestedMultiselect = false, selectionLimit = 4 }: MultiselectDropdownProps) {
+export function MultiselectDropdown({
+  name,
+  nestedMultiselect = false,
+  selectionLimit = 4,
+  data = [],
+}: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  // TODO: Get options from CMS
-  const [options] = useState<Options>(
-    nestedMultiselect
-      ? [
-          { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
-          { title: 'Group 2', children: ['child4', 'child5'] },
-        ]
-      : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
-  )
+  let options = []
+  if (data) {
+    options = data.map((item: any) => {
+      return { id: `${name}.${item.geography_code}`, label: item.name }
+    })
+  }
 
-  const createFilterOption = (optionValue: string) => ({
-    id: `${name}.${optionValue}`,
-    label: optionValue,
+  //TODO: I have left this in for reference. will need to be tidied up once functionality is complete.
+  // const [options] = useState<Options>(
+  //   nestedMultiselect
+  //     ? [
+  //         { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
+  //         { title: 'Group 2', children: ['child4', 'child5'] },
+  //       ]
+  //     : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
+  // )
+
+  const createFilterOption = (optionValue: FlatOption) => ({
+    id: optionValue.id,
+    label: optionValue.label,
   })
 
-  const isFilterSelected = (optionValue: string) => {
-    const filterId = `${name}.${optionValue}`
+  const isFilterSelected = (optionValue: FlatOption) => {
+    const filterId = optionValue.id
     const isSelected = selectedFilters!.some((filter) => filter.id === filterId)
     return isSelected
   }
@@ -171,12 +184,10 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
         addFilter(filterOption)
       }
     } else {
-      const option = (options as FlatOption[])[groupIndexOrIndex]
-      if (isOptionDisabled(option)) return
+      const filterOption = (options as FlatOption[])[groupIndexOrIndex]
+      if (isOptionDisabled(filterOption)) return
 
-      const filterOption = createFilterOption(option)
-
-      if (isFilterSelected(option)) {
+      if (isFilterSelected(filterOption)) {
         removeFilter(filterOption.id)
       } else {
         addFilter(filterOption)
@@ -323,8 +334,8 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                   <input
                     className="govuk-checkboxes__input py-0 pl-4"
                     tabIndex={-1}
-                    name={option}
-                    id={`ukhsa-checkbox-${option}`}
+                    name={option.label}
+                    id={`ukhsa-checkbox-${option.label}`}
                     type="checkbox"
                     value={option}
                     ref={checkboxRefs.current[index]}
@@ -339,7 +350,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                     })}
                     htmlFor={`ukhsa-checkbox-${option}`}
                   >
-                    {option}
+                    {option.label}
                   </label>
                 </div>
               )

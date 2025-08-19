@@ -8,26 +8,31 @@ import { useGeographyState } from '@/app/hooks/globalFilterHooks'
 
 function DisplayGeographyDropdowns() {
   const { geographyAreas, geographyAreasError, geographyAreasLoading } = useGeographyState()
-  console.log('geographyAreas: ', geographyAreas)
+
   if (geographyAreasLoading) {
     return <div>Loading...</div>
   }
+
   if (geographyAreasError) {
     return <div>Error: {geographyAreasError}</div>
   }
-  return (
-    <>
-      <div className="w-1/3 px-2 z-100">
-        <MultiselectDropdown name="Country" />
+
+  if (!geographyAreas || geographyAreas.size === 0) {
+    return <div>No geography areas available</div>
+  }
+
+  const geographyDropdowns: JSX.Element[] = []
+
+  // Use for...of to iterate over Map entries
+  for (const [key, geographyArea] of geographyAreas) {
+    geographyDropdowns.push(
+      <div key={key} className={`w-1/${geographyAreas.size} px-2 z-100`}>
+        <MultiselectDropdown name={key} data={geographyArea} />
       </div>
-      <div className="w-1/3 px-2">
-        <MultiselectDropdown name="Region" />
-      </div>
-      <div className="w-1/3 px-2">
-        <MultiselectDropdown name="Local Authority" />
-      </div>
-    </>
-  )
+    )
+  }
+
+  return <>{geographyDropdowns}</>
 }
 
 export function FilterDropdowns() {
