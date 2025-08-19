@@ -9,9 +9,10 @@ import {
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { MapDataResponse } from '@/api/models/Maps'
+import { postMapData } from '@/api/requests/cover-maps/postMaps'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
-import { postMapData } from '@/api/requests/cover-maps/postMaps'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -37,7 +38,7 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   geographyAreasLoading: boolean
   geographyAreasError: string | null
   selectedVaccination: DataFilter | null
-  mapData: Map<string, GeographiesSchema> | null
+  mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
 }
@@ -69,7 +70,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [geographyAreasLoading, setGeographyAreasLoading] = useState<boolean>(false)
   const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
   const [selectedVaccination, setSelectedVaccination] = useState<DataFilter | null>(null)
-  const [mapData, setMapData] = useState<Map<string, GeographiesSchema>>(null)
+  const [mapData, setMapData] = useState<MapDataResponse | null>(null)
   const [mapDataLoading, setMapDataLoading] = useState<boolean>(false)
   const [mapDataError, setMapDataError] = useState<string | null>(null)
 
@@ -140,7 +141,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
 
       console.log('Map Data Response', response.data)
 
-      setMapData(response)
+      setMapData(response.data ?? null)
     } catch (error) {
       console.log('Map Data Error: ', error)
       setMapDataError('Error fetching geography data: ' + error || 'Unknown error')

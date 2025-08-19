@@ -5,6 +5,7 @@ import {
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { MapDataResponse } from '@/api/models/Maps'
 import { GeographiesSchema } from '@/api/requests/geographies/getGeographies'
 import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
 
@@ -77,7 +78,7 @@ export function useVaccinationState(): {
 }
 
 export function useMapData(): {
-  mapData: Map<string, GeographiesSchema>
+  mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
 } {
