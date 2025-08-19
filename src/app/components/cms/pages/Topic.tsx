@@ -13,7 +13,7 @@ import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
-import TableData from '../../ui/ukhsa/Table/TableData'
+import TableCard from '../../ui/ukhsa/TableCard/TableCard'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
@@ -41,9 +41,27 @@ export default async function TopicPage({
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
 
-  const sampleData = [
-    { id: 1, name: 'John Doe', role: 'Developer' },
-    { id: 2, name: 'Jane Smith', role: 'Designer' },
+  interface TableCard {
+    id: number
+    age: string
+    vaccinations: string[]
+  }
+  const sampleData: TableCard[] = [
+    {
+      id: 1,
+      age: '8 weeks',
+      vaccinations: ['6-in-1 vaccine', 'Rotavirus vaccine', 'MenB vaccine'],
+    },
+    {
+      id: 2,
+      age: '12 weeks',
+      vaccinations: ['6-in-1 vaccine (2nd dose)', 'Rotavirus vaccine (2nd dose)'],
+    },
+    {
+      id: 3,
+      age: '16 weeks',
+      vaccinations: ['6-in-1 vaccine (3rd dose)', 'MenB vaccine (2nd dose)'],
+    },
   ]
 
   body.map(({ value }) => {
@@ -153,7 +171,7 @@ export default async function TopicPage({
         {relatedLinksLayout === 'Footer' ? (
           <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
         ) : null}
-        <TableData data={sampleData}></TableData>
+        <TableCard data={sampleData}></TableCard>
       </View>
     </>
   )
