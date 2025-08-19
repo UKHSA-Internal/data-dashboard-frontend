@@ -2,7 +2,13 @@
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
-import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilter,
+  DataFilters,
+  GeographyFilters,
+  ThresholdFilters,
+  TimePeriod,
+} from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
 
@@ -29,6 +35,7 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   geographyAreas: Map<string, GeographiesSchema>
   geographyAreasLoading: boolean
   geographyAreasError: string | null
+  selectedVaccination: DataFilter | null
 }
 
 // Global Filter Action Interface
@@ -38,6 +45,7 @@ export interface GlobalFilterActions {
   addFilter: (filter: FilterOption) => void
   removeFilter: (filterId: string) => void
   clearFilters: () => void
+  setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
 }
 
 //Interface for the global filter context
@@ -56,6 +64,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [geographyAreas, setGeographyAreas] = useState<Map<string, GeographiesSchema>>(new Map())
   const [geographyAreasLoading, setGeographyAreasLoading] = useState<boolean>(false)
   const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
+  const [selectedVaccination, setSelectedVaccination] = useState<DataFilter | null>(null)
 
   const fetchGeographyData = async () => {
     try {
@@ -103,11 +112,17 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     geographyAreas,
     geographyAreasLoading,
     geographyAreasError,
+    selectedVaccination,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
     setSelectedTimePeriod: (timePeriod: TimePeriod | null) => {
       setSelectedTimePeriod(timePeriod)
+    },
+
+    //Time Period Actions
+    setSelectedVaccination: (vaccination: DataFilter | null) => {
+      setSelectedVaccination(vaccination)
     },
 
     //Filter selection actions

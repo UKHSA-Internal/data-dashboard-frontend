@@ -1,12 +1,9 @@
 'use client'
 
 import clsx from 'clsx'
-import { useState } from 'react'
-import dataMockJson from 'src/app/components/ui/ukhsa/VaccinationDropdown/data.json'
 
-import { Vaccination } from '@/api/models/cms/Page/GlobalFilter'
-
-const dataMock = dataMockJson as Vaccination[]
+import { DataFilter } from '@/api/models/cms/Page/GlobalFilter'
+import { useVaccinationState } from '@/app/hooks/globalFilterHooks'
 
 interface VaccinationDropdownProps {
   className?: string
@@ -21,7 +18,7 @@ export const VaccinationDropdown = ({
   disabled = false,
   onChange,
 }: VaccinationDropdownProps) => {
-  const [selectedVaccination, setSelectedVaccination] = useState<string | null>(null)
+  const { vaccinationList, selectedVaccination, setSelectedVaccination } = useVaccinationState()
 
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedVaccineId = event.target.value
@@ -32,14 +29,14 @@ export const VaccinationDropdown = ({
       return
     }
 
-    const selectedVaccinationValue = dataMock.find((vaccine) => vaccine.id === selectedVaccineId)
+    const selectedVaccinationValue = vaccinationList!.find((vaccine: DataFilter) => vaccine.id === selectedVaccineId)
+
     if (selectedVaccinationValue) {
-      setSelectedVaccination(selectedVaccinationValue['id'])
+      setSelectedVaccination(selectedVaccinationValue)
       onChange?.(selectedVaccinationValue['id'])
     }
   }
-
-  if (dataMock.length === 0) {
+  if (!vaccinationList) {
     return null
   }
 
@@ -51,15 +48,15 @@ export const VaccinationDropdown = ({
       <select
         id="vaccination-select"
         className="govuk-select"
-        value={selectedVaccination ?? ''}
+        value={selectedVaccination ? selectedVaccination.id : ''}
         onChange={handleSelectionChange}
         disabled={disabled}
         data-testid="vaccination-select-control"
       >
         <option value="">{placeholder}</option>
-        {dataMock.map((vaccine) => (
+        {vaccinationList!.map((vaccine: DataFilter) => (
           <option key={vaccine.id} value={vaccine.id}>
-            {vaccine.label}
+            {vaccine.value.label}
           </option>
         ))}
       </select>
