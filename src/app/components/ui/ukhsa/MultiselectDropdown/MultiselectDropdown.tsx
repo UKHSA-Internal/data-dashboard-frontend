@@ -227,7 +227,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
         tabIndex={-1}
         // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
         className={clsx(
-          'absolute z-[1] flex max-h-[214px] w-[300px] flex-col overflow-y-auto border-[1px] border-grey-4 bg-white p-2 shadow-md',
+          'absolute z-[10000] flex max-h-[214px] w-[300px] flex-col overflow-y-auto border-[1px] border-grey-4 bg-white p-2 shadow-md',
           {
             block: open,
             hidden: !open,
