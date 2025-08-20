@@ -8,75 +8,30 @@ import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 
 const newCard = {
-  id: 'time-series-card-test',
-  type: 'chart_row_card' as const,
-  value: {
-    columns: [
-      {
-        type: 'chart_card' as const,
-        value: {
-          title: 'New test card',
-          body: 'This is a new test card body content example text',
-          related_links: [
-            {
-              type: 'related_link' as const,
-              value: {
-                link_display_text: 'Link 1',
-                link: 'https://www.google.com',
-              },
-              id: 'd3fef747-7c5b-46d2-9ea0-da08ee98164e',
-            },
-            {
-              type: 'related_link' as const,
-              value: {
-                link_display_text: 'Google Page',
-                link: 'https://www.google.com',
-              },
-              id: '46ce6b14-ace8-46f0-af98-ee69afc79383',
-            },
-            {
-              type: 'related_link' as const,
-              value: {
-                link_display_text: 'Link 2',
-                link: 'https://www.google.com',
-              },
-              id: '45cc9523-d471-473a-af16-4bdbb9618072',
-            },
-          ],
-          tag_manager_event_id: 'new_test_card',
-          date_prefix: 'Up to',
-          about: 'This is a new test card about text',
-          x_axis: null,
-          x_axis_title: 'New test card X axis title',
-          y_axis: null,
-          y_axis_title: 'New test card Y axis title',
-          show_timeseries_filter: true,
-          chart: [
-            {
-              type: 'plot' as const,
-              value: {
-                topic: 'COVID-19',
-                metric: 'new_cases_daily',
-                chart_type: 'bar',
-                date_from: null,
-                date_to: null,
-                stratum: '',
-                geography: '',
-                geography_type: '',
-                label: 'teshjkfdsjk',
-                age: '',
-                sex: null,
-                line_colour: null,
-                line_type: null,
-              },
-              id: '7d8ee647-1e12-4ea5-8051-dacda36d7dc1',
-            },
-          ],
-        },
-        id: 'a937cbb1-b846-4ce8-b334-83ad5988b57b',
+  title: 'New test card',
+  description: 'This is a new test card description',
+  upToAndIncluding: '2025-01-01',
+  chart: [
+    {
+      type: 'plot' as const,
+      value: {
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        chart_type: 'bar',
+        date_from: null,
+        date_to: null,
+        stratum: '',
+        geography: '',
+        geography_type: '',
+        label: 'teshjkfdsjk',
+        age: '',
+        sex: null,
+        line_colour: null,
+        line_type: null,
       },
-    ],
-  },
+      id: '7d8ee647-1e12-4ea5-8051-dacda36d7dc1',
+    },
+  ],
 }
 
 const FilterCards = () => {
@@ -103,39 +58,34 @@ const FilterCards = () => {
         <div key={id} className="mb-4">
           <Card
             asChild
-            aria-labelledby={`chart-row-card-heading-${card.id}`}
+            aria-labelledby={`chart-row-card-heading-${id}`}
             className="ukhsa-chart-card flex flex-col gap-6"
           >
             <article>
               <header>
-                <h3 id={`chart-row-card-heading-${card.id}`} className="govuk-heading-m mb-2 font-bold">
-                  {card.value.columns[0].value.title}
+                <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
+                  {card.title}
                 </h3>
-                <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">
-                  {card.value.columns[0].value.body}
-                </p>
+                <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{card.description}</p>
               </header>
 
-              <Tabs
-                defaultValue={`${kebabCase(card.value.columns[0].value.title)}-chart`}
-                className="govuk-!-margin-bottom-0"
-              >
+              <Tabs defaultValue={`${kebabCase(card.title)}-chart`} className="govuk-!-margin-bottom-0">
                 <TabsList className="hidden no-js:block sm:block">
                   <TabsTrigger
                     asChild
-                    value={`${kebabCase(card.value.columns[0].value.title)}-chart`}
-                    aria-controls={`chart-${kebabCase(card.value.columns[0].value.title)}-content`}
+                    value={`${kebabCase(card.title)}-chart`}
+                    aria-controls={`chart-${kebabCase(card.title)}-content`}
                   >
-                    <Link href={`#chart-${kebabCase(card.value.columns[0].value.title)}`}>
+                    <Link href={`#chart-${kebabCase(card.title)}`}>
                       <span>Chart</span>
                     </Link>
                   </TabsTrigger>
                   <TabsTrigger
                     asChild
-                    value={`${kebabCase(card.value.columns[0].value.title)}-table`}
-                    aria-controls={`table-${kebabCase(card.value.columns[0].value.title)}-content`}
+                    value={`${kebabCase(card.title)}-table`}
+                    aria-controls={`table-${kebabCase(card.title)}-content`}
                   >
-                    <Link href={`#table-${kebabCase(card.value.columns[0].value.title)}`}>
+                    <Link href={`#table-${kebabCase(card.title)}`}>
                       <span className="govuk-visually-hidden">Tabular data</span>
                       <span aria-hidden>
                         Tabular <span className="hidden lg:inline">data</span>
@@ -144,19 +94,19 @@ const FilterCards = () => {
                   </TabsTrigger>
                   <TabsTrigger
                     asChild
-                    value={`${kebabCase(card.value.columns[0].value.title)}-download`}
-                    aria-controls={`download-${kebabCase(card.value.columns[0].value.title)}-content`}
+                    value={`${kebabCase(card.title)}-download`}
+                    aria-controls={`download-${kebabCase(card.title)}-content`}
                   >
-                    <Link href={`#download-${kebabCase(card.value.columns[0].value.title)}`}>
+                    <Link href={`#download-${kebabCase(card.title)}`}>
                       <span>Download</span>
                     </Link>
                   </TabsTrigger>
                 </TabsList>
                 <TabsContent
-                  value={`${kebabCase(card.value.columns[0].value.title)}-chart`}
+                  value={`${kebabCase(card.title)}-chart`}
                   className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
                   data-type="chart"
-                  id={`chart-${kebabCase(card.value.columns[0].value.title)}-content`}
+                  id={`chart-${kebabCase(card.title)}-content`}
                 >
                   {/* <Chart data={card.value.columns[0].value} timeseriesFilter={""} chartId={card.id} sizes={[
                   {
@@ -167,25 +117,24 @@ const FilterCards = () => {
                   Chart content
                 </TabsContent>
                 <TabsContent
-                  value={`${kebabCase(card.value.columns[0].value.title)}-table`}
+                  value={`${kebabCase(card.title)}-table`}
                   className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
                   data-type="table"
-                  id={`table-${kebabCase(card.value.columns[0].value.title)}-content`}
+                  id={`table-${kebabCase(card.title)}-content`}
                 >
                   Table content
                 </TabsContent>
                 <TabsContent
-                  value={`${kebabCase(card.value.columns[0].value.title)}-download`}
+                  value={`${kebabCase(card.title)}-download`}
                   className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
                   data-type="download"
-                  id={`download-${kebabCase(card.value.columns[0].value.title)}-content`}
+                  id={`download-${kebabCase(card.title)}-content`}
                 >
                   Download content
                 </TabsContent>
               </Tabs>
             </article>
           </Card>
-          {/* {renderCard('test', [], '', card, 'time-series')} */}
         </div>
       ))}
     </>
