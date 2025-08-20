@@ -4,16 +4,17 @@ import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+/* eslint-disable @typescript-eslint/no-explicit-any*/
 
-type FlatOption = { id: string; name: string }
-type GroupedOption = { title: string; children: string[] }
+type FlatOption = { id: string; label: string }
+type GroupedOption = { title: string; children: FlatOption[] }
 type Options = FlatOption[] | GroupedOption[]
 
 interface MultiselectDropdownProps {
   name: string
   nestedMultiselect?: boolean
   selectionLimit?: number
-  data?: any
+  data?: any[]
 }
 
 export function MultiselectDropdown({
@@ -26,7 +27,7 @@ export function MultiselectDropdown({
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  let options = []
+  let options = [] as Options
   if (data) {
     options = data.map((item: any) => {
       return { id: `${name}.${item.geography_code}`, label: item.name }
@@ -43,10 +44,15 @@ export function MultiselectDropdown({
   //     : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
   // )
 
-  const createFilterOption = (optionValue: FlatOption) => ({
-    id: optionValue.id,
-    label: optionValue.label,
-  })
+  const createFilterOption = (optionValue: FlatOption | string) => {
+    if (typeof optionValue === 'string') {
+      return { id: `${name}.${optionValue}`, label: optionValue }
+    }
+    return {
+      id: optionValue.id,
+      label: optionValue.label,
+    }
+  }
 
   const isFilterSelected = (optionValue: FlatOption) => {
     const filterId = optionValue.id
@@ -54,7 +60,7 @@ export function MultiselectDropdown({
     return isSelected
   }
 
-  const isOptionDisabled = (optionValue: string) => {
+  const isOptionDisabled = (optionValue: FlatOption) => {
     if (nestedMultiselect) return false
     if (isFilterSelected(optionValue)) return false
 
@@ -281,7 +287,7 @@ export function MultiselectDropdown({
                       {group.title}
                     </label>
                   </div>
-                  {group.children.map((child: string, childIndex: number) => {
+                  {group.children.map((child: FlatOption, childIndex: number) => {
                     const childFlatIndex =
                       flatFocusableList.find(
                         (item) =>
@@ -297,10 +303,10 @@ export function MultiselectDropdown({
                         <input
                           className="govuk-checkboxes__input py-0 pl-4"
                           tabIndex={-1}
-                          name={child}
+                          name={child.label}
                           id={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
                           type="checkbox"
-                          value={child}
+                          value={child.label}
                           ref={checkboxRefs.current[childFlatIndex]}
                           checked={isFilterSelected(child)}
                           onChange={() => {
@@ -313,7 +319,7 @@ export function MultiselectDropdown({
                           className="govuk-label govuk-checkboxes__label relative py-0 before:left-[-32px] before:top-0 after:left-[-26px] after:top-[8px]"
                           htmlFor={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
                         >
-                          {child}
+                          {child.label}
                         </label>
                       </div>
                     )
@@ -337,7 +343,7 @@ export function MultiselectDropdown({
                     name={option.label}
                     id={`ukhsa-checkbox-${option.label}`}
                     type="checkbox"
-                    value={option}
+                    value={option.label}
                     ref={checkboxRefs.current[index]}
                     checked={isFilterSelected(option)}
                     disabled={isDisabled}
