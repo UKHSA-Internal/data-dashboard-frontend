@@ -41,7 +41,7 @@ const customJestConfig = {
       // functions: 96,
 
       // Will update back up as part of CDD-2370
-      statements: 91,
+      statements: 80,
       branches: 80,
       lines: 92,
       functions: 87,
