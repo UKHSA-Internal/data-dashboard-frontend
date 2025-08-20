@@ -7,7 +7,7 @@ import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
 export type FlatOption = { id: string; label: string }
-type GroupedOption = { title: string; children: FlatOption[] }
+export type GroupedOption = { title: string; children: FlatOption[] }
 type Options = FlatOption[] | GroupedOption[]
 
 interface MultiselectDropdownProps {
@@ -30,20 +30,21 @@ export function MultiselectDropdown({
   let options = [] as Options
 
   if (data) {
-    options = data.map((item: any) => {
-      return { id: `${name}.${item.id}`, label: item.label }
-    })
+    if (nestedMultiselect) {
+      options = data.map((group: any) => {
+        return {
+          title: group.title,
+          children: group.children.map((item: FlatOption) => {
+            return { id: `${name}.${item.id}`, label: item.label }
+          }),
+        }
+      })
+    } else {
+      options = data.map((item: any) => {
+        return { id: `${name}.${item.id}`, label: item.label }
+      })
+    }
   }
-
-  //TODO: I have left this in for reference. will need to be tidied up once functionality is complete.
-  // const [options] = useState<Options>(
-  //   nestedMultiselect
-  //     ? [
-  //         { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
-  //         { title: 'Group 2', children: ['child4', 'child5'] },
-  //       ]
-  //     : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
-  // )
 
   const createFilterOption = (optionValue: FlatOption | string) => {
     if (typeof optionValue === 'string') {
@@ -86,8 +87,8 @@ export function MultiselectDropdown({
       childIndex: number | undefined
       flatIndex: number
     }> = []
+    console.log('options: ', options)
     let flatIndex = 0
-
     ;(options as GroupedOption[]).forEach((group, groupIndex) => {
       list.push({ type: 'group', groupIndex, childIndex: undefined, flatIndex: flatIndex++ })
       group.children.forEach((_, childIndex) => {
@@ -209,7 +210,7 @@ export function MultiselectDropdown({
     if (allSelected) {
       // Deselect all children in this group
       const updatedFilters = selectedFilters!.filter((filter) => {
-        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        const groupChildIds = group.children.map((child) => `${name}.${child.label}`)
         return !groupChildIds.includes(filter.id)
       })
       updateFilters(updatedFilters)

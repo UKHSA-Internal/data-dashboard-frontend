@@ -1,8 +1,12 @@
 'use client'
 import React from 'react'
 
-import { FlatOption, MultiselectDropdown } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
-import { useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
+import {
+  FlatOption,
+  GroupedOption,
+  MultiselectDropdown,
+} from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
+import { useDataFilters, useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
@@ -57,6 +61,37 @@ function DisplayCoverageDropdown() {
   )
 }
 
+export function DisplayVaccinationDropDown() {
+  const vaccinationFilters = useDataFilters()
+  if (!vaccinationFilters) {
+    return null
+  }
+  let data: GroupedOption[] = []
+
+  data = [
+    {
+      title: 'Group 1',
+      children: [
+        { label: 'child1', id: 'child1' },
+        { label: 'child2', id: 'child2' },
+        { label: 'child3', id: 'child3' },
+      ],
+    },
+    {
+      title: 'Group 2',
+      children: [
+        { label: 'child5', id: 'child5' },
+        { label: 'child6', id: 'child6' },
+      ],
+    },
+  ]
+  return (
+    <div className="w-1/2 px-2">
+      <MultiselectDropdown name="Select vaccination" data={data} nestedMultiselect />
+    </div>
+  )
+}
+
 export function FilterDropdowns() {
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 z-100 bg-grey-2">
@@ -67,9 +102,7 @@ export function FilterDropdowns() {
 
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 govuk-!-margin-top-2 w-full">Vaccination and Coverage</h2>
       <div className="-mx-2 flex flex-wrap">
-        <div className="w-1/2 px-2">
-          <MultiselectDropdown name="Select vaccination" nestedMultiselect />
-        </div>
+        <DisplayVaccinationDropDown />
         <DisplayCoverageDropdown />
       </div>
     </div>
