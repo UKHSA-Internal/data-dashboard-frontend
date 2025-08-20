@@ -58,7 +58,7 @@ export function extractGeographyIdFromGeographyFilter(geographyFilter: Geography
   return geographyFilter.geography_types.map((filter) => filter.value.geography_type)
 }
 
-interface FlattenedAccompanyingPoint {
+export interface FlattenedAccompanyingPoint {
   label_prefix: string
   label_suffix: string
   parameters: Record<string, string>
