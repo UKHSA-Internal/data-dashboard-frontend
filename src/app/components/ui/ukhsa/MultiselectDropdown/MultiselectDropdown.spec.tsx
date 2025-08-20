@@ -55,60 +55,31 @@ describe('flat multiselect component', () => {
 
   const mockData = [
     {
-      name: 'East Midlands',
-      geography_code: 'E12000004',
-      relationships: null,
+      label: 'East Midlands',
+      id: 'E12000004',
     },
     {
-      name: 'East of England',
-      geography_code: 'E12000006',
-      relationships: null,
+      label: 'East of England',
+      id: 'E12000006',
     },
     {
-      name: 'London',
-      geography_code: 'E12000007',
-      relationships: null,
+      label: 'London',
+      id: 'E12000007',
     },
     {
-      name: 'North East',
-      geography_code: 'E12000001',
-      relationships: null,
-    },
-    {
-      name: 'North West',
-      geography_code: 'E12000002',
-      relationships: null,
-    },
-    {
-      name: 'South East',
-      geography_code: 'E12000008',
-      relationships: null,
-    },
-    {
-      name: 'South West',
-      geography_code: 'E12000009',
-      relationships: null,
-    },
-    {
-      name: 'West Midlands',
-      geography_code: 'E12000005',
-      relationships: null,
-    },
-    {
-      name: 'Yorkshire and The Humber',
-      geography_code: 'E12000003',
-      relationships: null,
+      label: 'North East',
+      id: 'E12000001',
     },
   ]
 
   it('renders the dropdown button', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(<MultiselectDropdown name={name} data={mockData} />)
 
     expect(screen.getByRole('button', { name })).toBeInTheDocument()
   })
 
   it('opens and closes the dropdown on click', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(<MultiselectDropdown name={name} data={mockData} />)
 
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
@@ -118,7 +89,7 @@ describe('flat multiselect component', () => {
   })
 
   it('opens the dropdown with keyboard (Enter/Space)', () => {
-    render(<MultiselectDropdown name={name} />)
+    render(<MultiselectDropdown name={name} data={mockData} />)
 
     const button = screen.getByRole('button', { name })
     fireEvent.keyDown(button, { key: 'Enter' })

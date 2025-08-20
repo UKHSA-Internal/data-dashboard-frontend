@@ -6,33 +6,32 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
-type FlatOption = { id: string; label: string }
+export type FlatOption = { id: string; label: string }
 type GroupedOption = { title: string; children: FlatOption[] }
 type Options = FlatOption[] | GroupedOption[]
 
 interface MultiselectDropdownProps {
   name: string
+  data?: Options
   nestedMultiselect?: boolean
   selectionLimit?: number
-  data?: any[]
 }
 
 export function MultiselectDropdown({
   name,
+  data,
   nestedMultiselect = false,
   selectionLimit = 4,
-  data = [],
 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  console.log('data: ', data)
-
   let options = [] as Options
+
   if (data) {
     options = data.map((item: any) => {
-      return { id: `${name}.${item.geography_code}`, label: item.name }
+      return { id: `${name}.${item.id}`, label: item.label }
     })
   }
 

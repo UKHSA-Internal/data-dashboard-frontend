@@ -107,43 +107,43 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   }
 
   const fetchMapData = async () => {
+    console.log('selectedTimePeriod: ', selectedTimePeriod)
+    console.log('selectedVaccination: ', selectedVaccination)
+    if (!selectedTimePeriod || !selectedVaccination) return
+
     const request = {
-      date_from: '2023-10-30',
-      date_to: '2023-10-31',
+      date_from: selectedTimePeriod.value.date_from,
+      date_to: selectedTimePeriod.value.date_to,
       parameters: {
-        theme: 'infectious_disease',
-        sub_theme: 'respiratory',
-        topic: 'COVID-19',
-        metric: 'COVID-19_deaths_ONSByWeek',
-        stratum: 'default',
-        age: 'all',
-        sex: 'all',
+        theme: selectedVaccination.value.parameters.theme.value,
+        sub_theme: selectedVaccination.value.parameters.sub_theme.value,
+        topic: selectedVaccination.value.parameters.topic.value,
+        metric: selectedVaccination.value.parameters.metric.value,
+        stratum: selectedVaccination.value.parameters.stratum.value,
+        age: selectedVaccination.value.parameters.age.value,
+        sex: selectedVaccination.value.parameters.sex.value,
         geography_type: 'Lower Tier Local Authority',
         geographies: [],
       },
       accompanying_points: [
         {
-          label_prefix: 'Rate of cases in England: ',
-          label_suffix: '',
+          label_prefix: selectedVaccination.value.accompanying_points[0].value.label_prefix,
+          label_suffix: selectedVaccination.value.accompanying_points[0].value.label_suffix,
           parameters: {
-            metric: 'COVID-19_cases_rateRollingMean',
+            metric: selectedVaccination.value.accompanying_points[0].value.parameters[0].value.value,
             geography_type: 'Nation',
             geography: 'England',
           },
         },
       ],
     }
-    console.log('Fetching Map Data')
 
     try {
       setMapDataLoading(true)
       const response = await postMapData(request)
 
-      console.log('Map Data Response', response.data)
-
       setMapData(response.data ?? null)
     } catch (error) {
-      console.log('Map Data Error: ', error)
       setMapDataError('Error fetching geography data: ' + error || 'Unknown error')
     } finally {
       setMapDataLoading(false)
