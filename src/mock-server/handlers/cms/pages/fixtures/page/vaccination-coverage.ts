@@ -350,41 +350,6 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
       },
       id: 'c95a839e-4aa6-4f11-af18-c72df6623268',
     },
-    {
-      type: 'section',
-      value: {
-        heading: 'Coverage',
-        content: [
-          {
-            type: 'filter_linked_sub_plot_chart_template',
-            value: {
-              title_prefix: 'Vaccination coverage statistics',
-              legend_title: 'Coverage (%)',
-              target_threshold: 0.95,
-            },
-            id: 'ef3a544a-f335-44a8-9259-ee323b60e0fa',
-          },
-        ],
-      },
-      id: '17912509-023d-4d29-8d8b-3017d4688370',
-    },
-    {
-      type: 'section',
-      value: {
-        heading: 'Time series',
-        content: [
-          {
-            type: 'filter_linked_time_series_chart_template',
-            value: {
-              title_prefix: 'Annual vaccination coverage',
-              legend_title: 'Level of coverage (%)',
-            },
-            id: '7bfe0836-6a2c-4596-909f-974426123536',
-          },
-        ],
-      },
-      id: '0986c2cd-a730-4e7e-bc3c-94c634b071e2',
-    },
   ],
   seo_change_frequency: 5,
   seo_priority: 0.5,
