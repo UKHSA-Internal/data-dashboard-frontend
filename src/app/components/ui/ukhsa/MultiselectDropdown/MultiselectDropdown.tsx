@@ -12,25 +12,26 @@ type Options = FlatOption[] | GroupedOption[]
 
 interface MultiselectDropdownProps {
   name: string
+  data?: Options
   nestedMultiselect?: boolean
   selectionLimit?: number
-  data?: any[]
 }
 
 export function MultiselectDropdown({
   name,
+  data,
   nestedMultiselect = false,
   selectionLimit = 4,
-  data = [],
 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
   let options = [] as Options
+
   if (data) {
     options = data.map((item: any) => {
-      return { id: `${name}.${item.geography_code}`, label: item.name }
+      return { id: `${name}.${item.id}`, label: item.label }
     })
   }
 

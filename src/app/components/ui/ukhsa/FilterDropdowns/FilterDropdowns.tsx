@@ -4,6 +4,8 @@ import React from 'react'
 import { MultiselectDropdown } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 import { useGeographyState } from '@/app/hooks/globalFilterHooks'
 
+/* eslint-disable @typescript-eslint/no-explicit-any*/
+
 //TODO: Headers and content to come from CMS
 
 function DisplayGeographyDropdowns() {
@@ -25,9 +27,13 @@ function DisplayGeographyDropdowns() {
 
   // Use for...of to iterate over Map entries
   for (const [key, geographyArea] of geographyAreas) {
+    const data = geographyArea.map((item: any) => {
+      return { id: `${key}.${item.geography_code}`, label: item.name }
+    })
+
     geographyDropdowns.push(
-      <div key={key} className={`w-1/${geographyAreas.size} px-2 z-100`}>
-        <MultiselectDropdown name={key} data={geographyArea} />
+      <div key={key} className={`w-1/${geographyAreas.size} z-100 px-2`}>
+        <MultiselectDropdown name={key} data={data} />
       </div>
     )
   }
@@ -37,7 +43,7 @@ function DisplayGeographyDropdowns() {
 
 export function FilterDropdowns() {
   return (
-    <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 bg-grey-2 z-100">
+    <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 z-100 bg-grey-2">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">Area</h2>
       <div className="-mx-2 flex flex-wrap">
         <DisplayGeographyDropdowns />

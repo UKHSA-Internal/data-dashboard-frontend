@@ -137,17 +137,13 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         },
       ],
     }
-    console.log('Fetching Map Data')
 
     try {
       setMapDataLoading(true)
       const response = await postMapData(request)
 
-      console.log('Map Data Response', response.data)
-
       setMapData(response.data ?? null)
     } catch (error) {
-      console.log('Map Data Error: ', error)
       setMapDataError('Error fetching geography data: ' + error || 'Unknown error')
     } finally {
       setMapDataLoading(false)
