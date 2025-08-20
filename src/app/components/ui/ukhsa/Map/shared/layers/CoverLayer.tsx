@@ -130,7 +130,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       switch (level) {
         case 'local-authorities':
           const englishLocalAuthorityFeatures = localAuthoritiesFeatureCollection.features.filter((feature) =>
-            feature.properties.LAD24CD.startsWith('E')
+            feature.properties.CTYUA24CD.startsWith('E')
           )
           localAuthoritiesFeatureCollection.features = englishLocalAuthorityFeatures
           newData = [regionFeatureCollection, localAuthoritiesFeatureCollection]
@@ -154,7 +154,7 @@ const CoverLayer = <T extends LayerWithFeature>({
     }
   }, [])
 
-  const geoJsonFeatureId = 'LAD24CD' satisfies keyof LocalAuthoritiesFeature['properties']
+  const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
 
   useEffect(() => {
     if (map) {
@@ -221,7 +221,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
                   `
-                  <h1></h1><b>Local Authority</b>: ${feature.properties['LAD24NM']}
+                  <h1></h1><b>Local Authority</b>: ${feature.properties['CTYUA24NM']}
                   <br />
                   <b>Vaccine Uptake</b>:${featureData?.metric_value}</>
                   `,
