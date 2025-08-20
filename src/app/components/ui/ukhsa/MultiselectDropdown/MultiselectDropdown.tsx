@@ -207,8 +207,7 @@ export function MultiselectDropdown({
       // Deselect all children in this group
       const updatedFilters = selectedFilters!.filter((filter) => {
         const groupChildIds = group.children.map((child) => `${child.id}`)
-        console.log('groupChildIds: ', groupChildIds)
-        console.log('filterId: ', filter.id)
+
         return !groupChildIds.includes(filter.id)
       })
       updateFilters(updatedFilters)
