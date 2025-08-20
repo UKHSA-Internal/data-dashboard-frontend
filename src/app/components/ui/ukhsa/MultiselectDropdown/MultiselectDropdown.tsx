@@ -87,7 +87,6 @@ export function MultiselectDropdown({
       childIndex: number | undefined
       flatIndex: number
     }> = []
-    console.log('options: ', options)
     let flatIndex = 0
     ;(options as GroupedOption[]).forEach((group, groupIndex) => {
       list.push({ type: 'group', groupIndex, childIndex: undefined, flatIndex: flatIndex++ })
