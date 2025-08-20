@@ -1,3 +1,4 @@
+/* eslint-disable @next/next/no-img-element */
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -11,6 +12,7 @@ import { renderCard } from '@/app/utils/cms.utils'
 import { extractDataFromGlobalFilter, ExtractedFilters } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
+import FilterCards from '../../ui/ukhsa/FilterCards/FilterCards'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
@@ -97,6 +99,7 @@ export default async function TopicPage({
           <img
             className="float-right"
             src={'/assets/images/accredited-official-statistics-logo.svg'}
+            alt="Accredited Official Statistics"
             height={'70px'}
             width={'70px'}
           />
@@ -134,6 +137,10 @@ export default async function TopicPage({
                     )}
                   </PageSection>
                 ))}
+                {/* TODO: Only add timeseries seciton if in childhood-vaccinations page & filter button pressed */}
+                <PageSection heading="Time series">
+                  <FilterCards />
+                </PageSection>
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>
