@@ -512,7 +512,7 @@ describe('nested multiselect', () => {
   })
 
   it('focuses first option when dropdown opens', () => {
-    render(<MultiselectDropdown name={name} nestedMultiselect={true} />)
+    render(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
     const button = screen.getByRole('button', { name })
     fireEvent.click(button)
     const checkboxes = screen.getAllByRole('checkbox')
