@@ -209,7 +209,9 @@ export function MultiselectDropdown({
     if (allSelected) {
       // Deselect all children in this group
       const updatedFilters = selectedFilters!.filter((filter) => {
-        const groupChildIds = group.children.map((child) => `${name}.${child.label}`)
+        const groupChildIds = group.children.map((child) => `${child.id}`)
+        console.log('groupChildIds: ', groupChildIds)
+        console.log('filterId: ', filter.id)
         return !groupChildIds.includes(filter.id)
       })
       updateFilters(updatedFilters)
@@ -217,7 +219,7 @@ export function MultiselectDropdown({
       // Select all children in this group (including those already selected)
       const groupFilters = group.children.map((child) => createFilterOption(child))
       const nonGroupFilters = selectedFilters!.filter((filter) => {
-        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        const groupChildIds = group.children.map((child) => `${name}.${child.id}`)
         return !groupChildIds.includes(filter.id)
       })
       const updatedFilters = [...nonGroupFilters, ...groupFilters]
