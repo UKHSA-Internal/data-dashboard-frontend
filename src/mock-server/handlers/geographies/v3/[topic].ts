@@ -81,7 +81,7 @@ export default async function handler(req: Request, res: Response) {
     }
     if (req.query['geography_type']) {
       const geographies = geographyTypeMocks[req.query.geography_type as MockedGeographyTypes]
-      return res.json(geographies)
+      return res.json([geographies])
     }
   } catch (error) {
     logger.error(error)

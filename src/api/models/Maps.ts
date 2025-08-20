@@ -41,11 +41,7 @@ export const MapDataRequest = z.object({
     z.object({
       label_prefix: z.string(),
       label_suffix: z.string(),
-      parameters: z.object({
-        metric: z.string(),
-        geography_type: z.string(),
-        geography: z.string(),
-      }),
+      parameters: z.record(z.string()),
     })
   ),
 })

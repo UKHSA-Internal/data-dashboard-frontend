@@ -63,19 +63,21 @@ const AccompanyingPoint = z.object({
   ),
 })
 
+const AccompanyingPointObject = z.object({
+  type: z.literal('accompanying_point'),
+  value: AccompanyingPoint,
+  id: z.string(),
+})
+
+const AccompanyingPointArray = z.array(AccompanyingPointObject)
+
 const DataFilter = z.object({
   type: z.literal('data_filter'),
   value: z.object({
     label: z.string(),
     colour: z.string(),
     parameters: DataFilterParameters,
-    accompanying_points: z.array(
-      z.object({
-        type: z.literal('accompanying_point'),
-        value: AccompanyingPoint,
-        id: z.string(),
-      })
-    ),
+    accompanying_points: AccompanyingPointArray,
   }),
   id: z.string(),
 })
@@ -135,6 +137,8 @@ export type ThresholdFilter = z.infer<typeof ThresholdFilter>
 export type Parameter = z.infer<typeof Parameter>
 export type DataFilterParameters = z.infer<typeof DataFilterParameters>
 export type AccompanyingPoint = z.infer<typeof AccompanyingPoint>
+export type AccompanyingPointObject = z.infer<typeof AccompanyingPointObject>
+export type AccompanyingPointArray = z.infer<typeof AccompanyingPointArray>
 export type DataFilter = z.infer<typeof DataFilter>
 export type GeographyFilters = z.infer<typeof GeographyFilters>
 export type DataFilters = z.infer<typeof DataFilters>
