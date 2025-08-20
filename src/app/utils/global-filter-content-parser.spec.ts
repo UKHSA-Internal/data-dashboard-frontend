@@ -747,15 +747,15 @@ describe('extractDataFromGlobalFilter', () => {
       expect(oneYearGroup).toBeDefined()
       expect(oneYearGroup?.children).toHaveLength(2)
       expect(oneYearGroup?.children).toEqual([
-        { label: '6-in-1 (1 year)', id: 'data_filter-1' },
-        { label: 'PCV (1 year)', id: 'data_filter-2' },
+        { label: '6-in-1 (1 year)', id: 'data_filter.1' },
+        { label: 'PCV (1 year)', id: 'data_filter.2' },
       ])
 
       expect(twoYearGroup).toBeDefined()
       expect(twoYearGroup?.children).toHaveLength(2)
       expect(twoYearGroup?.children).toEqual([
-        { label: '6-in-1 (2 years)', id: 'data_filter-3' },
-        { label: 'MMR1 (2 years)', id: 'data_filter-4' },
+        { label: '6-in-1 (2 years)', id: 'data_filter.3' },
+        { label: 'MMR1 (2 years)', id: 'data_filter.4' },
       ])
     })
 
@@ -775,9 +775,9 @@ describe('extractDataFromGlobalFilter', () => {
       expect(result?.[0].title).toBe('1 year')
       expect(result?.[0].children).toHaveLength(3)
       expect(result?.[0].children).toEqual([
-        { label: 'Vaccine A', id: 'data_filter-1' },
-        { label: 'Vaccine B', id: 'data_filter-2' },
-        { label: 'Vaccine C', id: 'data_filter-3' },
+        { label: 'Vaccine A', id: 'data_filter.1' },
+        { label: 'Vaccine B', id: 'data_filter.2' },
+        { label: 'Vaccine C', id: 'data_filter.3' },
       ])
     })
 
@@ -868,7 +868,7 @@ describe('extractDataFromGlobalFilter', () => {
 
       const result = getGroupedVaccinationOptions(mockData)
 
-      expect(result?.[0].children[0].id).toBe('custom_filter-unique-123')
+      expect(result?.[0].children[0].id).toBe('custom_filter.unique-123')
     })
   })
 })

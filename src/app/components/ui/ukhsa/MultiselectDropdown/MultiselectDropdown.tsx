@@ -35,21 +35,18 @@ export function MultiselectDropdown({
         return {
           title: group.title,
           children: group.children.map((item: FlatOption) => {
-            return { id: `${name}.${item.id}`, label: item.label }
+            return { id: `${item.id}`, label: item.label }
           }),
         }
       })
     } else {
       options = data.map((item: any) => {
-        return { id: `${name}.${item.id}`, label: item.label }
+        return { id: `${item.id}`, label: item.label }
       })
     }
   }
 
-  const createFilterOption = (optionValue: FlatOption | string) => {
-    if (typeof optionValue === 'string') {
-      return { id: `${name}.${optionValue}`, label: optionValue }
-    }
+  const createFilterOption = (optionValue: FlatOption) => {
     return {
       id: optionValue.id,
       label: optionValue.label,
@@ -66,7 +63,7 @@ export function MultiselectDropdown({
     if (nestedMultiselect) return false
     if (isFilterSelected(optionValue)) return false
 
-    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`${name}.`)).length
+    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`geography.`)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
@@ -219,7 +216,7 @@ export function MultiselectDropdown({
       // Select all children in this group (including those already selected)
       const groupFilters = group.children.map((child) => createFilterOption(child))
       const nonGroupFilters = selectedFilters!.filter((filter) => {
-        const groupChildIds = group.children.map((child) => `${name}.${child.id}`)
+        const groupChildIds = group.children.map((child) => `${child.id}`)
         return !groupChildIds.includes(filter.id)
       })
       const updatedFilters = [...nonGroupFilters, ...groupFilters]

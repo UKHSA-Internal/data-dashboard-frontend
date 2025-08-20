@@ -34,7 +34,7 @@ function DisplayGeographyDropdowns() {
   // Use for...of to iterate over Map entries
   for (const [key, geographyArea] of geographyAreas) {
     const data = geographyArea.map((item: any) => {
-      return { id: `${key}.${item.geography_code}`, label: item.name }
+      return { id: `geography.${key}.${item.geography_code}`, label: item.name }
     })
 
     geographyDropdowns.push(
@@ -54,7 +54,7 @@ function DisplayCoverageDropdown() {
   }
   const data: FlatOption[] = []
   thresholdFilters.thresholds.map((filter: any) => {
-    data.push({ id: filter.id, label: filter.value.label })
+    data.push({ id: `${filter.type}.${filter.id}`, label: filter.value.label })
   })
   return (
     <div className="w-1/2 px-2">
