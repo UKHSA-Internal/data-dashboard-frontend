@@ -1,5 +1,12 @@
 import { CardTypes } from '@/api/models/cms/Page/Body'
-import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  AccompanyingPointArray,
+  AccompanyingPointObject,
+  DataFilters,
+  GeographyFilters,
+  ThresholdFilters,
+  TimePeriod,
+} from '@/api/models/cms/Page/GlobalFilter'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 export interface ExtractedFilters {
   timePeriods: TimePeriod[]
@@ -49,4 +56,29 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
 export function extractGeographyIdFromGeographyFilter(geographyFilter: GeographyFilters | null): string[] {
   if (!geographyFilter) return []
   return geographyFilter.geography_types.map((filter) => filter.value.geography_type)
+}
+
+interface FlattenedAccompanyingPoint {
+  label_prefix: string
+  label_suffix: string
+  parameters: Record<string, string>
+}
+
+export function getAccompanyingPoints(accompanyingPoints: AccompanyingPointArray): FlattenedAccompanyingPoint[] {
+  const flattenedAccompanyingPoints = [] as FlattenedAccompanyingPoint[]
+  accompanyingPoints.map((point: AccompanyingPointObject) => {
+    const transformedParameters: Record<string, string> = {}
+
+    point.value.parameters.map((param) => {
+      // Use the parameter's type as the key and the nested value as the value
+      transformedParameters[param.type] = param.value.value
+    })
+    flattenedAccompanyingPoints.push({
+      label_prefix: point.value.label_prefix,
+      label_suffix: point.value.label_suffix,
+      parameters: transformedParameters,
+    })
+  })
+
+  return flattenedAccompanyingPoints
 }

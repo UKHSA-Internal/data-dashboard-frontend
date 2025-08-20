@@ -12,7 +12,7 @@ import {
 import { MapDataResponse } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
-import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
+import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -107,10 +107,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   }
 
   const fetchMapData = async () => {
-    console.log('selectedTimePeriod: ', selectedTimePeriod)
-    console.log('selectedVaccination: ', selectedVaccination)
     if (!selectedTimePeriod || !selectedVaccination) return
-
+    const accompanyingPoints = getAccompanyingPoints(selectedVaccination.value.accompanying_points)
     const request = {
       date_from: selectedTimePeriod.value.date_from,
       date_to: selectedTimePeriod.value.date_to,
@@ -122,20 +120,10 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         stratum: selectedVaccination.value.parameters.stratum.value,
         age: selectedVaccination.value.parameters.age.value,
         sex: selectedVaccination.value.parameters.sex.value,
-        geography_type: 'Lower Tier Local Authority',
+        geography_type: 'Upper Tier Local Authority',
         geographies: [],
       },
-      accompanying_points: [
-        {
-          label_prefix: selectedVaccination.value.accompanying_points[0].value.label_prefix,
-          label_suffix: selectedVaccination.value.accompanying_points[0].value.label_suffix,
-          parameters: {
-            metric: selectedVaccination.value.accompanying_points[0].value.parameters[0].value.value,
-            geography_type: 'Nation',
-            geography: 'England',
-          },
-        },
-      ],
+      accompanying_points: accompanyingPoints,
     }
 
     try {
