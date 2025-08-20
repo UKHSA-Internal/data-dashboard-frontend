@@ -6,7 +6,7 @@ import React, { useEffect, useRef, useState } from 'react'
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
-type FlatOption = { id: string; label: string }
+export type FlatOption = { id: string; label: string }
 type GroupedOption = { title: string; children: FlatOption[] }
 type Options = FlatOption[] | GroupedOption[]
 

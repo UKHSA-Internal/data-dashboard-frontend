@@ -1,8 +1,8 @@
 'use client'
 import React from 'react'
 
-import { MultiselectDropdown } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
-import { useGeographyState } from '@/app/hooks/globalFilterHooks'
+import { FlatOption, MultiselectDropdown } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
+import { useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
@@ -41,6 +41,22 @@ function DisplayGeographyDropdowns() {
   return <>{geographyDropdowns}</>
 }
 
+function DisplayCoverageDropdown() {
+  const thresholdFilters = useThresholdFilters()
+  if (!thresholdFilters) {
+    return null
+  }
+  const data: FlatOption[] = []
+  thresholdFilters.thresholds.map((filter: any) => {
+    data.push({ id: filter.id, label: filter.value.label })
+  })
+  return (
+    <div className="w-1/2 px-2">
+      <MultiselectDropdown name="Select level of coverage %" data={data} />
+    </div>
+  )
+}
+
 export function FilterDropdowns() {
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 z-100 bg-grey-2">
@@ -54,9 +70,7 @@ export function FilterDropdowns() {
         <div className="w-1/2 px-2">
           <MultiselectDropdown name="Select vaccination" nestedMultiselect />
         </div>
-        <div className="w-1/2 px-2">
-          <MultiselectDropdown name="Select level of coverage %" nestedMultiselect />
-        </div>
+        <DisplayCoverageDropdown />
       </div>
     </div>
   )
