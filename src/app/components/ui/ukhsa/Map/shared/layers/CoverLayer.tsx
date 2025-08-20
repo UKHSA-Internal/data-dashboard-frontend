@@ -277,7 +277,7 @@ const CoverLayer = <T extends LayerWithFeature>({
                   <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
                   <hr style="margin: 8px 0; border: none; border-top: 1px solid #ccc;" />
                   <b>Vaccination</b>: ${vaccination}</> </br>
-                  <b>Vaccine Uptake</b>: ${featureData?.metric_value ? featureData.metric_value : 'No Data Available'}</>
+                  <b>Level of Coverage</b>: ${featureData?.metric_value ? featureData.metric_value : 'No Data Available'}</>
                   ${
                     featureData?.accompanying_points
                       ? featureData?.accompanying_points
@@ -286,7 +286,10 @@ const CoverLayer = <T extends LayerWithFeature>({
                               `<br /><b>${point.label_prefix}</b>: ${point.metric_value}${point.label_suffix}`
                           )
                           .join('')
-                      : ''
+                      : `
+                      </br><b>Country level of coverage</b>: No Data Available</br>
+                      <b>Region level of coverage</b>: No Data Available</br>
+                      `
                   }
                   `,
                   {
