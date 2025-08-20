@@ -27,8 +27,6 @@ export function MultiselectDropdown({
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  console.log('data: ', data)
-
   let options = [] as Options
   if (data) {
     options = data.map((item: any) => {
