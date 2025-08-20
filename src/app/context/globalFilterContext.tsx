@@ -45,6 +45,18 @@ export interface GlobalFilterProviderProps {
   filters: InitialGlobalFilterState
 }
 
+export interface FilterCoverageChartCard {
+  id: string
+  title: string
+  description: string
+}
+
+export interface FilterTimeSeriesChartCard {
+  id: string
+  title: string
+  description: string
+}
+
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
   selectedFilters: FilterOption[]
@@ -58,6 +70,8 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
+  filterCoverageChartCards: FilterCoverageChartCard[]
+  filterTimeSeriesChartCards: FilterTimeSeriesChartCard[]
 }
 
 // Global Filter Action Interface
@@ -68,6 +82,7 @@ export interface GlobalFilterActions {
   removeFilter: (filterId: string) => void
   clearFilters: () => void
   setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
+  applyFilters: () => void
 }
 
 //Interface for the global filter context
@@ -93,6 +108,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
   const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
   const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
+  const [filterCoverageChartCards, setFilterCoverageChartCards] = useState<FilterCoverageChartCard[]>([])
+  const [filterTimeSeriesChartCards, setFilterTimeSeriesChartCards] = useState<FilterTimeSeriesChartCard[]>([])
 
   const fetchGeographyData = async () => {
     try {
@@ -157,6 +174,47 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setMapDataLoading(false)
     }
   }
+  // const newCard = {
+  //   title: 'New test card',
+  //   description: 'This is a new test card description',
+  //   upToAndIncluding: '2025-01-01',
+  //   chart: [
+  //     {
+  //       type: 'plot' as const,
+  //       value: {
+  //         topic: 'COVID-19',
+  //         metric: 'new_cases_daily',
+  //         chart_type: 'bar',
+  //         date_from: null,
+  //         date_to: null,
+  //         stratum: '',
+  //         geography: '',
+  //         geography_type: '',
+  //         label: 'teshjkfdsjk',
+  //         age: '',
+  //         sex: null,
+  //         line_colour: null,
+  //         line_type: null,
+  //       },
+  //       id: '7d8ee647-1e12-4ea5-8051-dacda36d7dc1',
+  //     },
+  //   ],
+  // }
+
+  const updateFilterChartCards = () => {
+    console.log('update filter chart cards')
+    // TODO: Get coverage items, and make API call, create object & call new chart
+    setFilterCoverageChartCards([
+      ...filterCoverageChartCards,
+      { id: '1', title: 'New Coverage', description: 'New Coverage description' },
+    ])
+
+    // TODO: Get time series items, and make API call, create object & call new chart
+    setFilterTimeSeriesChartCards([
+      ...filterTimeSeriesChartCards,
+      { id: '1', title: 'New Time Series', description: 'New Time Series description' },
+    ])
+  }
 
   /* Usage: When the geographyFilters are updated this will trigger this use effect 
   to load the most recent list of geography areas for each of the geography filters */
@@ -184,6 +242,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
+    filterCoverageChartCards,
+    filterTimeSeriesChartCards,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -298,6 +358,11 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedGeographyFilters([])
       setSelectedThresholdFilters([])
       setSelectedVaccinationFilters([])
+    },
+
+    // Apply filters and add new cards
+    applyFilters: () => {
+      updateFilterChartCards()
     },
   }
 
