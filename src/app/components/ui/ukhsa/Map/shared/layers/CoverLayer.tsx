@@ -12,6 +12,7 @@ import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { mapQueryKeys } from '@/app/constants/map.constants'
+import { useGeographyState, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
@@ -77,6 +78,12 @@ interface LayerWithFeature extends Path {
   feature: LocalAuthoritiesFeature & RegionFeature & CountriesFeature
 }
 
+interface TooltipResponse {
+  regionName: string | null | undefined
+  nationName: string | null | undefined
+  vaccination: string
+}
+
 interface GeoJSONLayer<T extends LayerWithFeature> extends GeoJSONOptions {
   /**
    * Callback function called once for each feature found in the GeoJSON data.
@@ -113,11 +120,53 @@ const CoverLayer = <T extends LayerWithFeature>({
   const [geoJsonData, setGeoJsonData] = useState<any>(countriesFeatureCollection)
   const [renderKey, setRenderKey] = useState(0)
   const activeTooltipLayerRef: { current: T | null } = useRef(null)
+  const { selectedVaccination } = useVaccinationState()
+  const { geographyAreas } = useGeographyState()
 
   const featuresRef = useRef<Array<LocalAuthoritiesFeature & RegionFeature & CountriesFeature>>([])
 
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
   const map = useMap()
+
+  const renderTooltip = (featureData: any): TooltipResponse => {
+    // Return default values instead of undefined
+    const defaultResponse: TooltipResponse = {
+      regionName: 'Data Unavailable',
+      nationName: 'Data Unavailable',
+      vaccination: 'Data Unavailable',
+    }
+
+    if (!featureData || !selectedVaccination || !geographyAreas) {
+      return defaultResponse
+    }
+
+    const vaccination = selectedVaccination.value.label ?? 'Data Unavailable'
+
+    const geographyDataArray = geographyAreas.get(featureData.geography_type)
+    if (!geographyDataArray) {
+      return { ...defaultResponse, vaccination }
+    }
+
+    const geographyData = geographyDataArray.find((area) => area.geography_code === featureData.geography_code)
+
+    if (!geographyData) {
+      return { ...defaultResponse, vaccination }
+    }
+
+    const relatedData = geographyData.relationships
+
+    if (!relatedData) {
+      return { ...defaultResponse, vaccination }
+    }
+    const regionName = relatedData.find((rel) => rel && rel.geography_type === 'Region')?.name ?? 'Data Unavailable'
+    const nationName = relatedData.find((rel) => rel && rel.geography_type === 'Nation')?.name ?? 'Data Unavailable'
+
+    return {
+      regionName,
+      nationName,
+      vaccination,
+    }
+  }
 
   const getDataLevel = useCallback(() => {
     return 'local-authorities'
@@ -130,7 +179,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       switch (level) {
         case 'local-authorities':
           const englishLocalAuthorityFeatures = localAuthoritiesFeatureCollection.features.filter((feature) =>
-            feature.properties.LAD24CD.startsWith('E')
+            feature.properties.CTYUA24CD.startsWith('E')
           )
           localAuthoritiesFeatureCollection.features = englishLocalAuthorityFeatures
           newData = [regionFeatureCollection, localAuthoritiesFeatureCollection]
@@ -154,7 +203,7 @@ const CoverLayer = <T extends LayerWithFeature>({
     }
   }, [])
 
-  const geoJsonFeatureId = 'LAD24CD' satisfies keyof LocalAuthoritiesFeature['properties']
+  const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
 
   useEffect(() => {
     if (map) {
@@ -218,12 +267,31 @@ const CoverLayer = <T extends LayerWithFeature>({
             } else {
               // Clicked new feature - create and open tooltip
               const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+              const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
+
+              const { regionName, nationName, vaccination } = renderTooltip(featureData)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
                   `
-                  <h1></h1><b>Local Authority</b>: ${feature.properties['LAD24NM']}
-                  <br />
-                  <b>Vaccine Uptake</b>:${featureData?.metric_value}</>
+                  <b>Country</b>: ${nationName}</br>
+                  <b>Region name</b>: ${regionName}</br>
+                  <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
+                  <hr style="margin: 8px 0; border: none; border-top: 1px solid #ccc;" />
+                  <b>Vaccination</b>: ${vaccination}</> </br>
+                  <b>Level of Coverage</b>: ${mainMetricValue}</>
+                  ${
+                    featureData?.accompanying_points
+                      ? featureData?.accompanying_points
+                          ?.map(
+                            (point: any) =>
+                              `<br /><b>${point.label_prefix}</b>: ${point.metric_value}${point.label_suffix}`
+                          )
+                          .join('')
+                      : `
+                      </br><b>Country level of coverage</b>: No Data Available</br>
+                      <b>Region level of coverage</b>: No Data Available</br>
+                      `
+                  }
                   `,
                   {
                     permanent: true, // This keeps it open while moving cursor
@@ -241,7 +309,7 @@ const CoverLayer = <T extends LayerWithFeature>({
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
           const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
-          if (!featureData) return
+          if (!featureData || !featureData.metric_value) return
           const colour = getThresholdColour(featureData)
           const hoverColour = getHoverCssVariableFromColour(colour as MapFeatureColour)
           layer.setStyle({ fillColor: hoverColour })
@@ -250,7 +318,7 @@ const CoverLayer = <T extends LayerWithFeature>({
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
           const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
-          if (!featureData) return
+          if (!featureData || !featureData.metric_value) return
           const colour = getThresholdColour(featureData)
           layer.setStyle({
             fillColor: getCssVariableFromColour(colour as MapFeatureColour),
@@ -295,7 +363,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   }
 
   const getThresholdColour = (featureData: any): MapFeatureColour | undefined => {
-    const processedMetricValue = (featureData.metric_value / 100).toFixed(2)
+    const processedMetricValue = featureData.metric_value
 
     let thresholdColour
     thresholdData.forEach((threshold: any) => {
@@ -327,13 +395,15 @@ const CoverLayer = <T extends LayerWithFeature>({
 
     // Apply different styling based on feature collection name
     if (featureCollection.name === 'Local Authorities') {
-      if (featureData) {
+      if (featureData && featureData.metric_value) {
         const colour = getThresholdColour(featureData)
         if (isSelected) {
           style.fillColor = getActiveCssVariableFromColour(colour as MapFeatureColour)
         } else {
           style.fillColor = getCssVariableFromColour(colour as MapFeatureColour)
         }
+      } else {
+        style.fillColor = 'rgba(62, 62, 62, 0.5)'
       }
       style.fillOpacity = 1
       style.color = 'rgb(255, 255, 255)'

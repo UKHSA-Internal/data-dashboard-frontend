@@ -5,32 +5,31 @@ import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
 
-export const geographiesSchema = z.array(
-  z.object({
-    name: z.string(),
-    geography_code: z.string().optional(),
-    relationships: z
-      .array(
-        z
-          .object({
-            name: z.string().optional().nullable(),
-            geography_code: z.string().optional().nullable(),
-            geography_type: z.string().optional(),
-          })
-          .optional()
-      )
-      .nullable(),
-  })
-)
+const geographiesSchemaObject = z.object({
+  name: z.string(),
+  geography_code: z.string().optional(),
+  relationships: z
+    .array(
+      z
+        .object({
+          name: z.string().optional().nullable(),
+          geography_code: z.string().optional().nullable(),
+          geography_type: z.string().optional(),
+        })
+        .optional()
+    )
+    .nullable(),
+})
 
+export const geographiesSchema = z.array(geographiesSchemaObject)
 export const responseObject = z.object({
   geography_type: z.string(),
   geographies: geographiesSchema,
 })
 
 export const responseSchema = z.array(responseObject)
-
 export type GeographiesSchema = z.infer<typeof geographiesSchema>
+export type GeographiesSchemaObject = z.infer<typeof geographiesSchemaObject>
 export type GeographyObject = z.infer<typeof responseObject>
 export type GeographyResponse = z.infer<typeof responseSchema>
 

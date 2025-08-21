@@ -2,9 +2,11 @@ import {
   DataFilter,
   DataFilters,
   GeographyFilters,
+  ThresholdFilter,
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { MapDataResponse } from '@/api/models/Maps'
 import { GeographiesSchema } from '@/api/requests/geographies/getGeographies'
 import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
 
@@ -30,6 +32,9 @@ export function useDataFilters(): DataFilters | null {
 
 export function useSelectedFilters(): {
   selectedFilters: FilterOption[] | null
+  selectedVaccinationFilters: DataFilter[] | null
+  selectedGeographyFilters: GeographiesSchema | null
+  selectedThresholdFilters: ThresholdFilter[] | null
   updateFilters: (newFilters: FilterOption[]) => void
   addFilter: (filter: FilterOption) => void
   removeFilter: (filterId: string) => void
@@ -39,6 +44,9 @@ export function useSelectedFilters(): {
 
   return {
     selectedFilters: state.selectedFilters,
+    selectedVaccinationFilters: state.selectedVaccinationFilters,
+    selectedGeographyFilters: state.selectedGeographyFilters,
+    selectedThresholdFilters: state.selectedThresholdFilters,
     updateFilters: actions.updateFilters,
     addFilter: actions.addFilter,
     removeFilter: actions.removeFilter,
@@ -73,5 +81,19 @@ export function useVaccinationState(): {
     vaccinationList,
     selectedVaccination: state.selectedVaccination,
     setSelectedVaccination: actions.setSelectedVaccination,
+  }
+}
+
+export function useMapData(): {
+  mapData: MapDataResponse | null
+  mapDataLoading: boolean
+  mapDataError: string | null
+} {
+  const { state } = useGlobalFilters()
+
+  return {
+    mapData: state.mapData,
+    mapDataLoading: state.mapDataLoading,
+    mapDataError: state.mapDataError,
   }
 }

@@ -9,7 +9,7 @@ import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
-import { useThresholdFilters } from '@/app/hooks/globalFilterHooks'
+import { useMapData, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
@@ -17,7 +17,6 @@ import { CoverControl } from '../../ui/ukhsa/Map/shared/controls/CoverControl'
 import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
 import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
 import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
-import useMapData from '../../ui/ukhsa/Map/shared/hooks/useMapData'
 import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
 import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 
@@ -69,39 +68,12 @@ export default function MapCard({
     }
   })
 
-  const request = {
-    date_from: '2023-10-30',
-    date_to: '2023-10-31',
-    parameters: {
-      theme: 'infectious_disease',
-      sub_theme: 'respiratory',
-      topic: 'COVID-19',
-      metric: 'COVID-19_deaths_ONSByWeek',
-      stratum: 'default',
-      age: 'all',
-      sex: 'all',
-      geography_type: 'Lower Tier Local Authority',
-      geographies: [],
-    },
-    accompanying_points: [
-      {
-        label_prefix: 'Rate of cases in England: ',
-        label_suffix: '',
-        parameters: {
-          metric: 'COVID-19_cases_rateRollingMean',
-          geography_type: 'Nation',
-          geography: 'England',
-        },
-      },
-    ],
-  }
-
-  const mapData = useMapData(request)
+  const { mapData, mapDataLoading, mapDataError } = useMapData()
 
   const coverLayer = useMemo(() => {
-    if (!mapData.data) return
-    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data.data} />
-  }, [thresholdData, mapData.data])
+    if (!mapData || mapDataLoading || mapDataError) return
+    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
+  }, [thresholdData, mapData])
 
   return (
     <>

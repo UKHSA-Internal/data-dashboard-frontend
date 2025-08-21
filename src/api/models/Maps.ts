@@ -13,8 +13,8 @@ export const MapDataList = z.array(
     geography_code: z.string(),
     geography_type: z.string(),
     geography: z.string(),
-    metric_value: z.number(),
-    accompanying_points: MapAccompanyingPointList,
+    metric_value: z.number().nullable(),
+    accompanying_points: MapAccompanyingPointList.nullable(),
   })
 )
 
@@ -41,11 +41,7 @@ export const MapDataRequest = z.object({
     z.object({
       label_prefix: z.string(),
       label_suffix: z.string(),
-      parameters: z.object({
-        metric: z.string(),
-        geography_type: z.string(),
-        geography: z.string(),
-      }),
+      parameters: z.record(z.string()),
     })
   ),
 })

@@ -4,48 +4,66 @@ import clsx from 'clsx'
 import React, { useEffect, useRef, useState } from 'react'
 
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+/* eslint-disable @typescript-eslint/no-explicit-any*/
 
-type FlatOption = string
-type GroupedOption = { title: string; children: string[] }
+export type FlatOption = { id: string; label: string }
+export type GroupedOption = { title: string; children: FlatOption[] }
 type Options = FlatOption[] | GroupedOption[]
 
 interface MultiselectDropdownProps {
   name: string
+  data?: Options
   nestedMultiselect?: boolean
   selectionLimit?: number
 }
 
-export function MultiselectDropdown({ name, nestedMultiselect = false, selectionLimit = 4 }: MultiselectDropdownProps) {
+export function MultiselectDropdown({
+  name,
+  data,
+  nestedMultiselect = false,
+  selectionLimit = 4,
+}: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  // TODO: Get options from CMS
-  const [options] = useState<Options>(
-    nestedMultiselect
-      ? [
-          { title: 'Group 1', children: ['child1', 'child2', 'child3'] },
-          { title: 'Group 2', children: ['child4', 'child5'] },
-        ]
-      : ['test1', 'test2', 'test3', 'test4', 'test5', 'test6', 'test7', 'test8', 'test9', 'test10']
-  )
+  let options = [] as Options
 
-  const createFilterOption = (optionValue: string) => ({
-    id: `${name}.${optionValue}`,
-    label: optionValue,
-  })
+  if (data) {
+    if (nestedMultiselect) {
+      options = data.map((group: any) => {
+        return {
+          title: group.title,
+          children: group.children.map((item: FlatOption) => {
+            return { id: `${item.id}`, label: item.label }
+          }),
+        }
+      })
+    } else {
+      options = data.map((item: any) => {
+        return { id: `${item.id}`, label: item.label }
+      })
+    }
+  }
 
-  const isFilterSelected = (optionValue: string) => {
-    const filterId = `${name}.${optionValue}`
+  const createFilterOption = (optionValue: FlatOption) => {
+    return {
+      id: optionValue.id,
+      label: optionValue.label,
+    }
+  }
+
+  const isFilterSelected = (optionValue: FlatOption) => {
+    const filterId = optionValue.id
     const isSelected = selectedFilters!.some((filter) => filter.id === filterId)
     return isSelected
   }
 
-  const isOptionDisabled = (optionValue: string) => {
+  const isOptionDisabled = (optionValue: FlatOption) => {
     if (nestedMultiselect) return false
     if (isFilterSelected(optionValue)) return false
 
-    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`${name}.`)).length
+    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`geography.`)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
@@ -67,7 +85,6 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
       flatIndex: number
     }> = []
     let flatIndex = 0
-
     ;(options as GroupedOption[]).forEach((group, groupIndex) => {
       list.push({ type: 'group', groupIndex, childIndex: undefined, flatIndex: flatIndex++ })
       group.children.forEach((_, childIndex) => {
@@ -171,12 +188,10 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
         addFilter(filterOption)
       }
     } else {
-      const option = (options as FlatOption[])[groupIndexOrIndex]
-      if (isOptionDisabled(option)) return
+      const filterOption = (options as FlatOption[])[groupIndexOrIndex]
+      if (isOptionDisabled(filterOption)) return
 
-      const filterOption = createFilterOption(option)
-
-      if (isFilterSelected(option)) {
+      if (isFilterSelected(filterOption)) {
         removeFilter(filterOption.id)
       } else {
         addFilter(filterOption)
@@ -191,7 +206,8 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
     if (allSelected) {
       // Deselect all children in this group
       const updatedFilters = selectedFilters!.filter((filter) => {
-        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        const groupChildIds = group.children.map((child) => `${child.id}`)
+        group.children.map((child) => removeFilter(child.id))
         return !groupChildIds.includes(filter.id)
       })
       updateFilters(updatedFilters)
@@ -199,7 +215,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
       // Select all children in this group (including those already selected)
       const groupFilters = group.children.map((child) => createFilterOption(child))
       const nonGroupFilters = selectedFilters!.filter((filter) => {
-        const groupChildIds = group.children.map((child) => `${name}.${child}`)
+        const groupChildIds = group.children.map((child) => `${child.id}`)
         return !groupChildIds.includes(filter.id)
       })
       const updatedFilters = [...nonGroupFilters, ...groupFilters]
@@ -227,7 +243,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
         tabIndex={-1}
         // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
         className={clsx(
-          'absolute z-[1] flex max-h-[214px] w-[300px] flex-col overflow-y-auto border-[1px] border-grey-4 bg-white p-2 shadow-md',
+          'absolute z-[10000] flex max-h-[214px] w-[300px] flex-col overflow-y-auto border-[1px] border-grey-4 bg-white p-2 shadow-md',
           {
             block: open,
             hidden: !open,
@@ -270,7 +286,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                       {group.title}
                     </label>
                   </div>
-                  {group.children.map((child: string, childIndex: number) => {
+                  {group.children.map((child: FlatOption, childIndex: number) => {
                     const childFlatIndex =
                       flatFocusableList.find(
                         (item) =>
@@ -286,10 +302,10 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                         <input
                           className="govuk-checkboxes__input py-0 pl-4"
                           tabIndex={-1}
-                          name={child}
+                          name={child.label}
                           id={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
                           type="checkbox"
-                          value={child}
+                          value={child.label}
                           ref={checkboxRefs.current[childFlatIndex]}
                           checked={isFilterSelected(child)}
                           onChange={() => {
@@ -302,7 +318,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                           className="govuk-label govuk-checkboxes__label relative py-0 before:left-[-32px] before:top-0 after:left-[-26px] after:top-[8px]"
                           htmlFor={`ukhsa-checkbox-child-${groupIndex}-${childIndex}`}
                         >
-                          {child}
+                          {child.label}
                         </label>
                       </div>
                     )
@@ -323,10 +339,10 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                   <input
                     className="govuk-checkboxes__input py-0 pl-4"
                     tabIndex={-1}
-                    name={option}
-                    id={`ukhsa-checkbox-${option}`}
+                    name={option.label}
+                    id={`ukhsa-checkbox-${option.label}`}
                     type="checkbox"
-                    value={option}
+                    value={option.label}
                     ref={checkboxRefs.current[index]}
                     checked={isFilterSelected(option)}
                     disabled={isDisabled}
@@ -339,7 +355,7 @@ export function MultiselectDropdown({ name, nestedMultiselect = false, selection
                     })}
                     htmlFor={`ukhsa-checkbox-${option}`}
                   >
-                    {option}
+                    {option.label}
                   </label>
                 </div>
               )

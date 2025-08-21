@@ -10,17 +10,14 @@ jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapRef', () => ({
   useMapRef: jest.fn(),
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapData', () => ({
-  __esModule: true,
-  default: jest.fn().mockReturnValue({
-    data: {},
-    error: null,
-  }),
-}))
-
 jest.mock('@/app/hooks/globalFilterHooks', () => ({
   useThresholdFilters: jest.fn().mockReturnValue({
     thresholds: [],
+  }),
+  useMapData: jest.fn().mockReturnValue({
+    mapData: {},
+    mapDataLoading: false,
+    mapDataError: null,
   }),
 }))
 

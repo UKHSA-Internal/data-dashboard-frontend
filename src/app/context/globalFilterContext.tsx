@@ -6,11 +6,21 @@ import {
   DataFilter,
   DataFilters,
   GeographyFilters,
+  ThresholdFilter,
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { MapDataResponse } from '@/api/models/Maps'
+import { postMapData } from '@/api/requests/cover-maps/postMaps'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
-import { extractGeographyIdFromGeographyFilter } from '@/app/utils/global-filter-content-parser'
+import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
+
+import {
+  addFilterToSelectedGeographyFilters,
+  addFilterToSelectedThresholdFilters,
+  addFilterToSelectedVaccinationFilters,
+  getFilterType,
+} from '../utils/selected-filter.utils'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -18,6 +28,8 @@ interface InitialGlobalFilterState {
   thresholdFilters: ThresholdFilters | null
   dataFilters: DataFilters | null
 }
+
+export type FilterType = 'geography' | 'data_filter' | 'threshold'
 
 export interface FilterOption {
   id: string
@@ -32,10 +44,16 @@ export interface GlobalFilterProviderProps {
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
   selectedFilters: FilterOption[]
+  selectedGeographyFilters: GeographiesSchema | null
+  selectedVaccinationFilters: DataFilter[] | null
+  selectedThresholdFilters: ThresholdFilter[] | null
   geographyAreas: Map<string, GeographiesSchema>
   geographyAreasLoading: boolean
   geographyAreasError: string | null
   selectedVaccination: DataFilter | null
+  mapData: MapDataResponse | null
+  mapDataLoading: boolean
+  mapDataError: string | null
 }
 
 // Global Filter Action Interface
@@ -65,6 +83,12 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [geographyAreasLoading, setGeographyAreasLoading] = useState<boolean>(false)
   const [geographyAreasError, setGeographyAreasError] = useState<string | null>(null)
   const [selectedVaccination, setSelectedVaccination] = useState<DataFilter | null>(null)
+  const [mapData, setMapData] = useState<MapDataResponse | null>(null)
+  const [mapDataLoading, setMapDataLoading] = useState<boolean>(false)
+  const [mapDataError, setMapDataError] = useState<string | null>(null)
+  const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
+  const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
+  const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
 
   const fetchGeographyData = async () => {
     try {
@@ -98,12 +122,49 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     }
   }
 
+  const fetchMapData = async () => {
+    if (!selectedTimePeriod || !selectedVaccination) return
+    const accompanyingPoints = getAccompanyingPoints(selectedVaccination.value.accompanying_points)
+    const request = {
+      date_from: selectedTimePeriod.value.date_from,
+      date_to: selectedTimePeriod.value.date_to,
+      parameters: {
+        theme: selectedVaccination.value.parameters.theme.value,
+        sub_theme: selectedVaccination.value.parameters.sub_theme.value,
+        topic: selectedVaccination.value.parameters.topic.value,
+        metric: selectedVaccination.value.parameters.metric.value,
+        stratum: selectedVaccination.value.parameters.stratum.value,
+        age: selectedVaccination.value.parameters.age.value,
+        sex: selectedVaccination.value.parameters.sex.value,
+        geography_type: 'Upper Tier Local Authority',
+        geographies: [],
+      },
+      accompanying_points: accompanyingPoints,
+    }
+
+    try {
+      setMapDataLoading(true)
+      const response = await postMapData(request)
+
+      setMapData(response.data ?? null)
+    } catch (error) {
+      setMapDataError('Error fetching geography data: ' + error || 'Unknown error')
+    } finally {
+      setMapDataLoading(false)
+    }
+  }
+
   /* Usage: When the geographyFilters are updated this will trigger this use effect 
   to load the most recent list of geography areas for each of the geography filters */
   useEffect(() => {
     if (!filters.geographyFilters) return
     fetchGeographyData()
   }, [filters.geographyFilters])
+
+  useEffect(() => {
+    if (!selectedVaccination || !selectedTimePeriod) return
+    fetchMapData()
+  }, [selectedVaccination, selectedTimePeriod])
 
   const state: GlobalFilterState = {
     ...filters,
@@ -113,6 +174,12 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     geographyAreasLoading,
     geographyAreasError,
     selectedVaccination,
+    mapData,
+    mapDataLoading,
+    mapDataError,
+    selectedGeographyFilters,
+    selectedThresholdFilters,
+    selectedVaccinationFilters,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -127,18 +194,106 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
 
     //Filter selection actions
     updateFilters: (newFilters: FilterOption[]) => {
+      newFilters.map((filter) => {
+        const filterType = getFilterType(filter.id)
+        if (filterType == 'data_filter') {
+          const dataFilterId = filter.id.split('.')[1]
+          const newVaccinationFilter = filters.dataFilters!.data_filters.find(
+            (data_filter) => data_filter.id === dataFilterId
+          )
+
+          if (!newVaccinationFilter) {
+            return
+          }
+
+          setSelectedVaccinationFilters((prevFilters) =>
+            addFilterToSelectedVaccinationFilters(prevFilters, newVaccinationFilter)
+          )
+        }
+      })
       setSelectedFilters(newFilters)
     },
     addFilter: (filter: FilterOption) => {
       if (!selectedFilters.some((existingFilter) => existingFilter.id === filter.id)) {
         setSelectedFilters([...selectedFilters, filter])
+
+        const filterType = getFilterType(filter.id)
+        switch (filterType) {
+          case 'geography':
+            const geographyFilterData = filter.id.split('.')
+            const geographyGroup = geographyFilterData[1]
+            const geographyId = geographyFilterData[2]
+
+            const newGeographyFilter = geographyAreas
+              .get(geographyGroup)
+              ?.find((geography) => geography.geography_code === geographyId)
+
+            if (!newGeographyFilter) {
+              break
+            }
+
+            setSelectedGeographyFilters((prevFilters) =>
+              addFilterToSelectedGeographyFilters(prevFilters, newGeographyFilter)
+            )
+            break
+          case 'data_filter':
+            const dataFilterId = filter.id.split('.')[1]
+            const newVaccinationFilter = filters.dataFilters!.data_filters.find(
+              (data_filter) => data_filter.id === dataFilterId
+            )
+
+            if (!newVaccinationFilter) {
+              break
+            }
+            setSelectedVaccinationFilters((prevFilters) =>
+              addFilterToSelectedVaccinationFilters(prevFilters, newVaccinationFilter)
+            )
+            break
+
+          case 'threshold':
+            const thresholdFilterId = filter.id.split('.')[1]
+            const newThresholdFilter = filters.thresholdFilters!.thresholds.find(
+              (threshold) => threshold.id === thresholdFilterId
+            )
+
+            if (!newThresholdFilter) {
+              break
+            }
+            setSelectedThresholdFilters((prevFilters) =>
+              addFilterToSelectedThresholdFilters(prevFilters, newThresholdFilter)
+            )
+            break
+        }
       }
     },
     removeFilter: (filterId: string) => {
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
+      const filterType = getFilterType(filterId)
+      switch (filterType) {
+        case 'geography':
+          const geographyFilterData = filterId.split('.')
+          const geographyId = geographyFilterData[2]
+          setSelectedGeographyFilters((prevFilters) =>
+            prevFilters.filter((filter) => filter.geography_code !== geographyId)
+          )
+          break
+
+        case 'data_filter':
+          const dataFilterId = filterId.split('.')[1]
+          setSelectedVaccinationFilters((prevFilters) => prevFilters.filter((filter) => filter.id !== dataFilterId))
+          break
+
+        case 'threshold':
+          const thresholdFilterId = filterId.split('.')[1]
+          setSelectedThresholdFilters((prevFilters) => prevFilters.filter((filter) => filter.id !== thresholdFilterId))
+          break
+      }
     },
     clearFilters: () => {
       setSelectedFilters([])
+      setSelectedGeographyFilters([])
+      setSelectedThresholdFilters([])
+      setSelectedVaccinationFilters([])
     },
   }
 
