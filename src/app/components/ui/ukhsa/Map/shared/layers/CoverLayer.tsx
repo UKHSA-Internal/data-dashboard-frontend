@@ -309,7 +309,7 @@ const CoverLayer = <T extends LayerWithFeature>({
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
           const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
-          if (!featureData) return
+          if (!featureData || !featureData.metric_value) return
           const colour = getThresholdColour(featureData)
           const hoverColour = getHoverCssVariableFromColour(colour as MapFeatureColour)
           layer.setStyle({ fillColor: hoverColour })
@@ -318,7 +318,7 @@ const CoverLayer = <T extends LayerWithFeature>({
           // Skip hover styles if this feature is already active/clicked
           if (clickedFeatureIdRef.current === layer.feature.id) return
           const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
-          if (!featureData) return
+          if (!featureData || !featureData.metric_value) return
           const colour = getThresholdColour(featureData)
           layer.setStyle({
             fillColor: getCssVariableFromColour(colour as MapFeatureColour),
@@ -395,13 +395,15 @@ const CoverLayer = <T extends LayerWithFeature>({
 
     // Apply different styling based on feature collection name
     if (featureCollection.name === 'Local Authorities') {
-      if (featureData) {
+      if (featureData && featureData.metric_value) {
         const colour = getThresholdColour(featureData)
         if (isSelected) {
           style.fillColor = getActiveCssVariableFromColour(colour as MapFeatureColour)
         } else {
           style.fillColor = getCssVariableFromColour(colour as MapFeatureColour)
         }
+      } else {
+        style.fillColor = 'rgba(62, 62, 62, 0.5)'
       }
       style.fillOpacity = 1
       style.color = 'rgb(255, 255, 255)'
