@@ -13,8 +13,8 @@ export const MapDataList = z.array(
     geography_code: z.string(),
     geography_type: z.string(),
     geography: z.string(),
-    metric_value: z.number(),
-    accompanying_points: MapAccompanyingPointList,
+    metric_value: z.number().nullable(),
+    accompanying_points: MapAccompanyingPointList.nullable(),
   })
 )
 
