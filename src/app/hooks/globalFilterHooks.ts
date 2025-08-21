@@ -31,6 +31,9 @@ export function useDataFilters(): DataFilters | null {
 
 export function useSelectedFilters(): {
   selectedFilters: FilterOption[] | null
+  selectedVaccinationFilters: FilterOption[] | null
+  selectedGeographyFilters: FilterOption[] | null
+  selectedThresholdFilters: FilterOption[] | null
   updateFilters: (newFilters: FilterOption[]) => void
   addFilter: (filter: FilterOption) => void
   removeFilter: (filterId: string) => void
@@ -40,6 +43,9 @@ export function useSelectedFilters(): {
 
   return {
     selectedFilters: state.selectedFilters,
+    selectedVaccinationFilters: state.selectedVaccinationFilters,
+    selectedGeographyFilters: state.selectedGeographyFilters,
+    selectedThresholdFilters: state.selectedThresholdFilters,
     updateFilters: actions.updateFilters,
     addFilter: actions.addFilter,
     removeFilter: actions.removeFilter,

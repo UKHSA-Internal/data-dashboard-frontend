@@ -127,3 +127,4 @@ export function getGroupedVaccinationOptions(vaccinationFilters: DataFilters): G
 
   return result
 }
+
