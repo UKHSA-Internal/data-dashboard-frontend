@@ -2,6 +2,7 @@ import {
   DataFilter,
   DataFilters,
   GeographyFilters,
+  ThresholdFilter,
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
@@ -31,9 +32,9 @@ export function useDataFilters(): DataFilters | null {
 
 export function useSelectedFilters(): {
   selectedFilters: FilterOption[] | null
-  selectedVaccinationFilters: FilterOption[] | null
-  selectedGeographyFilters: FilterOption[] | null
-  selectedThresholdFilters: FilterOption[] | null
+  selectedVaccinationFilters: DataFilter[] | null
+  selectedGeographyFilters: GeographiesSchema | null
+  selectedThresholdFilters: ThresholdFilter[] | null
   updateFilters: (newFilters: FilterOption[]) => void
   addFilter: (filter: FilterOption) => void
   removeFilter: (filterId: string) => void

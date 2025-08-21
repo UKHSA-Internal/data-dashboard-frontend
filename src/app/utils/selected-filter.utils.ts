@@ -1,6 +1,7 @@
+import { DataFilter, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchema, GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+
 import { FilterOption, FilterType } from '../context/globalFilterContext'
-import { DataFilter, DataFilters, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
 
 // Helper function to extract filter type
 export const getFilterType = (filterId: string): FilterType | null => {

@@ -14,12 +14,12 @@ import { MapDataResponse } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
+
 import {
   addFilterToSelectedGeographyFilters,
   addFilterToSelectedThresholdFilters,
   addFilterToSelectedVaccinationFilters,
   getFilterType,
-  updateFilterToSelectedVaccinationFilters,
 } from '../utils/selected-filter.utils'
 
 interface InitialGlobalFilterState {
@@ -44,9 +44,9 @@ export interface GlobalFilterProviderProps {
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
   selectedFilters: FilterOption[]
-  selectedGeographyFilters: any[] | null
-  selectedVaccinationFilters: any[] | null
-  selectedThresholdFilters: any[] | null
+  selectedGeographyFilters: GeographiesSchema | null
+  selectedVaccinationFilters: DataFilter[] | null
+  selectedThresholdFilters: ThresholdFilter[] | null
   geographyAreas: Map<string, GeographiesSchema>
   geographyAreasLoading: boolean
   geographyAreasError: string | null
@@ -198,7 +198,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         const filterType = getFilterType(filter.id)
         if (filterType == 'data_filter') {
           const dataFilterId = filter.id.split('.')[1]
-          let newVaccinationFilter = filters.dataFilters!.data_filters.find(
+          const newVaccinationFilter = filters.dataFilters!.data_filters.find(
             (data_filter) => data_filter.id === dataFilterId
           )
           console.log('newVaccinationFilter: ', newVaccinationFilter)
@@ -239,7 +239,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
             break
           case 'data_filter':
             const dataFilterId = filter.id.split('.')[1]
-            let newVaccinationFilter = filters.dataFilters!.data_filters.find(
+            const newVaccinationFilter = filters.dataFilters!.data_filters.find(
               (data_filter) => data_filter.id === dataFilterId
             )
 
@@ -253,7 +253,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
 
           case 'threshold':
             const thresholdFilterId = filter.id.split('.')[1]
-            let newThresholdFilter = filters.thresholdFilters!.thresholds.find(
+            const newThresholdFilter = filters.thresholdFilters!.thresholds.find(
               (threshold) => threshold.id === thresholdFilterId
             )
 

@@ -48,6 +48,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
   })
 
@@ -159,6 +162,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     // Re-render the component to reflect the state change
@@ -188,6 +194,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} selectionLimit={2} data={mockFlatListData} />)
 
@@ -204,6 +213,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} selectionLimit={2} data={mockFlatListData} />)
 
@@ -224,6 +236,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} selectionLimit={2} data={mockFlatListData} />)
 
@@ -263,6 +278,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
   })
 
@@ -346,6 +364,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -371,6 +392,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -402,6 +426,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -420,6 +447,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -447,6 +477,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -466,6 +499,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -484,6 +520,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
