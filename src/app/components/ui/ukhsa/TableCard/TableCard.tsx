@@ -9,6 +9,7 @@ export interface TableCard {
 interface TableCardProps {
   data: TableCard[]
 }
+const tableHeaders: string[] = ['Age', 'Vaccinations']
 
 const TableCard: React.FC<TableCardProps> = ({ data }) => {
   return (
@@ -16,8 +17,11 @@ const TableCard: React.FC<TableCardProps> = ({ data }) => {
       <table className="min-w-full table-auto ">
         <thead className="w-full table-auto text-left">
           <tr>
-            <th className="border-b border-grey-2 p-2 font-bold">Age of measure</th>
-            <th className="border-b border-grey-2 p-2 font-bold">Vaccination</th>
+            {tableHeaders.map((header, index) => (
+              <th className="border-b border-grey-2 p-2 font-bold" key={index}>
+                {header}
+              </th>
+            ))}
           </tr>
         </thead>
         <tbody>
