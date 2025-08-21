@@ -14,6 +14,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { MapDataResponse } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
+import { RequestParams } from '@/api/requests/charts/getCharts'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
 
@@ -49,12 +50,14 @@ export interface FilterCoverageChartCard {
   id: string
   title: string
   description: string
+  chart: RequestParams
 }
 
 export interface FilterTimeSeriesChartCard {
   id: string
   title: string
   description: string
+  chart: RequestParams
 }
 
 export interface GlobalFilterState extends InitialGlobalFilterState {
@@ -200,19 +203,54 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   //     },
   //   ],
   // }
+  const timeseriesPayload: RequestParams = {
+    file_format: 'svg',
+    chart_height: 220,
+    chart_width: 515,
+    x_axis: 'date',
+    x_axis_title: '',
+    y_axis: 'metric',
+    y_axis_title: 'Year',
+    y_axis_minimum_value: null,
+    y_axis_maximum_value: null,
+    plots: [
+      {
+        topic: '6-in-1',
+        metric: '6-in-1_coverage_coverageByYear',
+        stratum: '12m',
+        age: 'all',
+        sex: 'all',
+        geography: 'Bexley',
+        geography_type: 'Upper Tier Local Authority',
+        date_from: '2009-04-01',
+        date_to: '2025-03-31',
+        chart_type: 'line_multi_coloured',
+        label: '6-in-1 (12 months)',
+        line_colour: '',
+        line_type: 'SOLID',
+        use_smooth_lines: false,
+        use_markers: true,
+      },
+    ],
+  }
 
   const updateFilterChartCards = () => {
     console.log('update filter chart cards')
     // TODO: Get coverage items, and make API call, create object & call new chart
+
     setFilterCoverageChartCards([
       ...filterCoverageChartCards,
-      { id: '1', title: 'New Coverage', description: 'New Coverage description' },
+      { id: '1', title: 'New Coverage', description: 'New Coverage description', chart: timeseriesPayload },
     ])
 
-    // TODO: Get time series items, and make API call, create object & call new chart
+    // --- Timeseries section ---
+    // Selected 2 geographies, 2 vaccines
+    // 2 charts expected for 2 geographies
+    //
+
     setFilterTimeSeriesChartCards([
       ...filterTimeSeriesChartCards,
-      { id: '1', title: 'New Time Series', description: 'New Time Series description' },
+      { id: '1', title: 'New Time Series', description: 'New Time Series description', chart: timeseriesPayload },
     ])
   }
 
