@@ -9,7 +9,7 @@ export interface TableCard {
 interface TableCardProps {
   data: TableCard[]
 }
-const tableHeaders: string[] = ['Age', 'Vaccinations']
+const tableHeaders: string[] = ['Age of measure', 'Vaccinations']
 
 const TableCard: React.FC<TableCardProps> = ({ data }) => {
   return (

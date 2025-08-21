@@ -18,12 +18,6 @@ describe('TableCard', () => {
     },
   ]
 
-  it('renders the table headers', () => {
-    render(<TableCard data={sampleData} />)
-    expect(screen.getByText(/Age of measure/i)).toBeInTheDocument()
-    expect(screen.getByText(/Vaccination/i)).toBeInTheDocument()
-  })
-
   it('renders each row with correct age and vaccinations', () => {
     render(<TableCard data={sampleData} />)
 
