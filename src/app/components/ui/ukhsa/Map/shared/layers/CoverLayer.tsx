@@ -12,7 +12,7 @@ import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { mapQueryKeys } from '@/app/constants/map.constants'
-import { useGeographyState, useVaccinationState } from '@/app/hooks/globalFilterHooks'
+import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
@@ -122,6 +122,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   const activeTooltipLayerRef: { current: T | null } = useRef(null)
   const { selectedVaccination } = useVaccinationState()
   const { geographyAreas } = useGeographyState()
+  const { addFilter } = useSelectedFilters()
 
   const featuresRef = useRef<Array<LocalAuthoritiesFeature & RegionFeature & CountriesFeature>>([])
 
@@ -239,6 +240,16 @@ const CoverLayer = <T extends LayerWithFeature>({
             clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
           const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
+          const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+
+          if (featureData) {
+            const selectedFeature: FlatOption = {
+              id: `map.${featureData.geography_type}.${featureData?.geography_code}`,
+              label: `Map selected area -  ${featureData?.geography}`,
+            }
+
+            addFilter(selectedFeature)
+          }
 
           if (map.getZoom() < 8) {
             map.setView(latlng, 8)
@@ -266,7 +277,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               return null
             } else {
               // Clicked new feature - create and open tooltip
-              const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+
               const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
 
               const { regionName, nationName, vaccination } = renderTooltip(featureData)

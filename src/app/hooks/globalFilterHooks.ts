@@ -35,6 +35,7 @@ export function useSelectedFilters(): {
   selectedVaccinationFilters: DataFilter[] | null
   selectedGeographyFilters: GeographiesSchema | null
   selectedThresholdFilters: ThresholdFilter[] | null
+  selectedMapFilters: GeographiesSchemaObject | null
   updateFilters: (newFilters: FilterOption[]) => void
   addFilter: (filter: FilterOption) => void
   removeFilter: (filterId: string) => void
@@ -47,6 +48,7 @@ export function useSelectedFilters(): {
     selectedVaccinationFilters: state.selectedVaccinationFilters,
     selectedGeographyFilters: state.selectedGeographyFilters,
     selectedThresholdFilters: state.selectedThresholdFilters,
+    selectedMapFilters: state.selectedMapFilters,
     updateFilters: actions.updateFilters,
     addFilter: actions.addFilter,
     removeFilter: actions.removeFilter,

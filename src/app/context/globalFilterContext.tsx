@@ -12,7 +12,12 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { MapDataResponse } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
-import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
+import {
+  GeographiesSchema,
+  GeographiesSchemaObject,
+  GeographyObject,
+  getGeographies,
+} from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
 
 import {
@@ -29,7 +34,7 @@ interface InitialGlobalFilterState {
   dataFilters: DataFilters | null
 }
 
-export type FilterType = 'geography' | 'data_filter' | 'threshold'
+export type FilterType = 'geography' | 'data_filter' | 'threshold' | 'map'
 
 export interface FilterOption {
   id: string
@@ -54,6 +59,7 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
+  selectedMapFilters: GeographiesSchemaObject | null
 }
 
 // Global Filter Action Interface
@@ -89,6 +95,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
   const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
   const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
+  const [selectedMapFilters, setSelectedMapFilters] = useState<GeographiesSchemaObject>({})
 
   const fetchGeographyData = async () => {
     try {
@@ -180,6 +187,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
+    selectedMapFilters,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -219,6 +227,20 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
 
         const filterType = getFilterType(filter.id)
         switch (filterType) {
+          case 'map':
+            const mapFilterData = filter.id.split('.')
+            const mapGeographyGroup = mapFilterData[1]
+            const mapGeographyId = mapFilterData[2]
+
+            const newMapGeographyFilter = geographyAreas
+              .get(mapGeographyGroup)
+              ?.find((geography) => geography.geography_code === mapGeographyId)
+
+            if (!newMapGeographyFilter) {
+              break
+            }
+            setSelectedMapFilters(newMapGeographyFilter)
+            break
           case 'geography':
             const geographyFilterData = filter.id.split('.')
             const geographyGroup = geographyFilterData[1]
@@ -270,6 +292,9 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
       const filterType = getFilterType(filterId)
       switch (filterType) {
+        case 'map':
+          setSelectedMapFilters({})
+          break
         case 'geography':
           const geographyFilterData = filterId.split('.')
           const geographyId = geographyFilterData[2]
@@ -294,6 +319,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedGeographyFilters([])
       setSelectedThresholdFilters([])
       setSelectedVaccinationFilters([])
+      setSelectedMapFilters({})
     },
   }
 

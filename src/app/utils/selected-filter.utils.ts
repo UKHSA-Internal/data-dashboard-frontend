@@ -8,7 +8,7 @@ export const getFilterType = (filterId: string): FilterType | null => {
   const filterParts = filterId.split('.')
   const filterType = filterParts[0]
 
-  if (['geography', 'data_filter', 'threshold'].includes(filterType)) {
+  if (['geography', 'data_filter', 'threshold', 'map'].includes(filterType)) {
     return filterType as FilterType
   }
 
@@ -27,14 +27,18 @@ export const addFilterToSelectedGeographyFilters = (
   filters: GeographiesSchema,
   newFilter: GeographiesSchemaObject
 ): GeographiesSchema => {
-  if (
-    !filters.some(
-      (existingFilter: GeographiesSchemaObject) => existingFilter.geography_code === newFilter.geography_code
+  const filterExists = filters.some(
+    (existingFilter: GeographiesSchemaObject) => existingFilter.geography_code === newFilter.geography_code
+  )
+  if (filterExists) {
+    // If filter exists, remove it (filter it out)
+    return filters.filter(
+      (existingFilter: GeographiesSchemaObject) => existingFilter.geography_code !== newFilter.geography_code
     )
-  ) {
+  } else {
+    // If filter doesn't exist, add it
     return [...filters, newFilter]
   }
-  return filters
 }
 
 export const addFilterToSelectedVaccinationFilters = (filters: DataFilter[], newFilter: DataFilter): DataFilter[] => {
