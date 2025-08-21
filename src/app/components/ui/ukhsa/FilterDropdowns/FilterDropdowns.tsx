@@ -1,12 +1,14 @@
 'use client'
 import React from 'react'
 
+import { DataFilters } from '@/api/models/cms/Page/GlobalFilter'
 import {
   FlatOption,
   GroupedOption,
   MultiselectDropdown,
 } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 import { useDataFilters, useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
+import { getGroupedVaccinationOptions } from '@/app/utils/global-filter-content-parser'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
@@ -32,7 +34,7 @@ function DisplayGeographyDropdowns() {
   // Use for...of to iterate over Map entries
   for (const [key, geographyArea] of geographyAreas) {
     const data = geographyArea.map((item: any) => {
-      return { id: `${key}.${item.geography_code}`, label: item.name }
+      return { id: `geography.${key}.${item.geography_code}`, label: item.name }
     })
 
     geographyDropdowns.push(
@@ -52,7 +54,7 @@ function DisplayCoverageDropdown() {
   }
   const data: FlatOption[] = []
   thresholdFilters.thresholds.map((filter: any) => {
-    data.push({ id: filter.id, label: filter.value.label })
+    data.push({ id: `${filter.type}.${filter.id}`, label: filter.value.label })
   })
   return (
     <div className="w-1/2 px-2">
@@ -62,32 +64,21 @@ function DisplayCoverageDropdown() {
 }
 
 export function DisplayVaccinationDropDown() {
-  const vaccinationFilters = useDataFilters()
+  const vaccinationFilters: DataFilters | null = useDataFilters()
+
   if (!vaccinationFilters) {
     return null
   }
-  let data: GroupedOption[] = []
+  const { label } = vaccinationFilters
 
-  data = [
-    {
-      title: 'Group 1',
-      children: [
-        { label: 'child1', id: 'child1' },
-        { label: 'child2', id: 'child2' },
-        { label: 'child3', id: 'child3' },
-      ],
-    },
-    {
-      title: 'Group 2',
-      children: [
-        { label: 'child5', id: 'child5' },
-        { label: 'child6', id: 'child6' },
-      ],
-    },
-  ]
+  const groupedMultiselectOptions: GroupedOption[] | null = getGroupedVaccinationOptions(vaccinationFilters)
+
+  if (!groupedMultiselectOptions) {
+    return null
+  }
   return (
     <div className="w-1/2 px-2">
-      <MultiselectDropdown name="Select vaccination" data={data} nestedMultiselect />
+      <MultiselectDropdown name={label} data={groupedMultiselectOptions} nestedMultiselect />
     </div>
   )
 }

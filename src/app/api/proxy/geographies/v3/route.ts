@@ -13,7 +13,6 @@ export async function GET(req: NextRequest) {
   }
 
   const body: GeographyParams = { geography_type: geography_type }
-  console.log('inside Geographies route')
 
   if (!body) {
     return new NextResponse('Missing category', {

@@ -48,6 +48,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
   })
 
@@ -56,19 +59,19 @@ describe('flat multiselect component', () => {
   const mockFlatListData = [
     {
       label: 'East Midlands',
-      id: 'E12000004',
+      id: 'geography.E12000004',
     },
     {
       label: 'East of England',
-      id: 'E12000006',
+      id: 'geography.E12000006',
     },
     {
       label: 'London',
-      id: 'E12000007',
+      id: 'geography.E12000007',
     },
     {
       label: 'North East',
-      id: 'E12000001',
+      id: 'geography.E12000001',
     },
   ]
 
@@ -151,7 +154,7 @@ describe('flat multiselect component', () => {
 
     // Verify the mock was called
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Test Dropdown.E12000006',
+      id: 'geography.E12000006',
       label: 'East of England',
     })
 
@@ -159,6 +162,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     // Re-render the component to reflect the state change
@@ -180,7 +186,7 @@ describe('flat multiselect component', () => {
     // Select first option
     fireEvent.click(checkboxes[0])
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Test Dropdown.E12000004',
+      id: 'geography.E12000004',
       label: 'East Midlands',
     })
 
@@ -188,6 +194,9 @@ describe('flat multiselect component', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} selectionLimit={2} data={mockFlatListData} />)
 
@@ -196,14 +205,17 @@ describe('flat multiselect component', () => {
     // Select second option
     fireEvent.click(checkboxes[1])
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Test Dropdown.E12000004',
-      label: 'East Midlands',
+      label: 'East of England',
+      id: 'geography.E12000006',
     })
 
     // Update mock and re-render
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} selectionLimit={2} data={mockFlatListData} />)
 
@@ -218,12 +230,15 @@ describe('flat multiselect component', () => {
 
     // Deselect one option
     fireEvent.click(checkboxes[0])
-    expect(mockFunctions.removeFilter).toHaveBeenCalledWith('Test Dropdown.E12000004')
+    expect(mockFunctions.removeFilter).toHaveBeenCalledWith('geography.E12000004')
 
     // Update mock and re-render
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} selectionLimit={2} data={mockFlatListData} />)
 
@@ -263,6 +278,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
   })
 
@@ -337,15 +355,18 @@ describe('nested multiselect', () => {
 
     // Verify the updateFilters was called with all children
     expect(mockFunctions.updateFilters).toHaveBeenCalledWith([
-      { id: 'Nested Dropdown.child1', label: 'child1' },
-      { id: 'Nested Dropdown.child2', label: 'child2' },
-      { id: 'Nested Dropdown.child3', label: 'child3' },
+      { id: 'child1', label: 'child1' },
+      { id: 'child2', label: 'child2' },
+      { id: 'child3', label: 'child3' },
     ])
 
     // Update mock and re-render
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -371,6 +392,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -394,7 +418,7 @@ describe('nested multiselect', () => {
 
     // Verify addFilter was called
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Nested Dropdown.child1',
+      id: 'child1',
       label: 'child1',
     })
 
@@ -402,6 +426,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -414,12 +441,15 @@ describe('nested multiselect', () => {
     fireEvent.keyDown(child1, { key: ' ' })
 
     // Verify removeFilter was called
-    expect(mockFunctions.removeFilter).toHaveBeenCalledWith('Nested Dropdown.child1')
+    expect(mockFunctions.removeFilter).toHaveBeenCalledWith('child1')
 
     // Update mock and re-render
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -439,7 +469,7 @@ describe('nested multiselect', () => {
     // Select first child
     fireEvent.click(child1)
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Nested Dropdown.child1',
+      id: 'child1',
       label: 'child1',
     })
 
@@ -447,6 +477,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -458,7 +491,7 @@ describe('nested multiselect', () => {
     // Select second child
     fireEvent.click(child2)
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Nested Dropdown.child2',
+      id: 'child2',
       label: 'child2',
     })
 
@@ -466,6 +499,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 
@@ -476,7 +512,7 @@ describe('nested multiselect', () => {
     // Select third child
     fireEvent.click(child3)
     expect(mockFunctions.addFilter).toHaveBeenCalledWith({
-      id: 'Nested Dropdown.child3',
+      id: 'child3',
       label: 'child3',
     })
 
@@ -484,6 +520,9 @@ describe('nested multiselect', () => {
     mockUseSelectedFilters.mockReturnValue({
       selectedFilters: mockSelectedFilters,
       ...mockFunctions,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
     rerender(<MultiselectDropdown name={name} nestedMultiselect={true} data={mockNestedListData} />)
 

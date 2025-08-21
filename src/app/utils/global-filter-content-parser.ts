@@ -7,6 +7,8 @@ import {
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+
+import { FlatOption, GroupedOption } from '../components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 export interface ExtractedFilters {
   timePeriods: TimePeriod[]
@@ -82,3 +84,47 @@ export function getAccompanyingPoints(accompanyingPoints: AccompanyingPointArray
 
   return flattenedAccompanyingPoints
 }
+
+export function getGroupedVaccinationOptions(vaccinationFilters: DataFilters): GroupedOption[] | null {
+  if (!vaccinationFilters) {
+    return null
+  }
+  const { data_filters, categories_to_group_by } = vaccinationFilters
+  const primaryGroupCategory = categories_to_group_by[0]?.value.data_category
+  const secondaryGroupCategory = categories_to_group_by[1]?.value.data_category
+
+  if (!primaryGroupCategory || !secondaryGroupCategory) {
+    throw new Error('Both primary and secondary group categories must be provided')
+  }
+
+  const groupedData = new Map<string, FlatOption[]>()
+
+  data_filters.forEach((dataFilter) => {
+    const { parameters, label } = dataFilter.value
+
+    // Get the primary group key (e.g., stratum)
+    const primaryGroupKey =
+      parameters[primaryGroupCategory as keyof typeof parameters]?.label ||
+      parameters[primaryGroupCategory as keyof typeof parameters]?.value ||
+      'Unknown'
+
+    // Initialize the group if it doesn't exist
+    if (!groupedData.has(primaryGroupKey)) {
+      groupedData.set(primaryGroupKey, [])
+    }
+
+    // Add the item to the appropriate group
+    groupedData.get(primaryGroupKey)!.push({
+      label: label,
+      id: `${dataFilter.type}.${dataFilter.id}`,
+    })
+  })
+
+  const result: GroupedOption[] = Array.from(groupedData.entries()).map(([title, children]) => ({
+    title,
+    children,
+  }))
+
+  return result
+}
+

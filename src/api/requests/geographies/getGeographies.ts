@@ -22,15 +22,14 @@ const geographiesSchemaObject = z.object({
 })
 
 export const geographiesSchema = z.array(geographiesSchemaObject)
-
 export const responseObject = z.object({
   geography_type: z.string(),
   geographies: geographiesSchema,
 })
 
 export const responseSchema = z.array(responseObject)
-export type GeographiesSchemaObject = z.infer<typeof geographiesSchemaObject>
 export type GeographiesSchema = z.infer<typeof geographiesSchema>
+export type GeographiesSchemaObject = z.infer<typeof geographiesSchemaObject>
 export type GeographyObject = z.infer<typeof responseObject>
 export type GeographyResponse = z.infer<typeof responseSchema>
 

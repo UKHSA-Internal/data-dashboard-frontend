@@ -28,6 +28,9 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
   })
 
@@ -53,6 +56,9 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     render(<FilterBanners />)
@@ -74,6 +80,9 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     render(<FilterBanners />)
@@ -99,6 +108,9 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     render(<FilterBanners />)
@@ -120,6 +132,9 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     render(<FilterBanners />)
@@ -142,6 +157,9 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
     })
 
     render(<FilterBanners />)
