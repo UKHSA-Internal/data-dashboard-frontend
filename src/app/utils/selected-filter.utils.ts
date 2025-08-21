@@ -1,5 +1,6 @@
 import { GeographiesSchema, GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { FilterOption, FilterType } from '../context/globalFilterContext'
+import { DataFilter, DataFilters, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
 
 // Helper function to extract filter type
 export const getFilterType = (filterId: string): FilterType | null => {
@@ -33,4 +34,31 @@ export const addFilterToSelectedGeographyFilters = (
     return [...filters, newFilter]
   }
   return filters
+}
+
+export const addFilterToSelectedVaccinationFilters = (filters: DataFilter[], newFilter: DataFilter): DataFilter[] => {
+  if (!filters.some((existingFilter: DataFilter) => existingFilter.id === newFilter.id)) {
+    return [...filters, newFilter]
+  }
+  return filters
+}
+
+export const addFilterToSelectedThresholdFilters = (
+  filters: ThresholdFilter[],
+  newFilter: ThresholdFilter
+): ThresholdFilter[] => {
+  if (!filters.some((existingFilter: ThresholdFilter) => existingFilter.id === newFilter.id)) {
+    return [...filters, newFilter]
+  }
+  return filters
+}
+
+export const updateFilterToSelectedVaccinationFilters = (
+  filters: DataFilter[],
+  newFilter: DataFilter
+): DataFilter[] => {
+  if (!filters.some((existingFilter: DataFilter) => existingFilter.id === newFilter.id)) {
+    return [...filters, newFilter]
+  }
+  return filters.filter((filter) => filter.id !== newFilter.id)
 }

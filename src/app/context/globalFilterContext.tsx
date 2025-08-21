@@ -6,6 +6,7 @@ import {
   DataFilter,
   DataFilters,
   GeographyFilters,
+  ThresholdFilter,
   ThresholdFilters,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
@@ -13,7 +14,13 @@ import { MapDataResponse } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
-import { addFilterToArray, addFilterToSelectedGeographyFilters, getFilterType } from '../utils/selected-filter.utils'
+import {
+  addFilterToSelectedGeographyFilters,
+  addFilterToSelectedThresholdFilters,
+  addFilterToSelectedVaccinationFilters,
+  getFilterType,
+  updateFilterToSelectedVaccinationFilters,
+} from '../utils/selected-filter.utils'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null
@@ -80,8 +87,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [mapDataLoading, setMapDataLoading] = useState<boolean>(false)
   const [mapDataError, setMapDataError] = useState<string | null>(null)
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
-  const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<FilterOption[]>([])
-  const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<FilterOption[]>([])
+  const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
+  const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
 
   const fetchGeographyData = async () => {
     try {
@@ -188,7 +195,22 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     //Filter selection actions
     updateFilters: (newFilters: FilterOption[]) => {
       newFilters.map((filter) => {
-        console.log(filter)
+        const filterType = getFilterType(filter.id)
+        if (filterType == 'data_filter') {
+          const dataFilterId = filter.id.split('.')[1]
+          let newVaccinationFilter = filters.dataFilters!.data_filters.find(
+            (data_filter) => data_filter.id === dataFilterId
+          )
+          console.log('newVaccinationFilter: ', newVaccinationFilter)
+
+          if (!newVaccinationFilter) {
+            return
+          }
+
+          setSelectedVaccinationFilters((prevFilters) =>
+            addFilterToSelectedVaccinationFilters(prevFilters, newVaccinationFilter)
+          )
+        }
       })
       setSelectedFilters(newFilters)
     },
@@ -217,18 +239,36 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
             break
           case 'data_filter':
             const dataFilterId = filter.id.split('.')[1]
-            console.log('dataFilterId: ', dataFilterId)
-            let newVaccinationFilter = dataFilters
-            setSelectedVaccinationFilters((prevFilters) => addFilterToArray(prevFilters, filter))
+            let newVaccinationFilter = filters.dataFilters!.data_filters.find(
+              (data_filter) => data_filter.id === dataFilterId
+            )
+
+            if (!newVaccinationFilter) {
+              break
+            }
+            setSelectedVaccinationFilters((prevFilters) =>
+              addFilterToSelectedVaccinationFilters(prevFilters, newVaccinationFilter)
+            )
             break
 
           case 'threshold':
-            setSelectedThresholdFilters((prevFilters) => addFilterToArray(prevFilters, filter))
+            const thresholdFilterId = filter.id.split('.')[1]
+            let newThresholdFilter = filters.thresholdFilters!.thresholds.find(
+              (threshold) => threshold.id === thresholdFilterId
+            )
+
+            if (!newThresholdFilter) {
+              break
+            }
+            setSelectedThresholdFilters((prevFilters) =>
+              addFilterToSelectedThresholdFilters(prevFilters, newThresholdFilter)
+            )
             break
         }
       }
     },
     removeFilter: (filterId: string) => {
+      console.log('removeFilters: ', filterId)
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
       const filterType = getFilterType(filterId)
       switch (filterType) {
@@ -241,11 +281,13 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
           break
 
         case 'data_filter':
-          setSelectedVaccinationFilters((prevFilters) => prevFilters.filter((filter) => filter.id !== filterId))
+          const dataFilterId = filterId.split('.')[1]
+          setSelectedVaccinationFilters((prevFilters) => prevFilters.filter((filter) => filter.id !== dataFilterId))
           break
 
         case 'threshold':
-          setSelectedThresholdFilters((prevFilters) => prevFilters.filter((filter) => filter.id !== filterId))
+          const thresholdFilterId = filterId.split('.')[1]
+          setSelectedThresholdFilters((prevFilters) => prevFilters.filter((filter) => filter.id !== thresholdFilterId))
           break
       }
     },
