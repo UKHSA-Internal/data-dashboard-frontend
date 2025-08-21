@@ -10,19 +10,8 @@ import CrossIcon from '../Icons/CrossIcon'
 export function SelectedFilters() {
   const { t } = useTranslation('common')
 
-  const {
-    selectedFilters,
-    selectedGeographyFilters,
-    selectedThresholdFilters,
-    selectedVaccinationFilters,
-    removeFilter,
-    clearFilters,
-  } = useSelectedFilters()
+  const { selectedFilters, removeFilter, clearFilters } = useSelectedFilters()
 
-  console.log('selectedFilters: ', selectedFilters)
-  console.log('selectedGeographyFilters: ', selectedGeographyFilters)
-  console.log('selectedVaccinationFilters: ', selectedVaccinationFilters)
-  console.log('selectedThresholdFilters: ', selectedThresholdFilters)
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 relative flex flex-wrap bg-grey-4">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">{`${t('globalFilter.globalFilterTitle')} (${selectedFilters!.length})`}</h2>

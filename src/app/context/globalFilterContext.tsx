@@ -201,7 +201,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
           const newVaccinationFilter = filters.dataFilters!.data_filters.find(
             (data_filter) => data_filter.id === dataFilterId
           )
-          console.log('newVaccinationFilter: ', newVaccinationFilter)
 
           if (!newVaccinationFilter) {
             return
@@ -268,7 +267,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       }
     },
     removeFilter: (filterId: string) => {
-      console.log('removeFilters: ', filterId)
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
       const filterType = getFilterType(filterId)
       switch (filterType) {
