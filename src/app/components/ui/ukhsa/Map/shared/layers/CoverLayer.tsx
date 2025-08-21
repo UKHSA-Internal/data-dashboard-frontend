@@ -267,6 +267,7 @@ const CoverLayer = <T extends LayerWithFeature>({
             } else {
               // Clicked new feature - create and open tooltip
               const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+              const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
 
               const { regionName, nationName, vaccination } = renderTooltip(featureData)
               activeTooltipLayerRef.current = layer
@@ -277,7 +278,7 @@ const CoverLayer = <T extends LayerWithFeature>({
                   <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
                   <hr style="margin: 8px 0; border: none; border-top: 1px solid #ccc;" />
                   <b>Vaccination</b>: ${vaccination}</> </br>
-                  <b>Level of Coverage</b>: ${featureData?.metric_value ? featureData.metric_value : 'No Data Available'}</>
+                  <b>Level of Coverage</b>: ${mainMetricValue}</>
                   ${
                     featureData?.accompanying_points
                       ? featureData?.accompanying_points
