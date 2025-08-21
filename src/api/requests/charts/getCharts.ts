@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
 import { client } from '@/api/utils/api.utils'
+import { isSSR } from '@/app/utils/app.utils'
 import { chartFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
@@ -73,7 +74,8 @@ export const getCharts = async (chart: RequestParams) => {
   }
 
   try {
-    const { data } = await client<z.infer<typeof responseSchema>>('charts/v3', { body })
+    const path = isSSR ? `charts/v3` : `proxy/charts/v3`
+    const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
     return responseSchema.safeParse(data)
   } catch (error) {
