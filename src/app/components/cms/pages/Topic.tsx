@@ -137,10 +137,7 @@ export default async function TopicPage({
                     )}
                   </PageSection>
                 ))}
-                {/* TODO: Only add timeseries seciton if in childhood-vaccinations page & filter button pressed */}
-                <PageSection heading="Time series">
-                  <FilterCards />
-                </PageSection>
+                <FilterCards />
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>
