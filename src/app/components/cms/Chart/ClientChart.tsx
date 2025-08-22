@@ -7,6 +7,8 @@ import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
+import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+import { RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../ChartInteractive/ChartInteractive'
 
@@ -74,12 +76,15 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
+  console.log('client chart data: ', data)
   useEffect(() => {
     const fetchCharts = async () => {
       try {
         setLoading(true)
 
         const chartData = data
+
+        console.log('client chartData: ', chartData)
 
         let yAxisMinimum = null
         let yAxisMaximum = null
@@ -99,17 +104,8 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
           yAxisTitle = chartData.y_axis_title || ''
         }
 
-        const { chart, x_axis, y_axis } = chartData
+        const { plots, x_axis, y_axis } = chartData
 
-        // const [areaType, areaName] = getAreaSelecto
-
-        const plots = chart.map((plot) => ({
-          ...plot?.value,
-          // geography_type: areaType ?? plot?.value.geography_type,
-          // geography: areaName ?? plot?.value.geography,
-          geography_type: plot?.value.geography_type ?? 'nation',
-          geography: plot?.value.geography ?? 'England',
-        }))
 
         console.log('--------------------------------')
         console.log('Getting charts with: ')

@@ -16,7 +16,7 @@ type ChartData = z.infer<typeof ChartCardSchemas>['value']
 function transformRequestParamsToChartData(requestParams: RequestParams, title: string): ChartData {
   return {
     title,
-    chart: requestParams.plots.map((plot) => ({
+    plots: requestParams.plots.map((plot) => ({
       type: 'plot' as const,
       id: plot.metric || 'default',
       value: plot,
@@ -37,21 +37,57 @@ function transformRequestParamsToChartData(requestParams: RequestParams, title: 
 }
 
 export function newCard({
-  id,
-  title,
-  description,
-  chart,
+  id = 1,
+  title = 'New Card',
+  description = 'New Card',
+  geography,
+  dataFilters,
 }: {
   id: string
   title: string
   description: string
   chart: RequestParams | ChartData
 }) {
-  console.log(chart)
+  console.log('geography: ', geography)
+  console.log('dataFilter: ', dataFilters)
 
-  // Transform the chart data if it's RequestParams
-  const chartData = 'plots' in chart ? transformRequestParamsToChartData(chart, title) : chart
+  //create the requestBody
+  const chart: RequestParams = {
+    file_format: 'svg',
+    chart_height: 220,
+    chart_width: 515,
+    x_axis: 'date',
+    y_axis: 'metric',
+    y_axis_title: 'Year',
+    y_axis_minimum_value: null,
+    y_axis_maximum_value: null,
+    plots: dataFilters.map((filter) => {
+      return {
+        topic: filter.value.parameters.topic.value,
+        metric: filter.value.parameters.metric.value,
+        stratum: filter.value.parameters.stratum.value,
+        sex: filter.value.parameters.sex.value,
+        age: filter.value.parameters.age.value,
+        line_colour: filter.value.colour,
+        label: filter.value.label,
+        geography: geography.name,
+        geography_type: 'Upper Tier Local Authority',
+        chart_type: 'line_multi_coloured',
+        line_type: 'SOLID',
+        date_from: '2020-01-01',
+        date_to: '2020-12-31',
+        use_smooth_lines: false,
+        use_markers: true,
+      }
+    }),
+  }
 
+  console.log('generated chart object: ', chart)
+
+  // // Transform the chart data if it's RequestParams
+  // const chartData = 'plots' in chart ? transformRequestParamsToChartData(chart, title) : chart
+  const chartData = chart
+  console.log('chartData: ', chartData)
   return (
     <div key={id} className="mb-4">
       <Card asChild aria-labelledby={`chart-row-card-heading-${id}`} className="ukhsa-chart-card flex flex-col gap-6">
