@@ -12,7 +12,6 @@ export function SelectedFilters() {
 
   const {
     selectedFilters,
-    selectedMapFilters,
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
@@ -22,7 +21,6 @@ export function SelectedFilters() {
 
   console.log('selectedFilters: ', selectedFilters)
   console.log('selectedGeographyFilters: ', selectedGeographyFilters)
-  console.log('MapFIlters: ', selectedMapFilters)
   console.log('selectedThresholdFilters: ', selectedThresholdFilters)
   console.log('selectedVaccinationFilters: ', selectedVaccinationFilters)
   console.log('break')

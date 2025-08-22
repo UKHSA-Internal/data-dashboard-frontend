@@ -20,6 +20,7 @@ import {
   MapFeatureColour,
 } from '@/app/utils/map.utils'
 
+import { FlatOption } from '../../../MultiselectDropdown/MultiselectDropdown'
 import { ThresholdItemProps } from '../controls/MapLegendControl'
 import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
 import localAuthoritiesFeatureCollection, {
@@ -245,7 +246,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               label: `${featureData?.geography}`,
             }
             // pass in an optional param to remove the previously clicked one from the geographyFilters.
-            addFilterFromMap(selectedFeature, clickedFeatureIdRef.current)
+            addFilterFromMap(selectedFeature, clickedFeatureIdRef!.current!)
           }
 
           // Store the clicked ref

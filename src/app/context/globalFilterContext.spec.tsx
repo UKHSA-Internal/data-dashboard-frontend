@@ -49,6 +49,13 @@ describe('GlobalFilterContext', () => {
       parent_geography_code: 'UK',
       relationships: [],
     },
+    {
+      name: 'Ireland',
+      geography_code: 'I92000005',
+      geography_type: 'nation',
+      parent_geography_code: 'UK',
+      relationships: [],
+    },
   ]
 
   // Create mock threshold filters
@@ -502,6 +509,215 @@ describe('GlobalFilterContext', () => {
       }).toThrow('useGlobalFilters must be used within a GlobalFilterProvider')
 
       consoleSpy.mockRestore()
+    })
+  })
+
+  describe('addFilterFromMap Action', () => {
+    // Test filter options for geography filters with specific ID format
+    const mapFilter1: FilterOption = {
+      id: 'geography.Upper Tier Local Authority.E92000001',
+      label: 'England',
+    }
+
+    const mapFilter2: FilterOption = {
+      id: 'geography.Upper Tier Local Authority.W92000004',
+      label: 'Wales',
+    }
+
+    const mapFilter3: FilterOption = {
+      id: 'geography.Upper Tier Local Authority.I92000005',
+      label: 'UTLA 3',
+    }
+
+    test('should add a geography filter from map without mapSelectedId', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      // Wait for geography areas to be loaded
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      // Set up geography areas in the Map
+      result.current.state.geographyAreas.set('Upper Tier Local Authority', mockGeographyAreas)
+
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter1)
+      })
+
+      // Check that the filter was added to selectedFilters
+      expect(result.current.state.selectedFilters).toContain(mapFilter1)
+
+      // Check that the geography was added to selectedGeographyFilters
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(1)
+      expect(result.current.state.selectedGeographyFilters[0].geography_code).toBe('E92000001')
+      expect(result.current.state.selectedGeographyFilters[0].name).toBe('England')
+    })
+
+    test('should add a geography filter from map with mapSelectedId when no previous filter exists', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      // Wait for geography areas to be loaded
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      // Set up geography areas in the Map
+      result.current.state.geographyAreas.set('Upper Tier Local Authority', mockGeographyAreas)
+
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter1, 'E92000001')
+      })
+
+      // Check that the filter was added to selectedFilters
+      expect(result.current.state.selectedFilters).toContain(mapFilter1)
+
+      // Check that the geography was added to selectedGeographyFilters
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(1)
+      expect(result.current.state.selectedGeographyFilters[0].geography_code).toBe('E92000001')
+    })
+
+    test('should replace existing geography filter when mapSelectedId matches existing filter', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      // Wait for geography areas to be loaded
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      // Set up geography areas in the Map
+      result.current.state.geographyAreas.set('Upper Tier Local Authority', mockGeographyAreas)
+
+      // Add initial filter
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter1)
+      })
+
+      // Verify initial state
+      expect(result.current.state.selectedFilters).toHaveLength(1)
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(1)
+      expect(result.current.state.selectedFilters[0].id).toBe('geography.Upper Tier Local Authority.E92000001')
+
+      // Add Wales filter with England's mapSelectedId (should replace England)
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter2, 'E92000001')
+      })
+
+      // Check that England filter was removed and Wales was added
+      expect(result.current.state.selectedFilters).toHaveLength(1)
+      expect(result.current.state.selectedFilters[0].id).toBe('geography.Upper Tier Local Authority.W92000004')
+      expect(result.current.state.selectedFilters[0].label).toBe('Wales')
+
+      // Check geography filters were updated correctly
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(1)
+      expect(result.current.state.selectedGeographyFilters[0].geography_code).toBe('W92000004')
+      expect(result.current.state.selectedGeographyFilters[0].name).toBe('Wales')
+    })
+
+    test('should remove existing geography filter by mapSelectedId and add new filter', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      // Wait for geography areas to be loaded
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      // Set up geography areas in the Map
+      result.current.state.geographyAreas.set('Upper Tier Local Authority', mockGeographyAreas)
+
+      // Add England filter first
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter1)
+      })
+
+      // Add Wales filter first (no mapSelectedId)
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter2)
+      })
+
+      // Verify we have both filters
+      expect(result.current.state.selectedFilters).toHaveLength(2)
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(2)
+
+      // Now add a new England filter with Wales' mapSelectedId (should remove Wales, keep new England)
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter3, 'W92000004')
+      })
+
+      // Should have 2 filters: original England + new England (Wales removed)
+      expect(result.current.state.selectedFilters).toHaveLength(2)
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(2)
+
+      // Check that Wales was removed from geography filters
+      const walesGeoFilter = result.current.state.selectedGeographyFilters.find(
+        (geo) => geo.geography_code === 'W92000004'
+      )
+      expect(walesGeoFilter).toBeUndefined()
+    })
+
+    test('should handle non-existent geography in geographyAreas', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      // Wait for geography areas to be loaded
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      // Don't set up geography areas or set up with different type
+      result.current.state.geographyAreas.set('region', []) // Empty region data
+
+      const initialFiltersCount = result.current.state.selectedFilters.length
+      const initialGeographyCount = result.current.state.selectedGeographyFilters.length
+
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter1) // nation type, but no nation data
+      })
+
+      // Filter should be added to selectedFilters
+      expect(result.current.state.selectedFilters).toHaveLength(initialFiltersCount + 1)
+      expect(result.current.state.selectedFilters).toContain(mapFilter1)
+
+      // But geography should not be added to selectedGeographyFilters since it doesn't exist
+      expect(result.current.state.selectedGeographyFilters).toHaveLength(initialGeographyCount)
+    })
+
+    test('should handle mapSelectedId removal when corresponding geography filter does not exist', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      // Wait for geography areas to be loaded
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      // Set up geography areas in the Map
+      result.current.state.geographyAreas.set('nation', mockGeographyAreas)
+
+      // Add a filter normally first
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter1)
+      })
+
+      const initialState = {
+        filters: [...result.current.state.selectedFilters],
+        geoFilters: [...result.current.state.selectedGeographyFilters],
+      }
+
+      // Try to add Wales with a non-existent mapSelectedId
+      act(() => {
+        result.current.actions.addFilterFromMap(mapFilter2, 'NONEXISTENT123')
+      })
+
+      // Wales should be added
+      expect(result.current.state.selectedFilters).toHaveLength(initialState.filters.length + 1)
+      expect(result.current.state.selectedFilters).toContain(mapFilter2)
+
+      // Original England filter should still be there
+      expect(result.current.state.selectedFilters).toContain(mapFilter1)
     })
   })
 })

@@ -16,6 +16,7 @@ interface MockFilterFunctions {
   addFilter: jest.MockedFunction<(filter: FilterOption) => void>
   removeFilter: jest.MockedFunction<(filterId: string) => void>
   clearFilters: jest.MockedFunction<() => void>
+  addFilterFromMap: jest.MockedFunction<(filter: FilterOption, mapSelectedId?: string) => void>
 }
 
 const mockUseSelectedFilters = useSelectedFilters as jest.MockedFunction<typeof useSelectedFilters>
@@ -43,6 +44,7 @@ describe('flat multiselect component', () => {
       clearFilters: jest.fn(() => {
         mockSelectedFilters = []
       }),
+      addFilterFromMap: jest.fn(),
     }
 
     mockUseSelectedFilters.mockReturnValue({
@@ -273,6 +275,7 @@ describe('nested multiselect', () => {
       clearFilters: jest.fn(() => {
         mockSelectedFilters = []
       }),
+      addFilterFromMap: jest.fn(),
     }
 
     mockUseSelectedFilters.mockReturnValue({

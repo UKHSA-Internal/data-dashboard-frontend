@@ -17,6 +17,7 @@ describe('FilterBanners', () => {
   const mockAddFilter = jest.fn()
   const mockRemoveFilter = jest.fn()
   const mockClearFilters = jest.fn()
+  const mockAddFilterFromMap = jest.fn()
   beforeEach(() => {
     // Reset all mocks before each test
     jest.clearAllMocks()
@@ -28,6 +29,7 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      addFilterFromMap: mockAddFilterFromMap,
       selectedVaccinationFilters: null,
       selectedGeographyFilters: null,
       selectedThresholdFilters: null,
@@ -56,6 +58,7 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      addFilterFromMap: mockAddFilterFromMap,
       selectedVaccinationFilters: null,
       selectedGeographyFilters: null,
       selectedThresholdFilters: null,
@@ -80,6 +83,7 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      addFilterFromMap: mockAddFilterFromMap,
       selectedVaccinationFilters: null,
       selectedGeographyFilters: null,
       selectedThresholdFilters: null,
@@ -108,6 +112,7 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      addFilterFromMap: mockAddFilterFromMap,
       selectedVaccinationFilters: null,
       selectedGeographyFilters: null,
       selectedThresholdFilters: null,
@@ -132,6 +137,7 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      addFilterFromMap: mockAddFilterFromMap,
       selectedVaccinationFilters: null,
       selectedGeographyFilters: null,
       selectedThresholdFilters: null,
@@ -157,6 +163,7 @@ describe('FilterBanners', () => {
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
+      addFilterFromMap: mockAddFilterFromMap,
       selectedVaccinationFilters: null,
       selectedGeographyFilters: null,
       selectedThresholdFilters: null,
