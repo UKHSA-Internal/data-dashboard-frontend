@@ -11,10 +11,13 @@ import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../ChartInteractive/ChartInteractive'
+import { TimePeriodSelector } from '../../ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 interface ClientChartProps {
   data: z.infer<typeof ChartCardSchemas>['value']
   legendTitle: string
+  timePeriods: TimePeriod[]
   // enableInteractive?: boolean
   sizes: Array<
     | {
@@ -72,10 +75,15 @@ const createStaticChart = ({
   )
 }
 
-export function ClientChart({ data, sizes, legendTitle }: ClientChartProps) {
+export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientChartProps) {
   const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getCharts>>[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(0)
+
+  const handleTimePeriodChange = (index: number) => {
+    setCurrentTimePeriodIndex(index)
+  }
 
   console.log('client chart data: ', data)
   useEffect(() => {
@@ -107,9 +115,17 @@ export function ClientChart({ data, sizes, legendTitle }: ClientChartProps) {
 
         const { plots, x_axis, y_axis } = chartData
 
+        let updatedPlots = plots.map((plot) => {
+          return {
+            ...plot,
+            date_from: timePeriods[currentTimePeriodIndex].value.date_from,
+            date_to: timePeriods[currentTimePeriodIndex].value.date_from,
+          }
+        })
+
         console.log('--------------------------------')
         console.log('Getting charts with: ')
-        console.log('Plots: ', plots)
+        console.log('Plots: ', updatedPlots)
         console.log('X axis: ', x_axis)
         console.log('Y axis: ', y_axis)
         console.log('X axis title: ', xAxisTitle)
@@ -119,7 +135,7 @@ export function ClientChart({ data, sizes, legendTitle }: ClientChartProps) {
         console.log('--------------------------------')
 
         const requests =
-          plots &&
+          updatedPlots &&
           sizes.map((chart) =>
             getCharts({
               plots,
@@ -193,7 +209,13 @@ export function ClientChart({ data, sizes, legendTitle }: ClientChartProps) {
           <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
         </Suspense>
       )}
-
+      <div className="pt-6">
+        <TimePeriodSelector
+          timePeriods={timePeriods}
+          currentTimePeriodIndex={currentTimePeriodIndex}
+          onTimePeriodChange={handleTimePeriodChange}
+        />
+      </div>
       {/* Debugger */}
       {/* <div><strong>Chart Responses:</strong> {chartResponses.length}</div>
       <div>

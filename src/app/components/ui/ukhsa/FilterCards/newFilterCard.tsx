@@ -144,6 +144,7 @@ export function newCard({
               <ClientChart
                 legendTitle={cardData.legend_title}
                 data={chartData}
+                timePeriods={timePeriods.reverse()}
                 sizes={[
                   {
                     minWidth: 768,
