@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { RequestParams } from '@/api/requests/charts/getCharts'
 import { ClientChart } from '@/app/components/cms/Chart/ClientChart'
-import { MinMaxDate, getMinMaxYears, getMinMaxFullDate } from '@/app/utils/time-period.utils'
+import { MinMaxFullDate, getMinMaxYears, getMinMaxFullDate, MinMaxYear } from '@/app/utils/time-period.utils'
 import { getParentGeography, GeographyParent } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
@@ -51,13 +51,10 @@ export function newCard({
   description: string
   chart: RequestParams | ChartData
 }) {
-  console.log('geography: ', geography)
-  console.log('dataFilter: ', dataFilters)
-  console.log('Filter Card - timePeriods: ', timePeriods)
-  const minMaxDateRange: MinMaxDate = getMinMaxDateRange(timePeriods)
-  console.log('generated chart object: ', cardData)
+  const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
+  const chartDateRange: MinMaxFullDate = getMinMaxFullDate(timePeriods)
   const geographyParent: GeographyParent | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent.geography_name}, ${geography.name})`
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.geography_name}, ${geography.name})`
 
   //create the requestBody
   const chart: RequestParams = {
@@ -79,18 +76,16 @@ export function newCard({
         line_colour: filter.value.colour,
         label: filter.value.label,
         geography: geography.name,
-        geography_type: 'Upper Tier Local Authority',
+        geography_type: geography.geography_type,
         chart_type: 'line_multi_coloured',
         line_type: 'SOLID',
-        date_from: '2020-01-01',
-        date_to: '2020-12-31',
+        date_from: chartDateRange.date_from,
+        date_to: chartDateRange.date_to,
         use_smooth_lines: false,
         use_markers: true,
       }
     }),
   }
-
-  console.log('generated chart object: ', chart)
 
   // // Transform the chart data if it's RequestParams
   // const chartData = 'plots' in chart ? transformRequestParamsToChartData(chart, title) : chart
@@ -146,7 +141,8 @@ export function newCard({
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              {/* <ClientChart
+              <ClientChart
+                legendTitle={cardData.legend_title}
                 data={chartData}
                 sizes={[
                   {
@@ -154,7 +150,7 @@ export function newCard({
                     size: 'wide',
                   },
                 ]}
-              /> */}
+              />
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-table`}

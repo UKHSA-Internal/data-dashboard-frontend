@@ -14,6 +14,7 @@ import ChartInteractive from '../ChartInteractive/ChartInteractive'
 
 interface ClientChartProps {
   data: z.infer<typeof ChartCardSchemas>['value']
+  legendTitle: string
   // enableInteractive?: boolean
   sizes: Array<
     | {
@@ -71,7 +72,7 @@ const createStaticChart = ({
   )
 }
 
-export function ClientChart({ data, sizes }: ClientChartProps) {
+export function ClientChart({ data, sizes, legendTitle }: ClientChartProps) {
   const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getCharts>>[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -105,7 +106,6 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
         }
 
         const { plots, x_axis, y_axis } = chartData
-
 
         console.log('--------------------------------')
         console.log('Getting charts with: ')
@@ -187,6 +187,7 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
 
   return (
     <div>
+      <h1 className="text-center">{legendTitle}</h1>
       {figure! && (
         <Suspense fallback={staticChart}>
           <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />

@@ -1,8 +1,9 @@
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
-export type MinMaxDate = { minDate: string; maxDate: string }
+export type MinMaxYear = { minDate: string; maxDate: string }
+export type MinMaxFullDate = { date_from: string; date_to: string }
 
-export const getMinMaxYears = (timePeriods: TimePeriod[]): { minDate: string; maxDate: string } => {
+export const getMinMaxYears = (timePeriods: TimePeriod[]): MinMaxYear => {
   if (timePeriods.length === 0) {
     throw new Error('Cannot determine date range from empty time periods array')
   }
