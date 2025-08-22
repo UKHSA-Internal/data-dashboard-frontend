@@ -5,7 +5,7 @@ import { z } from 'zod'
 import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { RequestParams } from '@/api/requests/charts/getCharts'
 import { ClientChart } from '@/app/components/cms/Chart/ClientChart'
-import { MinMaxDate, getMinMaxDateRange } from '@/app/utils/time-period.utils'
+import { MinMaxDate, getMinMaxYears, getMinMaxFullDate } from '@/app/utils/time-period.utils'
 import { getParentGeography, GeographyParent } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
