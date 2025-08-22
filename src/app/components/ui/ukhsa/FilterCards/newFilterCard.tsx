@@ -5,6 +5,8 @@ import { z } from 'zod'
 import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { RequestParams } from '@/api/requests/charts/getCharts'
 import { ClientChart } from '@/app/components/cms/Chart/ClientChart'
+import { MinMaxDate, getMinMaxDateRange } from '@/app/utils/time-period.utils'
+import { getParentGeography, GeographyParent } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
@@ -38,10 +40,11 @@ function transformRequestParamsToChartData(requestParams: RequestParams, title: 
 
 export function newCard({
   id = 1,
-  title = 'New Card',
   description = 'New Card',
   geography,
   dataFilters,
+  timePeriods,
+  cardData,
 }: {
   id: string
   title: string
@@ -50,6 +53,11 @@ export function newCard({
 }) {
   console.log('geography: ', geography)
   console.log('dataFilter: ', dataFilters)
+  console.log('Filter Card - timePeriods: ', timePeriods)
+  const minMaxDateRange: MinMaxDate = getMinMaxDateRange(timePeriods)
+  console.log('generated chart object: ', cardData)
+  const geographyParent: GeographyParent | null = getParentGeography(geography)
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent.geography_name}, ${geography.name})`
 
   //create the requestBody
   const chart: RequestParams = {
@@ -138,7 +146,7 @@ export function newCard({
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              <ClientChart
+              {/* <ClientChart
                 data={chartData}
                 sizes={[
                   {
@@ -146,7 +154,7 @@ export function newCard({
                     size: 'wide',
                   },
                 ]}
-              />
+              /> */}
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-table`}
