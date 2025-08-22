@@ -122,7 +122,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   const activeTooltipLayerRef: { current: T | null } = useRef(null)
   const { selectedVaccination } = useVaccinationState()
   const { geographyAreas } = useGeographyState()
-  const { addFilter } = useSelectedFilters()
+  const { addFilterFromMap } = useSelectedFilters()
 
   const featuresRef = useRef<Array<LocalAuthoritiesFeature & RegionFeature & CountriesFeature>>([])
 
@@ -235,20 +235,22 @@ const CoverLayer = <T extends LayerWithFeature>({
           event.target.getElement().setAttribute('data-testid', testId)
         },
         click: (event: CustomLeafletEvent) => {
-          // Store the clicked ref
-          if (layer.feature.id) {
-            clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
-          }
-          const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
           const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+
+          const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
 
           if (featureData) {
             const selectedFeature: FlatOption = {
-              id: `map.${featureData.geography_type}.${featureData?.geography_code}`,
-              label: `Map selected area -  ${featureData?.geography}`,
+              id: `geography.${featureData.geography_type}.${featureData?.geography_code}`,
+              label: `${featureData?.geography}`,
             }
+            // pass in an optional param to remove the previously clicked one from the geographyFilters.
+            addFilterFromMap(selectedFeature, clickedFeatureIdRef.current)
+          }
 
-            addFilter(selectedFeature)
+          // Store the clicked ref
+          if (layer.feature.id) {
+            clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
 
           if (map.getZoom() < 8) {

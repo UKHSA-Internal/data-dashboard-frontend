@@ -40,6 +40,7 @@ export function useSelectedFilters(): {
   addFilter: (filter: FilterOption) => void
   removeFilter: (filterId: string) => void
   clearFilters: () => void
+  addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
 } {
   const { state, actions } = useGlobalFilters()
 
@@ -53,6 +54,7 @@ export function useSelectedFilters(): {
     addFilter: actions.addFilter,
     removeFilter: actions.removeFilter,
     clearFilters: actions.clearFilters,
+    addFilterFromMap: actions.addFilterFromMap,
   }
 }
 
