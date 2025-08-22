@@ -19,9 +19,12 @@ const FilterCards = () => {
     <>
       <PageSection heading="Coverage">
         {/* TODO: On adding a new card, should update URL params for persistence */}
-        {selectedGeographyFilters.map((geography) => {
-          return newCard({ geography, dataFilters: selectedVaccinationFilters })
-        })}
+
+        {selectedGeographyFilters.length > 0 && selectedVaccinationFilters.length > 0
+          ? selectedGeographyFilters.map((geography) => {
+              return newCard({ geography, dataFilters: selectedVaccinationFilters })
+            })
+          : null}
       </PageSection>
       {/* {filterTimeSeriesChartCards.length > 0 && (
         <PageSection heading="Time Series">
