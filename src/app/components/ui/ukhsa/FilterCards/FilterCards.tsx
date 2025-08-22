@@ -13,6 +13,9 @@ const FilterCards = () => {
     selectedThresholdFilters,
     selectedVaccinationFilters,
     selectedGeographyFilters,
+    timePeriods,
+    timeseriesTemplateData,
+    coverageTemplateData,
   } = state
 
   return (
@@ -22,7 +25,12 @@ const FilterCards = () => {
 
         {selectedGeographyFilters.length > 0 && selectedVaccinationFilters.length > 0
           ? selectedGeographyFilters.map((geography) => {
-              return newCard({ geography, dataFilters: selectedVaccinationFilters })
+              return newCard({
+                geography,
+                dataFilters: selectedVaccinationFilters,
+                timePeriods,
+                cardData: timeseriesTemplateData,
+              })
             })
           : null}
       </PageSection>

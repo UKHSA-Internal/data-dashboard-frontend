@@ -140,7 +140,12 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         }
 
         geographyAreaData.forEach((geographyArea: GeographyObject) => {
-          newGeographyAreas.set(geographyArea.geography_type, geographyArea.geographies)
+          const enhancedGeographies = geographyArea.geographies.map((geography) => ({
+            ...geography,
+            geography_type: geographyArea.geography_type,
+          }))
+
+          newGeographyAreas.set(geographyArea.geography_type, enhancedGeographies)
         })
       })
       setGeographyAreas(newGeographyAreas)
