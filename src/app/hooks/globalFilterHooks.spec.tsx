@@ -36,6 +36,18 @@ describe('globalFilterHooks', () => {
     ],
   }
 
+  const mockCoverageTemplateData = {
+    title_prefix: 'Vaccination coverage statistics',
+    legend_title: 'Coverage (%)',
+    target_threshold: 95,
+    target_threshold_label: '95% target',
+  }
+
+  const mockCoverageTimeSeriesData = {
+    title_prefix: 'Annual vaccination coverage',
+    legend_title: 'Level of coverage (%)',
+  }
+
   const mockThresholdFilters: ThresholdFilters = {
     label: '',
     thresholds: [
@@ -211,6 +223,8 @@ describe('globalFilterHooks', () => {
     geographyFilters: mockGeographyFilters,
     thresholdFilters: mockThresholdFilters,
     dataFilters: mockDataFilters,
+    coverageTemplateData: mockCoverageTemplateData,
+    timeseriesTemplateData: mockCoverageTimeSeriesData,
   }
 
   const wrapper = ({ children }: { children: ReactNode }) => (
