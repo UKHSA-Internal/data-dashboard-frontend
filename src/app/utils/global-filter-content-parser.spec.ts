@@ -32,6 +32,8 @@ describe('extractDataFromGlobalFilter', () => {
         geographyFilters: null,
         thresholdFilters: null,
         dataFilters: null,
+        coverageTemplateData: {},
+        timeseriesTemplateData: {},
       })
     })
   })
@@ -214,6 +216,8 @@ describe('extractDataFromGlobalFilter', () => {
         geographyFilters: null,
         thresholdFilters: null,
         dataFilters: null,
+        coverageTemplateData: {},
+        timeseriesTemplateData: {},
       })
     })
 
@@ -238,6 +242,8 @@ describe('extractDataFromGlobalFilter', () => {
         geographyFilters: null,
         thresholdFilters: null,
         dataFilters: null,
+        coverageTemplateData: {},
+        timeseriesTemplateData: {},
       })
     })
 
@@ -254,6 +260,8 @@ describe('extractDataFromGlobalFilter', () => {
         geographyFilters: null,
         thresholdFilters: null,
         dataFilters: null,
+        coverageTemplateData: {},
+        timeseriesTemplateData: {},
       })
     })
   })
