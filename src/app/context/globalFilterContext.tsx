@@ -34,7 +34,7 @@ interface InitialGlobalFilterState {
   dataFilters: DataFilters | null
 }
 
-export type FilterType = 'geography' | 'data_filter' | 'threshold' | 'map'
+export type FilterType = 'geography' | 'data_filter' | 'threshold'
 
 export interface FilterOption {
   id: string
@@ -59,7 +59,6 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
-  selectedMapFilters: GeographiesSchemaObject | null
 }
 
 // Global Filter Action Interface
@@ -96,7 +95,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
   const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
   const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
-  const [selectedMapFilters, setSelectedMapFilters] = useState<GeographiesSchemaObject>({})
 
   const fetchGeographyData = async () => {
     try {
@@ -188,7 +186,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
-    selectedMapFilters,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -317,9 +314,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
       const filterType = getFilterType(filterId)
       switch (filterType) {
-        case 'map':
-          setSelectedMapFilters({})
-          break
         case 'geography':
           const geographyFilterData = filterId.split('.')
           const geographyId = geographyFilterData[2]
@@ -344,7 +338,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedGeographyFilters([])
       setSelectedThresholdFilters([])
       setSelectedVaccinationFilters([])
-      setSelectedMapFilters({})
     },
   }
 
