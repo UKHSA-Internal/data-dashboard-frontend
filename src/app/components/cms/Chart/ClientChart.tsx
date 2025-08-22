@@ -79,7 +79,7 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
   const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getCharts>>[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(0)
+  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 2)
 
   const handleTimePeriodChange = (index: number) => {
     setCurrentTimePeriodIndex(index)
@@ -119,12 +119,13 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
           return {
             ...plot,
             date_from: timePeriods[currentTimePeriodIndex].value.date_from,
-            date_to: timePeriods[currentTimePeriodIndex].value.date_from,
+            date_to: timePeriods[currentTimePeriodIndex].value.date_to,
           }
         })
 
         console.log('--------------------------------')
         console.log('Getting charts with: ')
+        console.log('existing plots: ', plots)
         console.log('Plots: ', updatedPlots)
         console.log('X axis: ', x_axis)
         console.log('Y axis: ', y_axis)
@@ -138,7 +139,7 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
           updatedPlots &&
           sizes.map((chart) =>
             getCharts({
-              plots,
+              plots: updatedPlots,
               x_axis,
               y_axis,
               x_axis_title: xAxisTitle,
@@ -163,7 +164,7 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
     }
 
     fetchCharts()
-  }, [data, sizes])
+  }, [currentTimePeriodIndex, data, sizes])
 
   if (loading) {
     return <div>Loading charts...</div>
