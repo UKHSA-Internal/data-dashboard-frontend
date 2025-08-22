@@ -1,56 +1,59 @@
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
-import { z } from 'zod'
 
-import { ChartCardSchemas } from '@/api/models/cms/Page'
-import { RequestParams } from '@/api/requests/charts/getCharts'
-import { ClientChart } from '@/app/components/cms/Chart/ClientChart'
+import { RequestParams as ChartRequestParams } from '@/api/requests/charts/getCharts'
+import { RequestParams as SubplotRequestParams} from '@/api/requests/charts/subplot/getSubplots'
 
+// import { ClientChart } from '@/app/components/cms/Chart/ClientChart'
+// import { ClientChartSubplot } from '@/app/components/cms/Chart/ClientChartSubplot'
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 
 // Type for the chart data that the Chart component expects
-type ChartData = z.infer<typeof ChartCardSchemas>['value']
+// type ChartData = z.infer<typeof ChartCardSchemas>['value']
 
 // Function to transform RequestParams into ChartData structure
-function transformRequestParamsToChartData(requestParams: RequestParams, title: string): ChartData {
-  return {
-    title,
-    chart: requestParams.plots.map((plot) => ({
-      type: 'plot' as const,
-      id: plot.metric || 'default',
-      value: plot,
-    })),
-    body: '',
-    date_prefix: '',
-    about: '',
-    x_axis: requestParams.x_axis || null,
-    y_axis: requestParams.y_axis || null,
-    x_axis_title: requestParams.x_axis_title || '',
-    y_axis_title: requestParams.y_axis_title || '',
-    y_axis_minimum_value: requestParams.y_axis_minimum_value || null,
-    y_axis_maximum_value: requestParams.y_axis_maximum_value || null,
-    show_timeseries_filter: false,
-    tag_manager_event_id: null,
-    related_links: undefined,
-  }
-}
+// function transformRequestParamsToChartData(requestParams: RequestParams, title: string): ChartData {
+//   return {
+//     title,
+//     chart: requestParams.plots.map((plot) => ({
+//       type: 'plot' as const,
+//       id: plot.metric || 'default',
+//       value: plot,
+//     })),
+//     body: '',
+//     date_prefix: '',
+//     about: '',
+//     x_axis: requestParams.x_axis || null,
+//     y_axis: requestParams.y_axis || null,
+//     x_axis_title: requestParams.x_axis_title || '',
+//     y_axis_title: requestParams.y_axis_title || '',
+//     y_axis_minimum_value: requestParams.y_axis_minimum_value || null,
+//     y_axis_maximum_value: requestParams.y_axis_maximum_value || null,
+//     show_timeseries_filter: false,
+//     tag_manager_event_id: null,
+//     related_links: undefined,
+//   }
+// }
 
-export function newCard({
+export const NewFilterCard = ({
   id,
   title,
   description,
   chart,
+  children,
 }: {
   id: string
   title: string
   description: string
-  chart: RequestParams | ChartData
-}) {
+  chart: ChartRequestParams | SubplotRequestParams
+  children: React.ReactNode
+}) => {
   console.log(chart)
 
   // Transform the chart data if it's RequestParams
-  const chartData = 'plots' in chart ? transformRequestParamsToChartData(chart, title) : chart
+  // const chartData = 'plots' in chart ? transformRequestParamsToChartData(chart, title) : chart
+  // const chartData = 'plots' in chart
 
   return (
     <div key={id} className="mb-4">
@@ -102,15 +105,7 @@ export function newCard({
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              <ClientChart
-                data={chartData}
-                sizes={[
-                  {
-                    minWidth: 768,
-                    size: 'wide',
-                  },
-                ]}
-              />
+              {children}
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-table`}

@@ -2,13 +2,15 @@
 import { Suspense, useEffect, useState } from 'react'
 
 import { ChartFigure } from '@/api/models/Chart'
-import { getCharts , RequestParams as ChartRequestParams } from '@/api/requests/charts/getCharts'
+import { getCharts } from '@/api/requests/charts/getCharts'
+import { RequestParams as SubplotRequestParams} from '@/api/requests/charts/subplot/getSubplots'
+import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { getChartSvg } from '@/app/utils/chart.utils'
 
 import ChartInteractive from '../ChartInteractive/ChartInteractive'
 
 interface ClientChartProps {
-  data: ChartRequestParams
+  data: SubplotRequestParams
   sizes: Array<
     | {
         default?: never
@@ -40,6 +42,7 @@ const createStaticChart = ({
     <picture data-testid="chart" data-location={areaName}>
       {sizes.map((size, index) => {
         const chartSvg = charts[index].data?.chart
+        // console.log("Decoded", decodeURIComponent(chartSvg?.replace(/\+/g, ' ') ?? ''))
 
         if (chartSvg) {
           return (
@@ -64,21 +67,20 @@ const createStaticChart = ({
   )
 }
 
-export function ClientChart({ data, sizes }: ClientChartProps) {
-  const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getCharts>>[]>([])
+export function ClientChartSubplot({ data, sizes }: ClientChartProps) {
+  const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getSubplots>>[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
   useEffect(() => {
-    const fetchCharts = async () => {
+    const fetchSubplots = async () => {
       try {
         setLoading(true)
+        const requests = sizes.map(() => getSubplots(data))
 
-        const chartRequests = sizes.map(() => getCharts(data))
-
-        const resolvedRequests = await Promise.all(chartRequests)
+        const resolvedRequests = await Promise.all(requests)
         console.log('Chart responses:', resolvedRequests)
-        console.log(resolvedRequests[0]?.data?.chart)
+        console.log(resolvedRequests[0].data?.chart)
         setChartResponses(resolvedRequests)
       } catch (err) {
         console.error('Error fetching charts:', err)
@@ -88,7 +90,7 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
       }
     }
 
-    fetchCharts()
+    fetchSubplots()
   }, [data, sizes])
 
   if (loading) {

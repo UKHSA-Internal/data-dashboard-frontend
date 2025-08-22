@@ -11,8 +11,9 @@ import {
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
 import { MapDataResponse } from '@/api/models/Maps'
+import { RequestParams as ChartRequestParams } from '@/api/requests/charts/getCharts'
+import { RequestParams as SubplotRequestParams } from '@/api/requests/charts/subplot/getSubplots'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
-import { RequestParams } from '@/api/requests/charts/getCharts'
 import { GeographiesSchema, GeographyObject, getGeographies } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
 
@@ -46,14 +47,14 @@ export interface FilterCoverageChartCard {
   id: string
   title: string
   description: string
-  chart: RequestParams
+  chart: SubplotRequestParams
 }
 
 export interface FilterTimeSeriesChartCard {
   id: string
   title: string
   description: string
-  chart: RequestParams
+  chart: ChartRequestParams
 }
 
 export interface GlobalFilterState extends InitialGlobalFilterState {
@@ -110,6 +111,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [filterCoverageChartCards, setFilterCoverageChartCards] = useState<FilterCoverageChartCard[]>([])
   const [filterTimeSeriesChartCards, setFilterTimeSeriesChartCards] = useState<FilterTimeSeriesChartCard[]>([])
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchGeographyData = async () => {
     try {
       const geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
@@ -142,6 +144,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     }
   }
 
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   const fetchMapData = async () => {
     if (!selectedTimePeriod || !selectedVaccination) return
     const accompanyingPoints = getAccompanyingPoints(selectedVaccination.value.accompanying_points)
@@ -173,33 +176,92 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setMapDataLoading(false)
     }
   }
-  // const newCard = {
-  //   title: 'New test card',
-  //   description: 'This is a new test card description',
-  //   upToAndIncluding: '2025-01-01',
-  //   chart: [
-  //     {
-  //       type: 'plot' as const,
-  //       value: {
-  //         topic: 'COVID-19',
-  //         metric: 'new_cases_daily',
-  //         chart_type: 'bar',
-  //         date_from: null,
-  //         date_to: null,
-  //         stratum: '',
-  //         geography: '',
-  //         geography_type: '',
-  //         label: 'teshjkfdsjk',
-  //         age: '',
-  //         sex: null,
-  //         line_colour: null,
-  //         line_type: null,
-  //       },
-  //       id: '7d8ee647-1e12-4ea5-8051-dacda36d7dc1',
-  //     },
-  //   ],
-  // }
-  const timeseriesPayload: RequestParams = {
+ 
+
+  const coveragePayload: SubplotRequestParams = {
+    file_format: 'svg',
+    chart_height: 300,
+    chart_width: 900,
+    x_axis_title: 'Coverage %',
+    y_axis_title: 'Vaccination type',
+    y_axis_minimum_value: null,
+    y_axis_maximum_value: null,
+    target_threshold: 95,
+    target_threshold_label: '95% target',
+    chart_parameters: {
+      x_axis: 'geography',
+      y_axis: 'metric',
+      theme: 'immunisation',
+      sub_theme: 'childhood-vaccines',
+      date_from: '2021-01-31',
+      date_to: '2021-12-31',
+      age: 'all',
+      sex: 'all',
+      stratum: '24m',
+    },
+    subplots: [
+      {
+        subplot_title: '6-in-1 (12 months)',
+        subplot_parameters: {
+          topic: '6-in-1',
+          metric: '6-in-1_coverage_coverageByYear',
+          stratum: '12m',
+        },
+        plots: [
+          {
+            label: 'England',
+            geography: 'England',
+            geography_type: 'Nation',
+            line_colour: 'COLOUR_1_DARK_BLUE',
+          },
+          {
+            label: 'North East',
+            geography: 'North East',
+            geography_type: 'Region',
+            line_colour: 'COLOUR_2_TURQUOISE',
+          },
+          {
+            label: 'Darlington',
+            geography: 'Darlington',
+            geography_type: 'Upper Tier Local Authority',
+            line_colour: 'COLOUR_3_DARK_PINK',
+          },
+        ],
+      },
+      {
+        subplot_title: 'MMR1 (24 months)',
+        subplot_parameters: {
+          topic: 'MMR1',
+          metric: 'MMR1_coverage_coverageByYear',
+          stratum: '24m',
+        },
+        plots: [
+          {
+            label: 'England',
+            geography: 'England',
+            geography_type: 'Nation',
+            line_colour: 'COLOUR_1_DARK_BLUE',
+          },
+          {
+            label: 'North East',
+            geography: 'North East',
+            geography_type: 'Region',
+            line_colour: 'COLOUR_2_TURQUOISE',
+          },
+          {
+            label: 'Darlington',
+            geography: 'Darlington',
+            geography_type: 'Upper Tier Local Authority',
+            line_colour: 'COLOUR_3_DARK_PINK',
+          },
+        ],
+      },
+    ],
+  }
+  console.log('coveragePayload', coveragePayload)
+
+
+  const timeseriesPayload: ChartRequestParams = {
     file_format: 'svg',
     chart_height: 220,
     chart_width: 515,
@@ -236,13 +298,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
 
     setFilterCoverageChartCards([
       ...filterCoverageChartCards,
-      { id: '1', title: 'New Coverage', description: 'New Coverage description', chart: timeseriesPayload },
+      { id: '1', title: 'New Coverage', description: 'New Coverage description', chart: coveragePayload },
     ])
-
-    // --- Timeseries section ---
-    // Selected 2 geographies, 2 vaccines
-    // 2 charts expected for 2 geographies
-    //
 
     setFilterTimeSeriesChartCards([
       ...filterTimeSeriesChartCards,
