@@ -5,6 +5,8 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import {
   DataFilter,
   DataFilters,
+  FilterLinkedSubPlotData,
+  FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilter,
   ThresholdFilters,
@@ -27,6 +29,8 @@ interface InitialGlobalFilterState {
   geographyFilters: GeographyFilters | null
   thresholdFilters: ThresholdFilters | null
   dataFilters: DataFilters | null
+  coverageTemplateData: FilterLinkedSubPlotData | null
+  timeseriesTemplateData: FilterLinkedTimeSeriesData | null
 }
 
 export type FilterType = 'geography' | 'data_filter' | 'threshold'
