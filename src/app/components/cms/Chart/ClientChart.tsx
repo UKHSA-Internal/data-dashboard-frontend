@@ -11,9 +11,13 @@ import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../ChartInteractive/ChartInteractive'
+import { TimePeriodSelector } from '../../ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 interface ClientChartProps {
   data: z.infer<typeof ChartCardSchemas>['value']
+  legendTitle: string
+  timePeriods: TimePeriod[]
   // enableInteractive?: boolean
   sizes: Array<
     | {
@@ -71,10 +75,18 @@ const createStaticChart = ({
   )
 }
 
-export function ClientChart({ data, sizes }: ClientChartProps) {
+export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientChartProps) {
   const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getCharts>>[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  // ONLY FOR SUBPLOT CHARTS - SELECTOR SHOULD NOT DISPLAY ON TIMESERIES
+  // THIS IS FOR MANAGING THE TIMEPERIOD THAT IS SELECTED BY THE USER. AT THE MOMENT IT DISPLAYS THE MOST RECENT TIME PERIOD
+  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
+  //FUNCTION FOR HANDLING THE SELECTED TIMEPERIOD/
+  const handleTimePeriodChange = (index: number) => {
+    setCurrentTimePeriodIndex(index)
+  }
 
   console.log('client chart data: ', data)
   useEffect(() => {
@@ -107,9 +119,20 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
         const { plots, x_axis, y_axis } = chartData
 
 
+        // ONLY FOR SUBPLOT CHARTS - SELECTOR SHOULD NOT DISPLAY ON TIMESERIES
+        //THIS IS NEEDED IF YOU ARE WANTING TO UPDATE THE TIME PERIOD OF THE CHART USING THE TIME PERIOD SELECTOR.
+        let updatedPlots = plots.map((plot) => {
+          return {
+            ...plot,
+            // date_from: timePeriods[currentTimePeriodIndex].value.date_from,
+            // date_to: timePeriods[currentTimePeriodIndex].value.date_to,
+          }
+        })
+
         console.log('--------------------------------')
         console.log('Getting charts with: ')
-        console.log('Plots: ', plots)
+        console.log('existing plots: ', plots)
+        console.log('Plots: ', updatedPlots)
         console.log('X axis: ', x_axis)
         console.log('Y axis: ', y_axis)
         console.log('X axis title: ', xAxisTitle)
@@ -119,10 +142,10 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
         console.log('--------------------------------')
 
         const requests =
-          plots &&
+          updatedPlots &&
           sizes.map((chart) =>
             getCharts({
-              plots,
+              plots: updatedPlots,
               x_axis,
               y_axis,
               x_axis_title: xAxisTitle,
@@ -147,7 +170,7 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
     }
 
     fetchCharts()
-  }, [data, sizes])
+  }, [currentTimePeriodIndex, data, sizes])
 
   if (loading) {
     return <div>Loading charts...</div>
@@ -187,12 +210,21 @@ export function ClientChart({ data, sizes }: ClientChartProps) {
 
   return (
     <div>
+      <h1 className="text-center">{legendTitle}</h1>
       {figure! && (
         <Suspense fallback={staticChart}>
           <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
         </Suspense>
       )}
 
+      {/* SHOULD ONLY HAVE SELECTOR ON TIME PERIOD SELECTION */}
+      <div className="pt-6">
+        <TimePeriodSelector
+          timePeriods={timePeriods}
+          currentTimePeriodIndex={currentTimePeriodIndex}
+          onTimePeriodChange={handleTimePeriodChange}
+        />
+      </div>
       {/* Debugger */}
       {/* <div><strong>Chart Responses:</strong> {chartResponses.length}</div>
       <div>

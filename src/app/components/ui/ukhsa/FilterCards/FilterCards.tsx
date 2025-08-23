@@ -23,8 +23,8 @@ const FilterCards = () => {
       <PageSection heading="Coverage">
         {/* TODO: On adding a new card, should update URL params for persistence */}
 
-        {selectedGeographyFilters.length > 0 && selectedVaccinationFilters.length > 0
-          ? selectedGeographyFilters.map((geography) => {
+        {selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
+          ? selectedGeographyFilters!.map((geography) => {
               return newCard({
                 geography,
                 dataFilters: selectedVaccinationFilters,

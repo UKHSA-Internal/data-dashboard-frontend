@@ -17,7 +17,7 @@ export const getParentGeography = (geography: GeographiesSchemaObject): Geograph
     }
   }
 
-  const expectedParentType = getExpectedParentType(geography.geography_type)
+  const expectedParentType = getExpectedParentType(geography.geography_type!)
 
   if (!expectedParentType || !geography.relationships) {
     return null

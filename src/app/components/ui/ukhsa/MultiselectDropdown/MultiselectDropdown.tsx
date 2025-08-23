@@ -25,6 +25,7 @@ export function MultiselectDropdown({
 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
+  const dropdownContainerRef = useRef<HTMLDivElement>(null)
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
   let options = [] as Options
@@ -62,8 +63,10 @@ export function MultiselectDropdown({
   const isOptionDisabled = (optionValue: FlatOption) => {
     if (nestedMultiselect) return false
     if (isFilterSelected(optionValue)) return false
+    //get the first part of the selected option id
+    let optionType = optionValue.id.split('.')[0]
 
-    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`geography.`)).length
+    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(optionType)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
@@ -106,6 +109,38 @@ export function MultiselectDropdown({
     }
   }, [open])
 
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownContainerRef.current && !dropdownContainerRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [open])
+
+  useEffect(() => {
+    function handleEscapeKey(event: KeyboardEvent) {
+      if (event.key === 'Escape' && open) {
+        setOpen(false)
+      }
+    }
+
+    if (open) {
+      document.addEventListener('keydown', handleEscapeKey)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey)
+    }
+  }, [open])
+
   function toggleDropdown() {
     setOpen((open) => !open)
   }
@@ -118,10 +153,8 @@ export function MultiselectDropdown({
           toggleDropdown()
         } else if (event.key === 'ArrowDown') {
           event.preventDefault()
-          // Open the menu if down pressed and it's closed
           if (!open) setOpen(true)
 
-          // Move down the list on down pressed (and open)
           if (checkboxRefs.current[0]?.current) {
             checkboxRefs.current[0].current.focus()
           }
@@ -224,7 +257,7 @@ export function MultiselectDropdown({
   }
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownContainerRef}>
       <button
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -353,7 +386,7 @@ export function MultiselectDropdown({
                     className={clsx('govuk-label govuk-checkboxes__label py-0', {
                       'govuk-checkboxes__label--disabled': isDisabled,
                     })}
-                    htmlFor={`ukhsa-checkbox-${option}`}
+                    htmlFor={`ukhsa-checkbox-${option.label}`}
                   >
                     {option.label}
                   </label>

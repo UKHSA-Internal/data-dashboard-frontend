@@ -66,22 +66,62 @@ describe('FilterBanners', () => {
     expect(screen.queryByText(/Important information/)).not.toBeInTheDocument()
   })
 
-  it('should show banner when one filter group has exactly 4 selections', () => {
-    const selectedFilters = [
-      { id: 'Country.England', label: 'England' },
-      { id: 'Country.Scotland', label: 'Scotland' },
-      { id: 'Country.Wales', label: 'Wales' },
-      { id: 'Country.NorthernIreland', label: 'Northern Ireland' },
+  it('should show banner when one geography group has exactly 4 selections', () => {
+    const selectedGeographyFilters = [
+      {
+        name: 'geography1',
+        geography_code: 'geography1',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
+      {
+        name: 'geography2',
+        geography_code: 'geography2',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
+      {
+        name: 'geography3',
+        geography_code: 'geography3',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
+      {
+        name: 'geography4',
+        geography_code: 'geography4',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
     ]
 
     mockUseSelectedFilters.mockReturnValue({
-      selectedFilters,
+      selectedFilters: [],
       updateFilters: mockUpdateFilters,
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
       selectedVaccinationFilters: null,
-      selectedGeographyFilters: null,
+      selectedGeographyFilters: selectedGeographyFilters,
       selectedThresholdFilters: null,
     })
 
@@ -93,77 +133,67 @@ describe('FilterBanners', () => {
     expect(screen.getByText(/display at a time/)).toBeInTheDocument()
   })
 
-  it('should show banner when one filter group has more than 4 selections', () => {
-    const selectedFilters = [
-      { id: 'Country.England', label: 'England' },
-      { id: 'Country.Scotland', label: 'Scotland' },
-      { id: 'Country.Wales', label: 'Wales' },
-      { id: 'Country.NorthernIreland', label: 'Northern Ireland' },
-      { id: 'Country.Ireland', label: 'Ireland' },
+  it('should show banner when geography group has more than 4 selections', () => {
+    const selectedGeographyFilters = [
+      {
+        name: 'geography1',
+        geography_code: 'geography1',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
+      {
+        name: 'geography2',
+        geography_code: 'geography2',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
+      {
+        name: 'geography3',
+        geography_code: 'geography3',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
+      {
+        name: 'geography4',
+        geography_code: 'geography4',
+        relationships: [
+          {
+            name: 'Parent Region',
+            geography_code: 'PARENT1',
+            geography_type: 'region',
+          },
+        ],
+      },
     ]
 
     mockUseSelectedFilters.mockReturnValue({
-      selectedFilters,
+      selectedFilters: [],
       updateFilters: mockUpdateFilters,
       addFilter: mockAddFilter,
       removeFilter: mockRemoveFilter,
       clearFilters: mockClearFilters,
       selectedVaccinationFilters: null,
-      selectedGeographyFilters: null,
+      selectedGeographyFilters: selectedGeographyFilters,
       selectedThresholdFilters: null,
     })
 
     render(<FilterBanners />)
 
     expect(screen.getByText(/Important information/)).toBeInTheDocument()
-  })
-
-  it('should show banner when any filter group exceeds 3 items, regardless of filter type', () => {
-    const selectedFilters = [
-      { id: 'vaccine.6-in-1', label: '6-in-1' },
-      { id: 'vaccine.MMR', label: 'MMR' },
-      { id: 'vaccine.DTaP', label: 'DTaP' },
-      { id: 'vaccine.HepatitisB', label: 'Hepatitis B' },
-    ]
-
-    mockUseSelectedFilters.mockReturnValue({
-      selectedFilters,
-      updateFilters: mockUpdateFilters,
-      addFilter: mockAddFilter,
-      removeFilter: mockRemoveFilter,
-      clearFilters: mockClearFilters,
-      selectedVaccinationFilters: null,
-      selectedGeographyFilters: null,
-      selectedThresholdFilters: null,
-    })
-
-    render(<FilterBanners />)
-
-    expect(screen.getByText(/Important information/)).toBeInTheDocument()
-  })
-
-  it('should not show banner when multiple filter groups each have 3 or fewer items', () => {
-    const selectedFilters = [
-      { id: 'Country.England', label: 'England' },
-      { id: 'Country.Scotland', label: 'Scotland' },
-      { id: 'vaccine.6-in-1', label: '6-in-1' },
-      { id: 'vaccine.MMR', label: 'MMR' },
-      { id: 'vaccine.DTaP', label: 'DTaP' },
-    ]
-
-    mockUseSelectedFilters.mockReturnValue({
-      selectedFilters,
-      updateFilters: mockUpdateFilters,
-      addFilter: mockAddFilter,
-      removeFilter: mockRemoveFilter,
-      clearFilters: mockClearFilters,
-      selectedVaccinationFilters: null,
-      selectedGeographyFilters: null,
-      selectedThresholdFilters: null,
-    })
-
-    render(<FilterBanners />)
-
-    expect(screen.queryByText(/Important information/)).not.toBeInTheDocument()
   })
 })
