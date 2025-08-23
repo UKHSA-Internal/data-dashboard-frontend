@@ -25,8 +25,6 @@ import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
-
-
 export default async function TopicPage({
   slug,
   searchParams: { areaName, areaType, timeseriesFilter = '' },
@@ -155,7 +153,6 @@ export default async function TopicPage({
                     )}
                   </PageSection>
                 ))}
-                <FilterLinkedCards />
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>

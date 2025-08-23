@@ -23,6 +23,8 @@ import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL, getShowMoreURL } from '@/app/utils/show-more.utils'
+import TimeSeriesFilterCardsContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
+import SubplotFilterCardContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
 
 import {
   ButtonExternal,
@@ -297,6 +299,18 @@ export const renderCard = (
             </article>
           </div>
         </MapRowCard>
+      )}
+
+      {type === 'filter_linked_sub_plot_chart_template' && (
+        <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+          <SubplotFilterCardContainer />
+        </div>
+      )}
+
+      {type === 'filter_linked_time_series_chart_template' && (
+        <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+          <TimeSeriesFilterCardsContainer />
+        </div>
       )}
 
       {type === 'chart_card_section' && (
