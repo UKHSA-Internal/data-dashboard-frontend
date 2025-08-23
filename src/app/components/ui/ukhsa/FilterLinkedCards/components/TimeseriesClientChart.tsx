@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { getCharts, RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
+import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
 interface ClientChartProps {
   geography: any
@@ -13,10 +14,12 @@ interface ClientChartProps {
 }
 
 
-const TimeseriesClientChart = ({ geography, dataFilters }: ClientChartProps) => {
+const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<Awaited<ReturnType<typeof getCharts>> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const chartDateRange: MinMaxFullDate = getMinMaxFullDate(timePeriods)
 
   const chartRequestBody: RequestParams = {
     file_format: 'svg',
@@ -37,11 +40,11 @@ const TimeseriesClientChart = ({ geography, dataFilters }: ClientChartProps) => 
         line_colour: filter.value.colour,
         label: filter.value.label,
         geography: geography.name,
-        geography_type: 'Upper Tier Local Authority',
+        geography_type: geography.geography_type,
         chart_type: 'line_multi_coloured',
         line_type: 'SOLID',
-        date_from: '2020-01-01',
-        date_to: '2025-12-31',
+        date_from: chartDateRange.date_from,
+        date_to: chartDateRange.date_to,
         use_smooth_lines: false,
         use_markers: true,
       }

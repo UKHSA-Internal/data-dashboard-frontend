@@ -101,6 +101,8 @@ export const getSubplots = async (chart: RequestParams) => {
     const path = isSSR ? `charts/subplot/v1` : `proxy/charts/subplot/v1`
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
+    console.log(body)
+
     return responseSchema.safeParse(data)
   } catch (error) {
     if (error instanceof Error) {

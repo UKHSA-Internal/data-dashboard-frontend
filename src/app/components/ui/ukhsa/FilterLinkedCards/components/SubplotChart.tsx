@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react'
 
 import { getSubplots, RequestParams } from '@/api/requests/charts/subplot/getSubplots'
 import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInteractive'
+import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 import { getGeographyColourSelection } from '@/app/utils/geography.utils'
 
@@ -11,13 +13,49 @@ interface SubplotClientChartProps {
   dataFilters: any
   selectedGeographyFilters: any;
   geographyFilters: any;
+  timePeriods: any;
+  handleTimePeriodIndex: any;
+  currentTimePeriodIndex: any;
+}
+
+function flattenGeographyObject(geographyObject: Geography): FlattenedGeography[] {
+  const flattenedGeographies: FlattenedGeography[] = [];
+
+  // Add the main geography object
+  const mainGeography: FlattenedGeography = {
+    name: geographyObject.name,
+    geography_code: geographyObject.geography_code,
+    geography_type: geographyObject.geography_type || 'UTLA', // Default to UTLA if not specified
+  };
+
+  flattenedGeographies.push(mainGeography);
+
+  // Add each relationship as a separate object
+  if (geographyObject.relationships && geographyObject.relationships.length > 0) {
+    const relationshipGeographies = geographyObject.relationships
+      .map(relationship => ({
+        name: relationship.name,
+        geography_code: relationship.geography_code,
+        geography_type: relationship.geography_type,
+    }));
+
+    flattenedGeographies.push(...relationshipGeographies);
+  }
+
+  if (mainGeography.geography_type != "Nation") {
+    return flattenedGeographies.filter(geography => geography.geography_type != "United Kingdom").reverse()
+  }
+
+  return flattenedGeographies.reverse();
 }
 
 
-const SubplotClientChart = ( { dataFilters, selectedGeographyFilters, geographyFilters }: SubplotClientChartProps ) => {
+const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePeriods, currentTimePeriodIndex, handleTimePeriodChange }: SubplotClientChartProps ) => {
   const [chartResponse, setChartResponse] = useState<Awaited<ReturnType<typeof getSubplots>> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+
+  const geographyRelations = flattenGeographyObject(geography)
 
   const chartRequestBody: RequestParams = {
     file_format: 'svg',
@@ -34,7 +72,7 @@ const SubplotClientChart = ( { dataFilters, selectedGeographyFilters, geographyF
       y_axis: 'metric',
       theme: 'immunisation',
       sub_theme: 'childhood_vaccines',
-      date_from: '2021-01-31',
+      date_from: '2021-01-01',
       date_to: '2021-12-31',
       age: 'all',
       sex: 'all',
@@ -48,7 +86,8 @@ const SubplotClientChart = ( { dataFilters, selectedGeographyFilters, geographyF
           metric: filter.value.parameters.metric.value,
           stratum: filter.value.parameters.stratum.value
         },
-        plots: selectedGeographyFilters.map((geography: any) => {
+        plots: geographyRelations.map(geography => {
+          console.log(geography)
           return {
             label: geography.name,
             geography_type: geography.geography_type,
@@ -60,13 +99,54 @@ const SubplotClientChart = ( { dataFilters, selectedGeographyFilters, geographyF
     })
   }
 
+  console.log(timePeriods[currentTimePeriodIndex].value.date_from)
+
   useEffect(() => {
     const fetchCharts = async () => {
       try {
         setLoading(true)
 
         const chartResponse = await getSubplots({
-          ...chartRequestBody
+          file_format: 'svg',
+          chart_height: 260,
+          chart_width: 515,
+          x_axis_title: 'Coverage %',
+          y_axis_title: 'Year',
+          y_axis_minimum_value: null,
+          y_axis_maximum_value: null,
+          target_threshold: 95,
+          target_threshold_label: 'coverage %',
+          chart_parameters: {
+            x_axis: 'geography',
+            y_axis: 'metric',
+            theme: 'immunisation',
+            sub_theme: 'childhood_vaccines',
+            date_from: timePeriods[currentTimePeriodIndex].value.date_from,
+            date_to: timePeriods[currentTimePeriodIndex].value.date_to,
+            age: 'all',
+            sex: 'all',
+            stratum: '24m'
+          },
+          subplots: dataFilters.map((filter: any) => {
+            return {
+              subplot_title: filter.value.label,
+              subplot_parameters: {
+                topic: filter.value.parameters.topic.value,
+                metric: filter.value.parameters.metric.value,
+                stratum: filter.value.parameters.stratum.value
+              },
+              plots: geographyRelations.map(geography => {
+                console.log(geography)
+                return {
+                  label: geography.name,
+                  geography_type: geography.geography_type,
+                  geography: geography.name,
+                  line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters)
+                }
+              })
+            }
+          })
+
         })
 
         setChartResponse(chartResponse.data)
@@ -78,7 +158,7 @@ const SubplotClientChart = ( { dataFilters, selectedGeographyFilters, geographyF
     }
 
     fetchCharts()
-  }, [dataFilters, geographyFilters])
+  }, [dataFilters, geographyFilters, currentTimePeriodIndex])
 
   if (loading) {
     return <span>loading...</span>
@@ -91,7 +171,16 @@ const SubplotClientChart = ( { dataFilters, selectedGeographyFilters, geographyF
   if (chartResponse) {
     const { figure } = chartResponse
     return (
-      <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+      <>
+        <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+        <div className="pt-6">
+          <TimePeriodSelector
+            timePeriods={timePeriods}
+            currentTimePeriodIndex={currentTimePeriodIndex}
+            onTimePeriodChange={handleTimePeriodChange}
+          />
+        </div>
+      </>
     )
   }
 }

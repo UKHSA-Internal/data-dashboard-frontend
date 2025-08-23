@@ -8,7 +8,7 @@ export const getGeographyColourSelection = (geographyType: string, geographies: 
   if (selected.length > 0) {
     return selected[0].value.colour
   }
-  return "COLOUR_1_DARK_BLUE"
+  return "COLOUR_9_DEEP_PLUM"
 }
 
 export const getParentGeography = (geography: GeographiesSchemaObject): GeographyParent | null => {
