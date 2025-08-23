@@ -256,3 +256,31 @@ $govuk-page-width: 1400px;
     display: none !important;
   }
 }
+
+.loading-dots {
+  display: inline-block;
+  width: 1.5em; /* Reserve space for 3 dots */
+  text-align: left;
+
+  &:after {
+    content: '';
+    animation: dots 1.5s steps(4, end) infinite;
+  }
+}
+
+@keyframes dots {
+  0%,
+  20% {
+    content: '';
+  }
+  40% {
+    content: '.';
+  }
+  60% {
+    content: '..';
+  }
+  80%,
+  100% {
+    content: '...';
+  }
+}

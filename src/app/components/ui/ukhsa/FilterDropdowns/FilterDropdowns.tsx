@@ -10,6 +10,7 @@ import {
 import { useDataFilters, useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { getGroupedVaccinationOptions } from '@/app/utils/global-filter-content-parser'
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
+import { TextualLoader } from '../Loader/TextualLoader'
 
 //TODO: Headers and content to come from CMS
 
@@ -17,7 +18,7 @@ function DisplayGeographyDropdowns() {
   const { geographyAreas, geographyAreasError, geographyAreasLoading } = useGeographyState()
 
   if (geographyAreasLoading) {
-    return <div>Loading...</div>
+    return <TextualLoader text="Loading available geographies" className="flex-auto bg-white py-2" />
   }
 
   if (geographyAreasError) {
@@ -43,7 +44,7 @@ function DisplayGeographyDropdowns() {
     )
   }
 
-  return <>{geographyDropdowns}</>
+  return geographyDropdowns
 }
 
 function DisplayCoverageDropdown() {
