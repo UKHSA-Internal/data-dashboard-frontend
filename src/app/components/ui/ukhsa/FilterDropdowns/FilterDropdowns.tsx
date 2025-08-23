@@ -9,9 +9,6 @@ import {
 } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 import { useDataFilters, useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { getGroupedVaccinationOptions } from '@/app/utils/global-filter-content-parser'
-import { useGlobalFilters } from '@/app/context/globalFilterContext'
-
-//TODO: Headers and content to come from CMS
 
 function DisplayGeographyDropdowns() {
   const { geographyAreas, geographyAreasError, geographyAreasLoading } = useGeographyState()
@@ -83,9 +80,6 @@ export function DisplayVaccinationDropDown() {
 }
 
 export function FilterDropdowns() {
-  const { actions } = useGlobalFilters()
-  const { applyFilters } = actions
-
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 z-100 bg-grey-2">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">Area</h2>
@@ -98,13 +92,6 @@ export function FilterDropdowns() {
         <DisplayVaccinationDropDown />
         <DisplayCoverageDropdown />
       </div>
-      <button
-        type="button"
-        className="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-3"
-        onClick={applyFilters}
-      >
-        Apply filters
-      </button>
     </div>
   )
 }

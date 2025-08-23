@@ -51,19 +51,6 @@ export interface GlobalFilterProviderProps {
   filters: InitialGlobalFilterState
 }
 
-export interface FilterCoverageChartCard {
-  id: string
-  title: string
-  description: string
-  chart: RequestParams
-}
-
-export interface FilterTimeSeriesChartCard {
-  id: string
-  title: string
-  description: string
-  chart: RequestParams
-}
 
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
@@ -78,8 +65,6 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
-  filterCoverageChartCards: FilterCoverageChartCard[]
-  filterTimeSeriesChartCards: FilterTimeSeriesChartCard[]
 }
 
 // Global Filter Action Interface
@@ -90,7 +75,6 @@ export interface GlobalFilterActions {
   removeFilter: (filterId: string) => void
   clearFilters: () => void
   setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
-  applyFilters: () => void
 }
 
 //Interface for the global filter context
@@ -116,8 +100,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
   const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
   const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
-  const [filterCoverageChartCards, setFilterCoverageChartCards] = useState<FilterCoverageChartCard[]>([])
-  const [filterTimeSeriesChartCards, setFilterTimeSeriesChartCards] = useState<FilterTimeSeriesChartCard[]>([])
 
   const fetchGeographyData = async () => {
     try {
@@ -187,82 +169,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setMapDataLoading(false)
     }
   }
-  // const newCard = {
-  //   title: 'New test card',
-  //   description: 'This is a new test card description',
-  //   upToAndIncluding: '2025-01-01',
-  //   chart: [
-  //     {
-  //       type: 'plot' as const,
-  //       value: {
-  //         topic: 'COVID-19',
-  //         metric: 'new_cases_daily',
-  //         chart_type: 'bar',
-  //         date_from: null,
-  //         date_to: null,
-  //         stratum: '',
-  //         geography: '',
-  //         geography_type: '',
-  //         label: 'teshjkfdsjk',
-  //         age: '',
-  //         sex: null,
-  //         line_colour: null,
-  //         line_type: null,
-  //       },
-  //       id: '7d8ee647-1e12-4ea5-8051-dacda36d7dc1',
-  //     },
-  //   ],
-  // }
-  const timeseriesPayload: RequestParams = {
-    file_format: 'svg',
-    chart_height: 220,
-    chart_width: 515,
-    x_axis: 'date',
-    x_axis_title: '',
-    y_axis: 'metric',
-    y_axis_title: 'Year',
-    y_axis_minimum_value: null,
-    y_axis_maximum_value: null,
-    plots: [
-      {
-        topic: '6-in-1',
-        metric: '6-in-1_coverage_coverageByYear',
-        stratum: '12m',
-        age: 'all',
-        sex: 'all',
-        geography: 'Bexley',
-        geography_type: 'Upper Tier Local Authority',
-        date_from: '2009-04-01',
-        date_to: '2025-03-31',
-        chart_type: 'line_multi_coloured',
-        label: '6-in-1 (12 months)',
-        line_colour: '',
-        line_type: 'SOLID',
-        use_smooth_lines: false,
-        use_markers: true,
-      },
-    ],
-  }
-
-  const updateFilterChartCards = () => {
-    console.log('update filter chart cards')
-    // TODO: Get coverage items, and make API call, create object & call new chart
-
-    setFilterCoverageChartCards([
-      ...filterCoverageChartCards,
-      { id: '1', title: 'New Coverage', description: 'New Coverage description', chart: timeseriesPayload },
-    ])
-
-    // --- Timeseries section ---
-    // Selected 2 geographies, 2 vaccines
-    // 2 charts expected for 2 geographies
-    //
-
-    setFilterTimeSeriesChartCards([
-      ...filterTimeSeriesChartCards,
-      { id: '1', title: 'New Time Series', description: 'New Time Series description', chart: timeseriesPayload },
-    ])
-  }
 
   /* Usage: When the geographyFilters are updated this will trigger this use effect 
   to load the most recent list of geography areas for each of the geography filters */
@@ -290,8 +196,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
-    filterCoverageChartCards,
-    filterTimeSeriesChartCards,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -408,10 +312,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedVaccinationFilters([])
     },
 
-    // Apply filters and add new cards
-    applyFilters: () => {
-      updateFilterChartCards()
-    },
   }
 
   const contextValue: GlobalFilterContextValue = {

@@ -3,16 +3,10 @@
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
 
 import { PageSection } from '../PageSections/PageSectionsWithContents'
-import FilterCard from '@/app/components/ui/ukhsa/FilterLinkedCards/FilterCard'
 
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 import SubplotFilterCard from './SubplotFilterCard'
 
-// Move to time series and subplot filter card
-import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
-import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
-
-import { geographiesSchema } from '@/api/requests/geographies/getGeographies'
 
 const FilterCards = () => {
   const { state } = useGlobalFilters()
@@ -28,8 +22,6 @@ const FilterCards = () => {
   const isChartDataAvailable = () => {
     return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0;
   }
-
-  const selectedUTLAS = selectedGeographyFilters.filter(geography => geography.geography_type === "Upper Tier Local Authority")
 
   return (
     <>
