@@ -1,4 +1,4 @@
-import { getMinMaxYears, getMinMaxFullDate } from './time-period.utils' // Adjust import path as needed
+import { getMinMaxYears, getMinMaxFullDate } from './time-period.utils'
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 // Mock TimePeriod type for testing
 describe('time-period.utils, ', () => {

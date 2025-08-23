@@ -116,12 +116,10 @@ export function MultiselectDropdown({
       }
     }
 
-    // Only add the event listener when the dropdown is open
     if (open) {
       document.addEventListener('mousedown', handleClickOutside)
     }
 
-    // Cleanup function to remove the event listener
     return () => {
       document.removeEventListener('mousedown', handleClickOutside)
     }
@@ -155,10 +153,8 @@ export function MultiselectDropdown({
           toggleDropdown()
         } else if (event.key === 'ArrowDown') {
           event.preventDefault()
-          // Open the menu if down pressed and it's closed
           if (!open) setOpen(true)
 
-          // Move down the list on down pressed (and open)
           if (checkboxRefs.current[0]?.current) {
             checkboxRefs.current[0].current.focus()
           }

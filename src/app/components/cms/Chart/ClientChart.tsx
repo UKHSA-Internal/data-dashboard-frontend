@@ -79,8 +79,11 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
   const [chartResponses, setChartResponses] = useState<Awaited<ReturnType<typeof getCharts>>[]>([])
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 2)
 
+  // ONLY FOR SUBPLOT CHARTS - SELECTOR SHOULD NOT DISPLAY ON TIMESERIES
+  // THIS IS FOR MANAGING THE TIMEPERIOD THAT IS SELECTED BY THE USER. AT THE MOMENT IT DISPLAYS THE MOST RECENT TIME PERIOD
+  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
+  //FUNCTION FOR HANDLING THE SELECTED TIMEPERIOD/
   const handleTimePeriodChange = (index: number) => {
     setCurrentTimePeriodIndex(index)
   }
@@ -115,6 +118,9 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
 
         const { plots, x_axis, y_axis } = chartData
 
+
+        // ONLY FOR SUBPLOT CHARTS - SELECTOR SHOULD NOT DISPLAY ON TIMESERIES
+        //THIS IS NEEDED IF YOU ARE WANTING TO UPDATE THE TIME PERIOD OF THE CHART USING THE TIME PERIOD SELECTOR.
         let updatedPlots = plots.map((plot) => {
           return {
             ...plot,
@@ -210,6 +216,8 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
           <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
         </Suspense>
       )}
+
+      {/* SHOULD ONLY HAVE SELECTOR ON TIME PERIOD SELECTION */}
       <div className="pt-6">
         <TimePeriodSelector
           timePeriods={timePeriods}

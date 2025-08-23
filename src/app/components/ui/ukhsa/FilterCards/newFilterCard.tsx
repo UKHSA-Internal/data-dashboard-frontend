@@ -51,8 +51,11 @@ export function newCard({
   description: string
   chart: RequestParams | ChartData
 }) {
+  //MIN MAX DATE RANGE IS REQUIRED FOR THE HEADING FOR TIMESERIES CHARTS.
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
+  // CHART DATE RANGE IS ONLY REQUIRED FOR TIMESERIES CHARTS.
   const chartDateRange: MinMaxFullDate = getMinMaxFullDate(timePeriods)
+
   const geographyParent: GeographyParent | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.geography_name}, ${geography.name})`
 

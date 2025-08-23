@@ -13,8 +13,6 @@ export function FilterBanners() {
   // Group filters
   const filterGroups = selectedFilters!.reduce(
     (groups, filter) => {
-      console.log('filter: ', filter)
-      console.log('groups: ', groups)
       const prefix = filter.id.split('.')[0]
       if (!groups[prefix]) {
         groups[prefix] = []
