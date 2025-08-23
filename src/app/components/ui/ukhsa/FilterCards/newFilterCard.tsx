@@ -15,6 +15,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 type ChartData = z.infer<typeof ChartCardSchemas>['value']
 
 // Function to transform RequestParams into ChartData structure
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 function transformRequestParamsToChartData(requestParams: RequestParams, title: string): ChartData {
   return {
     title,
@@ -144,8 +145,7 @@ export function newCard({
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              <ClientChart
-                legendTitle={cardData.legend_title}
+              {/* <ClientChart
                 data={chartData}
                 timePeriods={timePeriods.reverse()}
                 sizes={[

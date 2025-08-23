@@ -18,12 +18,14 @@ import {
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
-import FilterCards from '../../ui/ukhsa/FilterCards/FilterCards'
+import FilterLinkedCards from '../../ui/ukhsa/FilterLinkedCards/FilterCards'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
+
 
 export default async function TopicPage({
   slug,
@@ -153,7 +155,7 @@ export default async function TopicPage({
                     )}
                   </PageSection>
                 ))}
-                <FilterCards />
+                <FilterLinkedCards />
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>

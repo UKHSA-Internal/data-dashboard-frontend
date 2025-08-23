@@ -8,14 +8,10 @@ import { newCard } from './newFilterCard'
 const FilterCards = () => {
   const { state } = useGlobalFilters()
   const {
-    filterCoverageChartCards,
-    filterTimeSeriesChartCards,
-    selectedThresholdFilters,
     selectedVaccinationFilters,
     selectedGeographyFilters,
     timePeriods,
     timeseriesTemplateData,
-    coverageTemplateData,
   } = state
 
   return (

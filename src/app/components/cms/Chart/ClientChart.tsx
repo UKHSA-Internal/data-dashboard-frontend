@@ -7,8 +7,6 @@ import { ChartCardSchemas } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
-import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
-import { RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../ChartInteractive/ChartInteractive'
 import { TimePeriodSelector } from '../../ui/ukhsa/TimePeriodSelector/TimePeriodSelector'

@@ -1,6 +1,15 @@
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 export type GeographyParent = { geography_name: string; geography_code: string; geography_type: string }
+export type GeographyColour = string
+
+export const getGeographyColourSelection = (geographyType: string, geographies: GeographiesSchemaObject[]): GeographyColour => {
+  const selected = geographies.geography_types.filter(type => type.value.geography_type === geographyType)
+  if (selected.length > 0) {
+    return selected[0].value.colour
+  }
+  return "COLOUR_1_DARK_BLUE"
+}
 
 export const getParentGeography = (geography: GeographiesSchemaObject): GeographyParent | null => {
   const getExpectedParentType = (currentType: string): string | null => {
