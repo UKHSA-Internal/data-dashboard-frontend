@@ -25,6 +25,7 @@ export function MultiselectDropdown({
 }: MultiselectDropdownProps) {
   const [open, setOpen] = useState(false)
   const checkboxRefs = useRef<Array<React.RefObject<HTMLInputElement>>>([])
+  const dropdownContainerRef = useRef<HTMLDivElement>(null)
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
   let options = [] as Options
@@ -103,6 +104,40 @@ export function MultiselectDropdown({
   useEffect(() => {
     if (open && checkboxRefs.current[0]?.current) {
       checkboxRefs.current[0].current.focus()
+    }
+  }, [open])
+
+  useEffect(() => {
+    function handleClickOutside(event: MouseEvent) {
+      if (dropdownContainerRef.current && !dropdownContainerRef.current.contains(event.target as Node)) {
+        setOpen(false)
+      }
+    }
+
+    // Only add the event listener when the dropdown is open
+    if (open) {
+      document.addEventListener('mousedown', handleClickOutside)
+    }
+
+    // Cleanup function to remove the event listener
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [open])
+
+  useEffect(() => {
+    function handleEscapeKey(event: KeyboardEvent) {
+      if (event.key === 'Escape' && open) {
+        setOpen(false)
+      }
+    }
+
+    if (open) {
+      document.addEventListener('keydown', handleEscapeKey)
+    }
+
+    return () => {
+      document.removeEventListener('keydown', handleEscapeKey)
     }
   }, [open])
 
@@ -224,7 +259,7 @@ export function MultiselectDropdown({
   }
 
   return (
-    <div className="relative">
+    <div className="relative" ref={dropdownContainerRef}>
       <button
         aria-haspopup="listbox"
         aria-expanded={open}
@@ -353,7 +388,7 @@ export function MultiselectDropdown({
                     className={clsx('govuk-label govuk-checkboxes__label py-0', {
                       'govuk-checkboxes__label--disabled': isDisabled,
                     })}
-                    htmlFor={`ukhsa-checkbox-${option}`}
+                    htmlFor={`ukhsa-checkbox-${option.label}`}
                   >
                     {option.label}
                   </label>

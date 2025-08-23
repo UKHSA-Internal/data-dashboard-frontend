@@ -118,8 +118,8 @@ export function ClientChart({ data, sizes, legendTitle, timePeriods }: ClientCha
         let updatedPlots = plots.map((plot) => {
           return {
             ...plot,
-            date_from: timePeriods[currentTimePeriodIndex].value.date_from,
-            date_to: timePeriods[currentTimePeriodIndex].value.date_to,
+            // date_from: timePeriods[currentTimePeriodIndex].value.date_from,
+            // date_to: timePeriods[currentTimePeriodIndex].value.date_to,
           }
         })
 
