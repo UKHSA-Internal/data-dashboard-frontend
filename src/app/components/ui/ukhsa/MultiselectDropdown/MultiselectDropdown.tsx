@@ -63,8 +63,10 @@ export function MultiselectDropdown({
   const isOptionDisabled = (optionValue: FlatOption) => {
     if (nestedMultiselect) return false
     if (isFilterSelected(optionValue)) return false
+    //get the first part of the selected option id
+    let optionType = optionValue.id.split('.')[0]
 
-    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(`geography.`)).length
+    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(optionType)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
