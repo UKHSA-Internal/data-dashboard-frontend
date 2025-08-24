@@ -60,7 +60,7 @@ const SubplotFilterCard = ({
                   <span>Chart</span>
                 </Link>
               </TabsTrigger>
-              <TabsTrigger
+              {/* <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-table`}
                 aria-controls={`table-${kebabCase(title)}-content`}
@@ -80,7 +80,7 @@ const SubplotFilterCard = ({
                 <Link href={`#download-${kebabCase(title)}`}>
                   <span>Download</span>
                 </Link>
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
             <TabsContent
               value={`${kebabCase(title)}-chart`}
@@ -97,9 +97,10 @@ const SubplotFilterCard = ({
                 selectedVaccinations={selectedVaccinations}
                 geographyFilters={geographyFilters}
                 geography={geography}
+                cardData={cardData}
               />
             </TabsContent>
-            <TabsContent
+            {/* <TabsContent
               value={`${kebabCase(title)}-table`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="table"
@@ -114,7 +115,7 @@ const SubplotFilterCard = ({
               id={`download-${kebabCase(title)}-content`}
             >
               Download content
-            </TabsContent>
+            </TabsContent> */}
           </Tabs>
         </article>
       </Card>

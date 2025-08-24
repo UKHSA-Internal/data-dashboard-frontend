@@ -40,3 +40,27 @@ export const getMinMaxFullDate = (timePeriods: TimePeriod[]): { date_from: strin
     date_to,
   }
 }
+
+export interface MinMaxTimePeriodLabelResponse {
+  minLabel: string
+  maxLabel: string
+}
+
+export const getMinMaxTimePeriodLabels = (timePeriods: TimePeriod[]): MinMaxTimePeriodLabelResponse => {
+  if (timePeriods.length === 0) {
+    throw new Error('Cannot determine time period labels from empty time periods array')
+  }
+
+  const earliestTimePeriod = timePeriods.reduce((earliest, current) =>
+    current.value.date_from < earliest.value.date_from ? current : earliest
+  )
+
+  const latestTimePeriod = timePeriods.reduce((latest, current) =>
+    current.value.date_to > latest.value.date_to ? current : latest
+  )
+
+  return {
+    minLabel: earliestTimePeriod.value.label,
+    maxLabel: latestTimePeriod.value.label,
+  }
+}

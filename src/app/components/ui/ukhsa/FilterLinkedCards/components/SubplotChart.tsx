@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { DataFilter, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedSubplotData,GeographyFilters, TimePeriod  } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
@@ -18,6 +18,7 @@ interface SubplotClientChartProps {
   currentTimePeriodIndex: number
   handleTimePeriodChange: (index: number) => void
   geography: GeographiesSchemaObject
+  cardData: FilterLinkedSubplotData
 }
 
 const SubplotClientChart = ({
@@ -27,6 +28,7 @@ const SubplotClientChart = ({
   timePeriods,
   currentTimePeriodIndex,
   handleTimePeriodChange,
+  cardData,
 }: SubplotClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -46,8 +48,8 @@ const SubplotClientChart = ({
           y_axis_title: 'Year',
           y_axis_minimum_value: null,
           y_axis_maximum_value: null,
-          target_threshold: 95,
-          target_threshold_label: 'coverage %',
+          target_threshold: cardData.target_threshold,
+          target_threshold_label: cardData.target_threshold_label,
           chart_parameters: {
             x_axis: 'geography',
             y_axis: 'metric',
