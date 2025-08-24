@@ -6,8 +6,7 @@ import { useState } from 'react'
 import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
-import { FlattenedGeography,getParentGeography } from '@/app/utils/geography.utils'
-import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
+import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
@@ -32,12 +31,11 @@ const SubplotFilterCard = ({
   const handleTimePeriodChange = (index: number) => {
     setCurrentTimePeriodIndex(index)
   }
-
-  const description = 'testing testing 123'
-
-  const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
+  // we need to retrieve date somehow
+  const date = ''
+  const description = `Last Updated ${date}`
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
+  const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent!.name}, ${geography.name})`
   const id = title
 
   return (

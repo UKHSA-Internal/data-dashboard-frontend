@@ -77,6 +77,7 @@ export const flattenGeographyObject = (geographyObject: GeographiesSchemaObject)
     flattenedGeographies.push(...relationshipGeographies)
   }
 
+  // If the geography is not nation then this will remove the United Kindom relation and reverse the array so that the plots are generated in the correct order.
   if (mainGeography.geography_type != 'Nation') {
     return flattenedGeographies.filter((geography) => geography.geography_type != 'United Kingdom').reverse()
   }
