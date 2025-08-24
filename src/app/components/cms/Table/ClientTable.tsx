@@ -11,6 +11,8 @@ import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { RichText } from '../RichText/RichText'
@@ -43,8 +45,8 @@ export function ClientTable({
   const title = 'example title'
   const body = 'example body'
 
-  const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
-  const [tableResponse, setTableResponse] = useState<Response | null>()
+  const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
+  const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>()
   const [tableLoading, setTableLoading] = useState(true)
   const [tableError, setTableError] = useState<string | null>(null)
   const [chartLoading, setChartLoading] = useState(true)
@@ -63,7 +65,6 @@ export function ClientTable({
         setChartLoading(true)
 
         const chartResponse = await getCharts({
-          file_format: 'svg',
           chart_height: 260,
           chart_width: 515,
           x_axis: 'date',
@@ -92,7 +93,7 @@ export function ClientTable({
           }),
         })
         if (chartResponse.success) {
-          setChartResponse(chartResponse.data)
+          setChartResponse(chartResponse)
         } else {
           setChartError('Failed to parse chart response')
         }
@@ -113,14 +114,8 @@ export function ClientTable({
         setTableLoading(true)
 
         const tableResponse = await getTables({
-          file_format: 'svg',
-          chart_height: 260,
-          chart_width: 515,
           x_axis: 'date',
           y_axis: 'metric',
-          y_axis_title: 'Year',
-          y_axis_minimum_value: null,
-          y_axis_maximum_value: null,
           plots: dataFilters.map((filter: DataFilter) => {
             return {
               topic: filter.value.parameters.topic.value,
@@ -156,22 +151,6 @@ export function ClientTable({
 
     fetchTables()
   }, [dataFilters, geography])
-
-  // Call the table endpoint to get the data in table format
-  // const tableResponse = await getTables({
-  //   plots,
-  //   x_axis,
-  //   y_axis,
-  // })
-
-  // // Call the charts endpoint as this gives us the data timestamp
-  // const chartResponse = await getCharts({
-  //   plots,
-  //   x_axis,
-  //   y_axis,
-  //   chart_width: chartSizes[size].width,
-  //   chart_height: chartSizes[size].height,
-  // })
 
   if (tableResponse && chartResponse) {
     console.log('tableResponse: ', tableResponse)
