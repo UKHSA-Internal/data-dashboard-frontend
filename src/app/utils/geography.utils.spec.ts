@@ -19,7 +19,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(nationGeography)
 
     expect(result).toEqual({
-      geography_name: 'United Kingdom',
+      name: 'United Kingdom',
       geography_code: 'K02000001',
       geography_type: 'United Kingdom',
     })
@@ -42,7 +42,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(regionGeography)
 
     expect(result).toEqual({
-      geography_name: 'England',
+      name: 'England',
       geography_code: 'E92000001',
       geography_type: 'Nation',
     })
@@ -65,7 +65,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(upperTierGeography)
 
     expect(result).toEqual({
-      geography_name: 'North West',
+      name: 'North West',
       geography_code: 'E12000002',
       geography_type: 'Region',
     })
@@ -88,7 +88,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(lowerTierGeography)
 
     expect(result).toEqual({
-      geography_name: 'North West',
+      name: 'North West',
       geography_code: 'E12000002',
       geography_type: 'Region',
     })
@@ -121,7 +121,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(geographyWithMultipleRelations)
 
     expect(result).toEqual({
-      geography_name: 'North West',
+      name: 'North West',
       geography_code: 'E12000002',
       geography_type: 'Region',
     })
@@ -149,7 +149,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(geographyWithDuplicateTypes)
 
     expect(result).toEqual({
-      geography_name: 'England',
+      name: 'England',
       geography_code: 'E92000001',
       geography_type: 'Nation',
     })
@@ -173,6 +173,7 @@ describe('getParentGeography', () => {
       name: 'Test Geography',
       geography_code: 'T12000001',
       geography_type: 'Nation',
+      relationships: null,
     }
 
     const result = getParentGeography(geographyWithUndefinedRelations)
@@ -288,19 +289,19 @@ describe('getParentGeography', () => {
       geography_code: 'T12000001',
       geography_type: 'Nation',
       relationships: [
-        null,
         {
           name: 'United Kingdom',
           geography_code: 'K02000001',
           geography_type: 'United Kingdom',
         },
+        undefined,
       ],
     }
 
     const result = getParentGeography(geographyWithNullRelationshipObject)
 
     expect(result).toEqual({
-      geography_name: 'United Kingdom',
+      name: 'United Kingdom',
       geography_code: 'K02000001',
       geography_type: 'United Kingdom',
     })
@@ -324,7 +325,7 @@ describe('getParentGeography', () => {
     const result = getParentGeography(geographyWithUndefinedRelationshipObject)
 
     expect(result).toEqual({
-      geography_name: 'United Kingdom',
+      name: 'United Kingdom',
       geography_code: 'K02000001',
       geography_type: 'United Kingdom',
     })

@@ -1,5 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
-import { FilterLinkedSubPlotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
+import { FilterLinkedSubplotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -18,7 +18,6 @@ import {
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
-import FilterCards from '../../ui/ukhsa/FilterCards/FilterCards'
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
@@ -48,7 +47,7 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
-  let extractedSubplotData = {} as FilterLinkedSubPlotData
+  let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
   body.map(({ value }) => {
@@ -153,7 +152,6 @@ export default async function TopicPage({
                     )}
                   </PageSection>
                 ))}
-                <FilterCards />
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>
