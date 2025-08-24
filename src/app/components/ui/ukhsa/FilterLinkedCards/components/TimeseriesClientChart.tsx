@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { getCharts, RequestParams } from '@/api/requests/charts/getCharts'
+import { ChartResponse, getCharts, RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
@@ -16,7 +16,7 @@ interface ClientChartProps {
 }
 
 const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientChartProps) => {
-  const [chartResponse, setChartResponse] = useState<Awaited<ReturnType<typeof getCharts>> | null>(null)
+  const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -56,8 +56,11 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientCh
             }
           }),
         })
-
-        setChartResponse(chartResponse.data)
+        if (chartResponse.success) {
+          setChartResponse(chartResponse.data)
+        } else {
+          setError('Failed to parse chart response')
+        }
       } catch (error) {
         setError(error instanceof Error ? error.message : 'Unknown error')
       } finally {

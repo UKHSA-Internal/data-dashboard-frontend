@@ -45,6 +45,8 @@ export const responseSchema = z.object({
   figure: ChartFigure,
 })
 
+export type ChartResponse = z.infer<typeof responseSchema>
+
 export type RequestParams = z.infer<typeof requestSchema>
 
 export const getCharts = async (chart: RequestParams) => {

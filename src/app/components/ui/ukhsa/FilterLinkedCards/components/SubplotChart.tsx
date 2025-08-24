@@ -9,6 +9,8 @@ import { DataFilter, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/
 
 import { getGeographyColourSelection, flattenGeographyObject } from '@/app/utils/geography.utils'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { ChartFigure } from '@/api/models/Chart'
+import { ChartResponse } from '@/api/requests/charts/getCharts'
 
 interface SubplotClientChartProps {
   selectedVaccinations: DataFilter[]
@@ -27,7 +29,7 @@ const SubplotClientChart = ({
   currentTimePeriodIndex,
   handleTimePeriodChange,
 }: SubplotClientChartProps) => {
-  const [chartResponse, setChartResponse] = useState<Awaited<ReturnType<typeof getSubplots>> | null>(null)
+  const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
 
@@ -78,8 +80,11 @@ const SubplotClientChart = ({
             }
           }),
         })
-
-        setChartResponse(chartResponse.data)
+        if (chartResponse.success) {
+          setChartResponse(chartResponse.data)
+        } else {
+          setError('Failed to parse chart response')
+        }
       } catch (error) {
         setError(error instanceof Error ? error.message : 'Unknown error')
       } finally {
