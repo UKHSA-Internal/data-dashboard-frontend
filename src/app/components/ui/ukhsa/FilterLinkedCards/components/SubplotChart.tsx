@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { DataFilter, FilterLinkedSubplotData,GeographyFilters, TimePeriod  } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
@@ -19,6 +19,7 @@ interface SubplotClientChartProps {
   handleTimePeriodChange: (index: number) => void
   geography: GeographiesSchemaObject
   cardData: FilterLinkedSubplotData
+  handleLatestDate: (date: string) => void
 }
 
 const SubplotClientChart = ({
@@ -29,6 +30,7 @@ const SubplotClientChart = ({
   currentTimePeriodIndex,
   handleTimePeriodChange,
   cardData,
+  handleLatestDate,
 }: SubplotClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -112,7 +114,9 @@ const SubplotClientChart = ({
   }
 
   if (chartResponse) {
-    const { figure } = chartResponse
+    const { figure, last_updated } = chartResponse
+    handleLatestDate(last_updated)
+
     return (
       <>
         <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />

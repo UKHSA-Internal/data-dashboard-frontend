@@ -10,6 +10,7 @@ import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 import { useMapData, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
+import { formatDate } from '@/app/utils/date.utils'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
@@ -75,8 +76,15 @@ export default function MapCard({
     return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
   }, [thresholdData, mapData])
 
+  let date
+  if (mapData) {
+    const { latest_date } = mapData
+    date = `Last updated ${formatDate(latest_date)}`
+  }
+
   return (
     <>
+      {date && <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{date}</p>}
       <MapContainer
         {...options}
         id={mapId}
