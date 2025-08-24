@@ -7,7 +7,7 @@ import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInterac
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
-import { getGeographyColourSelection } from '@/app/utils/geography.utils'
+import { getGeographyColourSelection, flattenGeographyObject } from '@/app/utils/geography.utils'
 
 interface SubplotClientChartProps {
   dataFilters: any
@@ -18,36 +18,7 @@ interface SubplotClientChartProps {
   currentTimePeriodIndex: any;
 }
 
-function flattenGeographyObject(geographyObject: Geography): FlattenedGeography[] {
-  const flattenedGeographies: FlattenedGeography[] = [];
 
-  // Add the main geography object
-  const mainGeography: FlattenedGeography = {
-    name: geographyObject.name,
-    geography_code: geographyObject.geography_code,
-    geography_type: geographyObject.geography_type || 'UTLA', // Default to UTLA if not specified
-  };
-
-  flattenedGeographies.push(mainGeography);
-
-  // Add each relationship as a separate object
-  if (geographyObject.relationships && geographyObject.relationships.length > 0) {
-    const relationshipGeographies = geographyObject.relationships
-      .map(relationship => ({
-        name: relationship.name,
-        geography_code: relationship.geography_code,
-        geography_type: relationship.geography_type,
-    }));
-
-    flattenedGeographies.push(...relationshipGeographies);
-  }
-
-  if (mainGeography.geography_type != "Nation") {
-    return flattenedGeographies.filter(geography => geography.geography_type != "United Kingdom").reverse()
-  }
-
-  return flattenedGeographies.reverse();
-}
 
 
 const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePeriods, currentTimePeriodIndex, handleTimePeriodChange }: SubplotClientChartProps ) => {

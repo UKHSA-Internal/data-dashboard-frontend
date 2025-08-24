@@ -3,20 +3,27 @@ import Link from 'next/link'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
 
 import { MinMaxFullDate, getMinMaxYears, getMinMaxFullDate, MinMaxYear } from '@/app/utils/time-period.utils'
-import { getParentGeography, GeographyParent } from '@/app/utils/geography.utils'
+import { getParentGeography, FlattenedGeography } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { TimePeriod, DataFilter, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 
-// interface TimeseriesFilterCardProps {
-// }
+interface TimeseriesFilterCardProps {
+  geography: GeographiesSchemaObject
+  timePeriods: TimePeriod[]
+  dataFilters: DataFilter[]
+  cardData: FilterLinkedTimeSeriesData
+  chartId?: string
+}
 
-const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }) => {
-  const description = "testing testing 123"
+const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }: TimeseriesFilterCardProps) => {
+  const description = 'testing testing 123'
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
-  const geographyParent: GeographyParent | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.geography_name}, ${geography.name})`
+  const geographyParent: FlattenedGeography | null = getParentGeography(geography)
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
   const id = title
 
   return (
@@ -69,24 +76,8 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData })
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-
               <h1>{cardData.legend_title}</h1>
-              <TimeseriesClientChart
-                geography={geography}
-                dataFilters={dataFilters}
-                timePeriods={timePeriods}
-              />
-
-              {/*<ClientChart*/}
-              {/*  data={chartData}*/}
-              {/*  timePeriods={timePeriods.reverse()}*/}
-              {/*  sizes={[*/}
-              {/*    {*/}
-              {/*      minWidth: 768,*/}
-              {/*      size: 'wide',*/}
-              {/*    },*/}
-              {/*  ]}*/}
-              {/*/>*/}
+              <TimeseriesClientChart geography={geography} dataFilters={dataFilters} timePeriods={timePeriods} />
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-table`}

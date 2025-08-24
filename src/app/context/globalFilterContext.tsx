@@ -5,7 +5,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import {
   DataFilter,
   DataFilters,
-  FilterLinkedSubPlotData,
+  FilterLinkedSubplotData,
   FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilter,
@@ -35,7 +35,7 @@ interface InitialGlobalFilterState {
   geographyFilters: GeographyFilters | null
   thresholdFilters: ThresholdFilters | null
   dataFilters: DataFilters | null
-  coverageTemplateData: FilterLinkedSubPlotData | null
+  coverageTemplateData: FilterLinkedSubplotData | null
   timeseriesTemplateData: FilterLinkedTimeSeriesData | null
 }
 
@@ -50,7 +50,6 @@ export interface GlobalFilterProviderProps {
   children: ReactNode
   filters: InitialGlobalFilterState
 }
-
 
 export interface GlobalFilterState extends InitialGlobalFilterState {
   selectedTimePeriod: TimePeriod | null
@@ -311,7 +310,6 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedThresholdFilters([])
       setSelectedVaccinationFilters([])
     },
-
   }
 
   const contextValue: GlobalFilterContextValue = {

@@ -5,28 +5,44 @@ import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
 import { MinMaxFullDate, getMinMaxYears, getMinMaxFullDate, MinMaxYear } from '@/app/utils/time-period.utils'
-import { getParentGeography, GeographyParent } from '@/app/utils/geography.utils'
+import { getParentGeography, FlattenedGeography } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
+import { DataFilters, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
-const SubplotFilterCard = ({ geography, dataFilters, geographyFilters, timePeriods, cardData }) => {
+interface SubplotFilterCardProps {
+  geography: GeographiesSchemaObject
+  dataFilters: DataFilters
+  geographyFilters: GeographyFilters
+  timePeriods: TimePeriod[]
+  cardData: FilterLinkedSubplotData
+}
+
+const SubplotFilterCard = ({
+  geography,
+  dataFilters,
+  geographyFilters,
+  timePeriods,
+  cardData,
+}: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 2)
   //FUNCTION FOR HANDLING THE SELECTED TIMEPERIOD/
   const handleTimePeriodChange = (index: number) => {
     setCurrentTimePeriodIndex(index)
   }
 
-  const description = "testing testing 123"
+  const description = 'testing testing 123'
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
-  const geographyParent: GeographyParent | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.geography_name}, ${geography.name})`
+  const geographyParent: FlattenedGeography | null = getParentGeography(geography)
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
   const id = title
 
- return (
+  return (
     <div key={id} className="mb-4">
       <Card asChild aria-labelledby={`chart-row-card-heading-${id}`} className="ukhsa-chart-card flex flex-col gap-6">
         <article>
@@ -76,7 +92,6 @@ const SubplotFilterCard = ({ geography, dataFilters, geographyFilters, timePerio
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-
               <h1>{cardData.legend_title}</h1>
 
               <SubplotClientChart
@@ -87,7 +102,6 @@ const SubplotFilterCard = ({ geography, dataFilters, geographyFilters, timePerio
                 geographyFilters={geographyFilters}
                 geography={geography}
               />
-
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-table`}

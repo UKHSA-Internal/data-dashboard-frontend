@@ -6,13 +6,14 @@ import { getCharts, RequestParams } from '@/api/requests/charts/getCharts'
 
 import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
+import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 interface ClientChartProps {
-  geography: any
-  dataFilters: any
-  // data: z.infer<typeof ChartCardSchemas>['value'];
+  geography: GeographiesSchemaObject
+  dataFilters: DataFilter[]
+  timePeriods: TimePeriod[]
 }
-
 
 const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<Awaited<ReturnType<typeof getCharts>> | null>(null)
@@ -83,9 +84,7 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientCh
 
   if (chartResponse) {
     const { figure } = chartResponse
-    return (
-      <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
-    )
+    return <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
   }
 }
 

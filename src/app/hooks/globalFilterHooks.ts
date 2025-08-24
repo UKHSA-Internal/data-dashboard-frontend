@@ -1,7 +1,7 @@
 import {
   DataFilter,
   DataFilters,
-  FilterLinkedSubPlotData,
+  FilterLinkedSubplotData,
   FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilter,
@@ -37,7 +37,7 @@ export function useTimeSeriesData(): FilterLinkedTimeSeriesData | null {
   return state.timeseriesTemplateData
 }
 
-export function useCoverageTemplateData(): FilterLinkedSubPlotData | null {
+export function useCoverageTemplateData(): FilterLinkedSubplotData | null {
   const { state } = useGlobalFilters()
   return state.coverageTemplateData
 }

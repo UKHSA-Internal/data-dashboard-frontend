@@ -24,19 +24,21 @@ const TimeSeriesFilterCardsContainer = () => {
 
   return (
     <>
-      {isChartDataAvailable()
-        ? selectedGeographyFilters!.map((geography) => {
-            return (
-              <TimeseriesFilterCard
-                key={geography.name}
-                geography={geography}
-                timePeriods={timePeriods}
-                dataFilters={selectedVaccinationFilters}
-                cardData={timeseriesTemplateData}
-              />
-            )
-          })
-        : null}
+      {isChartDataAvailable() ? (
+        selectedGeographyFilters!.map((geography) => {
+          return (
+            <TimeseriesFilterCard
+              key={geography.name}
+              geography={geography}
+              timePeriods={timePeriods!}
+              dataFilters={selectedVaccinationFilters!}
+              cardData={timeseriesTemplateData!}
+            />
+          )
+        })
+      ) : (
+        <div>Charts will be displayed here when filters are selected above.</div>
+      )}
     </>
   )
 }
