@@ -1,10 +1,6 @@
 'use client'
 
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
-
-import { PageSection } from '../PageSections/PageSectionsWithContents'
-
-import TimeseriesFilterCard from './TimeseriesFilterCard'
 import SubplotFilterCard from './SubplotFilterCard'
 
 const SubplotFilterCardContainer = () => {

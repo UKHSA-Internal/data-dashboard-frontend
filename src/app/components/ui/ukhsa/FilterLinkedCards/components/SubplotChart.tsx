@@ -32,51 +32,6 @@ const SubplotClientChart = ({
   const [error, setError] = useState<string | null>(null)
 
   const geographyRelations = flattenGeographyObject(geography)
-
-  const chartRequestBody: RequestParams = {
-    file_format: 'svg',
-    chart_height: 260,
-    chart_width: 515,
-    x_axis_title: 'Coverage %',
-    y_axis_title: 'Year',
-    y_axis_minimum_value: null,
-    y_axis_maximum_value: null,
-    target_threshold: 95,
-    target_threshold_label: 'coverage %',
-    chart_parameters: {
-      x_axis: 'geography',
-      y_axis: 'metric',
-      theme: 'immunisation',
-      sub_theme: 'childhood_vaccines',
-      date_from: '2021-01-01',
-      date_to: '2021-12-31',
-      age: 'all',
-      sex: 'all',
-      stratum: '24m',
-    },
-    subplots: dataFilters.map((filter: any) => {
-      return {
-        subplot_title: filter.value.label,
-        subplot_parameters: {
-          topic: filter.value.parameters.topic.value,
-          metric: filter.value.parameters.metric.value,
-          stratum: filter.value.parameters.stratum.value,
-        },
-        plots: geographyRelations.map((geography) => {
-          console.log(geography)
-          return {
-            label: geography.name,
-            geography_type: geography.geography_type,
-            geography: geography.name,
-            line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters),
-          }
-        }),
-      }
-    }),
-  }
-
-  console.log(timePeriods[currentTimePeriodIndex].value.date_from)
-
   useEffect(() => {
     const fetchCharts = async () => {
       try {
@@ -117,7 +72,7 @@ const SubplotClientChart = ({
                   label: geography.name,
                   geography_type: geography.geography_type,
                   geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters),
+                  line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
                 }
               }),
             }
