@@ -1,10 +1,10 @@
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
-import { DataFilter, FilterLinkedTimeSeriesData,TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
-import { FlattenedGeography,getParentGeography } from '@/app/utils/geography.utils'
+import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
 import { Card } from '../Card/Card'
@@ -19,7 +19,8 @@ interface TimeseriesFilterCardProps {
 }
 
 const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }: TimeseriesFilterCardProps) => {
-  const description = 'testing testing 123'
+  const date = ''
+  const description = `Last Updated ${date}`
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)

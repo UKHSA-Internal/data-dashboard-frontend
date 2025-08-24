@@ -9,7 +9,6 @@ export type FlattenedGeography = {
 export type GeographyColour = string
 
 export const getGeographyColourSelection = (geographyType: string, geographies: GeographyFilters): GeographyColour => {
-  console.log('get colour :', geographies)
   const selected = geographies.geography_types.filter((type) => type.value.geography_type === geographyType)
   if (selected.length > 0) {
     return selected[0].value.colour
@@ -78,6 +77,7 @@ export const flattenGeographyObject = (geographyObject: GeographiesSchemaObject)
     flattenedGeographies.push(...relationshipGeographies)
   }
 
+  // If the geography is not nation then this will remove the United Kindom relation and reverse the array so that the plots are generated in the correct order.
   if (mainGeography.geography_type != 'Nation') {
     return flattenedGeographies.filter((geography) => geography.geography_type != 'United Kingdom').reverse()
   }
