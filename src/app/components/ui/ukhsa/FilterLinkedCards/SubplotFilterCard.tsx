@@ -6,6 +6,7 @@ import { useState } from 'react'
 import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
+import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
@@ -27,13 +28,13 @@ const SubplotFilterCard = ({
   cardData,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 2)
+  const [date, setDate] = useState<string | null>(null)
   //FUNCTION FOR HANDLING THE SELECTED TIMEPERIOD/
   const handleTimePeriodChange = (index: number) => {
     setCurrentTimePeriodIndex(index)
   }
   // we need to retrieve date somehow
-  const date = ''
-  const description = `Last Updated ${date}`
+  const description = date ? `Last Updated ${formatDate(date)}` : ''
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent!.name}, ${geography.name})`
   const id = title
@@ -98,6 +99,7 @@ const SubplotFilterCard = ({
                 geographyFilters={geographyFilters}
                 geography={geography}
                 cardData={cardData}
+                handleLatestDate={setDate}
               />
             </TabsContent>
             {/* <TabsContent

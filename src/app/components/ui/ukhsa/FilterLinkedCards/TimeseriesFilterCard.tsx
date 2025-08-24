@@ -1,11 +1,13 @@
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
+import { useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { ClientTable } from '@/app/components/cms/Table/ClientTable'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
+import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
@@ -21,8 +23,9 @@ interface TimeseriesFilterCardProps {
 }
 
 const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }: TimeseriesFilterCardProps) => {
-  const date = ''
-  const description = `Last Updated ${date}`
+  const [date, setDate] = useState<string | null>(null)
+
+  const description = date ? `Last Updated ${formatDate(date)}` : ''
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
@@ -86,7 +89,12 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
               id={`chart-${kebabCase(title)}-content`}
             >
               <h1>{cardData.legend_title}</h1>
-              <TimeseriesClientChart geography={geography} dataFilters={dataFilters} timePeriods={timePeriods} />
+              <TimeseriesClientChart
+                geography={geography}
+                dataFilters={dataFilters}
+                timePeriods={timePeriods}
+                handleLatestDate={setDate}
+              />
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-table`}

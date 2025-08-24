@@ -14,9 +14,10 @@ interface ClientChartProps {
   geography: GeographiesSchemaObject
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
+  handleLatestDate: (date: string) => void
 }
 
-const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientChartProps) => {
+const TimeseriesClientChart = ({ geography, dataFilters, timePeriods, handleLatestDate }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -89,7 +90,9 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientCh
   }
 
   if (chartResponse) {
-    const { figure } = chartResponse
+    const { figure, last_updated } = chartResponse
+    handleLatestDate(last_updated)
+
     return <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
   }
 }
