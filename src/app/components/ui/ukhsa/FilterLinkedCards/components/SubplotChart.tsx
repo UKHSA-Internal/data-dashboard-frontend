@@ -67,7 +67,6 @@ const SubplotClientChart = ({
                 stratum: filter.value.parameters.stratum.value,
               },
               plots: geographyRelations.map((geography) => {
-                console.log(geography)
                 return {
                   label: geography.name,
                   geography_type: geography.geography_type,

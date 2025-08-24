@@ -9,7 +9,6 @@ export type FlattenedGeography = {
 export type GeographyColour = string
 
 export const getGeographyColourSelection = (geographyType: string, geographies: GeographyFilters): GeographyColour => {
-  console.log('get colour :', geographies)
   const selected = geographies.geography_types.filter((type) => type.value.geography_type === geographyType)
   if (selected.length > 0) {
     return selected[0].value.colour
