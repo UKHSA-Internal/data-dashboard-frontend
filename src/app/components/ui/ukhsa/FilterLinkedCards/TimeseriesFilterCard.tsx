@@ -61,7 +61,7 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                   </span>
                 </Link>
               </TabsTrigger>
-              <TabsTrigger
+              {/* <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-download`}
                 aria-controls={`download-${kebabCase(title)}-content`}
@@ -69,7 +69,7 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                 <Link href={`#download-${kebabCase(title)}`}>
                   <span>Download</span>
                 </Link>
-              </TabsTrigger>
+              </TabsTrigger> */}
             </TabsList>
             <TabsContent
               value={`${kebabCase(title)}-chart`}
@@ -88,14 +88,14 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
             >
               Table content
             </TabsContent>
-            <TabsContent
+            {/* <TabsContent
               value={`${kebabCase(title)}-download`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="download"
               id={`download-${kebabCase(title)}-content`}
             >
               Download content
-            </TabsContent>
+            </TabsContent> */}
           </Tabs>
         </article>
       </Card>
