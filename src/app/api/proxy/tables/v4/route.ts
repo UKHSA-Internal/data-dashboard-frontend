@@ -12,7 +12,6 @@ export async function POST(req: NextRequest) {
   }
 
   const proxiedResponse = await getTables(body)
-  console.log('tables response: ', proxiedResponse)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)

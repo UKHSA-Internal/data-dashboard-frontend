@@ -33,7 +33,6 @@ const DropdownTab = ({ className, chartTitle, noAbout, noDownload = false }: Dro
       id={`ukhsa-chart-dropdown-${chartIdentifier}`}
       defaultValue={`chart-${chartIdentifier}`}
       onChange={(optionSelected) => {
-        console.log('Option Selected: ', `${chartIdentifier}-${optionSelected.target.value}`)
         optionSelected.preventDefault()
         setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
       }}

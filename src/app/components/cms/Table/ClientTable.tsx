@@ -37,18 +37,9 @@ const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string
   return fallback
 }
 
-export function ClientTable({
-  // data: { chart, y_axis, x_axis, x_axis_title, y_axis_title, title, body },
-  size,
-  geography,
-  dataFilters,
-  timePeriods,
-  cardData,
-}: TableProps) {
+export function ClientTable({ size, geography, dataFilters, timePeriods, cardData }: TableProps) {
   const { t } = useTranslation('common')
-  const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix}`
-  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
+
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>()
   const [tableLoading, setTableLoading] = useState(true)
@@ -59,6 +50,11 @@ export function ClientTable({
   const chartDateRange: MinMaxFullDate = getMinMaxFullDate(timePeriods)
   const tableDateRange: MinMaxTimePeriodLabelResponse = getMinMaxTimePeriodLabels(timePeriods)
 
+  const geographyParent: FlattenedGeography | null = getParentGeography(geography)
+
+  // hardcoded for timeseries charts but want to be parameters depending on the use case.
+  const title = `${cardData.title_prefix}`
+  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
   const x_axis_title = 'year'
   const y_axis_title = `Vaccine Coverage %`
   const x_axis = 'date'
