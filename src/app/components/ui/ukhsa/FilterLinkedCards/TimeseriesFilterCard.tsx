@@ -94,7 +94,6 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
               data-type="table"
               id={`table-${kebabCase(title)}-content`}
             >
-              table
               <ClientTable geography={geography} dataFilters={dataFilters} timePeriods={timePeriods} size={'wide'} />
             </TabsContent>
             {/* <TabsContent

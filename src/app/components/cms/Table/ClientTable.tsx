@@ -64,8 +64,8 @@ export function ClientTable({
         const chartResponse = await getCharts({
           chart_height: 260,
           chart_width: 515,
-          x_axis: 'date',
-          y_axis: 'metric',
+          x_axis: x_axis,
+          y_axis: y_axis,
           y_axis_title: 'Year',
           y_axis_minimum_value: null,
           y_axis_maximum_value: null,
@@ -97,7 +97,7 @@ export function ClientTable({
       } catch (error) {
         setChartError(error instanceof Error ? error.message : 'Unknown error')
       } finally {
-        setTableLoading(false)
+        setChartLoading(false)
       }
     }
 
@@ -111,8 +111,8 @@ export function ClientTable({
         setTableLoading(true)
 
         const tableResponse = await getTables({
-          x_axis: 'date',
-          y_axis: 'metric',
+          x_axis: x_axis,
+          y_axis: y_axis,
           plots: dataFilters.map((filter: DataFilter) => {
             return {
               topic: filter.value.parameters.topic.value,
@@ -149,6 +149,14 @@ export function ClientTable({
     fetchTables()
   }, [dataFilters, geography])
 
+  if (tableLoading || chartLoading) {
+    return <span>loading...</span>
+  }
+
+  if (tableError || chartError) {
+    return <span>{`Error: ${tableError || chartError}`}</span>
+  }
+
   if (tableResponse && chartResponse) {
     console.log('tableResponse: ', tableResponse)
     const groups = parseChartTableData(tableResponse.data, {
@@ -180,21 +188,21 @@ export function ClientTable({
 
         <tbody className="govuk-table__body">
           {groups.map(({ columns, data }, groupIndex) => {
-            let labelIndex = 0
+            // let labelIndex = 0
 
             return (
               <Fragment key={groupIndex}>
                 <tr className="govuk-table__row sticky top-0 bg-grey-3 js:-top-6">
                   {columns.map((column, columnIndex) => {
                     // For multu-column tables, working out which label to get
-                    labelIndex = groupIndex * (columns.length - 1) + columnIndex - 1
+                    // labelIndex = groupIndex * (columns.length - 1) + columnIndex - 1
 
                     // In cases where there are 2 columns all table,
                     // but the last row only has one, an exception is needed here
-                    if (groups.length > 1 && groupIndex == groups.length - 1) {
-                      const previousColLength = groups[groupIndex - 1]?.columns?.length - 1
-                      labelIndex = groupIndex * previousColLength + columnIndex - 1
-                    }
+                    // if (groups.length > 1 && groupIndex == groups.length - 1) {
+                    //   const previousColLength = groups[groupIndex - 1]?.columns?.length - 1
+                    //   labelIndex = groupIndex * previousColLength + columnIndex - 1
+                    // }
 
                     incrementingColumnId += 1
                     // const chartLabel = columnIndex === 0 ? '' : chart[labelIndex]?.value?.label ?? ''
@@ -282,7 +290,4 @@ export function ClientTable({
       </table>
     )
   }
-
-  // TODO: This needs to be a chart loading / chart error component displayed
-  // return <ChartEmpty resetHref={pathname} />
 }
