@@ -7,6 +7,7 @@ import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
+import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
@@ -155,11 +156,23 @@ export function ClientTable({
   }, [dataFilters, geography])
 
   if (tableLoading || chartLoading) {
-    return <span>loading...</span>
+    return (
+      <ClientInformationCard
+        variant="loading"
+        title="Table loading"
+        message="Requesting tabular information based on selected filters"
+      />
+    )
   }
 
   if (tableError || chartError) {
-    return <span>{`Error: ${tableError || chartError}`}</span>
+    return (
+      <ClientInformationCard
+        variant="error"
+        title="error"
+        message="No data is available for the tables that you have requested."
+      />
+    )
   }
 
   if (tableResponse && chartResponse) {
