@@ -3,16 +3,20 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import { Fragment, useEffect, useState } from 'react'
 
-import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
 import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
-import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
+import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
+import {
+  getMinMaxFullDate,
+  getMinMaxTimePeriodLabels,
+  MinMaxFullDate,
+  MinMaxTimePeriodLabelResponse,
+} from '@/app/utils/time-period.utils'
 import { chartTableMaxColumns } from '@/config/constants'
-
-import { RichText } from '../RichText/RichText'
 
 interface TableProps {
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
@@ -20,6 +24,7 @@ interface TableProps {
   geography: GeographiesSchemaObject
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
+  cardData: FilterLinkedTimeSeriesData
 }
 
 // To receieve axis title, chart.label, & fallback text
@@ -37,11 +42,12 @@ export function ClientTable({
   geography,
   dataFilters,
   timePeriods,
+  cardData,
 }: TableProps) {
   const { t } = useTranslation('common')
-  const title = 'example title'
-  const body = 'example body'
-
+  const geographyParent: FlattenedGeography | null = getParentGeography(geography)
+  const title = `${cardData.title_prefix}`
+  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>()
   const [tableLoading, setTableLoading] = useState(true)
@@ -50,6 +56,7 @@ export function ClientTable({
   const [chartError, setChartError] = useState<string | null>(null)
 
   const chartDateRange: MinMaxFullDate = getMinMaxFullDate(timePeriods)
+  const tableDateRange: MinMaxTimePeriodLabelResponse = getMinMaxTimePeriodLabels(timePeriods)
 
   const x_axis_title = 'year'
   const y_axis_title = `Vaccine Coverage %`
@@ -106,7 +113,6 @@ export function ClientTable({
 
   useEffect(() => {
     const fetchTables = async () => {
-      console.log('called fetch tables')
       try {
         setTableLoading(true)
 
@@ -133,7 +139,6 @@ export function ClientTable({
             }
           }),
         })
-        console.log('tableResponse', tableResponse)
         if (tableResponse.success) {
           setTableResponse(tableResponse)
         } else {
@@ -158,14 +163,9 @@ export function ClientTable({
   }
 
   if (tableResponse && chartResponse) {
-    console.log('tableResponse: ', tableResponse)
     const groups = parseChartTableData(tableResponse.data, {
       maxColumns: chartTableMaxColumns[size],
     })
-
-    console.log('groups: ', groups)
-
-    const timestamp = chartResponse.success && chartResponse.data.last_updated
 
     let incrementingColumnId = 0
 
@@ -173,9 +173,16 @@ export function ClientTable({
 
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
-        <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
-          <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
-          <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
+        <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2">
+          <div className="govuk-!-margin-bottom-2 font-bold">
+            {t('cms.blocks.table.timeseries_title', { title, geographyDetails })}
+          </div>
+          <p className="govuk-!-margin-0">
+            {t('cms.blocks.table.min_year_to_max_year', {
+              minYear: tableDateRange.minLabel,
+              maxYear: tableDateRange.maxLabel,
+            })}
+          </p>
           {hasReportingDelayPeriod && (
             <>
               <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">

@@ -1,19 +1,19 @@
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
-import { getMinMaxFullDate,getMinMaxYears } from './time-period.utils'
+import { getMinMaxFullDate, getMinMaxTimePeriodLabels, getMinMaxYears } from './time-period.utils'
 // Mock TimePeriod type for testing
 describe('time-period.utils, ', () => {
-  describe('getMinMaxYears', () => {
-    const createMockTimePeriod = (id: string, label: string, dateFrom: string, dateTo: string): TimePeriod => ({
-      id,
-      value: {
-        label,
-        date_from: dateFrom,
-        date_to: dateTo,
-      },
-      type: 'time_period',
-    })
+  const createMockTimePeriod = (id: string, label: string, dateFrom: string, dateTo: string): TimePeriod => ({
+    id,
+    value: {
+      label,
+      date_from: dateFrom,
+      date_to: dateTo,
+    },
+    type: 'time_period',
+  })
 
+  describe('getMinMaxYears', () => {
     test('should return the earliest date_from year and latest date_to year from multiple time periods', () => {
       const timePeriods: TimePeriod[] = [
         createMockTimePeriod('1', '2010-2011', '2010-04-01', '2011-03-31'),
@@ -276,6 +276,115 @@ describe('time-period.utils, ', () => {
       expect(result).toEqual({
         date_from: '2020-01-01',
         date_to: '2021-02-28',
+      })
+    })
+  })
+  describe('getMinMaxTimePeriodLabels', () => {
+    it('should return the label of the time period with earliest date_from and the label of the time period with latest date_to', () => {
+      const timePeriods: TimePeriod[] = [
+        createMockTimePeriod('1', '2010-2011', '2010-04-01', '2011-03-31'),
+        createMockTimePeriod('2', '2009-2010', '2009-04-01', '2010-03-31'),
+        createMockTimePeriod('3', '2012-2013', '2012-04-01', '2013-03-31'),
+      ]
+
+      const result = getMinMaxTimePeriodLabels(timePeriods)
+
+      expect(result).toEqual({
+        minLabel: '2009-2010',
+        maxLabel: '2012-2013',
+      })
+    })
+
+    it('should return the same label for min and max when there is only a single time period', () => {
+      const timePeriods: TimePeriod[] = [createMockTimePeriod('1', '2020-2021', '2020-04-01', '2021-03-31')]
+
+      const result = getMinMaxTimePeriodLabels(timePeriods)
+
+      expect(result).toEqual({
+        minLabel: '2020-2021',
+        maxLabel: '2020-2021',
+      })
+    })
+
+    it('should find correct labels regardless of the order of time periods in the array', () => {
+      const timePeriods: TimePeriod[] = [
+        createMockTimePeriod('1', '2015-2016', '2015-04-01', '2016-03-31'),
+        createMockTimePeriod('2', '2010-2011', '2010-04-01', '2011-03-31'),
+        createMockTimePeriod('3', '2020-2021', '2020-04-01', '2021-03-31'),
+        createMockTimePeriod('4', '2008-2009', '2008-04-01', '2009-03-31'),
+      ]
+
+      const result = getMinMaxTimePeriodLabels(timePeriods)
+
+      expect(result).toEqual({
+        minLabel: '2008-2009',
+        maxLabel: '2020-2021',
+      })
+    })
+
+    it('should throw an error when the time periods array is empty', () => {
+      const timePeriods: TimePeriod[] = []
+
+      expect(() => getMinMaxTimePeriodLabels(timePeriods)).toThrow(
+        'Cannot determine time period labels from empty time periods array'
+      )
+    })
+
+    it('should handle time periods where different periods have the earliest start and latest end dates', () => {
+      const timePeriods: TimePeriod[] = [
+        createMockTimePeriod('1', 'Early Period', '2020-01-01', '2020-06-30'),
+        createMockTimePeriod('2', 'Late Period', '2020-07-01', '2020-12-31'),
+        createMockTimePeriod('3', 'Middle Period', '2020-03-01', '2020-09-30'),
+      ]
+
+      const result = getMinMaxTimePeriodLabels(timePeriods)
+
+      expect(result).toEqual({
+        minLabel: 'Early Period',
+        maxLabel: 'Late Period',
+      })
+    })
+
+    it('should return 2009-2010 as minLabel and 2024-2025 as maxLabel when given the complete example dataset', () => {
+      const fullDataset: TimePeriod[] = [
+        createMockTimePeriod('1', '2009-2010', '2009-04-01', '2010-03-31'),
+        createMockTimePeriod('2', '2010-2011', '2010-04-01', '2011-03-31'),
+        createMockTimePeriod('3', '2011-2012', '2011-04-01', '2012-03-31'),
+        createMockTimePeriod('4', '2012-2013', '2012-04-01', '2013-03-31'),
+        createMockTimePeriod('5', '2013-2014', '2013-04-01', '2014-03-31'),
+        createMockTimePeriod('6', '2024-2025', '2024-04-01', '2025-03-31'),
+      ]
+
+      const result = getMinMaxTimePeriodLabels(fullDataset)
+
+      expect(result).toEqual({
+        minLabel: '2009-2010',
+        maxLabel: '2024-2025',
+      })
+    })
+
+    it('should not modify the original time periods array when processing', () => {
+      const timePeriods: TimePeriod[] = [createMockTimePeriod('1', '2020-2021', '2020-04-01', '2021-03-31')]
+      const originalLength = timePeriods.length
+      const originalFirstItem = { ...timePeriods[0] }
+
+      getMinMaxTimePeriodLabels(timePeriods)
+
+      expect(timePeriods.length).toBe(originalLength)
+      expect(timePeriods[0]).toEqual(originalFirstItem)
+    })
+
+    it('should correctly identify labels when the same time period has both earliest and latest dates', () => {
+      const timePeriods: TimePeriod[] = [
+        createMockTimePeriod('1', '2020-Full-Year', '2020-01-01', '2020-12-31'),
+        createMockTimePeriod('2', '2020-Mid-Year', '2020-06-01', '2020-06-30'),
+      ]
+
+      const result = getMinMaxTimePeriodLabels(timePeriods)
+
+      expect(result).toEqual({
+        minLabel: '2020-Full-Year',
+        maxLabel: '2020-Full-Year',
       })
     })
   })
