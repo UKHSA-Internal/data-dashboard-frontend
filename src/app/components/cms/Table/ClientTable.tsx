@@ -2,19 +2,16 @@
 import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import { Fragment, useEffect, useState } from 'react'
-import { z } from 'zod'
 
-import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
 import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
-import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
-import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { chartTableMaxColumns } from '@/config/constants'
 
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { RichText } from '../RichText/RichText'
 
 interface TableProps {

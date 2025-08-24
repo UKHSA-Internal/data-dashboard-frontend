@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { DataFilter, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedSubplotData,GeographyFilters, TimePeriod  } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
@@ -10,7 +10,6 @@ import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInterac
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
-import { FilterLinkedSubplotData } from '@/api/models/cms/Page/GlobalFilter'
 
 interface SubplotClientChartProps {
   selectedVaccinations: DataFilter[]

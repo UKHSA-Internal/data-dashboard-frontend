@@ -3,11 +3,11 @@ import Link from 'next/link'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { ClientTable } from '@/app/components/cms/Table/ClientTable'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
+import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
-import { ClientTable } from '@/app/components/cms/Table/ClientTable'
-import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
