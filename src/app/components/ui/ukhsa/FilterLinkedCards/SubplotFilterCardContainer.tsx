@@ -1,6 +1,7 @@
 'use client'
 
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
+
 import SubplotFilterCard from './SubplotFilterCard'
 
 const SubplotFilterCardContainer = () => {

@@ -14,12 +14,10 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { MapDataResponse } from '@/api/models/Maps'
 import { postMapData } from '@/api/requests/cover-maps/postMaps'
-import { RequestParams } from '@/api/requests/charts/getCharts'
 import {
   GeographiesSchema,
   GeographyObject,
   getGeographies,
-  GeographiesSchemaObject,
 } from '@/api/requests/geographies/getGeographies'
 import { extractGeographyIdFromGeographyFilter, getAccompanyingPoints } from '@/app/utils/global-filter-content-parser'
 
