@@ -1,14 +1,14 @@
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
-import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
 
-import { MinMaxFullDate, getMinMaxYears, getMinMaxFullDate, MinMaxYear } from '@/app/utils/time-period.utils'
-import { getParentGeography, FlattenedGeography } from '@/app/utils/geography.utils'
+import { DataFilter, FilterLinkedTimeSeriesData,TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
+import { FlattenedGeography,getParentGeography } from '@/app/utils/geography.utils'
+import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
-import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import { TimePeriod, DataFilter, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 
 interface TimeseriesFilterCardProps {
   geography: GeographiesSchemaObject

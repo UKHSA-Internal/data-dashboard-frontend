@@ -1,5 +1,6 @@
-import { getParentGeography } from './geography.utils'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+
+import { getParentGeography } from './geography.utils'
 
 describe('getParentGeography', () => {
   test('returns United Kingdom as parent for Nation geography type', () => {

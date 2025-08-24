@@ -2,18 +2,13 @@
 
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
 
-import { PageSection } from '../PageSections/PageSectionsWithContents'
-
 import TimeseriesFilterCard from './TimeseriesFilterCard'
-import SubplotFilterCard from './SubplotFilterCard'
 
 const TimeSeriesFilterCardsContainer = () => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
     selectedGeographyFilters,
-    geographyFilters,
-    coverageTemplateData,
     timePeriods,
     timeseriesTemplateData,
   } = state

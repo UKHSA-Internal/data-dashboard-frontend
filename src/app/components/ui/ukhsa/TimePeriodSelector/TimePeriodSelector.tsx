@@ -10,7 +10,7 @@ const Button = ({ label, onClick, disabled }: { label: string; onClick: () => vo
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`flex govuk-button govuk-button--secondary font-bold text-2xl`}
+    className={`govuk-button govuk-button--secondary text-2xl flex font-bold`}
   >
     {label}
   </button>
@@ -38,9 +38,9 @@ export const TimePeriodSelector = ({
   }
 
   return (
-    <div className="flex justify gap-2 items-baseline">
+    <div className="justify flex items-baseline gap-2">
       <Button label="-" onClick={handleDecrease} disabled={isFirstPeriod} />
-      <div className=" border border-black px-4 py-2 min-w-32 text-center">
+      <div className=" min-w-32 border border-black px-4 py-2 text-center">
         {currentTimePeriod?.value.label || 'No period selected'}
       </div>
       <Button label="+" onClick={handleIncrease} disabled={isLastPeriod} />

@@ -18,13 +18,13 @@ import {
   TabsTrigger,
 } from '@/app/components/ui/ukhsa'
 import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
+import SubplotFilterCardContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
+import TimeSeriesFilterCardsContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL, getShowMoreURL } from '@/app/utils/show-more.utils'
-import TimeSeriesFilterCardsContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
-import SubplotFilterCardContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
 
 import {
   ButtonExternal,

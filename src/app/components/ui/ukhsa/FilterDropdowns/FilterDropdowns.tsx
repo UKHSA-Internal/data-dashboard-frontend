@@ -1,7 +1,8 @@
 'use client'
 import React from 'react'
 
-import { DataFilters } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import {
   FlatOption,
   GroupedOption,
@@ -29,7 +30,7 @@ function DisplayGeographyDropdowns() {
 
   // Use for...of to iterate over Map entries
   for (const [key, geographyArea] of geographyAreas) {
-    const data = geographyArea.map((item: any) => {
+    const data = geographyArea.map((item: GeographiesSchemaObject) => {
       return { id: `geography.${key}.${item.geography_code}`, label: item.name }
     })
 
@@ -49,7 +50,7 @@ function DisplayCoverageDropdown() {
     return null
   }
   const data: FlatOption[] = []
-  thresholdFilters.thresholds.map((filter: any) => {
+  thresholdFilters.thresholds.map((filter: ThresholdFilter) => {
     data.push({ id: `${filter.type}.${filter.id}`, label: filter.value.label })
   })
   return (
