@@ -11,7 +11,6 @@ const SubplotFilterCardContainer = () => {
     geographyFilters,
     coverageTemplateData,
     timePeriods,
-    timeseriesTemplateData,
   } = state
 
   const isChartDataAvailable = () => {
@@ -26,10 +25,10 @@ const SubplotFilterCardContainer = () => {
               <SubplotFilterCard
                 key={geography.name}
                 geography={geography}
-                dataFilters={selectedVaccinationFilters}
-                geographyFilters={geographyFilters}
-                cardData={coverageTemplateData}
-                timePeriods={timePeriods}
+                selectedVaccinations={selectedVaccinationFilters!}
+                geographyFilters={geographyFilters!}
+                cardData={coverageTemplateData!}
+                timePeriods={timePeriods!}
               />
             )
           })

@@ -5,22 +5,22 @@ import { useEffect, useState } from 'react'
 import { getSubplots, RequestParams } from '@/api/requests/charts/subplot/getSubplots'
 import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInteractive'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 import { getGeographyColourSelection, flattenGeographyObject } from '@/app/utils/geography.utils'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 interface SubplotClientChartProps {
-  dataFilters: any
-  geographyFilters: any
-  timePeriods: any
-  currentTimePeriodIndex: any
+  selectedVaccinations: DataFilter[]
+  geographyFilters: GeographyFilters
+  timePeriods: TimePeriod[]
+  currentTimePeriodIndex: number
   handleTimePeriodChange: (index: number) => void
   geography: GeographiesSchemaObject
 }
 
 const SubplotClientChart = ({
-  dataFilters,
+  selectedVaccinations,
   geography,
   geographyFilters,
   timePeriods,
@@ -58,7 +58,7 @@ const SubplotClientChart = ({
             sex: 'all',
             stratum: '24m',
           },
-          subplots: dataFilters.map((filter: any) => {
+          subplots: selectedVaccinations.map((filter: any) => {
             return {
               subplot_title: filter.value.label,
               subplot_parameters: {
@@ -88,7 +88,7 @@ const SubplotClientChart = ({
     }
 
     fetchCharts()
-  }, [dataFilters, geographyFilters, currentTimePeriodIndex])
+  }, [selectedVaccinations, geographyFilters, currentTimePeriodIndex])
 
   if (loading) {
     return <span>loading...</span>

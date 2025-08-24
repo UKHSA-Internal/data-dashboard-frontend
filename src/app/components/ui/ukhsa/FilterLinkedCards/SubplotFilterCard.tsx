@@ -11,12 +11,12 @@ import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
-import { DataFilters, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 interface SubplotFilterCardProps {
   geography: GeographiesSchemaObject
-  dataFilters: DataFilters
+  selectedVaccinations: DataFilter[]
   geographyFilters: GeographyFilters
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
@@ -24,7 +24,7 @@ interface SubplotFilterCardProps {
 
 const SubplotFilterCard = ({
   geography,
-  dataFilters,
+  selectedVaccinations,
   geographyFilters,
   timePeriods,
   cardData,
@@ -98,7 +98,7 @@ const SubplotFilterCard = ({
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 handleTimePeriodChange={handleTimePeriodChange}
                 timePeriods={timePeriods}
-                dataFilters={dataFilters}
+                selectedVaccinations={selectedVaccinations}
                 geographyFilters={geographyFilters}
                 geography={geography}
               />
