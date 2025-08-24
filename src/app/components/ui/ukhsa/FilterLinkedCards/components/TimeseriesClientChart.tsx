@@ -2,12 +2,12 @@
 
 import { useEffect, useState } from 'react'
 
-import { ChartResponse, getCharts, RequestParams } from '@/api/requests/charts/getCharts'
+import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
 import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
-import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
-import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 interface ClientChartProps {
   geography: GeographiesSchemaObject
@@ -36,7 +36,7 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientCh
           y_axis_title: 'Year',
           y_axis_minimum_value: null,
           y_axis_maximum_value: null,
-          plots: dataFilters.map((filter: any) => {
+          plots: dataFilters.map((filter: DataFilter) => {
             return {
               topic: filter.value.parameters.topic.value,
               metric: filter.value.parameters.metric.value,
@@ -46,7 +46,7 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientCh
               line_colour: filter.value.colour,
               label: filter.value.label,
               geography: geography.name,
-              geography_type: geography.geography_type,
+              geography_type: geography.geography_type || undefined,
               chart_type: 'line_multi_coloured',
               line_type: 'SOLID',
               date_from: chartDateRange.date_from,
