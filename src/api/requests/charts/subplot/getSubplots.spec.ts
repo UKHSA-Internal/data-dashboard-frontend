@@ -34,6 +34,7 @@ describe('getSubplots', () => {
       age: 'all',
       sex: 'all',
       stratum: '24m',
+      metric_value_ranges: null,
     },
     subplots: [
       {

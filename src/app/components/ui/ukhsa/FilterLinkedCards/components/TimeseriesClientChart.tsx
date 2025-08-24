@@ -28,6 +28,7 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods, handleLate
     const fetchCharts = async () => {
       try {
         setLoading(true)
+        setError(null)
 
         const chartResponse = await getCharts({
           file_format: 'svg',

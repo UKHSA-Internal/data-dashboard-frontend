@@ -27,6 +27,15 @@ export const requestSchema = z.object({
     topic: z.string().nullable().optional(),
     metric: z.string().nullable().optional(),
     stratum: z.string().nullable().optional(),
+    metric_value_ranges: z
+      .array(
+        z.object({
+          start: z.string().nullable().optional(),
+          end: z.string().nullable().optional(),
+        })
+      )
+      .nullable()
+      .optional(),
   }),
   subplots: z.array(
     z.object({
@@ -80,7 +89,7 @@ export const getSubplots = async (chart: RequestParams) => {
     target_threshold,
     target_threshold_label,
     chart_parameters,
-    subplots
+    subplots,
   } = chart
 
   const body: RequestParams = {
@@ -105,7 +114,10 @@ export const getSubplots = async (chart: RequestParams) => {
   } catch (error) {
     if (error instanceof Error) {
       if (error.code === 400) {
-        logger.info('POST failed (no data) charts/subplot/v1 %s', subplots.map((subplot) => subplot.subplot_title).join())
+        logger.info(
+          'POST failed (no data) charts/subplot/v1 %s',
+          subplots.map((subplot) => subplot.subplot_title).join()
+        )
       } else {
         logger.error(error.message)
       }
