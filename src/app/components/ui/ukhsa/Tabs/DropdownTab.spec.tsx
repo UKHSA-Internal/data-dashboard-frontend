@@ -37,6 +37,7 @@ describe('DropdownTab Component', () => {
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
           chartTitle={chartTitle}
           noAbout={false}
+          noDownload={false}
         />
       </Tabs>
     )
@@ -50,6 +51,7 @@ describe('DropdownTab Component', () => {
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
           chartTitle={chartTitle}
           noAbout={false}
+          noDownload={false}
         />
       </Tabs>
     )

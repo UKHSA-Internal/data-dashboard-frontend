@@ -10,9 +10,10 @@ interface DropdownProps {
   className: string
   chartTitle: string
   noAbout: boolean
+  noDownload?: boolean
 }
 
-const DropdownTab = ({ className, chartTitle, noAbout }: DropdownProps) => {
+const DropdownTab = ({ className, chartTitle, noAbout, noDownload = false }: DropdownProps) => {
   const chartIdentifier = kebabCase(chartTitle)
   const context = React.useContext(TabsContext)
   const { t } = useTranslation('common')
@@ -23,9 +24,8 @@ const DropdownTab = ({ className, chartTitle, noAbout }: DropdownProps) => {
   const dropdownOptions = [
     { value: 'chart', displayText: t('cms.dropdown.chartLabel') },
     { value: 'table', displayText: t('cms.dropdown.tableLabel') },
-    { value: 'download', displayText: t('cms.dropdown.downloadLabel') },
   ]
-
+  noDownload ? null : dropdownOptions.push({ value: 'download', displayText: t('cms.dropdown.downloadLabel') })
   noAbout ? null : dropdownOptions.push({ value: 'about', displayText: t('cms.dropdown.aboutLabel') })
 
   return (
@@ -33,6 +33,7 @@ const DropdownTab = ({ className, chartTitle, noAbout }: DropdownProps) => {
       id={`ukhsa-chart-dropdown-${chartIdentifier}`}
       defaultValue={`chart-${chartIdentifier}`}
       onChange={(optionSelected) => {
+        console.log('Option Selected: ', `${chartIdentifier}-${optionSelected.target.value}`)
         optionSelected.preventDefault()
         setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
       }}

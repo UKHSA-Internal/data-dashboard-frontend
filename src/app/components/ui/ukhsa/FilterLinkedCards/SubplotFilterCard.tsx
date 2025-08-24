@@ -97,6 +97,7 @@ const SubplotFilterCard = ({
                 selectedVaccinations={selectedVaccinations}
                 geographyFilters={geographyFilters}
                 geography={geography}
+                cardData={cardData}
               />
             </TabsContent>
             {/* <TabsContent

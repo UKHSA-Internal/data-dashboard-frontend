@@ -10,6 +10,7 @@ import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInterac
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
+import { FilterLinkedSubplotData } from '@/api/models/cms/Page/GlobalFilter'
 
 interface SubplotClientChartProps {
   selectedVaccinations: DataFilter[]
@@ -18,6 +19,7 @@ interface SubplotClientChartProps {
   currentTimePeriodIndex: number
   handleTimePeriodChange: (index: number) => void
   geography: GeographiesSchemaObject
+  cardData: FilterLinkedSubplotData
 }
 
 const SubplotClientChart = ({
@@ -27,6 +29,7 @@ const SubplotClientChart = ({
   timePeriods,
   currentTimePeriodIndex,
   handleTimePeriodChange,
+  cardData,
 }: SubplotClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -46,8 +49,8 @@ const SubplotClientChart = ({
           y_axis_title: 'Year',
           y_axis_minimum_value: null,
           y_axis_maximum_value: null,
-          target_threshold: 95,
-          target_threshold_label: 'coverage %',
+          target_threshold: cardData.target_threshold,
+          target_threshold_label: cardData.target_threshold_label,
           chart_parameters: {
             x_axis: 'geography',
             y_axis: 'metric',

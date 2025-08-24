@@ -188,6 +188,7 @@ export const renderCard = (
                         className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
                         chartTitle={column.value.title}
                         noAbout={noAbout}
+                        noDownload={false}
                       />
                       <TabsContent
                         value={`${kebabCase(column.value.title)}-chart`}
