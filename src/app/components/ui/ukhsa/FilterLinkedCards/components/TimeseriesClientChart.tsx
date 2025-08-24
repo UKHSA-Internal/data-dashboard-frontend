@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
 import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
@@ -72,11 +73,19 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods }: ClientCh
   }, [dataFilters, geography])
 
   if (loading) {
-    return <span>loading...</span>
+    return (
+      <ClientInformationCard
+        variant="loading"
+        title="Chart loading"
+        message="Requesting chart based on selected filters"
+      />
+    )
   }
 
   if (error) {
-    return <span>{`Error: ${error}`}</span>
+    return (
+      <ClientInformationCard variant="error" title="error" message="No data available for the selected chart filters" />
+    )
   }
 
   if (chartResponse) {

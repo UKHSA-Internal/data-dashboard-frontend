@@ -7,6 +7,7 @@ import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInteractive'
+import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
 
@@ -93,11 +94,19 @@ const SubplotClientChart = ({
   }, [selectedVaccinations, geographyFilters, currentTimePeriodIndex])
 
   if (loading) {
-    return <span>loading...</span>
+    return (
+      <ClientInformationCard
+        variant="loading"
+        title="Chart loading"
+        message="Requesting chart based on selected filters"
+      />
+    )
   }
 
   if (error) {
-    return <span>{`Error: ${error}`}</span>
+    return (
+      <ClientInformationCard variant="error" title="error" message="No data available for the selected chart filters" />
+    )
   }
 
   if (chartResponse) {

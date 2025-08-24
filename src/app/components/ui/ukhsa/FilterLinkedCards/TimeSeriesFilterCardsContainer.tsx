@@ -2,16 +2,12 @@
 
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
 
+import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 
 const TimeSeriesFilterCardsContainer = () => {
   const { state } = useGlobalFilters()
-  const {
-    selectedVaccinationFilters,
-    selectedGeographyFilters,
-    timePeriods,
-    timeseriesTemplateData,
-  } = state
+  const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
   const isChartDataAvailable = () => {
     return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
@@ -32,7 +28,11 @@ const TimeSeriesFilterCardsContainer = () => {
           )
         })
       ) : (
-        <div>Charts will be displayed here when filters are selected above.</div>
+        <ClientInformationCard
+          variant="info"
+          title="Chart selection required"
+          message="Please make the requried selections from the filter to display a chart."
+        />
       )}
     </>
   )
