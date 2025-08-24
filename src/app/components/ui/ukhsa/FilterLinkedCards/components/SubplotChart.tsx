@@ -8,20 +8,25 @@ import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 import { getGeographyColourSelection, flattenGeographyObject } from '@/app/utils/geography.utils'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 interface SubplotClientChartProps {
   dataFilters: any
-  selectedGeographyFilters: any;
-  geographyFilters: any;
-  timePeriods: any;
-  handleTimePeriodIndex: any;
-  currentTimePeriodIndex: any;
+  geographyFilters: any
+  timePeriods: any
+  currentTimePeriodIndex: any
+  handleTimePeriodChange: (index: number) => void
+  geography: GeographiesSchemaObject
 }
 
-
-
-
-const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePeriods, currentTimePeriodIndex, handleTimePeriodChange }: SubplotClientChartProps ) => {
+const SubplotClientChart = ({
+  dataFilters,
+  geography,
+  geographyFilters,
+  timePeriods,
+  currentTimePeriodIndex,
+  handleTimePeriodChange,
+}: SubplotClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<Awaited<ReturnType<typeof getSubplots>> | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -47,7 +52,7 @@ const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePer
       date_to: '2021-12-31',
       age: 'all',
       sex: 'all',
-      stratum: '24m'
+      stratum: '24m',
     },
     subplots: dataFilters.map((filter: any) => {
       return {
@@ -55,19 +60,19 @@ const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePer
         subplot_parameters: {
           topic: filter.value.parameters.topic.value,
           metric: filter.value.parameters.metric.value,
-          stratum: filter.value.parameters.stratum.value
+          stratum: filter.value.parameters.stratum.value,
         },
-        plots: geographyRelations.map(geography => {
+        plots: geographyRelations.map((geography) => {
           console.log(geography)
           return {
             label: geography.name,
             geography_type: geography.geography_type,
             geography: geography.name,
-            line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters)
+            line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters),
           }
-        })
+        }),
       }
-    })
+    }),
   }
 
   console.log(timePeriods[currentTimePeriodIndex].value.date_from)
@@ -96,7 +101,7 @@ const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePer
             date_to: timePeriods[currentTimePeriodIndex].value.date_to,
             age: 'all',
             sex: 'all',
-            stratum: '24m'
+            stratum: '24m',
           },
           subplots: dataFilters.map((filter: any) => {
             return {
@@ -104,20 +109,19 @@ const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePer
               subplot_parameters: {
                 topic: filter.value.parameters.topic.value,
                 metric: filter.value.parameters.metric.value,
-                stratum: filter.value.parameters.stratum.value
+                stratum: filter.value.parameters.stratum.value,
               },
-              plots: geographyRelations.map(geography => {
+              plots: geographyRelations.map((geography) => {
                 console.log(geography)
                 return {
                   label: geography.name,
                   geography_type: geography.geography_type,
                   geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters)
+                  line_colour: getGeographyColourSelection(geography.geography_type, geographyFilters),
                 }
-              })
+              }),
             }
-          })
-
+          }),
         })
 
         setChartResponse(chartResponse.data)
@@ -155,6 +159,5 @@ const SubplotClientChart = ( { dataFilters, geography, geographyFilters, timePer
     )
   }
 }
-
 
 export default SubplotClientChart
