@@ -291,6 +291,14 @@ export const mockChartRowCardWithDualChartCard = Mock.of<CardType>({
     ],
   },
 })
+export const mockFilterLinkedSubplotChartTemplate = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'filter_linked_map',
+})
+export const mockFilterLinkedTimeSeriesChartTemplate = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'filter_linked_map',
+})
 export const mockLinkedMapCard = Mock.of<CardType>({
   id: 'mockid',
   type: 'filter_linked_map',
