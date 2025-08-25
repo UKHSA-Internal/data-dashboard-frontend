@@ -68,6 +68,7 @@ export interface GlobalFilterActions {
   removeFilter: (filterId: string) => void
   clearFilters: () => void
   setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
+  addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
 }
 
 //Interface for the global filter context
@@ -274,6 +275,44 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
             break
         }
       }
+    },
+    addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => {
+      const geographyFilterData = filter.id.split('.')
+      const geographyGroup = geographyFilterData[1]
+      const geographyId = geographyFilterData[2]
+      const previouslySelectedId = `${geographyFilterData[0]}.${geographyFilterData[1]}.${mapSelectedId}`
+
+      // Update selectedFilters: remove existing filter if mapSelectedId exists, then add new filter
+      setSelectedFilters((prevFilters) => {
+        let updatedFilters = prevFilters
+
+        // Remove the filter if mapSelectedId exists
+        if (mapSelectedId) {
+          updatedFilters = prevFilters.filter((storedFilter) => storedFilter.id !== previouslySelectedId)
+        }
+
+        // Add the new filter (create new array to avoid mutation)
+        return [...updatedFilters, filter]
+      })
+
+      // Update selectedGeographyFilters: remove existing if mapSelectedId exists
+      if (mapSelectedId) {
+        setSelectedGeographyFilters((prevFilters) =>
+          prevFilters.filter((geoFilter) => geoFilter.geography_code !== mapSelectedId)
+        )
+      }
+
+      // Find the corresponding geography in state
+      const newGeographyFilter = geographyAreas
+        .get(geographyGroup)
+        ?.find((geography) => geography.geography_code === geographyId)
+
+      if (!newGeographyFilter) {
+        return
+      }
+
+      // Add new geography to state
+      setSelectedGeographyFilters((prevFilters) => addFilterToSelectedGeographyFilters(prevFilters, newGeographyFilter))
     },
     removeFilter: (filterId: string) => {
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
