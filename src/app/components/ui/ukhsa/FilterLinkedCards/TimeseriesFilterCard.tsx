@@ -4,6 +4,7 @@ import { useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { ClientDownload } from '@/app/components/cms/Download/ClientDownload'
 import { ClientTable } from '@/app/components/cms/Table/ClientTable'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
@@ -66,7 +67,7 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                   </span>
                 </Link>
               </TabsTrigger>
-              {/* <TabsTrigger
+              <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-download`}
                 aria-controls={`download-${kebabCase(title)}-content`}
@@ -74,7 +75,7 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                 <Link href={`#download-${kebabCase(title)}`}>
                   <span>Download</span>
                 </Link>
-              </TabsTrigger> */}
+              </TabsTrigger>
             </TabsList>
             <DropdownTab
               aria-label="Select for selecting chart content"
@@ -110,14 +111,22 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                 cardData={cardData}
               />
             </TabsContent>
-            {/* <TabsContent
+            <TabsContent
               value={`${kebabCase(title)}-download`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="download"
               id={`download-${kebabCase(title)}-content`}
             >
-              Download content
-            </TabsContent> */}
+              <span className="govuk-heading-m govuk-!-margin-top-3 js:hidden" id={`download-${kebabCase(title)}`}>
+                Download
+              </span>
+              <ClientDownload
+                geography={geography}
+                dataFilters={dataFilters}
+                timePeriods={timePeriods}
+                cardData={cardData}
+              />
+            </TabsContent>
           </Tabs>
         </article>
       </Card>
