@@ -12,7 +12,7 @@ import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { mapQueryKeys } from '@/app/constants/map.constants'
-import { useGeographyState, useVaccinationState } from '@/app/hooks/globalFilterHooks'
+import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
   getActiveCssVariableFromColour,
   getCssVariableFromColour,
@@ -20,6 +20,7 @@ import {
   MapFeatureColour,
 } from '@/app/utils/map.utils'
 
+import { FlatOption } from '../../../MultiselectDropdown/MultiselectDropdown'
 import { ThresholdItemProps } from '../controls/MapLegendControl'
 import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
 import localAuthoritiesFeatureCollection, {
@@ -122,13 +123,13 @@ const CoverLayer = <T extends LayerWithFeature>({
   const activeTooltipLayerRef: { current: T | null } = useRef(null)
   const { selectedVaccination } = useVaccinationState()
   const { geographyAreas } = useGeographyState()
-
+  const { addFilterFromMap } = useSelectedFilters()
   const featuresRef = useRef<Array<LocalAuthoritiesFeature & RegionFeature & CountriesFeature>>([])
 
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
   const map = useMap()
 
-  const renderTooltip = (featureData: any): TooltipResponse => {
+  const renderTooltip = (featureId: string | null): TooltipResponse => {
     // Return default values instead of undefined
     const defaultResponse: TooltipResponse = {
       regionName: 'Data Unavailable',
@@ -136,18 +137,19 @@ const CoverLayer = <T extends LayerWithFeature>({
       vaccination: 'Data Unavailable',
     }
 
-    if (!featureData || !selectedVaccination || !geographyAreas) {
+    if (!featureId) {
       return defaultResponse
     }
 
-    const vaccination = selectedVaccination.value.label ?? 'Data Unavailable'
+    const vaccination = selectedVaccination!.value.label ?? 'Data Unavailable'
 
-    const geographyDataArray = geographyAreas.get(featureData.geography_type)
+    const geographyDataArray = geographyAreas.get('Upper Tier Local Authority')
+
     if (!geographyDataArray) {
       return { ...defaultResponse, vaccination }
     }
 
-    const geographyData = geographyDataArray.find((area) => area.geography_code === featureData.geography_code)
+    const geographyData = geographyDataArray.find((area) => area.geography_code === featureId)
 
     if (!geographyData) {
       return { ...defaultResponse, vaccination }
@@ -234,11 +236,22 @@ const CoverLayer = <T extends LayerWithFeature>({
           event.target.getElement().setAttribute('data-testid', testId)
         },
         click: (event: CustomLeafletEvent) => {
+          const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
+
+          const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
+
+          if (featureData) {
+            const selectedFeature: FlatOption = {
+              id: `geography.${featureData.geography_type}.${featureData?.geography_code}`,
+              label: `${featureData?.geography}`,
+            }
+            // pass in an optional param to remove the previously clicked one from the geographyFilters.
+            addFilterFromMap(selectedFeature, clickedFeatureIdRef!.current!)
+          }
           // Store the clicked ref
           if (layer.feature.id) {
             clickedFeatureIdRef.current = layer.feature.properties[geoJsonFeatureId]
           }
-          const latlng = Leaflet.latLng(feature.properties.LAT, feature.properties.LONG)
 
           if (map.getZoom() < 8) {
             map.setView(latlng, 8)
@@ -266,10 +279,8 @@ const CoverLayer = <T extends LayerWithFeature>({
               return null
             } else {
               // Clicked new feature - create and open tooltip
-              const featureData = getFeatureData(layer.feature.properties[geoJsonFeatureId])
               const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
-
-              const { regionName, nationName, vaccination } = renderTooltip(featureData)
+              const { regionName, nationName, vaccination } = renderTooltip(featureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
                   `

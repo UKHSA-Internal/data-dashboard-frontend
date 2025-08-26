@@ -7,7 +7,7 @@ import SubplotFilterCard from './SubplotFilterCard'
 
 const SubplotFilterCardContainer = () => {
   const { state } = useGlobalFilters()
-  const { selectedVaccinationFilters, selectedGeographyFilters, geographyFilters, coverageTemplateData, timePeriods } =
+  const { selectedVaccinationFilters, selectedGeographyFilters, geographyFilters, coverageTemplateData, timePeriods, selectedThresholdFilters } =
     state
 
   const isChartDataAvailable = () => {
@@ -22,6 +22,7 @@ const SubplotFilterCardContainer = () => {
             <SubplotFilterCard
               key={geography.name}
               geography={geography}
+              selectedThresholds={selectedThresholdFilters!}
               selectedVaccinations={selectedVaccinationFilters!}
               geographyFilters={geographyFilters!}
               cardData={coverageTemplateData!}

@@ -2,7 +2,13 @@
 
 import { useEffect, useState } from 'react'
 
-import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilter,
+  FilterLinkedSubplotData,
+  GeographyFilters,
+  ThresholdFilter,
+  TimePeriod,
+} from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
@@ -10,10 +16,12 @@ import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInterac
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
+import { mapThresholdsToMetricValueRanges, MetricValueRange } from '@/app/utils/threshold.utils'
 
 interface SubplotClientChartProps {
   selectedVaccinations: DataFilter[]
   geographyFilters: GeographyFilters
+  selectedThresholds: ThresholdFilter[]
   timePeriods: TimePeriod[]
   currentTimePeriodIndex: number
   handleTimePeriodChange: (index: number) => void
@@ -24,6 +32,7 @@ interface SubplotClientChartProps {
 
 const SubplotClientChart = ({
   selectedVaccinations,
+  selectedThresholds,
   geography,
   geographyFilters,
   timePeriods,
@@ -38,9 +47,16 @@ const SubplotClientChart = ({
 
   const geographyRelations = flattenGeographyObject(geography)
   useEffect(() => {
+    let metricValueRanges: MetricValueRange[] | [] = []
+
+    if (selectedThresholds) {
+      metricValueRanges = mapThresholdsToMetricValueRanges(selectedThresholds)
+    }
+
     const fetchCharts = async () => {
       try {
         setLoading(true)
+        setError(null)
 
         const chartResponse = await getSubplots({
           file_format: 'svg',
@@ -62,6 +78,7 @@ const SubplotClientChart = ({
             age: 'all',
             sex: 'all',
             stratum: '24m',
+            metric_value_ranges: metricValueRanges,
           },
           subplots: selectedVaccinations.map((filter: DataFilter) => {
             return {
@@ -95,7 +112,7 @@ const SubplotClientChart = ({
     }
 
     fetchCharts()
-  }, [selectedVaccinations, geographyFilters, currentTimePeriodIndex])
+  }, [selectedVaccinations, selectedThresholds, geographyFilters, currentTimePeriodIndex])
 
   if (loading) {
     return (
@@ -124,13 +141,12 @@ const SubplotClientChart = ({
     return (
       <>
         <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
-        <div className="pt-6">
-          <TimePeriodSelector
-            timePeriods={timePeriods}
-            currentTimePeriodIndex={currentTimePeriodIndex}
-            onTimePeriodChange={handleTimePeriodChange}
-          />
-        </div>
+
+        <TimePeriodSelector
+          timePeriods={timePeriods}
+          currentTimePeriodIndex={currentTimePeriodIndex}
+          onTimePeriodChange={handleTimePeriodChange}
+        />
       </>
     )
   }
