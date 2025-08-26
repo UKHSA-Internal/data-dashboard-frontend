@@ -230,9 +230,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         const filterType = getFilterType(filter.id)
         switch (filterType) {
           case 'geography':
-            const geographyFilterData = filter.id.split('.')
-            const geographyGroup = geographyFilterData[1]
-            const geographyId = geographyFilterData[2]
+            const [, geographyGroup, geographyId] = filter.id.split('.')
 
             const newGeographyFilter = geographyAreas
               .get(geographyGroup)
@@ -277,10 +275,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       }
     },
     addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => {
-      const geographyFilterData = filter.id.split('.')
-      const geographyGroup = geographyFilterData[1]
-      const geographyId = geographyFilterData[2]
-      const previouslySelectedId = `${geographyFilterData[0]}.${geographyFilterData[1]}.${mapSelectedId}`
+      const [geographyType, geographyGroup, geographyId] = filter.id.split('.')
+      const previouslySelectedId = `${geographyType}.${geographyGroup}.${mapSelectedId}`
 
       // Update selectedFilters: remove existing filter if mapSelectedId exists, then add new filter
       setSelectedFilters((prevFilters) => {
