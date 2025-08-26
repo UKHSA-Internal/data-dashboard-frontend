@@ -31,11 +31,18 @@ const SubplotFilterCardContainer = () => {
           )
         })
       ) : (
-        <ClientInformationCard
-          variant="info"
-          title="Chart selection required"
-          message="Please make the requried selections from the filter to display a chart."
-        />
+        <div className="govuk-!-padding-4 bg-grey-3" style={{ minHeight: 300 }}>
+          <section
+            className="clear-both mb-0 flex items-center justify-center border border-mid-grey bg-white p-3 lg:px-4 lg:py-6"
+            style={{ minHeight: 260 }}
+          >
+            <ClientInformationCard
+              variant="info"
+              title="Chart selection required"
+              message="Please make the required selections from the filter to display a chart."
+            />
+          </section>
+        </div>
       )}
     </>
   )
