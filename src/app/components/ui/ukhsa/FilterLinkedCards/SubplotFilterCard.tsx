@@ -89,7 +89,7 @@ const SubplotFilterCard = ({
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              <h1>{cardData.legend_title}</h1>
+              <h1 className="govuk-heading-s mb-3 mt-2">{cardData.legend_title}</h1>
 
               <SubplotClientChart
                 currentTimePeriodIndex={currentTimePeriodIndex}
