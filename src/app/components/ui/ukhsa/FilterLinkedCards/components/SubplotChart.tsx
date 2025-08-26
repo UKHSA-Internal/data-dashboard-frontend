@@ -47,7 +47,7 @@ const SubplotClientChart = ({
 
   const geographyRelations = flattenGeographyObject(geography)
   useEffect(() => {
-    let metricValueRanges: MetricValueRange = []
+    let metricValueRanges: MetricValueRange[] | [] = []
 
     if (selectedThresholds) {
       metricValueRanges = mapThresholdsToMetricValueRanges(selectedThresholds)

@@ -34,7 +34,7 @@ describe('getSubplots', () => {
       age: 'all',
       sex: 'all',
       stratum: '24m',
-      metric_value_ranges: null,
+      metric_value_ranges: [],
     },
     subplots: [
       {
@@ -184,7 +184,7 @@ describe('getSubplots', () => {
 
       const result = await getSubplots(mockValidRequestParams)
 
-      expect(mockLogger.info).toHaveBeenCalledWith('POST failed (no data) charts/subplot/v1 %s', '6-in-1 (1 year)')
+      expect(mockLogger.warn).toHaveBeenCalledWith('POST failed (no data) charts/subplot/v1 %s', '6-in-1 (1 year)')
       expect(result.success).toBe(false)
     })
 
@@ -224,7 +224,7 @@ describe('getSubplots', () => {
 
       await getSubplots(requestWithMultipleSubplots)
 
-      expect(mockLogger.info).toHaveBeenCalledWith(
+      expect(mockLogger.warn).toHaveBeenCalledWith(
         'POST failed (no data) charts/subplot/v1 %s',
         'First Plot,Second Plot'
       )
