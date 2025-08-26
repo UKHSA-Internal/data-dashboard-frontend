@@ -109,7 +109,11 @@ const SubplotClientChart = ({
 
   if (error) {
     return (
-      <ClientInformationCard variant="error" title="error" message="No data available for the selected chart filters" />
+      <ClientInformationCard
+        variant="info"
+        title="No data available"
+        message="Please adjust your filter selections to display a chart"
+      />
     )
   }
 
