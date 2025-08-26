@@ -7,8 +7,8 @@ import {
   DataFilter,
   FilterLinkedSubplotData,
   GeographyFilters,
-  TimePeriod,
   ThresholdFilter,
+  TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'

@@ -6,8 +6,8 @@ import {
   DataFilter,
   FilterLinkedSubplotData,
   GeographyFilters,
-  TimePeriod,
   ThresholdFilter,
+  TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
