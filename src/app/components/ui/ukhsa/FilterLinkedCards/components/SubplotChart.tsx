@@ -28,6 +28,7 @@ interface SubplotClientChartProps {
   geography: GeographiesSchemaObject
   cardData: FilterLinkedSubplotData
   handleLatestDate: (date: string) => void
+  timePeriodTitle: string
 }
 
 const SubplotClientChart = ({
@@ -40,6 +41,7 @@ const SubplotClientChart = ({
   handleTimePeriodChange,
   cardData,
   handleLatestDate,
+  timePeriodTitle,
 }: SubplotClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -126,11 +128,19 @@ const SubplotClientChart = ({
 
   if (error) {
     return (
-      <ClientInformationCard
-        variant="info"
-        title="No data available"
-        message="Please adjust your filter selections to display a chart"
-      />
+      <>
+        <ClientInformationCard
+          variant="error"
+          title="error"
+          message="No data available for the selected chart filters"
+        />
+        <TimePeriodSelector
+          timePeriods={timePeriods}
+          currentTimePeriodIndex={currentTimePeriodIndex}
+          onTimePeriodChange={handleTimePeriodChange}
+          timePeriodTitle={timePeriodTitle}
+        />
+      </>
     )
   }
 
@@ -141,11 +151,11 @@ const SubplotClientChart = ({
     return (
       <>
         <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
-
         <TimePeriodSelector
           timePeriods={timePeriods}
           currentTimePeriodIndex={currentTimePeriodIndex}
           onTimePeriodChange={handleTimePeriodChange}
+          timePeriodTitle={timePeriodTitle}
         />
       </>
     )

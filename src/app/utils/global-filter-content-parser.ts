@@ -19,6 +19,7 @@ export interface ExtractedFilters {
   dataFilters: DataFilters | null
   coverageTemplateData: FilterLinkedSubplotData
   timeseriesTemplateData: FilterLinkedTimeSeriesData
+  timePeriodTitle: string
 }
 
 export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilters {
@@ -26,6 +27,7 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
   let thresholdFilters: ThresholdFilters | null = null
   let dataFilters: DataFilters | null = null
   let timePeriods: TimePeriod[] = []
+  let timePeriodTitle: string = ''
   const coverageTemplateData: FilterLinkedSubplotData = {} as FilterLinkedSubplotData
   const timeseriesTemplateData: FilterLinkedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
@@ -48,12 +50,14 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
     })
   }
 
-  // Usage: Time Period Extraction
+  // Usage: Time Period and timePeriodTitle Extraction
   if (content.type === 'global_filter_card' && content.value.time_range) {
     timePeriods = content.value.time_range.time_periods
+    timePeriodTitle = content.value.time_range.title
   }
 
   return {
+    timePeriodTitle,
     timePeriods,
     geographyFilters,
     thresholdFilters,
