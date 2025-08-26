@@ -51,7 +51,6 @@ const SubplotClientChart = ({
 
     if (selectedThresholds) {
       metricValueRanges = mapThresholdsToMetricValueRanges(selectedThresholds)
-      console.log('metricValueRanges: ', metricValueRanges)
     }
 
     const fetchCharts = async () => {
