@@ -25,6 +25,7 @@ interface SubplotFilterCardProps {
   geographyFilters: GeographyFilters
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
+  timePeriodTitle: string
 }
 
 const SubplotFilterCard = ({
@@ -34,8 +35,9 @@ const SubplotFilterCard = ({
   geographyFilters,
   timePeriods,
   cardData,
+  timePeriodTitle,
 }: SubplotFilterCardProps) => {
-  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 2)
+  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
   //FUNCTION FOR HANDLING THE SELECTED TIMEPERIOD/
   const handleTimePeriodChange = (index: number) => {
@@ -109,6 +111,7 @@ const SubplotFilterCard = ({
                 geography={geography}
                 cardData={cardData}
                 handleLatestDate={setDate}
+                timePeriodTitle={timePeriodTitle}
               />
             </TabsContent>
             {/* <TabsContent

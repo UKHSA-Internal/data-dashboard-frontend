@@ -31,6 +31,7 @@ interface InitialGlobalFilterState {
   dataFilters: DataFilters | null
   coverageTemplateData: FilterLinkedSubplotData | null
   timeseriesTemplateData: FilterLinkedTimeSeriesData | null
+  timePeriodTitle: string | null
 }
 
 export type FilterType = 'geography' | 'data_filter' | 'threshold'
