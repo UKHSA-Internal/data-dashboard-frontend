@@ -49,6 +49,7 @@ export function useSelectedFilters(): {
   selectedThresholdFilters: ThresholdFilter[] | null
   updateFilters: (newFilters: FilterOption[]) => void
   addFilter: (filter: FilterOption) => void
+  addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
   removeFilter: (filterId: string) => void
   clearFilters: () => void
 } {
@@ -61,6 +62,7 @@ export function useSelectedFilters(): {
     selectedThresholdFilters: state.selectedThresholdFilters,
     updateFilters: actions.updateFilters,
     addFilter: actions.addFilter,
+    addFilterFromMap: actions.addFilterFromMap,
     removeFilter: actions.removeFilter,
     clearFilters: actions.clearFilters,
   }
