@@ -38,7 +38,7 @@ const SubplotFilterCardContainer = () => {
             <ClientInformationCard
               variant="info"
               title="Chart selection required"
-              message="Please make the requried selections from the filter to display a chart."
+              message="Please make the required selections from the filter to display a chart."
             />
           </section>
         </div>
