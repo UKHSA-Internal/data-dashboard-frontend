@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from 'react'
 
-import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
@@ -15,9 +15,16 @@ interface ClientChartProps {
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
   handleLatestDate: (date: string | null) => void
+  cardData: FilterLinkedTimeSeriesData
 }
 
-const TimeseriesClientChart = ({ geography, dataFilters, timePeriods, handleLatestDate }: ClientChartProps) => {
+const TimeseriesClientChart = ({
+  geography,
+  dataFilters,
+  timePeriods,
+  handleLatestDate,
+  cardData,
+}: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
@@ -36,7 +43,8 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods, handleLate
           chart_width: 515,
           x_axis: 'date',
           y_axis: 'metric',
-          y_axis_title: 'Year',
+          x_axis_title: 'Year',
+          y_axis_title: cardData.legend_title,
           y_axis_minimum_value: null,
           y_axis_maximum_value: null,
           plots: dataFilters.map((filter: DataFilter) => {
