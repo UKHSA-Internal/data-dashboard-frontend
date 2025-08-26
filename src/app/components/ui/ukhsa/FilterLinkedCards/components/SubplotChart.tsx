@@ -120,13 +120,12 @@ const SubplotClientChart = ({
     return (
       <>
         <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
-        <div className="pt-6">
-          <TimePeriodSelector
-            timePeriods={timePeriods}
-            currentTimePeriodIndex={currentTimePeriodIndex}
-            onTimePeriodChange={handleTimePeriodChange}
-          />
-        </div>
+
+        <TimePeriodSelector
+          timePeriods={timePeriods}
+          currentTimePeriodIndex={currentTimePeriodIndex}
+          onTimePeriodChange={handleTimePeriodChange}
+        />
       </>
     )
   }
