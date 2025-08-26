@@ -1,3 +1,4 @@
+import { FilterLinkedSubPlotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -8,7 +9,12 @@ import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
-import { extractDataFromGlobalFilter, ExtractedFilters } from '@/app/utils/global-filter-content-parser'
+import {
+  extractDataFromGlobalFilter,
+  ExtractedFilters,
+  extractSubplotSectionData,
+  extractTimeSeriesSectionData,
+} from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
@@ -40,6 +46,8 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
+  let extractedSubplotData = {} as FilterLinkedSubPlotData
+  let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
   interface TableCard {
     id: number
@@ -92,6 +100,14 @@ export default async function TopicPage({
         // abstract out available time periods
         if (content.type === 'global_filter_card') {
           extractedGlobalFilterContent = extractDataFromGlobalFilter(content)
+        }
+        if (content.type === 'filter_linked_sub_plot_chart_template') {
+          extractedSubplotData = extractSubplotSectionData(content)
+          extractedGlobalFilterContent.coverageTemplateData = extractedSubplotData
+        }
+        if (content.type === 'filter_linked_time_series_chart_template') {
+          extractedTimeSeriesData = extractTimeSeriesSectionData(content)
+          extractedGlobalFilterContent.timeseriesTemplateData = extractedTimeSeriesData
         }
       })
     }

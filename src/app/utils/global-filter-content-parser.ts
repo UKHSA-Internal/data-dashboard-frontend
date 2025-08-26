@@ -3,6 +3,8 @@ import {
   AccompanyingPointArray,
   AccompanyingPointObject,
   DataFilters,
+  FilterLinkedSubPlotData,
+  FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilters,
   TimePeriod,
@@ -15,6 +17,8 @@ export interface ExtractedFilters {
   geographyFilters: GeographyFilters | null
   thresholdFilters: ThresholdFilters | null
   dataFilters: DataFilters | null
+  coverageTemplateData: FilterLinkedSubPlotData
+  timeseriesTemplateData: FilterLinkedTimeSeriesData
 }
 
 export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilters {
@@ -22,6 +26,8 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
   let thresholdFilters: ThresholdFilters | null = null
   let dataFilters: DataFilters | null = null
   let timePeriods: TimePeriod[] = []
+  const coverageTemplateData: FilterLinkedSubPlotData = {} as FilterLinkedSubPlotData
+  const timeseriesTemplateData: FilterLinkedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
   // Usage: Extracts each of the filter types that are provided in the rows
   if (content.type === 'global_filter_card' && content.value.rows) {
@@ -52,7 +58,29 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
     geographyFilters,
     thresholdFilters,
     dataFilters,
+    coverageTemplateData,
+    timeseriesTemplateData,
   }
+}
+
+export function extractSubplotSectionData(content: CardTypes): FilterLinkedSubPlotData {
+  let coverageTemplateData: FilterLinkedSubPlotData = {} as FilterLinkedSubPlotData
+
+  if (content.type === 'filter_linked_sub_plot_chart_template' && content.value) {
+    coverageTemplateData = content.value
+  }
+
+  return coverageTemplateData
+}
+
+export function extractTimeSeriesSectionData(content: CardTypes): FilterLinkedTimeSeriesData {
+  let timeseriesTemplateData: FilterLinkedTimeSeriesData = {} as FilterLinkedTimeSeriesData
+
+  if (content.type === 'filter_linked_time_series_chart_template' && content.value) {
+    timeseriesTemplateData = content.value
+  }
+
+  return timeseriesTemplateData
 }
 /* Usage: This function is used to retrieve each of the geography types that are present in the provided geography filters */
 export function extractGeographyIdFromGeographyFilter(geographyFilter: GeographyFilters | null): string[] {
@@ -127,4 +155,3 @@ export function getGroupedVaccinationOptions(vaccinationFilters: DataFilters): G
 
   return result
 }
-
