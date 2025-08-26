@@ -54,7 +54,7 @@ export function useSelectedFilters(): {
   clearFilters: () => void
 } {
   const { state, actions } = useGlobalFilters()
-
+  console.log('check')
   return {
     selectedFilters: state.selectedFilters,
     selectedVaccinationFilters: state.selectedVaccinationFilters,
