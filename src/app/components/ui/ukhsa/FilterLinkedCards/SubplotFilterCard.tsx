@@ -3,7 +3,13 @@ import { kebabCase } from 'lodash'
 import Link from 'next/link'
 import { useState } from 'react'
 
-import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilter,
+  FilterLinkedSubplotData,
+  GeographyFilters,
+  ThresholdFilter,
+  TimePeriod,
+} from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { formatDate } from '@/app/utils/date.utils'
@@ -15,6 +21,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 interface SubplotFilterCardProps {
   geography: GeographiesSchemaObject
   selectedVaccinations: DataFilter[]
+  selectedThresholds: ThresholdFilter[]
   geographyFilters: GeographyFilters
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
@@ -23,6 +30,7 @@ interface SubplotFilterCardProps {
 const SubplotFilterCard = ({
   geography,
   selectedVaccinations,
+  selectedThresholds,
   geographyFilters,
   timePeriods,
   cardData,
@@ -94,6 +102,7 @@ const SubplotFilterCard = ({
               <SubplotClientChart
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 handleTimePeriodChange={handleTimePeriodChange}
+                selectedThresholds={selectedThresholds}
                 timePeriods={timePeriods}
                 selectedVaccinations={selectedVaccinations}
                 geographyFilters={geographyFilters}
