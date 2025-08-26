@@ -17,8 +17,6 @@ interface ClientDownloadProps {
 }
 
 export function ClientDownload({ geography, dataFilters, timePeriods }: ClientDownloadProps) {
-  // TODO: Sort out the type for the table response - Success/error
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState(true)
   const [tableError, setTableError] = useState<string | null>(null)
