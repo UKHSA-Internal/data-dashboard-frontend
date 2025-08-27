@@ -128,7 +128,7 @@ const SubplotClientChart = ({
 
   if (error) {
     return (
-      <>
+      <div className="relative">
         <ClientInformationCard
           variant="error"
           title="error"
@@ -140,7 +140,7 @@ const SubplotClientChart = ({
           onTimePeriodChange={handleTimePeriodChange}
           timePeriodTitle={timePeriodTitle}
         />
-      </>
+      </div>
     )
   }
 
