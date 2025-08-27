@@ -28,6 +28,7 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods, handleLate
     const fetchCharts = async () => {
       try {
         setLoading(true)
+        setError(null)
 
         const chartResponse = await getCharts({
           file_format: 'svg',
@@ -85,7 +86,11 @@ const TimeseriesClientChart = ({ geography, dataFilters, timePeriods, handleLate
 
   if (error) {
     return (
-      <ClientInformationCard variant="error" title="error" message="No data available for the selected chart filters" />
+      <ClientInformationCard
+        variant="info"
+        title="No data available"
+        message="Please adjust your filter selections to display a chart"
+      />
     )
   }
 

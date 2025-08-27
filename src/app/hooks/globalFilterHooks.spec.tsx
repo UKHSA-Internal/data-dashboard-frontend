@@ -225,6 +225,7 @@ describe('globalFilterHooks', () => {
     dataFilters: mockDataFilters,
     coverageTemplateData: mockCoverageTemplateData,
     timeseriesTemplateData: mockCoverageTimeSeriesData,
+    timePeriodTitle: 'Year selection',
   }
 
   const wrapper = ({ children }: { children: ReactNode }) => (

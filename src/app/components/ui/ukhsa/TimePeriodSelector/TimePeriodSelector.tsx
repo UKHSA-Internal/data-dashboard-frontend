@@ -4,13 +4,14 @@ interface TimePeriodSelectorProps {
   timePeriods: TimePeriod[]
   currentTimePeriodIndex: number
   onTimePeriodChange: (index: number) => void
+  timePeriodTitle: string
 }
 
 const Button = ({ label, onClick, disabled }: { label: string; onClick: () => void; disabled?: boolean }) => (
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`govuk-button govuk-button--secondary text-2xl flex font-bold`}
+    className={`govuk-button govuk-button--secondary govuk-!-margin-0 flex items-center border border-black font-bold`}
   >
     {label}
   </button>
@@ -20,6 +21,7 @@ export const TimePeriodSelector = ({
   timePeriods,
   currentTimePeriodIndex,
   onTimePeriodChange,
+  timePeriodTitle,
 }: TimePeriodSelectorProps): JSX.Element => {
   const currentTimePeriod = timePeriods[currentTimePeriodIndex]
   const isFirstPeriod = currentTimePeriodIndex === 0
@@ -38,12 +40,17 @@ export const TimePeriodSelector = ({
   }
 
   return (
-    <div className="justify flex items-baseline gap-2">
-      <Button label="-" onClick={handleDecrease} disabled={isFirstPeriod} />
-      <div className=" min-w-32 border border-black px-4 py-2 text-center">
-        {currentTimePeriod?.value.label || 'No period selected'}
+    <div>
+      <div className="mb-1 font-bold">
+        {!timePeriodTitle || timePeriodTitle == '' ? 'Year selection' : timePeriodTitle}:
       </div>
-      <Button label="+" onClick={handleIncrease} disabled={isLastPeriod} />
+      <div className="flex">
+        <Button onClick={handleDecrease} disabled={isFirstPeriod} label="-" />
+        <div className="border border-x-0 border-black px-4 py-[8px] text-center shadow-[0_2px_0_#929191]">
+          {currentTimePeriod?.value.label || 'No period selected'}
+        </div>
+        <Button onClick={handleIncrease} disabled={isLastPeriod} label="+" />
+      </div>
     </div>
   )
 }

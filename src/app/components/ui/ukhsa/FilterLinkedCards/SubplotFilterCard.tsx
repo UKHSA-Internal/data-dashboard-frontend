@@ -3,7 +3,13 @@ import { kebabCase } from 'lodash'
 import Link from 'next/link'
 import { useState } from 'react'
 
-import { DataFilter, FilterLinkedSubplotData, GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import {
+  DataFilter,
+  FilterLinkedSubplotData,
+  GeographyFilters,
+  ThresholdFilter,
+  TimePeriod,
+} from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { formatDate } from '@/app/utils/date.utils'
@@ -15,19 +21,23 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 interface SubplotFilterCardProps {
   geography: GeographiesSchemaObject
   selectedVaccinations: DataFilter[]
+  selectedThresholds: ThresholdFilter[]
   geographyFilters: GeographyFilters
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
+  timePeriodTitle: string
 }
 
 const SubplotFilterCard = ({
   geography,
   selectedVaccinations,
+  selectedThresholds,
   geographyFilters,
   timePeriods,
   cardData,
+  timePeriodTitle,
 }: SubplotFilterCardProps) => {
-  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 2)
+  const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
   //FUNCTION FOR HANDLING THE SELECTED TIMEPERIOD/
   const handleTimePeriodChange = (index: number) => {
@@ -89,17 +99,19 @@ const SubplotFilterCard = ({
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              <h1>{cardData.legend_title}</h1>
+              <h1 className="govuk-heading-s mb-3 mt-2">{cardData.legend_title}</h1>
 
               <SubplotClientChart
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 handleTimePeriodChange={handleTimePeriodChange}
+                selectedThresholds={selectedThresholds}
                 timePeriods={timePeriods}
                 selectedVaccinations={selectedVaccinations}
                 geographyFilters={geographyFilters}
                 geography={geography}
                 cardData={cardData}
                 handleLatestDate={setDate}
+                timePeriodTitle={timePeriodTitle}
               />
             </TabsContent>
             {/* <TabsContent
