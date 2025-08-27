@@ -110,6 +110,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       const newGeographyAreas = new Map(geographyAreas)
 
       responses.forEach((response) => {
+        console.log('Global Filter Context Response: ', response.data)
         const geographyAreaData = response.data
 
         if (!geographyAreaData) {

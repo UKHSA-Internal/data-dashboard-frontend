@@ -56,8 +56,9 @@ export const getGeographies = async (params: GeographyParams) => {
     }
     if (params.geography_type) {
       try {
+        console.log('getGeographys param:', params.geography_type)
         const { data } = await client<z.infer<typeof responseSchema>>(`${path}?geography_type=${params.geography_type}`)
-
+        console.log('getGeographys response data:', data)
         return responseSchema.safeParse(data)
       } catch (error) {
         logger.error(error)

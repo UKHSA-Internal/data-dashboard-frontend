@@ -20,7 +20,10 @@ export async function GET(req: NextRequest) {
     })
   }
 
+  console.log('Route body: ', geography_type)
   const proxiedResponse = await getGeographies(body)
+
+  console.log('Route response: ', proxiedResponse.data)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)
