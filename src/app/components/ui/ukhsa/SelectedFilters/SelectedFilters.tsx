@@ -7,7 +7,7 @@ import { useTranslation } from '@/app/i18n/client'
 
 import CrossIcon from '../Icons/CrossIcon'
 
-export function SelectedFilters() {
+export default function SelectedFilters() {
   const { t } = useTranslation('common')
 
   const { selectedFilters, removeFilter, clearFilters } = useSelectedFilters()

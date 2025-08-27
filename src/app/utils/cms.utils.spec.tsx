@@ -20,6 +20,13 @@ import {
 } from './__mocks__/cms'
 import { renderBlock, renderCard, renderCompositeBlock, renderSection } from './cms.utils'
 
+jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer', () => ({
+  TimeSeriesFilterCardsContainer: () => <div>Mocked time series filter cards container</div>,
+}))
+
+jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer', () => ({
+  SubplotFilterCardContainer: () => <div>Mocked subplot filter card container</div>,
+}))
 // This is an ugly hack because Jest currently cannot render nested server components. As a result we must
 // stub these components in order to test the functionality within cms.utils.tsx
 jest.mock('../components/cms', () => ({
@@ -45,7 +52,6 @@ jest.mock('../components/cms', () => ({
   RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
 }))
-
 //Mock the getShowLessURL and getShowMoreURL
 jest.mock('@/app/utils/show-more.utils', () => ({
   getShowMoreURL: jest.fn(),

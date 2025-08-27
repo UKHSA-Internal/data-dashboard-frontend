@@ -5,7 +5,7 @@ import { createContext, ReactNode, useContext, useEffect, useState } from 'react
 import {
   DataFilter,
   DataFilters,
-  FilterLinkedSubPlotData,
+  FilterLinkedSubplotData,
   FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilter,
@@ -29,8 +29,9 @@ interface InitialGlobalFilterState {
   geographyFilters: GeographyFilters | null
   thresholdFilters: ThresholdFilters | null
   dataFilters: DataFilters | null
-  coverageTemplateData: FilterLinkedSubPlotData | null
+  coverageTemplateData: FilterLinkedSubplotData | null
   timeseriesTemplateData: FilterLinkedTimeSeriesData | null
+  timePeriodTitle: string | null
 }
 
 export type FilterType = 'geography' | 'data_filter' | 'threshold'
@@ -68,6 +69,7 @@ export interface GlobalFilterActions {
   removeFilter: (filterId: string) => void
   clearFilters: () => void
   setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
+  addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
 }
 
 //Interface for the global filter context
@@ -115,7 +117,12 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         }
 
         geographyAreaData.forEach((geographyArea: GeographyObject) => {
-          newGeographyAreas.set(geographyArea.geography_type, geographyArea.geographies)
+          const enhancedGeographies = geographyArea.geographies.map((geography) => ({
+            ...geography,
+            geography_type: geographyArea.geography_type,
+          }))
+
+          newGeographyAreas.set(geographyArea.geography_type, enhancedGeographies)
         })
       })
       setGeographyAreas(newGeographyAreas)
@@ -224,9 +231,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         const filterType = getFilterType(filter.id)
         switch (filterType) {
           case 'geography':
-            const geographyFilterData = filter.id.split('.')
-            const geographyGroup = geographyFilterData[1]
-            const geographyId = geographyFilterData[2]
+            const [, geographyGroup, geographyId] = filter.id.split('.')
 
             const newGeographyFilter = geographyAreas
               .get(geographyGroup)
@@ -269,6 +274,42 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
             break
         }
       }
+    },
+    addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => {
+      const [geographyType, geographyGroup, geographyId] = filter.id.split('.')
+      const previouslySelectedId = `${geographyType}.${geographyGroup}.${mapSelectedId}`
+
+      // Update selectedFilters: remove existing filter if mapSelectedId exists, then add new filter
+      setSelectedFilters((prevFilters) => {
+        let updatedFilters = prevFilters
+
+        // Remove the filter if mapSelectedId exists
+        if (mapSelectedId) {
+          updatedFilters = prevFilters.filter((storedFilter) => storedFilter.id !== previouslySelectedId)
+        }
+
+        // Add the new filter (create new array to avoid mutation)
+        return [...updatedFilters, filter]
+      })
+
+      // Update selectedGeographyFilters: remove existing if mapSelectedId exists
+      if (mapSelectedId) {
+        setSelectedGeographyFilters((prevFilters) =>
+          prevFilters.filter((geoFilter) => geoFilter.geography_code !== mapSelectedId)
+        )
+      }
+
+      // Find the corresponding geography in state
+      const newGeographyFilter = geographyAreas
+        .get(geographyGroup)
+        ?.find((geography) => geography.geography_code === geographyId)
+
+      if (!newGeographyFilter) {
+        return
+      }
+
+      // Add new geography to state
+      setSelectedGeographyFilters((prevFilters) => addFilterToSelectedGeographyFilters(prevFilters, newGeographyFilter))
     },
     removeFilter: (filterId: string) => {
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))

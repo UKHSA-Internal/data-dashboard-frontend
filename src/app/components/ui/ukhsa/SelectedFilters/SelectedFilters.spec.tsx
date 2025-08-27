@@ -4,7 +4,7 @@ import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { useTranslation } from '@/app/i18n/client'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
-import { SelectedFilters } from './SelectedFilters'
+import SelectedFilters from './SelectedFilters'
 
 // Mock the translation hook
 jest.mock('@/app/i18n/client', () => ({

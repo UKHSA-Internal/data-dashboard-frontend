@@ -1,7 +1,8 @@
 'use client'
 import React from 'react'
 
-import { DataFilters } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilters, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import {
   FlatOption,
   GroupedOption,
@@ -9,10 +10,6 @@ import {
 } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 import { useDataFilters, useGeographyState, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { getGroupedVaccinationOptions } from '@/app/utils/global-filter-content-parser'
-
-/* eslint-disable @typescript-eslint/no-explicit-any*/
-
-//TODO: Headers and content to come from CMS
 
 function DisplayGeographyDropdowns() {
   const { geographyAreas, geographyAreasError, geographyAreasLoading } = useGeographyState()
@@ -33,7 +30,7 @@ function DisplayGeographyDropdowns() {
 
   // Use for...of to iterate over Map entries
   for (const [key, geographyArea] of geographyAreas) {
-    const data = geographyArea.map((item: any) => {
+    const data = geographyArea.map((item: GeographiesSchemaObject) => {
       return { id: `geography.${key}.${item.geography_code}`, label: item.name }
     })
 
@@ -53,7 +50,7 @@ function DisplayCoverageDropdown() {
     return null
   }
   const data: FlatOption[] = []
-  thresholdFilters.thresholds.map((filter: any) => {
+  thresholdFilters.thresholds.map((filter: ThresholdFilter) => {
     data.push({ id: `${filter.type}.${filter.id}`, label: filter.value.label })
   })
   return (
@@ -83,7 +80,7 @@ export function DisplayVaccinationDropDown() {
   )
 }
 
-export function FilterDropdowns() {
+export default function FilterDropdowns() {
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 z-100 bg-grey-2">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">Area</h2>
@@ -99,5 +96,3 @@ export function FilterDropdowns() {
     </div>
   )
 }
-
-export default FilterDropdowns

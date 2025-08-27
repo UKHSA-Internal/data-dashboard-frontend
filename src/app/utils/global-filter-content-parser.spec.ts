@@ -34,6 +34,7 @@ describe('extractDataFromGlobalFilter', () => {
         dataFilters: null,
         coverageTemplateData: {},
         timeseriesTemplateData: {},
+        timePeriodTitle: '',
       })
     })
   })
@@ -175,15 +176,20 @@ describe('extractDataFromGlobalFilter', () => {
     })
 
     test('should extract time periods when time_range is provided', () => {
-      const mockTimePeriods: TimePeriod[] = [
-        { start_date: '2023-01-01', end_date: '2023-12-31' },
-        { start_date: '2024-01-01', end_date: '2024-12-31' },
-      ]
+      const mockTimePeriods: TimePeriod[] = {
+        title: 'Year selection',
+        time_periods: [
+          { start_date: '2023-01-01', end_date: '2023-12-31' },
+          { start_date: '2024-01-01', end_date: '2024-12-31' },
+        ],
+      }
+      const mockTimePeriodTitle: string = 'Year selection'
 
       const content: CardTypes = {
         type: 'global_filter_card',
         value: {
           time_range: {
+            title: 'Year selection',
             time_periods: mockTimePeriods,
           },
         },
@@ -192,6 +198,7 @@ describe('extractDataFromGlobalFilter', () => {
       const result = extractDataFromGlobalFilter(content)
 
       expect(result.timePeriods).toEqual(mockTimePeriods)
+      expect(result.timePeriodTitle).toEqual(mockTimePeriodTitle)
       expect(result.geographyFilters).toBeNull()
       expect(result.thresholdFilters).toBeNull()
       expect(result.dataFilters).toBeNull()
@@ -218,6 +225,7 @@ describe('extractDataFromGlobalFilter', () => {
         dataFilters: null,
         coverageTemplateData: {},
         timeseriesTemplateData: {},
+        timePeriodTitle: '',
       })
     })
 
@@ -244,6 +252,7 @@ describe('extractDataFromGlobalFilter', () => {
         dataFilters: null,
         coverageTemplateData: {},
         timeseriesTemplateData: {},
+        timePeriodTitle: '',
       })
     })
 
@@ -262,6 +271,7 @@ describe('extractDataFromGlobalFilter', () => {
         dataFilters: null,
         coverageTemplateData: {},
         timeseriesTemplateData: {},
+        timePeriodTitle: '',
       })
     })
   })

@@ -1,4 +1,5 @@
-import { FilterLinkedSubPlotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
+/* eslint-disable @next/next/no-img-element */
+import { FilterLinkedSubplotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
@@ -46,7 +47,7 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
-  let extractedSubplotData = {} as FilterLinkedSubPlotData
+  let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
   body.map(({ value }) => {
@@ -113,6 +114,7 @@ export default async function TopicPage({
           <img
             className="float-right"
             src={'/assets/images/accredited-official-statistics-logo.svg'}
+            alt="Accredited Official Statistics"
             height={'70px'}
             width={'70px'}
           />
