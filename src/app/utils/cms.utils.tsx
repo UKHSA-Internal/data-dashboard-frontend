@@ -7,17 +7,7 @@ import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
-import {
-  Card,
-  FilterBanners,
-  SelectedFilters,
-  StaticFilter,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/app/components/ui/ukhsa'
-import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
+import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
 import SubplotFilterCardContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
 import TimeSeriesFilterCardsContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { List } from '@/app/components/ui/ukhsa/List/List'
@@ -45,6 +35,7 @@ import {
 } from '../components/cms'
 import About from '../components/cms/About/About'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
+import { FilterBannerWrapper } from '../components/ui/ukhsa/FilterBanners/FilterBannerWrapper'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
 
@@ -281,15 +272,7 @@ export const renderCard = (
         </ChartRowCard>
       )}
 
-      {type === 'global_filter_card' && (
-        <>
-          <FilterBanners />
-          <StaticFilter>
-            <SelectedFilters />
-            <FilterDropdowns />
-          </StaticFilter>
-        </>
-      )}
+      {type === 'global_filter_card' && <FilterBannerWrapper />}
 
       {type === 'filter_linked_map' && (
         <MapRowCard>

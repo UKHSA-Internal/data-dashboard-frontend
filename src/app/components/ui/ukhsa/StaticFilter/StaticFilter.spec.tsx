@@ -7,7 +7,7 @@ import { useWindowScroll } from 'react-use'
 import { useTranslation } from '@/app/i18n/client'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
-import { StaticFilter } from './StaticFilter'
+import StaticFilter from './StaticFilter'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 // Mock the react-use hook

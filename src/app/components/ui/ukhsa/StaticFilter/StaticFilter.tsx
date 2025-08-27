@@ -12,7 +12,7 @@ interface StaticFilterProps {
   children?: ReactNode
 }
 
-export function StaticFilter({ href = '#filter', className, children }: StaticFilterProps) {
+export default function StaticFilter({ href = '#filter', className, children }: StaticFilterProps) {
   const { y: horizontalWindowPosition } = useWindowScroll()
   const { t } = useTranslation('common')
 
@@ -55,5 +55,3 @@ export function StaticFilter({ href = '#filter', className, children }: StaticFi
     </>
   )
 }
-
-export default StaticFilter

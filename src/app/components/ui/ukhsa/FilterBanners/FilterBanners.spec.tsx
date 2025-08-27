@@ -3,7 +3,7 @@ import React from 'react'
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { render, screen } from '@/config/test-utils'
 
-import { FilterBanners } from './FilterBanners'
+import FilterBanners from './FilterBanners'
 
 // Mock the useSelectedFilters hook
 jest.mock('@/app/hooks/globalFilterHooks', () => ({
