@@ -27,7 +27,7 @@ interface SubplotClientChartProps {
   handleTimePeriodChange: (index: number) => void
   geography: GeographiesSchemaObject
   cardData: FilterLinkedSubplotData
-  handleLatestDate: (date: string) => void
+  handleLatestDate: (date: string | null) => void
   timePeriodTitle: string
 }
 
@@ -116,6 +116,15 @@ const SubplotClientChart = ({
     fetchCharts()
   }, [selectedVaccinations, selectedThresholds, geographyFilters, currentTimePeriodIndex])
 
+  useEffect(() => {
+    if (chartResponse?.last_updated) {
+      handleLatestDate(chartResponse.last_updated)
+    }
+    if (!chartResponse) {
+      handleLatestDate(null)
+    }
+  }, [chartResponse])
+
   if (loading) {
     return (
       <ClientInformationCard
@@ -145,8 +154,7 @@ const SubplotClientChart = ({
   }
 
   if (chartResponse) {
-    const { figure, last_updated } = chartResponse
-    handleLatestDate(last_updated)
+    const { figure } = chartResponse
 
     return (
       <>
