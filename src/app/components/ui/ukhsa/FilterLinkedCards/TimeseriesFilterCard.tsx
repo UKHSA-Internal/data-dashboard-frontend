@@ -1,3 +1,4 @@
+'use client'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 import { useState } from 'react'

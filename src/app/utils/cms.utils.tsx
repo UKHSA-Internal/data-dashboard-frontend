@@ -8,8 +8,7 @@ import { z } from 'zod'
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
-import SubplotFilterCardContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
-import TimeSeriesFilterCardsContainer from '@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
+import { FilterLinkedCardWrapper } from '@/app/components/ui/ukhsa/FilterLinkedCards/FilterLinkedCardWrapper'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
@@ -287,13 +286,13 @@ export const renderCard = (
 
       {type === 'filter_linked_sub_plot_chart_template' && (
         <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-          <SubplotFilterCardContainer />
+          <FilterLinkedCardWrapper cardType="subplot" />
         </div>
       )}
 
       {type === 'filter_linked_time_series_chart_template' && (
         <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-          <TimeSeriesFilterCardsContainer />
+          <FilterLinkedCardWrapper cardType="time-series" />
         </div>
       )}
 
