@@ -80,7 +80,7 @@ export function DisplayVaccinationDropDown() {
   )
 }
 
-export function FilterDropdowns() {
+export default function FilterDropdowns() {
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 z-100 bg-grey-2">
       <h2 className="govuk-heading-s govuk-!-margin-bottom-2 w-full">Area</h2>
@@ -96,5 +96,3 @@ export function FilterDropdowns() {
     </div>
   )
 }
-
-export default FilterDropdowns

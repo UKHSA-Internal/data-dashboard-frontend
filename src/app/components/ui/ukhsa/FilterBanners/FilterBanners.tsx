@@ -6,7 +6,7 @@ import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 
 import { FilterBanner } from '../FilterBanner/FilterBanner'
 
-export function FilterBanners() {
+export default function FilterBanners() {
   const { selectedFilters, selectedGeographyFilters } = useSelectedFilters()
   let showGeographyLimitBanner: boolean = false
 
