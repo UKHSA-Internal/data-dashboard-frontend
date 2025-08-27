@@ -8,7 +8,7 @@
     "dev:mock-server": "nodemon ./src/mock-server/index.ts",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint --fix",
+    "lint": "next lint",
     "export": "next export",
     "lighthouse": "npx unlighthouse",
     "tsc": "npx tsc --noEmit",
