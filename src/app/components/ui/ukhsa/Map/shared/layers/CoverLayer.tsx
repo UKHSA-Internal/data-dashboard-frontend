@@ -417,7 +417,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         style.fillColor = 'rgba(62, 62, 62, 0.5)'
       }
       style.fillOpacity = 1
-      style.color = 'rgb(255, 255, 255)'
+      style.color = 'rgb(0, 0, 0)'
       style.weight = 1
     } else if (featureCollection.name === 'Regions') {
       style.fillColor = 'rgba(99, 232, 89, 0)'
