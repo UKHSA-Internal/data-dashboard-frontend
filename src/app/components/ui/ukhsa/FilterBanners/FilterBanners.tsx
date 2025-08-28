@@ -43,8 +43,8 @@ export default function FilterBanners() {
     message += '<li>You can only select <b>four locations</b> to display at a time.</li>'
   }
   if (showErrorBanner) {
-    chartRequestErrors!.map((error: string) => {
-      message += `<li>${error}.</li>`
+    chartRequestErrors!.map((error: { id: string; error: string }) => {
+      message += `<li>${error.error}.</li>`
     })
   }
   if (unavailableCountries.length > 0) {

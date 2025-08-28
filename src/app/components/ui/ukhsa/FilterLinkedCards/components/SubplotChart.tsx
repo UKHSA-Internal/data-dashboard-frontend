@@ -16,6 +16,7 @@ import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInterac
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
+import createChartErrorMessage from '@/app/utils/error-utils'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
 import { mapThresholdsToMetricValueRanges, MetricValueRange } from '@/app/utils/threshold.utils'
 
@@ -47,7 +48,7 @@ const SubplotClientChart = ({
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
-  const { setChartRequestErrors, clearChartRequestErrors } = useErrorData()
+  const { setChartRequestErrors, removeChartRequestError } = useErrorData()
 
   const geographyRelations = flattenGeographyObject(geography)
   useEffect(() => {
@@ -61,7 +62,7 @@ const SubplotClientChart = ({
       try {
         setLoading(true)
         setError(null)
-        clearChartRequestErrors()
+        removeChartRequestError(`subplot-${geography.geography_code}`)
 
         const chartResponse = await getSubplots({
           file_format: 'svg',
@@ -107,12 +108,14 @@ const SubplotClientChart = ({
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)
         } else {
-          console.log(
-            `Failed to retrieve data for: ${geography.name}, ${selectedThresholds.map((selectedThreshold) => selectedThreshold.value.label)}, ${selectedVaccinations.map((selectedVaccination) => selectedVaccination.value.label)} for the date range: ${timePeriods[currentTimePeriodIndex].value.date_from} to ${timePeriods[currentTimePeriodIndex].value.date_to}`
-          )
-          setChartRequestErrors(
-            `Failed to retrieve data for: ${geography.name}, ${selectedThresholds.map((selectedThreshold) => selectedThreshold.value.label)}, ${selectedVaccinations.map((selectedVaccination) => selectedVaccination.value.label)} for the date range: ${timePeriods[currentTimePeriodIndex].value.date_from} to ${timePeriods[currentTimePeriodIndex].value.date_to}`
-          )
+          const errorMessage = createChartErrorMessage({
+            geographyName: geography.name,
+            selectedThresholds,
+            selectedVaccinations,
+            dateFrom: timePeriods[currentTimePeriodIndex].value.date_from,
+            dateTo: timePeriods[currentTimePeriodIndex].value.date_to,
+          })
+          setChartRequestErrors({ id: `subplot-${geography.geography_code}`, error: errorMessage })
           setError('Failed to parse chart response')
         }
       } catch (error) {

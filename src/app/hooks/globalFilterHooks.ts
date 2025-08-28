@@ -113,9 +113,10 @@ export function useMapData(): {
 }
 
 export function useErrorData(): {
-  chartRequestErrors: string[] | null
-  setChartRequestErrors: (error: string) => void
+  chartRequestErrors: { id: string; error: string }[] | null
+  setChartRequestErrors: (error: { id: string; error: string }) => void
   clearChartRequestErrors: () => void
+  removeChartRequestError: (errorId: string) => void
 } {
   const { state, actions } = useGlobalFilters()
 
@@ -123,5 +124,6 @@ export function useErrorData(): {
     chartRequestErrors: state.chartRequestErrors,
     setChartRequestErrors: actions.setChartRequestErrors,
     clearChartRequestErrors: actions.clearChartRequestErrors,
+    removeChartRequestError: actions.removeChartRequestError,
   }
 }
