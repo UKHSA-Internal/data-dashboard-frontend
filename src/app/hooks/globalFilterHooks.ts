@@ -111,3 +111,17 @@ export function useMapData(): {
     mapDataError: state.mapDataError,
   }
 }
+
+export function useErrorData(): {
+  chartRequestErrors: string[] | null
+  setChartRequestErrors: (error: string) => void
+  clearChartRequestErrors: () => void
+} {
+  const { state, actions } = useGlobalFilters()
+
+  return {
+    chartRequestErrors: state.chartRequestErrors,
+    setChartRequestErrors: actions.setChartRequestErrors,
+    clearChartRequestErrors: actions.clearChartRequestErrors,
+  }
+}

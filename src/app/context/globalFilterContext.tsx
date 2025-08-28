@@ -59,6 +59,7 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
+  chartRequestErrors: string[]
 }
 
 // Global Filter Action Interface
@@ -70,6 +71,8 @@ export interface GlobalFilterActions {
   clearFilters: () => void
   setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
   addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
+  setChartRequestErrors: (error: string) => void
+  clearChartRequestErrors: () => void
 }
 
 //Interface for the global filter context
@@ -95,6 +98,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
   const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
   const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
+  const [chartRequestErrors, setChartRequestErrors] = useState<string[]>([])
 
   const fetchGeographyData = async () => {
     try {
@@ -191,6 +195,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
+    chartRequestErrors,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -312,6 +317,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedGeographyFilters((prevFilters) => addFilterToSelectedGeographyFilters(prevFilters, newGeographyFilter))
     },
     removeFilter: (filterId: string) => {
+      actions.clearChartRequestErrors()
       setSelectedFilters(selectedFilters.filter((filter) => filter.id !== filterId))
       const filterType = getFilterType(filterId)
       switch (filterType) {
@@ -339,6 +345,12 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedGeographyFilters([])
       setSelectedThresholdFilters([])
       setSelectedVaccinationFilters([])
+    },
+    setChartRequestErrors: (error: string) => {
+      setChartRequestErrors([...chartRequestErrors, error])
+    },
+    clearChartRequestErrors: () => {
+      setChartRequestErrors([])
     },
   }
 
