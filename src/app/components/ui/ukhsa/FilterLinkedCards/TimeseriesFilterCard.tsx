@@ -90,13 +90,12 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
               data-type="chart"
               id={`chart-${kebabCase(title)}-content`}
             >
-              <h1 className="govuk-heading-s mb-3 mt-2">{cardData.legend_title}</h1>
-
               <TimeseriesClientChart
                 geography={geography}
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
                 handleLatestDate={setDate}
+                cardData={cardData}
               />
             </TabsContent>
             <TabsContent
