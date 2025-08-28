@@ -2,14 +2,13 @@
 
 import React from 'react'
 
-import { useMapData, useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 
 import { FilterBanner } from '../FilterBanner/FilterBanner'
 
 export default function FilterBanners() {
   const { selectedFilters, selectedGeographyFilters } = useSelectedFilters()
   let showGeographyLimitBanner: boolean = false
-  const { mapData } = useMapData()
 
   // Group filters
   const filterGroups = selectedFilters!.reduce(
@@ -29,7 +28,9 @@ export default function FilterBanners() {
   }
   // Conditions
   const showFilterBanner = Object.values(filterGroups).some((group) => group!.length > 3)
-  const showNoDataBanner = mapData === null && Object.values(filterGroups).some((group) => group!.length > 0)
+  const showNoDataBanner = /* update the correct condition for here */ Object.values(filterGroups).some(
+    (group) => group!.length > 0
+  )
   const locationName = Object.values(filterGroups)
     .flatMap((group) => group!.map((filter) => filter.label))
     .join(', ')
