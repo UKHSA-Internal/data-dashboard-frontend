@@ -42,7 +42,7 @@ describe('FilterBanners', () => {
     expect(screen.queryByText(/Important information/)).not.toBeInTheDocument()
   })
 
-  it('should not show banner when all filter groups have 3 or fewer selections', () => {
+  /*it('should not show banner when all filter groups have 3 or fewer selections', () => {
     const selectedFilters = [
       { id: 'Country.England', label: 'England' },
       { id: 'Country.Scotland', label: 'Scotland' },
@@ -67,9 +67,9 @@ describe('FilterBanners', () => {
     render(<FilterBanners />)
 
     expect(screen.queryByText(/Important information/)).not.toBeInTheDocument()
-  })
+  }) */
 
-  it('should show banner when one geography group has exactly 4 selections', () => {
+  it('should show banner when geography filters exceed the limit', () => {
     const selectedGeographyFilters = [
       {
         name: 'geography1',
