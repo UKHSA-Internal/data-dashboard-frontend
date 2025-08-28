@@ -4,7 +4,13 @@ import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import {
+  Announcements,
+  FilterBannerWrapper,
+  PageSection,
+  PageSectionWithContents,
+  View,
+} from '@/app/components/ui/ukhsa'
 import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -144,14 +150,21 @@ export default async function TopicPage({
             )}
 
             <GlobalFilterProvider filters={extractedGlobalFilterContent}>
+              {body.some(({ value }) => value.content?.some((content) => content.type === 'global_filter_card')) && (
+                <FilterBannerWrapper />
+              )}
+
               <PageSectionWithContents>
-                {body.map(({ id, value }) => (
-                  <PageSection key={id} heading={value.heading}>
-                    {value.content.map((item) =>
-                      renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                    )}
-                  </PageSection>
-                ))}
+                {body.map(
+                  ({ id, value }) =>
+                    value.content.some((content) => content.type !== 'global_filter_card') && (
+                      <PageSection key={id} heading={value.heading}>
+                        {value.content.map((item) =>
+                          renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                        )}
+                      </PageSection>
+                    )
+                )}
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>
