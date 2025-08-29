@@ -40,6 +40,7 @@ export async function Timestamp({ data, size }: TimestampProps) {
 
     return (
       <h4 className="govuk-body-s govuk-!-margin-bottom-0 text-dark-grey">
+        <h3>{lastUpdated}</h3>
         {t('cms.blocks.timestamp.value', { prefix: datePrefix, value: lastUpdated })}
       </h4>
     )
