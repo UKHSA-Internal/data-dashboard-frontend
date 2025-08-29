@@ -80,7 +80,7 @@ export const getCharts = async (chart: RequestParams) => {
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
     if (plots[0].metric === 'COVID-19_cases_casesByDay') {
-      logger.info('Last updated date: ', data?.last_updated)
+      logger.info(`Last updated: ${data?.last_updated}`)
     }
 
     return responseSchema.safeParse(data)
