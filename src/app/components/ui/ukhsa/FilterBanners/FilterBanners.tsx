@@ -2,13 +2,15 @@
 
 import React from 'react'
 
-import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
+import { useErrorData, useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 
 import { FilterBanner } from '../FilterBanner/FilterBanner'
 
 export default function FilterBanners() {
   const { selectedFilters, selectedGeographyFilters } = useSelectedFilters()
+  const { chartRequestErrors } = useErrorData()
   let showGeographyLimitBanner: boolean = false
+  let showErrorBanner: boolean = false
 
   // Group filters
   const filterGroups = selectedFilters!.reduce(
@@ -22,24 +24,38 @@ export default function FilterBanners() {
     },
     {} as Record<string, typeof selectedFilters>
   )
+  if (chartRequestErrors!.length > 0) {
+    showErrorBanner = true
+  }
 
+  //show banner if geography length is greater than 3.
   if (selectedGeographyFilters) {
     showGeographyLimitBanner = selectedGeographyFilters.length > 3
   }
-  // Check if any filter group has more than 3 items
-  const showFilterBanner = Object.values(filterGroups).some((group) => group!.length > 3)
 
+  const labels = Object.values(filterGroups).flatMap((group) => group!.map((filter) => filter.label))
+  const countryList = ['Northern Ireland', 'Scotland', 'Wales']
+  const unavailableCountries = countryList.filter((country) => labels.includes(country))
+
+  // Build message
+  let message = '&nbsp;&nbsp;<b>Important information:</b><ul class="list-disc">'
   if (showGeographyLimitBanner) {
-    return (
-      <FilterBanner
-        message="&nbsp;&nbsp;<b>Important information :</b> You can only select <b>four locations </b> to display at a time."
-        showIcon={true}
-      />
-    )
+    message += '<li>You can only select <b>four locations</b> to display at a time.</li>'
   }
+  if (showErrorBanner) {
+    chartRequestErrors!.map((error: { id: string; error: string }) => {
+      message += `<li>${error.error}.</li>`
+    })
+  }
+  if (unavailableCountries.length > 0) {
+    message += `<li>Regional and Local authority level of coverage data is not available for <b>${unavailableCountries.join(', ')}</b>. All data displayed is at the country level.</li>`
+  }
+  message += '</ul>'
 
-  if (!showFilterBanner) {
+  // No banners? Return nothing
+  if (!showGeographyLimitBanner && !showErrorBanner && unavailableCountries.length === 0) {
     return null
   }
-  return null
+
+  return <FilterBanner message={message} showIcon={true} />
 }

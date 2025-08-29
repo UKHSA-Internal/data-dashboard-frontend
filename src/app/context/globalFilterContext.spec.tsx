@@ -179,6 +179,8 @@ describe('GlobalFilterContext', () => {
 
       //expect there to be no errors
       expect(result.current.state.geographyAreasError).toBeNull()
+      expect(result.current.state.mapDataError).toBeNull()
+      expect(result.current.state.chartRequestErrors).toEqual([])
     })
 
     test('should provide action functions', () => {
@@ -191,6 +193,9 @@ describe('GlobalFilterContext', () => {
       expect(typeof result.current.actions.addFilter).toBe('function')
       expect(typeof result.current.actions.removeFilter).toBe('function')
       expect(typeof result.current.actions.clearFilters).toBe('function')
+      expect(typeof result.current.actions.setChartRequestErrors).toBe('function')
+      expect(typeof result.current.actions.clearChartRequestErrors).toBe('function')
+      expect(typeof result.current.actions.removeChartRequestError).toBe('function')
     })
   })
 
@@ -718,6 +723,374 @@ describe('GlobalFilterContext', () => {
 
       // Original England filter should still be there
       expect(result.current.state.selectedFilters).toContain(mapFilter1)
+    })
+  })
+
+  describe('setChartRequestErrors', () => {
+    it('should add new error when no existing errors', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const newError = { id: 'error-1', error: 'Failed to load chart data' }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(newError)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([newError])
+    })
+
+    it('should add multiple different errors', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error1 = { id: 'error-1', error: 'Failed to load chart data for Northern Ireland' }
+      const error2 = { id: 'error-2', error: 'Failed to load chart data for Scotland' }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error1)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error2)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error1, error2])
+    })
+
+    it('should replace existing error with same id', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const originalError = { id: 'error-1', error: 'Original error message' }
+      const updatedError = { id: 'error-1', error: 'Updated error message' }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(originalError)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([originalError])
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(updatedError)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([updatedError])
+      expect(result.current.state.chartRequestErrors).toHaveLength(1)
+    })
+
+    it('should replace error with same id while keeping other errors', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error1 = { id: 'error-1', error: 'Error for Northern Ireland' }
+      const error2 = { id: 'error-2', error: 'Error for Scotland' }
+      const updatedError1 = { id: 'error-1', error: 'Updated error for Northern Ireland' }
+
+      // Add two errors
+      act(() => {
+        result.current.actions.setChartRequestErrors(error1)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error2)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error1, error2])
+
+      // Update first error
+      act(() => {
+        result.current.actions.setChartRequestErrors(updatedError1)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error2, updatedError1])
+      expect(result.current.state.chartRequestErrors).toHaveLength(2)
+    })
+
+    it('should handle errors with complex error messages', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const complexError = {
+        id: 'subplot-N92000002',
+        error:
+          'Failed to retrieve coverage data for: Northern Ireland with selected vaccinations: 6-in-1 (1 year), PCV (1 year) and threshold values: Under 80%, 85-90% for the date range: 2024-04-01 to 2025-03-31',
+      }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(complexError)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([complexError])
+    })
+  })
+
+  describe('clearChartRequestErrors', () => {
+    it('should clear all errors when errors exist', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error1 = { id: 'error-1', error: 'Error 1' }
+      const error2 = { id: 'error-2', error: 'Error 2' }
+
+      // Add some errors first
+      act(() => {
+        result.current.actions.setChartRequestErrors(error1)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error2)
+      })
+
+      expect(result.current.state.chartRequestErrors).toHaveLength(2)
+
+      // Clear all errors
+      act(() => {
+        result.current.actions.clearChartRequestErrors()
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+    })
+
+    it('should handle clearing when no errors exist', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      // Initial state should be empty array
+      expect(result.current.state.chartRequestErrors).toEqual([])
+
+      // Clear when already empty
+      act(() => {
+        result.current.actions.clearChartRequestErrors()
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+    })
+
+    it('should set errors to empty array, not null', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error = { id: 'error-1', error: 'Test error' }
+
+      // Add an error
+      act(() => {
+        result.current.actions.setChartRequestErrors(error)
+      })
+
+      // Clear errors
+      act(() => {
+        result.current.actions.clearChartRequestErrors()
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+      expect(result.current.state.chartRequestErrors).not.toBeNull()
+    })
+  })
+
+  describe('removeChartRequestError', () => {
+    it('should remove error by id when error exists', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error1 = { id: 'error-1', error: 'Error 1' }
+      const error2 = { id: 'error-2', error: 'Error 2' }
+      const error3 = { id: 'error-3', error: 'Error 3' }
+
+      // Add multiple errors
+      act(() => {
+        result.current.actions.setChartRequestErrors(error1)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error2)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error3)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error1, error2, error3])
+
+      // Remove middle error
+      act(() => {
+        result.current.actions.removeChartRequestError('error-2')
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error1, error3])
+      expect(result.current.state.chartRequestErrors).toHaveLength(2)
+    })
+
+    it('should remove error by id when only one error exists', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error = { id: 'single-error', error: 'Only error' }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error])
+
+      act(() => {
+        result.current.actions.removeChartRequestError('single-error')
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+    })
+
+    it('should handle removal when error id does not exist', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error1 = { id: 'error-1', error: 'Error 1' }
+      const error2 = { id: 'error-2', error: 'Error 2' }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error1)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(error2)
+      })
+
+      const originalErrors = result.current.state.chartRequestErrors
+
+      // Try to remove non-existent error
+      act(() => {
+        result.current.actions.removeChartRequestError('non-existent-id')
+      })
+
+      // Should remain unchanged
+      expect(result.current.state.chartRequestErrors).toEqual(originalErrors)
+    })
+
+    it('should handle removal when chartRequestErrors is empty', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      // Initial state is empty array
+      expect(result.current.state.chartRequestErrors).toEqual([])
+
+      // Try to remove from empty array
+      act(() => {
+        result.current.actions.removeChartRequestError('non-existent-id')
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+    })
+
+    it('should handle realistic error IDs like subplot and timeseries patterns', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const subplotError = { id: 'subplot-N92000002', error: 'Subplot error for Northern Ireland' }
+      const timeseriesError = { id: 'timeseries-E92000001', error: 'Timeseries error for England' }
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(subplotError)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors(timeseriesError)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([subplotError, timeseriesError])
+
+      // Remove subplot error
+      act(() => {
+        result.current.actions.removeChartRequestError('subplot-N92000002')
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([timeseriesError])
+
+      // Remove timeseries error
+      act(() => {
+        result.current.actions.removeChartRequestError('timeseries-E92000001')
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+    })
+  })
+
+  describe('integrated error action workflows', () => {
+    it('should handle add, update, and remove workflow', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      const error1 = { id: 'chart-error-1', error: 'Initial error' }
+      const updatedError1 = { id: 'chart-error-1', error: 'Updated error' }
+      const error2 = { id: 'chart-error-2', error: 'Second error' }
+
+      // Add first error
+      act(() => {
+        result.current.actions.setChartRequestErrors(error1)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error1])
+
+      // Add second error
+      act(() => {
+        result.current.actions.setChartRequestErrors(error2)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error1, error2])
+
+      // Update first error (should replace)
+      act(() => {
+        result.current.actions.setChartRequestErrors(updatedError1)
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([error2, updatedError1])
+
+      // Remove second error
+      act(() => {
+        result.current.actions.removeChartRequestError('chart-error-2')
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([updatedError1])
+
+      // Clear all
+      act(() => {
+        result.current.actions.clearChartRequestErrors()
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([])
+    })
+
+    it('should handle multiple rapid operations correctly', () => {
+      const { result } = renderHook(() => useGlobalFilters(), {
+        wrapper: createWrapper(),
+      })
+
+      act(() => {
+        // Rapid fire operations
+        result.current.actions.setChartRequestErrors({ id: 'rapid-1', error: 'Error 1' })
+        result.current.actions.setChartRequestErrors({ id: 'rapid-2', error: 'Error 2' })
+        result.current.actions.setChartRequestErrors({ id: 'rapid-3', error: 'Error 3' })
+        result.current.actions.removeChartRequestError('rapid-2')
+        result.current.actions.setChartRequestErrors({ id: 'rapid-1', error: 'Updated Error 1' })
+      })
+
+      expect(result.current.state.chartRequestErrors).toEqual([
+        { id: 'rapid-3', error: 'Error 3' },
+        { id: 'rapid-1', error: 'Updated Error 1' },
+      ])
     })
   })
 })

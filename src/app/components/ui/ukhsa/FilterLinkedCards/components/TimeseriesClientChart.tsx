@@ -6,6 +6,8 @@ import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
+import { useErrorData } from '@/app/hooks/globalFilterHooks'
+import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
 import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
@@ -28,6 +30,7 @@ const TimeseriesClientChart = ({
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
   const [error, setError] = useState<string | null>(null)
+  const { setChartRequestErrors, removeChartRequestError } = useErrorData()
 
   const chartDateRange: MinMaxFullDate = getMinMaxFullDate(timePeriods)
 
@@ -36,7 +39,7 @@ const TimeseriesClientChart = ({
       try {
         setLoading(true)
         setError(null)
-
+        removeChartRequestError(`subplot-${geography.geography_code}`)
         const chartResponse = await getCharts({
           file_format: 'svg',
           chart_height: 260,
@@ -70,6 +73,14 @@ const TimeseriesClientChart = ({
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)
         } else {
+          const errorMessage = createChartErrorMessage({
+            chartType: 'timeseries',
+            geographyName: geography.name,
+            selectedVaccinations: dataFilters,
+            dateFrom: chartDateRange.date_from,
+            dateTo: chartDateRange.date_to,
+          })
+          setChartRequestErrors({ id: `timeseries-${geography.geography_code}`, error: errorMessage })
           setError('Failed to parse chart response')
         }
       } catch (error) {

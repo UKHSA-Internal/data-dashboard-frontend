@@ -59,6 +59,7 @@ export interface GlobalFilterState extends InitialGlobalFilterState {
   mapData: MapDataResponse | null
   mapDataLoading: boolean
   mapDataError: string | null
+  chartRequestErrors: { id: string; error: string }[] | null
 }
 
 // Global Filter Action Interface
@@ -70,6 +71,9 @@ export interface GlobalFilterActions {
   clearFilters: () => void
   setSelectedVaccination: (selectedVaccination: DataFilter | null) => void
   addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
+  setChartRequestErrors: (error: { id: string; error: string }) => void
+  clearChartRequestErrors: () => void
+  removeChartRequestError: (errorId: string) => void
 }
 
 //Interface for the global filter context
@@ -95,6 +99,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   const [selectedGeographyFilters, setSelectedGeographyFilters] = useState<GeographiesSchema>([])
   const [selectedVaccinationFilters, setSelectedVaccinationFilters] = useState<DataFilter[]>([])
   const [selectedThresholdFilters, setSelectedThresholdFilters] = useState<ThresholdFilter[]>([])
+  const [chartRequestErrors, setChartRequestErrors] = useState<{ id: string; error: string }[]>([])
 
   const fetchGeographyData = async () => {
     try {
@@ -191,6 +196,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
     selectedGeographyFilters,
     selectedThresholdFilters,
     selectedVaccinationFilters,
+    chartRequestErrors,
   }
   const actions: GlobalFilterActions = {
     //Time Period Actions
@@ -318,6 +324,13 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         case 'geography':
           const geographyFilterData = filterId.split('.')
           const geographyId = geographyFilterData[2]
+          setChartRequestErrors((prevErrors) =>
+            prevErrors.filter(
+              (errorObj) =>
+                !errorObj.id.startsWith(`subplot-${geographyId}`) &&
+                !errorObj.id.startsWith(`timeseries-${geographyId}`)
+            )
+          )
           setSelectedGeographyFilters((prevFilters) =>
             prevFilters.filter((filter) => filter.geography_code !== geographyId)
           )
@@ -339,6 +352,21 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setSelectedGeographyFilters([])
       setSelectedThresholdFilters([])
       setSelectedVaccinationFilters([])
+      setChartRequestErrors([])
+    },
+    setChartRequestErrors: (error: { id: string; error: string }) => {
+      setChartRequestErrors((prevErrors) => {
+        const filteredErrors = prevErrors.filter((err) => err.id !== error.id)
+        return [...filteredErrors, error]
+      })
+    },
+    clearChartRequestErrors: () => {
+      setChartRequestErrors([])
+    },
+    removeChartRequestError: (errorId: string) => {
+      if (chartRequestErrors) {
+        setChartRequestErrors((prevErrors) => prevErrors.filter((error) => error.id !== errorId))
+      }
     },
   }
 
