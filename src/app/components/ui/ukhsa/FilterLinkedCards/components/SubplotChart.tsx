@@ -109,6 +109,7 @@ const SubplotClientChart = ({
           setChartResponse(chartResponse.data)
         } else {
           const errorMessage = createChartErrorMessage({
+            chartType: 'subplot',
             geographyName: geography.name,
             selectedThresholds,
             selectedVaccinations,

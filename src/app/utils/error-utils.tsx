@@ -1,6 +1,7 @@
 import { DataFilter, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
 
 interface ErrorMessageParams {
+  chartType: string
   geographyName: string
   selectedThresholds?: ThresholdFilter[]
   selectedVaccinations: DataFilter[]
@@ -9,6 +10,7 @@ interface ErrorMessageParams {
 }
 
 export default function createChartErrorMessage({
+  chartType,
   geographyName,
   selectedThresholds,
   selectedVaccinations,
@@ -26,6 +28,8 @@ export default function createChartErrorMessage({
   // Build the conditional parts
   const parts = []
 
+  const requestType = chartType === 'subplot' ? 'coverage' : 'time series'
+
   if (vaccinationLabels) {
     parts.push(`selected vaccinations: ${vaccinationLabels}`)
   }
@@ -37,5 +41,5 @@ export default function createChartErrorMessage({
   // Join parts with appropriate conjunction
   const withClause = parts.length > 0 ? ` with ${parts.join(' and ')}` : ''
 
-  return `Failed to retrieve data for: ${geographyName}${withClause} for the date range: ${dateFrom} to ${dateTo}`
+  return `Failed to retrieve ${requestType} data for: ${geographyName}${withClause} for the date range: ${dateFrom} to ${dateTo}`
 }
