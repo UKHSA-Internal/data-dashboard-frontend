@@ -79,6 +79,10 @@ export const getCharts = async (chart: RequestParams) => {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
+    if (plots[0].metric === 'COVID-19_cases_casesByDay') {
+      logger.info('Last updated date: ', data?.last_updated)
+    }
+
     return responseSchema.safeParse(data)
   } catch (error) {
     if (error instanceof Error) {
