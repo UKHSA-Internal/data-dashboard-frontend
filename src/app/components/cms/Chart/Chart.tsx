@@ -11,6 +11,7 @@ import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
+import { logger } from '@/lib/logger'
 
 import ChartNoScript from '../../ui/ukhsa/ChartNoScript/ChartNoScript'
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
@@ -155,17 +156,21 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     geography: areaName ?? plot?.value.geography,
   }))
 
+  const chartRequestBody = {
+    plots,
+    x_axis,
+    y_axis,
+    x_axis_title: xAxisTitle,
+    y_axis_title: yAxisTitle,
+    y_axis_maximum_value: yAxisMaximum,
+    y_axis_minimum_value: yAxisMinimum,
+  }
+
   const requests =
     plots &&
     sizes.map((chart) =>
       getCharts({
-        plots,
-        x_axis,
-        y_axis,
-        x_axis_title: xAxisTitle,
-        y_axis_title: yAxisTitle,
-        y_axis_maximum_value: yAxisMaximum,
-        y_axis_minimum_value: yAxisMinimum,
+        ...chartRequestBody,
         chart_width: chartSizes[chart.size].width,
         chart_height: chartSizes[chart.size].height,
       })
@@ -176,6 +181,11 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
 
   // Pick out the default chart (mobile-first)
   const defaultChartResponse = resolvedRequests[resolvedRequests.length - 1].data
+
+  if (defaultChartResponse && plots[0]?.metric === 'COVID-19_cases_casesByDay') {
+    logger.info(`Chart Request body: ${JSON.stringify(chartRequestBody)}`)
+    logger.info(`Chart Response default Response: ${JSON.stringify(defaultChartResponse)}`)
+  }
 
   // Check the default chart & any additional charts have correctly returned responses
   if (!defaultChartResponse || resolvedRequests.some((request) => !request.success)) {
