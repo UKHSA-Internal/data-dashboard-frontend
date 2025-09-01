@@ -22,7 +22,16 @@ interface TimestampProps {
 export async function Timestamp({ data, size }: TimestampProps) {
   const { t } = await getServerTranslation('common')
 
-  const { chart, x_axis, y_axis, date_prefix: datePrefix } = data
+  const {
+    chart,
+    x_axis,
+    y_axis,
+    x_axis_title,
+    y_axis_title,
+    y_axis_minimum_value,
+    y_axis_maximum_value,
+    date_prefix: datePrefix,
+  } = data
 
   const plots = chart.map((plot) => plot.value)
 
@@ -30,6 +39,10 @@ export async function Timestamp({ data, size }: TimestampProps) {
     plots,
     x_axis,
     y_axis,
+    x_axis_title,
+    y_axis_title,
+    y_axis_minimum_value,
+    y_axis_maximum_value,
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
   }
