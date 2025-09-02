@@ -71,11 +71,17 @@ export default function MapCard({
 
   const { mapData, mapDataLoading, mapDataError } = useMapData()
 
-  const { selectedFilters } = useSelectedFilters()
+  const { selectedGeographyFilters } = useSelectedFilters()
 
   const coverLayer = useMemo(() => {
     if (!mapData || mapDataLoading || mapDataError) return
-    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} selectedFilters={selectedFilters} />
+    return (
+      <CoverLayer
+        dataThresholds={thresholdData}
+        mapData={mapData.data}
+        selectedGeographyFilters={selectedGeographyFilters}
+      />
+    )
   }, [thresholdData, mapData])
 
   let date

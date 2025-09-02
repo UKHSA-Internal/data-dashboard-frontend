@@ -11,6 +11,7 @@ import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
+import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { mapQueryKeys } from '@/app/constants/map.constants'
 import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
@@ -47,7 +48,7 @@ interface CoverLayerProps extends Omit<GeoJSONProps, 'data'> {
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
   data?: GeoJSONProps['data']
-  selectedFilters?: FlatOption[] | null
+  selectedGeographyFilters?: GeographiesSchemaObject[] | null
 
   /**
    * The ID of the selected feature.
@@ -113,7 +114,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   className = 'transition-all duration-150 outline-none',
   dataThresholds: thresholdData,
   mapData,
-  selectedFilters,
+  selectedGeographyFilters,
   ...rest
 }: CoverLayerProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
@@ -210,10 +211,31 @@ const CoverLayer = <T extends LayerWithFeature>({
   const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
 
   useEffect(() => {
-    if (selectedFilters) {
-      console.log('selected Filters: ', selectedFilters)
+    if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {
+      console.log('selected Geography Filters: ', selectedGeographyFilters)
+      // Get most recently selected geography
+      const latestGeography = selectedGeographyFilters[selectedGeographyFilters.length - 1]
+
+      // Find matching feature in current features
+      const matchingFeature = featuresRef.current.find(
+        (feature) => feature.properties[geoJsonFeatureId] === latestGeography.geography_code
+      )
+
+      if (matchingFeature && matchingFeature.properties.LAT && matchingFeature.properties.LONG) {
+        const latlng = Leaflet.latLng(matchingFeature.properties.LAT, matchingFeature.properties.LONG)
+
+        // Set the selected feature first
+        setSelectedFeatureId(latestGeography.geography_code!)
+
+        // Then update the map view
+        if (map.getZoom() < 8) {
+          map.setView(latlng, 8)
+        } else {
+          map.setView(latlng)
+        }
+      }
     }
-  }, [selectedFilters])
+  }, [selectedGeographyFilters, map, setSelectedFeatureId])
 
   useEffect(() => {
     if (map) {
@@ -365,11 +387,10 @@ const CoverLayer = <T extends LayerWithFeature>({
         updateScreenReaderText()
       },
       zoomend() {
-        const newDataLevel = getDataLevel()
-
-        if (newDataLevel !== dataLevel) {
-          setDataLevel(newDataLevel)
-        }
+        // const newDataLevel = getDataLevel()
+        // if (newDataLevel !== dataLevel) {
+        //   setDataLevel(newDataLevel)
+        // }
       },
     })
     return null
