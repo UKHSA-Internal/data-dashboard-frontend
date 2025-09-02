@@ -47,6 +47,7 @@ interface CoverLayerProps extends Omit<GeoJSONProps, 'data'> {
    * By default, this component automatically populates UKHSA-specific regional boundary data.
    */
   data?: GeoJSONProps['data']
+  selectedFilters?: FlatOption[] | null
 
   /**
    * The ID of the selected feature.
@@ -112,6 +113,7 @@ const CoverLayer = <T extends LayerWithFeature>({
   className = 'transition-all duration-150 outline-none',
   dataThresholds: thresholdData,
   mapData,
+  selectedFilters,
   ...rest
 }: CoverLayerProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
@@ -208,6 +210,12 @@ const CoverLayer = <T extends LayerWithFeature>({
   const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
 
   useEffect(() => {
+    if (selectedFilters) {
+      console.log('selected Filters: ', selectedFilters)
+    }
+  }, [selectedFilters])
+
+  useEffect(() => {
     if (map) {
       const initialDataLevel = getDataLevel()
       setDataLevel(initialDataLevel)
@@ -255,6 +263,9 @@ const CoverLayer = <T extends LayerWithFeature>({
 
           if (map.getZoom() < 8) {
             map.setView(latlng, 8)
+          }
+          if (map.getZoom() >= 8) {
+            map.setView(latlng)
           }
 
           // Prevent map click events from firing
