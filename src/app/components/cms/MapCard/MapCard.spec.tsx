@@ -19,6 +19,9 @@ jest.mock('@/app/hooks/globalFilterHooks', () => ({
     mapDataLoading: false,
     mapDataError: null,
   }),
+  useSelectedFilters: jest.fn().mockReturnValue({
+    selectedFilters: [],
+  }),
 }))
 
 interface MockLayerProps {
