@@ -6,13 +6,11 @@
 'use client'
 
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
-import { parseAsString, useQueryState } from 'nuqs'
 import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import { mapQueryKeys } from '@/app/constants/map.constants'
 import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
   getActiveCssVariableFromColour,
@@ -117,7 +115,8 @@ const CoverLayer = <T extends LayerWithFeature>({
   selectedGeographyFilters,
   ...rest
 }: CoverLayerProps) => {
-  const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
+  const [selectedFeatureId, setSelectedFeatureId] = useState<string | null>(null)
+  const [filterSelectedFeatureId, setFilterSelectedFeatureId] = useState<string | null>(null)
 
   // State for zoom-dependent data loading
   const [dataLevel, setDataLevel] = useState<DataLevel>('countries')
@@ -225,7 +224,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         const latlng = Leaflet.latLng(matchingFeature.properties.LAT, matchingFeature.properties.LONG)
 
         // Set the selected feature first
-        setSelectedFeatureId(latestGeography.geography_code!)
+        setFilterSelectedFeatureId(latestGeography.geography_code!)
 
         // Then update the map view
         if (map.getZoom() < 8) {
@@ -235,7 +234,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         }
       }
     }
-  }, [selectedGeographyFilters, map, setSelectedFeatureId])
+  }, [selectedGeographyFilters, map, setFilterSelectedFeatureId])
 
   useEffect(() => {
     if (map) {
@@ -435,6 +434,7 @@ const CoverLayer = <T extends LayerWithFeature>({
 
     const currentFeatureId = feature.properties[geoJsonFeatureId]
     const isSelected = selectedFeatureId == currentFeatureId
+    const isFilterFeature = filterSelectedFeatureId == currentFeatureId
 
     // Apply different styling based on feature collection name
     if (featureCollection.name === 'Local Authorities') {
@@ -442,6 +442,8 @@ const CoverLayer = <T extends LayerWithFeature>({
         const colour = getThresholdColour(featureData)
         if (isSelected) {
           style.fillColor = getActiveCssVariableFromColour(colour as MapFeatureColour)
+        } else if (isFilterFeature) {
+          style.fillColor = getHoverCssVariableFromColour(colour as MapFeatureColour)
         } else {
           style.fillColor = getCssVariableFromColour(colour as MapFeatureColour)
         }
