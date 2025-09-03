@@ -1,4 +1,5 @@
 'use client'
+import clsx from 'clsx'
 import React from 'react'
 
 import { DataFilters, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
@@ -35,7 +36,15 @@ function DisplayGeographyDropdowns() {
     })
 
     geographyDropdowns.push(
-      <div key={key} className={`w-1/${geographyAreas.size} z-100 px-2`}>
+      <div
+        key={key}
+        // eslint-disable-next-line tailwindcss/no-custom-classname
+        className={clsx(`z-100 w-full px-2`, {
+          'md:w-1/2': geographyAreas.size === 2,
+          'md:w-1/3': geographyAreas.size === 3,
+          'md:w-1/4': geographyAreas.size === 4,
+        })}
+      >
         <MultiselectDropdown name={key} data={data} />
       </div>
     )
@@ -54,7 +63,7 @@ function DisplayCoverageDropdown() {
     data.push({ id: `${filter.type}.${filter.id}`, label: filter.value.label })
   })
   return (
-    <div className="w-1/2 px-2">
+    <div className="w-full px-2 md:w-1/2">
       <MultiselectDropdown name="Select level of coverage %" data={data} />
     </div>
   )
@@ -74,7 +83,7 @@ export function DisplayVaccinationDropDown() {
     return null
   }
   return (
-    <div className="w-1/2 px-2">
+    <div className="w-full px-2 md:w-1/2">
       <MultiselectDropdown name={label} data={groupedMultiselectOptions} nestedMultiselect />
     </div>
   )
