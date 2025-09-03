@@ -11,7 +11,6 @@ import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
-import { logger } from '@/lib/logger'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { RichText } from '../RichText/RichText'
@@ -69,14 +68,6 @@ export async function Table({
   }
 
   const chartResponse = await getCharts(chartRequestBody)
-
-  // log out request body and response
-  if (chartResponse.success) {
-    if (plots[0]?.metric === 'COVID-19_cases_casesByDay') {
-      logger.info(`Table Request: ${JSON.stringify(chartRequestBody)}`)
-      logger.info(`Table Response: ${JSON.stringify(chartResponse.data)}`)
-    }
-  }
 
   if (tableResponse.success) {
     const groups = parseChartTableData(tableResponse.data, {

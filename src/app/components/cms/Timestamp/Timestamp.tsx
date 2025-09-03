@@ -4,7 +4,6 @@ import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/P
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getServerTranslation } from '@/app/i18n'
 import { chartSizes } from '@/config/constants'
-import { logger } from '@/lib/logger'
 
 /**
  * NOTE: The timestamp is currently only returned by the charts endpoint.
@@ -53,11 +52,6 @@ export async function Timestamp({ data, size }: TimestampProps) {
     const {
       data: { last_updated: lastUpdated },
     } = res
-
-    if (plots[0]?.metric === 'COVID-19_cases_casesByDay') {
-      logger.info(`Timestamp Request: ${JSON.stringify(requestBody)}`)
-      logger.info(`Timestamp Response: ${JSON.stringify(res.data)}`)
-    }
 
     return (
       <h4 className="govuk-body-s govuk-!-margin-bottom-0 text-dark-grey">
