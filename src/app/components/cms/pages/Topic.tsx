@@ -150,20 +150,17 @@ export default async function TopicPage({
             )}
 
             <GlobalFilterProvider filters={extractedGlobalFilterContent}>
-              {body.some(({ value }) => value.content?.some((content) => content.type === 'global_filter_card')) && (
-                <FilterBannerWrapper />
-              )}
-
               <PageSectionWithContents>
-                {body.map(
-                  ({ id, value }) =>
-                    value.content.some((content) => content.type !== 'global_filter_card') && (
-                      <PageSection key={id} heading={value.heading}>
-                        {value.content.map((item) =>
-                          renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                        )}
-                      </PageSection>
-                    )
+                {body.map(({ id, value }) =>
+                  value.content.some((content) => content.type === 'global_filter_card') ? (
+                    <FilterBannerWrapper key={id} />
+                  ) : (
+                    <PageSection key={id} heading={value.heading}>
+                      {value.content.map((item) =>
+                        renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                      )}
+                    </PageSection>
+                  )
                 )}
               </PageSectionWithContents>
             </GlobalFilterProvider>

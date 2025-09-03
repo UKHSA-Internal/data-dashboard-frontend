@@ -35,7 +35,7 @@ function DisplayGeographyDropdowns() {
     })
 
     geographyDropdowns.push(
-      <div key={key} className={`w-1/${geographyAreas.size} z-100 px-2`}>
+      <div key={key} className={`md:w-1/${geographyAreas.size} z-100 w-full px-2`}>
         <MultiselectDropdown name={key} data={data} />
       </div>
     )
@@ -54,7 +54,7 @@ function DisplayCoverageDropdown() {
     data.push({ id: `${filter.type}.${filter.id}`, label: filter.value.label })
   })
   return (
-    <div className="w-1/2 px-2">
+    <div className="w-full px-2 md:w-1/2">
       <MultiselectDropdown name="Select level of coverage %" data={data} />
     </div>
   )
@@ -74,7 +74,7 @@ export function DisplayVaccinationDropDown() {
     return null
   }
   return (
-    <div className="w-1/2 px-2">
+    <div className="w-full px-2 md:w-1/2">
       <MultiselectDropdown name={label} data={groupedMultiselectOptions} nestedMultiselect />
     </div>
   )
