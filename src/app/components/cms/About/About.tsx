@@ -3,6 +3,7 @@
 import { ChartRelatedLink } from '@/api/models/cms/Page/Body'
 import { useTranslation } from '@/app/i18n/client'
 
+import { RichText } from '../RichText/RichText'
 export interface AboutProps {
   description?: string
   relatedLinks?: ChartRelatedLink
@@ -26,7 +27,7 @@ const About = ({ description, relatedLinks, content }: AboutProps) => {
   const { t } = useTranslation('common')
   return (
     <div>
-      {content && <div dangerouslySetInnerHTML={{ __html: content ?? '' }} />}
+      {content && <RichText>{content}</RichText>}
       {description && <p className="govuk-!-margin-bottom-2 whitespace-pre-wrap pt-0">{description}</p>}
       {relatedLinks && relatedLinks.length > 0 ? (
         <div>
