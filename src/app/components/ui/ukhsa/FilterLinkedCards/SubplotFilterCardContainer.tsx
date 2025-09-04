@@ -27,7 +27,7 @@ const SubplotFilterCardContainer = () => {
         selectedGeographyFilters!.map((geography) => {
           return (
             <SubplotFilterCard
-              key={geography.name}
+              key={`${geography.geography_code}-subplot`}
               geography={geography}
               selectedThresholds={selectedThresholdFilters!}
               selectedVaccinations={selectedVaccinationFilters!}
