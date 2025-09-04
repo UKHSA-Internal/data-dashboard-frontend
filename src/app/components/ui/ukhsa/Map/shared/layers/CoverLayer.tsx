@@ -211,7 +211,6 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   useEffect(() => {
     if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {
-      console.log('selected Geography Filters: ', selectedGeographyFilters)
       // Get most recently selected geography
       const latestGeography = selectedGeographyFilters[selectedGeographyFilters.length - 1]
 
@@ -386,10 +385,10 @@ const CoverLayer = <T extends LayerWithFeature>({
         updateScreenReaderText()
       },
       zoomend() {
-        // const newDataLevel = getDataLevel()
-        // if (newDataLevel !== dataLevel) {
-        //   setDataLevel(newDataLevel)
-        // }
+        const newDataLevel = getDataLevel()
+        if (newDataLevel !== dataLevel) {
+          setDataLevel(newDataLevel)
+        }
       },
     })
     return null
