@@ -17,6 +17,7 @@ import {
   mockSectionWithLink,
   mockSectionWithLongHeading,
   mockTextCard,
+  mockTextCardWithUnorderedList,
 } from './__mocks__/cms'
 import { renderBlock, renderCard, renderCompositeBlock, renderSection } from './cms.utils'
 
@@ -49,7 +50,6 @@ jest.mock('../components/cms', () => ({
   ),
   ButtonExternal: () => <div>Mocked external download button</div>,
   ButtonInternal: () => <div>Mocked internal download button</div>,
-  RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
 }))
 //Mock the getShowLessURL and getShowMoreURL
@@ -88,6 +88,13 @@ describe('Text card', () => {
     render(renderCard('Text card heading', [], '', mockTextCard))
     expect(screen.getByRole('heading', { level: 3, name: 'Text card heading' })).toBeInTheDocument()
     expect(screen.getByText('Text card body')).toBeInTheDocument()
+  })
+
+  test('text card renders unordered list', () => {
+    render(renderCard('Text card renders unordered list', [], '', mockTextCardWithUnorderedList))
+    expect(screen.getByRole('list', {})).toBeInTheDocument()
+    expect(screen.getByText('bullet point one')).toBeInTheDocument()
+    expect(screen.getByText('bullet point two')).toBeInTheDocument()
   })
 })
 
@@ -281,14 +288,16 @@ describe('Metrics', () => {
 
 describe('Composite block', () => {
   test('composite with text block', () => {
+    const textValue = 'text test content'
+
     render(
       renderCompositeBlock({
         type: 'text',
-        value: 'text test content',
+        value: textValue,
         id: '2df8361c-12f4-40d3-aa01-ce2c68a24d04',
       })
     )
-    expect(screen.getByText('Mocked richtext component')).toBeInTheDocument()
+    expect(screen.getByText(textValue)).toBeInTheDocument()
   })
 
   test('internal button', () => {
