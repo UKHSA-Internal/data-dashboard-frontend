@@ -313,6 +313,7 @@ export const mockLinkedMapCard = Mock.of<CardType>({
   value: {
     title_prefix: 'Map Heading',
     legend_title: 'Level of Coverage',
+    about: 'This <b>map</b> shows vaccination coverage statistics.',
   },
 })
 

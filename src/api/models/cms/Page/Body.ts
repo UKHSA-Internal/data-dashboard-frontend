@@ -118,6 +118,7 @@ export const CardTypes = z.discriminatedUnion('type', [
     value: z.object({
       title_prefix: z.optional(z.string()),
       legend_title: z.optional(z.string()),
+      about: z.optional(z.string()),
     }),
     id: z.string(),
   }),
@@ -148,6 +149,7 @@ export const CardTypes = z.discriminatedUnion('type', [
       legend_title: z.string(),
       target_threshold: z.number(),
       target_threshold_label: z.string().optional(),
+      about: z.string(),
     }),
     id: z.string(),
   }),
@@ -156,6 +158,7 @@ export const CardTypes = z.discriminatedUnion('type', [
     value: z.object({
       title_prefix: z.string(),
       legend_title: z.string(),
+      about: z.string(),
     }),
     id: z.string(),
   }),

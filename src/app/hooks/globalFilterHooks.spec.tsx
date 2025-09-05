@@ -42,11 +42,13 @@ describe('globalFilterHooks', () => {
     legend_title: 'Coverage (%)',
     target_threshold: 95,
     target_threshold_label: '95% target',
+    about: 'This <b>chart</b> shows vaccination coverage statistics.',
   }
 
   const mockCoverageTimeSeriesData = {
     title_prefix: 'Annual vaccination coverage',
     legend_title: 'Level of coverage (%)',
+    about: 'This <b>chart</b> shows vaccination coverage statistics.',
   }
 
   const mockThresholdFilters: ThresholdFilters = {
