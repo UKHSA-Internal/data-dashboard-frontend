@@ -84,7 +84,7 @@ export const renderCard = (
 ) => {
   return (
     <div key={id}>
-      {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
+      {type === 'text_card' && <RichText>{value.body}</RichText>}
 
       {type === 'headline_numbers_row_card' && (
         <Card className="ukhsa-headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
