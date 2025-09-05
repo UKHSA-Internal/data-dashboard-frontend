@@ -57,7 +57,13 @@ describe('SelectedFilters', () => {
       t: mockTranslation,
     })
 
-    mockTranslation.mockReturnValue('Selected Filters')
+    mockTranslation.mockImplementation((key: string) => {
+      const translations: Record<string, string> = {
+        'globalFilter.globalFilterTitle': 'Selected Filters',
+        'globalFilter.clearFilterSelection': 'Clear filter selection',
+      }
+      return translations[key] || key
+    })
   })
 
   describe('when no filters are selected', () => {

@@ -19,7 +19,7 @@ export default function SelectedFilters() {
         onClick={() => clearFilters()}
         className="govuk-body-xs govuk-!-margin-[-2px] govuk-link absolute right-3 text-blue underline"
       >
-        Clear filter selection
+        {t('globalFilter.clearFilterSelection')}
         <span className="govuk-!-margin-left-2 inline-block">
           <CrossIcon colour="var(--colour-blue)" />
         </span>

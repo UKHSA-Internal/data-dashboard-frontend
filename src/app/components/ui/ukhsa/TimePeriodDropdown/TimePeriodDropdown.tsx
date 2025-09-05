@@ -1,6 +1,9 @@
 'use client'
+import { useEffect } from 'react'
+
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { useGlobalFilters } from '@/app/context/globalFilterContext'
+import { useTranslation } from '@/app/i18n/client'
 
 interface TimePeriodDropdownProps {
   className?: string
@@ -15,9 +18,30 @@ export const TimePeriodDropdown = ({
   disabled = false,
   onChange,
 }: TimePeriodDropdownProps) => {
+  const { t } = useTranslation('common')
   const { state, actions } = useGlobalFilters()
   const { timePeriods, selectedTimePeriod } = state
   const { setSelectedTimePeriod } = actions
+
+  // Set initial value to current year (2024-2025) on first load
+  useEffect(() => {
+    if (timePeriods && timePeriods.length > 0 && !selectedTimePeriod) {
+      const currentYear = new Date().getFullYear()
+
+      // Loop backwards through time periods to find one that includes current year
+      for (let i = timePeriods.length - 1; i >= 0; i--) {
+        const period = timePeriods[i]
+        const dateFrom = new Date(period.value.date_from).getFullYear()
+        const dateTo = new Date(period.value.date_to).getFullYear()
+
+        if (dateFrom === currentYear || dateTo === currentYear) {
+          setSelectedTimePeriod(period)
+          onChange?.(period)
+          break
+        }
+      }
+    }
+  }, [timePeriods, selectedTimePeriod, setSelectedTimePeriod, onChange])
 
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedLabel = event.target.value
@@ -44,7 +68,7 @@ export const TimePeriodDropdown = ({
   return (
     <div className={`govuk-form-group ${className}`}>
       <label className="govuk-label govuk-label--s" htmlFor="time-period-select">
-        Year selection
+        {t('map.yearSelection')}
       </label>
       <select
         id="time-period-select"
