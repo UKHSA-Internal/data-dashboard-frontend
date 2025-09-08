@@ -9,7 +9,7 @@ import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
-import { useMapData, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
+import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { formatDate } from '@/app/utils/date.utils'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
@@ -71,9 +71,17 @@ export default function MapCard({
 
   const { mapData, mapDataLoading, mapDataError } = useMapData()
 
+  const { selectedGeographyFilters } = useSelectedFilters()
+
   const coverLayer = useMemo(() => {
     if (!mapData || mapDataLoading || mapDataError) return
-    return <CoverLayer dataThresholds={thresholdData} mapData={mapData.data} />
+    return (
+      <CoverLayer
+        dataThresholds={thresholdData}
+        mapData={mapData.data}
+        selectedGeographyFilters={selectedGeographyFilters}
+      />
+    )
   }, [thresholdData, mapData])
 
   let date
@@ -93,6 +101,7 @@ export default function MapCard({
         zoom={7}
         ref={ref}
         className={clsx('relative h-[70vh] overflow-hidden ukhsa-focus', className)}
+        style={{ zIndex: 1 }}
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
