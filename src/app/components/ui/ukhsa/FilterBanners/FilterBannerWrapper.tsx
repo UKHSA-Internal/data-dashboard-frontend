@@ -13,8 +13,8 @@ const FilterDropdowns = dynamic(() => import('@/app/components/ui/ukhsa/FilterDr
 export async function FilterBannerWrapper() {
   return (
     <Suspense fallback={null}>
-      <FilterBanners />
       <StaticFilter>
+        <FilterBanners />
         <SelectedFilters />
         <FilterDropdowns />
       </StaticFilter>
