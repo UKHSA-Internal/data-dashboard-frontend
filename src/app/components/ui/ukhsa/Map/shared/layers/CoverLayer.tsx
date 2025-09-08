@@ -476,6 +476,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         <GeoJSON
           interactive={featureCollection.name != 'Regions'}
           key={`geojson-${dataLevel}-${renderKey}-${index}`}
+          data-testId={`geojson-localAuthorities`}
           data={featureCollection}
           {...defaultOptions}
           style={(feature) => getStyleForFeatureCollection(feature, featureCollection)}
@@ -487,6 +488,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       <GeoJSON
         key={`geojson-${dataLevel}-${renderKey}`}
         data={getCurrentData()}
+        data-testid={`geojson-regions`}
         {...defaultOptions}
         style={(feature) => {
           // If the feature or its ID is not available, return an empty style
