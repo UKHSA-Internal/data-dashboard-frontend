@@ -101,6 +101,7 @@ export default function MapCard({
         zoom={7}
         ref={ref}
         className={clsx('relative h-[70vh] overflow-hidden ukhsa-focus', className)}
+        style={{ zIndex: 1 }}
         zoomControl={false}
       >
         <UKHSALogoLayer position="topright" />
