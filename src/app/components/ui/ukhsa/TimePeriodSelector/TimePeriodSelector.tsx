@@ -11,7 +11,7 @@ const Button = ({ label, onClick, disabled }: { label: string; onClick: () => vo
   <button
     onClick={onClick}
     disabled={disabled}
-    className={`govuk-button govuk-button--secondary govuk-!-margin-0 flex items-center border border-black font-bold`}
+    className={`govuk-button govuk-button--secondary govuk-!-margin-0 flex max-w-[32px] items-center border border-black font-bold`}
   >
     {label}
   </button>
