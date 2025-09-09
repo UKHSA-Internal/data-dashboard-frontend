@@ -1,11 +1,19 @@
-import { render, screen, fireEvent, waitFor } from '@testing-library/react'
+import Leaflet from 'leaflet'
 import { MapContainer } from 'react-leaflet'
-import L from 'leaflet'
-import CoverLayer from './CoverLayer'
+
 import { MapDataList } from '@/api/models/Maps'
-import { ThresholdItemProps } from '../controls/MapLegendControl'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { FilterOption } from '@/app/context/globalFilterContext'
+import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
+import { fireEvent, render, screen, waitFor } from '@/config/test-utils'
+
+import { ThresholdItemProps } from '../controls/MapLegendControl'
+import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
+import CoverLayer from './CoverLayer'
+
+/* eslint-disable @typescript-eslint/no-explicit-any*/
+/* eslint-disable jsx-a11y/click-events-have-key-events*/
 
 let layerCounter = 0
 
@@ -129,6 +137,10 @@ const mockMap = {
   setView: jest.fn(),
 }
 
+/* eslint-disable jsx-a11y/click-events-have-key-events*/
+/* eslint-disable jsx-a11y/mouse-events-have-key-events*/
+/* eslint-disable jsx-a11y/no-static-element-interactions*/
+
 jest.mock('react-leaflet', () => ({
   ...jest.requireActual('react-leaflet'),
   useMap: () => mockMap,
@@ -190,7 +202,7 @@ jest.mock('react-leaflet', () => ({
               onClick={() => {
                 const clickEvent = {
                   target: { feature },
-                  latlng: L.latLng(feature.properties.LAT, feature.properties.LONG),
+                  latlng: Leaflet.latLng(feature.properties.LAT, feature.properties.LONG),
                 }
                 const layerEvents = (global as any)[`mockLayerEvents_${featureId}`]
                 if (layerEvents?.click) {
@@ -218,21 +230,6 @@ jest.mock('react-leaflet', () => ({
     )
   }),
 }))
-
-const getAllGeoJSONLayers = () => {
-  const layers = []
-  let layerIndex = 1
-  while (true) {
-    try {
-      const layer = screen.getByTestId(`geojson-layer-${layerIndex}`)
-      layers.push(layer)
-      layerIndex++
-    } catch {
-      break
-    }
-  }
-  return layers
-}
 
 // Test wrapper component
 const TestWrapper: React.FC<{ children: React.ReactNode }> = ({ children }) => (
@@ -303,9 +300,9 @@ describe('CoverLayer', () => {
   ]
 
   // Mock hook implementations
-  const mockUseGeographyState = require('@/app/hooks/globalFilterHooks').useGeographyState
-  const mockUseSelectedFilters = require('@/app/hooks/globalFilterHooks').useSelectedFilters
-  const mockUseVaccinationState = require('@/app/hooks/globalFilterHooks').useVaccinationState
+  const mockUseGeographyState = useGeographyState as jest.MockedFunction<typeof useGeographyState>
+  const mockUseSelectedFilters = useSelectedFilters as jest.MockedFunction<typeof useSelectedFilters>
+  const mockUseVaccinationState = useVaccinationState as jest.MockedFunction<typeof useVaccinationState>
 
   beforeEach(() => {
     jest.clearAllMocks()
@@ -325,7 +322,7 @@ describe('CoverLayer', () => {
           [
             {
               geography_code: 'E06000001',
-              geography: 'Test Local Authority',
+              name: 'Test Local Authority',
               geography_type: 'Upper Tier Local Authority',
               relationships: [
                 {
@@ -341,17 +338,79 @@ describe('CoverLayer', () => {
           ],
         ],
       ]),
+      geographyAreasLoading: false,
+      geographyAreasError: null,
     })
 
     mockUseSelectedFilters.mockReturnValue({
       addFilterFromMap: jest.fn(),
+      selectedFilters: null,
+      selectedVaccinationFilters: null,
+      selectedGeographyFilters: null,
+      selectedThresholdFilters: null,
+      updateFilters: function (newFilters: FilterOption[]): void {
+        throw new Error(`Function not implemented, ${newFilters}`)
+      },
+      addFilter: function (filter: FilterOption): void {
+        throw new Error(`Function not implemented, ${filter}`)
+      },
+      removeFilter: function (filterId: string): void {
+        throw new Error(`Function not implemented, ${filterId}`)
+      },
+      clearFilters: function (): void {
+        throw new Error(`Function not implemented.`)
+      },
     })
 
     mockUseVaccinationState.mockReturnValue({
       selectedVaccination: {
+        type: 'data_filter',
+        id: 'test-id',
         value: {
           label: 'COVID-19 Vaccination',
+          colour: '',
+          parameters: {
+            theme: { label: '', value: '' },
+            sub_theme: { label: '', value: '' },
+            topic: { label: '', value: '' },
+            stratum: { label: '', value: '' },
+            metric: { label: '', value: '' },
+            age: { label: '', value: '' },
+            sex: { label: '', value: '' },
+          },
+          accompanying_points: [],
         },
+      },
+      vaccinationList: null,
+      setSelectedVaccination: function (
+        vaccination: {
+          type: 'data_filter'
+          value: {
+            label: string
+            colour: string
+            parameters: {
+              theme: { value: string; label: string }
+              sub_theme: { value: string; label: string }
+              topic: { value: string; label: string }
+              stratum: { value: string; label: string }
+              metric: { value: string; label: string }
+              age: { value: string; label: string }
+              sex: { value: string; label: string }
+            }
+            accompanying_points: {
+              type: 'accompanying_point'
+              value: {
+                parameters: { type: string; value: { value: string; label: string }; id: string }[]
+                label_prefix: string
+                label_suffix: string
+              }
+              id: string
+            }[]
+          }
+          id: string
+        } | null
+      ): void {
+        throw new Error(`Function not implemented. ${vaccination}`)
       },
     })
   })
@@ -485,7 +544,7 @@ describe('CoverLayer', () => {
 
       await waitFor(() => {
         expect(mockMap.setView).toHaveBeenCalledWith(
-          expect.any(Object), // L.latLng object
+          expect.any(Object), // Leaflet.latLng object
           8
         )
       })
@@ -551,6 +610,8 @@ describe('CoverLayer', () => {
       // Mock empty geography data
       mockUseGeographyState.mockReturnValue({
         geographyAreas: new Map(),
+        geographyAreasLoading: false,
+        geographyAreasError: null,
       })
 
       render(
@@ -595,7 +656,9 @@ describe('CoverLayer', () => {
 
   describe('Accessibility', () => {
     it('calls keyboard accessibility hook', () => {
-      const mockAccessibilityHook = require('../hooks/useChoroplethKeyboardEvents').useChoroplethKeyboardAccessibility
+      const mockAccessibilityHook = useChoroplethKeyboardAccessibility as jest.MockedFunction<
+        typeof useChoroplethKeyboardAccessibility
+      >
 
       render(
         <TestWrapper>
