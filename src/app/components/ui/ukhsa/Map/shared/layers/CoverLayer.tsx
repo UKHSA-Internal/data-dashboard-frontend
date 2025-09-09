@@ -215,7 +215,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       console.log('selectedGeographyFilters: ', selectedGeographyFilters)
       // Get most recently selected geography
       const latestGeography = selectedGeographyFilters[selectedGeographyFilters.length - 1]
-      let matchingFeature: LocalAuthoritiesFeature & RegionFeature & CountriesFeature
+      let matchingFeature: (LocalAuthoritiesFeature & RegionFeature & CountriesFeature) | undefined
 
       if (latestGeography.geography_type === 'Region') {
         matchingFeature = featuresRef.current.find(
