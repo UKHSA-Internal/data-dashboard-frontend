@@ -5,6 +5,7 @@ import { useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import About from '@/app/components/cms/About/About'
 import { ClientDownload } from '@/app/components/cms/Download/ClientDownload'
 import { ClientTable } from '@/app/components/cms/Table/ClientTable'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
@@ -33,6 +34,7 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
   const id = title
+  const about = cardData.about ? cardData.about : ''
 
   return (
     <div key={id} className="mb-4">
@@ -77,6 +79,17 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                   <span>Download</span>
                 </Link>
               </TabsTrigger>
+              {about && (
+                <TabsTrigger
+                  asChild
+                  value={`${kebabCase(title)}-about`}
+                  aria-controls={`about-${kebabCase(title)}-content`}
+                >
+                  <Link href={`#about-${kebabCase(title)}`}>
+                    <span>About</span>
+                  </Link>
+                </TabsTrigger>
+              )}
             </TabsList>
             <DropdownTab
               aria-label="Select for selecting chart content"
@@ -128,6 +141,18 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                 cardData={cardData}
               />
             </TabsContent>
+            {about && (
+              <TabsContent
+                value={`${kebabCase(title)}-about`}
+                className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
+                id={`about-${kebabCase(title)}-content`}
+              >
+                <span className="govuk-heading-m govuk-!-margin-top-3 js:hidden" id={`about-${kebabCase(title)}`}>
+                  About
+                </span>
+                <About content={about} />
+              </TabsContent>
+            )}
           </Tabs>
         </article>
       </Card>
