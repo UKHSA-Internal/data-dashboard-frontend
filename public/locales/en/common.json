@@ -125,6 +125,10 @@
   "globalFilter": {
     "showFilters": "Show filters",
     "hideFilters": "Hide filters",
-    "globalFilterTitle": "Selected filters"
+    "globalFilterTitle": "Selected filters",
+    "clearFilterSelection": "Clear filter selection"
+  },
+  "map": {
+    "yearSelection": "Year selection"
   }
 }
