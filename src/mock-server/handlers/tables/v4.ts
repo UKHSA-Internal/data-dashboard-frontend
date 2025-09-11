@@ -18,7 +18,9 @@ export default async function handler(req: Request, res: Response) {
 
     // Return a 500 if the query parameters provided aren't valid
     if (!parsedQueryParams.success) {
-      return res.status(500)
+      return res.status(500).send({
+        message: 'Failed to parse request body',
+      })
     }
 
     const {
@@ -28,7 +30,7 @@ export default async function handler(req: Request, res: Response) {
     } = parsedQueryParams
 
     // Return a json fixture identified by the topic & metric provided
-    if (fixtures[topic][metric]) {
+    if (fixtures[topic]?.hasOwnProperty(metric)) {
       return res.json(fixtures[topic][metric])
     }
 
