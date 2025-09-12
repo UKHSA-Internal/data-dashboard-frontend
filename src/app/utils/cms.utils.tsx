@@ -8,6 +8,7 @@ import { z } from 'zod'
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import { FilterLinkedCardWrapper } from '@/app/components/ui/ukhsa/FilterLinkedCards/FilterLinkedCardWrapper'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
@@ -23,6 +24,8 @@ import {
   CodeBlock,
   Download,
   Headline,
+  MapCardWrapper,
+  MapRowCard,
   Percentage,
   RichText,
   Table,
@@ -34,6 +37,7 @@ import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorL
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
 
+/* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
 export const renderSection = (
   showMoreSections: string[],
@@ -79,7 +83,7 @@ export const renderCard = (
 ) => {
   return (
     <div key={id}>
-      {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
+      {type === 'text_card' && <RichText>{value.body}</RichText>}
 
       {type === 'headline_numbers_row_card' && (
         <Card className="ukhsa-headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
@@ -173,6 +177,7 @@ export const renderCard = (
                         className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
                         chartTitle={column.value.title}
                         noAbout={noAbout}
+                        noDownload={false}
                       />
                       <TabsContent
                         value={`${kebabCase(column.value.title)}-chart`}
@@ -265,6 +270,31 @@ export const renderCard = (
         </ChartRowCard>
       )}
 
+      {/* {type === 'global_filter_card' && <FilterBannerWrapper />} */}
+
+      {type === 'filter_linked_map' && (
+        <MapRowCard>
+          <div key={id} className={clsx('mb-3 sm:mb-6 lg:mb-0', 'lg:w-full')}>
+            <article className={'ukhsa-map-card'}>
+              <ChartRowCardHeader id={`map-row-heading-${id}`} title={value.title_prefix ? value.title_prefix : ''} />
+              <MapCardWrapper />
+            </article>
+          </div>
+        </MapRowCard>
+      )}
+
+      {type === 'filter_linked_sub_plot_chart_template' && (
+        <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+          <FilterLinkedCardWrapper cardType="subplot" />
+        </div>
+      )}
+
+      {type === 'filter_linked_time_series_chart_template' && (
+        <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+          <FilterLinkedCardWrapper cardType="time-series" />
+        </div>
+      )}
+
       {type === 'chart_card_section' && (
         <div
           className={clsx('mb-3 grid gap-4 sm:mb-6 ', {
@@ -272,7 +302,7 @@ export const renderCard = (
             'lg:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr]': value.cards.length > 2,
           })}
         >
-          {value.cards.map((card, index) => {
+          {value.cards.map((card: any, index: any) => {
             if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
               return (
                 <div key={index}>
@@ -376,7 +406,10 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'code_block' && (
-      <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
+      <>
+        {value.heading && <h4 className="govuk-heading-m">{value.heading}</h4>}
+        <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
+      </>
     )}
 
     {type === 'internal_page_links' && value && value.length > 0 && (

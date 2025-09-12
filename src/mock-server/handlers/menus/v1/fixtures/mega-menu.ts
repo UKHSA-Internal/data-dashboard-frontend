@@ -40,6 +40,16 @@ export const megaMenu: Response = {
                         'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
                     },
                   },
+                  {
+                    id: '79c65515-8f70-446d-8ed8-f49d6ad5cefg',
+                    type: 'secondary_link',
+                    value: {
+                      body: '<p data-block-key="27vjw">Childhood vaccination coverage for England</p>',
+                      page: 183,
+                      title: 'Childhood Vaccination Coverage',
+                      html_url: 'https://dev.ukhsa-dashboard.data.gov.uk/respiratory-viruses/childhood-vaccinations',
+                    },
+                  },
                 ],
               },
               heading: 'Respiratory viruses',

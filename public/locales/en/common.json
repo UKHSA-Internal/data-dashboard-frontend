@@ -31,12 +31,12 @@
       },
       "percentage": {
         "heading": "{{heading}}",
-        "value": "{{value, number}}%"
+        "value": "{{value, number1DP}}%"
       },
       "trend": {
         "heading": "{{heading}}",
         "value": {
-          "percentage": "({{percentage, number}}%)",
+          "percentage": "({{percentage, number1DP}}%)",
           "change": "{{change}}"
         },
         "alt_green_up": "There has been an increase of {{change, number}} ({{percentage, number}}%) compared to the previous 7 days.",
@@ -70,14 +70,16 @@
         "header_plot_single": "Amount",
         "header_plot_multi": "{{value}}",
         "row": "{{value, dateShortest}}",
-        "row_plot": "{{value, number}}",
+        "row_plot": "{{value, number2DP}}",
         "row_plot_null": "-",
         "row_age": "{{value}}",
         "row_geography": "{{value}}",
         "row_sex": "{{value}}",
         "row_stratum": "{{value}}",
         "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}",
-        "timestamp": "Up to and including {{timestamp, dateShort}}"
+        "timestamp": "Up to and including {{timestamp, dateShort}}",
+        "timeseries_title": "{{title}} by vaccine type - {{geographyDetails}}",
+        "min_year_to_max_year": "{{minYear}} to {{maxYear}}"
       },
       "download": {
         "heading": "Download data",
@@ -119,5 +121,14 @@
     "noData_withArea": "No data available in {{- areaName}}"
   },
   "reportingLagPeriodKey": "Reporting delay period",
-  "oneYearNoScript": "Up to one year of data currently shown, there may be additional content. To see this please <1>download</1> the full data set"
+  "oneYearNoScript": "Up to one year of data currently shown, there may be additional content. To see this please <1>download</1> the full data set",
+  "globalFilter": {
+    "showFilters": "Show filters",
+    "hideFilters": "Hide filters",
+    "globalFilterTitle": "Selected filters",
+    "clearFilterSelection": "Clear filter selection"
+  },
+  "map": {
+    "yearSelection": "Year selection"
+  }
 }
