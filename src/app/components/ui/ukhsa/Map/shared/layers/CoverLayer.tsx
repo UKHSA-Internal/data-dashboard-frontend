@@ -212,7 +212,6 @@ const CoverLayer = <T extends LayerWithFeature>({
 
   useEffect(() => {
     if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {
-      console.log('selectedGeographyFilters: ', selectedGeographyFilters)
       // Get most recently selected geography
       const latestGeography = selectedGeographyFilters[selectedGeographyFilters.length - 1]
       let matchingFeature: (LocalAuthoritiesFeature & RegionFeature & CountriesFeature) | undefined

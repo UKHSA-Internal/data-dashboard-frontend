@@ -7,7 +7,6 @@ import { logger } from '@/lib/logger'
 // proxy the request to the API through NextJs. For RSC's we can call the backend API directly
 export const postMapData = async (request: MapDataRequest) => {
   try {
-    console.log('isSSR: ', isSSR)
     const path = isSSR ? `maps/v1` : `proxy/maps/v1`
     const { data } = await client<MapDataResponse>(`${path}`, {
       body: request,
