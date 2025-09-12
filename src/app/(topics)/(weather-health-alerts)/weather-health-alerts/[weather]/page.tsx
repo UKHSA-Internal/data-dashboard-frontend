@@ -18,6 +18,7 @@ import { cachingEnabled } from '@/config/constants'
 import AlertList from './AlertList'
 
 export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
+export const revalidate = 60
 
 export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
   const {
