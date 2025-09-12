@@ -186,7 +186,7 @@ const CoverLayer = <T extends LayerWithFeature>({
             feature.properties.CTYUA24CD.startsWith('E')
           )
           localAuthoritiesFeatureCollection.features = englishLocalAuthorityFeatures
-          newData = [regionFeatureCollection, localAuthoritiesFeatureCollection]
+          newData = [localAuthoritiesFeatureCollection, regionFeatureCollection]
           break
         case 'regions':
           newData = regionFeatureCollection
@@ -208,16 +208,23 @@ const CoverLayer = <T extends LayerWithFeature>({
   }, [])
 
   const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
+  const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
 
   useEffect(() => {
     if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {
       // Get most recently selected geography
       const latestGeography = selectedGeographyFilters[selectedGeographyFilters.length - 1]
+      let matchingFeature: (LocalAuthoritiesFeature & RegionFeature & CountriesFeature) | undefined
 
-      // Find matching feature in current features
-      const matchingFeature = featuresRef.current.find(
-        (feature) => feature.properties[geoJsonFeatureId] === latestGeography.geography_code
-      )
+      if (latestGeography.geography_type === 'Region') {
+        matchingFeature = featuresRef.current.find(
+          (feature) => feature.properties[regionGeoJsonFeatureId] === latestGeography.geography_code
+        )
+      } else {
+        matchingFeature = featuresRef.current.find(
+          (feature) => feature.properties[geoJsonFeatureId] === latestGeography.geography_code
+        )
+      }
 
       if (matchingFeature && matchingFeature.properties.LAT && matchingFeature.properties.LONG) {
         const latlng = Leaflet.latLng(matchingFeature.properties.LAT, matchingFeature.properties.LONG)
@@ -466,6 +473,7 @@ const CoverLayer = <T extends LayerWithFeature>({
     if (Array.isArray(geoJsonFeatures)) {
       return geoJsonFeatures.map((featureCollection, index) => (
         <GeoJSON
+          interactive={featureCollection.name != 'Regions'}
           key={`geojson-${dataLevel}-${renderKey}-${index}`}
           data={featureCollection}
           {...defaultOptions}
