@@ -7,17 +7,17 @@ export const defaultCoverageTableValues: Response = [
       {
         in_reporting_delay_period: false,
         label: '6-in-1 (12 months)',
-        value: '88.0000',
+        value: 88.0,
       },
       {
         in_reporting_delay_period: false,
         label: '6-in-1 (24 months)',
-        value: '78.0000',
+        value: 78.0,
       },
       {
         in_reporting_delay_period: false,
         label: 'MMR1 (24 months)',
-        value: '84.0000',
+        value: 84.0,
       },
     ],
   },
@@ -27,17 +27,17 @@ export const defaultCoverageTableValues: Response = [
       {
         in_reporting_delay_period: false,
         label: '6-in-1 (12 months)',
-        value: '97.0000',
+        value: 97.0,
       },
       {
         in_reporting_delay_period: false,
         label: '6-in-1 (24 months)',
-        value: '89.0000',
+        value: 89.0,
       },
       {
         in_reporting_delay_period: false,
         label: 'MMR1 (24 months)',
-        value: '84.0000',
+        value: 84.0,
       },
     ],
   },
@@ -47,17 +47,17 @@ export const defaultCoverageTableValues: Response = [
       {
         in_reporting_delay_period: false,
         label: '6-in-1 (12 months)',
-        value: '90.0000',
+        value: 90.0,
       },
       {
         in_reporting_delay_period: false,
         label: '6-in-1 (24 months)',
-        value: '87.0000',
+        value: 87.0,
       },
       {
         in_reporting_delay_period: false,
         label: 'MMR1 (24 months)',
-        value: '93.0000',
+        value: 93.0,
       },
     ],
   },

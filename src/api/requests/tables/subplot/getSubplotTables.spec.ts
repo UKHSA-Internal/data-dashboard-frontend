@@ -34,7 +34,9 @@ describe('getSubplotTables', () => {
 
     const result = await getSubplotTables(requestBody)
 
-    expect(result).toEqual<successResponse>({ success: true, data: defaultCoverageTableValues })
+    const expectedResult: unknown = responseSchema.safeParse(defaultCoverageTableValues)
+
+    expect(result).toEqual<successResponse>(expectedResult as successResponse)
   })
 
   test('Handles invalid json received from the API', async () => {
