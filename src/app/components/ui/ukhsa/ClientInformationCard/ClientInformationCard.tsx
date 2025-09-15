@@ -30,8 +30,8 @@ const ClientInformationCard = ({ variant, title, message, children }: ClientInfo
   }
 
   return (
-    <div className="flex flex-col items-center text-center">
-      <div className="flex flex-col items-center">
+    <div className="flex flex-col items-center bg-white text-center">
+      <div className="flex flex-col items-center ">
         <span className="mb-2">{getIcon()}</span>
 
         {title && (
