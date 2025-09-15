@@ -155,17 +155,21 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     geography: areaName ?? plot?.value.geography,
   }))
 
+  const chartRequestBody = {
+    plots,
+    x_axis,
+    y_axis,
+    x_axis_title: xAxisTitle,
+    y_axis_title: yAxisTitle,
+    y_axis_maximum_value: yAxisMaximum,
+    y_axis_minimum_value: yAxisMinimum,
+  }
+
   const requests =
     plots &&
     sizes.map((chart) =>
       getCharts({
-        plots,
-        x_axis,
-        y_axis,
-        x_axis_title: xAxisTitle,
-        y_axis_title: yAxisTitle,
-        y_axis_maximum_value: yAxisMaximum,
-        y_axis_minimum_value: yAxisMinimum,
+        ...chartRequestBody,
         chart_width: chartSizes[chart.size].width,
         chart_height: chartSizes[chart.size].height,
       })

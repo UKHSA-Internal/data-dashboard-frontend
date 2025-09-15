@@ -77,7 +77,9 @@
         "row_sex": "{{value}}",
         "row_stratum": "{{value}}",
         "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}",
-        "timestamp": "Up to and including {{timestamp, dateShort}}"
+        "timestamp": "Up to and including {{timestamp, dateShort}}",
+        "timeseries_title": "{{title}} by vaccine type - {{geographyDetails}}",
+        "min_year_to_max_year": "{{minYear}} to {{maxYear}}"
       },
       "download": {
         "heading": "Download data",
@@ -123,6 +125,10 @@
   "globalFilter": {
     "showFilters": "Show filters",
     "hideFilters": "Hide filters",
-    "globalFilterTitle": "Selected filters"
+    "globalFilterTitle": "Selected filters",
+    "clearFilterSelection": "Clear filter selection"
+  },
+  "map": {
+    "yearSelection": "Year selection"
   }
 }

@@ -56,6 +56,7 @@ module.exports = {
       white: 'var(--colour-white)',
       'light-purple': 'var(--colour-light-purple)',
       'bright-purple': 'var(--colour-bright-purple)',
+      'dark-purple': 'var(--colour-dark-purple)',
       pink: 'var(--colour-pink)',
       'light-pink': 'var(--colour-light-pink)',
       orange: 'var(--colour-orange)',
@@ -68,6 +69,11 @@ module.exports = {
       'red-opaque': 'var(--colour-red-opaque)',
       'delay-blue': 'var(--colour-delay-blue)',
       'delay-blue-opaque': 'var(--colour-delay-blue-opaque)',
+      'colour-5-dark-blue': 'var(--colour-map-dark-blue)',
+      'colour-3-turquoise': 'var(--colour-map-turquoise)',
+      'colour-4-blue': 'var(--colour-map-blue)',
+      'colour-2-light-green': 'var(--colour-map-light-green)',
+      'colour-1-light-yellow': 'var(--colour-map-light-yellow)',
     }),
     extend: {
       backgroundImage: {

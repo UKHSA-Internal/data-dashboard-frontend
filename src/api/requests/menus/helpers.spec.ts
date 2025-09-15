@@ -100,6 +100,11 @@ describe('Mega Menu Transformations', () => {
               description:
                 '<p data-block-key="27vjw">Other common respiratory viruses including adenovirus, hMPV &amp; parainfluenza</p>',
             },
+            {
+              description: '<p data-block-key="27vjw">Childhood vaccination coverage for England</p>',
+              slug: '/respiratory-viruses/childhood-vaccinations',
+              title: 'Childhood Vaccination Coverage',
+            },
           ],
         },
         {

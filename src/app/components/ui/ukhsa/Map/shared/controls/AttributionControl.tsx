@@ -64,8 +64,10 @@ export function AttributionControl({ position }: AttributionControlProps) {
           <DialogHeader aria-hidden className="govuk-visually-hidden">
             <DialogTitle>&copy; Copyright</DialogTitle>
           </DialogHeader>
-          <ScrollArea className="h-[10rem]">
+          <ScrollArea className="h-[12rem]">
             <p>{text}</p>
+            <p>Source: Office for National Statistics licensed under the Open Government Licence v.3.0.</p>
+            <p>Contains OS data &copy; Crown copyright and database right 2025.</p>
             <ScrollBar />
           </ScrollArea>
         </DialogContent>

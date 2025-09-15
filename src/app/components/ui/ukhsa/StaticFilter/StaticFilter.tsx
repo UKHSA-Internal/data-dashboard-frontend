@@ -1,8 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import React, { ReactNode, useEffect, useState } from 'react'
-import { useWindowScroll } from 'react-use'
+import React, { ReactNode, useState } from 'react'
 
 import { useTranslation } from '@/app/i18n/client'
 
@@ -12,26 +11,15 @@ interface StaticFilterProps {
   children?: ReactNode
 }
 
-export function StaticFilter({ href = '#filter', className, children }: StaticFilterProps) {
-  const { y: horizontalWindowPosition } = useWindowScroll()
+export default function StaticFilter({ href = '#filter', className, children }: StaticFilterProps) {
   const { t } = useTranslation('common')
 
-  const [isSticky, setIsSticky] = useState(false)
   const [isVisible, setIsVisible] = useState(true)
 
-  useEffect(() => {
-    if (horizontalWindowPosition > 200) {
-      setIsSticky(true)
-    } else {
-      setIsSticky(false)
-    }
-  }, [horizontalWindowPosition])
-
   return (
-    <>
+    <div className="govuk-!-margin-bottom-8 sticky top-0 z-10">
       <div
-        className={clsx('bg-grey-3', {
-          'govuk-!-padding-3': isVisible,
+        className={clsx({
           'h-0 m-0 overflow-hidden govuk-!-padding-0': !isVisible,
         })}
       >
@@ -41,11 +29,7 @@ export function StaticFilter({ href = '#filter', className, children }: StaticFi
         href={href}
         className={clsx(
           className,
-          'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 sticky bottom-3 float-right inline-flex items-center bg-black text-white no-underline shadow-none ukhsa-focus focus:bg-yellow focus:text-black',
-          {
-            // 'hidden': !isSticky,
-            sticky: isSticky,
-          }
+          'govuk-link--no-visited-state govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 sticky bottom-3 float-right inline-flex items-center bg-black text-white no-underline shadow-none ukhsa-focus focus:bg-yellow focus:text-black'
         )}
         onClick={() => {
           setIsVisible((prevState) => !prevState)
@@ -53,8 +37,6 @@ export function StaticFilter({ href = '#filter', className, children }: StaticFi
       >
         {isVisible ? t('globalFilter.hideFilters') : t('globalFilter.showFilters')}
       </a>
-    </>
+    </div>
   )
 }
-
-export default StaticFilter
