@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { ChartTypes } from '@/api/models/Chart'
 import { client } from '@/api/utils/api.utils'
+import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
@@ -36,12 +37,13 @@ export const responseSchema = z.array(
   })
 )
 
-type RequestParams = z.infer<typeof requestSchema>
+export type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
 export const getTables = async (body: RequestParams) => {
   try {
-    const { data } = await client<Response>('tables/v4', { body })
+    const path = isSSR ? `tables/v4` : `proxy/tables/v4`
+    const { data } = await client<Response>(path, { body })
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
