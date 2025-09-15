@@ -52,5 +52,12 @@ export async function signOut(options?: { redirectTo?: string; redirect?: true }
   }
 
   // Always attempt to clear NextAuth session, regardless of token revocation success
-  return nextAuthSignOut(options)
+  const result = await nextAuthSignOut(options)
+
+  // Redirect to /start after sign out
+  if (options?.redirect) {
+    return { redirect: { destination: '/start', permanent: false } }
+  }
+
+  return result
 }

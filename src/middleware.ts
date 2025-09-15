@@ -25,19 +25,18 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
 
   // Handle auth first if enabled
   if (process.env.AUTH_ENABLED === 'true') {
-    // Filter out next-auth API requests
-    if (request.nextUrl.pathname.startsWith('/api/auth/')) {
-      return response
-    }
+    const unauthenticatedPaths = ['/api/auth/', '/api/health', '/robots.txt']
 
-    // Ensure the health check endpoint is always reachable
-    if (request.nextUrl.pathname.startsWith('/api/health')) {
+    if (unauthenticatedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
       return response
     }
 
     try {
       const token = await auth()
-      if (!token && !pathname.includes('/start')) {
+      const excludePaths = ['/start', '/auth/error', '/auth/signin', '/auth/signout']
+
+      // Check if the pathname is in the exclude list
+      if (!token && !excludePaths.some((path) => pathname.includes(path))) {
         return NextResponse.redirect(new URL('/start', request.url))
       }
       response = await validateAndRenewSession(request, response)

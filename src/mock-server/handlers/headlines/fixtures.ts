@@ -27,12 +27,13 @@ type Fixtures = Record<Topics, Record<string, z.infer<typeof responseSchema>>>
 
 export const fixtures: Fixtures = {
   'COVID-19': {
-    'COVID-19_headline_newcases_7daytotals': { value: 24298, period_end: '2023-11-03' },
-    'COVID-19_headline_ONSdeaths_7daytotals': { value: 379, period_end: '2023-11-03' },
-    'COVID-19_headline_7DayAdmissions': { value: 6288, period_end: '2023-11-03' },
-    'COVID-19_headline_totalvaccines_spring23': { value: 4095083, period_end: '2023-11-03' },
-    'COVID-19_headline_positivity_latest': { value: 10.4, period_end: '2023-11-03' },
-    'COVID-19_headline_newcases_7daychange': { value: 722, period_end: '2023-11-03' },
+    'COVID-19_headline_newcases_7daytotals': { value: 24298, period_end: '2025-11-03' },
+    'COVID-19_headline_cases_7DayPercentChange': { value: 722, period_end: '2025-11-03' },
+    'COVID-19_headline_ONSdeaths_7DayTotals': { value: 722, period_end: '2025-11-03' },
+    'COVID-19_headline_ONSdeaths_7DayChange': { value: 34, period_end: '2025-11-03' },
+    'COVID-19_headline_7DayAdmissions': { value: 6288, period_end: '2025-11-03' },
+    'COVID-19_headline_vaccines_autumn23Uptake': { value: 59, period_end: '2025-11-03' },
+    'COVID-19_headline_positivity_latest': { value: 10.4, period_end: '2025-11-03' },
   },
   Influenza: {
     influenza_headline_ICUHDUadmissionrateLatest: { value: 981596, period_end: '2023-11-03' },

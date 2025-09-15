@@ -12,18 +12,18 @@ interface BackToTopProps {
 }
 
 export const BackToTop = ({ href = '#main-content', className }: BackToTopProps) => {
-  const { y } = useWindowScroll()
+  const { y: horizontalWindowPosition } = useWindowScroll()
   const { t } = useTranslation('common')
 
   const [isSticky, setIsSticky] = useState(false)
 
   useEffect(() => {
-    if (y > 200) {
+    if (horizontalWindowPosition > 200) {
       setIsSticky(true)
     } else {
       setIsSticky(false)
     }
-  }, [y])
+  }, [horizontalWindowPosition])
 
   return (
     <a

@@ -13,6 +13,13 @@ test.describe('COVID-19 page', () => {
     await test.step('displays the correct layout', async () => {
       await app.hasLayout()
     })
+    await test.step('displays an announcement', async () => {
+      await app.hasAnnouncement(
+        'Warning',
+        'COVID-19 Data Update',
+        'We have updated our COVID-19 data reporting to include new metrics and improved visualization tools. Please review the changes and provide feedback.'
+      )
+    })
     await test.step('displays without any accessibility defects', async () => {
       await app.hasNoAccessibilityDefects()
     })
