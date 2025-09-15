@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { HealthAlertTypes } from '../../Alerts'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
+import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
 
 /**
  * Body Discriminated Union Types
@@ -58,6 +59,7 @@ const chartCardValues = z.object({
   y_axis_title: z.string().optional(),
   y_axis_minimum_value: z.number().nullable().optional(),
   y_axis_maximum_value: z.number().nullable().optional(),
+  show_timeseries_filter: z.boolean().optional(),
   date_prefix: z.string(),
   about: z.string(),
 })
@@ -112,6 +114,14 @@ export const CardTypes = z.discriminatedUnion('type', [
     id: z.string(),
   }),
   z.object({
+    type: z.literal('filter_linked_map'),
+    value: z.object({
+      title_prefix: z.optional(z.string()),
+      legend_title: z.optional(z.string()),
+    }),
+    id: z.string(),
+  }),
+  z.object({
     type: z.literal('chart_card_section'),
     value: z.object({
       cards: z.array(WithSimplifiedChartCardAndLink),
@@ -121,6 +131,34 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('weather_health_alert_card'),
     value: WithWeatherHealthAlertCard,
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('global_filter_card'),
+    value: z.object({
+      time_range: TimeRangeSchema,
+      rows: GlobalFilterRow,
+    }),
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('filter_linked_sub_plot_chart_template'),
+    value: z.object({
+      title_prefix: z.string(),
+      legend_title: z.string(),
+      target_threshold: z.number(),
+      target_threshold_label: z.string().optional(),
+      about: z.string().optional(),
+    }),
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('filter_linked_time_series_chart_template'),
+    value: z.object({
+      title_prefix: z.string(),
+      legend_title: z.string(),
+      about: z.string().optional(),
+    }),
     id: z.string(),
   }),
 ])
@@ -201,4 +239,5 @@ export const CompositeBody = z.array(
   ])
 )
 
+export type CardTypes = z.infer<typeof CardTypes>
 export type CompositeBody = z.infer<typeof CompositeBody>

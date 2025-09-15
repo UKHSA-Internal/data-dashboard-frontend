@@ -9,6 +9,7 @@ const providers: Provider[] = [
     clientId: process.env.AUTH_CLIENT_ID,
     clientSecret: process.env.AUTH_CLIENT_SECRET,
     issuer: process.env.AUTH_CLIENT_URL,
+    checks: ['pkce', 'state', 'nonce'],
     profile(profile) {
       return {
         id: profile.sub,
@@ -20,14 +21,22 @@ const providers: Provider[] = [
   }),
 ]
 
+const tenMinutes = 60 * 10
+
 export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',
+    maxAge: tenMinutes,
   },
   trustHost: true,
   useSecureCookies: process.env.NEXTAUTH_URL?.startsWith('https://'),
   providers,
+  pages: {
+    error: '/auth/error',
+    signOut: '/auth/signout',
+    signIn: '/auth/signin',
+  },
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
@@ -46,6 +55,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
 
     async session({ session, token }) {
       session.error = token.error
+      session.accessToken = token.access_token
       session.refreshToken = token.refresh_token
       return session
     },

@@ -56,6 +56,7 @@ module.exports = {
       white: 'var(--colour-white)',
       'light-purple': 'var(--colour-light-purple)',
       'bright-purple': 'var(--colour-bright-purple)',
+      'dark-purple': 'var(--colour-dark-purple)',
       pink: 'var(--colour-pink)',
       'light-pink': 'var(--colour-light-pink)',
       orange: 'var(--colour-orange)',
@@ -68,6 +69,11 @@ module.exports = {
       'red-opaque': 'var(--colour-red-opaque)',
       'delay-blue': 'var(--colour-delay-blue)',
       'delay-blue-opaque': 'var(--colour-delay-blue-opaque)',
+      'colour-5-dark-blue': 'var(--colour-map-dark-blue)',
+      'colour-3-turquoise': 'var(--colour-map-turquoise)',
+      'colour-4-blue': 'var(--colour-map-blue)',
+      'colour-2-light-green': 'var(--colour-map-light-green)',
+      'colour-1-light-yellow': 'var(--colour-map-light-yellow)',
     }),
     extend: {
       backgroundImage: {
@@ -111,7 +117,7 @@ module.exports = {
             'box-shadow': 'none',
           },
           '&:focus:after': {
-            '@apply absolute inset-[5px] pointer-events-none z-[1000] content-[""]': {},
+            '@apply absolute inset-0 pointer-events-none z-[1000] content-[""]': {},
             'box-shadow': `0px 0px 0px 0px #fff, inset 0px 0px 0px 1px #0b0c0c, 0px 0px 0px 2px #0b0c0c, 0px 0px 0px 5px #fd0`,
             outline: '3px solid rgba(0, 0, 0, 0)',
           },

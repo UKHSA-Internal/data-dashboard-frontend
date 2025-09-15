@@ -8,7 +8,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/111/',
-    html_url: 'http://localhost/topics/influenza/',
+    html_url: 'http://localhost/respiratory-viruses/influenza/',
     slug: 'influenza',
     show_in_menus: true,
     seo_title: 'Influenza | UKHSA data dashboard',
@@ -627,5 +627,13 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
   selected_topics: ['Influenza'],
   related_links: relatedLinksMock,
   related_links_layout: 'Footer',
+  active_announcements: [
+    {
+      id: 1,
+      title: 'Single page announcement',
+      body: 'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.',
+      banner_type: 'Warning',
+    },
+  ],
   last_published_at: '2023-05-15T16:26:41.095645+01:00',
 }

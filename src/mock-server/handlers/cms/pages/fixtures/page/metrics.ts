@@ -26,6 +26,8 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
       title: 'UKHSA Dashboard Root',
     },
   },
+  show_pagination: true,
+  pagination_size: 10,
   seo_change_frequency: 5,
   seo_priority: 0.5,
   last_updated_at: '2023-12-15T14:47:27.346523Z',
@@ -98,6 +100,14 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
           body: '<p>This figure will underestimate the actual number of COVID-19 infections due to people not testing or not being able to report LFD results.</p><p>Variation in cases can reflect differences in the underlying population, including variation in vaccination status, public health measures and community transmission.</p>',
         },
         id: faker.string.uuid(),
+      },
+    ],
+    active_announcements: [
+      {
+        id: 1,
+        title: 'Single page announcement',
+        body: 'Metrics child announcement, this is a test',
+        banner_type: 'Warning',
       },
     ],
   },

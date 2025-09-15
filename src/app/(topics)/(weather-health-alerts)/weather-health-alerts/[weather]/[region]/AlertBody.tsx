@@ -18,7 +18,7 @@ import {
 import useWeatherHealthAlert from '@/app/hooks/queries/useWeatherHealthAlert'
 import useWeatherHealthAlertList from '@/app/hooks/queries/useWeatherHealthAlertList'
 import { useTranslation } from '@/app/i18n/client'
-import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/weather-health-alert.utils'
+import { getTailwindBackgroundFromColour, getTextColourCssFromColour } from '@/app/utils/map.utils'
 import { logger } from '@/lib/logger'
 
 interface AlertProps {
@@ -51,7 +51,8 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
     return redirect('/error')
   }
 
-  const { regionName, status, text, lastUpdated, firstPublished, expiryDate } = healthAlert.data
+  const { regionName, status, riskScore, text, impact, likelihood, lastUpdated, firstPublished, expiryDate } =
+    healthAlert.data
 
   const breadcrumbs = [
     { name: 'Home', link: '/' },
@@ -110,14 +111,31 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
                     {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status.toLowerCase() })}
                   </div>
                 </SummaryListRow>
-                <SummaryListRow>
-                  <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
-                  <SummaryListValue>{firstPublishedDate}</SummaryListValue>
-                </SummaryListRow>
-                <SummaryListRow>
-                  <SummaryListKey>{t('map.alertDialog.expiryKey')}</SummaryListKey>
-                  <SummaryListValue>{alertExpiryDate}</SummaryListValue>
-                </SummaryListRow>
+
+                {status === 'Green' ? null : (
+                  <>
+                    <SummaryListRow>
+                      <SummaryListKey>{t('map.alertDialog.riskKey')}</SummaryListKey>
+                      <SummaryListValue className={'font-bold'}>{riskScore}</SummaryListValue>
+                    </SummaryListRow>
+                    <SummaryListRow>
+                      <SummaryListKey>{t('map.alertDialog.impactKey')}</SummaryListKey>
+                      <SummaryListValue>{impact}</SummaryListValue>
+                    </SummaryListRow>
+                    <SummaryListRow>
+                      <SummaryListKey>{t('map.alertDialog.likelihoodKey')}</SummaryListKey>
+                      <SummaryListValue>{likelihood}</SummaryListValue>
+                    </SummaryListRow>
+                    <SummaryListRow>
+                      <SummaryListKey>{t('map.alertDialog.dateKey')}</SummaryListKey>
+                      <SummaryListValue>{firstPublishedDate}</SummaryListValue>
+                    </SummaryListRow>
+                    <SummaryListRow>
+                      <SummaryListKey>{t('map.alertDialog.expiryKey')}</SummaryListKey>
+                      <SummaryListValue>{alertExpiryDate}</SummaryListValue>
+                    </SummaryListRow>
+                  </>
+                )}
               </SummaryList>
             </div>
           </div>
@@ -126,6 +144,20 @@ export default function AlertBody({ relatedLinks, relatedLinksLayout, weather, r
             className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
             dangerouslySetInnerHTML={{ __html: text }}
           />
+
+          {status === 'Green' ? null : (
+            <>
+              <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
+              <div className="pb-5">
+                <img
+                  src={'/assets/images/risk-matrix.png'}
+                  height={'450'}
+                  width={'450'}
+                  alt="Risk Matrix for the Weather Health Alert risk score metric."
+                />
+              </div>
+            </>
+          )}
 
           <Suspense>
             <HealthAlertsLink regionId={regionId} type={type} className="govuk-!-margin-bottom-5" />

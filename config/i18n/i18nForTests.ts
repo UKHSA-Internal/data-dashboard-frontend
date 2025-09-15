@@ -28,6 +28,7 @@ i18n.use(initReactI18next).init({
   defaultNS,
   interpolation: {
     format: formatters,
+    escapeValue: false,
   },
   debug: false,
 })

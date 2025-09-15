@@ -15,6 +15,8 @@ import {
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
   respiratoryVirusesMock,
+  vaccinationCoverageMock,
+  whatsComingPageMock,
   whatsNewChildMocks,
   whatsNewParentMock,
 } from './page'
@@ -86,6 +88,21 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       seo_change_frequency: aboutPageMock.seo_change_frequency,
       seo_priority: aboutPageMock.seo_priority,
       title: aboutPageMock.title,
+    },
+    {
+      id: whatsComingPageMock.id,
+      meta: {
+        type: whatsComingPageMock.meta.type,
+        detail_url: whatsComingPageMock.meta.detail_url,
+        html_url: whatsComingPageMock.meta.html_url,
+        slug: whatsComingPageMock.meta.slug,
+        search_description: whatsComingPageMock.meta.search_description,
+        show_in_menus: whatsComingPageMock.meta.show_in_menus,
+        first_published_at: whatsComingPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: whatsComingPageMock.seo_change_frequency,
+      seo_priority: whatsComingPageMock.seo_priority,
+      title: whatsComingPageMock.title,
     },
     {
       id: cookiesPageMock.id,
@@ -266,7 +283,7 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
 
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {
-    total_count: 3,
+    total_count: 4,
   },
   items: [
     {
@@ -313,6 +330,21 @@ export const pagesWithTopicTypeMock: PagesResponse = {
       seo_change_frequency: otherRespiratoryVirusesPageMock.seo_change_frequency,
       seo_priority: otherRespiratoryVirusesPageMock.seo_priority,
       title: otherRespiratoryVirusesPageMock.title,
+    },
+    {
+      id: vaccinationCoverageMock.id,
+      meta: {
+        type: vaccinationCoverageMock.meta.type,
+        detail_url: vaccinationCoverageMock.meta.detail_url,
+        html_url: vaccinationCoverageMock.meta.html_url,
+        slug: vaccinationCoverageMock.meta.slug,
+        search_description: vaccinationCoverageMock.meta.search_description,
+        show_in_menus: vaccinationCoverageMock.meta.show_in_menus,
+        first_published_at: vaccinationCoverageMock.meta.first_published_at,
+      },
+      seo_change_frequency: vaccinationCoverageMock.seo_change_frequency,
+      seo_priority: vaccinationCoverageMock.seo_priority,
+      title: vaccinationCoverageMock.title,
     },
   ],
 }

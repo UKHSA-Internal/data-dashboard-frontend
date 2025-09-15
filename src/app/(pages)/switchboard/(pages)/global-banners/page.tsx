@@ -5,6 +5,7 @@ import { BackLink } from '@/app/components/ui/ukhsa/View/BackLink/Backlink'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 
+import GlobalBannerRadio from '../../components/GlobalBannerRadio'
 import { StatusSelect } from '../../components/StatusSelect'
 import { heading } from '../../shared/constants'
 import { getSwitchBoardState, syncState } from '../../shared/state'
@@ -42,47 +43,10 @@ export default function SwitchBoard() {
             <label className="govuk-label" htmlFor="global-banners.scenario.Information">
               Variant
             </label>
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={globalBanner.scenario === 'Information'}
-                className="govuk-radios__input"
-                id="global-banners.scenario.Information"
-                name="global-banners.scenario"
-                type="radio"
-                value="Information"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.scenario.Information">
-                Information
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={globalBanner.scenario === 'Warning'}
-                className="govuk-radios__input"
-                id="global-banners.scenario.Warning"
-                name="global-banners.scenario"
-                type="radio"
-                value="Warning"
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.scenario.Warning">
-                Warning
-              </label>
-            </div>
-
-            <div className="govuk-radios__item">
-              <input
-                defaultChecked={!globalBanner.scenario}
-                className="govuk-radios__input"
-                id="global-banners.scenario.Inactive"
-                name="global-banners.scenario"
-                type="radio"
-                value=""
-              />
-              <label className="govuk-label govuk-radios__label" htmlFor="global-banners.scenario.Inactive">
-                Inactive
-              </label>
-            </div>
+            <GlobalBannerRadio globalBannerScenario={globalBanner.scenario} radioOption="Information" />
+            <GlobalBannerRadio globalBannerScenario={globalBanner.scenario} radioOption="Warning" />
+            <GlobalBannerRadio globalBannerScenario={globalBanner.scenario} radioOption="Multiple" />
+            <GlobalBannerRadio globalBannerScenario={globalBanner.scenario} radioOption="Inactive" />
           </div>
         </fieldset>
         <button type="submit" className="govuk-button">

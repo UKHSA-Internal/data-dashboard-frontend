@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
+import { Announcements } from '@/api/models/cms/Page/Announcements'
 import { FormFields } from '@/api/models/cms/Page/FormFields'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
@@ -31,6 +32,7 @@ const SharedPageData = z.object({
   last_updated_at: z.string(),
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
+  active_announcements: Announcements.or(fallback([])).optional(),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -87,6 +89,8 @@ const WithCompositeData = SharedPageData.extend({
 
 const WithWhatsNewParentData = SharedPageData.extend({
   body: z.string(),
+  show_pagination: z.boolean(),
+  pagination_size: z.number(),
   meta: Meta.extend({
     type: z.literal('whats_new.WhatsNewParentPage'),
   }),
@@ -112,6 +116,8 @@ const WithWhatsNewChildData = SharedPageData.omit({ last_published_at: true }).e
 
 const WithMetricsParentData = SharedPageData.extend({
   body: z.string(),
+  show_pagination: z.boolean(),
+  pagination_size: z.number(),
   meta: Meta.extend({
     type: z.literal('metrics_documentation.MetricsDocumentationParentPage'),
   }),
@@ -168,7 +174,6 @@ export const getPage = async <T extends PageType>(id: number) => {
     searchParams.set('fields', 'html_url')
 
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
-
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)

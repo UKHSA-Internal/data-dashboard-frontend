@@ -1,6 +1,12 @@
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
-import { authEnabled, cacheFetchTags, cacheRevalidationInterval } from '@/config/constants'
+import {
+  authEnabled,
+  cacheFetchTags,
+  ISRCachingEnabled,
+  nonPublicCacheRevalidationInterval,
+  publicCacheRevalidationInterval,
+} from '@/config/constants'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -13,6 +19,18 @@ interface Options {
   headers?: Record<string, string>
   cache?: RequestInit['cache']
   next?: { revalidate: number }
+}
+
+function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'next'>) {
+  if (ISRCachingEnabled) {
+    return publicCacheRevalidationInterval
+  }
+
+  if (authEnabled && isPublic) {
+    return customConfig.next?.revalidate ?? nonPublicCacheRevalidationInterval
+  }
+
+  return 0
 }
 
 /**
@@ -53,8 +71,8 @@ export async function client<T>(
     ...customConfig,
     next: {
       // The public dashboard is behind a CDN so doesn't rely on any Next.js caching
-      // However, the auth instance is not so we rely on Next.js caching for unauthenticated requests
-      revalidate: authEnabled && isPublic ? customConfig.next?.revalidate ?? cacheRevalidationInterval : 0,
+      // However, the auth instance is not, so we rely on Next.js caching for unauthenticated requests
+      revalidate: getRevalidateInterval(isPublic, customConfig),
       tags: authEnabled && isPublic ? [cacheFetchTags.public] : [],
     },
     headers: {

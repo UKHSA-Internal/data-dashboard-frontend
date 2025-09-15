@@ -8,7 +8,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
   meta: {
     type: 'topic.TopicPage',
     detail_url: 'http://localhost/api/pages/10/',
-    html_url: 'http://localhost/topics/other-respiratory-viruses/',
+    html_url: 'http://localhost/respiratory-viruses/other-respiratory-viruses/',
     slug: 'other-respiratory-viruses',
     show_in_menus: true,
     seo_title: 'Other respiratory viruses | UKHSA data dashboard',
@@ -934,5 +934,13 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
   selected_topics: ['Adenovirus', 'hMPV', 'Parainfluenza', 'Rhinovirus'],
   related_links: relatedLinksMock,
   related_links_layout: 'Footer',
+  active_announcements: [
+    {
+      id: 1,
+      title: 'Announcement title',
+      body: 'Announcement body',
+      banner_type: 'Warning',
+    },
+  ],
   last_published_at: '2023-05-10T17:27:37.116337+01:00',
 }

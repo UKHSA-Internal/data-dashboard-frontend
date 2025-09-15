@@ -12,7 +12,7 @@ export const requestSchema = z.object({
   geography: z.optional(Geography),
   age: z.optional(Age),
   sex: z.optional(Sex),
-  statum: z.optional(Stratum),
+  stratum: z.optional(Stratum),
 })
 
 export const responseSchema = z.object({

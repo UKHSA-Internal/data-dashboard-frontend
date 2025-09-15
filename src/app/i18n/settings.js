@@ -14,6 +14,7 @@ export function getOptions(lng = fallbackLng, ns = defaultNS) {
     localePath: typeof window === 'undefined' ? require('path').resolve('./public/locales') : '/locales',
     interpolation: {
       format: formatters,
+      escapeValue: false,
     },
     supportedLngs: languages,
     fallbackLng,

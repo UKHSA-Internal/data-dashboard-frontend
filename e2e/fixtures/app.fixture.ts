@@ -164,16 +164,6 @@ export class App {
       this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
     ).toBeVisible()
 
-    // Announcement
-    const infoBanner = this.page.getByRole('status')
-    await expect(infoBanner.getByText('Information', { exact: true })).toBeVisible()
-    await expect(infoBanner.getByText('This is an information level site wide banner. Puppies are cute')).toBeVisible()
-    await expect(
-      infoBanner.getByText(
-        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.'
-      )
-    ).toBeVisible()
-
     // Footer
     await expect(this.footer.getByText(/All content is available under the/)).toBeVisible()
     await expect(this.footer.getByText(/Open Government Licence v3.0/)).toBeVisible()
@@ -185,6 +175,15 @@ export class App {
     await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
     await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
+  }
+
+  async hasAnnouncement(type: 'Information' | 'Warning', title: string, body: string) {
+    const infoBanner = this.page.getByRole(type === 'Information' ? 'status' : 'alert')
+    await expect(
+      infoBanner.getByText(type === 'Information' ? 'Information' : 'Warning', { exact: true })
+    ).toBeVisible()
+    await expect(infoBanner.getByText(title)).toBeVisible()
+    await expect(infoBanner.getByText(body)).toBeVisible()
   }
 
   async hasHeroBannerLayout() {
@@ -281,10 +280,9 @@ export class App {
   async clickNav(name: string) {
     await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
     await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: true })).toBeVisible()
-
     const nav = this.page.getByRole('navigation', { name: 'Menu' })
+
+    await expect(nav).toBeVisible()
 
     await nav.getByRole('link', { name }).click()
   }
@@ -513,18 +511,18 @@ export class App {
 
   async checkAreaSelectorFormIsActive(isActive = true) {
     if (isActive) {
-      await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeVisible({ timeout: 10000 })
+      await expect(this.page.getByTestId('Area selector')).toBeVisible({ timeout: 10000 })
     } else {
-      await expect(this.page.getByRole('form', { name: 'Area selector' })).toBeHidden({ timeout: 10000 })
+      await expect(this.page.getByTestId('Area selector')).toBeHidden({ timeout: 10000 })
     }
   }
 
   async checkAreaSelectorInputMatchesValue(label: 'Area type' | 'Area name', expectedValue: string) {
-    await expect(this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label)).toHaveValue(expectedValue)
+    await expect(this.page.getByTestId('Area selector').getByLabel(label)).toHaveValue(expectedValue)
   }
 
   async checkAreaSelectorDropdownOptions(label: 'Area type' | 'Area name', expectedOptions: Array<string>) {
-    const input = this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label)
+    const input = this.page.getByTestId('Area selector').getByLabel(label)
 
     // Placeholder option
     await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('disabled')
@@ -538,11 +536,11 @@ export class App {
   }
 
   async checkAreaSelectorAreaNameIsDisabled() {
-    await expect(this.page.getByRole('form', { name: 'Area selector' }).getByLabel('Area name')).toBeDisabled()
+    await expect(this.page.getByTestId('Area selector').getByLabel('Area name')).toBeDisabled()
   }
 
   async selectAreaSelectorDropdownOption(label: 'Area type' | 'Area name', selectedOption: string) {
-    await this.page.getByRole('form', { name: 'Area selector' }).getByLabel(label).selectOption(selectedOption)
+    await this.page.getByTestId('Area selector').getByLabel(label).selectOption(selectedOption)
   }
 
   async checkAreaSelectorChartsRefreshedForLocation(location: string) {
@@ -556,11 +554,11 @@ export class App {
   }
 
   async clickAreaSelectorResetLink() {
-    await this.page.getByRole('form', { name: 'Area selector' }).getByRole('link', { name: 'Reset' }).click()
+    await this.page.getByTestId('Area selector').getByRole('link', { name: 'Reset' }).click()
   }
 
   async submitAreaSelectorForm() {
-    await this.page.getByRole('form', { name: 'Area selector' }).getByRole('button', { name: 'Update' }).click()
+    await this.page.getByTestId('Area selector').getByRole('button', { name: 'Update' }).click()
   }
 }
 

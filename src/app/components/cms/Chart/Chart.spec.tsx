@@ -51,6 +51,7 @@ test('renders a narrow chart correctly', async () => {
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    show_timeseries_filter: false,
     chart: [
       {
         id: '',
@@ -81,6 +82,8 @@ test('renders a narrow chart correctly', async () => {
           size: 'narrow',
         },
       ],
+      timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -162,6 +165,8 @@ test('renders the chart by geography and geography type when both are present in
           size: 'narrow',
         },
       ],
+      timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -207,6 +212,7 @@ test('full width charts should also have an acompanying narrow version for mobil
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    show_timeseries_filter: false,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
@@ -229,6 +235,8 @@ test('full width charts should also have an acompanying narrow version for mobil
           size: 'narrow',
         },
       ],
+      timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -256,6 +264,7 @@ test('landing page half width charts should also have an acompanying third width
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    show_timeseries_filter: false,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
@@ -278,6 +287,8 @@ test('landing page half width charts should also have an acompanying third width
           size: 'third',
         },
       ],
+      timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -309,6 +320,7 @@ test('renders a fallback message when the chart requests fail', async () => {
   const data: ComponentProps<typeof Chart>['data'] = {
     x_axis: null,
     y_axis: null,
+    show_timeseries_filter: false,
     chart: [],
     body: 'COVID-19 chart description.',
     title: 'Cases by specimen date',
@@ -327,6 +339,8 @@ test('renders a fallback message when the chart requests fail', async () => {
           size: 'narrow',
         },
       ],
+      timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 
@@ -359,6 +373,7 @@ test('Fallback message with escaped characters', async () => {
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    show_timeseries_filter: false,
     chart: [],
     body: 'COVID-19 chart description.',
     tag_manager_event_id: '',
@@ -377,6 +392,8 @@ test('Fallback message with escaped characters', async () => {
           size: 'narrow',
         },
       ],
+      timeseriesFilter: '',
+      chartId: '',
     })) as ReactElement
   )
 

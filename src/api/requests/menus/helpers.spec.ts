@@ -86,19 +86,24 @@ describe('Mega Menu Transformations', () => {
           links: [
             {
               title: 'COVID-19',
-              slug: '/topics/covid-19',
+              slug: '/respiratory-viruses/covid-19',
               description: '<p data-block-key="zftwk">COVID-19 respiratory infection statistics</p>',
             },
             {
               title: 'Influenza',
-              slug: '/topics/influenza',
+              slug: '/respiratory-viruses/influenza',
               description: '<p data-block-key="27vjw">Flu ICU and HDU admissions and other statistics</p>',
             },
             {
               title: 'Other respiratory viruses',
-              slug: '/topics/other-respiratory-viruses',
+              slug: '/respiratory-viruses/other-respiratory-viruses',
               description:
                 '<p data-block-key="27vjw">Other common respiratory viruses including adenovirus, hMPV &amp; parainfluenza</p>',
+            },
+            {
+              description: '<p data-block-key="27vjw">Childhood vaccination coverage for England</p>',
+              slug: '/respiratory-viruses/childhood-vaccinations',
+              title: 'Childhood Vaccination Coverage',
             },
           ],
         },
