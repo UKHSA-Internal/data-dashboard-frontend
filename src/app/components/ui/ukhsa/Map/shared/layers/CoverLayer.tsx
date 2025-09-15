@@ -338,7 +338,7 @@ const CoverLayer = <T extends LayerWithFeature>({
             } else {
               // Clicked new feature - create and open tooltip
               const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
-              const { regionName, nationName, vaccination } = renderTooltip(featureId)
+              const { regionName, nationName, vaccination } = renderTooltip(currentFeatureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
                   `
