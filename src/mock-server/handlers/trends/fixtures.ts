@@ -54,7 +54,7 @@ export const fixtures: Fixtures = {
       metric_value: 21,
       metric_period_end: '2023-11-04',
       percentage_metric_name: 'COVID-19_headline_ONSdeaths_7daypercentchange',
-      percentage_metric_value: -5.0,
+      percentage_metric_value: -5,
       percentage_metric_period_end: '2023-11-04',
       colour: 'green',
       direction: 'down',

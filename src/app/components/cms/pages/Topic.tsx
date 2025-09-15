@@ -1,12 +1,27 @@
+/* eslint-disable @next/next/no-img-element */
+import { FilterLinkedSubplotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
+import {
+  Announcements,
+  FilterBannerWrapper,
+  PageSection,
+  PageSectionWithContents,
+  View,
+} from '@/app/components/ui/ukhsa'
+import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
+import {
+  extractDataFromGlobalFilter,
+  ExtractedFilters,
+  extractSubplotSectionData,
+  extractTimeSeriesSectionData,
+} from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
@@ -37,6 +52,10 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
+  let extractedGlobalFilterContent = {} as ExtractedFilters
+  let extractedSubplotData = {} as FilterLinkedSubplotData
+  let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
+
   body.map(({ value }) => {
     if (value.content) {
       value.content.map((content) => {
@@ -62,6 +81,18 @@ export default async function TopicPage({
             newChartFilters += `${chartId}|${valueToAdd};`
           })
         }
+        // abstract out available time periods
+        if (content.type === 'global_filter_card') {
+          extractedGlobalFilterContent = extractDataFromGlobalFilter(content)
+        }
+        if (content.type === 'filter_linked_sub_plot_chart_template') {
+          extractedSubplotData = extractSubplotSectionData(content)
+          extractedGlobalFilterContent.coverageTemplateData = extractedSubplotData
+        }
+        if (content.type === 'filter_linked_time_series_chart_template') {
+          extractedTimeSeriesData = extractTimeSeriesSectionData(content)
+          extractedGlobalFilterContent.timeseriesTemplateData = extractedTimeSeriesData
+        }
       })
     }
   })
@@ -70,7 +101,12 @@ export default async function TopicPage({
 
   if (newChartFilters !== timeseriesFilter) {
     const newParams = new URLSearchParams('')
-    newParams.set('timeseriesFilter', newChartFilters)
+    if (newChartFilters !== '') {
+      newParams.set('timeseriesFilter', newChartFilters)
+    } else {
+      newParams.delete('timeseriesFilter')
+    }
+
     newRoute = `?${newParams.toString()}`
   }
 
@@ -80,6 +116,15 @@ export default async function TopicPage({
     <>
       <RedirectHandler newRoute={newRoute} />
       <View>
+        {slug[1] === 'childhood-vaccinations' && (
+          <img
+            className="float-right"
+            src={'/assets/images/accredited-official-statistics-logo.svg'}
+            alt="Accredited Official Statistics"
+            height={'70px'}
+            width={'70px'}
+          />
+        )}
         <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
         <LastUpdated lastUpdated={lastUpdated} />
         <Announcements announcements={activeAnnouncements} />
@@ -104,15 +149,21 @@ export default async function TopicPage({
               </>
             )}
 
-            <PageSectionWithContents>
-              {body.map(({ id, value }) => (
-                <PageSection key={id} heading={value.heading}>
-                  {value.content.map((item) =>
-                    renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                  )}
-                </PageSection>
-              ))}
-            </PageSectionWithContents>
+            <GlobalFilterProvider filters={extractedGlobalFilterContent}>
+              <PageSectionWithContents>
+                {body.map(({ id, value }) =>
+                  value.content.some((content) => content.type === 'global_filter_card') ? (
+                    <FilterBannerWrapper key={id} />
+                  ) : (
+                    <PageSection key={id} heading={value.heading}>
+                      {value.content.map((item) =>
+                        renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                      )}
+                    </PageSection>
+                  )
+                )}
+              </PageSectionWithContents>
+            </GlobalFilterProvider>
           </div>
 
           {relatedLinksLayout === 'Sidebar' ? (

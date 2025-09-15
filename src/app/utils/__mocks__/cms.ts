@@ -57,6 +57,14 @@ export const mockTextCard = Mock.of<CardType>({
   },
 })
 
+export const mockTextCardWithUnorderedList = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'text_card',
+  value: {
+    body: '<div><ul><li>bullet point one</li><li>bullet point two</li></ul><div>',
+  },
+})
+
 export const mockHeadlineNumbersRowCard = Mock.of<CardType>({
   id: 'mockid',
   type: 'headline_numbers_row_card',
@@ -289,6 +297,22 @@ export const mockChartRowCardWithDualChartCard = Mock.of<CardType>({
         },
       },
     ],
+  },
+})
+export const mockFilterLinkedSubplotChartTemplate = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'filter_linked_map',
+})
+export const mockFilterLinkedTimeSeriesChartTemplate = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'filter_linked_map',
+})
+export const mockLinkedMapCard = Mock.of<CardType>({
+  id: 'mockid',
+  type: 'filter_linked_map',
+  value: {
+    title_prefix: 'Map Heading',
+    legend_title: 'Level of Coverage',
   },
 })
 
