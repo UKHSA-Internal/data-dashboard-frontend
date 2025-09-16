@@ -261,6 +261,26 @@ const CoverLayer = <T extends LayerWithFeature>({
     setRenderKey((prev) => prev + 1)
   }, [dataLevel])
 
+  // Handle click outside tooltip to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (activeTooltipLayerRef.current) {
+        const tooltipElement = document.querySelector('.leaflet-tooltip')
+
+        if (tooltipElement && !tooltipElement.contains(event.target as Node)) {
+          activeTooltipLayerRef.current.closeTooltip().unbindTooltip()
+          activeTooltipLayerRef.current = null
+          setSelectedFeatureId(null)
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
       featuresRef.current = [...featuresRef.current, feature]
@@ -318,7 +338,7 @@ const CoverLayer = <T extends LayerWithFeature>({
             } else {
               // Clicked new feature - create and open tooltip
               const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
-              const { regionName, nationName, vaccination } = renderTooltip(featureId)
+              const { regionName, nationName, vaccination } = renderTooltip(currentFeatureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
                   `
