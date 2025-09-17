@@ -1,6 +1,6 @@
 'use client'
 
-import { useGlobalFilters } from '@/app/context/globalFilterContext'
+import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'

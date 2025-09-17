@@ -1,6 +1,6 @@
 import React from 'react'
 
-import { FilterOption } from '@/app/context/globalFilterContext'
+import { FilterOption } from '@/app/features/global-filter/context/globalFilterContext'
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
 import { fireEvent, render, screen } from '@/config/test-utils'
 

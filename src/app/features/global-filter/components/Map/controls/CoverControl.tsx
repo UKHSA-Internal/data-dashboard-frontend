@@ -3,8 +3,8 @@
 import { ControlPosition } from 'leaflet'
 import Control from 'react-leaflet-custom-control'
 
-import { TimePeriodDropdown } from '../../../TimePeriodDropdown/TimePeriodDropdown'
-import { VaccinationDropdown } from '../../../VaccinationDropdown/VaccinationDropdown'
+import { TimePeriodDropdown } from '../../../../../components/ui/ukhsa/TimePeriodDropdown/TimePeriodDropdown'
+import { VaccinationDropdown } from '../../../../../components/ui/ukhsa/VaccinationDropdown/VaccinationDropdown'
 
 interface YearSelectControlProps {
   position: ControlPosition

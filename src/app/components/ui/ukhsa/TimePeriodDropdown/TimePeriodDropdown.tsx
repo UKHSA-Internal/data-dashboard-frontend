@@ -2,7 +2,7 @@
 import { useEffect } from 'react'
 
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-import { useGlobalFilters } from '@/app/context/globalFilterContext'
+import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 import { useTranslation } from '@/app/i18n/client'
 
 interface TimePeriodDropdownProps {

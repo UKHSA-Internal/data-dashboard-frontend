@@ -11,7 +11,7 @@ import {
   PageSectionWithContents,
   View,
 } from '@/app/components/ui/ukhsa'
-import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
+import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
