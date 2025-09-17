@@ -118,6 +118,7 @@ export const CardTypes = z.discriminatedUnion('type', [
     value: z.object({
       title_prefix: z.optional(z.string()),
       legend_title: z.optional(z.string()),
+      about: z.optional(z.string()),
     }),
     id: z.string(),
   }),
