@@ -87,7 +87,6 @@ export default function MapCard({
 
   return (
     <div className="relative">
-      {date && <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{date}</p>}
       <MapContainer
         {...options}
         id={mapId}
