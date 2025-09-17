@@ -2,7 +2,7 @@
 import { ReactNode } from 'react'
 
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
-import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
+import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
 import { act, renderHook } from '@/config/test-utils'
 
 import {

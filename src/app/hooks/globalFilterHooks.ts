@@ -10,7 +10,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { MapDataResponse } from '@/api/models/Maps'
 import { GeographiesSchema } from '@/api/requests/geographies/getGeographies'
-import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
+import { FilterOption, useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
 export function useTimePeriods(): TimePeriod[] | null {
   const { state } = useGlobalFilters()

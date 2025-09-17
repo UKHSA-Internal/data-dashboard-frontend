@@ -9,23 +9,22 @@ import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
+import { AttributionControl } from '@/app/components/ui/ukhsa/Map/shared/controls/AttributionControl'
+import { FullscreenControl } from '@/app/components/ui/ukhsa/Map/shared/controls/FullscreenControl'
+import { MapLegendControl, ThresholdItemProps } from '@/app/components/ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { ZoomControl } from '@/app/components/ui/ukhsa/Map/shared/controls/ZoomControl'
+import { useMapRef } from '@/app/components/ui/ukhsa/Map/shared/hooks/useMapRef'
+import { UKHSALogoLayer } from '@/app/components/ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { CoverControl } from '@/app/features/global-filter/components/Map/controls/CoverControl'
 import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
-
-import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
-import { CoverControl } from '../../ui/ukhsa/Map/shared/controls/CoverControl'
-import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
-import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
-import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
-import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
-import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 
 const { BaseLayer, CoverLayer } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
     ssr: false,
   }),
-  CoverLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/CoverLayer'), {
+  CoverLayer: dynamic(() => import('@/app/features/global-filter/components/Map/layers/CoverLayer'), {
     ssr: false,
   }),
 }

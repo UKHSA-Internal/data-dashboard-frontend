@@ -19,14 +19,18 @@ import {
   MapFeatureColour,
 } from '@/app/utils/map.utils'
 
-import { FlatOption } from '../../../MultiselectDropdown/MultiselectDropdown'
-import { ThresholdItemProps } from '../controls/MapLegendControl'
-import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
+import { ThresholdItemProps } from '../../../../../components/ui/ukhsa/Map/shared/controls/MapLegendControl'
+import countriesFeatureCollection, {
+  Feature as CountriesFeature,
+} from '../../../../../components/ui/ukhsa/Map/shared/data/geojson/countries'
 import localAuthoritiesFeatureCollection, {
   Feature as LocalAuthoritiesFeature,
-} from '../data/geojson/local-authorities'
-import regionFeatureCollection, { Feature as RegionFeature } from '../data/geojson/ukhsa-regions'
-import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
+} from '../../../../../components/ui/ukhsa/Map/shared/data/geojson/local-authorities'
+import regionFeatureCollection, {
+  Feature as RegionFeature,
+} from '../../../../../components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions'
+import { useChoroplethKeyboardAccessibility } from '../../../../../components/ui/ukhsa/Map/shared/hooks/useChoroplethKeyboardEvents'
+import { FlatOption } from '../../../../../components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
