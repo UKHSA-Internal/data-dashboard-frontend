@@ -12,6 +12,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import About from '@/app/components/cms/About/About'
+import { SubplotClientTable } from '@/app/components/cms/Table/SubplotClientTable'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
@@ -73,7 +74,7 @@ const SubplotFilterCard = ({
                   <span>Chart</span>
                 </Link>
               </TabsTrigger>
-              {/* <TabsTrigger
+              <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-table`}
                 aria-controls={`table-${kebabCase(title)}-content`}
@@ -85,7 +86,7 @@ const SubplotFilterCard = ({
                   </span>
                 </Link>
               </TabsTrigger>
-              <TabsTrigger
+              {/* <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-download`}
                 aria-controls={`download-${kebabCase(title)}-content`}
@@ -125,15 +126,25 @@ const SubplotFilterCard = ({
                 timePeriodTitle={timePeriodTitle}
               />
             </TabsContent>
-            {/* <TabsContent
+            <TabsContent
               value={`${kebabCase(title)}-table`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="table"
               id={`table-${kebabCase(title)}-content`}
             >
-              Table content
+              <SubplotClientTable
+                size={'wide'}
+                timestamp={date}
+                geography={geography}
+                geographyFilters={geographyFilters}
+                dataFilters={selectedVaccinations}
+                selectedThresholds={selectedThresholds}
+                timePeriods={timePeriods}
+                currentTimePeriodIndex={currentTimePeriodIndex}
+                cardData={cardData}
+              />
             </TabsContent>
-            <TabsContent
+            {/* <TabsContent
               value={`${kebabCase(title)}-download`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="download"

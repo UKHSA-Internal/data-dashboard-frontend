@@ -64,7 +64,7 @@ export const responseSchema = z.array(
     values: z.array(
       z.object({
         label: z.string(),
-        value: z.string().nullable().optional(),
+        value: z.coerce.number().nullable(),
         in_reporting_delay_period: z.boolean(),
       })
     ),

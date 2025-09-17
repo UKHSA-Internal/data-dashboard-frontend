@@ -11,7 +11,6 @@ import { MapContainer } from 'react-leaflet'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
-import { formatDate } from '@/app/utils/date.utils'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
 import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
@@ -83,13 +82,8 @@ export default function MapCard({
         selectedGeographyFilters={selectedGeographyFilters}
       />
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thresholdData, mapData])
-
-  let date
-  if (mapData) {
-    const { latest_date } = mapData
-    date = `Last updated ${formatDate(latest_date)}`
-  }
 
   return (
     <div className="relative">
