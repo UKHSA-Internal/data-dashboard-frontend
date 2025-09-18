@@ -4,7 +4,7 @@ import { z } from 'zod'
 import { CardTypes } from '@/api/models/cms/Page'
 import { ChartRowCard, ChartRowCardHeader } from '@/app/components/cms'
 
-import { MapCardTabWrapper } from '../components/MapCard/MapCardTabWrapper'
+import { MapCardTabWrapper } from './MapCard/MapCardTabWrapper'
 
 export function GlobalFilterLinkedMap({ type, value, id }: z.infer<typeof CardTypes>) {
   if (type === 'filter_linked_map') {

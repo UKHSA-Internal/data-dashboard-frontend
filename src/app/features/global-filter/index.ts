@@ -1,1 +1,1 @@
-export * from './global-filter-map/GlobalFilterLinkedMap'
+export * from './components/global-filter-map/GlobalFilterLinkedMap'
