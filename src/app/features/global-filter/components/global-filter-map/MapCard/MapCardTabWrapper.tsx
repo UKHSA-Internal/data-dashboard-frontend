@@ -11,7 +11,6 @@ const MapCard = dynamic(() => import('./MapCard'), { ssr: false })
 export async function MapCardTabWrapper({ id, about }: { id: string; about: string | null }) {
   const title = `filter-linked-map-${id}`
 
-  console.log('about param value: ', about)
   if (about) {
     return (
       <Tabs defaultValue={`${kebabCase(title)}`} className="govuk-!-margin-bottom-0">
