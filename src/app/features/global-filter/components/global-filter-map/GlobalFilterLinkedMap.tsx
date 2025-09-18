@@ -7,10 +7,6 @@ import { ChartRowCard, ChartRowCardHeader } from '@/app/components/cms'
 import { MapCardTabWrapper } from './MapCard/MapCardTabWrapper'
 
 export function GlobalFilterLinkedMap({ type, value, id }: z.infer<typeof CardTypes>) {
-  console.log('CMS type: ', type)
-  console.log('CMS value: ', value)
-  console.log('CMS id: ', id)
-
   if (type === 'filter_linked_map') {
     return (
       <ChartRowCard>

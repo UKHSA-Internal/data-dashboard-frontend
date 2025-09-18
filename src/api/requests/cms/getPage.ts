@@ -175,7 +175,6 @@ export const getPage = async <T extends PageType>(id: number) => {
 
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
 
-    console.log('CMS getPage:', data)
     return responseSchema.safeParse(data)
   } catch (error) {
     logger.error(error)
