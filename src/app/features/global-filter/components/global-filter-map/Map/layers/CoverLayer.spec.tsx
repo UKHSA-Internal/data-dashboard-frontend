@@ -3,13 +3,13 @@ import { MapContainer } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import { FilterOption } from '@/app/context/globalFilterContext'
+import { ThresholdItemProps } from '@/app/components/ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { useChoroplethKeyboardAccessibility } from '@/app/components/ui/ukhsa/Map/shared/hooks/useChoroplethKeyboardEvents'
+import { FilterOption } from '@/app/features/global-filter/context/globalFilterContext'
 import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 import { fireEvent, render, screen, waitFor } from '@/config/test-utils'
 
-import { ThresholdItemProps } from '../controls/MapLegendControl'
-import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 import CoverLayer from './CoverLayer'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
@@ -32,7 +32,7 @@ jest.mock('@/app/utils/map.utils', () => ({
 }))
 
 // Mock the geojson data
-jest.mock('../data/geojson/countries', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/data/geojson/countries', () => ({
   __esModule: true,
   default: {
     type: 'FeatureCollection',
@@ -63,7 +63,7 @@ jest.mock('../data/geojson/countries', () => ({
   },
 }))
 
-jest.mock('../data/geojson/local-authorities', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/data/geojson/local-authorities', () => ({
   __esModule: true,
   default: {
     type: 'FeatureCollection',
@@ -94,7 +94,7 @@ jest.mock('../data/geojson/local-authorities', () => ({
   },
 }))
 
-jest.mock('../data/geojson/ukhsa-regions', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions', () => ({
   __esModule: true,
   default: {
     type: 'FeatureCollection',
@@ -127,7 +127,7 @@ jest.mock('../data/geojson/ukhsa-regions', () => ({
 }))
 
 // Mock keyboard accessibility hook
-jest.mock('../hooks/useChoroplethKeyboardEvents', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/hooks/useChoroplethKeyboardEvents', () => ({
   useChoroplethKeyboardAccessibility: jest.fn(() => [<div key="screen-reader">Screen reader text</div>, jest.fn()]),
 }))
 

@@ -22,7 +22,7 @@ import {
   addFilterToSelectedThresholdFilters,
   addFilterToSelectedVaccinationFilters,
   getFilterType,
-} from '../utils/selected-filter.utils'
+} from '../../../utils/selected-filter.utils'
 
 interface InitialGlobalFilterState {
   timePeriods: TimePeriod[] | null

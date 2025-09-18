@@ -24,8 +24,6 @@ import {
   CodeBlock,
   Download,
   Headline,
-  MapCardWrapper,
-  MapRowCard,
   Percentage,
   RichText,
   Table,
@@ -36,6 +34,7 @@ import About from '../components/cms/About/About'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
+import { GlobalFilterLinkedMap } from '../features/global-filter'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
@@ -272,16 +271,7 @@ export const renderCard = (
 
       {/* {type === 'global_filter_card' && <FilterBannerWrapper />} */}
 
-      {type === 'filter_linked_map' && (
-        <MapRowCard>
-          <div key={id} className={clsx('mb-3 sm:mb-6 lg:mb-0', 'lg:w-full')}>
-            <article className={'ukhsa-map-card'}>
-              <ChartRowCardHeader id={`map-row-heading-${id}`} title={value.title_prefix ? value.title_prefix : ''} />
-              <MapCardWrapper />
-            </article>
-          </div>
-        </MapRowCard>
-      )}
+      {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
       {type === 'filter_linked_sub_plot_chart_template' && (
         <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
