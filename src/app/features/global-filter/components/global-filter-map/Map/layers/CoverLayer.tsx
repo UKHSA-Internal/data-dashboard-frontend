@@ -11,6 +11,18 @@ import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import localAuthoritiesFeatureCollection, {
+  Feature as LocalAuthoritiesFeature,
+} from '@/app/components/ui/ukhsa/Map/shared//data/geojson/local-authorities'
+import regionFeatureCollection, {
+  Feature as RegionFeature,
+} from '@/app/components/ui/ukhsa/Map/shared//data/geojson/ukhsa-regions'
+import { ThresholdItemProps } from '@/app/components/ui/ukhsa/Map/shared/controls/MapLegendControl'
+import countriesFeatureCollection, {
+  Feature as CountriesFeature,
+} from '@/app/components/ui/ukhsa/Map/shared/data/geojson/countries'
+import { useChoroplethKeyboardAccessibility } from '@/app/components/ui/ukhsa/Map/shared/hooks/useChoroplethKeyboardEvents'
+import { FlatOption } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
   getActiveCssVariableFromColour,
@@ -18,19 +30,6 @@ import {
   getHoverCssVariableFromColour,
   MapFeatureColour,
 } from '@/app/utils/map.utils'
-
-import { ThresholdItemProps } from '../../../../../components/ui/ukhsa/Map/shared/controls/MapLegendControl'
-import countriesFeatureCollection, {
-  Feature as CountriesFeature,
-} from '../../../../../components/ui/ukhsa/Map/shared/data/geojson/countries'
-import localAuthoritiesFeatureCollection, {
-  Feature as LocalAuthoritiesFeature,
-} from '../../../../../components/ui/ukhsa/Map/shared/data/geojson/local-authorities'
-import regionFeatureCollection, {
-  Feature as RegionFeature,
-} from '../../../../../components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions'
-import { useChoroplethKeyboardAccessibility } from '../../../../../components/ui/ukhsa/Map/shared/hooks/useChoroplethKeyboardEvents'
-import { FlatOption } from '../../../../../components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 

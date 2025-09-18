@@ -97,7 +97,7 @@ jest.mock('@/app/components/ui/ukhsa/Map/shared/controls/FullscreenControl', () 
   ),
 }))
 
-jest.mock('@/app/features/global-filter/components/Map/controls/CoverControl', () => ({
+jest.mock('@/app/features/global-filter/components/global-filter-map/Map/controls/CoverControl', () => ({
   CoverControl: ({ position }: MockLayerProps) => <div data-testid="cover-control" data-position={position} />,
 }))
 
@@ -106,7 +106,7 @@ jest.mock('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   default: () => <div data-testid="base-layer" />,
 }))
 
-jest.mock('@/app/features/global-filter/components/Map/layers/CoverLayer', () => ({
+jest.mock('@/app/features/global-filter/components/global-filter-map/Map/layers/CoverLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="cover-layer" />,
 }))

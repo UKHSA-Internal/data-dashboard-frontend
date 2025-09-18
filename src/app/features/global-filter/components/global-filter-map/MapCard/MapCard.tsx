@@ -16,7 +16,7 @@ import { ZoomControl } from '@/app/components/ui/ukhsa/Map/shared/controls/ZoomC
 import { useMapRef } from '@/app/components/ui/ukhsa/Map/shared/hooks/useMapRef'
 import { UKHSALogoLayer } from '@/app/components/ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
-import { CoverControl } from '@/app/features/global-filter/components/Map/controls/CoverControl'
+import { CoverControl } from '@/app/features/global-filter/components/global-filter-map/Map/controls/CoverControl'
 import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
 
@@ -24,7 +24,7 @@ const { BaseLayer, CoverLayer } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
     ssr: false,
   }),
-  CoverLayer: dynamic(() => import('@/app/features/global-filter/components/Map/layers/CoverLayer'), {
+  CoverLayer: dynamic(() => import('@/app/features/global-filter/components/global-filter-map/Map/layers/CoverLayer'), {
     ssr: false,
   }),
 }
