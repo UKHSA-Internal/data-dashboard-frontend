@@ -4,6 +4,10 @@ import { getSubplotDownloads, requestSchema } from '@/api/requests/downloads/sub
 import { logger } from '@/lib/logger'
 // import { SafeParseReturnType } from 'zod'
 
+// export async function POST(req: NextRequest) {
+//   return new Response('Hello from subplot API', { status: 200 })
+// }
+
 export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
@@ -11,7 +15,7 @@ export async function POST(req: NextRequest) {
   const body = await req.formData()
 
   const params = requestSchema.safeParse({
-    file_format: body.get('file_format'),
+    file_format: body.get('file_format') || 'csv',
     target_threshold: body.get('target_threshold'),
     target_threshold_label: body.get('target_threshold_label'),
     chart_parameters: JSON.parse(body.get('chart_parameters') as string),

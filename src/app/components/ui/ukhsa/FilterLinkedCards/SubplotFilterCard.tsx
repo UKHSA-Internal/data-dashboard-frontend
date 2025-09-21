@@ -12,6 +12,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import About from '@/app/components/cms/About/About'
+import { SubplotClientDownload } from '@/app/components/cms/Download/SubplotClientDownload'
 import { SubplotClientTable } from '@/app/components/cms/Table/SubplotClientTable'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { formatDate } from '@/app/utils/date.utils'
@@ -86,7 +87,7 @@ const SubplotFilterCard = ({
                   </span>
                 </Link>
               </TabsTrigger>
-              {/* <TabsTrigger
+              <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-download`}
                 aria-controls={`download-${kebabCase(title)}-content`}
@@ -94,7 +95,7 @@ const SubplotFilterCard = ({
                 <Link href={`#download-${kebabCase(title)}`}>
                   <span>Download</span>
                 </Link>
-              </TabsTrigger> */}
+              </TabsTrigger>
               {about && (
                 <TabsTrigger
                   asChild
@@ -144,14 +145,21 @@ const SubplotFilterCard = ({
                 cardData={cardData}
               />
             </TabsContent>
-            {/* <TabsContent
+            <TabsContent
               value={`${kebabCase(title)}-download`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="download"
               id={`download-${kebabCase(title)}-content`}
             >
-              Download content
-            </TabsContent> */}
+              <SubplotClientDownload
+                geography={geography}
+                geographyFilters={geographyFilters}
+                dataFilters={selectedVaccinations}
+                timePeriods={timePeriods}
+                currentTimePeriodIndex={currentTimePeriodIndex}
+                selectedThresholds={selectedThresholds}
+              />
+            </TabsContent>
             {about && (
               <TabsContent
                 value={`${kebabCase(title)}-about`}
