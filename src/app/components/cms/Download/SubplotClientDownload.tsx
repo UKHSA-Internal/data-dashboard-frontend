@@ -149,7 +149,6 @@ export function SubplotClientDownload({
       }),
     }
 
-    // return <h2>client subplot download</h2>
     return <SubplotDownloadForm chart={chart} xAxis={x_axis} tagManagerEventId={null} />
   }
 }

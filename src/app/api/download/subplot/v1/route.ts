@@ -2,11 +2,6 @@ import { NextRequest, NextResponse } from 'next/server'
 
 import { getSubplotDownloads, requestSchema } from '@/api/requests/downloads/subplot/getSubplotDownloads'
 import { logger } from '@/lib/logger'
-// import { SafeParseReturnType } from 'zod'
-
-// export async function POST(req: NextRequest) {
-//   return new Response('Hello from subplot API', { status: 200 })
-// }
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
