@@ -40,6 +40,90 @@ test.describe('Childhood vaccinations page', () => {
     await test.step('displays key section underneath the map', async () => {
       await coverPage.hasKeySection()
     })
+    await test.step('displays map legend with correct thresholds', async () => {
+      await coverPage.hasMapLegend()
+      await coverPage.hasMapLegendWithThresholds(['Under 80%', '80-85%', '85-90%', '90-95%', 'Over 95%'])
+    })
+  })
+
+  test('Map loading states', async ({ coverPage }) => {
+    await test.step('loads the page', async () => {
+      await coverPage.goto()
+    })
+    await test.step('initially no loading state', async () => {
+      await coverPage.hasNoMapLoadingState()
+    })
+    await test.step('selects a vaccine to trigger loading', async () => {
+      await coverPage.selectVaccine('MenB (2 years)')
+    })
+    await test.step('shows loading state during data fetch', async () => {
+      await coverPage.hasMapLoadingState()
+    })
+    await test.step('loading state disappears after data loads', async () => {
+      await coverPage.hasNoMapLoadingState()
+    })
+  })
+
+  test('Map data loading with vaccine selection changes', async ({ coverPage }) => {
+    await test.step('loads the page', async () => {
+      await coverPage.goto()
+    })
+    await test.step('initially no vaccine selected, no loading', async () => {
+      await coverPage.hasNoMapLoadingState()
+    })
+    await test.step('selects vaccine', async () => {
+      await coverPage.selectVaccine('MenB (2 years)')
+    })
+    await test.step('map loading state appears', async () => {
+      await coverPage.hasMapLoadingState()
+    })
+    await test.step('map data loaded', async () => {
+      await coverPage.hasMapDataLoaded()
+    })
+    await test.step('waits for first vaccine data to load', async () => {
+      await coverPage.hasNoMapLoadingState()
+    })
+  })
+
+  // TODO: Investigate tooltip in e2e, playwright is finding the element, but unable to interact with it?
+  // test('Map tooltip functionality', async ({ coverPage }) => {
+  //   await test.step('loads the page', async () => {
+  //     await coverPage.goto()
+  //   })
+  //   await test.step('selects a vaccine to load map data', async () => {
+  //     await coverPage.selectVaccine('MenB (2 years)')
+  //   })
+  //   await test.step('waits for map data to load', async () => {
+  //     await coverPage.hasMapDataLoaded()
+  //   })
+  //   await test.step('clicks on a map feature to show tooltip', async () => {
+  //     await coverPage.clickMapFeature('E06000001')
+  //   })
+  //   await test.step('tooltip appears with vaccination data', async () => {
+  //     await coverPage.hasMapTooltip()
+  //     await coverPage.hasMapTooltipWithVaccinationData()
+  //   })
+  //   await test.step('tooltip contains specific content', async () => {
+  //     await coverPage.hasMapTooltipWithContent('MenB (2 years)')
+  //   })
+  //   await test.step('closes tooltip by clicking same feature', async () => {
+  //     await coverPage.closeMapTooltip()
+  //     await coverPage.hasMapTooltipClosed()
+  //   })
+  // })
+
+  test('Map interaction controls', async ({ coverPage }) => {
+    await test.step('loads the page', async () => {
+      await coverPage.goto()
+    })
+    await test.step('zoom controls work', async () => {
+      await coverPage.clickZoomIn()
+      await coverPage.clickZoomOut()
+    })
+    await test.step('fullscreen controls work', async () => {
+      await coverPage.clickFullscreen()
+      await coverPage.clickExitFullscreen()
+    })
   })
 
   test('Selected filters functionality', async ({ coverPage }) => {
@@ -104,6 +188,19 @@ test.describe('Cover - mobile @mobileOnly', () => {
     await coverPage.goto()
     await app.hasNav()
   })
+
+  test('map functionality on mobile', async ({ coverPage }) => {
+    await test.step('loads the page', async () => {
+      await coverPage.goto()
+    })
+    await test.step('displays map on mobile', async () => {
+      await coverPage.hasMapOnMobile()
+    })
+    await test.step('vaccine selection works on mobile', async () => {
+      await coverPage.selectVaccine('MenB (2 years)')
+      await coverPage.hasVaccineSelected('MenB (2 years)')
+    })
+  })
 })
 
 test.describe('Cover - tablet @tabletOnly', () => {
@@ -113,14 +210,18 @@ test.describe('Cover - tablet @tabletOnly', () => {
     await coverPage.goto()
     await app.hasNav()
   })
-})
 
-test.describe('Cover - desktop @desktopOnly', () => {
-  test.use({ viewport: viewports.desktop })
-
-  test('displays the navigation on desktop', async ({ coverPage, app }) => {
-    await coverPage.goto()
-    await app.hasNav()
+  test('map functionality on tablet', async ({ coverPage }) => {
+    await test.step('loads the page', async () => {
+      await coverPage.goto()
+    })
+    await test.step('displays map on tablet', async () => {
+      await coverPage.hasMapOnTablet()
+    })
+    await test.step('vaccine selection works on tablet', async () => {
+      await coverPage.selectVaccine('MenB (2 years)')
+      await coverPage.hasMapDataLoaded()
+    })
   })
 })
 

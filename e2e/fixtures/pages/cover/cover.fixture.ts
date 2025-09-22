@@ -139,4 +139,154 @@ export class CoverPage {
     const selectedFilters = this.page.getByTestId('ukhsa-static-filter')
     await expect(selectedFilters).toHaveCSS('position', 'sticky')
   }
+
+  // --- Map Loading Tests ---
+  async hasMapLoadingState() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.getByText('Map loading')).toBeVisible()
+    await expect(mapContainer.getByText('Requesting map based on selected filters')).toBeVisible()
+  }
+
+  async hasNoMapLoadingState() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.getByText('Map loading')).toBeHidden()
+  }
+
+  // --- Map Interaction Tests ---
+  async clickMapFeature(featureId: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByTestId(`feature-${featureId}`).click()
+  }
+
+  async hoverMapFeature(featureId: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByTestId(`feature-${featureId}`).hover()
+  }
+
+  async hasMapTooltip() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.locator('.leaflet-tooltip')).toBeVisible()
+  }
+
+  async hasMapTooltipClosed() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.locator('.leaflet-tooltip')).toBeHidden()
+  }
+
+  async hasMapTooltipWithContent(content: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.locator('.leaflet-tooltip').getByText(content)).toBeVisible()
+  }
+
+  async hasMapTooltipWithVaccinationData() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    const tooltip = mapContainer.locator('.leaflet-tooltip')
+
+    // Check for key tooltip elements
+    await expect(tooltip.getByText('Country:')).toBeVisible()
+    await expect(tooltip.getByText('Region name:')).toBeVisible()
+    await expect(tooltip.getByText('Local Authority:')).toBeVisible()
+    await expect(tooltip.getByText('Vaccination:')).toBeVisible()
+    await expect(tooltip.getByText('Level of Coverage:')).toBeVisible()
+  }
+
+  async closeMapTooltip() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.locator('.leaflet-tooltip').click()
+  }
+
+  // --- Map Controls Tests ---
+  async clickZoomIn() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('button', { name: /Zoom in/i }).click()
+  }
+
+  async clickZoomOut() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('button', { name: /Zoom out/i }).click()
+  }
+
+  async clickFullscreen() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('button', { name: /Enter fullscreen/i }).click()
+  }
+
+  async clickExitFullscreen() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('button', { name: /Exit fullscreen/i }).click()
+  }
+
+  async selectVaccine(vaccineName: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('combobox', { name: /Vaccine selection/i }).selectOption(vaccineName)
+  }
+
+  async hasVaccineSelected(vaccineName: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    const select = mapContainer.getByRole('combobox', { name: /Vaccine selection/i })
+    await expect(select).toHaveValue(vaccineName)
+  }
+
+  async clearVaccineSelection() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('combobox', { name: /Vaccine selection/i }).selectOption('')
+  }
+
+  // --- Map Data Tests ---
+  async hasMapDataLoaded() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    // Check that map features are rendered
+    await expect(mapContainer.locator('[data-testid^="feature-"]').first()).toBeVisible()
+  }
+
+  async hasMapErrorState() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.getByText('Error loading map data')).toBeVisible()
+  }
+
+  // Map Legend Tests
+  async hasMapLegend() {
+    await expect(this.page.getByTestId('ukhsa-map-key')).toBeVisible()
+  }
+
+  async hasMapLegendWithThresholds(thresholds: string[]) {
+    const mapKey = this.page.getByTestId('ukhsa-map-key')
+    for (const threshold of thresholds) {
+      await expect(mapKey.getByText(threshold)).toBeVisible()
+    }
+  }
+
+  // Map Feature Tests
+  async hasMapFeatures(count: number) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    const features = mapContainer.locator('[data-testid^="feature-"]')
+    await expect(features).toHaveCount(count)
+  }
+
+  async hasMapFeatureWithId(featureId: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer.getByTestId(`feature-${featureId}`)).toBeVisible()
+  }
+
+  // Map Responsive Tests
+  async hasMapOnMobile() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer).toBeVisible()
+    // Check that map has appropriate mobile styling
+    await expect(mapContainer).toHaveClass(/h-\[70vh\]/)
+  }
+
+  async hasMapOnTablet() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer).toBeVisible()
+    // Check that map has appropriate tablet styling
+    await expect(mapContainer).toHaveClass(/h-\[70vh\]/)
+  }
+
+  async hasMapOnDesktop() {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await expect(mapContainer).toBeVisible()
+    // Check that map has appropriate desktop styling
+    await expect(mapContainer).toHaveClass(/h-\[70vh\]/)
+  }
 }
