@@ -86,7 +86,7 @@ export default function MapCard({
   }, [thresholdData, mapData])
 
   return (
-    <div className="relative">
+    <div className="relative" data-testid="ukhsa-map-container">
       <MapContainer
         {...options}
         id={mapId}
