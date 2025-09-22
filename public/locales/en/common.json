@@ -97,11 +97,12 @@
       }
     },
     "dropdown": {
+      "mapLabel": "Map",
       "chartLabel": "Chart",
       "downloadLabel": "Download",
       "tableLabel": "Tabular Data",
       "aboutLabel": "About",
-      "selectLabel": "Choose display option for '{{chartTitle}}' data"
+      "selectLabel": "Choose display option for '{{tabGroupTitle}}' data"
     }
   },
   "cookieBanner": {

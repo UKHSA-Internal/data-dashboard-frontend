@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { Suspense } from 'react'
 
 import About from '@/app/components/cms/About/About'
+import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa/Tabs/Tabs'
 
 const MapCard = dynamic(() => import('./MapCard'), { ssr: false })
@@ -13,11 +14,11 @@ export async function MapCardTabWrapper({ id, about }: { id: string; about: stri
 
   if (about) {
     return (
-      <Tabs defaultValue={`${kebabCase(title)}`} className="govuk-!-margin-bottom-0">
+      <Tabs defaultValue={`${kebabCase(title)}-map`} className="govuk-!-margin-bottom-0">
         <TabsList className="hidden no-js:block sm:block">
-          <TabsTrigger asChild value={`${kebabCase(title)}`} aria-controls={`${kebabCase(title)}-content`}>
+          <TabsTrigger asChild value={`${kebabCase(title)}-map`} aria-controls={`${kebabCase(title)}-content`}>
             <Link href={`#map-${kebabCase(title)}`}>
-              <span>Chart</span>
+              <span>Map</span>
             </Link>
           </TabsTrigger>
           {about && (
@@ -32,8 +33,18 @@ export async function MapCardTabWrapper({ id, about }: { id: string; about: stri
             </TabsTrigger>
           )}
         </TabsList>
+        <DropdownTab
+          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
+          tabGroupTitle={kebabCase(title)}
+          defaultValue={`${kebabCase(title)}-map`}
+          showMap={true}
+          showChart={false}
+          showTable={false}
+          showAbout={about ? true : false}
+          showDownload={false}
+        />
         <TabsContent
-          value={`${kebabCase(title)}`}
+          value={`${kebabCase(title)}-map`}
           className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
           data-type="chart"
           id={`map-${kebabCase(title)}`}

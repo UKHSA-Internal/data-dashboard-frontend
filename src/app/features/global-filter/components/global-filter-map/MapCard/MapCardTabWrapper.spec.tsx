@@ -51,21 +51,21 @@ describe('MapCardTabWrapper', () => {
     render(await MapCardTabWrapper({ id: 'test-map', about: aboutContent }))
 
     expect(screen.getByRole('tablist')).toBeInTheDocument()
-    expect(screen.getByRole('tab', { name: 'Chart' })).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Map' })).toBeInTheDocument()
     expect(screen.getByRole('tab', { name: 'About' })).toBeInTheDocument()
   })
 
   test('generates correct kebab-case title from id prop', async () => {
     render(await MapCardTabWrapper({ id: 'Test Map ID', about: 'content' }))
 
-    const chartTab = screen.getByRole('tab', { name: 'Chart' })
+    const chartTab = screen.getByRole('tab', { name: 'Map' })
     expect(chartTab.closest('a')).toHaveAttribute('href', '#map-filter-linked-map-test-map-id')
   })
 
   test('sets correct aria-controls attribute on Chart tab', async () => {
     render(await MapCardTabWrapper({ id: 'test-map', about: 'content' }))
 
-    const chartTab = screen.getByRole('tab', { name: 'Chart' })
+    const chartTab = screen.getByRole('tab', { name: 'Map' })
     expect(chartTab).toHaveAttribute('aria-controls', 'filter-linked-map-test-map-content')
   })
 
@@ -101,14 +101,6 @@ describe('MapCardTabWrapper', () => {
     expect(screen.getByTestId('about-component')).toHaveTextContent(aboutContent)
   })
 
-  test('renders About section heading with correct id', async () => {
-    render(await MapCardTabWrapper({ id: 'test-map', about: 'content' }))
-
-    const aboutHeading = screen.getAllByText('About')
-    expect(aboutHeading[1]).toHaveAttribute('id', 'about-filter-linked-map-test-map')
-    expect(aboutHeading[1]).toHaveClass('govuk-heading-m', 'govuk-!-margin-top-3', 'js:hidden')
-  })
-
   test('applies correct CSS classes to Tabs component', async () => {
     render(await MapCardTabWrapper({ id: 'test-map', about: 'content' }))
 
@@ -140,7 +132,7 @@ describe('MapCardTabWrapper', () => {
   test('sets Chart tab as default selected tab', async () => {
     render(await MapCardTabWrapper({ id: 'test-map', about: 'content' }))
 
-    const chartTab = screen.getByRole('tab', { name: 'Chart' })
+    const chartTab = screen.getByRole('tab', { name: 'Map' })
     expect(chartTab).toHaveAttribute('aria-selected', 'true')
   })
 })

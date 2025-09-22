@@ -107,7 +107,7 @@ export const renderCard = (
         <ChartRowCard>
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
-            const noAbout = !column.value.about || column.value.about.length === 0
+            const showAbout = column.value.about && column.value.about.length > 0
             const noRelatedLinks = !column.value.related_links || column.value.related_links.length === 0
             return (
               <div
@@ -159,7 +159,7 @@ export const renderCard = (
                             <span>Download</span>
                           </Link>
                         </TabsTrigger>
-                        {noAbout && noRelatedLinks ? null : (
+                        {!showAbout && noRelatedLinks ? null : (
                           <TabsTrigger
                             asChild
                             value={`${kebabCase(column.value.title)}-about`}
@@ -174,9 +174,9 @@ export const renderCard = (
                       <DropdownTab
                         aria-label="Select for selecting chart content"
                         className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
-                        chartTitle={column.value.title}
-                        noAbout={noAbout}
-                        noDownload={false}
+                        tabGroupTitle={column.value.title}
+                        defaultValue={`${kebabCase(column.value.title)}-chart`}
+                        showAbout={showAbout || !noRelatedLinks ? true : false}
                       />
                       <TabsContent
                         value={`${kebabCase(column.value.title)}-chart`}
@@ -245,7 +245,7 @@ export const renderCard = (
                         </span>
                         <Download data={column.value} />
                       </TabsContent>
-                      {noAbout && noRelatedLinks ? null : (
+                      {!showAbout && noRelatedLinks ? null : (
                         <TabsContent
                           value={`${kebabCase(column.value.title)}-about`}
                           className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
