@@ -8,6 +8,7 @@ import dynamic from 'next/dynamic'
 import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
+import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
@@ -85,7 +86,7 @@ export default function MapCard({
   }, [thresholdData, mapData])
 
   return (
-    <>
+    <div className="relative">
       <MapContainer
         {...options}
         id={mapId}
@@ -107,6 +108,16 @@ export default function MapCard({
         {children}
       </MapContainer>
       <MapLegendControl thresholdData={thresholdData} />
-    </>
+      {/* Show loading overlay when map data is being fetched */}
+      {mapDataLoading && (
+        <div className="absolute inset-0 z-[1000] flex items-center justify-center">
+          <ClientInformationCard
+            variant="loading"
+            title="Map loading"
+            message="Requesting map based on selected filters"
+          />
+        </div>
+      )}
+    </div>
   )
 }
