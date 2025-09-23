@@ -50,7 +50,7 @@ const DropdownTab = ({
         setSelectedTab(`${chartIdentifier}-${optionSelected.target.value}`)
       }}
       className={className}
-      aria-label={t('cms.dropdown.selectLabel', { chartTitle: lowerCase(tabGroupTitle) })}
+      aria-label={t('cms.dropdown.selectLabel', { tabGroupTitle: lowerCase(tabGroupTitle) })}
     >
       {dropdownOptions.map(({ value, displayText }) => (
         <option key={`option-${value}`} value={value}>
