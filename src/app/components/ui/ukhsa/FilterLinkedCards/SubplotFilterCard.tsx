@@ -115,7 +115,7 @@ const SubplotFilterCard = ({
               tabGroupTitle={`${kebabCase(title)}`}
               defaultValue={`${kebabCase(title)}-chart`}
               showAbout={about ? true : false}
-              showDownload={false}
+              showDownload={true}
             />
             <TabsContent
               value={`${kebabCase(title)}-chart`}
