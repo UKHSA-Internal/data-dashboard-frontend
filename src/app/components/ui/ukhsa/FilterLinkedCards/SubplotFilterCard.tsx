@@ -19,6 +19,7 @@ import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
+import DropdownTab from '../Tabs/DropdownTab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 
 interface SubplotFilterCardProps {
@@ -108,6 +109,14 @@ const SubplotFilterCard = ({
                 </TabsTrigger>
               )}
             </TabsList>
+            <DropdownTab
+              aria-label="Select for selecting chart content"
+              className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
+              tabGroupTitle={`${kebabCase(title)}`}
+              defaultValue={`${kebabCase(title)}-chart`}
+              showAbout={about ? true : false}
+              showDownload={false}
+            />
             <TabsContent
               value={`${kebabCase(title)}-chart`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
