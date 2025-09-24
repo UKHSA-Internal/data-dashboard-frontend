@@ -25,7 +25,7 @@ export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
 
-  const cookieStore = cookies()
+  const cookieStore = await cookies()
 
   return (
     <html lang="en" className={`govuk-template ${font.variable} govuk-template--rebranded font-sans`}>
