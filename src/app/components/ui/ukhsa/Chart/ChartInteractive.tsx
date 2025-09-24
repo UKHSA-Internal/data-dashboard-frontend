@@ -1,18 +1,11 @@
 'use client'
 import dynamic from 'next/dynamic'
 
-interface ChartInteractiveProps {
-  staticChart: React.ReactElement
-  figure: any
-}
-
-const ChartInteractive = ({ staticChart, figure }: ChartInteractiveProps) => {
-  const DynamicChart = dynamic(() => import('../../../cms/ChartInteractive/ChartInteractive'), {
+const ChartInteractive = (staticChart: any) => {
+  return dynamic(() => import('../../../cms/ChartInteractive/ChartInteractive'), {
     ssr: false,
-    loading: () => <>{staticChart}</>,
+    loading: () => staticChart, // Show the static svg chart whilst this chunk is being loaded
   })
-
-  return <DynamicChart fallbackUntilLoaded={staticChart} figure={figure} />
 }
 
 export default ChartInteractive
