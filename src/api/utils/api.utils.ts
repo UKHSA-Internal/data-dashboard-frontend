@@ -57,9 +57,9 @@ export async function client<T>(
   if (!isWellKnownEnvironment() && isSSR) {
     // Import cookies dynamically only in node environment to not trigger nextjs warnings
     // TODO: Investigate the above. It means currently any client-side requests won't receive dynamically mocked responses
-    const cookies = async () => (await import('next/headers')).cookies
+    const { cookies } = await import('next/headers')
     const cookieStore = await cookies()
-    const switchBoardCookie = cookieStore().get(UKHSA_SWITCHBOARD_COOKIE_NAME)
+    const switchBoardCookie = cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)
     if (switchBoardCookie) {
       headers.cookie = switchBoardCookie.value
     }
