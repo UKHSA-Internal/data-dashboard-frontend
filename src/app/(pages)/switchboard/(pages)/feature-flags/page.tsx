@@ -8,8 +8,8 @@ import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { heading } from '../../shared/constants'
 import { getSwitchBoardState, syncState } from '../../shared/state'
 
-export default function SwitchBoard() {
-  const cookieStore = cookies()
+export default async function SwitchBoard() {
+  const cookieStore = await cookies()
 
   const {
     flags: { 'example-flag': exampleFlag },

@@ -48,8 +48,8 @@ export const getSwitchBoardState = (cookies: string | undefined) => {
   return switchBoardSchema.parse(JSON.parse(cookies))
 }
 
-export function syncState(newState: Record<string, unknown>, newFlags?: Record<string, string>) {
-  const cookieStore = cookies()
+export async function syncState(newState: Record<string, unknown>, newFlags?: Record<string, string>) {
+  const cookieStore = await cookies()
   const switchBoardState = getSwitchBoardState(cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)?.value)
   const mergedState = { ...switchBoardState.api, ...newState }
   const mergedFlags = { ...switchBoardState.flags, ...newFlags }
