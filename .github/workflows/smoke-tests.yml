@@ -92,7 +92,7 @@ jobs:
         if: ${{ needs.smoke-tests.result == 'failure' }}
         with:
           status: failure
-          notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
+          notification_title: ':rotating_light: {workflow} workflow has {status_message} :rotating_light:'
           message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
           mention_groups: ${{ vars.SLACK_MENTION_USERS }}
           mention_groups_when: 'failure,warnings'
