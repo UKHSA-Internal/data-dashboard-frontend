@@ -94,8 +94,6 @@ jobs:
           status: failure
           notification_title: ':alert: {workflow} workflow has {status_message} :alert:'
           message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
-          mention_groups: ${{ vars.SLACK_MENTION_USERS }}
-          mention_groups_when: 'failure,warnings'
           footer: '<{run_url}|View Run>'
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
