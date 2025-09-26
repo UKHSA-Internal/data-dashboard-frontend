@@ -6,6 +6,11 @@ import { ChartCardSection } from './ChartCardSection'
 jest.mock('@/app/components/cms', () => ({
   ...jest.requireActual('@/app/components/cms'),
   ChartRowCard: ({ children }: any) => <div data-testid="chart-row-card">{children}</div>,
+  Chart: ({ chartId }: { chartId: string }) => (
+    <div data-testid="chart" data-chart-id={chartId}>
+      Chart Component Mock
+    </div>
+  ),
 }))
 
 describe('ChartCardSection', () => {
