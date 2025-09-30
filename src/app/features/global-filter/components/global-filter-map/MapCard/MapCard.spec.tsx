@@ -6,7 +6,7 @@ import { render, screen } from '@/config/test-utils'
 import MapCard from './MapCard'
 
 // Mock the useMapRef hook
-jest.mock('../../ui/ukhsa/Map/shared/hooks/useMapRef', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/hooks/useMapRef', () => ({
   useMapRef: jest.fn(),
 }))
 
@@ -73,40 +73,40 @@ jest.mock('react-leaflet', () => ({
 }))
 
 // Mock child components
-jest.mock('../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/layers/UKHSALogoLayer', () => ({
   UKHSALogoLayer: ({ position }: MockLayerProps) => <div data-testid="ukhsa-logo-layer" data-position={position} />,
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/AttributionControl', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/controls/AttributionControl', () => ({
   AttributionControl: ({ position }: MockLayerProps) => (
     <div data-testid="attribution-control" data-position={position} />
   ),
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/MapLegendControl', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/controls/MapLegendControl', () => ({
   MapLegendControl: ({ position }: MockLayerProps) => <div data-testid="map-legend-control" data-position={position} />,
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/ZoomControl', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/controls/ZoomControl', () => ({
   ZoomControl: ({ position }: MockLayerProps) => <div data-testid="zoom-control" data-position={position} />,
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/FullscreenControl', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/controls/FullscreenControl', () => ({
   FullscreenControl: ({ position }: MockLayerProps) => (
     <div data-testid="fullscreen-control" data-position={position} />
   ),
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/controls/CoverControl', () => ({
+jest.mock('@/app/features/global-filter/components/global-filter-map/Map/controls/CoverControl', () => ({
   CoverControl: ({ position }: MockLayerProps) => <div data-testid="cover-control" data-position={position} />,
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
+jest.mock('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="base-layer" />,
 }))
 
-jest.mock('../../ui/ukhsa/Map/shared/layers/CoverLayer', () => ({
+jest.mock('@/app/features/global-filter/components/global-filter-map/Map/layers/CoverLayer', () => ({
   __esModule: true,
   default: () => <div data-testid="cover-layer" />,
 }))

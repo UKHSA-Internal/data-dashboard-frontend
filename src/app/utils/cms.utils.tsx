@@ -17,7 +17,6 @@ import {
   ChartRowCard,
   ChartRowCardContent,
   CodeBlock,
-  FilterLinkedMap,
   FilterLinkedSubplot,
   FilterLinkedTimeseries,
   Headline,
@@ -29,6 +28,7 @@ import {
   WeatherHealthAlertCard,
 } from '../components/cms'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
+import { GlobalFilterLinkedMap } from '../features/global-filter'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
@@ -88,7 +88,7 @@ export const renderCard = (
 
       {/* {type === 'global_filter_card' && <FilterBannerWrapper />} */}
 
-      {type === 'filter_linked_map' && <FilterLinkedMap id={id} value={value} />}
+      {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
       {type === 'filter_linked_sub_plot_chart_template' && <FilterLinkedSubplot />}
 
