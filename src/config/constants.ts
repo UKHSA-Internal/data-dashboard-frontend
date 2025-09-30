@@ -40,6 +40,11 @@ export const cacheFetchTags = {
 export const chartExportApiRoutePath = '/api/download/chart'
 
 /**
+ * The NextJS API Route path for subplot chart download
+ */
+export const subplotChartExportApiRoutePath = '/api/download/subplot/v1'
+
+/**
  * The NextJS Api Route path for bulk download
  */
 export const downloadApiRoutePath = '/api/download'
