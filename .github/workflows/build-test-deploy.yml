@@ -256,6 +256,16 @@ jobs:
     steps:
       - name: Check out code
         uses: actions/checkout@v4
+
+      - name: Generate ephemeral deployment token
+        id: generate-deployment-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_APP_ID }}
+          private-key: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_PRIVATE_KEY }}
+          skip-token-revoke: false
+          repositories: "data-dashboard-infra"
+
       - uses: ./.github/actions/trigger-deployments
         with:
-          token: ${{ secrets.DEPLOYMENT_TRIGGER_TOKEN }}
+          token: ${{ steps.generate-deployment-token.outputs.token }}
