@@ -110,18 +110,68 @@ export type MetricsChildPagesResponse = z.infer<typeof metricsChildResponseSchem
 
 export const getPages = async (additionalParams?: Record<string, string>) => {
   try {
-    const searchParams = new URLSearchParams()
-    searchParams.set('limit', '800') // TODO: This is a temporary fix to ensure the backend page limit is not hit
-    searchParams.set('fields', '*')
+    const limit = 50
+    const page = 1
+    let allItems: z.infer<typeof responseSchema>['items'] = []
+    let totalCount = 0
+
+    // First request to get total count
+    const initialSearchParams = new URLSearchParams()
+    initialSearchParams.set('limit', String(limit))
+    initialSearchParams.set('fields', '*')
+    initialSearchParams.set('offset', String(calculatePageOffset(page, limit)))
 
     if (additionalParams) {
       for (const key in additionalParams) {
-        searchParams.set(key, additionalParams[key])
+        initialSearchParams.set(key, additionalParams[key])
       }
     }
 
-    const { data } = await client<PagesResponse>('pages', { searchParams })
-    return responseSchema.safeParse(data)
+    const { data: initialData } = await client<PagesResponse>('pages', { searchParams: initialSearchParams })
+    const initialResult = responseSchema.safeParse(initialData)
+
+    if (!initialResult.success) {
+      return initialResult
+    }
+
+    totalCount = initialResult.data.meta.total_count
+    allItems = [...initialResult.data.items]
+
+    // Calculate total pages needed
+    const totalPages = Math.ceil(totalCount / limit)
+
+    // Fetch remaining pages if there are more than 1 page
+    if (totalPages > 1) {
+      for (let pageNum = 2; pageNum <= totalPages; pageNum++) {
+        const searchParams = new URLSearchParams()
+        searchParams.set('limit', String(limit))
+        searchParams.set('fields', '*')
+        searchParams.set('offset', String(calculatePageOffset(pageNum, limit)))
+
+        if (additionalParams) {
+          for (const key in additionalParams) {
+            searchParams.set(key, additionalParams[key])
+          }
+        }
+
+        const { data } = await client<PagesResponse>('pages', { searchParams })
+        const result = responseSchema.safeParse(data)
+
+        if (result.success) {
+          allItems = [...allItems, ...result.data.items]
+        }
+      }
+    }
+
+    // Return combined result
+    const combinedResponse = {
+      items: allItems,
+      meta: {
+        total_count: totalCount,
+      },
+    }
+
+    return responseSchema.safeParse(combinedResponse)
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)
