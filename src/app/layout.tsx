@@ -7,6 +7,7 @@ import './globals.scss'
 import { cookies } from 'next/headers'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
@@ -30,27 +31,29 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   return (
     <html lang="en" className={`govuk-template ${font.variable} govuk-template--rebranded font-sans`}>
       <body className="govuk-template__body">
-        <GoogleTagManager />
-        <GovUK />
-        <AWSRum applicationId={process.env.RUM_APPLICATION_ID} identityPoolId={process.env.RUM_IDENTITY_POOL_ID} />
+        <NuqsAdapter>
+          <GoogleTagManager />
+          <GovUK />
+          <AWSRum applicationId={process.env.RUM_APPLICATION_ID} identityPoolId={process.env.RUM_IDENTITY_POOL_ID} />
 
-        <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
-          {t('skipLink')}
-        </a>
-        <Suspense fallback={null}>
-          <CookieBanner
-            cookie={cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value}
-            title={t('cookieBanner.title')}
-            body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
-          />
-        </Suspense>
+          <a href="#main-content" className="govuk-skip-link" data-module="govuk-skip-link">
+            {t('skipLink')}
+          </a>
+          <Suspense fallback={null}>
+            <CookieBanner
+              cookie={cookieStore.get(UKHSA_GDPR_COOKIE_NAME)?.value}
+              title={t('cookieBanner.title')}
+              body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
+            />
+          </Suspense>
 
-        <Providers>
-          {children}
-          <HealthAlertsMapWrapper />
-        </Providers>
+          <Providers>
+            {children}
+            <HealthAlertsMapWrapper />
+          </Providers>
 
-        <Footer />
+          <Footer />
+        </NuqsAdapter>
       </body>
     </html>
   )
