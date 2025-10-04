@@ -17,7 +17,7 @@ export default function StaticFilter({ href = '#filter', className, children }: 
   const [isVisible, setIsVisible] = useState(true)
 
   return (
-    <div className="govuk-!-margin-bottom-8 sticky top-0 z-10">
+    <div className="govuk-!-margin-bottom-8 sticky top-0 z-10" data-testid="ukhsa-static-filter">
       <div
         className={clsx({
           'h-0 m-0 overflow-hidden govuk-!-padding-0': !isVisible,

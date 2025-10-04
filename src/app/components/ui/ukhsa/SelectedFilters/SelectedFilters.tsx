@@ -28,7 +28,7 @@ const FilterContent = ({ isMobile }: { isMobile: boolean }) => {
           <CrossIcon colour="var(--colour-blue)" />
         </span>
       </button>
-      <div>
+      <div data-testid="selected-filters-list">
         {selectedFilters!.map((filter) => (
           <button
             key={filter.id}

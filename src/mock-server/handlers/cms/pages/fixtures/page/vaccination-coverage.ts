@@ -191,6 +191,72 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                                   },
                                 ],
                               },
+                              id: '119e270f-2759-44a0-969a-1651407b109a',
+                            },
+                            {
+                              type: 'data_filter',
+                              value: {
+                                label: 'MenB (2 years)',
+                                colour: 'COLOUR_1_DARK_BLUE',
+                                parameters: {
+                                  theme: {
+                                    label: '',
+                                    value: 'immunisations',
+                                  },
+                                  sub_theme: {
+                                    label: '',
+                                    value: 'childhood-vaccines',
+                                  },
+                                  topic: {
+                                    label: '',
+                                    value: 'MMR1',
+                                  },
+                                  stratum: {
+                                    label: '2 years',
+                                    value: '24m',
+                                  },
+                                  metric: {
+                                    label: '',
+                                    value: 'MMR1_coverage_coverageByYear',
+                                  },
+                                  age: {
+                                    label: '',
+                                    value: 'all',
+                                  },
+                                  sex: {
+                                    label: '',
+                                    value: 'all',
+                                  },
+                                },
+                                accompanying_points: [
+                                  {
+                                    type: 'accompanying_point',
+                                    value: {
+                                      label_prefix: 'Country level of coverage',
+                                      label_suffix: '%',
+                                      parameters: [
+                                        {
+                                          type: 'geography_type',
+                                          value: {
+                                            label: '',
+                                            value: 'Nation',
+                                          },
+                                          id: '8ed98517-38ba-4b7b-91d8-05f4864be648',
+                                        },
+                                        {
+                                          type: 'geography',
+                                          value: {
+                                            label: '',
+                                            value: 'England',
+                                          },
+                                          id: 'deb5c0e4-2512-409d-9342-a3f2169041a4',
+                                        },
+                                      ],
+                                    },
+                                    id: 'ab8e4f2f-d62b-411c-adff-8a9bb0aa8ac7',
+                                  },
+                                ],
+                              },
                               id: '119e270f-2759-44a0-969a-1651407a109a',
                             },
                             {
