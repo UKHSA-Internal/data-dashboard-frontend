@@ -111,15 +111,14 @@ export type MetricsChildPagesResponse = z.infer<typeof metricsChildResponseSchem
 export const getPages = async (additionalParams?: Record<string, string>) => {
   try {
     const limit = 50
-    const page = 1
     let allItems: z.infer<typeof responseSchema>['items'] = []
     let totalCount = 0
 
-    // First request to get total count
+    // First request to get total count and initial items
     const initialSearchParams = new URLSearchParams()
     initialSearchParams.set('limit', String(limit))
     initialSearchParams.set('fields', '*')
-    initialSearchParams.set('offset', String(calculatePageOffset(page, limit)))
+    initialSearchParams.set('offset', '0')
 
     if (additionalParams) {
       for (const key in additionalParams) {
@@ -142,7 +141,8 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
 
     // Fetch remaining pages if there are more than 1 page
     if (totalPages > 1) {
-      for (let pageNum = 2; pageNum <= totalPages; pageNum++) {
+      const pagesToFetch = Array.from({ length: totalPages - 1 }, (_, i) => i + 2)
+      const fetchPromises = pagesToFetch.map(async (pageNum) => {
         const searchParams = new URLSearchParams()
         searchParams.set('limit', String(limit))
         searchParams.set('fields', '*')
@@ -154,13 +154,21 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
           }
         }
 
-        const { data } = await client<PagesResponse>('pages', { searchParams })
-        const result = responseSchema.safeParse(data)
-
-        if (result.success) {
-          allItems = [...allItems, ...result.data.items]
+        try {
+          const { data } = await client<PagesResponse>('pages', { searchParams })
+          const result = responseSchema.safeParse(data)
+          return result.success ? result.data.items : []
+        } catch (error) {
+          logger.warn(`Failed to fetch page ${pageNum}:`, error)
+          return []
         }
-      }
+      })
+
+      // Wait for all requests to complete & combine results
+      const results = await Promise.all(fetchPromises)
+      results.forEach((items) => {
+        allItems = [...allItems, ...items]
+      })
     }
 
     // Return combined result
