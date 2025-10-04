@@ -11,17 +11,16 @@ const TimeSeriesFilterCardsContainer = dynamic(
 )
 
 export async function FilterLinkedCardWrapper({ cardType }: { cardType: string }) {
-  if (cardType === 'subplot') {
-    return (
-      <Suspense fallback={null}>
-        <SubplotFilterCardContainer />
-      </Suspense>
-    )
-  } else if (cardType === 'time-series') {
-    return (
-      <Suspense fallback={null}>
-        <TimeSeriesFilterCardsContainer />
-      </Suspense>
-    )
+  if (cardType !== 'subplot' && cardType !== 'time-series') {
+    return undefined
   }
+
+  return (
+    <Suspense fallback={null}>
+      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+        {cardType === 'subplot' && <SubplotFilterCardContainer />}
+        {cardType === 'time-series' && <TimeSeriesFilterCardsContainer />}
+      </div>
+    </Suspense>
+  )
 }

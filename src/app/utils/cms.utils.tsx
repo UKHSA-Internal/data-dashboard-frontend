@@ -17,8 +17,6 @@ import {
   ChartRowCard,
   ChartRowCardContent,
   CodeBlock,
-  FilterLinkedSubplot,
-  FilterLinkedTimeseries,
   Headline,
   HeadlineNumbersRowCard,
   Percentage,
@@ -27,6 +25,7 @@ import {
   Trend,
   WeatherHealthAlertCard,
 } from '../components/cms'
+import { FilterLinkedCardWrapper } from '../components/ui/ukhsa/FilterLinkedCards/FilterLinkedCardWrapper'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
 
@@ -86,13 +85,11 @@ export const renderCard = (
         </ChartRowCard>
       )}
 
-      {/* {type === 'global_filter_card' && <FilterBannerWrapper />} */}
-
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
-      {type === 'filter_linked_sub_plot_chart_template' && <FilterLinkedSubplot />}
+      {type === 'filter_linked_sub_plot_chart_template' && <FilterLinkedCardWrapper cardType="subplot" />}
 
-      {type === 'filter_linked_time_series_chart_template' && <FilterLinkedTimeseries />}
+      {type === 'filter_linked_time_series_chart_template' && <FilterLinkedCardWrapper cardType="time-series" />}
 
       {type === 'chart_card_section' && (
         <ChartCardSection

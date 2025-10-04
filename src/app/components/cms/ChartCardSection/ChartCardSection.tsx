@@ -61,7 +61,8 @@ export function ChartCardSection({
 
                 <div>
                   <Chart
-                    // Disable on landing page
+                    // CartCardSection used exclusively on landing page
+                    // No interactive charts on landing page
                     enableInteractive={false}
                     data={card.value}
                     sizes={[
