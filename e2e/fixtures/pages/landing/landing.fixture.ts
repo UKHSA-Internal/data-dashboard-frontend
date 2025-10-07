@@ -180,7 +180,7 @@ export class LandingPage {
   async clickMinimapCardRegionByMap(name: string, regionId: string) {
     const card = await this.getButtonInSection('Weather and climate risks', name)
 
-    const map = card.getByRole('application', { name: 'Cold health alerts' })
+    const map = card.getByRole('application', { name: 'Map of weather health alerts' })
     await expect(map).toBeVisible()
     const region = map.getByTestId(`feature-${regionId}`)
     await expect(region).toBeVisible()
