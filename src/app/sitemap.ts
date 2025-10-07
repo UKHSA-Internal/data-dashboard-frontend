@@ -98,7 +98,7 @@ async function getWeatherHealthAlertRegionPages() {
 /**
  * Generates a sitemap array for non-CMS pages.
  *
- * Constructs sitemap entries for static URLs such as feedback and browse pages,
+ * Constructs sitemap entries for static URLs such as browse pages,
  * setting their last modified date to the current date, monthly change frequency, and appropriate priority.
  *
  * @returns {MetadataRoute.Sitemap} The generated sitemap.
@@ -109,14 +109,7 @@ function getNonCmsPages() {
 
   const sitemap: MetadataRoute.Sitemap = []
 
-  sitemap.push({
-    url: `${rootUrl}/feedback`,
-    lastModified: new Date(),
-    changeFrequency: 'monthly',
-    priority: 0.7,
-  })
-
-  // Brwose
+  // Browse
   sitemap.push({
     url: `${rootUrl}/browse`,
     lastModified: new Date(),
