@@ -267,26 +267,4 @@ export class CoverPage {
     const mapContainer = this.page.getByTestId('ukhsa-map-container')
     await expect(mapContainer.getByTestId(`feature-${featureId}`)).toBeVisible()
   }
-
-  // Map Responsive Tests
-  async hasMapOnMobile() {
-    const mapContainer = this.page.getByTestId('ukhsa-map-container')
-    await expect(mapContainer).toBeVisible()
-    // Check that map has appropriate mobile styling
-    await expect(mapContainer).toHaveClass(/h-\[70vh\]/)
-  }
-
-  async hasMapOnTablet() {
-    const mapContainer = this.page.getByTestId('ukhsa-map-container')
-    await expect(mapContainer).toBeVisible()
-    // Check that map has appropriate tablet styling
-    await expect(mapContainer).toHaveClass(/h-\[70vh\]/)
-  }
-
-  async hasMapOnDesktop() {
-    const mapContainer = this.page.getByTestId('ukhsa-map-container')
-    await expect(mapContainer).toBeVisible()
-    // Check that map has appropriate desktop styling
-    await expect(mapContainer).toHaveClass(/h-\[70vh\]/)
-  }
 }

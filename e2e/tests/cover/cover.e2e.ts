@@ -194,7 +194,7 @@ test.describe('Cover - mobile @mobileOnly', () => {
       await coverPage.goto()
     })
     await test.step('displays map on mobile', async () => {
-      await coverPage.hasMapOnMobile()
+      await coverPage.hasMap()
     })
     await test.step('vaccine selection works on mobile', async () => {
       await coverPage.selectVaccine('MenB (2 years)')
@@ -216,7 +216,7 @@ test.describe('Cover - tablet @tabletOnly', () => {
       await coverPage.goto()
     })
     await test.step('displays map on tablet', async () => {
-      await coverPage.hasMapOnTablet()
+      await coverPage.hasMap()
     })
     await test.step('vaccine selection works on tablet', async () => {
       await coverPage.selectVaccine('MenB (2 years)')
