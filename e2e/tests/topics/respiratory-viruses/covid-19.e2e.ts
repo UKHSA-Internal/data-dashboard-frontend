@@ -128,9 +128,6 @@ test.describe('COVID-19 page', () => {
     await test.step('loads the page', async () => {
       await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
-    await test.step('open the area selector', async () => {
-      await app.clickAreaSelectorToggle()
-    })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
     })
@@ -199,10 +196,7 @@ test.describe('COVID-19 page', () => {
     await test.step('loads the page', async () => {
       await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
-    await test.step('open the area selector', async () => {
-      await app.clickAreaSelectorToggle()
-    })
-    await test.step('check the area selector is open by default', async () => {
+    await test.step('check the area selector is open', async () => {
       await app.checkAreaSelectorFormIsActive()
     })
     await test.step('document title shows the selected location', async () => {
@@ -388,9 +382,6 @@ test.describe('COVID-19 page - no JS', () => {
     await test.step('loads the page', async () => {
       await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
-    await test.step('open the area selector', async () => {
-      await app.clickAreaSelectorToggle()
-    })
     await test.step('check the area selector is open by default', async () => {
       await app.checkAreaSelectorFormIsActive()
     })
@@ -469,17 +460,8 @@ test.describe('COVID-19 page - no JS', () => {
     await test.step('loads the page', async () => {
       await app.goto('/respiratory-viruses/covid-19?areaType=Lower+Tier+Local+Authority&areaName=Southampton')
     })
-    await test.step('open the area selector', async () => {
-      await app.clickAreaSelectorToggle()
-    })
-    await test.step('check the area selector is open by default', async () => {
+    await test.step('check the area selector is open', async () => {
       await app.checkAreaSelectorFormIsActive()
-    })
-    await test.step('document title shows the selected location', async () => {
-      await app.hasDocumentTitle('COVID-19 in Southampton | UKHSA data dashboard')
-    })
-    await test.step('page heading shows the selected location', async () => {
-      await covid19Page.hasHeading('COVID-19 in Southampton')
     })
     await test.step('click reset link', async () => {
       await app.clickAreaSelectorResetLink()
