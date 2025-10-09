@@ -126,7 +126,7 @@ test.describe('Childhood vaccinations page', () => {
     })
   })
 
-  test('Selected filters functionality', async ({ coverPage }) => {
+  test('Selected filters functionality @desktopOnly', async ({ coverPage }) => {
     await test.step('loads the page', async () => {
       await coverPage.goto()
     })
@@ -188,7 +188,6 @@ test.describe('Cover - mobile @mobileOnly', () => {
     await coverPage.goto()
     await app.hasNav()
   })
-
   test('map functionality on mobile', async ({ coverPage }) => {
     await test.step('loads the page', async () => {
       await coverPage.goto()
@@ -198,7 +197,29 @@ test.describe('Cover - mobile @mobileOnly', () => {
     })
     await test.step('vaccine selection works on mobile', async () => {
       await coverPage.selectVaccine('MenB (2 years)')
-      await coverPage.hasVaccineSelected('MenB (2 years)')
+      await coverPage.hasVaccineSelected('119e270f-2759-44a0-969a-1651407a109a')
+    })
+  })
+  test('displays the selected filters section on mobile', async ({ coverPage }) => {
+    await test.step('loads the page', async () => {
+      await coverPage.goto()
+    })
+    await test.step('displays the selected filters section on mobile', async () => {
+      await coverPage.hasMobileSelectedFiltersSection()
+    })
+    await test.step('clicks a filter', async () => {
+      await coverPage.clickDropdownOption('Nation')
+      await coverPage.selectAreaCheckbox('England')
+    })
+    await test.step('displays the selected filters section on mobile', async () => {
+      await coverPage.hasMobileSelectedFiltersCount(1)
+      await coverPage.hasSelectedFilterItem('England')
+    })
+    await test.step('clears the filter', async () => {
+      await coverPage.clearSelectedFilters()
+    })
+    await test.step('displays the selected filters section on mobile', async () => {
+      await coverPage.hasMobileSelectedFiltersCount(0)
     })
   })
 })

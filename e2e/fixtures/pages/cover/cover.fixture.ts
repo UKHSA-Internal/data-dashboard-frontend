@@ -83,6 +83,13 @@ export class CoverPage {
     await expect(this.page.getByText(/Hide filters/i)).toBeVisible()
   }
 
+  async hasMobileSelectedFiltersSection() {
+    const mobileSelectedFiltersSection = this.page.getByTestId('selected-filters-mobile')
+    await expect(mobileSelectedFiltersSection).toBeVisible()
+    await mobileSelectedFiltersSection.click()
+    await expect(mobileSelectedFiltersSection.getByRole('button', { name: /Clear filter selection/i })).toBeVisible()
+  }
+
   async hasInitialSelectedFiltersState() {
     await expect(this.page.getByRole('heading', { name: /Selected filters/i, level: 2 })).toBeVisible()
   }
@@ -105,6 +112,12 @@ export class CoverPage {
 
   async hasSelectedFiltersCount(count: number) {
     await expect(this.page.getByRole('heading', { name: `Selected filters (${count})`, level: 2 })).toBeVisible()
+  }
+
+  async hasMobileSelectedFiltersCount(count: number) {
+    await expect(
+      this.page.getByTestId('selected-filters-mobile').getByText(`Selected filters (${count})`)
+    ).toBeVisible()
   }
 
   async hasSelectedFilterItem(itemName: string) {
