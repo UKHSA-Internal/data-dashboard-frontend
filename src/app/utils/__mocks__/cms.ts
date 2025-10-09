@@ -40,7 +40,7 @@ export const mockSectionWithCard = Mock.of<PageSection>({
         id: 'cardTestId',
         type: 'text_card',
         value: {
-          body: '<p>This is some cms content</p>',
+          body: 'This is some cms content',
         },
       },
     ],
