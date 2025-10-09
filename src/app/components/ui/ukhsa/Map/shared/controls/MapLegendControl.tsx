@@ -120,6 +120,7 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
         shadow-lg sm:min-w-[400px]
         md:min-w-[600px]
       "
+        data-testid="ukhsa-map-key"
       >
         {/* Header for the legend component*/}
         <div className="mb-3 flex items-center justify-between">
