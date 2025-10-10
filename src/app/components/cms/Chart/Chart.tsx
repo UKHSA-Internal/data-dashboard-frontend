@@ -15,6 +15,7 @@ import { chartSizes } from '@/config/constants'
 import ChartNoScript from '../../ui/ukhsa/ChartNoScript/ChartNoScript'
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+import ChartInteractive from './ChartInteractive'
 
 interface ChartProps {
   /**
@@ -198,10 +199,6 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   })
 
   // Lazy load the interactive chart component (and all associated plotly.js code)
-  const ChartInteractive = dynamic(() => import('../ChartInteractive/ChartInteractive'), {
-    ssr: false,
-    loading: () => staticChart, // Show the static svg chart whilst this chunk is being loaded
-  })
 
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
@@ -221,7 +218,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     <>
       {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
       <Suspense fallback={staticChart}>
-        <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
+        <ChartInteractive staticChart={staticChart} />
       </Suspense>
       {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
     </>
