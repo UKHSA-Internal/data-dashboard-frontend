@@ -20,6 +20,11 @@ export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
 
   // All other pages
   const pageData = await getPageBySlug(urlSlug)
+
+  if (!pageData) {
+    return notFound()
+  }
+
   const {
     meta: { html_url: url },
   } = pageData
