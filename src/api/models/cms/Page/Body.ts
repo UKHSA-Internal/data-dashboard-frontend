@@ -33,7 +33,7 @@ export const WithWeatherHealthAlertCard = z.object({
   alert_type: HealthAlertTypes,
 })
 
-const WithHeadlineNumbersRowCard = z.object({
+export const WithHeadlineNumbersRowCard = z.object({
   columns: z.array(
     z.object({
       id: z.string(),
