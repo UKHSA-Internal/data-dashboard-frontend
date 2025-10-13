@@ -25,7 +25,8 @@ import {
   Trend,
   WeatherHealthAlertCard,
 } from '../components/cms'
-import { FilterLinkedCardWrapper } from '../components/ui/ukhsa/FilterLinkedCards/FilterLinkedCardWrapper'
+import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
+import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
 
@@ -87,9 +88,9 @@ export const renderCard = (
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
-      {type === 'filter_linked_sub_plot_chart_template' && <FilterLinkedCardWrapper cardType="subplot" />}
+      {type === 'filter_linked_sub_plot_chart_template' && <SubplotFilterCardContainer />}
 
-      {type === 'filter_linked_time_series_chart_template' && <FilterLinkedCardWrapper cardType="time-series" />}
+      {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer />}
 
       {type === 'chart_card_section' && (
         <ChartCardSection
