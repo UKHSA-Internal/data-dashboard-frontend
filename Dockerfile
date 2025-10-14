@@ -50,6 +50,8 @@ COPY --from=builder /app/next.config.js ./next.config.js
 
 RUN mkdir -p .next && chown -R nextjs:nodejs .next && chmod -R 755 .next
 
+RUN mkdir -p /app/.next/cache/fetch-cache
+
 USER nextjs
 
 EXPOSE 3000
