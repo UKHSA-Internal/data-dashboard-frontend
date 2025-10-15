@@ -574,37 +574,3 @@ test.describe('WHA child smoke test - no JavaScript @smoke', () => {
     })
   })
 })
-
-// TODO: CDD-2032 - Ticket to add feature flag tests
-/**
- *  Feature flag disabled
- */
-// test.describe('Feature flag disabled', () => {
-//   test.describe('Heat health alerts page', () => {
-//     test('loads the page', async ({ app }) => {
-//       await test.step('loads the page', async () => {
-//         await app.goto('/weather-health-alerts/heat')
-//       })
-//       await test.step('metadata is correct', async () => {
-//         await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
-//       })
-//       await test.step('Shows page not found message', async () => {
-//         await app.hasHeading('Page not found')
-//       })
-//     })
-//   })
-
-//   test.describe('Cold health alerts page', () => {
-//     test('loads the page', async ({ app }) => {
-//       await test.step('loads the page', async () => {
-//         await app.goto('/weather-health-alerts/cold')
-//       })en
-//       await test.step('metadata is correct', async () => {
-//         await app.hasDocumentTitle('Page not found | UKHSA data dashboard')
-//       })
-//       await test.step('Shows page not found message', async () => {
-//         await app.hasHeading('Page not found')
-//       })
-//     })
-//   })
-// })
