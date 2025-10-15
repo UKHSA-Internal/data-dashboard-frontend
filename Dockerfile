@@ -37,8 +37,14 @@ ENV KEEP_ALIVE_TIMEOUT 61000
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
+# Set Next.js to use /tmp for caching
+ENV NEXT_CACHE_DIR=/tmp/.next/cache
+
 RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
+
+# Create cache directory and set ownership
+RUN mkdir -p /tmp/.next/cache && chown -R nextjs:nodejs /tmp
 
 COPY --from=builder /app/public ./public
 
@@ -47,11 +53,6 @@ COPY --from=builder /app/public ./public
 COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
-
-RUN mkdir -p .next && chown -R nextjs:nodejs .next && chmod -R 755 .next
-
-RUN mkdir -p /app/.next/cache
-RUN mkdir -p /app/.next/cache/fetch-cache
 
 USER nextjs
 
