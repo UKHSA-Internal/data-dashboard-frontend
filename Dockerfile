@@ -44,7 +44,8 @@ RUN addgroup --system --gid 1001 nodejs
 RUN adduser --system --uid 1001 nextjs
 
 # Create cache directory and set ownership
-RUN mkdir -p /tmp/.next/cache && chown -R nextjs:nodejs /tmp
+RUN mkdir -p /app/.next/cache \
+    && chown -R nextjs:nodejs /app/.next/cache
 
 COPY --from=builder /app/public ./public
 
