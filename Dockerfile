@@ -48,13 +48,13 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
 
-# Create .next/cache directory with proper ownership before switching user
-RUN mkdir -p /app/.next/cache && chown -R nextjs:nodejs /app/.next
-
-USER nextjs
+# Copy entrypoint script
+COPY entrypoint.sh /entrypoint.sh
+RUN chmod +x /entrypoint.sh
 
 EXPOSE 3000
 
 ENV PORT 3000
 
+ENTRYPOINT ["/entrypoint.sh"]
 CMD ["node", "server.js"]
