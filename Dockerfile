@@ -52,6 +52,8 @@ COPY --from=builder /app/next.config.js ./next.config.js
 COPY entrypoint.sh /entrypoint.sh
 RUN chmod +x /entrypoint.sh
 
+User nextjs
+
 EXPOSE 3000
 
 ENV PORT 3000
