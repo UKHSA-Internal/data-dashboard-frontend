@@ -1,17 +1,14 @@
 #!/bin/sh
-set -e
+#
+# This script is executed before the main process starts.
+# It ensures that the 'nextjs' user has the correct permissions
+# on the mounted cache volume.
 
-# Try to fix permissions on mounted cache directory, but don't fail if we can't
-if [ -d /app/.next/cache ]; then
-  chown -R nextjs:nodejs /app/.next/cache 2>/dev/null || true
-fi
+# Change the ownership of the cache directory to the nextjs user and group.
+# The -R flag makes it recursive, which is good practice.
+chown -R nextjs:nodejs /app/.next/cache
 
-# Create a writable cache directory in /tmp as fallback
-mkdir -p /tmp/.next/cache
-chown -R nextjs:nodejs /tmp/.next/cache
-
-# Export the cache dir to /tmp if we can't write to /app/.next/cache
-export NEXT_CACHE_DIR=/tmp/.next/cache
-
-# Execute the main command
+# Execute the command passed to this script (i.e., the Docker CMD)
+# 'exec' replaces the shell process with the new process, which is the
+# correct way to run the main application.
 exec "$@"

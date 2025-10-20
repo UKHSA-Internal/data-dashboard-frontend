@@ -48,11 +48,10 @@ COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
 COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
 
-# Copy entrypoint script
-COPY entrypoint.sh /entrypoint.sh
-RUN chmod +x /entrypoint.sh
-
-User nextjs
+# Copy the entrypoint script into the container
+COPY --chown=nextjs:nodejs entrypoint.sh .
+# Make the script executable
+RUN chmod +x entrypoint.sh
 
 EXPOSE 3000
 
