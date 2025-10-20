@@ -37,8 +37,9 @@ ENV KEEP_ALIVE_TIMEOUT 61000
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
-RUN addgroup --system --gid 1001 nodejs
-RUN adduser --system --uid 1001 nextjs
+RUN addgroup --system --gid 1001 nodejs \
+    && adduser --system --uid 1001 nextjs \
+    && apk add --no-cache su-exec
 
 COPY --from=builder /app/public ./public
 
