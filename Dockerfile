@@ -38,8 +38,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
 RUN addgroup --system --gid 1001 nodejs \
-    && adduser --system --uid 1001 nextjs \
-    && apk add --no-cache su-exec
+    && adduser --system --uid 1001 nextjs
 
 COPY --from=builder /app/public ./public
 
