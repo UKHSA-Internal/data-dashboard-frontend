@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx'
-import { snakeCase } from 'lodash'
+import { kebabCase, snakeCase } from 'lodash'
 import Link from 'next/link'
 
 import { Chart } from '@/app/components/cms'
@@ -31,12 +31,12 @@ export function ChartCardSection({
       })}
     >
       {value.cards.map((card: any, index: any) => {
-        if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(heading)) {
+        if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
           return (
             <div key={index}>
               <Link
                 className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat"
-                href={getShowMoreURL(showMoreSections, heading)}
+                href={getShowMoreURL(showMoreSections, kebabCase(heading))}
               >
                 <span className="pl-4">Show More</span>
               </Link>
@@ -44,7 +44,7 @@ export function ChartCardSection({
           )
         }
 
-        if (index > 3 && !showMoreSections.includes(heading)) return
+        if (index > 3 && !showMoreSections.includes(kebabCase(heading))) return
 
         return (
           <div key={card.id} data-testid="card-wrapper">
