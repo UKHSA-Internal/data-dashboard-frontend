@@ -43,18 +43,26 @@ export class WeatherHealthAlertsRegionPage {
 
     await expect(banner).toHaveClass(alertClasses)
 
-    //TODO: Need to implement tags for mobile vs desktop tags CDD-2024
-    // if (!mobile) {
-    //   await expect(
-    //     banner.getByRole('img', { name: `${weatherCapitalise} health alerts ${statusLowercase}` })
-    //   ).toBeHidden()
-    //   await expect(banner.getByTestId(`${weather}-alert-icon-${statusLowercase}`)).toBeVisible()
-    // }
+    await expect(
+      banner.getByRole('img', { name: `${weatherCapitalise} health alerts ${statusLowercase}` })
+    ).toBeHidden()
+    await expect(banner.getByTestId(`${weather}-alert-icon-${statusLowercase}`)).toBeVisible()
 
     await expect(
       banner.getByRole('heading', { level: 2, name: `${status} ${weatherCapitalise}-health alert has been issued` })
     ).toBeVisible()
     await expect(banner.getByText(/Alert is in effect from/)).toBeVisible()
+  }
+
+  async hasMobileAlertBanner(weather: HealthAlertTypes, status: HealthAlertStatus) {
+    const weatherCapitalise = weather.charAt(0).toUpperCase() + weather.slice(1)
+    const statusLowercase = status.toLowerCase()
+
+    await expect(
+      this.page
+        .getByLabel(`Alert banner`)
+        .getByRole('img', { name: `${weatherCapitalise} health alerts ${statusLowercase}` })
+    ).toBeHidden()
   }
 
   async hasNoAlertBanner() {
