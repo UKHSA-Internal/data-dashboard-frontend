@@ -2,6 +2,18 @@ import { render, screen } from '@/config/test-utils'
 
 import { TextCard } from './TextCard'
 
+jest.mock('react-plotly.js', () => ({
+  default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
+}))
+
+Object.defineProperty(window, 'URL', {
+  value: {
+    createObjectURL: jest.fn(() => 'mock-object-url'),
+    revokeObjectURL: jest.fn(),
+  },
+  writable: true,
+})
+
 // Mock RichText component
 jest.mock('@/app/components/cms', () => ({
   ...jest.requireActual('@/app/components/cms'),

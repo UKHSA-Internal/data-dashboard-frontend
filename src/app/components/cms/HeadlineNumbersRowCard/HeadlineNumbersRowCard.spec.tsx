@@ -2,6 +2,18 @@ import { render, screen, within } from '@/config/test-utils'
 
 import { HeadlineNumbersRowCard } from './HeadlineNumbersRowCard'
 
+jest.mock('react-plotly.js', () => ({
+  default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
+}))
+
+Object.defineProperty(window, 'URL', {
+  value: {
+    createObjectURL: jest.fn(() => 'mock-object-url'),
+    revokeObjectURL: jest.fn(),
+  },
+  writable: true,
+})
+
 // Mock the renderBlock function and components
 jest.mock('@/app/utils/cms.utils', () => ({
   ...jest.requireActual('@/app/utils/cms.utils'),

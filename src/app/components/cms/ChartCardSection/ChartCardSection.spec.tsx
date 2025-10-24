@@ -2,6 +2,19 @@ import { render, screen } from '@/config/test-utils'
 
 import { ChartCardSection } from './ChartCardSection'
 
+jest.mock('react-plotly.js', () => ({
+  default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
+}))
+
+const OriginalURL = global.URL
+Object.defineProperty(window, 'URL', {
+  value: class MockURL extends OriginalURL {
+    static createObjectURL = jest.fn(() => 'mock-object-url')
+    static revokeObjectURL = jest.fn()
+  },
+  writable: true,
+})
+
 // Mock components
 jest.mock('@/app/components/cms', () => ({
   ...jest.requireActual('@/app/components/cms'),
