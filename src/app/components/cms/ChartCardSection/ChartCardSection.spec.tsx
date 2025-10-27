@@ -6,6 +6,10 @@ jest.mock('react-plotly.js', () => ({
   default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
 }))
 
+jest.mock('@/app/hooks/getPathname', () => ({
+  getPathname: jest.fn(() => '/test-pathname'),
+}))
+
 const OriginalURL = global.URL
 Object.defineProperty(window, 'URL', {
   value: class MockURL extends OriginalURL {
@@ -92,34 +96,34 @@ describe('ChartCardSection', () => {
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
   })
 
-  // test('shows "Show More" button when there are 4 cards and only displays first 3 cards', () => {
-  //   const mockValue = {
-  //     cards: [
-  //       createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
-  //       createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
-  //       createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
-  //       createMockCard('test-card-4', 'Test Chart 4', 'Test Description 4'),
-  //     ],
-  //   }
+  test('shows "Show More" button when there are 4 cards and only displays first 3 cards', () => {
+    const mockValue = {
+      cards: [
+        createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
+        createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
+        createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
+        createMockCard('test-card-4', 'Test Chart 4', 'Test Description 4'),
+      ],
+    }
 
-  //   const mockProps = {
-  //     value: mockValue,
-  //     heading: 'Test Section',
-  //     showMoreSections: [],
-  //     timeseriesFilter: '',
-  //     chartId: 'test-chart-id',
-  //   }
+    const mockProps = {
+      value: mockValue,
+      heading: 'Test Section',
+      showMoreSections: [],
+      timeseriesFilter: '',
+      chartId: 'test-chart-id',
+    }
 
-  //   render(<ChartCardSection {...mockProps} />)
+    render(<ChartCardSection {...mockProps} />)
 
-  //   // Should only show first 3 cards
-  //   expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
-  //   expect(screen.getByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
-  //   expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
-  //   expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
-  //   expect(screen.queryByRole('heading', { name: 'Test Chart 4', level: 3 })).not.toBeInTheDocument()
+    // Should only show first 3 cards
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
+    expect(screen.getByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Test Chart 4', level: 3 })).not.toBeInTheDocument()
 
-  //   // Should show "Show More" link
-  //   expect(screen.getByText('Show More')).toBeInTheDocument()
-  // })
+    // Should show "Show More" link
+    expect(screen.getByText('Show More')).toBeInTheDocument()
+  })
 })
