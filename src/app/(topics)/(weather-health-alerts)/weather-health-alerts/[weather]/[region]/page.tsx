@@ -10,7 +10,13 @@ import AlertBody from './AlertBody'
 
 export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
 
-export async function generateMetadata({ params: { region } }: { params: { region: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ region: string }> }): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    region
+  } = params;
+
   return {
     title: `Weather alert for ${region} | UKHSA data dashboard`,
     description: `Weather alert for ${region}`,
@@ -18,13 +24,20 @@ export async function generateMetadata({ params: { region } }: { params: { regio
 }
 
 interface WeatherHealthAlertProps {
-  params: {
+  params: Promise<{
     weather: HealthAlertTypes
     region: string
-  }
+  }>
 }
 
-export default async function Alert({ params: { weather, region } }: WeatherHealthAlertProps) {
+export default async function Alert(props: WeatherHealthAlertProps) {
+  const params = await props.params;
+
+  const {
+    weather,
+    region
+  } = params;
+
   const { related_links: relatedLinks, related_links_layout: relatedLinksLayout } =
     await getPageBySlug<PageType.Composite>(weather)
 

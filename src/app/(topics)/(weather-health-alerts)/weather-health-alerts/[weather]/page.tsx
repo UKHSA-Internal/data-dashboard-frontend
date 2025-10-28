@@ -19,7 +19,13 @@ import AlertList from './AlertList'
 
 export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
 
-export async function generateMetadata({ params: { weather } }: { params: { weather: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ weather: string }> }): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    weather
+  } = params;
+
   const {
     meta: { seo_title: title, search_description: description },
   } = await getPageBySlug<PageType.Composite>(weather)
@@ -31,12 +37,18 @@ export async function generateMetadata({ params: { weather } }: { params: { weat
 }
 
 interface WeatherHealthAlertProps {
-  params: {
+  params: Promise<{
     weather: HealthAlertTypes
-  }
+  }>
 }
 
-export default async function WeatherHealthAlert({ params: { weather } }: WeatherHealthAlertProps) {
+export default async function WeatherHealthAlert(props: WeatherHealthAlertProps) {
+  const params = await props.params;
+
+  const {
+    weather
+  } = params;
+
   const { furtherAdviceLinks } = {
     // Further advice links hardcoded currently
     furtherAdviceLinks: [
