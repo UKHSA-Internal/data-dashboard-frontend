@@ -54,6 +54,7 @@ const SheetContent = React.forwardRef<React.ElementRef<typeof SheetPrimitive.Con
         )}
         {...props}
       >
+        <SheetPrimitive.Title />  
         {children}
         <SheetPrimitive.Close className="govuk-button govuk-button--secondary absolute right-3 top-3 flex w-auto gap-1 disabled:pointer-events-none sm:right-4 sm:top-4">
           <span>Close</span>
