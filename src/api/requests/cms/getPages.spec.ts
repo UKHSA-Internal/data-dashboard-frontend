@@ -2,8 +2,10 @@ import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import {
+  allPagesMock,
   pagesWithLandingTypeMock,
   pagesWithMetricsChildTypeMock,
+  pagesWithTopicTypeMock,
   pagesWithWhatsNewChildTypeMock,
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
@@ -43,8 +45,8 @@ describe('Successfully getting all pages from the cms api ', () => {
 })
 
 // Pages tests
-describe('Failing to get all pages from the cms api', () => {
-  test('invalid http status code returns an error', async () => {
+describe('getPages', () => {
+  test('returns and error when it receives invalid http status code', async () => {
     getPagesResponse.mockResolvedValueOnce({
       status: 404,
       data: {},
@@ -71,6 +73,174 @@ describe('Failing to get all pages from the cms api', () => {
         },
       ]),
     })
+  })
+  test('returns a list of pages', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: allPagesMock,
+    })
+
+    const result = await getPages()
+
+    expect(result.success).toBe(true)
+
+    if (!result.success) {
+      throw new Error('Expected successful parse result')
+    }
+
+    expect(result.data.meta).toEqual({
+      total_count: allPagesMock.items.length,
+    })
+    expect(result.data.items).toHaveLength(allPagesMock.items.length)
+    expect(result.data.items).toEqual(
+      expect.arrayContaining([
+        expect.objectContaining({
+          id: expect.any(Number),
+          title: expect.any(String),
+          seo_change_frequency: expect.any(Number),
+          seo_priority: expect.any(Number),
+          meta: expect.objectContaining({
+            type: expect.any(String),
+            detail_url: expect.any(String),
+            html_url: expect.any(String),
+            slug: expect.any(String),
+            search_description: expect.any(String),
+            show_in_menus: expect.any(Boolean),
+            first_published_at: expect.any(String),
+          }),
+        }),
+      ])
+    )
+  })
+  test('makes single request when total count is less than limit', async () => {
+    const smallMock = {
+      items: allPagesMock.items.slice(0, 10),
+      meta: { total_count: 10 },
+    }
+
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: smallMock,
+    })
+
+    const result = await getPages()
+
+    expect(result.success).toBe(true)
+    expect(getPagesResponse).toHaveBeenCalledTimes(1)
+  })
+
+  test('makes multiple requests when total count exceeds limit of 50', async () => {
+    const totalItems = 113 // This should require 3 requests (50, 50, 25)
+    const firstPageItems = allPagesMock.items.slice(0, 50)
+    const secondPageItems = allPagesMock.items.slice(50, 100)
+    const thirdPageItems = allPagesMock.items.slice(100, 113)
+
+    getPagesResponse
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: firstPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: secondPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: thirdPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+
+    const result = await getPages()
+
+    expect(result.success).toBe(true)
+
+    if (!result.success) {
+      throw new Error('Expected successful parse result')
+    }
+
+    expect(result.data.items).toHaveLength(totalItems)
+    expect(result.data.meta.total_count).toBe(totalItems)
+    expect(getPagesResponse).toHaveBeenCalledTimes(3)
+  })
+
+  test('includes additional params in initial request', async () => {
+    const additionalParams = { type: 'topic.TopicPage' }
+
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithTopicTypeMock,
+    })
+
+    await getPages(additionalParams)
+
+    const firstCallArgs = getPagesResponse.mock.calls[0]
+    const searchParams = firstCallArgs[1]?.searchParams as URLSearchParams
+
+    expect(searchParams.get('type')).toBe('topic.TopicPage')
+    expect(searchParams.get('limit')).toBe('50')
+    expect(searchParams.get('fields')).toBe('*')
+    expect(searchParams.get('offset')).toBe('0')
+  })
+
+  test('includes additional params in all paginated requests', async () => {
+    const additionalParams = { type: 'common.CommonPage' }
+    const totalItems = 125
+
+    const firstPageItems = allPagesMock.items.slice(0, 50)
+    const secondPageItems = allPagesMock.items.slice(50, 100)
+    const thirdPageItems = allPagesMock.items.slice(100, 125)
+
+    getPagesResponse
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: firstPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: secondPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: thirdPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+
+    await getPages(additionalParams)
+
+    // Check all calls include the additional params
+    getPagesResponse.mock.calls.forEach((call) => {
+      const searchParams = call[1]?.searchParams as URLSearchParams
+      expect(searchParams.get('type')).toBe('common.CommonPage')
+    })
+  })
+  test('returns error when initial request fails validation', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        items: 'invalid data', // Wrong structure
+        meta: { total_count: 1 },
+      },
+    })
+
+    const result = await getPages()
+
+    expect(result.success).toBe(false)
   })
 })
 
