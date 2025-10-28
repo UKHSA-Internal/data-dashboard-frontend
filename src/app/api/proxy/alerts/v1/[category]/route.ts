@@ -4,12 +4,18 @@ import { HealthAlertTypes } from '@/api/models/Alerts'
 import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
 
 interface PathParameters {
-  params: {
+  params: Promise<{
     category?: HealthAlertTypes
-  }
+  }>
 }
 
-export async function GET(req: NextRequest, { params: { category } }: PathParameters) {
+export async function GET(req: NextRequest, props: PathParameters) {
+  const params = await props.params;
+
+  const {
+    category
+  } = params;
+
   if (!category) {
     return new NextResponse('Missing category', {
       status: 500,

@@ -4,13 +4,20 @@ import { HealthAlertTypes } from '@/api/models/Alerts'
 import { getHealthAlertByRegion } from '@/api/requests/health-alerts/getHealthAlertByRegion'
 
 interface PathParameters {
-  params: {
+  params: Promise<{
     category: HealthAlertTypes
     region: string
-  }
+  }>
 }
 
-export async function GET(req: NextRequest, { params: { category, region } }: PathParameters) {
+export async function GET(req: NextRequest, props: PathParameters) {
+  const params = await props.params;
+
+  const {
+    category,
+    region
+  } = params;
+
   if (!category || !region) {
     return new NextResponse('Missing category and/or region', {
       status: 500,

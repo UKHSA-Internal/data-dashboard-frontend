@@ -5,7 +5,13 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getServerTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-export async function generateMetadata({ params: { slug } }: { params: { slug: string } }): Promise<Metadata> {
+export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const {
     meta: { seo_title, search_description },
   } = await getPageBySlug<PageType.Composite>(slug)
@@ -16,7 +22,13 @@ export async function generateMetadata({ params: { slug } }: { params: { slug: s
   }
 }
 
-export default async function AccessOurDataChild({ params: { slug } }: { params: { slug: string } }) {
+export default async function AccessOurDataChild(props: { params: Promise<{ slug: string }> }) {
+  const params = await props.params;
+
+  const {
+    slug
+  } = params;
+
   const { t } = await getServerTranslation('common')
 
   const { title, body, last_updated_at: lastUpdated } = await getPageBySlug<PageType.Composite>(slug)
