@@ -9,8 +9,8 @@ interface PaginationBlockProps {
   links: Array<PaginationLink>
 }
 
-export function getPaginationBlock({ links }: PaginationBlockProps) {
-  const pathname = getPathname()
+export async function getPaginationBlock({ links }: PaginationBlockProps) {
+  const pathname = await getPathname()
 
   const pageIndex = links.findIndex(({ pageHref }) => pageHref === pathname)
 
