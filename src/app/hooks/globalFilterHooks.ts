@@ -1,7 +1,7 @@
 import {
   DataFilter,
   DataFilters,
-  FilterLinkedSubPlotData,
+  FilterLinkedSubplotData,
   FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilter,
@@ -10,7 +10,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { MapDataResponse } from '@/api/models/Maps'
 import { GeographiesSchema } from '@/api/requests/geographies/getGeographies'
-import { FilterOption, useGlobalFilters } from '@/app/context/globalFilterContext'
+import { FilterOption, useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
 export function useTimePeriods(): TimePeriod[] | null {
   const { state } = useGlobalFilters()
@@ -37,7 +37,7 @@ export function useTimeSeriesData(): FilterLinkedTimeSeriesData | null {
   return state.timeseriesTemplateData
 }
 
-export function useCoverageTemplateData(): FilterLinkedSubPlotData | null {
+export function useCoverageTemplateData(): FilterLinkedSubplotData | null {
   const { state } = useGlobalFilters()
   return state.coverageTemplateData
 }
@@ -49,6 +49,7 @@ export function useSelectedFilters(): {
   selectedThresholdFilters: ThresholdFilter[] | null
   updateFilters: (newFilters: FilterOption[]) => void
   addFilter: (filter: FilterOption) => void
+  addFilterFromMap: (filter: FilterOption, mapSelectedId?: string) => void
   removeFilter: (filterId: string) => void
   clearFilters: () => void
 } {
@@ -61,6 +62,7 @@ export function useSelectedFilters(): {
     selectedThresholdFilters: state.selectedThresholdFilters,
     updateFilters: actions.updateFilters,
     addFilter: actions.addFilter,
+    addFilterFromMap: actions.addFilterFromMap,
     removeFilter: actions.removeFilter,
     clearFilters: actions.clearFilters,
   }
@@ -107,5 +109,21 @@ export function useMapData(): {
     mapData: state.mapData,
     mapDataLoading: state.mapDataLoading,
     mapDataError: state.mapDataError,
+  }
+}
+
+export function useErrorData(): {
+  chartRequestErrors: { id: string; error: string }[] | null
+  setChartRequestErrors: (error: { id: string; error: string }) => void
+  clearChartRequestErrors: () => void
+  removeChartRequestError: (errorId: string) => void
+} {
+  const { state, actions } = useGlobalFilters()
+
+  return {
+    chartRequestErrors: state.chartRequestErrors,
+    setChartRequestErrors: actions.setChartRequestErrors,
+    clearChartRequestErrors: actions.clearChartRequestErrors,
+    removeChartRequestError: actions.removeChartRequestError,
   }
 }

@@ -17,6 +17,7 @@ import {
   BrowsePage,
   BulkDownloadsPage,
   CompliancePage,
+  CoverPage,
   Covid19Page,
   ErrorPage,
   FeedbackConfirmationPage,
@@ -60,6 +61,7 @@ type Fixtures = {
   notFoundPage: NotFoundPage
   accessibilityStatementPage: AccessibilityStatementPage
   compliancePage: CompliancePage
+  coverPage: CoverPage
   accessOurDataPage: AccessOurDataPage
   weatherHealthAlertsParentPage: WeatherHealthAlertsParentPage
   weatherHealthAlertsChildPage: WeatherHealthAlertsChildPage
@@ -643,6 +645,9 @@ export const test = AuthSetupFixtures.extend<Fixtures>({
   },
   weatherHealthAlertsMapPage: async ({ page }, use) => {
     await use(new WeatherHealthAlertsMapPage(page))
+  },
+  coverPage: async ({ page }, use) => {
+    await use(new CoverPage(page))
   },
 })
 

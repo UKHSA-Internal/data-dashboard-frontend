@@ -77,8 +77,28 @@ describe('validateUrlWithCms', () => {
   })
 
   test('Nested metrics documentation child page', async () => {
-    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
+    // Mock getPages to return a simplified list with just the fields needed for slug matching
+    const simplifiedPages = {
+      meta: { total_count: 1 },
+      items: [
+        {
+          id: metricsChildMocks[0].id,
+          title: metricsChildMocks[0].title,
+          seo_change_frequency: metricsChildMocks[0].seo_change_frequency,
+          seo_priority: metricsChildMocks[0].seo_priority,
+          meta: metricsChildMocks[0].meta,
+        },
+      ],
+    }
+
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: simplifiedPages,
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: metricsChildMocks[0],
+    })
 
     const slug: Slug = ['metrics-documentation', 'new-cases-7days-sum']
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
@@ -106,13 +126,15 @@ describe('validateUrlWithCms', () => {
   })
 
   test('404 Not Found when a URL cannot be matched against the CMS', async () => {
-    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsChildMocks[0] }) // Mock initial child request
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: { meta: { total_count: 0 }, items: [] },
+    })
 
     const slug: Slug = ['whats-new', 'new-cases-7days-sum']
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
 
-    expect(notFound).toHaveBeenCalledTimes(1)
+    expect(notFound).toHaveBeenCalledTimes(2)
     expect(result).toBeUndefined()
   })
 })

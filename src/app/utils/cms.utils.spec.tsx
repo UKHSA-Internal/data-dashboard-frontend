@@ -11,15 +11,22 @@ import {
   mockChartRowCardWithSingleChartCard,
   mockHeadlineNumbersRowCard,
   mockHeadlineNumbersRowCardWithOneColumn,
-  mockLinkedMapCard,
   mockSectionNoLink,
   mockSectionWithCard,
   mockSectionWithLink,
   mockSectionWithLongHeading,
   mockTextCard,
+  mockTextCardWithUnorderedList,
 } from './__mocks__/cms'
 import { renderBlock, renderCard, renderCompositeBlock, renderSection } from './cms.utils'
 
+jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer', () => ({
+  TimeSeriesFilterCardsContainer: () => <div>Mocked time series filter cards container</div>,
+}))
+
+jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer', () => ({
+  SubplotFilterCardContainer: () => <div>Mocked subplot filter card container</div>,
+}))
 // This is an ugly hack because Jest currently cannot render nested server components. As a result we must
 // stub these components in order to test the functionality within cms.utils.tsx
 jest.mock('../components/cms', () => ({
@@ -42,10 +49,8 @@ jest.mock('../components/cms', () => ({
   ),
   ButtonExternal: () => <div>Mocked external download button</div>,
   ButtonInternal: () => <div>Mocked internal download button</div>,
-  RichText: () => <div>Mocked richtext component</div>,
   CodeBlock: () => <div>Mocked code block</div>,
 }))
-
 //Mock the getShowLessURL and getShowMoreURL
 jest.mock('@/app/utils/show-more.utils', () => ({
   getShowMoreURL: jest.fn(),
@@ -82,6 +87,13 @@ describe('Text card', () => {
     render(renderCard('Text card heading', [], '', mockTextCard))
     expect(screen.getByRole('heading', { level: 3, name: 'Text card heading' })).toBeInTheDocument()
     expect(screen.getByText('Text card body')).toBeInTheDocument()
+  })
+
+  test('text card renders unordered list', () => {
+    render(renderCard('Text card renders unordered list', [], '', mockTextCardWithUnorderedList))
+    expect(screen.getByRole('list', {})).toBeInTheDocument()
+    expect(screen.getByText('bullet point one')).toBeInTheDocument()
+    expect(screen.getByText('bullet point two')).toBeInTheDocument()
   })
 })
 
@@ -130,21 +142,6 @@ describe('Headline numbers row card', () => {
     const gridRow = screen.getByTestId('headline-row').firstChild
     expect(gridRow).toHaveClass('grid-cols-2 sm:grid-cols-3')
     expect(gridRow).not.toHaveClass('md:grid-cols-5')
-  })
-})
-describe('Linked Map Card', () => {
-  test('linked Map card displays correctly', () => {
-    render(renderCard('', [], '', mockLinkedMapCard))
-    const article = screen.getByRole('article')
-    expect(article).toBeInTheDocument()
-
-    expect(article).toHaveClass('ukhsa-map-card')
-
-    // Heading and description
-    expect(within(article).getByRole('heading', { level: 3, name: 'Map Heading' })).toBeInTheDocument()
-
-    // Chart
-    expect(screen.getByText('Mocked Map')).toBeVisible()
   })
 })
 
@@ -275,14 +272,16 @@ describe('Metrics', () => {
 
 describe('Composite block', () => {
   test('composite with text block', () => {
+    const textValue = 'text test content'
+
     render(
       renderCompositeBlock({
         type: 'text',
-        value: 'text test content',
+        value: textValue,
         id: '2df8361c-12f4-40d3-aa01-ce2c68a24d04',
       })
     )
-    expect(screen.getByText('Mocked richtext component')).toBeInTheDocument()
+    expect(screen.getByText(textValue)).toBeInTheDocument()
   })
 
   test('internal button', () => {

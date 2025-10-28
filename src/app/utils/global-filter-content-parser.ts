@@ -3,7 +3,7 @@ import {
   AccompanyingPointArray,
   AccompanyingPointObject,
   DataFilters,
-  FilterLinkedSubPlotData,
+  FilterLinkedSubplotData,
   FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilters,
@@ -17,8 +17,9 @@ export interface ExtractedFilters {
   geographyFilters: GeographyFilters | null
   thresholdFilters: ThresholdFilters | null
   dataFilters: DataFilters | null
-  coverageTemplateData: FilterLinkedSubPlotData
+  coverageTemplateData: FilterLinkedSubplotData
   timeseriesTemplateData: FilterLinkedTimeSeriesData
+  timePeriodTitle: string
 }
 
 export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilters {
@@ -26,7 +27,8 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
   let thresholdFilters: ThresholdFilters | null = null
   let dataFilters: DataFilters | null = null
   let timePeriods: TimePeriod[] = []
-  const coverageTemplateData: FilterLinkedSubPlotData = {} as FilterLinkedSubPlotData
+  let timePeriodTitle: string = ''
+  const coverageTemplateData: FilterLinkedSubplotData = {} as FilterLinkedSubplotData
   const timeseriesTemplateData: FilterLinkedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
   // Usage: Extracts each of the filter types that are provided in the rows
@@ -48,12 +50,14 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
     })
   }
 
-  // Usage: Time Period Extraction
+  // Usage: Time Period and timePeriodTitle Extraction
   if (content.type === 'global_filter_card' && content.value.time_range) {
     timePeriods = content.value.time_range.time_periods
+    timePeriodTitle = content.value.time_range.title
   }
 
   return {
+    timePeriodTitle,
     timePeriods,
     geographyFilters,
     thresholdFilters,
@@ -63,8 +67,8 @@ export function extractDataFromGlobalFilter(content: CardTypes): ExtractedFilter
   }
 }
 
-export function extractSubplotSectionData(content: CardTypes): FilterLinkedSubPlotData {
-  let coverageTemplateData: FilterLinkedSubPlotData = {} as FilterLinkedSubPlotData
+export function extractSubplotSectionData(content: CardTypes): FilterLinkedSubplotData {
+  let coverageTemplateData: FilterLinkedSubplotData = {} as FilterLinkedSubplotData
 
   if (content.type === 'filter_linked_sub_plot_chart_template' && content.value) {
     coverageTemplateData = content.value

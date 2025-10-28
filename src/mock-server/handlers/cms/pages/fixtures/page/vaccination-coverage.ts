@@ -23,8 +23,24 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
       title: 'Respiratory viruses',
     },
   },
-  title: 'Childhood vaccinations',
+  title: 'Childhood vaccination coverage',
   body: [
+    {
+      type: 'section',
+      value: {
+        heading: 'Coverage map',
+        content: [
+          {
+            type: 'filter_linked_map',
+            value: {
+              title_prefix: 'Vaccination coverage statistics',
+            },
+            id: 'c5720a34-4f6e-4132-b82b-c8982b9f4551',
+          },
+        ],
+      },
+      id: 'c95a839e-4aa6-4f11-af18-c72df6623268',
+    },
     {
       type: 'section',
       value: {
@@ -80,7 +96,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               value: {
                                 label: 'Region',
                                 colour: 'COLOUR_2_TURQUOISE',
-                                geography_type: 'Lower Tier Local Authority',
+                                geography_type: 'Region',
                               },
                               id: '87c30c92-c9bd-46cd-89eb-6468e46e7b5b',
                             },
@@ -115,6 +131,72 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'data_filter',
                               value: {
                                 label: 'MMR1 (2 years)',
+                                colour: 'COLOUR_1_DARK_BLUE',
+                                parameters: {
+                                  theme: {
+                                    label: '',
+                                    value: 'immunisations',
+                                  },
+                                  sub_theme: {
+                                    label: '',
+                                    value: 'childhood-vaccines',
+                                  },
+                                  topic: {
+                                    label: '',
+                                    value: 'MMR1',
+                                  },
+                                  stratum: {
+                                    label: '2 years',
+                                    value: '24m',
+                                  },
+                                  metric: {
+                                    label: '',
+                                    value: 'MMR1_coverage_coverageByYear',
+                                  },
+                                  age: {
+                                    label: '',
+                                    value: 'all',
+                                  },
+                                  sex: {
+                                    label: '',
+                                    value: 'all',
+                                  },
+                                },
+                                accompanying_points: [
+                                  {
+                                    type: 'accompanying_point',
+                                    value: {
+                                      label_prefix: 'Country level of coverage',
+                                      label_suffix: '%',
+                                      parameters: [
+                                        {
+                                          type: 'geography_type',
+                                          value: {
+                                            label: '',
+                                            value: 'Nation',
+                                          },
+                                          id: '8ed98517-38ba-4b7b-91d8-05f4864be648',
+                                        },
+                                        {
+                                          type: 'geography',
+                                          value: {
+                                            label: '',
+                                            value: 'England',
+                                          },
+                                          id: 'deb5c0e4-2512-409d-9342-a3f2169041a4',
+                                        },
+                                      ],
+                                    },
+                                    id: 'ab8e4f2f-d62b-411c-adff-8a9bb0aa8ac7',
+                                  },
+                                ],
+                              },
+                              id: '119e270f-2759-44a0-969a-1651407b109a',
+                            },
+                            {
+                              type: 'data_filter',
+                              value: {
+                                label: 'MenB (2 years)',
                                 colour: 'COLOUR_1_DARK_BLUE',
                                 parameters: {
                                   theme: {
@@ -337,36 +419,21 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
     {
       type: 'section',
       value: {
-        heading: 'Coverage map',
-        content: [
-          {
-            type: 'filter_linked_map',
-            value: {
-              title_prefix: 'Vaccination coverage statistics',
-            },
-            id: 'c5720a34-4f6e-4132-b82b-c8982b9f4551',
-          },
-        ],
-      },
-      id: 'c95a839e-4aa6-4f11-af18-c72df6623268',
-    },
-    {
-      type: 'section',
-      value: {
-        heading: 'Coverage',
+        heading: 'Coverage statistics',
         content: [
           {
             type: 'filter_linked_sub_plot_chart_template',
             value: {
-              title_prefix: 'Vaccination coverage statistics',
+              title_prefix: 'Vaccination coverage',
               legend_title: 'Coverage (%)',
-              target_threshold: 0.95,
+              target_threshold: 95,
+              target_threshold_label: '95% target',
             },
-            id: 'ef3a544a-f335-44a8-9259-ee323b60e0fa',
+            id: 'f5aa2cb0-b871-4c71-a880-d2c1433e3618',
           },
         ],
       },
-      id: '17912509-023d-4d29-8d8b-3017d4688370',
+      id: 'f5aa2cb0-b871-4c71-a880-d2c1433e3618',
     },
     {
       type: 'section',
@@ -374,16 +441,23 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
         heading: 'Time series',
         content: [
           {
+            type: 'text_card',
+            value: {
+              body: '<p data-block-key="04bkf">Annual immunisation coverage is calculated and reported by financial year (1 April to 31 March). In time series data, coverage statistics for a given year are tied to the end of respective financial year. For example, annual coverage for the 2022-2023 reporting year is represented by the date 31 March 2023.</p><p data-block-key="dadjm">In Q2 2020-2021 the vaccine schedule changed for the pneumococcal vaccine. Coverage for this reporting year cannot be calculated. This may also affect comparability with previous years.</p>',
+            },
+            id: '4678dec2-9023-4dae-91c5-1c18d3a04d7b',
+          },
+          {
             type: 'filter_linked_time_series_chart_template',
             value: {
-              title_prefix: 'Annual vaccination coverage',
-              legend_title: 'Level of coverage (%)',
+              title_prefix: 'Vaccination coverage by year',
+              legend_title: 'Coverage (%)',
             },
-            id: '7bfe0836-6a2c-4596-909f-974426123536',
+            id: '486629f9-07ce-4f41-a4eb-413c006a8c10',
           },
         ],
       },
-      id: '0986c2cd-a730-4e7e-bc3c-94c634b071e2',
+      id: '587c7b3a-2313-444e-87b6-d5d9c27d6ccb',
     },
   ],
   seo_change_frequency: 5,

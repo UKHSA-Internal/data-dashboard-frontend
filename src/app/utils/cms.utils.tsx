@@ -7,17 +7,8 @@ import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
-import {
-  Card,
-  FilterBanners,
-  SelectedFilters,
-  StaticFilter,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from '@/app/components/ui/ukhsa'
-import { FilterDropdowns } from '@/app/components/ui/ukhsa/FilterDropdowns/FilterDropdowns'
+import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import { FilterLinkedCardWrapper } from '@/app/components/ui/ukhsa/FilterLinkedCards/FilterLinkedCardWrapper'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
@@ -33,8 +24,6 @@ import {
   CodeBlock,
   Download,
   Headline,
-  MapCardWrapper,
-  MapRowCard,
   Percentage,
   RichText,
   Table,
@@ -45,6 +34,7 @@ import About from '../components/cms/About/About'
 import { AreaSelectorLoader } from '../components/cms/AreaSelector/AreaSelectorLoader'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import DropdownTab from '../components/ui/ukhsa/Tabs/DropdownTab'
+import { GlobalFilterLinkedMap } from '../features/global-filter'
 
 /* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
@@ -92,7 +82,7 @@ export const renderCard = (
 ) => {
   return (
     <div key={id}>
-      {type === 'text_card' && <div dangerouslySetInnerHTML={{ __html: value.body }} />}
+      {type === 'text_card' && <RichText>{value.body}</RichText>}
 
       {type === 'headline_numbers_row_card' && (
         <Card className="ukhsa-headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
@@ -117,7 +107,7 @@ export const renderCard = (
         <ChartRowCard>
           {value.columns.map((column) => {
             const size = value.columns.length === 1 ? 'wide' : 'narrow'
-            const noAbout = !column.value.about || column.value.about.length === 0
+            const showAbout = column.value.about && column.value.about.length > 0
             const noRelatedLinks = !column.value.related_links || column.value.related_links.length === 0
             return (
               <div
@@ -169,7 +159,7 @@ export const renderCard = (
                             <span>Download</span>
                           </Link>
                         </TabsTrigger>
-                        {noAbout && noRelatedLinks ? null : (
+                        {!showAbout && noRelatedLinks ? null : (
                           <TabsTrigger
                             asChild
                             value={`${kebabCase(column.value.title)}-about`}
@@ -184,8 +174,9 @@ export const renderCard = (
                       <DropdownTab
                         aria-label="Select for selecting chart content"
                         className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
-                        chartTitle={column.value.title}
-                        noAbout={noAbout}
+                        tabGroupTitle={column.value.title}
+                        defaultValue={`${kebabCase(column.value.title)}-chart`}
+                        showAbout={showAbout || !noRelatedLinks ? true : false}
                       />
                       <TabsContent
                         value={`${kebabCase(column.value.title)}-chart`}
@@ -254,7 +245,7 @@ export const renderCard = (
                         </span>
                         <Download data={column.value} />
                       </TabsContent>
-                      {noAbout && noRelatedLinks ? null : (
+                      {!showAbout && noRelatedLinks ? null : (
                         <TabsContent
                           value={`${kebabCase(column.value.title)}-about`}
                           className="min-h-[var(--ukhsa-chart-card-tab-min-height)]"
@@ -278,25 +269,20 @@ export const renderCard = (
         </ChartRowCard>
       )}
 
-      {type === 'global_filter_card' && (
-        <>
-          <FilterBanners />
-          <StaticFilter>
-            <SelectedFilters />
-            <FilterDropdowns />
-          </StaticFilter>
-        </>
+      {/* {type === 'global_filter_card' && <FilterBannerWrapper />} */}
+
+      {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
+
+      {type === 'filter_linked_sub_plot_chart_template' && (
+        <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+          <FilterLinkedCardWrapper cardType="subplot" />
+        </div>
       )}
 
-      {type === 'filter_linked_map' && (
-        <MapRowCard>
-          <div key={id} className={clsx('mb-3 sm:mb-6 lg:mb-0', 'lg:w-full')}>
-            <article className={'ukhsa-map-card'}>
-              <ChartRowCardHeader id={`map-row-heading-${id}`} title={value.title_prefix ? value.title_prefix : ''} />
-              <MapCardWrapper />
-            </article>
-          </div>
-        </MapRowCard>
+      {type === 'filter_linked_time_series_chart_template' && (
+        <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+          <FilterLinkedCardWrapper cardType="time-series" />
+        </div>
       )}
 
       {type === 'chart_card_section' && (

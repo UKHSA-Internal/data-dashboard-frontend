@@ -6,7 +6,7 @@ import DropdownTab from './DropdownTab'
 import { Tabs, TabsContext } from './Tabs'
 
 describe('DropdownTab Component', () => {
-  const chartTitle = 'Test chart'
+  const chartTitle = 'Test-chart'
 
   beforeEach(() => {
     // Set up DOM elements that will be manipulated
@@ -23,8 +23,9 @@ describe('DropdownTab Component', () => {
       render(
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartTitle={chartTitle}
-          noAbout={false}
+          tabGroupTitle={chartTitle}
+          defaultValue={`${chartTitle}-chart`}
+          showAbout={false}
         />
       )
     ).toThrow('DropdownTab must be used within the <Tabs/> component')
@@ -35,8 +36,10 @@ describe('DropdownTab Component', () => {
       <Tabs>
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartTitle={chartTitle}
-          noAbout={false}
+          tabGroupTitle={chartTitle}
+          defaultValue={`${chartTitle}-chart`}
+          showAbout={true}
+          showDownload={false}
         />
       </Tabs>
     )
@@ -48,8 +51,10 @@ describe('DropdownTab Component', () => {
       <Tabs>
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartTitle={chartTitle}
-          noAbout={false}
+          tabGroupTitle={chartTitle}
+          defaultValue={`${chartTitle}-chart`}
+          showAbout={true}
+          showDownload={true}
         />
       </Tabs>
     )
@@ -59,13 +64,14 @@ describe('DropdownTab Component', () => {
     expect(options.map((option) => option.textContent)).toEqual(['Chart', 'Tabular Data', 'Download', 'About'])
   })
 
-  it('renders only 3 dropdown options when no about is true', () => {
+  it('renders only 3 dropdown options when show about is false', () => {
     render(
       <Tabs>
         <DropdownTab
           className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-          chartTitle={chartTitle}
-          noAbout={true}
+          tabGroupTitle={chartTitle}
+          defaultValue={`${chartTitle}-chart`}
+          showAbout={false}
         />
       </Tabs>
     )
@@ -75,6 +81,27 @@ describe('DropdownTab Component', () => {
     expect(options.map((option) => option.textContent)).toEqual(['Chart', 'Tabular Data', 'Download'])
   })
 
+  it('renders only the map if other options are set to false.', () => {
+    render(
+      <Tabs>
+        <DropdownTab
+          className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
+          tabGroupTitle={chartTitle}
+          defaultValue={`${chartTitle}-chart`}
+          showAbout={false}
+          showChart={false}
+          showTable={false}
+          showDownload={false}
+          showMap={true}
+        />
+      </Tabs>
+    )
+
+    const options = screen.getAllByRole('option')
+    expect(options).toHaveLength(1)
+    expect(options.map((option) => option.textContent)).toEqual(['Map'])
+  })
+
   it('changes active state on selecting an option', () => {
     const mockSetSelectedTab = jest.fn()
     render(
@@ -82,8 +109,9 @@ describe('DropdownTab Component', () => {
         <Tabs>
           <DropdownTab
             className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 sm:hidden"
-            chartTitle={chartTitle}
-            noAbout={false}
+            tabGroupTitle={chartTitle}
+            defaultValue={`${chartTitle}-chart`}
+            showAbout={true}
           />
         </Tabs>
       </TabsContext.Provider>

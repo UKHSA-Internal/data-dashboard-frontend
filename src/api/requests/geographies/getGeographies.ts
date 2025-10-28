@@ -8,6 +8,7 @@ import { logger } from '@/lib/logger'
 const geographiesSchemaObject = z.object({
   name: z.string(),
   geography_code: z.string().optional(),
+  geography_type: z.string().optional().nullable(),
   relationships: z
     .array(
       z

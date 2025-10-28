@@ -1,10 +1,17 @@
-import { FilterLinkedSubPlotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
+/* eslint-disable @next/next/no-img-element */
+import { FilterLinkedSubplotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
-import { Announcements, PageSection, PageSectionWithContents, View } from '@/app/components/ui/ukhsa'
-import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
+import {
+  Announcements,
+  FilterBannerWrapper,
+  PageSection,
+  PageSectionWithContents,
+  View,
+} from '@/app/components/ui/ukhsa'
+import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { getChartTimespan } from '@/app/utils/chart.utils'
@@ -46,7 +53,7 @@ export default async function TopicPage({
   let chartCounter = 0
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
-  let extractedSubplotData = {} as FilterLinkedSubPlotData
+  let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
 
   interface TableCard {
@@ -136,6 +143,7 @@ export default async function TopicPage({
           <img
             className="float-right"
             src={'/assets/images/accredited-official-statistics-logo.svg'}
+            alt="Accredited Official Statistics"
             height={'70px'}
             width={'70px'}
           />
@@ -166,13 +174,17 @@ export default async function TopicPage({
 
             <GlobalFilterProvider filters={extractedGlobalFilterContent}>
               <PageSectionWithContents>
-                {body.map(({ id, value }) => (
-                  <PageSection key={id} heading={value.heading}>
-                    {value.content.map((item) =>
-                      renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
-                    )}
-                  </PageSection>
-                ))}
+                {body.map(({ id, value }) =>
+                  value.content.some((content) => content.type === 'global_filter_card') ? (
+                    <FilterBannerWrapper key={id} />
+                  ) : (
+                    <PageSection key={id} heading={value.heading}>
+                      {value.content.map((item) =>
+                        renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                      )}
+                    </PageSection>
+                  )
+                )}
               </PageSectionWithContents>
             </GlobalFilterProvider>
           </div>

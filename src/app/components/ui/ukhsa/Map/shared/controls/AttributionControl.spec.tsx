@@ -186,7 +186,7 @@ describe('AttributionControl', () => {
     render(<AttributionControl position="bottomright" />)
 
     const scrollArea = screen.getByTestId('scroll-area')
-    expect(scrollArea).toHaveClass('h-[10rem]')
+    expect(scrollArea).toHaveClass('h-[12rem]')
   })
 
   test('works with different control positions', () => {

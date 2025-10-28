@@ -1,9 +1,10 @@
 'use client'
 
 import clsx from 'clsx'
+import { useEffect, useMemo, useState } from 'react'
 
 import { DataFilter } from '@/api/models/cms/Page/GlobalFilter'
-import { useVaccinationState } from '@/app/hooks/globalFilterHooks'
+import { useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 
 interface VaccinationDropdownProps {
   className?: string
@@ -11,7 +12,6 @@ interface VaccinationDropdownProps {
   disabled?: boolean
   onChange?: (selectedVaccinationId: string | null) => void
 }
-
 export const VaccinationDropdown = ({
   className = '',
   placeholder = 'Select a vaccination',
@@ -19,6 +19,26 @@ export const VaccinationDropdown = ({
   onChange,
 }: VaccinationDropdownProps) => {
   const { vaccinationList, selectedVaccination, setSelectedVaccination } = useVaccinationState()
+  const { selectedFilters } = useSelectedFilters()
+
+  //to find the matching vaccinations from the selected filters
+  const selectedLabels = new Set(selectedFilters!.map((item) => item.label))
+  const selectedVaccinationList = vaccinationList!.filter((item) => selectedLabels.has(item.value.label))
+  const matchingVaccinations = useMemo(() => {
+    if (!vaccinationList) return []
+    // If nothing is selected, return full list
+    if (!selectedVaccinationList || selectedVaccinationList.length === 0) {
+      return vaccinationList
+    }
+    // Otherwise return only matches
+    return selectedVaccinationList
+  }, [vaccinationList, selectedFilters])
+
+  const [newVaccinationList, setNewVaccinationList] = useState(matchingVaccinations)
+
+  useEffect(() => {
+    setNewVaccinationList(matchingVaccinations)
+  }, [matchingVaccinations])
 
   const handleSelectionChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
     const selectedVaccineId = event.target.value
@@ -54,7 +74,7 @@ export const VaccinationDropdown = ({
         data-testid="vaccination-select-control"
       >
         <option value="">{placeholder}</option>
-        {vaccinationList!.map((vaccine: DataFilter) => (
+        {newVaccinationList!.map((vaccine: DataFilter) => (
           <option key={vaccine.id} value={vaccine.id}>
             {vaccine.value.label}
           </option>

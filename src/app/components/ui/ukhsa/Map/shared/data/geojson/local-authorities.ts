@@ -13697,7 +13697,10 @@ const localAuthoritiesFeatureCollection: FeatureCollection = {
       },
       properties: {
         FID: 62,
-        CTYUA24CD: 'E06000065',
+        // This has been manually altered so that
+        // the map references the matching North Yorkshire record
+        // in the database
+        CTYUA24CD: 'E10000023',
         CTYUA24NM: 'North Yorkshire',
         CTYUA24NMW: ' ',
         BNG_E: 429508,
@@ -14110,7 +14113,10 @@ const localAuthoritiesFeatureCollection: FeatureCollection = {
       },
       properties: {
         FID: 63,
-        CTYUA24CD: 'E06000066',
+        // This has been manually altered so that
+        // the map references the matching Somerset record
+        // in the database
+        CTYUA24CD: 'E10000027',
         CTYUA24NM: 'Somerset',
         CTYUA24NMW: ' ',
         BNG_E: 309294,

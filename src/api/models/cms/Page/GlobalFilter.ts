@@ -130,16 +130,18 @@ export const GlobalFilterRow = z.array(
   })
 )
 
-const FilterLinkedSubPlotData = z.object({
+const FilterLinkedSubplotData = z.object({
   title_prefix: z.string(),
   legend_title: z.string(),
   target_threshold: z.number(),
   target_threshold_label: z.string().optional(),
+  about: z.string().optional(),
 })
 
 const FilterLinkedTimeSeriesData = z.object({
   title_prefix: z.string(),
   legend_title: z.string(),
+  about: z.string().optional(),
 })
 
 export type TimePeriod = z.infer<typeof TimePeriodSchema>
@@ -159,5 +161,5 @@ export type GlobalFilters = z.infer<typeof GlobalFilters>
 export type GlobalFilterRowItem = z.infer<typeof GlobalFilterRowItem>
 export type GlobalFilterRow = z.infer<typeof GlobalFilterRow>
 export type Vaccination = z.infer<typeof VaccinationSchema>
-export type FilterLinkedSubPlotData = z.infer<typeof FilterLinkedSubPlotData>
+export type FilterLinkedSubplotData = z.infer<typeof FilterLinkedSubplotData>
 export type FilterLinkedTimeSeriesData = z.infer<typeof FilterLinkedTimeSeriesData>

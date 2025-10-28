@@ -33,7 +33,7 @@ const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string
 }
 
 export async function Table({
-  data: { chart, y_axis, x_axis, x_axis_title, y_axis_title, title, body },
+  data: { chart, y_axis, x_axis, x_axis_title, y_axis_title, y_axis_minimum_value, y_axis_maximum_value, title, body },
   size,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
@@ -55,13 +55,19 @@ export async function Table({
   })
 
   // Call the charts endpoint as this gives us the data timestamp
-  const chartResponse = await getCharts({
+  const chartRequestBody = {
     plots,
     x_axis,
     y_axis,
+    x_axis_title,
+    y_axis_title,
+    y_axis_minimum_value,
+    y_axis_maximum_value,
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
-  })
+  }
+
+  const chartResponse = await getCharts(chartRequestBody)
 
   if (tableResponse.success) {
     const groups = parseChartTableData(tableResponse.data, {

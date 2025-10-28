@@ -1,13 +1,13 @@
 // eslint-disable-next-line @typescript-eslint/ban-ts-comment
 // @ts-nocheck
-// StaticFilter.spec.tsx
+
 import React from 'react'
 import { useWindowScroll } from 'react-use'
 
 import { useTranslation } from '@/app/i18n/client'
 import { fireEvent, render, screen } from '@/config/test-utils'
 
-import { StaticFilter } from './StaticFilter'
+import StaticFilter from './StaticFilter'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 // Mock the react-use hook
@@ -71,6 +71,7 @@ describe('StaticFilter', () => {
     })
 
     test('should render with custom className', () => {
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       render(<StaticFilter className="custom-class" />)
 
       const link = screen.getByRole('link')
@@ -101,68 +102,6 @@ describe('StaticFilter', () => {
 
       const contentContainer = screen.getByTestId('filter-content').parentElement
       expect(contentContainer).toHaveClass('h-0', 'm-0', 'overflow-hidden', 'govuk-!-padding-0')
-    })
-  })
-
-  describe('scroll behavior', () => {
-    test('should not be sticky when scroll position is less than 200', () => {
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: 150,
-      })
-
-      render(<StaticFilter />)
-
-      const link = screen.getByRole('link')
-      expect(link).not.toHaveClass('sticky')
-    })
-
-    test('should be sticky when scroll position is 200 or more', () => {
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: 200,
-      })
-
-      render(<StaticFilter />)
-
-      const link = screen.getByRole('link')
-      expect(link).toHaveClass('sticky')
-    })
-
-    test('should be sticky when scroll position is greater than 200', () => {
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: 500,
-      })
-
-      render(<StaticFilter />)
-
-      const link = screen.getByRole('link')
-      expect(link).toHaveClass('sticky')
-    })
-
-    test('should update sticky state when scroll position changes', () => {
-      // Start with scroll position less than 200
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: 100,
-      })
-
-      const { rerender } = render(<StaticFilter />)
-
-      let link = screen.getByRole('link')
-      expect(link).not.toHaveClass('sticky')
-
-      // Update scroll position to greater than 200
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: 300,
-      })
-
-      rerender(<StaticFilter />)
-
-      link = screen.getByRole('link')
-      expect(link).toHaveClass('sticky')
     })
   })
 
@@ -245,6 +184,7 @@ describe('StaticFilter', () => {
         'govuk-!-padding-1',
         'govuk-!-padding-right-2',
         'govuk-!-padding-left-2',
+        'sticky',
         'bottom-3',
         'float-right',
         'inline-flex',
@@ -257,22 +197,6 @@ describe('StaticFilter', () => {
         'focus:bg-yellow',
         'focus:text-black'
       )
-    })
-
-    test('should conditionally apply sticky class based on scroll position', () => {
-      // Test when not sticky
-      mockUseWindowScroll.mockReturnValue({ x: 0, y: 100 })
-      const { rerender } = render(<StaticFilter />)
-
-      let link = screen.getByRole('link')
-      expect(link).not.toHaveClass('sticky')
-
-      // Test when sticky
-      mockUseWindowScroll.mockReturnValue({ x: 0, y: 300 })
-      rerender(<StaticFilter />)
-
-      link = screen.getByRole('link')
-      expect(link).toHaveClass('sticky')
     })
   })
 
@@ -315,39 +239,6 @@ describe('StaticFilter', () => {
 
       const link = screen.getByRole('link')
       expect(link).toHaveTextContent('globalFilter.hideFilters')
-    })
-  })
-
-  describe('edge cases', () => {
-    test('should handle no children', () => {
-      render(<StaticFilter />)
-
-      expect(screen.getByRole('link')).toBeInTheDocument()
-      // Should not crash without children
-    })
-
-    test('should handle scroll position exactly at 200', () => {
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: 200,
-      })
-
-      render(<StaticFilter />)
-
-      const link = screen.getByRole('link')
-      expect(link).toHaveClass('sticky')
-    })
-
-    test('should handle negative scroll positions', () => {
-      mockUseWindowScroll.mockReturnValue({
-        x: 0,
-        y: -50,
-      })
-
-      render(<StaticFilter />)
-
-      const link = screen.getByRole('link')
-      expect(link).not.toHaveClass('sticky')
     })
   })
 })

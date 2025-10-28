@@ -26,9 +26,11 @@ import express from 'express'
 import alertList from './handlers/alerts/v1/[category]'
 import alertDetail from './handlers/alerts/v1/[category]/[region]'
 import bulkDownloads from './handlers/bulkdownloads/v1'
+import subplotCharts from './handlers/charts/subplot/v1'
 import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
+import subplotDownloads from './handlers/downloads/subplot/v1'
 import downloads from './handlers/downloads/v2'
 import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
@@ -38,6 +40,7 @@ import headlines from './handlers/headlines/v3'
 import maps from './handlers/maps/v1/v1'
 import menus from './handlers/menus/v1'
 import suggestions from './handlers/suggestions/v2'
+import subplotTables from './handlers/tables/subplot/v1'
 import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v3'
 
@@ -64,8 +67,11 @@ app.get('/api/menus/v1', menus)
 
 // POST endpoints
 app.post('/api/charts/v3', charts)
+app.post('/api/charts/subplot/v1', subplotCharts)
 app.post('/api/tables/v4', tables)
+app.post('/api/tables/subplot/v1', subplotTables)
 app.post('/api/downloads/v2', downloads)
+app.post('/api/downloads/subplot/v1', subplotDownloads)
 app.post('/api/maps/v1', maps)
 
 // Misc endpoints
