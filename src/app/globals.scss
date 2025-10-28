@@ -1,3 +1,4 @@
+@use '~node_modules/govuk-frontend/dist/govuk/all' as *;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -19,8 +20,6 @@ $govuk-global-styles: true;
 $govuk-new-typography-scale: true;
 $govuk-font-family: var(--font-primary), arial, sans-serif;
 $govuk-page-width: 1400px;
-
-@import '~node_modules/govuk-frontend/dist/govuk/all';
 
 @layer utilities {
   // Applies the govuk focus ring to an element

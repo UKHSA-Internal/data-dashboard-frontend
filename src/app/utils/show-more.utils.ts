@@ -1,7 +1,7 @@
 import { getPathname } from '../hooks/getPathname'
 
-const createURL = (paramSections: string[], heading: string): string => {
-  let query = getPathname() + '?'
+const createURL = async (paramSections: string[], heading: string): Promise<string> => {
+  let query = (await getPathname()) + '?'
   paramSections.map((section, index) => {
     if (index > 0) {
       query = query + `&section=${section}`
