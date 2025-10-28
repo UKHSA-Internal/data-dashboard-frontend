@@ -5,7 +5,7 @@ import Plot, { Figure } from 'react-plotly.js'
 import { useIntersectionObserver } from 'usehooks-ts'
 
 interface ChartInteractiveProps {
-  fallbackUntilLoaded: React.ReactElement
+  fallbackUntilLoaded: ReactElement
   figure: Figure
 }
 
