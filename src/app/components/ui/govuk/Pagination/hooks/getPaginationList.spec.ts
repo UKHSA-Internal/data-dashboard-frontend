@@ -9,15 +9,15 @@ jest.mock('@/app/hooks/getSearchParams', () => ({
   getSearchParams: jest.fn(() => defaultUrl.searchParams),
 }))
 
-type PaginationListProps = ReturnType<typeof getPaginationList>
+type PaginationListProps = Awaited<ReturnType<typeof getPaginationList>>
 
 describe('getPaginationList', () => {
   beforeEach(() => {
     mockRouter.push('/')
   })
 
-  test('no results', () => {
-    const props = getPaginationList({ initialPage: 0, initialPageSize: 0, totalItems: 0 })
+  test('no results', async () => {
+    const props = await getPaginationList({ initialPage: 0, initialPageSize: 0, totalItems: 0 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: null,
@@ -27,8 +27,8 @@ describe('getPaginationList', () => {
     })
   })
 
-  test('only one page of results', () => {
-    const props = getPaginationList({ initialPage: 0, initialPageSize: 5, totalItems: 5 })
+  test('only one page of results', async () => {
+    const props = await getPaginationList({ initialPage: 0, initialPageSize: 5, totalItems: 5 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: null,
@@ -39,7 +39,7 @@ describe('getPaginationList', () => {
   })
 
   test('show the first page of two', async () => {
-    const props = getPaginationList({ initialPage: 1, initialPageSize: 4, totalItems: 5 })
+    const props = await getPaginationList({ initialPage: 1, initialPageSize: 4, totalItems: 5 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: 1,
@@ -77,7 +77,7 @@ describe('getPaginationList', () => {
   })
 
   test('show the second page of two', async () => {
-    const props = getPaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 5 })
+    const props = await getPaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 5 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: 2,
@@ -115,7 +115,7 @@ describe('getPaginationList', () => {
   })
 
   test('show the second page of three', async () => {
-    const props = getPaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 10 })
+    const props = await getPaginationList({ initialPage: 2, initialPageSize: 4, totalItems: 10 })
 
     expect(props).toEqual<PaginationListProps>({
       currentPage: 2,

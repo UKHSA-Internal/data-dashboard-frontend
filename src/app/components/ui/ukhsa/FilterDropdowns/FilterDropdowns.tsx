@@ -1,6 +1,6 @@
 'use client'
 import clsx from 'clsx'
-import React from 'react'
+import React, { ReactElement } from 'react'
 
 import { DataFilters, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
@@ -27,7 +27,7 @@ function DisplayGeographyDropdowns() {
     return <div>No geography areas available</div>
   }
 
-  const geographyDropdowns: JSX.Element[] = []
+  const geographyDropdowns: ReactElement[] = []
 
   // Use for...of to iterate over Map entries
   for (const [key, geographyArea] of geographyAreas) {

@@ -60,7 +60,7 @@ export default async function WhatsNewParentPage({
     },
   } = whatsNewEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
+  const { previousPageHref, nextPageHref, pages, currentPage } = await getPaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: paginationSize,
