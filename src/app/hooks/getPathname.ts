@@ -1,4 +1,4 @@
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers';
+import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
 
 /**
  * Extracts and returns the URL pathname from the current page in a Next.js Server component.
@@ -19,8 +19,8 @@ import { headers, type UnsafeUnwrappedHeaders } from 'next/headers';
  * @returns {string} An string containing the URL pathname
  */
 
-export const getPathname = () => {
-  const headersList = (headers() as unknown as UnsafeUnwrappedHeaders)
+export const getPathname = async () => {
+  const headersList = (await headers()) as unknown as UnsafeUnwrappedHeaders
   const headersUrl = headersList.get('x-url') || ''
 
   const pathname = headersUrl ? new URL(headersUrl).pathname : ''
