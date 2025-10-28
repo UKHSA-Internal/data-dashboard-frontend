@@ -1,4 +1,4 @@
-import { GlobalFilterProvider } from '@/app/context/globalFilterContext'
+import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
 import { ExtractedFilters } from '@/app/utils/global-filter-content-parser'
 import { render } from '@/config/test-utils'
 
@@ -22,7 +22,7 @@ jest.mock('react-leaflet-custom-control', () => {
 })
 
 // Mock TimePeriodDropdown
-jest.mock('../../../TimePeriodDropdown/TimePeriodDropdown', () => ({
+jest.mock('@/app/components/ui/ukhsa/TimePeriodDropdown/TimePeriodDropdown', () => ({
   TimePeriodDropdown: ({ className }: { className?: string }) => (
     <div data-testid="time-period-dropdown" className={className}>
       Time Period Dropdown
@@ -31,7 +31,7 @@ jest.mock('../../../TimePeriodDropdown/TimePeriodDropdown', () => ({
 }))
 
 // Mock VaccinationDropdown
-jest.mock('../../../VaccinationDropdown/VaccinationDropdown', () => ({
+jest.mock('@/app/components/ui/ukhsa/VaccinationDropdown/VaccinationDropdown', () => ({
   VaccinationDropdown: ({ className }: { className?: string }) => (
     <div data-testid="vaccination-dropdown" className={className}>
       Vaccination Dropdown

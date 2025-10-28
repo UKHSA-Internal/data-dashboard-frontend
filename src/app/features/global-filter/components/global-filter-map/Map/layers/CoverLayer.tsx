@@ -11,6 +11,18 @@ import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
 
 import { MapDataList } from '@/api/models/Maps'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import localAuthoritiesFeatureCollection, {
+  Feature as LocalAuthoritiesFeature,
+} from '@/app/components/ui/ukhsa/Map/shared//data/geojson/local-authorities'
+import regionFeatureCollection, {
+  Feature as RegionFeature,
+} from '@/app/components/ui/ukhsa/Map/shared//data/geojson/ukhsa-regions'
+import { ThresholdItemProps } from '@/app/components/ui/ukhsa/Map/shared/controls/MapLegendControl'
+import countriesFeatureCollection, {
+  Feature as CountriesFeature,
+} from '@/app/components/ui/ukhsa/Map/shared/data/geojson/countries'
+import { useChoroplethKeyboardAccessibility } from '@/app/components/ui/ukhsa/Map/shared/hooks/useChoroplethKeyboardEvents'
+import { FlatOption } from '@/app/components/ui/ukhsa/MultiselectDropdown/MultiselectDropdown'
 import { useGeographyState, useSelectedFilters, useVaccinationState } from '@/app/hooks/globalFilterHooks'
 import {
   getActiveCssVariableFromColour,
@@ -18,15 +30,6 @@ import {
   getHoverCssVariableFromColour,
   MapFeatureColour,
 } from '@/app/utils/map.utils'
-
-import { FlatOption } from '../../../MultiselectDropdown/MultiselectDropdown'
-import { ThresholdItemProps } from '../controls/MapLegendControl'
-import countriesFeatureCollection, { Feature as CountriesFeature } from '../data/geojson/countries'
-import localAuthoritiesFeatureCollection, {
-  Feature as LocalAuthoritiesFeature,
-} from '../data/geojson/local-authorities'
-import regionFeatureCollection, { Feature as RegionFeature } from '../data/geojson/ukhsa-regions'
-import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 
 /* eslint-disable @typescript-eslint/no-explicit-any*/
 
@@ -261,6 +264,26 @@ const CoverLayer = <T extends LayerWithFeature>({
     setRenderKey((prev) => prev + 1)
   }, [dataLevel])
 
+  // Handle click outside tooltip to close it
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (activeTooltipLayerRef.current) {
+        const tooltipElement = document.querySelector('.leaflet-tooltip')
+
+        if (tooltipElement && !tooltipElement.contains(event.target as Node)) {
+          activeTooltipLayerRef.current.closeTooltip().unbindTooltip()
+          activeTooltipLayerRef.current = null
+          setSelectedFeatureId(null)
+        }
+      }
+    }
+
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside)
+    }
+  }, [])
+
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
       featuresRef.current = [...featuresRef.current, feature]
@@ -318,7 +341,7 @@ const CoverLayer = <T extends LayerWithFeature>({
             } else {
               // Clicked new feature - create and open tooltip
               const mainMetricValue = featureData?.metric_value ? `${featureData.metric_value}%` : 'No Data Available'
-              const { regionName, nationName, vaccination } = renderTooltip(featureId)
+              const { regionName, nationName, vaccination } = renderTooltip(currentFeatureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
                   `

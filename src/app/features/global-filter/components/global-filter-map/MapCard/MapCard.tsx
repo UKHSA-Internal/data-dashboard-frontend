@@ -8,24 +8,23 @@ import dynamic from 'next/dynamic'
 import { ComponentProps, ReactNode, useMemo } from 'react'
 import { MapContainer } from 'react-leaflet'
 
+import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
+import { AttributionControl } from '@/app/components/ui/ukhsa/Map/shared/controls/AttributionControl'
+import { FullscreenControl } from '@/app/components/ui/ukhsa/Map/shared/controls/FullscreenControl'
+import { MapLegendControl, ThresholdItemProps } from '@/app/components/ui/ukhsa/Map/shared/controls/MapLegendControl'
+import { ZoomControl } from '@/app/components/ui/ukhsa/Map/shared/controls/ZoomControl'
+import { useMapRef } from '@/app/components/ui/ukhsa/Map/shared/hooks/useMapRef'
+import { UKHSALogoLayer } from '@/app/components/ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { CoverControl } from '@/app/features/global-filter/components/global-filter-map/Map/controls/CoverControl'
 import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
-import { formatDate } from '@/app/utils/date.utils'
 import { MapFeatureColour } from '@/app/utils/map.utils'
-
-import { AttributionControl } from '../../ui/ukhsa/Map/shared/controls/AttributionControl'
-import { CoverControl } from '../../ui/ukhsa/Map/shared/controls/CoverControl'
-import { FullscreenControl } from '../../ui/ukhsa/Map/shared/controls/FullscreenControl'
-import { MapLegendControl, ThresholdItemProps } from '../../ui/ukhsa/Map/shared/controls/MapLegendControl'
-import { ZoomControl } from '../../ui/ukhsa/Map/shared/controls/ZoomControl'
-import { useMapRef } from '../../ui/ukhsa/Map/shared/hooks/useMapRef'
-import { UKHSALogoLayer } from '../../ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
 
 const { BaseLayer, CoverLayer } = {
   BaseLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/BaseLayer'), {
     ssr: false,
   }),
-  CoverLayer: dynamic(() => import('@/app/components/ui/ukhsa/Map/shared/layers/CoverLayer'), {
+  CoverLayer: dynamic(() => import('@/app/features/global-filter/components/global-filter-map/Map/layers/CoverLayer'), {
     ssr: false,
   }),
 }
@@ -82,17 +81,11 @@ export default function MapCard({
         selectedGeographyFilters={selectedGeographyFilters}
       />
     )
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [thresholdData, mapData])
 
-  let date
-  if (mapData) {
-    const { latest_date } = mapData
-    date = `Last updated ${formatDate(latest_date)}`
-  }
-
   return (
-    <>
-      {date && <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{date}</p>}
+    <div className="relative" data-testid="ukhsa-map-container">
       <MapContainer
         {...options}
         id={mapId}
@@ -114,6 +107,16 @@ export default function MapCard({
         {children}
       </MapContainer>
       <MapLegendControl thresholdData={thresholdData} />
-    </>
+      {/* Show loading overlay when map data is being fetched */}
+      {mapDataLoading && (
+        <div className="absolute inset-0 z-[1000] flex items-center justify-center">
+          <ClientInformationCard
+            variant="loading"
+            title="Map loading"
+            message="Requesting map based on selected filters"
+          />
+        </div>
+      )}
+    </div>
   )
 }

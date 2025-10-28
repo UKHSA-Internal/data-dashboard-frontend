@@ -28,7 +28,7 @@ const FilterContent = ({ isMobile }: { isMobile: boolean }) => {
           <CrossIcon colour="var(--colour-blue)" />
         </span>
       </button>
-      <div>
+      <div data-testid="selected-filters-list">
         {selectedFilters!.map((filter) => (
           <button
             key={filter.id}
@@ -53,7 +53,7 @@ export default function SelectedFilters() {
 
   return (
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 relative flex flex-wrap bg-grey-4">
-      <details className="govuk-details govuk-!-margin-bottom-0 w-full md:hidden">
+      <details className="govuk-details govuk-!-margin-bottom-0 w-full md:hidden" data-testid="selected-filters-mobile">
         <summary className="govuk-details__summary">
           <span className="govuk-details__summary-text">Show selected filters ({selectedFilters!.length})</span>
         </summary>

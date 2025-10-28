@@ -312,7 +312,6 @@ export const mockLinkedMapCard = Mock.of<CardType>({
   type: 'filter_linked_map',
   value: {
     title_prefix: 'Map Heading',
-    legend_title: 'Level of Coverage',
   },
 })
 

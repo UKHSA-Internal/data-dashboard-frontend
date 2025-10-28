@@ -1,7 +1,7 @@
 'use client'
 
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
-import { useGlobalFilters } from '@/app/context/globalFilterContext'
+import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
 import SubplotFilterCard from './SubplotFilterCard'
 

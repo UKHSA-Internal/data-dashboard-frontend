@@ -12,11 +12,14 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import About from '@/app/components/cms/About/About'
+import { SubplotClientDownload } from '@/app/components/cms/Download/SubplotClientDownload'
+import { SubplotClientTable } from '@/app/components/cms/Table/SubplotClientTable'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 
 import { Card } from '../Card/Card'
+import DropdownTab from '../Tabs/DropdownTab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
 
 interface SubplotFilterCardProps {
@@ -73,7 +76,7 @@ const SubplotFilterCard = ({
                   <span>Chart</span>
                 </Link>
               </TabsTrigger>
-              {/* <TabsTrigger
+              <TabsTrigger
                 asChild
                 value={`${kebabCase(title)}-table`}
                 aria-controls={`table-${kebabCase(title)}-content`}
@@ -93,7 +96,7 @@ const SubplotFilterCard = ({
                 <Link href={`#download-${kebabCase(title)}`}>
                   <span>Download</span>
                 </Link>
-              </TabsTrigger> */}
+              </TabsTrigger>
               {about && (
                 <TabsTrigger
                   asChild
@@ -106,6 +109,14 @@ const SubplotFilterCard = ({
                 </TabsTrigger>
               )}
             </TabsList>
+            <DropdownTab
+              aria-label="Select for selecting chart content"
+              className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
+              tabGroupTitle={`${kebabCase(title)}`}
+              defaultValue={`${kebabCase(title)}-chart`}
+              showAbout={about ? true : false}
+              showDownload={true}
+            />
             <TabsContent
               value={`${kebabCase(title)}-chart`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
@@ -125,13 +136,23 @@ const SubplotFilterCard = ({
                 timePeriodTitle={timePeriodTitle}
               />
             </TabsContent>
-            {/* <TabsContent
+            <TabsContent
               value={`${kebabCase(title)}-table`}
               className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
               data-type="table"
               id={`table-${kebabCase(title)}-content`}
             >
-              Table content
+              <SubplotClientTable
+                size={'wide'}
+                timestamp={date}
+                geography={geography}
+                geographyFilters={geographyFilters}
+                dataFilters={selectedVaccinations}
+                selectedThresholds={selectedThresholds}
+                timePeriods={timePeriods}
+                currentTimePeriodIndex={currentTimePeriodIndex}
+                cardData={cardData}
+              />
             </TabsContent>
             <TabsContent
               value={`${kebabCase(title)}-download`}
@@ -139,8 +160,15 @@ const SubplotFilterCard = ({
               data-type="download"
               id={`download-${kebabCase(title)}-content`}
             >
-              Download content
-            </TabsContent> */}
+              <SubplotClientDownload
+                geography={geography}
+                geographyFilters={geographyFilters}
+                dataFilters={selectedVaccinations}
+                timePeriods={timePeriods}
+                currentTimePeriodIndex={currentTimePeriodIndex}
+                selectedThresholds={selectedThresholds}
+              />
+            </TabsContent>
             {about && (
               <TabsContent
                 value={`${kebabCase(title)}-about`}
