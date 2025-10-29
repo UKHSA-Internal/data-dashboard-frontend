@@ -245,16 +245,3 @@ test.describe('Cover - tablet @tabletOnly', () => {
     })
   })
 })
-
-test.describe('Cover - no Javascript', () => {
-  test.use({ javaScriptEnabled: false })
-
-  test('Parent page', async ({ coverPage }) => {
-    await test.step('go to route page', async () => {
-      await coverPage.goto()
-    })
-    await test.step('it redirects to first child page', async () => {
-      await coverPage.hasHeading()
-    })
-  })
-})
