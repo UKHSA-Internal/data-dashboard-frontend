@@ -1,4 +1,5 @@
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import React, { ReactElement } from 'react'
 
 interface TimePeriodSelectorProps {
   timePeriods: TimePeriod[]
@@ -22,7 +23,7 @@ export const TimePeriodSelector = ({
   currentTimePeriodIndex,
   onTimePeriodChange,
   timePeriodTitle,
-}: TimePeriodSelectorProps): JSX.Element => {
+}: TimePeriodSelectorProps): ReactElement => {
   const currentTimePeriod = timePeriods[currentTimePeriodIndex]
   const isFirstPeriod = currentTimePeriodIndex === 0
   const isLastPeriod = currentTimePeriodIndex === timePeriods.length - 1
