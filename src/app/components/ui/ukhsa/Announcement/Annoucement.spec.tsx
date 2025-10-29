@@ -2,6 +2,18 @@ import { render } from '@/config/test-utils'
 
 import { Announcement } from './Announcement'
 
+jest.mock('react-plotly.js', () => ({
+  default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
+}))
+
+Object.defineProperty(window, 'URL', {
+  value: {
+    createObjectURL: jest.fn(() => 'mock-object-url'),
+    revokeObjectURL: jest.fn(),
+  },
+  writable: true,
+})
+
 test('renders "information variant" announcement', async () => {
   const { getByRole, getByText } = render(
     await Announcement({

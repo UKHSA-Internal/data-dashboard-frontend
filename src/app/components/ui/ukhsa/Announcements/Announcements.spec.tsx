@@ -3,6 +3,18 @@ import { render } from '@/config/test-utils'
 import { BannerVariant } from '../GlobalBanner/GlobalBanner'
 import { Announcements } from './Announcements'
 
+jest.mock('react-plotly.js', () => ({
+  default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
+}))
+
+Object.defineProperty(window, 'URL', {
+  value: {
+    createObjectURL: jest.fn(() => 'mock-object-url'),
+    revokeObjectURL: jest.fn(),
+  },
+  writable: true,
+})
+
 test('renders multiple announcements when provided', async () => {
   const announcementsData = [
     {

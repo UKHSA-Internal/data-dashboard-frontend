@@ -4,6 +4,18 @@ import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { View } from './View'
 
+jest.mock('react-plotly.js', () => ({
+  default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
+}))
+
+Object.defineProperty(window, 'URL', {
+  value: {
+    createObjectURL: jest.fn(() => 'mock-object-url'),
+    revokeObjectURL: jest.fn(),
+  },
+  writable: true,
+})
+
 jest.mocked(client).mockResolvedValue({
   data: allPagesMock,
   status: 200,
