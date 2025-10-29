@@ -1,24 +1,27 @@
-import { headers } from 'next/headers'
-
 import { getReturnPathWithParams } from './getReturnPathWithParams'
 import { getSearchParams } from './getSearchParams'
 
-jest.mock('next/headers')
-jest.mock('./getSearchParams')
+jest.mock('next/headers', () => ({
+  headers: jest.fn(),
+}))
+jest.mock('./getSearchParams', () => ({
+  getSearchParams: jest.fn(),
+}))
 
 describe('getReturnPathWithParams', () => {
-  const mockSearchParams = jest.mocked(getSearchParams)
+  const mockSearchParams = getSearchParams as jest.MockedFunction<typeof getSearchParams>
   const mockHeaders = jest.fn()
 
-  ;(headers as jest.Mock).mockImplementation(() => ({
+  const { headers } = require('next/headers')
+  ;(headers as jest.Mock).mockReturnValue({
     get: mockHeaders,
-  }))
+  })
 
-  test('should construct a return URL with returnUrl parameter if "page" is present in search params', () => {
+  test('should construct a return URL with returnUrl parameter if "page" is present in search params', async () => {
     mockHeaders.mockReturnValue('http://localhost/metrics-documentation?page=6')
-    mockSearchParams.mockReturnValue(new URLSearchParams({ page: '6' }))
+    mockSearchParams.mockResolvedValue(new URLSearchParams({ page: '6' }))
 
-    const returnUrlBuilder = getReturnPathWithParams()
+    const returnUrlBuilder = await getReturnPathWithParams()
     const constructedUrl = returnUrlBuilder('/metrics-documentation/parainfluenza-testing-positivity-by-week')
 
     expect(constructedUrl).toBe(
@@ -28,11 +31,11 @@ describe('getReturnPathWithParams', () => {
     )
   })
 
-  test('should construct a return URL without returnUrl parameter if "page" is not present in search params', () => {
+  test('should construct a return URL without returnUrl parameter if "page" is not present in search params', async () => {
     mockHeaders.mockReturnValue('http://localhost/metrics-documentation')
-    mockSearchParams.mockReturnValue(new URLSearchParams())
+    mockSearchParams.mockResolvedValue(new URLSearchParams())
 
-    const returnUrlBuilder = getReturnPathWithParams()
+    const returnUrlBuilder = await getReturnPathWithParams()
     const constructedUrl = returnUrlBuilder('/metrics-documentation/parainfluenza-testing-positivity-by-week')
 
     expect(constructedUrl).toBe(`/metrics-documentation/parainfluenza-testing-positivity-by-week`)
