@@ -169,7 +169,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
       })
     })
     await test.step('shows View map of weather health alert button', async () => {
-      await weatherHealthAlertsChildPage.hasMapLink('heat')
+      await weatherHealthAlertsChildPage.hasMapLink('cold')
     })
   })
 
