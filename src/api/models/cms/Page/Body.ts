@@ -236,6 +236,15 @@ export const CompositeBody = z.array(
       ),
       id: z.string(),
     }),
+    z.object({
+      type: z.literal('wha_button'),
+      value: z.object({
+        text: z.string(),
+        button_type: z.string(),
+        geography_code: z.string(),
+      }),
+      id: z.string(),
+    }),
   ])
 )
 
