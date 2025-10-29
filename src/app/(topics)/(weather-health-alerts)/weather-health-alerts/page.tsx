@@ -38,6 +38,7 @@ export default async function WeatherHealthAlerts() {
     type: PageType.Composite,
   })
   const childPages = await getPages({ child_of: id.toString() })
+  // WHA button logic
   const weatherType = body.find((block) => block.type === 'wha_button') as {
     type: 'wha_button'
     value: {
