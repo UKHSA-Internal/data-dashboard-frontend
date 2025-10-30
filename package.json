@@ -9,6 +9,7 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint .",
+    "lint:id-files": "eslint . --format json | node -e \"const d=JSON.parse(require('fs').readFileSync(0,'utf-8')); d.filter(f=>f.messages.some(m=>m.ruleId==='@typescript-eslint/no-non-null-assertion')).forEach(f=>console.log(f.filePath))\"",
     "export": "next export",
     "lighthouse": "npx unlighthouse",
     "tsc": "npx tsc --noEmit",

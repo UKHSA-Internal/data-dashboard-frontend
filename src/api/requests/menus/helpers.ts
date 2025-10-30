@@ -16,7 +16,7 @@ const checkResponse = (response: MenuResponse) => {
       throw new Error()
     }
     return response.data.active_menu
-  } catch (error) {
+  } catch (_error) {
     return []
   }
 }

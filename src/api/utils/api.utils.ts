@@ -101,7 +101,7 @@ export async function client<T>(
         }
         const data = await response.json()
         return { data, status, headers }
-      } catch (error) {
+      } catch (_error) {
         return Promise.reject(JSON.stringify(response))
       }
     } else {

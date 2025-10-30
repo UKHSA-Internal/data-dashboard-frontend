@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 
 import rehypeToc, { HtmlElementNode } from '@jsdevtools/rehype-toc'
@@ -23,6 +22,8 @@ export const coreComponents: any = {
   h4: ({ children }: { children: ReactNode }) => <h4 className="govuk-heading-s">{children}</h4>,
   a: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
     const href = 'href' in props ? props.href : undefined
+
+    // Handle special change-settings links
     if (typeof href === 'string' && href.includes('change-settings=1')) {
       return (
         <Link href={href} className="govuk-link">
@@ -30,11 +31,18 @@ export const coreComponents: any = {
         </Link>
       )
     }
-    return (
-      <a href={typeof href === 'string' ? href : undefined} className="govuk-link">
-        {children}
-      </a>
-    )
+
+    // If href is valid, render an anchor
+    if (typeof href === 'string' && href) {
+      return (
+        <a href={href} className="govuk-link">
+          {children}
+        </a>
+      )
+    }
+
+    // If no href, render as a span (non-interactive)
+    return <span className="govuk-link">{children}</span>
   },
   ul: ({ children }: { children: ReactNode }) => (
     <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>
@@ -77,6 +85,8 @@ export const linkedHeadingsPlugins: any = [
 export const linkedHeadingsComponents: any = {
   a: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
     const href = 'href' in props ? (props.href as string) : undefined
+
+    // Handle special change-settings links
     if (typeof href === 'string' && href.includes('change-settings=1')) {
       return (
         <Link href={href} className="govuk-link">
@@ -84,14 +94,18 @@ export const linkedHeadingsComponents: any = {
         </Link>
       )
     }
-    return (
-      <a
-        href={typeof href === 'string' ? href : undefined}
-        className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0"
-      >
-        {children}
-      </a>
-    )
+
+    // If href is valid, render an anchor
+    if (typeof href === 'string' && href) {
+      return (
+        <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
+          {children}
+        </a>
+      )
+    }
+
+    // If no href, render as a span (non-interactive)
+    return <span className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">{children}</span>
   },
   h2: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
     const id = 'id' in props ? (props.id as string) : undefined
