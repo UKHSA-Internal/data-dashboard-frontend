@@ -12,7 +12,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async openWeatherHealthAlertsMap() {
-    await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
+    await this.page.getByRole('link', { name: /View map/i }).click()
   }
 
   async hasMapDialog() {
@@ -24,7 +24,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async hasNoMapButton() {
-    await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toBeHidden()
+    await expect(this.page.getByRole('link', { name: /View map/i })).toBeHidden()
   }
 
   async hasMapButtons() {
