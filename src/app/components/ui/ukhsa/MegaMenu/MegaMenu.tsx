@@ -1,5 +1,6 @@
 import clsx from 'clsx'
 import Link from 'next/link'
+import { ReactNode } from 'react'
 
 import { getMenu } from '@/api/requests/menus/getMenu'
 import { transformMenuSnippetToMegaMenu } from '@/api/requests/menus/helpers'
@@ -73,7 +74,7 @@ export async function MegaMenu({ className = 'govuk-!-padding-top-2' }: MegaMenu
                           {link.description ? (
                             <RichText
                               components={{
-                                p: ({ children }) => (
+                                p: ({ children }: { children: ReactNode }) => (
                                   <p className="govuk-body-s govuk-!-margin-top-1 govuk-!-margin-bottom-0">
                                     {children}
                                   </p>

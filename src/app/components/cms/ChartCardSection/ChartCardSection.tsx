@@ -16,7 +16,7 @@ type ChartCardSectionProps = {
   chartId?: string
 }
 
-export function ChartCardSection({
+export async function ChartCardSection({
   value,
   heading,
   showMoreSections,
@@ -30,13 +30,13 @@ export function ChartCardSection({
         'lg:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr]': value.cards.length > 2,
       })}
     >
-      {value.cards.map((card: any, index: any) => {
+      {value.cards.map(async (card: any, index: any) => {
         if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
           return (
             <div key={index}>
               <Link
                 className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat"
-                href={getShowMoreURL(showMoreSections, kebabCase(heading))}
+                href={await getShowMoreURL(showMoreSections, kebabCase(heading))}
               >
                 <span className="pl-4">Show More</span>
               </Link>
