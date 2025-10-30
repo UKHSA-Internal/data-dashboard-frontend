@@ -1,3 +1,6 @@
+/* eslint-disable @typescript-eslint/no-var-requires */
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
 import rehypeToc, { HtmlElementNode } from '@jsdevtools/rehype-toc'
 import Link from 'next/link'
 import { ComponentProps, ReactNode } from 'react'
@@ -6,7 +9,6 @@ import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
 
 type ReactMarkdownProps = ComponentProps<typeof ReactMarkdown>
-type Components = ReactMarkdownProps['components']
 export type RehypePlugins = NonNullable<ReactMarkdownProps['rehypePlugins']>
 
 /**
@@ -34,8 +36,12 @@ export const coreComponents: any = {
       </a>
     )
   },
-  ul: ({ children }: { children: ReactNode }) => <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>,
-  ol: ({ children }: { children: ReactNode }) => <ol className="govuk-list govuk-list--number govuk-list--spaced">{children}</ol>,
+  ul: ({ children }: { children: ReactNode }) => (
+    <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>
+  ),
+  ol: ({ children }: { children: ReactNode }) => (
+    <ol className="govuk-list govuk-list--number govuk-list--spaced">{children}</ol>
+  ),
   li: ({ children }: { children: ReactNode }) => <li>{children}</li>,
   p: ({ children }: { children: ReactNode }) => <p className="govuk-body">{children}</p>,
   code: ({ children }: { children: ReactNode }) => (

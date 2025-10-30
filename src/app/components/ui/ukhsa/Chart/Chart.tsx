@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import kebabCase from 'lodash/kebabCase'
-import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { z } from 'zod'
 

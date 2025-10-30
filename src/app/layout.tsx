@@ -5,9 +5,9 @@ const font = Roboto({ weight: ['400', '700'], subsets: ['latin'], display: 'swap
 import './globals.scss'
 
 import { cookies } from 'next/headers'
+import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
-import { NuqsAdapter } from 'nuqs/adapters/next/app'
 
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
