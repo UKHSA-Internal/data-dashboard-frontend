@@ -12,7 +12,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async openWeatherHealthAlertsMap() {
-    await this.page.getByRole('link', { name: /View map/i }).click()
+    await this.page.locator('a[href*="v=map"]').click()
   }
 
   async hasMapDialog() {
