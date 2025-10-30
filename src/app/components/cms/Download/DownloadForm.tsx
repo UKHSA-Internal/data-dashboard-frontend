@@ -46,7 +46,7 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId }: DownloadFormPr
       if (data) downloadFile(`ukhsa-chart-download.${formData.get('format')}`, new Blob([data]))
 
       setDownloading(false)
-    } catch (error) {
+    } catch (_error) {
       setDownloading(false)
       router.replace('/error')
     }
