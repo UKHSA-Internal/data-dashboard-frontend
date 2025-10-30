@@ -105,8 +105,7 @@ test.describe('Weather Health Alerts map interactivty', () => {
     })
   })
 
-  // TODO: Investigate flakeyness CDD-2136
-  test.skip('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
+  test('Zooming in and out by mouse', async ({ app, weatherHealthAlertsMapPage }) => {
     await test.step('open weather health alerts page', async () => {
       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
     })
@@ -289,468 +288,468 @@ test.describe('Weather Health Alerts map interactivty', () => {
   })
 })
 
-// Need to investigate flaky test: CDD-2136
-// -------------------------------------------------
+test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
+  test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000001')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Red Alert',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-// test.describe('Accessing Weather Health Alerts Map Regions by Mouse', () => {
+  test('Amber - North West', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Amber',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-//   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000001')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Red',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('Yellow - East Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000004')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Yellow',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-//   test('Amber - North West', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Amber',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('Green - London', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000007')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Green',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-//   test('Yellow - East Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000004')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Yellow',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('North West', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
+    })
+  })
 
-//   test('Green - London', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000007')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Green',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('West Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000005')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('West Midlands')
+    })
+  })
 
-//   test('North West', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000002')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
-//     })
-//   })
+  test('East of England', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000006')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('East of England')
+    })
+  })
 
-//   test('West Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000005')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('West Midlands')
-//     })
-//   })
+  // South east click doesn't work, the hitbox for clicking seems to cover london so it clicks there instead
+  // Testing for mobile only ensures that the functionality still works as expected
+  test('South East @mobileOnly', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'chromium', 'Skipping test on chrome as for mobile only')
 
-//   test('East of England', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000006')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('East of England')
-//     })
-//   })
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000008')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('South East')
+    })
+  })
 
-//   // TODO: South east click doesn't work, the hitbox for clicking seems to cover london so it clicks there instead? Investigate.
-//   // test('South East', async ({ app, weatherHealthAlertsMapPage }) => {
-//   //   await test.step('open weather health alerts page', async () => {
-//   //     await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//   //   })
-//   //   await test.step('clicks region', async () => {
-//   //     await weatherHealthAlertsMapPage.clickRegion('feature-E12000008')
-//   //   })
-//   //   await test.step('dialog opens', async () => {
-//   //     await weatherHealthAlertsMapPage.hasdialogContentTitle('South East')
-//   //   })
-//   // })
+  // Key is in the way on mobile tests, cannot click.
+  // Testing for desktop only ensures that the functionality still works as expected
+  test('South West @desktopOnly', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
 
-//   test('South West', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
-//     test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000009')
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('South West')
+    })
+  })
 
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000009')
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('South West')
-//     })
-//   })
+  test('go to alert page link works @desktopOnly', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
+    test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
 
-//   test('go to alert page link works', async ({ app, weatherHealthAlertsMapPage, browserName }) => {
-//     test.skip(browserName === 'firefox', 'Firefox intermittently failing here, CDD-2076 to investigate')
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('clicks region', async () => {
+      await weatherHealthAlertsMapPage.clickRegion('feature-E12000009')
+    })
+    await test.step('clicks go to alert page link', async () => {
+      await weatherHealthAlertsMapPage.clickDialogGoToAlertPage()
+    })
+    await test.step('check navigated successfully', async () => {
+      await app.hasHeading('South West')
+    })
+    await test.step('check map is closed', async () => {
+      await weatherHealthAlertsMapPage.dialogIsClosed('Weather health alerts map')
+    })
+  })
+})
 
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('clicks region', async () => {
-//       await weatherHealthAlertsMapPage.clickRegion('feature-E12000009')
-//     })
-//     await test.step('clicks go to alert page link', async () => {
-//       await weatherHealthAlertsMapPage.clickDialogGoToAlertPage()
-//     })
-//     await test.step('check navigated successfully', async () => {
-//       await app.hasHeading('South West')
-//     })
-//     await test.step('check map is closed', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsClosed('Weather health alerts map')
-//     })
-//   })
-// })
+test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopOnly', () => {
+  test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(1)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('North East')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Red',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-// test.describe('Accessing Weather Health Alerts Map Regions by Keyboard @desktopOnly', () => {
+  test('Amber - North West', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(2)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('North West')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Amber',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-//   test('Red - North East', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(1)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('North East')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('North East')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Red',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('Yellow - East Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(4)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Yellow',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-//   test('Amber - North West', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(2)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('North West')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('North West')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Amber',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('Green - London', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(7)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('London')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
+    })
+    await test.step('has summary component in dialog', async () => {
+      await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
+        type: 'Cold Health Alert',
+        status: 'Green',
+        start: '6 May 2024 at 12:00pm',
+        end: '8 May 2024 at 12:00pm',
+      })
+    })
+    await test.step('has dialog description', async () => {
+      await weatherHealthAlertsMapPage.hasDialogDescription(
+        'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
+      )
+    })
+  })
 
-//   test('Yellow - East Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(4)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('East Midlands')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('East Midlands')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Yellow',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('Yorkshire and the Humber', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(3)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Yorkshire and The Humber')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('Yorkshire and The Humber')
+    })
+  })
 
-//   test('Green - London', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(7)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('London')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('London')
-//     })
-//     await test.step('has summary component in dialog', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogWeatherHealthAlertSummary({
-//         type: 'Cold Health Alert',
-//         status: 'Green',
-//         start: '6 May 2024 at 12:00pm',
-//         end: '8 May 2024 at 12:00pm',
-//       })
-//     })
-//     await test.step('has dialog description', async () => {
-//       await weatherHealthAlertsMapPage.hasDialogDescription(
-//         'Severe impacts are expected across the health and social care sector due to forecast weather conditions, including'
-//       )
-//     })
-//   })
+  test('West Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(5)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('West Midlands')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('West Midlands')
+    })
+  })
 
-//   test('Yorkshire and the Humber', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(3)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Yorkshire and The Humber')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('Yorkshire and The Humber')
-//     })
-//   })
+  test('East of England', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(6)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('East of England')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('East of England')
+    })
+  })
 
-//   test('West Midlands', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(5)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('West Midlands')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('West Midlands')
-//     })
-//   })
+  test('South East', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(8)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('South East')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('South East')
+    })
+  })
 
-//   test('East of England', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(6)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('East of England')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('East of England')
-//     })
-//   })
-
-//   test('South East', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(8)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('South East')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('South East')
-//     })
-//   })
-
-//   test('South West', async ({ app, weatherHealthAlertsMapPage }) => {
-//     await test.step('open weather health alerts page', async () => {
-//       await app.goto('/weather-health-alerts/cold?v=map&type=cold')
-//     })
-//     await test.step('map is displaying', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
-//     })
-//     await test.step('shows highlighted choropleth regions', async () => {
-//       await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
-//     })
-//     await test.step('select region', async () => {
-//       await weatherHealthAlertsMapPage.accessRegionWithKeyboard(9)
-//     })
-//     await test.step('dialog opens', async () => {
-//       await weatherHealthAlertsMapPage.dialogIsOpen('South West')
-//       await weatherHealthAlertsMapPage.hasDialogContentTitle('South West')
-//     })
-//   })
-// })
+  test('South West', async ({ app, weatherHealthAlertsMapPage }) => {
+    await test.step('open weather health alerts page', async () => {
+      await app.goto('/weather-health-alerts/cold?v=map&type=cold')
+    })
+    await test.step('map is displaying', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('Weather health alerts map')
+    })
+    await test.step('shows highlighted choropleth regions', async () => {
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(9)
+    })
+    await test.step('select region', async () => {
+      await weatherHealthAlertsMapPage.accessRegionWithKeyboard(9)
+    })
+    await test.step('dialog opens', async () => {
+      await weatherHealthAlertsMapPage.dialogIsOpen('South West')
+      await weatherHealthAlertsMapPage.hasDialogContentTitle('South West')
+    })
+  })
+})
 
 test.describe('Weather health alerts map, smoke test - desktop @smoke', () => {
   test.use({ viewport: viewports.desktop })
