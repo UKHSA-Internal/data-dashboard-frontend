@@ -84,18 +84,11 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async dialogIsOpen(name: string) {
-    const dialog = this.page.getByRole('dialog', { name: new RegExp(name, 'i') })
-    await dialog.waitFor()
-    await expect(dialog).toBeVisible()
+    await expect(this.page.getByRole('dialog', { name })).toBeVisible()
   }
 
   async dialogIsClosed(name: string) {
-    const dialog = this.page.getByRole('dialog', { name: new RegExp(name, 'i') })
-    try {
-      await expect(dialog).toBeHidden({ timeout: 2000 })
-    } catch {
-      await expect(dialog).toHaveCount(0)
-    }
+    await expect(this.page.getByRole('dialog', { name })).toBeHidden()
   }
 
   async hasDialogContentTitle(region: string) {
