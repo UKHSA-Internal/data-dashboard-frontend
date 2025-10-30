@@ -1,5 +1,6 @@
-import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import React, { ReactElement } from 'react'
+
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
 interface TimePeriodSelectorProps {
   timePeriods: TimePeriod[]

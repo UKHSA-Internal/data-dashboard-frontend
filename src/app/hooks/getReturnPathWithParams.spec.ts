@@ -12,6 +12,7 @@ describe('getReturnPathWithParams', () => {
   const mockSearchParams = getSearchParams as jest.MockedFunction<typeof getSearchParams>
   const mockHeaders = jest.fn()
 
+  /* eslint-disable @typescript-eslint/no-var-requires */
   const { headers } = require('next/headers')
   ;(headers as jest.Mock).mockReturnValue({
     get: mockHeaders,
