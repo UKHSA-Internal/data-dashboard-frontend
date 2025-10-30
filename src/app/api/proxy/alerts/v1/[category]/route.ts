@@ -3,14 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import { HealthAlertTypes } from '@/api/models/Alerts'
 import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
 
-interface PathParameters {
-  params: Promise<{
-    category?: HealthAlertTypes
-  }>
-}
-
-export async function GET(req: NextRequest, props: PathParameters) {
-  const params = await props.params;
+export async function GET(req: NextRequest, context: { params: Promise<{ category: string }> }) {
+  const params = await context.params;
 
   const {
     category
@@ -22,7 +16,7 @@ export async function GET(req: NextRequest, props: PathParameters) {
     })
   }
 
-  const proxiedResponse = await getHealthAlerts(category)
+  const proxiedResponse = await getHealthAlerts(category as HealthAlertTypes)
 
   if (proxiedResponse.success) {
     return NextResponse.json(proxiedResponse.data)

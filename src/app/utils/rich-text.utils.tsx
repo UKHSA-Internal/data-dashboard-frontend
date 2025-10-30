@@ -1,6 +1,6 @@
 import rehypeToc, { HtmlElementNode } from '@jsdevtools/rehype-toc'
 import Link from 'next/link'
-import { ComponentProps } from 'react'
+import { ComponentProps, ReactNode } from 'react'
 import ReactMarkdown from 'react-markdown'
 import rehypeRaw from 'rehype-raw'
 import rehypeSlug from 'rehype-slug'
@@ -12,15 +12,16 @@ export type RehypePlugins = NonNullable<ReactMarkdownProps['rehypePlugins']>
 /**
  * Default Plugins and components for rich text
  */
-export const corePlugins: RehypePlugins = [rehypeRaw]
+export const corePlugins: any = [rehypeRaw]
 
-export const coreComponents: Components = {
-  h1: ({ children }) => <h1>{children}</h1>,
-  h2: ({ children }) => <h2 className="govuk-heading-l">{children}</h2>,
-  h3: ({ children }) => <h3 className="govuk-heading-m">{children}</h3>,
-  h4: ({ children }) => <h4 className="govuk-heading-s">{children}</h4>,
-  a: ({ children, href }) => {
-    if (href?.includes('change-settings=1')) {
+export const coreComponents: any = {
+  h1: ({ children }: { children: ReactNode }) => <h1>{children}</h1>,
+  h2: ({ children }: { children: ReactNode }) => <h2 className="govuk-heading-l">{children}</h2>,
+  h3: ({ children }: { children: ReactNode }) => <h3 className="govuk-heading-m">{children}</h3>,
+  h4: ({ children }: { children: ReactNode }) => <h4 className="govuk-heading-s">{children}</h4>,
+  a: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
+    const href = 'href' in props ? props.href : undefined
+    if (typeof href === 'string' && href.includes('change-settings=1')) {
       return (
         <Link href={href} className="govuk-link">
           {children}
@@ -28,16 +29,16 @@ export const coreComponents: Components = {
       )
     }
     return (
-      <a href={href} className="govuk-link">
+      <a href={typeof href === 'string' ? href : undefined} className="govuk-link">
         {children}
       </a>
     )
   },
-  ul: ({ children }) => <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>,
-  ol: ({ children }) => <ol className="govuk-list govuk-list--number govuk-list--spaced">{children}</ol>,
-  li: ({ children }) => <li>{children}</li>,
-  p: ({ children }) => <p className="govuk-body">{children}</p>,
-  code: ({ children }) => (
+  ul: ({ children }: { children: ReactNode }) => <ul className="govuk-list govuk-list--bullet govuk-list--spaced">{children}</ul>,
+  ol: ({ children }: { children: ReactNode }) => <ol className="govuk-list govuk-list--number govuk-list--spaced">{children}</ol>,
+  li: ({ children }: { children: ReactNode }) => <li>{children}</li>,
+  p: ({ children }: { children: ReactNode }) => <p className="govuk-body">{children}</p>,
+  code: ({ children }: { children: ReactNode }) => (
     <code className="inline-block max-w-full break-words bg-[var(--colour-code-background)] px-[3px] py-[1px] font-[var(--ukhsa-font-code)] text-[var(--colour-code-dark-red)] text-shadow-[0_1px_white]">
       {children}
     </code>
@@ -47,7 +48,7 @@ export const coreComponents: Components = {
 /**
  * Plugins and components for when a table of contents is required
  */
-export const linkedHeadingsPlugins: RehypePlugins = [
+export const linkedHeadingsPlugins: any = [
   rehypeSlug,
   [
     rehypeToc,
@@ -67,9 +68,10 @@ export const linkedHeadingsPlugins: RehypePlugins = [
   ],
 ]
 
-export const linkedHeadingsComponents: Components = {
-  a: ({ children, href }) => {
-    if (href?.includes('change-settings=1')) {
+export const linkedHeadingsComponents: any = {
+  a: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
+    const href = 'href' in props ? (props.href as string) : undefined
+    if (typeof href === 'string' && href.includes('change-settings=1')) {
       return (
         <Link href={href} className="govuk-link">
           {children}
@@ -77,24 +79,31 @@ export const linkedHeadingsComponents: Components = {
       )
     }
     return (
-      <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
+      <a
+        href={typeof href === 'string' ? href : undefined}
+        className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0"
+      >
         {children}
       </a>
     )
   },
-  h2: ({ children, id }) => (
-    <h2 className="govuk-!-margin-bottom-0 govuk-heading-l">
-      <Link
-        href={`#${id}`}
-        id={id}
-        className="govuk-!-margin-bottom-4 govuk-!-margin-top-3 govuk-link--no-visited-state inline-block"
-      >
-        {children}
-      </Link>
-    </h2>
-  ),
-  nav: ({ children, className }) => {
-    if (className?.includes('toc')) {
+  h2: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
+    const id = 'id' in props ? (props.id as string) : undefined
+    return (
+      <h2 className="govuk-!-margin-bottom-0 govuk-heading-l">
+        <Link
+          href={`#${id}`}
+          id={typeof id === 'string' ? id : undefined}
+          className="govuk-!-margin-bottom-4 govuk-!-margin-top-3 govuk-link--no-visited-state inline-block"
+        >
+          {children}
+        </Link>
+      </h2>
+    )
+  },
+  nav: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
+    const className = 'className' in props ? (props.className as string) : undefined
+    if (typeof className === 'string' && className.includes('toc')) {
       return (
         <nav aria-label="Contents" className="govuk-!-margin-bottom-5">
           <h2 className="govuk-body-m govuk-!-margin-bottom-1">Contents</h2>
@@ -104,11 +113,13 @@ export const linkedHeadingsComponents: Components = {
     }
     return <nav>{children}</nav>
   },
-  li: ({ children, className, id }) => {
-    if (className?.includes('toc')) {
+  li: ({ children, ...props }: { children: ReactNode; [key: string]: any }) => {
+    const className = 'className' in props ? (props.className as string) : undefined
+    const id = 'id' in props ? (props.id as string) : undefined
+    if (typeof className === 'string' && className.includes('toc')) {
       return (
         <li
-          id={id ?? ''}
+          id={typeof id === 'string' ? id : ''}
           className="govuk-!-margin-left-2 govuk-!-margin-bottom-1 bg-dash bg-[left_center] bg-no-repeat pl-6"
         >
           {children}
