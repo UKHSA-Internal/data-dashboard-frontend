@@ -49,8 +49,8 @@ export class WeatherHealthAlertsChildPage {
 
   async opensMapLink() {
     // await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
-    await this.page.getByRole('link', { name: /View map/i }).click()
-
+    // await this.page.getByRole('link', { name: /View map/i }).click()
+    await this.page.locator('a[href*="v=map"]').click()
     await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
 
     await this.page.getByRole('button', { name: 'Exit map' }).click()
