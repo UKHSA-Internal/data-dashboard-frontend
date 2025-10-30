@@ -69,7 +69,7 @@ export function RelatedLink({ title, url, children }: RelatedLinkProps) {
         {children && (
           <RichText
             components={{
-              p: ({ children }) => <p className="govuk-body-m break-words">{children}</p>,
+              p: ({ children }: { children: ReactNode }) => <p className="govuk-body-m break-words">{children}</p>,
             }}
           >
             {children}
@@ -89,7 +89,7 @@ export function RelatedSidebarLink({ title, url, children, className }: RelatedL
       {children && (
         <RichText
           components={{
-            p: ({ children }) => <p className="govuk-body-m break-words">{children}</p>,
+            p: ({ children }: { children: ReactNode }) => <p className="govuk-body-m break-words">{children}</p>,
           }}
         >
           {children}

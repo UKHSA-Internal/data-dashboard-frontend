@@ -100,7 +100,7 @@ export default async function MetricsParentPage({
     initialPageSize: paginationSize,
   })
 
-  const setReturnPath = getReturnPathWithParams()
+  const setReturnPath = await getReturnPathWithParams()
 
   return (
     <View>
