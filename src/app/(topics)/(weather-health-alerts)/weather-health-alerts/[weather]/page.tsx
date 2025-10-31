@@ -75,6 +75,17 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
     related_links_layout: relatedLinksLayout,
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Composite>(weather)
+  // WHA button logic
+  const weatherType = body.find((block) => block.type === 'wha_button') as {
+    type: 'wha_button'
+    value: {
+      text: string
+      button_type: string
+      geography_code: string
+    }
+    id: string
+  }
+  const buttonText = weatherType?.value.text || ''
 
   return (
     <View>
@@ -91,7 +102,7 @@ export default async function WeatherHealthAlert({ params: { weather } }: Weathe
       </div>
 
       <Suspense>
-        <HealthAlertsLink type={weather} className="govuk-!-margin-bottom-5" />
+        <HealthAlertsLink type={weather} buttonText={buttonText} className="govuk-!-margin-bottom-5" />
       </Suspense>
 
       <div className="govuk-grid-row">

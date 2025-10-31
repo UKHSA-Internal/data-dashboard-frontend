@@ -12,9 +12,10 @@ interface HealthAlertsLinkProps {
   type: HealthAlertTypes
   regionId?: string
   className?: string
+  buttonText?: string
 }
 
-export default function HealthAlertsLink({ className, type, regionId }: HealthAlertsLinkProps) {
+export default function HealthAlertsLink({ className, type, regionId, buttonText }: HealthAlertsLinkProps) {
   const { t } = useTranslation('weatherHealthAlerts')
   const searchParams = useSearchParams()
 
@@ -43,7 +44,7 @@ export default function HealthAlertsLink({ className, type, regionId }: HealthAl
           fill="currentColor"
         ></path>
       </svg>
-      {t('map.trigger')}
+      {buttonText || t('map.trigger')}
     </Link>
   )
 }
