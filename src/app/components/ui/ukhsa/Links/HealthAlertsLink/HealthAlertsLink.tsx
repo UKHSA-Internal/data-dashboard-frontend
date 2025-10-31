@@ -44,7 +44,7 @@ export default function HealthAlertsLink({ className, type, regionId, buttonText
           fill="currentColor"
         ></path>
       </svg>
-      {buttonText ? buttonText : t('map.trigger')}
+      {buttonText || t('map.trigger')}
     </Link>
   )
 }
