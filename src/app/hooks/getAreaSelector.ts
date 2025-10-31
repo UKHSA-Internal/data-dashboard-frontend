@@ -17,8 +17,8 @@ import { getSearchParams } from './getSearchParams'
  * @returns An array containing 'areaType' and 'areaName' if both are present, otherwise nulls.
  */
 
-export const getAreaSelector = () => {
-  const searchParams = getSearchParams()
+export const getAreaSelector = async () => {
+  const searchParams = await getSearchParams()
 
   const areaType = searchParams.get('areaType')
   const areaName = searchParams.get('areaName')

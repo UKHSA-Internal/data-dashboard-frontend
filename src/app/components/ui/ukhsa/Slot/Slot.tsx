@@ -18,12 +18,12 @@ export function Slot({
   if (isValidElement(children)) {
     return cloneElement(children, {
       ...props,
-      ...children.props,
+      ...(children.props as any),
       style: {
         ...props.style,
-        ...children.props.style,
+        ...(children.props as any).style,
       },
-      className: twMerge(props.className, children.props.className),
+      className: twMerge(props.className, (children.props as any).className),
     })
   }
   if (Children.count(children) > 1) {

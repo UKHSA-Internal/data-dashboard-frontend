@@ -38,8 +38,8 @@ export async function Table({
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
-  const pathname = getPathname()
-  const [areaType, areaName] = getAreaSelector()
+  const pathname = await getPathname()
+  const [areaType, areaName] = await getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,

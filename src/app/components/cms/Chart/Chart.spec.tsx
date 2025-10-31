@@ -116,7 +116,7 @@ test('renders a narrow chart correctly', async () => {
 test('renders the chart by geography and geography type when both are present in the url search params', async () => {
   jest
     .mocked(getSearchParams)
-    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
+    .mockResolvedValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: true,
@@ -302,7 +302,7 @@ test('landing page half width charts should also have an acompanying third width
 test('renders a fallback message when the chart requests fail', async () => {
   const url = 'http://localhost?areaType=UKHSA+Region&areaName=North+East'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockResolvedValueOnce(new URL(url).searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: false,
@@ -351,7 +351,7 @@ test('renders a fallback message when the chart requests fail', async () => {
 test('Fallback message with escaped characters', async () => {
   const url = 'http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockResolvedValueOnce(new URL(url).searchParams)
 
   getChartsMock.mockResolvedValueOnce({
     success: false,

@@ -6,7 +6,7 @@
  */
 import Leaflet from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
-import { useCallback, useEffect, useState } from 'react'
+import { ReactElement,useCallback, useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { useDebounceCallback, useEventListener } from 'usehooks-ts'
 
@@ -16,7 +16,7 @@ import { Feature } from '../data/geojson/ukhsa-regions'
 
 const maxVisibleRegions = 9
 
-export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [JSX.Element, () => void] => {
+export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [ReactElement, () => void] => {
   const [, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
   const debouncedSetSelectedFeatureId = useDebounceCallback(setSelectedFeatureId, 200)
   const map = useMap()

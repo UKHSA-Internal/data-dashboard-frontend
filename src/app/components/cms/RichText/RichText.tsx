@@ -10,8 +10,10 @@ interface RichTextProps {
 
 export const RichText = ({ children, components, className }: RichTextProps) => {
   return (
-    <ReactMarkdown rehypePlugins={corePlugins} components={{ ...coreComponents, ...components }} className={className}>
-      {children}
-    </ReactMarkdown>
+    <div className={className}>
+      <ReactMarkdown rehypePlugins={corePlugins} components={{ ...coreComponents, ...components }}>
+        {children}
+      </ReactMarkdown>
+    </div>
   )
 }

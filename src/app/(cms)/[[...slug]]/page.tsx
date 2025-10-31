@@ -17,13 +17,14 @@ import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
 /**
  * Generates metadata for the page based on the dynamic slug.
  */
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: PageParams
-  searchParams: SearchParams
-}): Promise<Metadata> {
+export async function generateMetadata(
+  props: {
+    params: Promise<PageParams>
+    searchParams: Promise<SearchParams>
+  }
+): Promise<Metadata> {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { slug = [] } = params
   const pageType = await getPageTypeBySlug(slug)
   return await getPageMetadata(slug, searchParams, pageType)
@@ -46,7 +47,11 @@ const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = 
  * Determines the page type from the CMS and conditionally renders the appropriate components.
  */
 
-export default async function Page({ params, searchParams }: { params: PageParams; searchParams: SearchParams }) {
+export default async function Page(
+  props: { params: Promise<PageParams>; searchParams: Promise<SearchParams> }
+) {
+  const searchParams = await props.searchParams;
+  const params = await props.params;
   const { slug = [] } = params
 
   const pageType = await getPageTypeBySlug(slug)
