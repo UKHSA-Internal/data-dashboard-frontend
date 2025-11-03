@@ -36,8 +36,9 @@ export class WeatherHealthAlertsChildPage {
   }
 
   async hasMapLink(weather: HealthAlertTypes) {
-    const link = this.page.locator(`a[href="?v=map&type=${weather}"]`)
+    const link = this.page.getByRole('link', { name: /View map/i })
     await expect(link).toBeVisible()
+    await expect(link).toHaveAttribute('href', `?v=map&type=${weather}`)
   }
 
   async opensMapLink() {
