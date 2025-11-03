@@ -11,7 +11,6 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
-import { cachingEnabled } from '@/config/constants'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner } from './components/ui/ukhsa'
@@ -21,7 +20,7 @@ import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
 
-export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
+export const dynamic = 'auto'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
