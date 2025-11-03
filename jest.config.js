@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
@@ -19,7 +18,8 @@ const customJestConfig = {
     '^@/auth': '<rootDir>/src/auth',
     // Needed to get react markdown & dependencies to work with react-raw, see:
     // https://stackoverflow.com/questions/70916761/next-js-and-jest-syntaxerror-cannot-use-import-statement-outside-a-module
-    'react-markdown': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
+    'react-markdown': '<rootDir>/__mocks__/react-markdown.tsx',
+    '^remark-gfm$': '<rootDir>/__mocks__/remark-gfm.ts',
     'parse5/lib/parser/index.js': '<rootDir>/node_modules/hast-util-raw/node_modules/parse5/lib/parser/index.js',
   },
   testEnvironment: 'jest-environment-jsdom',
