@@ -9,7 +9,6 @@ import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCa
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
-
 import ChartInteractiveWrapper from '@/app/components/ui/ukhsa/ChartInteractive/ChartInteractiveWrapper'
 
 interface ClientChartProps {
