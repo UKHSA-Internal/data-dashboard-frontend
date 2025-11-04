@@ -1,18 +1,16 @@
 import kebabCase from 'lodash/kebabCase'
-import { Children, cloneElement, isValidElement, ReactNode } from 'react'
+import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react'
 
 import { Contents, ContentsLink } from '../Contents/Contents'
 
-/**
- * PageSectionWithContents
- * Automatically renders a navigation list and related linkable sections in a composable style
- * <PageSectionWithContents>
- *    <PageSection>1st section</PageSection>
- *    <PageSection>2nd section</PageSection>
- * </PageSectionWithContents>
- */
 interface PageSectionWithContentsProps {
   children: ReactNode
+}
+
+interface PageSectionProps {
+  children: ReactNode
+  heading: string
+  id?: string
 }
 
 export const PageSectionWithContents = ({ children }: PageSectionWithContentsProps) => {
@@ -20,33 +18,20 @@ export const PageSectionWithContents = ({ children }: PageSectionWithContentsPro
     <>
       <Contents className="govuk-!-margin-bottom-5">
         {Children.map(children, (child: ReactNode) => {
-          return isValidElement(child) ? (
-            <ContentsLink href={`#${kebabCase(child.props.heading)}`}>{child.props.heading}</ContentsLink>
-          ) : null
+          if (!isValidElement(child)) return null
+
+          const childProps = child.props as PageSectionProps
+
+          return <ContentsLink href={`#${kebabCase(childProps.heading)}`}>{childProps.heading}</ContentsLink>
         })}
       </Contents>
       {Children.map(children, (child: ReactNode) => {
-        return isValidElement(child) ? (
-          <>
-            {cloneElement(child, {
-              ...child.props,
-              heading: child.props.heading,
-            })}
-          </>
-        ) : null
+        if (!isValidElement(child)) return null
+
+        return cloneElement(child as ReactElement<PageSectionProps>)
       })}
     </>
   )
-}
-
-/**
- * ContentsItem
- * Renders the individual contents section
- */
-interface PageSectionProps {
-  children: ReactNode
-  heading: string
-  id?: string
 }
 
 export const PageSection = ({ children, id, heading }: PageSectionProps) => {
