@@ -10,7 +10,7 @@ import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
-import ChartInteractive from '../../ChartInteractive/ChartInteractive'
+import ChartInteractiveWrapper from '@/app/components/ui/ukhsa/ChartInteractive/ChartInteractiveWrapper'
 
 interface ClientChartProps {
   geography: GeographiesSchemaObject
@@ -125,7 +125,7 @@ const TimeseriesClientChart = ({
   if (chartResponse) {
     const { figure } = chartResponse
 
-    return <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+    return <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
   }
 }
 
