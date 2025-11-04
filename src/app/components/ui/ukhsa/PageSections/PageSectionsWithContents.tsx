@@ -20,19 +20,17 @@ export const PageSectionWithContents = ({ children }: PageSectionWithContentsPro
     <>
       <Contents className="govuk-!-margin-bottom-5">
         {Children.map(children, (child: ReactNode) => {
-          return isValidElement(child) && (child.props as any).heading ? (
-            <ContentsLink href={`#${kebabCase((child.props as any).heading)}`}>
-              {(child.props as any).heading}
-            </ContentsLink>
+          return isValidElement(child) ? (
+            <ContentsLink href={`#${kebabCase(child.props.heading)}`}>{child.props.heading}</ContentsLink>
           ) : null
         })}
       </Contents>
       {Children.map(children, (child: ReactNode) => {
-        return isValidElement(child) && (child.props as any).heading ? (
+        return isValidElement(child) ? (
           <>
             {cloneElement(child, {
-              ...(child.props as any),
-              heading: (child.props as any).heading,
+              ...child.props,
+              heading: child.props.heading,
             })}
           </>
         ) : null
