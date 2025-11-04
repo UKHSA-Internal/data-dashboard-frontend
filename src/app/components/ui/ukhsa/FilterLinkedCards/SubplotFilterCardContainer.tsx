@@ -22,7 +22,7 @@ const SubplotFilterCardContainer = () => {
   }
 
   return (
-    <>
+    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
       {isChartDataAvailable() ? (
         selectedGeographyFilters!.map((geography) => {
           return (
@@ -52,7 +52,7 @@ const SubplotFilterCardContainer = () => {
           </section>
         </div>
       )}
-    </>
+    </div>
   )
 }
 
