@@ -263,7 +263,7 @@ export function MultiselectDropdown({
         aria-expanded={open}
         onClick={toggleDropdown}
         onKeyDown={(event) => handleKeyDown({ event, source: 'button', index: 0 })}
-        // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value, tailwindcss/no-custom-classname
+        // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
         className={clsx(
           'ukhsa-dropdown govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-bottom-1 relative w-full border-[1px] border-black bg-white text-left text-black no-underline ukhsa-focus before:border-black',
           { open: open }

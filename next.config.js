@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-var-requires */
 const dns = require('dns')
 
 dns.setDefaultResultOrder('ipv4first')
