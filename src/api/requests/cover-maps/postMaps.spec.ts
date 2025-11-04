@@ -2,8 +2,6 @@ import { MapDataRequest, MapDataResponse } from '@/api/models/Maps'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
 // Mock all dependencies
 jest.mock('@/api/utils/api.utils')
 jest.mock('@/lib/logger')

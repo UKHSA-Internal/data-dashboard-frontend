@@ -30,7 +30,6 @@ import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedC
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
 export const renderSection = async (
   showMoreSections: string[],
