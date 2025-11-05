@@ -1,3 +1,4 @@
+'use client'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx'
 import { kebabCase, snakeCase } from 'lodash'
@@ -16,7 +17,7 @@ type ChartCardSectionProps = {
   chartId?: string
 }
 
-export async function ChartCardSection({
+export function ChartCardSection({
   value,
   heading,
   showMoreSections,
@@ -30,21 +31,22 @@ export async function ChartCardSection({
         'lg:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr]': value.cards.length > 2,
       })}
     >
-      {value.cards.map(async (card: any, index: any) => {
-        if (value.cards.length > 3 && index == 3 && !showMoreSections.includes(kebabCase(heading))) {
+      {value.cards.map((card: any, index: number) => {
+        if (value.cards.length > 3 && index === 3 && !showMoreSections.includes(kebabCase(heading))) {
+          const showMoreURL = getShowMoreURL(showMoreSections, kebabCase(heading))
+
           return (
             <div key={index}>
-              <Link
-                className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat"
-                href={await getShowMoreURL(showMoreSections, kebabCase(heading))}
-              >
+              <Link className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat" href={showMoreURL}>
                 <span className="pl-4">Show More</span>
               </Link>
             </div>
           )
         }
 
-        if (index > 3 && !showMoreSections.includes(kebabCase(heading))) return
+        if (index > 3 && !showMoreSections.includes(kebabCase(heading))) return null
+
+        const topicPagePath = getPath(card.value.topic_page)
 
         return (
           <div key={card.id} data-testid="card-wrapper">
@@ -53,7 +55,7 @@ export async function ChartCardSection({
               aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
               className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
             >
-              <Link href={getPath(card.value.topic_page)} prefetch>
+              <Link href={topicPagePath} prefetch>
                 <h3 id={`chart-row-card-heading-${snakeCase(card.value.title)}`} className="govuk-heading-m mb-1">
                   {card.value.title}
                 </h3>
@@ -61,8 +63,6 @@ export async function ChartCardSection({
 
                 <div>
                   <Chart
-                    // CartCardSection used exclusively on landing page
-                    // No interactive charts on landing page
                     enableInteractive={false}
                     data={card.value}
                     sizes={[
