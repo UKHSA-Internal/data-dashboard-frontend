@@ -30,13 +30,13 @@ export function ChartCardSection({
         'lg:grid-cols-[1fr_1fr_1fr] md:grid-cols-[1fr_1fr]': value.cards.length > 2,
       })}
     >
-      {value.cards.map((card: any, index: number) => {
+      {value.cards.map(async (card: any, index: number) => {
         if (value.cards.length > 3 && index === 3 && !showMoreSections.includes(kebabCase(heading))) {
           const showMoreURL = getShowMoreURL(showMoreSections, kebabCase(heading))
 
           return (
             <div key={index}>
-              <Link className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat" href={showMoreURL}>
+              <Link className="govuk-link--no-visited-state bg-fill_arrow_right_blue bg-no-repeat" href={await showMoreURL}>
                 <span className="pl-4">Show More</span>
               </Link>
             </div>
