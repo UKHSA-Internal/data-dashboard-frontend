@@ -1,4 +1,3 @@
-'use client'
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import clsx from 'clsx'
 import { kebabCase, snakeCase } from 'lodash'
