@@ -2,12 +2,12 @@
 import clsx from 'clsx'
 import { kebabCase, snakeCase } from 'lodash'
 import Link from 'next/link'
+import { use } from 'react'
 
 import { Chart } from '@/app/components/cms'
 import { Card } from '@/app/components/ui/ukhsa'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowMoreURL } from '@/app/utils/show-more.utils'
-import { use } from 'react'
 
 type ChartCardSectionProps = {
   value: any
