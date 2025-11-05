@@ -145,7 +145,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
 
   const { chart, x_axis, y_axis } = chartData
 
-  const pathname = await getPathname()
+  const pathname = getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
   const plots = chart.map((plot) => ({
