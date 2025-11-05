@@ -2,7 +2,6 @@
 import clsx from 'clsx'
 import { kebabCase, snakeCase } from 'lodash'
 import Link from 'next/link'
-import { use } from 'react'
 
 import { Chart } from '@/app/components/cms'
 import { Card } from '@/app/components/ui/ukhsa'
@@ -33,7 +32,7 @@ export function ChartCardSection({
     >
       {value.cards.map((card: any, index: number) => {
         if (value.cards.length > 3 && index === 3 && !showMoreSections.includes(kebabCase(heading))) {
-          const showMoreURL = use(getShowMoreURL(showMoreSections, kebabCase(heading)))
+          const showMoreURL = getShowMoreURL(showMoreSections, kebabCase(heading))
 
           return (
             <div key={index}>
