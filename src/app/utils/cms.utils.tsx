@@ -146,10 +146,9 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'code_block' && (
-      <>
-        {value.heading && <h4 className="govuk-heading-m">{value.heading}</h4>}
-        <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
-      </>
+      <CodeBlock heading={value.heading} language={value.content[0].value.language}>
+        {value.content[0].value.code}
+      </CodeBlock>
     )}
 
     {type === 'internal_page_links' && value && value.length > 0 && (
