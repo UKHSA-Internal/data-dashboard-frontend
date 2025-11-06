@@ -443,6 +443,13 @@ export class App {
 
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
+      const tabs = await card.getByRole('tab').all()
+      console.log(`Found ${tabs.length} tabs for ${name}`)
+      for (const tab of tabs) {
+        const text = await tab.textContent()
+        console.log(`  - Tab: "${text}"`)
+      }
+
       // Wait for the card to be visible first
       await card.waitFor({ state: 'visible', timeout: 10000 })
 
