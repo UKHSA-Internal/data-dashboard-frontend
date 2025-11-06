@@ -52,7 +52,7 @@ export default async function WeatherHealthAlerts() {
       </div>
 
       <Suspense>
-        <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+        <HealthAlertsLink type="cold" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
       </Suspense>
 
       <div className="govuk-grid-row">
