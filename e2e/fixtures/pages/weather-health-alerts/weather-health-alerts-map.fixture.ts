@@ -101,15 +101,17 @@ export class WeatherHealthAlertsMapPage {
     await expect(wrapper.getByText('Type')).toBeVisible()
     await expect(wrapper.getByText(type, { exact: true })).toBeVisible()
 
-    await expect(wrapper.getByText('Colour')).toBeVisible()
-    await expect(wrapper.getByText(status)).toBeVisible()
+    if (status !== 'Green') {
+      await expect(wrapper.getByText('Risk score')).toBeVisible()
+      await expect(wrapper.getByText(status)).toBeVisible()
+    }
 
-    if (start) {
+    if (start && status !== 'Green') {
       await expect(wrapper.getByText('Start')).toBeVisible()
       await expect(wrapper.getByText(start)).toBeVisible()
     }
 
-    if (end) {
+    if (end && status !== 'Green') {
       await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
       await expect(wrapper.getByText(end)).toBeVisible()
     }
