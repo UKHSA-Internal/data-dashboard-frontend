@@ -69,14 +69,9 @@ test('renders without a heading', async () => {
 test('renders the govuk headings', async () => {
   const children = '<h2>heading 2</h2><h3>heading 3</h3><h4>heading 4</h4>'
 
-  const { getByRole, container } = render(await View({ heading: 'Test', description: children, children: null }))
-
-  // Debug: see what's actually rendered
-  console.log(container.innerHTML)
+  const { getByRole } = render(await View({ heading: 'Test', description: children, children: null }))
 
   const h2 = getByRole('heading', { level: 2, name: 'heading 2' })
-  console.log('H2 element:', h2)
-  console.log('H2 classes:', h2.className)
 
   expect(h2).toHaveClass('govuk-heading-l')
   expect(getByRole('heading', { level: 3, name: 'heading 3' })).toHaveClass('govuk-heading-m')
