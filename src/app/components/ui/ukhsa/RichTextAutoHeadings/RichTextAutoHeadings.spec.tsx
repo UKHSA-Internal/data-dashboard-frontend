@@ -34,8 +34,6 @@ test('Renders a table of contents using the H2 elements within the provided HTML
 test('Debug: Check what is being rendered', () => {
   const { container } = render(<RichTextAutoHeadings>{mockData}</RichTextAutoHeadings>)
 
-  console.log('Full HTML output:', container.innerHTML)
-
   // Check if component is rendering at all
   expect(container.firstChild).toBeInTheDocument()
 
