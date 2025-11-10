@@ -1,4 +1,4 @@
-@use '~node_modules/govuk-frontend/dist/govuk/all' as *;
+@use 'govuk-frontend/dist/govuk/index.scss' as *;
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
