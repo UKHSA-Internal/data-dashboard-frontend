@@ -70,7 +70,7 @@ export const requestSchema = z.object({
 
 export const responseSchema = z.object({
   chart: z.string(),
-  last_updated: z.string(),
+  last_updated: z.number(),
   alt_text: z.string(),
   figure: ChartFigure,
 })
@@ -119,7 +119,7 @@ export const getSubplots = async (chart: RequestParams) => {
           subplots.map((subplot) => subplot.subplot_title).join()
         )
       } else {
-        logger.error(error.message)
+        logger.error(`getSubplots error: ${error.message}`)
       }
     }
     return responseSchema.safeParse(error)

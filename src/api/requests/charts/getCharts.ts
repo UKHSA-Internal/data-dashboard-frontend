@@ -40,7 +40,7 @@ export const requestSchema = z.object({
 
 export const responseSchema = z.object({
   chart: z.string(),
-  last_updated: z.string(),
+  last_updated: z.number(),
   alt_text: z.string(),
   figure: ChartFigure,
 })
@@ -79,13 +79,21 @@ export const getCharts = async (chart: RequestParams) => {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`Zod Validation error: ${result.error}`)
+      return result
+    }
   } catch (error) {
+    console.log('error: ', error)
     if (error instanceof Error) {
       if (error.code === 400) {
         logger.info('POST failed (no data) charts/v3 %s', plots.map((plot) => plot.metric).join())
       } else {
-        logger.error(error.message)
+        logger.error(`getCharts error: ${error.message}`)
       }
     }
     return responseSchema.safeParse(error)
