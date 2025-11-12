@@ -2,8 +2,10 @@ import { describe, expect, it } from '@jest/globals'
 
 import { DataFilter, ThresholdFilter } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchema, GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import { FilterOption } from '@/app/features/global-filter/context/globalFilterContext'
 
 import {
+  addFilterToArray,
   addFilterToSelectedGeographyFilters,
   addFilterToSelectedThresholdFilters,
   addFilterToSelectedVaccinationFilters,
@@ -418,6 +420,47 @@ describe('selected-filter.utils', () => {
       expect(result).toHaveLength(1)
       expect(result[0].id).toBe('filter2') // Only filter2 should remain
       expect(result.filter((filter) => filter.id === 'filter1')).toHaveLength(0) // All filter1 should be gone
+    })
+  })
+
+  describe('addFilterToArray', () => {
+    it('should add a new filter when it does not exist in the array', () => {
+      const existingFilters: FilterOption[] = [
+        { id: 'filter1', label: 'Filter 1' },
+        { id: 'filter2', label: 'Filter 2' },
+      ]
+      const newFilter: FilterOption = { id: 'filter3', label: 'Filter 3' }
+
+      const result = addFilterToArray(existingFilters, newFilter)
+
+      expect(result).toHaveLength(3)
+      expect(result).toContainEqual(newFilter)
+      expect(result[2]).toEqual(newFilter)
+      expect(result).not.toBe(existingFilters)
+    })
+
+    it('should not add a filter that already exists based on id', () => {
+      const existingFilters: FilterOption[] = [
+        { id: 'filter1', label: 'Filter 1' },
+        { id: 'filter2', label: 'Filter 2' },
+      ]
+      const duplicateFilter: FilterOption = { id: 'filter1', label: 'Modified Filter 1' }
+
+      const result = addFilterToArray(existingFilters, duplicateFilter)
+
+      expect(result).toHaveLength(2)
+      expect(result).toEqual(existingFilters)
+      expect(result).toBe(existingFilters)
+    })
+
+    it('should handle adding to an empty array', () => {
+      const emptyFilters: FilterOption[] = []
+      const newFilter: FilterOption = { id: 'filter1', label: 'Filter 1' }
+
+      const result = addFilterToArray(emptyFilters, newFilter)
+
+      expect(result).toHaveLength(1)
+      expect(result[0]).toEqual(newFilter)
     })
   })
 })

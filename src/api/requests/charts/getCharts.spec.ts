@@ -162,3 +162,45 @@ test('Handles API errors for non-400 error responses', async () => {
     ]),
   })
 })
+
+test('Handles non-Error instances in catch block', async () => {
+  jest.mocked(client).mockRejectedValueOnce('String error')
+
+  const result = await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
+
+  expect(result.success).toBe(false)
+})
+
+test('Handles error when error.code is undefined', async () => {
+  const error = new Error('Failed')
+  jest.mocked(client).mockRejectedValueOnce(error)
+
+  const result = await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+      },
+    ],
+  })
+
+  expect(logger.error).toHaveBeenCalledWith('Failed')
+  expect(result.success).toBe(false)
+})

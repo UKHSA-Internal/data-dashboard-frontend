@@ -11,9 +11,13 @@ import { render } from '@/config/test-utils'
 jest.mock('@/app/utils/download.utils')
 jest.mock('cross-fetch')
 
+const mockReplace = jest.fn()
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
-  useRouter: jest.fn(() => mockRouter),
+  useRouter: jest.fn(() => ({
+    ...mockRouter,
+    replace: mockReplace,
+  })),
 }))
 
 const mockXaxis = 'geography'
@@ -139,5 +143,28 @@ describe('SubplotDownloadForm', () => {
 
       expect(downloadFile).toHaveBeenCalledWith('ukhsa-chart-download.json', new Blob(['mock-download']))
     })
+  })
+
+  test('handles download error and redirects to error page', async () => {
+    jest.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
+    mockReplace.mockClear()
+
+    mockRouter.push('/topics/mock-topic')
+
+    const { getByRole } = renderComponent()
+
+    // Wait for component to render, then click button
+    const button = await waitFor(() => {
+      return getByRole('button', { name: 'Download' })
+    })
+
+    await userEvent.click(button)
+
+    await waitFor(
+      () => {
+        expect(mockReplace).toHaveBeenCalledWith('/error')
+      },
+      { timeout: 3000 }
+    )
   })
 })
