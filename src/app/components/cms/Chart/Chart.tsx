@@ -12,9 +12,9 @@ import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
+import { ChartEmpty } from '../../ui/ukhsa/ChartEmpty/ChartEmpty'
 import ChartNoScript from '../../ui/ukhsa/ChartNoScript/ChartNoScript'
 import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface ChartProps {
   /**
