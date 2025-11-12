@@ -12,7 +12,7 @@ import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+import { ChartEmpty } from '../../ui/ukhsa/ChartEmpty/ChartEmpty'
 import { RichText } from '../RichText/RichText'
 
 interface TableProps {

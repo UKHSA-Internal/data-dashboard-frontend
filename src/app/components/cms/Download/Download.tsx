@@ -5,7 +5,7 @@ import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+import { ChartEmpty } from '../../ui/ukhsa/ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
 
 interface DownloadProps {
