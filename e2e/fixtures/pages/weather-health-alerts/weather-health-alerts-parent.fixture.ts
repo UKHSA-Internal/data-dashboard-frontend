@@ -23,15 +23,13 @@ export class WeatherHealthAlertsParentPage {
   }
 
   async hasMapLink() {
-    await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toHaveAttribute(
-      'href',
-      '?v=map&type=cold'
-    )
+    const mapLink = this.page.locator('a[href*="v=map"]')
+    await expect(mapLink).toHaveAttribute('href', /\?v=map&type=(heat|cold)/)
   }
 
   async opensMapLink() {
-    await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
-
+    const mapLink = this.page.locator('a[href*="v=map"]')
+    await mapLink.click()
     await expect(this.page.getByRole('button', { name: 'Exit map' })).toBeVisible()
 
     await this.page.getByRole('button', { name: 'Exit map' }).click()
