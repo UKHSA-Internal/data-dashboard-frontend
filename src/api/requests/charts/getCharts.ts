@@ -40,7 +40,7 @@ export const requestSchema = z.object({
 
 export const responseSchema = z.object({
   chart: z.string(),
-  last_updated: z.number(),
+  last_updated: z.string(),
   alt_text: z.string(),
   figure: ChartFigure,
 })
@@ -88,7 +88,6 @@ export const getCharts = async (chart: RequestParams) => {
       return result
     }
   } catch (error) {
-    console.log('error: ', error)
     if (error instanceof Error) {
       if (error.code === 400) {
         logger.info('POST failed (no data) charts/v3 %s', plots.map((plot) => plot.metric).join())
