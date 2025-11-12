@@ -39,7 +39,7 @@ Example
 ### Custom hooks
 
 A number of components make calls to the same endpoints for data across client components. By abstracting these out into custom hooks E.g: `useGetCharts`
-we can reduce duplication of this calls in useEffects making them easier to maintain.
+we can reduce duplication of these calls in useEffects making them easier to maintain.
 
 ```BASH
 src/app/components/cms/ClientTable.tsx # uses getCharts
