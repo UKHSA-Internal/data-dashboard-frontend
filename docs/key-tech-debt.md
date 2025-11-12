@@ -24,7 +24,7 @@ When a component uses the client directive `'use client'` it marks the current c
 that means any child components are also treated as client components without the need for a directive. This means we can reuse UI components as both server and client
 components removing the need for duplication.
 
-The do this we can create presentational components that contain the UI for a table and use a server or client component as its parent / wrapper that handles any
+To do this we can create presentational components that contain the UI for a table and use a server or client component as its parent / wrapper that handles any
 API requests or state management. This would reduce duplication of UI components and reduce the maintenance burden of keeping multiple components for the same UI.
 
 Example
