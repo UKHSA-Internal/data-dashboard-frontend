@@ -79,7 +79,13 @@ export const getCharts = async (chart: RequestParams) => {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getChart Zod Validation error: ${result.error}`)
+      return result
+    }
   } catch (error) {
     if (error instanceof Error) {
       if (error.code === 400) {

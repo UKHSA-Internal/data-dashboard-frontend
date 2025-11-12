@@ -130,6 +130,7 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
     const initialResult = responseSchema.safeParse(initialData)
 
     if (!initialResult.success) {
+      logger.error('getPages Zod Validation error :', initialResult.error)
       return initialResult
     }
 
@@ -157,7 +158,12 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
         try {
           const { data } = await client<PagesResponse>('pages', { searchParams })
           const result = responseSchema.safeParse(data)
-          return result.success ? result.data.items : []
+          if (result.success) {
+            return result.data.items
+          } else {
+            logger.error(`getPages Zod Validation error (page ${pageNum}):`, result.error)
+            return []
+          }
         } catch (error) {
           logger.warn(`Failed to fetch page ${pageNum}:`, error)
           return []
