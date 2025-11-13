@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
+import { logger } from '@/lib/logger'
 import {
   allPagesMock,
   pagesWithLandingTypeMock,
@@ -47,6 +48,7 @@ describe('Successfully getting all pages from the cms api ', () => {
 // Pages tests
 describe('getPages', () => {
   test('returns and error when it receives invalid http status code', async () => {
+    const loggerSpy = jest.spyOn(logger, 'error').mockImplementation()
     getPagesResponse.mockResolvedValueOnce({
       status: 404,
       data: {},
@@ -54,25 +56,28 @@ describe('getPages', () => {
 
     const result = await getPages({ type: PageType.Common })
 
-    expect(result).toEqual<ErrorResponse>({
-      success: false,
-      error: new z.ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'undefined',
-          path: ['items'],
-          message: 'Required',
-        },
-        {
-          code: 'invalid_type',
-          expected: 'object',
-          received: 'undefined',
-          path: ['meta'],
-          message: 'Required',
-        },
-      ]),
-    })
+    expect(result.success).toBe(false)
+    if (result.success) {
+      throw new Error('Expected error result')
+    }
+    expect(result.error.issues).toEqual([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'undefined',
+        path: ['items'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'object',
+        received: 'undefined',
+        path: ['meta'],
+        message: 'Required',
+      },
+    ])
+
+    loggerSpy.mockRestore()
   })
   test('returns a list of pages', async () => {
     getPagesResponse.mockResolvedValueOnce({
