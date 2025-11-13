@@ -175,7 +175,6 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
       })
     )
 
-  // Lazy load the interactive chart component (and all associated plotly.js code)
   const resolvedRequests = await Promise.all(requests)
 
   // Pick out the default chart (mobile-first)
