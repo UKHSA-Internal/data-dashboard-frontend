@@ -12,9 +12,9 @@ import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
-import { ChartEmpty } from '../../ui/ukhsa/ChartEmpty/ChartEmpty'
-import ChartNoScript from '../../ui/ukhsa/ChartNoScript/ChartNoScript'
-import ChartSelect from '../../ui/ukhsa/View/ChartSelect/ChartSelect'
+import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+import ChartNoScript from '../ChartNoScript/ChartNoScript'
+import ChartSelect from '../View/ChartSelect/ChartSelect'
 
 interface ChartProps {
   /**
@@ -198,7 +198,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   })
 
   // Lazy load the interactive chart component (and all associated plotly.js code)
-  const ChartInteractive = dynamic(() => import('../ChartInteractive/ChartInteractive'), {
+  const ChartInteractive = dynamic(() => import('../../../cms/ChartInteractive/ChartInteractive'), {
     ssr: false,
     loading: () => staticChart, // Show the static svg chart whilst this chunk is being loaded
   })

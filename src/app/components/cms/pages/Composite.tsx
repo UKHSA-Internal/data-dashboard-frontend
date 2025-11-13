@@ -7,7 +7,7 @@ import { LastUpdated } from '@/app/components/ui/ukhsa/View/LastUpdated/LastUpda
 import { PageComponentBaseProps } from '@/app/types'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
-import { RichTextAutoHeadings } from '../RichText/RichTextAutoHeadings'
+import { RichTextAutoHeadings } from '../../ui/ukhsa/RichTextAutoHeadings/RichTextAutoHeadings'
 
 export default async function CompositePage({ slug }: PageComponentBaseProps) {
   const {
