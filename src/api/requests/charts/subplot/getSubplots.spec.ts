@@ -195,7 +195,7 @@ describe('getSubplots', () => {
 
       const result = await getSubplots(mockValidRequestParams)
 
-      expect(mockLogger.error).toHaveBeenCalledWith('Internal Server Error')
+      expect(mockLogger.error).toHaveBeenCalledWith('getSubplots error: Internal Server Error')
       expect(result.success).toBe(false)
     })
 
@@ -205,7 +205,7 @@ describe('getSubplots', () => {
 
       const result = await getSubplots(mockValidRequestParams)
 
-      expect(mockLogger.error).toHaveBeenCalledWith('Network error')
+      expect(mockLogger.error).toHaveBeenCalledWith('getSubplots error: Network error')
       expect(result.success).toBe(false)
     })
 
