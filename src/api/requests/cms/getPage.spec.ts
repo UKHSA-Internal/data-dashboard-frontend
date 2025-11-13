@@ -9,6 +9,10 @@ import { getPage, responseSchema } from './getPage'
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
+beforeEach(() => {
+  jest.clearAllMocks()
+})
+
 test('Returns a full page from thge cms by id', async () => {
   jest.mocked(client).mockResolvedValueOnce({ data: dashboardMock, status: 200 })
 
@@ -25,10 +29,11 @@ test('Handles invalid json received from the api', async () => {
 
   const result = await getPage(dashboardMock.id)
 
-  expect(result).toEqual<ErrorResponse>({
-    success: false,
-    error: expect.any(Object),
-  })
+  expect(result.success).toBe(false)
+  if (result.success) {
+    throw new Error('Expected error result')
+  }
+  expect(result.error).toBeDefined()
 })
 
 test('Handles generic http errors', async () => {
