@@ -130,8 +130,8 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
     const initialResult = responseSchema.safeParse(initialData)
 
     if (!initialResult.success) {
-      logger.error('getPages Zod Validation error :', initialResult.error)
-      return initialResult
+      logger.error('getPages Zod Validation error: ', initialResult.error)
+      return { ...initialResult }
     }
 
     totalCount = initialResult.data.meta.total_count
@@ -158,12 +158,7 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
         try {
           const { data } = await client<PagesResponse>('pages', { searchParams })
           const result = responseSchema.safeParse(data)
-          if (result.success) {
-            return result.data.items
-          } else {
-            logger.error(`getPages Zod Validation error (page ${pageNum}):`, result.error)
-            return []
-          }
+          return result.success ? result.data.items : []
         } catch (error) {
           logger.warn(`Failed to fetch page ${pageNum}:`, error)
           return []
