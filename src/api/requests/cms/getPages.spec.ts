@@ -21,7 +21,6 @@ import {
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
 type WhatsNewSuccessResponse = z.SafeParseSuccess<z.infer<typeof whatsNewResponseSchema>>
-type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 const getPagesResponse = jest.mocked(client)
 
@@ -291,18 +290,19 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const response = await getWhatsNewPages({ page: 1 })
 
-    expect(response).toEqual<ErrorResponse>({
-      success: false,
-      error: new z.ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'null',
-          path: ['items'],
-          message: 'Expected array, received null',
-        },
-      ]),
-    })
+    expect(response.success).toBe(false)
+    if (response.success) {
+      throw new Error('Expected error result')
+    }
+    expect(response.error.issues).toEqual([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'null',
+        path: ['items'],
+        message: 'Expected array, received null',
+      },
+    ])
   })
 
   test('invalid http status code returns an error', async () => {
@@ -313,25 +313,26 @@ describe("Failing to get all What's new child pages from the cms api", () => {
 
     const result = await getWhatsNewPages({ page: 1 })
 
-    expect(result).toEqual<ErrorResponse>({
-      success: false,
-      error: new z.ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'undefined',
-          path: ['items'],
-          message: 'Required',
-        },
-        {
-          code: 'invalid_type',
-          expected: 'object',
-          received: 'undefined',
-          path: ['meta'],
-          message: 'Required',
-        },
-      ]),
-    })
+    expect(result.success).toBe(false)
+    if (result.success) {
+      throw new Error('Expected error result')
+    }
+    expect(result.error.issues).toEqual([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'undefined',
+        path: ['items'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'object',
+        received: 'undefined',
+        path: ['meta'],
+        message: 'Required',
+      },
+    ])
   })
 })
 
@@ -380,18 +381,19 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     const response = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(response).toEqual<ErrorResponse>({
-      success: false,
-      error: new z.ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'null',
-          path: ['items'],
-          message: 'Expected array, received null',
-        },
-      ]),
-    })
+    expect(response!.success).toBe(false)
+    if (response!.success) {
+      throw new Error('Expected error result')
+    }
+    expect(response!.error!.issues).toEqual([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'null',
+        path: ['items'],
+        message: 'Expected array, received null',
+      },
+    ])
   })
 
   test('invalid http status code returns an error', async () => {
@@ -402,24 +404,25 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     const result = await getMetricsPages({ search: undefined, page: 1 })
 
-    expect(result).toEqual<ErrorResponse>({
-      success: false,
-      error: new z.ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'undefined',
-          path: ['items'],
-          message: 'Required',
-        },
-        {
-          code: 'invalid_type',
-          expected: 'object',
-          received: 'undefined',
-          path: ['meta'],
-          message: 'Required',
-        },
-      ]),
-    })
+    expect(result!.success).toBe(false)
+    if (result!.success) {
+      throw new Error('Expected error result')
+    }
+    expect(result!.error.issues).toEqual([
+      {
+        code: 'invalid_type',
+        expected: 'array',
+        received: 'undefined',
+        path: ['items'],
+        message: 'Required',
+      },
+      {
+        code: 'invalid_type',
+        expected: 'object',
+        received: 'undefined',
+        path: ['meta'],
+        message: 'Required',
+      },
+    ])
   })
 })

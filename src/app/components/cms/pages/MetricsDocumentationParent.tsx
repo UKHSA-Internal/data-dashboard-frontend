@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
@@ -43,8 +44,8 @@ export async function generateMetadata({
 
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
-  if (!metricsEntries.success) {
-    logger.info(metricsEntries.error.message)
+  if (!metricsEntries || !metricsEntries.success) {
+    logger.info(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
     return redirect('/error')
   }
 
@@ -82,8 +83,8 @@ export default async function MetricsParentPage({
 
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
-  if (!metricsEntries.success) {
-    logger.error(metricsEntries.error.message)
+  if (!metricsEntries || !metricsEntries.success) {
+    logger.error(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
     return redirect('/error')
   }
 
@@ -114,19 +115,21 @@ export default async function MetricsParentPage({
           <MetricsSearch value={search ?? ''} />
 
           <ul className="govuk-!-margin-top-4" aria-label={title}>
-            {items.map(({ id, title, meta, page_description: description, metric, metric_group: group, topic }) => {
-              return (
-                <MetricsCard
-                  key={id}
-                  title={title}
-                  href={setReturnPath(`metrics-documentation/${meta.slug}`)}
-                  description={description}
-                  group={group}
-                  topic={topic}
-                  metric={metric}
-                />
-              )
-            })}
+            {items.map(
+              ({ id, title, meta, page_description: description, metric, metric_group: group, topic }: any) => {
+                return (
+                  <MetricsCard
+                    key={id}
+                    title={title}
+                    href={setReturnPath(`metrics-documentation/${meta.slug}`)}
+                    description={description}
+                    group={group}
+                    topic={topic}
+                    metric={metric}
+                  />
+                )
+              }
+            )}
           </ul>
           {items.length < 1 && <NoResults />}
 

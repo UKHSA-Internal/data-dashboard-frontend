@@ -208,7 +208,13 @@ export const getWhatsNewPages = async ({
 
   try {
     const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams })
-    return whatsNewResponseSchema.safeParse(data)
+    const result = whatsNewResponseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getWhatsNewPages Zod Validation error: ${result.error}`)
+      return result
+    }
   } catch (error) {
     logger.error(error)
     return whatsNewResponseSchema.safeParse(error)
@@ -244,7 +250,14 @@ export const getMetricsPages = async ({
 
   try {
     const { data } = await client<MetricsPagesResponse>('pages', { searchParams })
-    return metricsChildResponseSchema.safeParse(data)
+    const result = metricsChildResponseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getMetricsPages Zod Validation error: ${result.error}`)
+      return result
+    }
+    return
   } catch (error) {
     logger.error(error)
     return metricsChildResponseSchema.safeParse(error)
