@@ -110,7 +110,13 @@ export const getSubplots = async (chart: RequestParams) => {
     const path = isSSR ? `charts/subplot/v1` : `proxy/charts/subplot/v1`
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getSubplots Zod Validation error: ${result.error}`)
+      return result
+    }
   } catch (error) {
     if (error instanceof Error) {
       if (error.code === 400) {
