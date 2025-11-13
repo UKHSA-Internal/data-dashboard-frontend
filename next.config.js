@@ -7,7 +7,7 @@ const sharedCache = process.env.CACHING_V2_ENABLED === 'true'
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   cacheHandler: sharedCache ? require.resolve('./cache-handler.mjs') : undefined,
-  cacheMaxMemorySize: 10000000, // Disable default in-memory caching
+  cacheMaxMemorySize: 10000000, // set default max memory size to 10Mb
   output: 'standalone',
   staticPageGenerationTimeout: 1000,
   reactStrictMode: true,
