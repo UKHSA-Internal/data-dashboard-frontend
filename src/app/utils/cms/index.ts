@@ -74,8 +74,8 @@ export async function getPageMetadata(
     if (pageType === PageType.MetricsParent) {
       const metricsEntries = await getMetricsPages({ search, page })
 
-      if (!metricsEntries.success) {
-        logger.info(metricsEntries.error.message)
+      if (!metricsEntries || !metricsEntries.success) {
+        logger.info(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
         return notFound()
       }
 
