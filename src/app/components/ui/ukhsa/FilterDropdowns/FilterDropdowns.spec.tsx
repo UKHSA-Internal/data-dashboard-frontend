@@ -9,7 +9,7 @@ import { useDataFilters, useGeographyState, useThresholdFilters } from '@/app/ho
 import { getGroupedVaccinationOptions } from '@/app/utils/global-filter-content-parser'
 import { render, screen } from '@/config/test-utils'
 
-import FilterDropdowns, { DisplayVaccinationDropDown } from './FilterDropdowns' // Adjust import path
+import FilterDropdowns, { DisplayVaccinationDropDown } from './FilterDropdowns'
 
 // Mock all dependencies
 jest.mock('@/app/hooks/globalFilterHooks')
@@ -168,6 +168,10 @@ describe('FilterDropdowns', () => {
 })
 
 describe('DisplayGeographyDropdowns', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should display loading state when geography areas are loading', () => {
     mockUseGeographyState.mockReturnValue({
       geographyAreas: new Map(),
@@ -298,7 +302,7 @@ describe('DisplayGeographyDropdowns', () => {
         name: 'regions',
         data: [{ id: 'geography.regions.E12000002', label: 'North West' }],
       }),
-      expect.any(Object)
+      undefined
     )
   })
 
@@ -328,7 +332,7 @@ describe('DisplayGeographyDropdowns', () => {
         name: 'test_areas',
         data: [{ id: 'geography.test_areas.undefined', label: 'Test Area' }],
       }),
-      expect.any(Object)
+      undefined
     )
   })
 })
@@ -359,6 +363,10 @@ describe('DisplayCoverageDropdown', () => {
       },
     ],
   }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
   test('should return null when threshold filters is null', () => {
     mockUseGeographyState.mockReturnValue({
@@ -410,7 +418,7 @@ describe('DisplayCoverageDropdown', () => {
           { id: 'threshold.threshold_90', label: '90% Coverage' },
         ],
       }),
-      expect.any(Object)
+      undefined
     )
   })
 })
@@ -459,6 +467,10 @@ describe('DisplayVaccinationDropDown', () => {
     },
   ]
 
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
   test('should return null when vaccination filters is null', () => {
     mockUseDataFilters.mockReturnValue(null)
 
@@ -497,7 +509,7 @@ describe('DisplayVaccinationDropDown', () => {
         data: mockGroupedOptions,
         nestedMultiselect: true,
       }),
-      expect.any(Object)
+      undefined
     )
   })
 
@@ -540,6 +552,10 @@ describe('FilterDropdowns integration', () => {
       },
     ],
   }
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
 
   test('should render all components together when all data is available', () => {
     const mockGeographyAreas = new Map([['regions', [mockGeographiesSchemaObject]]])

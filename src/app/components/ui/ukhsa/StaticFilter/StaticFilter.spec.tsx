@@ -9,7 +9,6 @@ import { fireEvent, render, screen } from '@/config/test-utils'
 
 import StaticFilter from './StaticFilter'
 
-/* eslint-disable @typescript-eslint/no-explicit-any*/
 // Mock the react-use hook
 jest.mock('react-use', () => ({
   useWindowScroll: jest.fn(),

@@ -9,8 +9,8 @@ import { StatusSelect } from '../../components/StatusSelect'
 import { heading } from '../../shared/constants'
 import { getSwitchBoardState, syncState } from '../../shared/state'
 
-export default function SwitchBoard() {
-  const cookieStore = cookies()
+export default async function SwitchBoard() {
+  const cookieStore = await cookies()
 
   const {
     api: { alerts },

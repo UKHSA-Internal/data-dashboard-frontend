@@ -1,6 +1,5 @@
 import formatters from '../../../config/i18n/formatters'
 
-/* eslint-disable @typescript-eslint/no-var-requires */
 export const fallbackLng = 'en'
 export const languages = [fallbackLng]
 export const defaultNS = 'common'

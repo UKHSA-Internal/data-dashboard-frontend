@@ -1,11 +1,11 @@
 'use client'
 
-import { useState } from 'react'
+import { ReactElement, useState } from 'react'
 import Plot, { Figure } from 'react-plotly.js'
 import { useIntersectionObserver } from 'usehooks-ts'
 
 interface ChartInteractiveProps {
-  fallbackUntilLoaded: JSX.Element
+  fallbackUntilLoaded: ReactElement
   figure: Figure
 }
 

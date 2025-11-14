@@ -60,7 +60,7 @@ export function RelatedLink({ title, url, children, className }: RelatedLinkProp
         <RichText
           className="break-words"
           components={{
-            p: ({ children }) => <p className="govuk-body-s">{children}</p>,
+            p: ({ children }: { children: ReactNode }) => <p className="govuk-body-s">{children}</p>,
           }}
         >
           {children}

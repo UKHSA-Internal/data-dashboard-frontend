@@ -251,7 +251,6 @@ describe('MapLegendControl', () => {
 
   describe('translation integration', () => {
     test('calls useTranslation with correct namespace', () => {
-      // eslint-disable-next-line @typescript-eslint/no-var-requires
       const { useTranslation } = require('@/app/i18n/client')
 
       render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)

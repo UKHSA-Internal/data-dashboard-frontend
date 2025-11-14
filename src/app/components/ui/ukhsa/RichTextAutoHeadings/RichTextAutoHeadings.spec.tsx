@@ -31,6 +31,16 @@ test('Renders a table of contents using the H2 elements within the provided HTML
   expect(getByRole('heading', { name: 'Secondary test', level: 2 })).toBeInTheDocument()
 })
 
+test('Debug: Check what is being rendered', () => {
+  const { container } = render(<RichTextAutoHeadings>{mockData}</RichTextAutoHeadings>)
+
+  // Check if component is rendering at all
+  expect(container.firstChild).toBeInTheDocument()
+
+  // Check if the content is there
+  expect(container.textContent).toContain('Secondary test')
+})
+
 test('Converts a cms cookie settings anchor into the nextjs link', () => {
   const { getByRole } = render(
     <RichTextAutoHeadings>{`<a href="/cookies?change-settings=1">Change cookie settings</a>`}</RichTextAutoHeadings>

@@ -441,7 +441,20 @@ export class App {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
-      await card.getByRole('tab', { name: 'Chart' }).click()
+      // Wait for the card to be visible first
+      await card.waitFor({ state: 'visible', timeout: 10000 })
+
+      // Scroll the card into view (important for lazy-loaded content)
+      await card.scrollIntoViewIfNeeded()
+
+      // Wait a bit for any animations or loading to complete
+      await this.page.waitForTimeout(500)
+
+      const chartTab = card.getByRole('tab', { name: 'Chart' })
+
+      // Wait for the Chart tab to be visible and enabled
+      await chartTab.waitFor({ state: 'visible', timeout: 10000 })
+      await chartTab.click()
 
       await this.page.keyboard.press('Tab')
       await this.page.keyboard.press('Tab')

@@ -1,3 +1,10 @@
+@use 'govuk-frontend/dist/govuk/index.scss' as * with (
+  $govuk-fonts-path: '/assets/fonts/',
+  $govuk-global-styles: true,
+  $govuk-new-typography-scale: true,
+  $govuk-page-width: 1400px
+);
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -15,12 +22,7 @@
 }
 
 // GDS Front-end Overrides
-$govuk-global-styles: true;
-$govuk-new-typography-scale: true;
 $govuk-font-family: var(--font-primary), arial, sans-serif;
-$govuk-page-width: 1400px;
-
-@import '~node_modules/govuk-frontend/dist/govuk/all';
 
 @layer utilities {
   // Applies the govuk focus ring to an element
@@ -46,7 +48,7 @@ $govuk-page-width: 1400px;
 
   // Container width
   --ukhsa-page-min-width: 320px;
-  --ukhsa-page-width: 1400px;
+  --ukhsa-width-container: 1400px;
 
   // Side Nav
   --ukhsa-nav-width: 220px;

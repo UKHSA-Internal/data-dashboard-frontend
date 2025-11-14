@@ -41,7 +41,7 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId }: Subplot
       }
 
       setDownloading(false)
-    } catch (error) {
+    } catch (_error) {
       setDownloading(false)
       router.replace('/error')
     }

@@ -14,18 +14,27 @@ import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
 
+function isAssetPath(slugPath: string): boolean {
+  return /\.(woff|woff2|ttf|eot|svg|png|jpg|jpeg|gif|ico|css|js)$/i.test(slugPath)
+}
 /**
  * Generates metadata for the page based on the dynamic slug.
  */
-export async function generateMetadata({
-  params,
-  searchParams,
-}: {
-  params: PageParams
-  searchParams: SearchParams
+export async function generateMetadata(props: {
+  params: Promise<PageParams>
+  searchParams: Promise<SearchParams>
 }): Promise<Metadata> {
+  const searchParams = await props.searchParams
+  const params = await props.params
   const { slug = [] } = params
+  const slugPath = slug?.join('/') || ''
+
+  if (isAssetPath(slugPath)) {
+    return {}
+  }
+
   const pageType = await getPageTypeBySlug(slug)
+
   return await getPageMetadata(slug, searchParams, pageType)
 }
 
@@ -46,14 +55,17 @@ const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = 
  * Determines the page type from the CMS and conditionally renders the appropriate components.
  */
 
-export default async function Page({ params, searchParams }: { params: PageParams; searchParams: SearchParams }) {
+export default async function Page(props: { params: Promise<PageParams>; searchParams: Promise<SearchParams> }) {
+  const searchParams = await props.searchParams
+  const params = await props.params
   const { slug = [] } = params
+  const slugPath = slug?.join('/') || ''
 
   const pageType = await getPageTypeBySlug(slug)
 
   const PageComponent = PageComponents[pageType]
 
-  if (!PageComponent) {
+  if (!PageComponent || isAssetPath(slugPath)) {
     return notFound()
   }
 

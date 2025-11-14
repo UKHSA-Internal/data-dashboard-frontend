@@ -12,7 +12,7 @@ describe('getPaginationBlock', () => {
   test("when on first page, only 'next' button shows", async () => {
     getPathnameMock.mockReturnValue('/access-our-data/overview')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = await getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
@@ -29,7 +29,7 @@ describe('getPaginationBlock', () => {
   test("when on last page, only 'previous' button shows", async () => {
     getPathnameMock.mockReturnValue('/access-our-data/getting-started')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = await getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
@@ -46,7 +46,7 @@ describe('getPaginationBlock', () => {
   test('when on any other page, show both next & previous buttons', async () => {
     getPathnameMock.mockReturnValue('/access-our-data/what-is-an-api')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = await getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
@@ -63,7 +63,7 @@ describe('getPaginationBlock', () => {
   test('when on default route (no subpage), only the next button shows', async () => {
     getPathnameMock.mockReturnValue('/access-our-data')
 
-    const { previousText, previousPageHref, nextText, nextPageHref } = getPaginationBlock({
+    const { previousText, previousPageHref, nextText, nextPageHref } = await getPaginationBlock({
       links: [
         { pageHref: '/access-our-data/overview', pageText: 'Overview' },
         { pageHref: '/access-our-data/what-is-an-api', pageText: 'What is an API' },
