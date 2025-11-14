@@ -345,6 +345,40 @@ describe('GlobalFilterContext', () => {
       expect(result.current.state.selectedVaccinationFilters).toHaveLength(1)
     })
 
+    test('should add filter to selectedFilters but not to selectedVaccinationFilters when data_filter not found', () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      const nonExistentDataFilter: FilterOption = {
+        id: 'data_filter.nonExistent',
+        label: 'Non-existent Filter',
+      }
+
+      act(() => {
+        result.current.actions.addFilter(nonExistentDataFilter)
+      })
+
+      expect(result.current.state.selectedFilters).toContain(nonExistentDataFilter)
+      expect(result.current.state.selectedVaccinationFilters).toHaveLength(0)
+    })
+
+    test('should add filter to selectedFilters but not to selectedThresholdFilters when threshold not found', () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      const nonExistentThresholdFilter: FilterOption = {
+        id: 'threshold.nonExistent',
+        label: 'Non-existent Threshold',
+      }
+
+      act(() => {
+        result.current.actions.addFilter(nonExistentThresholdFilter)
+      })
+
+      expect(result.current.state.selectedFilters).toContain(nonExistentThresholdFilter)
+      expect(result.current.state.selectedThresholdFilters).toHaveLength(0)
+    })
+
     test('should remove a geography filter and update selectedGeographyFilters', async () => {
       const wrapper = createWrapper()
       const { result } = renderHook(() => useGlobalFilters(), { wrapper })
@@ -372,6 +406,36 @@ describe('GlobalFilterContext', () => {
       expect(result.current.state.selectedFilters).toContain(dataFilter)
       expect(result.current.state.selectedGeographyFilters).toHaveLength(0)
       expect(result.current.state.selectedVaccinationFilters).toHaveLength(1)
+    })
+
+    test('should remove chart request errors when removing geography filter', async () => {
+      const wrapper = createWrapper()
+      const { result } = renderHook(() => useGlobalFilters(), { wrapper })
+
+      await waitFor(() => {
+        expect(result.current.state.geographyAreasLoading).toBe(false)
+      })
+
+      result.current.state.geographyAreas.set('nation', mockGeographyAreas)
+
+      act(() => {
+        result.current.actions.addFilter(geographyFilter)
+      })
+
+      act(() => {
+        result.current.actions.setChartRequestErrors({ id: 'subplot-E92000001', error: 'Subplot error' })
+        result.current.actions.setChartRequestErrors({ id: 'timeseries-E92000001', error: 'Timeseries error' })
+        result.current.actions.setChartRequestErrors({ id: 'other-error', error: 'Other error' })
+      })
+
+      expect(result.current.state.chartRequestErrors).toHaveLength(3)
+
+      act(() => {
+        result.current.actions.removeFilter(geographyFilter.id)
+      })
+
+      expect(result.current.state.chartRequestErrors).toHaveLength(1)
+      expect(result.current.state.chartRequestErrors[0].id).toBe('other-error')
     })
 
     test('should remove a data filter and update selectedVaccinationFilters', () => {
