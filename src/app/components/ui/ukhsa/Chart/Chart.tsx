@@ -198,7 +198,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   })
 
   // Lazy load the interactive chart component (and all associated plotly.js code)
-  const ChartInteractive = dynamic(() => import('../../../cms/ChartInteractive/ChartInteractive'), {
+  const ChartInteractive = dynamic(() => import('../ChartInteractive/ChartInteractive'), {
     ssr: false,
     loading: () => staticChart, // Show the static svg chart whilst this chunk is being loaded
   })

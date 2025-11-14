@@ -12,7 +12,7 @@ import {
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInteractive'
+import ChartInteractive from '@/app/components/ui/ukhsa/ChartInteractive/ChartInteractive'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
