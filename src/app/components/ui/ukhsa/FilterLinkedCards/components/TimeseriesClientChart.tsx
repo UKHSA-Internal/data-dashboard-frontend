@@ -10,7 +10,7 @@ import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
-import ChartInteractive from '../../../../cms/ChartInteractive/ChartInteractive'
+import ChartInteractive from '../../ChartInteractive/ChartInteractive'
 
 interface ClientChartProps {
   geography: GeographiesSchemaObject
