@@ -12,7 +12,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async openWeatherHealthAlertsMap() {
-    await this.page.getByRole('link', { name: 'View map of weather health alerts' }).click()
+    await this.page.locator('a[href*="v=map"]').click()
   }
 
   async hasMapDialog() {
@@ -24,7 +24,7 @@ export class WeatherHealthAlertsMapPage {
   }
 
   async hasNoMapButton() {
-    await expect(this.page.getByRole('link', { name: 'View map of weather health alerts' })).toBeHidden()
+    await expect(this.page.getByRole('link', { name: /View map/i })).toBeHidden()
   }
 
   async hasMapButtons() {
@@ -90,6 +90,7 @@ export class WeatherHealthAlertsMapPage {
   async dialogIsClosed(name: string) {
     await expect(this.page.getByRole('dialog', { name })).toBeHidden()
   }
+
   async hasDialogContentTitle(region: string) {
     await expect(this.page.getByRole('heading', { level: 2, name: region })).toBeVisible()
   }
@@ -100,15 +101,17 @@ export class WeatherHealthAlertsMapPage {
     await expect(wrapper.getByText('Type')).toBeVisible()
     await expect(wrapper.getByText(type, { exact: true })).toBeVisible()
 
-    await expect(wrapper.getByText('Colour')).toBeVisible()
-    await expect(wrapper.getByText(status)).toBeVisible()
+    if (status !== 'Green') {
+      await expect(wrapper.getByText('Risk score')).toBeVisible()
+      await expect(wrapper.getByText(status)).toBeVisible()
+    }
 
-    if (start) {
+    if (start && status !== 'Green') {
       await expect(wrapper.getByText('Start')).toBeVisible()
       await expect(wrapper.getByText(start)).toBeVisible()
     }
 
-    if (end) {
+    if (end && status !== 'Green') {
       await expect(wrapper.getByText('End', { exact: true })).toBeVisible()
       await expect(wrapper.getByText(end)).toBeVisible()
     }
