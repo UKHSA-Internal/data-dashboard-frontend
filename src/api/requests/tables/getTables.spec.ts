@@ -23,74 +23,98 @@ const getTablesResponseMocks: Array<[Topics, Metrics, Response]> = [
   ['Influenza', 'influenza_testing_positivityByWeek', testing_positivityByWeek],
 ]
 
-test.each(getTablesResponseMocks)(
-  'Returns tabular data for the %s topic and %s metric',
-  async (topic, metric, data) => {
-    jest.mocked(client).mockResolvedValueOnce({ data, status: 200 })
-
-    const result = await getTables({ plots: [{ topic, metric }] })
-
-    expect(result).toEqual<SuccessResponse>({ success: true, data })
-  }
-)
-
-test('Handles invalid json received from the api', async () => {
-  jest.mocked(client).mockResolvedValueOnce({
-    data: {},
-    status: 200,
+describe('getTables', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
   })
 
-  const result = await getTables({
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-      },
-    ],
-    x_axis: 'metric',
-    y_axis: 'stratum',
+  test('Returns tabular data for the COVID-19 topic and new_cases_daily metric', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: cases_casesByDay,
+      status: 200,
+    })
+
+    const result = await getTables({
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_daily',
+        },
+      ],
+    })
+
+    expect(result).toEqual<SuccessResponse>({ success: true, data: cases_casesByDay })
   })
 
-  expect(result).toEqual<ErrorResponse>({
-    success: false,
-    error: new z.ZodError([
-      {
-        code: 'invalid_type',
-        expected: 'array',
-        received: 'object',
-        path: [],
-        message: 'Expected array, received object',
-      },
-    ]),
+  test.each(getTablesResponseMocks)(
+    'Returns tabular data for the %s topic and %s metric',
+    async (topic, metric, data) => {
+      jest.mocked(client).mockResolvedValueOnce({ data, status: 200 })
+
+      const result = await getTables({ plots: [{ topic, metric }] })
+
+      expect(result).toEqual<SuccessResponse>({ success: true, data })
+    }
+  )
+
+  test('Handles invalid json received from the api', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: {},
+      status: 200,
+    })
+
+    const result = await getTables({
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_daily',
+        },
+      ],
+      x_axis: 'metric',
+      y_axis: 'stratum',
+    })
+
+    expect(result).toEqual<ErrorResponse>({
+      success: false,
+      error: new z.ZodError([
+        {
+          code: 'invalid_type',
+          expected: 'array',
+          received: 'object',
+          path: [],
+          message: 'Expected array, received object',
+        },
+      ]),
+    })
   })
-})
 
-test('Handles generic http error', async () => {
-  jest.mocked(client).mockRejectedValueOnce({
-    status: 400,
-  })
+  test('Handles generic http error', async () => {
+    jest.mocked(client).mockRejectedValueOnce({
+      status: 400,
+    })
 
-  const result = await getTables({
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-      },
-    ],
-  })
+    const result = await getTables({
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_daily',
+        },
+      ],
+    })
 
-  expect(logger.error).toHaveBeenCalledTimes(1)
+    expect(logger.error).toHaveBeenCalledTimes(1)
 
-  expect(result).toEqual<ErrorResponse>({
-    success: false,
-    error: new z.ZodError([
-      {
-        code: 'invalid_type',
-        expected: 'array',
-        received: 'object',
-        path: [],
-        message: 'Expected array, received object',
-      },
-    ]),
+    expect(result).toEqual<ErrorResponse>({
+      success: false,
+      error: new z.ZodError([
+        {
+          code: 'invalid_type',
+          expected: 'array',
+          received: 'object',
+          path: [],
+          message: 'Expected array, received object',
+        },
+      ]),
+    })
   })
 })
