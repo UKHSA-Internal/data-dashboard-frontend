@@ -24,7 +24,7 @@ export const TimePeriodSelector = ({
   currentTimePeriodIndex,
   onTimePeriodChange,
   timePeriodTitle,
-}: TimePeriodSelectorProps): ReactElement => {
+}: TimePeriodSelectorProps) => {
   const currentTimePeriod = timePeriods[currentTimePeriodIndex]
   const isFirstPeriod = currentTimePeriodIndex === 0
   const isLastPeriod = currentTimePeriodIndex === timePeriods.length - 1

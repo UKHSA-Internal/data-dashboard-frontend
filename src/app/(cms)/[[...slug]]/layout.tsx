@@ -15,7 +15,7 @@ import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   children: ReactNode
-  params: Promise<{ slug?: string[] }>
+  params: Promise<{ slug: string }> | undefined
 }
 
 export function generateMetadata() {
@@ -24,16 +24,14 @@ export function generateMetadata() {
   }
 }
 
-export default async function Layout(props: LayoutProps) {
-  const params = await props.params;
+export default async function Layout({ children, params }: LayoutProps) {
+  const [{ t }, globalBanners, resolvedParams] = await Promise.all([
+    getServerTranslation('common'),
+    getGlobalBanner(),
+    params
+  ])
 
-  const {
-    children
-  } = props;
-
-  const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
-
-  const onLandingPage = !params?.slug || params.slug.length === 0
+  const onLandingPage = !resolvedParams?.slug
 
   const { sub_title: subTitle } = await getLandingPage()
 

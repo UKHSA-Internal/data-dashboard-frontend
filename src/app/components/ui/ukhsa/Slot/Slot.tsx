@@ -16,14 +16,15 @@ export function Slot({
   children?: React.ReactNode
 }) {
   if (isValidElement(children)) {
+    const childProps = children.props as any
     return cloneElement(children, {
       ...props,
-      ...(children.props as any),
+      ...childProps,
       style: {
         ...props.style,
-        ...(children.props as any).style,
+        ...(childProps?.style || {}),
       },
-      className: twMerge(props.className, (children.props as any).className),
+      className: twMerge(props.className, childProps?.className),
     })
   }
   if (Children.count(children) > 1) {

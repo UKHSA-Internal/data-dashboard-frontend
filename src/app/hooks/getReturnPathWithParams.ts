@@ -10,8 +10,8 @@ import { getSearchParams } from './getSearchParams'
  */
 
 export const getReturnPathWithParams = async () => {
-  const searchParams = await getSearchParams()
-  const headersList = headers() as unknown as UnsafeUnwrappedHeaders
+  const searchParams = getSearchParams()
+  const headersList = await headers()
   const currentUrl = new URL(headersList.get('x-url') || '')
 
   return (path: string) => {
