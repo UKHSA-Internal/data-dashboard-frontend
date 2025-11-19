@@ -16,7 +16,6 @@ export function Slot({
   children?: React.ReactNode
 }) {
   if (isValidElement(children)) {
-    const childProps = children.props as any
     return cloneElement(children, {
       ...props,
       ...childProps,
