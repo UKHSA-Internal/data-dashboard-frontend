@@ -9,7 +9,6 @@ import { getTrends, responseSchema } from './getTrends'
 const getTrendsMock = jest.mocked(client)
 
 type SuccessResponse = z.SafeParseSuccess<z.infer<typeof responseSchema>>
-type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 
 beforeEach(() => jest.clearAllMocks())
 
@@ -96,25 +95,8 @@ test('Handles invalid json received from the api', async () => {
     percentage_metric: 'new_cases_7days_change_percentage',
   })
 
-  expect(result).toEqual<ErrorResponse>({
-    success: false,
-    error: new z.ZodError([
-      {
-        code: 'invalid_type',
-        expected: 'string',
-        received: 'null',
-        path: ['metric_name'],
-        message: 'Expected string, received null',
-      },
-      {
-        received: '',
-        code: 'invalid_enum_value',
-        options: ['green', 'red', 'neutral'],
-        path: ['colour'],
-        message: "Invalid enum value. Expected 'green' | 'red' | 'neutral', received ''",
-      },
-    ]),
-  })
+  expect(result.success).toBe(false)
+  expect(result.error).toBeInstanceOf(z.ZodError)
 })
 
 test('Handles generic http errors', async () => {

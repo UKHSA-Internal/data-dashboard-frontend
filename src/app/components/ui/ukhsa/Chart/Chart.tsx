@@ -214,7 +214,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     <>
       {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
       <Suspense fallback={staticChart}>
-        <ChartInteractive staticChart={staticChart} />
+        <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
       </Suspense>
       {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
     </>
