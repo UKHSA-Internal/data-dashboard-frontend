@@ -1,19 +1,20 @@
 import { waitFor } from '@testing-library/dom'
 
-import {
-  DataFilter,
-  FilterLinkedSubplotData,
-  GeographyFilters,
-  ThresholdFilter,
-  TimePeriod,
-} from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedSubplotData } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
-import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
 import { mapThresholdsToMetricValueRanges } from '@/app/utils/threshold.utils'
-import { render, screen } from '@/config/test-utils'
+import {
+  mockGeography,
+  mockGeographyFilters,
+  mockSelectedThresholds,
+  mockSelectedVaccinations,
+  mockTimePeriods,
+  render,
+  screen,
+} from '@/config/test-utils'
 
 import SubplotClientChart from './SubplotChart'
 
@@ -80,82 +81,6 @@ jest.mock('@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector', () 
     </div>
   ),
 }))
-
-const mockGeography: GeographiesSchemaObject = {
-  name: 'England',
-  geography_code: 'E92000001',
-  geography_type: 'Nation',
-  relationships: [],
-}
-
-const mockSelectedVaccinations: DataFilter[] = [
-  {
-    id: 'vaccination-1',
-    type: 'data_filter',
-    value: {
-      label: '6-in-1 (12 months)',
-      colour: '#FF0000',
-      parameters: {
-        theme: { label: 'Theme', value: 'immunisation' },
-        sub_theme: { label: 'Sub Theme', value: 'childhood_vaccines' },
-        topic: { label: '6-in-1', value: '6-in-1' },
-        metric: { label: 'Coverage', value: '6-in-1_coverage_coverageByYear' },
-        stratum: { label: '12 months', value: '12m' },
-        sex: { label: 'All', value: 'all' },
-        age: { label: 'All Ages', value: 'all' },
-      },
-      accompanying_points: [],
-    },
-  },
-]
-
-const mockSelectedThresholds: ThresholdFilter[] = [
-  {
-    id: 'threshold-1',
-    type: 'threshold',
-    value: {
-      label: 'Target',
-      colour: '#00FF00',
-      boundary_minimum_value: 90,
-      boundary_maximum_value: 100,
-    },
-  },
-]
-
-const mockTimePeriods: TimePeriod[] = [
-  {
-    id: 'period-1',
-    type: 'time_period',
-    value: {
-      label: '2023',
-      date_from: '2023-01-01',
-      date_to: '2023-12-31',
-    },
-  },
-  {
-    id: 'period-2',
-    type: 'time_period',
-    value: {
-      label: '2024',
-      date_from: '2024-01-01',
-      date_to: '2024-12-31',
-    },
-  },
-]
-
-const mockGeographyFilters: GeographyFilters = {
-  geography_types: [
-    {
-      id: 'nation',
-      type: 'geography_filter',
-      value: {
-        label: 'Nation',
-        geography_type: 'Nation',
-        colour: 'COLOUR_1_DARK_BLUE',
-      },
-    },
-  ],
-}
 
 const mockCardData: FilterLinkedSubplotData = {
   title_prefix: 'Coverage',

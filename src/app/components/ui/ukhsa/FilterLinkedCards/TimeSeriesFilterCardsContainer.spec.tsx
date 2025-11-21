@@ -1,7 +1,6 @@
-import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
-import { render, screen } from '@/config/test-utils'
+import { mockSelectedVaccinations, mockTimePeriods, render, screen } from '@/config/test-utils'
 
 import TimeSeriesFilterCardsContainer from './TimeSeriesFilterCardsContainer'
 
@@ -32,18 +31,6 @@ jest.mock('@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard
   ),
 }))
 
-const mockTimePeriods: TimePeriod[] = [
-  {
-    id: 'period-1',
-    type: 'time_period',
-    value: {
-      label: '2023',
-      date_from: '2023-01-01',
-      date_to: '2023-12-31',
-    },
-  },
-]
-
 const mockSelectedGeographies: GeographiesSchemaObject[] = [
   {
     name: 'England',
@@ -56,27 +43,6 @@ const mockSelectedGeographies: GeographiesSchemaObject[] = [
     geography_code: 'W92000004',
     geography_type: 'Nation',
     relationships: [],
-  },
-]
-
-const mockSelectedVaccinations: DataFilter[] = [
-  {
-    id: 'vaccine-1',
-    type: 'data_filter',
-    value: {
-      label: 'COVID-19 Cases',
-      colour: '#FF0000',
-      parameters: {
-        theme: { label: 'Theme', value: 'infectious_disease' },
-        sub_theme: { label: 'Sub Theme', value: 'respiratory' },
-        topic: { label: 'COVID-19', value: 'COVID-19' },
-        metric: { label: 'Cases', value: 'new_cases_7days_sum' },
-        stratum: { label: 'All', value: 'default' },
-        sex: { label: 'All', value: 'all' },
-        age: { label: 'All', value: 'all' },
-      },
-      accompanying_points: [],
-    },
   },
 ]
 

@@ -1,7 +1,13 @@
-import { DataFilter, GeographyFilters, ThresholdFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
-import { render, screen } from '@/config/test-utils'
+import {
+  mockGeographyFilters,
+  mockSelectedThresholds,
+  mockSelectedVaccinations,
+  mockTimePeriods,
+  render,
+  screen,
+} from '@/config/test-utils'
 
 import SubplotFilterCardContainer from './SubplotFilterCardContainer'
 
@@ -29,24 +35,6 @@ jest.mock('@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard
   ),
 }))
 
-const mockTimePeriods: TimePeriod[] = [
-  {
-    id: 'period-1',
-    type: 'time_period',
-    value: {
-      label: '2023',
-      date_from: '2023-01-01',
-      date_to: '2023-12-31',
-    },
-  },
-]
-
-const mockGeographyFilters: GeographyFilters = {
-  geography_types: [
-    { type: 'geography_filter', value: { label: 'Nation', colour: 'Red', geography_type: 'nation' }, id: '1' },
-  ],
-}
-
 const mockSelectedGeographies: GeographiesSchemaObject[] = [
   {
     name: 'England',
@@ -59,40 +47,6 @@ const mockSelectedGeographies: GeographiesSchemaObject[] = [
     geography_code: 'W92000004',
     geography_type: 'Nation',
     relationships: [],
-  },
-]
-
-const mockSelectedVaccinations: DataFilter[] = [
-  {
-    id: 'vaccine-1',
-    type: 'data_filter',
-    value: {
-      label: '6-in-1',
-      colour: '#FF0000',
-      parameters: {
-        theme: { label: 'Theme', value: 'immunisation' },
-        sub_theme: { label: 'Sub Theme', value: 'childhood-vaccines' },
-        topic: { label: '6-in-1', value: '6-in-1' },
-        metric: { label: 'Coverage', value: 'coverage' },
-        stratum: { label: '12m', value: '12m' },
-        sex: { label: 'All', value: 'all' },
-        age: { label: 'All', value: 'all' },
-      },
-      accompanying_points: [],
-    },
-  },
-]
-
-const mockSelectedThresholds: ThresholdFilter[] = [
-  {
-    id: 'threshold-1',
-    type: 'threshold',
-    value: {
-      label: 'Target',
-      colour: '#00FF00',
-      boundary_minimum_value: 90,
-      boundary_maximum_value: 100,
-    },
   },
 ]
 

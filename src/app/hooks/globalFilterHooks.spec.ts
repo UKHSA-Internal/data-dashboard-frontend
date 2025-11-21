@@ -3,14 +3,12 @@ import {
   DataFilters,
   FilterLinkedSubplotData,
   FilterLinkedTimeSeriesData,
-  GeographyFilters,
   ThresholdFilter,
   ThresholdFilters,
-  TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchema } from '@/api/requests/geographies/getGeographies'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
-import { renderHook } from '@/config/test-utils'
+import { mockGeographyFilters, mockTimePeriods, renderHook } from '@/config/test-utils'
 
 import {
   useCoverageTemplateData,
@@ -33,32 +31,6 @@ jest.mock('@/app/features/global-filter/context/globalFilterContext', () => ({
 }))
 
 const mockUseGlobalFilters = useGlobalFilters as jest.MockedFunction<typeof useGlobalFilters>
-
-const mockTimePeriods: TimePeriod[] = [
-  {
-    id: 'period-1',
-    type: 'time_period',
-    value: {
-      label: '2023',
-      date_from: '2023-01-01',
-      date_to: '2023-12-31',
-    },
-  },
-]
-
-const mockGeographyFilters: GeographyFilters = {
-  geography_types: [
-    {
-      id: 'nation',
-      type: 'geography_filter',
-      value: {
-        label: 'Nation',
-        geography_type: 'Nation',
-        colour: 'COLOUR_1_DARK_BLUE',
-      },
-    },
-  ],
-}
 
 const mockThresholdFilters: ThresholdFilters = {
   label: 'Thresholds',

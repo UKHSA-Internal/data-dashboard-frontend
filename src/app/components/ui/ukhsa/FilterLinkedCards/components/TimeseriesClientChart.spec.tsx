@@ -1,11 +1,11 @@
 import { waitFor } from '@testing-library/dom'
 
-import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import { getMinMaxFullDate } from '@/app/utils/time-period.utils'
-import { render, screen } from '@/config/test-utils'
+import { mockGeography, mockTimePeriods, render, screen } from '@/config/test-utils'
 
 import TimeseriesClientChart from './TimeseriesClientChart'
 
@@ -49,13 +49,6 @@ jest.mock('@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard
   ),
 }))
 
-const mockGeography: GeographiesSchemaObject = {
-  name: 'England',
-  geography_code: 'E92000001',
-  geography_type: 'Nation',
-  relationships: [],
-}
-
 const mockDataFilters: DataFilter[] = [
   {
     id: 'filter-1',
@@ -73,27 +66,6 @@ const mockDataFilters: DataFilter[] = [
         age: { label: 'All Ages', value: 'all' },
       },
       accompanying_points: [],
-    },
-  },
-]
-
-const mockTimePeriods: TimePeriod[] = [
-  {
-    id: 'period-1',
-    type: 'time_period',
-    value: {
-      label: '2023',
-      date_from: '2023-01-01',
-      date_to: '2023-12-31',
-    },
-  },
-  {
-    id: 'period-2',
-    type: 'time_period',
-    value: {
-      label: '2024',
-      date_from: '2024-01-01',
-      date_to: '2024-12-31',
     },
   },
 ]

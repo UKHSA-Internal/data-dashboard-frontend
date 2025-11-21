@@ -1,8 +1,8 @@
-import { GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { getSubplotTables } from '@/api/requests/tables/subplot/getSubplotTables'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { flattenGeographyObject, getParentGeography } from '@/app/utils/geography.utils'
-import { render, screen, waitFor } from '@/config/test-utils'
+import { mockGeographyFilters, render, screen, waitFor } from '@/config/test-utils'
 
 import { SubplotClientTable } from './SubplotClientTable'
 
@@ -24,13 +24,6 @@ const mockTimePeriods: TimePeriod[] = [
 ]
 
 const mockCurrentTimePeriodIndex: number = mockTimePeriods.length - 1
-
-const mockGeographyFilters: GeographyFilters = {
-  geography_types: [
-    { type: 'geography_filter', value: { label: 'Nation', colour: 'Red', geography_type: 'nation' }, id: '1' },
-    { type: 'geography_filter', value: { label: 'Region', colour: 'Blue', geography_type: 'region' }, id: '2' },
-  ],
-}
 
 const mockParsedChartTableData = [
   {

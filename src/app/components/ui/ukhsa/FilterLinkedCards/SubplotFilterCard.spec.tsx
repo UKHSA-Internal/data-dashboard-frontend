@@ -1,15 +1,17 @@
 import userEvent from '@testing-library/user-event'
 
-import {
-  DataFilter,
-  FilterLinkedSubplotData,
-  GeographyFilters,
-  ThresholdFilter,
-  TimePeriod,
-} from '@/api/models/cms/Page/GlobalFilter'
+import { FilterLinkedSubplotData } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getParentGeography } from '@/app/utils/geography.utils'
-import { render, screen, waitFor } from '@/config/test-utils'
+import {
+  mockGeographyFilters,
+  mockSelectedThresholds,
+  mockSelectedVaccinations,
+  mockTimePeriods,
+  render,
+  screen,
+  waitFor,
+} from '@/config/test-utils'
 
 import SubplotFilterCard from './SubplotFilterCard'
 
@@ -60,67 +62,6 @@ const mockGeography: GeographiesSchemaObject = {
   ],
 }
 
-const mockTimePeriods: TimePeriod[] = [
-  {
-    id: 'period-1',
-    type: 'time_period',
-    value: {
-      label: '2022',
-      date_from: '2022-01-01',
-      date_to: '2022-12-31',
-    },
-  },
-  {
-    id: 'period-2',
-    type: 'time_period',
-    value: {
-      label: '2023',
-      date_from: '2023-01-01',
-      date_to: '2023-12-31',
-    },
-  },
-]
-
-const mockSelectedVaccinations: DataFilter[] = [
-  {
-    id: 'vaccine-1',
-    type: 'data_filter',
-    value: {
-      label: '6-in-1',
-      colour: '#FF0000',
-      parameters: {
-        theme: { label: 'Theme', value: 'immunisation' },
-        sub_theme: { label: 'Sub Theme', value: 'childhood-vaccines' },
-        topic: { label: '6-in-1', value: '6-in-1' },
-        metric: { label: 'Coverage', value: 'coverage' },
-        stratum: { label: '12m', value: '12m' },
-        sex: { label: 'All', value: 'all' },
-        age: { label: 'All', value: 'all' },
-      },
-      accompanying_points: [],
-    },
-  },
-]
-
-const mockSelectedThresholds: ThresholdFilter[] = [
-  {
-    id: 'threshold-1',
-    type: 'threshold',
-    value: {
-      label: 'Target',
-      colour: '#00FF00',
-      boundary_minimum_value: 90,
-      boundary_maximum_value: 100,
-    },
-  },
-]
-
-const mockGeographyFilters: GeographyFilters = {
-  geography_types: [
-    { type: 'geography_filter', value: { label: 'Nation', colour: 'Red', geography_type: 'nation' }, id: '1' },
-  ],
-}
-
 const mockCardData: FilterLinkedSubplotData = {
   title_prefix: 'Coverage',
   legend_title: 'Coverage %',
@@ -152,7 +93,7 @@ describe('SubplotFilterCard', () => {
       />
     )
 
-    expect(screen.getByText(/2023/)).toBeInTheDocument()
+    expect(screen.getByText(/2024/)).toBeInTheDocument()
   })
 
   test('initializes with null date state', () => {
@@ -187,13 +128,13 @@ describe('SubplotFilterCard', () => {
       />
     )
 
-    expect(screen.getByText(/2023/)).toBeInTheDocument()
+    expect(screen.getByText(/2024/)).toBeInTheDocument()
 
     const changeButton = screen.getByText('Change Period')
     await user.click(changeButton)
 
     await waitFor(() => {
-      expect(screen.getByText(/2022/)).toBeInTheDocument()
+      expect(screen.getByText(/2023/)).toBeInTheDocument()
     })
   })
 
@@ -236,7 +177,7 @@ describe('SubplotFilterCard', () => {
       />
     )
 
-    expect(screen.getByText(/Coverage between 2023 \(United Kingdom, England\)/)).toBeInTheDocument()
+    expect(screen.getByText(/Coverage between 2024 \(United Kingdom, England\)/)).toBeInTheDocument()
   })
 
   test('renders about tab when about is provided', () => {
