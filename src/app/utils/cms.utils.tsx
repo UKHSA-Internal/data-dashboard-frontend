@@ -72,7 +72,8 @@ export const renderCard = (
   showMoreSections: string[],
   timeseriesFilter: string,
   { type, value, id }: z.infer<typeof CardTypes>,
-  chartId?: string
+  chartId?: string,
+  startChartCounter?: number
 ) => {
   return (
     <div key={id}>
@@ -82,7 +83,12 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent value={value} timeseriesFilter={timeseriesFilter} chartId={chartId} />
+          <ChartRowCardContent
+            value={value}
+            timeseriesFilter={timeseriesFilter}
+            heading={heading}
+            startChartCounter={startChartCounter}
+          />
         </ChartRowCard>
       )}
 
