@@ -36,7 +36,7 @@ const TimeSeriesFilterCardsContainer = () => {
             <ClientInformationCard
               variant="info"
               title="Chart selection required"
-              message="Please make the required selections from the filter to display a chart."
+              message="Please make the required selections from the filter to display a chart. - Updated"
             />
           </section>
         </div>

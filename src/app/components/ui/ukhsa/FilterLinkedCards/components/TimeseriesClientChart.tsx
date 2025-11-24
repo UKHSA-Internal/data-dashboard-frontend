@@ -5,12 +5,11 @@ import { useEffect, useState } from 'react'
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
+import ChartInteractiveWrapper from '@/app/components/cms/ChartInteractive/ChartInteractiveWrapper'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
-
-import ChartInteractive from '../../ChartInteractive/ChartInteractive'
 
 interface ClientChartProps {
   geography: GeographiesSchemaObject
@@ -125,7 +124,7 @@ const TimeseriesClientChart = ({
   if (chartResponse) {
     const { figure } = chartResponse
 
-    return <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+    return <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
   }
 }
 

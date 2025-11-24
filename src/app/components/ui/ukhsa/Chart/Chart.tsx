@@ -1,6 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
 import kebabCase from 'lodash/kebabCase'
-import dynamic from 'next/dynamic'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
@@ -15,6 +14,7 @@ import { chartSizes } from '@/config/constants'
 import { ChartEmpty } from '../../../cms/ChartEmpty/ChartEmpty'
 import ChartNoScript from '../ChartNoScript/ChartNoScript'
 import ChartSelect from '../View/ChartSelect/ChartSelect'
+import ChartInteractive from './ChartInteractive'
 
 interface ChartProps {
   /**
@@ -146,7 +146,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   const { chart, x_axis, y_axis } = chartData
 
   const pathname = getPathname()
-  const [areaType, areaName] = getAreaSelector()
+  const [areaType, areaName] = await getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot?.value,
@@ -175,7 +175,6 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
       })
     )
 
-  // Lazy load the interactive chart component (and all associated plotly.js code)
   const resolvedRequests = await Promise.all(requests)
 
   // Pick out the default chart (mobile-first)
@@ -197,12 +196,6 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     }),
   })
 
-  // Lazy load the interactive chart component (and all associated plotly.js code)
-  const ChartInteractive = dynamic(() => import('../ChartInteractive/ChartInteractive'), {
-    ssr: false,
-    loading: () => staticChart, // Show the static svg chart whilst this chunk is being loaded
-  })
-
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
@@ -221,7 +214,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     <>
       {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
       <Suspense fallback={staticChart}>
-        <ChartInteractive fallbackUntilLoaded={staticChart} figure={{ frames: [], ...figure }} />
+        <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
       </Suspense>
       {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
     </>

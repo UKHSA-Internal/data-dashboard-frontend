@@ -3,7 +3,7 @@ import { Suspense } from 'react'
 
 import featureCollection from '../shared/data/geojson/ukhsa-regions'
 
-const HealthAlertsMapDialog = dynamic(() => import('./HealthAlertsMapDialog'), { ssr: false })
+const HealthAlertsMapDialog = dynamic(() => import('./HealthAlertsMapDialog'))
 
 export async function HealthAlertsMapWrapper() {
   return (

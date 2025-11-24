@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/app.fixture'
 
-test('Accessibility Statement Page', async ({ accessibilityStatementPage, app }) => {
+test('Accessibility Statement Page', async ({ accessibilityStatementPage }) => {
   await test.step('loads the page', async () => {
     await accessibilityStatementPage.goto()
   })

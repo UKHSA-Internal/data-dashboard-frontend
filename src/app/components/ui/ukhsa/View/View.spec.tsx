@@ -71,7 +71,9 @@ test('renders the govuk headings', async () => {
 
   const { getByRole } = render(await View({ heading: 'Test', description: children, children: null }))
 
-  expect(getByRole('heading', { level: 2, name: 'heading 2' })).toHaveClass('govuk-heading-l')
+  const h2 = getByRole('heading', { level: 2, name: 'heading 2' })
+
+  expect(h2).toHaveClass('govuk-heading-l')
   expect(getByRole('heading', { level: 3, name: 'heading 3' })).toHaveClass('govuk-heading-m')
   expect(getByRole('heading', { level: 4, name: 'heading 4' })).toHaveClass('govuk-heading-s')
 })
