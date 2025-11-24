@@ -15,7 +15,7 @@ import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   children: ReactNode
-  params: Promise<{ slug: string }> | undefined
+  params: Promise<{ slug?: string[] }>
 }
 
 export function generateMetadata() {
@@ -28,7 +28,7 @@ export default async function Layout({ children, params }: LayoutProps) {
   const [{ t }, globalBanners, resolvedParams] = await Promise.all([
     getServerTranslation('common'),
     getGlobalBanner(),
-    params
+    params,
   ])
 
   const onLandingPage = !resolvedParams?.slug
