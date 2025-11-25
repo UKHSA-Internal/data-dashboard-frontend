@@ -105,16 +105,16 @@ describe('download/subplot/v1', () => {
     expect(logger.error).toHaveBeenCalledWith(
       `Download Chart Schema parse error: [
   {
-    \"received\": \"invalid_file_format\",
-    \"code\": \"invalid_enum_value\",
-    \"options\": [
-      \"json\",
-      \"csv\"
+    "received": "invalid_file_format",
+    "code": "invalid_enum_value",
+    "options": [
+      "json",
+      "csv"
     ],
-    \"path\": [
-      \"file_format\"
+    "path": [
+      "file_format"
     ],
-    \"message\": \"Invalid enum value. Expected 'json' | 'csv', received 'invalid_file_format'\"
+    "message": "Invalid enum value. Expected 'json' | 'csv', received 'invalid_file_format'"
   }
 ]`
     )

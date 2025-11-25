@@ -257,7 +257,6 @@ export const getMetricsPages = async ({
       logger.error(`getMetricsPages Zod Validation error: ${result.error}`)
       return result
     }
-    return
   } catch (error) {
     logger.error(error)
     return metricsChildResponseSchema.safeParse(error)

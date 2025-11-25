@@ -44,7 +44,7 @@ export async function generateMetadata({
 
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
-  if (!metricsEntries || !metricsEntries.success) {
+  if (!metricsEntries.success) {
     logger.info(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
     return redirect('/error')
   }
@@ -83,7 +83,7 @@ export default async function MetricsParentPage({
 
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
-  if (!metricsEntries || !metricsEntries.success) {
+  if (!metricsEntries.success) {
     logger.error(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
     return redirect('/error')
   }
