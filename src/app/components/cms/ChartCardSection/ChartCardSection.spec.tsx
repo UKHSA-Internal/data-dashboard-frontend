@@ -10,6 +10,19 @@ jest.mock('@/app/hooks/getPathname', () => ({
   getPathname: jest.fn(() => '/test-pathname'),
 }))
 
+jest.mock('@/app/hooks/getSearchParams', () => ({
+  getSearchParams: jest.fn(() => new URL('http://localhost').searchParams),
+}))
+
+jest.mock('@/app/i18n', () => ({
+  getServerTranslation: jest.fn(() =>
+    Promise.resolve({
+      t: jest.fn((key: string) => key),
+      i18n: {},
+    })
+  ),
+}))
+
 const OriginalURL = global.URL
 Object.defineProperty(window, 'URL', {
   value: class MockURL extends OriginalURL {
@@ -20,9 +33,8 @@ Object.defineProperty(window, 'URL', {
 })
 
 // Mock components
-jest.mock('@/app/components/cms', () => ({
-  ...jest.requireActual('@/app/components/cms'),
-  ChartRowCard: ({ children }: any) => <div data-testid="chart-row-card">{children}</div>,
+jest.mock('@/app/components/ui/ukhsa', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa'),
   Chart: ({ chartId }: { chartId: string }) => (
     <div data-testid="chart" data-chart-id={chartId}>
       Chart Component Mock

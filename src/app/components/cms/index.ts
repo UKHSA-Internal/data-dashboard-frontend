@@ -1,7 +1,3 @@
-export * from '../ui/ukhsa/Chart/Chart'
-export * from '../ui/ukhsa/ChartEmpty/ChartEmpty'
-export * from '../ui/ukhsa/ChartRowCard/ChartRowCard'
-export * from '../ui/ukhsa/ChartRowCardHeader/ChartRowCardHeader'
 export * from './AreaSelector/AreaSelector'
 export * from './ButtonExternal/ButtonExternal'
 export * from './ButtonInternal/ButtonInternal'

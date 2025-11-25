@@ -5,7 +5,7 @@ import { useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import About from '@/app/components/cms/About/About'
+import { About } from '@/app/components/cms/About/About'
 import { ClientDownload } from '@/app/components/cms/Download/ClientDownload'
 import { ClientTable } from '@/app/components/cms/Table/ClientTable'
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'

@@ -3,7 +3,7 @@ import dynamic from 'next/dynamic'
 import Link from 'next/link'
 import { Suspense } from 'react'
 
-import About from '@/app/components/cms/About/About'
+import { About } from '@/app/components/cms/About/About'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa/Tabs/Tabs'
 

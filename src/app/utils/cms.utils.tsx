@@ -14,7 +14,6 @@ import {
   ButtonExternal,
   ButtonInternal,
   ChartCardSection,
-  ChartRowCard,
   CodeBlock,
   Headline,
   HeadlineNumbersRowCard,
@@ -25,6 +24,7 @@ import {
   WeatherHealthAlertCard,
 } from '../components/cms'
 import { ChartRowCardContent } from '../components/cms/ChartRowCardContent/ChartRowCardContent'
+import { ChartRowCard } from '../components/ui/ukhsa'
 import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
 import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'

@@ -13,7 +13,7 @@ import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/char
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
-import ChartNoScript from '../ChartNoScript/ChartNoScript'
+import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
 import ChartSelect from '../View/ChartSelect/ChartSelect'
 
 interface ChartProps {

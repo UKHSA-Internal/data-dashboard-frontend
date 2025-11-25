@@ -14,6 +14,19 @@ Object.defineProperty(window, 'URL', {
   writable: true,
 })
 
+jest.mock('@/app/hooks/getSearchParams', () => ({
+  getSearchParams: jest.fn(() => new URL('http://localhost').searchParams),
+}))
+
+jest.mock('@/app/i18n', () => ({
+  getServerTranslation: jest.fn(() =>
+    Promise.resolve({
+      t: jest.fn((key: string) => key),
+      i18n: {},
+    })
+  ),
+}))
+
 // Mock components
 jest.mock('@/app/components/cms', () => ({
   ...jest.requireActual('@/app/components/cms'),
@@ -21,6 +34,10 @@ jest.mock('@/app/components/cms', () => ({
   Download: () => <div>Mocked download</div>,
   About: () => <div>Mocked About</div>,
   Table: () => <div>Mocked table</div>,
+}))
+
+jest.mock('@/app/components/ui/ukhsa', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa'),
   Chart: () => <div>Mocked chart</div>,
   ChartRowCardHeader: ({ title, description, children, id }: any) => (
     <header>
