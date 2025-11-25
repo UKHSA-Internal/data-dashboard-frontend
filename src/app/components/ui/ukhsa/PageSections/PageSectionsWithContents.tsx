@@ -1,5 +1,5 @@
 import kebabCase from 'lodash/kebabCase'
-import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react'
+import { Children, cloneElement, isValidElement, ReactNode } from 'react'
 
 import { Contents, ContentsLink } from '../Contents/Contents'
 

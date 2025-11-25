@@ -6,7 +6,7 @@
  */
 import Leaflet from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
-import { useCallback, useEffect, useState, ReactElement } from 'react'
+import { ReactElement, useCallback, useEffect, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { useDebounceCallback, useEventListener } from 'usehooks-ts'
 

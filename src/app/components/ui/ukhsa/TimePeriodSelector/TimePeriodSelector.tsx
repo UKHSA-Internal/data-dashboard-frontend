@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React from 'react'
 
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 
