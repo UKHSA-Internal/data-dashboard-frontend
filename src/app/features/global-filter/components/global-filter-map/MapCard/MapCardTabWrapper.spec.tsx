@@ -22,12 +22,21 @@ jest.mock('react', () => ({
   Suspense: ({ children }: { children: React.ReactNode }) => children,
 }))
 
-// Mock the About component
-jest.mock('@/app/components/cms/About/About', () => {
-  return function MockAbout({ content }: { content: string }) {
-    return <div data-testid="about-component">{content}</div>
+jest.mock('next/link', () => {
+  return function MockLink({ children, href, ...props }: any) {
+    return (
+      <a href={href} {...props}>
+        {children}
+      </a>
+    )
   }
 })
+
+jest.mock('@/app/components/cms/About/About', () => ({
+  About: function MockAbout({ content }: { content: string }) {
+    return <div data-testid="about-component">{content}</div>
+  },
+}))
 
 describe('MapCardTabWrapper', () => {
   test('renders only MapCard component when about prop is null', async () => {

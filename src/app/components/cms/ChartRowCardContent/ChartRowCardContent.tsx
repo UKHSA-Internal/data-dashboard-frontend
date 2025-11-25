@@ -3,10 +3,18 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
-import { Chart, ChartRowCardHeader, Download, Table, Timestamp } from '@/app/components/cms'
-import About from '@/app/components/cms/About/About'
-import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
-import { AreaSelectorLoader } from '@/app/components/ui/ukhsa/AreaSelector/AreaSelectorLoader'
+import { Download, Table, Timestamp } from '@/app/components/cms'
+import { About } from '@/app/components/cms/About/About'
+import {
+  AreaSelectorLoader,
+  Card,
+  Chart,
+  ChartRowCardHeader,
+  Tabs,
+  TabsContent,
+  TabsList,
+  TabsTrigger,
+} from '@/app/components/ui/ukhsa'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 

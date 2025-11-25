@@ -4,12 +4,9 @@ import { HealthAlertTypes } from '@/api/models/Alerts'
 import { getHealthAlertByRegion } from '@/api/requests/health-alerts/getHealthAlertByRegion'
 
 export async function GET(req: NextRequest, context: { params: Promise<{ category: string; region: string }> }) {
-  const params = await context.params;
+  const params = await context.params
 
-  const {
-    category,
-    region
-  } = params;
+  const { category, region } = params
 
   if (!category || !region) {
     return new NextResponse('Missing category and/or region', {

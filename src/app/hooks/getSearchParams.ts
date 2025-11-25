@@ -1,4 +1,4 @@
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers';
+import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
 
 /**
  * Extracts and returns the URL search parameters from the current page in a Next.js Server component.
@@ -22,7 +22,7 @@ import { headers, type UnsafeUnwrappedHeaders } from 'next/headers';
  */
 
 export const getSearchParams = async () => {
-  const headersList = (await headers() as unknown as UnsafeUnwrappedHeaders)
+  const headersList = (await headers()) as unknown as UnsafeUnwrappedHeaders
   const headersUrl = headersList.get('x-url')
 
   const searchParams = headersUrl ? new URL(headersUrl).searchParams : new URLSearchParams()

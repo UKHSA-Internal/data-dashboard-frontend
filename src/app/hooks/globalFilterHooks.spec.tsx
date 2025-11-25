@@ -3,23 +3,24 @@ import { ReactNode } from 'react'
 
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
-import { act, renderHook } from '@/config/test-utils'
+import { act, renderHook, waitFor } from '@/config/test-utils'
 
 import {
   useDataFilters,
   useErrorData,
   useGeographyFilters,
+  useGeographyState,
+  useMapData,
   useSelectedFilters,
   useThresholdFilters,
   useTimePeriods,
+  useVaccinationState,
 } from './globalFilterHooks'
 
-// Mock the API call
 jest.mock('@/api/requests/geographies/getGeographies', () => ({
   getGeographies: jest.fn(),
 }))
 
-// Mock the utility function
 jest.mock('@/app/utils/global-filter-content-parser', () => ({
   extractGeographyIdFromGeographyFilter: jest.fn(() => []),
 }))
@@ -711,6 +712,59 @@ describe('globalFilterHooks', () => {
       })
 
       expect(result.current.chartRequestErrors).toEqual([])
+    })
+  })
+
+  describe('useGeographyState Hook', () => {
+    test('should return geography state from context', async () => {
+      const { result } = renderHook(() => useGeographyState(), { wrapper })
+
+      expect(result.current).toHaveProperty('geographyAreas')
+      expect(result.current).toHaveProperty('geographyAreasLoading')
+      expect(result.current).toHaveProperty('geographyAreasError')
+      expect(result.current.geographyAreas).toBeInstanceOf(Map)
+
+      await waitFor(() => {
+        expect(result.current.geographyAreasLoading).toBe(false)
+      })
+
+      expect(result.current.geographyAreasError).toBeNull()
+    })
+  })
+
+  describe('useVaccinationState Hook', () => {
+    test('should return vaccination state from context', () => {
+      const { result } = renderHook(() => useVaccinationState(), { wrapper })
+
+      expect(result.current).toHaveProperty('vaccinationList')
+      expect(result.current).toHaveProperty('selectedVaccination')
+      expect(result.current).toHaveProperty('setSelectedVaccination')
+      expect(result.current.vaccinationList).toEqual(mockDataFilters.data_filters)
+      expect(result.current.selectedVaccination).toBeNull()
+      expect(typeof result.current.setSelectedVaccination).toBe('function')
+    })
+
+    test('should return null vaccination list when no data filters are provided', () => {
+      const emptyWrapper = ({ children }: { children: ReactNode }) => (
+        <GlobalFilterProvider filters={{ ...mockFilters, dataFilters: null }}>{children}</GlobalFilterProvider>
+      )
+
+      const { result } = renderHook(() => useVaccinationState(), { wrapper: emptyWrapper })
+
+      expect(result.current.vaccinationList).toBeNull()
+    })
+  })
+
+  describe('useMapData Hook', () => {
+    test('should return map data state from context', () => {
+      const { result } = renderHook(() => useMapData(), { wrapper })
+
+      expect(result.current).toHaveProperty('mapData')
+      expect(result.current).toHaveProperty('mapDataLoading')
+      expect(result.current).toHaveProperty('mapDataError')
+      expect(result.current.mapData).toBeNull()
+      expect(result.current.mapDataLoading).toBe(false)
+      expect(result.current.mapDataError).toBeNull()
     })
   })
 })
