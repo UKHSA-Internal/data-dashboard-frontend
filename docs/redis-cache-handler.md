@@ -24,7 +24,7 @@ Authenticated App:
 
 ## Implementation
 
-We use the [`@neshca/cache-handler`](https://caching-tools.github.io/next-shared-cache/) package alongside Next.js's built-in cache handling configuration (`next.config.js`) to enable a **shared cache** across all application instances within the load balancer.
+We use the [`@fortedigital/nextjs-cache-handler`](https://caching-tools.github.io/next-shared-cache/) package alongside Next.js's built-in cache handling configuration (`next.config.js`) to enable a **shared cache** across all application instances within the load balancer.
 
 ### Redis Configuration
 

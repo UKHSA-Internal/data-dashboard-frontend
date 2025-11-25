@@ -12,9 +12,9 @@ interface PaginationListProps {
 type PageHref = UrlObject | null
 type Pages = Array<{ page: number; href: UrlObject }>
 
-export function getPaginationList({ totalItems, initialPage, initialPageSize }: PaginationListProps) {
-  const searchParams = getSearchParams()
-  const pathname = getPathname()
+export async function getPaginationList({ totalItems, initialPage, initialPageSize }: PaginationListProps) {
+  const searchParams = await getSearchParams()
+  const pathname = await getPathname()
   const currentPage = Number(searchParams.get('page')) || initialPage
   const totalPages = Math.ceil(totalItems / initialPageSize) || 1
   const hasNextPage = currentPage < totalPages

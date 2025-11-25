@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+
 import { render, screen } from '@/config/test-utils'
 
 import { ChartCardSection } from './ChartCardSection'
@@ -45,7 +47,7 @@ jest.mock('@/app/components/ui/ukhsa', () => ({
 jest.mock('next/link', () => {
   return function MockLink({ children, href, ...props }: any) {
     return (
-      <a href={href} {...props}>
+      <a href={typeof href === 'string' ? href : href.toString()} {...props}>
         {children}
       </a>
     )
@@ -63,7 +65,7 @@ describe('ChartCardSection', () => {
     },
   })
 
-  test('renders chart card section with 1 card', () => {
+  test('renders chart card section with 1 card', async () => {
     const mockValue = {
       cards: [createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1')],
     }
@@ -76,14 +78,18 @@ describe('ChartCardSection', () => {
       chartId: 'test-chart-id',
     }
 
-    render(<ChartCardSection {...mockProps} />)
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
 
-    expect(screen.getByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
     expect(screen.getByText('Test Description 1')).toBeInTheDocument()
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(1)
   })
 
-  test('renders chart card section with 3 cards', () => {
+  test('renders chart card section with 3 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
@@ -100,15 +106,19 @@ describe('ChartCardSection', () => {
       chartId: 'test-chart-id',
     }
 
-    render(<ChartCardSection {...mockProps} />)
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
 
-    expect(screen.getByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
+    expect(await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
   })
 
-  test('shows "Show More" button when there are 4 cards and only displays first 3 cards', () => {
+  test('shows "Show More" button when there are 4 cards and only displays first 3 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
@@ -126,7 +136,14 @@ describe('ChartCardSection', () => {
       chartId: 'test-chart-id',
     }
 
-    render(<ChartCardSection {...mockProps} />)
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
+
+    // Wait for component to render
+    await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })
 
     // Should only show first 3 cards
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)

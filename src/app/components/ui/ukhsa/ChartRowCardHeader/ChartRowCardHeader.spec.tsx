@@ -13,14 +13,14 @@ const getAreaSelectorMock = jest.mocked(getAreaSelector)
 
 describe('ChartRowCardHeader', () => {
   test('renders correctly with props', async () => {
-    getAreaSelectorMock.mockReturnValue([])
+    getAreaSelectorMock.mockResolvedValue([])
     render(await ChartRowCardHeader({ id: '1', title: 'Sample Title', description: 'Sample Description' }))
     expect(screen.getByRole('heading', { level: 3, name: 'Sample Title' })).toBeInTheDocument()
     expect(screen.getByText('Sample Description')).toBeInTheDocument()
   })
 
   test('displays a location when set', async () => {
-    getAreaSelectorMock.mockReturnValue([null, 'Test Area'])
+    getAreaSelectorMock.mockResolvedValue([null, 'Test Area'])
     render(await ChartRowCardHeader({ id: '1', title: 'Title', description: 'Description' }))
     expect(screen.getByRole('heading', { level: 3, name: 'Title (Test Area)' })).toBeInTheDocument()
   })

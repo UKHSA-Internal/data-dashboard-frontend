@@ -119,7 +119,7 @@ export const getSubplots = async (chart: RequestParams) => {
           subplots.map((subplot) => subplot.subplot_title).join()
         )
       } else {
-        logger.error(error.message)
+        logger.error(`getSubplots error: ${error.message}`)
       }
     }
     return responseSchema.safeParse(error)

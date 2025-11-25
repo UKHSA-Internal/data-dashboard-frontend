@@ -1,5 +1,4 @@
 import { Map } from 'leaflet'
-import { useQueryState } from 'nuqs'
 import { useMap } from 'react-leaflet'
 import { Mock } from 'ts-mockery'
 
@@ -10,7 +9,9 @@ import { FeatureCollection } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from './useChoroplethKeyboardEvents'
 
 jest.mock('react-leaflet')
-jest.mock('nuqs')
+jest.mock('nuqs', () => ({
+  useQueryState: jest.fn(),
+}))
 
 const features = Mock.of<FeatureCollection['features']>([
   {
@@ -40,6 +41,8 @@ const mockMap = {
   off: jest.fn(),
 }
 
+const { useQueryState } = require('nuqs')
+
 jest.mocked(useMap).mockReturnValue(Mock.of<Map>(mockMap))
 jest.mocked(useQueryState).mockReturnValue([null, mockSetSelectedFeatureId])
 
@@ -63,14 +66,14 @@ describe('useChoroplethKeyboardAccessibility', () => {
     })
 
     expect(mockMap.getBounds).toHaveBeenCalled()
-    expect(result.current[0].props.children[0]).toContain('1 regions highlighted')
+    expect((result.current[0] as any).props.children[0]).toContain('1 regions highlighted')
   })
 
   test('should generate the correct screen reader text when there are more than maxVisibleRegions', () => {
     const manyFeatures = new Array(10).fill(features[0])
     const { result } = renderHook(() => useChoroplethKeyboardAccessibility(manyFeatures))
 
-    expect(result.current[0].props.children).toContain(
+    expect((result.current[0] as any).props.children).toContain(
       'There are 10 or more visible regions. Please zoom in to refine results.'
     )
   })

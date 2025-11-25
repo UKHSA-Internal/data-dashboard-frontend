@@ -1,4 +1,3 @@
-export * from './AreaSelector/AreaSelector'
 export * from './ButtonExternal/ButtonExternal'
 export * from './ButtonInternal/ButtonInternal'
 export * from './ChartCardSection/ChartCardSection'

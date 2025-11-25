@@ -14,15 +14,15 @@ describe('getPathname', () => {
     }))
   })
 
-  test('should correctly extract pathname from x-url header', () => {
+  test('should correctly extract pathname from x-url header', async () => {
     mockHeaders.mockReturnValue('http://example.com/some/path?param=value')
-    const pathname = getPathname()
+    const pathname = await getPathname()
     expect(pathname).toBe('/some/path')
   })
 
-  test('should return an empty string if x-url header is absent', () => {
+  test('should return an empty string if x-url header is absent', async () => {
     mockHeaders.mockReturnValue(null)
-    const pathname = getPathname()
+    const pathname = await getPathname()
     expect(pathname).toBe('')
   })
 

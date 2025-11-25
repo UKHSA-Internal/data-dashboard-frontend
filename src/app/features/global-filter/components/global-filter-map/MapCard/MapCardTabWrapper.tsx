@@ -1,3 +1,4 @@
+'use client'
 import { kebabCase } from 'lodash'
 import dynamic from 'next/dynamic'
 import Link from 'next/link'
@@ -9,7 +10,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/uk
 
 const MapCard = dynamic(() => import('./MapCard'), { ssr: false })
 
-export async function MapCardTabWrapper({ id, about }: { id: string; about: string | null }) {
+export function MapCardTabWrapper({ id, about }: { id: string; about: string | null }) {
   const title = `filter-linked-map-${id}`
 
   if (about) {

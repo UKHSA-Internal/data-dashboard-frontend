@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 declare const window: Window & { dataLayer: Record<string, unknown>[] }
 
 export function gtag(event: string, data: Record<string, unknown>): void {

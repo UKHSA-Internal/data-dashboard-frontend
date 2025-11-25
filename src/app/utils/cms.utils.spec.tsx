@@ -72,12 +72,12 @@ jest.mock('@/app/i18n', () => ({
 }))
 
 describe('Displaying a section from the cms home page', () => {
-  test('renders a heading that links to the topic page', () => {
-    render(renderSection([], mockSectionWithLink))
+  test('renders a heading that links to the topic page', async () => {
+    render(await renderSection([], mockSectionWithLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
 
-    render(renderSection([], mockSectionWithLongHeading))
+    render(await renderSection([], mockSectionWithLongHeading))
     expect(screen.getByRole('heading', { level: 2, name: 'Other respiratory viruses' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
       'href',
@@ -85,13 +85,13 @@ describe('Displaying a section from the cms home page', () => {
     )
   })
 
-  test('renders a heading with no link', () => {
-    render(renderSection([], mockSectionNoLink))
+  test('renders a heading with no link', async () => {
+    render(await renderSection([], mockSectionNoLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
   })
 
-  test('renders a card', () => {
-    render(renderSection([], mockSectionWithCard))
+  test('renders a card', async () => {
+    render(await renderSection([], mockSectionWithCard))
     expect(screen.getByText('This is some cms content')).toBeInTheDocument()
   })
 })
@@ -111,9 +111,9 @@ describe('renderCard function', () => {
 
   test('if more than 3 cards are provided then expect "Show More" link to be present', () => {
     const mockGetShowMoreURL = getShowMoreURL as jest.MockedFunction<typeof getShowMoreURL>
-    mockGetShowMoreURL.mockImplementation((sections, heading) => `/mock-url/${heading}`)
+    mockGetShowMoreURL.mockImplementation((_, heading) => `/mock-url/${heading}`)
     render(renderCard('', [], '', mockChartCardSectionWithSixCards))
-    const showMoreButton = screen.getByRole('link', { name: 'Show More' })
+    const showMoreButton = screen.getByText('Show More').closest('a')
     expect(showMoreButton).toBeInTheDocument()
   })
 })
