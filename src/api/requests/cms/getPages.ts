@@ -131,7 +131,7 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
 
     if (!initialResult.success) {
       logger.error('getPages Zod Validation error: ', initialResult.error)
-      return { ...initialResult }
+      return initialResult
     }
 
     totalCount = initialResult.data.meta.total_count
