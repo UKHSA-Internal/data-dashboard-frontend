@@ -12,7 +12,7 @@ import {
 import { ChartResponse } from '@/api/requests/charts/getCharts'
 import { getSubplots } from '@/api/requests/charts/subplot/getSubplots'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import ChartInteractive from '@/app/components/cms/ChartInteractive/ChartInteractive'
+import ChartInteractiveWrapper from '@/app/components/cms/ChartInteractive/ChartInteractiveWrapper'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { TimePeriodSelector } from '@/app/components/ui/ukhsa/TimePeriodSelector/TimePeriodSelector'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
@@ -171,7 +171,7 @@ const SubplotClientChart = ({
 
     return (
       <>
-        <ChartInteractive fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+        <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
         <TimePeriodSelector
           timePeriods={timePeriods}
           currentTimePeriodIndex={currentTimePeriodIndex}

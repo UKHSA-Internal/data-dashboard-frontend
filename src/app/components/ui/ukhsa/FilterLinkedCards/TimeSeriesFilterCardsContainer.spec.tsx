@@ -125,7 +125,7 @@ describe('TimeSeriesFilterCardsContainer', () => {
     expect(screen.getByTestId('client-info-card-info')).toBeInTheDocument()
     expect(screen.getByText('Chart selection required')).toBeInTheDocument()
     expect(
-      screen.getByText('Please make the required selections from the filter to display a chart.')
+      screen.getByText('Please make the required selections from the filter to display a chart. - Updated')
     ).toBeInTheDocument()
   })
 

@@ -1,4 +1,5 @@
 import userEvent from '@testing-library/user-event'
+import React from 'react'
 
 import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { render, screen } from '@/config/test-utils'

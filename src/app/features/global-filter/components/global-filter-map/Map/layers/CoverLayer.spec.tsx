@@ -12,9 +12,6 @@ import { act, fireEvent, render, screen, waitFor } from '@/config/test-utils'
 
 import CoverLayer from './CoverLayer'
 
-/* eslint-disable @typescript-eslint/no-explicit-any*/
-/* eslint-disable jsx-a11y/click-events-have-key-events*/
-
 let layerCounter = 0
 
 // Mock the hooks

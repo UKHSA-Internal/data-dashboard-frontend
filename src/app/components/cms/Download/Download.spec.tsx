@@ -100,7 +100,7 @@ test('Chart download fails to show due to api exception', async () => {
 test('Chart download fails to show due to lack of data', async () => {
   const url = 'http://localhost?areaType=UKHSA+Region&areaName=North+East'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockResolvedValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
@@ -115,7 +115,7 @@ test('Chart download fails to show due to lack of data', async () => {
 test('Fallback message with escaped characters', async () => {
   const url = 'http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockResolvedValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 

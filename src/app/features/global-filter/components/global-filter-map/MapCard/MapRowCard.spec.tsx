@@ -4,7 +4,6 @@ import { act, render, screen, waitFor } from '@/config/test-utils'
 
 import { MapRowCard } from './MapRowCard'
 
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const { useWindowSize, useDebounceValue } = require('usehooks-ts')
 
 // Mock Next.js navigation

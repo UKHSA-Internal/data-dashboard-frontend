@@ -5,8 +5,8 @@ import Link from 'next/link'
 
 import { Chart, ChartRowCardHeader, Download, Table, Timestamp } from '@/app/components/cms'
 import About from '@/app/components/cms/About/About'
-import { AreaSelectorLoader } from '@/app/components/cms/AreaSelector/AreaSelectorLoader'
 import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import { AreaSelectorLoader } from '@/app/components/ui/ukhsa/AreaSelector/AreaSelectorLoader'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 

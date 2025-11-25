@@ -94,13 +94,13 @@ export default async function MetricsParentPage({
     },
   } = metricsEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
+  const { previousPageHref, nextPageHref, pages, currentPage } = await getPaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: paginationSize,
   })
 
-  const setReturnPath = getReturnPathWithParams()
+  const setReturnPath = await getReturnPathWithParams()
 
   return (
     <View>
