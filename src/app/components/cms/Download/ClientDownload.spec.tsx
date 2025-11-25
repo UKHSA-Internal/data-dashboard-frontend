@@ -331,4 +331,60 @@ describe('ClientDownload', () => {
       expect(getTablesMock).toHaveBeenCalledTimes(2)
     })
   })
+
+  test('renders error message when tableResponse is not successful', async () => {
+    getTablesMock.mockResolvedValueOnce({
+      success: false,
+      error: expect.any(Object),
+    })
+
+    render(
+      <ClientDownload
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
+      expect(screen.getByText('Error')).toBeInTheDocument()
+      expect(screen.getByText('No data is available for the download that you have requested.')).toBeInTheDocument()
+    })
+  })
+
+  test('handles geography without geography_type', async () => {
+    const geographyWithoutType = {
+      ...mockGeography,
+      geography_type: undefined,
+    }
+
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse.data,
+    })
+
+    render(
+      <ClientDownload
+        geography={geographyWithoutType}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+      />
+    )
+
+    await waitFor(() => {
+      expect(getTablesMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          plots: expect.arrayContaining([
+            expect.objectContaining({
+              geography: geographyWithoutType.name,
+              geography_type: undefined,
+            }),
+          ]),
+        })
+      )
+    })
+  })
 })

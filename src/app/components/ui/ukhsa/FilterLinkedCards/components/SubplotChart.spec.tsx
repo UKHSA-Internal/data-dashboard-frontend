@@ -595,4 +595,124 @@ describe('SubplotClientChart', () => {
       )
     })
   })
+
+  test('calls handleLatestDate with null when chartResponse is null', async () => {
+    getSubplotsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+
+    render(
+      <SubplotClientChart
+        selectedVaccinations={mockSelectedVaccinations}
+        geographyFilters={mockGeographyFilters}
+        selectedThresholds={mockSelectedThresholds}
+        timePeriods={mockTimePeriods}
+        currentTimePeriodIndex={0}
+        handleTimePeriodChange={mockHandleTimePeriodChange}
+        geography={mockGeography}
+        cardData={mockCardData}
+        handleLatestDate={mockHandleLatestDate}
+        timePeriodTitle="Year selection"
+      />
+    )
+
+    await waitFor(() => {
+      expect(mockHandleLatestDate).toHaveBeenCalledWith('2024-03-31')
+    })
+
+    await waitFor(() => {
+      expect(mockHandleLatestDate).toHaveBeenCalledWith(null)
+    })
+  })
+
+  test('handles chartResponse without last_updated', async () => {
+    const chartResponseWithoutDate = {
+      ...mockChartResponse,
+      last_updated: '',
+    }
+
+    getSubplotsMock.mockResolvedValueOnce({
+      success: true,
+      data: chartResponseWithoutDate,
+    })
+
+    render(
+      <SubplotClientChart
+        selectedVaccinations={mockSelectedVaccinations}
+        geographyFilters={mockGeographyFilters}
+        selectedThresholds={mockSelectedThresholds}
+        timePeriods={mockTimePeriods}
+        currentTimePeriodIndex={0}
+        handleTimePeriodChange={mockHandleTimePeriodChange}
+        geography={mockGeography}
+        cardData={mockCardData}
+        handleLatestDate={mockHandleLatestDate}
+        timePeriodTitle="Year selection"
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId('chart-interactive')).toBeInTheDocument()
+      expect(mockHandleLatestDate).not.toHaveBeenCalledWith('')
+    })
+  })
+
+  test('handles null selectedThresholds', async () => {
+    mockMapThresholdsToMetricValueRanges.mockReturnValueOnce([])
+
+    getSubplotsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+
+    render(
+      <SubplotClientChart
+        selectedVaccinations={mockSelectedVaccinations}
+        geographyFilters={mockGeographyFilters}
+        selectedThresholds={null as any}
+        timePeriods={mockTimePeriods}
+        currentTimePeriodIndex={0}
+        handleTimePeriodChange={mockHandleTimePeriodChange}
+        geography={mockGeography}
+        cardData={mockCardData}
+        handleLatestDate={mockHandleLatestDate}
+        timePeriodTitle="Year selection"
+      />
+    )
+
+    await waitFor(() => {
+      expect(getSubplotsMock).toHaveBeenCalledWith(
+        expect.objectContaining({
+          chart_parameters: expect.objectContaining({
+            metric_value_ranges: [],
+          }),
+        })
+      )
+    })
+  })
+
+  test('handles exception in fetchCharts', async () => {
+    getSubplotsMock.mockRejectedValueOnce('String error')
+
+    render(
+      <SubplotClientChart
+        selectedVaccinations={mockSelectedVaccinations}
+        geographyFilters={mockGeographyFilters}
+        selectedThresholds={mockSelectedThresholds}
+        timePeriods={mockTimePeriods}
+        currentTimePeriodIndex={0}
+        handleTimePeriodChange={mockHandleTimePeriodChange}
+        geography={mockGeography}
+        cardData={mockCardData}
+        handleLatestDate={mockHandleLatestDate}
+        timePeriodTitle="Year selection"
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
+      expect(screen.getByText('No data available for the selected chart filters')).toBeInTheDocument()
+    })
+  })
 })

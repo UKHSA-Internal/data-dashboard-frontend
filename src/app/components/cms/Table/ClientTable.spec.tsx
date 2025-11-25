@@ -895,4 +895,312 @@ describe('ClientTable', () => {
       expect(getTablesMock).toHaveBeenCalled()
     })
   })
+
+  test('uses getColumnHeader with chartLabel when available', async () => {
+    const tableDataWithChartLabel = [
+      {
+        columns: [
+          { header: 'Date', accessorKey: 'col-0' },
+          { header: 'COVID-19 Cases', accessorKey: 'col-1' },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2023-01-01',
+              'col-1': 100,
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockParseChartTableData.mockReturnValueOnce(tableDataWithChartLabel)
+
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse,
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      const headers = screen.getAllByRole('columnheader')
+      expect(headers[0]).toHaveTextContent('Date')
+      expect(headers[1]).toHaveTextContent('COVID-19 Cases')
+    })
+  })
+
+  test('uses getColumnHeader with axisTitle when chartLabel is empty', async () => {
+    const tableDataWithEmptyLabels = [
+      {
+        columns: [
+          { header: '', accessorKey: 'col-0' },
+          { header: '', accessorKey: 'col-1' },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2023-01-01',
+              'col-1': 100,
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockParseChartTableData.mockReturnValueOnce(tableDataWithEmptyLabels)
+
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse,
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByRole('table')).toBeInTheDocument()
+    })
+  })
+
+  test('handles case when tableResponse is null', async () => {
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: false,
+      error: expect.any(Object),
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
+    })
+  })
+
+  test('handles case when chartResponse is null', async () => {
+    getChartsMock.mockResolvedValueOnce({
+      success: false,
+      error: expect.any(Object),
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse,
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
+    })
+  })
+
+  test('handles multiple groups in table data', async () => {
+    const multiGroupTableData = [
+      {
+        columns: [
+          { header: 'Date', accessorKey: 'col-0' },
+          { header: 'COVID-19 Cases', accessorKey: 'col-1' },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2023-01-01',
+              'col-1': 100,
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+      {
+        columns: [
+          { header: 'Date', accessorKey: 'col-0' },
+          { header: 'Influenza Cases', accessorKey: 'col-2' },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2023-01-01',
+              'col-2': 50,
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockParseChartTableData.mockReturnValueOnce(multiGroupTableData)
+
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse,
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      const headers = screen.getAllByRole('columnheader')
+      expect(headers.length).toBeGreaterThan(2)
+    })
+  })
+
+  test('handles reporting delay period at first row', async () => {
+    const tableDataWithFirstRowDelay = [
+      {
+        columns: [
+          { header: 'Date', accessorKey: 'col-0' },
+          { header: 'COVID-19 Cases', accessorKey: 'col-1' },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2023-01-01',
+              'col-1': 100,
+            },
+            inReportingDelay: true,
+          },
+          {
+            record: {
+              'col-0': '2023-01-02',
+              'col-1': 150,
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockParseChartTableData.mockReturnValueOnce(tableDataWithFirstRowDelay)
+
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse,
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByText('Reporting delay period')).toBeInTheDocument()
+    })
+  })
+
+  test('handles last row in table correctly', async () => {
+    const tableData = [
+      {
+        columns: [
+          { header: 'Date', accessorKey: 'col-0' },
+          { header: 'COVID-19 Cases', accessorKey: 'col-1' },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2023-01-01',
+              'col-1': 100,
+            },
+            inReportingDelay: false,
+          },
+          {
+            record: {
+              'col-0': '2023-01-02',
+              'col-1': 150,
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockParseChartTableData.mockReturnValueOnce(tableData)
+
+    getChartsMock.mockResolvedValueOnce({
+      success: true,
+      data: mockChartResponse,
+    })
+    getTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: mockTableResponse,
+    })
+
+    render(
+      <ClientTable
+        size="narrow"
+        geography={mockGeography}
+        dataFilters={mockDataFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+      />
+    )
+
+    await waitFor(() => {
+      expect(screen.getByRole('table')).toBeInTheDocument()
+      expect(screen.getByText('2023-01-02')).toBeInTheDocument()
+    })
+  })
 })
