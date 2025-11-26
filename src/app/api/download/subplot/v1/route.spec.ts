@@ -3,7 +3,6 @@
  */
 import { NextRequest } from 'next/server'
 import { Mock } from 'ts-mockery'
-import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import { mockChartParameters, mockSubplot } from '@/app/api/download/subplot/v1/route.mocks'
@@ -104,15 +103,20 @@ describe('download/subplot/v1', () => {
 
     expect(res.headers.get('content-type')).toBe(null)
     expect(logger.error).toHaveBeenCalledWith(
-      new z.ZodError([
-        {
-          received: 'invalid_file_format',
-          code: 'invalid_enum_value',
-          options: ['json', 'csv'],
-          path: ['file_format'],
-          message: "Invalid enum value. Expected 'json' | 'csv', received 'invalid_file_format'",
-        },
-      ])
+      `Download Chart Schema parse error: [
+  {
+    "received": "invalid_file_format",
+    "code": "invalid_enum_value",
+    "options": [
+      "json",
+      "csv"
+    ],
+    "path": [
+      "file_format"
+    ],
+    "message": "Invalid enum value. Expected 'json' | 'csv', received 'invalid_file_format'"
+  }
+]`
     )
     expect(res.status).toBe(301)
   })

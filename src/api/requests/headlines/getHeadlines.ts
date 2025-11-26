@@ -25,7 +25,13 @@ export const getHeadlines = async (params: RequestParams) => {
   try {
     const searchParams = new URLSearchParams(params)
     const { data } = await client<z.infer<typeof responseSchema>>('headlines/v3', { searchParams })
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getHeadlines parse error: ${result.error}`)
+      return responseSchema.safeParse(result.error)
+    }
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

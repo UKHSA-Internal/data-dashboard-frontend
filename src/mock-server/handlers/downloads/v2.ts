@@ -18,6 +18,7 @@ export default async function handler(req: Request, res: Response) {
 
     // Return a 500 if the query parameters provided aren't valid
     if (!parsedRequestBody.success) {
+      logger.error(`Downloads Handler Schema parse error: ${parsedRequestBody.error}`)
       return res.status(500)
     }
 

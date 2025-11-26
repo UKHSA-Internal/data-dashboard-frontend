@@ -25,11 +25,8 @@ export function generateMetadata() {
 }
 
 export default async function Layout(props: LayoutProps) {
-  const params = await props.params;
-
-  const {
-    children
-  } = props;
+  const params = await props.params
+  const { children } = props
 
   const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
 
