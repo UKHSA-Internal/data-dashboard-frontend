@@ -78,7 +78,13 @@ export const getSubplotTables = async (body: RequestParams) => {
   try {
     const path = isSSR ? `tables/subplot/v1` : `proxy/tables/subplot/v1`
     const { data } = await client<Response>(path, { body })
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getSubplotTables parse error: ${result.error}`)
+      return responseSchema.safeParse(result.error)
+    }
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

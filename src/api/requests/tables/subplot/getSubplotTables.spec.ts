@@ -74,7 +74,7 @@ describe('getSubplotTables', () => {
 
     const result = await getSubplotTables(requestBody)
 
-    expect(logger.error).toHaveBeenCalledTimes(1)
+    expect(logger.error).toHaveBeenCalledTimes(2)
 
     expect(result).toEqual<ErrorResponse>({
       success: false,

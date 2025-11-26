@@ -17,6 +17,7 @@ export default async function handler(req: Request, res: Response) {
 
     // Return a 500 if the query parameters provided aren't valid
     if (!parsedQueryParams.success) {
+      logger.error(`Headlines Handler Schema parse error: ${parsedQueryParams.error}`)
       return res.status(500)
     }
 

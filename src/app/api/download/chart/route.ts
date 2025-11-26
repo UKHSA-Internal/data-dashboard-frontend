@@ -52,7 +52,7 @@ export async function POST(req: NextRequest) {
       })
     }
   } else {
-    logger.error(params.error)
+    logger.error(`Download Chart Schema parse error: ${params.error}`)
     return NextResponse.redirect(url, 301)
   }
 
