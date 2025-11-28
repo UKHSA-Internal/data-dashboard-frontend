@@ -117,7 +117,7 @@ export default async function TopicPage({
 
   return (
     <>
-      <RedirectHandler newRoute={newRoute} />
+      {newRoute && <RedirectHandler newRoute={newRoute} />}
       <View>
         {slug[1] === 'childhood-vaccinations' && (
           <img
