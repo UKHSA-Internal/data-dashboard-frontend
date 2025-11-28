@@ -78,6 +78,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
       redirect('/feedback/confirmation')
     } else {
+      console.log('Feedback Handler: submitting feedback')
       logger.info(`Feedback submitted successfully, redirecting to confirmation`)
 
       const { success } = await postSuggestions(validatedFields.data)
@@ -94,6 +95,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
 
     // errors - return errors
   } catch (error) {
+    console.log(`Feedback Handler - submitting feedback error: ${error}`)
     throw error
   }
 }
