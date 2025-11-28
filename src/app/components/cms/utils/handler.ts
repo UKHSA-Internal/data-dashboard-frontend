@@ -29,10 +29,15 @@ interface FieldError {
 }
 
 export async function handler(formFields: FormFields[], prevState: FormError, formData: FormData) {
+  console.log('Feedback Handler: entered the handler function')
+  logger.info('logger - Feedback Handler: entered the handler function')
   try {
     const requiredFields: FieldError[] = []
     const errors: FieldError[] = []
     let isEmptySubmission = false
+
+    console.log('Feedback Handler: entered the try block')
+    logger.info('logger - Feedback Handler: entered the try block')
 
     // Validate form request body
     //for each form field identify fields that are required
@@ -66,8 +71,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       // directly to the confirmation page to simulate a valid submission. This is to satisfy
       // business requirements of having the form completely optional but still submittable...
       logger.error('Feedback form validation failed, redirecting to confirmation anyway...')
-
-      redirect('/feedback/confirmation')
+      throw new Error('Feedback form validation failed, redirecting to confirmation anyway...')
     }
 
     if (requiredFields.length === 0 && errors.length === 0) {
@@ -76,7 +80,6 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
 
     if (isEmptySubmission) {
       logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
-      redirect('/feedback/confirmation')
     } else {
       console.log('Feedback Handler: submitting feedback')
       logger.info(`Feedback submitted successfully, redirecting to confirmation`)
@@ -89,13 +92,14 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
           errors: [],
         }
       }
-
-      redirect('/feedback/confirmation')
     }
 
     // errors - return errors
   } catch (error) {
     console.log(`Feedback Handler - submitting feedback error: ${error}`)
     throw error
+  } finally {
+    console.log('Feedback Handler: finally block')
+    redirect('/feedback/confirmation')
   }
 }
