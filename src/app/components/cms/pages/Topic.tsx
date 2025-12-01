@@ -71,16 +71,10 @@ export default async function TopicPage({
 
             // Check timeseries enabled per chart
             if (!column.value.show_timeseries_filter) return
-            logger.info(`--------------------------------`)
-            logger.info(
-              `Timeseries filter enabled on chart ${column.value.title} with timeseriesFilter: ${timeseriesFilter}`
-            )
 
             const chartId = `${value.heading}${chartCounter}`
-            logger.info(`Chart ID: ${chartId}`)
 
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
-            logger.info(`Existing filter: ${existingFilter}`)
 
             if (existingFilter) {
               newChartFilters += `${existingFilter};`
@@ -88,11 +82,13 @@ export default async function TopicPage({
             }
 
             const timespan = getChartTimespan(column.value.chart)
-            logger.info(`Timespan: ${timespan}`)
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
 
             newChartFilters += `${chartId}|${valueToAdd};`
-            logger.info(`New chart filters: ${newChartFilters}`)
+
+            logger.info(
+              `+++ Timeseries filter enabled on chart ${column.value.title} with timeseriesFilter: ${timeseriesFilter}, Chart ID: ${chartId}, Existing filter (from URL): ${JSON.stringify(existingFilter)}, New chart filters: ${newChartFilters}, Timespan returned: ${timespan} +++`
+            )
           })
         }
         // abstract out available time periods
@@ -123,8 +119,7 @@ export default async function TopicPage({
 
     newRoute = `?${newParams.toString()}`
   }
-  logger.info(`New route: ${newRoute}`)
-  logger.info(`--------------------------------`)
+  newRoute && logger.info(`+++ Route differs from URL: ${JSON.stringify(newRoute)} +++`)
 
   return (
     <>
