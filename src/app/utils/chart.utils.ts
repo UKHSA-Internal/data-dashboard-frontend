@@ -46,7 +46,7 @@ export const getChartTimespan = (plots: Chart): { years: number; months: number 
     months: maxMonths % 12,
   }
 
-  logger.info(`getChartTimespan: ${returnItem}`)
+  logger.info(`+++ getChartTimespan: ${JSON.stringify(returnItem)} +++`)
   return returnItem
 }
 
