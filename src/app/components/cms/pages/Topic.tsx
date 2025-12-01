@@ -87,7 +87,7 @@ export default async function TopicPage({
             newChartFilters += `${chartId}|${valueToAdd};`
 
             logger.info(
-              `+++ Timeseries filter enabled on chart ${column.value.title} with timeseriesFilter: ${timeseriesFilter}, Chart ID: ${chartId}, Existing filter (from URL): ${JSON.stringify(existingFilter)}, New chart filters: ${newChartFilters}, Timespan returned: ${timespan} +++`
+              `------------------------------------------------- Timeseries filter enabled on chart ${column.value.title} with timeseriesFilter: ${timeseriesFilter}, Chart ID: ${chartId}, Existing filter (from URL): ${JSON.stringify(existingFilter)}, New chart filters: ${newChartFilters}, Timespan returned: ${JSON.stringify(timespan)} -------------------------------------------------`
             )
           })
         }
