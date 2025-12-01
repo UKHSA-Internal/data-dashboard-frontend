@@ -29,14 +29,12 @@ interface FieldError {
 }
 
 export async function handler(formFields: FormFields[], prevState: FormError, formData: FormData) {
-  console.log('Feedback Handler: entered the handler function')
   logger.info('logger - Feedback Handler: entered the handler function')
   try {
     const requiredFields: FieldError[] = []
     const errors: FieldError[] = []
     let isEmptySubmission = false
 
-    console.log('Feedback Handler: entered the try block')
     logger.info('logger - Feedback Handler: entered the try block')
 
     // Validate form request body
@@ -81,10 +79,17 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
     if (isEmptySubmission) {
       logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
     } else {
-      console.log('Feedback Handler: submitting feedback')
-      logger.info(`Feedback submitted successfully, redirecting to confirmation`)
+      logger.info(`Feedback submitted successfully, submitting suggestions`)
 
       const { success } = await postSuggestions(validatedFields.data)
+        .then((response) => {
+          logger.info(`Feedback Handler - submitting feedback success: ${response}`)
+          return { success: true }
+        })
+        .catch((error) => {
+          logger.error(`Feedback Handler - submitting feedback error: ${error}`)
+          return { success: false }
+        })
 
       if (!success) {
         return {
@@ -96,10 +101,10 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
 
     // errors - return errors
   } catch (error) {
-    console.log(`Feedback Handler - submitting feedback error: ${error}`)
+    logger.info(`Feedback Handler - submitting feedback error: ${error}`)
     throw error
   } finally {
-    console.log('Feedback Handler: finally block')
+    logger.info('Feedback Handler: finally block')
     redirect('/feedback/confirmation')
   }
 }
