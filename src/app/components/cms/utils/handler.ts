@@ -68,8 +68,8 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       // For validation errors, we bypass the database insertion and just redirect
       // directly to the confirmation page to simulate a valid submission. This is to satisfy
       // business requirements of having the form completely optional but still submittable...
-      logger.error('Feedback form validation failed, redirecting to confirmation anyway...')
-      throw new Error('Feedback form validation failed, redirecting to confirmation anyway...')
+      logger.info('Feedback form validation failed, redirecting to confirmation anyway...')
+      redirect('/feedback/confirmation')
     }
 
     if (requiredFields.length === 0 && errors.length === 0) {
@@ -78,6 +78,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
 
     if (isEmptySubmission) {
       logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
+      redirect('/feedback/confirmation')
     } else {
       logger.info(`Feedback submitted successfully, submitting suggestions`)
 
@@ -97,14 +98,11 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
           errors: [],
         }
       }
+      redirect('/feedback/confirmation')
     }
-
     // errors - return errors
   } catch (error) {
     logger.info(`Feedback Handler - submitting feedback error: ${error}`)
     throw error
-  } finally {
-    logger.info('Feedback Handler: finally block')
-    redirect('/feedback/confirmation')
   }
 }
