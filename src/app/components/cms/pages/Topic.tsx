@@ -23,6 +23,7 @@ import {
   extractTimeSeriesSectionData,
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
+import { logger } from '@/lib/logger'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
@@ -70,10 +71,16 @@ export default async function TopicPage({
 
             // Check timeseries enabled per chart
             if (!column.value.show_timeseries_filter) return
+            logger.info(`--------------------------------`)
+            logger.info(
+              `Timeseries filter enabled on chart ${column.value.title} with timeseriesFilter: ${timeseriesFilter}`
+            )
 
             const chartId = `${value.heading}${chartCounter}`
+            logger.info(`Chart ID: ${chartId}`)
 
             const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
+            logger.info(`Existing filter: ${existingFilter}`)
 
             if (existingFilter) {
               newChartFilters += `${existingFilter};`
@@ -81,9 +88,11 @@ export default async function TopicPage({
             }
 
             const timespan = getChartTimespan(column.value.chart)
+            logger.info(`Timespan: ${timespan}`)
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
 
             newChartFilters += `${chartId}|${valueToAdd};`
+            logger.info(`New chart filters: ${newChartFilters}`)
           })
         }
         // abstract out available time periods
@@ -114,6 +123,8 @@ export default async function TopicPage({
 
     newRoute = `?${newParams.toString()}`
   }
+  logger.info(`New route: ${newRoute}`)
+  logger.info(`--------------------------------`)
 
   return (
     <>
