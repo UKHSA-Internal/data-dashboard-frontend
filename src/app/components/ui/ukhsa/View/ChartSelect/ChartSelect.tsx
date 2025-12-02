@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react'
 
 import { useTimeseriesFilterUpdater } from '@/app/hooks/useTimeseriesFilter'
 import { toSlug } from '@/app/utils/app.utils'
+import { logger } from '@/lib/logger'
 
 export const getSelectOptions = (years: number): Array<string> => {
   if (years < 1) return ['All']
@@ -90,6 +91,9 @@ const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
 
   // Handle update of select component
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    logger.info(
+      `------------------------------------------------- Timeseries filter on chart ${chartId} changed to: ${event.target.value} -------------------------------------------------`
+    )
     router.replace(setFilterParams(event.target.value), { scroll: false })
   }
 

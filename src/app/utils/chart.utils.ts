@@ -1,7 +1,6 @@
 import { z } from 'zod'
 
 import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
-import { logger } from '@/lib/logger'
 
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
@@ -46,7 +45,6 @@ export const getChartTimespan = (plots: Chart): { years: number; months: number 
     months: maxMonths % 12,
   }
 
-  logger.info(`+++ getChartTimespan: ${JSON.stringify(returnItem)} +++`)
   return returnItem
 }
 
