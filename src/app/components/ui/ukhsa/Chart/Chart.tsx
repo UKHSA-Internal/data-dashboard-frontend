@@ -199,12 +199,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
-    return (
-      <>
-        {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
-        {staticChart}
-      </>
-    )
+    return staticChart
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page)
