@@ -29,10 +29,13 @@ interface FieldError {
 }
 
 export async function handler(formFields: FormFields[], prevState: FormError, formData: FormData) {
+  logger.info('logger - Feedback Handler: entered the handler function')
   try {
     const requiredFields: FieldError[] = []
     const errors: FieldError[] = []
     let isEmptySubmission = false
+
+    logger.info('logger - Feedback Handler: entered the try block')
 
     // Validate form request body
     //for each form field identify fields that are required
@@ -65,8 +68,7 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       // For validation errors, we bypass the database insertion and just redirect
       // directly to the confirmation page to simulate a valid submission. This is to satisfy
       // business requirements of having the form completely optional but still submittable...
-      logger.error('Feedback form validation failed, redirecting to confirmation anyway...')
-
+      logger.info('Feedback form validation failed, redirecting to confirmation anyway...')
       redirect('/feedback/confirmation')
     }
 
@@ -78,9 +80,17 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
       logger.info(`Empty feedback form submitted, redirecting to confirmation and skipping api request`)
       redirect('/feedback/confirmation')
     } else {
-      logger.info(`Feedback submitted successfully, redirecting to confirmation`)
+      logger.info(`Feedback submitted successfully, submitting suggestions`)
 
       const { success } = await postSuggestions(validatedFields.data)
+        .then((response) => {
+          logger.info(`Feedback Handler - submitting feedback success: ${response}`)
+          return { success: true }
+        })
+        .catch((error) => {
+          logger.error(`Feedback Handler - submitting feedback error: ${error}`)
+          return { success: false }
+        })
 
       if (!success) {
         return {
@@ -88,12 +98,11 @@ export async function handler(formFields: FormFields[], prevState: FormError, fo
           errors: [],
         }
       }
-
       redirect('/feedback/confirmation')
     }
-
     // errors - return errors
   } catch (error) {
+    logger.info(`Feedback Handler - submitting feedback error: ${error}`)
     throw error
   }
 }
