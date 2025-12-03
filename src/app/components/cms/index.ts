@@ -1,6 +1,5 @@
 export * from '../ui/ukhsa/AreaSelector/AreaSelector'
 export * from '../ui/ukhsa/Chart/Chart'
-export * from '../ui/ukhsa/Table/Table'
 export * from './ButtonExternal/ButtonExternal'
 export * from './ButtonInternal/ButtonInternal'
 export * from './ChartCardSection/ChartCardSection'

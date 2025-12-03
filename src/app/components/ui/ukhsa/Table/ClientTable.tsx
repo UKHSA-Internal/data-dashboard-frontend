@@ -221,7 +221,6 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
                     // }
 
                     incrementingColumnId += 1
-                    // const chartLabel = columnIndex === 0 ? '' : chart[labelIndex]?.value?.label ?? ''
                     const chartLabel = column.header
                     const axisTitle = columnIndex === 0 ? (x_axis_title ?? '') : (y_axis_title ?? '')
                     const columnHeader = t('cms.blocks.table.header', {
