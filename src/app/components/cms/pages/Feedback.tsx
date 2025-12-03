@@ -1,7 +1,7 @@
 import { getFeedbackPage } from '@/app/utils/cms'
 
+import Feedback from '../../../features/Feedback/Feedback'
 import { Announcements, View } from '../../ui/ukhsa'
-import Feedback from '../../ui/ukhsa/Feedback/Feedback'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 
 export default async function FeedbackPage() {

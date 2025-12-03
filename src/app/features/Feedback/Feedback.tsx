@@ -6,7 +6,6 @@ import { z } from 'zod'
 
 import { FormField } from '@/api/models/cms/Page/FormFields'
 
-import { handler } from '../../../cms/utils/handler'
 import CheckboxField from './Fields/Checkbox/CheckboxField'
 import CheckboxesField from './Fields/Checkboxes/CheckboxesField'
 import DateField from './Fields/Date/DateField'
@@ -17,6 +16,7 @@ import NumberField from './Fields/Number/NumberField'
 import RadioField from './Fields/Radio/RadioField'
 import SinglelineField from './Fields/Singleline/SinglelineField'
 import UrlField from './Fields/Url/UrlField'
+import { handler } from './utils/handler'
 
 const initialState = {
   message: '',
