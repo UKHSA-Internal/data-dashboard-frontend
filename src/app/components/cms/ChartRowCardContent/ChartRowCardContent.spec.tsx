@@ -31,6 +31,11 @@ jest.mock('@/app/components/cms', () => ({
   ),
 }))
 
+jest.mock('@/app/components/ui/ukhsa/Timestamp/Timestamp', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa/Timestamp/Timestamp'),
+  Timestamp: () => <div>Up to and including 27 September 2023</div>,
+}))
+
 jest.mock('@/app/utils/cms.utils', () => ({
   ...jest.requireActual('@/app/utils/cms.utils'),
   renderBlock: jest.fn(),
