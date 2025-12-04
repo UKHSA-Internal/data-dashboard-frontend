@@ -10,13 +10,26 @@ export const getChartTimespan = (plots: Chart): { years: number; months: number 
 
   let maxMonths = 0
 
+  // Check if all plots have no date_to
+  const allPlotsMissingDateTo = plots.every((plot) => !plot.value.date_to)
+
   // Check each plot, get the largest difference for use in select component
   plots.forEach((plot) => {
-    // Null check
-    if (!plot.value.date_from || !plot.value.date_to) return
+    // If date_from is missing, skip this plot
+    if (!plot.value.date_from) return
+
+    // If all plots are missing date_to, use today's date
+    // Otherwise, only process plots that have both date_from and date_to
+    let dateTo: Date
+    if (allPlotsMissingDateTo) {
+      dateTo = new Date()
+    } else {
+      // If we're not using the "all missing" fallback and this plot is missing date_to, skip it
+      if (!plot.value.date_to) return
+      dateTo = new Date(plot.value.date_to)
+    }
 
     const dateFrom = new Date(plot.value.date_from)
-    const dateTo = new Date(plot.value.date_to)
 
     // Get total month difference
     const monthDiff = (dateTo.getFullYear() - dateFrom.getFullYear()) * 12 + (dateTo.getMonth() - dateFrom.getMonth())

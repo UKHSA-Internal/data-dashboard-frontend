@@ -23,6 +23,7 @@ import {
   extractTimeSeriesSectionData,
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
+import { logger } from '@/lib/logger'
 
 import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
@@ -84,6 +85,10 @@ export default async function TopicPage({
             const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
 
             newChartFilters += `${chartId}|${valueToAdd};`
+
+            logger.info(
+              `------------------------------------------------- Timeseries filter enabled on chart ${column.value.title} with timeseriesFilter: ${timeseriesFilter}, Chart ID: ${chartId}, Existing filter (from URL): ${JSON.stringify(existingFilter)}, New chart filters: ${newChartFilters}, Timespan returned: ${JSON.stringify(timespan)} -------------------------------------------------`
+            )
           })
         }
         // abstract out available time periods
@@ -114,10 +119,11 @@ export default async function TopicPage({
 
     newRoute = `?${newParams.toString()}`
   }
+  newRoute && logger.info(`+++ Route differs from URL: ${JSON.stringify(newRoute)} +++`)
 
   return (
     <>
-      <RedirectHandler newRoute={newRoute} />
+      {newRoute && <RedirectHandler newRoute={newRoute} />}
       <View>
         {slug[1] === 'childhood-vaccinations' && (
           <img
