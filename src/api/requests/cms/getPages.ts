@@ -130,6 +130,7 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
     const initialResult = responseSchema.safeParse(initialData)
 
     if (!initialResult.success) {
+      logger.error('getPages Zod Validation error: ', initialResult.error)
       return initialResult
     }
 
@@ -207,7 +208,12 @@ export const getWhatsNewPages = async ({
 
   try {
     const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams })
-    return whatsNewResponseSchema.safeParse(data)
+    const result = whatsNewResponseSchema.safeParse(data)
+
+    if (!result.success) {
+      logger.error(`WhatsNewResponseSchema Zod Validation error: ${result.error}`)
+    }
+    return result
   } catch (error) {
     logger.error(error)
     return whatsNewResponseSchema.safeParse(error)
@@ -243,7 +249,12 @@ export const getMetricsPages = async ({
 
   try {
     const { data } = await client<MetricsPagesResponse>('pages', { searchParams })
-    return metricsChildResponseSchema.safeParse(data)
+    const result = metricsChildResponseSchema.safeParse(data)
+
+    if (!result.success) {
+      logger.error(`metricsChildResponseSchema Zod Validation error: ${result.error}`)
+    }
+    return result
   } catch (error) {
     logger.error(error)
     return metricsChildResponseSchema.safeParse(error)

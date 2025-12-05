@@ -50,7 +50,13 @@ export type Response = z.infer<typeof responseSchema>
 export const getMenu = async () => {
   try {
     const { data } = await client<Response>('menus/v1')
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getMenu parse error: ${result.error}`)
+      return responseSchema.safeParse(result.error)
+    }
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

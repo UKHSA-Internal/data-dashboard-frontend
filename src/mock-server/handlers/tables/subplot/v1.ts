@@ -16,6 +16,7 @@ export default async function handler(req: Request, res: Response) {
     const parsedRequestBody = requestSchema.safeParse(req.body)
 
     if (!parsedRequestBody.success) {
+      logger.error(`Subplot Table Handler Schema parse error: ${parsedRequestBody.error}`)
       return res.status(500).send({
         message: 'Failed to parse request body',
       })
