@@ -160,7 +160,7 @@ export function SubplotClientTable({
                   {columns.map((column, columnIndex) => {
                     incrementingColumnId += 1
                     const chartLabel = column.header === 'Date' ? 'Location' : column.header
-                    const axisTitle = columnIndex === 0 ? x_axis_title ?? '' : y_axis_title ?? ''
+                    const axisTitle = columnIndex === 0 ? (x_axis_title ?? '') : (y_axis_title ?? '')
                     const columnHeader = t('cms.blocks.table.header', {
                       context:
                         columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',
