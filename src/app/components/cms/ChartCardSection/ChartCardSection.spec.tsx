@@ -62,7 +62,6 @@ describe('ChartCardSection', () => {
       value: mockValue,
       heading: 'Test Section',
       showMoreSections: [],
-      timeseriesFilter: '',
       chartId: 'test-chart-id',
     }
 
@@ -90,7 +89,6 @@ describe('ChartCardSection', () => {
       value: mockValue,
       heading: 'Test Section',
       showMoreSections: [],
-      timeseriesFilter: '',
       chartId: 'test-chart-id',
     }
 
@@ -120,7 +118,6 @@ describe('ChartCardSection', () => {
       value: mockValue,
       heading: 'Test Section',
       showMoreSections: [],
-      timeseriesFilter: '',
       chartId: 'test-chart-id',
     }
 

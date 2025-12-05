@@ -31,8 +31,8 @@ import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 export default async function TopicPage({
   slug,
-  searchParams: { areaName, areaType, timeseriesFilter = '' },
-}: PageComponentBaseProps<{ areaType?: string; areaName?: string; timeseriesFilter?: string }>) {
+  searchParams: { areaName, areaType },
+}: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
   const { t } = await getServerTranslation('common')
 
   logger.info('Topic page is being rendered.')
@@ -121,7 +121,6 @@ export default async function TopicPage({
                         renderCard(
                           value.heading,
                           [],
-                          timeseriesFilter,
                           item,
                           undefined,
                           chartRowCardStartCounters.get(item.id)

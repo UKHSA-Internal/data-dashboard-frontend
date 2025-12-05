@@ -78,27 +78,32 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
 
 export const getFilteredData = (
   data: z.infer<typeof ChartCardSchemas>['value'],
-  timeseriesFilter: string,
-  chartId: string
+  filterValue: string,
 ): Chart | undefined => {
-  if (!timeseriesFilter) return
-
-  // Get timeseriesFilter URL parameters
-  const filters =
-    timeseriesFilter?.split(';').map((filterString) => {
-      const [plotId, filterValue] = filterString.split('|')
-      return { plotId, filterValue }
-    }) ?? []
-
+  console.log('getFilteredData called with filterValue:', filterValue)
   return data.chart.map((plot) => {
-    const matchingFilter = filters.find((filter) => filter.plotId.toLowerCase() === chartId.toLowerCase())
+    console.log(`Original plot - date_from: ${plot.value.date_from}, date_to: ${plot.value.date_to}`)
+    // Default date_to to today's date if not provided
+    const dateTo = plot.value.date_to ? new Date(plot.value.date_to) : new Date()
+    const dateToString = plot.value.date_to || new Date().toISOString().split('T')[0]
 
-    if (!matchingFilter) return plot
+    // When filter is 'all', restore original dates (or use today if date_to was null)
+    if (!filterValue || filterValue === 'all') {
+      const restoredPlot = {
+        id: plot.id,
+        type: plot.type,
+        value: {
+          ...plot.value,
+          date_from: plot.value.date_from, // Original date_from
+          date_to: dateToString, // Original date_to or today's date
+        },
+      }
+      console.log(`Restored plot - date_from: ${restoredPlot.value.date_from}, date_to: ${restoredPlot.value.date_to}`)
+      return restoredPlot
+    }
 
-    let newDateFrom = plot.value.date_from
-
-    if (matchingFilter.filterValue !== 'all')
-      newDateFrom = subtractFromDate(matchingFilter.filterValue, new Date(plot.value.date_to ?? ''))
+    // Apply filter by updating date_from
+    const newDateFrom = subtractFromDate(filterValue, dateTo)
 
     return {
       id: plot.id,
@@ -106,6 +111,7 @@ export const getFilteredData = (
       value: {
         ...plot.value,
         date_from: newDateFrom, // Update date_from based on filter provided
+        date_to: dateToString, // Ensure date_to is set (original or today's date)
       },
     }
   })
