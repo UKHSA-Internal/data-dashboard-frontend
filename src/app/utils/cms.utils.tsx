@@ -53,7 +53,7 @@ export const renderSection = async (
       )}
     </h2>
 
-    {content.map((item) => renderCard(heading, showMoreSections, '', item))}
+    {content.map((item) => renderCard(heading, showMoreSections, item))}
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
@@ -69,10 +69,7 @@ export const renderSection = async (
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
-  timeseriesFilter: string,
   { type, value, id }: z.infer<typeof CardTypes>,
-  chartId?: string,
-  startChartCounter?: number
 ) => {
   return (
     <div key={id}>
@@ -82,12 +79,7 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent
-            value={value}
-            timeseriesFilter={timeseriesFilter}
-            heading={heading}
-            startChartCounter={startChartCounter}
-          />
+          <ChartRowCardContent value={value} />
         </ChartRowCard>
       )}
 
@@ -102,8 +94,6 @@ export const renderCard = (
           value={value}
           heading={heading}
           showMoreSections={showMoreSections}
-          timeseriesFilter={timeseriesFilter}
-          chartId={chartId}
         />
       )}
 

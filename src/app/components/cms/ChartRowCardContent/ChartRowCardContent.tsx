@@ -12,23 +12,15 @@ import { renderBlock } from '@/app/utils/cms.utils'
 
 type ChartRowCardContentProps = {
   value: any
-  timeseriesFilter: string
-  heading?: string
-  startChartCounter?: number
 }
 
-export function ChartRowCardContent({ value, timeseriesFilter, heading, startChartCounter }: ChartRowCardContentProps) {
+export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
   return (
     <>
-      {value.columns.map((column: any, columnIndex: number) => {
+      {value.columns.map((column: any) => {
         const size = value.columns.length === 1 ? 'wide' : 'narrow'
         const showAbout = column.value.about && column.value.about.length > 0
         const noRelatedLinks = !column.value.related_links || column.value.related_links.length === 0
-        const chartId = heading
-          ? startChartCounter
-            ? `${heading}${startChartCounter + columnIndex}`
-            : `${heading}${columnIndex + 1}`
-          : `chart${columnIndex + 1}`
         return (
           <div
             key={column.id}
@@ -134,8 +126,6 @@ export function ChartRowCardContent({ value, timeseriesFilter, heading, startCha
                             size: 'narrow',
                           },
                         ]}
-                        timeseriesFilter={timeseriesFilter}
-                        chartId={chartId}
                       />
                     </AreaSelectorLoader>
                   </TabsContent>
