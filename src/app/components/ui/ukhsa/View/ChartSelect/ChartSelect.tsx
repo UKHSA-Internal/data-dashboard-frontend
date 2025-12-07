@@ -1,5 +1,7 @@
 'use client'
 
+import { useEffect, useRef } from 'react'
+
 import { useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { toSlug } from '@/app/utils/app.utils'
 
@@ -37,6 +39,24 @@ interface ChartSelectProps {
 
 const ChartSelect = ({ timespan }: ChartSelectProps) => {
   const { currentFilter, setCurrentFilter } = useTimeseriesFilter()
+  const previousYearsRef = useRef<number | null>(null)
+
+  // Set initial filter value based on timespan
+  useEffect(() => {
+    const isInitialMount = previousYearsRef.current === null
+    const timespanChanged = previousYearsRef.current !== timespan.years
+
+    // Only set initial value on mount or when timespan changes
+    if (isInitialMount || timespanChanged) {
+      // If timespan is more than 1 year, default to '1-year', otherwise default to 'all'
+      if (timespan.years > 1) {
+        setCurrentFilter('1-year')
+      } else {
+        setCurrentFilter('all')
+      }
+      previousYearsRef.current = timespan.years
+    }
+  }, [timespan.years, setCurrentFilter])
 
   // Handle update of select component
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
@@ -49,12 +69,7 @@ const ChartSelect = ({ timespan }: ChartSelectProps) => {
       <label className="govuk-label" htmlFor="timeseries-filter">
         Filter data by
       </label>
-      <select
-        className="govuk-select"
-        id="timeseries-filter"
-        onChange={handleChange}
-        value={currentFilter}
-      >
+      <select className="govuk-select" id="timeseries-filter" onChange={handleChange} value={currentFilter}>
         {getSelectOptions(timespan.years).map((selectOption) => (
           <option key={selectOption} value={toSlug(selectOption)}>
             {selectOption}

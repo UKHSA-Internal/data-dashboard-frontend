@@ -1,7 +1,7 @@
 'use client'
 
 import kebabCase from 'lodash/kebabCase'
-import { useEffect, useRef, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
@@ -36,27 +36,15 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
-  const isInitialMount = useRef<boolean>(true)
+  const hasInitialized = useRef<boolean>(false)
 
-  useEffect(() => {
-    // Skip on initial mount to avoid unnecessary fetch
-    if (isInitialMount.current) {
-      isInitialMount.current = false
-      previousFilterRef.current = currentFilter
-      return
-    }
-
-    // Skip if filter hasn't actually changed
-    if (currentFilter === previousFilterRef.current) {
-      return
-    }
-
-    const fetchFilteredChart = async () => {
+  const fetchFilteredChart = useCallback(
+    async (filter: string) => {
       setIsLoading(true)
 
       try {
-        console.log('Fetching chart with filter:', currentFilter)
-        const filteredChart = getFilteredData(chartData, currentFilter)
+        console.log('Fetching chart with filter:', filter)
+        const filteredChart = getFilteredData(chartData, filter)
 
         if (!filteredChart) {
           setIsLoading(false)
@@ -106,12 +94,31 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
         console.error('Error fetching filtered chart:', error)
       } finally {
         setIsLoading(false)
-        previousFilterRef.current = currentFilter
+        previousFilterRef.current = filter
       }
+    },
+    [chartData]
+  )
+
+  useEffect(() => {
+    // Skip if filter hasn't changed
+    if (currentFilter === previousFilterRef.current) {
+      return
     }
 
-    fetchFilteredChart()
-  }, [currentFilter, chartData])
+    // On initial mount: if filter is not 'all', fetch the filtered chart
+    if (!hasInitialized.current) {
+      hasInitialized.current = true
+      if (currentFilter !== 'all') {
+        fetchFilteredChart(currentFilter)
+      } else {
+        previousFilterRef.current = currentFilter
+      }
+      return
+    }
+
+    fetchFilteredChart(currentFilter)
+  }, [currentFilter, fetchFilteredChart])
 
   return (
     <>
