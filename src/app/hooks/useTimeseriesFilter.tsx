@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
 interface TimeseriesFilterContextValue {
   currentFilter: string
@@ -30,3 +30,24 @@ export function useTimeseriesFilter(): TimeseriesFilterContextValue {
   return context
 }
 
+export function useTimeseriesFilterValue(chartId: string): string | undefined {
+  const [filter, setFilter] = useState<string | undefined>(undefined)
+
+  useEffect(() => {
+    // Guard against SSR where window is undefined
+    if (typeof window === 'undefined') {
+      return
+    }
+
+    const storedFilters = window.sessionStorage.getItem('timeseriesFilters')
+    if (!storedFilters) {
+      setFilter(undefined)
+      return
+    }
+
+    const matchedFilter = storedFilters.split(';').find((entry) => entry.startsWith(`${chartId}|`))
+    setFilter(matchedFilter ?? undefined)
+  }, [chartId])
+
+  return filter
+}

@@ -49,8 +49,6 @@ export default async function TopicPage({
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
-  const chartRowCardStartCounters = new Map<string, number>()
-
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
@@ -117,15 +115,7 @@ export default async function TopicPage({
                     <FilterBannerWrapper key={id} />
                   ) : (
                     <PageSection key={id} heading={value.heading}>
-                      {value.content.map((item) =>
-                        renderCard(
-                          value.heading,
-                          [],
-                          item,
-                          undefined,
-                          chartRowCardStartCounters.get(item.id)
-                        )
-                      )}
+                      {value.content.map((item) => renderCard(value.heading, [], item))}
                     </PageSection>
                   )
                 )}

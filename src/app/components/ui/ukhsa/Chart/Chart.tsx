@@ -181,7 +181,18 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   // Use client-side chart with filter when timeseries filter is enabled
   if (data.show_timeseries_filter) {
     return (
-      <ChartWithFilter figure={{ frames: [], ...figure }} title={data.title} chart={data.chart} chartData={chartData} />
+      <>
+        <noscript>{staticChart}</noscript>
+        {/* Interactive chart with filter - only visible when JavaScript is enabled */}
+        <div className="hidden js:block">
+          <ChartWithFilter
+            figure={{ frames: [], ...figure }}
+            title={data.title}
+            chart={data.chart}
+            chartData={chartData}
+          />
+        </div>
+      </>
     )
   }
 

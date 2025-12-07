@@ -69,7 +69,7 @@ export const renderSection = async (
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
-  { type, value, id }: z.infer<typeof CardTypes>,
+  { type, value, id }: z.infer<typeof CardTypes>
 ) => {
   return (
     <div key={id}>
@@ -90,11 +90,7 @@ export const renderCard = (
       {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer />}
 
       {type === 'chart_card_section' && (
-        <ChartCardSection
-          value={value}
-          heading={heading}
-          showMoreSections={showMoreSections}
-        />
+        <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}

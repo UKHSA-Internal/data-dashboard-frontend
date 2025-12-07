@@ -233,25 +233,40 @@ describe('getFilteredData', () => {
     ],
   }
 
-  test('returns undefined when no timeseriesFilter provided', () => {
-    const result = getFilteredData(mockData, '', 'chart1')
-    expect(result).toBeUndefined()
-  })
-
-  test('returns original data when no matching filter found', () => {
-    const result = getFilteredData(mockData, 'other-chart|6-months', 'chart1')
-    expect(result).toEqual(mockData.chart)
-  })
-
-  test('applies filter and updates date_from for matching chart', () => {
-    const result = getFilteredData(mockData, 'chart1|6-months', 'chart1')
-    expect(result).toHaveLength(2)
-    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
-  })
-
-  test('handles "all" filter value', () => {
-    const result = getFilteredData(mockData, 'chart1|all', 'chart1')
+  test('returns original data when no filter provided (empty string)', () => {
+    const result = getFilteredData(mockData, '')
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
+  })
+
+  test('applies filter and updates date_from for all plots', () => {
+    const result = getFilteredData(mockData, '6-months')
+    expect(result).toHaveLength(2)
+    // date_from should be updated to 6 months before date_to
+    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
+    expect(result?.[1].value.date_from).not.toBe('2023-01-01')
+    expect(result?.[1].value.date_to).toBe('2024-01-01')
+  })
+
+  test('handles "all" filter value and restores original dates', () => {
+    const result = getFilteredData(mockData, 'all')
+    expect(result).toHaveLength(2)
+    expect(result?.[0].value.date_from).toBe('2023-01-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
+    expect(result?.[1].value.date_from).toBe('2023-01-01')
+    expect(result?.[1].value.date_to).toBe('2024-01-01')
+  })
+
+  test('applies different filter values correctly', () => {
+    const result1Month = getFilteredData(mockData, '1-month')
+    const result3Months = getFilteredData(mockData, '3-months')
+
+    expect(result1Month).toHaveLength(2)
+    expect(result3Months).toHaveLength(2)
+
+    // 1 month should give a different date_from than 3 months
+    expect(result1Month?.[0].value.date_from).not.toBe(result3Months?.[0].value.date_from)
   })
 })

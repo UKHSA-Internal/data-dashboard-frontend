@@ -78,11 +78,9 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
 
 export const getFilteredData = (
   data: z.infer<typeof ChartCardSchemas>['value'],
-  filterValue: string,
+  filterValue: string
 ): Chart | undefined => {
-  console.log('getFilteredData called with filterValue:', filterValue)
   return data.chart.map((plot) => {
-    console.log(`Original plot - date_from: ${plot.value.date_from}, date_to: ${plot.value.date_to}`)
     // Default date_to to today's date if not provided
     const dateTo = plot.value.date_to ? new Date(plot.value.date_to) : new Date()
     const dateToString = plot.value.date_to || new Date().toISOString().split('T')[0]
@@ -98,7 +96,6 @@ export const getFilteredData = (
           date_to: dateToString, // Original date_to or today's date
         },
       }
-      console.log(`Restored plot - date_from: ${restoredPlot.value.date_from}, date_to: ${restoredPlot.value.date_to}`)
       return restoredPlot
     }
 
