@@ -48,7 +48,14 @@ export const getGeographies = async (params: GeographyParams) => {
     if (params.topic) {
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(`${path}?topic=${params.topic}`)
-        return responseSchema.safeParse(data)
+
+        const result = responseSchema.safeParse(data)
+        if (result.success) {
+          return result
+        } else {
+          logger.error(`getGeographies Topic parse error: ${result.error}`)
+          return responseSchema.safeParse(result.error)
+        }
       } catch (error) {
         logger.error(error)
         return responseSchema.safeParse(error)
@@ -58,7 +65,13 @@ export const getGeographies = async (params: GeographyParams) => {
       try {
         const { data } = await client<z.infer<typeof responseSchema>>(`${path}?geography_type=${params.geography_type}`)
 
-        return responseSchema.safeParse(data)
+        const result = responseSchema.safeParse(data)
+        if (result.success) {
+          return result
+        } else {
+          logger.error(`getGeographies geography_type parse error: ${result.error}`)
+          return responseSchema.safeParse(result.error)
+        }
       } catch (error) {
         logger.error(error)
         return responseSchema.safeParse(error)

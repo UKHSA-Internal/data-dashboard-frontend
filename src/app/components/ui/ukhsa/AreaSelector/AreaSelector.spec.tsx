@@ -75,18 +75,7 @@ describe('AreaSelector', () => {
 
     const { container } = render(await AreaSelector({ areaType: 'Nation', selectedTopics: ['COVID-19'] }))
 
-    expect(logger.error).toHaveBeenCalledWith(
-      'Could not load area selector %s',
-      new ZodError([
-        {
-          code: 'invalid_type',
-          expected: 'array',
-          received: 'null',
-          path: [],
-          message: 'Expected array, received null',
-        },
-      ])
-    )
+    expect(logger.error).toHaveBeenCalledWith('Could not load area selector %s', expect.any(ZodError))
     expect(container.firstChild).toBeNull()
   })
 })

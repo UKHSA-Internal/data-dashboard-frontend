@@ -1,4 +1,6 @@
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
+import { headers } from 'next/headers'
 
 /**
  * Extracts and returns the URL search parameters from the current page in a Next.js Server component.

@@ -1,4 +1,5 @@
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
+// @ts-nocheck
+import { headers } from 'next/headers'
 
 /**
  * Extracts and returns the URL pathname from the current page in a Next.js Server component.

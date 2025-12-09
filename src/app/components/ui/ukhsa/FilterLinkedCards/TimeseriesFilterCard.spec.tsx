@@ -17,7 +17,7 @@ jest.mock('@/app/components/cms/Download/ClientDownload', () => ({
   ClientDownload: () => <div data-testid="client-download">Download</div>,
 }))
 
-jest.mock('@/app/components/cms/Table/ClientTable', () => ({
+jest.mock('@/app/components/ui/ukhsa/Table/ClientTable', () => ({
   ClientTable: () => <div data-testid="client-table">Table</div>,
 }))
 

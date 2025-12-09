@@ -21,7 +21,13 @@ export type ResponseSchema = z.infer<typeof responseSchema>
 export const getGlobalBanners = async () => {
   try {
     const { data } = await client<z.infer<typeof responseSchema>>('global-banners/v2')
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getGlobalBanners parse error: ${result.error}`)
+      return responseSchema.safeParse(result.error)
+    }
   } catch (error) {
     if (error instanceof Error) {
       logger.error(error.message)

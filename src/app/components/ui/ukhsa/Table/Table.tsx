@@ -12,8 +12,8 @@ import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
-import { RichText } from '../RichText/RichText'
+import { ChartEmpty } from '../../../cms/ChartEmpty/ChartEmpty'
+import { RichText } from '../../../cms/RichText/RichText'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */

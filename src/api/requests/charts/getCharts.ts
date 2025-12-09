@@ -80,11 +80,10 @@ export const getCharts = async (chart: RequestParams) => {
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
     const result = responseSchema.safeParse(data)
-
     if (result.success) {
       return result
     } else {
-      logger.error(`Zod Validation error: ${result.error}`)
+      logger.error(`getChart Zod Validation error: ${result.error}`)
       return result
     }
   } catch (error) {

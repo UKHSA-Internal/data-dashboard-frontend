@@ -24,7 +24,7 @@ jest.mock('@/app/components/cms/Download/SubplotClientDownload', () => ({
   SubplotClientDownload: () => <div data-testid="subplot-client-download">Download</div>,
 }))
 
-jest.mock('@/app/components/cms/Table/SubplotClientTable', () => ({
+jest.mock('@/app/components/ui/ukhsa/Table/SubplotClientTable', () => ({
   SubplotClientTable: () => <div data-testid="subplot-client-table">Table</div>,
 }))
 
