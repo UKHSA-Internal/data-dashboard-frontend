@@ -12,6 +12,7 @@ import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import ChartNoScript from '../ChartNoScript/ChartNoScript'
+import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import { LoadingSpinner } from '../Icons/LoadingSpinner'
 import ChartSelect from '../View/ChartSelect/ChartSelect'
 import ChartInteractive from './ChartInteractive'
@@ -35,11 +36,13 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
+  const [hasError, setHasError] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
   const hasInitialized = useRef<boolean>(false)
 
   const fetchFilteredChart = useCallback(
     async (filter: string) => {
+      setHasError(false)
       setIsLoading(true)
 
       try {
@@ -47,6 +50,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
         const filteredChart = getFilteredData(chartData, filter)
 
         if (!filteredChart) {
+          setHasError(true)
           setIsLoading(false)
           return
         }
@@ -87,11 +91,16 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
           chart_height: chartSizes['narrow'].height,
         })
 
-        if (chartResponse.success && chartResponse.data) {
-          setFilteredFigure({ frames: [], ...chartResponse.data.figure })
+        if (!chartResponse.success || !chartResponse.data) {
+          setHasError(true)
+          return
         }
+
+        setFilteredFigure({ frames: [], ...chartResponse.data.figure })
+        setHasError(false)
       } catch (error) {
         console.error('Error fetching filtered chart:', error)
+        setHasError(true)
       } finally {
         setIsLoading(false)
         previousFilterRef.current = filter
@@ -125,7 +134,13 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
       <div className="hidden js:block">
         <ChartSelect timespan={getChartTimespan(chart)} />
       </div>
-      {isLoading ? (
+      {hasError ? (
+        <ClientInformationCard
+          variant="error"
+          title="No data available"
+          message="Please adjust or reset the filter to try again."
+        />
+      ) : isLoading ? (
         <LoadingSpinnerContainer />
       ) : (
         <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={filteredFigure} />
