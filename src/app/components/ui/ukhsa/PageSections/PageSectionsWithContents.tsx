@@ -1,5 +1,5 @@
 import kebabCase from 'lodash/kebabCase'
-import { Children, cloneElement, isValidElement, ReactNode } from 'react'
+import { Children, cloneElement, isValidElement, ReactElement, ReactNode } from 'react'
 
 import { Contents, ContentsLink } from '../Contents/Contents'
 
@@ -13,31 +13,28 @@ interface PageSectionProps {
   id?: string
 }
 
+type ChildWithProps<P> = ReactElement<P>
+type ChildWithHeadingProp = ChildWithProps<{ heading: string }>
+
 export const PageSectionWithContents = ({ children }: PageSectionWithContentsProps) => {
   return (
     <>
       <Contents className="govuk-!-margin-bottom-5">
         {Children.map(children, (child: ReactNode) => {
-          if (isValidElement(child)) {
-            const childProps = child.props as { heading: string }
-            return <ContentsLink href={`#${kebabCase(childProps.heading)}`}>{childProps.heading}</ContentsLink>
-          }
-          return null
+          if (!isValidElement(child)) return null
+
+          const typedChild = child as ChildWithHeadingProp
+          return (
+            <ContentsLink href={`#${kebabCase(typedChild.props.heading)}`}>{typedChild.props.heading}</ContentsLink>
+          )
         })}
       </Contents>
       {Children.map(children, (child: ReactNode) => {
-        if (isValidElement(child)) {
-          const childProps = child.props as any
-          return (
-            <>
-              {cloneElement(child, {
-                ...childProps,
-                heading: childProps.heading,
-              })}
-            </>
-          )
-        }
-        return null
+        if (!isValidElement(child)) return null
+
+        return cloneElement(child, {
+          ...(child.props as ChildWithProps<Record<string, unknown>>),
+        })
       })}
     </>
   )
