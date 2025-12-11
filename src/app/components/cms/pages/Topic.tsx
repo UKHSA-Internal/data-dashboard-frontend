@@ -22,7 +22,6 @@ import {
   extractTimeSeriesSectionData,
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
-import { logger } from '@/lib/logger'
 
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
@@ -34,8 +33,6 @@ export default async function TopicPage({
   searchParams: { areaName, areaType },
 }: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
   const { t } = await getServerTranslation('common')
-
-  logger.info('Topic page is being rendered.')
 
   const {
     title,
