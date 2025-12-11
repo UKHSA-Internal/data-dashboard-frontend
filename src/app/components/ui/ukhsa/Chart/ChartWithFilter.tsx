@@ -38,6 +38,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
+  const isFirstRender = useRef<boolean>(true)
   const hasInitialized = useRef<boolean>(false)
 
   const fetchFilteredChart = useCallback(
@@ -110,6 +111,13 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
   )
 
   useEffect(() => {
+    if (isFirstRender.current) {
+      // Skip refetch on the first render, we already have initial data
+      isFirstRender.current = false
+      previousFilterRef.current = currentFilter
+      return
+    }
+
     // Skip if filter hasn't changed
     if (currentFilter === previousFilterRef.current) {
       return
