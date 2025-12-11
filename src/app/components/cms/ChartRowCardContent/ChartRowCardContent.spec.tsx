@@ -20,7 +20,6 @@ jest.mock('@/app/components/cms', () => ({
   Timestamp: () => <div>Up to and including 27 September 2023</div>,
   Download: () => <div>Mocked download</div>,
   About: () => <div>Mocked About</div>,
-  Table: () => <div>Mocked table</div>,
   Chart: () => <div>Mocked chart</div>,
   ChartRowCardHeader: ({ title, description, children, id }: any) => (
     <header>
@@ -29,6 +28,11 @@ jest.mock('@/app/components/cms', () => ({
       {children}
     </header>
   ),
+}))
+
+jest.mock('@/app/components/ui/ukhsa/Timestamp/Timestamp', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa/Timestamp/Timestamp'),
+  Timestamp: () => <div>Up to and including 27 September 2023</div>,
 }))
 
 jest.mock('@/app/components/ui/ukhsa/Table/Table', () => ({
