@@ -2,7 +2,7 @@ import { waitFor } from '@testing-library/dom'
 import userEvent from '@testing-library/user-event'
 import fetch from 'cross-fetch'
 
-import { SubplotDownloadForm } from '@/app/components/cms/Download/SubplotDownloadForm'
+import { SubplotDownloadForm } from '@/app/components/ui/ukhsa/Download/SubplotDownloadForm'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { downloadFile } from '@/app/utils/download.utils'
 import { subplotChartExportApiRoutePath } from '@/config/constants'

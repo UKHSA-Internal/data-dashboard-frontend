@@ -12,7 +12,7 @@ import {
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import About from '@/app/components/cms/About/About'
-import { SubplotClientDownload } from '@/app/components/cms/Download/SubplotClientDownload'
+import { SubplotClientDownload } from '@/app/components/ui/ukhsa/Download/SubplotClientDownload'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
 import { formatDate } from '@/app/utils/date.utils'
