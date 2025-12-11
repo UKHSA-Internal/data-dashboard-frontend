@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import { Trans } from 'react-i18next'
 
-export default function ChartNoScript({ title }: { title: string }) {
+export function ChartNoScript({ title }: { title: string }) {
   return (
     <div className="govuk-!-margin-top-4">
       <noscript>

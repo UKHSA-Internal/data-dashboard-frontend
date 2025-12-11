@@ -2,7 +2,7 @@ import clsx from 'clsx'
 import { z } from 'zod'
 
 import { CardTypes } from '@/api/models/cms/Page'
-import { ChartRowCard, ChartRowCardHeader } from '@/app/components/cms'
+import { ChartRowCard, ChartRowCardHeader } from '@/app/components/ui/ukhsa'
 
 import { MapCardTabWrapper } from './MapCard/MapCardTabWrapper'
 

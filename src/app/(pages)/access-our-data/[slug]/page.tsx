@@ -6,11 +6,9 @@ import { getServerTranslation } from '@/app/i18n'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
 
 export async function generateMetadata(props: { params: Promise<{ slug: string }> }): Promise<Metadata> {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    slug
-  } = params;
+  const { slug } = params
 
   const {
     meta: { seo_title, search_description },
@@ -23,11 +21,9 @@ export async function generateMetadata(props: { params: Promise<{ slug: string }
 }
 
 export default async function AccessOurDataChild(props: { params: Promise<{ slug: string }> }) {
-  const params = await props.params;
+  const params = await props.params
 
-  const {
-    slug
-  } = params;
+  const { slug } = params
 
   const { t } = await getServerTranslation('common')
 
