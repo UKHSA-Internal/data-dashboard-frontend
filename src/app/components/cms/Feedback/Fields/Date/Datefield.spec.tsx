@@ -1,4 +1,4 @@
-import { render, screen } from '@/config/test-utils'
+import { fireEvent, render, screen, waitFor } from '@/config/test-utils'
 
 import DateField from './DateField'
 
@@ -78,5 +78,123 @@ describe('DateField component', () => {
     expect(monthInput).toHaveAttribute('max', '12')
     expect(yearInput).toHaveAttribute('min', '1900')
     expect(yearInput).toHaveAttribute('max', '2100')
+  })
+
+  test('handleChange updates day input value', () => {
+    render(<DateField {...mockProps} />)
+    const dayInput = screen.getByLabelText(/day/i) as HTMLInputElement
+
+    fireEvent.change(dayInput, { target: { name: 'day', value: '15' } })
+
+    expect(dayInput.value).toBe('15')
+  })
+
+  test('handleChange updates month input value', () => {
+    render(<DateField {...mockProps} />)
+    const monthInput = screen.getByLabelText(/month/i) as HTMLInputElement
+
+    fireEvent.change(monthInput, { target: { name: 'month', value: '6' } })
+
+    expect(monthInput.value).toBe('6')
+  })
+
+  test('handleChange updates year input value', () => {
+    render(<DateField {...mockProps} />)
+    const yearInput = screen.getByLabelText(/year/i) as HTMLInputElement
+
+    fireEvent.change(yearInput, { target: { name: 'year', value: '2023' } })
+
+    expect(yearInput.value).toBe('2023')
+  })
+
+  test('handleChange updates multiple fields independently', () => {
+    render(<DateField {...mockProps} />)
+    const dayInput = screen.getByLabelText(/day/i) as HTMLInputElement
+    const monthInput = screen.getByLabelText(/month/i) as HTMLInputElement
+    const yearInput = screen.getByLabelText(/year/i) as HTMLInputElement
+
+    fireEvent.change(dayInput, { target: { name: 'day', value: '15' } })
+    fireEvent.change(monthInput, { target: { name: 'month', value: '6' } })
+    fireEvent.change(yearInput, { target: { name: 'year', value: '2023' } })
+
+    expect(dayInput.value).toBe('15')
+    expect(monthInput.value).toBe('6')
+    expect(yearInput.value).toBe('2023')
+  })
+
+  test('useEffect sets hiddenDateInput when all date fields are filled', async () => {
+    render(<DateField {...mockProps} />)
+    const dayInput = screen.getByLabelText(/day/i) as HTMLInputElement
+    const monthInput = screen.getByLabelText(/month/i) as HTMLInputElement
+    const yearInput = screen.getByLabelText(/year/i) as HTMLInputElement
+    const hiddenInput = screen.getByLabelText(/Unused Hidden Date Input/i) as HTMLInputElement
+
+    fireEvent.change(dayInput, { target: { name: 'day', value: '15' } })
+    fireEvent.change(monthInput, { target: { name: 'month', value: '6' } })
+    fireEvent.change(yearInput, { target: { name: 'year', value: '2023' } })
+
+    await waitFor(() => {
+      expect(hiddenInput.value).toBe('15-6-2023')
+    })
+  })
+
+  test('useEffect clears hiddenDateInput when any date field is empty', async () => {
+    render(<DateField {...mockProps} />)
+    const dayInput = screen.getByLabelText(/day/i) as HTMLInputElement
+    const monthInput = screen.getByLabelText(/month/i) as HTMLInputElement
+    const yearInput = screen.getByLabelText(/year/i) as HTMLInputElement
+    const hiddenInput = screen.getByLabelText(/Unused Hidden Date Input/i) as HTMLInputElement
+
+    // Fill all fields
+    fireEvent.change(dayInput, { target: { name: 'day', value: '15' } })
+    fireEvent.change(monthInput, { target: { name: 'month', value: '6' } })
+    fireEvent.change(yearInput, { target: { name: 'year', value: '2023' } })
+
+    await waitFor(() => {
+      expect(hiddenInput.value).toBe('15-6-2023')
+    })
+
+    // Clear one field
+    fireEvent.change(dayInput, { target: { name: 'day', value: '' } })
+
+    await waitFor(() => {
+      expect(hiddenInput.value).toBe('')
+    })
+  })
+
+  test('useEffect does not set hiddenDateInput when only some fields are filled', async () => {
+    render(<DateField {...mockProps} />)
+    const dayInput = screen.getByLabelText(/day/i) as HTMLInputElement
+    const monthInput = screen.getByLabelText(/month/i) as HTMLInputElement
+    const hiddenInput = screen.getByLabelText(/Unused Hidden Date Input/i) as HTMLInputElement
+
+    fireEvent.change(dayInput, { target: { name: 'day', value: '15' } })
+    fireEvent.change(monthInput, { target: { name: 'month', value: '6' } })
+
+    await waitFor(() => {
+      expect(hiddenInput.value).toBe('')
+    })
+  })
+
+  test('renders error message when fieldHasError is true', () => {
+    render(<DateField {...mockProps} fieldHasError={true} />)
+    expect(screen.getByText(/Please enter a valid date/i)).toBeInTheDocument()
+  })
+
+  test('does not render error message when fieldHasError is false', () => {
+    render(<DateField {...mockProps} fieldHasError={false} />)
+    expect(screen.queryByText(/Please enter a valid date/i)).not.toBeInTheDocument()
+  })
+
+  test('applies error styling when fieldHasError is true', () => {
+    render(<DateField {...mockProps} fieldHasError={true} />)
+    const formGroup = screen.getByText('Date of Birth').closest('.govuk-form-group')
+    expect(formGroup).toHaveClass('govuk-form-group--error')
+  })
+
+  test('hidden input has correct name attribute', () => {
+    render(<DateField {...mockProps} />)
+    const hiddenInput = screen.getByLabelText(/Unused Hidden Date Input/i)
+    expect(hiddenInput).toHaveAttribute('name', 'dob')
   })
 })

@@ -6,212 +6,295 @@ import { render, screen } from '@/config/test-utils'
 
 import { TimePeriodSelector } from './TimePeriodSelector'
 
-describe('TimePeriodSelector', () => {
-  const mockTimePeriods: TimePeriod[] = [
-    { id: '1', value: { label: '2024-Q1', date_from: '2024-01-01', date_to: '2024-03-31' }, type: 'time_period' },
-    { id: '2', value: { label: '2024-Q2', date_from: '2024-04-01', date_to: '2024-06-30' }, type: 'time_period' },
-  ]
+const mockTimePeriods: TimePeriod[] = [
+  {
+    id: 'period-1',
+    type: 'time_period',
+    value: {
+      label: '2021',
+      date_from: '2021-01-01',
+      date_to: '2021-12-31',
+    },
+  },
+  {
+    id: 'period-2',
+    type: 'time_period',
+    value: {
+      label: '2022',
+      date_from: '2022-01-01',
+      date_to: '2022-12-31',
+    },
+  },
+  {
+    id: 'period-3',
+    type: 'time_period',
+    value: {
+      label: '2023',
+      date_from: '2023-01-01',
+      date_to: '2023-12-31',
+    },
+  },
+]
 
+describe('TimePeriodSelector', () => {
   const mockOnTimePeriodChange = jest.fn()
 
   beforeEach(() => {
     jest.clearAllMocks()
+    console.error = jest.fn()
   })
 
-  test('renders with default title when timePeriodTitle is not provided', async () => {
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle=""
-      />
-    )
+  describe('Rendering', () => {
+    test('renders with custom title', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Custom Title"
+        />
+      )
 
-    expect(screen.getByText('Year selection:')).toBeInTheDocument()
+      expect(screen.getByText('Custom Title:')).toBeInTheDocument()
+      expect(screen.getByText('2022')).toBeInTheDocument()
+    })
+
+    test('renders with default title when timePeriodTitle is empty string', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle=""
+        />
+      )
+
+      expect(screen.getByText('Year selection:')).toBeInTheDocument()
+    })
+
+    test('renders with default title when timePeriodTitle is not provided', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle={''}
+        />
+      )
+
+      expect(screen.getByText('Year selection:')).toBeInTheDocument()
+    })
+
+    test('displays current time period label', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={0}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      expect(screen.getByText('2021')).toBeInTheDocument()
+    })
+
+    test('displays "No period selected" when current period is missing', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={10}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      expect(screen.getByText('No period selected')).toBeInTheDocument()
+    })
+
+    test('renders decrease and increase buttons', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const decreaseButton = screen.getByRole('button', { name: '-' })
+      const increaseButton = screen.getByRole('button', { name: '+' })
+
+      expect(decreaseButton).toBeInTheDocument()
+      expect(increaseButton).toBeInTheDocument()
+    })
   })
 
-  test('renders with custom title when timePeriodTitle is provided', async () => {
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Custom Period"
-      />
-    )
+  describe('Button Interactions', () => {
+    test('calls onTimePeriodChange with decreased index when decrease button is clicked', async () => {
+      const user = userEvent.setup()
 
-    expect(screen.getByText('Custom Period:')).toBeInTheDocument()
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const decreaseButton = screen.getByRole('button', { name: '-' })
+      await user.click(decreaseButton)
+
+      expect(mockOnTimePeriodChange).toHaveBeenCalledTimes(1)
+      expect(mockOnTimePeriodChange).toHaveBeenCalledWith(0)
+    })
+
+    test('calls onTimePeriodChange with increased index when increase button is clicked', async () => {
+      const user = userEvent.setup()
+
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const increaseButton = screen.getByRole('button', { name: '+' })
+      await user.click(increaseButton)
+
+      expect(mockOnTimePeriodChange).toHaveBeenCalledTimes(1)
+      expect(mockOnTimePeriodChange).toHaveBeenCalledWith(2)
+    })
+
+    test('does not call onTimePeriodChange when decrease button is clicked at first period', async () => {
+      const user = userEvent.setup()
+
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={0}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const decreaseButton = screen.getByRole('button', { name: '-' })
+      await user.click(decreaseButton)
+
+      expect(mockOnTimePeriodChange).not.toHaveBeenCalled()
+    })
+
+    test('does not call onTimePeriodChange when increase button is clicked at last period', async () => {
+      const user = userEvent.setup()
+
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={2}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const increaseButton = screen.getByRole('button', { name: '+' })
+      await user.click(increaseButton)
+
+      expect(mockOnTimePeriodChange).not.toHaveBeenCalled()
+    })
   })
 
-  test('displays the current time period label', async () => {
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
+  describe('Button Disabled States', () => {
+    test('decrease button is disabled at first period', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={0}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
 
-    expect(screen.getByText('2024-Q1')).toBeInTheDocument()
+      const decreaseButton = screen.getByRole('button', { name: '-' })
+      expect(decreaseButton).toBeDisabled()
+    })
+
+    test('decrease button is enabled when not at first period', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const decreaseButton = screen.getByRole('button', { name: '-' })
+      expect(decreaseButton).not.toBeDisabled()
+    })
+
+    test('increase button is disabled at last period', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={2}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const increaseButton = screen.getByRole('button', { name: '+' })
+      expect(increaseButton).toBeDisabled()
+    })
+
+    test('increase button is enabled when not at last period', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={mockTimePeriods}
+          currentTimePeriodIndex={1}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
+
+      const increaseButton = screen.getByRole('button', { name: '+' })
+      expect(increaseButton).not.toBeDisabled()
+    })
   })
 
-  test('displays "No period selected" when current time period is undefined', async () => {
-    render(
-      <TimePeriodSelector
-        timePeriods={[]}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
+  describe('Edge Cases', () => {
+    test('handles single time period', () => {
+      const singlePeriod: TimePeriod[] = [mockTimePeriods[0]]
 
-    expect(screen.getByText('No period selected')).toBeInTheDocument()
-  })
+      render(
+        <TimePeriodSelector
+          timePeriods={singlePeriod}
+          currentTimePeriodIndex={0}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
 
-  test('disables decrease button when on first period', async () => {
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
+      const decreaseButton = screen.getByRole('button', { name: '-' })
+      const increaseButton = screen.getByRole('button', { name: '+' })
 
-    const decreaseButton = screen.getByRole('button', { name: '-' })
-    expect(decreaseButton).toBeDisabled()
-  })
+      expect(decreaseButton).toBeDisabled()
+      expect(increaseButton).toBeDisabled()
+      expect(screen.getByText('2021')).toBeInTheDocument()
+    })
 
-  test('disables increase button when on last period', async () => {
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={1}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
+    test('handles empty time periods array', () => {
+      render(
+        <TimePeriodSelector
+          timePeriods={[]}
+          currentTimePeriodIndex={0}
+          onTimePeriodChange={mockOnTimePeriodChange}
+          timePeriodTitle="Test Title"
+        />
+      )
 
-    const increaseButton = screen.getByRole('button', { name: '+' })
-    expect(increaseButton).toBeDisabled()
-  })
-
-  test('enables both buttons when on middle period', async () => {
-    const extendedMockTimePeriods: TimePeriod[] = [
-      ...mockTimePeriods,
-      { id: '3', value: { label: '2024-Q3', date_from: '2024-07-01', date_to: '2024-09-30' }, type: 'time_period' },
-    ]
-
-    render(
-      <TimePeriodSelector
-        timePeriods={extendedMockTimePeriods}
-        currentTimePeriodIndex={1}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
-
-    const decreaseButton = screen.getByRole('button', { name: '-' })
-    const increaseButton = screen.getByRole('button', { name: '+' })
-
-    expect(decreaseButton).not.toBeDisabled()
-    expect(increaseButton).not.toBeDisabled()
-  })
-
-  test('calls onTimePeriodChange with decremented index when decrease button is clicked', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={1}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
-
-    const decreaseButton = screen.getByRole('button', { name: '-' })
-    await user.click(decreaseButton)
-
-    expect(mockOnTimePeriodChange).toHaveBeenCalledWith(0)
-    expect(mockOnTimePeriodChange).toHaveBeenCalledTimes(1)
-  })
-
-  test('calls onTimePeriodChange with incremented index when increase button is clicked', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
-
-    const increaseButton = screen.getByRole('button', { name: '+' })
-    await user.click(increaseButton)
-
-    expect(mockOnTimePeriodChange).toHaveBeenCalledWith(1)
-    expect(mockOnTimePeriodChange).toHaveBeenCalledTimes(1)
-  })
-
-  test('does not call onTimePeriodChange when decrease button is clicked on first period', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
-
-    const decreaseButton = screen.getByRole('button', { name: '-' })
-    await user.click(decreaseButton)
-
-    expect(mockOnTimePeriodChange).not.toHaveBeenCalled()
-  })
-
-  test('does not call onTimePeriodChange when increase button is clicked on last period', async () => {
-    const user = userEvent.setup()
-
-    render(
-      <TimePeriodSelector
-        timePeriods={mockTimePeriods}
-        currentTimePeriodIndex={1}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
-
-    const increaseButton = screen.getByRole('button', { name: '+' })
-    await user.click(increaseButton)
-
-    expect(mockOnTimePeriodChange).not.toHaveBeenCalled()
-  })
-
-  test('handles single time period by disabling both buttons', async () => {
-    const singlePeriod: TimePeriod[] = [
-      { id: '1', value: { label: '2024-Q1', date_from: '2024-01-01', date_to: '2024-03-31' }, type: 'time_period' },
-    ]
-
-    render(
-      <TimePeriodSelector
-        timePeriods={singlePeriod}
-        currentTimePeriodIndex={0}
-        onTimePeriodChange={mockOnTimePeriodChange}
-        timePeriodTitle="Quarter"
-      />
-    )
-
-    const decreaseButton = screen.getByRole('button', { name: '-' })
-    const increaseButton = screen.getByRole('button', { name: '+' })
-
-    expect(decreaseButton).toBeDisabled()
-    expect(increaseButton).toBeDisabled()
+      expect(screen.getByText('No period selected')).toBeInTheDocument()
+    })
   })
 })

@@ -145,4 +145,74 @@ describe('getFilteredData', () => {
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
   })
+
+  test('applies year filter and updates date_from', () => {
+    const result = getFilteredData(mockData, 'chart1|1-year', 'chart1')
+    expect(result).toHaveLength(2)
+    expect(result?.[0].value.date_from).toBe('2023-01-01')
+    expect(result?.[1].value.date_from).toBe('2023-01-01')
+  })
+
+  test('applies years filter and updates date_from', () => {
+    const result = getFilteredData(mockData, 'chart1|2-years', 'chart1')
+    expect(result).toHaveLength(2)
+    expect(result?.[0].value.date_from).toBe('2022-01-01')
+    expect(result?.[1].value.date_from).toBe('2022-01-01')
+  })
+
+  test('throws error for unsupported subtraction unit', () => {
+    expect(() => getFilteredData(mockData, 'chart1|5-days', 'chart1')).toThrow('Unsupported subtraction unit')
+  })
+
+  test('handles case-insensitive chartId matching', () => {
+    const result = getFilteredData(mockData, 'CHART1|6-months', 'chart1')
+    expect(result).toHaveLength(2)
+    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
+  })
+
+  test('handles case-insensitive chartId matching with uppercase filter', () => {
+    const result = getFilteredData(mockData, 'chart1|6-months', 'CHART1')
+    expect(result).toHaveLength(2)
+    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
+  })
+
+  test('applies month filter (singular) and updates date_from', () => {
+    const result = getFilteredData(mockData, 'chart1|1-month', 'chart1')
+    expect(result).toHaveLength(2)
+    // Should subtract 1 month from date_to (2024-01-01) = 2023-12-01
+    expect(result?.[0].value.date_from).toBe('2023-12-01')
+  })
+
+  test('applies months filter (plural) and updates date_from', () => {
+    const result = getFilteredData(mockData, 'chart1|3-months', 'chart1')
+    expect(result).toHaveLength(2)
+    // Should subtract 3 months from date_to (2024-01-01) = 2023-10-01
+    expect(result?.[0].value.date_from).toBe('2023-10-01')
+  })
+
+  test('applies year filter (singular) and updates date_from', () => {
+    const result = getFilteredData(mockData, 'chart1|1-year', 'chart1')
+    expect(result).toHaveLength(2)
+    // Should subtract 1 year from date_to (2024-01-01) = 2023-01-01
+    expect(result?.[0].value.date_from).toBe('2023-01-01')
+  })
+
+  test('handles multiple filters in timeseriesFilter string', () => {
+    const result = getFilteredData(mockData, 'chart1|6-months;chart2|1-year', 'chart1')
+    expect(result).toHaveLength(2)
+    // chart1 should have 6-months filter applied - the filter matches chartId, so ALL plots get updated
+    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
+    // chart2 also gets updated because the filter matches chartId
+    expect(result?.[1].value.date_from).not.toBe('2023-01-01')
+  })
+
+  test('handles filter with no value (empty filterValue)', () => {
+    // Empty filterValue will cause subtractFromDate to fail when splitting
+    expect(() => getFilteredData(mockData, 'chart1|', 'chart1')).toThrow('Unsupported subtraction unit')
+  })
+
+  test('handles filter with malformed format', () => {
+    // Should throw error for unsupported unit
+    expect(() => getFilteredData(mockData, 'chart1|invalid-format', 'chart1')).toThrow('Unsupported subtraction unit')
+  })
 })
