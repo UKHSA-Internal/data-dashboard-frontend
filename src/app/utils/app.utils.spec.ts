@@ -1,5 +1,5 @@
 import { SITE_URL } from '../constants/app.constants'
-import { isProd, toSlug } from './app.utils'
+import { getTimespan, isProd, isWellKnownEnvironment, slug2String, toSlug, trimTrailingSlash } from './app.utils'
 
 test('Determine prod env based on hostname', () => {
   window = Object.create(window)
@@ -66,5 +66,34 @@ describe('toSlug', () => {
 
   test('handles mixed cases and special characters', () => {
     expect(toSlug('  --Hello W_o_r_l_d!!--  ')).toBe('hello-w_o_r_l_d')
+  })
+})
+
+describe('app utils helpers', () => {
+  const originalEnv = process.env
+
+  afterEach(() => {
+    process.env = originalEnv
+  })
+
+  test('detects well known environment based on BASE_URL', () => {
+    process.env = { ...originalEnv, BASE_URL: 'https://ukhsa-dashboard.data.gov.uk' }
+    expect(isWellKnownEnvironment()).toBe(true)
+
+    process.env = { ...originalEnv, BASE_URL: 'https://example.com' }
+    expect(isWellKnownEnvironment()).toBe(false)
+  })
+
+  test('converts slug array to string and trims trailing slash', () => {
+    expect(slug2String(['slug1', 'slug2', 'slug3'])).toBe('slug1/slug2/slug3')
+    expect(trimTrailingSlash('https://ukhsa-dashboard.data.gov.uk/slug1/')).toBe(
+      'https://ukhsa-dashboard.data.gov.uk/slug1'
+    )
+  })
+
+  test('calculates timespan between dates', () => {
+    const start = new Date('2020-01-01')
+    const end = new Date('2022-03-01')
+    expect(getTimespan(start, end)).toEqual({ years: 2, months: 2 })
   })
 })

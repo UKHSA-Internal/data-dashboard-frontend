@@ -269,4 +269,8 @@ describe('getFilteredData', () => {
     // 1 month should give a different date_from than 3 months
     expect(result1Month?.[0].value.date_from).not.toBe(result3Months?.[0].value.date_from)
   })
+
+  test('throws when filter unit is unsupported', () => {
+    expect(() => getFilteredData(mockData, '1-week')).toThrow('Unsupported subtraction unit')
+  })
 })
