@@ -1,4 +1,4 @@
-import { headers, type UnsafeUnwrappedHeaders } from 'next/headers'
+import { headers } from 'next/headers'
 
 import { getSearchParams } from './getSearchParams'
 
@@ -11,7 +11,7 @@ import { getSearchParams } from './getSearchParams'
 
 export const getReturnPathWithParams = async () => {
   const searchParams = await getSearchParams()
-  const headersList = headers() as unknown as UnsafeUnwrappedHeaders
+  const headersList = await headers()
   const currentUrl = new URL(headersList.get('x-url') || '')
 
   return (path: string) => {

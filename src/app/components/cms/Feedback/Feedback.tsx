@@ -1,8 +1,7 @@
 'use client'
 
 import Link from 'next/link'
-import { Fragment, useEffect } from 'react'
-import { useFormState } from 'react-dom'
+import { Fragment, useActionState, useEffect } from 'react'
 import { z } from 'zod'
 
 import { FormField } from '@/api/models/cms/Page/FormFields'
@@ -77,7 +76,7 @@ interface FeedbackProps {
 }
 
 export default function Feedback({ formFields }: FeedbackProps) {
-  const [state, formAction] = useFormState(handler.bind(null, formFields), initialState)
+  const [state, formAction] = useActionState(handler.bind(null, formFields), initialState)
 
   useEffect(() => {
     if (state.message) {

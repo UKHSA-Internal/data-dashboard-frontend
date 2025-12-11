@@ -9,7 +9,13 @@ export const getHealthAlertByRegion = async (type: HealthAlertTypes, region: str
   try {
     const path = isSSR ? `alerts/v1` : `proxy/alerts/v1`
     const { data } = await client<HealthAlert>(`${path}/${type}/${region}`)
-    return HealthAlert.safeParse(data)
+    const result = HealthAlert.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getHealthAlertByRegion Parsing Error: ${result.error}`)
+      return HealthAlert.safeParse(result.error)
+    }
   } catch (error) {
     logger.error(error)
     return HealthAlert.safeParse(error)

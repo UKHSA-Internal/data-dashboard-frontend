@@ -13,6 +13,9 @@ interface PageSectionProps {
   id?: string
 }
 
+type ChildWithProps<P> = ReactElement<P>
+type ChildWithHeadingProp = ChildWithProps<{ heading: string }>
+
 export const PageSectionWithContents = ({ children }: PageSectionWithContentsProps) => {
   return (
     <>
@@ -20,15 +23,18 @@ export const PageSectionWithContents = ({ children }: PageSectionWithContentsPro
         {Children.map(children, (child: ReactNode) => {
           if (!isValidElement(child)) return null
 
-          const childProps = child.props as PageSectionProps
-
-          return <ContentsLink href={`#${kebabCase(childProps.heading)}`}>{childProps.heading}</ContentsLink>
+          const typedChild = child as ChildWithHeadingProp
+          return (
+            <ContentsLink href={`#${kebabCase(typedChild.props.heading)}`}>{typedChild.props.heading}</ContentsLink>
+          )
         })}
       </Contents>
       {Children.map(children, (child: ReactNode) => {
         if (!isValidElement(child)) return null
 
-        return cloneElement(child as ReactElement<PageSectionProps>)
+        return cloneElement(child, {
+          ...(child.props as ChildWithProps<Record<string, unknown>>),
+        })
       })}
     </>
   )

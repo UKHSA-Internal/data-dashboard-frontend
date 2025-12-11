@@ -44,7 +44,13 @@ export const getTables = async (body: RequestParams) => {
   try {
     const path = isSSR ? `tables/v4` : `proxy/tables/v4`
     const { data } = await client<Response>(path, { body })
-    return responseSchema.safeParse(data)
+    const result = responseSchema.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getTables parse error: ${result.error}`)
+      return responseSchema.safeParse(result.error)
+    }
   } catch (error) {
     logger.error(error)
     return responseSchema.safeParse(error)

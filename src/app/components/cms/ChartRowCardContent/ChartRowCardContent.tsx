@@ -3,13 +3,14 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
-import { Download, Table, Timestamp } from '@/app/components/cms'
+import { Download, Timestamp } from '@/app/components/cms'
 import { About } from '@/app/components/cms/About/About'
 import {
   AreaSelectorLoader,
   Card,
   Chart,
   ChartRowCardHeader,
+  Table,
   Tabs,
   TabsContent,
   TabsList,

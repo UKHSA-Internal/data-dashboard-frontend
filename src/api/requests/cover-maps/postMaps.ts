@@ -11,7 +11,13 @@ export const postMapData = async (request: MapDataRequest) => {
     const { data } = await client<MapDataResponse>(`${path}`, {
       body: request,
     })
-    return MapDataResponse.safeParse(data)
+    const result = MapDataResponse.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`PostMaps Parsing Error: ${result.error}`)
+      return MapDataResponse.safeParse({ data: [], latest_date: '' })
+    }
   } catch (error) {
     logger.error(error)
     return MapDataResponse.safeParse({ data: [], latest_date: '' })

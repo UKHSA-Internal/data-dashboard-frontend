@@ -48,6 +48,11 @@ jest.mock('@/app/components/ui/ukhsa', () => ({
   ),
 }))
 
+jest.mock('@/app/components/ui/ukhsa/Table/Table', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa/Table/Table'),
+  Table: () => <div>Mocked table</div>,
+}))
+
 jest.mock('@/app/utils/cms.utils', () => ({
   ...jest.requireActual('@/app/utils/cms.utils'),
   renderBlock: jest.fn(),
