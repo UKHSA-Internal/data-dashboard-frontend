@@ -59,7 +59,7 @@ describe('ChartRowCardContent', () => {
       ],
     }
 
-    render(<ChartRowCardContent value={mockValue} timeseriesFilter="" />)
+    render(<ChartRowCardContent value={mockValue} />)
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
@@ -105,7 +105,7 @@ describe('ChartRowCardContent', () => {
       ],
     }
 
-    render(<ChartRowCardContent value={mockValue} timeseriesFilter="" />)
+    render(<ChartRowCardContent value={mockValue} />)
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
     expect(article.parentElement).toHaveClass('lg:w-full')
   })
@@ -136,7 +136,7 @@ describe('ChartRowCardContent', () => {
       ],
     }
 
-    render(<ChartRowCardContent value={mockValue} timeseriesFilter="" />)
+    render(<ChartRowCardContent value={mockValue} />)
     const article1 = screen.getByRole('article', { name: 'Chart heading 1' })
     const article2 = screen.getByRole('article', { name: 'Chart heading 2' })
     expect(article1.parentElement).toHaveClass('lg:w-1/2')

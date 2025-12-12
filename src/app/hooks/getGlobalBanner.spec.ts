@@ -53,4 +53,17 @@ describe('getGlobalBanner', () => {
 
     expect(await result.current).toBeNull()
   })
+
+  test('returns null when parse error occurs', async () => {
+    clientMock.mockResolvedValueOnce({
+      data: {
+        invalid_data: 'not matching schema',
+      },
+      status: 200,
+    })
+
+    const { result } = renderHook(() => getGlobalBanner())
+
+    expect(await result.current).toBeNull()
+  })
 })

@@ -46,4 +46,35 @@ describe('GET geographies/v3', () => {
       ]),
     })
   })
+
+  test('throws error when both topic and geography_type are provided', async () => {
+    const result = await getGeographies({ topic: 'COVID-19', geography_type: 'Region' })
+    expect(result.success).toBe(false)
+    expect(result.error).toBeInstanceOf(ZodError)
+  })
+
+  test('throws error when neither topic nor geography_type is provided', async () => {
+    const result = await getGeographies({})
+    expect(result.success).toBe(false)
+    expect(result.error).toBeInstanceOf(ZodError)
+  })
+
+  test('handles parse error for geography_type response', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: { invalid: 'data' },
+      status: 200,
+    })
+
+    const result = await getGeographies({ geography_type: 'Region' })
+    expect(result.success).toBe(false)
+    expect(result.error).toBeInstanceOf(ZodError)
+  })
+
+  test('handles catch error for geography_type request', async () => {
+    jest.mocked(client).mockRejectedValueOnce(new Error('Network error'))
+
+    const result = await getGeographies({ geography_type: 'Region' })
+    expect(result.success).toBe(false)
+    expect(result.error).toBeInstanceOf(ZodError)
+  })
 })
