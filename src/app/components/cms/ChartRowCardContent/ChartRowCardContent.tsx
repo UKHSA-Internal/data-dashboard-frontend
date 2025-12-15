@@ -10,7 +10,6 @@ import { AreaSelectorLoader } from '@/app/components/ui/ukhsa/AreaSelector/AreaS
 import { Download } from '@/app/components/ui/ukhsa/Download/Download'
 import { Table } from '@/app/components/ui/ukhsa/Table/Table'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
-// import { Timestamp } from '@/app/components/ui/ukhsa/Timestamp/Timestamp'
 import { renderBlock } from '@/app/utils/cms.utils'
 
 type ChartRowCardContentProps = {
