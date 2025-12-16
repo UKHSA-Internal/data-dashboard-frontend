@@ -18,9 +18,7 @@ Object.defineProperty(window, 'URL', {
 jest.mock('@/app/components/cms', () => ({
   ...jest.requireActual('@/app/components/cms'),
   Timestamp: () => <div>Up to and including 27 September 2023</div>,
-  Download: () => <div>Mocked download</div>,
   About: () => <div>Mocked About</div>,
-  Table: () => <div>Mocked table</div>,
   Chart: () => <div>Mocked chart</div>,
   ChartRowCardHeader: ({ title, description, children, id }: any) => (
     <header>
@@ -31,6 +29,11 @@ jest.mock('@/app/components/cms', () => ({
   ),
 }))
 
+jest.mock('@/app/components/ui/ukhsa/Timestamp/Timestamp', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa/Timestamp/Timestamp'),
+  Timestamp: () => <div>Up to and including 27 September 2023</div>,
+}))
+
 jest.mock('@/app/components/ui/ukhsa/Table/Table', () => ({
   ...jest.requireActual('@/app/components/ui/ukhsa/Table/Table'),
   Table: () => <div>Mocked table</div>,
@@ -39,6 +42,10 @@ jest.mock('@/app/components/ui/ukhsa/Table/Table', () => ({
 jest.mock('@/app/utils/cms.utils', () => ({
   ...jest.requireActual('@/app/utils/cms.utils'),
   renderBlock: jest.fn(),
+}))
+jest.mock('@/app/components/ui/ukhsa/Download/Download', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa/Download/Download'),
+  Download: () => <div>Mocked download</div>,
 }))
 
 describe('ChartRowCardContent', () => {
