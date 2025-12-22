@@ -226,7 +226,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '6-months')
+        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '6-months', '2025-05-21')
         expect(mockGetCharts).toHaveBeenCalledTimes(1)
       })
 
@@ -268,7 +268,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '3-months')
+        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
         expect(mockGetCharts).toHaveBeenCalledTimes(1)
       })
     })
@@ -311,7 +311,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '3-months')
+        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
         expect(mockGetCharts).toHaveBeenCalledTimes(1)
       })
     })
