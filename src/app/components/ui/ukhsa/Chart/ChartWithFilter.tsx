@@ -18,6 +18,7 @@ import ChartSelect from '../View/ChartSelect/ChartSelect'
 import ChartInteractive from './ChartInteractive'
 
 interface ChartWithFilterProps {
+  lastUpdated: string
   figure: ChartFigure
   title: string
   chart: Chart
@@ -32,7 +33,7 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -48,7 +49,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
 
       try {
         console.log('Fetching chart with filter:', filter)
-        const filteredChart = getFilteredData(chartData, filter)
+        const filteredChart = getFilteredData(chartData, filter, lastUpdated)
 
         if (!filteredChart) {
           setHasError(true)
@@ -140,7 +141,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData }: ChartWithFi
   return (
     <>
       <div className="hidden js:block">
-        <ChartSelect timespan={getChartTimespan(chart)} />
+        <ChartSelect timespan={getChartTimespan(chart, lastUpdated)} />
       </div>
       {hasError ? (
         <ClientInformationCard

@@ -5,7 +5,7 @@ import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
 
-export const getChartTimespan = (plots: Chart): { years: number; months: number } => {
+export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: number; months: number } => {
   if (!plots?.length) return { years: 0, months: 0 }
 
   let maxMonths = 0
@@ -18,11 +18,11 @@ export const getChartTimespan = (plots: Chart): { years: number; months: number 
     // If date_from is missing, skip this plot
     if (!plot.value.date_from) return
 
-    // If all plots are missing date_to, use today's date
+    // If all plots are missing date_to, use lastUpdated date
     // Otherwise, only process plots that have both date_from and date_to
     let dateTo: Date
     if (allPlotsMissingDateTo) {
-      dateTo = new Date()
+      dateTo = new Date(lastUpdated)
     } else {
       // If we're not using the "all missing" fallback and this plot is missing date_to, skip it
       if (!plot.value.date_to) return
@@ -78,12 +78,13 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
 
 export const getFilteredData = (
   data: z.infer<typeof ChartCardSchemas>['value'],
-  filterValue: string
+  filterValue: string,
+  lastUpdated: string
 ): Chart | undefined => {
   return data.chart.map((plot) => {
     // Default date_to to today's date if not provided
-    const dateTo = plot.value.date_to ? new Date(plot.value.date_to) : new Date()
-    const dateToString = plot.value.date_to || new Date().toISOString().split('T')[0]
+    const dateTo = plot.value.date_to ? new Date(plot.value.date_to) : new Date(lastUpdated)
+    const dateToString = plot.value.date_to || new Date(dateTo).toISOString().split('T')[0]
 
     // When filter is 'all', restore original dates (or use today if date_to was null)
     if (!filterValue || filterValue === 'all') {

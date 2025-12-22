@@ -1,8 +1,9 @@
 import { getChartSvg, getChartTimespan, getFilteredData } from './chart.utils'
 
 describe('Get timespan between dates for chart', () => {
+  const mockLastUpdated = '2025-05-21'
   test('return 0 when no plots provided', () => {
-    const timespan = getChartTimespan([])
+    const timespan = getChartTimespan([], mockLastUpdated)
     expect(timespan).toEqual({ years: 0, months: 0 })
   })
 
@@ -21,7 +22,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 0, months: 0 })
   })
 
@@ -40,7 +41,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 1, months: 1 })
   })
 
@@ -70,7 +71,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 2, months: 1 })
   })
 
@@ -104,7 +105,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     // Should calculate from two years ago to today (approximately 2 years)
     expect(timespan.years).toBeGreaterThanOrEqual(1)
     expect(timespan.years).toBeLessThanOrEqual(3)
@@ -147,7 +148,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     // Should only consider plots with date_to, picking the largest (3 years)
     expect(timespan).toEqual({ years: 3, months: 0 })
   })
@@ -178,7 +179,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     // Should only use the plot with both dates (1 year), not default to today for the incomplete one
     expect(timespan).toEqual({ years: 1, months: 0 })
   })
@@ -199,6 +200,7 @@ describe('getChartSvg', () => {
 })
 
 describe('getFilteredData', () => {
+  const mockLastUpdated = '2025-05-21'
   const mockData = {
     title: 'Test Chart',
     tag_manager_event_id: 'test-event',
@@ -234,14 +236,14 @@ describe('getFilteredData', () => {
   }
 
   test('returns original data when no filter provided (empty string)', () => {
-    const result = getFilteredData(mockData, '')
+    const result = getFilteredData(mockData, '', mockLastUpdated)
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
     expect(result?.[0].value.date_to).toBe('2024-01-01')
   })
 
   test('applies filter and updates date_from for all plots', () => {
-    const result = getFilteredData(mockData, '6-months')
+    const result = getFilteredData(mockData, '6-months', mockLastUpdated)
     expect(result).toHaveLength(2)
     // date_from should be updated to 6 months before date_to
     expect(result?.[0].value.date_from).not.toBe('2023-01-01')
@@ -251,7 +253,7 @@ describe('getFilteredData', () => {
   })
 
   test('handles "all" filter value and restores original dates', () => {
-    const result = getFilteredData(mockData, 'all')
+    const result = getFilteredData(mockData, 'all', mockLastUpdated)
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
     expect(result?.[0].value.date_to).toBe('2024-01-01')
@@ -260,8 +262,8 @@ describe('getFilteredData', () => {
   })
 
   test('applies different filter values correctly', () => {
-    const result1Month = getFilteredData(mockData, '1-month')
-    const result3Months = getFilteredData(mockData, '3-months')
+    const result1Month = getFilteredData(mockData, '1-month', mockLastUpdated)
+    const result3Months = getFilteredData(mockData, '3-months', mockLastUpdated)
 
     expect(result1Month).toHaveLength(2)
     expect(result3Months).toHaveLength(2)
@@ -271,6 +273,6 @@ describe('getFilteredData', () => {
   })
 
   test('throws when filter unit is unsupported', () => {
-    expect(() => getFilteredData(mockData, '1-week')).toThrow('Unsupported subtraction unit')
+    expect(() => getFilteredData(mockData, '1-week', mockLastUpdated)).toThrow('Unsupported subtraction unit')
   })
 })

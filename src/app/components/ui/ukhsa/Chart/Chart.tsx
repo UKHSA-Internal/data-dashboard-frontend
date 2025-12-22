@@ -158,7 +158,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     return <ChartEmpty resetHref={pathname} />
   }
 
-  const { alt_text: alt, figure } = defaultChartResponse
+  const { alt_text: alt, figure, last_updated } = defaultChartResponse
 
   const staticChart = createStaticChart({
     sizes,
@@ -186,6 +186,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
         {/* Interactive chart with filter - only visible when JavaScript is enabled */}
         <div className="hidden js:block">
           <ChartWithFilter
+            lastUpdated={last_updated}
             figure={{ frames: [], ...figure }}
             title={data.title}
             chart={data.chart}

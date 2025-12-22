@@ -149,7 +149,15 @@ describe('ChartWithFilter', () => {
 
   describe('Initial Render', () => {
     it('renders with initial figure and does not fetch on first render', async () => {
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       expect(screen.getByTestId('chart-select')).toBeInTheDocument()
 
@@ -160,7 +168,13 @@ describe('ChartWithFilter', () => {
 
     it('renders ChartNoScript with kebabCase title', () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart Title" chart={mockChart} chartData={mockChartData} />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart Title"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
       )
 
       expect(screen.getByTestId('chart-no-script')).toHaveTextContent('NoScript - test-chart-title')
@@ -169,7 +183,15 @@ describe('ChartWithFilter', () => {
 
   describe('Filter Change Handling', () => {
     it('skips fetch when filter changes to the same value', async () => {
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months') // first change triggers fetch
@@ -189,7 +211,15 @@ describe('ChartWithFilter', () => {
     })
 
     it('fetches filtered chart when filter changes from "all" to a specific filter', async () => {
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
@@ -212,7 +242,15 @@ describe('ChartWithFilter', () => {
     })
 
     it('fetches filtered chart when filter changes between different filters', async () => {
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('1-month')
@@ -236,7 +274,15 @@ describe('ChartWithFilter', () => {
     })
 
     it('does not fetch when filter is "all" on initial mount', async () => {
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       // Wait a bit to ensure no fetch happens
       await act(async () => {
@@ -249,7 +295,15 @@ describe('ChartWithFilter', () => {
     it('fetches filtered chart when filter is not "all" on initial mount', async () => {
       setTimeseriesInitialFilterForTests('6-months')
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       // No fetch until filter actually changes
       await act(async () => {
@@ -283,7 +337,15 @@ describe('ChartWithFilter', () => {
         })) as any
       )
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       // Wait a bit then change filter
       await act(async () => {
@@ -323,7 +385,15 @@ describe('ChartWithFilter', () => {
     it('shows error message when getFilteredData returns null', async () => {
       mockGetFilteredData.mockReturnValueOnce(undefined)
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
@@ -345,7 +415,15 @@ describe('ChartWithFilter', () => {
         ]),
       })
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
@@ -363,7 +441,15 @@ describe('ChartWithFilter', () => {
     it('shows error message when getCharts throws an error', async () => {
       mockGetCharts.mockRejectedValueOnce(new Error('Network error'))
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
@@ -396,7 +482,15 @@ describe('ChartWithFilter', () => {
         },
       })
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
@@ -423,7 +517,15 @@ describe('ChartWithFilter', () => {
         y_axis_maximum_value: 100,
       }
 
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={chartDataWithAxis} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={chartDataWithAxis}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
@@ -455,7 +557,15 @@ describe('ChartWithFilter', () => {
       // This tests the isFirstRender.current check
       // The component should skip on first render, then fetch on subsequent effect runs
       setTimeseriesInitialFilterForTests('6-months')
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       // First render skipped; trigger a change to ensure fetch occurs
       await act(async () => {
@@ -468,7 +578,15 @@ describe('ChartWithFilter', () => {
     })
 
     it('handles multiple rapid filter changes correctly', async () => {
-      render(<ChartWithFilter figure={mockFigure} title="Test Chart" chart={mockChart} chartData={mockChartData} />)
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+        />
+      )
 
       await act(async () => {
         setTimeseriesFilterForTests('1-month')
