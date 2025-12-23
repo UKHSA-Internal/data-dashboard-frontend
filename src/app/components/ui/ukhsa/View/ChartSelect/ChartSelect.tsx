@@ -5,8 +5,12 @@ import { useEffect, useRef } from 'react'
 import { useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { toSlug } from '@/app/utils/app.utils'
 
-export const getSelectOptions = (years: number): Array<string> => {
-  if (years < 1) return ['All']
+export const getSelectOptions = (timespan: { years: number; months: number }): Array<string> => {
+  const { years, months } = timespan
+
+  if (years === 0 && months < 6) return ['All']
+
+  if (years < 1 && months >= 6) return ['1 Month', '3 Months', '6 Months', 'All']
 
   if (years >= 1 && years < 2) return ['1 Month', '3 Months', '6 Months', 'All']
 
@@ -41,6 +45,8 @@ const ChartSelect = ({ timespan }: ChartSelectProps) => {
   const { currentFilter, setCurrentFilter } = useTimeseriesFilter()
   const previousYearsRef = useRef<number | null>(null)
 
+  console.log('select options: ' + JSON.stringify(timespan))
+
   // Set initial filter value based on timespan
   useEffect(() => {
     const isInitialMount = previousYearsRef.current === null
@@ -70,7 +76,7 @@ const ChartSelect = ({ timespan }: ChartSelectProps) => {
         Filter data by
       </label>
       <select className="govuk-select" id="timeseries-filter" onChange={handleChange} value={currentFilter}>
-        {getSelectOptions(timespan.years).map((selectOption) => (
+        {getSelectOptions(timespan).map((selectOption) => (
           <option key={selectOption} value={toSlug(selectOption)}>
             {selectOption}
           </option>

@@ -30,7 +30,7 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
     }
 
     const dateFrom = new Date(plot.value.date_from)
-
+    console.log(`${plot.value.label} date from: ${dateFrom}`)
     // Get total month difference
     const monthDiff = (dateTo.getFullYear() - dateFrom.getFullYear()) * 12 + (dateTo.getMonth() - dateFrom.getMonth())
 
@@ -44,6 +44,8 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
     years: Math.floor(maxMonths / 12),
     months: maxMonths % 12,
   }
+
+  console.log('getChartTimespan', returnItem)
 
   return returnItem
 }
