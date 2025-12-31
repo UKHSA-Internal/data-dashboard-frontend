@@ -3,15 +3,20 @@ import { ReactNode } from 'react'
 
 import { DataFilters, GeographyFilters, ThresholdFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
-import { act, renderHook } from '@/config/test-utils'
+import { act, renderHook, waitFor } from '@/config/test-utils'
 
 import {
+  useCoverageTemplateData,
   useDataFilters,
   useErrorData,
   useGeographyFilters,
+  useGeographyState,
+  useMapData,
   useSelectedFilters,
   useThresholdFilters,
   useTimePeriods,
+  useTimeSeriesData,
+  useVaccinationState,
 } from './globalFilterHooks'
 
 // Mock the API call
@@ -305,6 +310,81 @@ describe('globalFilterHooks', () => {
       const { result } = renderHook(() => useDataFilters(), { wrapper: emptyWrapper })
 
       expect(result.current).toBeNull()
+    })
+  })
+
+  describe('useTimeSeriesData', () => {
+    test('should return timeseries template data from context', () => {
+      const { result } = renderHook(() => useTimeSeriesData(), { wrapper })
+
+      expect(result.current).toEqual(mockCoverageTimeSeriesData)
+    })
+
+    test('should return null when no timeseries data provided', () => {
+      const emptyWrapper = ({ children }: { children: ReactNode }) => (
+        <GlobalFilterProvider filters={{ ...mockFilters, timeseriesTemplateData: null }}>
+          {children}
+        </GlobalFilterProvider>
+      )
+
+      const { result } = renderHook(() => useTimeSeriesData(), { wrapper: emptyWrapper })
+
+      expect(result.current).toBeNull()
+    })
+  })
+
+  describe('useCoverageTemplateData', () => {
+    test('should return coverage template data from context', () => {
+      const { result } = renderHook(() => useCoverageTemplateData(), { wrapper })
+
+      expect(result.current).toEqual(mockCoverageTemplateData)
+    })
+
+    test('should return null when no coverage template data provided', () => {
+      const emptyWrapper = ({ children }: { children: ReactNode }) => (
+        <GlobalFilterProvider filters={{ ...mockFilters, coverageTemplateData: null }}>{children}</GlobalFilterProvider>
+      )
+
+      const { result } = renderHook(() => useCoverageTemplateData(), { wrapper: emptyWrapper })
+
+      expect(result.current).toBeNull()
+    })
+  })
+
+  describe('useVaccinationState', () => {
+    test('should return vaccination list and selected vaccination state', () => {
+      const { result } = renderHook(() => useVaccinationState(), { wrapper })
+
+      expect(result.current.vaccinationList).toEqual(mockDataFilters.data_filters)
+      expect(result.current.selectedVaccination).toBeNull()
+
+      act(() => {
+        result.current.setSelectedVaccination(mockDataFilters.data_filters[0])
+      })
+
+      expect(result.current.selectedVaccination).toEqual(mockDataFilters.data_filters[0])
+    })
+  })
+
+  describe('useMapData', () => {
+    test('should return map data state defaults', () => {
+      const { result } = renderHook(() => useMapData(), { wrapper })
+
+      expect(result.current.mapData).toBeNull()
+      expect(result.current.mapDataLoading).toBe(false)
+      expect(result.current.mapDataError).toBeNull()
+    })
+  })
+
+  describe('useGeographyState', () => {
+    test('should return geography state values from context', () => {
+      const { result } = renderHook(() => useGeographyState(), { wrapper })
+
+      expect(result.current.geographyAreas instanceof Map).toBe(true)
+      waitFor(async () => {
+        expect(result.current.geographyAreasLoading).toBe(false)
+      })
+      expect(result.current.geographyAreasError).toBeNull()
     })
   })
 
