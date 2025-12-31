@@ -45,8 +45,6 @@ const ChartSelect = ({ timespan }: ChartSelectProps) => {
   const { currentFilter, setCurrentFilter } = useTimeseriesFilter()
   const previousYearsRef = useRef<number | null>(null)
 
-  console.log('select options: ' + JSON.stringify(timespan))
-
   // Set initial filter value based on timespan
   useEffect(() => {
     const isInitialMount = previousYearsRef.current === null

@@ -48,7 +48,6 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
       setIsLoading(true)
 
       try {
-        console.log('Fetching chart with filter:', filter)
         const filteredChart = getFilteredData(chartData, filter, lastUpdated)
 
         if (!filteredChart) {

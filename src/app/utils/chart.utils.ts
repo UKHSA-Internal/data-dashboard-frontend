@@ -30,7 +30,7 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
     }
 
     const dateFrom = new Date(plot.value.date_from)
-    console.log(`${plot.value.label} date from: ${dateFrom}`)
+
     // Get total month difference
     const monthDiff = (dateTo.getFullYear() - dateFrom.getFullYear()) * 12 + (dateTo.getMonth() - dateFrom.getMonth())
 
@@ -44,8 +44,6 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
     years: Math.floor(maxMonths / 12),
     months: maxMonths % 12,
   }
-
-  console.log('getChartTimespan', returnItem)
 
   return returnItem
 }
@@ -84,11 +82,11 @@ export const getFilteredData = (
   lastUpdated: string
 ): Chart | undefined => {
   return data.chart.map((plot) => {
-    // Default date_to to today's date if not provided
+    // Default date_to to last updated date of the data if no date_to is provided
     const dateTo = plot.value.date_to ? new Date(plot.value.date_to) : new Date(lastUpdated)
     const dateToString = plot.value.date_to || new Date(dateTo).toISOString().split('T')[0]
 
-    // When filter is 'all', restore original dates (or use today if date_to was null)
+    // When filter is 'all', restore original dates (or use last updated date if date_to was null)
     if (!filterValue || filterValue === 'all') {
       const restoredPlot = {
         id: plot.id,
@@ -96,7 +94,7 @@ export const getFilteredData = (
         value: {
           ...plot.value,
           date_from: plot.value.date_from, // Original date_from
-          date_to: dateToString, // Original date_to or today's date
+          date_to: dateToString, // Original date_to or last updated date
         },
       }
       return restoredPlot
@@ -111,7 +109,7 @@ export const getFilteredData = (
       value: {
         ...plot.value,
         date_from: newDateFrom, // Update date_from based on filter provided
-        date_to: dateToString, // Ensure date_to is set (original or today's date)
+        date_to: dateToString, // Ensure date_to is set (original or last updated date)
       },
     }
   })
