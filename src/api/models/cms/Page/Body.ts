@@ -1,5 +1,7 @@
 import { z } from 'zod'
 
+import { ChartLineColours } from '@/api/models/Chart'
+
 import { HealthAlertTypes } from '../../Alerts'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
@@ -62,6 +64,8 @@ const chartCardValues = z.object({
   show_timeseries_filter: z.boolean().optional(),
   date_prefix: z.string(),
   about: z.string(),
+  confidence_intervals: z.boolean().optional(),
+  confidence_colour: ChartLineColours.nullable().optional(),
 })
 
 export const WithChartHeadlineAndTrendCard = z.object({
