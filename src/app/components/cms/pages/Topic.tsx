@@ -52,6 +52,8 @@ export default async function TopicPage({
 
   let chartCounter = 0
 
+  const chartRowCardStartCounters = new Map<string, number>()
+
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
@@ -83,6 +85,9 @@ export default async function TopicPage({
     if (value.content) {
       value.content.map((content) => {
         if (content.type === 'chart_row_card' && content.value.columns) {
+          const startCounter = chartCounter + 1
+          chartRowCardStartCounters.set(content.id, startCounter)
+
           content.value.columns.map((column) => {
             chartCounter++
 
@@ -133,8 +138,6 @@ export default async function TopicPage({
     newRoute = `?${newParams.toString()}`
   }
 
-  let chartCardCounter = 0
-
   return (
     <>
       <RedirectHandler newRoute={newRoute} />
@@ -180,7 +183,14 @@ export default async function TopicPage({
                   ) : (
                     <PageSection key={id} heading={value.heading}>
                       {value.content.map((item) =>
-                        renderCard(value.heading, [], timeseriesFilter, item, `${value.heading}${chartCardCounter++}`)
+                        renderCard(
+                          value.heading,
+                          [],
+                          timeseriesFilter,
+                          item,
+                          undefined,
+                          chartRowCardStartCounters.get(item.id)
+                        )
                       )}
                     </PageSection>
                   )

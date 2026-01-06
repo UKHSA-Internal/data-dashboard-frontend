@@ -11,7 +11,6 @@ import weatherHealthAlerts from '../../../public/locales/en/weatherHealthAlerts.
 import whatsNew from '../../../public/locales/en/whatsNew.json'
 import { getOptions } from './settings'
 
-// eslint-disable-next-line import/no-named-as-default-member
 i18next.use(initReactI18next).init({
   ...getOptions(),
   supportedLngs: ['en'],

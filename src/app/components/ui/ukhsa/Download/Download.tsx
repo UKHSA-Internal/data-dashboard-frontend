@@ -5,7 +5,7 @@ import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
+import { ChartEmpty } from '../../../cms/ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
 
 interface DownloadProps {
@@ -14,8 +14,8 @@ interface DownloadProps {
 }
 
 export async function Download({ data: { chart, y_axis, x_axis, tag_manager_event_id } }: DownloadProps) {
-  const pathname = getPathname()
-  const [areaType, areaName] = getAreaSelector()
+  const pathname = await getPathname()
+  const [areaType, areaName] = await getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,

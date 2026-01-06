@@ -13,7 +13,13 @@ export const getHealthAlerts = async (type: HealthAlertTypes) => {
   try {
     const path = isSSR ? `alerts/v1` : `proxy/alerts/v1`
     const { data } = await client<HealthAlertList>(`${path}/${type}`)
-    return HealthAlertList.safeParse(data)
+    const result = HealthAlertList.safeParse(data)
+    if (result.success) {
+      return result
+    } else {
+      logger.error(`getHealthAlerts Parsing Error: ${result.error}`)
+      return HealthAlertList.safeParse(result.error)
+    }
   } catch (error) {
     logger.error(error)
     return HealthAlertList.safeParse(error)

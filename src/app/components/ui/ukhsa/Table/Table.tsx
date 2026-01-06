@@ -12,8 +12,8 @@ import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
-import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
-import { RichText } from '../RichText/RichText'
+import { ChartEmpty } from '../../../cms/ChartEmpty/ChartEmpty'
+import { RichText } from '../../../cms/RichText/RichText'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */
@@ -38,8 +38,8 @@ export async function Table({
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
-  const pathname = getPathname()
-  const [areaType, areaName] = getAreaSelector()
+  const pathname = await getPathname()
+  const [areaType, areaName] = await getAreaSelector()
 
   const plots = chart.map((plot) => ({
     ...plot.value,
@@ -114,8 +114,8 @@ export async function Table({
                     }
 
                     incrementingColumnId += 1
-                    const chartLabel = columnIndex === 0 ? '' : chart[labelIndex]?.value?.label ?? ''
-                    const axisTitle = columnIndex === 0 ? x_axis_title ?? '' : y_axis_title ?? ''
+                    const chartLabel = columnIndex === 0 ? '' : (chart[labelIndex]?.value?.label ?? '')
+                    const axisTitle = columnIndex === 0 ? (x_axis_title ?? '') : (y_axis_title ?? '')
                     const columnHeader = t('cms.blocks.table.header', {
                       context:
                         columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',

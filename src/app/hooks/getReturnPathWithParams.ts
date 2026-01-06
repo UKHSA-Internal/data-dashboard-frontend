@@ -9,9 +9,9 @@ import { getSearchParams } from './getSearchParams'
  * @returns A function that takes a path and constructs a pathname with optional return URL parameter.
  */
 
-export const getReturnPathWithParams = () => {
-  const searchParams = getSearchParams()
-  const headersList = headers()
+export const getReturnPathWithParams = async () => {
+  const searchParams = await getSearchParams()
+  const headersList = await headers()
   const currentUrl = new URL(headersList.get('x-url') || '')
 
   return (path: string) => {

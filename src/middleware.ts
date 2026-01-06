@@ -69,6 +69,7 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
       }
       notFound()
     } catch (error) {
+      logger.error('Access our data middleware error:', error)
       notFound()
     }
   }

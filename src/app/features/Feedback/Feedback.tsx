@@ -1,13 +1,11 @@
 'use client'
 
 import Link from 'next/link'
-import { Fragment, useEffect } from 'react'
-import { useFormState } from 'react-dom'
+import { Fragment, useActionState, useEffect } from 'react'
 import { z } from 'zod'
 
 import { FormField } from '@/api/models/cms/Page/FormFields'
 
-import { handler } from '../utils/handler'
 import CheckboxField from './Fields/Checkbox/CheckboxField'
 import CheckboxesField from './Fields/Checkboxes/CheckboxesField'
 import DateField from './Fields/Date/DateField'
@@ -18,6 +16,7 @@ import NumberField from './Fields/Number/NumberField'
 import RadioField from './Fields/Radio/RadioField'
 import SinglelineField from './Fields/Singleline/SinglelineField'
 import UrlField from './Fields/Url/UrlField'
+import { handler } from './utils/handler'
 
 const initialState = {
   message: '',
@@ -77,7 +76,7 @@ interface FeedbackProps {
 }
 
 export default function Feedback({ formFields }: FeedbackProps) {
-  const [state, formAction] = useFormState(handler.bind(null, formFields), initialState)
+  const [state, formAction] = useActionState(handler.bind(null, formFields), initialState)
 
   useEffect(() => {
     if (state.message) {

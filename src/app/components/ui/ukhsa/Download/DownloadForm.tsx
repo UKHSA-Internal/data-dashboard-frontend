@@ -1,47 +1,52 @@
 'use client'
 import fetch from 'cross-fetch'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
-import { useTranslation } from 'react-i18next'
 
+import type { Chart } from '@/api/models/cms/Page'
+import { useTranslation } from '@/app/i18n/client'
 import { downloadFile } from '@/app/utils/download.utils'
-import { subplotChartExportApiRoutePath } from '@/config/constants'
+import { chartExportApiRoutePath } from '@/config/constants'
 
-interface SubplotDownloadFormProps {
-  chart: Record<string, unknown>
-  xAxis: string
+interface DownloadFormProps {
+  chart: Chart
+  xAxis?: string | null
   tagManagerEventId: string | null
 }
 
-export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId }: SubplotDownloadFormProps) {
+export function DownloadForm({ chart, xAxis, tagManagerEventId }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
+  const searchParams = useSearchParams()
   const { t } = useTranslation('common')
+
+  const areaType = searchParams.get('areaType')
+  const areaName = searchParams.get('areaName')
+  const hasSelectedArea = areaType && areaName
 
   const formatInputId = useId()
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (downloading) return
+    if (downloading) return // Prevent the button being clicked multiple times whilst downloading
 
     setDownloading(true)
 
     try {
       const formData = new FormData(event.currentTarget)
 
-      const res = await fetch(subplotChartExportApiRoutePath as string, {
-        method: 'POST',
+      const res = await fetch(chartExportApiRoutePath, {
+        method: 'post',
         body: formData,
       })
 
-      if (res.redirected !== true) {
-        const data = await res.text()
-        if (data) downloadFile(`ukhsa-chart-download.${formData.get('file_format')}`, new Blob([data]))
-      }
+      const data = await res.text()
+
+      if (data) downloadFile(`ukhsa-chart-download.${formData.get('format')}`, new Blob([data]))
 
       setDownloading(false)
-    } catch (error) {
+    } catch (_error) {
       setDownloading(false)
       router.replace('/error')
     }
@@ -49,7 +54,7 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId }: Subplot
 
   return (
     <form
-      action={subplotChartExportApiRoutePath}
+      action={chartExportApiRoutePath}
       method="POST"
       data-testid="download-form"
       onSubmit={handleSubmit}
@@ -67,7 +72,7 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId }: Subplot
               <input
                 className="govuk-radios__input"
                 id={`format-${formatInputId}`}
-                name="file_format"
+                name="format"
                 type="radio"
                 value="csv"
                 defaultChecked
@@ -80,7 +85,7 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId }: Subplot
               <input
                 className="govuk-radios__input"
                 id={`format-${formatInputId}-2`}
-                name="file_format"
+                name="format"
                 type="radio"
                 value="json"
               />
@@ -92,22 +97,25 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId }: Subplot
 
           {xAxis && <input type="hidden" name="x_axis" value={xAxis} data-testid="download-x-axis" />}
 
-          {chart && (
-            <>
-              <input
-                type="hidden"
-                name="chart_parameters"
-                value={JSON.stringify(chart.chart_parameters)}
-                data-testid="download-form-chart_parameters"
-              />
-              <input
-                type="hidden"
-                name="subplots"
-                value={JSON.stringify(chart.subplots)}
-                data-testid="download-form-subplots"
-              />
-            </>
-          )}
+          {chart.map(({ id, value }) => (
+            <input
+              key={id}
+              type="hidden"
+              name="plots"
+              value={JSON.stringify({
+                topic: value.topic,
+                metric: value.metric,
+                stratum: value.stratum,
+                geography_type: hasSelectedArea ? areaType : value.geography_type,
+                geography: hasSelectedArea ? areaName : value.geography,
+                date_from: value.date_from,
+                date_to: value.date_to,
+                age: value.age,
+                sex: value.sex,
+              })}
+              data-testid="download-form-plots"
+            />
+          ))}
         </fieldset>
 
         <button

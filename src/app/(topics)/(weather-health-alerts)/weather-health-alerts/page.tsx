@@ -11,9 +11,8 @@ import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/Rela
 import { Breadcrumbs } from '@/app/components/ui/ukhsa/View/Breadcrumbs/Breadcrumbs'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { renderCompositeBlock } from '@/app/utils/cms.utils'
-import { cachingEnabled } from '@/config/constants'
 
-export const dynamic = cachingEnabled ? 'auto' : 'force-dynamic'
+export const dynamic = 'auto'
 
 export async function generateMetadata() {
   const {
@@ -37,8 +36,22 @@ export default async function WeatherHealthAlerts() {
   } = await getPageBySlug<PageType.Composite>('weather-health-alerts', {
     type: PageType.Composite,
   })
-
   const childPages = await getPages({ child_of: id.toString() })
+  // WHA button logic
+  const weatherType = body.find((block) => block.type === 'wha_button') as {
+    type: 'wha_button'
+    value: {
+      text: string
+      button_type: string
+      geography_code: string
+    }
+    id: string
+  }
+  const allowedTypes = ['heat', 'cold'] as const
+  type AllowedType = (typeof allowedTypes)[number]
+  const buttonType = weatherType?.value.button_type
+  const type: AllowedType = allowedTypes.includes(buttonType as AllowedType) ? (buttonType as AllowedType) : 'cold'
+  const buttonText = weatherType?.value.text || ''
 
   return (
     <View>
@@ -52,7 +65,11 @@ export default async function WeatherHealthAlerts() {
       </div>
 
       <Suspense>
-        <HealthAlertsLink type="heat" className="govuk-!-margin-top-1 govuk-!-margin-bottom-1" />
+        <HealthAlertsLink
+          type={type}
+          buttonText={buttonText}
+          className="govuk-!-margin-top-1 govuk-!-margin-bottom-1"
+        />
       </Suspense>
 
       <div className="govuk-grid-row">

@@ -3,7 +3,6 @@
  */
 import { NextRequest } from 'next/server'
 import { Mock } from 'ts-mockery'
-import { z } from 'zod'
 
 import { RequestParams } from '@/api/requests/downloads/getDownloads'
 import { client } from '@/api/utils/api.utils'
@@ -151,15 +150,20 @@ describe('POST /api/download/chart', () => {
 
     expect(res.headers.get('content-type')).toEqual(null)
     expect(logger.error).toHaveBeenCalledWith(
-      new z.ZodError([
-        {
-          received: 'not_valid',
-          code: 'invalid_enum_value',
-          options: ['json', 'csv'],
-          path: ['file_format'],
-          message: "Invalid enum value. Expected 'json' | 'csv', received 'not_valid'",
-        },
-      ])
+      `Download Chart Schema parse error: [
+  {
+    "received": "not_valid",
+    "code": "invalid_enum_value",
+    "options": [
+      "json",
+      "csv"
+    ],
+    "path": [
+      "file_format"
+    ],
+    "message": "Invalid enum value. Expected 'json' | 'csv', received 'not_valid'"
+  }
+]`
     )
     expect(res.status).toBe(301)
   })

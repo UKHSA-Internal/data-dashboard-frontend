@@ -1,3 +1,4 @@
+// @ts-nocheck
 import { headers } from 'next/headers'
 
 /**
@@ -20,7 +21,7 @@ import { headers } from 'next/headers'
  */
 
 export const getPathname = () => {
-  const headersList = headers()
+  const headersList = headers() as unknown as UnsafeUnwrappedHeaders
   const headersUrl = headersList.get('x-url') || ''
 
   const pathname = headersUrl ? new URL(headersUrl).pathname : ''

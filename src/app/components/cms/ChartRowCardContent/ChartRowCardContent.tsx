@@ -3,26 +3,34 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
-import { Chart, ChartRowCardHeader, Download, Table, Timestamp } from '@/app/components/cms'
+import { Chart, ChartRowCardHeader } from '@/app/components/cms'
 import About from '@/app/components/cms/About/About'
-import { AreaSelectorLoader } from '@/app/components/cms/AreaSelector/AreaSelectorLoader'
-import { Card, Tabs, TabsContent, TabsList, TabsTrigger } from '@/app/components/ui/ukhsa'
+import { Card, Tabs, TabsContent, TabsList, TabsTrigger, Timestamp } from '@/app/components/ui/ukhsa'
+import { AreaSelectorLoader } from '@/app/components/ui/ukhsa/AreaSelector/AreaSelectorLoader'
+import { Download } from '@/app/components/ui/ukhsa/Download/Download'
+import { Table } from '@/app/components/ui/ukhsa/Table/Table'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 
 type ChartRowCardContentProps = {
   value: any
   timeseriesFilter: string
-  chartId?: string
+  heading?: string
+  startChartCounter?: number
 }
 
-export function ChartRowCardContent({ value, timeseriesFilter, chartId }: ChartRowCardContentProps) {
+export function ChartRowCardContent({ value, timeseriesFilter, heading, startChartCounter }: ChartRowCardContentProps) {
   return (
     <>
-      {value.columns.map((column: any) => {
+      {value.columns.map((column: any, columnIndex: number) => {
         const size = value.columns.length === 1 ? 'wide' : 'narrow'
         const showAbout = column.value.about && column.value.about.length > 0
         const noRelatedLinks = !column.value.related_links || column.value.related_links.length === 0
+        const chartId = heading
+          ? startChartCounter
+            ? `${heading}${startChartCounter + columnIndex}`
+            : `${heading}${columnIndex + 1}`
+          : `chart${columnIndex + 1}`
         return (
           <div
             key={column.id}
@@ -129,7 +137,7 @@ export function ChartRowCardContent({ value, timeseriesFilter, chartId }: ChartR
                           },
                         ]}
                         timeseriesFilter={timeseriesFilter}
-                        chartId={chartId ?? ''}
+                        chartId={chartId}
                       />
                     </AreaSelectorLoader>
                   </TabsContent>

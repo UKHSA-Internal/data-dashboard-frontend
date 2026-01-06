@@ -126,7 +126,7 @@ test('Handles API errors for non-400 error responses', async () => {
     ],
   })
 
-  expect(logger.error).toHaveBeenNthCalledWith(1, 'Failed')
+  expect(logger.error).toHaveBeenNthCalledWith(1, 'getCharts error: Failed')
 
   expect(result).toEqual({
     success: false,

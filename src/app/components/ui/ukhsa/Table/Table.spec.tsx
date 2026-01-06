@@ -158,7 +158,7 @@ test('table with row data', async () => {
 test('table api request fails displays a fallback message', async () => {
   const url = 'http://localhost?areaType=UKHSA+Region&areaName=North+East'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockResolvedValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
@@ -177,7 +177,7 @@ test('table api request fails displays a fallback message', async () => {
 test('Fallback message with escaped characters', async () => {
   const url = 'http://localhost?areaType=NHS+Trust&areaName=Birmingham+Women%27s+and+Children%27s+NHS+Foundation+Trust'
   jest.mocked(useSearchParams).mockReturnValueOnce(new ReadonlyURLSearchParams(new URL(url).searchParams))
-  jest.mocked(getSearchParams).mockReturnValueOnce(new URL(url).searchParams)
+  jest.mocked(getSearchParams).mockResolvedValueOnce(new URL(url).searchParams)
 
   getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
@@ -214,7 +214,7 @@ test('table data containing null plot points', async () => {
 test('table by geography and geography type when both are present in the url search params', async () => {
   jest
     .mocked(getSearchParams)
-    .mockReturnValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
+    .mockResolvedValueOnce(new URL('http://localhost?areaType=UKHSA+Region&areaName=North+East').searchParams)
 
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 

@@ -30,7 +30,7 @@ export default async function WhatsNewParentPage({
 }: PageComponentBaseProps<{ page?: number }>) {
   const { t } = await getServerTranslation('whatsNew')
 
-  const setReturnPath = getReturnPathWithParams()
+  const setReturnPath = await getReturnPathWithParams()
 
   const {
     title,
@@ -60,7 +60,7 @@ export default async function WhatsNewParentPage({
     },
   } = whatsNewEntries
 
-  const { previousPageHref, nextPageHref, pages, currentPage } = getPaginationList({
+  const { previousPageHref, nextPageHref, pages, currentPage } = await getPaginationList({
     totalItems,
     initialPage: page ?? 1,
     initialPageSize: paginationSize,

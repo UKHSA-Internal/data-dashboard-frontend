@@ -30,9 +30,8 @@ import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedC
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
 
-/* eslint-disable @typescript-eslint/no-explicit-any */
 // TODO: Move this file into cms folder
-export const renderSection = (
+export const renderSection = async (
   showMoreSections: string[],
   { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number]
 ) => (
@@ -58,7 +57,7 @@ export const renderSection = (
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
-        href={getShowLessURL(showMoreSections, kebabCase(heading))}
+        href={await getShowLessURL(showMoreSections, kebabCase(heading))}
         prefetch
       >
         <span className="pl-4">Show Less</span>
@@ -72,7 +71,8 @@ export const renderCard = (
   showMoreSections: string[],
   timeseriesFilter: string,
   { type, value, id }: z.infer<typeof CardTypes>,
-  chartId?: string
+  chartId?: string,
+  startChartCounter?: number
 ) => {
   return (
     <div key={id}>
@@ -82,7 +82,12 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent value={value} timeseriesFilter={timeseriesFilter} chartId={chartId} />
+          <ChartRowCardContent
+            value={value}
+            timeseriesFilter={timeseriesFilter}
+            heading={heading}
+            startChartCounter={startChartCounter}
+          />
         </ChartRowCard>
       )}
 
@@ -146,10 +151,9 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'code_block' && (
-      <>
-        {value.heading && <h4 className="govuk-heading-m">{value.heading}</h4>}
-        <CodeBlock language={value.content[0].value.language}>{value.content[0].value.code}</CodeBlock>
-      </>
+      <CodeBlock heading={value.heading} language={value.content[0].value.language}>
+        {value.content[0].value.code}
+      </CodeBlock>
     )}
 
     {type === 'internal_page_links' && value && value.length > 0 && (

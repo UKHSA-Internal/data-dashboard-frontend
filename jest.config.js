@@ -1,4 +1,3 @@
-// eslint-disable-next-line @typescript-eslint/no-var-requires
 const nextJest = require('next/jest')
 
 const createJestConfig = nextJest({
@@ -19,7 +18,8 @@ const customJestConfig = {
     '^@/auth': '<rootDir>/src/auth',
     // Needed to get react markdown & dependencies to work with react-raw, see:
     // https://stackoverflow.com/questions/70916761/next-js-and-jest-syntaxerror-cannot-use-import-statement-outside-a-module
-    'react-markdown': '<rootDir>/node_modules/react-markdown/react-markdown.min.js',
+    'react-markdown': '<rootDir>/__mocks__/react-markdown.tsx',
+    '^remark-gfm$': '<rootDir>/__mocks__/remark-gfm.ts',
     'parse5/lib/parser/index.js': '<rootDir>/node_modules/hast-util-raw/node_modules/parse5/lib/parser/index.js',
   },
   testEnvironment: 'jest-environment-jsdom',
@@ -54,6 +54,6 @@ const customJestConfig = {
 module.exports = async () => ({
   ...(await createJestConfig(customJestConfig)()),
   transformIgnorePatterns: [
-    'node_modules/(?!(@react-leaflet|react-leaflet|rehype-slug|github-slugger|hast-util-has-property|hast-util-to-string|hast-util-heading-rank|rehype-raw|hast-util-raw|unist-util-position|unist-util-visit|unist-util-visit-parents|unist-util-is|hast-util-from-parse5|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens|vfile-location|web-namespaces|hast-util-to-parse5|zwitch|html-void-elements|next-auth|@auth/core|@panva/hkdf|jose|preact-render-to-string|preact|oauth4webapi|react-leaflet-custom-control)/)',
+    'node_modules/(?!(@react-leaflet|react-leaflet|rehype-raw|rehype-slug|github-slugger|hast-util-has-property|hast-util-to-string|hast-util-heading-rank|rehype-raw|hast-util-raw|unist-util-position|unist-util-visit|unist-util-visit-parents|unist-util-is|hast-util-from-parse5|hastscript|property-information|hast-util-parse-selector|space-separated-tokens|comma-separated-tokens|vfile-location|web-namespaces|hast-util-to-parse5|zwitch|html-void-elements|next-auth|@auth/core|@panva/hkdf|jose|preact-render-to-string|preact|oauth4webapi|react-leaflet-custom-control)/)',
   ],
 })
