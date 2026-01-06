@@ -1,3 +1,4 @@
+/* eslint-disable tailwindcss/no-custom-classname */
 'use client'
 
 import { ChartRelatedLink } from '@/api/models/cms/Page/Body'
@@ -23,7 +24,7 @@ const displayLinks = (contextualUrls: ChartRelatedLink) => {
   )
 }
 
-const About = ({ description, relatedLinks, content }: AboutProps) => {
+export const About = ({ description, relatedLinks, content }: AboutProps) => {
   const { t } = useTranslation('common')
   return (
     <div>
@@ -38,5 +39,3 @@ const About = ({ description, relatedLinks, content }: AboutProps) => {
     </div>
   )
 }
-
-export default About

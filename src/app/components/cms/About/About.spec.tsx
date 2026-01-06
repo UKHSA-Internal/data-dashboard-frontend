@@ -1,7 +1,7 @@
 import { ChartRelatedLink } from '@/api/models/cms/Page/Body'
 import { render } from '@/config/test-utils'
 
-import About from './About'
+import { About } from './About'
 
 describe('About', () => {
   test('renders about text in the content', async () => {
