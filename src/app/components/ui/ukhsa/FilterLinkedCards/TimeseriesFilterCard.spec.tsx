@@ -13,7 +13,7 @@ jest.mock('@/app/components/cms/About/About', () => ({
   default: ({ content }: any) => <div data-testid="about-content">{content}</div>,
 }))
 
-jest.mock('@/app/components/cms/Download/ClientDownload', () => ({
+jest.mock('@/app/components/ui/ukhsa/Download/ClientDownload', () => ({
   ClientDownload: () => <div data-testid="client-download">Download</div>,
 }))
 

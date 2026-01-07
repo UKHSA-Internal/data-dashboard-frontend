@@ -292,7 +292,7 @@ describe('DownloadForm', () => {
     mockRouter.push('/topics/mock-topic')
 
     const mockReplace = jest.fn()
-    // eslint-disable-next-line @typescript-eslint/no-var-requires
+
     const useRouterSpy = jest.spyOn(require('next/navigation'), 'useRouter')
     useRouterSpy.mockReturnValue({
       ...mockRouter,

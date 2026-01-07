@@ -20,7 +20,7 @@ jest.mock('@/app/components/cms/About/About', () => ({
   default: ({ content }: any) => <div data-testid="about-content">{content}</div>,
 }))
 
-jest.mock('@/app/components/cms/Download/SubplotClientDownload', () => ({
+jest.mock('@/app/components/ui/ukhsa/Download/SubplotClientDownload', () => ({
   SubplotClientDownload: () => <div data-testid="subplot-client-download">Download</div>,
 }))
 
