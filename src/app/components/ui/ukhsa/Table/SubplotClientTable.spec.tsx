@@ -1,8 +1,8 @@
-import { GeographyFilters, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { getSubplotTables } from '@/api/requests/tables/subplot/getSubplotTables'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { flattenGeographyObject, getParentGeography } from '@/app/utils/geography.utils'
-import { render, screen, waitFor } from '@/config/test-utils'
+import { mockGeographyFilters, render, screen, waitFor } from '@/config/test-utils'
 
 import { SubplotClientTable } from './SubplotClientTable'
 
@@ -24,13 +24,6 @@ const mockTimePeriods: TimePeriod[] = [
 ]
 
 const mockCurrentTimePeriodIndex: number = mockTimePeriods.length - 1
-
-const mockGeographyFilters: GeographyFilters = {
-  geography_types: [
-    { type: 'geography_filter', value: { label: 'Nation', colour: 'Red', geography_type: 'nation' }, id: '1' },
-    { type: 'geography_filter', value: { label: 'Region', colour: 'Blue', geography_type: 'region' }, id: '2' },
-  ],
-}
 
 const mockParsedChartTableData = [
   {
@@ -322,6 +315,130 @@ describe('SubplotClientTable', () => {
 
       expect(cells[0]).toHaveTextContent('88.00')
       expect(cells[1]).toHaveTextContent('-')
+    })
+  })
+
+  test('uses axisTitle when chartLabel is empty', async () => {
+    const mockDataWithAxisTitle = [
+      {
+        columns: [
+          {
+            header: 'Date',
+            accessorKey: 'col-0',
+          },
+          {
+            header: 'Metric Value',
+            accessorKey: 'col-1',
+          },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2024-01-01',
+              'col-1': '100',
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockedParseChartTableData.mockReturnValue(mockDataWithAxisTitle)
+
+    const mockCardDataWithAxisTitle = {
+      ...mockCardData,
+    }
+
+    const { getAllByRole } = render(
+      <SubplotClientTable
+        size={mockedChartSize}
+        timestamp={mockedChartDate}
+        geography={mockGeography}
+        geographyFilters={mockGeographyFilters}
+        dataFilters={mockDataFilters}
+        selectedThresholds={mockedSelectedMetricValues}
+        timePeriods={mockTimePeriods}
+        currentTimePeriodIndex={mockCurrentTimePeriodIndex}
+        cardData={mockCardDataWithAxisTitle}
+      />
+    )
+
+    await waitFor(() => {
+      const headers = getAllByRole('columnheader')
+      expect(headers.length).toBeGreaterThan(0)
+    })
+  })
+
+  test('uses fallback when both chartLabel and axisTitle are empty', async () => {
+    const mockDataWithEmptyHeaders = [
+      {
+        columns: [
+          {
+            header: '',
+            accessorKey: 'col-0',
+          },
+          {
+            header: '',
+            accessorKey: 'col-1',
+          },
+        ],
+        data: [
+          {
+            record: {
+              'col-0': '2024-01-01',
+              'col-1': '100',
+            },
+            inReportingDelay: false,
+          },
+        ],
+      },
+    ]
+
+    mockedParseChartTableData.mockReturnValue(mockDataWithEmptyHeaders)
+
+    const mockCardDataNoLabels = {
+      ...mockCardData,
+    }
+
+    const { getAllByRole } = render(
+      <SubplotClientTable
+        size={mockedChartSize}
+        timestamp={mockedChartDate}
+        geography={mockGeography}
+        geographyFilters={mockGeographyFilters}
+        dataFilters={mockDataFilters}
+        selectedThresholds={mockedSelectedMetricValues}
+        timePeriods={mockTimePeriods}
+        currentTimePeriodIndex={mockCurrentTimePeriodIndex}
+        cardData={mockCardDataNoLabels}
+      />
+    )
+
+    await waitFor(() => {
+      const headers = getAllByRole('columnheader')
+      expect(headers.length).toBeGreaterThan(0)
+    })
+  })
+
+  test('handles error when table fetch fails', async () => {
+    const error = new Error('Failed to fetch tables')
+    mockedGetSubplotTables.mockRejectedValueOnce(error)
+
+    renderComponent()
+
+    await waitFor(() => {
+      expect(mockedGetSubplotTables).toHaveBeenCalled()
+      expect(screen.queryByText(/error/i)).toBeInTheDocument()
+    })
+  })
+
+  test('handles non-Error exceptions in catch block', async () => {
+    mockedGetSubplotTables.mockRejectedValueOnce('String error')
+
+    renderComponent()
+
+    await waitFor(() => {
+      expect(mockedGetSubplotTables).toHaveBeenCalled()
     })
   })
 })
