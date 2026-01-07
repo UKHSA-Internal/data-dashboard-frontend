@@ -244,8 +244,8 @@ test('full width charts should also have an acompanying narrow version for mobil
     'src',
     'data:image/svg+xml;utf8,mock-chart-wide'
   )
-  expect(getByTestId('chart')).toHaveAttribute('img', 'data:image/svg+xml;utf8,mock-chart-wide')
-  expect(getByTestId('chart')).toHaveAttribute('img', '(min-width: 768px)')
+  expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-wide')
+  expect(getByTestId('chart')).toHaveAttribute('src', '(min-width: 768px)')
 })
 
 test('landing page half width charts should also have an acompanying third width version for mobile viewports', async () => {
@@ -296,7 +296,7 @@ test('landing page half width charts should also have an acompanying third width
     'src',
     'data:image/svg+xml;utf8,mock-chart-narrow'
   )
-  expect(getByTestId('chart')).toHaveAttribute('img', 'data:image/svg+xml;utf8,mock-chart-third')
+  expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-third')
 })
 
 test('renders a fallback message when the chart requests fail', async () => {
