@@ -242,7 +242,7 @@ test('full width charts should also have an acompanying narrow version for mobil
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
-    'data:image/svg+xml;utf8,mock-chart-narrow'
+    'data:image/svg+xml;utf8,mock-chart-wide'
   )
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-wide')
   expect(getByTestId('chart-src-min-768')).toHaveAttribute('media', '(min-width: 768px)')
@@ -294,7 +294,7 @@ test('landing page half width charts should also have an acompanying third width
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
-    'data:image/svg+xml;utf8,mock-chart-half'
+    'data:image/svg+xml;utf8,mock-chart-narrow'
   )
   expect(getByTestId('chart-src-min-1200')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-third')
 })
