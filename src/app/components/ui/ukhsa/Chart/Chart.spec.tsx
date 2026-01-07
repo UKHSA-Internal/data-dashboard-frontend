@@ -240,25 +240,34 @@ test('full width charts should also have an acompanying narrow version for mobil
     })) as ReactElement
   )
 
+  expect(getChartsMock).toHaveBeenCalledTimes(1)
+
+  expect(getChartsMock).toHaveBeenCalledWith(
+    expect.objectContaining({
+      chart_width: 1100,
+      chart_height: 260,
+    })
+  )
+
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart-wide'
   )
   expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-wide')
-  expect(getByTestId('chart')).toHaveAttribute('src', '(min-width: 768px)')
+
+  expect(getByTestId('chart')).not.toHaveAttribute('srcset')
+  expect(getByTestId('chart')).not.toHaveAttribute('media')
 })
 
-test('landing page half width charts should also have an acompanying third width version for mobile viewports', async () => {
-  ;['mock-chart-third', 'mock-chart-half'].forEach((chart) => {
-    getChartsMock.mockResolvedValueOnce({
-      success: true,
-      data: {
-        chart,
-        alt_text: 'alt text for chart',
-        last_updated: '2023-05-10T15:18:06.939535+01:00',
-        figure: { data: [], layout: {} },
-      },
-    })
+test('landing page half width charts should render the largest size (half) with a single API call', async () => {
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart-half',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -292,11 +301,23 @@ test('landing page half width charts should also have an acompanying third width
     })) as ReactElement
   )
 
+  expect(getChartsMock).toHaveBeenCalledTimes(1)
+
+  expect(getChartsMock).toHaveBeenCalledWith(
+    expect.objectContaining({
+      chart_width: 650,
+      chart_height: 200,
+    })
+  )
+
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
-    'data:image/svg+xml;utf8,mock-chart-narrow'
+    'data:image/svg+xml;utf8,mock-chart-half'
   )
-  expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-third')
+  expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-half')
+
+  expect(getByTestId('chart')).not.toHaveAttribute('srcset')
+  expect(getByTestId('chart')).not.toHaveAttribute('media')
 })
 
 test('renders a fallback message when the chart requests fail', async () => {
