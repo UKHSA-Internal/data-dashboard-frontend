@@ -10,7 +10,7 @@ import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
-import { ChartEmpty } from '../../../cms/ChartEmpty/ChartEmpty'
+import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import ChartInteractive from './ChartInteractive'
 import ChartWithFilter from './ChartWithFilter'
 

@@ -11,7 +11,7 @@ import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTi
 import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
-import ChartNoScript from '../ChartNoScript/ChartNoScript'
+import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import { LoadingSpinner } from '../Icons/LoadingSpinner'
 import ChartSelect from '../View/ChartSelect/ChartSelect'

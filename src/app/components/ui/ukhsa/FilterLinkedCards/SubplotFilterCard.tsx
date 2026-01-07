@@ -11,7 +11,7 @@ import {
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
-import About from '@/app/components/cms/About/About'
+import { About } from '@/app/components/cms/About/About'
 import { SubplotClientDownload } from '@/app/components/ui/ukhsa/Download/SubplotClientDownload'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
@@ -50,7 +50,7 @@ const SubplotFilterCard = ({
   // we need to retrieve date somehow
   const description = date ? `Last Updated ${formatDate(date)}` : ''
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent!.name}, ${geography.name})`
+  const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
 

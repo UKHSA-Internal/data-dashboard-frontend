@@ -1,11 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
+import React from 'react'
+
 import { FilterLinkedSubplotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { AreaSelector } from '@/app/components/cms'
 import { Details } from '@/app/components/ui/govuk'
 import {
   Announcements,
+  AreaSelector,
   FilterBannerWrapper,
   PageSection,
   PageSectionWithContents,
@@ -72,64 +74,66 @@ export default async function TopicPage({
   return (
     <>
       <View>
-        {slug[1] === 'childhood-vaccinations' && (
-          <img
-            className="float-right"
-            src={'/assets/images/accredited-official-statistics-logo.svg'}
-            alt="Accredited Official Statistics"
-            height={'70px'}
-            width={'70px'}
-          />
-        )}
-        <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
-        <LastUpdated lastUpdated={lastUpdated} />
-        <Announcements announcements={activeAnnouncements} />
-        <Description description={description} />
-        <div className="govuk-grid-row">
-          <div
-            className={clsx({
-              'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
-              'govuk-grid-column-full': relatedLinksLayout === 'Footer',
-            })}
-          >
-            {enableAreaSelector && (
-              <>
-                <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
-                <Details
-                  open={Boolean(areaType)}
-                  label={t('areaSelector.detailsLabel')}
-                  className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
-                >
-                  <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
-                </Details>
-              </>
-            )}
+        <>
+          {slug[1] === 'childhood-vaccinations' && (
+            <img
+              className="float-right"
+              src={'/assets/images/accredited-official-statistics-logo.svg'}
+              alt="Accredited Official Statistics"
+              height={'70px'}
+              width={'70px'}
+            />
+          )}
+          <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
+          <LastUpdated lastUpdated={lastUpdated} />
+          <Announcements announcements={activeAnnouncements} />
+          <Description description={description} />
+          <div className="govuk-grid-row">
+            <div
+              className={clsx({
+                'govuk-grid-column-three-quarters-from-desktop': relatedLinksLayout === 'Sidebar',
+                'govuk-grid-column-full': relatedLinksLayout === 'Footer',
+              })}
+            >
+              {enableAreaSelector && (
+                <>
+                  <hr className="govuk-section-break govuk-section-break--l govuk-section-break--visible" />
+                  <Details
+                    open={Boolean(areaType)}
+                    label={t('areaSelector.detailsLabel')}
+                    className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
+                  >
+                    <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
+                  </Details>
+                </>
+              )}
 
-            <GlobalFilterProvider filters={extractedGlobalFilterContent}>
-              <PageSectionWithContents>
-                {body.map(({ id, value }) =>
-                  value.content.some((content) => content.type === 'global_filter_card') ? (
-                    <FilterBannerWrapper key={id} />
-                  ) : (
-                    <PageSection key={id} heading={value.heading}>
-                      {value.content.map((item) => renderCard(value.heading, [], item))}
-                    </PageSection>
-                  )
-                )}
-              </PageSectionWithContents>
-            </GlobalFilterProvider>
+              <GlobalFilterProvider filters={extractedGlobalFilterContent}>
+                <PageSectionWithContents>
+                  {body.map(({ id, value }) =>
+                    value.content.some((content) => content.type === 'global_filter_card') ? (
+                      <FilterBannerWrapper key={id} />
+                    ) : (
+                      <PageSection key={id} heading={value.heading}>
+                        {value.content.map((item) => renderCard(value.heading, [], item))}
+                      </PageSection>
+                    )
+                  )}
+                </PageSectionWithContents>
+              </GlobalFilterProvider>
+            </div>
+
+            {relatedLinksLayout === 'Sidebar' ? (
+              <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
+                <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+              </div>
+            ) : null}
           </div>
 
-          {relatedLinksLayout === 'Sidebar' ? (
-            <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-6 sticky top-2">
-              <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-            </div>
+          {relatedLinksLayout === 'Footer' ? (
+            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
           ) : null}
-        </div>
-
-        {relatedLinksLayout === 'Footer' ? (
-          <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
-        ) : null}
+        </>
       </View>
     </>
   )

@@ -5,7 +5,7 @@ import { CardTypes } from '@/api/models/cms/Page'
 import { getShowMoreURL } from '@/app/utils/show-more.utils'
 import { render, screen } from '@/config/test-utils'
 
-import { ChartRowCardHeader } from '../components/cms'
+import { ChartRowCardHeader } from '../components/ui/ukhsa'
 import {
   mockChartCardSectionWithSixCards,
   mockSectionNoLink,
@@ -21,6 +21,11 @@ jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsCont
 
 jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer', () => ({
   SubplotFilterCardContainer: () => <div>Mocked subplot filter card container</div>,
+}))
+
+jest.mock('@/app/components/ui/ukhsa', () => ({
+  ...jest.requireActual('@/app/components/ui/ukhsa'),
+  Chart: () => <div>Mocked chart</div>,
 }))
 // This is an ugly hack because Jest currently cannot render nested server components. As a result we must
 // stub these components in order to test the functionality within cms.utils.tsx
@@ -51,6 +56,19 @@ jest.mock('../components/cms', () => ({
 jest.mock('@/app/utils/show-more.utils', () => ({
   getShowMoreURL: jest.fn(),
   getShowLessURL: jest.fn(),
+}))
+
+jest.mock('@/app/hooks/getSearchParams', () => ({
+  getSearchParams: jest.fn(() => new URL('http://localhost').searchParams),
+}))
+
+jest.mock('@/app/i18n', () => ({
+  getServerTranslation: jest.fn(() =>
+    Promise.resolve({
+      t: jest.fn((key: string) => key),
+      i18n: {},
+    })
+  ),
 }))
 
 describe('Displaying a section from the cms home page', () => {

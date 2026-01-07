@@ -234,6 +234,11 @@ export class CoverPage {
     await mapContainer.getByRole('combobox', { name: /Vaccine selection/i }).selectOption(vaccineName)
   }
 
+  async selectYear(yearRange: string) {
+    const mapContainer = this.page.getByTestId('ukhsa-map-container')
+    await mapContainer.getByRole('combobox', { name: /Year selection/i }).selectOption(yearRange)
+  }
+
   async hasVaccineSelected(vaccineName: string) {
     const mapContainer = this.page.getByTestId('ukhsa-map-container')
     const select = mapContainer.getByRole('combobox', { name: /Vaccine selection/i })
