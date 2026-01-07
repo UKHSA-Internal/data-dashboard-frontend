@@ -2,8 +2,21 @@ import { render, screen } from '@/config/test-utils'
 
 import { GlobalFilterLinkedMap } from './GlobalFilterLinkedMap'
 
+// Mock hooks used by ChartRowCard
+const mockUseWindowSize = jest.fn()
+const mockUseDebounceValue = jest.fn()
+jest.mock('usehooks-ts', () => ({
+  useWindowSize: (...args: any[]) => mockUseWindowSize(...args),
+  useDebounceValue: (...args: any[]) => mockUseDebounceValue(...args),
+}))
+
+const mockSearchParams = new URLSearchParams()
+jest.mock('next/navigation', () => ({
+  useSearchParams: jest.fn(() => mockSearchParams),
+}))
+
 // Mock ChartRowCard and ChartRowCardHeader
-jest.mock('@/app/components/cms', () => ({
+jest.mock('@/app/components/ui/ukhsa', () => ({
   ChartRowCard: ({ children }: { children: React.ReactNode }) => <div data-testid="chart-row-card">{children}</div>,
   ChartRowCardHeader: ({ id, title }: { id: string; title: string }) => (
     <header data-testid="chart-row-card-header" id={id}>
@@ -22,6 +35,11 @@ jest.mock('./MapCard/MapCardTabWrapper', () => ({
 }))
 
 describe('GlobalFilterLinkedMap', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
+    mockUseDebounceValue.mockReturnValue([1200])
+  })
   test('renders map card when type is filter_linked_map', () => {
     render(
       <GlobalFilterLinkedMap

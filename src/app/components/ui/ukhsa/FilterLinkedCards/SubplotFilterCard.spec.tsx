@@ -16,8 +16,7 @@ import {
 import SubplotFilterCard from './SubplotFilterCard'
 
 jest.mock('@/app/components/cms/About/About', () => ({
-  __esModule: true,
-  default: ({ content }: any) => <div data-testid="about-content">{content}</div>,
+  About: ({ content }: any) => <div data-testid="about-content">{content}</div>,
 }))
 
 jest.mock('@/app/components/ui/ukhsa/Download/SubplotClientDownload', () => ({
