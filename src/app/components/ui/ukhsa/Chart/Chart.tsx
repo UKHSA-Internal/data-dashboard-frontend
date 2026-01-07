@@ -148,7 +148,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   // Select the default size (mobile-first approach)
   const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
 
-  // Make single chart request instead of multiple
+  // Make single chart request with selected size
   const chartResponse = await getCharts({
     ...chartRequestBody,
     chart_width: chartSizes[selectedSize.size].width,
