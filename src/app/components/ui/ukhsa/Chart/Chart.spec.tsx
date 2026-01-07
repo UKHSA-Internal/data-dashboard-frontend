@@ -33,6 +33,12 @@ const getChartsMock = jest.mocked(getCharts)
 
 console.error = jest.fn()
 
+beforeEach(() => {
+  getChartsMock.mockClear()
+  jest.mocked(getSearchParams).mockClear()
+  jest.mocked(useSearchParams).mockClear()
+})
+
 test('renders a narrow chart correctly', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: true,
@@ -197,16 +203,14 @@ test('renders the chart by geography and geography type when both are present in
 })
 
 test('full width charts should also have an acompanying narrow version for mobile viewports', async () => {
-  ;['mock-chart-wide', 'mock-chart-narrow'].forEach((chart) => {
-    getChartsMock.mockResolvedValueOnce({
-      success: true,
-      data: {
-        chart,
-        alt_text: 'alt text for chart',
-        last_updated: '2023-05-10T15:18:06.939535+01:00',
-        figure: { data: [], layout: {} },
-      },
-    })
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart-wide',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
