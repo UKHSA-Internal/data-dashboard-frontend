@@ -10,7 +10,7 @@ type WeatherHealthAlertCardProps = {
 
 export function WeatherHealthAlertCard({ value }: WeatherHealthAlertCardProps) {
   return (
-    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-1/2">
+    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-2/3 xl:w-1/2">
       <MiniMapCard title={value.title} subTitle={value.sub_title} alertType={value.alert_type as 'heat' | 'cold'} />
     </div>
   )
