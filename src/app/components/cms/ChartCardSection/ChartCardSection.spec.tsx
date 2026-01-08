@@ -35,11 +35,14 @@ Object.defineProperty(window, 'URL', {
 })
 
 // Mock components
-jest.mock('@/app/components/cms', () => ({
-  ...jest.requireActual('@/app/components/cms'),
-  ChartRowCard: ({ children }: any) => <div data-testid="chart-row-card">{children}</div>,
-  Chart: () => <div data-testid="chart">Chart Component Mock</div>,
-}))
+jest.mock('@/app/components/ui/ukhsa', () => {
+  const React = require('react')
+  const actual = jest.requireActual('@/app/components/ui/ukhsa')
+  return {
+    ...actual,
+    Chart: () => <div data-testid="chart">Chart Component Mock</div>,
+  }
+})
 
 jest.mock('next/link', () => {
   return function MockLink({ children, href, ...props }: any) {
