@@ -27,6 +27,8 @@ import {
 } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import {
+  getFeedbackPage,
+  getLandingPage,
   getPageById,
   getPageMetadata,
   getPagesByContentType,
@@ -41,6 +43,7 @@ const getPages = jest.mocked(client)
 beforeEach(() => {
   jest.clearAllMocks()
   console.error = jest.fn()
+  console.log = jest.fn()
 })
 
 describe('validateUrlWithCms', () => {
@@ -135,6 +138,29 @@ describe('validateUrlWithCms', () => {
     const result = await validateUrlWithCms(slug, PageType.MetricsChild)
 
     expect(notFound).toHaveBeenCalledTimes(2)
+    expect(result).toBeUndefined()
+  })
+
+  test('404 Not Found when slug mismatch between URL and CMS slug', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithCompositeTypeMock,
+    })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        ...bulkDownloadsPageMock,
+        meta: {
+          ...bulkDownloadsPageMock.meta,
+          html_url: 'https://example.com/different-slug',
+        },
+      },
+    })
+
+    const slug: Slug = ['bulk-downloads']
+    const result = await validateUrlWithCms(slug, PageType.Composite)
+
+    expect(notFound).toHaveBeenCalled()
     expect(result).toBeUndefined()
   })
 })
@@ -366,6 +392,18 @@ describe('getParentPage', () => {
       expect(notFound).toHaveBeenCalledTimes(1)
       expect(result).not.toBeDefined()
     })
+
+    test('getting parent page returns unsuccessful response', async () => {
+      getPage.mockResolvedValueOnce({
+        status: 200,
+        data: null,
+      })
+
+      const result = await getParentPage(whatsNewChildMocks[0])
+      expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
+      expect(notFound).toHaveBeenCalledTimes(1)
+      expect(result).not.toBeDefined()
+    })
   })
 })
 
@@ -430,5 +468,160 @@ describe('getPageById', () => {
 
       expect(result).not.toBeDefined()
     })
+  })
+})
+
+describe('getPageMetadata - Additional Edge Cases', () => {
+  test('Getting metadata for topic page with areaName', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithTopicTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: covid19PageMock })
+
+    const slug: Slug = ['respiratory-viruses', 'covid-19']
+    const searchParams: SearchParams = {
+      areaName: 'England',
+    }
+    const result = await getPageMetadata(slug, searchParams, PageType.Topic)
+
+    expect(result.title).toContain('England')
+  })
+
+  test('Getting metadata for topic page without areaName', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithTopicTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: covid19PageMock })
+
+    const slug: Slug = ['respiratory-viruses', 'covid-19']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.Topic)
+
+    expect(result.title).not.toContain('England')
+  })
+
+  test('Handles error in MetricsParent pagination try block', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPage.mockRejectedValueOnce(new Error('Pagination config error'))
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    expect(result).toBeDefined()
+    expect(console.log as jest.Mock).toHaveBeenCalled()
+  })
+
+  test('MetricsParent with showPagination false does not update title', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        ...metricsParentMock,
+        show_pagination: false,
+        pagination_size: 10,
+      },
+    })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    // Title should remain unchanged when showPagination is false
+    expect(result.title).toBe(metricsParentMock.meta.seo_title)
+  })
+
+  test('MetricsParent with search undefined uses correct context', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    expect(result.title).toBeDefined()
+    expect(result.title).not.toContain('"')
+  })
+
+  test('Handles error in WhatsNewParent pagination try block', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+    getPage.mockRejectedValueOnce(new Error('Pagination config error'))
+
+    const slug: Slug = ['whats-new']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
+
+    // Should handle error gracefully
+    expect(result).toBeDefined()
+    expect(logger.error).toHaveBeenCalled()
+  })
+
+  test('WhatsNewParent with showPagination false does not update title', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewParentTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+    getPage.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        ...whatsNewParentMock,
+        show_pagination: false,
+        pagination_size: 10,
+      },
+    })
+
+    const slug: Slug = ['whats-new']
+    const searchParams: SearchParams = {}
+    const result = await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
+
+    expect(result.title).toBe(whatsNewParentMock.meta.seo_title)
+  })
+})
+
+describe('getLandingPage', () => {
+  test('Successfully getting landing page', async () => {
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithLandingTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: dashboardMock })
+
+    const result = await getLandingPage()
+
+    expect(result).toEqual(dashboardMock)
+  })
+
+  test('Handles error when getting landing page', async () => {
+    getPages.mockRejectedValueOnce(new Error('API error'))
+
+    const result = await getLandingPage()
+
+    expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
+    expect(notFound).toHaveBeenCalled()
+    expect(result).not.toBeDefined()
+  })
+})
+
+describe('getFeedbackPage', () => {
+  test('Successfully getting feedback page', async () => {
+    const { pagesWithFeedbackTypeMock } = await import('@/mock-server/handlers/cms/pages/fixtures/pages')
+    const { feedbackMock } = await import('@/mock-server/handlers/cms/pages/fixtures/page/feedback')
+
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithFeedbackTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: feedbackMock })
+
+    const result = await getFeedbackPage()
+
+    expect(result).toEqual(feedbackMock)
+  })
+
+  test('Handles error when getting feedback page', async () => {
+    getPages.mockRejectedValueOnce(new Error('API error'))
+
+    const result = await getFeedbackPage()
+
+    expect(logger.error).toHaveBeenCalledWith(expect.any(Error))
+    expect(notFound).toHaveBeenCalled()
+    expect(result).not.toBeDefined()
   })
 })

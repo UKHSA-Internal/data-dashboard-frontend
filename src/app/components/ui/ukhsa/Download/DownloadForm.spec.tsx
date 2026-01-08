@@ -70,6 +70,34 @@ describe('DownloadForm', () => {
     expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
   })
 
+  test('prevents multiple clicks when downloading', async () => {
+    jest.mocked(fetch).mockImplementationOnce(
+      () =>
+        new Promise(() => {
+          // Never resolves to simulate ongoing download
+        })
+    )
+
+    render(<DownloadForm {...props} />)
+
+    const button = screen.getByRole('button', { name: 'Download' })
+
+    // Click first time
+    await userEvent.click(button)
+
+    // Wait for downloading state
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Downloading' })).toBeInTheDocument()
+    })
+
+    // Try to click again - should not trigger another fetch
+    const downloadingButton = screen.getByRole('button', { name: 'Downloading' })
+    await userEvent.click(downloadingButton)
+
+    // Should only have been called once
+    expect(fetch).toHaveBeenCalledTimes(1)
+  })
+
   test('renders the form with geography parameters when a location is selected', () => {
     mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
@@ -256,5 +284,35 @@ describe('DownloadForm', () => {
     await waitFor(() => {
       expect(downloadFile).toHaveBeenNthCalledWith(1, 'ukhsa-chart-download.json', new Blob(['mock-download']))
     })
+  })
+
+  test('handles download error and redirects to error page', async () => {
+    jest.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
+
+    mockRouter.push('/topics/mock-topic')
+
+    const mockReplace = jest.fn()
+
+    const useRouterSpy = jest.spyOn(require('next/navigation'), 'useRouter')
+    useRouterSpy.mockReturnValue({
+      ...mockRouter,
+      replace: mockReplace,
+      push: mockRouter.push,
+      refresh: jest.fn(),
+    })
+
+    render(<DownloadForm {...props} />)
+
+    const button = screen.getByRole('button', { name: 'Download' })
+    await userEvent.click(button)
+
+    await waitFor(
+      () => {
+        expect(mockReplace).toHaveBeenCalledWith('/error')
+      },
+      { timeout: 3000 }
+    )
+
+    useRouterSpy.mockRestore()
   })
 })

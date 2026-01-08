@@ -334,6 +334,32 @@ describe("Failing to get all What's new child pages from the cms api", () => {
       },
     ])
   })
+
+  test('uses large page size when showPagination is false', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithWhatsNewChildTypeMock,
+    })
+
+    await getWhatsNewPages({ page: 1, showPagination: false, paginationSize: 10 })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('limit')).toBe('1000')
+  })
+
+  test('uses paginationSize when showPagination is true', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithWhatsNewChildTypeMock,
+    })
+
+    await getWhatsNewPages({ page: 1, showPagination: true, paginationSize: 20 })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('limit')).toBe('20')
+  })
 })
 
 // Metrics documentation tests
@@ -364,6 +390,58 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
       success: true,
       data: pagesWithMetricsChildTypeMock,
     })
+  })
+
+  test('includes search parameter in request when provided', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    await getMetricsPages({ search: 'covid-19', page: 1 })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('search')).toBe('covid-19')
+  })
+
+  test('does not include search parameter when undefined', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    await getMetricsPages({ search: undefined, page: 1 })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('search')).toBeNull()
+  })
+
+  test('uses large page size when showPagination is false', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    await getMetricsPages({ search: undefined, page: 1, showPagination: false, paginationSize: 10 })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('limit')).toBe('1000')
+  })
+
+  test('uses paginationSize when showPagination is true', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    await getMetricsPages({ search: undefined, page: 1, showPagination: true, paginationSize: 25 })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('limit')).toBe('25')
   })
 })
 
@@ -424,5 +502,67 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
         message: 'Required',
       },
     ])
+  })
+
+  test('handles pagination errors gracefully when fetching multiple pages', async () => {
+    const totalItems = 113 // This should require 3 requests (50, 50, 25)
+    const firstPageItems = allPagesMock.items.slice(0, 50)
+    const secondPageItems = allPagesMock.items.slice(50, 100)
+
+    getPagesResponse
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: firstPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+      .mockRejectedValueOnce(new Error('Network error')) // Second page fails
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: secondPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+
+    const result = await getPages()
+
+    expect(result.success).toBe(true)
+    if (!result.success) {
+      throw new Error('Expected successful parse result')
+    }
+    // Should still return items from successful requests
+    expect(result.data.items.length).toBeGreaterThan(0)
+  })
+
+  test('handles validation errors in paginated requests', async () => {
+    const totalItems = 113
+    const firstPageItems = allPagesMock.items.slice(0, 50)
+
+    getPagesResponse
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: firstPageItems,
+          meta: { total_count: totalItems },
+        },
+      })
+      .mockResolvedValueOnce({
+        status: 200,
+        data: {
+          items: 'invalid', // Invalid data structure
+          meta: { total_count: totalItems },
+        },
+      })
+
+    const result = await getPages()
+
+    expect(result.success).toBe(true)
+    if (!result.success) {
+      throw new Error('Expected successful parse result')
+    }
+    // Should only include items from valid responses
+    expect(result.data.items.length).toBe(50)
   })
 })
