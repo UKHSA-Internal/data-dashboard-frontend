@@ -143,7 +143,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     yAxisTitle = chartData.y_axis_title || ''
   }
 
-  const { chart, x_axis, y_axis } = chartData
+  const { chart, x_axis, y_axis, confidence_intervals, confidence_colour } = chartData
 
   const pathname = getPathname()
   const [areaType, areaName] = await getAreaSelector()
@@ -159,6 +159,8 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     plots,
     x_axis,
     y_axis,
+    confidence_intervals,
+    confidence_colour,
     x_axis_title: xAxisTitle,
     y_axis_title: yAxisTitle,
     y_axis_maximum_value: yAxisMaximum,
