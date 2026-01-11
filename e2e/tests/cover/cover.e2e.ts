@@ -53,8 +53,9 @@ test.describe('Childhood vaccinations page', () => {
     await test.step('initially no loading state', async () => {
       await coverPage.hasNoMapLoadingState()
     })
-    await test.step('selects a vaccine to trigger loading', async () => {
+    await test.step('selects a vaccine & year selection to trigger loading', async () => {
       await coverPage.selectVaccine('MenB (2 years)')
+      await coverPage.selectYear('2024-2025')
     })
     await test.step('shows loading state during data fetch', async () => {
       await coverPage.hasMapLoadingState()
@@ -64,7 +65,7 @@ test.describe('Childhood vaccinations page', () => {
     })
   })
 
-  test('Map data loading with vaccine selection changes', async ({ coverPage }) => {
+  test('Map data loading with vaccine & year selection changes', async ({ coverPage }) => {
     await test.step('loads the page', async () => {
       await coverPage.goto()
     })
@@ -73,6 +74,7 @@ test.describe('Childhood vaccinations page', () => {
     })
     await test.step('selects vaccine', async () => {
       await coverPage.selectVaccine('MenB (2 years)')
+      await coverPage.selectYear('2024-2025')
     })
     await test.step('map loading state appears', async () => {
       await coverPage.hasMapLoadingState()
@@ -241,6 +243,7 @@ test.describe('Cover - tablet @tabletOnly', () => {
     })
     await test.step('vaccine selection works on tablet', async () => {
       await coverPage.selectVaccine('MenB (2 years)')
+      await coverPage.selectYear('2024-2025')
       await coverPage.hasMapDataLoaded()
     })
   })

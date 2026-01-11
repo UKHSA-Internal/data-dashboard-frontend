@@ -3,8 +3,7 @@ import clsx from 'clsx'
 import { kebabCase, snakeCase } from 'lodash'
 import Link from 'next/link'
 
-import { Chart } from '@/app/components/cms'
-import { Card } from '@/app/components/ui/ukhsa'
+import { Card, Chart } from '@/app/components/ui/ukhsa'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowMoreURL } from '@/app/utils/show-more.utils'
 

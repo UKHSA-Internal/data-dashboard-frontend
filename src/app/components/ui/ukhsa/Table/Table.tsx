@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
+import { RichText } from '@/app/components/cms'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
@@ -13,7 +14,9 @@ import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
-import { RichText } from '../RichText/RichText'
+
+// import { ChartEmpty } from '../../ui/ukhsa/ChartEmpty/ChartEmpty'
+// import { RichText } from '../RichText/RichText'
 
 interface TableProps {
   /* Request metadata from the CMS required to fetch from the tables api */
@@ -114,8 +117,8 @@ export async function Table({
                     }
 
                     incrementingColumnId += 1
-                    const chartLabel = columnIndex === 0 ? '' : chart[labelIndex]?.value?.label ?? ''
-                    const axisTitle = columnIndex === 0 ? x_axis_title ?? '' : y_axis_title ?? ''
+                    const chartLabel = columnIndex === 0 ? '' : (chart[labelIndex]?.value?.label ?? '')
+                    const axisTitle = columnIndex === 0 ? (x_axis_title ?? '') : (y_axis_title ?? '')
                     const columnHeader = t('cms.blocks.table.header', {
                       context:
                         columnIndex === 0 ? x_axis : column.header.includes('Plot') ? 'plot_single' : 'plot_multi',

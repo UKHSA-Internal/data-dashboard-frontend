@@ -4,7 +4,7 @@
 import * as TabsPrimitive from '@radix-ui/react-tabs'
 import clsx from 'clsx'
 import * as React from 'react'
-import { useRef, useState } from 'react'
+import { Children, ReactNode, useRef, useState } from 'react'
 
 export function useTabContent(initialValue = 'chart') {
   const [selectedTab, setSelectedTab] = useState(initialValue)
@@ -52,6 +52,10 @@ const TabsTrigger = React.forwardRef<
 
   const [, setSelectedTab] = context
 
+  // ensure all the child elements passed into this trigger are not lazy
+  const childrenArray: ReactNode[] = Children.toArray(children)
+  const unwrappedChildren: ReactNode = childrenArray.length === 1 ? childrenArray[0] : children
+
   return (
     <TabsPrimitive.Trigger
       onClick={(evt) => {
@@ -83,7 +87,7 @@ const TabsTrigger = React.forwardRef<
       )}
       {...props}
     >
-      {children}
+      {unwrappedChildren}
     </TabsPrimitive.Trigger>
   )
 })
