@@ -65,7 +65,7 @@ test.describe('Childhood vaccinations page', () => {
     })
   })
 
-  test('Map data loading with vaccine selection changes', async ({ coverPage }) => {
+  test('Map data loading with vaccine & year selection changes', async ({ coverPage }) => {
     await test.step('loads the page', async () => {
       await coverPage.goto()
     })

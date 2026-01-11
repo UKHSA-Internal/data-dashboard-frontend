@@ -90,10 +90,64 @@ describe('app utils helpers', () => {
       'https://ukhsa-dashboard.data.gov.uk/slug1'
     )
   })
+})
 
-  test('calculates timespan between dates', () => {
-    const start = new Date('2020-01-01')
-    const end = new Date('2022-03-01')
-    expect(getTimespan(start, end)).toEqual({ years: 2, months: 2 })
+describe('getTimespan', () => {
+  test('calculates years and months correctly for same year', () => {
+    const startDate = new Date('2023-01-01')
+    const endDate = new Date('2023-06-15')
+    const result = getTimespan(startDate, endDate)
+    expect(result).toEqual({ years: 0, months: 5 })
+  })
+
+  test('calculates years and months correctly across one year boundary', () => {
+    const startDate = new Date('2023-01-01')
+    const endDate = new Date('2024-03-15')
+    const result = getTimespan(startDate, endDate)
+    expect(result).toEqual({ years: 1, months: 2 })
+  })
+
+  test('calculates years and months correctly across multiple years', () => {
+    const startDate = new Date('2020-01-01')
+    const endDate = new Date('2023-06-15')
+    const result = getTimespan(startDate, endDate)
+    expect(result).toEqual({ years: 3, months: 5 })
+  })
+
+  test('handles same dates', () => {
+    const date = new Date('2023-06-15')
+    const result = getTimespan(date, date)
+    expect(result).toEqual({ years: 0, months: 0 })
+  })
+
+  test('handles end date earlier in month than start date', () => {
+    const startDate = new Date('2023-06-15')
+    const endDate = new Date('2024-03-10')
+    const result = getTimespan(startDate, endDate)
+    // 9 months difference (June to March next year)
+    expect(result).toEqual({ years: 0, months: 9 })
+  })
+
+  test('handles exactly 12 months (1 year, 0 months)', () => {
+    const startDate = new Date('2023-01-01')
+    const endDate = new Date('2024-01-01')
+    const result = getTimespan(startDate, endDate)
+    expect(result).toEqual({ years: 1, months: 0 })
+  })
+
+  test('handles more than 12 months', () => {
+    const startDate = new Date('2022-01-01')
+    const endDate = new Date('2024-06-15')
+    const result = getTimespan(startDate, endDate)
+    // 29 months = 2 years, 5 months
+    expect(result).toEqual({ years: 2, months: 5 })
+  })
+
+  test('handles month rollover correctly', () => {
+    const startDate = new Date('2023-11-01')
+    const endDate = new Date('2024-02-01')
+    const result = getTimespan(startDate, endDate)
+    // 3 months difference
+    expect(result).toEqual({ years: 0, months: 3 })
   })
 })
