@@ -14,12 +14,6 @@ Object.defineProperty(window, 'URL', {
   writable: true,
 })
 
-// Mock the renderBlock function and components
-jest.mock('@/app/utils/cms.utils', () => ({
-  ...jest.requireActual('@/app/utils/cms.utils'),
-  renderBlock: jest.fn(),
-}))
-
 jest.mock('@/app/components/cms', () => ({
   ...jest.requireActual('@/app/components/cms'),
   Percentage: () => <div>Mocked percentage number</div>,

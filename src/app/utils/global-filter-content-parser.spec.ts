@@ -4,6 +4,8 @@ import { CardTypes } from '@/api/models/cms/Page/Body'
 import {
   AccompanyingPointArray,
   DataFilters,
+  FilterLinkedSubplotData,
+  FilterLinkedTimeSeriesData,
   GeographyFilters,
   ThresholdFilters,
   TimePeriod,
@@ -12,6 +14,8 @@ import {
 import {
   extractDataFromGlobalFilter,
   extractGeographyIdFromGeographyFilter,
+  extractSubplotSectionData,
+  extractTimeSeriesSectionData,
   FlattenedAccompanyingPoint,
   getAccompanyingPoints,
   getGroupedVaccinationOptions,
@@ -888,5 +892,89 @@ describe('extractDataFromGlobalFilter', () => {
 
       expect(result?.[0].children[0].id).toBe('custom_filter.unique-123')
     })
+  })
+})
+
+describe('extractSubplotSectionData', () => {
+  test('should return empty object when content type is not filter_linked_sub_plot_chart_template', () => {
+    const content: CardTypes = {
+      type: 'some_other_card',
+      value: {},
+    }
+
+    const result = extractSubplotSectionData(content)
+
+    expect(result).toEqual({})
+  })
+
+  test('should return empty object when content.value is falsy', () => {
+    const content: CardTypes = {
+      type: 'filter_linked_sub_plot_chart_template',
+      value: null as any,
+    }
+
+    const result = extractSubplotSectionData(content)
+
+    expect(result).toEqual({})
+  })
+
+  test('should extract subplot section data when content type matches', () => {
+    const mockSubplotData: FilterLinkedSubplotData = {
+      title_prefix: 'Test Subplot',
+      legend_title: 'Coverage (%)',
+      target_threshold: 95,
+      target_threshold_label: '95% target',
+      about: 'Test about content',
+    }
+
+    const content: CardTypes = {
+      type: 'filter_linked_sub_plot_chart_template',
+      value: mockSubplotData,
+    }
+
+    const result = extractSubplotSectionData(content)
+
+    expect(result).toEqual(mockSubplotData)
+  })
+})
+
+describe('extractTimeSeriesSectionData', () => {
+  test('should return empty object when content type is not filter_linked_time_series_chart_template', () => {
+    const content: CardTypes = {
+      type: 'some_other_card',
+      value: {},
+    }
+
+    const result = extractTimeSeriesSectionData(content)
+
+    expect(result).toEqual({})
+  })
+
+  test('should return empty object when content.value is falsy', () => {
+    const content: CardTypes = {
+      type: 'filter_linked_time_series_chart_template',
+      value: null as any,
+    }
+
+    const result = extractTimeSeriesSectionData(content)
+
+    expect(result).toEqual({})
+  })
+
+  test('should extract timeseries section data when content type matches', () => {
+    const mockTimeseriesData: FilterLinkedTimeSeriesData = {
+      title_prefix: 'Test Timeseries',
+      legend_title: 'Level of coverage (%)',
+      about: 'Test about content',
+    }
+
+    const content: CardTypes = {
+      type: 'filter_linked_time_series_chart_template',
+      value: mockTimeseriesData,
+    }
+
+    const result = extractTimeSeriesSectionData(content)
+
+    expect(result).toEqual(mockTimeseriesData)
   })
 })
