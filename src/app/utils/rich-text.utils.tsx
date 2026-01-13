@@ -148,4 +148,7 @@ export const linkedHeadingsComponents: any = {
     }
     return <li>{children}</li>
   },
+  ol: ({ children }: { children: ReactNode }) => {
+    return <ul className="govuk-list govuk-list--spaced">{children}</ul>
+  },
 }
