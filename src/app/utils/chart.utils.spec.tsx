@@ -149,8 +149,10 @@ describe('Get timespan between dates for chart', () => {
     ]
 
     const timespan = getChartTimespan(plots, mockLastUpdated)
-    // Should only consider plots with date_to, picking the largest (3 years)
-    expect(timespan).toEqual({ years: 3, months: 0 })
+    // Should only consider plots with date_to, picking the largest
+    // Plot 3 has date_to '2025-06-01' but lastUpdated is '2025-05-21', so we use lastUpdated
+    // Timespan from '2022-06-01' to '2025-05-21' = 2 years, 11 months
+    expect(timespan).toEqual({ years: 2, months: 11 })
   })
 
   test('when plot has date_from but no date_to and others have both, skips the incomplete plot', () => {
@@ -181,6 +183,48 @@ describe('Get timespan between dates for chart', () => {
 
     const timespan = getChartTimespan(plots, mockLastUpdated)
     // Should only use the plot with both dates (1 year), not default to today for the incomplete one
+    expect(timespan).toEqual({ years: 1, months: 0 })
+  })
+
+  test('when date_to is later than lastUpdated, uses lastUpdated for timespan calculation', () => {
+    const lastUpdated = '2023-04-30' // Data only goes up to April 2023
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2022-10-01', // October 2022
+          date_to: '2026-01-01', // Future date (2026) - should be ignored
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, lastUpdated)
+    // Should calculate from Oct 2022 to April 2023 (6 months), not from Oct 2022 to Jan 2026
+    expect(timespan).toEqual({ years: 0, months: 6 })
+  })
+
+  test('when date_to is earlier than lastUpdated, uses date_to for timespan calculation', () => {
+    const lastUpdated = '2025-05-21'
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2023-01-01',
+          date_to: '2024-01-01', // Earlier than lastUpdated
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, lastUpdated)
+    // Should use date_to (2024-01-01) since it's earlier than lastUpdated
     expect(timespan).toEqual({ years: 1, months: 0 })
   })
 })
@@ -274,5 +318,58 @@ describe('getFilteredData', () => {
 
   test('throws when filter unit is unsupported', () => {
     expect(() => getFilteredData(mockData, '1-week', mockLastUpdated)).toThrow('Unsupported subtraction unit')
+  })
+
+  test('when date_to is later than lastUpdated, uses lastUpdated for filtering', () => {
+    const lastUpdated = '2023-04-30' // Data only goes up to April 2023
+    const dataWithFutureDate = {
+      ...mockData,
+      chart: [
+        {
+          id: 'chart1',
+          type: 'plot' as const,
+          value: {
+            topic: 'test',
+            metric: 'test',
+            chart_type: 'test',
+            date_from: '2020-01-01', // Original date_from is much earlier
+            date_to: '2026-01-01', // Future date - should be ignored, use lastUpdated instead
+          },
+        },
+      ],
+    }
+
+    const result = getFilteredData(dataWithFutureDate, '6-months', lastUpdated)
+    // Should calculate 6 months from lastUpdated (2023-04-30), not from 2026-01-01
+    // 6 months before 2023-04-30 (set to 1st of month) is 2022-10-01
+    expect(result?.[0].value.date_from).toBe('2022-10-01')
+    // date_to should be the original value, but filtering calculation should use lastUpdated
+    expect(result?.[0].value.date_to).toBe('2026-01-01')
+  })
+
+  test('when date_to is earlier than lastUpdated, uses date_to for filtering', () => {
+    const lastUpdated = '2025-05-21'
+    const dataWithPastDate = {
+      ...mockData,
+      chart: [
+        {
+          id: 'chart1',
+          type: 'plot' as const,
+          value: {
+            topic: 'test',
+            metric: 'test',
+            chart_type: 'test',
+            date_from: '2023-01-01',
+            date_to: '2024-01-01', // Earlier than lastUpdated
+          },
+        },
+      ],
+    }
+
+    const result = getFilteredData(dataWithPastDate, '6-months', lastUpdated)
+    // Should calculate 6 months from date_to (2024-01-01), not from lastUpdated
+    // 6 months before 2024-01-01 is 2023-07-01
+    expect(result?.[0].value.date_from).toBe('2023-07-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
   })
 })

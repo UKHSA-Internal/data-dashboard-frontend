@@ -26,7 +26,10 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
     } else {
       // If we're not using the "all missing" fallback and this plot is missing date_to, skip it
       if (!plot.value.date_to) return
-      dateTo = new Date(plot.value.date_to)
+      // Use the minimum of date_to and lastUpdated to ensure filter ranges are based on actual data availability
+      const plotDateTo = new Date(plot.value.date_to)
+      const lastUpdatedDate = new Date(lastUpdated)
+      dateTo = plotDateTo < lastUpdatedDate ? plotDateTo : lastUpdatedDate
     }
 
     const dateFrom = new Date(plot.value.date_from)
@@ -82,8 +85,15 @@ export const getFilteredData = (
   lastUpdated: string
 ): Chart | undefined => {
   return data.chart.map((plot) => {
-    // Default date_to to last updated date of the data if no date_to is provided
-    const dateTo = plot.value.date_to ? new Date(plot.value.date_to) : new Date(lastUpdated)
+    // If date_to is provided, use the minimum of date_to and lastUpdated to ensure filter ranges are based on actual data availability
+    let dateTo: Date
+    if (plot.value.date_to) {
+      const plotDateTo = new Date(plot.value.date_to)
+      const lastUpdatedDate = new Date(lastUpdated)
+      dateTo = plotDateTo < lastUpdatedDate ? plotDateTo : lastUpdatedDate
+    } else {
+      dateTo = new Date(lastUpdated)
+    }
     const dateToString = plot.value.date_to || new Date(dateTo).toISOString().split('T')[0]
 
     // When filter is 'all', restore original dates (or use last updated date if date_to was null)
