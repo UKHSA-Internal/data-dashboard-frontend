@@ -1,6 +1,5 @@
 import { getServerTranslation } from '@/app/i18n'
 import { signOut } from '@/auth'
-import { authSignOutRedirectionPath } from '@/config/constants'
 
 export default async function Page() {
   const { t } = await getServerTranslation('auth')
@@ -14,7 +13,7 @@ export default async function Page() {
         className="inline-flex items-center gap-3"
         action={async () => {
           'use server'
-          await signOut({ redirectTo: authSignOutRedirectionPath })
+          await signOut({ redirect: false })
         }}
       >
         <button className="govuk-button mb-0" type="submit">

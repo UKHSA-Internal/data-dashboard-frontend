@@ -1,6 +1,7 @@
 import { redirect } from 'next/navigation'
 
 import { getServerTranslation } from '@/app/i18n'
+import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
 import { auth, signOut } from '@/auth'
 import { logger } from '@/lib/logger'
 
@@ -13,8 +14,6 @@ export default async function UserSignOut() {
     return <></>
   }
 
-  const getAuthApiBaseUrl = `${process.env.AUTH_DOMAIN ?? ''}`
-
   if (!session) return <></>
 
   const { t } = await getServerTranslation('auth')
@@ -26,14 +25,11 @@ export default async function UserSignOut() {
         'use server'
         try {
           await signOut({ redirect: false })
-          const cognitoLogoutUrl = new URL(`${getAuthApiBaseUrl}/logout`)
-          cognitoLogoutUrl.searchParams.set('client_id', process.env.AUTH_CLIENT_ID!)
-          cognitoLogoutUrl.searchParams.set('logout_uri', process.env.NEXTAUTH_URL)
-          redirect(cognitoLogoutUrl.toString())
-        } catch (error) {
-          logger.error(error)
-          redirect(process.env.NEXTAUTH_URL)
+        } catch {
+          logger.error('issue calling authJS signout.')
         }
+        const cognitoLogoutUrl = getCognitoSignoutURL()
+        redirect(cognitoLogoutUrl)
       }}
     >
       <button className="govuk-button mb-0" type="submit">
