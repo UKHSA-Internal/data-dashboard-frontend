@@ -34,25 +34,17 @@ However, Cognito's token revocation process is independent of NextAuth.js's sess
 
 ## Current Solution
 
-Our `signOut` function now:
+~~Our `signOut` function now:~~
 
-1. Attempts to revoke the refresh token with Cognito first
-2. Only proceeds with NextAuth.js sign out after successful token revocation
-3. Includes error handling to ensure NextAuth.js cleanup even if Cognito revocation fails
+- ~~1. Attempts to revoke the refresh token with Cognito first~~
+- ~~2. Only proceeds with NextAuth.js sign out after successful token revocation~~
+- ~~3. Includes error handling to ensure NextAuth.js cleanup even if Cognito revocation fails~~
 
-## Future Considerations
+#### Update 14/01/2026
 
-1. Investigate additional Cognito token revocation methods
-2. Consider implementing a more comprehensive sign out flow that:
-   - Revokes all tokens (access and refresh)
-   - Ensures complete token invalidation on both sides
-3. Add monitoring for failed sign out attempts
+The issue listed above has now been resolved as we no longer call the revoke endpoint. Instead we have implemented the following flow:
 
-## Testing Implications
+1. Log the user out using authJS signout functionality with `redirect = false`. This clears all token related cookies and state from the client side storage.
+2. Call the dedicated cognito signout URl which terminates the Users session and signs out the user which invalidates the issued tokens. This calls the signout URL passing in the clientID and the logout_uri which redirects the user to the homepage once logged out.
 
-When writing tests for authentication flows:
-
-1. Ensure both NextAuth.js session and Cognito tokens are properly revoked
-2. Verify that automatic re-authentication doesn't occur after sign out
-3. Test error scenarios during sign out
-4. Consider adding specific test cases for token revocation issues
+The solution above handles both the cognito and the authJS token storage and ensures that they are cleared prior to attempting to redirect to the dashboard homepage.
