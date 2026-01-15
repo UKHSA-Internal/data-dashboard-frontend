@@ -13,6 +13,7 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
   - [Deployment](#deployment)
   - [Styling](#styling)
   - [Environments](#environments)
+  - [Enabling Non-Public functionality](#enabling-non-public-functionality)
 
 ## Prerequisites
 
@@ -25,7 +26,6 @@ Before you begin, ensure you have the following installed:
 ### Initial Setup
 
 1. **Install Dependencies**
-
    - Install node modules : `npm install`
 
 2. **Environment Variables:**  
@@ -63,3 +63,7 @@ For styling, the project primarily uses [GOV.UK Frontend](https://frontend.desig
 ## Environments
 
 For a detailed list of our deployment environments and their configurations, refer to our [environments documentation on Confluence](https://digitaltools.phe.org.uk/confluence/pages/viewpage.action?spaceKey=DPD&title=Environments).
+
+## Enabling Non-Public functionality
+
+Instructions on setting up your the non-public version of the dashboard can be found here: [Enabling Non Public](./docs/auth/enabling-non-public.md)
