@@ -59,13 +59,10 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
   switch (unit) {
     case 'month':
     case 'months':
-      newDate.setDate(1)
       newDate.setMonth(newDate.getMonth() - parseInt(amount))
       break
     case 'year':
     case 'years':
-      newDate.setDate(1)
-      newDate.setMonth(0)
       newDate.setFullYear(newDate.getFullYear() - parseInt(amount))
       break
     default:
@@ -109,6 +106,9 @@ export const getFilteredData = (
       }
       return restoredPlot
     }
+
+    console.log('filterValue', filterValue)
+    console.log('dateTo', dateTo)
 
     // Apply filter by updating date_from
     const newDateFrom = subtractFromDate(filterValue, dateTo)
