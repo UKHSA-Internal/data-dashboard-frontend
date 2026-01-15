@@ -341,8 +341,8 @@ describe('getFilteredData', () => {
 
     const result = getFilteredData(dataWithFutureDate, '6-months', lastUpdated)
     // Should calculate 6 months from lastUpdated (2023-04-30), not from 2026-01-01
-    // 6 months before 2023-04-30 (set to 1st of month) is 2022-10-01
-    expect(result?.[0].value.date_from).toBe('2022-10-01')
+    // 6 months before 2023-04-30 is 2022-10-30
+    expect(result?.[0].value.date_from).toBe('2022-10-30')
     // date_to should be the original value, but filtering calculation should use lastUpdated
     expect(result?.[0].value.date_to).toBe('2026-01-01')
   })
