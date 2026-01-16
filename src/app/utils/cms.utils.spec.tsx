@@ -105,14 +105,14 @@ describe('renderCard function', () => {
       value: { body: 'Test content' },
     }
 
-    render(renderCard('Test heading', [], '', textCard))
+    render(renderCard('Test heading', [], textCard))
     expect(screen.getByText('Test content')).toBeInTheDocument()
   })
 
   test('if more than 3 cards are provided then expect "Show More" link to be present', () => {
     const mockGetShowMoreURL = getShowMoreURL as jest.MockedFunction<typeof getShowMoreURL>
     mockGetShowMoreURL.mockImplementation((_, heading) => `/mock-url/${heading}`)
-    render(renderCard('', [], '', mockChartCardSectionWithSixCards))
+    render(renderCard('', [], mockChartCardSectionWithSixCards))
     const showMoreButton = screen.getByText('Show More').closest('a')
     expect(showMoreButton).toBeInTheDocument()
   })

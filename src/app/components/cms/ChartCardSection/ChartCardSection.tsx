@@ -11,17 +11,9 @@ type ChartCardSectionProps = {
   value: any
   heading: string
   showMoreSections: string[]
-  timeseriesFilter: string
-  chartId?: string
 }
 
-export function ChartCardSection({
-  value,
-  heading,
-  showMoreSections,
-  timeseriesFilter,
-  chartId,
-}: ChartCardSectionProps) {
+export function ChartCardSection({ value, heading, showMoreSections }: ChartCardSectionProps) {
   return (
     <div
       className={clsx('mb-3 grid gap-4 sm:mb-6 ', {
@@ -73,8 +65,6 @@ export function ChartCardSection({
                         default: true,
                       },
                     ]}
-                    timeseriesFilter={timeseriesFilter}
-                    chartId={chartId ?? ''}
                   />
                 </div>
               </Link>

@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import kebabCase from 'lodash/kebabCase'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
@@ -8,13 +7,12 @@ import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
+import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
-import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
-import ChartSelect from '../View/ChartSelect/ChartSelect'
 import ChartInteractive from './ChartInteractive'
+import ChartWithFilter from './ChartWithFilter'
 
 interface ChartProps {
   /**
@@ -49,17 +47,6 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
-
-  /**
-   * Defines the value of the URL parameter 'timeseriesFilter' for use in filtering chart data
-   * Defaults to show all content if no filter present
-   */
-  timeseriesFilter: string
-
-  /**
-   * The ID of the chart card for use in filtering chart data
-   */
-  chartId: string
 }
 
 const createStaticChart = ({
@@ -106,24 +93,10 @@ const createStaticChart = ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter, chartId }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
-  let chartData = data
-
-  if (timeseriesFilter) {
-    // Nullcheck
-    const filteredData = getFilteredData(data, timeseriesFilter, chartId)?.filter(
-      (item): item is NonNullable<typeof item> => item !== null
-    )
-
-    if (filteredData) {
-      chartData = {
-        ...data,
-        chart: filteredData,
-      }
-    }
-  }
+  const chartData = data
 
   let yAxisMinimum = null
   let yAxisMaximum = null
@@ -185,7 +158,7 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     return <ChartEmpty resetHref={pathname} />
   }
 
-  const { alt_text: alt, figure } = defaultChartResponse
+  const { alt_text: alt, figure, last_updated } = defaultChartResponse
 
   const staticChart = createStaticChart({
     sizes,
@@ -199,24 +172,34 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
-    return (
-      <>
-        {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
-        {staticChart}
-      </>
-    )
+    return staticChart
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page)
   if (!enableInteractive) return staticChart
 
+  // Use client-side chart with filter when timeseries filter is enabled
+  if (data.show_timeseries_filter) {
+    return (
+      <>
+        <noscript>{staticChart}</noscript>
+        {/* Interactive chart with filter - only visible when JavaScript is enabled */}
+        <div className="hidden js:block">
+          <ChartWithFilter
+            lastUpdated={last_updated}
+            figure={{ frames: [], ...figure }}
+            title={data.title}
+            chart={data.chart}
+            chartData={chartData}
+          />
+        </div>
+      </>
+    )
+  }
+
   return (
-    <>
-      {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
-      <Suspense fallback={staticChart}>
-        <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
-      </Suspense>
-      {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
-    </>
+    <Suspense fallback={staticChart}>
+      <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
+    </Suspense>
   )
 }

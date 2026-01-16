@@ -16,7 +16,6 @@ import {
 import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
-import { getChartTimespan } from '@/app/utils/chart.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import {
   extractDataFromGlobalFilter,
@@ -26,7 +25,6 @@ import {
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
-import RedirectHandler from '../../ui/ukhsa/RedirectHandler/RedirectHandler'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -34,8 +32,8 @@ import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
 export default async function TopicPage({
   slug,
-  searchParams: { areaName, areaType, timeseriesFilter = '' },
-}: PageComponentBaseProps<{ areaType?: string; areaName?: string; timeseriesFilter?: string }>) {
+  searchParams: { areaName, areaType },
+}: PageComponentBaseProps<{ areaType?: string; areaName?: string }>) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -50,12 +48,6 @@ export default async function TopicPage({
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
-  let newChartFilters = ''
-
-  let chartCounter = 0
-
-  const chartRowCardStartCounters = new Map<string, number>()
-
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
@@ -63,31 +55,6 @@ export default async function TopicPage({
   body.map(({ value }) => {
     if (value.content) {
       value.content.map((content) => {
-        if (content.type === 'chart_row_card' && content.value.columns) {
-          const startCounter = chartCounter + 1
-          chartRowCardStartCounters.set(content.id, startCounter)
-
-          content.value.columns.map((column) => {
-            chartCounter++
-
-            // Check timeseries enabled per chart
-            if (!column.value.show_timeseries_filter) return
-
-            const chartId = `${value.heading}${chartCounter}`
-
-            const existingFilter = timeseriesFilter.split(';').find((filter) => filter.startsWith(chartId))
-
-            if (existingFilter) {
-              newChartFilters += `${existingFilter};`
-              return
-            }
-
-            const timespan = getChartTimespan(column.value.chart)
-            const valueToAdd = timespan.years < 2 ? 'all' : '1-year'
-
-            newChartFilters += `${chartId}|${valueToAdd};`
-          })
-        }
         // abstract out available time periods
         if (content.type === 'global_filter_card') {
           extractedGlobalFilterContent = extractDataFromGlobalFilter(content)
@@ -104,22 +71,8 @@ export default async function TopicPage({
     }
   })
 
-  let newRoute
-
-  if (newChartFilters !== timeseriesFilter) {
-    const newParams = new URLSearchParams('')
-    if (newChartFilters !== '') {
-      newParams.set('timeseriesFilter', newChartFilters)
-    } else {
-      newParams.delete('timeseriesFilter')
-    }
-
-    newRoute = `?${newParams.toString()}`
-  }
-
   return (
     <>
-      <RedirectHandler newRoute={newRoute} />
       <View>
         <>
           {slug[1] === 'childhood-vaccinations' && (
@@ -162,16 +115,7 @@ export default async function TopicPage({
                       <FilterBannerWrapper key={id} />
                     ) : (
                       <PageSection key={id} heading={value.heading}>
-                        {value.content.map((item) =>
-                          renderCard(
-                            value.heading,
-                            [],
-                            timeseriesFilter,
-                            item,
-                            undefined,
-                            chartRowCardStartCounters.get(item.id)
-                          )
-                        )}
+                        {value.content.map((item) => renderCard(value.heading, [], item))}
                       </PageSection>
                     )
                   )}
