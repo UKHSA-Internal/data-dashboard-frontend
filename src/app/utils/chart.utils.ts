@@ -107,9 +107,6 @@ export const getFilteredData = (
       return restoredPlot
     }
 
-    console.log('filterValue', filterValue)
-    console.log('dateTo', dateTo)
-
     // Apply filter by updating date_from
     const newDateFrom = subtractFromDate(filterValue, dateTo)
 
