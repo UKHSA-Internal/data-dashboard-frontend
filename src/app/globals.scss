@@ -258,3 +258,14 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
     display: none !important;
   }
 }
+
+.govuk-form-group {
+  .map-label-style {
+    text-shadow:
+    -2px -2px 0 white,
+     2px -2px 0 white,
+    -2px  2px 0 white,
+     2px  2px 0 white,
+     0px  0px 4px white;
+  }
+}
