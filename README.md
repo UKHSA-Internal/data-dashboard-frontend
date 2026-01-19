@@ -25,7 +25,6 @@ Before you begin, ensure you have the following installed:
 ### Initial Setup
 
 1. **Install Dependencies**
-
    - Install node modules : `npm install`
 
 2. **Environment Variables:**  
