@@ -111,7 +111,7 @@ describe('Get timespan between dates for chart', () => {
     expect(timespan.years).toBeLessThanOrEqual(3)
   })
 
-  test('when some plots have date_to and some dont, skips plots without date_to', () => {
+  test('when some plots have date_to and some dont, includes open-ended plots capped at lastUpdated', () => {
     const plots = [
       {
         type: 'plot' as const,
@@ -149,13 +149,12 @@ describe('Get timespan between dates for chart', () => {
     ]
 
     const timespan = getChartTimespan(plots, mockLastUpdated)
-    // Should only consider plots with date_to, picking the largest
-    // Plot 3 has date_to '2025-06-01' but lastUpdated is '2025-05-21', so we use lastUpdated
-    // Timespan from '2022-06-01' to '2025-05-21' = 2 years, 11 months
-    expect(timespan).toEqual({ years: 2, months: 11 })
+    // Open-ended plot (test2) should be included and capped at lastUpdated
+    // Longest span is from 2022-01-01 to 2025-05-21 = 3 years, 4 months
+    expect(timespan).toEqual({ years: 3, months: 4 })
   })
 
-  test('when plot has date_from but no date_to and others have both, skips the incomplete plot', () => {
+  test('when plot has date_from but no date_to and others have both, open-ended plot counts to lastUpdated', () => {
     const plots = [
       {
         type: 'plot' as const,
@@ -182,8 +181,8 @@ describe('Get timespan between dates for chart', () => {
     ]
 
     const timespan = getChartTimespan(plots, mockLastUpdated)
-    // Should only use the plot with both dates (1 year), not default to today for the incomplete one
-    expect(timespan).toEqual({ years: 1, months: 0 })
+    // Open-ended plot (test2) should be included and capped at lastUpdated (3 years, 4 months)
+    expect(timespan).toEqual({ years: 3, months: 4 })
   })
 
   test('when date_to is later than lastUpdated, uses lastUpdated for timespan calculation', () => {
