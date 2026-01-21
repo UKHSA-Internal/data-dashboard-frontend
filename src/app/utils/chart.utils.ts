@@ -10,27 +10,18 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
 
   let maxMonths = 0
 
-  // Check if all plots have no date_to
-  const allPlotsMissingDateTo = plots.every((plot) => !plot.value.date_to)
-
   // Check each plot, get the largest difference for use in select component
   plots.forEach((plot) => {
     // If date_from is missing, skip this plot
     if (!plot.value.date_from) return
 
-    // If all plots are missing date_to, use lastUpdated date
-    // Otherwise, only process plots that have both date_from and date_to
-    let dateTo: Date
-    if (allPlotsMissingDateTo) {
-      dateTo = new Date(lastUpdated)
-    } else {
-      // If we're not using the "all missing" fallback and this plot is missing date_to, skip it
-      if (!plot.value.date_to) return
-      // Use the minimum of date_to and lastUpdated to ensure filter ranges are based on actual data availability
+    // Always include open-ended plots by capping at lastUpdated
+    const dateTo = (() => {
+      if (!plot.value.date_to) return new Date(lastUpdated)
       const plotDateTo = new Date(plot.value.date_to)
       const lastUpdatedDate = new Date(lastUpdated)
-      dateTo = plotDateTo < lastUpdatedDate ? plotDateTo : lastUpdatedDate
-    }
+      return plotDateTo < lastUpdatedDate ? plotDateTo : lastUpdatedDate
+    })()
 
     const dateFrom = new Date(plot.value.date_from)
 
