@@ -66,6 +66,7 @@ const chartCardValues = z.object({
   about: z.string(),
   confidence_intervals: z.boolean().optional(),
   confidence_colour: ChartLineColours.nullable().optional(),
+  confidence_intervals_description: z.string().optional(),
 })
 
 export const WithChartHeadlineAndTrendCard = z.object({
