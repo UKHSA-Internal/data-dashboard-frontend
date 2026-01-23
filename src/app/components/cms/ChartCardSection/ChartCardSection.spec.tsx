@@ -35,14 +35,14 @@ Object.defineProperty(window, 'URL', {
 })
 
 // Mock components
-jest.mock('@/app/components/ui/ukhsa', () => ({
-  ...jest.requireActual('@/app/components/ui/ukhsa'),
-  Chart: ({ chartId }: { chartId: string }) => (
-    <div data-testid="chart" data-chart-id={chartId}>
-      Chart Component Mock
-    </div>
-  ),
-}))
+jest.mock('@/app/components/ui/ukhsa', () => {
+  const React = require('react')
+  const actual = jest.requireActual('@/app/components/ui/ukhsa')
+  return {
+    ...actual,
+    Chart: () => <div data-testid="chart">Chart Component Mock</div>,
+  }
+})
 
 jest.mock('next/link', () => {
   return function MockLink({ children, href, ...props }: any) {
@@ -74,8 +74,6 @@ describe('ChartCardSection', () => {
       value: mockValue,
       heading: 'Test Section',
       showMoreSections: [],
-      timeseriesFilter: '',
-      chartId: 'test-chart-id',
     }
 
     render(
@@ -102,8 +100,6 @@ describe('ChartCardSection', () => {
       value: mockValue,
       heading: 'Test Section',
       showMoreSections: [],
-      timeseriesFilter: '',
-      chartId: 'test-chart-id',
     }
 
     render(
@@ -132,8 +128,6 @@ describe('ChartCardSection', () => {
       value: mockValue,
       heading: 'Test Section',
       showMoreSections: [],
-      timeseriesFilter: '',
-      chartId: 'test-chart-id',
     }
 
     render(
