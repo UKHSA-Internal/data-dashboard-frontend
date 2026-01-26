@@ -1,13 +1,16 @@
 'use client'
 
-import { useRouter, useSearchParams } from 'next/navigation'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
-import { useTimeseriesFilterUpdater } from '@/app/hooks/useTimeseriesFilter'
+import { useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { toSlug } from '@/app/utils/app.utils'
 
-export const getSelectOptions = (years: number): Array<string> => {
-  if (years < 1) return ['All']
+export const getSelectOptions = (timespan: { years: number; months: number }): Array<string> => {
+  const { years, months } = timespan
+
+  if (years === 0 && months < 6) return ['All']
+
+  if (years < 1 && months >= 6) return ['1 Month', '3 Months', '6 Months', 'All']
 
   if (years >= 1 && years < 2) return ['1 Month', '3 Months', '6 Months', 'All']
 
@@ -36,100 +39,43 @@ export const getSelectOptions = (years: number): Array<string> => {
 
 interface ChartSelectProps {
   timespan: { years: number; months: number }
-  chartId: string
 }
 
-const ChartSelect = ({ timespan, chartId }: ChartSelectProps) => {
-  const router = useRouter()
-  const searchParams = useSearchParams()
+const ChartSelect = ({ timespan }: ChartSelectProps) => {
+  const { currentFilter, setCurrentFilter } = useTimeseriesFilter()
+  const previousYearsRef = useRef<number | null>(null)
 
-  const { setFilter } = useTimeseriesFilterUpdater()
-
-  // Initialize state with current filters
-  const [selectedFiltersList, setSelectedFiltersList] = useState<string[]>(
-    () => searchParams.get('timeseriesFilter')?.split(';') || []
-  )
-
-  // Update state with URL updates
+  // Set initial filter value based on timespan
   useEffect(() => {
-    setSelectedFiltersList(searchParams.get('timeseriesFilter')?.split(';') || [])
-  }, [searchParams])
+    const isInitialMount = previousYearsRef.current === null
+    const timespanChanged = previousYearsRef.current !== timespan.years
 
-  const setFilterParams = (newFilter: string) => {
-    let filters = getFilters()
-
-    const [filterName] = newFilter.split('|')
-
-    // Remove existing filters with the same name
-    filters = filters.filter((filter) => !filter.startsWith(filterName))
-
-    filters.push(newFilter)
-    setFilter(newFilter)
-
-    setSelectedFiltersList(filters)
-
-    // Filter out any empty strings before joining
-    const validFilters = filters.filter((filter) => filter.length > 0)
-
-    const currentParams = new URLSearchParams(searchParams.toString())
-
-    if (validFilters.length > 0) {
-      currentParams.set('timeseriesFilter', validFilters.join(';'))
-    } else {
-      currentParams.delete('timeseriesFilter')
+    // Only set initial value on mount or when timespan changes
+    if (isInitialMount || timespanChanged) {
+      // If timespan is more than 1 year, default to '1-year', otherwise default to 'all'
+      if (timespan.years > 1) {
+        setCurrentFilter('1-year')
+      } else {
+        setCurrentFilter('all')
+      }
+      previousYearsRef.current = timespan.years
     }
-
-    // Return the updated URL with all parameters preserved
-    return `?${currentParams.toString()}`
-  }
-
-  // Get list of timeseries filters for different charts
-  const getFilters = () => {
-    return searchParams.get('timeseriesFilter')?.split(';') ?? []
-  }
+  }, [timespan.years, setCurrentFilter])
 
   // Handle update of select component
   const handleChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
-    router.replace(setFilterParams(event.target.value), { scroll: false })
-  }
-
-  // Turn slug back into string for matching against select component
-  const formatTimeString = (timeString: string) => {
-    if (timeString === 'all') return 'All'
-
-    const [amount, unit] = timeString.split('-')
-    const capitalizedUnit = unit.charAt(0).toUpperCase() + unit.slice(1)
-
-    // Remove the 's' at the end if the amount is '1'
-    const formattedUnit = amount === '1' ? capitalizedUnit.slice(0, -1) : capitalizedUnit
-
-    return `${amount} ${formattedUnit}`
-  }
-
-  // Sort out default value for select component (if filter in URL params)
-  const getCurrentFilterValue = () => {
-    const currentFilter = selectedFiltersList.find((filter) => filter.startsWith(`${chartId}|`))
-
-    if (currentFilter) {
-      const [, filterValue] = currentFilter.split('|')
-      return formatTimeString(filterValue)
-    }
-
-    return 'All'
+    const newFilterValue = event.target.value
+    setCurrentFilter(newFilterValue)
   }
 
   return (
     <div className="govuk-form-group">
-      <label className="govuk-label" htmlFor={chartId}>
+      <label className="govuk-label" htmlFor="timeseries-filter">
         Filter data by
       </label>
-      <select className="govuk-select" id={chartId} onChange={handleChange}>
-        {getSelectOptions(timespan.years).map((selectOption) => (
-          <option
-            key={selectOption}
-            selected={selectOption === getCurrentFilterValue()}
-            value={`${chartId}|${toSlug(selectOption)}`}
-          >
+      <select className="govuk-select" id="timeseries-filter" onChange={handleChange} value={currentFilter}>
+        {getSelectOptions(timespan).map((selectOption) => (
+          <option key={selectOption} value={toSlug(selectOption)}>
             {selectOption}
           </option>
         ))}
