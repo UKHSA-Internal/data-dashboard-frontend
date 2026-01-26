@@ -51,8 +51,8 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
               </Link>
             </div>
 
-            <div className="float-left inline w-auto text-center sm:w-5/12">
-              <Link href="/" className="govuk-header__link govuk-header__service-name govuk-!-margin-3">
+            <div className="float-left flex h-9 w-auto text-center sm:w-5/12">
+              <Link href="/" className="govuk-header__link govuk-header__service-name m-0">
                 {t('serviceTitle')}
               </Link>
             </div>

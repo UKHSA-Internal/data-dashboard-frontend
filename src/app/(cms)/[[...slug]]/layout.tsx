@@ -70,8 +70,8 @@ export default async function Layout(props: LayoutProps) {
               </Link>
             </div>
             {onLandingPage ? null : (
-              <div className="govuk-header__content inline w-auto text-center sm:w-5/12">
-                <Link href="/" className="govuk-header__link govuk-header__service-name">
+              <div className="govuk-header__content flex h-9 w-auto items-center justify-center sm:w-5/12">
+                <Link href="/" className="govuk-header__link govuk-header__service-name m-0">
                   {t('serviceTitle')}
                 </Link>
               </div>
