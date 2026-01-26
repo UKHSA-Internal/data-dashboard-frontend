@@ -50,46 +50,26 @@ interface ChartProps {
 }
 
 const createStaticChart = ({
-  sizes,
-  charts,
+  chart,
   areaName,
   altText,
 }: {
-  sizes: ChartProps['sizes']
-  charts: Awaited<ReturnType<typeof getCharts>>[]
+  chart: Awaited<ReturnType<typeof getCharts>>
   areaName: string | null
   altText: string
 }) => {
+  const chartSvg = chart.data?.chart
+
+  if (!chartSvg) return <ChartEmpty resetHref={getPathname()} />
+
   return (
-    <picture data-testid="chart" data-location={areaName}>
-      {sizes.map((size, index) => {
-        const chartSvg = charts[index].data?.chart
-
-        if (chartSvg) {
-          if (size.minWidth) {
-            return (
-              <source
-                key={index}
-                media={`(min-width: ${size.minWidth}px)`}
-                srcSet={`data:image/svg+xml;utf8,${getChartSvg(chartSvg)}`}
-                data-testid={`chart-src-min-${size.minWidth}`}
-              />
-            )
-          }
-
-          if (size.default) {
-            return (
-              <img
-                key={index}
-                alt={altText}
-                src={`data:image/svg+xml;utf8,${getChartSvg(chartSvg)}`}
-                className="w-full"
-              />
-            )
-          }
-        }
-      })}
-    </picture>
+    <img
+      data-testid="chart"
+      data-location={areaName}
+      alt={altText}
+      src={`data:image/svg+xml;utf8,${getChartSvg(chartSvg)}`}
+      className="w-full"
+    />
   )
 }
 
@@ -138,31 +118,24 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     y_axis_minimum_value: yAxisMinimum,
   }
 
-  const requests =
-    plots &&
-    sizes.map((chart) =>
-      getCharts({
-        ...chartRequestBody,
-        chart_width: chartSizes[chart.size].width,
-        chart_height: chartSizes[chart.size].height,
-      })
-    )
+  // Select the default size (mobile-first approach)
+  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
 
-  const resolvedRequests = await Promise.all(requests)
+  // Make single chart request with selected size
+  const chartResponse = await getCharts({
+    ...chartRequestBody,
+    chart_width: chartSizes[selectedSize.size].width,
+    chart_height: chartSizes[selectedSize.size].height,
+  })
 
-  // Pick out the default chart (mobile-first)
-  const defaultChartResponse = resolvedRequests[resolvedRequests.length - 1].data
-
-  // Check the default chart & any additional charts have correctly returned responses
-  if (!defaultChartResponse || resolvedRequests.some((request) => !request.success)) {
+  if (!chartResponse.success || !chartResponse.data) {
     return <ChartEmpty resetHref={pathname} />
   }
 
-  const { alt_text: alt, figure, last_updated } = defaultChartResponse
+  const { alt_text: alt, figure, last_updated } = chartResponse.data
 
   const staticChart = createStaticChart({
-    sizes,
-    charts: resolvedRequests,
+    chart: chartResponse,
     areaName,
     altText: t('cms.blocks.chart.alt', {
       body: alt,
