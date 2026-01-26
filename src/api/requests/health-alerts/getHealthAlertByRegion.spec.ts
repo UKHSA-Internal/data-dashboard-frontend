@@ -44,6 +44,19 @@ describe('Successfully getting a health alert from the API', () => {
 })
 
 describe('Failing to get a health alert from the API', () => {
+  test('returns a parse error when the payload is invalid', async () => {
+    getHealthAlertMock.mockResolvedValueOnce({
+      status: 200,
+      data: { invalid: 'payload' },
+    })
+
+    const result = await getHealthAlertByRegion('heat', 'mockRegionId')
+
+    expect(result.success).toBe(false)
+    expect(result.error).toBeInstanceOf(ZodError)
+    expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('Parsing Error'))
+  })
+
   test('API request fails with a server error', async () => {
     getHealthAlertMock.mockRejectedValueOnce({
       status: 500,

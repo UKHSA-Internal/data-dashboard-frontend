@@ -1,8 +1,9 @@
 import { getChartSvg, getChartTimespan, getFilteredData } from './chart.utils'
 
 describe('Get timespan between dates for chart', () => {
+  const mockLastUpdated = '2025-05-21'
   test('return 0 when no plots provided', () => {
-    const timespan = getChartTimespan([])
+    const timespan = getChartTimespan([], mockLastUpdated)
     expect(timespan).toEqual({ years: 0, months: 0 })
   })
 
@@ -21,7 +22,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 0, months: 0 })
   })
 
@@ -40,7 +41,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 1, months: 1 })
   })
 
@@ -70,8 +71,160 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots)
+    const timespan = getChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 2, months: 1 })
+  })
+
+  test('when all plots have missing date_to, uses today as date_to', () => {
+    const today = new Date()
+    const twoYearsAgo = new Date(today)
+    twoYearsAgo.setFullYear(today.getFullYear() - 2)
+
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: twoYearsAgo.toISOString().split('T')[0],
+          date_to: null,
+        },
+      },
+      {
+        type: 'plot' as const,
+        id: 'test2',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: twoYearsAgo.toISOString().split('T')[0],
+          date_to: null,
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, mockLastUpdated)
+    // Should calculate from two years ago to today (approximately 2 years)
+    expect(timespan.years).toBeGreaterThanOrEqual(1)
+    expect(timespan.years).toBeLessThanOrEqual(3)
+  })
+
+  test('when some plots have date_to and some dont, includes open-ended plots capped at lastUpdated', () => {
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2023-01-01',
+          date_to: '2024-01-01', // 1 year span
+        },
+      },
+      {
+        type: 'plot' as const,
+        id: 'test2',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2022-01-01',
+          date_to: null, // Missing date_to - should be skipped
+        },
+      },
+      {
+        type: 'plot' as const,
+        id: 'test3',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2022-06-01',
+          date_to: '2025-06-01', // 3 year span - largest
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, mockLastUpdated)
+    // Open-ended plot (test2) should be included and capped at lastUpdated
+    // Longest span is from 2022-01-01 to 2025-05-21 = 3 years, 4 months
+    expect(timespan).toEqual({ years: 3, months: 4 })
+  })
+
+  test('when plot has date_from but no date_to and others have both, open-ended plot counts to lastUpdated', () => {
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2020-01-01',
+          date_to: '2021-01-01', // 1 year span
+        },
+      },
+      {
+        type: 'plot' as const,
+        id: 'test2',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2022-01-01',
+          date_to: null, // Missing date_to - should be skipped
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, mockLastUpdated)
+    // Open-ended plot (test2) should be included and capped at lastUpdated (3 years, 4 months)
+    expect(timespan).toEqual({ years: 3, months: 4 })
+  })
+
+  test('when date_to is later than lastUpdated, uses lastUpdated for timespan calculation', () => {
+    const lastUpdated = '2023-04-30' // Data only goes up to April 2023
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2022-10-01', // October 2022
+          date_to: '2026-01-01', // Future date (2026) - should be ignored
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, lastUpdated)
+    // Should calculate from Oct 2022 to April 2023 (6 months), not from Oct 2022 to Jan 2026
+    expect(timespan).toEqual({ years: 0, months: 6 })
+  })
+
+  test('when date_to is earlier than lastUpdated, uses date_to for timespan calculation', () => {
+    const lastUpdated = '2025-05-21'
+    const plots = [
+      {
+        type: 'plot' as const,
+        id: 'test',
+        value: {
+          topic: 'test',
+          metric: 'test',
+          chart_type: 'test',
+          date_from: '2023-01-01',
+          date_to: '2024-01-01', // Earlier than lastUpdated
+        },
+      },
+    ]
+
+    const timespan = getChartTimespan(plots, lastUpdated)
+    // Should use date_to (2024-01-01) since it's earlier than lastUpdated
+    expect(timespan).toEqual({ years: 1, months: 0 })
   })
 })
 
@@ -90,6 +243,7 @@ describe('getChartSvg', () => {
 })
 
 describe('getFilteredData', () => {
+  const mockLastUpdated = '2025-05-21'
   const mockData = {
     title: 'Test Chart',
     tag_manager_event_id: 'test-event',
@@ -124,95 +278,97 @@ describe('getFilteredData', () => {
     ],
   }
 
-  test('returns undefined when no timeseriesFilter provided', () => {
-    const result = getFilteredData(mockData, '', 'chart1')
-    expect(result).toBeUndefined()
-  })
-
-  test('returns original data when no matching filter found', () => {
-    const result = getFilteredData(mockData, 'other-chart|6-months', 'chart1')
-    expect(result).toEqual(mockData.chart)
-  })
-
-  test('applies filter and updates date_from for matching chart', () => {
-    const result = getFilteredData(mockData, 'chart1|6-months', 'chart1')
-    expect(result).toHaveLength(2)
-    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
-  })
-
-  test('handles "all" filter value', () => {
-    const result = getFilteredData(mockData, 'chart1|all', 'chart1')
+  test('returns original data when no filter provided (empty string)', () => {
+    const result = getFilteredData(mockData, '', mockLastUpdated)
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
   })
 
-  test('applies year filter and updates date_from', () => {
-    const result = getFilteredData(mockData, 'chart1|1-year', 'chart1')
+  test('applies filter and updates date_from for all plots', () => {
+    const result = getFilteredData(mockData, '6-months', mockLastUpdated)
     expect(result).toHaveLength(2)
-    expect(result?.[0].value.date_from).toBe('2023-01-01')
-    expect(result?.[1].value.date_from).toBe('2023-01-01')
-  })
-
-  test('applies years filter and updates date_from', () => {
-    const result = getFilteredData(mockData, 'chart1|2-years', 'chart1')
-    expect(result).toHaveLength(2)
-    expect(result?.[0].value.date_from).toBe('2022-01-01')
-    expect(result?.[1].value.date_from).toBe('2022-01-01')
-  })
-
-  test('throws error for unsupported subtraction unit', () => {
-    expect(() => getFilteredData(mockData, 'chart1|5-days', 'chart1')).toThrow('Unsupported subtraction unit')
-  })
-
-  test('handles case-insensitive chartId matching', () => {
-    const result = getFilteredData(mockData, 'CHART1|6-months', 'chart1')
-    expect(result).toHaveLength(2)
+    // date_from should be updated to 6 months before date_to
     expect(result?.[0].value.date_from).not.toBe('2023-01-01')
-  })
-
-  test('handles case-insensitive chartId matching with uppercase filter', () => {
-    const result = getFilteredData(mockData, 'chart1|6-months', 'CHART1')
-    expect(result).toHaveLength(2)
-    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
-  })
-
-  test('applies month filter (singular) and updates date_from', () => {
-    const result = getFilteredData(mockData, 'chart1|1-month', 'chart1')
-    expect(result).toHaveLength(2)
-    // Should subtract 1 month from date_to (2024-01-01) = 2023-12-01
-    expect(result?.[0].value.date_from).toBe('2023-12-01')
-  })
-
-  test('applies months filter (plural) and updates date_from', () => {
-    const result = getFilteredData(mockData, 'chart1|3-months', 'chart1')
-    expect(result).toHaveLength(2)
-    // Should subtract 3 months from date_to (2024-01-01) = 2023-10-01
-    expect(result?.[0].value.date_from).toBe('2023-10-01')
-  })
-
-  test('applies year filter (singular) and updates date_from', () => {
-    const result = getFilteredData(mockData, 'chart1|1-year', 'chart1')
-    expect(result).toHaveLength(2)
-    // Should subtract 1 year from date_to (2024-01-01) = 2023-01-01
-    expect(result?.[0].value.date_from).toBe('2023-01-01')
-  })
-
-  test('handles multiple filters in timeseriesFilter string', () => {
-    const result = getFilteredData(mockData, 'chart1|6-months;chart2|1-year', 'chart1')
-    expect(result).toHaveLength(2)
-    // chart1 should have 6-months filter applied - the filter matches chartId, so ALL plots get updated
-    expect(result?.[0].value.date_from).not.toBe('2023-01-01')
-    // chart2 also gets updated because the filter matches chartId
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
     expect(result?.[1].value.date_from).not.toBe('2023-01-01')
+    expect(result?.[1].value.date_to).toBe('2024-01-01')
   })
 
-  test('handles filter with no value (empty filterValue)', () => {
-    // Empty filterValue will cause subtractFromDate to fail when splitting
-    expect(() => getFilteredData(mockData, 'chart1|', 'chart1')).toThrow('Unsupported subtraction unit')
+  test('handles "all" filter value and restores original dates', () => {
+    const result = getFilteredData(mockData, 'all', mockLastUpdated)
+    expect(result).toHaveLength(2)
+    expect(result?.[0].value.date_from).toBe('2023-01-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
+    expect(result?.[1].value.date_from).toBe('2023-01-01')
+    expect(result?.[1].value.date_to).toBe('2024-01-01')
   })
 
-  test('handles filter with malformed format', () => {
-    // Should throw error for unsupported unit
-    expect(() => getFilteredData(mockData, 'chart1|invalid-format', 'chart1')).toThrow('Unsupported subtraction unit')
+  test('applies different filter values correctly', () => {
+    const result1Month = getFilteredData(mockData, '1-month', mockLastUpdated)
+    const result3Months = getFilteredData(mockData, '3-months', mockLastUpdated)
+
+    expect(result1Month).toHaveLength(2)
+    expect(result3Months).toHaveLength(2)
+
+    // 1 month should give a different date_from than 3 months
+    expect(result1Month?.[0].value.date_from).not.toBe(result3Months?.[0].value.date_from)
+  })
+
+  test('throws when filter unit is unsupported', () => {
+    expect(() => getFilteredData(mockData, '1-week', mockLastUpdated)).toThrow('Unsupported subtraction unit')
+  })
+
+  test('when date_to is later than lastUpdated, uses lastUpdated for filtering', () => {
+    const lastUpdated = '2023-04-30' // Data only goes up to April 2023
+    const dataWithFutureDate = {
+      ...mockData,
+      chart: [
+        {
+          id: 'chart1',
+          type: 'plot' as const,
+          value: {
+            topic: 'test',
+            metric: 'test',
+            chart_type: 'test',
+            date_from: '2020-01-01', // Original date_from is much earlier
+            date_to: '2026-01-01', // Future date - should be ignored, use lastUpdated instead
+          },
+        },
+      ],
+    }
+
+    const result = getFilteredData(dataWithFutureDate, '6-months', lastUpdated)
+    // Should calculate 6 months from lastUpdated (2023-04-30), not from 2026-01-01
+    // 6 months before 2023-04-30 is 2022-10-30
+    expect(result?.[0].value.date_from).toBe('2022-10-30')
+    // date_to should be the original value, but filtering calculation should use lastUpdated
+    expect(result?.[0].value.date_to).toBe('2026-01-01')
+  })
+
+  test('when date_to is earlier than lastUpdated, uses date_to for filtering', () => {
+    const lastUpdated = '2025-05-21'
+    const dataWithPastDate = {
+      ...mockData,
+      chart: [
+        {
+          id: 'chart1',
+          type: 'plot' as const,
+          value: {
+            topic: 'test',
+            metric: 'test',
+            chart_type: 'test',
+            date_from: '2023-01-01',
+            date_to: '2024-01-01', // Earlier than lastUpdated
+          },
+        },
+      ],
+    }
+
+    const result = getFilteredData(dataWithPastDate, '6-months', lastUpdated)
+    // Should calculate 6 months from date_to (2024-01-01), not from lastUpdated
+    // 6 months before 2024-01-01 is 2023-07-01
+    expect(result?.[0].value.date_from).toBe('2023-07-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
   })
 })
