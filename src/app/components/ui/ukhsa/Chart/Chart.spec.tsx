@@ -33,6 +33,12 @@ const getChartsMock = jest.mocked(getCharts)
 
 console.error = jest.fn()
 
+beforeEach(() => {
+  getChartsMock.mockClear()
+  jest.mocked(getSearchParams).mockClear()
+  jest.mocked(useSearchParams).mockClear()
+})
+
 test('renders a narrow chart correctly', async () => {
   getChartsMock.mockResolvedValueOnce({
     success: true,
@@ -82,8 +88,6 @@ test('renders a narrow chart correctly', async () => {
           size: 'narrow',
         },
       ],
-      timeseriesFilter: '',
-      chartId: '',
     })) as ReactElement
   )
 
@@ -165,8 +169,6 @@ test('renders the chart by geography and geography type when both are present in
           size: 'narrow',
         },
       ],
-      timeseriesFilter: '',
-      chartId: '',
     })) as ReactElement
   )
 
@@ -197,16 +199,14 @@ test('renders the chart by geography and geography type when both are present in
 })
 
 test('full width charts should also have an acompanying narrow version for mobile viewports', async () => {
-  ;['mock-chart-wide', 'mock-chart-narrow'].forEach((chart) => {
-    getChartsMock.mockResolvedValueOnce({
-      success: true,
-      data: {
-        chart,
-        alt_text: 'alt text for chart',
-        last_updated: '2023-05-10T15:18:06.939535+01:00',
-        figure: { data: [], layout: {} },
-      },
-    })
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart-wide',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -235,30 +235,37 @@ test('full width charts should also have an acompanying narrow version for mobil
           size: 'narrow',
         },
       ],
-      timeseriesFilter: '',
-      chartId: '',
     })) as ReactElement
+  )
+
+  expect(getChartsMock).toHaveBeenCalledTimes(1)
+
+  expect(getChartsMock).toHaveBeenCalledWith(
+    expect.objectContaining({
+      chart_width: 1100,
+      chart_height: 260,
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
-    'data:image/svg+xml;utf8,mock-chart-narrow'
+    'data:image/svg+xml;utf8,mock-chart-wide'
   )
-  expect(getByTestId('chart-src-min-768')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-wide')
-  expect(getByTestId('chart-src-min-768')).toHaveAttribute('media', '(min-width: 768px)')
+  expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-wide')
+
+  expect(getByTestId('chart')).not.toHaveAttribute('srcset')
+  expect(getByTestId('chart')).not.toHaveAttribute('media')
 })
 
-test('landing page half width charts should also have an acompanying third width version for mobile viewports', async () => {
-  ;['mock-chart-third', 'mock-chart-half'].forEach((chart) => {
-    getChartsMock.mockResolvedValueOnce({
-      success: true,
-      data: {
-        chart,
-        alt_text: 'alt text for chart',
-        last_updated: '2023-05-10T15:18:06.939535+01:00',
-        figure: { data: [], layout: {} },
-      },
-    })
+test('landing page half width charts should render the largest size (half) with a single API call', async () => {
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart-half',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
   })
 
   const data: ComponentProps<typeof Chart>['data'] = {
@@ -287,16 +294,26 @@ test('landing page half width charts should also have an acompanying third width
           size: 'third',
         },
       ],
-      timeseriesFilter: '',
-      chartId: '',
     })) as ReactElement
+  )
+
+  expect(getChartsMock).toHaveBeenCalledTimes(1)
+
+  expect(getChartsMock).toHaveBeenCalledWith(
+    expect.objectContaining({
+      chart_width: 650,
+      chart_height: 200,
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
     'data:image/svg+xml;utf8,mock-chart-half'
   )
-  expect(getByTestId('chart-src-min-1200')).toHaveAttribute('srcset', 'data:image/svg+xml;utf8,mock-chart-third')
+  expect(getByTestId('chart')).toHaveAttribute('src', 'data:image/svg+xml;utf8,mock-chart-half')
+
+  expect(getByTestId('chart')).not.toHaveAttribute('srcset')
+  expect(getByTestId('chart')).not.toHaveAttribute('media')
 })
 
 test('renders a fallback message when the chart requests fail', async () => {
@@ -339,8 +356,6 @@ test('renders a fallback message when the chart requests fail', async () => {
           size: 'narrow',
         },
       ],
-      timeseriesFilter: '',
-      chartId: '',
     })) as ReactElement
   )
 
@@ -392,8 +407,6 @@ test('Fallback message with escaped characters', async () => {
           size: 'narrow',
         },
       ],
-      timeseriesFilter: '',
-      chartId: '',
     })) as ReactElement
   )
 
