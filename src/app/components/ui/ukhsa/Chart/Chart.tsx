@@ -1,5 +1,4 @@
 /* eslint-disable @next/next/no-img-element */
-import kebabCase from 'lodash/kebabCase'
 import { Suspense } from 'react'
 import { z } from 'zod'
 
@@ -8,13 +7,12 @@ import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartSvg, getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
+import { getChartSvg } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
-import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
-import ChartSelect from '../View/ChartSelect/ChartSelect'
 import ChartInteractive from './ChartInteractive'
+import ChartWithFilter from './ChartWithFilter'
 
 interface ChartProps {
   /**
@@ -49,81 +47,36 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
-
-  /**
-   * Defines the value of the URL parameter 'timeseriesFilter' for use in filtering chart data
-   * Defaults to show all content if no filter present
-   */
-  timeseriesFilter: string
-
-  /**
-   * The ID of the chart card for use in filtering chart data
-   */
-  chartId: string
 }
 
 const createStaticChart = ({
-  sizes,
-  charts,
+  chart,
   areaName,
   altText,
 }: {
-  sizes: ChartProps['sizes']
-  charts: Awaited<ReturnType<typeof getCharts>>[]
+  chart: Awaited<ReturnType<typeof getCharts>>
   areaName: string | null
   altText: string
 }) => {
+  const chartSvg = chart.data?.chart
+
+  if (!chartSvg) return <ChartEmpty resetHref={getPathname()} />
+
   return (
-    <picture data-testid="chart" data-location={areaName}>
-      {sizes.map((size, index) => {
-        const chartSvg = charts[index].data?.chart
-
-        if (chartSvg) {
-          if (size.minWidth) {
-            return (
-              <source
-                key={index}
-                media={`(min-width: ${size.minWidth}px)`}
-                srcSet={`data:image/svg+xml;utf8,${getChartSvg(chartSvg)}`}
-                data-testid={`chart-src-min-${size.minWidth}`}
-              />
-            )
-          }
-
-          if (size.default) {
-            return (
-              <img
-                key={index}
-                alt={altText}
-                src={`data:image/svg+xml;utf8,${getChartSvg(chartSvg)}`}
-                className="w-full"
-              />
-            )
-          }
-        }
-      })}
-    </picture>
+    <img
+      data-testid="chart"
+      data-location={areaName}
+      alt={altText}
+      src={`data:image/svg+xml;utf8,${getChartSvg(chartSvg)}`}
+      className="w-full"
+    />
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true, timeseriesFilter, chartId }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
-  let chartData = data
-
-  if (timeseriesFilter) {
-    // Nullcheck
-    const filteredData = getFilteredData(data, timeseriesFilter, chartId)?.filter(
-      (item): item is NonNullable<typeof item> => item !== null
-    )
-
-    if (filteredData) {
-      chartData = {
-        ...data,
-        chart: filteredData,
-      }
-    }
-  }
+  const chartData = data
 
   let yAxisMinimum = null
   let yAxisMaximum = null
@@ -167,31 +120,24 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
     y_axis_minimum_value: yAxisMinimum,
   }
 
-  const requests =
-    plots &&
-    sizes.map((chart) =>
-      getCharts({
-        ...chartRequestBody,
-        chart_width: chartSizes[chart.size].width,
-        chart_height: chartSizes[chart.size].height,
-      })
-    )
+  // Select the default size (mobile-first approach)
+  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
 
-  const resolvedRequests = await Promise.all(requests)
+  // Make single chart request with selected size
+  const chartResponse = await getCharts({
+    ...chartRequestBody,
+    chart_width: chartSizes[selectedSize.size].width,
+    chart_height: chartSizes[selectedSize.size].height,
+  })
 
-  // Pick out the default chart (mobile-first)
-  const defaultChartResponse = resolvedRequests[resolvedRequests.length - 1].data
-
-  // Check the default chart & any additional charts have correctly returned responses
-  if (!defaultChartResponse || resolvedRequests.some((request) => !request.success)) {
+  if (!chartResponse.success || !chartResponse.data) {
     return <ChartEmpty resetHref={pathname} />
   }
 
-  const { alt_text: alt, figure } = defaultChartResponse
+  const { alt_text: alt, figure, last_updated } = chartResponse.data
 
   const staticChart = createStaticChart({
-    sizes,
-    charts: resolvedRequests,
+    chart: chartResponse,
     areaName,
     altText: t('cms.blocks.chart.alt', {
       body: alt,
@@ -201,24 +147,34 @@ export async function Chart({ data, sizes, enableInteractive = true, timeseriesF
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
   if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
-    return (
-      <>
-        {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
-        {staticChart}
-      </>
-    )
+    return staticChart
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page)
   if (!enableInteractive) return staticChart
 
+  // Use client-side chart with filter when timeseries filter is enabled
+  if (data.show_timeseries_filter) {
+    return (
+      <>
+        <noscript>{staticChart}</noscript>
+        {/* Interactive chart with filter - only visible when JavaScript is enabled */}
+        <div className="hidden js:block">
+          <ChartWithFilter
+            lastUpdated={last_updated}
+            figure={{ frames: [], ...figure }}
+            title={data.title}
+            chart={data.chart}
+            chartData={chartData}
+          />
+        </div>
+      </>
+    )
+  }
+
   return (
-    <>
-      {data.show_timeseries_filter && <ChartSelect timespan={getChartTimespan(data.chart)} chartId={chartId} />}
-      <Suspense fallback={staticChart}>
-        <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
-      </Suspense>
-      {data.show_timeseries_filter && <ChartNoScript title={kebabCase(data.title)} />}
-    </>
+    <Suspense fallback={staticChart}>
+      <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
+    </Suspense>
   )
 }
