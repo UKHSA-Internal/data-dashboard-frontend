@@ -71,6 +71,7 @@ export async function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
+  // read access token only if request is not public
   const accessToken = isPublic ? undefined : await getAuthToken()
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
