@@ -34,6 +34,24 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
 }
 
 /**
+ * Fetch the authentication token
+ * @returns The authentication token or undefined
+ * Only import auth at runtime, not at build time
+ */
+async function getAuthToken(): Promise<string | undefined> {
+  if (typeof window === 'undefined') {
+    try {
+      const { auth } = await import('@/auth')
+      const session = await auth()
+      return session?.accessToken
+    } catch (error) {
+      console.log('Failed to get auth token:', error)
+      return undefined
+    }
+  }
+}
+
+/**
  * Fetch client instance
  * This is the fetch instance which all requests should be initiated from.
  * It handles automatic retries and auth headers
@@ -53,6 +71,7 @@ export async function client<T>(
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
+  const accessToken = isPublic ? undefined : await getAuthToken()
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
     // Import cookies dynamically only in node environment to not trigger nextjs warnings
@@ -78,6 +97,8 @@ export async function client<T>(
     headers: {
       ...headers,
       ...customConfig.headers,
+      //passing authorization header only if request is not public
+      ...(isPublic ? {} : { Authorization: `Bearer ${accessToken}` }),
     },
   }
 
