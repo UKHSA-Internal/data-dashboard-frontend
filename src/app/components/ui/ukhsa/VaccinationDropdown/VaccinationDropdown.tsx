@@ -62,7 +62,7 @@ export const VaccinationDropdown = ({
 
   return (
     <div className={clsx('govuk-form-group', className)}>
-      <label className="govuk-label govuk-label--s" htmlFor="vaccination-select">
+      <label className="govuk-label govuk-label--s map-label-style" htmlFor="vaccination-select">
         Vaccine Selection
       </label>
       <select

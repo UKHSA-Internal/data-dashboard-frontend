@@ -67,7 +67,7 @@ export const TimePeriodDropdown = ({
 
   return (
     <div className={`govuk-form-group ${className}`}>
-      <label className="govuk-label govuk-label--s" htmlFor="time-period-select">
+      <label className="govuk-label govuk-label--s map-label-style" htmlFor="time-period-select">
         {t('map.yearSelection')}
       </label>
       <select
