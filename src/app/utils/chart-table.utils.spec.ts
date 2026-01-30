@@ -61,6 +61,7 @@ test('transforms the tabular api response to be usable within the ui', () => {
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -69,6 +70,7 @@ test('transforms the tabular api response to be usable within the ui', () => {
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -144,6 +146,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -151,6 +154,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -172,6 +176,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -179,6 +184,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -200,6 +206,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -207,6 +214,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -335,6 +343,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -343,6 +352,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -369,6 +379,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -377,6 +388,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -403,6 +415,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -411,6 +424,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -437,6 +451,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -445,6 +460,7 @@ test('divides into multiple tables when the number of plots exceeds the threshol
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-11-31',
@@ -516,6 +532,7 @@ test('successfully passes through reporting delay period', () => {
       ],
       data: [
         {
+          confidenceIntervals: {},
           inReportingDelay: false,
           record: {
             'col-0': '2022-10-31',
@@ -524,6 +541,7 @@ test('successfully passes through reporting delay period', () => {
           },
         },
         {
+          confidenceIntervals: {},
           inReportingDelay: true,
           record: {
             'col-0': '2022-11-31',

@@ -13,7 +13,9 @@ interface DownloadProps {
   data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
 }
 
-export async function Download({ data: { chart, y_axis, x_axis, tag_manager_event_id } }: DownloadProps) {
+export async function Download({
+  data: { chart, y_axis, x_axis, tag_manager_event_id, confidence_intervals },
+}: DownloadProps) {
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
@@ -43,6 +45,7 @@ export async function Download({ data: { chart, y_axis, x_axis, tag_manager_even
         }))}
         xAxis={x_axis}
         tagManagerEventId={tag_manager_event_id}
+        confidenceIntervals={confidence_intervals ?? false}
       />
     )
   }
