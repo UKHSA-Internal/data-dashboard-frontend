@@ -3,6 +3,7 @@ import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
+import ClassificationBanner from '@/app/components/ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
@@ -85,7 +86,7 @@ export default async function Layout(props: LayoutProps) {
       </TopNav>
 
       {onLandingPage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container bg-blue" />}
-
+      {onLandingPage && authEnabled ? <ClassificationBanner content="Official Sensitive" /> : null}
       {!onLandingPage ? (
         <div className="govuk-width-container print:hidden">
           <PhaseBanner tag={t('feedbackBannerPhase')}>
