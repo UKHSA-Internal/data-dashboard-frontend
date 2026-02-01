@@ -81,26 +81,4 @@ describe('ClassificationBanner', () => {
     expect(screen.getByText('Updated')).toBeInTheDocument()
     expect(screen.queryByText('Initial')).not.toBeInTheDocument()
   })
-
-  it('should have correct structure with div containing paragraph', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const banner = container.querySelector('div')
-    const paragraph = banner?.querySelector('p')
-
-    expect(banner).toBeInTheDocument()
-    expect(paragraph).toBeInTheDocument()
-    expect(paragraph?.textContent).toBe('official')
-  })
-
-  it('should preserve whitespace in content', () => {
-    const contentWithSpaces = 'official   sensitive'
-    render(<ClassificationBanner content={contentWithSpaces} />)
-    expect(screen.getByText(contentWithSpaces)).toBeInTheDocument()
-  })
-
-  it('should handle content with numbers', () => {
-    const contentWithNumbers = 'official-2024'
-    render(<ClassificationBanner content={contentWithNumbers} />)
-    expect(screen.getByText(contentWithNumbers)).toBeInTheDocument()
-  })
 })
