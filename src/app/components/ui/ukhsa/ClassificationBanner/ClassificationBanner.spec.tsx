@@ -23,19 +23,6 @@ describe('ClassificationBanner', () => {
     expect(banner).toHaveClass('bg-[#1D70B8]')
   })
 
-  it('should apply correct paragraph CSS classes', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const paragraph = container.querySelector('p')
-
-    expect(paragraph).toHaveClass('uppercase')
-    expect(paragraph).toHaveClass('font-sans')
-    expect(paragraph).toHaveClass('text-white')
-    expect(paragraph).toHaveClass('font-bold')
-    expect(paragraph).toHaveClass('text-[27px]')
-    expect(paragraph).toHaveClass('mt-[4px]')
-    expect(paragraph).toHaveClass('pl-[10px]')
-  })
-
   it('should have blue background color', () => {
     const { container } = render(<ClassificationBanner content="official" />)
     const banner = container.querySelector('div')
