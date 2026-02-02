@@ -47,20 +47,13 @@ export const CookieBanner = ({ title, body, cookie }: CookieBannerProps) => {
   })
 
   useEffect(() => {
-    const isCookieSet = !!getCookie(UKHSA_GDPR_COOKIE_NAME)
-
-    // Set initial visibility on client
-    if (view === CookieBannerView.Hidden && !isCookieSet) {
-      setView(CookieBannerView.Selection)
-    }
-
     // Set focus on confirmation screen
     if (view === CookieBannerView.Accepted || view === CookieBannerView.Rejected) {
       regionRef.current?.focus()
     }
 
     // Set focus after clicking "change settings"
-    if (view === CookieBannerView.Selection && isCookieSet) {
+    if (view === CookieBannerView.Selection && cookie) {
       regionRef.current?.focus()
     }
   }, [view])
