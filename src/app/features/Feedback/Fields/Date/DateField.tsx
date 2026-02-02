@@ -1,5 +1,5 @@
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
+import { useState } from 'react'
 
 import { Fieldtype } from '../../Feedback'
 
@@ -10,12 +10,14 @@ interface DateData {
 }
 
 export default function DateField({ label, helpText, cleanName, fieldHasError }: Readonly<Fieldtype>) {
-  const [hiddenDateInput, setHiddenDateInput] = useState<string>('')
   const [dateData, setDateData] = useState<DateData>({
     day: '',
     month: '',
     year: '',
   })
+
+  const hiddenDateInput =
+    dateData.day && dateData.month && dateData.year ? `${dateData.day}-${dateData.month}-${dateData.year}` : ''
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target
@@ -25,14 +27,6 @@ export default function DateField({ label, helpText, cleanName, fieldHasError }:
       [name]: value,
     }))
   }
-
-  useEffect(() => {
-    if (dateData.day && dateData.month && dateData.year) {
-      setHiddenDateInput(`${dateData.day}-${dateData.month}-${dateData.year}`)
-    } else {
-      setHiddenDateInput('')
-    }
-  }, [dateData])
 
   return (
     <div className={clsx('govuk-form-group govuk-!-margin-bottom-9', { 'govuk-form-group--error': fieldHasError })}>
