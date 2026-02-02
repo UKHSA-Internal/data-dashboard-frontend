@@ -14,7 +14,6 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({ size }) => {
           'text-[18px]': size === 'medium',
         })}
       >
-        {' '}
         Official Sensitive
       </p>
     </div>
