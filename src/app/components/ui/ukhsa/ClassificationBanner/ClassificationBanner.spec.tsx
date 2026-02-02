@@ -5,67 +5,56 @@ import { render, screen } from '@/config/test-utils'
 import ClassificationBanner from './ClassificationBanner'
 
 describe('ClassificationBanner', () => {
-  it('should render without crashing', () => {
-    render(<ClassificationBanner content="official" />)
-    expect(screen.getByText('official')).toBeInTheDocument()
+  it('should render the classification text', () => {
+    render(<ClassificationBanner size="large" />)
+
+    expect(screen.getByText('Official Sensitive')).toBeInTheDocument()
   })
 
-  it('should display the provided content', () => {
-    const testContent = 'official-sensitive'
-    render(<ClassificationBanner content={testContent} />)
-    expect(screen.getByText(testContent)).toBeInTheDocument()
+  it('should have blue background', () => {
+    const { container } = render(<ClassificationBanner size="large" />)
+    const bannerDiv = container.firstChild
+
+    expect(bannerDiv).toHaveClass('bg-[#1D70B8]')
   })
 
-  it('should apply correct container CSS classes', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const banner = container.querySelector('div')
+  it('should apply large font size when size is large', () => {
+    render(<ClassificationBanner size="large" />)
+    const paragraph = screen.getByText('Official Sensitive')
 
-    expect(banner).toHaveClass('bg-[#1D70B8]')
+    expect(paragraph).toHaveClass('text-[27px]')
   })
 
-  it('should have blue background color', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const banner = container.querySelector('div')
+  it('should apply medium font size when size is medium', () => {
+    render(<ClassificationBanner size="medium" />)
+    const paragraph = screen.getByText('Official Sensitive')
 
-    expect(banner).toHaveClass('bg-[#1D70B8]')
+    expect(paragraph).toHaveClass('text-[18px]')
   })
 
-  it('should render text in uppercase', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const paragraph = container.querySelector('p')
+  it('should not apply any conditional font size for other size values', () => {
+    render(<ClassificationBanner size="small" />)
+    const paragraph = screen.getByText('Official Sensitive')
 
+    expect(paragraph).not.toHaveClass('text-[27px]')
+    expect(paragraph).not.toHaveClass('text-[18px]')
+  })
+
+  it('should always apply base classes regardless of size', () => {
+    render(<ClassificationBanner size="unknown" />)
+    const paragraph = screen.getByText('Official Sensitive')
+
+    expect(paragraph).toHaveClass('govuk-width-container')
+    expect(paragraph).toHaveClass('mt-[4px]')
+    expect(paragraph).toHaveClass('font-sans')
+    expect(paragraph).toHaveClass('font-bold')
     expect(paragraph).toHaveClass('uppercase')
-  })
-
-  it('should render text in white color', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const paragraph = container.querySelector('p')
-
     expect(paragraph).toHaveClass('text-white')
   })
 
-  it('should render text in bold', () => {
-    const { container } = render(<ClassificationBanner content="official" />)
-    const paragraph = container.querySelector('p')
+  it('should render with empty size', () => {
+    render(<ClassificationBanner size="" />)
 
-    expect(paragraph).toHaveClass('font-bold')
-  })
-
-  it('should render multiple instances independently', () => {
-    const { rerender } = render(<ClassificationBanner content="official" />)
-    expect(screen.getByText('official')).toBeInTheDocument()
-
-    rerender(<ClassificationBanner content="secret" />)
-    expect(screen.getByText('secret')).toBeInTheDocument()
-    expect(screen.queryByText('official')).not.toBeInTheDocument()
-  })
-
-  it('should update when content prop changes', () => {
-    const { rerender } = render(<ClassificationBanner content="Initial" />)
-    expect(screen.getByText('Initial')).toBeInTheDocument()
-
-    rerender(<ClassificationBanner content="Updated" />)
-    expect(screen.getByText('Updated')).toBeInTheDocument()
-    expect(screen.queryByText('Initial')).not.toBeInTheDocument()
+    expect(screen.getByText('Official Sensitive')).toBeInTheDocument()
   })
 })

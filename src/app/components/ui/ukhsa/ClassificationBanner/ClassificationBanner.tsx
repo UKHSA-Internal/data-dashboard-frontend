@@ -1,12 +1,22 @@
 import React, { FC } from 'react'
 
+import { clsx } from '@/lib/clsx'
+
 interface ClassificationBannerProps {
-  content: string
+  size: 'large' | 'medium' | 'small' | 'unknown' | ''
 }
-const ClassificationBanner: FC<ClassificationBannerProps> = ({ content }) => {
+const ClassificationBanner: FC<ClassificationBannerProps> = ({ size }) => {
   return (
     <div className="bg-[#1D70B8]">
-      <p className="mt-[4px] pl-2 font-sans text-[27px] font-bold uppercase text-white"> {content}</p>
+      <p
+        className={clsx('govuk-width-container font-sans font-bold uppercase text-white', {
+          'text-[27px] mt-[4px]': size === 'large',
+          'text-[18px]': size === 'medium',
+        })}
+      >
+        {' '}
+        Official Sensitive
+      </p>
     </div>
   )
 }

@@ -86,7 +86,7 @@ export default async function Layout(props: LayoutProps) {
       </TopNav>
 
       {onLandingPage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container bg-blue" />}
-      {onLandingPage && authEnabled ? <ClassificationBanner content="Official Sensitive" /> : null}
+      {onLandingPage && authEnabled ? <ClassificationBanner size="large" /> : null}
       {!onLandingPage ? (
         <div className="govuk-width-container print:hidden">
           <PhaseBanner tag={t('feedbackBannerPhase')}>
