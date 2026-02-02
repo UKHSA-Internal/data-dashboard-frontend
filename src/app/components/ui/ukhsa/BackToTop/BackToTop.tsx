@@ -1,7 +1,6 @@
 'use client'
 
 import clsx from 'clsx'
-import { useEffect, useState } from 'react'
 import { useWindowScroll } from 'react-use'
 
 import { useTranslation } from '@/app/i18n/client'
@@ -15,15 +14,7 @@ export const BackToTop = ({ href = '#main-content', className }: BackToTopProps)
   const { y: horizontalWindowPosition } = useWindowScroll()
   const { t } = useTranslation('common')
 
-  const [isSticky, setIsSticky] = useState(false)
-
-  useEffect(() => {
-    if (horizontalWindowPosition > 200) {
-      setIsSticky(true)
-    } else {
-      setIsSticky(false)
-    }
-  }, [horizontalWindowPosition])
+  const isSticky = horizontalWindowPosition > 200
 
   return (
     <a
