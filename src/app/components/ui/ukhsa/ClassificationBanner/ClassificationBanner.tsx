@@ -10,12 +10,11 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({ size }) => {
     <div className="bg-[#1D70B8]">
       <p
         className={clsx('font-sans font-bold uppercase text-white', {
-          'govuk-width-container text-[27px] mt-[4px]': size === 'large',
+          'govuk-width-container text-[27px] mt-[4px] py-2': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
-        {' '}
-        Official Sensitive
+        Official-Sensitive
       </p>
     </div>
   )
