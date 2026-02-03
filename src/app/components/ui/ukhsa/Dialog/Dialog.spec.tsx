@@ -39,7 +39,7 @@ describe('Dialog', () => {
     const triggerElement = screen.getByRole('button', { name: 'Open' })
     expect(triggerElement).toHaveAttribute('aria-expanded', 'false')
     expect(triggerElement).toHaveAttribute('aria-haspopup', 'dialog')
-    expect(triggerElement).toHaveAttribute('aria-controls', 'radix-:r0:')
+    expect(triggerElement).toHaveAttribute('aria-controls', 'radix-_r_0_')
 
     expect(screen.queryByRole('dialog', { name: 'Dialog title' })).not.toBeInTheDocument()
 
