@@ -27,7 +27,7 @@ RUN npm run build
 # Runtime stage (distroless, nonroot)
 # Only copy what is required to run the built app.
 #
-FROM gcr.io/distroless/nodejs22-debian13:nonroot AS runner
+FROM gcr.io/distroless/nodejs22:nonroot AS runner
 
 WORKDIR /app
 
