@@ -6,7 +6,7 @@
  */
 import Leaflet from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
-import { ReactElement, useCallback, useEffect, useState } from 'react'
+import { ReactElement, useCallback, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { useDebounceCallback, useEventListener } from 'usehooks-ts'
 
@@ -20,23 +20,22 @@ export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [R
   const [, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
   const debouncedSetSelectedFeatureId = useDebounceCallback(setSelectedFeatureId, 200)
   const map = useMap()
-  const [visibleRegions, setVisibleRegions] = useState<Array<Feature>>([])
 
   // Detects visible features in the current map view.
   // This function is called once on map load and again on subsequent map move events.
-  const calculateVisibleFeatures = useCallback(() => {
+  const calculateVisibleFeatures = () => {
     const mapBounds = map.getBounds()
-    const visibleRegions = features.filter((feature) => {
+    return features.filter((feature) => {
       const featureBounds = Leaflet.geoJSON(feature).getBounds()
       return mapBounds.intersects(featureBounds)
     })
-    setVisibleRegions(visibleRegions)
-  }, [features, map])
+  }
 
-  useEffect(() => {
-    // Run this effect once on mount
-    calculateVisibleFeatures()
-  }, [calculateVisibleFeatures])
+  const [visibleRegions, setVisibleRegions] = useState<Array<Feature>>(calculateVisibleFeatures())
+
+  const updateVisibleRegions = useCallback(() => {
+    setVisibleRegions(calculateVisibleFeatures())
+  }, [calculateVisibleFeatures, features, map])
 
   useEventListener('keydown', (event) => {
     if (visibleRegions.some((region, index) => index === Number(event.key) - 1)) {
@@ -54,7 +53,7 @@ export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [R
         {`There are ${numVisibleRegions} or more visible regions. Please zoom in to refine results.`}
       </div>
     )
-    return [description, calculateVisibleFeatures]
+    return [description, updateVisibleRegions]
   }
 
   // Otherwise, provide instructions for selecting regions using keyboard numbers.
@@ -69,5 +68,5 @@ export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [R
     </div>
   )
 
-  return [description, calculateVisibleFeatures]
+  return [description, updateVisibleRegions]
 }
