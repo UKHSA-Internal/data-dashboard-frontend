@@ -4,8 +4,10 @@ import { kebabCase, snakeCase } from 'lodash'
 import Link from 'next/link'
 
 import { Card, Chart } from '@/app/components/ui/ukhsa'
+import ClassificationBanner from '@/app/components/ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowMoreURL } from '@/app/utils/show-more.utils'
+import { authEnabled } from '@/config/constants'
 
 type ChartCardSectionProps = {
   value: any
@@ -40,6 +42,7 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
 
         return (
           <div key={card.id} data-testid="card-wrapper">
+            {authEnabled && <ClassificationBanner size="medium" />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}
