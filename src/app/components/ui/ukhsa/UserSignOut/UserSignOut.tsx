@@ -1,10 +1,18 @@
-import { signOut } from '@/api/requests/auth/signOut'
+import { redirect } from 'next/navigation'
+
 import { getServerTranslation } from '@/app/i18n'
-import { auth } from '@/auth'
-import { authSignOutRedirectionPath } from '@/config/constants'
+import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
+import { auth, signOut } from '@/auth'
+import { logger } from '@/lib/logger'
 
 export default async function UserSignOut() {
-  const session = await auth()
+  let session
+  try {
+    session = await auth()
+  } catch (error) {
+    logger.error('Auth error:', error)
+    return <></>
+  }
 
   if (!session) return <></>
 
@@ -15,7 +23,13 @@ export default async function UserSignOut() {
       className="inline-flex items-center gap-3"
       action={async () => {
         'use server'
-        await signOut({ redirectTo: authSignOutRedirectionPath })
+        try {
+          await signOut({ redirect: false })
+        } catch {
+          logger.error('issue calling authJS signout.')
+        }
+        const cognitoLogoutUrl = getCognitoSignoutURL()
+        redirect(cognitoLogoutUrl)
       }}
     >
       <button className="govuk-button mb-0" type="submit">
