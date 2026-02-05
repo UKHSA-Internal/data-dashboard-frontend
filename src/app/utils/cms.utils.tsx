@@ -13,6 +13,7 @@ import { getShowLessURL } from '@/app/utils/show-more.utils'
 import {
   ButtonExternal,
   ButtonInternal,
+  CardCollageSection,
   ChartCardSection,
   CodeBlock,
   Headline,
@@ -91,6 +92,10 @@ export const renderCard = (
 
       {type === 'chart_card_section' && (
         <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
+      )}
+
+      {type === 'card_collage_section' && (
+        <CardCollageSection value={value} heading={heading} showMoreSections={showMoreSections} />
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}

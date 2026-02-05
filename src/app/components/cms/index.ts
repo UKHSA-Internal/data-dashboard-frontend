@@ -1,5 +1,6 @@
 export * from './ButtonExternal/ButtonExternal'
 export * from './ButtonInternal/ButtonInternal'
+export * from './CardCollageSection/CardCollageSection'
 export * from './ChartCardSection/ChartCardSection'
 export * from './CodeBlock/CodeBlock'
 export * from './Headline/Headline'

@@ -129,6 +129,31 @@ export const CardTypes = z.discriminatedUnion('type', [
     id: z.string(),
   }),
   z.object({
+    type: z.literal('card_collage_section'),
+    value: z.object({
+      columns: z.array(
+        z.object({
+          id: z.string(),
+          type: z.literal('column'),
+          value: z.discriminatedUnion('type', [
+            z.object({
+              type: z.literal('chart_card'),
+              value: WithSimplifiedChartCardAndLink.shape.value,
+            }),
+            z.object({
+              type: z.literal('headline_components'),
+              value: z.object({
+                components: z.tuple([Blocks.element, Blocks.element]), //TODO: Create new headline component schema
+                date_prefix: z.string(),
+              }),
+            }),
+          ]),
+        })
+      ),
+    }),
+    id: z.string(),
+  }),
+  z.object({
     type: z.literal('weather_health_alert_card'),
     value: WithWeatherHealthAlertCard,
     id: z.string(),
