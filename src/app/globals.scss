@@ -192,23 +192,7 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
     border-right: 2px solid #fff;
     display: inline-block;
     transition: transform 0.2s ease;
-    margin: 0 12px 7px 2px;
-  }
-
-  @media (max-width: 400px) {
-    &:before {
-      display: none;
-    }
-  }
-
-  &:after {
-    content: '';
-    height: 3px;
-    left: 20px;
-    position: absolute;
-    right: 20px;
-    bottom: 0;
-    top: auto;
+    margin: 0 12px 2px 2px;
   }
 
   &.open {
@@ -216,10 +200,6 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
       transform: rotate(225deg) translate(-1px, -3px);
       margin-bottom: 0;
       border-color: var(--colour-blue);
-    }
-
-    &:after {
-      background: var(--colour-blue);
     }
   }
 
@@ -230,14 +210,13 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
     &:before {
       border-color: var(--colour-black) !important;
     }
-    &:after {
-      background: var(--colour-black) !important;
-    }
   }
+}
 
-  &:hover:not(:focus):not(.open) {
-    &:after {
-      background-color: var(--colour-white) !important;
+.ukhsa-chevron.ukhsa-chevron--always-white {
+  &.open {
+    &:before {
+      border-color: var(--colour-white);
     }
   }
 }

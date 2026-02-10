@@ -3,19 +3,14 @@ import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
-import HeroBanner from '@/app/components/ui/ukhsa/HeroBanner/HeroBanner'
-import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
+import { HeaderMenu } from '@/app/components/ui/ukhsa/HeaderMenu/HeaderMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
-import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
-import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { getLandingPage } from '@/app/utils/cms'
 import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   children: ReactNode
-  params: Promise<{ slug?: string[] }>
 }
 
 export function generateMetadata() {
@@ -25,14 +20,9 @@ export function generateMetadata() {
 }
 
 export default async function Layout(props: LayoutProps) {
-  const params = await props.params
   const { children } = props
 
   const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])
-
-  const onLandingPage = !params?.slug || params.slug.length === 0
-
-  const { sub_title: subTitle } = await getLandingPage()
 
   return (
     <>
@@ -69,34 +59,25 @@ export default async function Layout(props: LayoutProps) {
                 </svg>
               </Link>
             </div>
-            {onLandingPage ? null : (
-              <div className="govuk-header__content inline w-auto text-center sm:w-5/12">
-                <Link href="/" className="govuk-header__link govuk-header__service-name">
-                  {t('serviceTitle')}
-                </Link>
-              </div>
-            )}
+            <div className="govuk-header__content inline w-auto text-center sm:w-5/12">
+              <Link href="/" className="govuk-header__link govuk-header__service-name">
+                {t('serviceTitle')}
+              </Link>
+            </div>
           </div>
+          <HeaderMenu />
         </div>
       </header>
 
-      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
-        <MegaMenu />
-      </TopNav>
-
-      {onLandingPage ? <HeroBanner subTitle={subTitle} /> : <div className="govuk-width-container bg-blue" />}
-
-      {!onLandingPage ? (
-        <div className="govuk-width-container print:hidden">
-          <PhaseBanner tag={t('feedbackBannerPhase')}>
-            <Trans i18nKey="feedbackBanner" t={t}>
-              <span className="govuk-phase-banner__text">
-                <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />
-              </span>
-            </Trans>
-          </PhaseBanner>
-        </div>
-      ) : null}
+      <div className="govuk-width-container print:hidden">
+        <PhaseBanner tag={t('feedbackBannerPhase')}>
+          <Trans i18nKey="feedbackBanner" t={t}>
+            <span className="govuk-phase-banner__text">
+              <Link className="govuk-link govuk-link--no-visited-state" href="/feedback" />
+            </span>
+          </Trans>
+        </PhaseBanner>
+      </div>
 
       {!globalBanners || globalBanners.length <= 0
         ? null
