@@ -12,9 +12,10 @@ interface DownloadFormProps {
   chart: Chart
   xAxis?: string | null
   tagManagerEventId: string | null
+  confidenceIntervals?: boolean
 }
 
-export function DownloadForm({ chart, xAxis, tagManagerEventId }: DownloadFormProps) {
+export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceIntervals = false }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
@@ -96,6 +97,13 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId }: DownloadFormPr
           </div>
 
           {xAxis && <input type="hidden" name="x_axis" value={xAxis} data-testid="download-x-axis" />}
+
+          <input
+            type="hidden"
+            name="confidence_intervals"
+            value={confidenceIntervals ? 'true' : 'false'}
+            data-testid="download-confidence-intervals"
+          />
 
           {chart.map(({ id, value }) => (
             <input

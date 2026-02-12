@@ -17,6 +17,8 @@ export const requestSchema = z.object({
   y_axis_title: z.string().optional(),
   y_axis_minimum_value: z.number().nullable().optional(),
   y_axis_maximum_value: z.number().nullable().optional(),
+  confidence_intervals: z.boolean().optional(),
+  confidence_colour: ChartLineColours.nullable().optional(),
   plots: z.array(
     z.object({
       topic: Topics,
@@ -60,6 +62,8 @@ export const getCharts = async (chart: RequestParams) => {
     y_axis_title,
     y_axis_maximum_value,
     y_axis_minimum_value,
+    confidence_intervals,
+    confidence_colour,
   } = chart
 
   const body: RequestParams = {
@@ -67,6 +71,8 @@ export const getCharts = async (chart: RequestParams) => {
     file_format: chartFormat,
     chart_width,
     chart_height,
+    confidence_intervals,
+    confidence_colour,
     x_axis,
     y_axis,
     x_axis_title,
