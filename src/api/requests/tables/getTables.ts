@@ -32,6 +32,8 @@ export const responseSchema = z.array(
         label: z.string(),
         value: z.coerce.number().nullable(),
         in_reporting_delay_period: z.boolean(),
+        lower_confidence: z.coerce.number().nullable().optional(),
+        upper_confidence: z.coerce.number().nullable().optional(),
       })
     ),
   })
