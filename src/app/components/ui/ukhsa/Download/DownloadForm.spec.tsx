@@ -191,6 +191,35 @@ describe('DownloadForm', () => {
     expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
   })
 
+  test('renders confidence_intervals hidden field with value false by default', () => {
+    render(<DownloadForm {...props} />)
+
+    const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
+    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
+    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
+    expect(confidenceIntervalsInput).toHaveValue('false')
+  })
+
+  test('renders confidence_intervals hidden field with value true when confidenceIntervals prop is true', () => {
+    const propsWithConfidenceIntervals = { ...props, confidenceIntervals: true }
+    render(<DownloadForm {...propsWithConfidenceIntervals} />)
+
+    const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
+    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
+    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
+    expect(confidenceIntervalsInput).toHaveValue('true')
+  })
+
+  test('renders confidence_intervals hidden field with value false when confidenceIntervals prop is false', () => {
+    const propsWithConfidenceIntervals = { ...props, confidenceIntervals: false }
+    render(<DownloadForm {...propsWithConfidenceIntervals} />)
+
+    const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
+    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
+    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
+    expect(confidenceIntervalsInput).toHaveValue('false')
+  })
+
   test('Downloading a csv file for users with JavaScript', async () => {
     jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
