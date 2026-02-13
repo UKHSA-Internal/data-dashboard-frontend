@@ -52,13 +52,17 @@ export default function DataAcknowledgement() {
               I acknowledge that I have read the full terms of service, understood and agree to the above conditions
             </b>
           </label>
-          {showError && (
-            <div>
-              <p className="govuk-error-message" id="acknowledgement-error">
-                <span className="govuk-visually-hidden">Error:</span> {state.error}
-              </p>
-            </div>
-          )}
+
+          {
+            // Only render error message if there is an error and the checkbox is not checked
+            showError && (
+              <div>
+                <p className="govuk-error-message" id="acknowledgement-error">
+                  <span className="govuk-visually-hidden">Error:</span> {state.error}
+                </p>
+              </div>
+            )
+          }
         </div>
 
         <div>

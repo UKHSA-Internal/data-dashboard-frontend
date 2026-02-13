@@ -27,8 +27,6 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
     const agreedToTerms = formData.get('acknowledgement')
 
     if (!agreedToTerms) {
-      // Instead of returning an error object, redirect to the same page
-      // or handle the error differently (e.g., use cookies/searchParams)
       if (!agreedToTerms) {
         return {
           error: 'You must accept the terms and conditions to continue',
