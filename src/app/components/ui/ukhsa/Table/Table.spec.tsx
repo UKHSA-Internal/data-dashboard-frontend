@@ -423,3 +423,330 @@ describe('Table headings display as expected', () => {
     expect(headers[2]).toHaveTextContent('Second label override')
   })
 })
+
+describe('Confidence intervals', () => {
+  test('displays confidence intervals description in caption when confidence_intervals is true', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getByText } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    expect(
+      getByText('Metric column includes 95% lower and upper confidence intervals, in brackets.')
+    ).toBeInTheDocument()
+  })
+
+  test('does not display confidence intervals description when confidence_intervals is false', async () => {
+    const mockDataWithoutConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: false,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { queryByText } = render((await Table({ data: mockDataWithoutConfidence, size: mockSize })) as ReactElement)
+
+    expect(
+      queryByText('Metric column includes 95% lower and upper confidence intervals, in brackets.')
+    ).not.toBeInTheDocument()
+  })
+
+  test('displays confidence intervals in table cells with bold value', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              lower_confidence: 93.0,
+              upper_confidence: 97.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+        {
+          reference: '2022-11-30',
+          values: [
+            {
+              label: 'Plot1',
+              value: 9360.0,
+              lower_confidence: 92.5,
+              upper_confidence: 97.5,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(2)
+
+    // Check that the value is bold and confidence intervals are displayed
+    const firstCell = cells[0]
+    expect(firstCell.innerHTML).toContain('<strong>12,630.00</strong>')
+    expect(firstCell.textContent).toContain('12,630.00')
+    expect(firstCell.textContent).toContain('(93.00 to 97.00)')
+
+    const secondCell = cells[1]
+    expect(secondCell.innerHTML).toContain('<strong>9,360.00</strong>')
+    expect(secondCell.textContent).toContain('9,360.00')
+    expect(secondCell.textContent).toContain('(92.50 to 97.50)')
+  })
+
+  test('does not display confidence intervals when confidence_intervals is false even if data includes them', async () => {
+    const mockDataWithoutConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: false,
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              lower_confidence: 93.0,
+              upper_confidence: 97.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithoutConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(1)
+
+    // Should display value without confidence intervals and without bold
+    expect(cells[0].textContent).toBe('12,630.00')
+    expect(cells[0].textContent).not.toContain('(93.00 to 97.00)')
+    expect(cells[0].innerHTML).not.toContain('<strong>')
+  })
+
+  test('displays value in bold even without confidence intervals when confidence_intervals is true', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(1)
+
+    // Value should be bold even without confidence intervals
+    expect(cells[0].innerHTML).toContain('<strong>12,630.00</strong>')
+    expect(cells[0].textContent).toBe('12,630.00')
+  })
+
+  test('handles null confidence interval values gracefully', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              lower_confidence: null,
+              upper_confidence: null,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(1)
+
+    // Should display value in bold without confidence intervals when values are null
+    expect(cells[0].innerHTML).toContain('<strong>12,630.00</strong>')
+    expect(cells[0].textContent).toBe('12,630.00')
+    expect(cells[0].textContent).not.toContain('(')
+  })
+
+  test('handles partial confidence interval values (only lower or only upper)', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              lower_confidence: 93.0,
+              upper_confidence: null,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(1)
+
+    // Should display value in bold without confidence intervals when only one value is present
+    expect(cells[0].innerHTML).toContain('<strong>12,630.00</strong>')
+    expect(cells[0].textContent).toBe('12,630.00')
+    expect(cells[0].textContent).not.toContain('(')
+  })
+
+  test('confidence intervals break to new line on small screens', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: 12630.0,
+              lower_confidence: 93.0,
+              upper_confidence: 97.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(1)
+
+    // Check that the span has the responsive classes for line breaking
+    const cellHTML = cells[0].innerHTML
+    expect(cellHTML).toContain('block sm:inline')
+  })
+
+  test('handles null cell values with confidence intervals', async () => {
+    const mockDataWithConfidence: ComponentProps<typeof Table>['data'] = {
+      ...mockData,
+      confidence_intervals: true,
+      confidence_intervals_description: 'Metric column includes 95% lower and upper confidence intervals, in brackets.',
+    }
+
+    getTableMock.mockResolvedValueOnce({
+      success: true,
+      data: [
+        {
+          reference: '2022-10-31',
+          values: [
+            {
+              label: 'Plot1',
+              value: null,
+              lower_confidence: 93.0,
+              upper_confidence: 97.0,
+              in_reporting_delay_period: false,
+            },
+          ],
+        },
+      ],
+    })
+
+    const { getAllByRole } = render((await Table({ data: mockDataWithConfidence, size: mockSize })) as ReactElement)
+
+    const cells = getAllByRole('cell')
+    expect(cells).toHaveLength(1)
+
+    // Should display "-" in bold without confidence intervals when value is null
+    expect(cells[0].innerHTML).toContain('<strong>-</strong>')
+    expect(cells[0].textContent).toBe('-')
+    expect(cells[0].textContent).not.toContain('(')
+  })
+})
