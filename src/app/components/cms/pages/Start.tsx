@@ -10,7 +10,7 @@ import { auth } from '@/auth'
 export default async function StartPage({ searchParams: { logout } }: PageComponentBaseProps<{ logout?: 'success' }>) {
   const session = await auth()
 
-  if (session) redirect('/')
+  if (session) redirect('/acknowledgements')
 
   const { t } = await getServerTranslation('auth')
 
