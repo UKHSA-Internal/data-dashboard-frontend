@@ -39,7 +39,7 @@ export default async function Layout(props: LayoutProps) {
       <header className="govuk-header border-none bg-blue" data-module="govuk-header">
         <div className="relative">
           <div className="govuk-width-container relative flow-root">
-            <div className="govuk-header__logo govuk-!-padding-top-3">
+            <div className="govuk-header__logo govuk-!-padding-top-3 w-auto">
               <Link href="/" className="govuk-header__link govuk-header__link--homepage">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
@@ -70,8 +70,8 @@ export default async function Layout(props: LayoutProps) {
               </Link>
             </div>
             {onLandingPage ? null : (
-              <div className="govuk-header__content inline w-auto text-center sm:w-5/12">
-                <Link href="/" className="govuk-header__link govuk-header__service-name">
+              <div className="govuk-header__content flex h-9 w-auto text-center sm:w-5/12">
+                <Link href="/" className="govuk-header__link govuk-header__service-name m-0 mt-3 h-6">
                   {t('serviceTitle')}
                 </Link>
               </div>
