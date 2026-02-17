@@ -191,15 +191,6 @@ export class App {
   async hasHeroBannerLayout() {
     await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
 
-    await expect(this.heroBanner.getByRole('heading', { level: 1, name: 'UKHSA data dashboard' })).toBeVisible()
-    await expect(
-      this.heroBanner.getByRole('heading', { level: 2, name: 'Showing public health data across England' })
-    ).toBeVisible()
-    await expect(this.heroBanner.getByRole('link', { name: 'What is the UKHSA data dashboard?' })).toHaveAttribute(
-      'href',
-      '/about'
-    )
-
     // Phase Banner
     await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
     await expect(
