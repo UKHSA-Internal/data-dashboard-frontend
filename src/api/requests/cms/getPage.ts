@@ -16,6 +16,7 @@ type PageTypeToDataMap = {
   [PageType.Landing]: typeof WithLandingData
   [PageType.Feedback]: typeof withFeedbackData
   [PageType.Topic]: typeof WithTopicData
+  [PageType.TopicsList]: typeof WithTopicsListData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
   [PageType.WhatsNewParent]: typeof WithWhatsNewParentData
@@ -65,6 +66,14 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+})
+
+const WithTopicsListData = SharedPageData.extend({
+  page_description: z.string(),
+  body: z.union([z.string(), CompositeBody]),
+  meta: Meta.extend({
+    type: z.literal('topics.TopicsListPage'),
+  }),
 })
 
 const WithCommonData = SharedPageData.extend({
@@ -148,6 +157,7 @@ export const responseSchema = z.union([
   WithLandingData,
   withFeedbackData,
   WithTopicData,
+  WithTopicsListData,
   WithCommonData,
   WithCompositeData,
   WithWhatsNewParentData,
