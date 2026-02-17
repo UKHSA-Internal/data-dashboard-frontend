@@ -33,6 +33,7 @@ export default [
       'yarn.lock',
       'playwright.config.ts',
       'playwright-report/**',
+      'test-results/**',
       '.unlighthouse/**',
     ],
   },
