@@ -14,14 +14,14 @@ import { headers } from 'next/headers'
  *
  * Example:
  * ```
- * const pathname = getPathname();
+ * const pathname = await getPathname();
  * ```
  *
  * @returns {string} An string containing the URL pathname
  */
 
-export const getPathname = () => {
-  const headersList = headers() as unknown as UnsafeUnwrappedHeaders
+export const getPathname = async (): Promise<string> => {
+  const headersList = (await headers()) as unknown as UnsafeUnwrappedHeaders
   const headersUrl = headersList.get('x-url') || ''
 
   const pathname = headersUrl ? new URL(headersUrl).pathname : ''

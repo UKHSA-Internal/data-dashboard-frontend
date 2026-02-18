@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { type NextMiddleware, type NextRequest, NextResponse } from 'next/server'
+import { type NextProxy, type NextRequest, NextResponse } from 'next/server'
 
 import { getPages } from './api/requests/cms/getPages'
 import { getPageBySlug } from './api/requests/getPageBySlug'
@@ -16,7 +16,7 @@ export const config = {
   ],
 }
 
-export const middleware: NextMiddleware = async (request: NextRequest) => {
+export const proxy: NextProxy = async (request: NextRequest) => {
   let response = NextResponse.next()
   const pathname = request.nextUrl.pathname
 
