@@ -14,8 +14,8 @@ import {
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
 import { Announcements, MetricsCard, View } from '@/app/components/ui/ukhsa'
-import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
 import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
+import Search from '@/app/components/ui/ukhsa/Search/Search'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -112,7 +112,7 @@ export default async function MetricsParentPage({
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
 
-          <MetricsSearch value={search ?? ''} />
+          <Search value={search ?? ''} />
 
           <ul className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(
