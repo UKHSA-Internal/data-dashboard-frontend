@@ -3,7 +3,7 @@ import { userEvent } from '@testing-library/user-event'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { render, waitFor } from '@/config/test-utils'
 
-import MetricsSearch from './MetricsSearch'
+import Search from './Search'
 
 beforeEach(() => {
   mockRouter.push('/metrics-documentation')
@@ -11,7 +11,7 @@ beforeEach(() => {
 })
 
 test('renders input and buttons', async () => {
-  const { getByRole } = render(<MetricsSearch value="" />)
+  const { getByRole } = render(<Search value="" />)
 
   const form = getByRole('form', { name: 'Metrics search' })
   expect(form).toBeVisible()
@@ -25,7 +25,7 @@ test('renders input and buttons', async () => {
 test('defaults the search input value with the value set in the url state', async () => {
   mockRouter.push('/?search=Mock+search+value')
 
-  const { getByLabelText } = render(<MetricsSearch value="Mock search value" />)
+  const { getByLabelText } = render(<Search value="Mock search value" />)
 
   await waitFor(() => {
     expect(mockRouter.asPath).toEqual('/?search=Mock+search+value')
@@ -39,7 +39,7 @@ test('defaults the search input value with the value set in the url state', asyn
 test('sets the url state with the search input when typing', async () => {
   mockRouter.push('')
 
-  const { getByLabelText } = render(<MetricsSearch value="" />)
+  const { getByLabelText } = render(<Search value="" />)
 
   await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
 
@@ -49,7 +49,7 @@ test('sets the url state with the search input when typing', async () => {
 })
 
 test('clears the url state and search input when clicking the "Clear" link', async () => {
-  const { getByRole, getByLabelText } = render(<MetricsSearch value="" />)
+  const { getByRole, getByLabelText } = render(<Search value="" />)
 
   await userEvent.type(getByRole('textbox', { name: 'Metric name' }), 'Mock search value')
 
@@ -67,7 +67,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
 })
 
 test('clears the url state when the search input is cleared (via keyboard e.g backspace)', async () => {
-  const { getByLabelText } = render(<MetricsSearch value="" />)
+  const { getByLabelText } = render(<Search value="" />)
 
   await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
 
