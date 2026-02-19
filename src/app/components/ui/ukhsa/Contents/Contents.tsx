@@ -15,11 +15,15 @@ interface ContentsProps {
   className?: string
 }
 
-export const Contents = ({ heading = 'Contents', children, className }: ContentsProps) => {
+export const Contents = ({
+  heading = 'Contents',
+  children,
+  className = 'mb-8 border-l-4 border-[#0b0c0c] pl-4',
+}: ContentsProps) => {
   return (
     <nav className={className} aria-label="Contents">
-      <h2 className="govuk-heading-s govuk-!-margin-bottom-1 font-normal">{heading}</h2>
-      <ol className="govuk-!-margin-left-4">{children}</ol>
+      <h2 className="govuk-body-m govuk-!-margin-bottom-1 font-bold">{heading}</h2>
+      <ol className="govuk-list govuk-list--spaced">{children}</ol>
     </nav>
   )
 }
@@ -35,8 +39,8 @@ interface ContentsLinkProps {
 
 export const ContentsLink = ({ children, href }: ContentsLinkProps) => {
   return children ? (
-    <li className="govuk-body-m govuk-!-margin-bottom-1 relative">
-      <Link className="govuk-link--no-visited-state govuk-dash" href={href} prefetch>
+    <li className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat">
+      <Link className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat underline" href={href} prefetch>
         {children}
       </Link>
     </li>

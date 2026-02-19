@@ -19,7 +19,7 @@ type ChildWithHeadingProp = ChildWithProps<{ heading: string }>
 export const PageSectionWithContents = ({ children }: PageSectionWithContentsProps) => {
   return (
     <>
-      <Contents className="govuk-!-margin-bottom-5">
+      <Contents>
         {Children.map(children, (child: ReactNode) => {
           if (!isValidElement(child)) return null
 

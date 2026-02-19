@@ -98,7 +98,7 @@ export const linkedHeadingsComponents: any = {
     // If href is valid, render an anchor
     if (typeof href === 'string' && href) {
       return (
-        <a href={href} className="govuk-link--no-visited-state govuk-body govuk-!-margin-bottom-0">
+        <a href={href} className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat underline">
           {children}
         </a>
       )
@@ -125,8 +125,8 @@ export const linkedHeadingsComponents: any = {
     const className = 'className' in props ? (props.className as string) : undefined
     if (typeof className === 'string' && className.includes('toc')) {
       return (
-        <nav aria-label="Contents" className="govuk-!-margin-bottom-5">
-          <h2 className="govuk-body-m govuk-!-margin-bottom-1">Contents</h2>
+        <nav aria-label="Contents" className="mb-8 border-l-4 border-[#0b0c0c] pl-4">
+          <h2 className="govuk-body-m govuk-!-margin-bottom-1 font-bold">Contents</h2>
           {children}
         </nav>
       )
@@ -138,10 +138,7 @@ export const linkedHeadingsComponents: any = {
     const id = 'id' in props ? (props.id as string) : undefined
     if (typeof className === 'string' && className.includes('toc')) {
       return (
-        <li
-          id={typeof id === 'string' ? id : ''}
-          className="govuk-!-margin-left-2 govuk-!-margin-bottom-1 bg-dash bg-[left_center] bg-no-repeat pl-6"
-        >
+        <li id={typeof id === 'string' ? id : ''} className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat">
           {children}
         </li>
       )
