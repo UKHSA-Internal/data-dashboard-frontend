@@ -81,6 +81,8 @@ export default async function MetricsParentPage({
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
+  const { t } = await getServerTranslation('metrics')
+
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
   if (!metricsEntries.success) {
@@ -111,9 +113,12 @@ export default async function MetricsParentPage({
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
-
-          <Search value={search ?? ''} />
-
+          <Search
+            searchTitle={t('metricsSearch.searchTitle')}
+            noScriptButtonText={t('metricsSearch.noScriptButtonText')}
+            clearText={t('metricsSearch.noScriptButtonText')}
+            href="/metrics-documentation"
+          />
           <ul className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(
               ({ id, title, meta, page_description: description, metric, metric_group: group, topic }: any) => {
