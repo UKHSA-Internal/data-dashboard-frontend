@@ -1,22 +1,22 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
+import { useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
-
-import { useTranslation } from '@/app/i18n/client'
 
 const DEBOUNCE_MILLISECONDS = 300
 
 interface SearchProps {
-  value: string
+  href: string
+  searchTitle: string
+  noScriptButtonText: string
+  clearText: string
 }
 
-export function Search({ value }: SearchProps) {
+export function Search({ href, searchTitle, noScriptButtonText, clearText }: SearchProps) {
   const router = useRouter()
-
-  const { t } = useTranslation('metrics')
+  const value = useSearchParams().get('value') || ''
 
   const [searchInputValue, setSearchInputValue] = useState(value)
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
@@ -29,12 +29,12 @@ export function Search({ value }: SearchProps) {
   }, [debouncedSearchValue])
 
   return (
-    <form method="GET" action={'/metrics-documentation'} aria-label="Metrics search">
+    <form method="GET" action={href} aria-label="Metrics search">
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-form-group">
             <label className="govuk-label" htmlFor="metric-name">
-              {t('metricsSearch.searchTitle')}
+              {searchTitle}
             </label>
             <input
               className={'govuk-input govuk-!-margin-right-2 govuk-!-margin-bottom-2 w-3/5'}
@@ -48,7 +48,7 @@ export function Search({ value }: SearchProps) {
             />
             <noscript>
               <button type="submit" className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2">
-                {t('metricsSearch.noScriptButtonText')}
+                {noScriptButtonText}
               </button>
             </noscript>
             <Link
@@ -59,7 +59,7 @@ export function Search({ value }: SearchProps) {
                 setSearchInputValue('')
               }}
             >
-              {t('metricsSearch.clearText')}
+              {clearText}
             </Link>
           </div>
         </div>
