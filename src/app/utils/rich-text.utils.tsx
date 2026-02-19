@@ -125,8 +125,8 @@ export const linkedHeadingsComponents: any = {
     const className = 'className' in props ? (props.className as string) : undefined
     if (typeof className === 'string' && className.includes('toc')) {
       return (
-        <nav aria-label="Contents" className="govuk-!-margin-bottom-5">
-          <h2 className="govuk-body-m govuk-!-margin-bottom-1">Contents</h2>
+        <nav aria-label="Contents" className="mb-8 border-l-4 border-[#0b0c0c] pl-4">
+          <h2 className="govuk-body-m govuk-!-margin-bottom-1 font-bold">Contents</h2>
           {children}
         </nav>
       )
@@ -140,7 +140,7 @@ export const linkedHeadingsComponents: any = {
       return (
         <li
           id={typeof id === 'string' ? id : ''}
-          className="govuk-!-margin-left-2 govuk-!-margin-bottom-1 bg-dash bg-[left_center] bg-no-repeat pl-6"
+          className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat underline"
         >
           {children}
         </li>
