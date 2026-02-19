@@ -9,11 +9,11 @@ import { useTranslation } from '@/app/i18n/client'
 
 const DEBOUNCE_MILLISECONDS = 300
 
-interface MetricsSearchProps {
+interface SearchProps {
   value: string
 }
 
-export function MetricsSearch({ value }: MetricsSearchProps) {
+export function Search({ value }: SearchProps) {
   const router = useRouter()
 
   const { t } = useTranslation('metrics')
@@ -68,4 +68,4 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
   )
 }
 
-export default MetricsSearch
+export default Search
