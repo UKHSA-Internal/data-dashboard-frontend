@@ -1,19 +1,17 @@
 'use client'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { MouseEvent, ReactNode, useEffect, useRef, useState } from 'react'
+import { MouseEvent, ReactNode, useRef, useState } from 'react'
 import { useClickAway } from 'react-use'
+
+import { useNavigationEvent } from '@/app/hooks/useNavigationEvent'
 
 /**
  * Topnav
  */
 export const TopNav = ({ children, avatar = null }: { children: ReactNode; avatar?: ReactNode }) => {
-  const pathname = usePathname()
   const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
-
-  useEffect(() => setMenuOpen(false), [pathname])
 
   const handleClick = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault()
@@ -22,6 +20,7 @@ export const TopNav = ({ children, avatar = null }: { children: ReactNode; avata
   }
 
   useClickAway(topNavRef, () => setMenuOpen(false))
+  useNavigationEvent(() => setMenuOpen(false))
 
   return (
     <div ref={topNavRef} className="print:hidden">
