@@ -3,6 +3,7 @@ import { PagesResponse, WhatsNewPagesResponse } from '@/api/requests/cms/getPage
 import {
   aboutPageMock,
   accessibilityStatementPageMock,
+  acknowledgementsPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
@@ -71,9 +72,24 @@ export const pagesWithFeedbackTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 4,
+    total_count: 6,
   },
   items: [
+    {
+      id: acknowledgementsPageMock.id,
+      meta: {
+        type: acknowledgementsPageMock.meta.type,
+        detail_url: acknowledgementsPageMock.meta.detail_url,
+        html_url: acknowledgementsPageMock.meta.html_url,
+        slug: acknowledgementsPageMock.meta.slug,
+        search_description: acknowledgementsPageMock.meta.search_description,
+        show_in_menus: acknowledgementsPageMock.meta.show_in_menus,
+        first_published_at: acknowledgementsPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: acknowledgementsPageMock.seo_change_frequency,
+      seo_priority: acknowledgementsPageMock.seo_priority,
+      title: acknowledgementsPageMock.title,
+    },
     {
       id: aboutPageMock.id,
       meta: {
@@ -148,6 +164,29 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       seo_change_frequency: compliancePageMock.seo_change_frequency,
       seo_priority: compliancePageMock.seo_priority,
       title: compliancePageMock.title,
+    },
+  ],
+}
+
+export const pagesWithAcknowledgementTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: acknowledgementsPageMock.id,
+      meta: {
+        type: acknowledgementsPageMock.meta.type,
+        detail_url: acknowledgementsPageMock.meta.detail_url,
+        html_url: acknowledgementsPageMock.meta.html_url,
+        slug: acknowledgementsPageMock.meta.slug,
+        search_description: acknowledgementsPageMock.meta.search_description,
+        show_in_menus: acknowledgementsPageMock.meta.show_in_menus,
+        first_published_at: acknowledgementsPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: acknowledgementsPageMock.seo_change_frequency,
+      seo_priority: acknowledgementsPageMock.seo_priority,
+      title: acknowledgementsPageMock.title,
     },
   ],
 }

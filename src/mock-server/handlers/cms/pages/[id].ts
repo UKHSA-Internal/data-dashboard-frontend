@@ -10,6 +10,7 @@ import {
   accessibilityStatementPageMock,
   accessOurDataChildMocks,
   accessOurDataParentMock,
+  acknowledgementsPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
@@ -33,6 +34,7 @@ import {
 
 // Contains the individual `/pages/{id}` mocks
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
+  [acknowledgementsPageMock.id]: acknowledgementsPageMock,
   [dashboardMock.id]: dashboardMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
