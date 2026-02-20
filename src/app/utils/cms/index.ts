@@ -220,3 +220,13 @@ export const getPageById = async <T extends PageType>(id: number) => {
     notFound()
   }
 }
+
+export const getAcknowledgementsPage = async () => {
+  try {
+    const acknowledgementsPage = await getPageBySlug<PageType.Common>('acknowledgements')
+    return acknowledgementsPage
+  } catch (error) {
+    logger.error(error)
+    notFound()
+  }
+}

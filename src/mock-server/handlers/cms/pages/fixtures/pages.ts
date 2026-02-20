@@ -3,20 +3,19 @@ import { PagesResponse, WhatsNewPagesResponse } from '@/api/requests/cms/getPage
 import {
   aboutPageMock,
   accessibilityStatementPageMock,
+  acknowledgementsPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
   feedbackMock,
-  healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
   respiratoryVirusesMock,
-  startPageMock,
   vaccinationCoverageMock,
   whatsComingPageMock,
   whatsNewChildMocks,
@@ -77,19 +76,19 @@ export const pagesWithCommonTypeMock: PagesResponse = {
   },
   items: [
     {
-      id: startPageMock.id,
+      id: acknowledgementsPageMock.id,
       meta: {
-        type: startPageMock.meta.type,
-        detail_url: startPageMock.meta.detail_url,
-        html_url: startPageMock.meta.html_url,
-        slug: startPageMock.meta.slug,
-        search_description: startPageMock.meta.search_description,
-        show_in_menus: startPageMock.meta.show_in_menus,
-        first_published_at: startPageMock.meta.first_published_at,
+        type: acknowledgementsPageMock.meta.type,
+        detail_url: acknowledgementsPageMock.meta.detail_url,
+        html_url: acknowledgementsPageMock.meta.html_url,
+        slug: acknowledgementsPageMock.meta.slug,
+        search_description: acknowledgementsPageMock.meta.search_description,
+        show_in_menus: acknowledgementsPageMock.meta.show_in_menus,
+        first_published_at: acknowledgementsPageMock.meta.first_published_at,
       },
-      seo_change_frequency: startPageMock.seo_change_frequency,
-      seo_priority: startPageMock.seo_priority,
-      title: startPageMock.title,
+      seo_change_frequency: acknowledgementsPageMock.seo_change_frequency,
+      seo_priority: acknowledgementsPageMock.seo_priority,
+      title: acknowledgementsPageMock.title,
     },
     {
       id: aboutPageMock.id,
@@ -165,6 +164,29 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       seo_change_frequency: compliancePageMock.seo_change_frequency,
       seo_priority: compliancePageMock.seo_priority,
       title: compliancePageMock.title,
+    },
+  ],
+}
+
+export const pagesWithAcknowledgementTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: acknowledgementsPageMock.id,
+      meta: {
+        type: acknowledgementsPageMock.meta.type,
+        detail_url: acknowledgementsPageMock.meta.detail_url,
+        html_url: acknowledgementsPageMock.meta.html_url,
+        slug: acknowledgementsPageMock.meta.slug,
+        search_description: acknowledgementsPageMock.meta.search_description,
+        show_in_menus: acknowledgementsPageMock.meta.show_in_menus,
+        first_published_at: acknowledgementsPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: acknowledgementsPageMock.seo_change_frequency,
+      seo_priority: acknowledgementsPageMock.seo_priority,
+      title: acknowledgementsPageMock.title,
     },
   ],
 }
@@ -295,29 +317,6 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
         title,
       })
     ),
-  ],
-}
-
-export const pagesWithTopicsListTypeMock: PagesResponse = {
-  meta: {
-    total_count: 1,
-  },
-  items: [
-    {
-      id: healthTopicsPageMock.id,
-      meta: {
-        type: healthTopicsPageMock.meta.type,
-        detail_url: healthTopicsPageMock.meta.detail_url,
-        html_url: healthTopicsPageMock.meta.html_url,
-        slug: healthTopicsPageMock.meta.slug,
-        search_description: healthTopicsPageMock.meta.search_description,
-        show_in_menus: healthTopicsPageMock.meta.show_in_menus,
-        first_published_at: healthTopicsPageMock.meta.first_published_at,
-      },
-      seo_change_frequency: healthTopicsPageMock.seo_change_frequency,
-      seo_priority: healthTopicsPageMock.seo_priority,
-      title: healthTopicsPageMock.title,
-    },
   ],
 }
 
@@ -491,7 +490,6 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       metric,
       last_published_at,
       body,
-      is_public,
     }) => ({
       id,
       title,
@@ -504,7 +502,6 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       metric,
       last_published_at,
       body,
-      is_public,
     })
   ),
 }
@@ -513,7 +510,6 @@ const items = [
   ...pagesWithLandingTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithCompositeTypeMock.items,
-  ...pagesWithTopicsListTypeMock.items,
   ...pagesWithTopicTypeMock.items,
   ...pagesWithWhatsNewParentTypeMock.items,
   ...pagesWithWhatsNewChildTypeMock.items,

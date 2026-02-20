@@ -10,6 +10,7 @@ import {
   accessibilityStatementPageMock,
   accessOurDataChildMocks,
   accessOurDataParentMock,
+  acknowledgementsPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
@@ -39,6 +40,7 @@ import {
 
 // The non-public dashboard signup page
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
+  [acknowledgementsPageMock.id]: acknowledgementsPageMock,
   [dashboardMock.id]: dashboardMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
