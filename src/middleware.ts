@@ -21,9 +21,10 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
 
   // Add x-url header for debugging or legacy usage
   response.headers.set('x-url', request.url)
-
+  console.log('Auth Enabled: ', process.env.AUTH_ENABLED)
   // Handle auth first if enabled
   if (process.env.AUTH_ENABLED === 'true') {
+    console.log('Auth Enabled: ', true)
     const unauthenticatedPaths = ['/api/health', '/robots.txt']
 
     if (unauthenticatedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
