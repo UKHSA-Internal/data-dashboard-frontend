@@ -42,7 +42,7 @@ export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {authEnabled && <ClassificationBanner size="medium" />}
+            {authEnabled && <ClassificationBanner size="medium" level="Blue" />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}
