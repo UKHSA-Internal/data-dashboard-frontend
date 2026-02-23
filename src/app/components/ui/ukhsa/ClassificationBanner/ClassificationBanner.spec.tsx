@@ -12,10 +12,10 @@ describe('ClassificationBanner', () => {
   })
 
   it('should have blue background', () => {
-    const { container } = render(<ClassificationBanner size="large" level="Red" />)
+    const { container } = render(<ClassificationBanner size="large" level="Blue" />)
     const bannerDiv = container.firstChild
 
-    expect(bannerDiv).toHaveClass('bg-[#1D70B8]')
+    expect(bannerDiv).toHaveClass('bg-[#2B71C7]')
   })
 
   it('should apply large font size when size is large', () => {
