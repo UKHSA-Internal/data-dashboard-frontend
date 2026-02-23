@@ -13,8 +13,7 @@ import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
-import { CookieBanner } from './components/ui/ukhsa'
-import { Search } from './components/ui/ukhsa'
+import { CookieBanner, Search } from './components/ui/ukhsa'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager/GoogleTagManager'
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
@@ -46,7 +45,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
             />
           </Suspense>
-
+          <Search
+            href=""
+            searchTitle={t('search.searchTitle')}
+            noScriptButtonText={t('search.noScriptButtonText')}
+            clearText={'search.clearText'}
+            inlineResults={true}
+          />
           <Providers>
             {children}
             <HealthAlertsMapWrapper />
