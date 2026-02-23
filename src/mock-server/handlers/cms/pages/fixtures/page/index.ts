@@ -1,7 +1,7 @@
 export { aboutPageMock } from './about'
 export { accessOurDataChildMocks, accessOurDataParentMock } from './access-our-data'
 export { accessibilityStatementPageMock } from './accessibility-statement'
-export { acknowledgementsPageMock } from './acknowledgements'
+export { acknowledgementPageMock } from './acknowledgement'
 export { archiveDataPageMock } from './archive-data'
 export { bulkDownloadsPageMock } from './bulk-downloads'
 export { compliancePageMock } from './complaince'
