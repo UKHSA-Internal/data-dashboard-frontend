@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { calculatePageOffset } from '@/app/utils/api.utils'
+import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
 
 /**
@@ -126,7 +127,8 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
       }
     }
 
-    const { data: initialData } = await client<PagesResponse>('pages', { searchParams: initialSearchParams })
+    const path = isSSR ? `pages` : `proxy/pages`
+    const { data: initialData } = await client<PagesResponse>(path, { searchParams: initialSearchParams })
     const initialResult = responseSchema.safeParse(initialData)
 
     if (!initialResult.success) {
