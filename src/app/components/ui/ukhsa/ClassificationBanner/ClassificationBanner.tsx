@@ -16,6 +16,13 @@ const levelColors: Record<Level, string> = {
   Red: 'bg-[#AA0000]',
 }
 
+const Content: Record<Level, string> = {
+  Blue: 'Official-Sensitive',
+  Gray: 'Protective marking not set',
+  Amber: 'Secret',
+  Red: 'Top Secret',
+}
+
 const ClassificationBanner: FC<ClassificationBannerProps> = ({ size, level }) => {
   return (
     <div className={clsx(levelColors[level])}>
@@ -25,7 +32,7 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({ size, level }) =>
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
-        Official-Sensitive
+        {Content[level]}
       </p>
     </div>
   )
