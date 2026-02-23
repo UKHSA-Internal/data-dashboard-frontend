@@ -67,3 +67,17 @@ For a detailed list of our deployment environments and their configurations, ref
 ## Enabling Non-Public functionality
 
 Instructions on setting up your the non-public version of the dashboard can be found here: [Enabling Non Public](./docs/auth/enabling-non-public.md)
+
+### Pre-commit Hooks
+
+This repository uses **pre-commit** to automatically scan for hardcoded secrets before allowing commits.
+
+#### Setup (one-time)
+
+1. Install Python (if not already installed)
+
+2. Install pre-commit:
+
+```bash
+pip install pre-commit
+```
