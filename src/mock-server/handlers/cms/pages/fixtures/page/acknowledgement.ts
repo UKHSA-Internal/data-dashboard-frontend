@@ -3,13 +3,13 @@ import { PageType } from '@/api/requests/cms/getPages'
 
 import { relatedLinksMock } from '../elements/related-links'
 
-export const acknowledgementsPageMock: PageResponse<PageType.Common> = {
+export const acknowledgementPageMock: PageResponse<PageType.Common> = {
   id: 27,
   meta: {
     type: 'common.CommonPage',
     detail_url: 'http://localhost/api/pages/27/',
-    html_url: 'http://localhost/acknowledgements/',
-    slug: 'acknowledgements',
+    html_url: 'http://localhost/acknowledgement/',
+    slug: 'acknowledgement',
     show_in_menus: false,
     seo_title: 'Accessing official sensitive data | UKHSA data dashboard',
     search_description: 'Acknowledgement required to access the dashboard',

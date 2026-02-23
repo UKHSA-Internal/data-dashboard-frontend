@@ -4,7 +4,7 @@ import { useActionState, useState } from 'react'
 
 import { handleFormSubmit } from '../../../hooks/useAcknowledgement'
 
-export default function AcknowledgementsForm() {
+export default function AcknowledgementForm() {
   const [state, formAction] = useActionState(handleFormSubmit, {})
   const [isChecked, setIsChecked] = useState(false)
 
