@@ -118,6 +118,7 @@ export default async function MetricsParentPage({
             noScriptButtonText={t('metricsSearch.noScriptButtonText')}
             clearText={t('metricsSearch.noScriptButtonText')}
             href="/metrics-documentation"
+            inlineResults={false}
           />
           <ul className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(

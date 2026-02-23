@@ -12,7 +12,7 @@ beforeEach(() => {
 
 test('renders input and buttons', async () => {
   const { getByRole } = render(
-    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" />
+    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" inlineResults={true} />
   )
 
   const form = getByRole('form', { name: 'Metrics search' })
@@ -28,7 +28,7 @@ test('sets the url state with the search input when typing', async () => {
   mockRouter.push('')
 
   const { getByLabelText } = render(
-    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" />
+    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" inlineResults={true} />
   )
 
   await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
@@ -40,7 +40,7 @@ test('sets the url state with the search input when typing', async () => {
 
 test('clears the url state and search input when clicking the "Clear" link', async () => {
   const { getByRole, getByLabelText } = render(
-    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" />
+    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" inlineResults={true} />
   )
 
   await userEvent.type(getByRole('textbox', { name: 'Metric name' }), 'Mock search value')
@@ -60,7 +60,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
 
 test('clears the url state when the search input is cleared (via keyboard e.g backspace)', async () => {
   const { getByLabelText } = render(
-    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" />
+    <Search href="/metrics-documentation" searchTitle="" noScriptButtonText="" clearText="" inlineResults={true} />
   )
 
   await userEvent.type(getByLabelText('Metric name'), 'Mock search value')
