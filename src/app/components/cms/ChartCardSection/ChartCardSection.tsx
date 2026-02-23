@@ -42,7 +42,7 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
 
         return (
           <div key={card.id} data-testid="card-wrapper">
-            {authEnabled && <ClassificationBanner size="medium" level="Blue" />}
+            {authEnabled && <ClassificationBanner size="medium" level="official_sensitive" />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${snakeCase(card.value.title)}`}

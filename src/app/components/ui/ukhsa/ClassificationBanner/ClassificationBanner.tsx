@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import { clsx } from '@/lib/clsx'
 
-type Level = 'Blue' | 'Gray' | 'Amber' | 'Red'
+type Level = 'official' | 'official_sensitive' | 'pm_not_set' | 'secret' | 'top_secret'
 
 interface ClassificationBannerProps {
   size: 'large' | 'medium' | 'small' | 'unknown' | ''
@@ -10,17 +10,19 @@ interface ClassificationBannerProps {
 }
 
 const levelColors: Record<Level, string> = {
-  Blue: 'bg-[#2B71C7]',
-  Gray: 'bg-[#616161]',
-  Amber: 'bg-[#F39C2C]',
-  Red: 'bg-[#AA0000]',
+  official: 'bg-[#2B71C7]',
+  official_sensitive: 'bg-[#2B71C7]',
+  pm_not_set: 'bg-[#616161]',
+  secret: 'bg-[#F39C2C]',
+  top_secret: 'bg-[#AA0000]',
 }
 
-const Content: Record<Level, string> = {
-  Blue: 'Official-Sensitive',
-  Gray: 'Protective marking not set',
-  Amber: 'Secret',
-  Red: 'Top Secret',
+const levelContent: Record<Level, string> = {
+  official: 'Official',
+  official_sensitive: 'Official-Sensitive',
+  pm_not_set: 'Protective marking not set',
+  secret: 'Secret',
+  top_secret: 'Top Secret',
 }
 
 const ClassificationBanner: FC<ClassificationBannerProps> = ({ size, level }) => {
@@ -32,7 +34,7 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({ size, level }) =>
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
-        {Content[level]}
+        {levelContent[level]}
       </p>
     </div>
   )
