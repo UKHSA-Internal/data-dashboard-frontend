@@ -6,7 +6,7 @@ type Level = 'Blue' | 'Gray' | 'Amber' | 'Red'
 
 interface ClassificationBannerProps {
   size: 'large' | 'medium' | 'small' | 'unknown' | ''
-  level: 'Blue' | 'Gray' | 'Amber' | 'Red'
+  level: Level
 }
 
 const levelColors: Record<Level, string> = {
