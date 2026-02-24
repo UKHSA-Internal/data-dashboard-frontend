@@ -1,3 +1,8 @@
+const mockFetchFn = jest.fn()
+globalThis.fetch = mockFetchFn
+
+// --- Step 2: All jest.mock() calls (hoisted by babel-jest) ---
+
 jest.mock('@/app/constants/app.constants', () => ({
   UKHSA_SWITCHBOARD_COOKIE_NAME: 'ukhsa-switchboard',
 }))
@@ -15,9 +20,7 @@ jest.mock('@/config/constants', () => ({
   publicCacheRevalidationInterval: 300,
 }))
 
-// Source imports '../requests/helpers' but Jest resolves it via moduleNameMapper
-// to the same identity as '@/api/requests/helpers' — use the alias here.
-jest.mock('../requests/helpers', () => ({
+jest.mock('@/api/requests/helpers', () => ({
   getApiBaseUrl: jest.fn(() => 'http://fake-backend.gov.uk'),
 }))
 
@@ -29,7 +32,7 @@ jest.mock('@/auth', () => ({
   auth: jest.fn(),
 }))
 
-// --- Imports (after mocks) ---
+// --- Step 3: Imports (run after mocks are hoisted) ---
 
 import { cookies } from 'next/headers'
 
@@ -39,7 +42,7 @@ import { auth } from '@/auth'
 
 // --- Helpers ---
 
-function mockResponse({
+function makeFetchResponse({
   ok = true,
   status = 200,
   statusText = 'OK',
@@ -51,7 +54,7 @@ function mockResponse({
   statusText?: string
   contentType?: string
   body?: unknown
-} = {}): Response {
+} = {}) {
   return {
     ok,
     status,
@@ -62,24 +65,17 @@ function mockResponse({
     json: jest.fn().mockResolvedValue(body),
     text: jest.fn().mockResolvedValue(typeof body === 'string' ? body : JSON.stringify(body)),
     arrayBuffer: jest.fn().mockResolvedValue(new ArrayBuffer(8)),
-  } as unknown as Response
+  }
 }
 
 // --- Tests ---
 
 describe('client()', () => {
-  let mockFetch: jest.SpyInstance
-
   beforeEach(() => {
-    // jest-environment-jsdom provides its own fetch — spyOn wraps the live
-    // reference so the spy is active when the module calls fetch() at runtime.
-    mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue(mockResponse() as any)
+    mockFetchFn.mockReset()
+    mockFetchFn.mockResolvedValue(makeFetchResponse())
     ;(isWellKnownEnvironment as jest.Mock).mockReturnValue(true)
     process.env.API_KEY = 'test-api-key'
-  })
-
-  afterEach(() => {
-    jest.restoreAllMocks()
   })
 
   // --- URL construction ---
@@ -88,7 +84,7 @@ describe('client()', () => {
     it('builds the URL from baseUrl and endpoint', async () => {
       await client('v1/data')
 
-      expect(mockFetch).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data', expect.any(Object))
+      expect(mockFetchFn).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data', expect.any(Object))
     })
 
     it('appends searchParams to the URL', async () => {
@@ -96,19 +92,19 @@ describe('client()', () => {
 
       await client('v1/data', { searchParams: params })
 
-      expect(mockFetch).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data?foo=bar&baz=qux', expect.any(Object))
+      expect(mockFetchFn).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data?foo=bar&baz=qux', expect.any(Object))
     })
 
     it('uses a custom baseUrl when provided', async () => {
       await client('endpoint', { baseUrl: 'https://custom.api.com' })
 
-      expect(mockFetch).toHaveBeenCalledWith('https://custom.api.com/endpoint', expect.any(Object))
+      expect(mockFetchFn).toHaveBeenCalledWith('https://custom.api.com/endpoint', expect.any(Object))
     })
 
     it('handles an empty baseUrl gracefully', async () => {
       await client('endpoint', { baseUrl: '' })
 
-      expect(mockFetch).toHaveBeenCalledWith('endpoint', expect.any(Object))
+      expect(mockFetchFn).toHaveBeenCalledWith('endpoint', expect.any(Object))
     })
   })
 
@@ -118,7 +114,7 @@ describe('client()', () => {
     it('uses GET when no body is provided', async () => {
       await client('v1/data')
 
-      expect(mockFetch).toHaveBeenCalledWith(
+      expect(mockFetchFn).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({ method: 'GET', body: undefined })
       )
@@ -129,7 +125,7 @@ describe('client()', () => {
 
       await client('v1/data', { body: payload })
 
-      expect(mockFetch).toHaveBeenCalledWith(
+      expect(mockFetchFn).toHaveBeenCalledWith(
         expect.any(String),
         expect.objectContaining({ method: 'POST', body: JSON.stringify(payload) })
       )
@@ -142,14 +138,14 @@ describe('client()', () => {
     it('sends the API_KEY as Authorization header', async () => {
       await client('v1/data')
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers).toMatchObject({ Authorization: 'test-api-key' })
     })
 
     it('merges custom headers with default headers', async () => {
       await client('v1/data', { headers: { 'X-Custom': 'yes' } })
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers).toMatchObject({
         'X-Custom': 'yes',
         'content-type': 'application/json',
@@ -162,7 +158,7 @@ describe('client()', () => {
   describe('response parsing', () => {
     it('returns parsed JSON data on a successful JSON response', async () => {
       const responseBody = { id: 1, name: 'Test' }
-      mockFetch.mockResolvedValue(mockResponse({ body: responseBody }) as any)
+      mockFetchFn.mockResolvedValue(makeFetchResponse({ body: responseBody }))
 
       const result = await client<typeof responseBody>('v1/data')
 
@@ -171,7 +167,7 @@ describe('client()', () => {
 
     it('returns text data for non-JSON content types', async () => {
       const text = 'plain text response'
-      mockFetch.mockResolvedValue(mockResponse({ contentType: 'text/plain', body: text }) as any)
+      mockFetchFn.mockResolvedValue(makeFetchResponse({ contentType: 'text/plain', body: text }))
 
       const result = await client<string>('v1/data')
 
@@ -179,7 +175,7 @@ describe('client()', () => {
     })
 
     it('returns a Buffer for application/zip content type', async () => {
-      mockFetch.mockResolvedValue(mockResponse({ contentType: 'application/zip' }) as any)
+      mockFetchFn.mockResolvedValue(makeFetchResponse({ contentType: 'application/zip' }))
 
       const result = await client<Buffer>('v1/data')
 
@@ -188,7 +184,7 @@ describe('client()', () => {
     })
 
     it('rejects when the response is not ok', async () => {
-      mockFetch.mockResolvedValue(mockResponse({ ok: false, status: 404, statusText: 'Not Found' }) as any)
+      mockFetchFn.mockResolvedValue(makeFetchResponse({ ok: false, status: 404, statusText: 'Not Found' }))
 
       await expect(client('v1/data')).rejects.toMatchObject({
         message: 'Not Found',
@@ -197,13 +193,12 @@ describe('client()', () => {
     })
 
     it('rejects when JSON parsing fails', async () => {
-      const failingResponse = {
+      mockFetchFn.mockResolvedValue({
         ok: true,
         status: 200,
         headers: { get: () => 'application/json' },
         json: jest.fn().mockRejectedValue(new Error('invalid json')),
-      } as unknown as Response
-      mockFetch.mockResolvedValue(failingResponse as any)
+      })
 
       await expect(client('v1/data')).rejects.toBeDefined()
     })
@@ -215,7 +210,7 @@ describe('client()', () => {
     it('sets revalidate to 0 when ISRCachingEnabled is false and authEnabled is false', async () => {
       await client('v1/data', { isPublic: true })
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.next.revalidate).toBe(0)
     })
   })
@@ -230,7 +225,7 @@ describe('client()', () => {
 
       await client('v1/data')
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.cookie).toBe('mock-cookie-value')
     })
 
@@ -239,7 +234,7 @@ describe('client()', () => {
 
       await client('v1/data')
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.cookie).toBeUndefined()
     })
   })
@@ -250,7 +245,7 @@ describe('client()', () => {
     it('does not fetch auth token for public requests', async () => {
       await client('v1/data', { isPublic: true })
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.Authorization).toBe('test-api-key')
     })
 
@@ -259,7 +254,7 @@ describe('client()', () => {
 
       await client('v1/data', { isPublic: false })
 
-      const [, options] = mockFetch.mock.calls[0]
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.Authorization).toBe('Bearer user-access-token')
     })
 
@@ -268,8 +263,7 @@ describe('client()', () => {
 
       await client('v1/data', { isPublic: false })
 
-      const [, options] = mockFetch.mock.calls[0]
-      // Falls back to the raw API_KEY, not "Bearer undefined"
+      const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.Authorization).toBe('test-api-key')
     })
   })
