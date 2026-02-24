@@ -1,7 +1,3 @@
-import { client } from './api.utils'
-
-// --- Mocks ---
-
 jest.mock('@/app/constants/app.constants', () => ({
   UKHSA_SWITCHBOARD_COOKIE_NAME: 'ukhsa-switchboard',
 }))
@@ -19,13 +15,30 @@ jest.mock('@/config/constants', () => ({
   publicCacheRevalidationInterval: 300,
 }))
 
-jest.mock('../requests/helpers', () => ({
-  getApiBaseUrl: jest.fn(() => 'http://localhost/mock-page/'),
+// Source imports '../requests/helpers' but Jest resolves it via moduleNameMapper
+// to the same identity as '@/api/requests/helpers' — use the alias here.
+jest.mock('@/api/requests/helpers', () => ({
+  getApiBaseUrl: jest.fn(() => 'http://fake-backend.gov.uk'),
 }))
 
-const { isWellKnownEnvironment } = require('@/app/utils/app.utils')
+jest.mock('next/headers', () => ({
+  cookies: jest.fn(),
+}))
 
-// Helper to create a mock Response
+jest.mock('@/auth', () => ({
+  auth: jest.fn(),
+}))
+
+// --- Imports (after mocks) ---
+
+import { cookies } from 'next/headers'
+
+import { client } from '@/api/utils/api.utils'
+import { isWellKnownEnvironment } from '@/app/utils/app.utils'
+import { auth } from '@/auth'
+
+// --- Helpers ---
+
 function mockResponse({
   ok = true,
   status = 200,
@@ -58,8 +71,8 @@ describe('client()', () => {
   let mockFetch: jest.SpyInstance
 
   beforeEach(() => {
-    // jest.spyOn binds to the same global.fetch reference the module uses at call time,
-    // unlike `global.fetch = jest.fn()` which only replaces it after module load.
+    // jest-environment-jsdom provides its own fetch — spyOn wraps the live
+    // reference so the spy is active when the module calls fetch() at runtime.
     mockFetch = jest.spyOn(global, 'fetch').mockResolvedValue(mockResponse() as any)
     ;(isWellKnownEnvironment as jest.Mock).mockReturnValue(true)
     process.env.API_KEY = 'test-api-key'
@@ -75,7 +88,7 @@ describe('client()', () => {
     it('builds the URL from baseUrl and endpoint', async () => {
       await client('v1/data')
 
-      expect(mockFetch).toHaveBeenCalledWith('http://localhost/mock-page/v1/data', expect.any(Object))
+      expect(mockFetch).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data', expect.any(Object))
     })
 
     it('appends searchParams to the URL', async () => {
@@ -83,7 +96,7 @@ describe('client()', () => {
 
       await client('v1/data', { searchParams: params })
 
-      expect(mockFetch).toHaveBeenCalledWith('http://localhost/mock-page/v1/data?foo=bar&baz=qux', expect.any(Object))
+      expect(mockFetch).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data?foo=bar&baz=qux', expect.any(Object))
     })
 
     it('uses a custom baseUrl when provided', async () => {
@@ -199,7 +212,6 @@ describe('client()', () => {
   // --- Caching ---
 
   describe('caching (next.revalidate)', () => {
-    // No jest.resetModules() here — that was clearing the mock mid-suite
     it('sets revalidate to 0 when ISRCachingEnabled is false and authEnabled is false', async () => {
       await client('v1/data', { isPublic: true })
 
@@ -213,13 +225,8 @@ describe('client()', () => {
   describe('switchboard cookie (non-well-known environments)', () => {
     it('attaches the switchboard cookie header when environment is not well-known and cookie exists', async () => {
       ;(isWellKnownEnvironment as jest.Mock).mockReturnValue(false)
-
-      const mockCookieStore = {
-        get: jest.fn().mockReturnValue({ value: 'mock-cookie-value' }),
-      }
-      jest.doMock('next/headers', () => ({
-        cookies: jest.fn().mockResolvedValue(mockCookieStore),
-      }))
+      const mockCookieStore = { get: jest.fn().mockReturnValue({ value: 'mock-cookie-value' }) }
+      ;(cookies as jest.Mock).mockResolvedValue(mockCookieStore)
 
       await client('v1/data')
 
@@ -248,14 +255,22 @@ describe('client()', () => {
     })
 
     it('adds Bearer token for non-public requests when auth resolves a token', async () => {
-      jest.doMock('@/auth', () => ({
-        auth: jest.fn().mockResolvedValue({ accessToken: 'user-access-token' }),
-      }))
+      ;(auth as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
 
       await client('v1/data', { isPublic: false })
 
       const [, options] = mockFetch.mock.calls[0]
       expect(options.headers.Authorization).toBe('Bearer user-access-token')
+    })
+
+    it('does not send Bearer header when auth returns no token', async () => {
+      ;(auth as jest.Mock).mockResolvedValue(null)
+
+      await client('v1/data', { isPublic: false })
+
+      const [, options] = mockFetch.mock.calls[0]
+      // Falls back to the raw API_KEY, not "Bearer undefined"
+      expect(options.headers.Authorization).toBe('test-api-key')
     })
   })
 })
