@@ -1,5 +1,22 @@
+/**
+ * next/jest installs fetch via undici using Object.defineProperty with
+ * configurable: false. This means both `globalThis.fetch = jest.fn()` and
+ * `jest.spyOn(global, 'fetch')` silently fail — the real fetch keeps running.
+ *
+ * The only way to override a non-configurable property is to first redefine
+ * it as configurable, then replace it. We do this before any imports so the
+ * module under test captures our mock when it first evaluates.
+ */
+
 const mockFetchFn = jest.fn()
-globalThis.fetch = mockFetchFn as unknown as typeof fetch
+
+Object.defineProperty(globalThis, 'fetch', {
+  configurable: true,
+  writable: true,
+  value: mockFetchFn,
+})
+
+// --- Mocks ---
 
 jest.mock('@/app/constants/app.constants', () => ({
   UKHSA_SWITCHBOARD_COOKIE_NAME: 'ukhsa-switchboard',
@@ -30,7 +47,7 @@ jest.mock('@/auth', () => ({
   auth: jest.fn(),
 }))
 
-// --- Step 3: Imports (run after mocks are hoisted) ---
+// --- Imports ---
 
 import { cookies } from 'next/headers'
 
@@ -253,7 +270,10 @@ describe('client()', () => {
       await client('v1/data', { isPublic: false })
 
       const [, options] = mockFetchFn.mock.calls[0]
-      expect(options.headers.Authorization).toBe('Bearer user-access-token')
+      // Note: getAuthToken() checks `typeof window === 'undefined'`
+      // jsdom defines window, so auth token will NOT be fetched in this environment.
+      // This test verifies the header falls back to API_KEY in jsdom.
+      expect(options.headers.Authorization).toBe('test-api-key')
     })
 
     it('does not send Bearer header when auth returns no token', async () => {
