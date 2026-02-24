@@ -98,8 +98,9 @@ export async function client<T>(
     headers: {
       ...headers,
       ...customConfig.headers,
-      //passing authorization header only if request is not public
-      ...(isPublic ? {} : { Authorization: `Bearer ${accessToken}` }),
+      //passing authorization header only if access token is available, to avoid sending
+      // "Authorization: Bearer undefined" in the headers which might cause issues with some APIs
+      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
     },
   }
 

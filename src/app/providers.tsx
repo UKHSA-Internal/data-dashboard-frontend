@@ -6,6 +6,7 @@ import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experime
 import { SessionProvider } from 'next-auth/react'
 import * as React from 'react'
 
+import { authEnabled } from '@/config/constants'
 function makeQueryClient() {
   return new QueryClient({
     defaultOptions: {
@@ -32,9 +33,13 @@ export function Providers(props: { children: React.ReactNode }) {
 
   return (
     <QueryClientProvider client={queryClient}>
-      <SessionProvider>
+      {authEnabled ? (
+        <SessionProvider>
+          <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>
+        </SessionProvider>
+      ) : (
         <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>
-      </SessionProvider>
+      )}
       <ReactQueryDevtools initialIsOpen={false} buttonPosition="bottom-left" />
     </QueryClientProvider>
   )
