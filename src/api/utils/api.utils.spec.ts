@@ -1,12 +1,4 @@
-/**
- * next/jest installs fetch via undici using Object.defineProperty with
- * configurable: false. This means both `globalThis.fetch = jest.fn()` and
- * `jest.spyOn(global, 'fetch')` silently fail — the real fetch keeps running.
- *
- * The only way to override a non-configurable property is to first redefine
- * it as configurable, then replace it. We do this before any imports so the
- * module under test captures our mock when it first evaluates.
- */
+jest.unmock('@/api/utils/api.utils')
 
 const mockFetchFn = jest.fn()
 
@@ -270,9 +262,8 @@ describe('client()', () => {
       await client('v1/data', { isPublic: false })
 
       const [, options] = mockFetchFn.mock.calls[0]
-      // Note: getAuthToken() checks `typeof window === 'undefined'`
-      // jsdom defines window, so auth token will NOT be fetched in this environment.
-      // This test verifies the header falls back to API_KEY in jsdom.
+      // getAuthToken() checks `typeof window === 'undefined'`
+      // jsdom defines window, so auth is never called — falls back to API_KEY
       expect(options.headers.Authorization).toBe('test-api-key')
     })
 
