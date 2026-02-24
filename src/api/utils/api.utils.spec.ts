@@ -17,7 +17,7 @@ jest.mock('@/config/constants', () => ({
 
 // Source imports '../requests/helpers' but Jest resolves it via moduleNameMapper
 // to the same identity as '@/api/requests/helpers' — use the alias here.
-jest.mock('@/api/requests/helpers', () => ({
+jest.mock('../requests/helpers', () => ({
   getApiBaseUrl: jest.fn(() => 'http://fake-backend.gov.uk'),
 }))
 
