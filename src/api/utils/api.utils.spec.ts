@@ -17,7 +17,7 @@ jest.mock('@/config/constants', () => ({
   publicCacheRevalidationInterval: 300,
 }))
 
-jest.mock('@/api/requests/helpers', () => ({
+jest.mock('../requests/helpers', () => ({
   getApiBaseUrl: jest.fn(() => 'http://fake-backend.gov.uk'),
 }))
 
