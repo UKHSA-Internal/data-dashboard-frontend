@@ -1,5 +1,5 @@
 const mockFetchFn = jest.fn()
-globalThis.fetch = mockFetchFn
+globalThis.fetch = mockFetchFn as unknown as typeof fetch
 
 jest.mock('@/app/constants/app.constants', () => ({
   UKHSA_SWITCHBOARD_COOKIE_NAME: 'ukhsa-switchboard',
