@@ -85,8 +85,14 @@ export default async function handler(req: Request, res: Response) {
         ...mockedPageMap[pageId],
       })
     }
+
+    return res.status(404).json({ message: 'page not found' })
   } catch (error) {
     logger.error(error)
-    return res.status(500)
+    let message = 'unkown error occured'
+    if (error instanceof Error) {
+      message = error.message
+    }
+    return res.status(500).json({ message: message })
   }
 }
