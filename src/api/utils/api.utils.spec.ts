@@ -1,8 +1,6 @@
 const mockFetchFn = jest.fn()
 globalThis.fetch = mockFetchFn
 
-// --- Step 2: All jest.mock() calls (hoisted by babel-jest) ---
-
 jest.mock('@/app/constants/app.constants', () => ({
   UKHSA_SWITCHBOARD_COOKIE_NAME: 'ukhsa-switchboard',
 }))
@@ -20,7 +18,7 @@ jest.mock('@/config/constants', () => ({
   publicCacheRevalidationInterval: 300,
 }))
 
-jest.mock('@/api/requests/helpers', () => ({
+jest.mock('../requests/helpers', () => ({
   getApiBaseUrl: jest.fn(() => 'http://fake-backend.gov.uk'),
 }))
 
