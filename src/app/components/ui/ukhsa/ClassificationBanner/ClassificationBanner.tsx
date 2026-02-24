@@ -7,6 +7,9 @@ type Level = 'official' | 'official_sensitive' | 'pm_not_set' | 'secret' | 'top_
 interface ClassificationBannerProps {
   size: 'large' | 'medium' | 'small' | 'unknown' | ''
   level: Level
+  customContent?: string
+  // Optional custom color in hex format (e.g., ''bg-[#2B71C7]', 'bg-[#F39C2C]', etc.)
+  customColor?: string
 }
 
 const levelColors: Record<Level, string> = {
@@ -25,16 +28,16 @@ const levelContent: Record<Level, string> = {
   top_secret: 'Top Secret',
 }
 
-const ClassificationBanner: FC<ClassificationBannerProps> = ({ size, level }) => {
+const ClassificationBanner: FC<ClassificationBannerProps> = ({ size, level, customContent, customColor }) => {
   return (
-    <div className={clsx(levelColors[level])}>
+    <div className={clsx(customColor || levelColors[level])}>
       <p
         className={clsx('font-sans font-bold uppercase text-white', {
           'govuk-width-container text-[27px] mt-[4px] py-2': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
-        {levelContent[level]}
+        {customContent || levelContent[level]}
       </p>
     </div>
   )
