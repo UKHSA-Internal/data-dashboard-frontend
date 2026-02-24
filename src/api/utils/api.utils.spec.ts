@@ -28,7 +28,7 @@ jest.mock('@/config/constants', () => ({
 }))
 
 jest.mock('../requests/helpers', () => ({
-  getApiBaseUrl: jest.fn(() => 'http://fake-backend.gov.uk'),
+  getApiBaseUrl: jest.fn(() => 'https://fake-backend.gov.uk'),
 }))
 
 jest.mock('next/headers', () => ({
@@ -91,7 +91,7 @@ describe('client()', () => {
     it('builds the URL from baseUrl and endpoint', async () => {
       await client('v1/data')
 
-      expect(mockFetchFn).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data', expect.any(Object))
+      expect(mockFetchFn).toHaveBeenCalledWith('https://fake-backend.gov.uk/v1/data', expect.any(Object))
     })
 
     it('appends searchParams to the URL', async () => {
@@ -99,7 +99,10 @@ describe('client()', () => {
 
       await client('v1/data', { searchParams: params })
 
-      expect(mockFetchFn).toHaveBeenCalledWith('http://fake-backend.gov.uk/v1/data?foo=bar&baz=qux', expect.any(Object))
+      expect(mockFetchFn).toHaveBeenCalledWith(
+        'https://fake-backend.gov.uk/v1/data?foo=bar&baz=qux',
+        expect.any(Object)
+      )
     })
 
     it('uses a custom baseUrl when provided', async () => {
