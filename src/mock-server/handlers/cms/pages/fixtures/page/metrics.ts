@@ -112,12 +112,12 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     ],
   },
   {
-    id: 27,
+    id: 30,
     meta: {
       seo_title: 'Metrics child | UKHSA data dashboard',
       search_description: '',
       type: 'metrics_documentation.MetricsDocumentationChildEntry',
-      detail_url: 'http://localhost/api/pages/27/',
+      detail_url: 'http://localhost/api/pages/30/',
       html_url: 'http://localhost/metrics-documentation/new-deaths-7days-change-percentage',
       slug: 'new-deaths-7days-change-percentage',
       show_in_menus: false,

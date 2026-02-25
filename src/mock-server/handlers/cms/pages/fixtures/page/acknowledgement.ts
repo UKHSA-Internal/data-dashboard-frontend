@@ -1,12 +1,10 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
-import { relatedLinksMock } from '../elements/related-links'
-
-export const acknowledgementPageMock: PageResponse<PageType.Common> = {
+export const acknowledgementPageMock: PageResponse<PageType.Acknowledgement> = {
   id: 27,
   meta: {
-    type: 'common.CommonPage',
+    type: 'acknowledgement.AcknowledgementPage',
     detail_url: 'http://localhost/api/pages/27/',
     html_url: 'http://localhost/acknowledgement/',
     slug: 'acknowledgement',
@@ -25,9 +23,6 @@ export const acknowledgementPageMock: PageResponse<PageType.Common> = {
       title: 'UKHSA Dashboard Root',
     },
   },
-  seo_change_frequency: 5,
-  seo_priority: 0.5,
-  last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'Accessing official sensitive data',
   body: `
     <div class="bg-gray-50 mb-6 rounded">
@@ -44,7 +39,15 @@ export const acknowledgementPageMock: PageResponse<PageType.Common> = {
       </a>
     </div>
   `,
+  terms_of_service_link_text: 'Read full terms of service here',
+  terms_of_service_link: '#terms',
+  i_agree_checkbox: 'I agree to the terms of service',
+  disagree_button: 'Disagree',
+  agree_button: 'Agree',
+
+  // These exist on SharedPageData, but your acknowledgement schema allows fallbacks/optionals
   last_published_at: '2023-05-12T16:53:51.464146+01:00',
-  related_links: relatedLinksMock,
-  related_links_layout: 'Footer',
+  last_updated_at: '2024-07-02T12:44:54.461914+01:00',
+  seo_change_frequency: 5,
+  seo_priority: 0.5,
 }
