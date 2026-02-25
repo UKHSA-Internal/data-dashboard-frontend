@@ -242,6 +242,18 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   }
 }
 
+.ukhsa-section-chevron {
+  &:after {
+    content: "";
+    display: inline-block;
+    border-width: 2px 2px 0 0;
+    transform: rotate(45deg);
+    width: 15px;
+    height: 15px;
+    margin-left: 10px;
+  }
+}
+
 .striped-background {
   background: repeating-linear-gradient(45deg, #606dbc, #606dbc 10px, #465298 10px, #465298 20px);
 }
