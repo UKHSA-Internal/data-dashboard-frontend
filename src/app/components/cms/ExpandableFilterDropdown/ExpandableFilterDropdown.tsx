@@ -68,12 +68,19 @@ function DropdownButton({ open, onClick, label }: DropdownButtonProps) {
 function flattenSelected(items: ExpandableFilterItem[], selectedIds: Set<string>): SelectedFilterItem[] {
   const result: SelectedFilterItem[] = []
   for (const item of items) {
-    if (item.children) {
-      for (const child of item.children) {
-        if (selectedIds.has(child.id)) {
-          result.push({ id: child.id, label: child.label })
+    if (item.children && item.children.length > 0) {
+      const allChildrenSelected = item.children.every((c) => selectedIds.has(c.id))
+      if (allChildrenSelected) {
+        result.push({ id: item.id, label: item.label })
+      } else {
+        for (const child of item.children) {
+          if (selectedIds.has(child.id)) {
+            result.push({ id: child.id, label: child.label })
+          }
         }
       }
+    } else if (selectedIds.has(item.id)) {
+      result.push({ id: item.id, label: item.label })
     }
   }
   return result
@@ -108,7 +115,7 @@ function DropdownContent({
     <div
       role="listbox"
       tabIndex={-1}
-      className="mt-0 max-h-[280px] max-w-[550px] overflow-y-auto border border-grey-4 bg-white p-2 shadow-md"
+      className="mt-0 max-h-[280px] w-full max-w-[650px] overflow-y-auto border border-grey-4 bg-white p-2 shadow-md"
     >
       {items.map((item) => {
         const isParent = item.children && item.children.length > 0
@@ -283,13 +290,26 @@ export function ExpandableFilterDropdown({ items }: ExpandableFilterDropdownProp
     })
   }, [])
 
-  const removeSelected = useCallback((id: string) => {
-    setSelectedIds((prev) => {
-      const next = new Set(prev)
-      next.delete(id)
-      return next
-    })
-  }, [])
+  const removeSelected = useCallback(
+    (id: string) => {
+      const parentItem = items.find((i) => i.id === id && i.children && i.children.length > 0)
+      if (parentItem) {
+        setSelectedIds((prev) => {
+          const next = new Set(prev)
+          next.delete(parentItem.id)
+          parentItem.children?.forEach((c) => next.delete(c.id))
+          return next
+        })
+      } else {
+        setSelectedIds((prev) => {
+          const next = new Set(prev)
+          next.delete(id)
+          return next
+        })
+      }
+    },
+    [items]
+  )
 
   const clearAllSelected = useCallback(() => {
     setSelectedIds(new Set())
@@ -317,17 +337,19 @@ export function ExpandableFilterDropdown({ items }: ExpandableFilterDropdownProp
 
   return (
     <div className="w-full" ref={containerRef}>
-      <div>
+      <div className="relative">
         <DropdownButton open={open} onClick={() => setOpen((o) => !o)} label={t('cms.dropdown.filterButtonLabel')} />
         {open && (
-          <DropdownContent
-            items={items}
-            selectedIds={selectedIds}
-            expandedIds={expandedIds}
-            onToggleExpand={toggleExpand}
-            onToggleParent={toggleParent}
-            onToggleChild={toggleChild}
-          />
+          <div className="absolute left-0 top-full z-50 mt-1 w-[min(500px,calc(100vw-2rem))]">
+            <DropdownContent
+              items={items}
+              selectedIds={selectedIds}
+              expandedIds={expandedIds}
+              onToggleExpand={toggleExpand}
+              onToggleParent={toggleParent}
+              onToggleChild={toggleChild}
+            />
+          </div>
         )}
       </div>
       <SelectedItemsList selected={selectedList} onRemove={removeSelected} onClearAll={clearAllSelected} />
