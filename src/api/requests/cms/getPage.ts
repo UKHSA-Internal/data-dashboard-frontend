@@ -174,6 +174,7 @@ const WithAcknowledgementData = SharedPageData.omit({
     type: z.literal('acknowledgement.AcknowledgementPage'),
   }),
   body: z.string(),
+  terms_of_service_link_text: z.string(),
   terms_of_service_link: z.string(),
   i_agree_checkbox: z.string(),
   disagree_button: z.string(),

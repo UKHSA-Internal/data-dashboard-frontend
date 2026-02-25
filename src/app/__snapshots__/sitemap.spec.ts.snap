@@ -11,12 +11,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -685,6 +679,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -695,12 +695,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -1369,6 +1363,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -1379,12 +1379,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -2053,6 +2047,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -2063,12 +2063,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -2737,6 +2731,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -2747,12 +2747,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -3421,6 +3415,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -3431,12 +3431,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -4105,6 +4099,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -4115,12 +4115,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -4789,6 +4783,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -4799,12 +4799,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -5473,6 +5467,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -5483,12 +5483,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -6157,6 +6151,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -6167,12 +6167,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -6841,6 +6835,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -6851,12 +6851,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -7525,6 +7519,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -7535,12 +7535,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -8209,6 +8203,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -8219,12 +8219,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -8893,6 +8887,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -8903,12 +8903,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -9577,6 +9571,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -9587,12 +9587,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -10261,6 +10255,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -10271,12 +10271,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -10945,6 +10939,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -10955,12 +10955,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -11629,6 +11623,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -11639,12 +11639,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -12313,6 +12307,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -12323,12 +12323,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -12997,6 +12991,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -13007,12 +13007,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -13681,6 +13675,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -13691,12 +13691,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -14365,6 +14359,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -14375,12 +14375,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -15049,6 +15043,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -15059,12 +15059,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -15733,6 +15727,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -15743,12 +15743,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -16417,6 +16411,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -16427,12 +16427,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -17101,6 +17095,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -17111,12 +17111,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -17785,6 +17779,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -17795,12 +17795,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -18469,6 +18463,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -18479,12 +18479,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -19153,6 +19147,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -19163,12 +19163,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -19837,6 +19831,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",
@@ -19847,12 +19847,6 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.5,
-    "url": "http://localhost/acknowledgement/",
-  },
-  {
-    "changeFrequency": "monthly",
-    "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.7,
     "url": "http://localhost/about/",
   },
@@ -20521,6 +20515,12 @@ exports[`Sitemap displays correctly 1`] = `
     "lastModified": 2020-01-01T00:00:00.000Z,
     "priority": 0.5,
     "url": "https://localhost/feedback/",
+  },
+  {
+    "changeFrequency": "monthly",
+    "lastModified": 2020-01-01T00:00:00.000Z,
+    "priority": 0.5,
+    "url": "http://localhost/acknowledgement/",
   },
   {
     "changeFrequency": "monthly",

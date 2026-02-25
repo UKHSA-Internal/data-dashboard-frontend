@@ -70,9 +70,9 @@ export const pagesWithFeedbackTypeMock: PagesResponse = {
   ],
 }
 
-export const pagesWithCommonTypeMock: PagesResponse = {
+export const pagesWithAcknowledgementTypeMock: PagesResponse = {
   meta: {
-    total_count: 6,
+    total_count: 1,
   },
   items: [
     {
@@ -86,10 +86,18 @@ export const pagesWithCommonTypeMock: PagesResponse = {
         show_in_menus: acknowledgementPageMock.meta.show_in_menus,
         first_published_at: acknowledgementPageMock.meta.first_published_at,
       },
-      seo_change_frequency: acknowledgementPageMock.seo_change_frequency,
-      seo_priority: acknowledgementPageMock.seo_priority,
+      seo_change_frequency: acknowledgementPageMock.seo_change_frequency ?? 5,
+      seo_priority: acknowledgementPageMock.seo_priority ?? 0.5,
       title: acknowledgementPageMock.title,
     },
+  ],
+}
+
+export const pagesWithCommonTypeMock: PagesResponse = {
+  meta: {
+    total_count: 5,
+  },
+  items: [
     {
       id: aboutPageMock.id,
       meta: {
@@ -164,29 +172,6 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       seo_change_frequency: compliancePageMock.seo_change_frequency,
       seo_priority: compliancePageMock.seo_priority,
       title: compliancePageMock.title,
-    },
-  ],
-}
-
-export const pagesWithAcknowledgementTypeMock: PagesResponse = {
-  meta: {
-    total_count: 1,
-  },
-  items: [
-    {
-      id: acknowledgementPageMock.id,
-      meta: {
-        type: acknowledgementPageMock.meta.type,
-        detail_url: acknowledgementPageMock.meta.detail_url,
-        html_url: acknowledgementPageMock.meta.html_url,
-        slug: acknowledgementPageMock.meta.slug,
-        search_description: acknowledgementPageMock.meta.search_description,
-        show_in_menus: acknowledgementPageMock.meta.show_in_menus,
-        first_published_at: acknowledgementPageMock.meta.first_published_at,
-      },
-      seo_change_frequency: acknowledgementPageMock.seo_change_frequency,
-      seo_priority: acknowledgementPageMock.seo_priority,
-      title: acknowledgementPageMock.title,
     },
   ],
 }
@@ -516,6 +501,7 @@ const items = [
   ...pagesWithMetricsParentTypeMock.items,
   ...pagesWithMetricsChildTypeMock.items,
   ...pagesWithFeedbackTypeMock.items,
+  ...pagesWithAcknowledgementTypeMock.items,
 ]
 
 export const allPagesMock: PagesResponse = {
