@@ -40,7 +40,11 @@ interface ContentsLinkProps {
 export const ContentsLink = ({ children, href }: ContentsLinkProps) => {
   return children ? (
     <li className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat">
-      <Link className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat underline" href={href} prefetch>
+      <Link
+        className="govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat"
+        href={href}
+        prefetch
+      >
         {children}
       </Link>
     </li>

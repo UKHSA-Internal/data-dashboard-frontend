@@ -98,7 +98,10 @@ export const linkedHeadingsComponents: any = {
     // If href is valid, render an anchor
     if (typeof href === 'string' && href) {
       return (
-        <a href={href} className="govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat underline">
+        <a
+          href={href}
+          className="govuk-link govuk-link--no-visited-state govuk-!-margin-bottom-1 bg-[left_center] bg-no-repeat"
+        >
           {children}
         </a>
       )
