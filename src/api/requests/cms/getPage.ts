@@ -41,6 +41,9 @@ const WithLandingData = SharedPageData.extend({
   meta: Meta.extend({
     type: z.literal('home.LandingPage'),
   }),
+  page_description: z.string(),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
 })
 
 const withFeedbackData = SharedPageData.extend({
