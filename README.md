@@ -68,16 +68,42 @@ For a detailed list of our deployment environments and their configurations, ref
 
 Instructions on setting up your the non-public version of the dashboard can be found here: [Enabling Non Public](./docs/auth/enabling-non-public.md)
 
+
 ### Pre-commit Hooks
 
 This repository uses **pre-commit** to automatically scan for hardcoded secrets before allowing commits.
 
+We recommend using **prek**, a faster drop-in replacement for pre-commit. It works with the existing configuration and requires no changes to the config files.
+
+---
+
 #### Setup (one-time)
 
-1. Install Python (if not already installed)
+1. Install `uv` (if not already installed)
 
-2. Install pre-commit:
+On macOS:
 
 ```bash
-pip install pre-commit
+brew install uv
+```
+
+2. Install `prek` globally:
+
+```bash
+uv tool install prek
+```
+
+3. Install Git Hooks(required)
+
+Run this once per repository
+```bash
+prek install
+```
+This install the git hooks so secret scanning runs automatically before every commit
+
+4. Run Manually(Optional)
+
+To scan all files manually
+```bash
+prek run --all-files
 ```
