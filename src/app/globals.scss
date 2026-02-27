@@ -246,11 +246,22 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   &:after {
     content: "";
     display: inline-block;
-    border-width: 2px 2px 0 0;
+    height: 12px;
+    width: 12px;
     transform: rotate(45deg);
-    width: 15px;
-    height: 15px;
-    margin-left: 10px;
+    border-width: 2px 2px 0 0;
+    margin: 0 0 3px 5px;
+  }
+}
+
+.ukhsa-section-link {
+  &:link,
+  &:visited {
+    color: var(--color-black);
+  }
+  &:hover,
+  &active {
+    color: $govuk-link-colour;
   }
 }
 

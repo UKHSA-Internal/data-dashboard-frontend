@@ -46,7 +46,7 @@ export const PageSection = ({ children, id, heading }: PageSectionProps) => {
       <a
         href={`#${kebabCase(heading)}`}
         id={kebabCase(heading)}
-        className="govuk-heading-l govuk-!-margin-bottom-3 govuk-link--no-visited-state inline-block underline"
+        className="govuk-heading-l govuk-!-margin-bottom-3 govuk-link--no-visited-state ukhsa-section-link govuk-link inline-block no-underline hover:underline"
       >
         <h2 className="ukhsa-section-chevron mb-0 text-inherit">{heading}</h2>
       </a>
