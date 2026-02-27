@@ -1,6 +1,6 @@
 import clsx from 'clsx'
 import { kebabCase } from 'lodash'
-import { Fragment } from 'react'
+import React, { Fragment } from 'react'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
@@ -35,8 +35,69 @@ const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string
   return fallback
 }
 
+/**
+ * Formats a table cell value with confidence intervals if available
+ * Format: {value} ({lower_confidence} to {upper_confidence})
+ * The value is rendered in bold
+ * On small screens, the confidence interval breaks into a new line
+ */
+const formatCellValue = (
+  value: string | number | null,
+  confidenceIntervals: { lower: number | null; upper: number | null } | undefined,
+  t: (key: string, options?: { context?: string; value?: string | number | null }) => string,
+  context: string
+): React.ReactNode => {
+  const formattedValue = t('cms.blocks.table.row', {
+    context: value === null ? 'plot_null' : context,
+    value,
+  })
+
+  // Only add confidence intervals if both lower and upper are available and not null
+  // Don't show confidence intervals when the value itself is null
+  if (
+    value !== null &&
+    confidenceIntervals &&
+    confidenceIntervals.lower !== null &&
+    confidenceIntervals.lower !== undefined &&
+    confidenceIntervals.upper !== null &&
+    confidenceIntervals.upper !== undefined
+  ) {
+    const lowerFormatted = t('cms.blocks.table.row', {
+      context: 'plot',
+      value: confidenceIntervals.lower,
+    })
+    const upperFormatted = t('cms.blocks.table.row', {
+      context: 'plot',
+      value: confidenceIntervals.upper,
+    })
+    return (
+      <>
+        <strong>{formattedValue}</strong>
+        <span className="block sm:inline">
+          {' '}
+          ({lowerFormatted} to {upperFormatted})
+        </span>
+      </>
+    )
+  }
+
+  return <strong>{formattedValue}</strong>
+}
+
 export async function Table({
-  data: { chart, y_axis, x_axis, x_axis_title, y_axis_title, y_axis_minimum_value, y_axis_maximum_value, title, body },
+  data: {
+    chart,
+    y_axis,
+    x_axis,
+    x_axis_title,
+    y_axis_title,
+    y_axis_minimum_value,
+    y_axis_maximum_value,
+    title,
+    body,
+    confidence_intervals,
+    confidence_intervals_description,
+  },
   size,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
@@ -88,6 +149,9 @@ export async function Table({
         <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
           <RichText className="govuk-!-margin-bottom-2">{t('cms.blocks.table.caption', { title, body })}</RichText>
           <p className="govuk-!-margin-0">{t('cms.blocks.table.timestamp', { timestamp })}</p>
+          {confidence_intervals === true && confidence_intervals_description && (
+            <p className="govuk-!-margin-0 govuk-!-margin-top-2 font-bold">{confidence_intervals_description}</p>
+          )}
           {hasReportingDelayPeriod && (
             <>
               <p className="govuk-body-s govuk-!-padding-top-4 govuk-!-padding-right-2 inline-block">
@@ -182,10 +246,17 @@ export async function Table({
                                   'border-b-[0.5px]': !(key + 1 === array.length),
                                 })}
                               >
-                                {t('cms.blocks.table.row', {
-                                  context: item.record[column.accessorKey] === null ? 'plot_null' : 'plot',
-                                  value: item.record[column.accessorKey],
-                                })}
+                                {confidence_intervals === true
+                                  ? formatCellValue(
+                                      item.record[column.accessorKey],
+                                      item.confidenceIntervals?.[column.accessorKey],
+                                      t,
+                                      'plot'
+                                    )
+                                  : t('cms.blocks.table.row', {
+                                      context: item.record[column.accessorKey] === null ? 'plot_null' : 'plot',
+                                      value: item.record[column.accessorKey],
+                                    })}
                               </td>
                             )}
                           </Fragment>

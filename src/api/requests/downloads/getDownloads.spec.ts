@@ -63,3 +63,103 @@ test('Handles generic http errors', async () => {
 
   expect(result).toEqual(undefined)
 })
+
+test('Sends confidence_intervals as true in request body', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsCsvFixture,
+    status: 200,
+  })
+
+  await getDownloads(
+    [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        stratum: '',
+      },
+    ],
+    'csv',
+    null,
+    true
+  )
+
+  expect(client).toHaveBeenCalledWith('downloads/v2', {
+    body: {
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          stratum: '',
+        },
+      ],
+      file_format: 'csv',
+      x_axis: null,
+      confidence_intervals: true,
+    },
+  })
+})
+
+test('Sends confidence_intervals as false in request body', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsCsvFixture,
+    status: 200,
+  })
+
+  await getDownloads(
+    [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        stratum: '',
+      },
+    ],
+    'csv',
+    null,
+    false
+  )
+
+  expect(client).toHaveBeenCalledWith('downloads/v2', {
+    body: {
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          stratum: '',
+        },
+      ],
+      file_format: 'csv',
+      x_axis: null,
+      confidence_intervals: false,
+    },
+  })
+})
+
+test('Defaults confidence_intervals to false when not provided', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsCsvFixture,
+    status: 200,
+  })
+
+  await getDownloads([
+    {
+      topic: 'COVID-19',
+      metric: 'new_cases_7days_sum',
+      stratum: '',
+    },
+  ])
+
+  expect(client).toHaveBeenCalledWith('downloads/v2', {
+    body: {
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          stratum: '',
+        },
+      ],
+      file_format: 'csv',
+      x_axis: null,
+      confidence_intervals: false,
+    },
+  })
+})
