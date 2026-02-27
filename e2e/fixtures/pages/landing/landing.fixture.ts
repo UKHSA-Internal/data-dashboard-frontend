@@ -32,7 +32,8 @@ export class LandingPage {
   }
 
   async hasHeading() {
-    await expect(this.page.getByRole('heading', { name: /UKHSA data dashboard/, level: 1 })).toBeVisible()
+    // Landing page no longer has hero banner h1, assert main content section is visible
+    await expect(this.page.getByRole('heading', { name: 'Respiratory viruses', level: 2 })).toBeVisible()
   }
 
   async hasNotLastUpdated() {
