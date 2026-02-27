@@ -7,7 +7,7 @@ WORKDIR /app
 
 
 # Install dependencies based on the preferred package manager
-# COPY package.json package-lock.json ./
+COPY package.json package-lock.json ./
 RUN \
   if [ -f yarn.lock ]; then yarn --frozen-lockfile; \
   elif [ -f package-lock.json ]; then npm ci; \
