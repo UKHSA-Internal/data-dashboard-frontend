@@ -58,6 +58,7 @@ const withFeedbackData = SharedPageData.extend({
 const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
+  is_public: z.boolean().optional(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -142,6 +143,7 @@ const WithMetricsChildData = SharedPageData.extend({
       }),
     })
   ),
+  is_public: z.boolean(),
 })
 
 export const responseSchema = z.union([

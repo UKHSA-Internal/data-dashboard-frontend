@@ -25,6 +25,7 @@ import {
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
+import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -46,6 +47,7 @@ export default async function TopicPage({
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
     active_announcements: activeAnnouncements,
+    is_public: isPublic,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
@@ -75,6 +77,7 @@ export default async function TopicPage({
     <>
       <View>
         <>
+          {!isPublic && <ClassificationBanner size="medium" />}
           {slug[1] === 'childhood-vaccinations' && (
             <img
               className="float-right"
@@ -84,6 +87,7 @@ export default async function TopicPage({
               width={'70px'}
             />
           )}
+
           <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
           <LastUpdated lastUpdated={lastUpdated} />
           <Announcements announcements={activeAnnouncements} />
