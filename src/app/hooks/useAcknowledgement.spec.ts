@@ -42,7 +42,7 @@ describe('handleFormSubmit', () => {
 
   describe('Disagree Action', () => {
     beforeEach(() => {
-      mockFormData.set('action', 'disagree')
+      mockFormData.set('action', 'disagreed')
     })
 
     it('should call signOut with redirect false when user disagrees', async () => {
@@ -149,9 +149,8 @@ describe('handleFormSubmit', () => {
       expect(redirect).not.toHaveBeenCalled()
     })
 
-    it('should log user agreement when acknowledgement is provided', async () => {
-      const consoleSpy = jest.spyOn(console, 'log').mockImplementation()
-      mockFormData.set('acknowledgement', 'acknowledgement accepted')
+    it('should not log error when acknowledgement is provided', async () => {
+      mockFormData.set('acknowledgement', 'agreed')
 
       try {
         await handleFormSubmit({}, mockFormData)
@@ -159,12 +158,11 @@ describe('handleFormSubmit', () => {
         // Expected redirect error
       }
 
-      expect(consoleSpy).toHaveBeenCalledWith('User agreed', 'acknowledgement accepted')
-      consoleSpy.mockRestore()
+      expect(logger.error).not.toHaveBeenCalled()
     })
 
     it('should redirect to home page when acknowledgement is accepted', async () => {
-      mockFormData.set('acknowledgement', 'acknowledgement accepted')
+      mockFormData.set('acknowledgement', 'agreed')
 
       await expect(handleFormSubmit({}, mockFormData)).rejects.toThrow('NEXT_REDIRECT: /')
 
@@ -184,7 +182,7 @@ describe('handleFormSubmit', () => {
     })
 
     it('should not call signOut when user agrees', async () => {
-      mockFormData.set('acknowledgement', 'acknowledgement accepted')
+      mockFormData.set('acknowledgement', 'agreed')
 
       try {
         await handleFormSubmit({}, mockFormData)
@@ -196,7 +194,7 @@ describe('handleFormSubmit', () => {
     })
 
     it('should not call getCognitoSignoutURL when user agrees', async () => {
-      mockFormData.set('acknowledgement', 'acknowledgement accepted')
+      mockFormData.set('acknowledgement', 'agreed')
 
       try {
         await handleFormSubmit({}, mockFormData)
