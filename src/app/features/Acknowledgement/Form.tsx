@@ -5,7 +5,7 @@ import { useActionState, useState } from 'react'
 import { handleFormSubmit } from '@/app/hooks/useAcknowledgement'
 
 export type FormProps = {
-  checkboxLabel?: string
+  iAgreeCheckboxLabel?: string
   disagreeButtonText?: string
   agreeButtonText?: string
 }
@@ -29,19 +29,21 @@ export const renderErrorSummary = (errorMessage: string) => {
   )
 }
 
-export default function Form({ checkboxLabel, disagreeButtonText, agreeButtonText }: FormProps) {
+export default function Form({
+  iAgreeCheckboxLabel: termsCheckboxLabel,
+  disagreeButtonText,
+  agreeButtonText,
+}: FormProps) {
   const [state, formAction] = useActionState(handleFormSubmit, {})
   const [isChecked, setIsChecked] = useState(false)
   const [clientError, setClientError] = useState<string | null>(null)
-
+  const showError = (state.error || clientError) && !isChecked
+  const errorMessage = state.error || clientError
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const checked = e.target.checked
     setIsChecked(checked)
     if (checked) setClientError(null)
   }
-
-  const showError = (state.error || clientError) && !isChecked
-  const errorMessage = state.error || clientError
 
   return (
     <form action={formAction}>
@@ -57,11 +59,12 @@ export default function Form({ checkboxLabel, disagreeButtonText, agreeButtonTex
           aria-describedby={showError ? 'acknowledgement-error' : undefined}
         />
         <label className="govuk-label govuk-checkboxes__label" htmlFor="acknowledgement">
-          <b>{checkboxLabel}</b>
+          <b>{termsCheckboxLabel}</b>
         </label>
       </div>
 
       {showError && errorMessage && renderErrorSummary(errorMessage)}
+
       <div>
         <button
           name="action"
@@ -90,8 +93,6 @@ export default function Form({ checkboxLabel, disagreeButtonText, agreeButtonTex
             width="17.5"
             height="19"
             viewBox="0 0 33 40"
-            aria-hidden="true"
-            focusable="false"
           >
             <path fill="currentColor" d="M0 0h13l20 20-20 20H0l20-20z" />
           </svg>

@@ -9,7 +9,7 @@ export const acknowledgementPageMock: PageResponse<PageType.Acknowledgement> = {
     html_url: 'http://localhost/acknowledgement/',
     slug: 'acknowledgement',
     show_in_menus: false,
-    seo_title: 'Accessing official sensitive data | UKHSA data dashboard',
+    seo_title: 'Acknowledgement | UKHSA data dashboard',
     search_description: 'Acknowledgement required to access the dashboard',
     first_published_at: '2023-05-12T16:51:07.555450+01:00',
     alias_of: null,
@@ -23,7 +23,7 @@ export const acknowledgementPageMock: PageResponse<PageType.Acknowledgement> = {
       title: 'UKHSA Dashboard Root',
     },
   },
-  title: 'Accessing official sensitive data',
+  title: 'Acknowledgement',
   body: `
     <div class="bg-gray-50 mb-6 rounded">
       <p class="mb-4">By accessing this dashboard you agree to:</p>
@@ -44,8 +44,6 @@ export const acknowledgementPageMock: PageResponse<PageType.Acknowledgement> = {
   i_agree_checkbox: 'I agree to the terms of service',
   disagree_button: 'Disagree',
   agree_button: 'Agree',
-
-  // These exist on SharedPageData, but your acknowledgement schema allows fallbacks/optionals
   last_published_at: '2023-05-12T16:53:51.464146+01:00',
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   seo_change_frequency: 5,
