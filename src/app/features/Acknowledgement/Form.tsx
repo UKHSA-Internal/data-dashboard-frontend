@@ -67,7 +67,6 @@ export default function Form({ checkboxLabel, disagreeButtonText, agreeButtonTex
           name="action"
           value="disagree"
           className="govuk-button govuk-button--start govuk-!-margin-right-3"
-          style={{ backgroundColor: '#000', boxShadow: '0 2px 0 #000' }}
           type="submit"
         >
           {disagreeButtonText}
