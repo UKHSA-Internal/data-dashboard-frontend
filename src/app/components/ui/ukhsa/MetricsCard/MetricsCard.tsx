@@ -25,8 +25,8 @@ export async function MetricsCard({ title, href, description, group, topic, metr
   const { t } = await getServerTranslation('metrics')
   return (
     <>
-      {is_public === false && <ClassificationBanner size="medium" />}
       <li className="govuk-summary-card">
+        {is_public === false && <ClassificationBanner size="medium" />}
         <div className="govuk-summary-card__title-wrapper">
           <h2 className="govuk-summary-card__title">
             <Trans
