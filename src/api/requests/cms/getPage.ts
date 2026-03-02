@@ -70,7 +70,7 @@ const WithTopicData = SharedPageData.extend({
 
 const WithTopicsListData = SharedPageData.extend({
   page_description: z.string(),
-  body: z.union([z.string(), CompositeBody]),
+  body: Body,
   meta: Meta.extend({
     type: z.literal('topics.TopicsListPage'),
   }),

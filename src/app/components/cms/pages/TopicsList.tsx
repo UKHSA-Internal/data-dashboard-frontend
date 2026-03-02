@@ -3,14 +3,17 @@ import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
-import { renderCompositeBlock } from '@/app/utils/cms.utils'
+import { renderSection } from '@/app/utils/cms.utils'
+import { processSectionParams } from '@/app/utils/show-more.utils'
 
-import { RichTextAutoHeadings } from '../../ui/ukhsa/RichTextAutoHeadings/RichTextAutoHeadings'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
-export default async function TopicsListPage({ slug }: PageComponentBaseProps) {
+export default async function TopicsListPage({
+  slug,
+  searchParams: { section },
+}: PageComponentBaseProps<{ section?: string }>) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -30,11 +33,7 @@ export default async function TopicsListPage({ slug }: PageComponentBaseProps) {
 
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-full">
-          {typeof body === 'string' ? (
-            <RichTextAutoHeadings>{body}</RichTextAutoHeadings>
-          ) : (
-            body.map(renderCompositeBlock)
-          )}
+          {body.map(renderSection.bind(null, processSectionParams(section)))}
         </div>
       </div>
     </View>

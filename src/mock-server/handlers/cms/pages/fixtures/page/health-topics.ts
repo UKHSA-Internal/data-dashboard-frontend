@@ -30,5 +30,5 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
   title: 'Health topics',
   page_description:
     '<p>Explore data and insights across a range of health topics from the UK Health Security Agency.</p>',
-  body: '<p>This page lists the health topics available on the UKHSA data dashboard. Select a topic to view detailed data and metrics.</p>',
+  body: [],
 }
