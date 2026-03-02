@@ -39,7 +39,7 @@ describe('Form', () => {
       expect(disagreeButton).toBeInTheDocument()
       expect(disagreeButton).toHaveAttribute('type', 'submit')
       expect(disagreeButton).toHaveAttribute('name', 'action')
-      expect(disagreeButton).toHaveAttribute('value', 'disagree')
+      expect(disagreeButton).toHaveAttribute('value', 'disagreed')
     })
 
     it('renders agree button with custom text and start icon', () => {

@@ -53,7 +53,7 @@ export default function Form({
           id="acknowledgement"
           name="acknowledgement"
           type="checkbox"
-          value="acknowledgement accepted"
+          value="agreed"
           checked={isChecked}
           onChange={handleCheckboxChange}
           aria-describedby={showError ? 'acknowledgement-error' : undefined}
@@ -68,7 +68,7 @@ export default function Form({
       <div>
         <button
           name="action"
-          value="disagree"
+          value="disagreed"
           className="govuk-button govuk-button--start govuk-!-margin-right-3"
           type="submit"
         >

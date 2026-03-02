@@ -14,7 +14,7 @@ type FormState = {
 export async function handleFormSubmit(_prevState: FormState, formData: FormData): Promise<FormState> {
   const action = formData.get('action')
 
-  if (action === 'disagree') {
+  if (action === 'disagreed') {
     try {
       await signOut({ redirect: false })
     } catch {
