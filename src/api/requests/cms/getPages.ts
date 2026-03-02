@@ -103,7 +103,6 @@ export const metricsChildResponseSchema = responseSchema.extend({
           }),
         })
       ),
-      is_public: z.boolean(),
     })
   ),
 })
