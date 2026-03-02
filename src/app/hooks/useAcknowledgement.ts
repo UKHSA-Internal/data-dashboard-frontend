@@ -10,6 +10,7 @@ type FormState = {
   error?: string
   success?: boolean
 }
+
 export async function handleFormSubmit(_prevState: FormState, formData: FormData): Promise<FormState> {
   const action = formData.get('action')
 
@@ -34,11 +35,9 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
       }
     }
 
-    console.log('User agreed', agreedToTerms)
     redirect('/')
     return { success: true }
   }
 
-  // Default return if no action matches
   return { error: 'Invalid action' }
 }

@@ -14,7 +14,7 @@ jest.mock('react', () => {
 
 describe('Form', () => {
   const defaultProps: FormProps = {
-    checkboxLabel: 'I agree',
+    iAgreeCheckboxLabel: 'I agree',
     disagreeButtonText: 'No',
     agreeButtonText: 'Yes',
   }
