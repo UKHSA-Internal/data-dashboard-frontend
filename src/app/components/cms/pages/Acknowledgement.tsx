@@ -22,7 +22,7 @@ export default async function AcknowledgementPage() {
     <View>
       <Heading heading={title} />
       <Announcements announcements={active_announcements} />
-      <div className="bg-gray-50 mb-6">
+      <div className="govuk-!-margin-bottom-6">
         <div dangerouslySetInnerHTML={{ __html: body }} />
         <Link href={terms_of_service_link} className="govuk-link">
           {terms_of_service_link_text}
