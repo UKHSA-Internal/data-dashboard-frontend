@@ -53,7 +53,6 @@ export default async function TopicPage({
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
-
   body.map(({ value }) => {
     if (value.content) {
       value.content.map((content) => {
@@ -77,7 +76,7 @@ export default async function TopicPage({
     <>
       <View>
         <>
-          {!isPublic && <ClassificationBanner size="medium" />}
+          {isPublic === false && <ClassificationBanner size="medium" />}
           {slug[1] === 'childhood-vaccinations' && (
             <img
               className="float-right"

@@ -17,10 +17,8 @@ import {
   TabsTrigger,
   Timestamp,
 } from '@/app/components/ui/ukhsa'
-import ClassificationBanner from '@/app/components/ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
-import { authEnabled } from '@/config/constants'
 
 type ChartRowCardContentProps = {
   value: any
@@ -42,7 +40,6 @@ export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {authEnabled && <ClassificationBanner size="medium" />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}

@@ -3,7 +3,6 @@ import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
-import ClassificationBanner from '@/app/components/ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { GovukHeader } from '@/app/components/ui/ukhsa/GovukHeader/GovukHeader'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
@@ -35,7 +34,6 @@ export default async function Layout({ children }: LayoutProps) {
       </TopNav>
 
       <div className="govuk-width-container bg-blue" />
-      {authEnabled ? <ClassificationBanner size="large" /> : null}
       <div className="govuk-width-container print:hidden">
         <PhaseBanner tag={t('feedbackBannerPhase')}>
           <Trans i18nKey="feedbackBanner" t={t}>

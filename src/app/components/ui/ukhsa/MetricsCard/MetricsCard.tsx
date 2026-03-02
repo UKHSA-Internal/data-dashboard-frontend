@@ -21,20 +21,11 @@ interface MetricsCardProps {
   is_public?: boolean
 }
 
-export async function MetricsCard({
-  title,
-  href,
-  description,
-  group,
-  topic,
-  metric,
-  is_public = true,
-}: MetricsCardProps) {
+export async function MetricsCard({ title, href, description, group, topic, metric, is_public }: MetricsCardProps) {
   const { t } = await getServerTranslation('metrics')
-
   return (
     <>
-      {is_public ? <ClassificationBanner size="medium" /> : null}
+      {is_public === false && <ClassificationBanner size="medium" />}
       <li className="govuk-summary-card">
         <div className="govuk-summary-card__title-wrapper">
           <h2 className="govuk-summary-card__title">
