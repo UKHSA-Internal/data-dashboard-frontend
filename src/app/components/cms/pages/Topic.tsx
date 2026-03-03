@@ -25,7 +25,7 @@ import {
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
-import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
+import PublicFlagSetter from '../../ui/ukhsa/ClassificationBanner/PublicFlagSetter'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -71,12 +71,11 @@ export default async function TopicPage({
       })
     }
   })
-
   return (
     <>
+      <PublicFlagSetter isPublic={isPublic === false} />
       <View>
         <>
-          {isPublic === false && <ClassificationBanner size="medium" />}
           {slug[1] === 'childhood-vaccinations' && (
             <img
               className="float-right"

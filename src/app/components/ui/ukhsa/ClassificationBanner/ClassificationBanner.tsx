@@ -38,7 +38,7 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
     <div className={clsx(customColor || levelColors[level])}>
       <p
         className={clsx('font-sans font-bold uppercase text-white', {
-          'govuk-width-container text-[27px] mt-[4px] py-2': size === 'large',
+          'govuk-width-container text-[27px] py-2': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
