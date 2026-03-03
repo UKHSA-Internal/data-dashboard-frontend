@@ -1,5 +1,11 @@
 import { getPathname } from '../hooks/getPathname'
 
+export const processSectionParams = (value: string | string[] | undefined): string[] => {
+  if (!value) return []
+  const arr = Array.isArray(value) ? value : [value]
+  return arr.map((section) => section.toLowerCase())
+}
+
 const createURL = (paramSections: string[], heading: string): string => {
   let query = getPathname() + '?'
   paramSections.map((section, index) => {
