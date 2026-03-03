@@ -63,8 +63,19 @@ export default async function Layout({ children }: LayoutProps) {
               </div>
             </div>
           ))}
-      <LayoutProvider>
-        <BannerWrapper size="large" />
+      {authEnabled ? (
+        <LayoutProvider>
+          <BannerWrapper size="large" />
+          <div className="govuk-width-container">
+            <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
+              <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
+                {children}
+              </main>
+            </div>
+            <BackToTop className="govuk-!-margin-bottom-4" />
+          </div>
+        </LayoutProvider>
+      ) : (
         <div className="govuk-width-container">
           <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
             <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
@@ -73,7 +84,7 @@ export default async function Layout({ children }: LayoutProps) {
           </div>
           <BackToTop className="govuk-!-margin-bottom-4" />
         </div>
-      </LayoutProvider>
+      )}
     </>
   )
 }
