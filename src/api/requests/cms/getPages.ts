@@ -33,6 +33,7 @@ export enum PageType {
   Common = 'common.CommonPage',
   Composite = 'composite.CompositePage',
   Topic = 'topic.TopicPage',
+  TopicsList = 'topics.TopicsListPage',
   WhatsNewParent = 'whats_new.WhatsNewParentPage',
   WhatsNewChild = 'whats_new.WhatsNewChildEntry',
   MetricsParent = 'metrics_documentation.MetricsDocumentationParentPage',
