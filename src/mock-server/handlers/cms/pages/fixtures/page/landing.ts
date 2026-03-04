@@ -1,6 +1,8 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
+import { relatedLinksMock } from '../elements/related-links'
+
 export const landingPageMock: PageResponse<PageType.Landing> = {
   id: 79,
   meta: {
@@ -28,6 +30,9 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
   seo_priority: 0.5,
   last_updated_at: '2024-09-30T11:41:36.884029+01:00',
   sub_title: 'Showing public health data across England',
+  page_description: 'This is a description',
+  related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
   body: [
     {
       type: 'section',

@@ -63,11 +63,11 @@ export class LandingPage {
   async hasHealthTopicColumns(columns: string[]) {
     const section = await this.getSection('Respiratory viruses')
 
-    await expect(await section.getByRole('heading', { level: 3 }).count()).toEqual(columns.length)
+    await expect(await section.getByRole('heading', { level: 2 }).count()).toEqual(columns.length)
 
     for (const name of columns) {
       await expect(
-        section.getByTestId('chart-row-cards').getByRole('heading', { level: 3, name }).isVisible
+        section.getByTestId('chart-row-cards').getByRole('heading', { level: 2, name }).isVisible
       ).toBeTruthy()
     }
   }
@@ -75,14 +75,14 @@ export class LandingPage {
   async hasLandingPageCard({ title, sub_title }: { title: string; sub_title: string }) {
     const card = await this.getButtonInSection('Respiratory viruses', title)
 
-    await expect(card.getByRole('heading', { level: 3, name: title, exact: true })).toBeVisible()
+    await expect(card.getByRole('heading', { level: 2, name: title, exact: true })).toBeVisible()
     await expect(card.getByText(sub_title)).toBeVisible()
   }
 
   async hasNoLandingPageCard({ title, sub_title }: { title: string; sub_title: string }) {
     const card = await this.getButtonInSection('Respiratory viruses', title)
 
-    await expect(card.getByRole('heading', { level: 3, name: title, exact: true })).toBeHidden()
+    await expect(card.getByRole('heading', { level: 2, name: title, exact: true })).toBeHidden()
     await expect(card.getByText(sub_title)).toBeHidden()
   }
 
@@ -137,7 +137,7 @@ export class LandingPage {
 
     await expect(section).toBeVisible()
     await expect(card).toBeVisible()
-    await expect(card.getByRole('heading', { name, level: 3 })).toBeVisible()
+    await expect(card.getByRole('heading', { name, level: 2 })).toBeVisible()
     await expect(card.getByText(tagline)).toBeVisible()
 
     if (map) {
@@ -161,7 +161,7 @@ export class LandingPage {
 
     await expect(section).toBeVisible()
     await expect(card).toBeVisible()
-    await expect(card.getByRole('heading', { name, level: 3 })).toBeVisible()
+    await expect(card.getByRole('heading', { name, level: 2 })).toBeVisible()
     await expect(card.getByText(tagline)).toBeVisible()
 
     if (map) {
