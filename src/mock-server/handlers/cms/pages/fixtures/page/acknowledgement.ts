@@ -41,6 +41,7 @@ export const acknowledgementPageMock: PageResponse<PageType.Acknowledgement> = {
   `,
   terms_of_service_link_text: 'Read full terms of service here',
   terms_of_service_link: '#terms',
+  terms_of_service_error: 'You must accept the terms',
   i_agree_checkbox: 'I agree to the terms of service',
   disagree_button: 'Disagree',
   agree_button: 'Agree',

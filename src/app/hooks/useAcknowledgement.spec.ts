@@ -122,6 +122,7 @@ describe('handleFormSubmit', () => {
   describe('Agree Action', () => {
     beforeEach(() => {
       mockFormData.set('action', 'agree')
+      mockFormData.set('termsOfServiceError', 'You must accept the terms')
     })
 
     it('should return error when acknowledgement is not provided', async () => {
@@ -129,7 +130,7 @@ describe('handleFormSubmit', () => {
       const result = await handleFormSubmit({}, mockFormData)
 
       expect(result).toEqual({
-        error: 'You must accept the terms and conditions to continue',
+        error: 'You must accept the terms',
       })
     })
 
@@ -139,7 +140,7 @@ describe('handleFormSubmit', () => {
       const result = await handleFormSubmit({}, mockFormData)
 
       expect(result).toEqual({
-        error: 'You must accept the terms and conditions to continue',
+        error: 'You must accept the terms',
       })
     })
 

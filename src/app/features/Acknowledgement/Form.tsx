@@ -6,6 +6,7 @@ import { handleFormSubmit } from '@/app/hooks/useAcknowledgement'
 
 export type FormProps = {
   iAgreeCheckboxLabel?: string
+  termsOfServiceError?: string
   disagreeButtonText?: string
   agreeButtonText?: string
 }
@@ -30,7 +31,8 @@ export const renderErrorSummary = (errorMessage: string) => {
 }
 
 export default function Form({
-  iAgreeCheckboxLabel: termsCheckboxLabel,
+  iAgreeCheckboxLabel,
+  termsOfServiceError,
   disagreeButtonText,
   agreeButtonText,
 }: FormProps) {
@@ -47,6 +49,7 @@ export default function Form({
 
   return (
     <form action={formAction}>
+      <input type="hidden" name="termsOfServiceError" value={termsOfServiceError} />
       <div className="govuk-checkboxes__item mb-6">
         <input
           className="govuk-checkboxes__input"
@@ -59,7 +62,7 @@ export default function Form({
           aria-describedby={showError ? 'acknowledgement-error' : undefined}
         />
         <label className="govuk-label govuk-checkboxes__label" htmlFor="acknowledgement">
-          <b>{termsCheckboxLabel}</b>
+          <b>{iAgreeCheckboxLabel}</b>
         </label>
       </div>
 
@@ -69,7 +72,7 @@ export default function Form({
         <button
           name="action"
           value="disagreed"
-          className="govuk-button govuk-button--start govuk-!-margin-right-3"
+          className="govuk-button govuk-button--start govuk-!-margin-right-3 duration-400 bg-black transition-colors ease-in-out hover:!bg-dark-grey"
           type="submit"
         >
           {disagreeButtonText}
@@ -82,7 +85,7 @@ export default function Form({
           onClick={(e) => {
             if (!isChecked) {
               e.preventDefault()
-              setClientError('You must accept the terms and conditions to continue')
+              setClientError(termsOfServiceError ?? 'You must accept the terms')
             }
           }}
         >

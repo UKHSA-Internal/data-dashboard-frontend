@@ -15,6 +15,7 @@ jest.mock('react', () => {
 describe('Form', () => {
   const defaultProps: FormProps = {
     iAgreeCheckboxLabel: 'I agree',
+    termsOfServiceError: 'You must accept the terms',
     disagreeButtonText: 'No',
     agreeButtonText: 'Yes',
   }
@@ -66,11 +67,11 @@ describe('Form', () => {
       fireEvent.click(agreeButton)
 
       expect(screen.getByRole('alert')).toBeInTheDocument()
-      expect(screen.getByText(/You must accept the terms and conditions to continue/)).toBeInTheDocument()
+      expect(screen.getByText(/You must accept the terms/)).toBeInTheDocument()
 
       const checkbox = screen.getByRole('checkbox')
       fireEvent.click(checkbox)
-      expect(screen.queryByText(/You must accept the terms and conditions to continue/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/You must accept the terms/)).not.toBeInTheDocument()
     })
 
     it('prevents form submission when agree clicked without checkbox checked', () => {
