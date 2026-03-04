@@ -35,7 +35,11 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
   customColor,
 }) => {
   return (
-    <div className={clsx(customColor || levelColors[level])}>
+    <div
+      className={clsx('govuk-classification-banner', { [customColor || levelColors[level]]: true })}
+      role="banner"
+      aria-label="Classification banner"
+    >
       <p
         className={clsx('font-sans font-bold uppercase text-white', {
           'govuk-width-container text-[27px] py-2': size === 'large',
