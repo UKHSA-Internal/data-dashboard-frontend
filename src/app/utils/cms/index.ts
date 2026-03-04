@@ -223,7 +223,9 @@ export const getPageById = async <T extends PageType>(id: number) => {
 
 export const getAcknowledgementPage = async () => {
   try {
-    const acknowledgementPage = await getPageBySlug<PageType.Acknowledgement>('acknowledgement')
+    const acknowledgementPage = await getPageBySlug<PageType.Acknowledgement>('acknowledgement', {
+      type: PageType.Acknowledgement,
+    })
     return acknowledgementPage
   } catch (error) {
     logger.error(error)
