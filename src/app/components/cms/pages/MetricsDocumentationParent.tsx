@@ -125,6 +125,7 @@ export default async function MetricsParentPage({
                 metric_group: group,
                 topic,
                 is_public,
+                page_classification,
               }: any) => {
                 return (
                   <MetricsCard
@@ -136,6 +137,7 @@ export default async function MetricsParentPage({
                     topic={topic}
                     metric={metric}
                     is_public={is_public}
+                    page_classification={page_classification}
                   />
                 )
               }

@@ -9,6 +9,7 @@ import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
 
 import type { PageType } from './getPages'
+import { DataClassification } from '@/api/models/DataClassification'
 
 export type PageResponse<T> = T extends keyof PageTypeToDataMap ? z.infer<PageTypeToDataMap[T]> : never
 
@@ -34,6 +35,7 @@ const SharedPageData = z.object({
   seo_priority: z.coerce.number(),
   active_announcements: Announcements.or(fallback([])).optional(),
   is_public: z.boolean().optional(),
+  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -63,6 +65,7 @@ const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
   is_public: z.boolean(),
+  page_classification: DataClassification.or(fallback(undefined)),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -148,6 +151,7 @@ const WithMetricsChildData = SharedPageData.extend({
     })
   ),
   is_public: z.boolean(),
+  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 export const responseSchema = z.union([

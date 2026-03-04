@@ -4,6 +4,7 @@ import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { calculatePageOffset } from '@/app/utils/api.utils'
 import { logger } from '@/lib/logger'
+import { DataClassification } from '@/api/models/DataClassification'
 
 /**
  * Defines API request handlers and Zod schemas for fetching and validating CMS page data.
@@ -103,6 +104,7 @@ export const metricsChildResponseSchema = responseSchema.extend({
         })
       ),
       is_public: z.boolean(),
+      page_classification: DataClassification.or(fallback(undefined))
     })
   ),
 })

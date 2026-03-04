@@ -29,6 +29,7 @@ import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards
 import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
+import { DataClassification } from '@/api/models/DataClassification'
 
 // TODO: Move this file into cms folder
 export const renderSection = async (
@@ -70,7 +71,8 @@ export const renderCard = (
   heading: string,
   showMoreSections: string[],
   { type, value, id }: z.infer<typeof CardTypes>,
-  isPublic?: boolean
+  isPublic?: boolean,
+  pageClassification?: DataClassification
 ) => {
   return (
     <div key={id}>
@@ -80,7 +82,7 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent value={value} isPublic={isPublic} />
+          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
         </ChartRowCard>
       )}
 

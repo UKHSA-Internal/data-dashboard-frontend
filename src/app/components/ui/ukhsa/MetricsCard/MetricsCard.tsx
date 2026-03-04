@@ -10,6 +10,7 @@ import {
 import { getServerTranslation } from '@/app/i18n'
 
 import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
+import { DataClassification } from '@/api/models/DataClassification'
 
 interface MetricsCardProps {
   title: string
@@ -19,14 +20,15 @@ interface MetricsCardProps {
   topic: string
   metric: string
   is_public?: boolean
+  page_classification?: DataClassification
 }
 
-export async function MetricsCard({ title, href, description, group, topic, metric, is_public }: MetricsCardProps) {
+export async function MetricsCard({ title, href, description, group, topic, metric, is_public, page_classification }: MetricsCardProps) {
   const { t } = await getServerTranslation('metrics')
   return (
     <>
       <li className="govuk-summary-card">
-        {is_public === false && <ClassificationBanner size="medium" />}
+        {is_public === false && <ClassificationBanner size="medium" level={page_classification}/>}
         <div className="govuk-summary-card__title-wrapper">
           <h2 className="govuk-summary-card__title">
             <Trans

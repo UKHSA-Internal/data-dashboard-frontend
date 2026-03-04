@@ -6,6 +6,8 @@ import { HealthAlertTypes } from '../../Alerts'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
 import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
+import { DataClassification } from '../../DataClassification'
+import { fallback } from '@/api/utils/zod.utils'
 
 /**
  * Body Discriminated Union Types
@@ -118,6 +120,7 @@ export const CardTypes = z.discriminatedUnion('type', [
     }),
     id: z.string(),
     isPublic: z.boolean().optional(),
+    pageClassification: DataClassification.or(fallback(undefined))
   }),
   z.object({
     type: z.literal('filter_linked_map'),

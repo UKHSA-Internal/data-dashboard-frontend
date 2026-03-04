@@ -21,13 +21,15 @@ import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
+import { DataClassification } from '@/api/models/DataClassification'
 
 type ChartRowCardContentProps = {
   value: any
   isPublic?: boolean
+  pageClassification?: DataClassification
 }
 
-export function ChartRowCardContent({ value, isPublic }: ChartRowCardContentProps) {
+export function ChartRowCardContent({ value, isPublic, pageClassification }: ChartRowCardContentProps) {
   return (
     <>
       {value.columns.map((column: any) => {
@@ -43,7 +45,7 @@ export function ChartRowCardContent({ value, isPublic }: ChartRowCardContentProp
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {isPublic === false && <ClassificationBanner size="medium" />}
+            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification}/>}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}

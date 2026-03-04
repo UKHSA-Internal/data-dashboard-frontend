@@ -48,6 +48,7 @@ export default async function TopicPage({
     selected_topics: selectedTopics,
     active_announcements: activeAnnouncements,
     is_public: isPublic,
+    page_classification: pageClassification
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
@@ -73,7 +74,7 @@ export default async function TopicPage({
   })
   return (
     <>
-      {isPublic === false && <ClassificationBanner size="large" />}
+      {isPublic === false && <ClassificationBanner size="large" level={pageClassification}/>}
       <View>
         <>
           {slug[1] === 'childhood-vaccinations' && (
@@ -117,7 +118,7 @@ export default async function TopicPage({
                       <FilterBannerWrapper key={id} />
                     ) : (
                       <PageSection key={id} heading={value.heading}>
-                        {value.content.map((item) => renderCard(value.heading, [], item, isPublic))}
+                        {value.content.map((item) => renderCard(value.heading, [], item, isPublic, pageClassification))}
                       </PageSection>
                     )
                   )}

@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 
 import { clsx } from '@/lib/clsx'
 
-type Level = 'official' | 'official_sensitive' | 'pm_not_set' | 'secret' | 'top_secret'
+type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
 
 interface ClassificationBannerProps {
   size: 'large' | 'medium' | 'small' | 'unknown' | ''
@@ -15,7 +15,7 @@ interface ClassificationBannerProps {
 const levelColors: Record<Level, string> = {
   official: 'bg-[#2B71C7]',
   official_sensitive: 'bg-[#2B71C7]',
-  pm_not_set: 'bg-[#616161]',
+  protective_marking_not_set: 'bg-[#616161]',
   secret: 'bg-[#F39C2C]',
   top_secret: 'bg-[#AA0000]',
 }
@@ -23,7 +23,7 @@ const levelColors: Record<Level, string> = {
 const levelContent: Record<Level, string> = {
   official: 'Official',
   official_sensitive: 'Official-Sensitive',
-  pm_not_set: 'Protective marking not set',
+  protective_marking_not_set: 'Protective marking not set',
   secret: 'Secret',
   top_secret: 'Top Secret',
 }
