@@ -47,7 +47,6 @@ const page = z.object({
   // We default these with a fallback as to not break the schema.
   seo_change_frequency: z.number().or(fallback(5)),
   seo_priority: z.coerce.number().or(fallback(0.5)),
-  is_public: z.boolean().optional(),
   meta: z.object({
     type: z.string(),
     detail_url: z.string(),
@@ -103,6 +102,7 @@ export const metricsChildResponseSchema = responseSchema.extend({
           }),
         })
       ),
+      is_public: z.boolean(),
     })
   ),
 })

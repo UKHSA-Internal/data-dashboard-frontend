@@ -20,11 +20,14 @@ import {
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 
+import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
+
 type ChartRowCardContentProps = {
   value: any
+  isPublic?: boolean
 }
 
-export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
+export function ChartRowCardContent({ value, isPublic }: ChartRowCardContentProps) {
   return (
     <>
       {value.columns.map((column: any) => {
@@ -40,6 +43,7 @@ export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
+            {isPublic === false && <ClassificationBanner size="medium" />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}

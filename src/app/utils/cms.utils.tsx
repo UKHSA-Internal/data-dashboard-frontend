@@ -69,7 +69,8 @@ export const renderSection = async (
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
-  { type, value, id }: z.infer<typeof CardTypes>
+  { type, value, id }: z.infer<typeof CardTypes>,
+  isPublic?: boolean
 ) => {
   return (
     <div key={id}>
@@ -79,7 +80,7 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent value={value} />
+          <ChartRowCardContent value={value} isPublic={isPublic} />
         </ChartRowCard>
       )}
 

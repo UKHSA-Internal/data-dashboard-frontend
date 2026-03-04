@@ -117,6 +117,7 @@ export const CardTypes = z.discriminatedUnion('type', [
       columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
     }),
     id: z.string(),
+    isPublic: z.boolean().optional(),
   }),
   z.object({
     type: z.literal('filter_linked_map'),

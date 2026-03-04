@@ -3,13 +3,11 @@ import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
-import BannerWrapper from '@/app/components/ui/ukhsa/ClassificationBanner/BannerWrapper'
 import { GovukHeader } from '@/app/components/ui/ukhsa/GovukHeader/GovukHeader'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
-import { LayoutProvider } from '@/app/context/LayoutContext'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
 import { authEnabled } from '@/config/constants'
@@ -63,28 +61,14 @@ export default async function Layout({ children }: LayoutProps) {
               </div>
             </div>
           ))}
-      {authEnabled ? (
-        <LayoutProvider>
-          <BannerWrapper size="large" />
-          <div className="govuk-width-container">
-            <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
-              <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
-                {children}
-              </main>
-            </div>
-            <BackToTop className="govuk-!-margin-bottom-4" />
-          </div>
-        </LayoutProvider>
-      ) : (
-        <div className="govuk-width-container">
-          <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
-            <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
-              {children}
-            </main>
-          </div>
-          <BackToTop className="govuk-!-margin-bottom-4" />
+      <div className="govuk-width-container">
+        <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
+          <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
+            {children}
+          </main>
         </div>
-      )}
+        <BackToTop className="govuk-!-margin-bottom-4" />
+      </div>
     </>
   )
 }
