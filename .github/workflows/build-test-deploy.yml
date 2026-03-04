@@ -228,25 +228,15 @@ jobs:
       - name: Run container
         run: docker run -d -p 3000:3000 --name fe-test fe-test
 
-      - name: Wait for container
+      - name: Wait for app
         run: sleep 15
 
-      - name: Show container logs
-        run: docker logs fe-test
-
       - name: Health check
-        run: |
-          for i in {1..10}; do
-            curl -f http://localhost:3000 && exit 0
-            sleep 5
-          done
-          exit 1
+        run: curl --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
 
-      - name: Cleanup container
+      - name: Cleanup
         if: always()
-        run: |
-          docker stop fe-test || true
-          docker rm fe-test || true
+        run: docker rm -f fe-test
 
   ###############################################################################
   # Success gate
