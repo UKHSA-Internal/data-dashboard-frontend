@@ -37,8 +37,8 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
   return (
     <div
       className={clsx('govuk-classification-banner', { [customColor || levelColors[level]]: true })}
-      role="banner"
-      aria-label="Classification banner"
+      role="note"
+      aria-label={`${levelContent[level]} classification`}
     >
       <p
         className={clsx('font-sans font-bold uppercase text-white', {

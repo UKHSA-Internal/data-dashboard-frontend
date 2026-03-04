@@ -62,7 +62,7 @@ const withFeedbackData = SharedPageData.extend({
 const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
-  is_public: z.boolean().optional(),
+  is_public: z.boolean(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),

@@ -39,6 +39,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
       banner_type: 'Warning',
     },
   ],
+  is_public: true,
   body: [
     {
       type: 'section',
