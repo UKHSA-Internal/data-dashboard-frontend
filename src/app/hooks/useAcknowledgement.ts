@@ -30,7 +30,7 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
     if (!agreedToTerms) {
       if (!agreedToTerms) {
         return {
-          error: 'You must accept the terms and conditions to continue',
+          error: formData.get('termsOfServiceError') as string,
         }
       }
     }
