@@ -228,11 +228,14 @@ jobs:
       - name: Run container
         run: docker run -d -p 3000:3000 --name fe-test fe-test
 
-      - name: Wait for app
-        run: sleep 15
-
       - name: Health check
-        run: curl --retry 10 --retry-delay 3 --retry-connrefused http://localhost:3000
+        run: |
+          for i in {1..10}; do
+            curl -f http://localhost:3000 && exit 0
+            sleep 3
+          done
+          echo "Health check failed"
+          exit 1
 
       - name: Cleanup
         if: always()
