@@ -36,12 +36,30 @@ The mock server starts automatically when you run the command npm run dev. It wi
 
 ## Environment Configuration
 
-When working locally, you need to set up a .env.local file to configure the API endpoint and authentication key. This file should include the following:
+When working locally with the mock server, you need to set up a .env.local file to configure the API endpoint and authentication key. This file should include the following:
 
 ```
 API_URL=http://localhost:3005
 API_KEY=123
 ```
+
+### Draft Preview Mocks
+
+The mock server now supports draft preview calls used by the frontend preview flow.
+
+- **Endpoint:** `GET /api/drafts/<slug>/`
+- **Auth:** Requires `Authorization: Bearer <token>`
+- **Response shape:** CMS page detail payload (`PageResponse`), matching `/api/pages/:id` shape
+
+Current canned draft slugs:
+
+- `cover` → returns a draft "Cover" page payload (`200`)
+- `respiratory-viruses/covid-19` → returns the COVID-19 topic payload (`200`)
+
+Fallback behaviours:
+
+- Missing/invalid authorization header → `401` `{ "message": "missing or invalid authorization header" }`
+- Unknown slug → `404` `{ "message": "page not found" }`
 
 ### Testing Against a Deployed Environment
 
@@ -51,6 +69,8 @@ If you want to test against a real deployed environment, you can adjust your .en
 API_URL=https://private-api.dev.ukhsa-dashboard.data.gov.uk
 API_KEY={DEV_API_KEY}
 ```
+
+If you are testing against a local real CMS backend, use your local host for `API_URL` (for example `http://localhost:8000`).
 
 Make sure to uncomment these lines when you wish to test against the actual API.
 
@@ -74,7 +94,6 @@ The switchboard is located in the `src/app/(pages)/switchboard` directory. You c
 1. **Starting the Development Environment:**
    - Run the command npm run dev to start the development server, including the mock server.
 2. **Accessing the Mock Server:**
-
    - Once the mock server is running, navigate to http://localhost:3005 in your browser to access the mock API.
 
 3. **Accessing the Switchboard:**

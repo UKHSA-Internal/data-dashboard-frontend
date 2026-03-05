@@ -163,6 +163,30 @@ describe('validateUrlWithCms', () => {
     expect(notFound).toHaveBeenCalled()
     expect(result).toBeUndefined()
   })
+
+  test('Preview mode applies same html_url slug mismatch validation as normal mode', async () => {
+    getPages.mockResolvedValueOnce({
+      status: 200,
+      data: {
+        id: 80,
+        title: 'Cover',
+        meta: {
+          type: PageType.Composite,
+          slug: 'cover',
+        },
+      },
+    })
+
+    const slug: Slug = ['cover']
+    const result = await validateUrlWithCms(slug, PageType.Composite, {
+      preview: 'true',
+      slug: 'cover',
+      t: 'draft-token',
+    })
+
+    expect(result).toBeUndefined()
+    expect(notFound).toHaveBeenCalled()
+  })
 })
 
 describe('getPageMetadata', () => {
@@ -277,6 +301,38 @@ describe('getPageMetadata', () => {
     })
   })
 
+  test('Preview mode applies no-store cache options to metrics metadata list fetch', async () => {
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
+
+    const slug: Slug = ['metrics-documentation']
+    const searchParams: SearchParams = {
+      preview: 'true',
+      slug: 'metrics-documentation',
+      t: 'draft-token',
+    }
+
+    await getPageMetadata(slug, searchParams, PageType.MetricsParent)
+
+    const metricsPagesCall = getPages.mock.calls.find(([endpoint, options]) => {
+      if (endpoint !== 'pages') {
+        return false
+      }
+
+      const searchParams = (options as { searchParams?: URLSearchParams })?.searchParams
+      return searchParams?.get('type') === PageType.MetricsChild
+    })
+
+    expect(metricsPagesCall).toBeDefined()
+    expect(metricsPagesCall?.[1]).toEqual(
+      expect.objectContaining({
+        cache: 'no-store',
+        next: { revalidate: 0 },
+      })
+    )
+  })
+
   test('Failing to get metrics metadata', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
@@ -319,6 +375,38 @@ describe('getPageMetadata', () => {
         title: "What's new (page 1 of 4) | UKHSA data dashboard",
       },
     })
+  })
+
+  test("Preview mode applies no-store cache options to what's-new metadata list fetch", async () => {
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
+    getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
+
+    const slug: Slug = ['whats-new']
+    const searchParams: SearchParams = {
+      preview: 'true',
+      slug: 'whats-new',
+      t: 'draft-token',
+    }
+
+    await getPageMetadata(slug, searchParams, PageType.WhatsNewParent)
+
+    const whatsNewPagesCall = getPages.mock.calls.find(([endpoint, options]) => {
+      if (endpoint !== 'pages') {
+        return false
+      }
+
+      const searchParams = (options as { searchParams?: URLSearchParams })?.searchParams
+      return searchParams?.get('type') === PageType.WhatsNewChild
+    })
+
+    expect(whatsNewPagesCall).toBeDefined()
+    expect(whatsNewPagesCall?.[1]).toEqual(
+      expect.objectContaining({
+        cache: 'no-store',
+        next: { revalidate: 0 },
+      })
+    )
   })
 
   test('Failing to get whats-new metadata', async () => {

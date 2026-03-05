@@ -11,7 +11,28 @@ import { logger } from '@/lib/logger'
 import { getSiteUrl, slug2String, trimTrailingSlash } from '../app.utils'
 import { getPathSegments } from './slug'
 
-export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
+function isPreviewMode(searchParams?: SearchParams) {
+  const params = (searchParams ?? {}) as Record<string, unknown>
+
+  return params.preview === 'true' && typeof params.slug === 'string' && typeof params.t === 'string'
+}
+
+async function shouldBypassCache(searchParams?: SearchParams) {
+  if (isPreviewMode(searchParams)) {
+    return true
+  }
+
+  try {
+    const { headers } = await import('next/headers')
+    const requestHeaders = await headers()
+
+    return requestHeaders.get('x-cms-cache-bypass') === 'true'
+  } catch {
+    return false
+  }
+}
+
+export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType, searchParams?: SearchParams) {
   // Landing page
   if (pageType === PageType.Landing) {
     const pageData: PageResponse<PageType> = await getLandingPage()
@@ -19,7 +40,7 @@ export async function validateUrlWithCms(urlSlug: Slug, pageType: PageType) {
   }
 
   // All other pages
-  const pageData = await getPageBySlug(urlSlug)
+  const pageData = await getPageBySlug(urlSlug, searchParams)
 
   if (!pageData) {
     return notFound()
@@ -43,6 +64,14 @@ export async function getPageMetadata(
   pageType: PageType
 ): Promise<Metadata> {
   const { t } = await getServerTranslation('common')
+  const previewRequest = await shouldBypassCache(searchParams)
+  // Preview pages must always reflect latest draft content, so disable fetch/data cache reuse.
+  const previewNoStore = previewRequest
+    ? {
+        cache: 'no-store' as const,
+        next: { revalidate: 0 },
+      }
+    : undefined
 
   const page = searchParams.page ?? 1
   const search = searchParams.search
@@ -50,7 +79,7 @@ export async function getPageMetadata(
   const isLandingPage = pageType === PageType.Landing
 
   try {
-    const pageData = await validateUrlWithCms(urlSlug, pageType)
+    const pageData = await validateUrlWithCms(urlSlug, pageType, searchParams)
     const siteUrl = getSiteUrl()
     const pagePath = isLandingPage ? '' : `/${slug2String(urlSlug)}`
     const fullUrl = siteUrl + pagePath
@@ -72,7 +101,7 @@ export async function getPageMetadata(
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.MetricsParent) {
-      const metricsEntries = await getMetricsPages({ search, page })
+      const metricsEntries = await getMetricsPages({ search, page, requestCacheOptions: previewNoStore })
 
       if (!metricsEntries.success) {
         logger.info(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
@@ -89,6 +118,7 @@ export async function getPageMetadata(
         const { pagination_size: paginationSize, show_pagination: showPagination } =
           await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], {
             type: PageType.MetricsParent,
+            ...searchParams,
           })
 
         const totalPages = Math.ceil(totalItems / paginationSize) || 1
@@ -106,7 +136,7 @@ export async function getPageMetadata(
 
     // TODO: This should be dynamic and cms driven once CMS pages have pagination configured
     if (pageType === PageType.WhatsNewParent) {
-      const whatsNewEntries = await getWhatsNewPages({ page })
+      const whatsNewEntries = await getWhatsNewPages({ page, requestCacheOptions: previewNoStore })
 
       if (!whatsNewEntries.success) {
         logger.error(whatsNewEntries.error.message)
@@ -121,7 +151,10 @@ export async function getPageMetadata(
 
       try {
         const { pagination_size: paginationSize, show_pagination: showPagination } =
-          await getPageBySlug<PageType.WhatsNewParent>(['whats-new'], { type: PageType.WhatsNewParent })
+          await getPageBySlug<PageType.WhatsNewParent>(['whats-new'], {
+            type: PageType.WhatsNewParent,
+            ...searchParams,
+          })
 
         const totalPages = Math.ceil(totalItems / paginationSize) || 1
         title = showPagination ? seoTitle.replace('|', t('documentTitlePagination', { page, totalPages })) : seoTitle
@@ -151,10 +184,10 @@ export async function getPageMetadata(
   }
 }
 
-export async function getPageTypeBySlug(slug: Slug) {
+export async function getPageTypeBySlug(slug: Slug, searchParams?: SearchParams) {
   if (!slug.length) return PageType.Landing
 
-  const page = await getPageBySlug(slug)
+  const page = await getPageBySlug(slug, searchParams)
   return page.meta.type as PageType
 }
 

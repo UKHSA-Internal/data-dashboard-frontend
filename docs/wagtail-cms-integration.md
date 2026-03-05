@@ -10,6 +10,19 @@ The front-end (FE) application is built with **Next.js 14** using the **app rout
 
 Our CMS, Wagtail, is a traditional Python-based CMS with headless capabilities, allowing REST API integration. The FE application consumes data from Wagtail’s private API, which offers both Wagtail-specific endpoints (`/api/pages/:id`) and additional, non-Wagtail endpoints. These endpoints may require page-specific payloads, which Wagtail provides in its responses. For example, a request to `/api/pages/:id` returns structured data for that page’s type (e.g., `TopicPage`), including any necessary data to render complex elements like charts or trend cards.
 
+### CMS Page Previews
+
+The frontend supports draft page previews so CMS editors can view unpublished content through the FE preview flow.
+
+Preview uses two slug sources by design:
+
+- normal requests use the URL path slug
+- preview requests use the query slug from `/preview?slug=<slug>&t=<token>`
+
+This exists because preview middleware rewrites internally to `/<slug>` and forwards draft context via request headers (`x-cms-draft-token`, `x-cms-cache-bypass`).
+
+See [CDD-1379: CMS Page Previews](../changelog/CDD-1379-page-previews.md) for details.
+
 ## Dynamic Page Rendering in Next.js
 
 The FE application uses a **dynamic page renderer** pattern. This pattern enables the front-end to interpret URL paths dynamically and map them to Wagtail content:

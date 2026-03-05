@@ -189,14 +189,21 @@ export const getPages = async (additionalParams?: Record<string, string>) => {
 
 export type WhatsNewPagesResponse = z.infer<typeof whatsNewResponseSchema>
 
+type RequestCacheOptions = {
+  cache?: RequestInit['cache']
+  next?: { revalidate: number }
+}
+
 export const getWhatsNewPages = async ({
   page = 1,
   showPagination,
   paginationSize = 1,
+  requestCacheOptions,
 }: {
   page: number | undefined
   showPagination?: boolean
   paginationSize?: number
+  requestCacheOptions?: RequestCacheOptions
 }) => {
   const whatsNewPageSize = showPagination ? paginationSize : 1000 // set large value for when pagination is disabled
   const searchParams = new URLSearchParams()
@@ -207,7 +214,7 @@ export const getWhatsNewPages = async ({
   searchParams.set('offset', String(calculatePageOffset(page, paginationSize)))
 
   try {
-    const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams })
+    const { data } = await client<WhatsNewPagesResponse>('pages', { searchParams, ...requestCacheOptions })
     const result = whatsNewResponseSchema.safeParse(data)
 
     if (!result.success) {
@@ -227,6 +234,7 @@ interface GetMetricsPagesRequestParams {
   page: number
   showPagination?: boolean
   paginationSize?: number
+  requestCacheOptions?: RequestCacheOptions
 }
 
 export const getMetricsPages = async ({
@@ -234,6 +242,7 @@ export const getMetricsPages = async ({
   page = 1,
   showPagination,
   paginationSize = 1,
+  requestCacheOptions,
 }: GetMetricsPagesRequestParams) => {
   const metricsDocumentationPageSize = showPagination ? paginationSize : 1000 // set large value for when pagination is disabled
 
@@ -248,7 +257,7 @@ export const getMetricsPages = async ({
   }
 
   try {
-    const { data } = await client<MetricsPagesResponse>('pages', { searchParams })
+    const { data } = await client<MetricsPagesResponse>('pages', { searchParams, ...requestCacheOptions })
     const result = metricsChildResponseSchema.safeParse(data)
 
     if (!result.success) {

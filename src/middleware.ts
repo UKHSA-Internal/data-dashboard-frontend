@@ -19,6 +19,50 @@ export const middleware: NextMiddleware = async (request: NextRequest) => {
   let response = NextResponse.next()
   // const pathname = request.nextUrl.pathname
 
+  // Rewrite /preview requests into the catch-all CMS route so draft pages can be
+  // resolved using query-provided slug/token without exposing a separate preview page.
+  if (request.nextUrl.pathname === '/preview') {
+    const slug = request.nextUrl.searchParams.get('slug')
+    const token = request.nextUrl.searchParams.get('t')
+
+    if (!slug || !token) {
+      return NextResponse.json(
+        {
+          message: 'Missing required preview params: slug and t',
+        },
+        { status: 400 }
+      )
+    }
+
+    const normalizedSlug = slug
+      .split('/')
+      .map((segment) => segment.trim())
+      .filter(Boolean)
+      .map((segment) => encodeURIComponent(segment))
+      .join('/')
+
+    if (!normalizedSlug) {
+      return NextResponse.json(
+        {
+          message: 'Preview slug must contain at least one non-empty path segment',
+        },
+        { status: 400 }
+      )
+    }
+
+    const rewriteUrl = new URL(`/${normalizedSlug}`, request.url)
+
+    const requestHeaders = new Headers(request.headers)
+    requestHeaders.set('x-cms-draft-token', token)
+    requestHeaders.set('x-cms-cache-bypass', 'true')
+
+    return NextResponse.rewrite(rewriteUrl, {
+      request: {
+        headers: requestHeaders,
+      },
+    })
+  }
+
   // Add x-url header for debugging or legacy usage
   response.headers.set('x-url', request.url)
   // Handle auth first if enabled

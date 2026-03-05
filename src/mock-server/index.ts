@@ -32,6 +32,7 @@ import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
 import subplotDownloads from './handlers/downloads/subplot/v1'
 import downloads from './handlers/downloads/v2'
+import drafts from './handlers/drafts/[...slug]'
 import flags from './handlers/flags/client/features'
 import geographies from './handlers/geographies/v2/[topic]'
 import geographiesv3 from './handlers/geographies/v3/[topic]'
@@ -53,6 +54,7 @@ app.use(cookieParser())
 // CMS endpoints
 app.get('/api/pages', pages)
 app.get('/api/pages/:id', page)
+app.get('/api/drafts/*', drafts)
 
 // GET endpoints
 app.get('/api/headlines/v3', headlines)
