@@ -5,8 +5,8 @@
 - Branch: `task/CDD-1379-page-previews`
 - Baseline: `main`
 - Comparison used: `git diff main`
-- Files changed: 20
-- Total delta: 1012 insertions, 27 deletions
+- Files changed: 15
+- Total delta: 1269 insertions, 17 deletions
 
 ## Reviewer TL;DR
 
@@ -19,31 +19,25 @@
 
 1. `README.md` (modified)
 2. `changelog/CDD-1379-page-previews.md` (added)
-3. `docs/application-architecture-report.md` (added)
-4. `docs/mock-server-and-switchboard.md` (modified)
-5. `docs/wagtail-cms-integration.md` (modified)
-6. `src/api/requests/cms/getPages.ts` (modified)
-7. `src/api/requests/getPageBySlug.spec.ts` (modified)
-8. `src/api/requests/getPageBySlug.ts` (modified)
-9. `src/app/(cms)/[[...slug]]/page.tsx` (modified)
-10. `src/app/components/cms/pages/MetricsDocumentationChild.tsx` (modified)
-11. `src/app/components/cms/pages/MetricsDocumentationParent.tsx` (modified)
-12. `src/app/components/cms/pages/Topic.tsx` (modified)
-13. `src/app/components/cms/pages/WhatsNewChild.tsx` (modified)
-14. `src/app/components/cms/pages/WhatsNewParent.tsx` (modified)
-15. `src/app/utils/cms/index.spec.ts` (modified)
-16. `src/app/utils/cms/index.ts` (modified)
-17. `src/middleware.ts` (modified)
-18. `src/mock-server/handlers/drafts/[...slug].spec.ts` (added)
-19. `src/mock-server/handlers/drafts/[...slug].ts` (added)
-20. `src/mock-server/index.ts` (modified)
+3. `changelog/task.CDD-3197-page-previews.PR.md` (added)
+4. `docs/application-architecture-report.md` (added)
+5. `docs/mock-server-and-switchboard.md` (modified)
+6. `docs/wagtail-cms-integration.md` (modified)
+7. `src/api/requests/cms/getPages.ts` (modified)
+8. `src/api/requests/getPageBySlug.spec.ts` (modified)
+9. `src/api/requests/getPageBySlug.ts` (modified)
+10. `src/app/utils/cms/index.spec.ts` (modified)
+11. `src/app/utils/cms/index.ts` (modified)
+12. `src/middleware.ts` (modified)
+13. `src/mock-server/handlers/drafts/[...slug].spec.ts` (added)
+14. `src/mock-server/handlers/drafts/[...slug].ts` (added)
+15. `src/mock-server/index.ts` (modified)
 
 ## Code Changes
 
 | File Name                                           | Purpose                                                | Change                                                                                                                                        | Input (example)                                                                                               | Process                                                                                                                                                            | Output (example)                                                                                                                                        |
 | --------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `src/middleware.ts`                                 | Request middleware (rewrite/auth/redirects).           | Added `/preview` validation and rewrite to canonical CMS route path; injects boundary request headers for draft token/cache bypass semantics. | `GET /preview?slug=respiratory-viruses/covid-19&t=abc123`                                                     | Validate `slug` + `t`, normalize slug segments, rewrite to `/<normalized-slug>`, set `x-cms-draft-token` + `x-cms-cache-bypass` headers.                           | Browser URL stays `/preview?...`; internal route resolves as `/respiratory-viruses/covid-19` and downstream fetch layer can select draft source.        |
-| `src/app/(cms)/[[...slug]]/page.tsx`                | Catch-all CMS route rendering entrypoint.              | Kept rendering path preview-agnostic; removed preview-specific slug/context logic.                                                            | `params.slug=['respiratory-viruses','covid-19']`                                                              | Resolve page type from route slug; render via existing `PageComponents` map.                                                                                       | Draft and published responses share the same renderer path with no preview-specific component wiring.                                                   |
 | `src/app/utils/cms/index.ts`                        | CMS utility layer for validation/metadata/type lookup. | Keeps renderer behavior unchanged and applies cache-bypass options from request boundary context when generating metadata lists.              | Rewritten preview request to `/metrics-documentation` with `x-cms-cache-bypass: true` header.                 | Resolve page by routed slug; detect cache-bypass mode from search params or boundary header; pass no-store overrides into metadata list fetches.                   | CMS `pages` list fetch executes with `{ cache:'no-store', next:{ revalidate:0 } }` for metadata generation under cache-bypass mode.                     |
 | `src/api/requests/getPageBySlug.ts`                 | Slug-based CMS page resolver.                          | Added boundary-driven draft branch using route slug + draft token context and strict no-cache draft fetch.                                    | `getPageBySlug(['respiratory-viruses','covid-19'], { type: PageType.Topic })` during preview rewrite request. | Resolve draft token from explicit `t` or request header `x-cms-draft-token`; if present, fetch `drafts/<route-slug>/`; otherwise run published list/detail lookup. | Requests `drafts/respiratory-viruses/covid-19/` with `Authorization: Bearer <token>` and no-store options without preview-specific renderer parameters. |
 | `src/api/requests/cms/getPages.ts`                  | CMS list-fetch request handlers.                       | Added optional request cache override support for preview metadata fetches.                                                                   | `getMetricsPages({search:'covid', page:1, requestCacheOptions:{cache:'no-store', next:{revalidate:0}}})`      | Merge `requestCacheOptions` into `client('pages', ...)` request options.                                                                                           | `pages` API call honors preview cache override options.                                                                                                 |
@@ -95,12 +89,19 @@
 ### Rendering parity (draft vs normal pages)
 
 - Draft responses are rendered through the same dynamic renderer used for published pages.
-- The only difference is data source selection in `getPageBySlug` (draft endpoint vs published list/detail lookup).
-- After data is fetched, the rendering path is unchanged:
+- Data source selection in `getPageBySlug` uses either draft endpoint or published list/detail lookup.
+- Rendering path:
   1. `getPageTypeBySlug` resolves CMS page type from returned page payload.
   2. `src/app/(cms)/[[...slug]]/page.tsx` selects component from `PageComponents` by that type.
   3. The selected page component (`Landing`, `Topic`, `Composite`, `WhatsNew`, `Metrics`, etc.) renders exactly as in normal flow.
 - This means draft API payloads are schema-compatible `PageResponse` objects and are intentionally fed into the existing component map/pipeline without a separate “preview renderer”.
+
+### Generic page rendering interface
+
+- Rendering is contract-driven by `page.meta.type` and the existing `PageComponents` map.
+- Middleware and request utilities decide only **which data source** is fetched (draft vs published), not **which renderer** is used.
+- Any page that conforms to the central `PageResponse` + `PageType` interface enters the same route/type/component pipeline.
+- No per-component preview implementations or preview-specific component branches are required.
 
 ### Local mock API path
 
@@ -185,10 +186,10 @@ Rewrite example:
   - Browser still shows `/preview?slug=respiratory-viruses/covid-19&t=abc123`
   - Next resolves/rendering against `/respiratory-viruses/covid-19`; downstream request layer consumes draft token context and selects draft data source.
 
-### `src/app/(cms)/[[...slug]]/page.tsx`
+### `src/app/(cms)/[[...slug]]/page.tsx` (rendering context)
 
-- **Change:** Kept dynamic route rendering path stable and preview-agnostic after middleware rewrite-to-slug boundary design.
-- **Behavioral effect:** Route selection and component rendering are unchanged for preview vs published content.
+- **Change:** Rendering flow reference only.
+- **Behavioral effect:** Route selection and component rendering remain identical for preview and published payloads.
 
 ### `src/app/utils/cms/index.ts`
 
@@ -294,7 +295,7 @@ Rewrite example:
 
 - Test coverage chain:
   - Request-layer tests: `src/api/requests/getPageBySlug.spec.ts`
-  - CMS utility tests: `src/app/utils/cms/index.spec.ts` (includes preview no-cache assertions for `getMetricsPages` / `getWhatsNewPages` requestCacheOptions pass-through)
+  - CMS utility tests: `src/app/utils/cms/index.spec.ts` (includes preview no-cache assertion as a single contract example via parent metadata list fetch)
   - Mock endpoint tests: `src/mock-server/handlers/drafts/[...slug].spec.ts`
 
 ---
@@ -303,11 +304,11 @@ Rewrite example:
 
 - Draft-mode request selection depends on boundary token context (`x-cms-draft-token` header or explicit `t` parameter) being present.
 - Metadata cache-bypass behavior depends on boundary cache header (`x-cms-cache-bypass`) or legacy preview query params in helper call paths.
-- Middleware preview rewrite executes before existing middleware branches.
+- Middleware preview rewrite executes in the middleware request pipeline.
 - Mock draft auth intentionally validates only bearer header presence, not signed token semantics.
 
-## Verification Notes (from branch context)
+## Verification Notes
 
-- TypeScript compile verified after test typing fix (`npm run tsc` passed).
+- TypeScript compile verified (`npm run tsc` passed).
 - Draft mock handler tests validate success + auth + unknown slug behavior.
 - Endpoint sanity checks performed against local mock server for `cover` and nested slug.

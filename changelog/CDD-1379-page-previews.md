@@ -18,7 +18,7 @@ This feature adds support for rendering **preview versions of CMS pages** from t
 
 The intent is:
 
-- Allow CMS editors to open a draft page before publish.
+- Allow CMS editors to open a draft page.
 - Route preview requests through the frontend using preview query parameters.
 - Fetch preview content from the CMS **drafts API** instead of the published pages API.
 - Ensure draft content is **never cached**.
@@ -82,7 +82,7 @@ Renderer components remain preview-agnostic.
 
 ### 3) Draft fetch path calls CMS drafts API
 
-`getPageBySlug(...)` now includes draft-specific request handling:
+`getPageBySlug(...)` includes draft-specific request handling:
 
 - [src/api/requests/getPageBySlug.ts](../src/api/requests/getPageBySlug.ts)
 
