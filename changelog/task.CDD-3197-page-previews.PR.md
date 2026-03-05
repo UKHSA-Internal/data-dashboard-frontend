@@ -40,18 +40,100 @@
 
 ## Code Changes
 
-| File Name                                           | Purpose                                                | Change                                                                                                                                        | Input (example)                                                                                               | Process                                                                                                                                                            | Output (example)                                                                                                                                        |
-| --------------------------------------------------- | ------------------------------------------------------ | --------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `src/middleware.ts`                                 | Request middleware (rewrite/auth/redirects).           | Added `/preview` validation and rewrite to canonical CMS route path; injects boundary request headers for draft token/cache bypass semantics. | `GET /preview?slug=respiratory-viruses/covid-19&t=abc123`                                                     | Validate `slug` + `t`, normalize slug segments, rewrite to `/<normalized-slug>`, set `x-cms-draft-token` + `x-cms-cache-bypass` headers.                           | Browser URL stays `/preview?...`; internal route resolves as `/respiratory-viruses/covid-19` and downstream fetch layer can select draft source.        |
-| `src/app/(cms)/[[...slug]]/page.tsx`                | Catch-all CMS route rendering entrypoint.              | Kept rendering path preview-agnostic; removed preview-specific slug/context logic.                                                            | `params.slug=['respiratory-viruses','covid-19']`                                                              | Resolve page type from route slug; render via existing `PageComponents` map.                                                                                       | Draft and published responses share the same renderer path with no preview-specific component wiring.                                                   |
-| `src/app/utils/cms/index.ts`                        | CMS utility layer for validation/metadata/type lookup. | Keeps renderer behavior unchanged and applies cache-bypass options from request boundary context when generating metadata lists.              | Rewritten preview request to `/metrics-documentation` with `x-cms-cache-bypass: true` header.                 | Resolve page by routed slug; detect cache-bypass mode from search params or boundary header; pass no-store overrides into metadata list fetches.                   | CMS `pages` list fetch executes with `{ cache:'no-store', next:{ revalidate:0 } }` for metadata generation under cache-bypass mode.                     |
-| `src/api/requests/getPageBySlug.ts`                 | Slug-based CMS page resolver.                          | Added boundary-driven draft branch using route slug + draft token context and strict no-cache draft fetch.                                    | `getPageBySlug(['respiratory-viruses','covid-19'], { type: PageType.Topic })` during preview rewrite request. | Resolve draft token from explicit `t` or request header `x-cms-draft-token`; if present, fetch `drafts/<route-slug>/`; otherwise run published list/detail lookup. | Requests `drafts/respiratory-viruses/covid-19/` with `Authorization: Bearer <token>` and no-store options without preview-specific renderer parameters. |
-| `src/api/requests/cms/getPages.ts`                  | CMS list-fetch request handlers.                       | Added optional request cache override support for preview metadata fetches.                                                                   | `getMetricsPages({search:'covid', page:1, requestCacheOptions:{cache:'no-store', next:{revalidate:0}}})`      | Merge `requestCacheOptions` into `client('pages', ...)` request options.                                                                                           | `pages` API call honors preview cache override options.                                                                                                 |
-| `src/mock-server/index.ts`                          | Mock server route registration.                        | Registered drafts API route for preview flow.                                                                                                 | `GET /api/drafts/cover/`                                                                                      | Route matcher directs request to drafts handler module.                                                                                                            | Request is handled by `handlers/drafts/[...slug].ts`.                                                                                                   |
-| `src/mock-server/handlers/drafts/[...slug].ts`      | Mock drafts endpoint implementation.                   | Added authenticated draft slug handler with fixture-based responses.                                                                          | `GET /api/drafts/respiratory-viruses/covid-19/` + `Authorization: Bearer test`                                | Validate auth header, normalize slug, resolve fixture/switchboard status.                                                                                          | Returns fixture payload on success, otherwise `401`/`404`/`400`.                                                                                        |
-| `src/api/requests/getPageBySlug.spec.ts`            | Tests for slug-based page lookup.                      | Added draft endpoint coverage for route-slug path and middleware-token header context.                                                        | Resolver call with route slug and either explicit token param or `x-cms-draft-token` header.                  | Execute request resolver under boundary-token draft context and assert branch behavior/failures.                                                                   | Asserts draft endpoint, bearer token, and no-store options apply without preview renderer context wiring.                                               |
-| `src/app/utils/cms/index.spec.ts`                   | CMS utility behavior tests.                            | Added preview-path assertions, including preview no-cache metadata list checks.                                                               | Preview metadata call for metrics/what's-new in test case.                                                    | Run metadata utilities in preview context and inspect list-fetch call options.                                                                                     | Asserts list fetch includes `{ cache:'no-store', next:{ revalidate:0 } }`.                                                                              |
-| `src/mock-server/handlers/drafts/[...slug].spec.ts` | Tests for mock drafts endpoint handler.                | Added success/failure coverage for draft endpoint behavior.                                                                                   | Authorized and unauthorized draft requests in tests.                                                          | Exercise handler branches for valid slug, missing auth, unknown slug, and invalid slug.                                                                            | Asserts expected status/payload (`200`, `401`, `404`, `400`).                                                                                           |
+<table style="width:100%; table-layout: fixed; border-collapse: collapse; word-wrap: break-word;">
+  <thead>
+    <tr>
+      <th style="width:15%;">File Name</th>
+      <th style="width:15%;">Purpose</th>
+      <th style="width:20%;">Change</th>
+      <th style="width:15%;">Input (example)</th>
+      <th style="width:20%;">Process</th>
+      <th style="width:15%;">Output (example)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>src/middleware.ts</td>
+      <td>Request middleware (rewrite/auth/redirects)</td>
+      <td>Added `/preview` validation and rewrite to canonical CMS route path; injects boundary request headers for draft token/cache bypass semantics</td>
+      <td>GET /preview?slug=respiratory-viruses/covid-19&t=abc123</td>
+      <td>Validate slug + t, normalize slug segments, rewrite to /&lt;normalized-slug&gt;, set x-cms-draft-token + x-cms-cache-bypass headers</td>
+      <td>Browser URL stays `/preview?...`; internal route resolves as `/respiratory-viruses/covid-19` and downstream fetch layer can select draft source</td>
+    </tr>
+    <tr>
+      <td>src/app/(cms)/[[...slug]]/page.tsx</td>
+      <td>Catch-all CMS route rendering entrypoint</td>
+      <td>Kept rendering path preview-agnostic; removed preview-specific slug/context logic</td>
+      <td>params.slug=['respiratory-viruses','covid-19']</td>
+      <td>Resolve page type from route slug; render via existing PageComponents map</td>
+      <td>Draft and published responses share the same renderer path with no preview-specific component wiring</td>
+    </tr>
+    <tr>
+      <td>src/app/utils/cms/index.ts</td>
+      <td>CMS utility layer for validation/metadata/type lookup</td>
+      <td>Keeps renderer behavior unchanged and applies cache-bypass options from request boundary context when generating metadata lists</td>
+      <td>Rewritten preview request to `/metrics-documentation` with x-cms-cache-bypass: true header</td>
+      <td>Resolve page by routed slug; detect cache-bypass mode from search params or boundary header; pass no-store overrides into metadata list fetches</td>
+      <td>CMS `pages` list fetch executes with { cache:'no-store', next:{ revalidate:0 } } for metadata generation under cache-bypass mode</td>
+    </tr>
+    <tr>
+      <td>src/api/requests/getPageBySlug.ts</td>
+      <td>Slug-based CMS page resolver</td>
+      <td>Added boundary-driven draft branch using route slug + draft token context and strict no-cache draft fetch</td>
+      <td>getPageBySlug(['respiratory-viruses','covid-19'], { type: PageType.Topic }) during preview rewrite request</td>
+      <td>Resolve draft token from explicit t or request header x-cms-draft-token; if present, fetch drafts/&lt;route-slug&gt;/; otherwise run published list/detail lookup</td>
+      <td>Requests drafts/respiratory-viruses/covid-19/ with Authorization: Bearer &lt;token&gt; and no-store options without preview-specific renderer parameters</td>
+    </tr>
+    <tr>
+      <td>src/api/requests/cms/getPages.ts</td>
+      <td>CMS list-fetch request handlers</td>
+      <td>Added optional request cache override support for preview metadata fetches</td>
+      <td>getMetricsPages({search:'covid', page:1, requestCacheOptions:{cache:'no-store', next:{revalidate:0}}})</td>
+      <td>Merge requestCacheOptions into client('pages', ...) request options</td>
+      <td>pages API call honors preview cache override options</td>
+    </tr>
+    <tr>
+      <td>src/mock-server/index.ts</td>
+      <td>Mock server route registration</td>
+      <td>Registered drafts API route for preview flow</td>
+      <td>GET /api/drafts/cover/</td>
+      <td>Route matcher directs request to drafts handler module</td>
+      <td>Request is handled by handlers/drafts/[...slug].ts</td>
+    </tr>
+    <tr>
+      <td>src/mock-server/handlers/drafts/[...slug].ts</td>
+      <td>Mock drafts endpoint implementation</td>
+      <td>Added authenticated draft slug handler with fixture-based responses</td>
+      <td>GET /api/drafts/respiratory-viruses/covid-19/ + Authorization: Bearer test</td>
+      <td>Validate auth header, normalize slug, resolve fixture/switchboard status</td>
+      <td>Returns fixture payload on success, otherwise 401/404/400</td>
+    </tr>
+    <tr>
+      <td>src/api/requests/getPageBySlug.spec.ts</td>
+      <td>Tests for slug-based page lookup</td>
+      <td>Added draft endpoint coverage for route-slug path and middleware-token header context</td>
+      <td>Resolver call with route slug and either explicit token param or x-cms-draft-token header</td>
+      <td>Execute request resolver under boundary-token draft context and assert branch behavior/failures</td>
+      <td>Asserts draft endpoint, bearer token, and no-store options apply without preview renderer context wiring</td>
+    </tr>
+    <tr>
+      <td>src/app/utils/cms/index.spec.ts</td>
+      <td>CMS utility behavior tests</td>
+      <td>Added preview-path assertions, including preview no-cache metadata list checks</td>
+      <td>Preview metadata call for metrics/what's-new in test case</td>
+      <td>Run metadata utilities in preview context and inspect list-fetch call options</td>
+      <td>Asserts list fetch includes { cache:'no-store', next:{ revalidate:0 } }</td>
+    </tr>
+    <tr>
+      <td>src/mock-server/handlers/drafts/[...slug].spec.ts</td>
+      <td>Tests for mock drafts endpoint handler</td>
+      <td>Added success/failure coverage for draft endpoint behavior</td>
+      <td>Authorized and unauthorized draft requests in tests</td>
+      <td>Exercise handler branches for valid slug, missing auth, unknown slug, and invalid slug</td>
+      <td>Asserts expected status/payload (200, 401, 404, 400)</td>
+    </tr>
+  </tbody>
+</table>
 
 ---
 
