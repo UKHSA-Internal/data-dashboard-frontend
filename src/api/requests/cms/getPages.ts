@@ -37,6 +37,7 @@ export enum PageType {
   WhatsNewChild = 'whats_new.WhatsNewChildEntry',
   MetricsParent = 'metrics_documentation.MetricsDocumentationParentPage',
   MetricsChild = 'metrics_documentation.MetricsDocumentationChildEntry',
+  Acknowledgement = 'acknowledgement.AcknowledgementPage',
 }
 
 const page = z.object({
