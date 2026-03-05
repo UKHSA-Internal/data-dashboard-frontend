@@ -6,7 +6,7 @@
  */
 import Leaflet from 'leaflet'
 import { parseAsString, useQueryState } from 'nuqs'
-import { ReactElement, useCallback, useState } from 'react'
+import { ReactElement, useState } from 'react'
 import { useMap } from 'react-leaflet'
 import { useDebounceCallback, useEventListener } from 'usehooks-ts'
 
@@ -33,9 +33,9 @@ export const useChoroplethKeyboardAccessibility = (features: Array<Feature>): [R
 
   const [visibleRegions, setVisibleRegions] = useState<Array<Feature>>(calculateVisibleFeatures())
 
-  const updateVisibleRegions = useCallback(() => {
+  const updateVisibleRegions = () => {
     setVisibleRegions(calculateVisibleFeatures())
-  }, [calculateVisibleFeatures, features, map])
+  }
 
   useEventListener('keydown', (event) => {
     if (visibleRegions.some((region, index) => index === Number(event.key) - 1)) {
