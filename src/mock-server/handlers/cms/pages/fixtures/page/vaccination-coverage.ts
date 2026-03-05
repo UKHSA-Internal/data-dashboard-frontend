@@ -24,6 +24,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
     },
   },
   title: 'Childhood vaccination coverage',
+  is_public: true,
   body: [
     {
       type: 'section',
