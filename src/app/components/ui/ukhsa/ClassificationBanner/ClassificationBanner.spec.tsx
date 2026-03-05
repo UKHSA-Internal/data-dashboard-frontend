@@ -17,8 +17,8 @@ describe('ClassificationBanner', () => {
     expect(screen.getByText('Official-Sensitive')).toBeInTheDocument()
   })
 
-  it('should render the correct text for pm_not_set level', () => {
-    render(<ClassificationBanner size="large" level="pm_not_set" />)
+  it('should render the correct text for protective_marking_not_set level', () => {
+    render(<ClassificationBanner size="large" level="protective_marking_not_set" />)
 
     expect(screen.getByText('Protective marking not set')).toBeInTheDocument()
   })
@@ -47,8 +47,8 @@ describe('ClassificationBanner', () => {
     expect(container.firstChild).toHaveClass('bg-[#2B71C7]')
   })
 
-  it('should have gray background for pm_not_set level', () => {
-    const { container } = render(<ClassificationBanner size="large" level="pm_not_set" />)
+  it('should have gray background for protective_marking_not_set level', () => {
+    const { container } = render(<ClassificationBanner size="large" level="protective_marking_not_set" />)
 
     expect(container.firstChild).toHaveClass('bg-[#616161]')
   })
