@@ -1,7 +1,5 @@
-import { getPathname } from '../hooks/getPathname'
-
 const createURL = (paramSections: string[], heading: string): string => {
-  let query = getPathname() + '?'
+  let query = '/?'
   paramSections.map((section, index) => {
     if (index > 0) {
       query = query + `&section=${section}`
