@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import {
   SummaryList,
   SummaryListKey,
@@ -10,7 +11,6 @@ import {
 import { getServerTranslation } from '@/app/i18n'
 
 import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
-import { DataClassification } from '@/api/models/DataClassification'
 
 interface MetricsCardProps {
   title: string

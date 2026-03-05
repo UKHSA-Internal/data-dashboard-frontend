@@ -1,13 +1,13 @@
 import { z } from 'zod'
 
 import { ChartLineColours } from '@/api/models/Chart'
+import { fallback } from '@/api/utils/zod.utils'
 
 import { HealthAlertTypes } from '../../Alerts'
+import { DataClassification } from '../../DataClassification'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
 import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
-import { DataClassification } from '../../DataClassification'
-import { fallback } from '@/api/utils/zod.utils'
 
 /**
  * Body Discriminated Union Types

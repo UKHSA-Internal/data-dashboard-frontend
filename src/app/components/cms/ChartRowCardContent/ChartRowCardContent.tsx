@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { About } from '@/app/components/cms/About/About'
 import {
   AreaSelectorLoader,
@@ -21,7 +22,6 @@ import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
-import { DataClassification } from '@/api/models/DataClassification'
 
 type ChartRowCardContentProps = {
   value: any
