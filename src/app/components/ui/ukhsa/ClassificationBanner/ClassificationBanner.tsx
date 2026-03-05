@@ -36,13 +36,13 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
 }) => {
   return (
     <div
-      className={clsx('govuk-classification-banner', { [customColor || levelColors[level]]: true })}
+      className={clsx('govuk-classification-banner', { [customColor || levelColors[level]]: true, 'my-3':size==='large' })}
       role="note"
       aria-label={`${levelContent[level]} classification`}
     >
       <p
         className={clsx('font-sans font-bold uppercase text-white', {
-          'govuk-width-container text-[27px] py-2': size === 'large',
+          'govuk-width-container text-[27px] py-2 !pl-[12px]': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
