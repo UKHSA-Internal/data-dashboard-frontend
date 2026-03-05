@@ -10,6 +10,8 @@
 
 **Testing:** Comprehensive unit tests supplied. UAT needed.
 
+**Extended PR Notes:** [task.CDD-3197-page-previews.PR.md](./task.CDD-3197-page-previews.PR.md)
+
 ## Overview
 
 This feature adds support for rendering **preview versions of CMS pages** from the frontend when explicitly requested.
@@ -95,8 +97,6 @@ Key draft behavior:
 - Uses drafts base URL helper:
   - [src/api/requests/helpers.ts](../src/api/requests/helpers.ts)
 
-No separate drafts base/path configuration is exposed.
-
 ---
 
 ## Caching behavior for previews
@@ -153,5 +153,6 @@ Adds coverage for preview metadata no-cache option propagation.
 ## Other files changed as part of this feature branch
 
 - [docs/application-architecture-report.md](../docs/application-architecture-report.md)
+- [changelog/task.CDD-3197-page-previews.PR.md](./task.CDD-3197-page-previews.PR.md)
 
 This file was regenerated/updated during the same branch to capture current architecture notes, including preview/draft authentication flow documentation.

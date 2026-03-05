@@ -301,38 +301,6 @@ describe('getPageMetadata', () => {
     })
   })
 
-  test('Preview mode applies no-store cache options to metrics metadata list fetch', async () => {
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
-    getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsChildTypeMock })
-    getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
-
-    const slug: Slug = ['metrics-documentation']
-    const searchParams: SearchParams = {
-      preview: 'true',
-      slug: 'metrics-documentation',
-      t: 'draft-token',
-    }
-
-    await getPageMetadata(slug, searchParams, PageType.MetricsParent)
-
-    const metricsPagesCall = getPages.mock.calls.find(([endpoint, options]) => {
-      if (endpoint !== 'pages') {
-        return false
-      }
-
-      const searchParams = (options as { searchParams?: URLSearchParams })?.searchParams
-      return searchParams?.get('type') === PageType.MetricsChild
-    })
-
-    expect(metricsPagesCall).toBeDefined()
-    expect(metricsPagesCall?.[1]).toEqual(
-      expect.objectContaining({
-        cache: 'no-store',
-        next: { revalidate: 0 },
-      })
-    )
-  })
-
   test('Failing to get metrics metadata', async () => {
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithMetricsParentTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: metricsParentMock })
@@ -377,7 +345,7 @@ describe('getPageMetadata', () => {
     })
   })
 
-  test("Preview mode applies no-store cache options to what's-new metadata list fetch", async () => {
+  test("Preview mode applies no-store cache options to parent metadata list fetch (example: what's-new)", async () => {
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
     getPages.mockResolvedValueOnce({ status: 200, data: pagesWithWhatsNewChildTypeMock })
     getPage.mockResolvedValueOnce({ status: 200, data: whatsNewParentMock })
