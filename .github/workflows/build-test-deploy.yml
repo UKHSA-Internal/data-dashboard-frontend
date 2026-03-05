@@ -21,7 +21,7 @@ jobs:
 
   secret-scan:
     name: Gitleaks Secret Scan
-    runs-on: ubuntu-latest
+    runs-on:  ubuntu-22.04-arm
 
     steps:
       - name: Checkout PR head
