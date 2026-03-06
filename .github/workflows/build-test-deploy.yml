@@ -21,7 +21,7 @@ jobs:
 
   secret-scan:
       name: Gitleaks Secret Scan
-      runs-on: ubuntu-latestExpand commentComment on line R27Resolved
+      runs-on: ubuntu-22.04-arm
 
       steps:
         - uses: actions/checkout@v4
