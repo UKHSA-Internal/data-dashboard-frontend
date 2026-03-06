@@ -28,7 +28,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
     {
       type: 'section',
       value: {
-        heading: 'Respiratory viruses',
+        heading: 'Current topics',
         page_link: 'https://localhost/respiratory-viruses/',
         content: [
           {
