@@ -14,6 +14,7 @@ export { landingPageMock } from './landing'
 export { metricsChildMocks, metricsParentMock } from './metrics'
 export { otherRespiratoryVirusesPageMock } from './other-respiratory-viruses'
 export { respiratoryVirusesMock } from './respiratory-viruses'
+export { startPageMock } from './start' // the non-public dashboard signup page
 export { vaccinationCoverageMock } from './vaccination-coverage'
 export { weatherHealthAlertsChildMocks, weatherHealthAlertsParentMock } from './weather-health-alerts'
 export { whatsComingPageMock } from './whats-coming'
