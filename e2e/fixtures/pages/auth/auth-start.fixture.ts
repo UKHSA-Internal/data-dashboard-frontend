@@ -67,4 +67,28 @@ export class AuthStartPage {
        - paragraph: You have successfully signed out of the UKHSA Data Dashboard. If you need to access the data again, please sign in.
     `)
   }
+
+  async hasLogoutBanner() {
+    await expect(this.page.getByRole('alert')).toHaveCount(1)
+  }
+
+  async hasNoLogoutBanner() {
+    await expect(this.page.getByRole('alert')).toHaveCount(0)
+  }
+
+  async hasMainHeading() {
+    await expect(this.page.locator('main').getByRole('heading', { level: 1 })).toHaveCount(1)
+  }
+
+  async hasNoMainHeading() {
+    await expect(this.page.locator('main').getByRole('heading', { level: 1 })).toHaveCount(0)
+  }
+
+  async hasSignInAction() {
+    await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(1)
+  }
+
+  async hasNoSignInAction() {
+    await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(0)
+  }
 }
