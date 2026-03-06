@@ -39,6 +39,7 @@ jest.mock('@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper', () => ({
 
 const mockedGetLandingPage = jest.mocked(getLandingPage)
 const mockedRenderSection = jest.mocked(renderSection)
+type RenderSectionArgs = Parameters<typeof renderSection>
 
 const landingBody = [
   {
@@ -64,9 +65,9 @@ const landingBody = [
 beforeEach(() => {
   jest.clearAllMocks()
 
-  mockedRenderSection.mockImplementation(async (_, section) => (
+  mockedRenderSection.mockImplementation(((_: RenderSectionArgs[0], section: RenderSectionArgs[1]) => (
     <section key={section.id}>{section.value.heading}</section>
-  ))
+  )) as unknown as typeof renderSection)
 })
 
 describe('LandingPage', () => {
