@@ -39,9 +39,6 @@ Before you begin, ensure you have the following installed:
    GOOGLE_TAG_MANAGER_ID=GTM-W39KF5J2
    ```
 
-   Notes:
-   - `API_URL` is the CMS/private API base
-
 3. **Development Server:**  
    Start the Next.js development server by running the following command in your terminal:
 
@@ -54,14 +51,6 @@ Before you begin, ensure you have the following installed:
 ### Local Development
 
 The frontend interacts with a Node.js Express-based mock server during development. This server runs on [http://localhost:3005](http://localhost:3005) and uses the `/mock-server/handlers` directory for loading mock data. This setup allows for isolated local development ahead of backend integrations.
-
-If you are running a real local CMS backend, set `API_URL=http://localhost:8000` and run `npm run dev:next`.
-
-Port summary:
-
-- `3000`: Next.js frontend
-- `3005`: local mock API server
-- `8000`: example local real CMS/private API server
 
 ## Deployment
 
