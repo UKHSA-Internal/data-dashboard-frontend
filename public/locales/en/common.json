@@ -131,5 +131,9 @@
   },
   "map": {
     "yearSelection": "Year selection"
+  },
+  "search": {
+    "searchTitle": "Search the UKHSA data dashboard",
+    "clearText": "Search"
   }
 }
