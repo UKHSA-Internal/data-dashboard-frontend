@@ -87,7 +87,7 @@ export class LandingPage {
   }
 
   async hasXCardsInSection(section: string, expectedNumberOfCards: number) {
-    const selectedSection = await this.getSection('Respiratory viruses')
+    const selectedSection = await this.getSection(section)
     const cardCount = await selectedSection.getByTestId('card-wrapper').count()
 
     expect(cardCount).toBe(expectedNumberOfCards)
