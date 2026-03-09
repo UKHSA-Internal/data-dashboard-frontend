@@ -53,56 +53,52 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
 
   return (
     <form method="GET" action={href} aria-label={searchLabel}>
-      <div className="govuk-grid-row">
-        <div className="govuk-grid-column-two-thirds">
-          <div className="govuk-form-group">
-            <label className="govuk-label" htmlFor="metric-name">
-              {searchTitle}
-            </label>
-            <input
-              className={'ukhsa-input'}
-              id="metric-name"
-              name="search"
-              type="text"
-              placeholder={searchTitle}
-              value={searchInputValue}
-              onChange={(event) => {
-                setSearchInputValue(event.currentTarget.value)
-              }}
-            />
-            <div className="absolute max-h-[100px] overflow-y-auto bg-white">
-              <ul className="govuk-list">
-                {searchResults?.map(({ title, html_url }, i) => (
-                  <li
-                    key={`result-${i}`}
-                    value="{i}"
-                    className="govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 border-b-2 border-black"
-                  >
-                    <Link href={html_url || ''}>{title}</Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-            <noscript>
-              <button
-                type="submit"
-                className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2 govuk-link govuk-link--inverse"
+      <div className="govuk-form-group">
+        <label className="govuk-label" htmlFor="metric-name">
+          {searchTitle}
+        </label>
+        <input
+          className="govuk-input"
+          id="metric-name"
+          name="search"
+          type="text"
+          placeholder={searchTitle}
+          value={searchInputValue}
+          onChange={(event) => {
+            setSearchInputValue(event.currentTarget.value)
+          }}
+        />
+        <div className="absolute max-h-[100px] overflow-y-auto bg-white">
+          <ul className="govuk-list">
+            {searchResults?.map(({ title, html_url }, i) => (
+              <li
+                key={`result-${i}`}
+                value="{i}"
+                className="govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 border-b-2 border-black"
               >
-                {noScriptButtonText}
-              </button>
-            </noscript>
-            <Link
-              href="/metrics-documentation"
-              className="govuk-link govuk-link--inverse inline"
-              onClick={(evt) => {
-                evt.preventDefault()
-                setSearchInputValue('')
-              }}
-            >
-              {clearText}
-            </Link>
-          </div>
+                <Link href={html_url || ''}>{title}</Link>
+              </li>
+            ))}
+          </ul>
         </div>
+        <noscript>
+          <button
+            type="submit"
+            className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2 govuk-link govuk-link--inverse"
+          >
+            {noScriptButtonText}
+          </button>
+        </noscript>
+        <Link
+          href="/metrics-documentation"
+          className="govuk-link govuk-link--inverse inline"
+          onClick={(evt) => {
+            evt.preventDefault()
+            setSearchInputValue('')
+          }}
+        >
+          {clearText}
+        </Link>
       </div>
     </form>
   )
