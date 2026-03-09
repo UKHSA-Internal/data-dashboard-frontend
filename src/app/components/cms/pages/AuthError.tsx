@@ -1,0 +1,43 @@
+import { PageType } from '@/api/requests/cms/getPages'
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
+import { Announcements, View } from '@/app/components/ui/ukhsa'
+import { RelatedLinksWrapper } from '@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
+import { LastUpdated } from '@/app/components/ui/ukhsa/View/LastUpdated/LastUpdated'
+import { PageComponentBaseProps } from '@/app/types'
+
+import { RichTextAutoHeadings } from '../../ui/ukhsa/RichTextAutoHeadings/RichTextAutoHeadings'
+
+export default async function AuthErrorPage({ slug }: PageComponentBaseProps) {
+  const {
+    title,
+    body,
+    last_updated_at: lastUpdated,
+    related_links: relatedLinks,
+    related_links_layout: relatedLinksLayout,
+    active_announcements: activeAnnouncements,
+  } = await getPageBySlug<PageType.AuthError>(slug)
+
+  return (
+    <View>
+      <Heading heading={title} />
+      <LastUpdated lastUpdated={lastUpdated} />
+      <Announcements announcements={activeAnnouncements} />
+      <div className="govuk-grid-row">
+        <div className="govuk-grid-column-three-quarters-from-desktop">
+          <RichTextAutoHeadings>{body}</RichTextAutoHeadings>
+        </div>
+
+        {relatedLinksLayout === 'Sidebar' ? (
+          <div className="govuk-grid-column-one-quarter-from-desktop govuk-!-margin-top-2 sticky top-2">
+            <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+          </div>
+        ) : null}
+      </div>
+
+      {relatedLinksLayout === 'Footer' ? (
+        <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks} />
+      ) : null}
+    </View>
+  )
+}
