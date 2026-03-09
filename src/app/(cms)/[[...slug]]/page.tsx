@@ -15,6 +15,7 @@ import WhatsNewChildPage from '@/app/components/cms/pages/WhatsNewChild'
 import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
+import AuthErrorPage from '@/app/components/cms/pages/AuthError'
 
 function isAssetPath(slugPath: string): boolean {
   return /\.(woff|woff2|ttf|eot|svg|png|jpg|jpeg|gif|ico|css|js)$/i.test(slugPath)
@@ -51,7 +52,11 @@ const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = 
   [PageType.MetricsChild]: MetricsChildPage,
   [PageType.WhatsNewParent]: WhatsNewParentPage,
   [PageType.WhatsNewChild]: WhatsNewChildPage,
+<<<<<<< HEAD
   [PageType.Acknowledgement]: AcknowledgementPage,
+=======
+  [PageType.AuthError]: AuthErrorPage,
+>>>>>>> 4faa4a4b (CDD-3084: Add initial error page handling from CMS)
 }
 
 /**
