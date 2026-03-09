@@ -72,7 +72,7 @@ export default function Form({
         <button
           name="action"
           value="disagreed"
-          className="govuk-button govuk-button--start govuk-!-margin-right-3 duration-400 bg-black transition-colors ease-in-out hover:!bg-dark-grey"
+          className="govuk-button govuk-button--secondary govuk-!-margin-right-3"
           type="submit"
         >
           {disagreeButtonText}
