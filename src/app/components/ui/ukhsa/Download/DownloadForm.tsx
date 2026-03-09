@@ -1,4 +1,5 @@
 'use client'
+import clsx from 'clsx'
 import fetch from 'cross-fetch'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
@@ -17,6 +18,7 @@ interface DownloadFormProps {
 
 export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceIntervals = false }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
+  const [showDownLoadBanner, setShowDownloadBanner] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const { t } = useTranslation('common')
@@ -26,10 +28,15 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceInterv
   const hasSelectedArea = areaType && areaName
 
   const formatInputId = useId()
+  const isPublic = false // TODO: Get this from the CMS when we have the field available
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
+    if (isPublic === false && showDownLoadBanner === false) {
+      setShowDownloadBanner(true)
+      return
+    }
     if (downloading) return // Prevent the button being clicked multiple times whilst downloading
 
     setDownloading(true)
@@ -53,6 +60,10 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceInterv
     }
   }
 
+  const handleCancel = () => {
+    setShowDownloadBanner(false)
+  }
+
   return (
     <form
       action={chartExportApiRoutePath}
@@ -65,37 +76,60 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceInterv
       <div className="govuk-form-group govuk-!-margin-bottom-0">
         <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
-            <h3 className="govuk-fieldset__heading">{t('cms.blocks.download.heading')}</h3>
+            <h3 className="govuk-fieldset__heading">
+              {showDownLoadBanner ? t('cms.blocks.download.headingAlert') : t('cms.blocks.download.heading')}
+            </h3>
           </legend>
-          <div className="govuk-hint">{t('cms.blocks.download.hint')}</div>
+          <div className={clsx('govuk-hint', showDownLoadBanner && 'hidden')}>{t('cms.blocks.download.hint')}</div>
+
           <div className="govuk-radios govuk-radios--small govuk-radios--inline">
             <div className="govuk-radios__item">
               <input
-                className="govuk-radios__input"
+                className={clsx('govuk-radios__input', showDownLoadBanner && 'hidden')}
                 id={`format-${formatInputId}`}
                 name="format"
                 type="radio"
                 value="csv"
                 defaultChecked
               />
-              <label className="govuk-label govuk-radios__label" htmlFor={`format-${formatInputId}`}>
+              <label
+                className={clsx('govuk-label govuk-radios__label', showDownLoadBanner && 'hidden')}
+                htmlFor={`format-${formatInputId}`}
+              >
                 {t('cms.blocks.download.inputLabel', { context: 'csv' })}
               </label>
             </div>
             <div className="govuk-radios__item">
               <input
-                className="govuk-radios__input"
+                className={clsx('govuk-radios__input', showDownLoadBanner && 'hidden')}
                 id={`format-${formatInputId}-2`}
                 name="format"
                 type="radio"
                 value="json"
               />
-              <label className="govuk-label govuk-radios__label" htmlFor={`format-${formatInputId}-2`}>
+              <label
+                className={clsx('govuk-label govuk-radios__label', showDownLoadBanner && 'hidden')}
+                htmlFor={`format-${formatInputId}-2`}
+              >
                 {t('cms.blocks.download.inputLabel', { context: 'json' })}
               </label>
             </div>
           </div>
 
+          {showDownLoadBanner && (
+            <div
+              className="download-acknowledgement-banner"
+              role="region"
+              aria-label="Download official sensitive data warning"
+            >
+              <p className="download-acknowledgement-banner-body govuk-!-margin-bottom-2">
+                You are about to download data that contains <b>official sensitive data.</b>
+              </p>
+              <p className="download-acknowledgement-banner-body">
+                Select <b>“continue and download”</b> to proceed or <b>“back”</b> to cancel.
+              </p>
+            </div>
+          )}
           {xAxis && <input type="hidden" name="x_axis" value={xAxis} data-testid="download-x-axis" />}
 
           <input
@@ -125,20 +159,34 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceInterv
             />
           ))}
         </fieldset>
-
-        <button
-          className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 govuk-!-margin-top-4 flex w-auto items-center gap-2 print:hidden"
-          type="submit"
-        >
-          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" aria-hidden>
-            <path fill="currentColor" d="M7 0h2v11H7zM0 16v-2h16v2z" />
-            <path fill="currentColor" d="M8.414 12.11 7 10.698 11.696 6l1.414 1.414z" />
-            <path fill="currentColor" d="M9 11H7V1h2z" />
-            <path fill="currentColor" d="M3 7.414 4.414 6l4.696 4.696-1.414 1.414z" />
-            <path fill="currentColor" d="M7.168 11.574 7.742 11l.889.889-.574.574z" />
-          </svg>
-          {downloading ? t('cms.blocks.download.buttonDownloading') : t('cms.blocks.download.buttonDownload')}
-        </button>
+        <div className="flex gap-2">
+          <button
+            className="govuk-button govuk-button--primary govuk-!-margin-bottom-0 govuk-!-margin-top-4 flex w-auto items-center gap-2 print:hidden"
+            type="submit"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="none" aria-hidden>
+              <path fill="currentColor" d="M7 0h2v11H7zM0 16v-2h16v2z" />
+              <path fill="currentColor" d="M8.414 12.11 7 10.698 11.696 6l1.414 1.414z" />
+              <path fill="currentColor" d="M9 11H7V1h2z" />
+              <path fill="currentColor" d="M3 7.414 4.414 6l4.696 4.696-1.414 1.414z" />
+              <path fill="currentColor" d="M7.168 11.574 7.742 11l.889.889-.574.574z" />
+            </svg>
+            {showDownLoadBanner
+              ? t('cms.blocks.download.buttonDownloadAlert')
+              : downloading
+                ? t('cms.blocks.download.buttonDownloading')
+                : t('cms.blocks.download.buttonDownload')}
+          </button>
+          {showDownLoadBanner && (
+            <button
+              className="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4 hover:!bg-gray-800 w-auto !bg-black !text-white print:hidden"
+              type="button"
+              onClick={handleCancel}
+            >
+              Back
+            </button>
+          )}
+        </div>
       </div>
     </form>
   )
