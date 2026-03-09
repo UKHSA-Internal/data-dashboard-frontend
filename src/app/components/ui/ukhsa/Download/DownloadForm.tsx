@@ -171,10 +171,10 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceInterv
               <path fill="currentColor" d="M3 7.414 4.414 6l4.696 4.696-1.414 1.414z" />
               <path fill="currentColor" d="M7.168 11.574 7.742 11l.889.889-.574.574z" />
             </svg>
-            {showDownLoadBanner
-              ? t('cms.blocks.download.buttonDownloadAlert')
-              : downloading
-                ? t('cms.blocks.download.buttonDownloading')
+            {downloading
+              ? t('cms.blocks.download.buttonDownloading')
+              : showDownLoadBanner
+                ? t('cms.blocks.download.buttonDownloadAlert')
                 : t('cms.blocks.download.buttonDownload')}
           </button>
           {showDownLoadBanner && (
