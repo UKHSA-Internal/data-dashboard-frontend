@@ -25,8 +25,8 @@ export const acknowledgementPageMock: PageResponse<PageType.Acknowledgement> = {
   },
   title: 'Acknowledgement',
   body: `
-    <div class="bg-gray-50 mb-6 rounded">
-      <p class="mb-4">By accessing this dashboard you agree to:</p>
+    <div class="govuk-!-margin-bottom-6">
+      <p>By accessing this dashboard you agree to:</p>
       <ul class="govuk-list govuk-list--bullet text-xl">
         <li>Not share any content with persons that do not have permission to access the none public dashboard</li>
         <li>Not distribute or share any content from the none public dashboard online</li>

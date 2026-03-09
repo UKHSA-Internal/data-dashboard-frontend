@@ -28,15 +28,12 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
     const agreedToTerms = formData.get('acknowledgement')
 
     if (!agreedToTerms) {
-      if (!agreedToTerms) {
-        return {
-          error: formData.get('termsOfServiceError') as string,
-        }
+      return {
+        error: formData.get('termsOfServiceError') as string,
       }
     }
 
     redirect('/')
-    return { success: true }
   }
 
   return { error: 'Invalid action' }
