@@ -114,6 +114,7 @@ export default async function MetricsParentPage({
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
           <Search
+            searchLabel={t('metricsSearch.searchLabel')}
             searchTitle={t('metricsSearch.searchTitle')}
             noScriptButtonText={t('metricsSearch.noScriptButtonText')}
             clearText={t('metricsSearch.noScriptButtonText')}

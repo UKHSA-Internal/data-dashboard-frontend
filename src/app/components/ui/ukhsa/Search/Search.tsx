@@ -9,14 +9,15 @@ import { getPages } from '@/api/requests/cms/getPages'
 const DEBOUNCE_MILLISECONDS = 300
 
 interface SearchProps {
-  href: string
-  searchTitle: string
-  noScriptButtonText: string
   clearText: string
+  href: string
   inlineResults: boolean
+  noScriptButtonText: string
+  searchLabel: string
+  searchTitle: string
 }
 
-export function Search({ href, searchTitle, noScriptButtonText, clearText, inlineResults }: SearchProps) {
+export function Search({ clearText, href, inlineResults, noScriptButtonText, searchLabel, searchTitle }: SearchProps) {
   const router = useRouter()
   const value = useSearchParams().get('value') || ''
   const limit = 5
@@ -51,7 +52,7 @@ export function Search({ href, searchTitle, noScriptButtonText, clearText, inlin
   }, [debouncedSearchValue])
 
   return (
-    <form method="GET" action={href} aria-label={searchTitle}>
+    <form method="GET" action={href} aria-label={searchLabel}>
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-two-thirds">
           <div className="govuk-form-group">

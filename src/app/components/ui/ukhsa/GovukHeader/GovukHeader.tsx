@@ -53,6 +53,7 @@ export async function GovukHeader({ serviceTitle }: GovukHeaderProps) {
           <div className="h6 float-right m-0 mt-3 flex w-auto sm:w-5/12">
             <Search
               href=""
+              searchLabel={t('search.searchLabel')}
               searchTitle={t('search.searchTitle')}
               noScriptButtonText={t('search.noScriptButtonText')}
               clearText={t('search.clearText')}
