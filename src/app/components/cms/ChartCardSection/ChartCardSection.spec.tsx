@@ -112,12 +112,11 @@ describe('ChartCardSection', () => {
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(1)
   })
 
-  test('renders chart card section with 3 cards', async () => {
+  test('renders chart card section with 2 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
         createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
-        createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
       ],
     }
 
@@ -135,17 +134,15 @@ describe('ChartCardSection', () => {
 
     expect(await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
-    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(2)
   })
 
-  test('shows "Show More" button when there are 4 cards and only displays first 3 cards', async () => {
+  test('shows "Show More" button when there are 3 cards and only displays first 3 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
         createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
         createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
-        createMockCard('test-card-4', 'Test Chart 4', 'Test Description 4'),
       ],
     }
 
@@ -164,12 +161,11 @@ describe('ChartCardSection', () => {
     // Wait for component to render
     await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })
 
-    // Should only show first 3 cards
-    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
+    // Should only show first 2 cards
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(2)
     expect(screen.getByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Test Chart 4', level: 3 })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Test Chart 3', level: 3 })).not.toBeInTheDocument()
 
     // Should show "Show More" link
     expect(screen.getByText('Show More')).toBeInTheDocument()
