@@ -8,7 +8,7 @@ import { useClickAway } from 'react-use'
 /**
  * Topnav
  */
-export const TopNav = ({ children, avatar = null }: { children: ReactNode; avatar?: ReactNode }) => {
+export function TopNav({ children, avatar = null }: { children: ReactNode; avatar?: ReactNode }) {
   const pathname = usePathname()
   const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)

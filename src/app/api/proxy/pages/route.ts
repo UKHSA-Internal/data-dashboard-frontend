@@ -3,8 +3,11 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getPages } from '@/api/requests/cms/getPages'
 
 export async function GET(req: NextRequest) {
-  const query = req.url
-  const proxiedResponse = await getPages({ query })
+  const searchParams: Record<string, string> = {}
+  for (const [k, v] of req.nextUrl.searchParams) {
+    searchParams[k] = v
+  }
+  const proxiedResponse = await getPages(searchParams)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)

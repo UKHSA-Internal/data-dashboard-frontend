@@ -263,6 +263,9 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   &:active {
     color: $govuk-link-colour;
   }
+
+.ukhsa-input {
+    color: var(--colour-black);
 }
 
 .striped-background {
@@ -289,6 +292,5 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
      2px -2px 0 white,
     -2px  2px 0 white,
      2px  2px 0 white,
-     0px  0px 4px white;
-  }
+     0px  0px 4px  }
 }

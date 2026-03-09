@@ -59,10 +59,11 @@ export function Search({ href, searchTitle, noScriptButtonText, clearText, inlin
               {searchTitle}
             </label>
             <input
-              className={'govuk-input govuk-!-margin-right-2 govuk-!-margin-bottom-2 w-3/5'}
+              className={'ukhsa-input'}
               id="metric-name"
               name="search"
               type="text"
+              placeholder={searchTitle}
               value={searchInputValue}
               onChange={(event) => {
                 setSearchInputValue(event.currentTarget.value)
@@ -82,13 +83,16 @@ export function Search({ href, searchTitle, noScriptButtonText, clearText, inlin
               </ul>
             </div>
             <noscript>
-              <button type="submit" className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2">
+              <button
+                type="submit"
+                className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2 govuk-link govuk-link--inverse"
+              >
                 {noScriptButtonText}
               </button>
             </noscript>
             <Link
               href="/metrics-documentation"
-              className="govuk-link govuk-link--no-visited-state inline"
+              className="govuk-link govuk-link--inverse inline"
               onClick={(evt) => {
                 evt.preventDefault()
                 setSearchInputValue('')
