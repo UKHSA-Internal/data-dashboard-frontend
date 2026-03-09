@@ -137,7 +137,7 @@ describe('ChartCardSection', () => {
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(2)
   })
 
-  test('shows "Show More" button when there are 3 cards and only displays first 3 cards', async () => {
+  test('shows "Show More" button when there are 3 cards and only displays first 2 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),

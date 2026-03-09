@@ -19,8 +19,7 @@ const SHOW_MORE_SECTION_COLUMNS = 2
 export function ChartCardSection({ value, heading, showMoreSections }: ChartCardSectionProps) {
   return (
     <div
-      className={clsx('mb-3 grid gap-4 sm:mb-6 ', {
-        'md:grid-cols-[1fr_1fr]': value.cards.length <= SHOW_MORE_SECTION_COLUMNS,
+      className={clsx('mb-3 grid gap-4 sm:mb-6 md:grid-cols-[1fr_1fr]', {
         'lg:grid-cols-[1fr_1fr]': value.cards.length > SHOW_MORE_SECTION_COLUMNS,
       })}
     >
