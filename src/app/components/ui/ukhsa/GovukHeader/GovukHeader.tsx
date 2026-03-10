@@ -1,18 +1,14 @@
 import Link from 'next/link'
 
-import { Search } from '@/app/components/ui/ukhsa/Search/Search'
-import { getServerTranslation } from '@/app/i18n'
-
 interface GovukHeaderProps {
   serviceTitle: string
 }
 
 export async function GovukHeader({ serviceTitle }: GovukHeaderProps) {
-  const { t } = await getServerTranslation('common')
   return (
     <header className="govuk-header border-none bg-blue" data-module="govuk-header">
-      <div className="govuk-width-container">
-        <div className="govuk-grid-row">
+      <div className="relative ">
+        <div className="govuk-width-container relative flow-root">
           <div className="relative ">
             <div className="govuk-width-container relative flow-root">
               <div className="govuk-header__logo w-auto">
@@ -50,17 +46,6 @@ export async function GovukHeader({ serviceTitle }: GovukHeaderProps) {
                 <Link href="/" className="govuk-header__link govuk-header__service-name m-0 mt-3 h-6">
                   {serviceTitle}
                 </Link>
-              </div>
-
-              <div className="h6 float-right m-0 mt-3 flex w-auto sm:w-5/12">
-                <Search
-                  href=""
-                  searchTitle={t('search.searchTitle')}
-                  noScriptButtonText={t('search.noScriptButtonText')}
-                  clearText={t('search.clearText')}
-                  searchLabel={t('search.searchLabel')}
-                  inlineResults={true}
-                />
               </div>
             </div>
           </div>
