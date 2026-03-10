@@ -1,6 +1,8 @@
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 
+import { relatedLinksMock } from '../elements/related-links'
+
 export const dashboardMock: PageResponse<PageType.Landing> = {
   id: 4,
   meta: {
@@ -28,6 +30,9 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
   last_updated_at: '2024-07-02T12:44:54.461914+01:00',
   title: 'UKHSA data dashboard',
   sub_title: '',
+  page_description: 'This is a description',
+  related_links: relatedLinksMock,
+  related_links_layout: 'Footer',
   body: [
     {
       type: 'section',
