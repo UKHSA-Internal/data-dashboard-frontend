@@ -17,7 +17,7 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
     <Card
       asChild
       aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
-      className="ukhsa-chart-card relative flex flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:border-[var(--colour-home-chart-background-hover)] hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]"
+      className="ukhsa-chart-card relative flex flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]"
     >
       <Link href={topicPagePath} prefetch>
         <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
@@ -54,7 +54,7 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
         {value.source && value.source.external_url && (
           <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-source">
             Source:
-            <Link href={value.source.external_url} prefetch>
+            <Link className="govuk-link govuk-link--no-visited-state" href={value.source.external_url} prefetch>
               {value.source.link_display_text}
             </Link>
           </p>
