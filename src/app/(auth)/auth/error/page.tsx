@@ -1,7 +1,5 @@
-import React from 'react'
+import { redirect } from 'next/navigation'
 
-import ErrorMessage from '@/app/components/ui/ukhsa/ErrorMessage/ErrorMessage'
-
-export default async function Page() {
-  return <ErrorMessage />
+export default function Page() {
+  redirect('/authentication-error')
 }
