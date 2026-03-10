@@ -1,6 +1,6 @@
 'use client'
 
-import { useActionState, useState } from 'react'
+import React, { useActionState, useState } from 'react'
 
 import { handleFormSubmit } from '@/app/hooks/useAcknowledgement'
 
@@ -72,7 +72,7 @@ export default function Form({
         <button
           name="action"
           value="disagreed"
-          className="govuk-button govuk-button--secondary govuk-!-margin-right-3"
+          className="govuk-button govuk-button--start govuk-!-margin-right-3 bg-black text-white"
           type="submit"
         >
           {disagreeButtonText}
