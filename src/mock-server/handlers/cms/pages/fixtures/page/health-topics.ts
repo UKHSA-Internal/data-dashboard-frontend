@@ -27,8 +27,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
   seo_priority: 0.7,
   last_published_at: '2024-01-10T10:00:00.000000+00:00',
   last_updated_at: '2024-01-10T10:00:00.000000+00:00',
-  title: 'Health topics',
+  title: 'Data dashboard health themes',
   page_description:
     '<p>Explore data and insights across a range of health topics from the UK Health Security Agency.</p>',
-  body: '<p>This page lists the health topics available on the UKHSA data dashboard. Select a topic to view detailed data and metrics.</p>',
+  body: '',
 }
