@@ -6,6 +6,7 @@ import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import { GovukHeader } from '@/app/components/ui/ukhsa/GovukHeader/GovukHeader'
 import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
+import { Search } from '@/app/components/ui/ukhsa/Search/Search'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
@@ -32,6 +33,19 @@ export default async function Layout({ children }: LayoutProps) {
       <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
         <MegaMenu />
       </TopNav>
+
+      <div className="bg-blue">
+        <div className="govuk-width-container relative flow-root">
+          <Search
+            href=""
+            searchTitle={t('search.searchTitle')}
+            noScriptButtonText={t('search.noScriptButtonText')}
+            clearText={t('search.clearText')}
+            searchLabel={t('search.searchLabel')}
+            inlineResults={true}
+          />
+        </div>
+      </div>
 
       <div className="govuk-width-container bg-blue" />
 

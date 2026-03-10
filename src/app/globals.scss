@@ -242,8 +242,12 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   }
 }
 
-.ukhsa-input {
+.govuk-input {
     color: var(--colour-black);
+}
+
+.text-offwhite {
+    color: var(--colour-offwhite) !important;
 }
 
 .striped-background {
