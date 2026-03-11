@@ -12,20 +12,26 @@ type ChartWithDescriptionCardProps = {
 
 export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
+  const hasSource = value.source && value.source.external_url
 
   return (
-    <Card
-      asChild
-      aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
-      className="ukhsa-chart-card relative flex flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]"
-    >
-      <Link href={topicPagePath} prefetch>
-        <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
-          {value.title}
-        </h3>
-        <p className="govuk-body-s mb-3 text-grey-1">{value.sub_title}</p>
+    <div className="group flex h-full flex-col">
+      <Card
+        asChild
+        aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
+        className={[
+          'ukhsa-chart-card relative flex min-h-0 flex-1 flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus group-hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]',
+          hasSource && 'border-b-0 pb-2',
+        ]
+          .filter(Boolean)
+          .join(' ')}
+      >
+        <Link href={topicPagePath} prefetch className="flex h-full min-h-0 flex-col">
+          <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
+            {value.title}
+          </h3>
+          <p className="govuk-body-s mb-3 text-grey-1">{value.sub_title}</p>
 
-        <div>
           <Chart
             enableInteractive={false}
             data={value}
@@ -40,26 +46,31 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
               },
             ]}
           />
-        </div>
 
-        {value.description && (
-          <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-description">
-            {value.description}
-            <Link className="govuk-link govuk-link--no-visited-state ml-1" href={topicPagePath} prefetch tabIndex={-1}>
-              Visit {value.title} to find out more
-            </Link>
-          </p>
-        )}
+          {value.description && (
+            <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-description">
+              {value.description}
+              <span className="govuk-link govuk-link--no-visited-state ml-1 text-blue hover:text-dark-blue">
+                Visit {value.title} to find out more
+              </span>
+            </p>
+          )}
+        </Link>
+      </Card>
 
-        {value.source && value.source.external_url && (
-          <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-source">
-            Source:
+      {hasSource && (
+        <div
+          className="border-x border-b border-grey-2 bg-[var(--colour-home-chart-background)] !px-4 !py-2 pb-4 transition-colors duration-200 group-hover:bg-[var(--colour-home-chart-background-hover)]"
+          data-testid="chart-source"
+        >
+          <p className="govuk-body-s mb-0 text-grey-1">
+            Source:{' '}
             <Link className="govuk-link govuk-link--no-visited-state" href={value.source.external_url} prefetch>
               {value.source.link_display_text}
             </Link>
           </p>
-        )}
-      </Link>
-    </Card>
+        </div>
+      )}
+    </div>
   )
 }
