@@ -44,8 +44,8 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
       aria-label={`${levelContent[level]} classification`}
     >
       <p
-        className={clsx('font-sans font-bold uppercase text-white', {
-          'text-[27px] py-2 !pl-[12px]': size === 'large',
+        className={clsx('font-open-sans font-bold uppercase text-white', {
+          'govuk-width-container text-[27px] py-2 ml-4': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
         })}
       >
