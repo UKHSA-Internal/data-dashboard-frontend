@@ -151,8 +151,19 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
+      - name: Start Dev Server
+        run: npm run start &
+        env:
+          NODE_ENV: test
+
+      - name: Wait for Dev Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        env:
+          baseURL: http://localhost:3000
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
