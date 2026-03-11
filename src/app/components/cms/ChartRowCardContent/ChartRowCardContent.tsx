@@ -175,7 +175,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Download
                     </span>
-                    <Download data={column.value} isPublic={false} />
+                    <Download data={column.value} isPublic={true} />
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent
