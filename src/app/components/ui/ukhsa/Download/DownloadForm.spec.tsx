@@ -12,8 +12,6 @@ import { DownloadForm } from './DownloadForm'
 jest.mock('@/app/utils/download.utils')
 jest.mock('cross-fetch')
 
-const { useSearchParams, useRouter } = require('next/navigation')
-
 const props: ComponentProps<typeof DownloadForm> = {
   chart: [
     {
@@ -38,301 +36,312 @@ const props: ComponentProps<typeof DownloadForm> = {
 
 describe('DownloadForm', () => {
   beforeEach(() => {
+    mockRouter.push('/topics/mock-topic')
     console.error = jest.fn()
     jest.clearAllMocks()
-    // Default: no search params, standard router
-    useSearchParams.mockReturnValue(new URLSearchParams())
-    useRouter.mockReturnValue(mockRouter)
   })
 
-  describe('Initial render', () => {
-    test('renders a progressively enhanced form with hidden inputs and submit button', () => {
-      render(<DownloadForm {...props} />)
+  test('renders a progressively enhanced form with hidden inputs and submit button', () => {
+    render(<DownloadForm {...props} />)
 
-      const form = screen.getByRole('form', { name: 'Download' })
-      expect(form).toHaveAttribute('method', 'POST')
-      expect(form).toHaveAttribute('action', chartExportApiRoutePath)
-      expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
 
-      expect(screen.getByLabelText('CSV')).toBeChecked()
+    expect(screen.getByLabelText('CSV')).toBeChecked()
 
-      expect(screen.getByTestId('download-form-plots')).toHaveValue(
-        JSON.stringify({
-          topic: 'COVID-19',
-          metric: 'new_cases_daily',
-          stratum: '',
-          geography_type: '',
-          geography: '',
-          date_from: null,
-          date_to: null,
-          age: '',
-          sex: '',
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: '',
+        geography: '',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+
+    // CTA
+    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+  })
+
+  test('prevents multiple clicks when downloading', async () => {
+    jest.mocked(fetch).mockImplementationOnce(
+      () =>
+        new Promise(() => {
+          // Never resolves to simulate ongoing download
         })
-      )
+    )
 
-      expect(screen.getByRole('button', { name: /download/i })).toHaveAttribute('type', 'submit')
+    render(<DownloadForm {...props} />)
+
+    const button = screen.getByRole('button', { name: 'Download' })
+
+    // Click first time
+    await userEvent.click(button)
+
+    // Wait for downloading state
+    await waitFor(() => {
+      expect(screen.getByRole('button', { name: 'Downloading' })).toBeInTheDocument()
     })
 
-    test('does not show the warning banner on initial render', () => {
-      render(<DownloadForm {...props} />)
+    // Try to click again - should not trigger another fetch
+    const downloadingButton = screen.getByRole('button', { name: 'Downloading' })
+    await userEvent.click(downloadingButton)
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
-    })
+    // Should only have been called once
+    expect(fetch).toHaveBeenCalledTimes(1)
+  })
 
-    test('does not show the back button on initial render', () => {
-      render(<DownloadForm {...props} />)
+  test('renders the form with geography parameters when a location is selected', () => {
+    mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-      expect(screen.queryByRole('button', { name: 'Back' })).not.toBeInTheDocument()
+    render(<DownloadForm {...props} />)
+
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
+
+    expect(screen.getByLabelText('CSV')).toBeChecked()
+
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: 'Nation',
+        geography: 'England',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+
+    // CTA
+    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+  })
+
+  test('renders a hidden field for a chart x-axis if one is selected', () => {
+    const headline_chart_props = { ...props, xAxis: 'geography' }
+    render(<DownloadForm {...headline_chart_props} />)
+
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+
+    expect(screen.getByLabelText('CSV')).toBeChecked()
+
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: '',
+        geography: '',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+    expect(screen.getByTestId('download-x-axis')).toHaveValue('geography')
+
+    // CTA
+    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+  })
+
+  test('does not render hidden field for a chart x-axis if one is not provided', () => {
+    render(<DownloadForm {...props} />)
+
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+
+    expect(screen.getByLabelText('CSV')).toBeChecked()
+
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: '',
+        geography: '',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+    expect(screen.queryByTestId('download-x-axis')).toBeNull()
+
+    // CTA
+    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+  })
+
+  test('renders confidence_intervals hidden field with value false by default', () => {
+    render(<DownloadForm {...props} />)
+
+    const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
+    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
+    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
+    expect(confidenceIntervalsInput).toHaveValue('false')
+  })
+
+  test('renders confidence_intervals hidden field with value true when confidenceIntervals prop is true', () => {
+    const propsWithConfidenceIntervals = { ...props, confidenceIntervals: true }
+    render(<DownloadForm {...propsWithConfidenceIntervals} />)
+
+    const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
+    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
+    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
+    expect(confidenceIntervalsInput).toHaveValue('true')
+  })
+
+  test('renders confidence_intervals hidden field with value false when confidenceIntervals prop is false', () => {
+    const propsWithConfidenceIntervals = { ...props, confidenceIntervals: false }
+    render(<DownloadForm {...propsWithConfidenceIntervals} />)
+
+    const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
+    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
+    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
+    expect(confidenceIntervalsInput).toHaveValue('false')
+  })
+
+  test('Downloading a csv file for users with JavaScript', async () => {
+    jest.mocked(fetch).mockReturnValueOnce(
+      Promise.resolve({
+        text: async () => Promise.resolve('mock-download'),
+      } as Response)
+    )
+
+    mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
+
+    render(<DownloadForm {...props} />)
+
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
+
+    expect(screen.getByLabelText('CSV')).toBeChecked()
+
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: 'Nation',
+        geography: 'England',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
+      })
+    )
+
+    // CTA
+    const button = screen.getByRole('button', { name: 'Download' })
+    expect(button).toHaveAttribute('type', 'submit')
+
+    await userEvent.click(button)
+
+    await waitFor(() => {
+      expect(downloadFile).toHaveBeenNthCalledWith(1, 'ukhsa-chart-download.csv', new Blob(['mock-download']))
     })
   })
 
-  describe('Warning banner (isPublic = false)', () => {
-    test('shows the warning banner and back button on first submit', async () => {
-      render(<DownloadForm {...props} />)
+  test('Downloading a json file for users with JavaScript', async () => {
+    jest.mocked(fetch).mockReturnValueOnce(
+      Promise.resolve({
+        text: async () => Promise.resolve('mock-download'),
+      } as Response)
+    )
 
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
+    mockRouter.push('/topics/mock-topic?areaType=Nation&areaName=England')
 
-      expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
-      expect(screen.getByRole('button', { name: 'Back' })).toBeInTheDocument()
-    })
+    render(<DownloadForm {...props} />)
 
-    test('does not trigger a fetch on first submit', async () => {
-      render(<DownloadForm {...props} />)
+    // Form
+    const form = screen.getByRole('form', { name: 'Download' })
+    expect(form).toHaveAttribute('method', 'POST')
+    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
+    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
 
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
+    expect(screen.getByLabelText('CSV')).toBeChecked()
 
-      expect(fetch).not.toHaveBeenCalled()
-    })
+    await userEvent.click(screen.getByLabelText('JSON'))
 
-    test('hides the radio inputs and labels when the warning banner is shown', async () => {
-      render(<DownloadForm {...props} />)
+    expect(screen.getByLabelText('CSV')).not.toBeChecked()
+    expect(screen.getByLabelText('JSON')).toBeChecked()
 
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-
-      expect(screen.getByLabelText('CSV')).toHaveClass('hidden')
-      expect(screen.getByLabelText('JSON')).toHaveClass('hidden')
-    })
-
-    test('shows "Continue and download" button text when the warning banner is shown', async () => {
-      render(<DownloadForm {...props} />)
-
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /continue and download/i })).toBeInTheDocument()
+    // Hidden inputs
+    expect(screen.getByTestId('download-form-plots')).toHaveValue(
+      JSON.stringify({
+        topic: 'COVID-19',
+        metric: 'new_cases_daily',
+        stratum: '',
+        geography_type: 'Nation',
+        geography: 'England',
+        date_from: null,
+        date_to: null,
+        age: '',
+        sex: '',
       })
-    })
+    )
 
-    test('proceeds with download on second submit after confirming the warning', async () => {
-      jest.mocked(fetch).mockReturnValueOnce(
-        Promise.resolve({
-          text: async () => Promise.resolve('mock-download'),
-        } as Response)
-      )
+    // CTA
+    const button = screen.getByRole('button', { name: 'Download' })
+    expect(button).toHaveAttribute('type', 'submit')
 
-      render(<DownloadForm {...props} />)
+    await userEvent.click(button)
 
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
-
-      await waitFor(() => {
-        expect(fetch).toHaveBeenCalledTimes(1)
-        expect(downloadFile).toHaveBeenCalledWith('ukhsa-chart-download.csv', new Blob(['mock-download']))
-      })
-    })
-
-    test('hides the warning banner and back button when back is clicked', async () => {
-      render(<DownloadForm {...props} />)
-
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
-
-      await userEvent.click(screen.getByRole('button', { name: 'Back' }))
-
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
-      expect(screen.queryByRole('button', { name: 'Back' })).not.toBeInTheDocument()
-    })
-
-    test('restores the radio inputs after clicking back', async () => {
-      render(<DownloadForm {...props} />)
-
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: 'Back' }))
-
-      expect(screen.getByLabelText('CSV')).not.toHaveClass('hidden')
-      expect(screen.getByLabelText('JSON')).not.toHaveClass('hidden')
-    })
-
-    test('does not trigger a fetch when back button is clicked', async () => {
-      render(<DownloadForm {...props} />)
-
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: 'Back' }))
-
-      expect(fetch).not.toHaveBeenCalled()
+    await waitFor(() => {
+      expect(downloadFile).toHaveBeenNthCalledWith(1, 'ukhsa-chart-download.json', new Blob(['mock-download']))
     })
   })
 
-  describe('Downloading', () => {
-    test('prevents multiple clicks when downloading', async () => {
-      jest.mocked(fetch).mockImplementationOnce(
-        () =>
-          new Promise<Response>(() => {
-            // Never resolves to simulate an ongoing download
-          })
-      )
+  test('handles download error and redirects to error page', async () => {
+    jest.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
 
-      render(<DownloadForm {...props} />)
+    mockRouter.push('/topics/mock-topic')
 
-      // Two-step: show banner then confirm to start downloading
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
+    const mockReplace = jest.fn()
 
-      await waitFor(() => {
-        expect(screen.getByRole('button', { name: /downloading/i })).toBeInTheDocument()
-      })
-
-      // Try clicking again whilst downloading — should not trigger another fetch
-      await userEvent.click(screen.getByRole('button', { name: /downloading/i }))
-
-      expect(fetch).toHaveBeenCalledTimes(1)
+    const useRouterSpy = jest.spyOn(require('next/navigation'), 'useRouter')
+    useRouterSpy.mockReturnValue({
+      ...mockRouter,
+      replace: mockReplace,
+      push: mockRouter.push,
+      refresh: jest.fn(),
     })
 
-    test('downloads a csv file', async () => {
-      jest.mocked(fetch).mockReturnValueOnce(
-        Promise.resolve({
-          text: async () => Promise.resolve('mock-download'),
-        } as Response)
-      )
+    render(<DownloadForm {...props} />)
 
-      render(<DownloadForm {...props} />)
+    const button = screen.getByRole('button', { name: 'Download' })
+    await userEvent.click(button)
 
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
+    await waitFor(
+      () => {
+        expect(mockReplace).toHaveBeenCalledWith('/error')
+      },
+      { timeout: 3000 }
+    )
 
-      await waitFor(() => {
-        expect(downloadFile).toHaveBeenNthCalledWith(1, 'ukhsa-chart-download.csv', new Blob(['mock-download']))
-      })
-    })
-
-    test('downloads a json file', async () => {
-      jest.mocked(fetch).mockReturnValueOnce(
-        Promise.resolve({
-          text: async () => Promise.resolve('mock-download'),
-        } as Response)
-      )
-
-      render(<DownloadForm {...props} />)
-
-      await userEvent.click(screen.getByLabelText('JSON'))
-      expect(screen.getByLabelText('JSON')).toBeChecked()
-
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
-
-      await waitFor(() => {
-        expect(downloadFile).toHaveBeenNthCalledWith(1, 'ukhsa-chart-download.json', new Blob(['mock-download']))
-      })
-    })
-
-    test('handles a download error and redirects to the error page', async () => {
-      jest.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
-
-      const mockReplace = jest.fn()
-      useRouter.mockReturnValue({
-        ...mockRouter,
-        replace: mockReplace,
-        refresh: jest.fn(),
-      })
-
-      render(<DownloadForm {...props} />)
-
-      await userEvent.click(screen.getByRole('button', { name: /download/i }))
-      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
-
-      await waitFor(
-        () => {
-          expect(mockReplace).toHaveBeenCalledWith('/error')
-        },
-        { timeout: 3000 }
-      )
-    })
-  })
-
-  describe('Geography parameters', () => {
-    test('uses area type and name from search params when a location is selected', () => {
-      useSearchParams.mockReturnValue(new URLSearchParams('areaType=Nation&areaName=England'))
-
-      render(<DownloadForm {...props} />)
-
-      expect(screen.getByTestId('download-form-plots')).toHaveValue(
-        JSON.stringify({
-          topic: 'COVID-19',
-          metric: 'new_cases_daily',
-          stratum: '',
-          geography_type: 'Nation',
-          geography: 'England',
-          date_from: null,
-          date_to: null,
-          age: '',
-          sex: '',
-        })
-      )
-    })
-
-    test('falls back to chart geography values when no location is selected', () => {
-      useSearchParams.mockReturnValue(new URLSearchParams())
-
-      render(<DownloadForm {...props} />)
-
-      expect(screen.getByTestId('download-form-plots')).toHaveValue(
-        JSON.stringify({
-          topic: 'COVID-19',
-          metric: 'new_cases_daily',
-          stratum: '',
-          geography_type: '',
-          geography: '',
-          date_from: null,
-          date_to: null,
-          age: '',
-          sex: '',
-        })
-      )
-    })
-  })
-
-  describe('Hidden fields', () => {
-    test('renders the x-axis hidden field when an x-axis is provided', () => {
-      render(<DownloadForm {...props} xAxis="geography" />)
-
-      expect(screen.getByTestId('download-x-axis')).toHaveValue('geography')
-    })
-
-    test('does not render the x-axis hidden field when no x-axis is provided', () => {
-      render(<DownloadForm {...props} />)
-
-      expect(screen.queryByTestId('download-x-axis')).toBeNull()
-    })
-
-    test('renders confidence_intervals as false by default', () => {
-      render(<DownloadForm {...props} />)
-
-      const input = screen.getByTestId('download-confidence-intervals')
-      expect(input).toHaveAttribute('type', 'hidden')
-      expect(input).toHaveAttribute('name', 'confidence_intervals')
-      expect(input).toHaveValue('false')
-    })
-
-    test('renders confidence_intervals as true when prop is true', () => {
-      render(<DownloadForm {...props} confidenceIntervals={true} />)
-
-      expect(screen.getByTestId('download-confidence-intervals')).toHaveValue('true')
-    })
-
-    test('renders confidence_intervals as false when prop is false', () => {
-      render(<DownloadForm {...props} confidenceIntervals={false} />)
-
-      expect(screen.getByTestId('download-confidence-intervals')).toHaveValue('false')
-    })
+    useRouterSpy.mockRestore()
   })
 })

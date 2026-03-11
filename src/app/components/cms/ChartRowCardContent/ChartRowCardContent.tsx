@@ -163,7 +163,7 @@ export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
                     >
                       Download
                     </span>
-                    <Download data={column.value} />
+                    <Download data={column.value} isPublic={false} />
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent
