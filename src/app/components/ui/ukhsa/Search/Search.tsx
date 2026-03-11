@@ -22,6 +22,9 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
   const value = useSearchParams().get('value') || ''
   const limit = 5
 
+  // CSS used to hide the search bar for non-JS users
+  const hideSearch = `input#metric-name { display: none; }`
+
   interface searchResult {
     title: string
     html_url: string | null
@@ -68,13 +71,13 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
             setSearchInputValue(event.currentTarget.value)
           }}
         />
-        <div className="ukhsa-search-result-container absolute max-h-[100px] overflow-y-auto bg-white">
+        <div className="absolute z-[1000] max-h-[200px] overflow-y-auto bg-white shadow-[0px_15px_15px_0px_rgba(0,0,0,0.35)] sm:w-5/12">
           <ul>
             {searchResults?.map(({ title, html_url }, i) => (
               <li
                 key={`result-${i}`}
                 value="{i}"
-                className="govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 border-b-2 border-black"
+                className="govuk-!-padding-3 govuk-!-margin-left-2 govuk-!-margin-right-2 border-b shadow-[0_1px_0_#929191]"
               >
                 <Link href={html_url || ''}>{title}</Link>
               </li>
@@ -82,6 +85,7 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
           </ul>
         </div>
         <noscript>
+          <style>{hideSearch}</style>
           <button
             type="submit"
             className="govuk-button govuk-!-margin-bottom-2 govuk-!-margin-right-2 govuk-link govuk-link--inverse"
