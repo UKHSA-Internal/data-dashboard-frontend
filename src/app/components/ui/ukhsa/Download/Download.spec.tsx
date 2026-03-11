@@ -71,6 +71,7 @@ const props: ComponentProps<typeof Download> = {
     body: 'Table Body',
     about: '',
   },
+  isPublic: false,
 }
 
 test('Chart download', async () => {

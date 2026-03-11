@@ -11,10 +11,12 @@ import { DownloadForm } from './DownloadForm'
 interface DownloadProps {
   /* Request metadata from the CMS required to fetch from the tables api */
   data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
+  isPublic: boolean
 }
 
 export async function Download({
   data: { chart, y_axis, x_axis, tag_manager_event_id, confidence_intervals },
+  isPublic,
 }: DownloadProps) {
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
@@ -46,6 +48,7 @@ export async function Download({
         xAxis={x_axis}
         tagManagerEventId={tag_manager_event_id}
         confidenceIntervals={confidence_intervals ?? false}
+        isPublic={isPublic}
       />
     )
   }

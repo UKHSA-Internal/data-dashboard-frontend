@@ -14,9 +14,16 @@ interface DownloadFormProps {
   xAxis?: string | null
   tagManagerEventId: string | null
   confidenceIntervals?: boolean
+  isPublic?: boolean
 }
 
-export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceIntervals = false }: DownloadFormProps) {
+export function DownloadForm({
+  chart,
+  xAxis,
+  tagManagerEventId,
+  confidenceIntervals = false,
+  isPublic = true,
+}: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownLoadBanner, setShowDownloadBanner] = useState(false)
   const router = useRouter()
@@ -28,7 +35,6 @@ export function DownloadForm({ chart, xAxis, tagManagerEventId, confidenceInterv
   const hasSelectedArea = areaType && areaName
 
   const formatInputId = useId()
-  const isPublic = false // TODO: Get this from the CMS when we have the field available
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
