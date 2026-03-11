@@ -91,4 +91,13 @@ export class AuthStartPage {
   async hasNoSignInAction() {
     await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(0)
   }
+
+  async hasClassificationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' })).toBeVisible()
+  }
+
+  async checkClassificationBannerContent() {
+    const banner = this.page.locator('div.govuk-classification-banner')
+    await expect(banner).toContainText('Official-Sensitive')
+  }
 }

@@ -47,6 +47,14 @@ test.describe('Start page - logged out (normal initial state)', () => {
     await authStartPage.goto()
     await authStartPage.hasNoLogoutBanner()
   })
+
+  test('Displays classification banner', async ({ authStartPage, authEnabled }) => {
+    test.skip(!authEnabled, 'Skipping auth UI tests when auth is disabled')
+
+    await authStartPage.goto()
+    await authStartPage.hasClassificationBanner()
+    await authStartPage.checkClassificationBannerContent()
+  })
 })
 
 test.describe('Start page - logged in', () => {
@@ -97,5 +105,13 @@ test.describe('Start page - after logout (post-logout state)', () => {
     await authStartPage.hasLogoutBanner()
     await authStartPage.hasNoMainHeading()
     await authStartPage.hasNoSignInAction()
+  })
+
+  test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {
+    test.skip(!authEnabled, 'Skipping auth UI tests when auth is disabled')
+
+    await authStartPage.page.goto('/start?logout=success')
+    await authStartPage.hasClassificationBanner()
+    await authStartPage.checkClassificationBannerContent()
   })
 })
