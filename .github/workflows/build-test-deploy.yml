@@ -145,14 +145,20 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Start mock server
-        run: npm run dev:mock-server &
+        id: start-mock-server
+        run: |
+          npm run dev:mock-server &
+          echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
 
       - name: Wait for Mock Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
       - name: Start Dev Server
-        run: npm run start &
+        id: start-dev-server
+        run: |
+          npm run start &
+          echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
           NODE_ENV: test
 
@@ -171,6 +177,12 @@ jobs:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
           retention-days: 10
+
+      - name: Cleanup servers
+        if: always()
+        run: |
+          kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
+          kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
 
   ##############################################################################
   # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
