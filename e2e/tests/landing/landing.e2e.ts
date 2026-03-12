@@ -189,6 +189,10 @@ test.describe('Landing page - desktop @desktopOnly', () => {
   test('displays the back to top navigation', async ({ app }) => {
     await app.hasBackToTop()
   })
+
+  test('displays search box', async ({ app }) => {
+    await app.hasSearch()
+  })
 })
 
 test.describe('Landing page - no JavaScript', () => {
@@ -207,6 +211,11 @@ test.describe('Landing page - no JavaScript', () => {
     await test.step('has the correct page formatting', async () => {
       await landingPage.goto()
       await app.hasHeroBannerLayout()
+    })
+
+    await test.step('does not have search visible', async () => {
+      await landingPage.goto()
+      await app.hasSearch()
     })
   })
 })

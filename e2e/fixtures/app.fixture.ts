@@ -208,6 +208,10 @@ export class App {
     ).toBeVisible()
   }
 
+  async hasSearch() {
+    await expect(this.page.getByText('Search')).toBeVisible()
+  }
+
   // TODO: Rename once above test removed in CDD-2154
   async hasNav() {
     await this.waitForPageLoaded()
