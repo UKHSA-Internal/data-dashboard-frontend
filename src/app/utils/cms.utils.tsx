@@ -45,7 +45,10 @@ export const renderSection = async (
   >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
-        <Link href={getPath(pageLink)} className="govuk-link--no-visited-state">
+        <Link
+          href={getPath(pageLink)}
+          className="govuk-link--no-visited-state govuk-link ukhsa-section-chevron ukhsa-section-link inline-block no-underline hover:underline"
+        >
           {heading}
         </Link>
       ) : (
