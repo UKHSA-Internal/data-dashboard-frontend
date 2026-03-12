@@ -18,7 +18,7 @@ test('renders input and buttons', async () => {
       searchLabel="Metrics search"
       noScriptButtonText="Metric name"
       clearText="Clear"
-      inlineResults={true}
+      inlineResults={false}
     />
   )
 
@@ -41,7 +41,7 @@ test('sets the url state with the search input when typing', async () => {
       searchLabel="Metrics search"
       noScriptButtonText="Metric name"
       clearText="Clear"
-      inlineResults={false}
+      inlineResults={true}
     />
   )
 
@@ -60,7 +60,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
       searchLabel="Metrics search"
       noScriptButtonText="Metric name"
       clearText="Clear"
-      inlineResults={true}
+      inlineResults={false}
     />
   )
 
@@ -87,7 +87,7 @@ test('clears the url state when the search input is cleared (via keyboard e.g ba
       searchLabel="Metrics search"
       noScriptButtonText="Metric name"
       clearText="Clear"
-      inlineResults={true}
+      inlineResults={false}
     />
   )
 
