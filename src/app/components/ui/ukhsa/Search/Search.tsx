@@ -57,7 +57,7 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
   return (
     <form method="GET" action={href} aria-label={searchLabel}>
       <div className="govuk-form-group">
-        <label className="govuk-label" htmlFor="metric-name" hidden>
+        <label className="govuk-label" htmlFor="metric-name" hidden={inlineResults}>
           {searchTitle}
         </label>
         <input
@@ -95,13 +95,14 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
         </noscript>
         <div className="govuk-grid-one-quarter govuk-!-padding-top-2">
           <Link
-            href="/metrics-documentation"
+            id="clear-search"
+            href={href}
             className="govuk-link govuk-link--inverse"
             onClick={(evt) => {
               evt.preventDefault()
               setSearchInputValue('')
             }}
-            hidden
+            hidden={inlineResults}
           >
             {clearText}
           </Link>
