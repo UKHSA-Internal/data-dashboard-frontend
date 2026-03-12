@@ -65,6 +65,7 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
           id="metric-name"
           name="search"
           type="text"
+          aria-label={searchTitle}
           placeholder={searchTitle}
           value={searchInputValue}
           onChange={(event) => {
