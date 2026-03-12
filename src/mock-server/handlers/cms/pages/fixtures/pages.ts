@@ -5,6 +5,7 @@ import {
   accessibilityStatementPageMock,
   acknowledgementPageMock,
   archiveDataPageMock,
+  authErrorMock,
   bulkDownloadsPageMock,
   compliancePageMock,
   cookiesPageMock,
@@ -66,6 +67,29 @@ export const pagesWithFeedbackTypeMock: PagesResponse = {
       seo_change_frequency: feedbackMock.seo_change_frequency,
       seo_priority: feedbackMock.seo_priority,
       title: feedbackMock.title,
+    },
+  ],
+}
+
+export const pagesWithAuthErrorTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: authErrorMock.id,
+      meta: {
+        type: authErrorMock.meta.type,
+        detail_url: authErrorMock.meta.detail_url,
+        html_url: authErrorMock.meta.html_url,
+        slug: authErrorMock.meta.slug,
+        show_in_menus: authErrorMock.meta.show_in_menus,
+        first_published_at: authErrorMock.meta.first_published_at,
+        search_description: authErrorMock.meta.search_description,
+      },
+      seo_change_frequency: authErrorMock.seo_change_frequency,
+      seo_priority: authErrorMock.seo_priority,
+      title: authErrorMock.title,
     },
   ],
 }
@@ -502,6 +526,7 @@ const items = [
   ...pagesWithMetricsChildTypeMock.items,
   ...pagesWithFeedbackTypeMock.items,
   ...pagesWithAcknowledgementTypeMock.items,
+  ...pagesWithAuthErrorTypeMock.items,
 ]
 
 export const allPagesMock: PagesResponse = {

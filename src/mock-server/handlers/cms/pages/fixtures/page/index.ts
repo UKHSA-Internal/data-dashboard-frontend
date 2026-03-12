@@ -3,6 +3,7 @@ export { accessOurDataChildMocks, accessOurDataParentMock } from './access-our-d
 export { accessibilityStatementPageMock } from './accessibility-statement'
 export { acknowledgementPageMock } from './acknowledgement'
 export { archiveDataPageMock } from './archive-data'
+export { authErrorMock } from './auth-error' // the non-public dashboard authentication error page
 export { bulkDownloadsPageMock } from './bulk-downloads'
 export { compliancePageMock } from './complaince'
 export { cookiesPageMock } from './cookies'

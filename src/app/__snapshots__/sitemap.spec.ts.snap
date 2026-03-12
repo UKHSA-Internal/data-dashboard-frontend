@@ -11,6 +11,7 @@ exports[`test sitemap function that builds a list of URLs for search engines 1`]
   "/access-our-data/what-is-an-api",
   "/accessibility-statement/",
   "/acknowledgement/",
+  "/authentication-error/",
   "/browse",
   "/bulk-downloads/",
   "/compliance/",
