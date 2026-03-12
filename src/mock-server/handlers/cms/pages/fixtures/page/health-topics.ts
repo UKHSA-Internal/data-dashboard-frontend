@@ -44,8 +44,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                     description:
                       'This chart show data for COVID-19. Specifically the metric cases by count rolling mean',
                     source: {
-                      link_display_text: '',
-                      page: null,
+                      link_display_text: 'Metrics documentation',
+                      page: '/metrics-documentation',
                       external_url: '',
                     },
                     tag_manager_event_id: '',
