@@ -188,7 +188,9 @@ const WithAcknowledgementData = SharedPageData.omit({
 })
 
 const WithErrorData = SharedPageData.extend({
-  body: z.string(),
+  error_line: z.string(),
+  error_text: z.string(),
+  sub_text: z.string(),
   meta: Meta.extend({
     type: z.literal('error.ErrorPage'),
   }),
