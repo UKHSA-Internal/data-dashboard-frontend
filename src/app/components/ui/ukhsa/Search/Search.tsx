@@ -46,11 +46,11 @@ export function Search({ clearText, href, inlineResults, noScriptButtonText, sea
   useEffect(() => {
     if (inlineResults) {
       if (debouncedSearchValue) getSearchResults({ search: debouncedSearchValue })
-    } else {
-      const url = new URL(window.location.href)
-      url.searchParams.set('search', debouncedSearchValue)
-      router.replace(url.toString())
     }
+    const url = new URL(window.location.href)
+    if (debouncedSearchValue) url.searchParams.set('search', debouncedSearchValue)
+    else url.searchParams.delete('search')
+    router.replace(url.toString())
     // eslint-disable-next-line react-hooks/exhaustive-deps -- router is omitted as it causes infinite redirects
   }, [debouncedSearchValue])
 
