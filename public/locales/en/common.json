@@ -102,6 +102,7 @@
       "downloadLabel": "Download",
       "tableLabel": "Tabular Data",
       "aboutLabel": "About",
+      "filterButtonLabel": "Select themes or topics to view",
       "selectLabel": "Choose display option for '{{tabGroupTitle}}' data"
     }
   },
