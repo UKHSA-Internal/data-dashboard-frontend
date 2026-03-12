@@ -262,27 +262,6 @@ input#metric-name {
 .ukhsa-topnav {
   height: 75px !important;
   top: -75px !important;
-.ukhsa-section-chevron {
-  &:after {
-    content: "";
-    display: inline-block;
-    height: 12px;
-    width: 12px;
-    transform: rotate(45deg);
-    border-width: 2px 2px 0 0;
-    margin: 0 0 3px 5px;
-  }
-}
-
-.ukhsa-section-link {
-  &:link,
-  &:visited {
-    color: var(--colour-black);
-  }
-  &:hover,
-  &:active {
-    color: $govuk-link-colour;
-  }
 }
 
 .striped-background {
