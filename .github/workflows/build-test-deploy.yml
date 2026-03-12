@@ -212,12 +212,46 @@ jobs:
   #         retention-days: 10
 
   ###############################################################################
+  # Docker build check (PR validation)
+  ###############################################################################
+
+  docker-build-check:
+    name: Docker Build Check
+    needs: [build]
+    runs-on: ubuntu-22.04-arm
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t fe-test .
+
+      - name: Run container
+        run: docker run -d -p 3000:3000 --name fe-test fe-test
+
+      - name: Health check
+        run: |
+          echo "Waiting for container to start..."
+          sleep 10
+
+          if [ "$(docker inspect -f '{{.State.Running}}' fe-test)" != "true" ]; then
+            echo "Container is not running"
+            docker logs fe-test
+            exit 1
+          fi
+
+          echo "Container is running successfully"
+
+      - name: Cleanup
+        if: always()
+        run: docker rm -f fe-test
+
+  ###############################################################################
   # Success gate
   ###############################################################################
 
   success-gate:
     name: Build Success Check
-    needs: [unit-tests, quality-checks, typescript, e2e-tests-public]
+    needs: [unit-tests, quality-checks, typescript, e2e-tests-public, docker-build-check]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'

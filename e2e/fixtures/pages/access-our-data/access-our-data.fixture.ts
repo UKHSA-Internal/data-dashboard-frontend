@@ -36,7 +36,7 @@ export class AccessOurDataPage {
     await expect(this.page.getByRole('heading', { level: 2, name: /Contents/ })).toBeVisible()
 
     await expect(this.page.getByRole('link', { name: 'Overview' })).toHaveAttribute('href', '/access-our-data/overview')
-    await expect(this.page.getByRole('link', { name: '— What is an API', exact: true })).toHaveAttribute(
+    await expect(this.page.getByRole('link', { name: 'What is an API', exact: true })).toHaveAttribute(
       'href',
       '/access-our-data/what-is-an-api'
     )
