@@ -9,13 +9,13 @@ import { Card } from './Card'
 test('renders the Card component with default className', async () => {
   const { container } = render(await Card({ children: 'Test Content' }))
   const cardElement = container.firstChild
-  expect(cardElement).toHaveClass('govuk-!-padding-4 bg-grey-3')
+  expect(cardElement).toHaveClass('govuk-!-padding-4')
 })
 
 test('renders the Card component with additional className', async () => {
   const { container } = render(await Card({ children: 'Test Content', className: 'custom-class' }))
   const cardElement = container.firstChild
-  expect(cardElement).toHaveClass('govuk-!-padding-4 bg-grey-3 custom-class')
+  expect(cardElement).toHaveClass('govuk-!-padding-4 custom-class')
 })
 
 test('renders the Card component with provided children', async () => {

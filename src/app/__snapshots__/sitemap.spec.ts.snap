@@ -113,8 +113,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -797,8 +797,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -1481,8 +1481,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -2165,8 +2165,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -2849,8 +2849,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -3533,8 +3533,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -4217,8 +4217,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -4901,8 +4901,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -5585,8 +5585,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -6269,8 +6269,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -6953,8 +6953,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -7637,8 +7637,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -8321,8 +8321,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -9005,8 +9005,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -9689,8 +9689,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -10373,8 +10373,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -11057,8 +11057,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -11741,8 +11741,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -12425,8 +12425,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -13109,8 +13109,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -13793,8 +13793,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -14477,8 +14477,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -15161,8 +15161,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -15845,8 +15845,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -16529,8 +16529,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -17213,8 +17213,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -17897,8 +17897,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -18581,8 +18581,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -19265,8 +19265,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",
@@ -19949,8 +19949,8 @@ exports[`Sitemap displays correctly 1`] = `
   {
     "changeFrequency": "monthly",
     "lastModified": 2020-01-01T00:00:00.000Z,
-    "priority": 0.7,
-    "url": "http://localhost/health-topics/",
+    "priority": 0.5,
+    "url": "https://localhost/health-topics/",
   },
   {
     "changeFrequency": "weekly",

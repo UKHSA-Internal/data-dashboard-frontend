@@ -24,7 +24,7 @@ import {
 export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'home.LandingPage': pagesWithLandingTypeMock,
   'topic.TopicPage': pagesWithTopicTypeMock,
-  'topics.TopicsListPage': pagesWithTopicsListTypeMock,
+  'topics_list.TopicsListPage': pagesWithTopicsListTypeMock,
   'forms.FormPage': pagesWithFeedbackTypeMock,
   'common.CommonPage': pagesWithCommonTypeMock,
   'composite.CompositePage': pagesWithCompositeTypeMock,
