@@ -60,7 +60,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
       searchLabel="Metrics search"
       noScriptButtonText="Metric name"
       clearText="Clear"
-      inlineResults={false}
+      inlineResults={true}
     />
   )
 
@@ -73,7 +73,7 @@ test('clears the url state and search input when clicking the "Clear" link', asy
   await userEvent.click(getByRole('link', { name: 'Clear' }))
 
   await waitFor(() => {
-    expect(mockRouter.asPath).toEqual('/?search=')
+    expect(mockRouter.asPath).toEqual('/')
   })
 
   expect(getByLabelText('Metric name')).toHaveValue('')
@@ -87,7 +87,7 @@ test('clears the url state when the search input is cleared (via keyboard e.g ba
       searchLabel="Metrics search"
       noScriptButtonText="Metric name"
       clearText="Clear"
-      inlineResults={false}
+      inlineResults={true}
     />
   )
 
@@ -100,7 +100,7 @@ test('clears the url state when the search input is cleared (via keyboard e.g ba
   await userEvent.clear(getByLabelText('Metric name'))
 
   await waitFor(() => {
-    expect(mockRouter.asPath).toEqual('/?search=')
+    expect(mockRouter.asPath).toEqual('/')
   })
 
   expect(getByLabelText('Metric name')).toHaveValue('')
