@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { ComponentType } from 'react'
 
 import { PageType } from '@/api/requests/cms/getPages'
+import AuthErrorPage from '@/app/components/cms/pages/AuthError'
 import CompositePage from '@/app/components/cms/pages/Composite'
 import FeedbackPage from '@/app/components/cms/pages/Feedback'
 import LandingPage from '@/app/components/cms/pages/Landing'
@@ -13,7 +14,6 @@ import WhatsNewChildPage from '@/app/components/cms/pages/WhatsNewChild'
 import WhatsNewParentPage from '@/app/components/cms/pages/WhatsNewParent'
 import { PageComponentBaseProps, PageParams, SearchParams } from '@/app/types'
 import { getPageMetadata, getPageTypeBySlug } from '@/app/utils/cms'
-import AuthErrorPage from '@/app/components/cms/pages/AuthError'
 
 function isAssetPath(slugPath: string): boolean {
   return /\.(woff|woff2|ttf|eot|svg|png|jpg|jpeg|gif|ico|css|js)$/i.test(slugPath)
