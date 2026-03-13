@@ -215,7 +215,7 @@ test.describe('Landing page - no JavaScript', () => {
 
     await test.step('does not have search visible', async () => {
       await landingPage.goto()
-      await app.hasSearch()
+      await app.doesNotHaveSearch()
     })
   })
 })

@@ -212,6 +212,10 @@ export class App {
     await expect(this.page.getByRole('textbox', { name: 'Search' })).toBeVisible()
   }
 
+  async doesNotHaveSearch() {
+    await expect(this.page.getByRole('textbox', { name: 'Search' })).not.toBeVisible()
+  }
+
   // TODO: Rename once above test removed in CDD-2154
   async hasNav() {
     await this.waitForPageLoaded()
