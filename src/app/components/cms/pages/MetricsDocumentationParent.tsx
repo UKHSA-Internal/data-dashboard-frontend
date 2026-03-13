@@ -14,8 +14,8 @@ import {
 } from '@/app/components/ui/govuk'
 import { getPaginationList } from '@/app/components/ui/govuk/Pagination/hooks/getPaginationList'
 import { Announcements, MetricsCard, View } from '@/app/components/ui/ukhsa'
-import MetricsSearch from '@/app/components/ui/ukhsa/MetricsSearch/MetricsSearch'
 import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
+import Search from '@/app/components/ui/ukhsa/Search/Search'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -81,6 +81,8 @@ export default async function MetricsParentPage({
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.MetricsParent>(slug, { type: PageType.MetricsParent })
 
+  const { t } = await getServerTranslation('metrics')
+
   const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
 
   if (!metricsEntries.success) {
@@ -111,9 +113,14 @@ export default async function MetricsParentPage({
       <div className="govuk-grid-row">
         <div className="govuk-grid-column-three-quarters-from-desktop">
           <RichText>{body}</RichText>
-
-          <MetricsSearch value={search ?? ''} />
-
+          <Search
+            searchLabel={t('metricsSearch.searchLabel')}
+            searchTitle={t('metricsSearch.searchTitle')}
+            noScriptButtonText={t('metricsSearch.noScriptButtonText')}
+            clearText={t('metricsSearch.noScriptButtonText')}
+            href="/metrics-documentation"
+            inlineResults={false}
+          />
           <ul className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(
               ({ id, title, meta, page_description: description, metric, metric_group: group, topic }: any) => {

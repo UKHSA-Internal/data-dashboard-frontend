@@ -45,7 +45,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
             />
           </Suspense>
-
           <Providers>
             {children}
             <HealthAlertsMapWrapper />
