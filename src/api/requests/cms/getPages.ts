@@ -1,5 +1,6 @@
 import { z } from 'zod'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { calculatePageOffset } from '@/app/utils/api.utils'
@@ -102,6 +103,8 @@ export const metricsChildResponseSchema = responseSchema.extend({
           }),
         })
       ),
+      is_public: z.boolean(),
+      page_classification: DataClassification.or(fallback(undefined))
     })
   ),
 })

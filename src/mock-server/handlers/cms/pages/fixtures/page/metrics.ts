@@ -110,6 +110,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         banner_type: 'Warning',
       },
     ],
+    is_public: false,
   },
   {
     id: 27,
@@ -176,6 +177,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    is_public: false,
   },
   {
     id: 28,
@@ -235,6 +237,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    is_public: false,
   },
   {
     id: 29,
@@ -293,6 +296,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    is_public: false,
   },
   {
     id: 30,
@@ -359,6 +363,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    is_public: false,
   },
 
   // Generate a set of random pages for testing of pagination
@@ -427,5 +432,6 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: faker.string.uuid(),
       },
     ],
+    is_public: false,
   })),
 ]
