@@ -39,14 +39,14 @@ export class AuthStartPage {
 
   async isStartPage({ afterLogout }: { afterLogout: boolean } | undefined = { afterLogout: false }) {
     if (afterLogout) {
-      expect(this.page.waitForURL('/start?logout=success')).toBeTruthy()
+      await expect(this.page).toHaveURL(/\/start\/?\?logout=success$/)
     } else {
-      expect(this.page.waitForURL('/start')).toBeTruthy()
+      await expect(this.page).toHaveURL(/\/start\/?$/)
     }
   }
 
   async isRedirectedDueToLoggedIn() {
-    expect(this.page.waitForURL('/')).toBeTruthy()
+    await expect(this.page).toHaveURL(/\/$/)
   }
 
   async checkSignOutButtonExists() {
