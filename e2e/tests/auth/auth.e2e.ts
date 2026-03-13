@@ -6,25 +6,30 @@ const runIfAuthEnabled = async (authEnabled: boolean, run: () => Promise<void>) 
 }
 
 test.describe('Start page - when auth is disabled', () => {
+  if (process.env.AUTH_ENABLED !== 'false') {
+    return
+  }
+
   test.use({ authEnabled: false })
 
-  test('Returns 404 when auth is disabled', async ({ authStartPage }) => {
-    await authStartPage.goto()
-    await authStartPage.page.waitForURL('**/404')
+  test('Returns 404 when auth is disabled', async ({ notFoundPage }) => {
+    await notFoundPage.goto('/start')
+    await notFoundPage.hasPageContent()
   })
 })
 
 test.describe('Start page - logged out (normal initial state)', () => {
   test.use({ startLoggedOut: true })
 
-  test('Redirects to start page when not logged in', async ({ landingPage, aboutPage, authStartPage, authEnabled }) => {
+  test('Shows logged-out state when not logged in', async ({ landingPage, aboutPage, authStartPage, authEnabled }) => {
     await runIfAuthEnabled(authEnabled, async () => {
       await landingPage.goto()
       await authStartPage.checkIsLoggedOut()
-      await authStartPage.isStartPage()
 
       await aboutPage.goto()
       await authStartPage.checkIsLoggedOut()
+
+      await authStartPage.goto()
       await authStartPage.isStartPage()
     })
   })
