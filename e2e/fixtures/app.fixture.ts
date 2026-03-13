@@ -209,7 +209,7 @@ export class App {
   }
 
   async hasSearch() {
-    await expect(this.page.getByText('Search')).toBeVisible()
+    await expect(this.page.getByRole('textbox', { name: 'Search' })).toBeVisible()
   }
 
   // TODO: Rename once above test removed in CDD-2154
