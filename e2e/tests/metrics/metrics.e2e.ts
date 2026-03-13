@@ -136,7 +136,7 @@ test.describe('Metrics parent page', () => {
       await metricsParentPage.clickClear()
     })
     await test.step('updates the url', async () => {
-      await app.waitForUrl(`${baseURL}/metrics-documentation?search=`)
+      await app.waitForUrl(`${baseURL}/metrics-documentation`)
     })
     await test.step('shows all items', async () => {
       await metricsParentPage.countMetricsItems(10)
