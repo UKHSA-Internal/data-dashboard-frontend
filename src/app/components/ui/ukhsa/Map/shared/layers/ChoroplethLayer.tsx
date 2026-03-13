@@ -18,7 +18,7 @@ import {
   getHoverCssVariableFromColour,
 } from '@/app/utils/map.utils'
 
-import { Feature } from '../data/geojson/ukhsa-regions'
+import { Feature, regionFeatureCollection } from '../data/geojson/ukhsa-regions'
 import { useChoroplethKeyboardAccessibility } from '../hooks/useChoroplethKeyboardEvents'
 
 /**
@@ -100,14 +100,10 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
 }: ChoroplethProps) => {
   const [selectedFeatureId, setSelectedFeatureId] = useQueryState(mapQueryKeys.featureId, parseAsString)
 
-  const featuresRef = useRef<Array<Feature>>([])
-
   const clickedFeatureIdRef = useRef<string | null>(selectedFeatureId)
 
   const defaultOptions: GeoJSONLayer<T> = {
     onEachFeature: (feature, layer) => {
-      featuresRef.current = [...featuresRef.current, feature]
-
       layer.on({
         add: (event) => {
           const testId = `feature-${feature.properties[geoJsonFeatureId]}`
@@ -156,7 +152,9 @@ const ChoroplethLayer = <T extends LayerWithFeature>({
     },
   }
 
-  const [screenReaderText, updateScreenReaderText] = useChoroplethKeyboardAccessibility(featuresRef.current)
+  const [screenReaderText, updateScreenReaderText] = useChoroplethKeyboardAccessibility(
+    regionFeatureCollection.features
+  )
 
   // Setup map click events for interactions outside of the geojson features
   const MapEvents = () => {
