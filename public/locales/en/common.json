@@ -137,9 +137,7 @@
     "searchLabel": "Search",
     "clearText": "Clear"
   },
-  "metricsSearch": {
-    "searchTitle": "Metrics search",
-    "searchLabel": "Metric name",
-    "clearText": "Clear"
-  }
+  "metricsSearch.searchTitle": "Metrics search",
+  "metricsSearch.searchLabel": "Metric name",
+  "metricsSearch.clearText": "Clear"
 }
