@@ -25,6 +25,7 @@ import {
 } from '@/app/utils/global-filter-content-parser'
 import { clsx } from '@/lib/clsx'
 
+import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -46,12 +47,13 @@ export default async function TopicPage({
     enable_area_selector: enableAreaSelector,
     selected_topics: selectedTopics,
     active_announcements: activeAnnouncements,
+    is_public: isPublic,
+    page_classification: pageClassification
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
-
   body.map(({ value }) => {
     if (value.content) {
       value.content.map((content) => {
@@ -70,9 +72,9 @@ export default async function TopicPage({
       })
     }
   })
-
   return (
     <>
+      {isPublic === false && <ClassificationBanner size="large" level={pageClassification}/>}
       <View>
         <>
           {slug[1] === 'childhood-vaccinations' && (
@@ -84,6 +86,7 @@ export default async function TopicPage({
               width={'70px'}
             />
           )}
+
           <Heading heading={t('pageTitle', { context: areaName && 'withArea', title, areaName })} />
           <LastUpdated lastUpdated={lastUpdated} />
           <Announcements announcements={activeAnnouncements} />
@@ -115,7 +118,7 @@ export default async function TopicPage({
                       <FilterBannerWrapper key={id} />
                     ) : (
                       <PageSection key={id} heading={value.heading}>
-                        {value.content.map((item) => renderCard(value.heading, [], item))}
+                        {value.content.map((item) => renderCard(value.heading, [], item, isPublic, pageClassification))}
                       </PageSection>
                     )
                   )}

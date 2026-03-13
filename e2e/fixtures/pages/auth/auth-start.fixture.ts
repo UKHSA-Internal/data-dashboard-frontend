@@ -39,14 +39,14 @@ export class AuthStartPage {
 
   async isStartPage({ afterLogout }: { afterLogout: boolean } | undefined = { afterLogout: false }) {
     if (afterLogout) {
-      await expect(this.page.waitForURL('/start?logout=success')).toBeTruthy()
+      await expect(this.page).toHaveURL(/\/start\/?\?logout=success$/)
     } else {
-      await expect(this.page.waitForURL('/start')).toBeTruthy()
+      await expect(this.page).toHaveURL(/\/start\/?$/)
     }
   }
 
   async isRedirectedDueToLoggedIn() {
-    await expect(this.page.waitForURL('/')).toBeTruthy()
+    await expect(this.page).toHaveURL(/\/$/)
   }
 
   async checkSignOutButtonExists() {
@@ -66,5 +66,38 @@ export class AuthStartPage {
        - heading "You've been signed out" [level=3]
        - paragraph: You have successfully signed out of the UKHSA Data Dashboard. If you need to access the data again, please sign in.
     `)
+  }
+
+  async hasLogoutBanner() {
+    await expect(this.page.getByRole('alert')).toHaveCount(1)
+  }
+
+  async hasNoLogoutBanner() {
+    await expect(this.page.getByRole('alert')).toHaveCount(0)
+  }
+
+  async hasMainHeading() {
+    await expect(this.page.locator('main').getByRole('heading', { level: 1 })).toHaveCount(1)
+  }
+
+  async hasNoMainHeading() {
+    await expect(this.page.locator('main').getByRole('heading', { level: 1 })).toHaveCount(0)
+  }
+
+  async hasSignInAction() {
+    await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(1)
+  }
+
+  async hasNoSignInAction() {
+    await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(0)
+  }
+
+  async hasClassificationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' })).toBeVisible()
+  }
+
+  async checkClassificationBannerContent() {
+    const banner = this.page.locator('div.govuk-classification-banner')
+    await expect(banner).toContainText('Official-Sensitive')
   }
 }

@@ -48,8 +48,8 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
       }
 
       // Perform login if needed
-      await page.goto('/')
-      await page.getByRole('button', { name: 'Start now' }).click()
+      await page.goto('/start')
+      await page.getByRole('button', { name: 'Sign in' }).click()
       await page.waitForURL(new RegExp(process.env.AUTH_DOMAIN || ''), { timeout: 5000 })
 
       await page.keyboard.press('Tab')
