@@ -134,7 +134,12 @@
   },
   "search": {
     "searchTitle": "Search the UKHSA data dashboard",
-    "searchLabel": "Metrics search",
+    "searchLabel": "Search",
+    "clearText": "Clear"
+  },
+  "metricSearch": {
+    "searchTitle": "Metrics search",
+    "searchLabel": "Metric name",
     "clearText": "Clear"
   }
 }
