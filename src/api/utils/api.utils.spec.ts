@@ -251,6 +251,39 @@ describe('client()', () => {
 
   // --- Auth token ---
 
+  // --- Page Previews ---
+  describe('Page Previews', () => {
+    let cookieSpy: jest.SpyInstance
+    afterEach(() => {
+      if (cookieSpy) cookieSpy.mockRestore()
+    })
+
+    it('rewrites pages endpoint to drafts and sets x-draft-auth header in preview mode', async () => {
+      cookieSpy = jest
+        .spyOn(document, 'cookie', 'get')
+        .mockReturnValue(
+          [
+            'isPreview=true',
+            'queryStringParams=' + encodeURIComponent(JSON.stringify({ t: 'draft-token', isPreview: 'true' })),
+          ].join('; ')
+        )
+      await client('pages/123')
+      const [url, options] = mockFetchFn.mock.calls[0]
+      expect(url).toContain('drafts/123')
+      expect(options.headers['x-draft-auth']).toBe('Bearer draft-token')
+      expect(options.cache).toBe('no-store')
+      expect(options.next).toEqual({ revalidate: 0, tags: [] })
+    })
+
+    it('does not rewrite endpoint or set x-draft-auth if not preview', async () => {
+      cookieSpy = jest.spyOn(document, 'cookie', 'get').mockReturnValue('isPreview=false')
+      await client('pages/456')
+      const [url, options] = mockFetchFn.mock.calls[0]
+      expect(url).toContain('pages/456')
+      expect(options.headers['x-draft-auth']).toBeUndefined()
+    })
+  })
+
   describe('auth token (non-public requests)', () => {
     it('does not fetch auth token for public requests', async () => {
       await client('v1/data', { isPublic: true })

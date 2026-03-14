@@ -57,6 +57,45 @@ async function getAuthToken(): Promise<string | undefined> {
  * It handles automatic retries and auth headers
  */
 
+// Utility to read preview info from cookies (SSR and CSR)
+function getPreviewInfoFromCookie() {
+  let isPreview = false
+  let draftAuthToken: string | undefined = undefined
+  if (typeof document !== 'undefined') {
+    // --- Client-side ---
+    const isPreviewCookie = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('isPreview='))
+      ?.split('=')[1]
+    isPreview = isPreviewCookie === 'true'
+    const queryStringParams = document.cookie
+      .split('; ')
+      .find((row) => row.startsWith('queryStringParams='))
+      ?.split('=')[1]
+    if (queryStringParams) {
+      try {
+        const params = JSON.parse(decodeURIComponent(queryStringParams))
+        draftAuthToken = params['t']
+      } catch {}
+    }
+  } else {
+    // --- Server-side ---
+    try {
+      // Dynamically import next/headers only on the server
+
+      const { cookies } = require('next/headers')
+      const cookieStore = cookies()
+      const queryStringParams = cookieStore.get('queryStringParams')?.value
+      if (queryStringParams) {
+        const params = JSON.parse(queryStringParams)
+        draftAuthToken = params['t']
+        isPreview = params['isPreview'] === 'true'
+      }
+    } catch {}
+  }
+  return { isPreview, draftAuthToken }
+}
+
 export async function client<T>(
   endpoint: string,
   {
@@ -70,6 +109,21 @@ export async function client<T>(
   }: Options = {}
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
+
+  // --- PREVIEW LOGIC ---
+  const { isPreview, draftAuthToken } = await getPreviewInfoFromCookie()
+
+  // If preview and endpoint starts with 'pages', rewrite to start with 'drafts' and add x-draft-auth header
+  let endpointFinal = endpoint
+  if (isPreview && endpoint.startsWith('pages')) {
+    endpointFinal = endpoint.replace(/^pages/, 'drafts')
+    if (draftAuthToken) {
+      headers['x-draft-auth'] = `Bearer ${draftAuthToken}`
+    }
+    isPublic = false
+    customConfig.cache = 'no-store'
+    customConfig.next = { revalidate: 0 }
+  }
 
   // read access token only if request is not public
   const accessToken = isPublic ? undefined : await getAuthToken()
@@ -104,7 +158,7 @@ export async function client<T>(
     },
   }
 
-  const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
+  const url = `${baseUrl}${baseUrl && '/'}${endpointFinal}${searchParams ? `?${searchParams.toString()}` : ''}`
 
   return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok, headers } = response
@@ -128,6 +182,7 @@ export async function client<T>(
         return Promise.reject(JSON.stringify(response))
       }
     } else {
+      console.debug('API Request:', { url, options: fetchOptions })
       const error = new Error(response.statusText)
       error.code = status
       return Promise.reject(error)

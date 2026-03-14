@@ -1,4 +1,8 @@
 /**
+ * Page Previews Feature Flag (from env)
+ */
+export const pagePreviewsEnabled = process.env.PAGE_PREVIEWS_ENABLED?.toLowerCase() === 'true' || false
+/**
  * Checks to see if running the Authenticated version of the data dashboard
  */
 export const authEnabled = process.env.AUTH_ENABLED === 'true'
