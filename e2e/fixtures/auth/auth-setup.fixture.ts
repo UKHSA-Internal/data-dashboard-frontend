@@ -1,4 +1,4 @@
-import { Cookie, test as base } from '@playwright/test'
+import { Cookie, Page, test as base } from '@playwright/test'
 import fs from 'fs'
 
 type AuthSetupFixtures = {
@@ -6,6 +6,41 @@ type AuthSetupFixtures = {
   authUserName: string
   setupAuth: void
   startLoggedOut: boolean
+}
+
+const MICROSOFT_LOGIN_HOST = 'login.microsoftonline.com'
+
+const getHost = (urlString: string) => {
+  try {
+    return new URL(urlString).host
+  } catch {
+    return ''
+  }
+}
+
+const isAllowedAuthHost = (urlString: string, hosts: string[]) => {
+  const host = getHost(urlString)
+  return hosts.some((allowedHost) => host === allowedHost || host.endsWith(`.${allowedHost}`))
+}
+
+async function signInViaMicrosoft(page: Page, username: string, password: string) {
+  await page.getByRole('textbox', { name: /email|phone|skype/i }).fill(username)
+
+  const nextButton = page.getByRole('button', { name: /^next$/i })
+  if (await nextButton.isVisible().catch(() => false)) {
+    await nextButton.click()
+  } else {
+    await page.locator('#idSIButton9').click()
+  }
+
+  await page.locator('input[name="passwd"]').fill(password)
+  await page.locator('#idSIButton9').click()
+
+  // "Stay signed in?" prompt is optional.
+  const staySignedInNo = page.locator('#idBtn_Back')
+  if (await staySignedInNo.isVisible().catch(() => false)) {
+    await staySignedInNo.click()
+  }
 }
 
 export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
@@ -48,17 +83,41 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
       }
 
       // Perform login if needed
-      await page.goto('/start')
-      await page.getByRole('button', { name: 'Sign in' }).click()
-      await page.waitForURL(new RegExp(process.env.AUTH_DOMAIN || ''), { timeout: 5000 })
+      const username = process.env.PLAYWRIGHT_AUTH_USER_USERNAME || ''
+      const password = process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || ''
+      const authDomainHost = getHost(process.env.AUTH_DOMAIN || '')
+      const allowedAuthHosts = [authDomainHost, MICROSOFT_LOGIN_HOST].filter(Boolean)
 
-      await page.keyboard.press('Tab')
-      await page.keyboard.type(process.env.PLAYWRIGHT_AUTH_USER_USERNAME || '')
-      await page.keyboard.press('Tab')
-      await page.keyboard.type(process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || '')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Tab')
-      await page.keyboard.press('Enter')
+      if (!username || !password) {
+        throw new Error('Missing PLAYWRIGHT_AUTH_USER_USERNAME or PLAYWRIGHT_AUTH_USER_PASSWORD for auth-enabled tests')
+      }
+
+      if (allowedAuthHosts.length === 0) {
+        throw new Error('AUTH_DOMAIN must be set to a valid URL for auth-enabled tests')
+      }
+
+      await page.goto('/start')
+      await Promise.all([
+        page.waitForURL((url) => isAllowedAuthHost(url.toString(), allowedAuthHosts), { timeout: 30000 }),
+        page.getByRole('button', { name: 'Sign in' }).click(),
+      ])
+
+      const currentUrl = page.url()
+
+      if (currentUrl.includes(MICROSOFT_LOGIN_HOST)) {
+        await signInViaMicrosoft(page, username, password)
+      } else {
+        await page.keyboard.press('Tab')
+        await page.keyboard.type(username)
+        await page.keyboard.press('Tab')
+        await page.keyboard.type(password)
+        await page.keyboard.press('Tab')
+        await page.keyboard.press('Tab')
+        await page.keyboard.press('Enter')
+      }
+
+      // Wait until we return to the app domain after external auth redirects.
+      await page.waitForURL((url) => url.host === getHost(process.env.baseURL || ''), { timeout: 30000 })
 
       // eslint-disable-next-line playwright/no-networkidle
       await page.waitForLoadState('networkidle')
