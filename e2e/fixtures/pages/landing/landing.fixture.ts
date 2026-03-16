@@ -156,8 +156,8 @@ export class LandingPage {
     name: string,
     { tagline, map = true }: { tagline: string; map?: boolean }
   ) {
-    const section = this.page.getByRole('link', { name: 'Weather and climate risks' })
-    const card = this.page.getByRole('link', { name })
+    const section = this.page.getByRole('region', { name: 'Weather and climate risks' })
+    const card = section.getByRole('link', { name })
 
     await expect(section).toBeVisible()
     await expect(card).toBeVisible()
@@ -170,7 +170,7 @@ export class LandingPage {
       await expect(card.getByRole('application', { name: 'Map of weather health alerts' })).toBeHidden()
     }
 
-    await section.click()
+    await card.click()
   }
 
   async clickMinimapCard(name: string) {
