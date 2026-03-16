@@ -20,7 +20,7 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
     } catch {
       logger.error('issue calling authJS signout.')
     }
-    const cognitoLogoutUrl = getCognitoSignoutURL()
+    const cognitoLogoutUrl = getCognitoSignoutURL('/start')
     redirect(cognitoLogoutUrl)
   }
 
