@@ -1,7 +1,8 @@
 'use client'
 import { ReactNode, useEffect } from 'react'
 
-export function ClientBody({ children }: { children: ReactNode }) {
+type ClientBodyProps = { readonly children: ReactNode }
+export function ClientBody({ children }: ClientBodyProps) {
   useEffect(() => {
     document.body.classList.add('js-enabled', 'govuk-frontend-supported')
     return () => {
