@@ -1,10 +1,8 @@
 import { z } from 'zod'
 
 import { ChartLineColours } from '@/api/models/Chart'
-import { fallback } from '@/api/utils/zod.utils'
 
 import { HealthAlertTypes } from '../../Alerts'
-import { DataClassification } from '../../DataClassification'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
 import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
@@ -119,8 +117,6 @@ export const CardTypes = z.discriminatedUnion('type', [
       columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
     }),
     id: z.string(),
-    isPublic: z.boolean().optional(),
-    pageClassification: DataClassification.or(fallback(undefined))
   }),
   z.object({
     type: z.literal('filter_linked_map'),
