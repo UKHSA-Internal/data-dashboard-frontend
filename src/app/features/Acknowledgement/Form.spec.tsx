@@ -18,6 +18,9 @@ describe('Form', () => {
     termsOfServiceError: 'You must accept the terms',
     disagreeButtonText: 'No',
     agreeButtonText: 'Yes',
+    body: 'This is some text',
+    terms_of_service_link: 'http://localhost:3000/accessibility-statement',
+    terms_of_service_link_text: 'Read full terms of service here',
   }
 
   beforeEach(() => {
@@ -25,6 +28,22 @@ describe('Form', () => {
   })
 
   describe('Rendering', () => {
+    it('renders form with text', () => {
+      render(<Form {...defaultProps} />)
+
+      const text = screen.getByTestId('react-markdown')
+      expect(text).toBeInTheDocument()
+      expect(within(text).getByText('This is some text')).toBeInTheDocument()
+    })
+
+    it('renders terms of service', () => {
+      render(<Form {...defaultProps} />)
+
+      const text = screen.getByTestId('terms-link')
+      expect(text).toBeInTheDocument()
+      expect(within(text).getByText('Read full terms of service here')).toBeInTheDocument()
+    })
+
     it('renders form with checkbox and custom label', () => {
       render(<Form {...defaultProps} />)
 

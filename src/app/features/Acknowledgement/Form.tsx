@@ -1,7 +1,8 @@
 'use client'
-
+import Link from 'next/link'
 import React, { useActionState, useState } from 'react'
 
+import { RichText } from '@/app/components/cms/RichText/RichText'
 import { handleFormSubmit } from '@/app/hooks/useAcknowledgement'
 
 export type FormProps = {
@@ -9,6 +10,9 @@ export type FormProps = {
   termsOfServiceError?: string
   disagreeButtonText?: string
   agreeButtonText?: string
+  body: string
+  terms_of_service_link: string
+  terms_of_service_link_text?: string
 }
 
 export const renderErrorSummary = (errorMessage: string) => {
@@ -35,6 +39,9 @@ export default function Form({
   termsOfServiceError,
   disagreeButtonText,
   agreeButtonText,
+  body,
+  terms_of_service_link,
+  terms_of_service_link_text,
 }: FormProps) {
   const [state, formAction] = useActionState(handleFormSubmit, {})
   const [isChecked, setIsChecked] = useState(false)
@@ -49,7 +56,14 @@ export default function Form({
 
   return (
     <form action={formAction}>
+      {showError && errorMessage && renderErrorSummary(errorMessage)}
       <input type="hidden" name="termsOfServiceError" value={termsOfServiceError} />
+      <div className="govuk-!-margin-bottom-6">
+        <RichText data-testId="text-body">{body}</RichText>
+        <Link data-testId="terms-link" href={terms_of_service_link} className="govuk-link">
+          {terms_of_service_link_text}
+        </Link>
+      </div>
       <div className="govuk-checkboxes__item mb-6">
         <input
           className="govuk-checkboxes__input"
@@ -65,8 +79,6 @@ export default function Form({
           <b>{iAgreeCheckboxLabel}</b>
         </label>
       </div>
-
-      {showError && errorMessage && renderErrorSummary(errorMessage)}
 
       <div>
         <button
