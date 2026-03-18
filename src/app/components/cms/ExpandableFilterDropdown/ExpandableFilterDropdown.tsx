@@ -244,9 +244,10 @@ function SelectedItemsList({ selected, onRemove, onClearAll }: SelectedItemsList
 
 export interface ExpandableFilterDropdownProps {
   items: ExpandableFilterItem[]
+  onSelectionChange?: (selected: SelectedFilterItem[]) => void
 }
 
-export function ExpandableFilterDropdown({ items }: ExpandableFilterDropdownProps) {
+export function ExpandableFilterDropdown({ items, onSelectionChange }: ExpandableFilterDropdownProps) {
   const { t } = useTranslation('common')
   const [open, setOpen] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
@@ -316,6 +317,10 @@ export function ExpandableFilterDropdown({ items }: ExpandableFilterDropdownProp
   }, [])
 
   const selectedList = useMemo(() => flattenSelected(items, selectedIds), [items, selectedIds])
+
+  useEffect(() => {
+    onSelectionChange?.(selectedList)
+  }, [onSelectionChange, selectedList])
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {

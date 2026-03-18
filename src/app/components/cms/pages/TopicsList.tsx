@@ -1,9 +1,7 @@
+import type { Body, CardTypes } from '@/api/models/cms/Page/Body'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import {
-  ExpandableFilterDropdown,
-  type ExpandableFilterItem,
-} from '@/app/components/cms/ExpandableFilterDropdown/ExpandableFilterDropdown'
+import { type ExpandableFilterItem } from '@/app/components/cms/ExpandableFilterDropdown/ExpandableFilterDropdown'
 import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
@@ -13,26 +11,35 @@ import { processSectionParams } from '@/app/utils/show-more.utils'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+import { TopicsListFilterController } from './TopicsListFilterController'
 
-const SAMPLE_TOPICS_AND_THEMES: ExpandableFilterItem[] = [
-  {
-    id: 'theme-infectious-diseases',
-    label: 'Infectious diseases',
-    children: [
-      { id: 'topic-covid-19', label: 'COVID-19' },
-      { id: 'topic-flu', label: 'Seasonal flu' },
-      { id: 'topic-tb', label: 'Tuberculosis' },
-    ],
-  },
-  {
-    id: 'theme-environmental-health',
-    label: 'Environmental health',
-    children: [
-      { id: 'topic-air-quality', label: 'Air quality' },
-      { id: 'topic-radiation', label: 'Radiation' },
-    ],
-  },
-]
+const getFilterItemsFromBody = (body: Body): ExpandableFilterItem[] => {
+  return body
+    .filter((section) => section.value.heading && Array.isArray(section.value.content))
+    .map((section) => {
+      const children =
+        section.value.content?.flatMap((content: CardTypes) => {
+          if (content.type !== 'chart_card_section') return []
+
+          return content.value.cards
+            .map((card) => {
+              const title = card.value.title
+              if (!title) return null
+
+              const id = card.id ?? title
+              return { id, label: title }
+            })
+            .filter(Boolean) as { id: string; label: string }[]
+        }) ?? []
+
+      return {
+        id: section.id ?? section.value.heading,
+        label: section.value.heading,
+        children,
+      }
+    })
+    .filter((item) => item.children && item.children.length > 0)
+}
 
 export default async function TopicsListPage({
   slug,
@@ -48,6 +55,8 @@ export default async function TopicsListPage({
     active_announcements: activeAnnouncements,
   } = await getPageBySlug<PageType.TopicsList>(slug, { type: PageType.TopicsList })
 
+  const filterItems = getFilterItemsFromBody(body)
+
   return (
     <View>
       <Heading heading={t('pageTitle', { title })} />
@@ -57,7 +66,7 @@ export default async function TopicsListPage({
 
       <div className="govuk-grid-row govuk-!-margin-top-4">
         <div className="govuk-grid-column-full">
-          <ExpandableFilterDropdown items={SAMPLE_TOPICS_AND_THEMES} />
+          <TopicsListFilterController items={filterItems} />
         </div>
       </div>
 

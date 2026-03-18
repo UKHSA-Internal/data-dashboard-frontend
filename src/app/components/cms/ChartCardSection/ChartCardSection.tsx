@@ -39,7 +39,12 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
 
         if (card.type === 'chart_with_description_card') {
           return (
-            <div key={card.id} className="ukhsa-chart-card-section" data-testid="card-wrapper">
+            <div
+              key={card.id}
+              className="ukhsa-chart-card-section"
+              data-testid="card-wrapper"
+              data-topic-filter-id={card.id}
+            >
               <ChartWithDescriptionCard value={card.value} cardsCount={value.cards.length} />
             </div>
           )
@@ -47,7 +52,12 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
 
         if (card.type === 'simplified_chart_with_link') {
           return (
-            <div key={card.id} className="ukhsa-chart-card-section" data-testid="card-wrapper">
+            <div
+              key={card.id}
+              className="ukhsa-chart-card-section"
+              data-testid="card-wrapper"
+              data-topic-filter-id={card.id}
+            >
               <SimplifiedChartWithLinkCard value={card.value} cardsCount={value.cards.length} />
             </div>
           )
