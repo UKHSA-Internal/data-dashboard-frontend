@@ -11,6 +11,7 @@ import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCa
 import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
+import { getColumnHeader } from '@/app/utils/table.utils'
 import {
   getMinMaxFullDate,
   getMinMaxTimePeriodLabels,
@@ -27,33 +28,6 @@ interface TableProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   isPublic?: boolean
-}
-
-// To receieve axis title, chart.label, & fallback text
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string, isPublic?: boolean) => {
-  const sensitiveLabel = isPublic ? (
-    ''
-  ) : (
-    <span className="whitespace-nowrap text-[#CECECE]">&nbsp;OFFICIAL-SENSITIVE</span>
-  )
-
-  if (chartLabel)
-    return (
-      <>
-        {chartLabel} {sensitiveLabel}
-      </>
-    )
-  if (axisTitle)
-    return (
-      <>
-        {axisTitle} {sensitiveLabel}
-      </>
-    )
-  return (
-    <>
-      {fallback} {sensitiveLabel}
-    </>
-  )
 }
 
 export function ClientTable({ size, geography, dataFilters, timePeriods, cardData, isPublic }: TableProps) {

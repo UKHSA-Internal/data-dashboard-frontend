@@ -21,6 +21,7 @@ import {
   getGeographyColourSelection,
   getParentGeography,
 } from '@/app/utils/geography.utils'
+import { getColumnHeader } from '@/app/utils/table.utils'
 import { mapThresholdsToMetricValueRanges, MetricValueRange } from '@/app/utils/threshold.utils'
 import { chartTableMaxColumns } from '@/config/constants'
 
@@ -35,32 +36,6 @@ interface TableProps {
   currentTimePeriodIndex: number
   cardData: FilterLinkedSubplotData
   isPublic?: boolean
-}
-
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string, isPublic?: boolean) => {
-  const sensitiveLabel = isPublic ? (
-    ''
-  ) : (
-    <span className="whitespace-nowrap text-[#CECECE]">&nbsp;OFFICIAL-SENSITIVE</span>
-  )
-
-  if (chartLabel)
-    return (
-      <>
-        {chartLabel} {sensitiveLabel}
-      </>
-    )
-  if (axisTitle)
-    return (
-      <>
-        {axisTitle} {sensitiveLabel}
-      </>
-    )
-  return (
-    <>
-      {fallback} {sensitiveLabel}
-    </>
-  )
 }
 
 export function SubplotClientTable({
