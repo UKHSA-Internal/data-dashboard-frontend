@@ -35,6 +35,7 @@ const SubplotFilterCardContainer = () => {
               cardData={coverageTemplateData!}
               timePeriods={timePeriods!}
               timePeriodTitle={timePeriodTitle!}
+              isPublic={false}
             />
           )
         })
