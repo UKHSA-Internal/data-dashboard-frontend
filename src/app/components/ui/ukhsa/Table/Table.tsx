@@ -11,6 +11,7 @@ import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
+import { getColumnHeader } from '@/app/utils/table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
@@ -26,33 +27,6 @@ interface TableProps {
   size: 'narrow' | 'wide'
 
   isPublic?: boolean
-}
-
-// To receieve axis title, chart.label, & fallback text
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string, isPublic?: boolean) => {
-  const sensitiveLabel = isPublic ? (
-    ''
-  ) : (
-    <span className="whitespace-nowrap text-[#CECECE]">&nbsp;OFFICIAL-SENSITIVE</span>
-  )
-
-  if (chartLabel)
-    return (
-      <>
-        {chartLabel} {sensitiveLabel}
-      </>
-    )
-  if (axisTitle)
-    return (
-      <>
-        {axisTitle} {sensitiveLabel}
-      </>
-    )
-  return (
-    <>
-      {fallback} {sensitiveLabel}
-    </>
-  )
 }
 
 /**
