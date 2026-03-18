@@ -1,6 +1,7 @@
 'use client'
 
-import { useCallback, useEffect, useState } from 'react'
+import snakeCase from 'lodash/snakeCase'
+import { useCallback, useEffect, useMemo, useState } from 'react'
 
 import {
   ExpandableFilterDropdown,
@@ -10,6 +11,18 @@ import {
 
 type TopicsListFilterControllerProps = {
   items: ExpandableFilterItem[]
+}
+
+// Ensures URL params are human readable rather than ID's
+function getItemLabelByIDMap(items: ExpandableFilterItem[]) {
+  const labelById = new Map<string, string>()
+
+  for (const item of items) {
+    labelById.set(item.id, item.label)
+    item.children?.forEach((child) => labelById.set(child.id, child.label))
+  }
+
+  return labelById
 }
 
 function getVisibleCardIDs(items: ExpandableFilterItem[], selectedFilterItems: SelectedFilterItem[]) {
@@ -32,6 +45,7 @@ function getVisibleCardIDs(items: ExpandableFilterItem[], selectedFilterItems: S
 
 export function TopicsListFilterController({ items }: TopicsListFilterControllerProps) {
   const [selected, setSelected] = useState<SelectedFilterItem[]>([])
+  const labelById = useMemo(() => getItemLabelByIDMap(items), [items])
 
   const handleSelectionChange = useCallback((nextSelected: SelectedFilterItem[]) => {
     setSelected(nextSelected)
@@ -39,6 +53,10 @@ export function TopicsListFilterController({ items }: TopicsListFilterController
 
   useEffect(() => {
     const visibleCardIDs = getVisibleCardIDs(items, selected)
+    const visibleCardLabelsSnakeCase = Array.from(visibleCardIDs).map((id) => {
+      const label = labelById.get(id)
+      return label ? snakeCase(label) : id
+    })
 
     const topicFilterItems = document.querySelectorAll<HTMLElement>('[data-topic-filter-id]')
     for (const topicFilterItem of topicFilterItems) {
@@ -53,10 +71,10 @@ export function TopicsListFilterController({ items }: TopicsListFilterController
     if (visibleCardIDs.size === 0) {
       url.searchParams.delete('topicFilters')
     } else {
-      url.searchParams.set('topicFilters', Array.from(visibleCardIDs).join(','))
+      url.searchParams.set('topicFilters', visibleCardLabelsSnakeCase.join(','))
     }
     window.history.replaceState({}, '', url.toString())
-  }, [items, selected])
+  }, [items, selected, labelById])
 
   return <ExpandableFilterDropdown items={items} onSelectionChange={handleSelectionChange} />
 }
