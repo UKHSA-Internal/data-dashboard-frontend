@@ -14,12 +14,12 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
   const topicPagePath = getPath(value.topic_page)
 
   return (
-    <Card
-      asChild
-      aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
-      className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
-    >
-      <>
+    <>
+      <Card
+        asChild
+        aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
+        className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
+      >
         <Link href={topicPagePath} prefetch>
           <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
             {value.title}
@@ -50,20 +50,20 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
             </p>
           )}
         </Link>
+      </Card>
 
-        {value.source && (value.source.external_url || value.source.page) && (
-          <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-source">
-            Source:
-            <Link
-              className="govuk-link govuk-link--no-visited-state ml-1"
-              href={value.source.external_url ? value.source.external_url : value.source.page}
-              prefetch
-            >
-              {value.source.link_display_text}
-            </Link>
-          </p>
-        )}
-      </>
-    </Card>
+      {value.source && (value.source.external_url || value.source.page) && (
+        <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-source">
+          Source:
+          <Link
+            className="govuk-link govuk-link--no-visited-state ml-1"
+            href={value.source.external_url ? value.source.external_url : value.source.page}
+            prefetch
+          >
+            {value.source.link_display_text}
+          </Link>
+        </p>
+      )}
+    </>
   )
 }
