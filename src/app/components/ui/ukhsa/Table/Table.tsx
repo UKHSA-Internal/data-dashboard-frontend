@@ -24,15 +24,35 @@ interface TableProps {
 
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
+
+  isPublic?: boolean
 }
 
 // To receieve axis title, chart.label, & fallback text
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
-  if (chartLabel) return chartLabel
+const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string, isPublic?: boolean) => {
+  const sensitiveLabel = isPublic ? (
+    ''
+  ) : (
+    <span className="whitespace-nowrap text-[#CECECE]">&nbsp;OFFICIAL-SENSITIVE</span>
+  )
 
-  if (axisTitle) return axisTitle
-
-  return fallback
+  if (chartLabel)
+    return (
+      <>
+        {chartLabel} {sensitiveLabel}
+      </>
+    )
+  if (axisTitle)
+    return (
+      <>
+        {axisTitle} {sensitiveLabel}
+      </>
+    )
+  return (
+    <>
+      {fallback} {sensitiveLabel}
+    </>
+  )
 }
 
 /**
@@ -99,6 +119,7 @@ export async function Table({
     confidence_intervals_description,
   },
   size,
+  isPublic = false,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
@@ -196,7 +217,7 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic)}
                       </th>
                     )
                   })}

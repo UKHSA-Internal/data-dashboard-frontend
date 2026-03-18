@@ -26,18 +26,37 @@ interface TableProps {
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
+  isPublic?: boolean
 }
 
 // To receieve axis title, chart.label, & fallback text
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
-  if (chartLabel) return chartLabel
+const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string, isPublic?: boolean) => {
+  const sensitiveLabel = isPublic ? (
+    ''
+  ) : (
+    <span className="whitespace-nowrap text-[#CECECE]">&nbsp;OFFICIAL-SENSITIVE</span>
+  )
 
-  if (axisTitle) return axisTitle
-
-  return fallback
+  if (chartLabel)
+    return (
+      <>
+        {chartLabel} {sensitiveLabel}
+      </>
+    )
+  if (axisTitle)
+    return (
+      <>
+        {axisTitle} {sensitiveLabel}
+      </>
+    )
+  return (
+    <>
+      {fallback} {sensitiveLabel}
+    </>
+  )
 }
 
-export function ClientTable({ size, geography, dataFilters, timePeriods, cardData }: TableProps) {
+export function ClientTable({ size, geography, dataFilters, timePeriods, cardData, isPublic }: TableProps) {
   const { t } = useTranslation('common')
 
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
@@ -236,7 +255,7 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic)}
                       </th>
                     )
                   })}

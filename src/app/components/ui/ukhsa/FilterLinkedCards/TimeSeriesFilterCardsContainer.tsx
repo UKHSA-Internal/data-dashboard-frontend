@@ -24,6 +24,7 @@ const TimeSeriesFilterCardsContainer = () => {
               timePeriods={timePeriods!}
               dataFilters={selectedVaccinationFilters!}
               cardData={timeseriesTemplateData!}
+              isPublic={false}
             />
           )
         })
