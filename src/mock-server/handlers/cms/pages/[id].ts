@@ -17,6 +17,7 @@ import {
   covid19PageMock,
   dashboardMock,
   feedbackMock,
+  healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -43,6 +44,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [whatsComingPageMock.id]: whatsComingPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,
+  [healthTopicsPageMock.id]: healthTopicsPageMock,
   [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,
   [whatsNewParentMock.id]: whatsNewParentMock,
   [metricsParentMock.id]: metricsParentMock,
@@ -85,8 +87,14 @@ export default async function handler(req: Request, res: Response) {
         ...mockedPageMap[pageId],
       })
     }
+
+    return res.status(404).json({ message: 'page not found' })
   } catch (error) {
     logger.error(error)
-    return res.status(500)
+    let message = 'unkown error occured'
+    if (error instanceof Error) {
+      message = error.message
+    }
+    return res.status(500).json({ message: message })
   }
 }

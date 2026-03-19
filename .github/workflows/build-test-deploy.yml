@@ -1,12 +1,11 @@
 name: Pipeline
 
-on:
+on: 
+  pull_request:
+    types: [opened, synchronize, reopened]
   push:
     branches:
       - main
-  pull_request:
-    branches:
-      - '*'
 
 env:
   AWS_REGION: 'eu-west-2'
@@ -17,11 +16,32 @@ permissions:
 
 jobs:
   ###############################################################################
+  # Secret Scan
+  ###############################################################################
+
+  secret-scan:
+    name: Gitleaks Secret Scan
+    runs-on: ubuntu-22.04-arm
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        if: github.actor != 'dependabot[bot]'
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  ###############################################################################
   # Install dependencies & build packages
   ###############################################################################
 
   install:
     name: Install
+    needs: [secret-scan]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
@@ -145,14 +165,31 @@ jobs:
         run: npx playwright install --with-deps
 
       - name: Start mock server
-        run: npm run dev:mock-server &
+        id: start-mock-server
+        run: |
+          npm run dev:mock-server &
+          echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
 
       - name: Wait for Mock Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
+      - name: Start Dev Server
+        id: start-dev-server
+        run: |
+          npm run start &
+          echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
+        env:
+          NODE_ENV: test
+
+      - name: Wait for Dev Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        env:
+          baseURL: http://localhost:3000
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -160,6 +197,12 @@ jobs:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
           path: playwright-report/
           retention-days: 10
+
+      - name: Cleanup servers
+        if: always()
+        run: |
+          kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
+          kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
 
   ##############################################################################
   # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
@@ -212,12 +255,46 @@ jobs:
   #         retention-days: 10
 
   ###############################################################################
+  # Docker build check (PR validation)
+  ###############################################################################
+
+  docker-build-check:
+    name: Docker Build Check
+    needs: [build]
+    runs-on: ubuntu-22.04-arm
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t fe-test .
+
+      - name: Run container
+        run: docker run -d -p 3000:3000 --name fe-test fe-test
+
+      - name: Health check
+        run: |
+          echo "Waiting for container to start..."
+          sleep 10
+
+          if [ "$(docker inspect -f '{{.State.Running}}' fe-test)" != "true" ]; then
+            echo "Container is not running"
+            docker logs fe-test
+            exit 1
+          fi
+
+          echo "Container is running successfully"
+
+      - name: Cleanup
+        if: always()
+        run: docker rm -f fe-test
+
+  ###############################################################################
   # Success gate
   ###############################################################################
 
   success-gate:
     name: Build Success Check
-    needs: [unit-tests, quality-checks, typescript, e2e-tests-public]
+    needs: [unit-tests, quality-checks, typescript, e2e-tests-public, docker-build-check]
     runs-on: ubuntu-latest
     steps:
       - run: echo 'All tests passed ✅'

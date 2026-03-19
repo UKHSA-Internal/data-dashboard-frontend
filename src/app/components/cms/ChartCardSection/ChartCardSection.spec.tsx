@@ -36,16 +36,25 @@ Object.defineProperty(window, 'URL', {
 
 // Mock components
 jest.mock('@/app/components/ui/ukhsa', () => {
-  const React = require('react')
   const actual = jest.requireActual('@/app/components/ui/ukhsa')
+
+  // Withouit 'asChild' prop we were seeing an error about it not being defined
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const MockCard = ({ children, asChild, ...props }: any) => (
+    <div data-testid="card" {...props}>
+      {children}
+    </div>
+  )
+
   return {
     ...actual,
+    Card: MockCard,
     Chart: () => <div data-testid="chart">Chart Component Mock</div>,
   }
 })
 
 jest.mock('next/link', () => {
-  return function MockLink({ children, href, ...props }: any) {
+  return function MockLink({ children, href, _prefetch, ...props }: any) {
     return (
       <a href={typeof href === 'string' ? href : href.toString()} {...props}>
         {children}
