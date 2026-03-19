@@ -451,6 +451,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       metric,
       last_published_at,
       body,
+      is_public,
     }) => ({
       id,
       title,
@@ -463,6 +464,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       metric,
       last_published_at,
       body,
+      is_public,
     })
   ),
 }
