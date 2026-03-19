@@ -52,6 +52,54 @@ Before you begin, ensure you have the following installed:
 
 The frontend interacts with a Node.js Express-based mock server during development. This server runs on [http://localhost:3005](http://localhost:3005) and uses the `/mock-server/handlers` directory for loading mock data. This setup allows for isolated local development ahead of backend integrations.
 
+### Playwright Tests
+
+We have some Playwright tests which are used during the CI pipeline on PRs for testing as well as after deployments to
+smoke test (this is [triggered](https://github.com/UKHSA-Internal/data-dashboard-infra/blob/main/.github/workflows/production.yml#L138) from the infrastructure repository after a deployment is completed).
+
+#### Installing Playwright
+
+To setup to run the playwright tests locally, you must install playwright's dependencies:
+
+```bash
+npx playwright install --with-deps
+```
+
+This should install the necessary packages on your system and will inform you if anything can't be installed.
+
+#### Running the Playwright Tests
+
+There are two sets of Playwright tests each of which targets a specific task and server.
+There are general tests which you should run against a dev instance of the frontend using either the mock server or a
+dev backend instance, and then there are smoke tests which should be run against WKEs like production.
+
+Which server to target is specified using the `baseURL` environment variable.
+You can specify this in your `.env.local` file which is read in the [Playwright config file](playwright.config.ts), or
+you can specify it directly as an environment variable before you run Playwright (e.g. `export baseURL=http://a.b.c`).
+The Playwright configuration will default this `baseURL` to `http://localhost:3000` if not specified.
+
+Which tests are run is easiest controlled using the `--grep` argument passed to `playwright`, this is shown below.
+
+##### Running the general tests
+
+Target `baseURL` at local development server, make sure your dev server is running, and then run:
+
+```bash
+npx playwright test --grep-invert @smoke
+# or
+npm run test:e2e
+```
+
+##### Running the smoke tests
+
+Target `baseURL` at a WKE's URL and then run:
+
+```bash
+npx playwright test --grep @smoke
+# or
+npm run test:e2e:smoke
+```
+
 ## Deployment
 
 Our project uses a GitHub Actions workflow for CI/CD. The workflow, located at `.github/workflows/build-test-deploy`, automates the build, test, code quality checks, and deployment processes. Deployments are made to AWS Elastic Container Service (ECS) on port `3000`. The workflow also initiates deployment updates in our [infrastructure repository](https://github.com/UKHSA-Internal/data-dashboard-infra/).
@@ -67,3 +115,45 @@ For a detailed list of our deployment environments and their configurations, ref
 ## Enabling Non-Public functionality
 
 Instructions on setting up your the non-public version of the dashboard can be found here: [Enabling Non Public](./docs/auth/enabling-non-public.md)
+
+### Pre-commit Hooks
+
+This repository uses **pre-commit** to automatically scan for hardcoded secrets before allowing commits.
+
+We recommend using **prek**, a faster drop-in replacement for pre-commit. It works with the existing configuration and requires no changes to the config files.
+
+---
+
+#### Setup (one-time)
+
+1. Install `uv` (if not already installed)
+
+On macOS:
+
+```bash
+brew install uv
+```
+
+2. Install `prek` globally:
+
+```bash
+uv tool install prek
+```
+
+3. Install Git Hooks(required)
+
+Run this once per repository
+
+```bash
+prek install
+```
+
+This install the git hooks so secret scanning runs automatically before every commit
+
+4. Run Manually(Optional)
+
+To scan all files manually
+
+```bash
+prek run --all-files
+```

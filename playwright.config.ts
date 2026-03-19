@@ -5,6 +5,7 @@ import path from 'path'
 
 dotenv.config({ path: path.resolve(__dirname, '.env.local') })
 
+// URL test to, this must be up and available before the tests are run
 const baseURL = process.env.baseURL || 'http://localhost:3000'
 
 const authStorage =
@@ -66,11 +67,4 @@ export default defineConfig({
       grepInvert: /@desktopOnly/,
     },
   ],
-
-  /* Run your local dev server before starting the tests */
-  webServer: {
-    command: 'NODE_ENV=test npm run start',
-    url: 'http://localhost:3000',
-    reuseExistingServer: !process.env.CI,
-  },
 })
