@@ -1,6 +1,32 @@
-import { getShowLessURL, getShowMoreURL } from './show-more.utils'
+import { getShowLessURL, getShowMoreURL, processSectionParams } from './show-more.utils'
 
 const defaultUrl = new URL('http://localhost')
+
+describe('processSectionParams', () => {
+  test('returns empty array when value is undefined', () => {
+    expect(processSectionParams(undefined)).toEqual([])
+  })
+
+  test('returns empty array when value is empty string', () => {
+    expect(processSectionParams('')).toEqual([])
+  })
+
+  test('converts single string to array of lowercase', () => {
+    expect(processSectionParams('Respiratory-Viruses')).toEqual(['respiratory-viruses'])
+  })
+
+  test('converts array of strings to array of lowercase', () => {
+    expect(processSectionParams(['Influenza', 'COVID-19', 'measles'])).toEqual(['influenza', 'covid-19', 'measles'])
+  })
+
+  test('handles single section param from URL', () => {
+    expect(processSectionParams('infectious-diseases')).toEqual(['infectious-diseases'])
+  })
+
+  test('handles multiple section params from URL', () => {
+    expect(processSectionParams(['respiratory-viruses', 'outbreaks'])).toEqual(['respiratory-viruses', 'outbreaks'])
+  })
+})
 
 jest.mock('@/app/hooks/getPathname', () => ({ getPathname: jest.fn(() => defaultUrl.pathname) }))
 
