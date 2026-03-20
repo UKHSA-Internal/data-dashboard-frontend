@@ -83,13 +83,11 @@ export const renderCard = (
 
       {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} />}
 
-      {type === 'chart_row_card' &&
-        (console.log('Rendering chart_row_card with value:', isPublic), // Debug log to check the value
-        (
-          <ChartRowCard>
-            <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
-          </ChartRowCard>
-        ))}
+      {type === 'chart_row_card' && (
+        <ChartRowCard>
+          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
+        </ChartRowCard>
+      )}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
