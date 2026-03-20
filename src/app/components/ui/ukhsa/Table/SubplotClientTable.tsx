@@ -10,6 +10,7 @@ import {
   ThresholdFilter,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getSubplotTables, Response } from '@/api/requests/tables/subplot/getSubplotTables'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
@@ -36,6 +37,7 @@ interface TableProps {
   currentTimePeriodIndex: number
   cardData: FilterLinkedSubplotData
   isPublic?: boolean
+  level?: DataClassification
 }
 
 export function SubplotClientTable({
@@ -49,6 +51,7 @@ export function SubplotClientTable({
   currentTimePeriodIndex,
   cardData,
   isPublic,
+  level,
 }: TableProps) {
   const { t } = useTranslation('common')
 
@@ -169,7 +172,7 @@ export function SubplotClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level)}
                       </th>
                     )
                   })}

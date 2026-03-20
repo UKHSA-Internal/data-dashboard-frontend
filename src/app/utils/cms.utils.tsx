@@ -85,17 +85,23 @@ export const renderCard = (
 
       {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} />}
 
-      {type === 'chart_row_card' && (
-        <ChartRowCard>
-          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
-        </ChartRowCard>
-      )}
+      {type === 'chart_row_card' &&
+        (console.log('Rendering chart_row_card with value:', isPublic), // Debug log to check the value
+        (
+          <ChartRowCard>
+            <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
+          </ChartRowCard>
+        ))}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
-      {type === 'filter_linked_sub_plot_chart_template' && <SubplotFilterCardContainer />}
+      {type === 'filter_linked_sub_plot_chart_template' && (
+        <SubplotFilterCardContainer isPublic={isPublic} pageClassification={pageClassification} />
+      )}
 
-      {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer />}
+      {type === 'filter_linked_time_series_chart_template' && (
+        <TimeSeriesFilterCardsContainer isPublic={isPublic} pageClassification={pageClassification} />
+      )}
 
       {type === 'chart_card_section' && (
         <ChartCardSectionRow>

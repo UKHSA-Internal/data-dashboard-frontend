@@ -4,6 +4,7 @@ import React, { Fragment } from 'react'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
 import { RichText } from '@/app/components/cms'
@@ -27,6 +28,8 @@ interface TableProps {
   size: 'narrow' | 'wide'
 
   isPublic?: boolean
+
+  level?: DataClassification
 }
 
 /**
@@ -94,6 +97,7 @@ export async function Table({
   },
   size,
   isPublic = false,
+  level,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
@@ -191,7 +195,7 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level)}
                       </th>
                     )
                   })}

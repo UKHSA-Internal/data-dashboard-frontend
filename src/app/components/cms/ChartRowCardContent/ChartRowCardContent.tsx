@@ -20,7 +20,6 @@ import {
 } from '@/app/components/ui/ukhsa'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
-import { authEnabled } from '@/config/constants'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 
@@ -46,7 +45,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
+            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}
@@ -157,7 +156,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Tabular data
                     </span>
-                    <Table data={column.value} size={size} isPublic={false} />
+                    <Table data={column.value} size={size} isPublic={isPublic} level={pageClassification} />
                   </TabsContent>
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-download`}
