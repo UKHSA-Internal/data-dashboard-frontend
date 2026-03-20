@@ -2,8 +2,13 @@ import { render, screen } from '@/config/test-utils'
 
 import { getColumnHeader } from './table.utils'
 
-const renderHeader = (chartLabel: string, axisTitle: string, fallback: string, isPublic?: boolean) =>
-  render(<>{getColumnHeader(chartLabel, axisTitle, fallback, isPublic)}</>)
+const renderHeader = (
+  chartLabel: string,
+  axisTitle: string,
+  fallback: string,
+  isPublic?: boolean,
+  level?: 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
+) => render(<>{getColumnHeader(chartLabel, axisTitle, fallback, isPublic, level)}</>)
 
 describe('getColumnHeader', () => {
   describe('label priority', () => {
@@ -23,20 +28,47 @@ describe('getColumnHeader', () => {
     })
   })
 
-  describe('OFFICIAL-SENSITIVE label', () => {
-    test('renders when isPublic is false', () => {
+  describe('sensitive label visibility', () => {
+    test('renders sensitive label when isPublic is false', () => {
       renderHeader('Label', '', 'Fallback', false)
-      expect(screen.getByText(/OFFICIAL-SENSITIVE/)).toBeInTheDocument()
+      expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
     })
 
-    test('does not render when isPublic is true', () => {
+    test('does not render sensitive label when isPublic is true', () => {
       renderHeader('Label', '', 'Fallback', true)
-      expect(screen.queryByText(/OFFICIAL-SENSITIVE/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
     })
 
-    test('does not render when isPublic is undefined', () => {
+    test('does not render sensitive label when isPublic is undefined', () => {
       renderHeader('Label', '', 'Fallback')
-      expect(screen.queryByText(/OFFICIAL-SENSITIVE/)).not.toBeInTheDocument()
+      expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
+    })
+  })
+
+  describe('level content', () => {
+    test('defaults to official_sensitive level', () => {
+      renderHeader('Label', '', 'Fallback', false)
+      expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
+    })
+
+    test('renders correct text for official level', () => {
+      renderHeader('Label', '', 'Fallback', false, 'official')
+      expect(screen.getByText(/Official$/i)).toBeInTheDocument()
+    })
+
+    test('renders correct text for protective_marking_not_set level', () => {
+      renderHeader('Label', '', 'Fallback', false, 'protective_marking_not_set')
+      expect(screen.getByText(/Protective marking not set/i)).toBeInTheDocument()
+    })
+
+    test('renders correct text for secret level', () => {
+      renderHeader('Label', '', 'Fallback', false, 'secret')
+      expect(screen.getByText(/Secret$/i)).toBeInTheDocument()
+    })
+
+    test('renders correct text for top_secret level', () => {
+      renderHeader('Label', '', 'Fallback', false, 'top_secret')
+      expect(screen.getByText(/Top Secret/i)).toBeInTheDocument()
     })
   })
 })
