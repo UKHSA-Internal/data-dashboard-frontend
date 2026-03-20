@@ -24,9 +24,9 @@ import { renderBlock } from '@/app/utils/cms.utils'
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 
 type ChartRowCardContentProps = {
-  value: any
-  isPublic?: boolean
-  pageClassification?: DataClassification
+  readonly value: any
+  readonly isPublic?: boolean
+  readonly pageClassification?: DataClassification
 }
 
 export function ChartRowCardContent({ value, isPublic, pageClassification }: ChartRowCardContentProps) {
@@ -45,7 +45,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification}/>}
+            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}

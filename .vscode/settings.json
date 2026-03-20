@@ -1,5 +1,9 @@
 {
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-  "cSpell.words": ["Colour"]
+  "js/ts.tsdk.path": "node_modules/typescript/lib",
+  "js/ts.tsdk.promptToUseWorkspaceVersion": true,
+  "cSpell.words": ["Colour"],
+  "sonarlint.connectedMode.project": {
+    "connectionId": "ukhsa-internal",
+    "projectKey": "UKHSA-Internal_winter-pressures-frontend"
+  }
 }
