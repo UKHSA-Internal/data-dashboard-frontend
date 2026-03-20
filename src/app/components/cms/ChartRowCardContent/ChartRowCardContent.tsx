@@ -24,9 +24,9 @@ import { renderBlock } from '@/app/utils/cms.utils'
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 
 type ChartRowCardContentProps = {
-  value: any
-  isPublic?: boolean
-  pageClassification?: DataClassification
+  readonly value: any
+  readonly isPublic?: boolean
+  readonly pageClassification?: DataClassification
 }
 
 export function ChartRowCardContent({ value, isPublic, pageClassification }: ChartRowCardContentProps) {
