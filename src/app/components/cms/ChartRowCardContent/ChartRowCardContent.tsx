@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { About } from '@/app/components/cms/About/About'
 import {
   AreaSelectorLoader,
@@ -20,11 +21,15 @@ import {
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
 
+import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
+
 type ChartRowCardContentProps = {
   value: any
+  isPublic?: boolean
+  pageClassification?: DataClassification
 }
 
-export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
+export function ChartRowCardContent({ value, isPublic, pageClassification }: ChartRowCardContentProps) {
   return (
     <>
       {value.columns.map((column: any) => {
@@ -40,6 +45,7 @@ export function ChartRowCardContent({ value }: ChartRowCardContentProps) {
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
+            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}
