@@ -34,7 +34,6 @@ export default async function Layout({ children }: LayoutProps) {
       </TopNav>
 
       <div className="govuk-width-container bg-blue" />
-
       <div className="govuk-width-container print:hidden">
         <PhaseBanner tag={t('feedbackBannerPhase')}>
           <Trans i18nKey="feedbackBanner" t={t}>
@@ -62,7 +61,6 @@ export default async function Layout({ children }: LayoutProps) {
               </div>
             </div>
           ))}
-
       <div className="govuk-width-container">
         <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
           <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">

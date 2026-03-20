@@ -31,6 +31,7 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
   title: 'Other respiratory viruses',
   page_description:
     '<p data-block-key="rjyu9">Data and insights from the UKHSA on other respiratory viruses. <a href="https://www.gov.uk/government/organisations/uk-health-security-agency\\">See the simple summary for England (opens in a new tab)</a>.</p>',
+  is_public: true,
   body: [
     {
       type: 'section',

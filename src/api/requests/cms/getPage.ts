@@ -4,6 +4,7 @@ import { Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { Announcements } from '@/api/models/cms/Page/Announcements'
 import { FormFields } from '@/api/models/cms/Page/FormFields'
+import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -16,6 +17,7 @@ type PageTypeToDataMap = {
   [PageType.Landing]: typeof WithLandingData
   [PageType.Feedback]: typeof withFeedbackData
   [PageType.Topic]: typeof WithTopicData
+  [PageType.TopicsList]: typeof WithTopicsListData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
   [PageType.WhatsNewParent]: typeof WithWhatsNewParentData
@@ -33,6 +35,8 @@ const SharedPageData = z.object({
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
   active_announcements: Announcements.or(fallback([])).optional(),
+  is_public: z.boolean().optional(),
+  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -61,6 +65,8 @@ const withFeedbackData = SharedPageData.extend({
 const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
+  is_public: z.boolean(),
+  page_classification: DataClassification.or(fallback(undefined)),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -68,6 +74,14 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+})
+
+const WithTopicsListData = SharedPageData.extend({
+  page_description: z.string().nullable().optional(),
+  body: Body,
+  meta: Meta.extend({
+    type: z.literal('topics_list.TopicsListPage'),
+  }),
 })
 
 const WithCommonData = SharedPageData.extend({
@@ -145,12 +159,15 @@ const WithMetricsChildData = SharedPageData.extend({
       }),
     })
   ),
+  is_public: z.boolean(),
+  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 export const responseSchema = z.union([
   WithLandingData,
   withFeedbackData,
   WithTopicData,
+  WithTopicsListData,
   WithCommonData,
   WithCompositeData,
   WithWhatsNewParentData,
