@@ -10,6 +10,7 @@ import {
   ThresholdFilter,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { About } from '@/app/components/cms/About/About'
 import { SubplotClientDownload } from '@/app/components/ui/ukhsa/Download/SubplotClientDownload'
@@ -31,6 +32,7 @@ interface SubplotFilterCardProps {
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
   isPublic?: boolean
+  level?: DataClassification
 }
 
 const SubplotFilterCard = ({
@@ -42,6 +44,7 @@ const SubplotFilterCard = ({
   cardData,
   timePeriodTitle,
   isPublic,
+  level,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
@@ -155,6 +158,7 @@ const SubplotFilterCard = ({
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 cardData={cardData}
                 isPublic={isPublic}
+                level={level}
               />
             </TabsContent>
             <TabsContent

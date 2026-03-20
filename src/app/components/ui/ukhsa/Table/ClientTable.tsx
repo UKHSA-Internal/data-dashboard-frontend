@@ -4,6 +4,7 @@ import { kebabCase } from 'lodash'
 import { Fragment, useEffect, useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
@@ -28,9 +29,10 @@ interface TableProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   isPublic?: boolean
+  level?: DataClassification
 }
 
-export function ClientTable({ size, geography, dataFilters, timePeriods, cardData, isPublic }: TableProps) {
+export function ClientTable({ size, geography, dataFilters, timePeriods, cardData, isPublic, level }: TableProps) {
   const { t } = useTranslation('common')
 
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
@@ -229,7 +231,7 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level)}
                       </th>
                     )
                   })}
