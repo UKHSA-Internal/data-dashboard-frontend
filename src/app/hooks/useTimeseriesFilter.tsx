@@ -38,7 +38,7 @@ export function useTimeseriesFilterValue(chartId: string): string | undefined {
 
   useEffect(() => {
     // Guard against SSR where window is undefined
-    if (typeof globalThis.window === 'undefined') {
+    if (globalThis.window === undefined) {
       return
     }
 

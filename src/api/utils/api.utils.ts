@@ -88,7 +88,7 @@ function clientBuildFetchOptions({
 export function getPreviewInfoFromCookie() {
   let isPreview = false
   let draftAuthToken: string | undefined = undefined
-  if (typeof globalThis.window === 'undefined') {
+  if (globalThis.window === undefined) {
     // --- Server-side ---
     try {
       // Dynamically import next/headers only on the server
