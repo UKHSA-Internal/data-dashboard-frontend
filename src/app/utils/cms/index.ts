@@ -151,7 +151,7 @@ export async function getPageMetadata(
   }
 }
 
-export async function getPageTypeBySlug(slug: Slug) {
+export async function getPageTypeBySlug(slug: Slug): Promise<PageType> {
   if (!slug.length) return PageType.Landing
 
   const page = await getPageBySlug(slug)

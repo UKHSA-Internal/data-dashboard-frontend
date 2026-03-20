@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useEffect, useMemo, useState } from 'react'
 
 interface TimeseriesFilterContextValue {
   currentFilter: string
@@ -9,13 +9,16 @@ interface TimeseriesFilterContextValue {
 
 const TimeseriesFilterContext = createContext<TimeseriesFilterContextValue | null>(null)
 
-export function TimeseriesFilterProvider({ children }: { children: ReactNode }) {
+export function TimeseriesFilterProvider({ children }: Readonly<{ children: ReactNode }>) {
   const [currentFilter, setCurrentFilter] = useState<string>('all')
 
-  const contextValue: TimeseriesFilterContextValue = {
-    currentFilter,
-    setCurrentFilter,
-  }
+  const contextValue = useMemo(
+    () => ({
+      currentFilter,
+      setCurrentFilter,
+    }),
+    [currentFilter, setCurrentFilter]
+  )
 
   return <TimeseriesFilterContext.Provider value={contextValue}>{children}</TimeseriesFilterContext.Provider>
 }
@@ -35,11 +38,11 @@ export function useTimeseriesFilterValue(chartId: string): string | undefined {
 
   useEffect(() => {
     // Guard against SSR where window is undefined
-    if (typeof window === 'undefined') {
+    if (typeof globalThis.window === 'undefined') {
       return
     }
 
-    const storedFilters = window.sessionStorage.getItem('timeseriesFilters')
+    const storedFilters = globalThis.window.sessionStorage.getItem('timeseriesFilters')
     if (!storedFilters) {
       setFilter(undefined)
       return
