@@ -94,10 +94,29 @@ const WithSimplifiedChartCardAndLink = z.object({
     .omit({ body: true, date_prefix: true, about: true }),
 })
 
+const WithChartCardWithDescription = z.object({
+  id: z.string(),
+  type: z.enum(['chart_with_description_card']),
+  value: chartCardValues
+    .extend({
+      sub_title: z.string(),
+      topic_page: z.string(),
+      description: z.string(),
+      show_tooltips: z.boolean(),
+      source: z.object({
+        link_display_text: z.string().optional().nullable(),
+        page: z.string().optional().nullable(),
+        external_url: z.string().optional().nullable(),
+      }),
+    })
+    .omit({ body: true, date_prefix: true, about: true }),
+})
+
 export const ChartCardSchemas = z.discriminatedUnion('type', [
   WithChartHeadlineAndTrendCard,
   WithChartCard,
   WithSimplifiedChartCardAndLink,
+  WithChartCardWithDescription,
 ])
 
 export const CardTypes = z.discriminatedUnion('type', [
@@ -129,7 +148,7 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('chart_card_section'),
     value: z.object({
-      cards: z.array(WithSimplifiedChartCardAndLink),
+      cards: z.array(z.union([WithSimplifiedChartCardAndLink, WithChartCardWithDescription])),
     }),
     id: z.string(),
   }),
