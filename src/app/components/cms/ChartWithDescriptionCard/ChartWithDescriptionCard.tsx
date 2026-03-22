@@ -12,7 +12,7 @@ type ChartWithDescriptionCardProps = {
 
 export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
-  const hasSource = value.source && value.source.external_url
+  const hasSource = value.source && (value.source.external_url || value.source.page)
 
   return (
     <div className="group flex h-full flex-col">
@@ -65,7 +65,11 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
         >
           <p className="govuk-body-s mb-0 text-grey-1">
             Source:{' '}
-            <Link className="govuk-link govuk-link--no-visited-state" href={value.source.external_url} prefetch>
+            <Link
+              className="govuk-link govuk-link--no-visited-state"
+              href={value.source.external_url ? value.source.external_url : value.source.page}
+              prefetch
+            >
               {value.source.link_display_text}
             </Link>
           </p>

@@ -62,7 +62,7 @@ export default async function TopicsListPage({
       <Heading heading={t('pageTitle', { title })} />
       <LastUpdated lastUpdated={lastUpdated} />
       <Announcements announcements={activeAnnouncements} />
-      <Description description={description} />
+      {description && <Description description={description} />}
 
       <div className="govuk-grid-row govuk-!-margin-top-4">
         <div className="govuk-grid-column-full">
