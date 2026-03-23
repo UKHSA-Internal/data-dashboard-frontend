@@ -16,14 +16,37 @@ permissions:
 
 jobs:
   ###############################################################################
+  # Secret Scan
+  ###############################################################################
+
+  secret-scan:
+    name: Gitleaks Secret Scan
+    runs-on: ubuntu-22.04-arm
+
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        if: github.actor != 'dependabot[bot]'
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_LICENSE: ${{ secrets.GITLEAKS_LICENSE }}
+
+  ###############################################################################
   # Install dependencies & build packages
   ###############################################################################
 
   install:
     name: Install
+    needs: [secret-scan]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
       - name: Install
         run: npm ci --no-audit --no-fund
 
@@ -33,8 +56,55 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
       - name: Build
         run: NODE_ENV=test npm run build
+
+  ###############################################################################
+  # Lighthouse checks
+  ###############################################################################
+
+  lighthouse:
+    name: Lighthouse
+    needs: [build]
+    runs-on: ubuntu-latest
+    if: false # Temporarily disabled due to config overriding CLI params and running against production
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Start mock server
+        run: npm run dev:mock-server &
+      - name: Wait for Mock Server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      - name: Start Applicaton
+        run: NODE_ENV=test npm run start &
+      - name: Unlighthouse assertions and client
+        run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: unlighthouse-report
+          path: ./.unlighthouse
+          retention-days: 10
+          overwrite: true
+
+  ###############################################################################
+  # Code quality checks
+  ###############################################################################
+
+  quality-checks:
+    name: Lint
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Quality check
+        run: npm run lint
 
   ##############################################################################
   # TypeScript
@@ -50,6 +120,28 @@ jobs:
       - uses: ./.github/actions/build-cache
       - name: TypeScript Compilation
         run: npm run tsc
+
+  ##############################################################################
+  # Unit tests
+  ##############################################################################
+
+  unit-tests:
+    name: Unit tests
+    permissions: write-all
+    needs: [build]
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - uses: ./.github/actions/install-cache
+      - uses: ./.github/actions/build-cache
+      - name: Unit tests
+        run: npm run test:ci
+      - name: Unit tests coverage comment
+        uses: ukhsa-internal/jest-coverage-comment-action@v1
+        with:
+          coverage-summary-path: ./coverage/coverage-summary.json
+          junitxml-path: ./junit.xml
+          title: Unit tests coverage
 
   ##############################################################################
   # Playwright tests - Public - (fully mocked backend)
@@ -112,3 +204,147 @@ jobs:
           kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
           kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
 
+  ##############################################################################
+  # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
+  ##############################################################################
+
+  # e2e-tests-non-public:
+  #   name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
+  #   needs: [build]
+  #   timeout-minutes: 20
+  #   runs-on: ubuntu-22.04
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       shard: [1, 2, 3]
+  #   steps:
+  #     - uses: actions/checkout@v3
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
+
+  #     - name: Setup Playwright
+  #       run: npx playwright install --with-deps
+
+  #     - name: Start mock server
+  #       run: npm run dev:mock-server &
+
+  #     - name: Wait for Mock Server
+  #       shell: sh
+  #       run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+
+  #     - name: Create .env.local
+  #       run: |
+  #         echo "AUTH_ENABLED=true" >> .env.local
+  #         echo "AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}" >> .env.local
+  #         echo "AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" >> .env.local
+  #         echo "AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}" >> .env.local
+  #         echo "AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}" >> .env.local
+  #         echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
+  #         echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
+  #         echo "PLAYWRIGHT_AUTH_USER_PASSWORD=${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}" >> .env.local
+  #         echo "PLAYWRIGHT_AUTH_USER_USERNAME=${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}" >> .env.local
+
+  #     - name: Run Playwright tests
+  #       run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+
+  #     - uses: actions/upload-artifact@v4
+  #       if: ${{ !cancelled() }}
+  #       with:
+  #         name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
+  #         path: playwright-report/
+  #         retention-days: 10
+
+  ###############################################################################
+  # Docker build check (PR validation)
+  ###############################################################################
+
+  docker-build-check:
+    name: Docker Build Check
+    needs: [build]
+    runs-on: ubuntu-22.04-arm
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Build Docker image
+        run: docker build -t fe-test .
+
+      - name: Run container
+        run: docker run -d -p 3000:3000 --name fe-test fe-test
+
+      - name: Health check
+        run: |
+          echo "Waiting for container to start..."
+          sleep 10
+
+          if [ "$(docker inspect -f '{{.State.Running}}' fe-test)" != "true" ]; then
+            echo "Container is not running"
+            docker logs fe-test
+            exit 1
+          fi
+
+          echo "Container is running successfully"
+
+      - name: Cleanup
+        if: always()
+        run: docker rm -f fe-test
+
+  ###############################################################################
+  # Success gate
+  ###############################################################################
+
+  success-gate:
+    name: Build Success Check
+    needs: [unit-tests, quality-checks, typescript, e2e-tests-public, docker-build-check]
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo 'All tests passed ✅'
+
+  ###############################################################################
+  # Push image to ECR
+  ###############################################################################
+
+  publish-image:
+    name: Publish image to ECR
+    needs: [success-gate]
+    runs-on: ubuntu-22.04-arm
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+      - name: Build and publish docker image
+        uses: ./.github/actions/publish-image
+        with:
+          role-to-assume: ${{ secrets.AWS_TOOLS_ACCOUNT_ROLE }}
+          architecture: arm64
+          ecr-repository: ukhsa-data-dashboard/front-end
+          image-tag: ${{ github.sha }}
+
+  ###############################################################################
+  # Deploy
+  ###############################################################################
+
+  trigger-deployments:
+    name: Trigger deployments
+    needs: [publish-image]
+    runs-on: ubuntu-latest
+    if: ${{ github.ref == 'refs/heads/main' }}
+
+    steps:
+      - name: Check out code
+        uses: actions/checkout@v4
+
+      - name: Generate ephemeral deployment token
+        id: generate-deployment-token
+        uses: actions/create-github-app-token@v2
+        with:
+          app-id: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_APP_ID }}
+          private-key: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_PRIVATE_KEY }}
+          skip-token-revoke: false
+          # Although this is the default, this is explicitly set so that
+          # we know the token gets revoked after the job has finished
+          repositories: "data-dashboard-infra"
+
+      - uses: ./.github/actions/trigger-deployments
+        with:
+          token: ${{ steps.generate-deployment-token.outputs.token }}
