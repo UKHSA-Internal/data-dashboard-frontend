@@ -10,7 +10,6 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL } from '@/app/utils/show-more.utils'
-import { authEnabled } from '@/config/constants'
 
 import {
   ButtonExternal,
@@ -20,13 +19,11 @@ import {
   Headline,
   HeadlineNumbersRowCard,
   Percentage,
-  PopularTopicsCard,
   RichText,
   TextCard,
   Trend,
   WeatherHealthAlertCard,
 } from '../components/cms'
-import { ChartCardSectionRow } from '../components/cms/ChartCardSection/ChartCardSectionRow'
 import { ChartRowCardContent } from '../components/cms/ChartRowCardContent/ChartRowCardContent'
 import { ChartRowCard } from '../components/ui/ukhsa'
 import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
@@ -94,31 +91,15 @@ export const renderCard = (
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
-      {type === 'filter_linked_sub_plot_chart_template' && (
-        <SubplotFilterCardContainer
-          isPublic={isPublic}
-          pageClassification={pageClassification}
-          authEnabled={authEnabled}
-        />
-      )}
+      {type === 'filter_linked_sub_plot_chart_template' && <SubplotFilterCardContainer isPublic={isPublic} />}
 
-      {type === 'filter_linked_time_series_chart_template' && (
-        <TimeSeriesFilterCardsContainer
-          isPublic={isPublic}
-          pageClassification={pageClassification}
-          authEnabled={authEnabled}
-        />
-      )}
+      {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer isPublic={isPublic} />}
 
       {type === 'chart_card_section' && (
-        <ChartCardSectionRow>
-          <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
-        </ChartCardSectionRow>
+        <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}
-
-      {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
     </div>
   )
 }

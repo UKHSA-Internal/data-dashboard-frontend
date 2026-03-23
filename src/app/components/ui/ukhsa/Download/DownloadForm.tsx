@@ -25,7 +25,7 @@ export function DownloadForm({
   isPublic = true,
 }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
-  const [showDownLoadBanner, setShowDownloadBanner] = useState(false)
+  const [showDownloadBanner, setShowDownloadBanner] = useState(false)
   const router = useRouter()
   const searchParams = useSearchParams()
   const { t } = useTranslation('common')
@@ -39,7 +39,7 @@ export function DownloadForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (isPublic === false && showDownLoadBanner === false) {
+    if (isPublic === false && showDownloadBanner === false) {
       setShowDownloadBanner(true)
       return
     }
@@ -83,15 +83,15 @@ export function DownloadForm({
         <fieldset className="govuk-fieldset">
           <legend className="govuk-fieldset__legend govuk-fieldset__legend--m">
             <h3 className="govuk-fieldset__heading">
-              {showDownLoadBanner ? t('cms.blocks.download.headingAlert') : t('cms.blocks.download.heading')}
+              {showDownloadBanner ? t('cms.blocks.download.headingAlert') : t('cms.blocks.download.heading')}
             </h3>
           </legend>
-          <div className={clsx('govuk-hint', showDownLoadBanner && 'hidden')}>{t('cms.blocks.download.hint')}</div>
+          <div className={clsx('govuk-hint', showDownloadBanner && 'hidden')}>{t('cms.blocks.download.hint')}</div>
 
           <div className="govuk-radios govuk-radios--small govuk-radios--inline">
             <div className="govuk-radios__item">
               <input
-                className={clsx('govuk-radios__input', showDownLoadBanner && 'hidden')}
+                className={clsx('govuk-radios__input', showDownloadBanner && 'hidden')}
                 id={`format-${formatInputId}`}
                 name="format"
                 type="radio"
@@ -99,7 +99,7 @@ export function DownloadForm({
                 defaultChecked
               />
               <label
-                className={clsx('govuk-label govuk-radios__label', showDownLoadBanner && 'hidden')}
+                className={clsx('govuk-label govuk-radios__label', showDownloadBanner && 'hidden')}
                 htmlFor={`format-${formatInputId}`}
               >
                 {t('cms.blocks.download.inputLabel', { context: 'csv' })}
@@ -107,14 +107,14 @@ export function DownloadForm({
             </div>
             <div className="govuk-radios__item">
               <input
-                className={clsx('govuk-radios__input', showDownLoadBanner && 'hidden')}
+                className={clsx('govuk-radios__input', showDownloadBanner && 'hidden')}
                 id={`format-${formatInputId}-2`}
                 name="format"
                 type="radio"
                 value="json"
               />
               <label
-                className={clsx('govuk-label govuk-radios__label', showDownLoadBanner && 'hidden')}
+                className={clsx('govuk-label govuk-radios__label', showDownloadBanner && 'hidden')}
                 htmlFor={`format-${formatInputId}-2`}
               >
                 {t('cms.blocks.download.inputLabel', { context: 'json' })}
@@ -122,7 +122,7 @@ export function DownloadForm({
             </div>
           </div>
 
-          {showDownLoadBanner && (
+          {showDownloadBanner && (
             <div
               className="download-acknowledgement-banner"
               role="region"
@@ -179,11 +179,11 @@ export function DownloadForm({
             </svg>
             {downloading
               ? t('cms.blocks.download.buttonDownloading')
-              : showDownLoadBanner
+              : showDownloadBanner
                 ? t('cms.blocks.download.buttonDownloadAlert')
                 : t('cms.blocks.download.buttonDownload')}
           </button>
-          {showDownLoadBanner && (
+          {showDownloadBanner && (
             <button
               className="govuk-button govuk-!-margin-bottom-0 govuk-!-margin-top-4 hover:!bg-gray-800 w-auto !bg-black !text-white print:hidden"
               type="button"
