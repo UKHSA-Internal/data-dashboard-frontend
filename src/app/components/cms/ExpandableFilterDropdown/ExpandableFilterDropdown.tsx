@@ -65,22 +65,26 @@ function DropdownButton({ open, onClick, label }: DropdownButtonProps) {
   )
 }
 
-function flattenSelected(items: ExpandableFilterItem[], selectedIds: Set<string>): SelectedFilterItem[] {
+function flattenFilterItems(items: ExpandableFilterItem[], selectedIds: Set<string>): SelectedFilterItem[] {
   const result: SelectedFilterItem[] = []
+
   for (const item of items) {
-    if (item.children && item.children.length > 0) {
-      const allChildrenSelected = item.children.every((c) => selectedIds.has(c.id))
-      if (allChildrenSelected) {
-        result.push({ id: item.id, label: item.label })
-      } else {
-        for (const child of item.children) {
-          if (selectedIds.has(child.id)) {
-            result.push({ id: child.id, label: child.label })
-          }
-        }
-      }
-    } else if (selectedIds.has(item.id)) {
+    const children = item.children
+
+    // If no children, add the 'parent' (leaf?) item to the result if selected
+    if (!children?.length) {
+      if (selectedIds.has(item.id)) result.push({ id: item.id, label: item.label })
+      continue
+    }
+
+    const selectedChildren = children.filter((c) => selectedIds.has(c.id))
+
+    // If all children are selected, represent the selection with the parent.
+    if (selectedChildren.length === children.length) {
       result.push({ id: item.id, label: item.label })
+    } else {
+      // Otherwise, show only the selected children.
+      result.push(...selectedChildren.map((c) => ({ id: c.id, label: c.label })))
     }
   }
   return result
@@ -316,7 +320,7 @@ export function ExpandableFilterDropdown({ items, onSelectionChange }: Expandabl
     setSelectedIds(new Set())
   }, [])
 
-  const selectedList = useMemo(() => flattenSelected(items, selectedIds), [items, selectedIds])
+  const selectedList = useMemo(() => flattenFilterItems(items, selectedIds), [items, selectedIds])
 
   useEffect(() => {
     onSelectionChange?.(selectedList)
