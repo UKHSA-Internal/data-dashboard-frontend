@@ -1,12 +1,18 @@
+import { kebabCase } from 'lodash'
+
 import { Announcements, View } from '@/app/components/ui/ukhsa'
+import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { PageComponentBaseProps } from '@/app/types'
 import { getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 import { processSectionParams } from '@/app/utils/show-more.utils'
 
+import { Contents, ContentsLink } from '../../ui/ukhsa/Contents/Contents'
+import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
+import { Description } from '../../ui/ukhsa/View/Description/Description'
+
 export default async function LandingPage({ searchParams: { section } }: PageComponentBaseProps<{ section?: string }>) {
   const processedSectionParams = processSectionParams(section)
-  const { body, active_announcements: activeAnnouncements } = await getLandingPage()
 
   const {
     title,
@@ -14,7 +20,6 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
     page_description: pageDescription,
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
-    last_published_at: lastPublishedAt,
     active_announcements: activeAnnouncements,
   } = await getLandingPage()
 
@@ -30,8 +35,7 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
             showSidebarRelatedLinks ? 'govuk-grid-column-three-quarters-from-desktop' : 'govuk-grid-column-full'
           }
         >
-          <Heading heading={title} lastUpdated={lastPublishedAt} />
-          <LastUpdated lastUpdated={lastPublishedAt} />
+          <Heading heading={title} />
           <Announcements announcements={activeAnnouncements} />
           {pageDescription ? <Description description={pageDescription} /> : null}
         </div>

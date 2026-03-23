@@ -85,7 +85,6 @@ describe('LandingPage', () => {
     render(await LandingPage({ slug: [], searchParams: {} }))
 
     expect(screen.getByRole('heading', { level: 1, name: 'About the UKHSA data dashboard' })).toBeInTheDocument()
-    expect(screen.getByText('Last updated: 2026-03-05T15:36:08.726625Z')).toBeInTheDocument()
     expect(screen.getByText('<p>this is another page description</p>')).toBeInTheDocument()
   })
 
