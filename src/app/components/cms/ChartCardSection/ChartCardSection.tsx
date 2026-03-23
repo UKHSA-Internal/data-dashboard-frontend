@@ -9,9 +9,9 @@ import { ChartWithDescriptionCard } from '../ChartWithDescriptionCard/ChartWithD
 import { SimplifiedChartWithLinkCard } from '../SimplifiedChartWithLinkCard/SimplifiedChartWithLinkCard'
 
 type ChartCardSectionProps = {
-  value: any
-  heading: string
-  showMoreSections: string[]
+  readonly value: any
+  readonly heading: string
+  readonly showMoreSections: string[]
 }
 
 export function ChartCardSection({ value, heading, showMoreSections }: ChartCardSectionProps) {
