@@ -10,6 +10,7 @@ import {
   cookiesPageMock,
   covid19PageMock,
   feedbackMock,
+  healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -305,6 +306,29 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
   ],
 }
 
+export const pagesWithTopicsListTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: healthTopicsPageMock.id,
+      meta: {
+        type: healthTopicsPageMock.meta.type,
+        detail_url: healthTopicsPageMock.meta.detail_url,
+        html_url: healthTopicsPageMock.meta.html_url,
+        slug: healthTopicsPageMock.meta.slug,
+        search_description: healthTopicsPageMock.meta.search_description,
+        show_in_menus: healthTopicsPageMock.meta.show_in_menus,
+        first_published_at: healthTopicsPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: healthTopicsPageMock.seo_change_frequency,
+      seo_priority: healthTopicsPageMock.seo_priority,
+      title: healthTopicsPageMock.title,
+    },
+  ],
+}
+
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {
     total_count: 4,
@@ -475,6 +499,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       metric,
       last_published_at,
       body,
+      is_public,
     }) => ({
       id,
       title,
@@ -487,6 +512,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       metric,
       last_published_at,
       body,
+      is_public,
     })
   ),
 }
@@ -495,6 +521,7 @@ const items = [
   ...pagesWithLandingTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithCompositeTypeMock.items,
+  ...pagesWithTopicsListTypeMock.items,
   ...pagesWithTopicTypeMock.items,
   ...pagesWithWhatsNewParentTypeMock.items,
   ...pagesWithWhatsNewChildTypeMock.items,
