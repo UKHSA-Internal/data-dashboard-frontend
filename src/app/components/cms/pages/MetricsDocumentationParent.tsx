@@ -116,7 +116,17 @@ export default async function MetricsParentPage({
 
           <ul className="govuk-!-margin-top-4" aria-label={title}>
             {items.map(
-              ({ id, title, meta, page_description: description, metric, metric_group: group, topic }: any) => {
+              ({
+                id,
+                title,
+                meta,
+                page_description: description,
+                metric,
+                metric_group: group,
+                topic,
+                is_public,
+                page_classification,
+              }: any) => {
                 return (
                   <MetricsCard
                     key={id}
@@ -126,6 +136,8 @@ export default async function MetricsParentPage({
                     group={group}
                     topic={topic}
                     metric={metric}
+                    is_public={is_public}
+                    page_classification={page_classification}
                   />
                 )
               }
