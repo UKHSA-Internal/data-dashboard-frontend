@@ -6,7 +6,7 @@ import { SubplotDownloadForm } from '@/app/components/ui/ukhsa/Download/SubplotD
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { downloadFile } from '@/app/utils/download.utils'
 import { subplotChartExportApiRoutePath } from '@/config/constants'
-import { render } from '@/config/test-utils'
+import { render, screen } from '@/config/test-utils'
 
 jest.mock('@/app/utils/download.utils')
 jest.mock('cross-fetch')
@@ -40,79 +40,74 @@ describe('SubplotDownloadForm', () => {
     jest.clearAllMocks()
   })
 
-  const renderComponent = () =>
-    render(<SubplotDownloadForm chart={mockedChart} xAxis={mockXaxis} tagManagerEventId={mockTagManagerId} />)
+  const renderComponent = (isPublic?: boolean) =>
+    render(
+      <SubplotDownloadForm
+        chart={mockedChart}
+        xAxis={mockXaxis}
+        tagManagerEventId={mockTagManagerId}
+        isPublic={isPublic}
+      />
+    )
 
   test('renders the form with expected attributes', async () => {
-    const { getByRole, getByLabelText } = renderComponent()
+    renderComponent()
 
     await waitFor(() => {
-      const form = getByRole('form', { name: 'Download' })
+      const form = screen.getByRole('form', { name: 'Download' })
       expect(form).toHaveAttribute('method', 'POST')
       expect(form).toHaveAttribute('action', subplotChartExportApiRoutePath)
-
-      expect(getByLabelText('CSV')).toBeChecked()
-      expect(getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
+      expect(screen.getByLabelText('CSV')).toBeChecked()
+      expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
     })
   })
 
   test('renders a chart with a hidden x-axis field', async () => {
-    const { getByTestId } = renderComponent()
+    renderComponent()
 
     await waitFor(() => {
-      expect(getByTestId('download-x-axis')).toBeInTheDocument()
+      expect(screen.getByTestId('download-x-axis')).toBeInTheDocument()
     })
   })
 
   test('renders a chart with a hidden `chart_parameters` field', async () => {
-    const { getByTestId } = renderComponent()
+    renderComponent()
 
     await waitFor(() => {
-      expect(getByTestId('download-form-chart_parameters')).toBeInTheDocument()
+      expect(screen.getByTestId('download-form-chart_parameters')).toBeInTheDocument()
     })
   })
 
   test('renders a chart with a hidden `subplots` field', async () => {
-    const { getByTestId } = renderComponent()
+    renderComponent()
 
     await waitFor(() => {
-      expect(getByTestId('download-form-subplots')).toBeInTheDocument()
+      expect(screen.getByTestId('download-form-subplots')).toBeInTheDocument()
     })
   })
 
   test('user can switch to JSON in download options', async () => {
-    const { getByLabelText } = renderComponent()
+    renderComponent()
 
-    await waitFor(() => {
-      userEvent.click(getByLabelText('JSON'))
+    await userEvent.click(screen.getByLabelText('JSON'))
 
-      expect(getByLabelText('CSV')).not.toBeChecked()
-      expect(getByLabelText('JSON')).toBeChecked()
-    })
+    expect(screen.getByLabelText('CSV')).not.toBeChecked()
+    expect(screen.getByLabelText('JSON')).toBeChecked()
   })
 
   test('user can download as a CSV file', async () => {
     jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
         redirected: false,
-        success: true,
         text: async () => Promise.resolve('mock-download'),
       } as any)
     )
 
-    mockRouter.push('/topics/mock-topic')
+    renderComponent()
 
-    const { getByRole, getByLabelText } = renderComponent()
+    await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
     await waitFor(() => {
-      const button = getByRole('button', { name: 'Download' })
-      expect(button).toHaveAttribute('type', 'submit')
-
-      expect(getByLabelText('CSV')).toBeChecked()
-      expect(getByLabelText('JSON')).not.toBeChecked()
-
-      userEvent.click(button)
-
       expect(downloadFile).toHaveBeenCalledWith('ukhsa-chart-download.csv', new Blob(['mock-download']))
     })
   })
@@ -121,44 +116,26 @@ describe('SubplotDownloadForm', () => {
     jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
         redirected: false,
-        success: true,
         text: async () => Promise.resolve('mock-download'),
       } as any)
     )
 
-    mockRouter.push('/topics/mock-topic')
+    renderComponent()
 
-    const { getByRole, getByLabelText } = renderComponent()
+    await userEvent.click(screen.getByLabelText('JSON'))
+    await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
     await waitFor(() => {
-      const button = getByRole('button', { name: 'Download' })
-      expect(button).toHaveAttribute('type', 'submit')
-
-      userEvent.click(getByLabelText('JSON'))
-
-      expect(getByLabelText('CSV')).not.toBeChecked()
-      expect(getByLabelText('JSON')).toBeChecked()
-
-      userEvent.click(button)
-
       expect(downloadFile).toHaveBeenCalledWith('ukhsa-chart-download.json', new Blob(['mock-download']))
     })
   })
 
   test('handles download error and redirects to error page', async () => {
     jest.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
-    mockReplace.mockClear()
 
-    mockRouter.push('/topics/mock-topic')
+    renderComponent()
 
-    const { getByRole } = renderComponent()
-
-    // Wait for component to render, then click button
-    const button = await waitFor(() => {
-      return getByRole('button', { name: 'Download' })
-    })
-
-    await userEvent.click(button)
+    await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
     await waitFor(
       () => {
@@ -166,5 +143,75 @@ describe('SubplotDownloadForm', () => {
       },
       { timeout: 3000 }
     )
+  })
+
+  describe('official sensitive download banner', () => {
+    test('shows acknowledgement banner on first submit when isPublic is false', async () => {
+      renderComponent(false)
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+      expect(screen.getByText(/official sensitive data/i)).toBeInTheDocument()
+      expect(fetch).not.toHaveBeenCalled()
+    })
+
+    test('proceeds with download on second submit after banner is shown', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          redirected: false,
+          text: async () => Promise.resolve('mock-download'),
+        } as any)
+      )
+
+      renderComponent(false)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      await waitFor(() => {
+        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    test('dismisses banner when back button is clicked', async () => {
+      renderComponent(false)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      await waitFor(() => {
+        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByRole('button', { name: 'Back' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+    })
+
+    test('does not show acknowledgement banner when isPublic is true', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          redirected: false,
+          text: async () => Promise.resolve('mock-download'),
+        } as any)
+      )
+
+      renderComponent(true)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 })
