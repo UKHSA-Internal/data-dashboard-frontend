@@ -321,7 +321,13 @@ export const mockWeatherHealthAlertCard = Mock.of<CardType>({
   value: {
     title: 'Heat health alerts',
     sub_title: 'Across England',
+    description: 'Optional description for the weather health alerts card.',
     alert_type: 'heat',
+    source: {
+      link_display_text: 'Weather alerts source',
+      page: null,
+      external_url: 'https://example.org/weather-alerts',
+    },
   },
 })
 

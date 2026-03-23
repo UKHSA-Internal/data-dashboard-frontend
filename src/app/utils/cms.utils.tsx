@@ -19,6 +19,7 @@ import {
   Headline,
   HeadlineNumbersRowCard,
   Percentage,
+  PopularTopicsCard,
   RichText,
   TextCard,
   Trend,
@@ -103,6 +104,8 @@ export const renderCard = (
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}
+
+      {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
     </div>
   )
 }
