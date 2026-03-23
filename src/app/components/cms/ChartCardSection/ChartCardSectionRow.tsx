@@ -2,10 +2,6 @@
 
 import { ReactNode, useEffect, useRef } from 'react'
 
-interface ChartCardSectionRowProps {
-  children: ReactNode
-}
-
 /**
  * Equalises the height of card wrappers in the row (2 or 3 cards). Finds the
  * tallest and sets each wrapper's minHeight to that so all cards match.
@@ -26,6 +22,10 @@ function equaliseCardHeights(row: HTMLDivElement | null) {
   for (const wrapper of cardWrappers) {
     ;(wrapper as HTMLElement).style.minHeight = `${tallest}px`
   }
+}
+
+interface ChartCardSectionRowProps {
+  readonly children: ReactNode
 }
 
 export function ChartCardSectionRow({ children }: ChartCardSectionRowProps) {

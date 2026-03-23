@@ -6,8 +6,8 @@ import { Card, Chart } from '@/app/components/ui/ukhsa'
 import { getPath } from '@/app/utils/cms/slug'
 
 type ChartWithDescriptionCardProps = {
-  value: any
-  cardsCount: number
+  readonly value: any
+  readonly cardsCount: number
 }
 
 export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescriptionCardProps) {
