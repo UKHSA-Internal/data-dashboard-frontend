@@ -45,7 +45,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification}/>}
+            {isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}
@@ -169,7 +169,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Download
                     </span>
-                    <Download data={column.value} isPublic={true} />
+                    <Download data={column.value} isPublic={isPublic} />
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent

@@ -23,9 +23,16 @@ interface TimeseriesFilterCardProps {
   dataFilters: DataFilter[]
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
+  isPublic?: boolean
 }
 
-const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }: TimeseriesFilterCardProps) => {
+const TimeseriesFilterCard = ({
+  geography,
+  timePeriods,
+  dataFilters,
+  cardData,
+  isPublic,
+}: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
 
   const description = date ? `Last Updated ${formatDate(date)}` : ''
@@ -140,6 +147,7 @@ const TimeseriesFilterCard = ({ geography, timePeriods, dataFilters, cardData }:
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
                 cardData={cardData}
+                isPublic={isPublic}
               />
             </TabsContent>
             {about && (

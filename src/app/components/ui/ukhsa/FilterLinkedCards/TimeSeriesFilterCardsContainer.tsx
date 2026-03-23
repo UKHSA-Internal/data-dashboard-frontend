@@ -5,7 +5,11 @@ import { useGlobalFilters } from '@/app/features/global-filter/context/globalFil
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 
-const TimeSeriesFilterCardsContainer = () => {
+interface TimeSeriesFilterCardsContainerProps {
+  isPublic?: boolean
+}
+
+const TimeSeriesFilterCardsContainer = ({ isPublic }: TimeSeriesFilterCardsContainerProps) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
@@ -24,6 +28,7 @@ const TimeSeriesFilterCardsContainer = () => {
               timePeriods={timePeriods!}
               dataFilters={selectedVaccinationFilters!}
               cardData={timeseriesTemplateData!}
+              isPublic={isPublic}
             />
           )
         })

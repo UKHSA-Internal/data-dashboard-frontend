@@ -91,9 +91,9 @@ export const renderCard = (
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
-      {type === 'filter_linked_sub_plot_chart_template' && <SubplotFilterCardContainer />}
+      {type === 'filter_linked_sub_plot_chart_template' && <SubplotFilterCardContainer isPublic={isPublic} />}
 
-      {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer />}
+      {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer isPublic={isPublic} />}
 
       {type === 'chart_card_section' && (
         <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />

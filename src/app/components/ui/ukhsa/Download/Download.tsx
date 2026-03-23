@@ -11,7 +11,7 @@ import { DownloadForm } from './DownloadForm'
 interface DownloadProps {
   /* Request metadata from the CMS required to fetch from the tables api */
   data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
-  isPublic: boolean
+  isPublic?: boolean
 }
 
 export async function Download({

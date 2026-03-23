@@ -30,6 +30,7 @@ interface SubplotFilterCardProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
+  isPublic?: boolean
 }
 
 const SubplotFilterCard = ({
@@ -40,6 +41,7 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
+  isPublic,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
@@ -167,6 +169,7 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 selectedThresholds={selectedThresholds}
+                isPublic={isPublic}
               />
             </TabsContent>
             {about && (
