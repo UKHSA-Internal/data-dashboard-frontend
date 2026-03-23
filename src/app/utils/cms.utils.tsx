@@ -5,6 +5,7 @@ import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
+import { DataClassification } from '@/api/models/DataClassification'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { getPath } from '@/app/utils/cms/slug'
@@ -73,7 +74,9 @@ export const renderSection = async (
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
-  { type, value, id }: z.infer<typeof CardTypes>
+  { type, value, id }: z.infer<typeof CardTypes>,
+  isPublic?: boolean,
+  pageClassification?: DataClassification
 ) => {
   return (
     <div key={id}>
@@ -83,7 +86,7 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent value={value} />
+          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
         </ChartRowCard>
       )}
 

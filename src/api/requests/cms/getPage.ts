@@ -4,6 +4,7 @@ import { Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { Announcements } from '@/api/models/cms/Page/Announcements'
 import { FormFields } from '@/api/models/cms/Page/FormFields'
+import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { logger } from '@/lib/logger'
@@ -34,6 +35,8 @@ const SharedPageData = z.object({
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
   active_announcements: Announcements.or(fallback([])).optional(),
+  is_public: z.boolean().optional(),
+  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -62,6 +65,8 @@ const withFeedbackData = SharedPageData.extend({
 const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
+  is_public: z.boolean(),
+  page_classification: DataClassification.or(fallback(undefined)),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -154,6 +159,8 @@ const WithMetricsChildData = SharedPageData.extend({
       }),
     })
   ),
+  is_public: z.boolean(),
+  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 export const responseSchema = z.union([
