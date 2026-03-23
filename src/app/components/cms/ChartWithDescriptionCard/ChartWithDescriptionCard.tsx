@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import clsx from 'clsx'
 import { snakeCase } from 'lodash'
 import Link from 'next/link'
 
@@ -19,12 +20,10 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
       <Card
         asChild
         aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
-        className={[
-          'ukhsa-chart-card relative flex min-h-0 flex-1 flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus group-hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]',
-          hasSource && 'border-b-0 pb-2',
-        ]
-          .filter(Boolean)
-          .join(' ')}
+        className={clsx(
+          'ukhsa-chart-card relative flex min-h-0 flex-1 flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)] group-hover:bg-[var(--colour-home-chart-background-hover)]',
+          hasSource && 'border-b-0 pb-2'
+        )}
       >
         <Link href={topicPagePath} prefetch className="flex h-full min-h-0 flex-col">
           <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
