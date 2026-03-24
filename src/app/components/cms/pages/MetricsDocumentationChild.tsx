@@ -6,6 +6,7 @@ import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSumm
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
+import { authEnabled } from '@/config/constants'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { BackLink } from '../../ui/ukhsa/View/BackLink/Backlink'
@@ -33,7 +34,7 @@ export default async function MetricsChildPage({
 
   return (
     <View>
-      {isPublic === false && <ClassificationBanner size="large" level={pageClassification} />}
+      {authEnabled && isPublic === false && <ClassificationBanner size="large" level={pageClassification} />}
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />
