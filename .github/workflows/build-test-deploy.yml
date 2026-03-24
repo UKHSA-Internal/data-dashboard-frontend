@@ -192,6 +192,9 @@ jobs:
         env:
           baseURL: http://localhost:3000
 
+      - name: List Playwright version
+        run: npx playwright --version
+        
       - name: Run Just One Failing Test
         run: CI=true npx playwright test --retries=0 --project='Mobile Chrome' --grep "Access.*displays the navigation on mobile" --max-failures=1 --reporter=line
         env:
