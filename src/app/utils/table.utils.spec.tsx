@@ -2,6 +2,11 @@ import { render, screen } from '@/config/test-utils'
 
 import { getColumnHeader } from './table.utils'
 
+jest.mock('@/config/constants', () => ({
+  ...jest.requireActual('@/config/constants'),
+  authEnabled: true,
+}))
+
 const renderHeader = (
   chartLabel: string,
   axisTitle: string,
@@ -69,6 +74,38 @@ describe('getColumnHeader', () => {
     test('renders correct text for top_secret level', () => {
       renderHeader('Label', '', 'Fallback', false, 'top_secret')
       expect(screen.getByText(/Top Secret/i)).toBeInTheDocument()
+    })
+  })
+
+  describe('authEnabled', () => {
+    test('renders sensitive label when authEnabled is true and isPublic is false', () => {
+      // authEnabled: true is set at the top-level mock above
+      renderHeader('Label', '', 'Fallback', false, 'official_sensitive')
+      expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
+    })
+
+    test('does not render sensitive label when authEnabled is true but isPublic is true', () => {
+      renderHeader('Label', '', 'Fallback', true, 'official_sensitive')
+      expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
+    })
+  })
+  describe('authEnabled is false', () => {
+    beforeEach(() => {
+      jest.resetModules()
+      jest.doMock('@/config/constants', () => ({
+        ...jest.requireActual('@/config/constants'),
+        authEnabled: false,
+      }))
+    })
+
+    afterEach(() => {
+      jest.resetModules()
+    })
+
+    test('does not render sensitive label even when isPublic is false', async () => {
+      const { getColumnHeader: freshGetColumnHeader } = await import('./table.utils')
+      render(<>{freshGetColumnHeader('Label', '', 'Fallback', false, 'official_sensitive')}</>)
+      expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
     })
   })
 })
