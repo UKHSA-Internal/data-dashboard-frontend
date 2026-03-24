@@ -131,11 +131,11 @@ export const ChartCardWithDescriptionValue = popularTopicsChartCardValue.extend(
   show_tooltips: z.boolean().optional(),
 })
 
-/** Headline metric card: title, date_prefix, and 1–2 headline/trend blocks. */
+/** Headline metric card: title, date_prefix, and exactly 2 headline/trend blocks. */
 const HeadlineMetricCardValue = z.object({
   title: z.string(),
   date_prefix: z.string(),
-  headline_metrics: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber])).min(1),
+  headline_metrics: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber])).length(2),
 })
 
 /** Left column item: chart with description or weather health alert. */
@@ -168,9 +168,9 @@ const PopularTopicsRightColumnBottomItem = z.object({
 
 /** Popular topics card value (left column + right top/bottom rows). */
 export const PopularTopicsCardValue = z.object({
-  left_column: z.array(PopularTopicsLeftColumnItem).min(1),
-  right_column_top_row: z.array(PopularTopicsRightColumnTopItem).min(1),
-  right_column_bottom_row: z.array(PopularTopicsRightColumnBottomItem).min(1).max(2),
+  left_column: z.array(PopularTopicsLeftColumnItem).length(1),
+  right_column_top_row: z.array(PopularTopicsRightColumnTopItem).length(1),
+  right_column_bottom_row: z.array(PopularTopicsRightColumnBottomItem).length(2),
 })
 
 export const ChartCardSchemas = z.discriminatedUnion('type', [
