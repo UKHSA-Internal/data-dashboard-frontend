@@ -18,7 +18,7 @@ describe('TopicsListFilterController', () => {
   ]
 
   test('when no filters are selected it shows all cards and removes topicFilters', async () => {
-    window.history.replaceState({}, '', '/health-topics`')
+    globalThis.history.replaceState({}, '', '/health-topics`')
 
     render(
       <div>
@@ -32,14 +32,14 @@ describe('TopicsListFilterController', () => {
     const fluCard = screen.getByTestId('flu-card')
 
     await waitFor(() => {
-      expect(window.location.search).not.toContain('topicFilters=')
+      expect(globalThis.location.search).not.toContain('topicFilters=')
       expect(covidCard.style.display).toBe('')
       expect(fluCard.style.display).toBe('')
     })
   })
 
   test('selecting a topic hides other cards and updates topicFilters', async () => {
-    window.history.replaceState({}, '', '/topics')
+    globalThis.history.replaceState({}, '', '/topics')
 
     render(
       <div>
@@ -61,8 +61,8 @@ describe('TopicsListFilterController', () => {
     fireEvent.click(screen.getByLabelText('COVID-19'))
 
     await waitFor(() => {
-      expect(window.location.search).toContain('topicFilters=covid_19')
-      expect(window.location.search).not.toContain('flu')
+      expect(globalThis.location.search).toContain('topicFilters=covid_19')
+      expect(globalThis.location.search).not.toContain('flu')
 
       expect(covidCard.style.display).toBe('')
       expect(fluCard.style.display).toBe('none')

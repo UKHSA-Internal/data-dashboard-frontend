@@ -9,10 +9,6 @@ import {
   type SelectedFilterItem,
 } from '@/app/components/cms/ExpandableFilterDropdown/ExpandableFilterDropdown'
 
-type TopicsListFilterControllerProps = {
-  items: ExpandableFilterItem[]
-}
-
 // Ensures URL params are human readable rather than ID's
 function getItemLabelByIDMap(items: ExpandableFilterItem[]) {
   const labelById = new Map<string, string>()
@@ -30,7 +26,8 @@ function getVisibleCardIDs(items: ExpandableFilterItem[], selectedFilterItems: S
 
   for (const selectedFilterItem of selectedFilterItems) {
     const parent = items.find((i) => i.id === selectedFilterItem.id)
-    if (parent && parent.children) {
+
+    if (parent?.children) {
       parent.children.forEach((child) => visible.add(child.id))
       continue
     }
@@ -41,6 +38,10 @@ function getVisibleCardIDs(items: ExpandableFilterItem[], selectedFilterItems: S
   }
 
   return visible
+}
+
+interface TopicsListFilterControllerProps {
+  readonly items: ExpandableFilterItem[]
 }
 
 export function TopicsListFilterController({ items }: TopicsListFilterControllerProps) {
@@ -67,13 +68,13 @@ export function TopicsListFilterController({ items }: TopicsListFilterController
       topicFilterItem.style.display = visibleCardIDs.size === 0 || visibleCardIDs.has(topicFilterId) ? '' : 'none'
     }
 
-    const url = new URL(window.location.href)
+    const url = new URL(globalThis.location.href)
     if (visibleCardIDs.size === 0) {
       url.searchParams.delete('topicFilters')
     } else {
       url.searchParams.set('topicFilters', visibleCardLabelsSnakeCase.join(','))
     }
-    window.history.replaceState({}, '', url.toString())
+    globalThis.history.replaceState({}, '', url.toString())
   }, [items, selected, labelById])
 
   return <ExpandableFilterDropdown items={items} onSelectionChange={handleSelectionChange} />
