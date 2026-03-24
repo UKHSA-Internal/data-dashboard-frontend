@@ -218,12 +218,18 @@ export class App {
     await this.menuLinkClosed.click()
 
     await expect(this.menuLinkOpen).toBeVisible()
+
     // SHOULD FAIL.  This is because the expectation below is out of sync with
     // the code in MegaMenu.tsx
     // MegaMenu.tsx generates an href
     // - the string literal below does not have hrefs, so the test SHOULD fail
     const expectedMenu = `
-- navigation "Menu":
+- navigation "Menu":${
+      this.authEnabled
+        ? `
+  - button "Sign out"`
+        : ''
+    }
   - heading "Respiratory viruses" [level=3]
   - list:
     - listitem:
@@ -235,6 +241,9 @@ export class App {
     - listitem:
       - link "Other respiratory viruses"
       - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
+    - listitem:
+      - link "Childhood Vaccination Coverage"
+      - paragraph: Childhood vaccination coverage for England
   - heading "Services and information" [level=3]
   - list:
     - listitem:
@@ -257,10 +266,7 @@ export class App {
       - link "What's new"
     - listitem:
       - link "What's coming"
-    - listitem:
-      - link "Switchboard"
-      - paragraph: Front-end environment settings
-`
+`.trim()
 
     // Get the ARIA snapshot string from the page
     const menuTree = await this.page.getByRole('navigation', { name: 'Menu' }).ariaSnapshot()
