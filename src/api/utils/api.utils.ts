@@ -100,7 +100,7 @@ export async function client<T>(
       ...customConfig.headers,
       //passing authorization header only if access token is available, to avoid sending
       // "Authorization: Bearer undefined" in the headers which might cause issues with some APIs
-      ...(accessToken ? { Authorization: `Bearer ${accessToken}` } : {}),
+      ...(accessToken ? { 'X-UHD-AUTH': `Bearer ${accessToken}` } : {}),
     },
   }
 
