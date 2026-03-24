@@ -1,4 +1,5 @@
 // To receive axis title, chart.label, & fallback text
+import { authEnabled } from '@/config/constants'
 
 type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
 
@@ -19,7 +20,7 @@ export const getColumnHeader = (
 ) => {
   const label = chartLabel || axisTitle || fallback
 
-  const sensitiveLabel = isPublic === false && (
+  const sensitiveLabel = authEnabled && isPublic === false && (
     <span className="whitespace-nowrap uppercase text-[#CECECE]">&nbsp;{levelContent[level]}</span>
   )
 
