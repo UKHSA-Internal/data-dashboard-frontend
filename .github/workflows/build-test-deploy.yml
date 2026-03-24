@@ -188,7 +188,7 @@ jobs:
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
       - name: List Playwright tests
-        run: npx playwright test --list --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        run: npx playwright test --list --grep-invert @smoke
         env:
           baseURL: http://localhost:3000
 
