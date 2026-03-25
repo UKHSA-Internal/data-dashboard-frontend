@@ -56,11 +56,10 @@ const formatCellValue = (
   // Don't show confidence intervals when the value itself is null
   if (
     value !== null &&
-    confidenceIntervals &&
-    confidenceIntervals.lower !== null &&
-    confidenceIntervals.lower !== undefined &&
-    confidenceIntervals.upper !== null &&
-    confidenceIntervals.upper !== undefined
+    confidenceIntervals?.lower !== null &&
+    confidenceIntervals?.lower !== undefined &&
+    confidenceIntervals?.upper !== null &&
+    confidenceIntervals?.upper !== undefined
   ) {
     const lowerFormatted = t('cms.blocks.table.row', {
       context: 'plot',
