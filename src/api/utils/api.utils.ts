@@ -63,7 +63,7 @@ export async function client<T>(
     body,
     // Defaulting all requests to public (non-authenticated) for now.
     // This may change to an opt-in approach as we build out the authenticated dashboard.
-    isPublic = true,
+    isPublic = false,
     searchParams,
     baseUrl = getApiBaseUrl(),
     ...customConfig
@@ -73,6 +73,7 @@ export async function client<T>(
 
   // read access token only if request is not public
   const accessToken = isPublic ? undefined : await getAuthToken()
+  console.log("🐼  ~ accessToken:", accessToken)
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
     // Import cookies dynamically only in node environment to not trigger nextjs warnings
