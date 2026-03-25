@@ -9,9 +9,9 @@ import { ChartWithDescriptionCard } from '../ChartWithDescriptionCard/ChartWithD
 import { SimplifiedChartWithLinkCard } from '../SimplifiedChartWithLinkCard/SimplifiedChartWithLinkCard'
 
 type ChartCardSectionProps = {
-  value: any
-  heading: string
-  showMoreSections: string[]
+  readonly value: any
+  readonly heading: string
+  readonly showMoreSections: string[]
 }
 
 const SHOW_MORE_SECTION_COLUMNS = 2
@@ -44,7 +44,7 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
 
         if (card.type === 'chart_with_description_card') {
           return (
-            <div key={card.id} data-testid="card-wrapper">
+            <div key={card.id} className="ukhsa-chart-card-section" data-testid="card-wrapper">
               <ChartWithDescriptionCard value={card.value} cardsCount={value.cards.length} />
             </div>
           )
@@ -52,7 +52,7 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
 
         if (card.type === 'simplified_chart_with_link') {
           return (
-            <div key={card.id} data-testid="card-wrapper">
+            <div key={card.id} className="ukhsa-chart-card-section" data-testid="card-wrapper">
               <SimplifiedChartWithLinkCard value={card.value} cardsCount={value.cards.length} />
             </div>
           )
