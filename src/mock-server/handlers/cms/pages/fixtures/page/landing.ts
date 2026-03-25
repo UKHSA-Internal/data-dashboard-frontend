@@ -31,6 +31,189 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
   body: [
     {
       type: 'section',
+      id: 'f0ea6602-3919-4d2f-95d2-601e1baafdae',
+      value: {
+        heading: 'Childhood vaccinations',
+        content: [
+          {
+            type: 'popular_topics_card',
+            id: '9f390365-c8f2-41f5-ba48-fb1dc81b06e8',
+            value: {
+              left_column: [
+                {
+                  type: 'chart_card_with_description',
+                  id: 'f9854239-4f0d-4e83-a2fa-28b651b54e92',
+                  value: {
+                    title: 'Childhood vaccination coverage',
+                    sub_title: 'Vaccination uptake rates for children in England',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/childhood-vaccinations/',
+                    description:
+                      'Coverage rates for childhood vaccination programmes across England, showing uptake trends over time.',
+                    source: {
+                      link_display_text: 'UKHSA data dashboard',
+                      page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/other-respiratory-viruses/',
+                      external_url: null,
+                    },
+                    tag_manager_event_id: 'childhood_vaccination_chart',
+                    x_axis: 'date',
+                    x_axis_title: 'Date',
+                    y_axis: 'metric',
+                    y_axis_title: 'Coverage (%)',
+                    y_axis_minimum_value: 0.0,
+                    y_axis_maximum_value: 100.0,
+                    show_tooltips: true,
+                    chart: [
+                      {
+                        type: 'plot',
+                        id: '31f64273-14d8-42e0-b428-cc360c93047c',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_cases_casesByDay',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'All episodes combined',
+                          chart_type: 'line_multi_coloured',
+                          date_from: null,
+                          date_to: null,
+                          label: '',
+                          line_colour: 'COLOUR_1_DARK_BLUE',
+                          line_type: 'DASH',
+                          use_markers: true,
+                          use_smooth_lines: true,
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+              right_column_top_row: [
+                {
+                  type: 'chart_card',
+                  id: '1517bdbb-0edf-432a-ad39-627359d52629',
+                  value: {
+                    title: 'COVID-19 cases by day',
+                    sub_title: 'Daily reported cases across England',
+                    tag_manager_event_id: 'covid19_cases_chart',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/childhood-vaccinations/',
+                    x_axis: 'date',
+                    x_axis_title: 'Date',
+                    y_axis: 'metric',
+                    y_axis_title: 'Cases',
+                    y_axis_minimum_value: 0.0,
+                    y_axis_maximum_value: null,
+                    chart: [
+                      {
+                        type: 'plot',
+                        id: '0995444b-ec78-4ba0-9ee9-8a79b6e215ba',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_cases_casesByDay',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          chart_type: 'line_single_simplified',
+                          date_from: '2022-03-04',
+                          date_to: '2026-03-04',
+                          use_smooth_lines: true,
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+              right_column_bottom_row: [
+                {
+                  type: 'headline_metric_card',
+                  id: '4bb7768b-57fd-4090-a70c-a29d8dce91d1',
+                  value: {
+                    title: 'COVID-19 hospital admissions',
+                    date_prefix: 'Up to',
+                    headline_metrics: [
+                      {
+                        type: 'headline_number',
+                        id: 'e93c4734-4522-4526-97b5-087e22329602',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayAdmissions',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Patients admitted',
+                        },
+                      },
+                      {
+                        type: 'trend_number',
+                        id: '2823ccb0-fb33-4be7-aafc-85a21cbfe9f0',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayAdmissionsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Last 7 days',
+                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  type: 'headline_metric_card',
+                  id: '5ea4a7d3-3dd1-4706-95b2-1dd35b4cd045',
+                  value: {
+                    title: 'test headline metric',
+                    date_prefix: 'Up to',
+                    headline_metrics: [
+                      {
+                        type: 'trend_number',
+                        id: '1b4e31b4-4b6e-4d53-9733-210e5a9ea022',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayOccupiedBedsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'All episodes combined',
+                          body: '',
+                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                        },
+                      },
+                      {
+                        type: 'trend_number',
+                        id: 'c2acdc2b-829d-4956-9ed4-b75e50e1e96f',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayOccupiedBedsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: '',
+                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
+          },
+        ],
+        page_link: 'https://ukhsa-dashboard.data.gov.uk/childhood-vaccinations/',
+      },
+    },
+    {
+      type: 'section',
       id: '2b99ceff-c282-4514-bc62-d7e64b81d681',
       value: {
         heading: 'Outbreaks',
@@ -532,9 +715,145 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
         heading: 'Weather and climate risks',
         content: [
           {
-            type: 'weather_health_alert_card',
-            value: { title: 'Cold health alerts', sub_title: 'Alerts in England', alert_type: 'cold' },
-            id: '65c80b21-26ff-4f0e-98f7-757a131276f2',
+            type: 'popular_topics_card',
+            id: '7962648a-9493-463e-a9e9-067bfbdaea4d',
+            value: {
+              left_column: [
+                {
+                  type: 'weather_health_alert_card',
+                  value: {
+                    title: 'Cold health alerts',
+                    sub_title: 'Alerts in England',
+                    description: 'Optional description for the weather health alerts card.',
+                    alert_type: 'cold',
+                    source: {
+                      link_display_text: 'Weather alerts source',
+                      page: null,
+                      external_url: 'https://example.org/weather-alerts',
+                    },
+                  },
+                  id: '65c80b21-26ff-4f0e-98f7-757a131276f2',
+                },
+              ],
+              right_column_top_row: [
+                {
+                  type: 'chart_card',
+                  id: '1517bdbb-0edf-432a-ad39-627359d52629',
+                  value: {
+                    title: 'COVID-19 cases by day',
+                    sub_title: 'Daily reported cases across England',
+                    tag_manager_event_id: 'covid19_cases_chart',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/childhood-vaccinations/',
+                    x_axis: 'date',
+                    x_axis_title: 'Date',
+                    y_axis: 'metric',
+                    y_axis_title: 'Cases',
+                    y_axis_minimum_value: 0.0,
+                    y_axis_maximum_value: null,
+                    chart: [
+                      {
+                        type: 'plot',
+                        id: '0995444b-ec78-4ba0-9ee9-8a79b6e215ba',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_cases_casesByDay',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          chart_type: 'line_single_simplified',
+                          date_from: '2022-03-04',
+                          date_to: '2026-03-04',
+                          use_smooth_lines: true,
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+              right_column_bottom_row: [
+                {
+                  type: 'headline_metric_card',
+                  id: '4bb7768b-57fd-4090-a70c-a29d8dce91d1',
+                  value: {
+                    title: 'COVID-19 hospital admissions',
+                    date_prefix: 'Up to',
+                    headline_metrics: [
+                      {
+                        type: 'headline_number',
+                        id: 'e93c4734-4522-4526-97b5-087e22329602',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayAdmissions',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Patients admitted',
+                        },
+                      },
+                      {
+                        type: 'trend_number',
+                        id: '2823ccb0-fb33-4be7-aafc-85a21cbfe9f0',
+                        value: {
+                          topic: 'COVID-19',
+                          metric: 'COVID-19_headline_7DayAdmissionsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: 'Last 7 days',
+                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                        },
+                      },
+                    ],
+                  },
+                },
+                {
+                  type: 'headline_metric_card',
+                  id: '5ea4a7d3-3dd1-4706-95b2-1dd35b4cd045',
+                  value: {
+                    title: 'Influenza',
+                    date_prefix: 'Up to',
+                    headline_metrics: [
+                      {
+                        type: 'trend_number',
+                        id: 'c2acdc2b-829d-4956-9ed4-b75e50e1e96f',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'influenza_headline_7DayAdmissionsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'default',
+                          body: '',
+                          percentage_metric: 'influenza_headline_7DayAdmissionsPercentChange',
+                        },
+                      },
+                      {
+                        type: 'trend_number',
+                        id: '5a4af9c2-0734-4bf0-8f9e-b7c8f5ef4f77',
+                        value: {
+                          topic: 'Influenza',
+                          metric: 'influenza_headline_7DayAdmissionsChange',
+                          geography: 'England',
+                          geography_type: 'Nation',
+                          sex: 'all',
+                          age: 'all',
+                          stratum: 'All episodes combined',
+                          body: 'Last 7 days',
+                          percentage_metric: 'influenza_headline_7DayAdmissionsPercentChange',
+                        },
+                      },
+                    ],
+                  },
+                },
+              ],
+            },
           },
         ],
         page_link: 'https://ukhsa-dashboard.data.gov.uk/weather-health-alerts/',
