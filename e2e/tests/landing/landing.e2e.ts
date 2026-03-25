@@ -56,10 +56,6 @@ test.describe('Landing page - desktop @desktopOnly', () => {
 
   test('displays the charts for respiratory viruses', async ({ landingPage }) => {
     await landingPage.hasLandingPageCard({
-      title: 'COVID-19',
-      sub_title: 'Cases Reported',
-    })
-    await landingPage.hasLandingPageCard({
       title: 'Influenza',
       sub_title: 'Healthcare admission rates',
     })
@@ -69,13 +65,13 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     })
   })
 
-  test('displays the showMore button with more than 3 charts', async ({ landingPage }) => {
-    await landingPage.hasXCardsInSection('Respiratory viruses', 3)
+  test('displays the showMore button with more than 2 charts', async ({ landingPage }) => {
+    await landingPage.hasXCardsInSection('Respiratory viruses', 2)
     await landingPage.hasShowMoreButton()
   })
 
-  test('doesnt display the showMore button with 3 or less charts', async ({ landingPage }) => {
-    await landingPage.hasXCardsInSection('Outbreaks', 3)
+  test('doesnt display the showMore button with 2 or less charts', async ({ landingPage }) => {
+    await landingPage.hasXCardsInSection('Outbreaks', 2)
     await landingPage.hasNoShowMoreButton()
   })
 
@@ -83,6 +79,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     await test.step('click show more button', async () => {
       await landingPage.clickShowMoreButton()
     })
+
     await test.step('Shows all charts', async () => {
       await landingPage.hasLandingPageCard({
         title: 'COVID-19',
@@ -109,6 +106,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
         sub_title: 'Testing Positivity',
       })
     })
+
     await test.step('displays show less button once expanded', async () => {
       await landingPage.hasShowLessButton()
     })
@@ -126,7 +124,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
     await test.step('click show less button', async () => {
       await landingPage.clickShowLessButton()
     })
-    await test.step('Shows only first three charts', async () => {
+    await test.step('Shows only first three', async () => {
       await landingPage.hasLandingPageCard({
         title: 'COVID-19',
         sub_title: 'Cases Reported',

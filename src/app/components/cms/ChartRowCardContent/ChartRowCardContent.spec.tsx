@@ -66,6 +66,10 @@ jest.mock('@/app/components/ui/ukhsa/Download/Download', () => ({
   Download: () => <div>Mocked download</div>,
 }))
 
+jest.mock('@/config/constants', () => ({
+  authEnabled: true,
+}))
+
 describe('ChartRowCardContent', () => {
   test('chart card displays correctly', () => {
     const mockValue = {
