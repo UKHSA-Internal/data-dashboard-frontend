@@ -60,6 +60,18 @@ export const renderSection = async (
 
     {content.map((item) => renderCard(heading, showMoreSections, item))}
 
+    {showMoreSections.includes(kebabCase(heading)) ? (
+      <div className="mt-3">
+        <Link
+          className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
+          href={await getShowLessURL(showMoreSections, kebabCase(heading))}
+          prefetch
+        >
+          <span className="pl-4">Show Less</span>
+        </Link>
+      </div>
+    ) : null}
+
     {footer &&
       footer.map(({ value }) => {
         const href = value.link.external_url
@@ -69,7 +81,7 @@ export const renderSection = async (
             : null
 
         return (
-          <div className="flex items-center gap-2" key={value.badge_label}>
+          <div className="mt-3 flex items-center gap-2" key={value.badge_label}>
             <div className="govuk-tag govuk-tag--blue">{value.badge_label}</div>
             <span className="govuk-body mb-0">{value.text}</span>
 
@@ -83,16 +95,6 @@ export const renderSection = async (
           </div>
         )
       })}
-
-    {showMoreSections.includes(kebabCase(heading)) ? (
-      <Link
-        className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
-        href={await getShowLessURL(showMoreSections, kebabCase(heading))}
-        prefetch
-      >
-        <span className="pl-4">Show Less</span>
-      </Link>
-    ) : null}
   </div>
 )
 
