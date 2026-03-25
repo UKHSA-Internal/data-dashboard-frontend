@@ -40,13 +40,11 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  */
 async function getAuthToken(): Promise<string | undefined> {
   console.log("🦄 getAuthToken")
-  console.log("🦄 typeof window", typeof window)
   if (typeof window === 'undefined') {
     try {
       const { auth } = await import('@/auth')
       const session = await auth()
-      console.log("🦊 session ~ ",session)
-      console.log("🦄🦊 session?.accessToken ~ ",session?.accessToken)
+      console.error('Got auth token:', JSON.stringify(session))
       return session?.accessToken
     } catch (error) {
       console.error('Failed to get auth token:', error)
@@ -110,7 +108,10 @@ export async function client<T>(
   }
 
   const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
-
+  console.error('🐼isPublic:', isPublic)
+  console.error('🐼authEnabled:', authEnabled)
+  console.error('🐼fetchOptions:', JSON.stringify(fetchOptions))
+  console.error('🐼url:', url)
   return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok, headers } = response
 
