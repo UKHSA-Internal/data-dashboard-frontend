@@ -39,9 +39,10 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  * Only import auth at runtime, not at build time
  */
 async function getAuthToken(): Promise<string | undefined> {
-  console.log("🦄 getAuthToken")
-  console.log("🦄 typeof window", typeof window)
+  console.log('🦄 getAuthToken')
+  console.log('🦄 typeof window', typeof window)
   if (typeof window === 'undefined') {
+    console.log('🦊 inside "IF"')
     try {
       const { auth } = await import('@/auth')
       const session = await auth()
@@ -51,7 +52,17 @@ async function getAuthToken(): Promise<string | undefined> {
       console.error('Failed to get auth token:', error)
       return undefined
     }
-  }
+  } else
+    console.log('🦊 inside "ELSE"')
+    try {
+      const { auth } = await import('@/auth')
+      const session = await auth()
+      console.error('Got auth token:', JSON.stringify(session))
+      return session?.accessToken
+    } catch (error) {
+      console.error('Failed to get auth token:', error)
+      return undefined
+    }
 }
 
 /**
@@ -76,7 +87,7 @@ export async function client<T>(
 
   // read access token only if request is not public
   const accessToken = isPublic ? undefined : await getAuthToken()
-  console.log("🐼  ~ accessToken:", accessToken)
+  console.log('🐼  ~ accessToken:', accessToken)
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
     // Import cookies dynamically only in node environment to not trigger nextjs warnings
