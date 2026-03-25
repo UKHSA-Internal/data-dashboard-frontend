@@ -1,6 +1,3 @@
-// To receive axis title, chart.label, & fallback text
-import { authEnabled } from '@/config/constants'
-
 type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
 
 const levelContent: Record<Level, string> = {
@@ -16,10 +13,9 @@ export const getColumnHeader = (
   axisTitle: string,
   fallback: string,
   isPublic?: boolean,
-  level: Level = 'official_sensitive'
+  level: Level = 'official_sensitive',
+  authEnabled?: boolean
 ) => {
-  console.log('isPublic:', isPublic)
-  console.log('authEnabled: ', authEnabled)
   const label = chartLabel || axisTitle || fallback
 
   const sensitiveLabel = authEnabled && isPublic === false && (

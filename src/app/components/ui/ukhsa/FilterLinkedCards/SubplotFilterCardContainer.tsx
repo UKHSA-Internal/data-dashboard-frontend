@@ -9,8 +9,9 @@ import SubplotFilterCard from './SubplotFilterCard'
 type SubplotFilterCardContainerProps = {
   isPublic?: boolean
   pageClassification?: DataClassification
+  authEnabled?: boolean
 }
-const SubplotFilterCardContainer = ({ isPublic, pageClassification }: SubplotFilterCardContainerProps) => {
+const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled }: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -42,6 +43,7 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification }: SubplotFil
               timePeriodTitle={timePeriodTitle!}
               isPublic={isPublic}
               level={pageClassification}
+              authEnabled={authEnabled}
             />
           )
         })

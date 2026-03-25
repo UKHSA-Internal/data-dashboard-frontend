@@ -38,6 +38,7 @@ interface TableProps {
   cardData: FilterLinkedSubplotData
   isPublic?: boolean
   level?: DataClassification
+  authEnabled?: boolean
 }
 
 export function SubplotClientTable({
@@ -52,6 +53,7 @@ export function SubplotClientTable({
   cardData,
   isPublic,
   level,
+  authEnabled,
 }: TableProps) {
   const { t } = useTranslation('common')
 
@@ -172,7 +174,7 @@ export function SubplotClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
                       </th>
                     )
                   })}

@@ -95,7 +95,11 @@ export const renderCard = (
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
       {type === 'filter_linked_sub_plot_chart_template' && (
-        <SubplotFilterCardContainer isPublic={isPublic} pageClassification={pageClassification} />
+        <SubplotFilterCardContainer
+          isPublic={isPublic}
+          pageClassification={pageClassification}
+          authEnabled={authEnabled}
+        />
       )}
 
       {type === 'filter_linked_time_series_chart_template' && (

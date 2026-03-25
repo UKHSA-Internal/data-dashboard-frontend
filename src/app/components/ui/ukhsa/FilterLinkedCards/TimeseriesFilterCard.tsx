@@ -26,6 +26,7 @@ interface TimeseriesFilterCardProps {
   chartId?: string
   isPublic?: boolean
   level?: DataClassification
+  authEnabled?: boolean
 }
 
 const TimeseriesFilterCard = ({
@@ -35,7 +36,9 @@ const TimeseriesFilterCard = ({
   cardData,
   isPublic,
   level,
+  authEnabled,
 }: TimeseriesFilterCardProps) => {
+  console.log('TimeseriesFilterCard authEnabled:', authEnabled)
   const [date, setDate] = useState<string | null>(null)
 
   const description = date ? `Last Updated ${formatDate(date)}` : ''
@@ -136,6 +139,7 @@ const TimeseriesFilterCard = ({
                 cardData={cardData}
                 isPublic={isPublic}
                 level={level}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             <TabsContent

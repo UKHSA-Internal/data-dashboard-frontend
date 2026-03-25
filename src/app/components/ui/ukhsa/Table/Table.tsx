@@ -30,6 +30,7 @@ interface TableProps {
   isPublic?: boolean
 
   level?: DataClassification
+  authEnabled?: boolean
 }
 
 /**
@@ -98,6 +99,7 @@ export async function Table({
   size,
   isPublic = false,
   level,
+  authEnabled,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
@@ -195,7 +197,7 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
                       </th>
                     )
                   })}

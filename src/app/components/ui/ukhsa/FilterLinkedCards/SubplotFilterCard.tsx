@@ -33,6 +33,7 @@ interface SubplotFilterCardProps {
   timePeriodTitle: string
   isPublic?: boolean
   level?: DataClassification
+  authEnabled?: boolean
 }
 
 const SubplotFilterCard = ({
@@ -45,6 +46,7 @@ const SubplotFilterCard = ({
   timePeriodTitle,
   isPublic,
   level,
+  authEnabled,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
@@ -159,6 +161,7 @@ const SubplotFilterCard = ({
                 cardData={cardData}
                 isPublic={isPublic}
                 level={level}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             <TabsContent

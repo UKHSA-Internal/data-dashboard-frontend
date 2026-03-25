@@ -2,18 +2,14 @@ import { render, screen } from '@/config/test-utils'
 
 import { getColumnHeader } from './table.utils'
 
-jest.mock('@/config/constants', () => ({
-  ...jest.requireActual('@/config/constants'),
-  authEnabled: true,
-}))
-
 const renderHeader = (
   chartLabel: string,
   axisTitle: string,
   fallback: string,
   isPublic?: boolean,
-  level?: 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
-) => render(<>{getColumnHeader(chartLabel, axisTitle, fallback, isPublic, level)}</>)
+  level?: 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret',
+  authEnabled?: boolean
+) => render(<>{getColumnHeader(chartLabel, axisTitle, fallback, isPublic, level, authEnabled)}</>)
 
 describe('getColumnHeader', () => {
   describe('label priority', () => {
@@ -35,76 +31,61 @@ describe('getColumnHeader', () => {
 
   describe('sensitive label visibility', () => {
     test('renders sensitive label when isPublic is false', () => {
-      renderHeader('Label', '', 'Fallback', false)
+      renderHeader('Label', '', 'Fallback', false, 'official_sensitive', true)
       expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
     })
 
     test('does not render sensitive label when isPublic is true', () => {
-      renderHeader('Label', '', 'Fallback', true)
+      renderHeader('Label', '', 'Fallback', true, 'official_sensitive', true)
       expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
     })
 
     test('does not render sensitive label when isPublic is undefined', () => {
-      renderHeader('Label', '', 'Fallback')
+      renderHeader('Label', '', 'Fallback', undefined, 'official_sensitive', true)
       expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
     })
   })
 
   describe('level content', () => {
     test('defaults to official_sensitive level', () => {
-      renderHeader('Label', '', 'Fallback', false)
+      renderHeader('Label', '', 'Fallback', false, undefined, true)
       expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
     })
 
     test('renders correct text for official level', () => {
-      renderHeader('Label', '', 'Fallback', false, 'official')
+      renderHeader('Label', '', 'Fallback', false, 'official', true)
       expect(screen.getByText(/Official$/i)).toBeInTheDocument()
     })
 
     test('renders correct text for protective_marking_not_set level', () => {
-      renderHeader('Label', '', 'Fallback', false, 'protective_marking_not_set')
+      renderHeader('Label', '', 'Fallback', false, 'protective_marking_not_set', true)
       expect(screen.getByText(/Protective marking not set/i)).toBeInTheDocument()
     })
 
     test('renders correct text for secret level', () => {
-      renderHeader('Label', '', 'Fallback', false, 'secret')
+      renderHeader('Label', '', 'Fallback', false, 'secret', true)
       expect(screen.getByText(/Secret$/i)).toBeInTheDocument()
     })
 
     test('renders correct text for top_secret level', () => {
-      renderHeader('Label', '', 'Fallback', false, 'top_secret')
+      renderHeader('Label', '', 'Fallback', false, 'top_secret', true)
       expect(screen.getByText(/Top Secret/i)).toBeInTheDocument()
     })
   })
 
   describe('authEnabled', () => {
+    test('does not render sensitive label when authEnabled is false, even if isPublic is false', () => {
+      renderHeader('Label', '', 'Fallback', false, 'official_sensitive', false)
+      expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
+    })
+
     test('renders sensitive label when authEnabled is true and isPublic is false', () => {
-      // authEnabled: true is set at the top-level mock above
-      renderHeader('Label', '', 'Fallback', false, 'official_sensitive')
+      renderHeader('Label', '', 'Fallback', false, 'official_sensitive', true)
       expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
     })
 
     test('does not render sensitive label when authEnabled is true but isPublic is true', () => {
-      renderHeader('Label', '', 'Fallback', true, 'official_sensitive')
-      expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
-    })
-  })
-  describe('authEnabled is false', () => {
-    beforeEach(() => {
-      jest.resetModules()
-      jest.doMock('@/config/constants', () => ({
-        ...jest.requireActual('@/config/constants'),
-        authEnabled: false,
-      }))
-    })
-
-    afterEach(() => {
-      jest.resetModules()
-    })
-
-    test('does not render sensitive label even when isPublic is false', async () => {
-      const { getColumnHeader: freshGetColumnHeader } = await import('./table.utils')
-      render(<>{freshGetColumnHeader('Label', '', 'Fallback', false, 'official_sensitive')}</>)
+      renderHeader('Label', '', 'Fallback', true, 'official_sensitive', true)
       expect(screen.queryByText(/Official-Sensitive/i)).not.toBeInTheDocument()
     })
   })
