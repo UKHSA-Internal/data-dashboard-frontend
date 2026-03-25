@@ -44,6 +44,8 @@ async function getAuthToken(): Promise<string | undefined> {
     try {
       const { auth } = await import('@/auth')
       const session = await auth()
+      console.log("🦊 session ~ ",session)
+      console.log("🦄🦊 session?.accessToken ~ ",session?.accessToken)
       return session?.accessToken
     } catch (error) {
       console.error('Failed to get auth token:', error)
