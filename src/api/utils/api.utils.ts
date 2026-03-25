@@ -40,6 +40,7 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  */
 async function getAuthToken(): Promise<string | undefined> {
   console.log("🦄 getAuthToken")
+  console.log("🦄 typeof window", typeof window)
   if (typeof window === 'undefined') {
     try {
       const { auth } = await import('@/auth')
