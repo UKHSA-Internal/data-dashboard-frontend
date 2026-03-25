@@ -39,6 +39,7 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  * Only import auth at runtime, not at build time
  */
 async function getAuthToken(): Promise<string | undefined> {
+  console.log("🦄 getAuthToken")
   if (typeof window === 'undefined') {
     try {
       const { auth } = await import('@/auth')
@@ -72,7 +73,7 @@ export async function client<T>(
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   // read access token only if request is not public
-  const accessToken = isPublic ? undefined : await getAuthToken()
+  const accessToken = isPublic ? "NotGettingAuthToken" : await getAuthToken()
   console.log("🐼  ~ accessToken:", accessToken)
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
