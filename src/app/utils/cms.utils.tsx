@@ -34,7 +34,7 @@ import { GlobalFilterLinkedMap } from '../features/global-filter'
 // TODO: Move this file into cms folder
 export const renderSection = async (
   showMoreSections: string[],
-  { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number]
+  { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number]
 ) => (
   <div
     id={kebabCase(heading)}
@@ -58,6 +58,31 @@ export const renderSection = async (
     </h2>
 
     {content.map((item) => renderCard(heading, showMoreSections, item))}
+
+    {footer &&
+      footer.map(({ value }) => {
+        const href = value.link.external_url
+          ? value.link.external_url
+          : value.link.page
+            ? getPath(value.link.page)
+            : null
+
+        return (
+          <div className="flex items-center gap-2" key={value.badge_label}>
+            <div className="govuk-tag govuk-tag--blue">{value.badge_label}</div>
+            <span className="govuk-body mb-0">{value.text}</span>
+
+            {href ? (
+              <Link href={href} prefetch className="govuk-link govuk-link--no-visited-state">
+                {value.link.link_display_text}
+              </Link>
+            ) : (
+              <span className="govuk-body">{value.link.link_display_text}</span>
+            )}
+          </div>
+        )
+      })}
+
     {showMoreSections.includes(kebabCase(heading)) ? (
       <Link
         className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"

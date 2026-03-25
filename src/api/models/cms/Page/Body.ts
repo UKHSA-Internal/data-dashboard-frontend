@@ -187,6 +187,19 @@ export const CardTypes = z.discriminatedUnion('type', [
   }),
 ])
 
+const SectionFooter = z.object({
+  type: z.literal('section_link'),
+  value: z.object({
+    badge_label: z.string(),
+    text: z.string(),
+    link: z.object({
+      link_display_text: z.string(),
+      page: z.string().optional().nullable(),
+      external_url: z.string().optional().nullable(),
+    }),
+  }),
+})
+
 export const Body = z.array(
   z.object({
     type: z.literal('section'),
@@ -195,6 +208,7 @@ export const Body = z.array(
       heading: z.string(),
       content: z.array(CardTypes),
       page_link: z.optional(z.nullable(z.string())),
+      footer: z.optional(z.array(SectionFooter)),
     }),
   })
 )
