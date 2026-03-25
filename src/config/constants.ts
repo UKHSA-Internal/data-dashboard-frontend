@@ -1,9 +1,3 @@
-// import { connection } from 'next/server'
-
-// // We need to evaluate these at runtime see
-// // https://nextjs.org/docs/app/api-reference/functions/connection
-// connection()
-
 /**
  * Checks to see if running the Authenticated version of the data dashboard
  */
