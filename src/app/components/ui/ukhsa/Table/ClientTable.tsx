@@ -19,7 +19,7 @@ import {
   MinMaxFullDate,
   MinMaxTimePeriodLabelResponse,
 } from '@/app/utils/time-period.utils'
-import { authEnabled, chartTableMaxColumns } from '@/config/constants'
+import { chartTableMaxColumns } from '@/config/constants'
 
 interface TableProps {
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
@@ -30,11 +30,20 @@ interface TableProps {
   cardData: FilterLinkedTimeSeriesData
   isPublic?: boolean
   level?: DataClassification
+  authEnabled?: boolean
 }
-
-export function ClientTable({ size, geography, dataFilters, timePeriods, cardData, isPublic, level }: TableProps) {
+//
+export function ClientTable({
+  size,
+  geography,
+  dataFilters,
+  timePeriods,
+  cardData,
+  isPublic,
+  level,
+  authEnabled,
+}: TableProps) {
   const { t } = useTranslation('common')
-
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>()
   const [tableLoading, setTableLoading] = useState(true)
@@ -176,7 +185,6 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
     let incrementingColumnId = 0
 
     const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.inReportingDelay))
-    console.log('isPublic:', isPublic)
 
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
@@ -234,7 +242,7 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
                       </th>
                     )
                   })}

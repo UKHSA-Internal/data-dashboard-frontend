@@ -37,6 +37,7 @@ const TimeSeriesFilterCardsContainer = ({
               cardData={timeseriesTemplateData!}
               isPublic={isPublic}
               level={pageClassification}
+              authEnabled={authEnabled}
             />
           )
         })
