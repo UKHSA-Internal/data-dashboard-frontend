@@ -10,6 +10,7 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL } from '@/app/utils/show-more.utils'
+import { authEnabled } from '@/config/constants'
 
 import {
   ButtonExternal,
@@ -96,7 +97,11 @@ export const renderCard = (
       )}
 
       {type === 'filter_linked_time_series_chart_template' && (
-        <TimeSeriesFilterCardsContainer isPublic={isPublic} pageClassification={pageClassification} />
+        <TimeSeriesFilterCardsContainer
+          isPublic={isPublic}
+          pageClassification={pageClassification}
+          authEnabled={authEnabled}
+        />
       )}
 
       {type === 'chart_card_section' && (

@@ -9,9 +9,11 @@ import TimeseriesFilterCard from './TimeseriesFilterCard'
 const TimeSeriesFilterCardsContainer = ({
   isPublic,
   pageClassification,
+  authEnabled,
 }: {
   isPublic?: boolean
   pageClassification?: DataClassification
+  authEnabled?: boolean
 }) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
@@ -19,6 +21,8 @@ const TimeSeriesFilterCardsContainer = ({
   const isChartDataAvailable = () => {
     return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
   }
+
+  console.log('Time Series Card authEnabled: ', authEnabled)
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
