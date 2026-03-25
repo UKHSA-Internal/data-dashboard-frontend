@@ -19,14 +19,14 @@ interface ChartProps {
    * Enables interactive chart rendering with Plotly.js if set to true.
    * Defaults to true. When disabled or unavailable, static charts will display instead.
    */
-  enableInteractive?: boolean
+  readonly enableInteractive?: boolean
 
   /**
    * Chart configuration data containing metadata required to fetch chart visuals
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof ChartCardSchemas>['value']
+  readonly data: z.infer<typeof ChartCardSchemas>['value']
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
@@ -35,7 +35,7 @@ interface ChartProps {
    * for the default chart display. `size` controls the width format for each entry.
    *
    */
-  sizes: Array<
+  readonly sizes: Array<
     | {
         default?: never
         minWidth: number

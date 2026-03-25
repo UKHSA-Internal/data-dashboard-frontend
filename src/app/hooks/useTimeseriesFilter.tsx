@@ -3,8 +3,8 @@
 import { createContext, ReactNode, useContext, useState } from 'react'
 
 interface TimeseriesFilterContextValue {
-  currentFilter: string
-  setCurrentFilter: (filter: string) => void
+  readonly currentFilter: string
+  readonly setCurrentFilter: (filter: string) => void
 }
 
 const TimeseriesFilterContext = createContext<TimeseriesFilterContextValue | null>(null)
@@ -32,11 +32,11 @@ export function useTimeseriesFilter(): TimeseriesFilterContextValue {
 
 export function useTimeseriesFilterValue(chartId: string): string | undefined {
   // Guard against SSR where window is undefined
-  if (typeof window === 'undefined') {
+  if (globalThis.window === undefined) {
     return
   }
 
-  const storedFilters = window.sessionStorage.getItem('timeseriesFilters')
+  const storedFilters = globalThis.sessionStorage.getItem('timeseriesFilters')
   if (!storedFilters) {
     return
   }
