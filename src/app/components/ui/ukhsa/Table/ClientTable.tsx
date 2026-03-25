@@ -19,7 +19,7 @@ import {
   MinMaxFullDate,
   MinMaxTimePeriodLabelResponse,
 } from '@/app/utils/time-period.utils'
-import { chartTableMaxColumns } from '@/config/constants'
+import { authEnabled, chartTableMaxColumns } from '@/config/constants'
 
 interface TableProps {
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
@@ -54,6 +54,8 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
   const y_axis_title = `Vaccine Coverage %`
   const x_axis = 'date'
   const y_axis = 'metric'
+
+  console.log('clientTable:', authEnabled)
 
   useEffect(() => {
     const fetchCharts = async () => {
@@ -174,6 +176,7 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
     let incrementingColumnId = 0
 
     const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.inReportingDelay))
+    console.log('isPublic:', isPublic)
 
     return (
       <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">

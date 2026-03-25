@@ -18,6 +18,8 @@ export const getColumnHeader = (
   isPublic?: boolean,
   level: Level = 'official_sensitive'
 ) => {
+  console.log('isPublic:', isPublic)
+  console.log('authEnabled: ', authEnabled)
   const label = chartLabel || axisTitle || fallback
 
   const sensitiveLabel = authEnabled && isPublic === false && (
