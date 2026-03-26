@@ -40,11 +40,11 @@ function getVisibleCardIDs(items: ExpandableFilterItem[], selectedFilterItems: S
   return visible
 }
 
-interface TopicsListFilterControllerProps {
+interface TopicsListFilterContainerProps {
   readonly items: ExpandableFilterItem[]
 }
 
-export function TopicsListFilterController({ items }: TopicsListFilterControllerProps) {
+export function TopicsListFilterContainer({ items }: TopicsListFilterContainerProps) {
   const [selected, setSelected] = useState<SelectedFilterItem[]>([])
   const labelById = useMemo(() => getItemLabelByIDMap(items), [items])
 

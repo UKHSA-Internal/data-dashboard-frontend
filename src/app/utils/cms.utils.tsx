@@ -24,7 +24,6 @@ import {
   Trend,
   WeatherHealthAlertCard,
 } from '../components/cms'
-import { ChartCardSectionRow } from '../components/cms/ChartCardSection/ChartCardSectionRow'
 import { ChartRowCardContent } from '../components/cms/ChartRowCardContent/ChartRowCardContent'
 import { ChartRowCard } from '../components/ui/ukhsa'
 import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
@@ -97,9 +96,7 @@ export const renderCard = (
       {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer />}
 
       {type === 'chart_card_section' && (
-        <ChartCardSectionRow>
-          <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
-        </ChartCardSectionRow>
+        <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}

@@ -11,7 +11,7 @@ import { processSectionParams } from '@/app/utils/show-more.utils'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
-import { TopicsListFilterController } from '../TopicsListFilterController/TopicsListFilterController'
+import { TopicsListFilterContainer } from '../TopicsListFilterContainer/TopicsListFilterContainer'
 
 const getFilterItemsFromBody = (body: Body): ExpandableFilterItem[] => {
   return body
@@ -66,7 +66,7 @@ export default async function TopicsListPage({
 
       <div className="govuk-grid-row govuk-!-margin-top-4">
         <div className="govuk-grid-column-full">
-          <TopicsListFilterController items={filterItems} />
+          <TopicsListFilterContainer items={filterItems} />
         </div>
       </div>
 

@@ -50,7 +50,7 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
               data-testid="card-wrapper"
               data-topic-filter-id={card.id}
             >
-              <ChartWithDescriptionCard value={card.value} cardsCount={value.cards.length} />
+              <ChartWithDescriptionCard value={card.value} />
             </div>
           )
         }

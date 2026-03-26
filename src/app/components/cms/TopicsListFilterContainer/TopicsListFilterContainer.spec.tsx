@@ -3,7 +3,7 @@ import React from 'react'
 import { type ExpandableFilterItem } from '@/app/components/cms/ExpandableFilterDropdown/ExpandableFilterDropdown'
 import { fireEvent, render, screen, waitFor } from '@/config/test-utils'
 
-import { TopicsListFilterController } from './TopicsListFilterController'
+import { TopicsListFilterContainer } from './TopicsListFilterContainer'
 
 describe('TopicsListFilterController', () => {
   const items: ExpandableFilterItem[] = [
@@ -24,7 +24,7 @@ describe('TopicsListFilterController', () => {
       <div>
         <div data-testid="covid-card" data-topic-filter-id="covid-19" style={{ display: 'none' }} />
         <div data-testid="flu-card" data-topic-filter-id="flu" style={{ display: 'none' }} />
-        <TopicsListFilterController items={items} />
+        <TopicsListFilterContainer items={items} />
       </div>
     )
 
@@ -45,7 +45,7 @@ describe('TopicsListFilterController', () => {
       <div>
         <div data-testid="covid-card" data-topic-filter-id="covid-19" style={{ display: 'none' }} />
         <div data-testid="flu-card" data-topic-filter-id="flu" style={{ display: 'none' }} />
-        <TopicsListFilterController items={items} />
+        <TopicsListFilterContainer items={items} />
       </div>
     )
 

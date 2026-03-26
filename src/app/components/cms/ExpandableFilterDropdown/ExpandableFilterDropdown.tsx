@@ -35,6 +35,8 @@ function ChevronDownIcon({ open }: { open: boolean }) {
   )
 }
 
+// Presentation component, or container component?
+
 interface DropdownButtonProps {
   open: boolean
   label: string
