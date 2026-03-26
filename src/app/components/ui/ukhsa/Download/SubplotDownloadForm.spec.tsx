@@ -40,13 +40,14 @@ describe('SubplotDownloadForm', () => {
     jest.clearAllMocks()
   })
 
-  const renderComponent = (isPublic?: boolean) =>
+  const renderComponent = (isPublic?: boolean, authEnabled?: boolean) =>
     render(
       <SubplotDownloadForm
         chart={mockedChart}
         xAxis={mockXaxis}
         tagManagerEventId={mockTagManagerId}
         isPublic={isPublic}
+        authEnabled={authEnabled}
       />
     )
 
@@ -147,7 +148,7 @@ describe('SubplotDownloadForm', () => {
 
   describe('official sensitive download banner', () => {
     test('shows acknowledgement banner on first submit when isPublic is false', async () => {
-      renderComponent(false)
+      renderComponent(false, true)
 
       expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
 
@@ -166,7 +167,7 @@ describe('SubplotDownloadForm', () => {
         } as any)
       )
 
-      renderComponent(false)
+      renderComponent(false, true)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
@@ -182,7 +183,7 @@ describe('SubplotDownloadForm', () => {
     })
 
     test('dismisses banner when back button is clicked', async () => {
-      renderComponent(false)
+      renderComponent(false, true)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
@@ -203,7 +204,26 @@ describe('SubplotDownloadForm', () => {
         } as any)
       )
 
-      renderComponent(true)
+      renderComponent(true, true)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    test('does not show acknowledgement banner when authEnabled is false', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          redirected: false,
+          text: async () => Promise.resolve('mock-download'),
+        } as any)
+      )
+
+      renderComponent(false, false)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
