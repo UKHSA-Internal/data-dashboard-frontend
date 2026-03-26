@@ -38,7 +38,6 @@ const TimeseriesFilterCard = ({
   level,
   authEnabled,
 }: TimeseriesFilterCardProps) => {
-  console.log('TimeseriesFilterCard authEnabled:', authEnabled)
   const [date, setDate] = useState<string | null>(null)
 
   const description = date ? `Last Updated ${formatDate(date)}` : ''
