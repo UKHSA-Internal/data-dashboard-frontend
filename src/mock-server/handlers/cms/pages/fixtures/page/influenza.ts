@@ -19,7 +19,7 @@ export const influenzaPageMock: PageResponse<PageType.Topic> = {
       id: 109,
       meta: {
         type: 'home.LandingPage',
-        detail_url: 'http://localhost:3000/api/pages/109/',
+        detail_url: 'http://localhost/api/pages/109/',
         html_url: null,
       },
       title: 'Respiratory viruses',

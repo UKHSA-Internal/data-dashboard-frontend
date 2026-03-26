@@ -9,7 +9,7 @@ export const whatsComingPageMock: PageResponse<PageType.Common> = {
       'A list of all the new features and key pieces of data which will be added to the UKHSA data dashboard',
     type: 'common.CommonPage',
     detail_url: 'http://localhost:3005/api/pages/11/',
-    html_url: 'http://localhost:3000/whats-coming/',
+    html_url: 'http://localhost/whats-coming/',
     slug: 'whats-coming',
     show_in_menus: true,
     first_published_at: '2023-09-06T17:25:43.801004+01:00',
@@ -18,7 +18,7 @@ export const whatsComingPageMock: PageResponse<PageType.Common> = {
       id: 3,
       meta: {
         type: 'home.HomePage',
-        detail_url: 'http://localhost:3000/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',

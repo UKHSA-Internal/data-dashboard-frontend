@@ -6,8 +6,8 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
   meta: {
     seo_title: 'Feedback | UKHSA data dashboard',
     type: 'forms.FormPage',
-    detail_url: 'https://localhost/api/pages/79/',
-    html_url: 'https://localhost/feedback/',
+    detail_url: 'http://localhost/api/pages/79/',
+    html_url: 'http://localhost/feedback/',
     slug: 'feedback',
     show_in_menus: false,
     search_description: '',
@@ -17,7 +17,7 @@ export const feedbackMock: PageResponse<PageType.Feedback> = {
       id: 3,
       meta: {
         type: 'home.UKHSARootPage',
-        detail_url: 'https://localhost/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
