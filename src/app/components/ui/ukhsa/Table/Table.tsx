@@ -56,11 +56,10 @@ const formatCellValue = (
   // Don't show confidence intervals when the value itself is null
   if (
     value !== null &&
-    confidenceIntervals &&
-    confidenceIntervals.lower !== null &&
-    confidenceIntervals.lower !== undefined &&
-    confidenceIntervals.upper !== null &&
-    confidenceIntervals.upper !== undefined
+    confidenceIntervals?.lower !== null &&
+    confidenceIntervals?.lower !== undefined &&
+    confidenceIntervals?.upper !== null &&
+    confidenceIntervals?.upper !== undefined
   ) {
     const lowerFormatted = t('cms.blocks.table.row', {
       context: 'plot',
@@ -140,8 +139,6 @@ export async function Table({
 
     const timestamp = chartResponse.success && chartResponse.data.last_updated
 
-    let incrementingColumnId = 0
-
     const hasReportingDelayPeriod = groups.some(({ data }) => data.some((item) => item.inReportingDelay))
 
     return (
@@ -180,7 +177,6 @@ export async function Table({
                       labelIndex = groupIndex * previousColLength + columnIndex - 1
                     }
 
-                    incrementingColumnId += 1
                     const chartLabel = columnIndex === 0 ? '' : (chart[labelIndex]?.value?.label ?? '')
                     const axisTitle = columnIndex === 0 ? (x_axis_title ?? '') : (y_axis_title ?? '')
                     const columnHeader = t('cms.blocks.table.header', {
@@ -191,7 +187,7 @@ export async function Table({
 
                     return (
                       <th
-                        id={`${kebabCase(title)}-col-${incrementingColumnId}`}
+                        id={`${kebabCase(title)}-col-${columnIndex}`}
                         key={columnIndex}
                         headers="blank"
                         className="govuk-table__header js:bg-white"
@@ -210,7 +206,7 @@ export async function Table({
                       aria-label={item.inReportingDelay ? t('reportingLagPeriodKey') : undefined}
                     >
                       {columns.map((column, columnIndex) => {
-                        const incrementingColumnId = columns.length * groupIndex + (columnIndex + 1)
+                        const columnId = columns.length * groupIndex + (columnIndex + 1)
                         const previousItemHasDelay = data[key - 1]?.inReportingDelay ?? false
                         const nextItemHasDelay = data[key + 1]?.inReportingDelay ?? false
 
@@ -235,7 +231,7 @@ export async function Table({
                               </th>
                             ) : (
                               <td
-                                headers={`${kebabCase(title)}-col-${incrementingColumnId}`}
+                                headers={`${kebabCase(title)}-col-${columnId}`}
                                 className={clsx('govuk-table__cell', {
                                   'bg-delay-blue-opaque': item.inReportingDelay,
                                   'border-t-2 border-t-delay-blue': item.inReportingDelay && !previousItemHasDelay,
