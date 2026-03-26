@@ -64,8 +64,6 @@ export function ClientTable({
   const x_axis = 'date'
   const y_axis = 'metric'
 
-  console.log('clientTable:', authEnabled)
-
   useEffect(() => {
     const fetchCharts = async () => {
       try {
