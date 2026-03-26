@@ -24,6 +24,7 @@ interface TimeseriesFilterCardProps {
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
 const TimeseriesFilterCard = ({
@@ -32,6 +33,7 @@ const TimeseriesFilterCard = ({
   dataFilters,
   cardData,
   isPublic,
+  authEnabled,
 }: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
 
@@ -148,6 +150,7 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 cardData={cardData}
                 isPublic={isPublic}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             {about && (
