@@ -167,7 +167,7 @@ describe('DownloadForm', () => {
 
   describe('official sensitive download banner', () => {
     test('shows acknowledgement banner on first submit when isPublic is false', async () => {
-      render(<DownloadForm {...props} isPublic={false} />)
+      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
 
       expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
 
@@ -185,7 +185,7 @@ describe('DownloadForm', () => {
         } as Response)
       )
 
-      render(<DownloadForm {...props} isPublic={false} />)
+      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
@@ -201,7 +201,7 @@ describe('DownloadForm', () => {
     })
 
     test('dismisses banner when back button is clicked', async () => {
-      render(<DownloadForm {...props} isPublic={false} />)
+      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
@@ -221,7 +221,25 @@ describe('DownloadForm', () => {
         } as Response)
       )
 
-      render(<DownloadForm {...props} isPublic={true} />)
+      render(<DownloadForm {...props} isPublic={true} authEnabled={true} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    test('does not show acknowledgement banner when authEnabled is false', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          text: async () => Promise.resolve('mock-download'),
+        } as Response)
+      )
+
+      render(<DownloadForm {...props} isPublic={false} authEnabled={false} />)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
