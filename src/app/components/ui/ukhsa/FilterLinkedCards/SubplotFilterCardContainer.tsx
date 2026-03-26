@@ -5,7 +5,12 @@ import { useGlobalFilters } from '@/app/features/global-filter/context/globalFil
 
 import SubplotFilterCard from './SubplotFilterCard'
 
-const SubplotFilterCardContainer = () => {
+interface SubplotFilterCardContainerProps {
+  isPublic?: boolean
+  authEnabled?: boolean
+}
+
+const SubplotFilterCardContainer = ({ isPublic, authEnabled }: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -35,6 +40,8 @@ const SubplotFilterCardContainer = () => {
               cardData={coverageTemplateData!}
               timePeriods={timePeriods!}
               timePeriodTitle={timePeriodTitle!}
+              isPublic={isPublic}
+              authEnabled={authEnabled}
             />
           )
         })
