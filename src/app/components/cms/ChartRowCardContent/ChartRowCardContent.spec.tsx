@@ -66,6 +66,10 @@ jest.mock('@/app/components/ui/ukhsa/Download/Download', () => ({
   Download: () => <div>Mocked download</div>,
 }))
 
+jest.mock('@/config/constants', () => ({
+  authEnabled: true,
+}))
+
 describe('ChartRowCardContent', () => {
   test('chart card displays correctly', () => {
     const mockValue = {
@@ -91,6 +95,116 @@ describe('ChartRowCardContent', () => {
     const article = screen.getByRole('article', { name: 'Chart heading 1' })
     expect(article).toBeInTheDocument()
     expect(article).toHaveClass('ukhsa-chart-card')
+
+    // Data Classification Banner
+
+    expect(screen.queryByText('Official-Sensitive')).not.toBeInTheDocument()
+
+    // Heading and description
+    expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
+    expect(within(article).getByText('Chart description 1')).toBeInTheDocument()
+    expect(within(article).getByText('Up to and including 27 September 2023')).toBeInTheDocument()
+
+    // Tabs list
+    expect(screen.getByRole('tablist')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('aria-selected', 'false')
+
+    // Tabs panel
+    expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('data-state', 'active')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('data-state', 'inactive')
+
+    // Chart
+    expect(screen.getByText('Mocked chart')).toBeVisible()
+  })
+
+  test('explicitly public chart card displays correctly', () => {
+    const mockValue = {
+      columns: [
+        {
+          id: 'col-1',
+          type: 'chart_card',
+          value: {
+            title: 'Chart heading 1',
+            body: 'Chart description 1',
+            about: 'Sample About Field',
+            x_axis: '',
+            y_axis: '',
+          },
+        },
+      ],
+    }
+    const isPublic = true
+
+    render(<ChartRowCardContent value={mockValue} isPublic={isPublic} />)
+
+    expect(screen.getAllByRole('article')).toHaveLength(1)
+
+    const article = screen.getByRole('article', { name: 'Chart heading 1' })
+    expect(article).toBeInTheDocument()
+    expect(article).toHaveClass('ukhsa-chart-card')
+
+    // Data Classification Banner
+
+    expect(screen.queryByText('Official-Sensitive')).not.toBeInTheDocument()
+
+    // Heading and description
+    expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()
+    expect(within(article).getByText('Chart description 1')).toBeInTheDocument()
+    expect(within(article).getByText('Up to and including 27 September 2023')).toBeInTheDocument()
+
+    // Tabs list
+    expect(screen.getByRole('tablist')).toBeInTheDocument()
+    expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('aria-selected', 'true')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('aria-selected', 'false')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('aria-selected', 'false')
+
+    // Tabs panel
+    expect(screen.getByRole('tab', { name: 'Chart' })).toHaveAttribute('data-state', 'active')
+    expect(screen.getByRole('tab', { name: 'Tabular data' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'Download' })).toHaveAttribute('data-state', 'inactive')
+    expect(screen.getByRole('tab', { name: 'About' })).toHaveAttribute('data-state', 'inactive')
+
+    // Chart
+    expect(screen.getByText('Mocked chart')).toBeVisible()
+  })
+
+  test('non-public chart card displays correctly with data classification banner', () => {
+    const mockValue = {
+      columns: [
+        {
+          id: 'col-1',
+          type: 'chart_card',
+          value: {
+            title: 'Chart heading 1',
+            body: 'Chart description 1',
+            about: 'Sample About Field',
+            x_axis: '',
+            y_axis: '',
+          },
+        },
+      ],
+    }
+    const isPublic = false
+    const mockPageClassification = 'official_sensitive'
+
+    render(<ChartRowCardContent value={mockValue} isPublic={isPublic} pageClassification={mockPageClassification} />)
+
+    expect(screen.getAllByRole('article')).toHaveLength(1)
+
+    const article = screen.getByRole('article', { name: 'Chart heading 1' })
+    expect(article).toBeInTheDocument()
+    expect(article).toHaveClass('ukhsa-chart-card')
+
+    // Data Classification Banner
+    const dataClassificationHeader = screen.getByRole('note')
+    expect(dataClassificationHeader).toBeInTheDocument()
+    expect(within(dataClassificationHeader).getByText('Official-Sensitive')).toBeInTheDocument()
 
     // Heading and description
     expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()

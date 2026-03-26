@@ -36,16 +36,25 @@ Object.defineProperty(window, 'URL', {
 
 // Mock components
 jest.mock('@/app/components/ui/ukhsa', () => {
-  const React = require('react')
   const actual = jest.requireActual('@/app/components/ui/ukhsa')
+
+  // Withouit 'asChild' prop we were seeing an error about it not being defined
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  const MockCard = ({ children, asChild, ...props }: any) => (
+    <div data-testid="card" {...props}>
+      {children}
+    </div>
+  )
+
   return {
     ...actual,
+    Card: MockCard,
     Chart: () => <div data-testid="chart">Chart Component Mock</div>,
   }
 })
 
 jest.mock('next/link', () => {
-  return function MockLink({ children, href, ...props }: any) {
+  return function MockLink({ children, href, _prefetch, ...props }: any) {
     return (
       <a href={typeof href === 'string' ? href : href.toString()} {...props}>
         {children}
@@ -62,6 +71,22 @@ describe('ChartCardSection', () => {
       title,
       sub_title: subTitle,
       topic_page: `https://example.com/${id}`,
+    },
+  })
+
+  const createMockChartWithDescriptionCard = (
+    id: string,
+    title: string,
+    subTitle: string,
+    options?: { description?: string; source?: { external_url: string; link_display_text: string } }
+  ) => ({
+    id,
+    type: 'chart_with_description_card',
+    value: {
+      title,
+      sub_title: subTitle,
+      topic_page: `https://example.com/${id}`,
+      ...options,
     },
   })
 
@@ -87,12 +112,11 @@ describe('ChartCardSection', () => {
     expect(screen.getAllByTestId('card-wrapper')).toHaveLength(1)
   })
 
-  test('renders chart card section with 3 cards', async () => {
+  test('renders chart card section with 2 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
         createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
-        createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
       ],
     }
 
@@ -110,17 +134,15 @@ describe('ChartCardSection', () => {
 
     expect(await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
-    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(2)
   })
 
-  test('shows "Show More" button when there are 4 cards and only displays first 3 cards', async () => {
+  test('shows "Show More" button when there are 3 cards and only displays first 2 cards', async () => {
     const mockValue = {
       cards: [
         createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
         createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
         createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
-        createMockCard('test-card-4', 'Test Chart 4', 'Test Description 4'),
       ],
     }
 
@@ -139,14 +161,67 @@ describe('ChartCardSection', () => {
     // Wait for component to render
     await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })
 
-    // Should only show first 3 cards
-    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
+    // Should only show first 2 cards
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(2)
     expect(screen.getByRole('heading', { name: 'Test Chart 1', level: 3 })).toBeInTheDocument()
     expect(screen.getByRole('heading', { name: 'Test Chart 2', level: 3 })).toBeInTheDocument()
-    expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
-    expect(screen.queryByRole('heading', { name: 'Test Chart 4', level: 3 })).not.toBeInTheDocument()
+    expect(screen.queryByRole('heading', { name: 'Test Chart 3', level: 3 })).not.toBeInTheDocument()
 
     // Should show "Show More" link
     expect(screen.getByText('Show More')).toBeInTheDocument()
+  })
+
+  test('renders chart card section with chart_with_description_card type', async () => {
+    const mockValue = {
+      cards: [
+        createMockChartWithDescriptionCard('desc-card-1', 'Description Chart 1', 'Description subtitle 1', {
+          description: 'Some chart description',
+        }),
+      ],
+    }
+
+    const mockProps = {
+      value: mockValue,
+      heading: 'Description Section',
+      showMoreSections: [],
+    }
+
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
+
+    expect(await screen.findByRole('heading', { name: 'Description Chart 1', level: 3 })).toBeInTheDocument()
+    expect(screen.getByText('Description subtitle 1')).toBeInTheDocument()
+    expect(screen.getByText('Some chart description')).toBeInTheDocument()
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(1)
+  })
+
+  test('renders chart card section with both simplified_chart_with_link and chart_with_description_card', async () => {
+    const mockValue = {
+      cards: [
+        createMockCard('link-card-1', 'Link Chart 1', 'Link subtitle 1'),
+        createMockChartWithDescriptionCard('desc-card-1', 'Description Chart 1', 'Description subtitle 1'),
+      ],
+    }
+
+    const mockProps = {
+      value: mockValue,
+      heading: 'Mixed Section',
+      showMoreSections: [],
+    }
+
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
+
+    expect(await screen.findByRole('heading', { name: 'Link Chart 1', level: 3 })).toBeInTheDocument()
+    expect(screen.getByRole('heading', { name: 'Description Chart 1', level: 3 })).toBeInTheDocument()
+    expect(screen.getByText('Link subtitle 1')).toBeInTheDocument()
+    expect(screen.getByText('Description subtitle 1')).toBeInTheDocument()
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(2)
   })
 })

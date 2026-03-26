@@ -17,12 +17,14 @@ type PageTypeToDataMap = {
   [PageType.Landing]: typeof WithLandingData
   [PageType.Feedback]: typeof withFeedbackData
   [PageType.Topic]: typeof WithTopicData
+  [PageType.TopicsList]: typeof WithTopicsListData
   [PageType.Common]: typeof WithCommonData
   [PageType.Composite]: typeof WithCompositeData
   [PageType.WhatsNewParent]: typeof WithWhatsNewParentData
   [PageType.WhatsNewChild]: typeof WithWhatsNewChildData
   [PageType.MetricsParent]: typeof WithMetricsParentData
   [PageType.MetricsChild]: typeof WithMetricsChildData
+  [PageType.Acknowledgement]: typeof WithAcknowledgementData
 }
 
 const SharedPageData = z.object({
@@ -73,6 +75,14 @@ const WithTopicData = SharedPageData.extend({
   selected_topics: z.array(Topics).or(fallback([])),
   related_links: RelatedLinks,
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+})
+
+const WithTopicsListData = SharedPageData.extend({
+  page_description: z.string().nullable().optional(),
+  body: Body,
+  meta: Meta.extend({
+    type: z.literal('topics_list.TopicsListPage'),
+  }),
 })
 
 const WithCommonData = SharedPageData.extend({
@@ -154,16 +164,40 @@ const WithMetricsChildData = SharedPageData.extend({
   page_classification: DataClassification.or(fallback(undefined)),
 })
 
+const WithAcknowledgementData = SharedPageData.omit({
+  last_published_at: true,
+  last_updated_at: true,
+  seo_change_frequency: true,
+  seo_priority: true,
+}).extend({
+  meta: Meta.extend({
+    type: z.literal('acknowledgement.AcknowledgementPage'),
+  }),
+  body: z.string(),
+  terms_of_service_link_text: z.string(),
+  terms_of_service_link: z.string(),
+  terms_of_service_error: z.string(),
+  i_agree_checkbox: z.string(),
+  disagree_button: z.string(),
+  agree_button: z.string(),
+  last_published_at: z.string().or(fallback('')).optional(),
+  last_updated_at: z.string().or(fallback('')).optional(),
+  seo_change_frequency: z.number().or(fallback(5)).optional(),
+  seo_priority: z.coerce.number().or(fallback(0.5)).optional(),
+})
+
 export const responseSchema = z.union([
   WithLandingData,
   withFeedbackData,
   WithTopicData,
+  WithTopicsListData,
   WithCommonData,
   WithCompositeData,
   WithWhatsNewParentData,
   WithWhatsNewChildData,
   WithMetricsParentData,
   WithMetricsChildData,
+  WithAcknowledgementData,
 ])
 
 /**

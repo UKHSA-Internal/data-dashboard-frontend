@@ -89,7 +89,7 @@ describe('ClassificationBanner', () => {
     render(<ClassificationBanner size="unknown" level="official_sensitive" />)
     const paragraph = screen.getByText('Official-Sensitive')
 
-    expect(paragraph).toHaveClass('font-sans')
+    expect(paragraph).toHaveClass('font-open-sans')
     expect(paragraph).toHaveClass('font-bold')
     expect(paragraph).toHaveClass('uppercase')
     expect(paragraph).toHaveClass('text-white')

@@ -1,10 +1,8 @@
 import { z } from 'zod'
 
 import { ChartLineColours } from '@/api/models/Chart'
-import { fallback } from '@/api/utils/zod.utils'
 
 import { HealthAlertTypes } from '../../Alerts'
-import { DataClassification } from '../../DataClassification'
 import { Blocks } from './Blocks'
 import { Chart } from './Chart'
 import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
@@ -96,10 +94,29 @@ const WithSimplifiedChartCardAndLink = z.object({
     .omit({ body: true, date_prefix: true, about: true }),
 })
 
+const WithChartCardWithDescription = z.object({
+  id: z.string(),
+  type: z.enum(['chart_with_description_card']),
+  value: chartCardValues
+    .extend({
+      sub_title: z.string(),
+      topic_page: z.string(),
+      description: z.string(),
+      show_tooltips: z.boolean(),
+      source: z.object({
+        link_display_text: z.string().optional().nullable(),
+        page: z.string().optional().nullable(),
+        external_url: z.string().optional().nullable(),
+      }),
+    })
+    .omit({ body: true, date_prefix: true, about: true }),
+})
+
 export const ChartCardSchemas = z.discriminatedUnion('type', [
   WithChartHeadlineAndTrendCard,
   WithChartCard,
   WithSimplifiedChartCardAndLink,
+  WithChartCardWithDescription,
 ])
 
 export const CardTypes = z.discriminatedUnion('type', [
@@ -119,8 +136,6 @@ export const CardTypes = z.discriminatedUnion('type', [
       columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
     }),
     id: z.string(),
-    isPublic: z.boolean().optional(),
-    pageClassification: DataClassification.or(fallback(undefined))
   }),
   z.object({
     type: z.literal('filter_linked_map'),
@@ -133,7 +148,7 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('chart_card_section'),
     value: z.object({
-      cards: z.array(WithSimplifiedChartCardAndLink),
+      cards: z.array(z.union([WithSimplifiedChartCardAndLink, WithChartCardWithDescription])),
     }),
     id: z.string(),
   }),

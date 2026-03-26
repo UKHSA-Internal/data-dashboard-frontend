@@ -24,6 +24,7 @@ import {
   Trend,
   WeatherHealthAlertCard,
 } from '../components/cms'
+import { ChartCardSectionRow } from '../components/cms/ChartCardSection/ChartCardSectionRow'
 import { ChartRowCardContent } from '../components/cms/ChartRowCardContent/ChartRowCardContent'
 import { ChartRowCard } from '../components/ui/ukhsa'
 import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards/SubplotFilterCardContainer'
@@ -46,7 +47,10 @@ export const renderSection = async (
   >
     <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
       {pageLink ? (
-        <Link href={getPath(pageLink)} className="govuk-link--no-visited-state">
+        <Link
+          href={getPath(pageLink)}
+          className="govuk-link--no-visited-state govuk-link ukhsa-section-chevron ukhsa-section-link inline-block no-underline hover:underline"
+        >
           {heading}
         </Link>
       ) : (
@@ -93,7 +97,9 @@ export const renderCard = (
       {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer />}
 
       {type === 'chart_card_section' && (
-        <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
+        <ChartCardSectionRow>
+          <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
+        </ChartCardSectionRow>
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}

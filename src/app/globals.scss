@@ -153,11 +153,15 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   --colour-delay-blue: #0090c6;
   --colour-delay-blue-opaque: #d2e9f1;
 
-  // UKHSA New Landing Page
+  // UKHSA existing Landing Page
   --colour-chart-background: #f7f7f7;
   --colour-chart-background-hover: #edf5ff;
   --colour-red-dark: #ab2b17;
   --colour-green-dark: #00703c;
+
+  // UKHSA new Home Page
+  --colour-home-chart-background: #fff;
+  --colour-home-chart-background-hover: #edf5ff;
 }
 
 .ukhsa-dropdown {
@@ -239,6 +243,29 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
     &:after {
       background-color: var(--colour-white) !important;
     }
+  }
+}
+
+.ukhsa-section-chevron {
+  &:after {
+    content: "";
+    display: inline-block;
+    height: 12px;
+    width: 12px;
+    transform: rotate(45deg);
+    border-width: 2px 2px 0 0;
+    margin: 0 0 3px 5px;
+  }
+}
+
+.ukhsa-section-link {
+  &:link,
+  &:visited {
+    color: var(--colour-black);
+  }
+  &:hover,
+  &:active {
+    color: $govuk-link-colour;
   }
 }
 

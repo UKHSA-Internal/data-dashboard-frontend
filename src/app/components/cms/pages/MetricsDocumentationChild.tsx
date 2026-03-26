@@ -6,11 +6,12 @@ import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSumm
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { extractRootSlug } from '@/app/utils/cms/slug'
+import { authEnabled } from '@/config/constants'
 
+import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { BackLink } from '../../ui/ukhsa/View/BackLink/Backlink'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
-
 export default async function MetricsChildPage({
   slug,
   searchParams: { returnUrl },
@@ -25,12 +26,15 @@ export default async function MetricsChildPage({
     body,
     last_updated_at: lastUpdated,
     active_announcements: activeAnnouncements,
+    is_public: isPublic,
+    page_classification: pageClassification,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
   const backLink = returnUrl || extractRootSlug(slug)
 
   return (
     <View>
+      {authEnabled && isPublic === false && <ClassificationBanner size="large" level={pageClassification} />}
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />

@@ -3,12 +3,14 @@ import { PagesResponse, WhatsNewPagesResponse } from '@/api/requests/cms/getPage
 import {
   aboutPageMock,
   accessibilityStatementPageMock,
+  acknowledgementPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
   cookiesPageMock,
   covid19PageMock,
   feedbackMock,
+  healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -66,6 +68,29 @@ export const pagesWithFeedbackTypeMock: PagesResponse = {
       seo_change_frequency: feedbackMock.seo_change_frequency,
       seo_priority: feedbackMock.seo_priority,
       title: feedbackMock.title,
+    },
+  ],
+}
+
+export const pagesWithAcknowledgementTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: acknowledgementPageMock.id,
+      meta: {
+        type: acknowledgementPageMock.meta.type,
+        detail_url: acknowledgementPageMock.meta.detail_url,
+        html_url: acknowledgementPageMock.meta.html_url,
+        slug: acknowledgementPageMock.meta.slug,
+        search_description: acknowledgementPageMock.meta.search_description,
+        show_in_menus: acknowledgementPageMock.meta.show_in_menus,
+        first_published_at: acknowledgementPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: acknowledgementPageMock.seo_change_frequency ?? 5,
+      seo_priority: acknowledgementPageMock.seo_priority ?? 0.5,
+      title: acknowledgementPageMock.title,
     },
   ],
 }
@@ -297,6 +322,29 @@ export const pagesWithCompositeTypeMock: PagesResponse = {
   ],
 }
 
+export const pagesWithTopicsListTypeMock: PagesResponse = {
+  meta: {
+    total_count: 1,
+  },
+  items: [
+    {
+      id: healthTopicsPageMock.id,
+      meta: {
+        type: healthTopicsPageMock.meta.type,
+        detail_url: healthTopicsPageMock.meta.detail_url,
+        html_url: healthTopicsPageMock.meta.html_url,
+        slug: healthTopicsPageMock.meta.slug,
+        search_description: healthTopicsPageMock.meta.search_description,
+        show_in_menus: healthTopicsPageMock.meta.show_in_menus,
+        first_published_at: healthTopicsPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: healthTopicsPageMock.seo_change_frequency,
+      seo_priority: healthTopicsPageMock.seo_priority,
+      title: healthTopicsPageMock.title,
+    },
+  ],
+}
+
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {
     total_count: 4,
@@ -489,12 +537,14 @@ const items = [
   ...pagesWithLandingTypeMock.items,
   ...pagesWithCommonTypeMock.items,
   ...pagesWithCompositeTypeMock.items,
+  ...pagesWithTopicsListTypeMock.items,
   ...pagesWithTopicTypeMock.items,
   ...pagesWithWhatsNewParentTypeMock.items,
   ...pagesWithWhatsNewChildTypeMock.items,
   ...pagesWithMetricsParentTypeMock.items,
   ...pagesWithMetricsChildTypeMock.items,
   ...pagesWithFeedbackTypeMock.items,
+  ...pagesWithAcknowledgementTypeMock.items,
 ]
 
 export const allPagesMock: PagesResponse = {

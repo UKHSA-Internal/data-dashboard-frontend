@@ -10,6 +10,7 @@ import {
   accessibilityStatementPageMock,
   accessOurDataChildMocks,
   accessOurDataParentMock,
+  acknowledgementPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
@@ -17,6 +18,7 @@ import {
   covid19PageMock,
   dashboardMock,
   feedbackMock,
+  healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
   metricsChildMocks,
@@ -38,6 +40,7 @@ import {
 
 // The non-public dashboard signup page
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
+  [acknowledgementPageMock.id]: acknowledgementPageMock,
   [dashboardMock.id]: dashboardMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
@@ -48,6 +51,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [whatsComingPageMock.id]: whatsComingPageMock,
   [influenzaPageMock.id]: influenzaPageMock,
   [covid19PageMock.id]: covid19PageMock,
+  [healthTopicsPageMock.id]: healthTopicsPageMock,
   [otherRespiratoryVirusesPageMock.id]: otherRespiratoryVirusesPageMock,
   [whatsNewParentMock.id]: whatsNewParentMock,
   [metricsParentMock.id]: metricsParentMock,
