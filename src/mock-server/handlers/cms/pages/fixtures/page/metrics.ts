@@ -20,7 +20,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
       id: 3,
       meta: {
         type: 'home.LandingPage',
-        detail_url: 'http://localhost:3000/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -53,7 +53,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -128,7 +128,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -195,7 +195,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -255,7 +255,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -314,7 +314,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -383,7 +383,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',

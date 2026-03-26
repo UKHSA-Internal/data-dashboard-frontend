@@ -7,8 +7,8 @@ export const weatherHealthAlertsParentMock: PageResponse<PageType.Composite> = {
   id: 40,
   meta: {
     type: 'composite.CompositePage',
-    detail_url: 'http://localhost:3000/api/pages/40/',
-    html_url: 'http://localhost:3000/weather-health-alerts',
+    detail_url: 'http://localhost/api/pages/40/',
+    html_url: 'http://localhost/weather-health-alerts',
     slug: 'weather-health-alerts',
     show_in_menus: false,
     seo_title: 'Weather health alerts | UKHSA data dashboard',
@@ -19,7 +19,7 @@ export const weatherHealthAlertsParentMock: PageResponse<PageType.Composite> = {
       id: 3,
       meta: {
         type: 'home.LandingPage',
-        detail_url: 'http://localhost:3000/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -66,8 +66,8 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
     id: 41,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/41/',
-      html_url: 'http://localhost:3000/weather-health-alerts/cold',
+      detail_url: 'http://localhost/api/pages/41/',
+      html_url: 'http://localhost/weather-health-alerts/heat',
       slug: 'cold',
       show_in_menus: false,
       seo_title: 'Cold health alerts | UKHSA data dashboard',
@@ -78,7 +78,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         id: 40,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/40/',
+          detail_url: 'http://localhost/api/pages/40/',
           html_url: null,
         },
         title: 'Weather health alerts',
@@ -123,8 +123,8 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
     id: 42,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/42/',
-      html_url: 'http://localhost:3000/weather-health-alerts/heat',
+      detail_url: 'http://localhost/api/pages/42/',
+      html_url: 'http://localhost/weather-health-alerts/heat',
       slug: 'heat',
       show_in_menus: false,
       seo_title: 'Heat health alerts | UKHSA data dashboard',
@@ -135,7 +135,7 @@ export const weatherHealthAlertsChildMocks: PageResponse<PageType.Composite>[] =
         id: 40,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/40/',
+          detail_url: 'http://localhost/api/pages/40/',
           html_url: null,
         },
         title: 'Weather health alerts',

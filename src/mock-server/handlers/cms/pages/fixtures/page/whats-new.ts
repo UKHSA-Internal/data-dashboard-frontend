@@ -19,7 +19,7 @@ export const whatsNewParentMock: PageResponse<PageType.WhatsNewParent> = {
       id: 3,
       meta: {
         type: 'home.LandingPage',
-        detail_url: 'http://localhost:3000/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -53,7 +53,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
         id: 21,
         meta: {
           type: 'whats_new.WhatsNewParentPage',
-          detail_url: 'http://localhost:3000/api/pages/21/',
+          detail_url: 'http://localhost/api/pages/21/',
           html_url: null,
         },
         title: "What's new",
@@ -88,7 +88,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
         id: 21,
         meta: {
           type: 'whats_new.WhatsNewParentPage',
-          detail_url: 'http://localhost:3000/api/pages/21/',
+          detail_url: 'http://localhost/api/pages/21/',
           html_url: null,
         },
         title: "What's new",
@@ -123,7 +123,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
         id: 21,
         meta: {
           type: 'whats_new.WhatsNewParentPage',
-          detail_url: 'http://localhost:3000/api/pages/21/',
+          detail_url: 'http://localhost/api/pages/21/',
           html_url: null,
         },
         title: "What's new",
@@ -159,7 +159,7 @@ export const whatsNewChildMocks: PageResponse<PageType.WhatsNewChild>[] = [
         id: 21,
         meta: {
           type: 'whats_new.WhatsNewParentPage',
-          detail_url: 'http://localhost:3000/api/pages/21/',
+          detail_url: 'http://localhost/api/pages/21/',
           html_url: null,
         },
         title: "What's new",

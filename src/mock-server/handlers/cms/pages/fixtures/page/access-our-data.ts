@@ -7,8 +7,8 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
   id: 31,
   meta: {
     type: 'composite.CompositePage',
-    detail_url: 'http://localhost:3000/api/pages/31/',
-    html_url: 'http://localhost:3000/access-our-data',
+    detail_url: 'http://localhost/api/pages/31/',
+    html_url: 'http://localhost/access-our-data',
     slug: 'access-our-data',
     show_in_menus: true,
     seo_title: 'Access our data | UKHSA data dashboard',
@@ -19,7 +19,7 @@ export const accessOurDataParentMock: PageResponse<PageType.Composite> = {
       id: 3,
       meta: {
         type: 'home.LandingPage',
-        detail_url: 'http://localhost:3000/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -66,8 +66,8 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     id: 32,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/32/',
-      html_url: 'http://localhost:3000/access-our-data/overview',
+      detail_url: 'http://localhost/api/pages/32/',
+      html_url: 'http://localhost/access-our-data/overview',
       slug: 'overview',
       show_in_menus: false,
       seo_title: 'Overview - Access our data | UKHSA data dashboard',
@@ -78,7 +78,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         id: 31,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/31/',
+          detail_url: 'http://localhost/api/pages/31/',
           html_url: null,
         },
         title: 'Access our data',
@@ -106,8 +106,8 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     id: 33,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/33/',
-      html_url: 'http://localhost:3000/access-our-data/what-is-an-api',
+      detail_url: 'http://localhost/api/pages/33/',
+      html_url: 'http://localhost/access-our-data/what-is-an-api',
       slug: 'what-is-an-api',
       show_in_menus: false,
       seo_title: 'What is an API - Access our data | UKHSA data dashboard',
@@ -118,7 +118,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         id: 31,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/31/',
+          detail_url: 'http://localhost/api/pages/31/',
           html_url: null,
         },
         title: 'Access our data',
@@ -145,8 +145,8 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     id: 34,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/34/',
-      html_url: 'http://localhost:3000/access-our-data/getting-started',
+      detail_url: 'http://localhost/api/pages/34/',
+      html_url: 'http://localhost/access-our-data/getting-started',
       slug: 'getting-started',
       show_in_menus: false,
       seo_title: 'Getting started - Access our data | UKHSA data dashboard',
@@ -157,7 +157,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         id: 31,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/31/',
+          detail_url: 'http://localhost/api/pages/31/',
           html_url: null,
         },
         title: 'Access our data',
@@ -212,8 +212,8 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     id: 35,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/35/',
-      html_url: 'http://localhost:3000/access-our-data/api-authentication',
+      detail_url: 'http://localhost/api/pages/35/',
+      html_url: 'http://localhost/access-our-data/api-authentication',
       slug: 'api-authentication',
       show_in_menus: false,
       seo_title: 'API Authentication - Access our data | UKHSA data dashboard',
@@ -224,7 +224,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         id: 31,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/31/',
+          detail_url: 'http://localhost/api/pages/31/',
           html_url: null,
         },
         title: 'Access our data',
@@ -249,8 +249,8 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
     id: 36,
     meta: {
       type: 'composite.CompositePage',
-      detail_url: 'http://localhost:3000/api/pages/35/',
-      html_url: 'http://localhost:3000/access-our-data/data-structure',
+      detail_url: 'http://localhost/api/pages/35/',
+      html_url: 'http://localhost/access-our-data/data-structure',
       slug: 'data-structure',
       show_in_menus: false,
       seo_title: 'Data structure - Access our data | UKHSA data dashboard',
@@ -261,7 +261,7 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
         id: 31,
         meta: {
           type: 'composite.CompositePage',
-          detail_url: 'http://localhost:3000/api/pages/31/',
+          detail_url: 'http://localhost/api/pages/31/',
           html_url: null,
         },
         title: 'Access our data',
