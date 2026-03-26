@@ -4,6 +4,7 @@ import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/P
 import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
+import { authEnabled } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
@@ -49,6 +50,7 @@ export async function Download({
         tagManagerEventId={tag_manager_event_id}
         confidenceIntervals={confidence_intervals ?? false}
         isPublic={isPublic}
+        authEnabled={authEnabled}
       />
     )
   }

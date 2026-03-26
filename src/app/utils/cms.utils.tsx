@@ -10,6 +10,7 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL } from '@/app/utils/show-more.utils'
+import { authEnabled } from '@/config/constants'
 
 import {
   ButtonExternal,
@@ -30,7 +31,6 @@ import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards
 import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
-
 // TODO: Move this file into cms folder
 export const renderSection = async (
   showMoreSections: string[],
@@ -91,7 +91,9 @@ export const renderCard = (
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
-      {type === 'filter_linked_sub_plot_chart_template' && <SubplotFilterCardContainer isPublic={isPublic} />}
+      {type === 'filter_linked_sub_plot_chart_template' && (
+        <SubplotFilterCardContainer isPublic={isPublic} authEnabled={authEnabled} />
+      )}
 
       {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer isPublic={isPublic} />}
 

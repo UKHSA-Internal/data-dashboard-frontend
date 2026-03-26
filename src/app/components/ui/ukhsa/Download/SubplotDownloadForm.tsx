@@ -7,15 +7,21 @@ import { useTranslation } from 'react-i18next'
 
 import { downloadFile } from '@/app/utils/download.utils'
 import { subplotChartExportApiRoutePath } from '@/config/constants'
-
 interface SubplotDownloadFormProps {
   chart: Record<string, unknown>
   xAxis: string
   tagManagerEventId: string | null
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
-export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId, isPublic = true }: SubplotDownloadFormProps) {
+export function SubplotDownloadForm({
+  chart,
+  xAxis,
+  tagManagerEventId,
+  isPublic = true,
+  authEnabled,
+}: SubplotDownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownloadBanner, setShowDownloadBanner] = useState(false)
   const router = useRouter()
@@ -26,7 +32,7 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId, isPublic 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (isPublic === false && showDownloadBanner === false) {
+    if (authEnabled && isPublic === false && showDownloadBanner === false) {
       setShowDownloadBanner(true)
       return
     }

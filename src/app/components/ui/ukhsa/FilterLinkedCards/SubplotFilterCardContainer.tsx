@@ -7,9 +7,10 @@ import SubplotFilterCard from './SubplotFilterCard'
 
 interface SubplotFilterCardContainerProps {
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
-const SubplotFilterCardContainer = ({ isPublic }: SubplotFilterCardContainerProps) => {
+const SubplotFilterCardContainer = ({ isPublic, authEnabled }: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -40,6 +41,7 @@ const SubplotFilterCardContainer = ({ isPublic }: SubplotFilterCardContainerProp
               timePeriods={timePeriods!}
               timePeriodTitle={timePeriodTitle!}
               isPublic={isPublic}
+              authEnabled={authEnabled}
             />
           )
         })
