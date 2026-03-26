@@ -22,8 +22,6 @@ const TimeSeriesFilterCardsContainer = ({
     return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
   }
 
-  console.log('Time Series Card authEnabled: ', authEnabled)
-
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
       {isChartDataAvailable() ? (
