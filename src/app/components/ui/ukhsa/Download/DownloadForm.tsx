@@ -15,6 +15,7 @@ interface DownloadFormProps {
   tagManagerEventId: string | null
   confidenceIntervals?: boolean
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
 export function DownloadForm({
@@ -23,6 +24,7 @@ export function DownloadForm({
   tagManagerEventId,
   confidenceIntervals = false,
   isPublic = true,
+  authEnabled,
 }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownloadBanner, setShowDownloadBanner] = useState(false)
@@ -39,7 +41,7 @@ export function DownloadForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (isPublic === false && showDownloadBanner === false) {
+    if (authEnabled && isPublic === false && showDownloadBanner === false) {
       setShowDownloadBanner(true)
       return
     }

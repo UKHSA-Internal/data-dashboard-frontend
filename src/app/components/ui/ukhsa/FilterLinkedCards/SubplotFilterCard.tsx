@@ -21,7 +21,6 @@ import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.ut
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
-
 interface SubplotFilterCardProps {
   geography: GeographiesSchemaObject
   selectedVaccinations: DataFilter[]
@@ -31,6 +30,7 @@ interface SubplotFilterCardProps {
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
 const SubplotFilterCard = ({
@@ -41,6 +41,7 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
+  authEnabled,
   isPublic,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
@@ -170,6 +171,7 @@ const SubplotFilterCard = ({
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 selectedThresholds={selectedThresholds}
                 isPublic={isPublic}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             {about && (
