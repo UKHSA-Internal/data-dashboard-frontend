@@ -95,7 +95,9 @@ export const renderCard = (
         <SubplotFilterCardContainer isPublic={isPublic} authEnabled={authEnabled} />
       )}
 
-      {type === 'filter_linked_time_series_chart_template' && <TimeSeriesFilterCardsContainer isPublic={isPublic} />}
+      {type === 'filter_linked_time_series_chart_template' && (
+        <TimeSeriesFilterCardsContainer isPublic={isPublic} authEnabled={authEnabled} />
+      )}
 
       {type === 'chart_card_section' && (
         <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />

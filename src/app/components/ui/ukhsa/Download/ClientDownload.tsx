@@ -15,9 +15,10 @@ interface ClientDownloadProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
-export function ClientDownload({ geography, dataFilters, timePeriods, isPublic }: ClientDownloadProps) {
+export function ClientDownload({ geography, dataFilters, timePeriods, isPublic, authEnabled }: ClientDownloadProps) {
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState(true)
   const [tableError, setTableError] = useState<string | null>(null)
@@ -123,7 +124,15 @@ export function ClientDownload({ geography, dataFilters, timePeriods, isPublic }
       })
     )
 
-    return <DownloadForm chart={chart} xAxis={x_axis} tagManagerEventId={null} isPublic={isPublic} />
+    return (
+      <DownloadForm
+        chart={chart}
+        xAxis={x_axis}
+        tagManagerEventId={null}
+        isPublic={isPublic}
+        authEnabled={authEnabled}
+      />
+    )
   }
 
   return (

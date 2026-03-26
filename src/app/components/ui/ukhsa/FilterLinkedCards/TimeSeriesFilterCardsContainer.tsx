@@ -7,9 +7,10 @@ import TimeseriesFilterCard from './TimeseriesFilterCard'
 
 interface TimeSeriesFilterCardsContainerProps {
   isPublic?: boolean
+  authEnabled?: boolean
 }
 
-const TimeSeriesFilterCardsContainer = ({ isPublic }: TimeSeriesFilterCardsContainerProps) => {
+const TimeSeriesFilterCardsContainer = ({ isPublic, authEnabled }: TimeSeriesFilterCardsContainerProps) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
@@ -29,6 +30,7 @@ const TimeSeriesFilterCardsContainer = ({ isPublic }: TimeSeriesFilterCardsConta
               dataFilters={selectedVaccinationFilters!}
               cardData={timeseriesTemplateData!}
               isPublic={isPublic}
+              authEnabled={authEnabled}
             />
           )
         })
