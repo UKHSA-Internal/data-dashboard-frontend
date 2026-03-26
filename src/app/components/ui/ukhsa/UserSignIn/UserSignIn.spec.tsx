@@ -13,6 +13,6 @@ describe('UserSignIn Component', () => {
 
   test('renders the sign-in button', async () => {
     render(await UserSignIn())
-    expect(screen.getByRole('button', { name: 'Start now' })).toBeInTheDocument()
+    expect(screen.getByRole('button', { name: 'Sign in' })).toBeInTheDocument()
   })
 })
