@@ -219,46 +219,109 @@ export class App {
 
     await expect(this.menuLinkOpen).toBeVisible()
 
-    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toMatchAriaSnapshot(`
-      - navigation "Menu":
-        ${this.authEnabled ? '- button "Sign out"' : ''}
-        - heading "Respiratory viruses" [level=3]
-        - list:
-          - listitem:
-            - link "COVID-19"
-            - paragraph: COVID-19 respiratory infection statistics
-          - listitem:
-            - link "Influenza"
-            - paragraph: Flu ICU and HDU admissions and other statistics
-          - listitem:
-            - link "Other respiratory viruses"
-            - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
-        - heading "Services and information" [level=3]
-        - list:
-          - listitem:
-            - link "Homepage"
-            - paragraph: The UKHSA data dashboard
-          - listitem:
-            - link "About"
-            - paragraph: About the dashboard
-          - listitem:
-            - link "Metrics documentation"
-            - paragraph: See all available metrics
-          - listitem:
-            - link "Weather health alerts"
-            - paragraph: Weather health alerting system provided by UKHSA
-          - listitem:
-            - link "Access our data"
-            - paragraph: API developer's guide
-        - list:
-          - listitem:
-            - link "What's new"
-          - listitem:
-            - link "What's coming"
-          - listitem:
-            - link "Switchboard"
-            - paragraph: Front-end environment settings
-  `)
+    // SHOULD FAIL.  This is because the expectation below is out of sync with
+    // the code in MegaMenu.tsx
+    // MegaMenu.tsx generates an href
+    // - the string literal below does not have hrefs, so the test SHOULD fail
+    const expectedMenu = `
+- navigation "Menu":${
+      this.authEnabled
+        ? `
+  - button "Sign out"`
+        : ''
+    }
+  - heading "Respiratory viruses" [level=3]
+  - list:
+    - listitem:
+      - link "COVID-19"
+      - paragraph: COVID-19 respiratory infection statistics
+    - listitem:
+      - link "Influenza"
+      - paragraph: Flu ICU and HDU admissions and other statistics
+    - listitem:
+      - link "Other respiratory viruses"
+      - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
+    - listitem:
+      - link "Childhood Vaccination Coverage"
+      - paragraph: Childhood vaccination coverage for England
+  - heading "Services and information" [level=3]
+  - list:
+    - listitem:
+      - link "Homepage"
+      - paragraph: The UKHSA data dashboard
+    - listitem:
+      - link "About"
+      - paragraph: About the dashboard
+    - listitem:
+      - link "Metrics documentation"
+      - paragraph: See all available metrics
+    - listitem:
+      - link "Weather health alerts"
+      - paragraph: Weather health alerting system provided by UKHSA
+    - listitem:
+      - link "Access our data"
+      - paragraph: API developer's guide
+  - list:
+    - listitem:
+      - link "What's new"
+    - listitem:
+      - link "What's coming"
+`.trim()
+
+    // Get the ARIA snapshot string from the page
+    const menuTree = await this.page.getByRole('navigation', { name: 'Menu' }).ariaSnapshot()
+
+    // Compare directly to our expected string
+    expect(menuTree.trim()).toBe(expectedMenu.trim())
+
+    // ORIGINAL CODE BELOW.  THIS PASSES IF WE RUN ON THE CI SERVER OR
+    // LOCALLY WITH npx playwright test --update-snapshot ... etc.
+    // THE ISSUE COULD POSSIBLY BE THAT IT IS AUTO-GENERATING A SNAPSHOT
+    // OF THE CURRENT DOM, AND THEREFORE OUR TEST IS NOT USING
+    // THE ONLINE STRING LITERAL, BUT IS USING THE REGENERATED SNAPSHOT
+    // WHICH WOULD MEAN THAT WE ARE SIMPLY COMPARING THE CURRENT DOM TO ITSELF!
+    // THIS PRODUCES A FALSE POSITIVE!
+
+    //   await expect(this.page.getByRole('navigation', { name: 'Menu' })).toMatchAriaSnapshot(`
+    //     - navigation "Menu":
+    //       ${this.authEnabled ? '- button "Sign out"' : ''}
+    //       - heading "Respiratory viruses" [level=3]
+    //       - list:
+    //         - listitem:
+    //           - link "COVID-19"
+    //           - paragraph: COVID-19 respiratory infection statistics
+    //         - listitem:
+    //           - link "Influenza"
+    //           - paragraph: Flu ICU and HDU admissions and other statistics
+    //         - listitem:
+    //           - link "Other respiratory viruses"
+    //           - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
+    //       - heading "Services and information" [level=3]
+    //       - list:
+    //         - listitem:
+    //           - link "Homepage"
+    //           - paragraph: The UKHSA data dashboard
+    //         - listitem:
+    //           - link "About"
+    //           - paragraph: About the dashboard
+    //         - listitem:
+    //           - link "Metrics documentation"
+    //           - paragraph: See all available metrics
+    //         - listitem:
+    //           - link "Weather health alerts"
+    //           - paragraph: Weather health alerting system provided by UKHSA
+    //         - listitem:
+    //           - link "Access our data"
+    //           - paragraph: API developer's guide
+    //       - list:
+    //         - listitem:
+    //           - link "What's new"
+    //         - listitem:
+    //           - link "What's coming"
+    //         - listitem:
+    //           - link "Switchboard"
+    //           - paragraph: Front-end environment settings
+    // `)
 
     // Close menu
     await this.menuLinkOpen.click()
