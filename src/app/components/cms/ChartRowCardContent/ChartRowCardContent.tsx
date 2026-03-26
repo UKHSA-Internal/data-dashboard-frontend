@@ -157,7 +157,13 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Tabular data
                     </span>
-                    <Table data={column.value} size={size} />
+                    <Table
+                      data={column.value}
+                      size={size}
+                      isPublic={isPublic}
+                      level={pageClassification}
+                      authEnabled={authEnabled}
+                    />
                   </TabsContent>
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-download`}

@@ -4,6 +4,7 @@ import { kebabCase } from 'lodash'
 import { Fragment, useEffect, useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
@@ -11,6 +12,7 @@ import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCa
 import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
+import { getColumnHeader } from '@/app/utils/table.utils'
 import {
   getMinMaxFullDate,
   getMinMaxTimePeriodLabels,
@@ -26,20 +28,22 @@ interface TableProps {
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
+  isPublic?: boolean
+  level?: DataClassification
+  authEnabled?: boolean
 }
-
-// To receieve axis title, chart.label, & fallback text
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
-  if (chartLabel) return chartLabel
-
-  if (axisTitle) return axisTitle
-
-  return fallback
-}
-
-export function ClientTable({ size, geography, dataFilters, timePeriods, cardData }: TableProps) {
+//
+export function ClientTable({
+  size,
+  geography,
+  dataFilters,
+  timePeriods,
+  cardData,
+  isPublic,
+  level,
+  authEnabled,
+}: TableProps) {
   const { t } = useTranslation('common')
-
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>()
   const [tableLoading, setTableLoading] = useState(true)
@@ -236,7 +240,7 @@ export function ClientTable({ size, geography, dataFilters, timePeriods, cardDat
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
                       </th>
                     )
                   })}
