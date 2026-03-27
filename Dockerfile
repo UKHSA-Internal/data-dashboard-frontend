@@ -22,12 +22,13 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm run build
+RUN mkdir -p /app/.next/cache
 
 #
 # Runtime stage (distroless, nonroot)
 # Only copy what is required to run the built app.
 #
-FROM gcr.io/distroless/nodejs22 AS runner
+FROM gcr.io/distroless/nodejs22:nonroot@sha256:c76575945c7abe77aec0cfd130944a875826f8433de2f113c1d9f7d2567d4fee AS runner
 
 WORKDIR /app
 
@@ -39,13 +40,14 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
 # Next.js standalone output (server.js + minimal node_modules) + static assets
-COPY --from=builder /app/public ./public
+COPY --from=builder --chown=nonroot:nonroot /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
-COPY --from=builder /app/next.config.js ./next.config.js
+COPY --from=builder --chown=nonroot:nonroot /app/.next/standalone ./
+COPY --from=builder --chown=nonroot:nonroot /app/.next/static ./.next/static
+COPY --from=builder --chown=nonroot:nonroot /app/.next/cache ./.next/cache
+COPY --from=builder --chown=nonroot:nonroot /app/next.config.js ./next.config.js
 
 EXPOSE 3000
 
