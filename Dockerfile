@@ -28,7 +28,9 @@ RUN mkdir -p /app/.next/cache
 # Runtime stage (distroless, nonroot)
 # Only copy what is required to run the built app.
 #
-FROM gcr.io/distroless/nodejs22:nonroot@sha256:c76575945c7abe77aec0cfd130944a875826f8433de2f113c1d9f7d2567d4fee AS runner
+
+# Pinned tag + digest (nonroot, Debian 12); bump digest when upgrading the runtime image.
+FROM gcr.io/distroless/nodejs22@sha256:c76575945c7abe77aec0cfd130944a875826f8433de2f113c1d9f7d2567d4fee AS runner
 
 WORKDIR /app
 
