@@ -1,32 +1,16 @@
 import { NextResponse } from 'next/server'
-import { getApiBaseUrl } from '@/api/requests/helpers'
+import { getMetrics } from '@/api/requests/telemetry/getMetrics'
 
 export async function GET() {
   try {
-    const url = `${getApiBaseUrl()}/telemetry/metrics/`
-
-    const response = await fetch(url, {
-      method: 'GET',
-    })
-
-    if (!response.ok) {
-      return NextResponse.json(
-        { error: 'Failed to fetch metrics' },
-        { status: 500 }
-      )
-    }
-
-    const text = await response.text()
+    const text = await getMetrics()
 
     return new NextResponse(text, {
-      status: 200,
-      headers: {
-        'content-type': 'text/plain',
-      },
+      headers: { 'content-type': 'text/plain' },
     })
   } catch (err) {
     return NextResponse.json(
-      { error: 'Metrics proxy failed' },
+      { error: 'Metrics failed' },
       { status: 500 }
     )
   }

@@ -3,6 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { getDownloads, requestSchema } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 
+
 export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
