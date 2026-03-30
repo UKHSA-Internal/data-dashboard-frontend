@@ -40,6 +40,9 @@ ENV KEEP_ALIVE_TIMEOUT 61000
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
+RUN mkdir -p /app/.next/cache
+RUN chown -R nonroot:nonroot /app/.next/cache
+
 # Next.js standalone output (server.js + minimal node_modules) + static assets.
 COPY --from=builder --chown=nonroot:nonroot /app/public ./public
 
