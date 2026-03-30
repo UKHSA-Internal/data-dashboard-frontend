@@ -21,7 +21,8 @@ COPY . .
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm run build
+# Ensure the standalone output traces the cache handler + its deps into `.next/standalone`.
+RUN npm run build && mkdir -p /app/.next/cache/fetch-cache
 
 #
 # Runtime stage (distroless, nonroot)
@@ -43,12 +44,15 @@ ENV TZ "Europe/London"
 # Next.js standalone output (server.js + minimal node_modules) + static assets.
 # Keep copied layers non-writable; mount a writable cache at runtime if needed.
 COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/public ./public
+# Do not copy `.next/cache` into the image (it is runtime state). In compose we mount a writable tmpfs
+# at `/app/.next/cache` for Next.js to create `fetch-cache` etc.
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/.next/standalone ./
 COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/.next/static ./.next/static
 COPY --from=builder --chown=nonroot:nonroot --chmod=444 /app/next.config.js ./next.config.js
+COPY --from=builder --chown=nonroot:nonroot --chmod=444 /app/cache-handler.mjs ./cache-handler.mjs
 
 EXPOSE 3000
 
