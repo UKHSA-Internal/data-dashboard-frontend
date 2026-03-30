@@ -41,14 +41,13 @@ ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
 # Next.js standalone output (server.js + minimal node_modules) + static assets.
-# --chmod strips all write bits (555 dirs/files, 444 config) for copied layers.
-COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/public ./public
+COPY --from=builder --chown=nonroot:nonroot /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
 COPY --from=builder --chown=nonroot:nonroot /app/.next/standalone ./
-COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/.next/static ./.next/static
-COPY --from=builder --chown=nonroot:nonroot --chmod=444 /app/next.config.js ./next.config.js
+COPY --from=builder --chown=nonroot:nonroot /app/.next/static ./.next/static
+COPY --from=builder --chown=nonroot:nonroot /app/next.config.js ./next.config.js
 
 EXPOSE 3000
 
