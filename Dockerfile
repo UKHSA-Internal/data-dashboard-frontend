@@ -40,17 +40,15 @@ ENV KEEP_ALIVE_TIMEOUT 61000
 ENV NEXT_TELEMETRY_DISABLED 1
 ENV TZ "Europe/London"
 
-RUN mkdir -p /app/.next/cache
-RUN chown -R nonroot:nonroot /app/.next/cache
-
 # Next.js standalone output (server.js + minimal node_modules) + static assets.
-COPY --from=builder --chown=nonroot:nonroot /app/public ./public
+# Keep copied layers non-writable; mount a writable cache at runtime if needed.
+COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nonroot:nonroot /app/.next/standalone ./
-COPY --from=builder --chown=nonroot:nonroot /app/.next/static ./.next/static
-COPY --from=builder --chown=nonroot:nonroot /app/next.config.js ./next.config.js
+COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/.next/standalone ./
+COPY --from=builder --chown=nonroot:nonroot --chmod=555 /app/.next/static ./.next/static
+COPY --from=builder --chown=nonroot:nonroot --chmod=444 /app/next.config.js ./next.config.js
 
 EXPOSE 3000
 
