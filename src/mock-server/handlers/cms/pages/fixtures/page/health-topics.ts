@@ -7,8 +7,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
     seo_title: 'Health topics',
     search_description: '',
     type: 'topics_list.TopicsListPage',
-    detail_url: 'https://localhost/api/pages/83/',
-    html_url: 'https://localhost/health-topics/',
+    detail_url: 'http://localhost/api/pages/83/',
+    html_url: 'http://localhost/health-topics/',
     slug: 'health-topics',
     show_in_menus: false,
     first_published_at: '2026-03-04T18:11:01.107400Z',
@@ -17,7 +17,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
       id: 3,
       meta: {
         type: 'home.UKHSARootPage',
-        detail_url: 'https://localhost/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -29,7 +29,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
       type: 'section',
       value: {
         heading: 'Current topics',
-        page_link: 'https://localhost/respiratory-viruses/',
+        page_link: 'http://localhost/respiratory-viruses/',
         content: [
           {
             type: 'chart_card_section',
@@ -40,7 +40,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                   value: {
                     title: 'COVID-19',
                     sub_title: 'Cases reported',
-                    topic_page: 'https://localhost/respiratory-viruses/covid-19/',
+                    topic_page: 'http://localhost/respiratory-viruses/covid-19/',
                     description:
                       'This chart show data for COVID-19. Specifically the metric cases by count rolling mean',
                     source: {
@@ -87,7 +87,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                   value: {
                     title: 'Influenza',
                     sub_title: 'Healthcare admission rates',
-                    topic_page: 'https://localhost/respiratory-viruses/influenza/',
+                    topic_page: 'http://localhost/respiratory-viruses/influenza/',
                     description:
                       'This chart show data for Influenza. Specifically the metric ICUHDU admission rate by week',
                     source: {
@@ -134,7 +134,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                   value: {
                     title: 'RSV',
                     sub_title: 'Positivity by week',
-                    topic_page: 'https://localhost/respiratory-viruses/other-respiratory-viruses/',
+                    topic_page: 'http://localhost/respiratory-viruses/other-respiratory-viruses/',
                     description: 'This chart show data for RSV. Specifically the metric ICUHDU admission rate by week',
                     source: {
                       link_display_text: '',

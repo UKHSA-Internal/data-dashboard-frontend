@@ -17,6 +17,7 @@ import {
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
   respiratoryVirusesMock,
+  startPageMock,
   vaccinationCoverageMock,
   whatsComingPageMock,
   whatsNewChildMocks,
@@ -96,9 +97,24 @@ export const pagesWithAcknowledgementTypeMock: PagesResponse = {
 
 export const pagesWithCommonTypeMock: PagesResponse = {
   meta: {
-    total_count: 5,
+    total_count: 6,
   },
   items: [
+    {
+      id: startPageMock.id,
+      meta: {
+        type: startPageMock.meta.type,
+        detail_url: startPageMock.meta.detail_url,
+        html_url: startPageMock.meta.html_url,
+        slug: startPageMock.meta.slug,
+        search_description: startPageMock.meta.search_description,
+        show_in_menus: startPageMock.meta.show_in_menus,
+        first_published_at: startPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: startPageMock.seo_change_frequency,
+      seo_priority: startPageMock.seo_priority,
+      title: startPageMock.title,
+    },
     {
       id: aboutPageMock.id,
       meta: {
