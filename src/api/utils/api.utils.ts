@@ -85,19 +85,19 @@ function clientBuildFetchOptions({
 }
 
 // Utility to read preview info from cookies (SSR and CSR)
-export function getPreviewInfoFromCookie() {
+export async function getPreviewInfoFromCookie() {
   let isPreview = false
-  let draftAuthToken: string | undefined = undefined
+  let cmsAuthToken: string | undefined = undefined
   if (globalThis.window === undefined) {
     // --- Server-side ---
     try {
       // Dynamically import next/headers only on the server
       const { cookies } = require('next/headers')
-      const cookieStore = cookies()
+      const cookieStore = await cookies()
       const queryStringParams = cookieStore.get('queryStringParams')?.value
       if (queryStringParams) {
         const params = JSON.parse(queryStringParams)
-        draftAuthToken = params['t']
+        cmsAuthToken = params['t']
         isPreview = params['isPreview'] === 'true'
       }
     } catch {}
@@ -115,11 +115,11 @@ export function getPreviewInfoFromCookie() {
     if (queryStringParams) {
       try {
         const params = JSON.parse(decodeURIComponent(queryStringParams))
-        draftAuthToken = params['t']
+        cmsAuthToken = params['t']
       } catch {}
     }
   }
-  return { isPreview, draftAuthToken }
+  return { isPreview, cmsAuthToken }
 }
 
 export async function clientHandleSwitchboardBranch(headers: Record<string, string>): Promise<Record<string, string>> {
@@ -137,24 +137,31 @@ export async function clientHandleSwitchboardBranch(headers: Record<string, stri
   return headers
 }
 
-export function clientHandlePreviewBranch(
+export async function clientHandleAuthToken(headers: Record<string, string>): Promise<Record<string, string>> {
+  const { cmsAuthToken } = await getPreviewInfoFromCookie()
+
+  if (cmsAuthToken) {
+    headers['x-cms-auth'] = `Bearer ${cmsAuthToken}`
+  }
+
+  return headers
+}
+
+export async function clientHandlePreviewBranch(
   endpoint: string,
   headers: Record<string, string>,
   customConfig: any
-): {
+): Promise<{
   endpoint: string
   headers: Record<string, string>
   customConfig: any
   isPublic: boolean
-} {
-  const { isPreview, draftAuthToken } = getPreviewInfoFromCookie()
+}> {
+  const { isPreview } = await getPreviewInfoFromCookie()
   const isPublic = false
 
-  if (isPreview && endpoint.startsWith('pages')) {
-    endpoint = endpoint.replace(/^pages/, 'drafts')
-    if (draftAuthToken) {
-      headers['x-draft-auth'] = `Bearer ${draftAuthToken}`
-    }
+  if (isPreview) {
+    endpoint = endpoint.replace(/^pages/, 'drafts') // will fetch the draft version
     customConfig.cache = 'no-store'
     customConfig.next = { revalidate: 0 }
   }
@@ -236,7 +243,7 @@ export async function client<T>(
     'content-type': 'application/json',
   }
 
-  const previewResult = clientHandlePreviewBranch(endpoint, headers, customConfig)
+  const previewResult = await clientHandlePreviewBranch(endpoint, headers, customConfig)
   endpoint = previewResult.endpoint
 
   // Defaulting all requests to public (non-authenticated) for now.
@@ -248,6 +255,12 @@ export async function client<T>(
 
   const switchResult = await clientHandleSwitchboardBranch(headers)
   headers = switchResult
+
+  // All api calls get the auth token, if present
+  // The backend will be able to unpack this, validate it
+  // and set embargo time travel if OK
+  const authTokenResult = await clientHandleAuthToken(headers)
+  headers = authTokenResult
 
   const fetchOptions = clientBuildFetchOptions({
     body,

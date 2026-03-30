@@ -66,6 +66,7 @@ export async function processPreviewMode(request: NextRequest): Promise<NextResp
     // The presence of the isPreview param in the cookie will signal to getPageBySlug
     // to fetch the draft version of the page using the provided token
     const rewriteUrl = new URL(`/preview/${normalizedSlug}`, request.url)
+    rewriteUrl.search = request.nextUrl.search
     const response = NextResponse.rewrite(rewriteUrl)
 
     // Set the query params in a cookie for downchain use

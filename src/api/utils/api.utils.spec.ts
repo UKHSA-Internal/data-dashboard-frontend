@@ -304,7 +304,7 @@ describe('client()', () => {
       if (cookieSpy) cookieSpy.mockRestore()
     })
 
-    it('rewrites pages endpoint to drafts and sets x-draft-auth header in preview mode', async () => {
+    it('rewrites pages endpoint to drafts and sets x-cms-auth header in preview mode', async () => {
       cookieSpy = jest
         .spyOn(document, 'cookie', 'get')
         .mockReturnValue(
@@ -316,17 +316,17 @@ describe('client()', () => {
       await client('pages/123')
       const [url, options] = mockFetchFn.mock.calls[0]
       expect(url).toContain('drafts/123')
-      expect(options.headers['x-draft-auth']).toBe('Bearer draft-token')
+      expect(options.headers['x-cms-auth']).toBe('Bearer draft-token')
       expect(options.cache).toBe('no-store')
       expect(options.next).toEqual({ revalidate: 0, tags: [] })
     })
 
-    it('does not rewrite endpoint or set x-draft-auth if not preview', async () => {
+    it('does not rewrite endpoint or set x-cms-auth if not preview', async () => {
       cookieSpy = jest.spyOn(document, 'cookie', 'get').mockReturnValue('isPreview=false')
       await client('pages/456')
       const [url, options] = mockFetchFn.mock.calls[0]
       expect(url).toContain('pages/456')
-      expect(options.headers['x-draft-auth']).toBeUndefined()
+      expect(options.headers['x-cms-auth']).toBeUndefined()
     })
   })
 
