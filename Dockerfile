@@ -5,6 +5,9 @@ FROM node:22.13.1-bookworm-slim AS builder
 
 WORKDIR /app
 
+# Log effective user/group and ownership of WORKDIR (.)
+RUN echo "[docker build] process: $(id -u) $(id -un) / $(id -g) $(id -gn) (groups: $(id -Gn))" \
+  && echo "[docker build] WORKDIR .:" && ls -ld .
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json ./
@@ -45,11 +48,11 @@ COPY --from=builder /app/public ./public
 
 # Automatically leverage output traces to reduce image size
 # https://nextjs.org/docs/advanced-features/output-file-tracing
-COPY --from=builder --chown=nextjs:nodejs /app/.next/standalone ./
-COPY --from=builder --chown=nextjs:nodejs /app/.next/static ./.next/static
+COPY --from=builder --chown=65532:65532 /app/.next/standalone ./
+COPY --from=builder --chown=65532:65532 /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
 
-COPY --from=builder --chown=nextjs:nodejs /app/.next/cache/fetch-cache ./app/.next/cache/fetch-cache
+COPY --from=builder --chown=65532:65532 /app/.next/cache/fetch-cache ./app/.next/cache/fetch-cache
 
 EXPOSE 3000
 
