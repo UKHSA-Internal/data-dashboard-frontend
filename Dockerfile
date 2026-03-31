@@ -24,7 +24,7 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
 #
-# Runtime stage (distroless, nonroot)
+# Runtime stage (distroless, root user`)
 # Only copy what is required to run the built app.
 #
 FROM gcr.io/distroless/nodejs22 AS runner
