@@ -27,8 +27,10 @@ ENV NEXT_TELEMETRY_DISABLED 1
 RUN npm run build
 
 # Pre-create cache directories and make them universally writable to support any deployed environment UID
-RUN mkdir -p /app/.next/standalone/.next/cache/fetch-cache \
-    && chmod -R 777 /app/.next/standalone/.next/cache
+RUN mkdir -p /app/.next/standalone/
+RUN mkdir -p /app/.next/cache/fetch-cache
+RUN chmod -R 777 /app/.next/standalone/
+RUN chmod -R 777 /app/.next/cache
 
 #
 # Runtime stage (distroless, nonroot)
@@ -38,9 +40,6 @@ RUN mkdir -p /app/.next/standalone/.next/cache/fetch-cache \
 FROM gcr.io/distroless/nodejs22:nonroot AS runner
 
 WORKDIR /app
-
-# Provide a minimal /bin/sh via BusyBox for debugging
-COPY --from=busybox /bin/busybox /bin/sh
 
 ENV NODE_ENV production
 ENV KEEP_ALIVE_TIMEOUT 61000
