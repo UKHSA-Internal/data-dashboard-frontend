@@ -20,7 +20,7 @@ export const metricsParentMock: PageResponse<PageType.MetricsParent> = {
       id: 3,
       meta: {
         type: 'home.LandingPage',
-        detail_url: 'http://localhost:3000/api/pages/3/',
+        detail_url: 'http://localhost/api/pages/3/',
         html_url: null,
       },
       title: 'UKHSA Dashboard Root',
@@ -53,7 +53,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -113,12 +113,12 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
     is_public: false,
   },
   {
-    id: 27,
+    id: 30,
     meta: {
       seo_title: 'Metrics child | UKHSA data dashboard',
       search_description: '',
       type: 'metrics_documentation.MetricsDocumentationChildEntry',
-      detail_url: 'http://localhost/api/pages/27/',
+      detail_url: 'http://localhost/api/pages/30/',
       html_url: 'http://localhost/metrics-documentation/new-deaths-7days-change-percentage',
       slug: 'new-deaths-7days-change-percentage',
       show_in_menus: false,
@@ -128,7 +128,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -195,7 +195,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -255,7 +255,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -314,7 +314,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',
@@ -383,7 +383,7 @@ export const metricsChildMocks: PageResponse<PageType.MetricsChild>[] = [
         id: metricsParentMock.id,
         meta: {
           type: 'metrics_documentation.MetricsDocumentationParentPage',
-          detail_url: 'http://localhost:3000/api/pages/25/',
+          detail_url: 'http://localhost/api/pages/25/',
           html_url: null,
         },
         title: 'Metrics documentation',

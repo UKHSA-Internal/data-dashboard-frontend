@@ -8,6 +8,7 @@ import { accessOurDataChildMocks, accessOurDataParentMock } from './fixtures/pag
 import { weatherHealthAlertsChildMocks, weatherHealthAlertsParentMock } from './fixtures/page/weather-health-alerts'
 import {
   allPagesMock,
+  pagesWithAcknowledgementTypeMock,
   pagesWithCommonTypeMock,
   pagesWithCompositeTypeMock,
   pagesWithFeedbackTypeMock,
@@ -32,6 +33,7 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'whats_new.WhatsNewChildEntry': pagesWithWhatsNewChildTypeMock,
   'metrics_documentation.MetricsDocumentationParentPage': pagesWithMetricsParentTypeMock,
   'metrics_documentation.MetricsDocumentationChildEntry': pagesWithMetricsChildTypeMock,
+  'acknowledgement.AcknowledgementPage': pagesWithAcknowledgementTypeMock,
 }
 
 export default async function handler(req: Request, res: Response) {

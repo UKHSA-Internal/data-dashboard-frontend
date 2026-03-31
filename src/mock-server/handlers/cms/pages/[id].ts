@@ -10,6 +10,7 @@ import {
   accessibilityStatementPageMock,
   accessOurDataChildMocks,
   accessOurDataParentMock,
+  acknowledgementPageMock,
   archiveDataPageMock,
   bulkDownloadsPageMock,
   compliancePageMock,
@@ -24,6 +25,7 @@ import {
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
   respiratoryVirusesMock,
+  startPageMock,
   vaccinationCoverageMock,
   weatherHealthAlertsChildMocks,
   weatherHealthAlertsParentMock,
@@ -32,8 +34,13 @@ import {
   whatsNewParentMock,
 } from './fixtures/page'
 
-// Contains the individual `/pages/{id}` mocks
+/**
+ * Contains the individual `/pages/{id}` mocks
+ */
+
+// The non-public dashboard signup page
 export const mockedPageMap: Record<number, PageResponse<PageType>> = {
+  [acknowledgementPageMock.id]: acknowledgementPageMock,
   [dashboardMock.id]: dashboardMock,
   [cookiesPageMock.id]: cookiesPageMock,
   [accessibilityStatementPageMock.id]: accessibilityStatementPageMock,
@@ -54,6 +61,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [respiratoryVirusesMock.id]: respiratoryVirusesMock,
   [feedbackMock.id]: feedbackMock,
   [vaccinationCoverageMock.id]: vaccinationCoverageMock,
+  [startPageMock.id]: startPageMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(metricsChildMocks.map((mock) => [mock.id, mock])),
   ...Object.fromEntries(accessOurDataChildMocks.map((mock) => [mock.id, mock])),
