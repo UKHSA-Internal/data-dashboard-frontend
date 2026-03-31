@@ -5,9 +5,6 @@ FROM node:22.13.1-bookworm-slim AS builder
 
 WORKDIR /app
 
-# Log effective user/group and ownership of WORKDIR (.)
-RUN echo "[docker build] process: $(id -u) $(id -un) / $(id -g) $(id -gn) (groups: $(id -Gn))" \
-  && echo "[docker build] WORKDIR .:" && ls -ld .
 
 # Install dependencies based on the preferred package manager
 COPY package.json package-lock.json ./
@@ -25,16 +22,15 @@ COPY . .
 ENV NEXT_TELEMETRY_DISABLED 1
 
 RUN npm run build \
-    # Symlink Next.js cache to /tmp (world-writable in distroless) to support arbitrary non-root UIDs
     && rm -rf /app/.next/standalone/.next/cache \
     && ln -s /tmp /app/.next/standalone/.next/cache
+    && ln -s /tmp /app/.next/cache
 
 #
 # Runtime stage (distroless, nonroot)
 # Only copy what is required to run the built app.
 #
-# FROM gcr.io/distroless/nodejs22@sha256:c76575945c7abe77aec0cfd130944a875826f8433de2f113c1d9f7d2567d4fee AS runner
-FROM gcr.io/distroless/nodejs22:nonroot AS runner
+FROM gcr.io/distroless/nodejs22@sha256:c76575945c7abe77aec0cfd130944a875826f8433de2f113c1d9f7d2567d4fee AS runner
 
 WORKDIR /app
 
@@ -53,7 +49,6 @@ COPY --from=builder --chown=nonroot:nonroot /app/public ./public
 COPY --from=builder --chown=nonroot:nonroot /app/.next/standalone ./
 COPY --from=builder --chown=nonroot:nonroot /app/.next/static ./.next/static
 COPY --from=builder --chown=nonroot:nonroot /app/next.config.js ./next.config.js
-
 
 EXPOSE 3000
 
