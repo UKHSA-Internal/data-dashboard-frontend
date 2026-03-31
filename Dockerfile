@@ -24,13 +24,10 @@ COPY . .
 # Disable telemetry during build
 ENV NEXT_TELEMETRY_DISABLED 1
 
-RUN npm run build
-
-# Pre-create cache directories and make them universally writable to support any deployed environment UID
-RUN mkdir -p /app/.next/standalone/
-RUN mkdir -p /app/.next/cache/fetch-cache
-RUN chmod -R 777 /app/.next/standalone/
-RUN chmod -R 777 /app/.next/cache
+RUN npm run build \
+    # Symlink Next.js cache to /tmp (world-writable in distroless) to support arbitrary non-root UIDs
+    && rm -rf /app/.next/standalone/.next/cache \
+    && ln -s /tmp /app/.next/standalone/.next/cache
 
 #
 # Runtime stage (distroless, nonroot)
