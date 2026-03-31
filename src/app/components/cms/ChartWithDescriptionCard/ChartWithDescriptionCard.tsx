@@ -8,10 +8,9 @@ import { getPath } from '@/app/utils/cms/slug'
 
 type ChartWithDescriptionCardProps = {
   readonly value: any
-  readonly cardsCount: number
 }
 
-export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescriptionCardProps) {
+export function ChartWithDescriptionCard({ value }: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
   const hasSource = value.source && (value.source.external_url || value.source.page)
 
@@ -29,27 +28,21 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
           <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
             {value.title}
           </h3>
-          <p className="govuk-body-s mb-3 text-grey-1">{value.sub_title}</p>
+          <p className="govuk-body-s mb-5 text-grey-1">{value.sub_title}</p>
 
-          <div>
-            <Chart
-              enableInteractive={false}
-              data={value}
-              sizes={[
-                {
-                  minWidth: 1200,
-                  size: cardsCount < 3 ? 'half' : 'third',
-                },
-                {
-                  size: 'third',
-                  default: true,
-                },
-              ]}
-            />
-          </div>
+          <Chart
+            enableInteractive={false}
+            data={value}
+            sizes={[
+              {
+                size: 'half',
+                default: true,
+              },
+            ]}
+          />
 
           {value.description && (
-            <p className="govuk-body-s mb-0 mt-3 text-grey-1" data-testid="chart-description">
+            <p className="govuk-body-s mb-0 mt-5 text-grey-1" data-testid="chart-description">
               {value.description}
               <span className="govuk-link govuk-link--no-visited-state ml-1 text-blue hover:text-dark-blue">
                 Visit {value.title} to find out more
