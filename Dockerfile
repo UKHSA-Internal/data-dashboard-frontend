@@ -52,7 +52,7 @@ COPY --from=builder --chown=65532:65532 /app/.next/standalone ./
 COPY --from=builder --chown=65532:65532 /app/.next/static ./.next/static
 COPY --from=builder /app/next.config.js ./next.config.js
 
-COPY --from=builder --chown=65532:65532 /app/.next/cache/fetch-cache ./app/.next/cache/fetch-cache
+COPY --from=builder --chown=65532:65532 /app/.next ./app/.next
 
 EXPOSE 3000
 
