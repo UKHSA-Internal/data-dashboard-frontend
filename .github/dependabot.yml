@@ -6,6 +6,8 @@ updates:
       prefix: "build"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 5
 
   - package-ecosystem: "docker"
     directory: "/"
@@ -13,3 +15,5 @@ updates:
       prefix: "build"
     schedule:
       interval: "weekly"
+    cooldown:
+      default-days: 5
