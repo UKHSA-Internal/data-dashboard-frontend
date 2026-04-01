@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
-import { getPages } from '@/api/requests/cms/getPages'
+import { searchPages } from '@/api/requests/cms/searchPages'
 
 const DEBOUNCE_MILLISECONDS = 300
 
@@ -13,9 +13,6 @@ interface SearchProps {
 }
 
 export function Search({ label, placeholder }: SearchProps) {
-  const limit = 5
-
-  // CSS used to hide the search bar for non-JS users
   interface SearchResult {
     readonly title: string
     readonly meta: {
@@ -27,14 +24,14 @@ export function Search({ label, placeholder }: SearchProps) {
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
   const [searchResults, setSearchResults] = useState<SearchResult[] | undefined>([])
 
-  const getSearchResults = async ({ query }: { query: string }) => {
-    const pages = await getPages({ limit: limit.toString(), search: query })
+  const getSearchResults = async ({ search }: { search: string }) => {
+    const pages = await searchPages({ search })
     setSearchResults(pages?.data?.items)
   }
 
   useEffect(() => {
     if (debouncedSearchValue) {
-      getSearchResults({ query: debouncedSearchValue })
+      getSearchResults({ search: debouncedSearchValue })
     } else {
       setSearchResults([])
     }

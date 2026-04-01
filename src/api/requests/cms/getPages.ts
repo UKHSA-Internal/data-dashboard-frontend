@@ -107,7 +107,7 @@ export const metricsChildResponseSchema = responseSchema.extend({
         })
       ),
       is_public: z.boolean(),
-      page_classification: DataClassification.or(fallback(undefined))
+      page_classification: DataClassification.or(fallback(undefined)),
     })
   ),
 })

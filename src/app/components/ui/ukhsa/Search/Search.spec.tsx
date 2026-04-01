@@ -5,11 +5,11 @@ import { render } from '@/config/test-utils'
 
 import Search from './Search'
 
-const getPages = jest.mocked(client)
+const mockClient = jest.mocked(client)
 
 beforeEach(() => {
   jest.clearAllMocks()
-  getPages.mockResolvedValue({
+  mockClient.mockResolvedValue({
     status: 200,
     data: {
       meta: { total_count: 1 },
@@ -50,4 +50,15 @@ test('searching displays results', async () => {
   await userEvent.type(getByRole('textbox'), 'query')
   expect(getByRole('textbox').getAttribute('value')).toBe('query')
   expect(await findByRole('link', { name: 'Result 1' })).toBeVisible()
+})
+
+test('searching uses correct query', async () => {
+  const query = 'query'
+  const search = render(<Search placeholder="Search" label="Search" />)
+  const { getByRole, findByRole } = search
+  await userEvent.type(getByRole('textbox'), query)
+  // Wait for the effect to finish
+  await findByRole('link', { name: 'Result 1' })
+  expect(mockClient).toHaveBeenCalledTimes(1)
+  expect(mockClient.mock.calls[0][1]?.searchParams?.toString()).toEqual(`fields=title&offset=0&search=${query}`)
 })
