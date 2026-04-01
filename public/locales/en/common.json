@@ -87,7 +87,9 @@
         "inputLabel_csv": "CSV",
         "inputLabel_json": "JSON",
         "buttonDownload": "Download",
-        "buttonDownloading": "Downloading"
+        "buttonDownloading": "Downloading",
+        "buttonDownloadAlert": "Continue and download",
+        "headingAlert": "Caution"
       },
       "chart": {
         "alt": "{{- body}} - Refer to tabular data."
