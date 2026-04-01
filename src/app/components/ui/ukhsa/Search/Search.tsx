@@ -42,12 +42,12 @@ export function Search({ label, placeholder }: SearchProps) {
 
   return (
     <form method="GET" aria-label={label}>
-      <div className="govuk-form-group">
+      <div className="govuk-form-group m-0">
         <label className="govuk-label" htmlFor="search" hidden={true}>
           {placeholder}
         </label>
         <input
-          className="govuk-input"
+          className="govuk-input govuk-!-font-size-16"
           id="search"
           name="search"
           type="text"
