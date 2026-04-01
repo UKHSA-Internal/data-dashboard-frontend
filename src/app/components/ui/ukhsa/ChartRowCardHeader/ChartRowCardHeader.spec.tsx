@@ -14,14 +14,30 @@ const getAreaSelectorMock = jest.mocked(getAreaSelector)
 describe('ChartRowCardHeader', () => {
   test('renders correctly with props', async () => {
     getAreaSelectorMock.mockResolvedValue([])
-    render(await ChartRowCardHeader({ id: '1', title: 'Sample Title', description: 'Sample Description' }))
+    render(
+      await ChartRowCardHeader({
+        id: '1',
+        title: 'Sample Title',
+        description: 'Sample Description',
+        pageClassification: 'default',
+        authEnabled: false,
+      })
+    )
     expect(screen.getByRole('heading', { level: 3, name: 'Sample Title' })).toBeInTheDocument()
     expect(screen.getByText('Sample Description')).toBeInTheDocument()
   })
 
   test('displays a location when set', async () => {
     getAreaSelectorMock.mockResolvedValue([null, 'Test Area'])
-    render(await ChartRowCardHeader({ id: '1', title: 'Title', description: 'Description' }))
+    render(
+      await ChartRowCardHeader({
+        id: '1',
+        title: 'Title',
+        description: 'Description',
+        pageClassification: 'default',
+        authEnabled: false,
+      })
+    )
     expect(screen.getByRole('heading', { level: 3, name: 'Title (Test Area)' })).toBeInTheDocument()
   })
 
@@ -31,18 +47,22 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
+        pageClassification: 'default',
+        authEnabled: false,
         children: <div>Child Element</div>,
       })
     )
     expect(screen.getByText('Child Element')).toBeInTheDocument()
   })
 
-  test('has correct structure and HTML elements', async () => {
+  test('applies correct classes to description and heading', async () => {
     render(
       await ChartRowCardHeader({
         id: '1',
         title: 'Title',
         description: 'Description',
+        pageClassification: 'default',
+        authEnabled: false,
       })
     )
     expect(screen.getByText('Description')).toHaveClass(
