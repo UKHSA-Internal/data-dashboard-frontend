@@ -90,6 +90,7 @@ export async function processStandardMode(request: NextRequest): Promise<NextRes
   // Default response for non-preview requests
   const response = NextResponse.next()
   response.headers.set('x-url', request.url)
+
   // Ensure isPreview is false for published pages.
   // This MUST be set for each request because the same client
   // may be used to access both preview and non-preview pages,
@@ -122,7 +123,9 @@ export async function processStandardMode(request: NextRequest): Promise<NextRes
       await validateAndRenewSession(request, response)
     } catch (error) {
       logger.error('Auth middleware error:', error)
-      return NextResponse.redirect(new URL('/start', request.url))
+      const redirectResponse = NextResponse.redirect(new URL('/start', request.url))
+      redirectResponse.headers.set('x-url', request.url)
+      return redirectResponse
     }
   }
 
@@ -144,7 +147,9 @@ export async function processStandardMode(request: NextRequest): Promise<NextRes
           },
         } = pages
 
-        return NextResponse.rewrite(new URL(`/access-our-data/${slug}`, request.url))
+        const rewriteResponse = NextResponse.rewrite(new URL(`/access-our-data/${slug}`, request.url))
+        rewriteResponse.headers.set('x-url', request.url)
+        return rewriteResponse
       }
 
       notFound()
