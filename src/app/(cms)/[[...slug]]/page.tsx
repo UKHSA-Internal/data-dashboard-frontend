@@ -4,6 +4,7 @@ import { ComponentType } from 'react'
 
 import { PageType } from '@/api/requests/cms/getPages'
 import AcknowledgementPage from '@/app/components/cms/pages/Acknowledgement'
+import AuthErrorPage from '@/app/components/cms/pages/AuthError'
 import CompositePage from '@/app/components/cms/pages/Composite'
 import FeedbackPage from '@/app/components/cms/pages/Feedback'
 import LandingPage from '@/app/components/cms/pages/Landing'
@@ -52,6 +53,7 @@ const PageComponents: Record<PageType, ComponentType<PageComponentBaseProps>> = 
   [PageType.WhatsNewParent]: WhatsNewParentPage,
   [PageType.WhatsNewChild]: WhatsNewChildPage,
   [PageType.Acknowledgement]: AcknowledgementPage,
+  [PageType.AuthError]: AuthErrorPage,
 }
 
 /**
