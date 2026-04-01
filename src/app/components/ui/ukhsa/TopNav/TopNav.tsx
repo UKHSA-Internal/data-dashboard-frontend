@@ -8,7 +8,7 @@ import { useClickAway } from 'react-use'
 /**
  * Topnav
  */
-export const TopNav = ({ children, avatar = null }: { children: ReactNode; avatar?: ReactNode }) => {
+export function TopNav({ children, avatar = null }: { children: ReactNode; avatar?: ReactNode }) {
   const pathname = usePathname()
   const topNavRef = useRef(null)
   const [menuOpen, setMenuOpen] = useState(false)
@@ -28,7 +28,7 @@ export const TopNav = ({ children, avatar = null }: { children: ReactNode; avata
       <div className="govuk-width-container relative">
         <Link
           className={clsx(
-            'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse group absolute -top-9 right-0 z-10 flex h-9 items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none md:-top-9 md:h-9',
+            'govuk-!-font-size-16 ukhsa-chevron govuk-link govuk-link--inverse ukhsa-topnav group absolute right-0 z-10 flex items-center px-4 font-bold no-underline shadow-none motion-reduce:transition-none',
             {
               'open bg-light-grey text-blue': menuOpen,
             }
