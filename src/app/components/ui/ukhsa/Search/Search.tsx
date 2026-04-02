@@ -24,6 +24,7 @@ export function Search({ label, placeholder }: SearchProps) {
   const [searchInputValue, setSearchInputValue] = useState('')
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
   const [searchResults, setSearchResults] = useState<SearchResult[] | undefined>([])
+  const [searchOpen, setSearchOpen] = useState(false)
 
   useEffect(() => {
     if (!debouncedSearchValue) return
@@ -34,6 +35,7 @@ export function Search({ label, placeholder }: SearchProps) {
       const pages = await searchPages({ limit: limit.toString(), search: debouncedSearchValue })
       if (cancelled) return
       setSearchResults(pages?.data?.items ?? [])
+      setSearchOpen(true)
     }
 
     void fetchResults()
@@ -44,6 +46,16 @@ export function Search({ label, placeholder }: SearchProps) {
   }, [debouncedSearchValue])
 
   const displayedResults = debouncedSearchValue ? searchResults : []
+
+  useEffect(() => {
+    window.addEventListener('keydown', (event) => {
+      // Clear search results when escape key is pressed
+      if (event.key === 'Escape') {
+        setSearchResults([])
+        setSearchOpen(false)
+      }
+    })
+  }, [])
 
   return (
     <form method="GET" aria-label={label}>
@@ -56,6 +68,8 @@ export function Search({ label, placeholder }: SearchProps) {
           id="search"
           name="search"
           type="text"
+          aria-controls="ukhsa-search-results"
+          aria-activedescendant=""
           placeholder={placeholder}
           value={searchInputValue}
           onChange={(event) => {
@@ -63,12 +77,14 @@ export function Search({ label, placeholder }: SearchProps) {
           }}
         />
         <div className="absolute z-[1000] max-h-[200px] overflow-y-auto bg-white shadow-[0px_15px_15px_0px_rgba(0,0,0,0.35)] sm:w-5/12">
-          <ul>
+          <ul role="listbox" aria-expanded={searchOpen} aria-label="search-results" id="ukhsa-search-results">
             {displayedResults?.map(({ title, meta: { html_url } }, i) => (
               <li
                 key={`result-${i}`}
                 value="{i}"
                 className="govuk-!-padding-3 govuk-!-margin-left-2 govuk-!-margin-right-2 border-b shadow-[0_1px_0_#929191]"
+                role="option"
+                aria-label="search-result-${i}"
               >
                 <Link href={html_url || ''}>{title}</Link>
               </li>
