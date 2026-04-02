@@ -52,7 +52,7 @@ export async function GovukHeader({ serviceTitle }: GovukHeaderProps) {
                 </Link>
               </div>
 
-              <div className="ukhsa-search float-right mt-3 h-9 sm:w-5/12">
+              <div className="ukhsa-search float-right h-9 flex-auto items-center pt-2 sm:w-5/12">
                 <Search placeholder={t('search.searchTitle')} label={t('search.searchLabel')} />
               </div>
             </div>
