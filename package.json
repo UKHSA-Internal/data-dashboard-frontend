@@ -50,7 +50,7 @@
     "prism-react-renderer": "^2.3.1",
     "prismjs": "^1.30.0",
     "react": "19.0.0",
-    "react-dom": "19.0.0",
+    "react-dom": "19.2.4",
     "react-error-boundary": "^4.0.13",
     "react-i18next": "^14.1.0",
     "react-leaflet": "^5.0.0",
