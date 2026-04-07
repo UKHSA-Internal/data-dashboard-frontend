@@ -4,6 +4,7 @@ import React, { Fragment } from 'react'
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getTables } from '@/api/requests/tables/getTables'
 import { RichText } from '@/app/components/cms'
@@ -11,6 +12,7 @@ import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
+import { getColumnHeader } from '@/app/utils/table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
@@ -24,15 +26,11 @@ interface TableProps {
 
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
-}
 
-// To receieve axis title, chart.label, & fallback text
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
-  if (chartLabel) return chartLabel
+  isPublic?: boolean
 
-  if (axisTitle) return axisTitle
-
-  return fallback
+  level?: DataClassification
+  authEnabled?: boolean
 }
 
 /**
@@ -99,6 +97,9 @@ export async function Table({
     confidence_intervals_description,
   },
   size,
+  isPublic = false,
+  level,
+  authEnabled,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
@@ -196,7 +197,7 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
                       </th>
                     )
                   })}

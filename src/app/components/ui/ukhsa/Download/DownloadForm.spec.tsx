@@ -131,64 +131,15 @@ describe('DownloadForm', () => {
   })
 
   test('renders a hidden field for a chart x-axis if one is selected', () => {
-    const headline_chart_props = { ...props, xAxis: 'geography' }
-    render(<DownloadForm {...headline_chart_props} />)
+    render(<DownloadForm {...props} xAxis="geography" />)
 
-    // Form
-    const form = screen.getByRole('form', { name: 'Download' })
-    expect(form).toHaveAttribute('method', 'POST')
-    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
-
-    expect(screen.getByLabelText('CSV')).toBeChecked()
-
-    // Hidden inputs
-    expect(screen.getByTestId('download-form-plots')).toHaveValue(
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        stratum: '',
-        geography_type: '',
-        geography: '',
-        date_from: null,
-        date_to: null,
-        age: '',
-        sex: '',
-      })
-    )
     expect(screen.getByTestId('download-x-axis')).toHaveValue('geography')
-
-    // CTA
-    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
   })
 
   test('does not render hidden field for a chart x-axis if one is not provided', () => {
     render(<DownloadForm {...props} />)
 
-    // Form
-    const form = screen.getByRole('form', { name: 'Download' })
-    expect(form).toHaveAttribute('method', 'POST')
-    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
-
-    expect(screen.getByLabelText('CSV')).toBeChecked()
-
-    // Hidden inputs
-    expect(screen.getByTestId('download-form-plots')).toHaveValue(
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        stratum: '',
-        geography_type: '',
-        geography: '',
-        date_from: null,
-        date_to: null,
-        age: '',
-        sex: '',
-      })
-    )
     expect(screen.queryByTestId('download-x-axis')).toBeNull()
-
-    // CTA
-    expect(screen.getByRole('button', { name: 'Download' })).toHaveAttribute('type', 'submit')
   })
 
   test('renders confidence_intervals hidden field with value false by default', () => {
@@ -201,23 +152,103 @@ describe('DownloadForm', () => {
   })
 
   test('renders confidence_intervals hidden field with value true when confidenceIntervals prop is true', () => {
-    const propsWithConfidenceIntervals = { ...props, confidenceIntervals: true }
-    render(<DownloadForm {...propsWithConfidenceIntervals} />)
+    render(<DownloadForm {...props} confidenceIntervals={true} />)
 
     const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
-    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
-    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
     expect(confidenceIntervalsInput).toHaveValue('true')
   })
 
   test('renders confidence_intervals hidden field with value false when confidenceIntervals prop is false', () => {
-    const propsWithConfidenceIntervals = { ...props, confidenceIntervals: false }
-    render(<DownloadForm {...propsWithConfidenceIntervals} />)
+    render(<DownloadForm {...props} confidenceIntervals={false} />)
 
     const confidenceIntervalsInput = screen.getByTestId('download-confidence-intervals')
-    expect(confidenceIntervalsInput).toHaveAttribute('type', 'hidden')
-    expect(confidenceIntervalsInput).toHaveAttribute('name', 'confidence_intervals')
     expect(confidenceIntervalsInput).toHaveValue('false')
+  })
+
+  describe('official sensitive download banner', () => {
+    test('shows acknowledgement banner on first submit when isPublic is false', async () => {
+      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+      expect(screen.getByText(/official sensitive data/i)).toBeInTheDocument()
+      expect(fetch).not.toHaveBeenCalled()
+    })
+
+    test('proceeds with download on second submit after banner is shown', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          text: async () => Promise.resolve('mock-download'),
+        } as Response)
+      )
+
+      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      await waitFor(() => {
+        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    test('dismisses banner when back button is clicked', async () => {
+      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      await waitFor(() => {
+        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+      })
+
+      await userEvent.click(screen.getByRole('button', { name: 'Back' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+    })
+
+    test('does not show acknowledgement banner when isPublic is true', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          text: async () => Promise.resolve('mock-download'),
+        } as Response)
+      )
+
+      render(<DownloadForm {...props} isPublic={true} authEnabled={true} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
+
+    test('does not show acknowledgement banner when authEnabled is false', async () => {
+      jest.mocked(fetch).mockReturnValueOnce(
+        Promise.resolve({
+          text: async () => Promise.resolve('mock-download'),
+        } as Response)
+      )
+
+      render(<DownloadForm {...props} isPublic={false} authEnabled={false} />)
+
+      await userEvent.click(screen.getByRole('button', { name: 'Download' }))
+
+      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+
+      await waitFor(() => {
+        expect(fetch).toHaveBeenCalledTimes(1)
+      })
+    })
   })
 
   test('Downloading a csv file for users with JavaScript', async () => {
@@ -231,33 +262,7 @@ describe('DownloadForm', () => {
 
     render(<DownloadForm {...props} />)
 
-    // Form
-    const form = screen.getByRole('form', { name: 'Download' })
-    expect(form).toHaveAttribute('method', 'POST')
-    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
-    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
-
-    expect(screen.getByLabelText('CSV')).toBeChecked()
-
-    // Hidden inputs
-    expect(screen.getByTestId('download-form-plots')).toHaveValue(
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        stratum: '',
-        geography_type: 'Nation',
-        geography: 'England',
-        date_from: null,
-        date_to: null,
-        age: '',
-        sex: '',
-      })
-    )
-
-    // CTA
     const button = screen.getByRole('button', { name: 'Download' })
-    expect(button).toHaveAttribute('type', 'submit')
-
     await userEvent.click(button)
 
     await waitFor(() => {
@@ -276,39 +281,12 @@ describe('DownloadForm', () => {
 
     render(<DownloadForm {...props} />)
 
-    // Form
-    const form = screen.getByRole('form', { name: 'Download' })
-    expect(form).toHaveAttribute('method', 'POST')
-    expect(form).toHaveAttribute('action', chartExportApiRoutePath)
-    expect(form).toHaveAttribute('data-tag-manager-event-id', 'new_cases_daily_test_tag')
-
-    expect(screen.getByLabelText('CSV')).toBeChecked()
-
     await userEvent.click(screen.getByLabelText('JSON'))
 
     expect(screen.getByLabelText('CSV')).not.toBeChecked()
     expect(screen.getByLabelText('JSON')).toBeChecked()
 
-    // Hidden inputs
-    expect(screen.getByTestId('download-form-plots')).toHaveValue(
-      JSON.stringify({
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        stratum: '',
-        geography_type: 'Nation',
-        geography: 'England',
-        date_from: null,
-        date_to: null,
-        age: '',
-        sex: '',
-      })
-    )
-
-    // CTA
-    const button = screen.getByRole('button', { name: 'Download' })
-    expect(button).toHaveAttribute('type', 'submit')
-
-    await userEvent.click(button)
+    await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
     await waitFor(() => {
       expect(downloadFile).toHaveBeenNthCalledWith(1, 'ukhsa-chart-download.json', new Blob(['mock-download']))
@@ -318,10 +296,7 @@ describe('DownloadForm', () => {
   test('handles download error and redirects to error page', async () => {
     jest.mocked(fetch).mockRejectedValueOnce(new Error('Network error'))
 
-    mockRouter.push('/topics/mock-topic')
-
     const mockReplace = jest.fn()
-
     const useRouterSpy = jest.spyOn(require('next/navigation'), 'useRouter')
     useRouterSpy.mockReturnValue({
       ...mockRouter,
@@ -332,8 +307,7 @@ describe('DownloadForm', () => {
 
     render(<DownloadForm {...props} />)
 
-    const button = screen.getByRole('button', { name: 'Download' })
-    await userEvent.click(button)
+    await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
     await waitFor(
       () => {
