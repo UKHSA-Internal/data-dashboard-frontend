@@ -2,6 +2,7 @@ import { getAcknowledgementPage } from '@/app/utils/cms'
 
 import Form from '../../../features/Acknowledgement/Form'
 import { Announcements, View } from '../../ui/ukhsa'
+import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 
 export default async function AcknowledgementPage() {
@@ -19,6 +20,7 @@ export default async function AcknowledgementPage() {
 
   return (
     <View>
+      <ClassificationBanner size="large" level="official_sensitive" />
       <Heading heading={title} />
       <Announcements announcements={active_announcements} />
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
