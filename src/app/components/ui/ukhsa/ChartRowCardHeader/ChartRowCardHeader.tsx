@@ -1,16 +1,7 @@
 import { ReactNode } from 'react'
 
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
-
-type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
-
-const levelContent: Record<Level, string> = {
-  official: '(Official)',
-  official_sensitive: '(Official Sensitive)',
-  protective_marking_not_set: '(Protective marking not set)',
-  secret: '(Secret)',
-  top_secret: '(Top Secret)',
-}
+import { getDataClassification } from '@/app/utils/table.utils'
 
 interface ChartRowCardHeaderProps {
   children?: ReactNode
@@ -20,18 +11,6 @@ interface ChartRowCardHeaderProps {
   isPublic?: boolean
   pageClassification?: string
   authEnabled?: boolean
-}
-
-const getDataClassification = (
-  isPublic: boolean | undefined,
-  pageClassification: string,
-  authEnabled: boolean | undefined
-): string => {
-  console.log('Auth enabled:', authEnabled, 'Is public:', isPublic, 'Page classification:', pageClassification)
-  if (authEnabled && isPublic === false) {
-    return pageClassification in levelContent ? levelContent[pageClassification as Level] : 'Official-Sensitive'
-  }
-  return ''
 }
 
 export async function ChartRowCardHeader({
