@@ -32,7 +32,6 @@ import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards
 import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
-
 // TODO: Move this file into cms folder
 export const renderSection = async (
   showMoreSections: string[],

@@ -155,6 +155,8 @@ const TimeseriesFilterCard = ({
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
                 cardData={cardData}
+                isPublic={isPublic}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             {about && (
