@@ -1,16 +1,17 @@
 'use client'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
 import SubplotFilterCard from './SubplotFilterCard'
 
-interface SubplotFilterCardContainerProps {
+type SubplotFilterCardContainerProps = {
   isPublic?: boolean
+  pageClassification?: DataClassification
   authEnabled?: boolean
 }
-
-const SubplotFilterCardContainer = ({ isPublic, authEnabled }: SubplotFilterCardContainerProps) => {
+const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled }: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -41,6 +42,7 @@ const SubplotFilterCardContainer = ({ isPublic, authEnabled }: SubplotFilterCard
               timePeriods={timePeriods!}
               timePeriodTitle={timePeriodTitle!}
               isPublic={isPublic}
+              level={pageClassification}
               authEnabled={authEnabled}
             />
           )

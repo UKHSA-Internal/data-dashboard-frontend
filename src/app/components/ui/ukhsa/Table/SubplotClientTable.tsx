@@ -10,6 +10,7 @@ import {
   ThresholdFilter,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getSubplotTables, Response } from '@/api/requests/tables/subplot/getSubplotTables'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
@@ -21,6 +22,7 @@ import {
   getGeographyColourSelection,
   getParentGeography,
 } from '@/app/utils/geography.utils'
+import { getColumnHeader } from '@/app/utils/table.utils'
 import { mapThresholdsToMetricValueRanges, MetricValueRange } from '@/app/utils/threshold.utils'
 import { chartTableMaxColumns } from '@/config/constants'
 
@@ -34,14 +36,9 @@ interface TableProps {
   timePeriods: TimePeriod[]
   currentTimePeriodIndex: number
   cardData: FilterLinkedSubplotData
-}
-
-const getColumnHeader = (chartLabel: string, axisTitle: string, fallback: string) => {
-  if (chartLabel) return chartLabel
-
-  if (axisTitle) return axisTitle
-
-  return fallback
+  isPublic?: boolean
+  level?: DataClassification
+  authEnabled?: boolean
 }
 
 export function SubplotClientTable({
@@ -54,6 +51,9 @@ export function SubplotClientTable({
   timePeriods,
   currentTimePeriodIndex,
   cardData,
+  isPublic,
+  level,
+  authEnabled,
 }: TableProps) {
   const { t } = useTranslation('common')
 
@@ -174,7 +174,7 @@ export function SubplotClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
                       </th>
                     )
                   })}

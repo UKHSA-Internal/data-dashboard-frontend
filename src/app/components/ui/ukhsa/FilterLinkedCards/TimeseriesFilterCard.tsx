@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { About } from '@/app/components/cms/About/About'
 import { ClientDownload } from '@/app/components/ui/ukhsa/Download/ClientDownload'
@@ -24,6 +25,7 @@ interface TimeseriesFilterCardProps {
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
   isPublic?: boolean
+  level?: DataClassification
   authEnabled?: boolean
 }
 
@@ -33,6 +35,7 @@ const TimeseriesFilterCard = ({
   dataFilters,
   cardData,
   isPublic,
+  level,
   authEnabled,
 }: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
@@ -133,6 +136,9 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 size={'wide'}
                 cardData={cardData}
+                isPublic={isPublic}
+                level={level}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             <TabsContent
