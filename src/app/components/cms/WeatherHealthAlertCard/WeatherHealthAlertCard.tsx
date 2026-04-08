@@ -5,18 +5,18 @@ import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
 
 type WeatherHealthAlertCardProps = {
-  value: {
-    title: string
-    sub_title: string
-    alert_type: string
-    description?: string | null
-    source?: {
-      link_display_text?: string | null
-      page?: string | null
-      external_url?: string | null
+  readonly value: {
+    readonly title: string
+    readonly sub_title: string
+    readonly alert_type: string
+    readonly description?: string | null
+    readonly source?: {
+      readonly link_display_text?: string | null
+      readonly page?: string | null
+      readonly external_url?: string | null
     }
   }
-  className?: string
+  readonly className?: string
 }
 
 export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertCardProps) {

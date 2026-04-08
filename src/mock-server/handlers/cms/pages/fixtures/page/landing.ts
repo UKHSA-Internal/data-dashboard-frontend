@@ -59,8 +59,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     x_axis_title: 'Date',
                     y_axis: 'metric',
                     y_axis_title: 'Coverage (%)',
-                    y_axis_minimum_value: 0.0,
-                    y_axis_maximum_value: 100.0,
+                    y_axis_minimum_value: 0,
+                    y_axis_maximum_value: 100,
                     show_tooltips: true,
                     chart: [
                       {
@@ -101,7 +101,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     x_axis_title: 'Date',
                     y_axis: 'metric',
                     y_axis_title: 'Cases',
-                    y_axis_minimum_value: 0.0,
+                    y_axis_minimum_value: 0,
                     y_axis_maximum_value: null,
                     chart: [
                       {
@@ -748,7 +748,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     x_axis_title: 'Date',
                     y_axis: 'metric',
                     y_axis_title: 'Cases',
-                    y_axis_minimum_value: 0.0,
+                    y_axis_minimum_value: 0,
                     y_axis_maximum_value: null,
                     chart: [
                       {

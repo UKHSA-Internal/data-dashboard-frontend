@@ -11,15 +11,6 @@ type NextLinkMockProps = Omit<ComponentPropsWithoutRef<'a'>, 'href'> & {
   prefetch?: boolean
 }
 
-/** Minimal ResizeObserver for `PopularTopicsCardHeightSync` in jsdom. */
-class ResizeObserverMock {
-  observe(): void {}
-  unobserve(): void {}
-  disconnect(): void {}
-}
-
-global.ResizeObserver = ResizeObserverMock
-
 jest.mock('@/app/hooks/queries/useWeatherHealthAlertList', () => ({
   __esModule: true,
   default: jest.fn(() => ({
