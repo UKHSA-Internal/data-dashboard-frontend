@@ -10,6 +10,7 @@ import {
   ThresholdFilter,
   TimePeriod,
 } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { About } from '@/app/components/cms/About/About'
 import { SubplotClientDownload } from '@/app/components/ui/ukhsa/Download/SubplotClientDownload'
@@ -21,7 +22,6 @@ import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.ut
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
-
 interface SubplotFilterCardProps {
   geography: GeographiesSchemaObject
   selectedVaccinations: DataFilter[]
@@ -30,6 +30,9 @@ interface SubplotFilterCardProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
+  isPublic?: boolean
+  level?: DataClassification
+  authEnabled?: boolean
 }
 
 const SubplotFilterCard = ({
@@ -40,6 +43,9 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
+  isPublic,
+  level,
+  authEnabled,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
@@ -152,6 +158,9 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 cardData={cardData}
+                isPublic={isPublic}
+                level={level}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             <TabsContent
@@ -167,6 +176,8 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 selectedThresholds={selectedThresholds}
+                isPublic={isPublic}
+                authEnabled={authEnabled}
               />
             </TabsContent>
             {about && (
