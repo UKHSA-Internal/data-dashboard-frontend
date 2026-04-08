@@ -164,6 +164,9 @@ jobs:
       - name: Setup Playwright
         run: npx playwright install --with-deps
 
+      - name: Log playwright version
+        run: npx playwright --version
+
       - name: Start mock server
         id: start-mock-server
         run: |
