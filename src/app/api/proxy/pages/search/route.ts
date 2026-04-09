@@ -1,13 +1,12 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { getPages } from '@/api/requests/cms/getPages'
+import { SearchResponse } from '@/api/requests/cms/searchPages'
+import { client } from '@/api/utils/api.utils'
 
 export async function GET(req: NextRequest) {
-  const searchParams: Record<string, string> = {}
-  for (const [k, v] of req.nextUrl.searchParams) {
-    searchParams[k] = v
-  }
-  const proxiedResponse = await getPages(searchParams)
+  // FIXME: should we clean down to expected params here?
+
+  const proxiedResponse = await client<SearchResponse>('pages', { searchParams: req.nextUrl.searchParams })
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)
