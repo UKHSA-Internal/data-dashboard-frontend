@@ -25,6 +25,7 @@ type PageTypeToDataMap = {
   [PageType.MetricsParent]: typeof WithMetricsParentData
   [PageType.MetricsChild]: typeof WithMetricsChildData
   [PageType.Acknowledgement]: typeof WithAcknowledgementData
+  [PageType.AuthError]: typeof WithErrorData
 }
 
 const SharedPageData = z.object({
@@ -186,6 +187,17 @@ const WithAcknowledgementData = SharedPageData.omit({
   seo_priority: z.coerce.number().or(fallback(0.5)).optional(),
 })
 
+const WithErrorData = SharedPageData.extend({
+  error_line: z.string(),
+  error_text: z.string(),
+  sub_text: z.string(),
+  meta: Meta.extend({
+    type: z.literal('error.ErrorPage'),
+  }),
+  related_links: RelatedLinks,
+  related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')),
+})
+
 export const responseSchema = z.union([
   WithLandingData,
   withFeedbackData,
@@ -198,6 +210,7 @@ export const responseSchema = z.union([
   WithMetricsParentData,
   WithMetricsChildData,
   WithAcknowledgementData,
+  WithErrorData,
 ])
 
 /**
