@@ -19,6 +19,7 @@ import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
+import LogoutWarning from './components/ui/ukhsa/LogoutWarning/LogoutWarning'
 
 export const dynamic = 'auto'
 
@@ -26,7 +27,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const { t } = await getServerTranslation('common')
 
   const cookieStore = await cookies()
-
+   const sessionExpiresInSeconds = 100
   return (
     <html lang="en" className={`govuk-template ${font.variable} govuk-template--rebranded font-sans`}>
       <body className="govuk-template__body">
@@ -47,6 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </Suspense>
 
           <Providers>
+            <LogoutWarning/>
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
