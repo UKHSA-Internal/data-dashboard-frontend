@@ -97,7 +97,7 @@ describe('getDataClassification', () => {
   })
 
   test('returns classification when authEnabled is true', () => {
-    expect(getDataClassification(true, 'official_sensitive', false)).toBe('official_sensitive')
+    expect(getDataClassification(true, 'official_sensitive', false)).toBe('(OFFICIAL SENSITIVE)')
   })
 
   test('returns empty string when isPublic is true', () => {
