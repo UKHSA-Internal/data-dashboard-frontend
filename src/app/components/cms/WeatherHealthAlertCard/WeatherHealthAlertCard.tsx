@@ -1,6 +1,6 @@
 import clsx from 'clsx'
-import Link from 'next/link'
 
+import { hasSource, SourceFooter } from '@/app/components/cms/SourceFooter/SourceFooter'
 import { MiniMapCard } from '@/app/components/ui/ukhsa/MiniMap/MiniMapCard'
 import { getPath } from '@/app/utils/cms/slug'
 
@@ -20,9 +20,7 @@ type WeatherHealthAlertCardProps = {
 }
 
 export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertCardProps) {
-  const sourceHref = value.source?.page ? getPath(value.source.page) : value.source?.external_url
-  const isExternal = Boolean(value.source?.external_url && !value.source?.page)
-  const sourceText = value.source?.link_display_text ?? null
+  const showSource = hasSource(value.source)
 
   return (
     <div
@@ -37,19 +35,13 @@ export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertC
       {value.description && (
         <p className="govuk-body-s govuk-!-margin-top-2 govuk-!-margin-bottom-2">{value.description}</p>
       )}
-      {sourceHref && value.source && sourceText && (
-        <div className="govuk-!-margin-top-2 mt-auto" data-testid="weather-health-alert-source">
-          <p className="govuk-body-s mb-0 text-grey-1">
-            Source:{' '}
-            <Link
-              href={sourceHref}
-              className="govuk-link govuk-link--no-visited-state"
-              {...(isExternal && { target: '_blank', rel: 'noopener noreferrer' })}
-            >
-              {sourceText}
-            </Link>
-          </p>
-        </div>
+      {showSource && (
+        <SourceFooter
+          source={value.source}
+          resolvePageHref={getPath}
+          className="govuk-!-margin-top-2 mt-auto"
+          testId="weather-health-alert-source"
+        />
       )}
     </div>
   )

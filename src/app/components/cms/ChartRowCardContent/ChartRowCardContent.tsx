@@ -20,6 +20,7 @@ import {
 } from '@/app/components/ui/ukhsa'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
+import { authEnabled } from '@/config/constants'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 

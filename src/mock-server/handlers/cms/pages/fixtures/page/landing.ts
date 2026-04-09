@@ -169,7 +169,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   type: 'headline_metric_card',
                   id: '5ea4a7d3-3dd1-4706-95b2-1dd35b4cd045',
                   value: {
-                    title: 'test headline metric',
+                    title: 'COVID-19 hospital occupied beds',
                     date_prefix: 'Up to',
                     headline_metrics: [
                       {
@@ -183,7 +183,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                           sex: 'all',
                           age: 'all',
                           stratum: 'All episodes combined',
-                          body: '',
+                          body: 'Occupied beds',
                           percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
                         },
                       },
@@ -198,7 +198,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                           sex: 'all',
                           age: 'all',
                           stratum: 'default',
-                          body: '',
+                          body: 'Last 7 days',
                           percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
                         },
                       },
