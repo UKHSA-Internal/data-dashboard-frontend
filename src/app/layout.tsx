@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </Suspense>
 
           <Providers>
-            <LogoutWarning/>
+            <LogoutWarning />
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
