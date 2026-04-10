@@ -19,7 +19,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Sample Title',
         description: 'Sample Description',
-        pageClassification: 'default',
+        pageClassification: 'official',
         authEnabled: false,
       })
     )
@@ -34,7 +34,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
-        pageClassification: 'default',
+        pageClassification: 'official',
         authEnabled: false,
       })
     )
@@ -47,7 +47,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
-        pageClassification: 'default',
+        pageClassification: 'official',
         authEnabled: false,
         children: <div>Child Element</div>,
       })
@@ -61,7 +61,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
-        pageClassification: 'default',
+        pageClassification: 'official',
         authEnabled: false,
       })
     )

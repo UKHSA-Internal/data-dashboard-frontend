@@ -1,5 +1,6 @@
 import { ReactNode } from 'react'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getDataClassification } from '@/app/utils/table.utils'
 
@@ -9,11 +10,9 @@ interface ChartRowCardHeaderProps {
   description?: string
   id: string
   isPublic?: boolean
-  pageClassification?: string
+  pageClassification?: DataClassification
   authEnabled?: boolean
 }
-
-type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
 
 export async function ChartRowCardHeader({
   children,
@@ -30,7 +29,7 @@ export async function ChartRowCardHeader({
     <header>
       <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
         {title} {areaName && `(${areaName})`}{' '}
-        {getDataClassification(isPublic, pageClassification as Level, authEnabled)}
+        {getDataClassification(isPublic, pageClassification as DataClassification, authEnabled)}
       </h3>
       {description ? (
         <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>

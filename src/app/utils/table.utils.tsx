@@ -1,6 +1,6 @@
-type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
+import { DataClassification } from '@/api/models/DataClassification'
 
-const levelContent: Record<Level, string> = {
+const levelContent: Record<DataClassification, string> = {
   official: 'Official',
   official_sensitive: 'Official-Sensitive',
   protective_marking_not_set: 'Protective marking not set',
@@ -8,7 +8,7 @@ const levelContent: Record<Level, string> = {
   top_secret: 'Top Secret',
 }
 
-const levelContentCaps: Record<Level, string> = {
+const levelContentCaps: Record<DataClassification, string> = {
   official: 'OFFICIAL',
   official_sensitive: 'OFFICIAL SENSITIVE',
   protective_marking_not_set: 'PROTECTIVE MARKING NOT SET',
@@ -21,7 +21,7 @@ export const getColumnHeader = (
   axisTitle: string,
   fallback: string,
   isPublic?: boolean,
-  level: Level = 'official_sensitive',
+  level: DataClassification = 'official_sensitive',
   authEnabled?: boolean
 ) => {
   const label = chartLabel || axisTitle || fallback
@@ -39,11 +39,11 @@ export const getColumnHeader = (
 
 export const getDataClassification = (
   isPublic: boolean | undefined,
-  pageClassification: Level = 'official_sensitive',
+  pageClassification: DataClassification = 'official_sensitive',
   authEnabled: boolean | undefined
 ): string => {
   if (authEnabled && isPublic === false) {
-    return pageClassification in levelContentCaps ? `(${levelContentCaps[pageClassification]})` : '(OFFICIAL SENSITIVE)'
+    return `(${levelContentCaps[pageClassification]})`
   }
   return ''
 }
