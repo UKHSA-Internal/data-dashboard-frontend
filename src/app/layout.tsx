@@ -14,12 +14,12 @@ import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner } from './components/ui/ukhsa'
+import LogoutWarning from './components/ui/ukhsa/LogoutWarning/LogoutWarning'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager/GoogleTagManager'
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
-import LogoutWarning from './components/ui/ukhsa/LogoutWarning/LogoutWarning'
 
 export const dynamic = 'auto'
 
@@ -40,7 +40,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const accessToken = await getAuthToken()
 
   const cookieStore = await cookies()
-   const sessionExpiresInSeconds = 100
   return (
     <html lang="en" className={`govuk-template ${font.variable} govuk-template--rebranded font-sans`}>
       <body className="govuk-template__body">
@@ -59,9 +58,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
             />
           </Suspense>
-
+          {accessToken && <LogoutWarning />}
           <Providers>
-            {accessToken && <LogoutWarning />}
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
