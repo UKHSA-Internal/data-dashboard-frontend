@@ -39,13 +39,11 @@ export const getColumnHeader = (
 
 export const getDataClassification = (
   isPublic: boolean | undefined,
-  pageClassification: string,
+  pageClassification: Level = 'official_sensitive',
   authEnabled: boolean | undefined
 ): string => {
   if (authEnabled && isPublic === false) {
-    return pageClassification in levelContentCaps
-      ? `(${levelContentCaps[pageClassification as Level]})`
-      : '(OFFICIAL SENSITIVE)'
+    return pageClassification in levelContentCaps ? `(${levelContentCaps[pageClassification]})` : '(OFFICIAL SENSITIVE)'
   }
   return ''
 }

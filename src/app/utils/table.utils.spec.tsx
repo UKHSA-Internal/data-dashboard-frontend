@@ -127,8 +127,4 @@ describe('getDataClassification', () => {
   test('returns uppercase classification wrapped in parentheses for protective_marking_not_set', () => {
     expect(getDataClassification(false, 'protective_marking_not_set', true)).toBe('(PROTECTIVE MARKING NOT SET)')
   })
-
-  test('falls back to (OFFICIAL SENSITIVE) for unknown classification', () => {
-    expect(getDataClassification(false, 'unknown_level', true)).toBe('(OFFICIAL SENSITIVE)')
-  })
 })

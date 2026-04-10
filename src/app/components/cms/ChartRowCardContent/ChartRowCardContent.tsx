@@ -58,7 +58,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                   title={column.value.title}
                   description={column.value.body}
                   isPublic={isPublic}
-                  pageClassification={pageClassification ?? ''}
+                  pageClassification={pageClassification}
                   authEnabled={authEnabled}
                 >
                   <Timestamp data={column.value} size={size} />

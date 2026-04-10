@@ -13,6 +13,8 @@ interface ChartRowCardHeaderProps {
   authEnabled?: boolean
 }
 
+type Level = 'official' | 'official_sensitive' | 'protective_marking_not_set' | 'secret' | 'top_secret'
+
 export async function ChartRowCardHeader({
   children,
   id,
@@ -27,7 +29,8 @@ export async function ChartRowCardHeader({
   return (
     <header>
       <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
-        {title} {areaName && `(${areaName})`} {getDataClassification(isPublic, pageClassification, authEnabled)}
+        {title} {areaName && `(${areaName})`}{' '}
+        {getDataClassification(isPublic, pageClassification as Level, authEnabled)}
       </h3>
       {description ? (
         <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
