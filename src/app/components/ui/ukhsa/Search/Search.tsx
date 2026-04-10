@@ -62,9 +62,13 @@ export function Search({ label, placeholder }: SearchProps) {
               <li
                 key={`result-${i}`}
                 value="{i}"
-                className="govuk-!-padding-3 govuk-!-margin-left-2 govuk-!-margin-right-2 border-b shadow-[0_1px_0_#929191]"
+                className="govuk-!-margin-left-2 govuk-!-margin-right-2 border-b shadow-[0_1px_0_#929191]"
               >
-                <Link href={html_url || ''}>{title}</Link>
+                <Link className="govuk-link group block focus:border-b-0 focus:outline-none" href={html_url || ''}>
+                  <div className="size-full border-2 border-transparent p-3 group-focus:border-black group-focus:bg-yellow">
+                    {title}
+                  </div>
+                </Link>
               </li>
             ))}
           </ul>
