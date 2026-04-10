@@ -23,8 +23,21 @@ import LogoutWarning from './components/ui/ukhsa/LogoutWarning/LogoutWarning'
 
 export const dynamic = 'auto'
 
+async function getAuthToken(): Promise<string | undefined> {
+  if (typeof window === 'undefined') {
+    try {
+      const { auth } = await import('@/auth')
+      const session = await auth()
+      return session?.accessToken
+    } catch (error) {
+      console.error('Failed to get auth token:', error)
+      return undefined
+    }
+  }
+}
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
+  const accessToken = await getAuthToken()
 
   const cookieStore = await cookies()
    const sessionExpiresInSeconds = 100
@@ -48,7 +61,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </Suspense>
 
           <Providers>
-            <LogoutWarning />
+            {accessToken && <LogoutWarning />}
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
