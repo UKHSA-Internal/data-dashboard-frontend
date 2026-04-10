@@ -28,7 +28,12 @@ export function SourceFooter({
 }: SourceFooterProps) {
   if (!hasSource(source)) return null
 
-  const href = source?.external_url ? source.external_url : source?.page ? resolvePageHref(source.page) : null
+  let href: string | null = null
+  if (source?.external_url) {
+    href = source.external_url
+  } else if (source?.page) {
+    href = resolvePageHref(source.page)
+  }
   const text = source?.link_display_text ?? null
   const isExternal = Boolean(source?.external_url && !source?.page)
 
