@@ -6,15 +6,11 @@ import { logoutThresholdMinutes, logoutWarningThresholdMinutes } from '@/config/
 interface LogoutWarningProps {
   timeoutMinutes?: number
   warningMinutes?: number
-  onStaySignedIn?: () => void
-  onSignOut?: () => void
 }
 
 export default function LogoutWarning({
   timeoutMinutes = logoutThresholdMinutes,
   warningMinutes = logoutWarningThresholdMinutes,
-  onStaySignedIn,
-  onSignOut,
 }: LogoutWarningProps) {
   const [secondsLeft, setSecondsLeft] = useState(warningMinutes * 60)
   const [visible, setVisible] = useState(false)
@@ -23,6 +19,7 @@ export default function LogoutWarning({
   const countdownInterval = useRef<ReturnType<typeof setInterval> | null>(null)
   const visibleRef = useRef(false)
 
+  // Clear all timers and intervals
   const clearTimers = () => {
     if (inactivityTimer.current) clearTimeout(inactivityTimer.current)
     if (countdownInterval.current) clearInterval(countdownInterval.current)
@@ -30,6 +27,7 @@ export default function LogoutWarning({
     countdownInterval.current = null
   }
 
+  // Start the countdown when the warning is triggered
   const startCountdown = useCallback(() => {
     setSecondsLeft(warningMinutes * 60)
     setVisible(true)
@@ -40,25 +38,27 @@ export default function LogoutWarning({
         if (s <= 1) {
           clearInterval(countdownInterval.current!)
           countdownInterval.current = null
-          onSignOut?.()
           return 0
         }
         return s - 1
       })
     }, 1000)
-  }, [warningMinutes, onSignOut])
+  }, [warningMinutes])
 
+  // Schedule the warning to show after the appropriate amount of inactivity
   const scheduleWarning = useCallback(() => {
     if (inactivityTimer.current) clearTimeout(inactivityTimer.current)
     const idleBeforeWarning = (timeoutMinutes - warningMinutes) * 60 * 1000
     inactivityTimer.current = setTimeout(startCountdown, idleBeforeWarning)
   }, [timeoutMinutes, warningMinutes, startCountdown])
 
+  // Reset timer on user activity, but only if warning isn't already visible
   const resetInactivityTimer = useCallback(() => {
-    if (visibleRef.current) return // ← use ref, not state
+    if (visibleRef.current) return
     scheduleWarning()
   }, [scheduleWarning])
 
+  // Set up event listeners for user activity and start the initial timer
   useEffect(() => {
     const events = ['mousemove', 'keydown', 'mousedown', 'touchstart', 'scroll']
     events.forEach((e) => window.addEventListener(e, resetInactivityTimer))
@@ -70,13 +70,13 @@ export default function LogoutWarning({
     }
   }, [])
 
+  // Handle "Stay signed in" button click
   const handleStaySignedIn = useCallback(() => {
     clearTimers()
     setVisible(false)
     visibleRef.current = false
-    onStaySignedIn?.()
     scheduleWarning()
-  }, [onStaySignedIn, scheduleWarning])
+  }, [scheduleWarning])
 
   const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
   const secs = String(secondsLeft % 60).padStart(2, '0')

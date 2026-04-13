@@ -2,11 +2,13 @@ import { act, fireEvent, render, screen } from '@/config/test-utils'
 
 import LogoutWarning from './LogoutWarning'
 
-describe('LogoutWarning', () => {
-  beforeEach(() => {
-    jest.useFakeTimers()
-  })
+jest.mock('@/config/constants', () => ({
+  logoutThresholdMinutes: 2,
+  logoutWarningThresholdMinutes: 1,
+}))
 
+describe('LogoutWarning', () => {
+  beforeEach(() => jest.useFakeTimers())
   afterEach(() => {
     jest.useRealTimers()
     jest.clearAllMocks()
@@ -14,31 +16,24 @@ describe('LogoutWarning', () => {
 
   describe('visibility', () => {
     test('does not show modal on initial render', () => {
-      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
+      render(<LogoutWarning />)
       expect(screen.queryByText('You will be signed out')).not.toBeInTheDocument()
     })
 
     test('shows modal after inactivity timeout', () => {
-      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
-
+      render(<LogoutWarning />)
       act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000) // timeoutMinutes - warningMinutes
+        jest.advanceTimersByTime(1 * 60 * 1000)
       })
-
       expect(screen.getByText('You will be signed out')).toBeInTheDocument()
     })
 
     test('hides modal when Stay signed in is clicked', () => {
-      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
-
+      render(<LogoutWarning />)
       act(() => {
         jest.advanceTimersByTime(1 * 60 * 1000)
       })
-
-      expect(screen.getByText('You will be signed out')).toBeInTheDocument()
-
       fireEvent.click(screen.getByRole('button', { name: /stay signed in/i }))
-
       expect(screen.queryByText('You will be signed out')).not.toBeInTheDocument()
     })
   })
@@ -58,11 +53,11 @@ describe('LogoutWarning', () => {
       render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
 
       act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000) // trigger modal
+        jest.advanceTimersByTime(1 * 60 * 1000)
       })
 
       act(() => {
-        jest.advanceTimersByTime(5000) // 5 seconds
+        jest.advanceTimersByTime(5000)
       })
 
       expect(screen.getByText(/00:55 Minutes/)).toBeInTheDocument()
@@ -76,59 +71,16 @@ describe('LogoutWarning', () => {
       })
 
       act(() => {
-        jest.advanceTimersByTime(10000) // tick down 10 seconds
+        jest.advanceTimersByTime(10000)
       })
 
       fireEvent.click(screen.getByRole('button', { name: /stay signed in/i }))
 
       act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000) // trigger modal again
+        jest.advanceTimersByTime(1 * 60 * 1000)
       })
 
       expect(screen.getByText(/01:00 Minutes/)).toBeInTheDocument()
-    })
-  })
-
-  describe('callbacks', () => {
-    test('calls onSignOut when countdown reaches zero', () => {
-      const onSignOut = jest.fn()
-      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} onSignOut={onSignOut} />)
-
-      act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000) // trigger modal
-      })
-
-      act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000) // complete countdown
-      })
-
-      expect(onSignOut).toHaveBeenCalledTimes(1)
-    })
-
-    test('calls onStaySignedIn when Stay signed in is clicked', () => {
-      const onStaySignedIn = jest.fn()
-      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} onStaySignedIn={onStaySignedIn} />)
-
-      act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000)
-      })
-
-      fireEvent.click(screen.getByRole('button', { name: /stay signed in/i }))
-
-      expect(onStaySignedIn).toHaveBeenCalledTimes(1)
-    })
-
-    test('does not call onSignOut when Stay signed in is clicked before timeout', () => {
-      const onSignOut = jest.fn()
-      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} onSignOut={onSignOut} />)
-
-      act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000)
-      })
-
-      fireEvent.click(screen.getByRole('button', { name: /stay signed in/i }))
-
-      expect(onSignOut).not.toHaveBeenCalled()
     })
   })
 
@@ -137,13 +89,13 @@ describe('LogoutWarning', () => {
       render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
 
       act(() => {
-        jest.advanceTimersByTime(30000) // 30 seconds in
+        jest.advanceTimersByTime(30000)
       })
 
-      fireEvent.mouseMove(window) // user activity
+      fireEvent.mouseMove(window)
 
       act(() => {
-        jest.advanceTimersByTime(30000) // 30 more seconds — would have triggered without reset
+        jest.advanceTimersByTime(30000)
       })
 
       expect(screen.queryByText('You will be signed out')).not.toBeInTheDocument()
@@ -169,12 +121,12 @@ describe('LogoutWarning', () => {
       render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
 
       act(() => {
-        jest.advanceTimersByTime(1 * 60 * 1000) // trigger modal
+        jest.advanceTimersByTime(1 * 60 * 1000)
       })
 
-      fireEvent.mouseMove(window) // activity while modal is open
+      fireEvent.mouseMove(window)
 
-      expect(screen.getByText('You will be signed out')).toBeInTheDocument() // modal stays
+      expect(screen.getByText('You will be signed out')).toBeInTheDocument()
     })
   })
 })
