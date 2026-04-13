@@ -34,6 +34,7 @@ export const mockedPagesMap: Record<PageType, PagesResponse> = {
   'metrics_documentation.MetricsDocumentationParentPage': pagesWithMetricsParentTypeMock,
   'metrics_documentation.MetricsDocumentationChildEntry': pagesWithMetricsChildTypeMock,
   'acknowledgement.AcknowledgementPage': pagesWithAcknowledgementTypeMock,
+  'error.ErrorPage': pagesWithCommonTypeMock,
 }
 
 export default async function handler(req: Request, res: Response) {
