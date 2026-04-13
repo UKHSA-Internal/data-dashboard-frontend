@@ -16,7 +16,7 @@ export type ExpandableFilterItem = {
 
 export type SelectedFilterItem = { id: string; label: string }
 
-function ChevronDownIcon({ open }: { open: boolean }) {
+function ChevronDownIcon({ open }: { readonly open: boolean }) {
   return (
     <span className="ml-2 inline-block shrink-0 transition-transform duration-200" aria-hidden>
       <svg
@@ -38,11 +38,11 @@ function ChevronDownIcon({ open }: { open: boolean }) {
 // Presentation component, or container component?
 
 interface DropdownButtonProps {
-  open: boolean
-  label: string
-  onClick: () => void
-  buttonId: string
-  controlsId: string
+  readonly open: boolean
+  readonly label: string
+  readonly onClick: () => void
+  readonly buttonId: string
+  readonly controlsId: string
 }
 
 function DropdownButton({ open, onClick, label, buttonId, controlsId }: DropdownButtonProps) {
@@ -104,14 +104,14 @@ function getAllIds(item: ExpandableFilterItem): string[] {
 }
 
 interface DropdownContentProps {
-  items: ExpandableFilterItem[]
-  selectedIds: Set<string>
-  expandedIds: Set<string>
-  onToggleExpand: (id: string) => void
-  onToggleParent: (item: ExpandableFilterItem) => void
-  onToggleChild: (parentId: string, child: FilterOptionChild) => void
-  dropdownId: string
-  labelledById: string
+  readonly items: ExpandableFilterItem[]
+  readonly selectedIds: Set<string>
+  readonly expandedIds: Set<string>
+  readonly onToggleExpand: (id: string) => void
+  readonly onToggleParent: (item: ExpandableFilterItem) => void
+  readonly onToggleChild: (parentId: string, child: FilterOptionChild) => void
+  readonly dropdownId: string
+  readonly label: string
 }
 
 function DropdownContent({
@@ -122,16 +122,15 @@ function DropdownContent({
   onToggleParent,
   onToggleChild,
   dropdownId,
-  labelledById,
+  label,
 }: DropdownContentProps) {
   return (
-    <div
+    <fieldset
       id={dropdownId}
-      role="group"
-      aria-labelledby={labelledById}
       data-testid="expandable-filter-dropdown-content"
       className="mt-0 max-h-[280px] w-full max-w-[650px] overflow-y-auto border border-grey-4 bg-white p-2 shadow-md"
     >
+      <legend className="sr-only">{label}</legend>
       {items.map((item) => {
         const isParent = item.children && item.children.length > 0
         const isExpanded = isParent && expandedIds.has(item.id)
@@ -175,7 +174,7 @@ function DropdownContent({
                   type="checkbox"
                   checked={parentChecked}
                   tabIndex={0}
-                  onChange={() => (isParent ? onToggleParent(item) : onToggleParent(item))}
+                  onChange={() => onToggleParent(item)}
                 />
                 <label
                   className="govuk-label govuk-checkboxes__label relative flex-1 py-0 before:left-[-32px] before:top-0 after:left-[-26px] after:top-[8px]"
@@ -186,12 +185,8 @@ function DropdownContent({
               </div>
             </div>
             {isParent && isExpanded && item.children && (
-              <div
-                id={`filter-children-${item.id}`}
-                role="group"
-                aria-label={`${item.label} options`}
-                className="ml-6 pl-2"
-              >
+              <fieldset id={`filter-children-${item.id}`} className="ml-6 pl-2">
+                <legend className="sr-only">{`${item.label} options`}</legend>
                 {item.children.map((child) => (
                   <div key={child.id} className="govuk-checkboxes govuk-checkboxes--small relative flex px-0 pl-4">
                     <input
@@ -211,19 +206,19 @@ function DropdownContent({
                     </label>
                   </div>
                 ))}
-              </div>
+              </fieldset>
             )}
           </div>
         )
       })}
-    </div>
+    </fieldset>
   )
 }
 
 interface SelectedItemsListProps {
-  selected: SelectedFilterItem[]
-  onRemove: (id: string) => void
-  onClearAll: () => void
+  readonly selected: SelectedFilterItem[]
+  readonly onRemove: (id: string) => void
+  readonly onClearAll: () => void
 }
 
 function SelectedItemsList({ selected, onRemove, onClearAll }: SelectedItemsListProps) {
@@ -239,7 +234,7 @@ function SelectedItemsList({ selected, onRemove, onClearAll }: SelectedItemsList
         onClick={onClearAll}
         className="govuk-body-xs govuk-link govuk-!-margin-bottom-0 absolute right-3 top-[12px] text-blue underline"
       >
-        Clear filter selection
+        Clear filter selection{' '}
         <span className="govuk-!-margin-left-2 inline-block">
           <CrossIcon colour="var(--colour-blue)" />
         </span>
@@ -265,8 +260,8 @@ function SelectedItemsList({ selected, onRemove, onClearAll }: SelectedItemsList
 }
 
 export interface ExpandableFilterDropdownProps {
-  items: ExpandableFilterItem[]
-  onSelectionChange?: (selected: SelectedFilterItem[]) => void
+  readonly items: ExpandableFilterItem[]
+  readonly onSelectionChange?: (selected: SelectedFilterItem[]) => void
 }
 
 export function ExpandableFilterDropdown({ items, onSelectionChange }: ExpandableFilterDropdownProps) {
@@ -385,7 +380,7 @@ export function ExpandableFilterDropdown({ items, onSelectionChange }: Expandabl
               onToggleParent={toggleParent}
               onToggleChild={toggleChild}
               dropdownId={contentId}
-              labelledById={buttonId}
+              label={t('cms.dropdown.filterButtonLabel')}
             />
           </div>
         )}
