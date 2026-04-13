@@ -9,6 +9,7 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { getAuthToken } from '@/api/utils/api.utils'
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
 
@@ -23,18 +24,6 @@ import { Providers } from './providers'
 
 export const dynamic = 'auto'
 
-async function getAuthToken(): Promise<string | undefined> {
-  if (typeof window === 'undefined') {
-    try {
-      const { auth } = await import('@/auth')
-      const session = await auth()
-      return session?.accessToken
-    } catch (error) {
-      console.error('Failed to get auth token:', error)
-      return undefined
-    }
-  }
-}
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
   const accessToken = await getAuthToken()

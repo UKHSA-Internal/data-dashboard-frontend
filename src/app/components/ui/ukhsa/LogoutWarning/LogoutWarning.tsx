@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { logoutThresholdMinutes, logoutWarningThresholdMinutes } from '@/config/constants'
 interface LogoutWarningProps {
   timeoutMinutes?: number
   warningMinutes?: number
@@ -10,8 +11,8 @@ interface LogoutWarningProps {
 }
 
 export default function LogoutWarning({
-  timeoutMinutes = 2,
-  warningMinutes = 2,
+  timeoutMinutes = logoutThresholdMinutes,
+  warningMinutes = logoutWarningThresholdMinutes,
   onStaySignedIn,
   onSignOut,
 }: LogoutWarningProps) {
@@ -67,7 +68,7 @@ export default function LogoutWarning({
       events.forEach((e) => window.removeEventListener(e, resetInactivityTimer))
       clearTimers()
     }
-  }, []) // ← empty deps: register listeners only once
+  }, [])
 
   const handleStaySignedIn = useCallback(() => {
     clearTimers()
@@ -83,9 +84,9 @@ export default function LogoutWarning({
   if (!visible) return null
 
   return (
-    <div className="logoutWarningContainer fixed inset-0 z-50 flex items-center justify-center px-4 ">
+    <div className="logoutWarningContainer fixed inset-0 z-50 flex items-center justify-center px-4">
       <div className="overflow-hidden rounded-sm bg-white shadow-2xl">
-        <div className="govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-padding-6">
+        <div className="govuk-!-padding-6">
           <h2 className="govuk-heading-l govuk-!-margin-bottom-2">You will be signed out</h2>
           <p className="text-sm text-gray-500 mb-6 leading-relaxed">
             You have been inactive for some time and will be signed out in:{' '}
@@ -94,7 +95,7 @@ export default function LogoutWarning({
             </strong>
           </p>
           <div className="flex items-center gap-6">
-            <button type="submit" className="govuk-button" onClick={handleStaySignedIn}>
+            <button type="submit" className="govuk-button govuk-!-margin-0" onClick={handleStaySignedIn}>
               Stay signed in
             </button>
           </div>
