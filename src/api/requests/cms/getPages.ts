@@ -41,6 +41,7 @@ export enum PageType {
   MetricsParent = 'metrics_documentation.MetricsDocumentationParentPage',
   MetricsChild = 'metrics_documentation.MetricsDocumentationChildEntry',
   Acknowledgement = 'acknowledgement.AcknowledgementPage',
+  AuthError = 'error.ErrorPage',
 }
 
 const page = z.object({
@@ -107,7 +108,7 @@ export const metricsChildResponseSchema = responseSchema.extend({
         })
       ),
       is_public: z.boolean(),
-      page_classification: DataClassification.or(fallback(undefined))
+      page_classification: DataClassification.or(fallback(undefined)),
     })
   ),
 })

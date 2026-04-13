@@ -16,6 +16,7 @@ export const BackToTop = ({ href = '#main-content', className }: BackToTopProps)
   const { t } = useTranslation('common')
 
   const [isSticky, setIsSticky] = useState(false)
+  const [shouldRender, setShouldRender] = useState(false)
 
   useEffect(() => {
     if (horizontalWindowPosition > 200) {
@@ -24,6 +25,25 @@ export const BackToTop = ({ href = '#main-content', className }: BackToTopProps)
       setIsSticky(false)
     }
   }, [horizontalWindowPosition])
+
+  useEffect(() => {
+    const checkPageHeight = () => {
+      const contentHeight = document.documentElement.scrollHeight
+      const viewportHeight = window.innerHeight
+      // Only show if content exceeds viewport by at least 50%
+      setShouldRender(contentHeight > viewportHeight * 1.5)
+    }
+
+    checkPageHeight()
+
+    // Recheck if content dynamically changes (e.g., lazy loading, accordions)
+    const observer = new ResizeObserver(checkPageHeight)
+    observer.observe(document.body)
+
+    return () => observer.disconnect()
+  }, [])
+
+  if (!shouldRender) return null
 
   return (
     <a
