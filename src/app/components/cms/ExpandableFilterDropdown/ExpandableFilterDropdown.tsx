@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useId, useMemo, useRef, useState } from 'react'
 
 import CrossIcon from '@/app/components/ui/ukhsa/Icons/CrossIcon'
 import { useTranslation } from '@/app/i18n/client'
@@ -41,14 +41,17 @@ interface DropdownButtonProps {
   open: boolean
   label: string
   onClick: () => void
+  buttonId: string
+  controlsId: string
 }
 
-function DropdownButton({ open, onClick, label }: DropdownButtonProps) {
+function DropdownButton({ open, onClick, label, buttonId, controlsId }: DropdownButtonProps) {
   return (
     <button
+      id={buttonId}
       type="button"
       aria-expanded={open}
-      aria-haspopup="listbox"
+      aria-controls={controlsId}
       onClick={onClick}
       onKeyDown={(e) => {
         if (e.key === 'Enter' || e.key === ' ') {
@@ -107,6 +110,8 @@ interface DropdownContentProps {
   onToggleExpand: (id: string) => void
   onToggleParent: (item: ExpandableFilterItem) => void
   onToggleChild: (parentId: string, child: FilterOptionChild) => void
+  dropdownId: string
+  labelledById: string
 }
 
 function DropdownContent({
@@ -116,11 +121,15 @@ function DropdownContent({
   onToggleExpand,
   onToggleParent,
   onToggleChild,
+  dropdownId,
+  labelledById,
 }: DropdownContentProps) {
   return (
     <div
-      role="listbox"
-      tabIndex={-1}
+      id={dropdownId}
+      role="group"
+      aria-labelledby={labelledById}
+      data-testid="expandable-filter-dropdown-content"
       className="mt-0 max-h-[280px] w-full max-w-[650px] overflow-y-auto border border-grey-4 bg-white p-2 shadow-md"
     >
       {items.map((item) => {
@@ -136,6 +145,8 @@ function DropdownContent({
                 <button
                   type="button"
                   aria-expanded={isExpanded}
+                  aria-controls={`filter-children-${item.id}`}
+                  aria-label={`${isExpanded ? 'Collapse' : 'Expand'} ${item.label}`}
                   onClick={() => onToggleExpand(item.id)}
                   className="relative shrink-0 p-1 ukhsa-focus"
                   title={isExpanded ? 'Collapse' : 'Expand'}
@@ -175,7 +186,12 @@ function DropdownContent({
               </div>
             </div>
             {isParent && isExpanded && item.children && (
-              <div className="ml-6 pl-2">
+              <div
+                id={`filter-children-${item.id}`}
+                role="group"
+                aria-label={`${item.label} options`}
+                className="ml-6 pl-2"
+              >
                 {item.children.map((child) => (
                   <div key={child.id} className="govuk-checkboxes govuk-checkboxes--small relative flex px-0 pl-4">
                     <input
@@ -234,8 +250,8 @@ function SelectedItemsList({ selected, onRemove, onClearAll }: SelectedItemsList
             key={filter.id}
             type="button"
             onClick={() => onRemove(filter.id)}
-            // eslint-disable-next-line tailwindcss/no-unnecessary-arbitrary-value
-            className="govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-top-2 relative border-[1px] border-black bg-white text-black no-underline ukhsa-focus"
+            aria-label={`Remove ${filter.label}`}
+            className="govuk-!-padding-1 govuk-!-padding-right-2 govuk-!-padding-left-2 govuk-!-margin-right-2 govuk-!-margin-top-2 relative border border-black bg-white text-black no-underline ukhsa-focus"
           >
             {filter.label}
             <span className="govuk-!-margin-left-2 inline-block">
@@ -255,6 +271,9 @@ export interface ExpandableFilterDropdownProps {
 
 export function ExpandableFilterDropdown({ items, onSelectionChange }: ExpandableFilterDropdownProps) {
   const { t } = useTranslation('common')
+  const dropdownId = useId()
+  const buttonId = `${dropdownId}-button`
+  const contentId = `${dropdownId}-content`
   const [open, setOpen] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const [expandedIds, setExpandedIds] = useState<Set<string>>(new Set())
@@ -347,9 +366,15 @@ export function ExpandableFilterDropdown({ items, onSelectionChange }: Expandabl
   }, [open])
 
   return (
-    <div className="w-full" ref={containerRef}>
+    <div className="w-full no-js:hidden" ref={containerRef}>
       <div className="relative">
-        <DropdownButton open={open} onClick={() => setOpen((o) => !o)} label={t('cms.dropdown.filterButtonLabel')} />
+        <DropdownButton
+          open={open}
+          onClick={() => setOpen((open) => !open)}
+          label={t('cms.dropdown.filterButtonLabel')}
+          buttonId={buttonId}
+          controlsId={contentId}
+        />
         {open && (
           <div className="absolute left-0 top-full z-50 mt-1 w-[min(500px,calc(100vw-2rem))]">
             <DropdownContent
@@ -359,6 +384,8 @@ export function ExpandableFilterDropdown({ items, onSelectionChange }: Expandabl
               onToggleExpand={toggleExpand}
               onToggleParent={toggleParent}
               onToggleChild={toggleChild}
+              dropdownId={contentId}
+              labelledById={buttonId}
             />
           </div>
         )}

@@ -53,7 +53,7 @@ describe('ExpandableFilterDropdown', () => {
 
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       expect(button).toHaveAttribute('aria-expanded', 'false')
-      expect(button).toHaveAttribute('aria-haspopup', 'listbox')
+      expect(button).toHaveAttribute('aria-controls')
     })
 
     test('button has aria-expanded true when dropdown is open', () => {
@@ -72,7 +72,7 @@ describe('ExpandableFilterDropdown', () => {
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       fireEvent.click(button)
 
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(screen.getByTestId('expandable-filter-dropdown-content')).toBeInTheDocument()
       expect(screen.getByText('COVID-19')).toBeInTheDocument()
       expect(screen.getByText('Seasonal flu')).toBeInTheDocument()
     })
@@ -82,10 +82,10 @@ describe('ExpandableFilterDropdown', () => {
 
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       fireEvent.click(button)
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(screen.getByTestId('expandable-filter-dropdown-content')).toBeInTheDocument()
 
       fireEvent.click(button)
-      expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('expandable-filter-dropdown-content')).not.toBeInTheDocument()
     })
 
     test('opens dropdown with Enter key', () => {
@@ -94,7 +94,7 @@ describe('ExpandableFilterDropdown', () => {
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       fireEvent.keyDown(button, { key: 'Enter' })
 
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(screen.getByTestId('expandable-filter-dropdown-content')).toBeInTheDocument()
     })
 
     test('opens dropdown with Space key', () => {
@@ -103,7 +103,7 @@ describe('ExpandableFilterDropdown', () => {
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       fireEvent.keyDown(button, { key: ' ' })
 
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(screen.getByTestId('expandable-filter-dropdown-content')).toBeInTheDocument()
     })
 
     test('closes dropdown when Escape is pressed', () => {
@@ -111,10 +111,10 @@ describe('ExpandableFilterDropdown', () => {
 
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       fireEvent.click(button)
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(screen.getByTestId('expandable-filter-dropdown-content')).toBeInTheDocument()
 
       fireEvent.keyDown(document, { key: 'Escape' })
-      expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('expandable-filter-dropdown-content')).not.toBeInTheDocument()
     })
 
     test('closes dropdown when clicking outside', () => {
@@ -127,10 +127,10 @@ describe('ExpandableFilterDropdown', () => {
 
       const button = screen.getByRole('button', { name: 'Select themes or topics to view' })
       fireEvent.click(button)
-      expect(screen.getByRole('listbox')).toBeInTheDocument()
+      expect(screen.getByTestId('expandable-filter-dropdown-content')).toBeInTheDocument()
 
       fireEvent.mouseDown(screen.getByTestId('outside'))
-      expect(screen.queryByRole('listbox')).not.toBeInTheDocument()
+      expect(screen.queryByTestId('expandable-filter-dropdown-content')).not.toBeInTheDocument()
     })
   })
 
@@ -359,6 +359,7 @@ describe('ExpandableFilterDropdown', () => {
       fireEvent.click(expandButtons[0])
       const collapseButton = screen.getByTitle('Collapse')
       expect(collapseButton).toHaveAttribute('aria-expanded', 'true')
+      expect(collapseButton).toHaveAttribute('aria-label', 'Collapse Infectious diseases')
     })
 
     test('checkboxes have correct checked state', () => {
