@@ -1,7 +1,6 @@
 import clsx from 'clsx'
 import { snakeCase } from 'lodash'
 import Link from 'next/link'
-import { Fragment } from 'react'
 import type { z } from 'zod'
 
 import { PopularTopicsCardValue as popularTopicsCardSchema } from '@/api/models/cms/Page/Body'
@@ -99,12 +98,12 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                     (
                       block: PopularTopicsCardData['right_column_bottom_row'][number]['value']['headline_metrics'][number]
                     ) => (
-                      <Fragment key={block.id}>
+                      <div key={block.id}>
                         {renderBlock({
                           ...block,
                           date_prefix: card.value.date_prefix,
                         } as Parameters<typeof renderBlock>[0])}
-                      </Fragment>
+                      </div>
                     )
                   )}
                 </div>
