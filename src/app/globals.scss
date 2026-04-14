@@ -282,13 +282,80 @@ input#search {
   color: var(--colour-black);
 }
 
+
+.ukhsa-header {
+  // 0 - 450px
+  position: relative;
+  display: grid;
+  grid-column-gap: 10px;
+  grid-template-columns: 1fr;
+  grid-template-rows: 50px 34px 50px 50px;
+
+  // 450 - 1200px
+  @media (min-width: 450px) {
+    grid-template-columns: 164px 1fr 100px;
+    grid-template-rows: 1fr 50px;
+  }
+
+  // 1200px +
+  @media (min-width: 1200px) {
+    grid-template-columns: 164px 1fr 550px 100px;
+    grid-template-rows: 1fr;
+  }
+}
+
+.ukhsa-service-name {
+  // 0 - 450px
+  grid-column: 1;
+  grid-row: 2;
+  height: 30px;
+  margin: 0 !important;
+
+  // 450 - 640px
+  @media (min-width: 450px) {
+    margin-top: 18px !important;
+    grid-column: 2 / 4;
+    grid-row: 1;
+  }
+
+  // 640 - 1200px
+  @media (min-width: 640px) {
+    margin: 0 !important;
+    margin-top: 16px !important;
+  }
+
+  // 1200px +
+  @media (min-width: 1200px) {
+    grid-column: 2;
+  }
+}
+
+
 .ukhsa-search {
-  margin-right: 120px;
+  // 0 - 450px
+  height: 40px;
+  grid-column: 1;
+  grid-row: 3;
+
+  // 450 - 1200px
+  @media (min-width: 450px) {
+    grid-column: 1 / 3;
+    grid-row: 2;
+  }
+
+  // 1200px +
+  @media (min-width: 1200px) {
+    margin-top: 10px;
+    margin-bottom: 0;
+    grid-column-gap: 0;
+    grid-column: 3;
+    grid-row: 1;
+  }
 }
 
 .ukhsa-topnav {
-  height: 75px !important;
-  top: -75px !important;
+  height: 60px !important;
+  top: -60px !important;
 }
 
 .striped-background {
