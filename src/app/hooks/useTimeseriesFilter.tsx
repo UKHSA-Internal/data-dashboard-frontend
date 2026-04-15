@@ -1,10 +1,10 @@
 'use client'
 
-import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
+import { createContext, ReactNode, useContext, useState } from 'react'
 
 interface TimeseriesFilterContextValue {
-  currentFilter: string
-  setCurrentFilter: (filter: string) => void
+  readonly currentFilter: string
+  readonly setCurrentFilter: (filter: string) => void
 }
 
 const TimeseriesFilterContext = createContext<TimeseriesFilterContextValue | null>(null)
@@ -31,23 +31,15 @@ export function useTimeseriesFilter(): TimeseriesFilterContextValue {
 }
 
 export function useTimeseriesFilterValue(chartId: string): string | undefined {
-  const [filter, setFilter] = useState<string | undefined>(undefined)
+  // Guard against SSR where window is undefined
+  if (globalThis.window === undefined) {
+    return
+  }
 
-  useEffect(() => {
-    // Guard against SSR where window is undefined
-    if (typeof window === 'undefined') {
-      return
-    }
+  const storedFilters = globalThis.sessionStorage.getItem('timeseriesFilters')
+  if (!storedFilters) {
+    return
+  }
 
-    const storedFilters = window.sessionStorage.getItem('timeseriesFilters')
-    if (!storedFilters) {
-      setFilter(undefined)
-      return
-    }
-
-    const matchedFilter = storedFilters.split(';').find((entry) => entry.startsWith(`${chartId}|`))
-    setFilter(matchedFilter ?? undefined)
-  }, [chartId])
-
-  return filter
+  return storedFilters.split(';').find((entry) => entry.startsWith(`${chartId}|`))
 }

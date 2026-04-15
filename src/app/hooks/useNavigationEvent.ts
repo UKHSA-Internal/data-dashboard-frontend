@@ -7,7 +7,7 @@ export const useNavigationEvent = (onPathnameChange: (pathname: string) => void)
   const pathname = usePathname() // Get current route
   const searchParams = useSearchParams()
 
-  const url = `${pathname}${!!searchParams.toString() ? `?${searchParams.toString()}` : ''}`
+  const url = `${pathname}${!!searchParams?.toString() ? `?${searchParams?.toString()}` : ''}`
 
   // Save url on component mount into a REF
   const savedUrlRef = useRef(url)
