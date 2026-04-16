@@ -6,7 +6,7 @@ import { client } from '@/api/utils/api.utils'
 export async function GET(req: NextRequest) {
   // FIXME: should we clean down to expected params here?
 
-  const proxiedResponse = await client<SearchResponse>('pages', { searchParams: req.nextUrl.searchParams })
+  const proxiedResponse = await client<SearchResponse>('search', { searchParams: req.nextUrl.searchParams })
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)
