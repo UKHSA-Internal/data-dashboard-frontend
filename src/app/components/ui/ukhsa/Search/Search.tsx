@@ -25,18 +25,25 @@ export function Search({ label, placeholder }: SearchProps) {
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
   const [searchResults, setSearchResults] = useState<SearchResult[] | undefined>([])
 
-  const getSearchResults = async ({ search }: { search: string }) => {
-    const pages = await searchPages({ limit: limit.toString(), search })
-    setSearchResults(pages?.data?.items)
-  }
-
   useEffect(() => {
-    if (debouncedSearchValue) {
-      getSearchResults({ search: debouncedSearchValue })
-    } else {
-      setSearchResults([])
+    if (!debouncedSearchValue) return
+
+    let cancelled = false
+
+    const fetchResults = async () => {
+      const pages = await searchPages({ limit: limit.toString(), search: debouncedSearchValue })
+      if (cancelled) return
+      setSearchResults(pages?.data?.items ?? [])
+    }
+
+    void fetchResults()
+
+    return () => {
+      cancelled = true
     }
   }, [debouncedSearchValue])
+
+  const displayedResults = debouncedSearchValue ? searchResults : []
 
   return (
     <form method="GET" aria-label={label}>
@@ -57,7 +64,7 @@ export function Search({ label, placeholder }: SearchProps) {
         />
         <div className="absolute z-[1000] max-h-[200px] overflow-y-auto bg-white shadow-[0px_15px_15px_0px_rgba(0,0,0,0.35)] sm:w-5/12">
           <ul>
-            {searchResults?.map(({ title, meta: { html_url } }, i) => (
+            {displayedResults?.map(({ title, meta: { html_url } }, i) => (
               <li
                 key={`result-${i}`}
                 value="{i}"
