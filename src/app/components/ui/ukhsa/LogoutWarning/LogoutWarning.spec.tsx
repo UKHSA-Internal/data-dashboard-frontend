@@ -7,8 +7,17 @@ jest.mock('@/config/constants', () => ({
   logoutWarningThresholdMinutes: 1,
 }))
 
+const mockServerSignOut = jest.fn()
+jest.mock('@/app/actions/auth.actions', () => ({
+  serverSignOut: () => mockServerSignOut(),
+}))
+
 describe('LogoutWarning', () => {
-  beforeEach(() => jest.useFakeTimers())
+  beforeEach(() => {
+    jest.useFakeTimers()
+    mockServerSignOut.mockClear()
+  })
+
   afterEach(() => {
     jest.useRealTimers()
     jest.clearAllMocks()
@@ -82,6 +91,38 @@ describe('LogoutWarning', () => {
 
       expect(screen.getByText(/01:00 Minutes/)).toBeInTheDocument()
     })
+
+    test('calls serverSignOut when countdown reaches zero', () => {
+      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
+
+      // Trigger the warning
+      act(() => {
+        jest.advanceTimersByTime(1 * 60 * 1000)
+      })
+
+      // Let the countdown expire
+      act(() => {
+        jest.advanceTimersByTime(1 * 60 * 1000)
+      })
+
+      expect(mockServerSignOut).toHaveBeenCalledTimes(1)
+    })
+
+    test('does not call serverSignOut when Stay signed in is clicked', () => {
+      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
+
+      act(() => {
+        jest.advanceTimersByTime(1 * 60 * 1000)
+      })
+
+      fireEvent.click(screen.getByRole('button', { name: /stay signed in/i }))
+
+      act(() => {
+        jest.advanceTimersByTime(1 * 60 * 1000)
+      })
+
+      expect(mockServerSignOut).not.toHaveBeenCalled()
+    })
   })
 
   describe('inactivity reset', () => {
@@ -125,6 +166,43 @@ describe('LogoutWarning', () => {
       })
 
       fireEvent.mouseMove(window)
+
+      expect(screen.getByText('You will be signed out')).toBeInTheDocument()
+    })
+  })
+
+  describe('tab sync', () => {
+    test('hides modal when activity is detected in another tab', () => {
+      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
+
+      act(() => {
+        jest.advanceTimersByTime(1 * 60 * 1000)
+      })
+
+      expect(screen.getByText('You will be signed out')).toBeInTheDocument()
+
+      act(() => {
+        window.dispatchEvent(
+          new StorageEvent('storage', {
+            key: 'lastActivity',
+            newValue: Date.now().toString(),
+          })
+        )
+      })
+
+      expect(screen.queryByText('You will be signed out')).not.toBeInTheDocument()
+    })
+
+    test('does not react to unrelated storage events', () => {
+      render(<LogoutWarning timeoutMinutes={2} warningMinutes={1} />)
+
+      act(() => {
+        jest.advanceTimersByTime(1 * 60 * 1000)
+      })
+
+      act(() => {
+        window.dispatchEvent(new StorageEvent('storage', { key: 'someOtherKey', newValue: 'value' }))
+      })
 
       expect(screen.getByText('You will be signed out')).toBeInTheDocument()
     })
