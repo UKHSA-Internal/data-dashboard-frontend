@@ -28,17 +28,11 @@ export function Search({ label, placeholder }: SearchProps) {
   const searchContainerRef = useRef<HTMLDivElement>(null)
   const searchInputRef = useRef<HTMLInputElement>(null)
 
-  const getSearchResults = async ({ search }: { search: string }) => {
-    const pages = await searchPages({ limit: limit.toString(), search })
-    setSearchResults(pages?.data?.items)
-  }
-
   useEffect(() => {
-    if (debouncedSearchValue) {
-      getSearchResults({ search: debouncedSearchValue })
-    } else {
-      setSearchResults([])
-    }
+    if (debouncedSearchValue)
+      searchPages({ limit: limit.toString(), search: debouncedSearchValue }).then((pages) =>
+        setSearchResults(pages?.data?.items)
+      )
   }, [debouncedSearchValue])
 
   useEffect(() => {

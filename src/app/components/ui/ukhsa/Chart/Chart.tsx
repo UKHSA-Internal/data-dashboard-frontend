@@ -19,14 +19,14 @@ interface ChartProps {
    * Enables interactive chart rendering with Plotly.js if set to true.
    * Defaults to true. When disabled or unavailable, static charts will display instead.
    */
-  enableInteractive?: boolean
+  readonly enableInteractive?: boolean
 
   /**
    * Chart configuration data containing metadata required to fetch chart visuals
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof ChartCardSchemas>['value']
+  readonly data: z.infer<typeof ChartCardSchemas>['value']
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
@@ -35,7 +35,7 @@ interface ChartProps {
    * for the default chart display. `size` controls the width format for each entry.
    *
    */
-  sizes: Array<
+  readonly sizes: Array<
     | {
         default?: never
         minWidth: number
@@ -49,7 +49,7 @@ interface ChartProps {
   >
 }
 
-const createStaticChart = ({
+const createStaticChart = async ({
   chart,
   areaName,
   altText,
@@ -60,7 +60,7 @@ const createStaticChart = ({
 }) => {
   const chartSvg = chart.data?.chart
 
-  if (!chartSvg) return <ChartEmpty resetHref={getPathname()} />
+  if (!chartSvg) return <ChartEmpty resetHref={await getPathname()} />
 
   return (
     <img
@@ -98,7 +98,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   const { chart, x_axis, y_axis, confidence_intervals, confidence_colour } = chartData
 
-  const pathname = getPathname()
+  const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
   const plots = chart.map((plot) => ({
@@ -136,7 +136,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   const { alt_text: alt, figure, last_updated } = chartResponse.data
 
-  const staticChart = createStaticChart({
+  const staticChart = await createStaticChart({
     chart: chartResponse,
     areaName,
     altText: t('cms.blocks.chart.alt', {
