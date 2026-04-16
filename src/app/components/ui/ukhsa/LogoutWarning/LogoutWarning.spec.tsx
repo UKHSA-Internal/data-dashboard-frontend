@@ -8,7 +8,7 @@ jest.mock('@/config/constants', () => ({
 }))
 
 const mockServerSignOut = jest.fn()
-jest.mock('@/app/actions/auth.actions', () => ({
+jest.mock('@/app/api/auth/auth.actions', () => ({
   serverSignOut: () => mockServerSignOut(),
 }))
 
