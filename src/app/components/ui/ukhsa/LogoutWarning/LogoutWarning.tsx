@@ -2,6 +2,7 @@
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
+import { serverSignOut } from '@/app/api/auth/auth.actions'
 import { logoutThresholdMinutes, logoutWarningThresholdMinutes } from '@/config/constants'
 interface LogoutWarningProps {
   timeoutMinutes?: number
@@ -20,15 +21,23 @@ export default function LogoutWarning({
   const visibleRef = useRef(false)
 
   // Clear all timers and intervals
-  const clearTimers = () => {
+  const clearTimers = useCallback(() => {
     if (inactivityTimer.current) clearTimeout(inactivityTimer.current)
     if (countdownInterval.current) clearInterval(countdownInterval.current)
     inactivityTimer.current = null
     countdownInterval.current = null
-  }
+  }, [])
+
+  // Trigger logout by clearing timers and calling the server sign out function
+  const triggerLogout = useCallback(async () => {
+    clearTimers()
+    serverSignOut()
+  }, [clearTimers])
 
   // Start the countdown when the warning is triggered
   const startCountdown = useCallback(() => {
+    if (countdownInterval.current) clearInterval(countdownInterval.current)
+
     setSecondsLeft(warningMinutes * 60)
     setVisible(true)
     visibleRef.current = true
@@ -38,12 +47,13 @@ export default function LogoutWarning({
         if (s <= 1) {
           clearInterval(countdownInterval.current!)
           countdownInterval.current = null
+          triggerLogout()
           return 0
         }
         return s - 1
       })
     }, 1000)
-  }, [warningMinutes])
+  }, [warningMinutes, triggerLogout])
 
   // Schedule the warning to show after the appropriate amount of inactivity
   const scheduleWarning = useCallback(() => {
@@ -55,6 +65,7 @@ export default function LogoutWarning({
   // Reset timer on user activity, but only if warning isn't already visible
   const resetInactivityTimer = useCallback(() => {
     if (visibleRef.current) return
+    localStorage.setItem('lastActivity', Date.now().toString())
     scheduleWarning()
   }, [scheduleWarning])
 
@@ -68,15 +79,32 @@ export default function LogoutWarning({
       events.forEach((e) => window.removeEventListener(e, resetInactivityTimer))
       clearTimers()
     }
-  }, [])
+  }, [scheduleWarning, resetInactivityTimer, clearTimers])
 
   // Handle "Stay signed in" button click
   const handleStaySignedIn = useCallback(() => {
     clearTimers()
     setVisible(false)
     visibleRef.current = false
+    localStorage.setItem('lastActivity', Date.now().toString())
     scheduleWarning()
-  }, [scheduleWarning])
+  }, [clearTimers, scheduleWarning])
+
+  // Listen for activity from OTHER tabs via localStorage events
+  useEffect(() => {
+    const onStorage = (e: StorageEvent) => {
+      if (e.key !== 'lastActivity') return
+      if (visibleRef.current) {
+        clearTimers()
+        setVisible(false)
+        visibleRef.current = false
+      }
+      scheduleWarning()
+    }
+
+    window.addEventListener('storage', onStorage)
+    return () => window.removeEventListener('storage', onStorage)
+  }, [scheduleWarning, clearTimers])
 
   const mins = String(Math.floor(secondsLeft / 60)).padStart(2, '0')
   const secs = String(secondsLeft % 60).padStart(2, '0')
@@ -95,7 +123,7 @@ export default function LogoutWarning({
             </strong>
           </p>
           <div className="flex items-center gap-6">
-            <button type="submit" className="govuk-button govuk-!-margin-0" onClick={handleStaySignedIn}>
+            <button type="button" className="govuk-button govuk-!-margin-0" onClick={handleStaySignedIn}>
               Stay signed in
             </button>
           </div>
