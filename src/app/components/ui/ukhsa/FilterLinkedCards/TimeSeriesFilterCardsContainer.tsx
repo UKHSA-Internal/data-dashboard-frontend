@@ -1,11 +1,20 @@
 'use client'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 
-const TimeSeriesFilterCardsContainer = () => {
+const TimeSeriesFilterCardsContainer = ({
+  isPublic,
+  pageClassification,
+  authEnabled,
+}: {
+  isPublic?: boolean
+  pageClassification?: DataClassification
+  authEnabled?: boolean
+}) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
@@ -24,6 +33,9 @@ const TimeSeriesFilterCardsContainer = () => {
               timePeriods={timePeriods!}
               dataFilters={selectedVaccinationFilters!}
               cardData={timeseriesTemplateData!}
+              isPublic={isPublic}
+              level={pageClassification}
+              authEnabled={authEnabled}
             />
           )
         })

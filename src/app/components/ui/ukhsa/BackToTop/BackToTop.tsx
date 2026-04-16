@@ -14,16 +14,28 @@ interface BackToTopProps {
 export const BackToTop = ({ href = '#main-content', className }: BackToTopProps) => {
   const { y: horizontalWindowPosition } = useWindowScroll()
   const { t } = useTranslation('common')
+  const [shouldRender, setShouldRender] = useState(false)
 
-  const [isSticky, setIsSticky] = useState(false)
+  const isSticky = horizontalWindowPosition > 200
 
   useEffect(() => {
-    if (horizontalWindowPosition > 200) {
-      setIsSticky(true)
-    } else {
-      setIsSticky(false)
+    const checkPageHeight = () => {
+      const contentHeight = document.documentElement.scrollHeight
+      const viewportHeight = window.innerHeight
+      // Only show if content exceeds viewport by at least 50%
+      setShouldRender(contentHeight > viewportHeight * 1.5)
     }
-  }, [horizontalWindowPosition])
+
+    checkPageHeight()
+
+    // Recheck if content dynamically changes (e.g., lazy loading, accordions)
+    const observer = new ResizeObserver(checkPageHeight)
+    observer.observe(document.body)
+
+    return () => observer.disconnect()
+  }, [])
+
+  if (!shouldRender) return null
 
   return (
     <a

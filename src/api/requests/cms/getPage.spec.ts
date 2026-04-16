@@ -13,7 +13,7 @@ beforeEach(() => {
   jest.clearAllMocks()
 })
 
-test('Returns a full page from thge cms by id', async () => {
+test('Returns a full page from the cms by id', async () => {
   jest.mocked(client).mockResolvedValueOnce({ data: dashboardMock, status: 200 })
 
   const result = await getPage(dashboardMock.id)
