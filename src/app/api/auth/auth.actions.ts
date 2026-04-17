@@ -1,7 +1,7 @@
 /**
- *
- * @description Server action to sign out the user. It calls the signOut API route and then redirects the user to the Cognito logout URL.
- * @returns {Promise<void>} - A promise that resolves when the user is signed out and redirected.
+ * Server action to sign out the user. Revokes the session token,
+ * clears the NextAuth session, and redirects to the Cognito logout URL.
+ * @throws Will always redirect via Next.js `redirect()` — the promise never resolves normally.
  */
 
 'use server'
