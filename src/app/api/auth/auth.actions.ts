@@ -1,3 +1,9 @@
+/**
+ *
+ * @description Server action to sign out the user. It calls the signOut API route and then redirects the user to the Cognito logout URL.
+ * @returns {Promise<void>} - A promise that resolves when the user is signed out and redirected.
+ */
+
 'use server'
 
 import { redirect } from 'next/navigation'
