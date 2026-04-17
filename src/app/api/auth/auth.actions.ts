@@ -1,7 +1,6 @@
 /**
  * Server action to sign out the user. Revokes the session token,
  * clears the NextAuth session, and redirects to the Cognito logout URL.
- * @throws Will always redirect via Next.js `redirect()` — the promise never resolves normally.
  */
 
 'use server'
