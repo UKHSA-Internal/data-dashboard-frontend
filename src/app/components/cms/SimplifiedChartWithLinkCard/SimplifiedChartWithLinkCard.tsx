@@ -17,7 +17,7 @@ export function SimplifiedChartWithLinkCard({ value, cardsCount }: SimplifiedCha
     <Card
       asChild
       aria-labelledby={`chart-row-card-heading-${snakeCase(value.title)}`}
-      className="ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
+      className="ukhsa-chart-card relative flex flex-col border border-black bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-black focus:bg-[var(--colour-home-chart-background-hover)]"
     >
       <Link href={topicPagePath} prefetch>
         <h3 id={`chart-row-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">

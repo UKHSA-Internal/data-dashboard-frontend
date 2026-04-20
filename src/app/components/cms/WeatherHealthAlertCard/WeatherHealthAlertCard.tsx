@@ -27,7 +27,8 @@ export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertC
       className={clsx(
         'mb-3 sm:mb-6 lg:mb-0 lg:w-2/3 xl:w-1/2',
         // Used by the PopularTopicsCard height-sync wrapper to keep the optional Source at the bottom.
-        'flex h-full flex-col',
+        'govuk-!-padding-5 ukhsa-chart-card flex h-full flex-col border border-black bg-[var(--colour-home-chart-background)] transition-colors duration-200 focus-within:border-black focus-within:bg-[var(--colour-home-chart-background-hover)] hover:bg-[var(--colour-home-chart-background-hover)]',
+        '[&_a.ukhsa-chart-card]:!border-0 [&_a.ukhsa-chart-card]:!bg-transparent [&_a.ukhsa-chart-card]:!p-0',
         className
       )}
     >
