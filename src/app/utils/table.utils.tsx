@@ -19,7 +19,9 @@ export const getColumnHeader = (
   const label = chartLabel || axisTitle || fallback
 
   const sensitiveLabel = authEnabled && isPublic === false && (
-    <span className="whitespace-nowrap uppercase text-[#CECECE]">&nbsp;{levelContent[level]}</span>
+    <span className="inline-block w-full whitespace-normal break-words text-[#CECECE] sm:w-auto">
+      &nbsp;{levelContent[level]}
+    </span>
   )
 
   return (
