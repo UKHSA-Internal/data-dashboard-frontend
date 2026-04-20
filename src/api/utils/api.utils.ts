@@ -63,7 +63,7 @@ export async function client<T>(
     body,
     // Defaulting all requests to public (non-authenticated) for now.
     // This may change to an opt-in approach as we build out the authenticated dashboard.
-    isPublic = true,
+    isPublic = false,
     searchParams,
     baseUrl = getApiBaseUrl(),
     ...customConfig
