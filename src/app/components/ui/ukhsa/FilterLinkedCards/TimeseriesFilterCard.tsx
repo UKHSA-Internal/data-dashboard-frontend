@@ -14,6 +14,7 @@ import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
+import { authEnabled } from '@/config/constants'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
@@ -24,9 +25,8 @@ interface TimeseriesFilterCardProps {
   dataFilters: DataFilter[]
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
-  isPublic?: boolean
-  level?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const TimeseriesFilterCard = ({
@@ -34,9 +34,8 @@ const TimeseriesFilterCard = ({
   timePeriods,
   dataFilters,
   cardData,
-  isPublic,
-  level,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
 
@@ -122,6 +121,8 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 handleLatestDate={setDate}
                 cardData={cardData}
+                isNonPublic={isNonPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -136,9 +137,8 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 size={'wide'}
                 cardData={cardData}
-                isPublic={isPublic}
-                level={level}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -155,7 +155,7 @@ const TimeseriesFilterCard = ({
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
                 cardData={cardData}
-                isPublic={isPublic}
+                isPublic={!isNonPublic}
                 authEnabled={authEnabled}
               />
             </TabsContent>

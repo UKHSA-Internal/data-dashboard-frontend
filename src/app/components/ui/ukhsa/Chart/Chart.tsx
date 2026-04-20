@@ -3,16 +3,20 @@ import { Suspense } from 'react'
 import { z } from 'zod'
 
 import { ChartCardSchemas } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { getChartSvg } from '@/app/utils/chart.utils'
+import { getWatermarkFlags } from '@/app/utils/data-classification.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import ChartInteractive from './ChartInteractive'
 import ChartWithFilter from './ChartWithFilter'
+
+const INTERACTIVE_CHART_API_HOSTS = ['ukhsa-dashboard.data.gov.uk', 'localhost:8000']
 
 interface ChartProps {
   /**
@@ -47,6 +51,16 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
+
+  /**
+   * True when auth is enabled and the page is non-public
+   * */
+  isNonPublic?: boolean
+
+  /**
+   * Data classification, eg "OFFICIAL SENSITIVE"
+   * */
+  dataClassification?: DataClassification
 }
 
 const createStaticChart = async ({
@@ -73,7 +87,7 @@ const createStaticChart = async ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, isNonPublic, dataClassification }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
   const chartData = data
@@ -108,6 +122,9 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     geography: areaName ?? plot?.value.geography,
   }))
 
+  // Select the default size (mobile-first approach)
+  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
+
   const chartRequestBody = {
     plots,
     x_axis,
@@ -118,17 +135,12 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     y_axis_title: yAxisTitle,
     y_axis_maximum_value: yAxisMaximum,
     y_axis_minimum_value: yAxisMinimum,
-  }
-
-  // Select the default size (mobile-first approach)
-  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
-
-  // Make single chart request with selected size
-  const chartResponse = await getCharts({
-    ...chartRequestBody,
     chart_width: chartSizes[selectedSize.size].width,
     chart_height: chartSizes[selectedSize.size].height,
-  })
+    ...getWatermarkFlags(isNonPublic, dataClassification),
+  }
+
+  const chartResponse = await getCharts(chartRequestBody)
 
   if (!chartResponse.success || !chartResponse.data) {
     return <ChartEmpty resetHref={pathname} />
@@ -144,16 +156,18 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     }),
   })
 
-  // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
+  // Return static charts locally as our mocks don't currently provide the Plotly layout and data JSON.
   // Update the mocks to include this, and then remove the below condition to enable interactive charts locally.
-  if (!process.env.API_URL.includes('ukhsa-dashboard.data.gov.uk') && !process.env.API_URL.includes('localhost:8000')) {
+  const supportsInteractiveCharts = INTERACTIVE_CHART_API_HOSTS.some((host) => process.env.API_URL.includes(host))
+
+  if (!supportsInteractiveCharts) {
     return staticChart
   }
 
   // Show static chart when interactive charts are disabled (i.e. landing page)
   if (!enableInteractive) return staticChart
 
-  // Use client-side chart with filter when timeseries filter is enabled
+  // Use client-side chart with filter when time series filtering is enabled.
   if (data.show_timeseries_filter) {
     return (
       <>
@@ -166,6 +180,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
             title={data.title}
             chart={data.chart}
             chartData={chartData}
+            isNonPublic={isNonPublic}
+            dataClassification={dataClassification}
           />
         </div>
       </>

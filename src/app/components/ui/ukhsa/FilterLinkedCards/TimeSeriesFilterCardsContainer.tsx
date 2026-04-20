@@ -7,13 +7,11 @@ import ClientInformationCard from '../ClientInformationCard/ClientInformationCar
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 
 const TimeSeriesFilterCardsContainer = ({
-  isPublic,
-  pageClassification,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: {
-  isPublic?: boolean
-  pageClassification?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
@@ -33,9 +31,8 @@ const TimeSeriesFilterCardsContainer = ({
               timePeriods={timePeriods!}
               dataFilters={selectedVaccinationFilters!}
               cardData={timeseriesTemplateData!}
-              isPublic={isPublic}
-              level={pageClassification}
-              authEnabled={authEnabled}
+              isNonPublic={isNonPublic}
+              dataClassification={dataClassification}
             />
           )
         })

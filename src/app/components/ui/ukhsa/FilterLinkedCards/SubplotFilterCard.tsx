@@ -18,6 +18,7 @@ import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/comp
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
+import { authEnabled } from '@/config/constants'
 
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
@@ -30,9 +31,8 @@ interface SubplotFilterCardProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
-  isPublic?: boolean
-  level?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const SubplotFilterCard = ({
@@ -43,9 +43,8 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
-  isPublic,
-  level,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
@@ -158,9 +157,8 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 cardData={cardData}
-                isPublic={isPublic}
-                level={level}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -176,7 +174,7 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 selectedThresholds={selectedThresholds}
-                isPublic={isPublic}
+                isPublic={!isNonPublic}
                 authEnabled={authEnabled}
               />
             </TabsContent>

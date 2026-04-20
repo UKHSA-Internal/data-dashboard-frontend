@@ -6,9 +6,11 @@ import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
 import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
+import { getWatermarkFlags } from '@/app/utils/data-classification.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
@@ -23,6 +25,8 @@ interface ChartWithFilterProps {
   title: string
   chart: Chart
   chartData: z.infer<typeof ChartCardSchemas>['value']
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const LoadingSpinnerContainer = () => {
@@ -33,7 +37,15 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({
+  figure,
+  title,
+  chart,
+  chartData,
+  lastUpdated,
+  isNonPublic,
+  dataClassification,
+}: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -90,6 +102,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
           y_axis_minimum_value: yAxisMinimum,
           chart_width: chartSizes['narrow'].width,
           chart_height: chartSizes['narrow'].height,
+          ...getWatermarkFlags(isNonPublic, dataClassification),
         })
 
         if (!chartResponse.success || !chartResponse.data) {
@@ -107,7 +120,8 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
         previousFilterRef.current = filter
       }
     },
-    [chartData]
+    // useCallback DependencyList:
+    [chartData, dataClassification, isNonPublic, lastUpdated]
   )
 
   useEffect(() => {

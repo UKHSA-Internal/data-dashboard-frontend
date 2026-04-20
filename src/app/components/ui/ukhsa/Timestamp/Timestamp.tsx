@@ -1,8 +1,10 @@
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getServerTranslation } from '@/app/i18n'
+import { getWatermarkFlags } from '@/app/utils/data-classification.utils'
 import { chartSizes } from '@/config/constants'
 
 /**
@@ -16,9 +18,12 @@ interface TimestampProps {
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
+
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
-export async function Timestamp({ data, size }: TimestampProps) {
+export async function Timestamp({ data, size, isNonPublic, dataClassification }: TimestampProps) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -44,6 +49,7 @@ export async function Timestamp({ data, size }: TimestampProps) {
     y_axis_maximum_value,
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
+    ...getWatermarkFlags(isNonPublic, dataClassification),
   }
 
   const res = await getCharts(requestBody)

@@ -11,6 +11,7 @@ import { getTables, Response } from '@/api/requests/tables/getTables'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { useTranslation } from '@/app/i18n/client'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
+import { getWatermarkFlags } from '@/app/utils/data-classification.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getColumnHeader } from '@/app/utils/table.utils'
 import {
@@ -28,9 +29,8 @@ interface TableProps {
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
-  isPublic?: boolean
-  level?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 //
 export function ClientTable({
@@ -39,9 +39,8 @@ export function ClientTable({
   dataFilters,
   timePeriods,
   cardData,
-  isPublic,
-  level,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: TableProps) {
   const { t } = useTranslation('common')
   const [chartResponse, setChartResponse] = useState<{ success: boolean; data: ChartResponse } | null>(null)
@@ -96,6 +95,7 @@ export function ClientTable({
               use_markers: true,
             }
           }),
+          ...getWatermarkFlags(isNonPublic, dataClassification),
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse)
@@ -240,7 +240,7 @@ export function ClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isNonPublic, dataClassification)}
                       </th>
                     )
                   })}
