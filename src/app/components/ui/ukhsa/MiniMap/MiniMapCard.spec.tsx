@@ -53,10 +53,14 @@ describe('MiniMapCard Component', () => {
     const { container } = renderMinimapComponent('heat')
     const card = container.querySelector('a')
     expect(card).toHaveClass(
-      'govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card bg-[var(--colour-chart-background)]'
-    )
-    expect(card).toHaveClass(
-      'no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]'
+      'ukhsa-chart-card',
+      'no-underline',
+      'transition-colors',
+      'duration-200',
+      'ukhsa-focus',
+      'bg-[var(--colour-home-chart-background)]',
+      'hover:bg-[var(--colour-home-chart-background-hover)]',
+      'focus:bg-[var(--colour-home-chart-background-hover)]'
     )
   })
 })
