@@ -22,7 +22,7 @@
     "prepare": "husky install"
   },
   "dependencies": {
-    "@fortedigital/nextjs-cache-handler": "^2.0.3",
+    "@fortedigital/nextjs-cache-handler": "^2.5.3",
     "@jsdevtools/rehype-toc": "^3.0.2",
     "@radix-ui/react-avatar": "^1.1.3",
     "@radix-ui/react-dialog": "^1.0.5",
