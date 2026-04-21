@@ -12,7 +12,7 @@ interface MiniMapCardProps {
   title: string
   subTitle: string
   alertType: HealthAlertTypes
-  headingClassName?: string
+  readonly headingClassName?: string
 }
 
 export function MiniMapCard({ title, subTitle, alertType, headingClassName }: MiniMapCardProps) {
