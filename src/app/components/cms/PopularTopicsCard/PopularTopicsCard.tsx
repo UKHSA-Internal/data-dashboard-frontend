@@ -24,13 +24,16 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
       <div className="flex h-full flex-col gap-6">
         {value.left_column.map((item: PopularTopicsCardData['left_column'][number]) => {
           if (item.type === 'chart_card_with_description') {
-            return <ChartWithDescriptionCard key={item.id} value={item.value} cardsCount={2} />
+            return (
+              <ChartWithDescriptionCard key={item.id} value={item.value} cardsCount={2} headingClassName="text-blue" />
+            )
           }
           return (
             <WeatherHealthAlertCard
               key={item.id}
               value={item.value}
               className="mb-0 w-full flex-1 lg:w-full xl:w-full"
+              headingClassName="text-blue"
             />
           )
         })}
@@ -57,7 +60,7 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                   <Link href={topicPagePath} prefetch className="flex h-full flex-col">
                     <h3
                       id={`popular-topic-right-chart-${snakeCase(card.value.title)}`}
-                      className="govuk-heading-m mb-1"
+                      className="govuk-heading-m mb-1 text-blue"
                     >
                       {card.value.title}
                     </h3>

@@ -10,9 +10,10 @@ import { getPath } from '@/app/utils/cms/slug'
 type ChartWithDescriptionCardProps = {
   readonly value: any
   readonly cardsCount: number
+  readonly headingClassName?: string
 }
 
-export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescriptionCardProps) {
+export function ChartWithDescriptionCard({ value, cardsCount, headingClassName }: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
   const showSource = hasSource(value.source)
 
@@ -27,7 +28,10 @@ export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescrip
         )}
       >
         <Link href={topicPagePath} prefetch className="flex h-full min-h-0 flex-col">
-          <h3 id={`chart-with-description-card-heading-${snakeCase(value.title)}`} className="govuk-heading-m mb-1">
+          <h3
+            id={`chart-with-description-card-heading-${snakeCase(value.title)}`}
+            className={clsx('govuk-heading-m mb-1', headingClassName)}
+          >
             {value.title}
           </h3>
           <p className="govuk-body-s mb-3 text-grey-1">{value.sub_title}</p>
