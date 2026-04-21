@@ -97,7 +97,6 @@ describe('ChartRowCardContent', () => {
     expect(article).toHaveClass('ukhsa-chart-card')
 
     // Data Classification Banner
-
     expect(screen.queryByText('Official-Sensitive')).not.toBeInTheDocument()
 
     // Heading and description
@@ -122,7 +121,7 @@ describe('ChartRowCardContent', () => {
     expect(screen.getByText('Mocked chart')).toBeVisible()
   })
 
-  test('explicitly public chart card displays correctly', () => {
+  test('public chart card displays correctly', () => {
     const mockValue = {
       columns: [
         {
@@ -138,9 +137,8 @@ describe('ChartRowCardContent', () => {
         },
       ],
     }
-    const isPublic = true
 
-    render(<ChartRowCardContent value={mockValue} isPublic={isPublic} />)
+    render(<ChartRowCardContent value={mockValue} isNonPublic={false} />)
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
@@ -149,7 +147,6 @@ describe('ChartRowCardContent', () => {
     expect(article).toHaveClass('ukhsa-chart-card')
 
     // Data Classification Banner
-
     expect(screen.queryByText('Official-Sensitive')).not.toBeInTheDocument()
 
     // Heading and description
@@ -190,10 +187,9 @@ describe('ChartRowCardContent', () => {
         },
       ],
     }
-    const isPublic = false
     const mockPageClassification = 'official_sensitive'
 
-    render(<ChartRowCardContent value={mockValue} isPublic={isPublic} pageClassification={mockPageClassification} />)
+    render(<ChartRowCardContent value={mockValue} isNonPublic={true} dataClassification={mockPageClassification} />)
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
@@ -204,7 +200,7 @@ describe('ChartRowCardContent', () => {
     // Data Classification Banner
     const dataClassificationHeader = screen.getByRole('note')
     expect(dataClassificationHeader).toBeInTheDocument()
-    expect(within(dataClassificationHeader).getByText('Official-Sensitive')).toBeInTheDocument()
+    expect(within(dataClassificationHeader).getByText('OFFICIAL-SENSITIVE')).toBeInTheDocument()
 
     // Heading and description
     expect(within(article).getByRole('heading', { level: 3, name: 'Chart heading 1' })).toBeInTheDocument()

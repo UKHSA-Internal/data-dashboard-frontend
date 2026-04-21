@@ -8,31 +8,31 @@ describe('ClassificationBanner', () => {
   it('should render the correct text for official level', () => {
     render(<ClassificationBanner size="large" level="official" />)
 
-    expect(screen.getByText('Official')).toBeInTheDocument()
+    expect(screen.getByText('OFFICIAL')).toBeInTheDocument()
   })
 
   it('should render the correct text for official_sensitive level', () => {
     render(<ClassificationBanner size="large" level="official_sensitive" />)
 
-    expect(screen.getByText('Official-Sensitive')).toBeInTheDocument()
+    expect(screen.getByText('OFFICIAL-SENSITIVE')).toBeInTheDocument()
   })
 
   it('should render the correct text for protective_marking_not_set level', () => {
     render(<ClassificationBanner size="large" level="protective_marking_not_set" />)
 
-    expect(screen.getByText('Protective marking not set')).toBeInTheDocument()
+    expect(screen.getByText('PROTECTIVE MARKING NOT SET')).toBeInTheDocument()
   })
 
   it('should render the correct text for secret level', () => {
     render(<ClassificationBanner size="large" level="secret" />)
 
-    expect(screen.getByText('Secret')).toBeInTheDocument()
+    expect(screen.getByText('SECRET')).toBeInTheDocument()
   })
 
   it('should render the correct text for top_secret level', () => {
     render(<ClassificationBanner size="large" level="top_secret" />)
 
-    expect(screen.getByText('Top Secret')).toBeInTheDocument()
+    expect(screen.getByText('TOP SECRET')).toBeInTheDocument()
   })
 
   it('should have blue background for official level', () => {
@@ -68,18 +68,18 @@ describe('ClassificationBanner', () => {
   it('should apply large font size when size is large', () => {
     render(<ClassificationBanner size="large" level="official_sensitive" />)
 
-    expect(screen.getByText('Official-Sensitive')).toHaveClass('text-[27px]')
+    expect(screen.getByText('OFFICIAL-SENSITIVE')).toHaveClass('text-[27px]')
   })
 
   it('should apply medium font size when size is medium', () => {
     render(<ClassificationBanner size="medium" level="official_sensitive" />)
 
-    expect(screen.getByText('Official-Sensitive')).toHaveClass('text-[18px]')
+    expect(screen.getByText('OFFICIAL-SENSITIVE')).toHaveClass('text-[18px]')
   })
 
   it('should not apply any conditional font size for other size values', () => {
     render(<ClassificationBanner size="small" level="official_sensitive" />)
-    const paragraph = screen.getByText('Official-Sensitive')
+    const paragraph = screen.getByText('OFFICIAL-SENSITIVE')
 
     expect(paragraph).not.toHaveClass('text-[27px]')
     expect(paragraph).not.toHaveClass('text-[18px]')
@@ -87,7 +87,7 @@ describe('ClassificationBanner', () => {
 
   it('should always apply base classes regardless of size', () => {
     render(<ClassificationBanner size="unknown" level="official_sensitive" />)
-    const paragraph = screen.getByText('Official-Sensitive')
+    const paragraph = screen.getByText('OFFICIAL-SENSITIVE')
 
     expect(paragraph).toHaveClass('font-open-sans')
     expect(paragraph).toHaveClass('font-bold')
@@ -98,6 +98,6 @@ describe('ClassificationBanner', () => {
   it('should render with empty size', () => {
     render(<ClassificationBanner size="" level="official_sensitive" />)
 
-    expect(screen.getByText('Official-Sensitive')).toBeInTheDocument()
+    expect(screen.getByText('OFFICIAL-SENSITIVE')).toBeInTheDocument()
   })
 })

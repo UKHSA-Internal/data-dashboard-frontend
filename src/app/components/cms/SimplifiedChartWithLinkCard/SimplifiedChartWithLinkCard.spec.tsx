@@ -7,7 +7,7 @@ jest.mock('@/app/utils/cms/slug', () => ({
 }))
 
 jest.mock('@/app/components/ui/ukhsa', () => ({
-  Card: ({ children, _asChild, ...props }: any) => (
+  Card: ({ children, asChild: _asChild, ...props }: any) => (
     <div data-testid="card" {...props}>
       {children}
     </div>
@@ -16,7 +16,7 @@ jest.mock('@/app/components/ui/ukhsa', () => ({
 }))
 
 jest.mock('next/link', () => {
-  return function MockLink({ children, href, _prefetch, ...props }: any) {
+  return function MockLink({ children, href, prefetch: _prefetch, ...props }: any) {
     return (
       <a href={typeof href === 'string' ? href : (href?.toString?.() ?? '#')} {...props}>
         {children}

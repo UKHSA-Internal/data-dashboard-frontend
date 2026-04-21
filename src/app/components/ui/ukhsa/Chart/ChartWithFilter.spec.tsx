@@ -564,6 +564,33 @@ describe('ChartWithFilter', () => {
         { timeout: 3000 }
       )
     })
+
+    it('sends is_public=false and data_classification in filtered chart requests on non-public pages', async () => {
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chart={mockChart}
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          isNonPublic={true}
+          dataClassification="secret"
+        />
+      )
+
+      await act(async () => {
+        setTimeseriesFilterForTests('6-months')
+      })
+
+      await waitFor(() => {
+        expect(mockGetCharts).toHaveBeenCalledWith(
+          expect.objectContaining({
+            is_public: false,
+            data_classification: 'secret',
+          })
+        )
+      })
+    })
   })
 
   describe('useEffect Logic Coverage', () => {
