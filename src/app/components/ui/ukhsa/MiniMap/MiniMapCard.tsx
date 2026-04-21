@@ -1,6 +1,5 @@
 'use client'
 
-import clsx from 'clsx'
 import Link from 'next/link'
 
 import { HealthAlertTypes } from '@/api/models/Alerts'
@@ -9,13 +8,12 @@ import { Card } from '../Card/Card'
 import { MiniMap } from './MiniMap'
 
 interface MiniMapCardProps {
-  readonly title: string
-  readonly subTitle: string
-  readonly alertType: HealthAlertTypes
-  readonly headingClassName?: string
+  title: string
+  subTitle: string
+  alertType: HealthAlertTypes
 }
 
-export function MiniMapCard({ title, subTitle, alertType, headingClassName }: MiniMapCardProps) {
+export function MiniMapCard({ title, subTitle, alertType }: MiniMapCardProps) {
   return (
     <Card
       asChild
