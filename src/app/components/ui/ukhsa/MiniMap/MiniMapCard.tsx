@@ -24,7 +24,7 @@ export function MiniMapCard({ title, subTitle, alertType, headingClassName }: Mi
     >
       <Link href={`/weather-health-alerts/${alertType}`}>
         <div className="min-[560px]:max-w-[60%]">
-          <h3 id="chart-row-card-heading-x4" className={clsx('govuk-heading-m mb-1', headingClassName)}>
+          <h3 id="chart-row-card-heading-x4" className="govuk-heading-m mb-1">
             {title}
           </h3>
           <p className="govuk-body-s text-grey-1">{subTitle}</p>
