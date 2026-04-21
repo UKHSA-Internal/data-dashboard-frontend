@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
-import { getPages } from '@/api/requests/cms/getPages'
+import { searchPages } from '@/api/requests/cms/searchPages'
 
 const DEBOUNCE_MILLISECONDS = 300
 
@@ -14,8 +14,6 @@ interface SearchProps {
 
 export function Search({ label, placeholder }: SearchProps) {
   const limit = 5
-
-  // CSS used to hide the search bar for non-JS users
   interface SearchResult {
     readonly title: string
     readonly meta: {
@@ -27,18 +25,25 @@ export function Search({ label, placeholder }: SearchProps) {
   const [debouncedSearchValue] = useDebounceValue(searchInputValue, DEBOUNCE_MILLISECONDS)
   const [searchResults, setSearchResults] = useState<SearchResult[] | undefined>([])
 
-  const getSearchResults = async ({ query }: { query: string }) => {
-    const pages = await getPages({ limit: limit.toString(), search: query })
-    setSearchResults(pages?.data?.items)
-  }
-
   useEffect(() => {
-    if (debouncedSearchValue) {
-      getSearchResults({ query: debouncedSearchValue })
-    } else {
-      setSearchResults([])
+    if (!debouncedSearchValue) return
+
+    let cancelled = false
+
+    const fetchResults = async () => {
+      const pages = await searchPages({ limit: limit.toString(), search: debouncedSearchValue })
+      if (cancelled) return
+      setSearchResults(pages?.data?.items ?? [])
+    }
+
+    void fetchResults()
+
+    return () => {
+      cancelled = true
     }
   }, [debouncedSearchValue])
+
+  const displayedResults = debouncedSearchValue ? searchResults : []
 
   return (
     <form method="GET" aria-label={label}>
@@ -59,7 +64,7 @@ export function Search({ label, placeholder }: SearchProps) {
         />
         <div className="absolute z-[1000] max-h-[200px] overflow-y-auto bg-white shadow-[0px_15px_15px_0px_rgba(0,0,0,0.35)] sm:w-5/12">
           <ul>
-            {searchResults?.map(({ title, meta: { html_url } }, i) => (
+            {displayedResults?.map(({ title, meta: { html_url } }, i) => (
               <li
                 key={`result-${i}`}
                 value="{i}"

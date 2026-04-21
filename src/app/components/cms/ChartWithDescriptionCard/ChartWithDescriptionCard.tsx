@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { snakeCase } from 'lodash'
 import Link from 'next/link'
 
+import { hasSource, SourceFooter } from '@/app/components/cms/SourceFooter/SourceFooter'
 import { Card, Chart } from '@/app/components/ui/ukhsa'
 import { getPath } from '@/app/utils/cms/slug'
 
@@ -12,7 +13,7 @@ type ChartWithDescriptionCardProps = {
 
 export function ChartWithDescriptionCard({ value }: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
-  const hasSource = value.source && (value.source.external_url || value.source.page)
+  const showSource = hasSource(value.source)
 
   return (
     <div className="group flex h-full flex-col">
@@ -21,7 +22,7 @@ export function ChartWithDescriptionCard({ value }: ChartWithDescriptionCardProp
         aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
         className={clsx(
           'ukhsa-chart-card relative flex min-h-0 flex-1 flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)] group-hover:bg-[var(--colour-home-chart-background-hover)]',
-          hasSource && 'border-b-0 pb-2'
+          showSource && 'border-b-0 pb-2'
         )}
       >
         <Link href={topicPagePath} prefetch className="flex h-full min-h-0 flex-col">
@@ -52,23 +53,11 @@ export function ChartWithDescriptionCard({ value }: ChartWithDescriptionCardProp
         </Link>
       </Card>
 
-      {hasSource && (
-        <div
-          className="border-x border-b border-grey-2 bg-[var(--colour-home-chart-background)] !px-4 !py-2 pb-4 transition-colors duration-200 group-hover:bg-[var(--colour-home-chart-background-hover)]"
-          data-testid="chart-source"
-        >
-          <p className="govuk-body-s mb-0 text-grey-1">
-            Source:{' '}
-            <Link
-              className="govuk-link govuk-link--no-visited-state"
-              href={value.source.external_url ? value.source.external_url : value.source.page}
-              prefetch
-            >
-              {value.source.link_display_text}
-            </Link>
-          </p>
-        </div>
-      )}
+      <SourceFooter
+        source={value.source}
+        className="border-x border-b border-grey-2 bg-[var(--colour-home-chart-background)] !px-4 !py-2 pb-4 transition-colors duration-200 group-hover:bg-[var(--colour-home-chart-background-hover)]"
+        testId="chart-source"
+      />
     </div>
   )
 }
