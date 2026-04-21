@@ -17,9 +17,10 @@ type WeatherHealthAlertCardProps = {
     }
   }
   readonly className?: string
+  readonly headingClassName?: string
 }
 
-export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertCardProps) {
+export function WeatherHealthAlertCard({ value, className, headingClassName }: WeatherHealthAlertCardProps) {
   const showSource = hasSource(value.source)
 
   return (
@@ -32,7 +33,12 @@ export function WeatherHealthAlertCard({ value, className }: WeatherHealthAlertC
         className
       )}
     >
-      <MiniMapCard title={value.title} subTitle={value.sub_title} alertType={value.alert_type as 'heat' | 'cold'} />
+      <MiniMapCard
+        title={value.title}
+        subTitle={value.sub_title}
+        alertType={value.alert_type as 'heat' | 'cold'}
+        headingClassName={headingClassName}
+      />
       {value.description && (
         <p className="govuk-body-s govuk-!-margin-top-2 govuk-!-margin-bottom-2">{value.description}</p>
       )}
