@@ -19,6 +19,7 @@ import {
   Headline,
   HeadlineNumbersRowCard,
   Percentage,
+  PopularTopicsCard,
   RichText,
   TextCard,
   Trend,
@@ -82,6 +83,8 @@ export const renderCard = (
       {type === 'text_card' && <TextCard value={value} />}
 
       {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} />}
+
+      {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
