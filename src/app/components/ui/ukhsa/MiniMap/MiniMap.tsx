@@ -147,84 +147,86 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
 
   return (
     <>
-      <ul
-        className="govuk-list govuk-!-font-size-16 mb-1 flex max-w-[80%] flex-wrap gap-1"
-        aria-label="Weather health alerts by region"
-      >
-        {groupedAlerts.map(({ status, alerts, id }) => {
-          if (alerts.length > 0) {
-            return (
-              <Fragment key={id}>
-                <li className="m-0 mt-2 w-full">
-                  <div
-                    className={`m-0 w-[100px] text-center capitalize ${getTailwindBackgroundFromColour(status)} ${getTextColourCssFromColour(status)}`}
-                  >
-                    {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status })}
-                  </div>
-                </li>
-                {alerts.map((alert) => (
-                  <AlertListItem
-                    key={alert.geography_code}
-                    name={alert.geography_name}
-                    status={alert.status}
-                    isHovered={debouncedHoveredRegion === alert.geography_code}
-                    isAnyHovered={debouncedHoveredRegion !== null}
-                    onMouseEnter={() => handleMouseEnter(alert.geography_code)}
-                    onMouseLeave={handleMouseLeave}
-                    onClick={(evt) => {
-                      evt.preventDefault()
-                      evt.stopPropagation()
-                      handleClick(alert.geography_code)
-                    }}
-                  />
-                ))}
-              </Fragment>
-            )
-          }
-        })}
-      </ul>
-      <div>
-        <svg
-          role="application"
-          aria-label="Map of weather health alerts"
-          xmlns="http://www.w3.org/2000/svg"
-          fill="none"
-          viewBox="0 0 272 323"
-          className="absolute right-3 top-2 hidden h-[calc(100%-20px)] min-[560px]:block"
+      <div className="min-[560px]:max-w-[60%]">
+        <ul
+          className="govuk-list govuk-!-font-size-16 mb-1 flex flex-wrap gap-1"
+          aria-label="Weather health alerts by region"
         >
-          {Object.keys(regionPaths).map((regionCode) => {
-            const alert = alerts.data?.find((foundAlert) => foundAlert.geography_code === regionCode)
-            if (!alert) return null
-            return (
-              <MapRegion
-                key={regionCode}
-                id={alert.geography_code}
-                status={alert.status}
-                isHovered={debouncedHoveredRegion === regionCode}
-                isAnyHovered={debouncedHoveredRegion !== null}
-                onMouseEnter={() => handleMouseEnter(regionCode)}
-                onMouseLeave={handleMouseLeave}
-                onClick={(evt) => {
-                  evt.preventDefault()
-                  evt.stopPropagation()
-                  handleClick(regionCode)
-                }}
-              />
-            )
+          {groupedAlerts.map(({ status, alerts, id }) => {
+            if (alerts.length > 0) {
+              return (
+                <Fragment key={id}>
+                  <li className="m-0 mt-2 w-full">
+                    <div
+                      className={`m-0 w-[100px] text-center capitalize ${getTailwindBackgroundFromColour(status)} ${getTextColourCssFromColour(status)}`}
+                    >
+                      {status == 'Green' ? t('map.no-alert') : t('map.alert', { level: status })}
+                    </div>
+                  </li>
+                  {alerts.map((alert) => (
+                    <AlertListItem
+                      key={alert.geography_code}
+                      name={alert.geography_name}
+                      status={alert.status}
+                      isHovered={debouncedHoveredRegion === alert.geography_code}
+                      isAnyHovered={debouncedHoveredRegion !== null}
+                      onMouseEnter={() => handleMouseEnter(alert.geography_code)}
+                      onMouseLeave={handleMouseLeave}
+                      onClick={(evt) => {
+                        evt.preventDefault()
+                        evt.stopPropagation()
+                        handleClick(alert.geography_code)
+                      }}
+                    />
+                  ))}
+                </Fragment>
+              )
+            }
           })}
-        </svg>
+        </ul>
+
+        <button
+          type="button"
+          className="govuk-!-margin-top-3 flex"
+          onClick={(evt) => {
+            evt.preventDefault()
+            handleClick()
+          }}
+        >
+          <RightArrowCircleIcon />
+          <div className="govuk-link ml-2 font-bold">Enter Fullscreen</div>
+        </button>
       </div>
-      <button
-        type="button"
-        className="govuk-!-margin-top-3 flex"
-        onClick={(evt) => {
-          evt.preventDefault()
-          handleClick()
-        }}
+
+      <svg
+        role="application"
+        aria-label="Map of weather health alerts"
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 272 323"
+        className="absolute right-3 top-2 hidden h-[calc(100%-20px)] min-[560px]:block"
       >
-        <RightArrowCircleIcon />
-        <div className="govuk-link ml-2 font-bold">Enter Fullscreen</div>
-      </button>
+        {Object.keys(regionPaths).map((regionCode) => {
+          const alert = alerts.data?.find((foundAlert) => foundAlert.geography_code === regionCode)
+          if (!alert) return null
+          return (
+            <MapRegion
+              key={regionCode}
+              id={alert.geography_code}
+              status={alert.status}
+              isHovered={debouncedHoveredRegion === regionCode}
+              isAnyHovered={debouncedHoveredRegion !== null}
+              onMouseEnter={() => handleMouseEnter(regionCode)}
+              onMouseLeave={handleMouseLeave}
+              onClick={(evt) => {
+                evt.preventDefault()
+                evt.stopPropagation()
+                handleClick(regionCode)
+              }}
+            />
+          )
+        })}
+      </svg>
     </>
   )
 }
