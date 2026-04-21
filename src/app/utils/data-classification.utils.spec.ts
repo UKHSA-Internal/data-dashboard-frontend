@@ -38,7 +38,7 @@ describe('data-classification.utils', () => {
     })
 
     test('defaults classification when isNonPublic is true and classification is undefined', () => {
-      expect(getWatermarkFlags(true, undefined)).toEqual({
+      expect(getWatermarkFlags(true)).toEqual({
         is_public: false,
         data_classification: DEFAULT_DATA_CLASSIFICATION,
       })

@@ -55,12 +55,12 @@ interface ChartProps {
   /**
    * True when auth is enabled and the page is non-public
    * */
-  isNonPublic?: boolean
+  readonly isNonPublic?: boolean
 
   /**
    * Data classification, eg "OFFICIAL SENSITIVE"
    * */
-  dataClassification?: DataClassification
+  readonly dataClassification?: DataClassification
 }
 
 const createStaticChart = async ({

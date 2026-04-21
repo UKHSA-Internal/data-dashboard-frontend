@@ -48,7 +48,7 @@ describe('getColumnHeader', () => {
 
   describe('level content', () => {
     test('defaults to official_sensitive level', () => {
-      renderHeader('Label', '', 'Fallback', true, undefined)
+      renderHeader('Label', '', 'Fallback', true)
       expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
     })
 

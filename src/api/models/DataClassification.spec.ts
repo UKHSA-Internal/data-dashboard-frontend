@@ -6,6 +6,9 @@ import {
   DEFAULT_DATA_CLASSIFICATION,
 } from './DataClassification'
 
+// check both sets contain the same keys after alphabetical sorting (not actually checking insertion order)
+const compareAlphabetically = (a: string, b: string) => a.localeCompare(b)
+
 describe('DataClassification model', () => {
   test('exposes the expected classification values', () => {
     expect(DATA_CLASSIFICATIONS).toEqual([
@@ -34,10 +37,14 @@ describe('DataClassification model', () => {
   })
 
   test('labels are present for all classifications', () => {
-    expect(Object.keys(DATA_CLASSIFICATION_LABELS).sort()).toEqual([...DATA_CLASSIFICATIONS].sort())
+    expect(Object.keys(DATA_CLASSIFICATION_LABELS).sort(compareAlphabetically)).toEqual(
+      [...DATA_CLASSIFICATIONS].sort(compareAlphabetically)
+    )
   })
 
   test('colors are present for all classifications', () => {
-    expect(Object.keys(DATA_CLASSIFICATION_COLORS).sort()).toEqual([...DATA_CLASSIFICATIONS].sort())
+    expect(Object.keys(DATA_CLASSIFICATION_COLORS).sort(compareAlphabetically)).toEqual(
+      [...DATA_CLASSIFICATIONS].sort(compareAlphabetically)
+    )
   })
 })

@@ -14,13 +14,13 @@ import { chartSizes } from '@/config/constants'
  */
 interface TimestampProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof WithChartHeadlineAndTrendCard | typeof WithChartCard>['value']
+  readonly data: z.infer<typeof WithChartHeadlineAndTrendCard | typeof WithChartCard>['value']
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
-  size: 'narrow' | 'wide'
+  readonly size: 'narrow' | 'wide'
 
-  isNonPublic?: boolean
-  dataClassification?: DataClassification
+  readonly isNonPublic?: boolean
+  readonly dataClassification?: DataClassification
 }
 
 export async function Timestamp({ data, size, isNonPublic, dataClassification }: TimestampProps) {
