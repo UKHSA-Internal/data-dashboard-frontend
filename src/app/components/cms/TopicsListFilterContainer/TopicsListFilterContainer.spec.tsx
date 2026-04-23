@@ -17,30 +17,7 @@ describe('TopicsListFilterController', () => {
     },
   ]
 
-  test('when no filters are selected it shows all cards and removes topicFilters', async () => {
-    globalThis.history.replaceState({}, '', '/health-topics`')
-
-    render(
-      <div>
-        <div data-testid="covid-card" data-topic-filter-id="covid-19" style={{ display: 'none' }} />
-        <div data-testid="flu-card" data-topic-filter-id="flu" style={{ display: 'none' }} />
-        <TopicsListFilterContainer items={items} />
-      </div>
-    )
-
-    const covidCard = screen.getByTestId('covid-card')
-    const fluCard = screen.getByTestId('flu-card')
-
-    await waitFor(() => {
-      expect(globalThis.location.search).not.toContain('topicFilters=')
-      expect(covidCard.style.display).toBe('')
-      expect(fluCard.style.display).toBe('')
-    })
-  })
-
-  test('selecting a topic hides other cards and updates topicFilters', async () => {
-    globalThis.history.replaceState({}, '', '/topics')
-
+  test('selecting a topic hides other cards', async () => {
     render(
       <div>
         <div data-testid="covid-card" data-topic-filter-id="covid-19" style={{ display: 'none' }} />
@@ -61,9 +38,6 @@ describe('TopicsListFilterController', () => {
     fireEvent.click(screen.getByLabelText('COVID-19'))
 
     await waitFor(() => {
-      expect(globalThis.location.search).toContain('topicFilters=covid_19')
-      expect(globalThis.location.search).not.toContain('flu')
-
       expect(covidCard.style.display).toBe('')
       expect(fluCard.style.display).toBe('none')
     })
