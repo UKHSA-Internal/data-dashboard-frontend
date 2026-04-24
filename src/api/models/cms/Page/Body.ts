@@ -3,7 +3,7 @@ import { z } from 'zod'
 import { ChartLineColours } from '@/api/models/Chart'
 
 import { HealthAlertTypes } from '../../Alerts'
-import { Blocks } from './Blocks'
+import { Blocks, HeadlineNumber, TrendNumber } from './Blocks'
 import { Chart } from './Chart'
 import { GlobalFilterRow, TimeRangeSchema } from './GlobalFilter'
 
@@ -29,10 +29,18 @@ export const ChartRelatedLinks = z.array(
 
 export type ChartRelatedLink = z.infer<typeof ChartRelatedLinks>
 
+const SourceLink = z.object({
+  link_display_text: z.string().nullable().optional(),
+  page: z.string().nullable().optional(),
+  external_url: z.string().nullable().optional(),
+})
+
 export const WithWeatherHealthAlertCard = z.object({
   title: z.string(),
   sub_title: z.string(),
+  description: z.string().nullable().optional(),
   alert_type: HealthAlertTypes,
+  source: SourceLink.optional(),
 })
 
 export const WithHeadlineNumbersRowCard = z.object({
@@ -99,17 +107,70 @@ const WithChartCardWithDescription = z.object({
   type: z.enum(['chart_with_description_card']),
   value: chartCardValues
     .extend({
-      sub_title: z.string(),
+      sub_title: z.string().optional(),
       topic_page: z.string(),
       description: z.string(),
-      show_tooltips: z.boolean(),
-      source: z.object({
-        link_display_text: z.string().optional().nullable(),
-        page: z.string().optional().nullable(),
-        external_url: z.string().optional().nullable(),
-      }),
+      source: SourceLink,
+      show_tooltips: z.boolean().optional(),
     })
     .omit({ body: true, date_prefix: true, about: true }),
+})
+
+/** Chart card value shape for popular topics (no body/date_prefix/about; has topic_page). */
+const popularTopicsChartCardValue = chartCardValues
+  .extend({
+    sub_title: z.string().optional(),
+    topic_page: z.string(),
+  })
+  .omit({ body: true, date_prefix: true, about: true })
+
+/** Chart card with description and source link (left column of popular topics card). */
+export const ChartCardWithDescriptionValue = popularTopicsChartCardValue.extend({
+  description: z.string(),
+  source: SourceLink,
+  show_tooltips: z.boolean().optional(),
+})
+
+/** Headline metric card: title, date_prefix, and exactly 2 headline/trend blocks. */
+const HeadlineMetricCardValue = z.object({
+  title: z.string(),
+  date_prefix: z.string(),
+  headline_metrics: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber])).length(2),
+})
+
+/** Left column item: chart with description or weather health alert. */
+const PopularTopicsLeftColumnItem = z.discriminatedUnion('type', [
+  z.object({
+    type: z.literal('chart_card_with_description'),
+    value: ChartCardWithDescriptionValue,
+    id: z.string(),
+  }),
+  z.object({
+    type: z.literal('weather_health_alert_card'),
+    value: WithWeatherHealthAlertCard,
+    id: z.string(),
+  }),
+])
+
+/** Right column top row: chart card linking to topic page. */
+const PopularTopicsRightColumnTopItem = z.object({
+  type: z.literal('chart_card'),
+  value: popularTopicsChartCardValue,
+  id: z.string(),
+})
+
+/** Right column bottom row: headline metric card. */
+const PopularTopicsRightColumnBottomItem = z.object({
+  type: z.literal('headline_metric_card'),
+  value: HeadlineMetricCardValue,
+  id: z.string(),
+})
+
+/** Popular topics card value (left column + right top/bottom rows). */
+export const PopularTopicsCardValue = z.object({
+  left_column: z.array(PopularTopicsLeftColumnItem).length(1),
+  right_column_top_row: z.array(PopularTopicsRightColumnTopItem).length(1),
+  right_column_bottom_row: z.array(PopularTopicsRightColumnBottomItem).length(2),
 })
 
 export const ChartCardSchemas = z.discriminatedUnion('type', [
@@ -185,7 +246,25 @@ export const CardTypes = z.discriminatedUnion('type', [
     }),
     id: z.string(),
   }),
+  z.object({
+    type: z.literal('popular_topics_card'),
+    value: PopularTopicsCardValue,
+    id: z.string(),
+  }),
 ])
+
+const SectionFooter = z.object({
+  type: z.literal('section_link'),
+  value: z.object({
+    badge_label: z.string(),
+    text: z.string(),
+    link: z.object({
+      link_display_text: z.string(),
+      page: z.string().optional().nullable(),
+      external_url: z.string().optional().nullable(),
+    }),
+  }),
+})
 
 export const Body = z.array(
   z.object({
@@ -195,6 +274,7 @@ export const Body = z.array(
       heading: z.string(),
       content: z.array(CardTypes),
       page_link: z.optional(z.nullable(z.string())),
+      footer: z.optional(z.array(SectionFooter)),
     }),
   })
 )

@@ -14,17 +14,9 @@ interface BackToTopProps {
 export const BackToTop = ({ href = '#main-content', className }: BackToTopProps) => {
   const { y: horizontalWindowPosition } = useWindowScroll()
   const { t } = useTranslation('common')
-
-  const [isSticky, setIsSticky] = useState(false)
   const [shouldRender, setShouldRender] = useState(false)
 
-  useEffect(() => {
-    if (horizontalWindowPosition > 200) {
-      setIsSticky(true)
-    } else {
-      setIsSticky(false)
-    }
-  }, [horizontalWindowPosition])
+  const isSticky = horizontalWindowPosition > 200
 
   useEffect(() => {
     const checkPageHeight = () => {
