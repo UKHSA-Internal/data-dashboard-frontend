@@ -9,6 +9,7 @@ import { renderBlock } from '@/app/utils/cms.utils'
 import { getPath } from '@/app/utils/cms/slug'
 
 import { ChartWithDescriptionCard } from '../ChartWithDescriptionCard/ChartWithDescriptionCard'
+import { Headline } from '../Headline/Headline'
 import { WeatherHealthAlertCard } from '../WeatherHealthAlertCard/WeatherHealthAlertCard'
 
 /** CMS popular topics card payload; inferred from zod so it stays aligned with `Body.ts`. */
@@ -92,20 +93,28 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
             {value.right_column_bottom_row.map((card: PopularTopicsCardData['right_column_bottom_row'][number]) => (
               <Card
                 key={card.id}
-                className="ukhsa-headline-metric-card govuk-!-margin-bottom-0 h-full"
+                className="ukhsa-headline-metric-card govuk-!-margin-bottom-0 h-full border border-black bg-[var(--colour-home-chart-background)] bg-white no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-black focus:bg-[var(--colour-home-chart-background-hover)]"
                 data-testid={`headline-metric-card-${card.id}`}
               >
-                <h3 className="govuk-body-m mb-2 text-dark-grey md:mb-3">{card.value.title}</h3>
+                <h3 className="govuk-heading-s mb-2 text-blue md:mb-3">{card.value.title}</h3>
                 <div className="flex flex-col gap-y-2 md:gap-y-4">
                   {card.value.headline_metrics.map(
                     (
                       block: PopularTopicsCardData['right_column_bottom_row'][number]['value']['headline_metrics'][number]
                     ) => (
                       <div key={block.id}>
-                        {renderBlock({
-                          ...block,
-                          date_prefix: card.value.date_prefix,
-                        } as Parameters<typeof renderBlock>[0])}
+                        {block.type === 'headline_number' ? (
+                          <Headline
+                            data={block.value}
+                            datePrefix={card.value.date_prefix}
+                            valueClassName="govuk-!-font-weight-bold govuk-!-font-size-36 text-grey-1"
+                          />
+                        ) : (
+                          renderBlock({
+                            ...block,
+                            date_prefix: card.value.date_prefix,
+                          } as Parameters<typeof renderBlock>[0])
+                        )}
                       </div>
                     )
                   )}
