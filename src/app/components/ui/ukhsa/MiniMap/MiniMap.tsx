@@ -1,4 +1,3 @@
-/* eslint-disable jsx-a11y/no-noninteractive-element-interactions -- for minimap interactivity */
 'use client'
 
 import { useRouter } from 'next/navigation'
