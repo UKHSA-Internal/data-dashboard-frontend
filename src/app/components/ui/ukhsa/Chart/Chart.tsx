@@ -58,7 +58,7 @@ interface ChartProps {
   readonly isNonPublic?: boolean
 
   /**
-   * Data classification, eg "OFFICIAL SENSITIVE"
+   * Data classification, eg "OFFICIAL-SENSITIVE"
    * */
   readonly dataClassification?: DataClassification
 }

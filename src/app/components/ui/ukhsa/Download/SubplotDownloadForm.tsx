@@ -118,10 +118,10 @@ export function SubplotDownloadForm({
             <div
               className="download-acknowledgement-banner"
               role="region"
-              aria-label="Download official sensitive data warning"
+              aria-label="Download official-sensitive data warning"
             >
               <p className="download-acknowledgement-banner-body govuk-!-margin-bottom-2">
-                You are about to download data that contains <b>official sensitive data.</b>
+                You are about to download data that contains <b>official-sensitive data.</b>
               </p>
               <p className="download-acknowledgement-banner-body">
                 Select <b>“continue and download”</b> to proceed or <b>“back”</b> to cancel.

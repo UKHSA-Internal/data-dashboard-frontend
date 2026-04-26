@@ -146,16 +146,16 @@ describe('SubplotDownloadForm', () => {
     )
   })
 
-  describe('official sensitive download banner', () => {
+  describe('official-sensitive download banner', () => {
     test('shows acknowledgement banner on first submit when isPublic is false', async () => {
       renderComponent(false, true)
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
-      expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
-      expect(screen.getByText(/official sensitive data/i)).toBeInTheDocument()
+      expect(screen.getByRole('region', { name: 'Download official-sensitive data warning' })).toBeInTheDocument()
+      expect(screen.getByText(/official-sensitive data/i)).toBeInTheDocument()
       expect(fetch).not.toHaveBeenCalled()
     })
 
@@ -172,7 +172,7 @@ describe('SubplotDownloadForm', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
       await waitFor(() => {
-        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+        expect(screen.getByRole('region', { name: 'Download official-sensitive data warning' })).toBeInTheDocument()
       })
 
       await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
@@ -188,12 +188,12 @@ describe('SubplotDownloadForm', () => {
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
       await waitFor(() => {
-        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+        expect(screen.getByRole('region', { name: 'Download official-sensitive data warning' })).toBeInTheDocument()
       })
 
       await userEvent.click(screen.getByRole('button', { name: 'Back' }))
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
     })
 
     test('does not show acknowledgement banner when isPublic is true', async () => {
@@ -208,7 +208,7 @@ describe('SubplotDownloadForm', () => {
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
 
       await waitFor(() => {
         expect(fetch).toHaveBeenCalledTimes(1)
@@ -227,7 +227,7 @@ describe('SubplotDownloadForm', () => {
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
 
       await waitFor(() => {
         expect(fetch).toHaveBeenCalledTimes(1)
