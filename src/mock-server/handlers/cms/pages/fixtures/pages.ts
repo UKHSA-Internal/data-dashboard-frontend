@@ -214,6 +214,21 @@ export const pagesWithCommonTypeMock: PagesResponse = {
       seo_priority: compliancePageMock.seo_priority,
       title: compliancePageMock.title,
     },
+    {
+      id: startPageMock.id,
+      meta: {
+        type: startPageMock.meta.type,
+        detail_url: startPageMock.meta.detail_url,
+        html_url: startPageMock.meta.html_url,
+        slug: startPageMock.meta.slug,
+        search_description: startPageMock.meta.search_description,
+        show_in_menus: startPageMock.meta.show_in_menus,
+        first_published_at: startPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: startPageMock.seo_change_frequency,
+      seo_priority: startPageMock.seo_priority,
+      title: startPageMock.title,
+    },
   ],
 }
 
@@ -540,6 +555,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       last_published_at,
       body,
       is_public,
+      page_classification,
     }) => ({
       id,
       title,
@@ -553,6 +569,7 @@ export const pagesWithMetricsChildTypeMock: PagesResponse = {
       last_published_at,
       body,
       is_public,
+      page_classification,
     })
   ),
 }
@@ -563,6 +580,7 @@ const items = [
   ...pagesWithCompositeTypeMock.items,
   ...pagesWithTopicsListTypeMock.items,
   ...pagesWithTopicTypeMock.items,
+  ...pagesWithTopicsListTypeMock.items,
   ...pagesWithWhatsNewParentTypeMock.items,
   ...pagesWithWhatsNewChildTypeMock.items,
   ...pagesWithMetricsParentTypeMock.items,
