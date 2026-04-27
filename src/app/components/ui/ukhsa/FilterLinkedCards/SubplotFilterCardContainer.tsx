@@ -4,8 +4,8 @@ import { DataClassification } from '@/api/models/DataClassification'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
+import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import SubplotFilterCard from './SubplotFilterCard'
-
 type SubplotFilterCardContainerProps = {
   isPublic?: boolean
   pageClassification?: DataClassification
@@ -29,6 +29,7 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
       {isChartDataAvailable() ? (
         selectedGeographyFilters!.map((geography) => {
           return (
