@@ -14,7 +14,9 @@ export const getColumnHeader = (
   const label = chartLabel || axisTitle || fallback
 
   const sensitiveLabel = isNonPublic && (
-    <span className="whitespace-nowrap uppercase text-[#CECECE]">&nbsp;{getDataClassificationLabel(level)}</span>
+    <span className="inline-block w-full whitespace-normal break-words text-[#CECECE] sm:w-auto">
+      &nbsp;{getDataClassificationLabel(level)}
+    </span>
   )
 
   return (
