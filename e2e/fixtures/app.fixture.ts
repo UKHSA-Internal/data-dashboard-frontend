@@ -209,11 +209,11 @@ export class App {
   }
 
   async hasSearch() {
-    await expect(this.page.getByRole('textbox', { name: 'Search' })).toBeVisible()
+    await expect(this.page.locator('input#search')).toBeVisible()
   }
 
   async doesNotHaveSearch() {
-    await expect(this.page.getByRole('textbox', { name: 'Search' })).not.toBeVisible()
+    await expect(this.page.locator('input#search')).not.toBeVisible()
   }
 
   // TODO: Rename once above test removed in CDD-2154
