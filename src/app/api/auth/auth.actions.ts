@@ -11,12 +11,13 @@ import { signOut } from '@/api/requests/auth/signOut'
 import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
 import { logger } from '@/lib/logger'
 
-export async function serverSignOut() {
+export async function serverSignOut(redirectRoute?: string) {
+  const route = redirectRoute ? redirectRoute : '/start'
   try {
-    await signOut()
+    await signOut({ redirectRoute: route })
   } catch {
     logger.error('issue calling signout.')
   }
-  const cognitoLogoutUrl = getCognitoSignoutURL('/start')
+  const cognitoLogoutUrl = getCognitoSignoutURL(route)
   redirect(cognitoLogoutUrl)
 }

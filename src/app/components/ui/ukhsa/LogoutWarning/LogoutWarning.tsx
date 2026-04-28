@@ -31,7 +31,7 @@ export default function LogoutWarning({
   // Trigger logout by clearing timers and calling the server sign out function
   const triggerLogout = useCallback(async () => {
     clearTimers()
-    serverSignOut()
+    serverSignOut('/logged-out')
   }, [clearTimers])
 
   // Start the countdown when the warning is triggered
