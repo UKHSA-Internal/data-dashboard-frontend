@@ -6,6 +6,8 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { RichText } from '@/app/components/cms'
 import { getServerTranslation } from '@/app/i18n'
 
+import { EmbargoNotice } from './EmbargoNotice/EmbargoNotice'
+
 interface PageProps {
   heading?: string
   showWelcome?: ReactNode
@@ -52,6 +54,8 @@ export async function View({
       )}
 
       {showWelcome && <p className="govuk-body-l govuk-!-margin-bottom-1 text-dark-grey">{t('welcome')}</p>}
+
+      <EmbargoNotice />
 
       {heading && (
         <Trans
