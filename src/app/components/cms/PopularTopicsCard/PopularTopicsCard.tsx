@@ -90,37 +90,49 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
               'md:grid-cols-2': value.right_column_bottom_row.length >= 2,
             })}
           >
-            {value.right_column_bottom_row.map((card: PopularTopicsCardData['right_column_bottom_row'][number]) => (
-              <Card
-                key={card.id}
-                className="ukhsa-headline-metric-card govuk-!-margin-bottom-0 h-full border border-black bg-[var(--colour-home-chart-background)] bg-white no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-black focus:bg-[var(--colour-home-chart-background-hover)]"
-                data-testid={`headline-metric-card-${card.id}`}
-              >
-                <h3 className="govuk-heading-s mb-2 text-blue md:mb-3">{card.value.title}</h3>
-                <div className="flex flex-col gap-y-2 md:gap-y-4">
-                  {card.value.headline_metrics.map(
-                    (
-                      block: PopularTopicsCardData['right_column_bottom_row'][number]['value']['headline_metrics'][number]
-                    ) => (
-                      <div key={block.id}>
-                        {block.type === 'headline_number' ? (
-                          <Headline
-                            data={block.value}
-                            datePrefix={card.value.date_prefix}
-                            valueClassName="govuk-!-font-weight-bold govuk-!-font-size-36 text-grey-1"
-                          />
-                        ) : (
-                          renderBlock({
-                            ...block,
-                            date_prefix: card.value.date_prefix,
-                          } as Parameters<typeof renderBlock>[0])
-                        )}
-                      </div>
-                    )
-                  )}
-                </div>
-              </Card>
-            ))}
+            {value.right_column_bottom_row.map((card: PopularTopicsCardData['right_column_bottom_row'][number]) => {
+              const topicPagePath = getPath(card.value.topic_page)
+              return (
+                <Card
+                  key={card.id}
+                  asChild
+                  aria-labelledby={`popular-topic-right-metric-${snakeCase(card.value.title)}`}
+                  className="ukhsa-headline-metric-card govuk-!-margin-bottom-0 relative h-full border border-black bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-black focus:bg-[var(--colour-home-chart-background-hover)]"
+                  data-testid={`headline-metric-card-${card.id}`}
+                >
+                  <Link href={topicPagePath} prefetch className="flex h-full flex-col">
+                    <h3
+                      id={`popular-topic-right-metric-${snakeCase(card.value.title)}`}
+                      className="govuk-heading-s mb-2 text-blue md:mb-3"
+                    >
+                      {card.value.title}
+                    </h3>
+                    <div className="flex flex-col gap-y-2 md:gap-y-4">
+                      {card.value.headline_metrics.map(
+                        (
+                          block: PopularTopicsCardData['right_column_bottom_row'][number]['value']['headline_metrics'][number]
+                        ) => (
+                          <div key={block.id}>
+                            {block.type === 'headline_number' ? (
+                              <Headline
+                                data={block.value}
+                                datePrefix={card.value.date_prefix}
+                                valueClassName="govuk-!-font-weight-bold govuk-!-font-size-36 text-grey-1"
+                              />
+                            ) : (
+                              renderBlock({
+                                ...block,
+                                date_prefix: card.value.date_prefix,
+                              } as Parameters<typeof renderBlock>[0])
+                            )}
+                          </div>
+                        )
+                      )}
+                    </div>
+                  </Link>
+                </Card>
+              )
+            })}
           </div>
         )}
       </div>
