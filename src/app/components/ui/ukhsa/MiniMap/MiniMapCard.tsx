@@ -9,10 +9,10 @@ import { Card } from '../Card/Card'
 import { MiniMap } from './MiniMap'
 
 interface MiniMapCardProps {
-  title: string
-  subTitle: string
-  alertType: HealthAlertTypes
-  headingClassName?: string
+  readonly title: string
+  readonly subTitle: string
+  readonly alertType: HealthAlertTypes
+  readonly headingClassName?: string
 }
 
 export function MiniMapCard({ title, subTitle, alertType, headingClassName }: MiniMapCardProps) {
