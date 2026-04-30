@@ -41,7 +41,7 @@ export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId, isNonPubl
         body: formData,
       })
 
-      if (res.redirected !== true) {
+      if (!res.redirected) {
         const data = await res.text()
         if (data) downloadFile(`ukhsa-chart-download.${formData.get('file_format')}`, new Blob([data]))
       }

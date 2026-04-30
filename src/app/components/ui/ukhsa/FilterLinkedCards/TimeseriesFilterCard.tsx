@@ -42,7 +42,7 @@ const TimeseriesFilterCard = ({
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent ? geographyParent.name : ''}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
 
@@ -106,7 +106,7 @@ const TimeseriesFilterCard = ({
               className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
               tabGroupTitle={`${kebabCase(title)}`}
               defaultValue={`${kebabCase(title)}-chart`}
-              showAbout={about ? true : false}
+              showAbout={!!about}
             />
             <TabsContent
               value={`${kebabCase(title)}-chart`}
