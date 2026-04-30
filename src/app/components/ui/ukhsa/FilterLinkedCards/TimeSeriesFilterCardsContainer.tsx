@@ -3,6 +3,7 @@
 import { DataClassification } from '@/api/models/DataClassification'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
+import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 
@@ -20,10 +21,12 @@ const TimeSeriesFilterCardsContainer = ({
   const dataFilters = selectedVaccinationFilters ?? []
   const periods = timePeriods ?? []
   const hasChartData = geographies.length > 0 && dataFilters.length > 0
+  const showChartSelectionInfo = !hasChartData || !timeseriesTemplateData
 
-  if (!hasChartData || !timeseriesTemplateData) {
-    return (
-      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+  return (
+    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+      {isNonPublic && <ClassificationBanner size="medium" level={dataClassification} />}
+      {showChartSelectionInfo ? (
         <div className="govuk-!-padding-4 bg-grey-3" style={{ minHeight: 300 }}>
           <section
             className="clear-both mb-0 flex items-center justify-center border border-mid-grey bg-white p-3 lg:px-4 lg:py-6"
@@ -36,23 +39,19 @@ const TimeSeriesFilterCardsContainer = ({
             />
           </section>
         </div>
-      </div>
-    )
-  }
-
-  return (
-    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {geographies.map((geography) => (
-        <TimeseriesFilterCard
-          key={geography.name}
-          geography={geography}
-          timePeriods={periods}
-          dataFilters={dataFilters}
-          cardData={timeseriesTemplateData}
-          isNonPublic={isNonPublic}
-          dataClassification={dataClassification}
-        />
-      ))}
+      ) : (
+        geographies.map((geography) => (
+          <TimeseriesFilterCard
+            key={geography.name}
+            geography={geography}
+            timePeriods={periods}
+            dataFilters={dataFilters}
+            cardData={timeseriesTemplateData}
+            isNonPublic={isNonPublic}
+            dataClassification={dataClassification}
+          />
+        ))
+      )}
     </div>
   )
 }
