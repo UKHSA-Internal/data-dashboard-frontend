@@ -14,8 +14,7 @@ interface DownloadFormProps {
   xAxis?: string | null
   tagManagerEventId: string | null
   confidenceIntervals?: boolean
-  isPublic?: boolean
-  authEnabled?: boolean
+  isNonPublic?: boolean
 }
 
 export function DownloadForm({
@@ -23,8 +22,7 @@ export function DownloadForm({
   xAxis,
   tagManagerEventId,
   confidenceIntervals = false,
-  isPublic = true,
-  authEnabled,
+  isNonPublic,
 }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownloadBanner, setShowDownloadBanner] = useState(false)
@@ -41,7 +39,7 @@ export function DownloadForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (authEnabled && isPublic === false && showDownloadBanner === false) {
+    if (isNonPublic && !showDownloadBanner) {
       setShowDownloadBanner(true)
       return
     }

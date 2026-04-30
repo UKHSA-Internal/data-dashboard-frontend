@@ -16,8 +16,7 @@ interface SubplotClientDownloadProps {
   selectedThresholds: ThresholdFilter[]
   timePeriods: TimePeriod[]
   currentTimePeriodIndex: number
-  isPublic?: boolean
-  authEnabled?: boolean
+  isNonPublic?: boolean
 }
 
 export function SubplotClientDownload({
@@ -27,8 +26,7 @@ export function SubplotClientDownload({
   timePeriods,
   currentTimePeriodIndex,
   selectedThresholds,
-  isPublic,
-  authEnabled,
+  isNonPublic,
 }: SubplotClientDownloadProps) {
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState<boolean>(true)
@@ -153,14 +151,6 @@ export function SubplotClientDownload({
       }),
     }
 
-    return (
-      <SubplotDownloadForm
-        chart={chart}
-        xAxis={x_axis}
-        tagManagerEventId={null}
-        isPublic={isPublic}
-        authEnabled={authEnabled}
-      />
-    )
+    return <SubplotDownloadForm chart={chart} xAxis={x_axis} tagManagerEventId={null} isNonPublic={isNonPublic} />
   }
 }

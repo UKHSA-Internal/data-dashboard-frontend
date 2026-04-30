@@ -18,7 +18,6 @@ import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/comp
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { authEnabled } from '@/config/constants'
 
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
@@ -174,8 +173,7 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 selectedThresholds={selectedThresholds}
-                isPublic={!isNonPublic}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
               />
             </TabsContent>
             {about && (

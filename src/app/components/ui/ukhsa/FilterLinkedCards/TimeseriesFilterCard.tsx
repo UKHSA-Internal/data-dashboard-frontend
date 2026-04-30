@@ -14,7 +14,6 @@ import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
-import { authEnabled } from '@/config/constants'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
@@ -155,8 +154,7 @@ const TimeseriesFilterCard = ({
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
                 cardData={cardData}
-                isPublic={!isNonPublic}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
               />
             </TabsContent>
             {about && (

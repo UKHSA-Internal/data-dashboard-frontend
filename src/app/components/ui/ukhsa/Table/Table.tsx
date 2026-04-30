@@ -98,7 +98,7 @@ export async function Table({
     confidence_intervals_description,
   },
   size,
-  isNonPublic = false,
+  isNonPublic,
   dataClassification,
 }: TableProps) {
   const { t } = await getServerTranslation('common')

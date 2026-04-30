@@ -175,7 +175,7 @@ export function ChartRowCardContent({ value, isNonPublic, dataClassification }: 
                     >
                       Download
                     </span>
-                    <Download data={column.value} isPublic={!isNonPublic} />
+                    <Download data={column.value} isNonPublic={isNonPublic} />
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent

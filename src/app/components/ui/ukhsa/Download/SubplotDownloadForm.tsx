@@ -11,17 +11,10 @@ interface SubplotDownloadFormProps {
   chart: Record<string, unknown>
   xAxis: string
   tagManagerEventId: string | null
-  isPublic?: boolean
-  authEnabled?: boolean
+  isNonPublic?: boolean
 }
 
-export function SubplotDownloadForm({
-  chart,
-  xAxis,
-  tagManagerEventId,
-  isPublic = true,
-  authEnabled,
-}: SubplotDownloadFormProps) {
+export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId, isNonPublic }: SubplotDownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownloadBanner, setShowDownloadBanner] = useState(false)
   const router = useRouter()
@@ -32,7 +25,7 @@ export function SubplotDownloadForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (authEnabled && isPublic === false && showDownloadBanner === false) {
+    if (isNonPublic && !showDownloadBanner) {
       setShowDownloadBanner(true)
       return
     }
