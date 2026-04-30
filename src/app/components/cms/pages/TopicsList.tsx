@@ -6,7 +6,6 @@ import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
 import { renderSection } from '@/app/utils/cms.utils'
-import { processSectionParams } from '@/app/utils/show-more.utils'
 
 import { Description } from '../../ui/ukhsa/View/Description/Description'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -41,10 +40,7 @@ const getFilterItemsFromBody = (body: Body): ExpandableFilterItem[] => {
     .filter((item) => item.children && item.children.length > 0)
 }
 
-export default async function TopicsListPage({
-  slug,
-  searchParams: { section },
-}: PageComponentBaseProps<{ section?: string }>) {
+export default async function TopicsListPage({ slug }: PageComponentBaseProps<{ section?: string }>) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -71,9 +67,7 @@ export default async function TopicsListPage({
       </div>
 
       <div className="govuk-grid-row">
-        <div className="govuk-grid-column-full">
-          {body.map(renderSection.bind(null, processSectionParams(section)))}
-        </div>
+        <div className="govuk-grid-column-full">{body.map((bodySection) => renderSection([], bodySection, false))}</div>
       </div>
     </View>
   )

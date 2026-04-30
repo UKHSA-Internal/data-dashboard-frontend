@@ -12,11 +12,12 @@ type ChartCardSectionProps = {
   readonly value: any
   readonly heading: string
   readonly showMoreSections: string[]
+  readonly enableShowMore?: boolean
 }
 
 const SHOW_MORE_SECTION_COLUMNS = 2
 
-export function ChartCardSection({ value, heading, showMoreSections }: ChartCardSectionProps) {
+export function ChartCardSection({ value, heading, showMoreSections, enableShowMore = true }: ChartCardSectionProps) {
   return (
     <div
       className={clsx('grid gap-4 md:grid-cols-[1fr_1fr]', {
@@ -24,10 +25,12 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
       })}
     >
       {value.cards.map((card: any, index: number) => {
+        const shouldShowMoreForSection = enableShowMore && !showMoreSections.includes(kebabCase(heading))
+
         if (
           value.cards.length > SHOW_MORE_SECTION_COLUMNS &&
           index === SHOW_MORE_SECTION_COLUMNS &&
-          !showMoreSections.includes(kebabCase(heading))
+          shouldShowMoreForSection
         ) {
           const showMoreURL = getShowMoreURL(showMoreSections, kebabCase(heading))
 
@@ -40,7 +43,7 @@ export function ChartCardSection({ value, heading, showMoreSections }: ChartCard
           )
         }
 
-        if (index > SHOW_MORE_SECTION_COLUMNS && !showMoreSections.includes(kebabCase(heading))) return null
+        if (index > SHOW_MORE_SECTION_COLUMNS && shouldShowMoreForSection) return null
 
         if (card.type === 'chart_with_description_card') {
           return (

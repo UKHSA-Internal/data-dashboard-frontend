@@ -35,7 +35,8 @@ import { GlobalFilterLinkedMap } from '../features/global-filter'
 // TODO: Move this file into cms folder
 export const renderSection = async (
   showMoreSections: string[],
-  { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number]
+  { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number],
+  enableShowMore = true
 ) => (
   <div
     id={kebabCase(heading)}
@@ -58,9 +59,9 @@ export const renderSection = async (
       )}
     </h2>
 
-    {content.map((item) => renderCard(heading, showMoreSections, item))}
+    {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore))}
 
-    {showMoreSections.includes(kebabCase(heading)) ? (
+    {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
       <div className="mt-3">
         <Link
           className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
@@ -102,6 +103,7 @@ export const renderCard = (
   heading: string,
   showMoreSections: string[],
   { type, value, id }: z.infer<typeof CardTypes>,
+  enableShowMore = true,
   isPublic?: boolean,
   pageClassification?: DataClassification
 ) => {
@@ -138,7 +140,12 @@ export const renderCard = (
       )}
 
       {type === 'chart_card_section' && (
-        <ChartCardSection value={value} heading={heading} showMoreSections={showMoreSections} />
+        <ChartCardSection
+          value={value}
+          heading={heading}
+          showMoreSections={showMoreSections}
+          enableShowMore={enableShowMore}
+        />
       )}
 
       {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}
