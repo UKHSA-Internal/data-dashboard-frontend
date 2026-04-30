@@ -55,7 +55,7 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
         ))}
       </Contents>
 
-      {body.map(renderSection.bind(null, processedSectionParams))}
+      {body.map((bodySection) => renderSection(processedSectionParams, bodySection))}
 
       {showFooterRelatedLinks ? <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks ?? []} /> : null}
     </View>

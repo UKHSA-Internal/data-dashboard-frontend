@@ -158,7 +158,7 @@ describe('LandingPage', () => {
     )
 
     expect(mockedRenderSection).toHaveBeenCalledTimes(landingBody.length)
-    expect(mockedRenderSection).toHaveBeenNthCalledWith(1, ['current-outbreaks'], landingBody[0], 0, landingBody)
-    expect(mockedRenderSection).toHaveBeenNthCalledWith(2, ['current-outbreaks'], landingBody[1], 1, landingBody)
+    expect(mockedRenderSection).toHaveBeenNthCalledWith(1, ['current-outbreaks'], landingBody[0])
+    expect(mockedRenderSection).toHaveBeenNthCalledWith(2, ['current-outbreaks'], landingBody[1])
   })
 })
