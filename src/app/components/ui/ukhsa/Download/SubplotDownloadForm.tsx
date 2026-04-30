@@ -8,10 +8,10 @@ import { useTranslation } from 'react-i18next'
 import { downloadFile } from '@/app/utils/download.utils'
 import { subplotChartExportApiRoutePath } from '@/config/constants'
 interface SubplotDownloadFormProps {
-  chart: Record<string, unknown>
-  xAxis: string
-  tagManagerEventId: string | null
-  isNonPublic?: boolean
+  readonly chart: Record<string, unknown>
+  readonly xAxis: string
+  readonly tagManagerEventId: string | null
+  readonly isNonPublic?: boolean
 }
 
 export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId, isNonPublic }: SubplotDownloadFormProps) {

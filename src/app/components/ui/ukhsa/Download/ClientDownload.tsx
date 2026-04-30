@@ -10,11 +10,11 @@ import { getMinMaxFullDate } from '@/app/utils/time-period.utils'
 import { DownloadForm } from './DownloadForm'
 
 interface ClientDownloadProps {
-  geography: GeographiesSchemaObject
-  dataFilters: DataFilter[]
-  timePeriods: TimePeriod[]
-  cardData: FilterLinkedTimeSeriesData
-  isNonPublic?: boolean
+  readonly geography: GeographiesSchemaObject
+  readonly dataFilters: DataFilter[]
+  readonly timePeriods: TimePeriod[]
+  readonly cardData: FilterLinkedTimeSeriesData
+  readonly isNonPublic?: boolean
 }
 
 export function ClientDownload({ geography, dataFilters, timePeriods, cardData, isNonPublic }: ClientDownloadProps) {
