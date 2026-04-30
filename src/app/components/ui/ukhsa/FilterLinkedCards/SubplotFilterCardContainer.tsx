@@ -23,30 +23,16 @@ const SubplotFilterCardContainer = ({ isNonPublic, dataClassification }: Subplot
     timePeriodTitle,
   } = state
 
-  const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
-  }
+  const geographies = selectedGeographyFilters ?? []
+  const vaccinations = selectedVaccinationFilters ?? []
+  const thresholds = selectedThresholdFilters ?? []
+  const periods = timePeriods ?? []
+  const periodTitle = timePeriodTitle ?? ''
+  const hasChartData = geographies.length > 0 && vaccinations.length > 0
 
-  return (
-    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
-          return (
-            <SubplotFilterCard
-              key={`${geography.geography_code}-subplot`}
-              geography={geography}
-              selectedThresholds={selectedThresholdFilters!}
-              selectedVaccinations={selectedVaccinationFilters!}
-              geographyFilters={geographyFilters!}
-              cardData={coverageTemplateData!}
-              timePeriods={timePeriods!}
-              timePeriodTitle={timePeriodTitle!}
-              isNonPublic={isNonPublic}
-              dataClassification={dataClassification}
-            />
-          )
-        })
-      ) : (
+  if (!hasChartData || !geographyFilters || !coverageTemplateData) {
+    return (
+      <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
         <div className="govuk-!-padding-4 bg-grey-3" style={{ minHeight: 300 }}>
           <section
             className="clear-both mb-0 flex items-center justify-center border border-mid-grey bg-white p-3 lg:px-4 lg:py-6"
@@ -59,7 +45,26 @@ const SubplotFilterCardContainer = ({ isNonPublic, dataClassification }: Subplot
             />
           </section>
         </div>
-      )}
+      </div>
+    )
+  }
+
+  return (
+    <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+      {geographies.map((geography) => (
+        <SubplotFilterCard
+          key={`${geography.geography_code}-subplot`}
+          geography={geography}
+          selectedThresholds={thresholds}
+          selectedVaccinations={vaccinations}
+          geographyFilters={geographyFilters}
+          cardData={coverageTemplateData}
+          timePeriods={periods}
+          timePeriodTitle={periodTitle}
+          isNonPublic={isNonPublic}
+          dataClassification={dataClassification}
+        />
+      ))}
     </div>
   )
 }
