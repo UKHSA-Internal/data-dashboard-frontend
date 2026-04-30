@@ -10,10 +10,9 @@ import { getPath } from '@/app/utils/cms/slug'
 type ChartWithDescriptionCardProps = {
   readonly value: any
   readonly cardsCount: number
-  readonly headingClassName?: string
 }
 
-export function ChartWithDescriptionCard({ value, cardsCount, headingClassName }: ChartWithDescriptionCardProps) {
+export function ChartWithDescriptionCard({ value, cardsCount }: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
   const showSource = hasSource(value.source)
 
@@ -23,14 +22,14 @@ export function ChartWithDescriptionCard({ value, cardsCount, headingClassName }
         asChild
         aria-labelledby={`chart-with-description-card-heading-${snakeCase(value.title)}`}
         className={clsx(
-          'ukhsa-chart-card relative flex min-h-0 flex-1 flex-col border border-black bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)] group-hover:bg-[var(--colour-home-chart-background-hover)]',
+          'ukhsa-chart-card relative flex min-h-0 flex-1 flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)] group-hover:bg-[var(--colour-home-chart-background-hover)]',
           showSource && 'border-b-0 pb-2'
         )}
       >
         <Link href={topicPagePath} prefetch className="flex h-full min-h-0 flex-col">
           <h3
             id={`chart-with-description-card-heading-${snakeCase(value.title)}`}
-            className={clsx('govuk-heading-m mb-1', headingClassName)}
+            className="govuk-heading-m mb-1 text-blue"
           >
             {value.title}
           </h3>
@@ -66,7 +65,7 @@ export function ChartWithDescriptionCard({ value, cardsCount, headingClassName }
 
       <SourceFooter
         source={value.source}
-        className="border-x border-b border-black bg-[var(--colour-home-chart-background)] !px-4 !py-2 pb-4 transition-colors duration-200 group-hover:bg-[var(--colour-home-chart-background-hover)]"
+        className="border-x border-b border-grey-2 bg-[var(--colour-home-chart-background)] !px-4 !py-2 pb-4 transition-colors duration-200 group-hover:bg-[var(--colour-home-chart-background-hover)]"
         testId="chart-source"
       />
     </div>
