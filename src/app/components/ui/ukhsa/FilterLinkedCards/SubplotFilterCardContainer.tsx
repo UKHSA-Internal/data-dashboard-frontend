@@ -6,12 +6,13 @@ import { useGlobalFilters } from '@/app/features/global-filter/context/globalFil
 
 import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import SubplotFilterCard from './SubplotFilterCard'
+
 type SubplotFilterCardContainerProps = {
-  isPublic?: boolean
-  pageClassification?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
-const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled }: SubplotFilterCardContainerProps) => {
+
+const SubplotFilterCardContainer = ({ isNonPublic, dataClassification }: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -23,32 +24,18 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
     timePeriodTitle,
   } = state
 
-  const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
-  }
+  const geographies = selectedGeographyFilters ?? []
+  const vaccinations = selectedVaccinationFilters ?? []
+  const thresholds = selectedThresholdFilters ?? []
+  const periods = timePeriods ?? []
+  const periodTitle = timePeriodTitle ?? ''
+  const hasChartData = geographies.length > 0 && vaccinations.length > 0
+  const showChartSelectionInfo = !hasChartData || !geographyFilters || !coverageTemplateData
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
-          return (
-            <SubplotFilterCard
-              key={`${geography.geography_code}-subplot`}
-              geography={geography}
-              selectedThresholds={selectedThresholdFilters!}
-              selectedVaccinations={selectedVaccinationFilters!}
-              geographyFilters={geographyFilters!}
-              cardData={coverageTemplateData!}
-              timePeriods={timePeriods!}
-              timePeriodTitle={timePeriodTitle!}
-              isPublic={isPublic}
-              level={pageClassification}
-              authEnabled={authEnabled}
-            />
-          )
-        })
-      ) : (
+      {isNonPublic && <ClassificationBanner size="medium" level={dataClassification} />}
+      {showChartSelectionInfo ? (
         <div className="govuk-!-padding-4 bg-grey-3" style={{ minHeight: 300 }}>
           <section
             className="clear-both mb-0 flex items-center justify-center border border-mid-grey bg-white p-3 lg:px-4 lg:py-6"
@@ -61,6 +48,21 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
             />
           </section>
         </div>
+      ) : (
+        geographies.map((geography) => (
+          <SubplotFilterCard
+            key={`${geography.geography_code}-subplot`}
+            geography={geography}
+            selectedThresholds={thresholds}
+            selectedVaccinations={vaccinations}
+            geographyFilters={geographyFilters}
+            cardData={coverageTemplateData}
+            timePeriods={periods}
+            timePeriodTitle={periodTitle}
+            isNonPublic={isNonPublic}
+            dataClassification={dataClassification}
+          />
+        ))
       )}
     </div>
   )

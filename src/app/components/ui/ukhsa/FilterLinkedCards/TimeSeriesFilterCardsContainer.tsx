@@ -6,41 +6,27 @@ import { useGlobalFilters } from '@/app/features/global-filter/context/globalFil
 import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
+
 const TimeSeriesFilterCardsContainer = ({
-  isPublic,
-  pageClassification,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: {
-  isPublic?: boolean
-  pageClassification?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
-  const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
-  }
+  const geographies = selectedGeographyFilters ?? []
+  const dataFilters = selectedVaccinationFilters ?? []
+  const periods = timePeriods ?? []
+  const hasChartData = geographies.length > 0 && dataFilters.length > 0
+  const showChartSelectionInfo = !hasChartData || !timeseriesTemplateData
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
-          return (
-            <TimeseriesFilterCard
-              key={geography.name}
-              geography={geography}
-              timePeriods={timePeriods!}
-              dataFilters={selectedVaccinationFilters!}
-              cardData={timeseriesTemplateData!}
-              isPublic={isPublic}
-              level={pageClassification}
-              authEnabled={authEnabled}
-            />
-          )
-        })
-      ) : (
+      {isNonPublic && <ClassificationBanner size="medium" level={dataClassification} />}
+      {showChartSelectionInfo ? (
         <div className="govuk-!-padding-4 bg-grey-3" style={{ minHeight: 300 }}>
           <section
             className="clear-both mb-0 flex items-center justify-center border border-mid-grey bg-white p-3 lg:px-4 lg:py-6"
@@ -53,6 +39,18 @@ const TimeSeriesFilterCardsContainer = ({
             />
           </section>
         </div>
+      ) : (
+        geographies.map((geography) => (
+          <TimeseriesFilterCard
+            key={geography.name}
+            geography={geography}
+            timePeriods={periods}
+            dataFilters={dataFilters}
+            cardData={timeseriesTemplateData}
+            isNonPublic={isNonPublic}
+            dataClassification={dataClassification}
+          />
+        ))
       )}
     </div>
   )

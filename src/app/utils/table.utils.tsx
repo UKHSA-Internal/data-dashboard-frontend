@@ -1,34 +1,21 @@
-import { DataClassification } from '@/api/models/DataClassification'
+import type { DataClassification } from '@/api/models/DataClassification'
+import { DEFAULT_DATA_CLASSIFICATION } from '@/api/models/DataClassification'
+import { getDataClassificationLabel } from '@/app/utils/data-classification.utils'
 
-const levelContent: Record<DataClassification, string> = {
-  official: 'Official',
-  official_sensitive: 'Official-Sensitive',
-  protective_marking_not_set: 'Protective marking not set',
-  secret: 'Secret',
-  top_secret: 'Top Secret',
-}
-
-const levelContentCaps: Record<DataClassification, string> = {
-  official: 'OFFICIAL',
-  official_sensitive: 'OFFICIAL SENSITIVE',
-  protective_marking_not_set: 'PROTECTIVE MARKING NOT SET',
-  secret: 'SECRET',
-  top_secret: 'TOP SECRET',
-}
+type Level = DataClassification
 
 export const getColumnHeader = (
   chartLabel: string,
   axisTitle: string,
   fallback: string,
-  isPublic?: boolean,
-  level: DataClassification = 'official_sensitive',
-  authEnabled?: boolean
+  isNonPublic?: boolean,
+  level: Level = DEFAULT_DATA_CLASSIFICATION
 ) => {
   const label = chartLabel || axisTitle || fallback
 
-  const sensitiveLabel = authEnabled && isPublic === false && (
+  const sensitiveLabel = isNonPublic && (
     <span className="inline-block w-full whitespace-normal break-words text-[#CECECE] sm:w-auto">
-      &nbsp;{levelContent[level]}
+      &nbsp;{getDataClassificationLabel(level)}
     </span>
   )
 
@@ -37,15 +24,4 @@ export const getColumnHeader = (
       {label} {sensitiveLabel}
     </>
   )
-}
-
-export const getDataClassification = (
-  isPublic: boolean | undefined,
-  pageClassification: DataClassification = 'official_sensitive',
-  authEnabled: boolean | undefined
-): string => {
-  if (authEnabled && isPublic === false) {
-    return `(${levelContentCaps[pageClassification]})`
-  }
-  return ''
 }

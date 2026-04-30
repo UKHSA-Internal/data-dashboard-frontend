@@ -54,7 +54,7 @@ jest.mock('@/app/components/ui/ukhsa', () => {
 })
 
 jest.mock('next/link', () => {
-  return function MockLink({ children, href, _prefetch, ...props }: any) {
+  return function MockLink({ children, href, prefetch: _prefetch, ...props }: any) {
     return (
       <a href={typeof href === 'string' ? href : href.toString()} {...props}>
         {children}

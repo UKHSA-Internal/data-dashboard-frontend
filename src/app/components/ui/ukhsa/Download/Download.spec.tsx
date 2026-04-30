@@ -21,7 +21,7 @@ jest.mock('@/app/hooks/getSearchParams', () => ({
   getSearchParams: jest.fn(() => defaultUrl.searchParams),
 }))
 
-// Mock the default NextJs util (for client components)
+// Mock the default Next.Js util (for client components)
 jest.mock('next/navigation', () => ({
   ...jest.requireActual('next/navigation'),
   useRouter: jest.fn(),
@@ -71,7 +71,7 @@ const props: ComponentProps<typeof Download> = {
     body: 'Table Body',
     about: '',
   },
-  isPublic: false,
+  isNonPublic: true,
 }
 
 test('Chart download', async () => {

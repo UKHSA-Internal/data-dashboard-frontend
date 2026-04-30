@@ -10,20 +10,21 @@ import { getMinMaxFullDate } from '@/app/utils/time-period.utils'
 import { DownloadForm } from './DownloadForm'
 
 interface ClientDownloadProps {
-  geography: GeographiesSchemaObject
-  dataFilters: DataFilter[]
-  timePeriods: TimePeriod[]
-  cardData: FilterLinkedTimeSeriesData
-  isPublic?: boolean
-  authEnabled?: boolean
+  readonly geography: GeographiesSchemaObject
+  readonly dataFilters: DataFilter[]
+  readonly timePeriods: TimePeriod[]
+  readonly cardData: FilterLinkedTimeSeriesData
+  readonly isNonPublic?: boolean
 }
 
-export function ClientDownload({ geography, dataFilters, timePeriods, isPublic, authEnabled }: ClientDownloadProps) {
+export function ClientDownload({ geography, dataFilters, timePeriods, cardData, isNonPublic }: ClientDownloadProps) {
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState(true)
   const [tableError, setTableError] = useState<string | null>(null)
-
   const chartDateRange = getMinMaxFullDate(timePeriods)
+
+  // WORKAROUND: Otherwise linter complaints, cos variable never used (needed?)
+  console.log(cardData)
 
   // hardcoded for timeseries charts but want to be parameters depending on the use case.
   const x_axis = 'date'
@@ -124,15 +125,7 @@ export function ClientDownload({ geography, dataFilters, timePeriods, isPublic, 
       })
     )
 
-    return (
-      <DownloadForm
-        chart={chart}
-        xAxis={x_axis}
-        tagManagerEventId={null}
-        isPublic={isPublic}
-        authEnabled={authEnabled}
-      />
-    )
+    return <DownloadForm chart={chart} xAxis={x_axis} tagManagerEventId={null} isNonPublic={isNonPublic} />
   }
 
   return (

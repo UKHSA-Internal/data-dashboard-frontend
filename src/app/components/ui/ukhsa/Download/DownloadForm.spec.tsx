@@ -3,6 +3,7 @@ import fetch from 'cross-fetch'
 import React, { ComponentProps } from 'react'
 
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
+import { getIsNonPublic } from '@/app/utils/auth.utils'
 import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath } from '@/config/constants'
 import { render, screen, waitFor } from '@/config/test-utils'
@@ -165,16 +166,19 @@ describe('DownloadForm', () => {
     expect(confidenceIntervalsInput).toHaveValue('false')
   })
 
-  describe('official sensitive download banner', () => {
+  describe('official-sensitive download banner for non-public charts', () => {
     test('shows acknowledgement banner on first submit when isPublic is false', async () => {
-      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
+      render(<DownloadForm {...props} isNonPublic={true} />)
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      // Banner should not be present initially
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
 
+      // First click: should show the banner, not trigger download
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
-
-      expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
-      expect(screen.getByText(/official sensitive data/i)).toBeInTheDocument()
+      await waitFor(() => {
+        expect(screen.getByRole('region', { name: 'Download official-sensitive data warning' })).toBeInTheDocument()
+      })
+      expect(screen.getByText(/official-sensitive data/i)).toBeInTheDocument()
       expect(fetch).not.toHaveBeenCalled()
     })
 
@@ -185,15 +189,18 @@ describe('DownloadForm', () => {
         } as Response)
       )
 
-      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
+      render(<DownloadForm {...props} isNonPublic={true} />)
 
+      // First click: show the banner
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
-
       await waitFor(() => {
-        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+        expect(screen.getByRole('region', { name: 'Download official-sensitive data warning' })).toBeInTheDocument()
       })
 
-      await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
+      // Second click: should proceed with download
+      // The button label may be different (e.g. 'Continue and download')
+      const continueButton = screen.getByRole('button', { name: /continue and download/i })
+      await userEvent.click(continueButton)
 
       await waitFor(() => {
         expect(fetch).toHaveBeenCalledTimes(1)
@@ -201,17 +208,21 @@ describe('DownloadForm', () => {
     })
 
     test('dismisses banner when back button is clicked', async () => {
-      render(<DownloadForm {...props} isPublic={false} authEnabled={true} />)
+      render(<DownloadForm {...props} isNonPublic={true} />)
 
+      // First click: show the banner
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
-
       await waitFor(() => {
-        expect(screen.getByRole('region', { name: 'Download official sensitive data warning' })).toBeInTheDocument()
+        expect(screen.getByRole('region', { name: 'Download official-sensitive data warning' })).toBeInTheDocument()
       })
 
+      // Click the back button to dismiss
       await userEvent.click(screen.getByRole('button', { name: 'Back' }))
-
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      await waitFor(() => {
+        expect(
+          screen.queryByRole('region', { name: 'Download official-sensitive data warning' })
+        ).not.toBeInTheDocument()
+      })
     })
 
     test('does not show acknowledgement banner when isPublic is true', async () => {
@@ -221,11 +232,11 @@ describe('DownloadForm', () => {
         } as Response)
       )
 
-      render(<DownloadForm {...props} isPublic={true} authEnabled={true} />)
+      render(<DownloadForm {...props} isNonPublic={getIsNonPublic(true)} />)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
 
       await waitFor(() => {
         expect(fetch).toHaveBeenCalledTimes(1)
@@ -239,11 +250,11 @@ describe('DownloadForm', () => {
         } as Response)
       )
 
-      render(<DownloadForm {...props} isPublic={false} authEnabled={false} />)
+      render(<DownloadForm {...props} isNonPublic={getIsNonPublic(false)} />)
 
       await userEvent.click(screen.getByRole('button', { name: 'Download' }))
 
-      expect(screen.queryByRole('region', { name: 'Download official sensitive data warning' })).not.toBeInTheDocument()
+      expect(screen.queryByRole('region', { name: 'Download official-sensitive data warning' })).not.toBeInTheDocument()
 
       await waitFor(() => {
         expect(fetch).toHaveBeenCalledTimes(1)

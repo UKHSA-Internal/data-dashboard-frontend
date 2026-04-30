@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
+import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { chartFormat } from '@/config/constants'
@@ -19,6 +20,15 @@ export const requestSchema = z.object({
   y_axis_maximum_value: z.number().nullable().optional(),
   confidence_intervals: z.boolean().optional(),
   confidence_colour: ChartLineColours.nullable().optional(),
+  /** When false the charts API will return a watermarked chart image. */
+  is_public: z.boolean().optional(),
+  /**
+   * The data classification level used in the chart watermark.
+   *
+   * Frontend and backend both currently default this to 'official_sensitive'.
+   * Frontend usually sends an explicit value; backend still defaults when omitted.
+   */
+  data_classification: DataClassification.optional(),
   plots: z.array(
     z.object({
       topic: Topics,
@@ -51,7 +61,7 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getCharts = async (chart: RequestParams) => {
+export const getCharts = async (chart: RequestParams, apiVersion: 'v2' | 'v3' = 'v3') => {
   const {
     plots,
     x_axis,
@@ -64,6 +74,8 @@ export const getCharts = async (chart: RequestParams) => {
     y_axis_minimum_value,
     confidence_intervals,
     confidence_colour,
+    is_public,
+    data_classification,
   } = chart
 
   const body: RequestParams = {
@@ -79,10 +91,21 @@ export const getCharts = async (chart: RequestParams) => {
     y_axis_title,
     y_axis_minimum_value,
     y_axis_maximum_value,
+    ...(is_public !== undefined && { is_public }),
+    ...(data_classification !== undefined && { data_classification }),
   }
 
   try {
-    const path = isSSR ? `charts/v3` : `proxy/charts/v3`
+    const path = isSSR ? `charts/${apiVersion}` : `proxy/charts/${apiVersion}`
+    logger.info(
+      {
+        source: 'getCharts',
+        path,
+        is_public: body.is_public,
+        data_classification: body.data_classification,
+      },
+      'Outbound charts payload flags'
+    )
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
     const result = responseSchema.safeParse(data)
@@ -95,7 +118,7 @@ export const getCharts = async (chart: RequestParams) => {
   } catch (error) {
     if (error instanceof Error) {
       if (error.code === 400) {
-        logger.info('POST failed (no data) charts/v3 %s', plots.map((plot) => plot.metric).join())
+        logger.info(`POST failed (no data) charts/${apiVersion} %s`, plots.map((plot) => plot.metric).join())
       } else {
         logger.error(`getCharts error: ${error.message}`)
       }

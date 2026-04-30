@@ -2,6 +2,7 @@
 import React from 'react'
 
 import { FilterLinkedSubplotData, FilterLinkedTimeSeriesData } from '@/api/models/cms/Page/GlobalFilter'
+import { DEFAULT_DATA_CLASSIFICATION } from '@/api/models/DataClassification'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Details } from '@/app/components/ui/govuk'
@@ -16,6 +17,7 @@ import {
 import { GlobalFilterProvider } from '@/app/features/global-filter/context/globalFilterContext'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
+import { getIsNonPublic } from '@/app/utils/auth.utils'
 import { renderCard } from '@/app/utils/cms.utils'
 import {
   extractDataFromGlobalFilter,
@@ -23,7 +25,6 @@ import {
   extractSubplotSectionData,
   extractTimeSeriesSectionData,
 } from '@/app/utils/global-filter-content-parser'
-import { authEnabled } from '@/config/constants'
 import { clsx } from '@/lib/clsx'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
@@ -52,6 +53,9 @@ export default async function TopicPage({
     page_classification: pageClassification,
   } = await getPageBySlug<PageType.Topic>(slug, { type: PageType.Topic })
 
+  const isNonPublic = getIsNonPublic(isPublic)
+  const dataClassification = pageClassification ?? DEFAULT_DATA_CLASSIFICATION
+
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
@@ -75,7 +79,7 @@ export default async function TopicPage({
   })
   return (
     <>
-      {authEnabled && isPublic === false && <ClassificationBanner size="large" level={pageClassification} />}
+      {isNonPublic && <ClassificationBanner size="large" level={dataClassification} />}{' '}
       <View>
         <>
           {slug[1] === 'childhood-vaccinations' && (
@@ -119,7 +123,9 @@ export default async function TopicPage({
                       <FilterBannerWrapper key={id} />
                     ) : (
                       <PageSection key={id} heading={value.heading}>
-                        {value.content.map((item) => renderCard(value.heading, [], item, isPublic, pageClassification))}
+                        {value.content.map((item) =>
+                          renderCard(value.heading, [], item, isNonPublic, dataClassification)
+                        )}
                       </PageSection>
                     )
                   )}

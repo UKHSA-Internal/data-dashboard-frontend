@@ -18,7 +18,6 @@ import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/comp
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { getDataClassification } from '@/app/utils/table.utils'
 
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
@@ -31,9 +30,8 @@ interface SubplotFilterCardProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
-  isPublic?: boolean
-  level?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const SubplotFilterCard = ({
@@ -44,9 +42,8 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
-  isPublic,
-  level,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: SubplotFilterCardProps) => {
   const [currentTimePeriodIndex, setCurrentTimePeriodIndex] = useState(timePeriods.length - 1)
   const [date, setDate] = useState<string | null>(null)
@@ -60,7 +57,6 @@ const SubplotFilterCard = ({
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassification = getDataClassification(isPublic, level ?? 'official_sensitive', authEnabled)
 
   return (
     <div key={id} className="mb-4">
@@ -68,7 +64,7 @@ const SubplotFilterCard = ({
         <article>
           <header>
             <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
-              {title} {dataClassification}
+              {title}
             </h3>
             <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
           </header>
@@ -122,7 +118,7 @@ const SubplotFilterCard = ({
               className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
               tabGroupTitle={`${kebabCase(title)}`}
               defaultValue={`${kebabCase(title)}-chart`}
-              showAbout={about ? true : false}
+              showAbout={!!about}
               showDownload={true}
             />
             <TabsContent
@@ -160,9 +156,8 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 cardData={cardData}
-                isPublic={isPublic}
-                level={level}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -178,8 +173,7 @@ const SubplotFilterCard = ({
                 timePeriods={timePeriods}
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 selectedThresholds={selectedThresholds}
-                isPublic={isPublic}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
               />
             </TabsContent>
             {about && (
