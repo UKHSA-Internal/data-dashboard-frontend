@@ -52,12 +52,12 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                   key={card.id}
                   asChild
                   aria-labelledby={`popular-topic-right-chart-${snakeCase(card.value.title)}`}
-                  className="ukhsa-chart-card relative flex h-full flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
+                  className="ukhsa-chart-card relative flex h-full flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]"
                 >
                   <Link href={topicPagePath} prefetch className="flex h-full flex-col">
                     <h3
                       id={`popular-topic-right-chart-${snakeCase(card.value.title)}`}
-                      className="govuk-heading-m mb-1"
+                      className="govuk-heading-m mb-1 text-blue"
                     >
                       {card.value.title}
                     </h3>
