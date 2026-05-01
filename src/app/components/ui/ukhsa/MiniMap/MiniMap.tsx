@@ -204,7 +204,7 @@ export function MiniMap({ alertType }: MiniMapProps): React.ReactElement | null 
         xmlns="http://www.w3.org/2000/svg"
         fill="none"
         viewBox="0 0 272 323"
-        className="absolute right-3 top-2 hidden h-[calc(100%-20px)] min-[560px]:block"
+        className="absolute right-3 top-2 hidden h-[calc(100%-20px)] min-[560px]:block min-[1024px]:max-[1250px]:mt-[12.5%] min-[1024px]:max-[1250px]:h-3/4"
       >
         {Object.keys(regionPaths).map((regionCode) => {
           const alert = alerts.data?.find((foundAlert) => foundAlert.geography_code === regionCode)
