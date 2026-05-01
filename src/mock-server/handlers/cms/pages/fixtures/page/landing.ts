@@ -132,6 +132,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   value: {
                     title: 'COVID-19 hospital admissions',
                     date_prefix: 'Up to',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
                     headline_metrics: [
                       {
                         type: 'headline_number',
@@ -171,6 +172,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   value: {
                     title: 'COVID-19 hospital occupied beds',
                     date_prefix: 'Up to',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
                     headline_metrics: [
                       {
                         type: 'trend_number',
@@ -779,6 +781,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   value: {
                     title: 'COVID-19 hospital admissions',
                     date_prefix: 'Up to',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
                     headline_metrics: [
                       {
                         type: 'headline_number',
@@ -818,6 +821,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                   value: {
                     title: 'Influenza',
                     date_prefix: 'Up to',
+                    topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/influenza/',
                     headline_metrics: [
                       {
                         type: 'headline_number',

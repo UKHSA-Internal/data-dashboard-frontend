@@ -60,6 +60,10 @@ jest.mock('../ChartWithDescriptionCard/ChartWithDescriptionCard', () => ({
   ),
 }))
 
+jest.mock('../Headline/Headline', () => ({
+  Headline: () => <div data-testid="mock-headline" />,
+}))
+
 import { PopularTopicsCard } from './PopularTopicsCard'
 
 type PopularTopicsCardData = z.infer<typeof popularTopicsCardSchema>
