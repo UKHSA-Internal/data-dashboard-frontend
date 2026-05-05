@@ -94,7 +94,7 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                   key={card.id}
                   asChild
                   aria-labelledby={`popular-topic-right-metric-${snakeCase(card.value.title)}`}
-                  className="ukhsa-headline-metric-card govuk-!-margin-bottom-0 relative h-full border border-black bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-black focus:bg-[var(--colour-home-chart-background-hover)]"
+                  className="ukhsa-headline-metric-card govuk-!-margin-bottom-0 relative h-full border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]"
                   data-testid={`headline-metric-card-${card.id}`}
                 >
                   <Link href={topicPagePath} prefetch className="flex h-full flex-col">
@@ -114,6 +114,7 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                               <Headline
                                 data={block.value}
                                 datePrefix={card.value.date_prefix}
+                                headingClassName="govuk-heading-s mb-2 md:mb-3"
                                 valueClassName="govuk-!-font-weight-bold govuk-!-font-size-36 text-grey-1"
                               />
                             ) : (

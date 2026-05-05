@@ -9,12 +9,14 @@ interface HeadlineProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   readonly data: z.infer<typeof HeadlineNumber>['value']
   readonly datePrefix: string
+  readonly headingClassName?: string
   readonly valueClassName?: string
 }
 
 export async function Headline({
   data: { body: heading, ...requestParams },
   datePrefix,
+  headingClassName,
   valueClassName,
 }: HeadlineProps) {
   const { t } = await getServerTranslation('common')
@@ -27,15 +29,15 @@ export async function Headline({
     } = headline
 
     return (
-      <div>
-        <div>{t('cms.blocks.headline.heading', { heading })}</div>
+      <>
+        <div className={headingClassName}>{t('cms.blocks.headline.heading', { heading })}</div>
         <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
           {t('cms.blocks.timestamp.value', { prefix: datePrefix, value: date })}
         </div>
         <div className={clsx(valueClassName ?? 'govuk-body-l', 'govuk-!-margin-bottom-0')}>
           {t('cms.blocks.headline.value', { value })}
         </div>
-      </div>
+      </>
     )
   }
 
