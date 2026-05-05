@@ -49,6 +49,22 @@ export function TopicsListFilterContainer({ items }: TopicsListFilterContainerPr
       // If visible filters contains topic, or no filters selected then show card
       topicFilterItem.style.display = visibleCardIDs.size === 0 || visibleCardIDs.has(topicFilterId) ? '' : 'none'
     }
+
+    // Hide section headers if none of its topic cards are visible
+    const healthTopicsSections = document.querySelectorAll<HTMLElement>('[data-topics-list-section-key]')
+    for (const section of healthTopicsSections) {
+      const topicCards = section.querySelectorAll<HTMLElement>('[data-topic-filter-id]')
+      if (topicCards.length === 0) {
+        section.style.display = ''
+        continue
+      }
+      if (visibleCardIDs.size === 0) {
+        section.style.display = ''
+        continue
+      }
+      const anyCardVisible = Array.from(topicCards).some((card) => card.style.display !== 'none')
+      section.style.display = anyCardVisible ? '' : 'none'
+    }
   }, [items, selected])
 
   return <ExpandableFilterDropdown items={items} onSelectionChange={handleSelectionChange} />

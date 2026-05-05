@@ -37,67 +37,72 @@ export const renderSection = async (
   showMoreSections: string[],
   { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number],
   enableShowMore = true
-) => (
-  <div
-    id={kebabCase(heading)}
-    key={id}
-    className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
-    data-testid={`section-${kebabCase(heading)}`}
-    role="region"
-    aria-label={heading}
-  >
-    <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
-      {pageLink ? (
-        <Link
-          href={getPath(pageLink)}
-          className="govuk-link--no-visited-state govuk-link ukhsa-section-chevron ukhsa-section-link inline-block no-underline hover:underline"
-        >
-          {heading}
-        </Link>
-      ) : (
-        heading
-      )}
-    </h2>
+) => {
+  const sectionFilterKey = String(id ?? heading ?? '')
 
-    {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore))}
+  return (
+    <div
+      id={kebabCase(heading)}
+      key={id}
+      className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
+      data-testid={`section-${kebabCase(heading)}`}
+      data-topics-list-section-key={sectionFilterKey || undefined}
+      role="region"
+      aria-label={heading}
+    >
+      <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
+        {pageLink ? (
+          <Link
+            href={getPath(pageLink)}
+            className="govuk-link--no-visited-state govuk-link ukhsa-section-chevron ukhsa-section-link inline-block no-underline hover:underline"
+          >
+            {heading}
+          </Link>
+        ) : (
+          heading
+        )}
+      </h2>
 
-    {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
-      <div className="mt-3">
-        <Link
-          className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
-          href={await getShowLessURL(showMoreSections, kebabCase(heading))}
-          prefetch
-        >
-          <span className="pl-4">Show Less</span>
-        </Link>
-      </div>
-    ) : null}
+      {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore))}
 
-    {footer &&
-      footer.map(({ value }) => {
-        const href = value.link.external_url
-          ? value.link.external_url
-          : value.link.page
-            ? getPath(value.link.page)
-            : null
+      {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
+        <div className="mt-3">
+          <Link
+            className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
+            href={await getShowLessURL(showMoreSections, kebabCase(heading))}
+            prefetch
+          >
+            <span className="pl-4">Show Less</span>
+          </Link>
+        </div>
+      ) : null}
 
-        return (
-          <div className="mt-3 flex items-center gap-2" key={value.badge_label}>
-            <div className="govuk-tag govuk-tag--blue">{value.badge_label}</div>
-            <span className="govuk-body mb-0">{value.text}</span>
+      {footer &&
+        footer.map(({ value }) => {
+          const href = value.link.external_url
+            ? value.link.external_url
+            : value.link.page
+              ? getPath(value.link.page)
+              : null
 
-            {href ? (
-              <Link href={href} prefetch className="govuk-link govuk-link--no-visited-state">
-                {value.link.link_display_text}
-              </Link>
-            ) : (
-              <span className="govuk-body">{value.link.link_display_text}</span>
-            )}
-          </div>
-        )
-      })}
-  </div>
-)
+          return (
+            <div className="mt-3 flex items-center gap-2" key={value.badge_label}>
+              <div className="govuk-tag govuk-tag--blue">{value.badge_label}</div>
+              <span className="govuk-body mb-0">{value.text}</span>
+
+              {href ? (
+                <Link href={href} prefetch className="govuk-link govuk-link--no-visited-state">
+                  {value.link.link_display_text}
+                </Link>
+              ) : (
+                <span className="govuk-body">{value.link.link_display_text}</span>
+              )}
+            </div>
+          )
+        })}
+    </div>
+  )
+}
 
 export const renderCard = (
   heading: string,

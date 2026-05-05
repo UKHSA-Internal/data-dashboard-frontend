@@ -299,6 +299,7 @@ describe('ExpandableFilterDropdown', () => {
       fireEvent.click(screen.getByLabelText('Seasonal flu'))
       const selectedList = screen.getByTestId('selected-filters-list')
       expect(selectedList).toHaveTextContent('COVID-19')
+      expect(selectedList).toHaveTextContent('Tuberculosis')
       expect(selectedList).not.toHaveTextContent('Infectious diseases')
     })
   })

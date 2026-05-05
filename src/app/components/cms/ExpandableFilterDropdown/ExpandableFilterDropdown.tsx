@@ -132,9 +132,10 @@ function DropdownContent({
     >
       <legend className="sr-only">{label}</legend>
       {items.map((item) => {
-        const isParent = item.children && item.children.length > 0
+        const childList = item.children?.length ? item.children : undefined
+        const isParent = !!childList?.length
         const isExpanded = isParent && expandedIds.has(item.id)
-        const allChildrenSelected = isParent && item.children?.every((c) => selectedIds.has(c.id))
+        const allChildrenSelected = isParent && childList.every((child) => selectedIds.has(child.id))
         const parentChecked = selectedIds.has(item.id) || (isParent && allChildrenSelected)
 
         return (
@@ -184,10 +185,10 @@ function DropdownContent({
                 </label>
               </div>
             </div>
-            {isParent && isExpanded && item.children && (
+            {isParent && isExpanded && childList && (
               <fieldset id={`filter-children-${item.id}`} className="ml-6 pl-2">
                 <legend className="sr-only">{`${item.label} options`}</legend>
-                {item.children.map((child) => (
+                {childList.map((child) => (
                   <div key={child.id} className="govuk-checkboxes govuk-checkboxes--small relative flex px-0 pl-4">
                     <input
                       className="govuk-checkboxes__input py-0 pl-4"
