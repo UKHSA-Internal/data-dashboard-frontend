@@ -109,29 +109,35 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                       {card.value.headline_metrics.map(
                         (
                           block: PopularTopicsCardData['right_column_bottom_row'][number]['value']['headline_metrics'][number]
-                        ) => (
-                          <div key={block.id}>
-                            {block.type === 'headline_number' ? (
+                        ) => {
+                          let content: React.ReactNode
+
+                          if (block.type === 'headline_number') {
+                            content = (
                               <Headline
                                 data={block.value}
                                 datePrefix={card.value.date_prefix}
                                 headingClassName="govuk-heading-s mb-2 md:mb-3"
                                 valueClassName="govuk-!-font-weight-bold govuk-!-font-size-36 text-grey-1"
                               />
-                            ) : block.type === 'trend_number' ? (
+                            )
+                          } else if (block.type === 'trend_number') {
+                            content = (
                               <Trend
                                 data={block.value}
                                 datePrefix={card.value.date_prefix}
                                 headingClassName="text-black"
                               />
-                            ) : (
-                              renderBlock({
-                                ...(block as Record<string, unknown>),
-                                date_prefix: card.value.date_prefix,
-                              } as Parameters<typeof renderBlock>[0])
-                            )}
-                          </div>
-                        )
+                            )
+                          } else {
+                            content = renderBlock({
+                              ...(block as Record<string, unknown>),
+                              date_prefix: card.value.date_prefix,
+                            } as Parameters<typeof renderBlock>[0])
+                          }
+
+                          return <div key={block.id}>{content}</div>
+                        }
                       )}
                     </div>
                   </Link>
