@@ -50,4 +50,33 @@ describe('ChartRowCardHeader', () => {
     )
     expect(screen.getByRole('heading', { level: 3 })).toHaveClass('govuk-heading-m mb-2 font-bold')
   })
+
+  test('renders classification in parentheses when non-public', async () => {
+    getAreaSelectorMock.mockResolvedValue([])
+
+    render(
+      await ChartRowCardHeader({
+        id: '1',
+        title: 'Title',
+        isNonPublic: true,
+        dataClassification: 'official_sensitive',
+      })
+    )
+
+    expect(screen.getByRole('heading', { level: 3, name: 'Title (OFFICIAL-SENSITIVE)' })).toBeInTheDocument()
+  })
+
+  test('uses default classification when non-public and classification is omitted', async () => {
+    getAreaSelectorMock.mockResolvedValue([])
+
+    render(
+      await ChartRowCardHeader({
+        id: '1',
+        title: 'Title',
+        isNonPublic: true,
+      })
+    )
+
+    expect(screen.getByRole('heading', { level: 3, name: 'Title (OFFICIAL-SENSITIVE)' })).toBeInTheDocument()
+  })
 })

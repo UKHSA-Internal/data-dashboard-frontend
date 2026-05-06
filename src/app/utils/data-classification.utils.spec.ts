@@ -5,7 +5,11 @@ import {
   DEFAULT_DATA_CLASSIFICATION,
 } from '@/api/models/DataClassification'
 
-import { getDataClassificationLabel, getWatermarkFlags } from './data-classification.utils'
+import {
+  getDataClassificationForHeader,
+  getDataClassificationLabel,
+  getWatermarkFlags,
+} from './data-classification.utils'
 
 describe('data-classification.utils', () => {
   describe('getDataClassificationLabel', () => {
@@ -42,6 +46,24 @@ describe('data-classification.utils', () => {
         is_public: false,
         data_classification: DEFAULT_DATA_CLASSIFICATION,
       })
+    })
+  })
+
+  describe('data classification <h3> heading suffix ', () => {
+    test('returns an empty string when isNonPublic is false', () => {
+      expect(getDataClassificationForHeader(false, 'secret')).toBe('')
+    })
+
+    test('returns an empty string when isNonPublic is undefined', () => {
+      expect(getDataClassificationForHeader(undefined, 'secret')).toBe('')
+    })
+
+    test.each(DATA_CLASSIFICATIONS)('returns the expected data classification header: %s', (classification) => {
+      expect(getDataClassificationForHeader(true, classification)).toBe(DATA_CLASSIFICATION_LABELS[classification])
+    })
+
+    test('defaults data classification when isNonPublic is true and data classification is undefined', () => {
+      expect(getDataClassificationForHeader(true)).toBe(DATA_CLASSIFICATION_LABELS[DEFAULT_DATA_CLASSIFICATION])
     })
   })
 })

@@ -52,7 +52,13 @@ export function ChartRowCardContent({ value, isNonPublic, dataClassification }: 
               className="ukhsa-chart-card flex flex-col gap-6"
             >
               <article>
-                <ChartRowCardHeader id={column.id} title={column.value.title} description={column.value.body}>
+                <ChartRowCardHeader
+                  id={column.id}
+                  title={column.value.title}
+                  description={column.value.body}
+                  isNonPublic={isNonPublic}
+                  dataClassification={dataClassification}
+                >
                   <Timestamp
                     data={column.value}
                     size={size}
