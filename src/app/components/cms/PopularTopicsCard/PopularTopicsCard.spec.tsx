@@ -64,6 +64,10 @@ jest.mock('../Headline/Headline', () => ({
   Headline: () => <div data-testid="mock-headline" />,
 }))
 
+jest.mock('../Trend/Trend', () => ({
+  Trend: () => <div data-testid="mock-trend" />,
+}))
+
 import { PopularTopicsCard } from './PopularTopicsCard'
 
 type PopularTopicsCardData = z.infer<typeof popularTopicsCardSchema>
@@ -98,7 +102,7 @@ describe('PopularTopicsCard', () => {
     expect(screen.getByTestId('mock-chart-with-description')).toHaveTextContent('Childhood vaccination coverage')
     expect(screen.getByRole('heading', { name: 'COVID-19 cases by day' })).toBeInTheDocument()
     expect(screen.getByTestId('popular-topics-chart')).toBeInTheDocument()
-    expect(screen.getAllByTestId('mock-render-block').length).toBeGreaterThan(0)
+    expect(screen.getAllByTestId('mock-trend').length).toBeGreaterThan(0)
     expect(screen.getByTestId('headline-metric-card-4bb7768b-57fd-4090-a70c-a29d8dce91d1')).toBeInTheDocument()
   })
 

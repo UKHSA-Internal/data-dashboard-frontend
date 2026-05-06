@@ -175,18 +175,17 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                     topic_page: 'https://ukhsa-dashboard.data.gov.uk/respiratory-viruses/covid-19/',
                     headline_metrics: [
                       {
-                        type: 'trend_number',
+                        type: 'headline_number',
                         id: '1b4e31b4-4b6e-4d53-9733-210e5a9ea022',
                         value: {
                           topic: 'COVID-19',
-                          metric: 'COVID-19_headline_7DayOccupiedBedsChange',
+                          metric: 'COVID-19_headline_ONSdeaths_7DayTotals',
                           geography: 'England',
                           geography_type: 'Nation',
                           sex: 'all',
                           age: 'all',
                           stratum: 'All episodes combined',
                           body: 'Occupied beds',
-                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
                         },
                       },
                       {
@@ -201,7 +200,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                           age: 'all',
                           stratum: 'default',
                           body: 'Last 7 days',
-                          percentage_metric: 'COVID-19_headline_7DayAdmissionsPercentChange',
+                          percentage_metric: 'COVID-19_headline_ONSdeaths_7DayPercentChange',
                         },
                       },
                     ],
