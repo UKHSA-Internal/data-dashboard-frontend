@@ -10,6 +10,7 @@ import { getPath } from '@/app/utils/cms/slug'
 
 import { ChartWithDescriptionCard } from '../ChartWithDescriptionCard/ChartWithDescriptionCard'
 import { Headline } from '../Headline/Headline'
+import { Trend } from '../Trend/Trend'
 import { WeatherHealthAlertCard } from '../WeatherHealthAlertCard/WeatherHealthAlertCard'
 
 /** CMS popular topics card payload; inferred from zod so it stays aligned with `Body.ts`. */
@@ -117,9 +118,15 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                                 headingClassName="govuk-heading-s mb-2 md:mb-3"
                                 valueClassName="govuk-!-font-weight-bold govuk-!-font-size-36 text-grey-1"
                               />
+                            ) : block.type === 'trend_number' ? (
+                              <Trend
+                                data={block.value}
+                                datePrefix={card.value.date_prefix}
+                                headingClassName="text-black"
+                              />
                             ) : (
                               renderBlock({
-                                ...block,
+                                ...(block as Record<string, unknown>),
                                 date_prefix: card.value.date_prefix,
                               } as Parameters<typeof renderBlock>[0])
                             )}
