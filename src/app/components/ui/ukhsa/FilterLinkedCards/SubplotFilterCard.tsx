@@ -16,6 +16,7 @@ import { About } from '@/app/components/cms/About/About'
 import { SubplotClientDownload } from '@/app/components/ui/ukhsa/Download/SubplotClientDownload'
 import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/SubplotChart'
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
+import { getDataClassificationForHeader } from '@/app/utils/data-classification.utils'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 
@@ -55,6 +56,7 @@ const SubplotFilterCard = ({
   const description = date ? `Last Updated ${formatDate(date)}` : ''
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
+  const dataClassificationForHeading = getDataClassificationForHeader(isNonPublic, dataClassification)
   const id = title
   const about = cardData.about ? cardData.about : ''
 
@@ -65,6 +67,7 @@ const SubplotFilterCard = ({
           <header>
             <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
               {title}
+              {dataClassificationForHeading ? ` (${dataClassificationForHeading})` : ''}
             </h3>
             <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
           </header>

@@ -11,6 +11,7 @@ import { ClientDownload } from '@/app/components/ui/ukhsa/Download/ClientDownloa
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
 import { ClientTable } from '@/app/components/ui/ukhsa/Table/ClientTable'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
+import { getDataClassificationForHeader } from '@/app/utils/data-classification.utils'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
@@ -43,6 +44,7 @@ const TimeseriesFilterCard = ({
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent ? geographyParent.name : ''}, ${geography.name})`
+  const dataClassificationForHeading = getDataClassificationForHeader(isNonPublic, dataClassification)
   const id = title
   const about = cardData.about ? cardData.about : ''
 
@@ -53,6 +55,7 @@ const TimeseriesFilterCard = ({
           <header>
             <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
               {title}
+              {dataClassificationForHeading ? ` (${dataClassificationForHeading})` : ''}
             </h3>
             <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
           </header>
