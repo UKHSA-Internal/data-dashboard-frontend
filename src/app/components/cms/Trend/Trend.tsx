@@ -9,12 +9,13 @@ interface TrendProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof TrendNumber>['value']
   datePrefix: string
+  isPublic?: boolean
 }
 
-export async function Trend({ data: { body: heading, ...requestParams }, datePrefix }: TrendProps) {
+export async function Trend({ data: { body: heading, ...requestParams }, datePrefix, isPublic }: TrendProps) {
   const { t } = await getServerTranslation('common')
 
-  const trend = await getTrends(requestParams)
+  const trend = await getTrends(requestParams, isPublic)
 
   if (trend.success) {
     const {

@@ -51,7 +51,7 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getCharts = async (chart: RequestParams) => {
+export const getCharts = async (chart: RequestParams, isPublic?: boolean) => {
   const {
     plots,
     x_axis,
@@ -83,7 +83,7 @@ export const getCharts = async (chart: RequestParams) => {
 
   try {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
-    const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
+    const { data } = await client<z.infer<typeof responseSchema>>(path, { body }, isPublic)
 
     const result = responseSchema.safeParse(data)
     if (result.success) {

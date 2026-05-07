@@ -28,10 +28,10 @@ export const responseSchema = z.object({
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getTrends = async (params: RequestParams) => {
+export const getTrends = async (params: RequestParams, isPublic?: boolean) => {
   try {
     const searchParams = new URLSearchParams(params)
-    const { data } = await client<z.infer<typeof responseSchema>>(`trends/v3`, { searchParams })
+    const { data } = await client<z.infer<typeof responseSchema>>(`trends/v3`, { searchParams }, isPublic)
     const result = responseSchema.safeParse(data)
     if (result.success) {
       return result

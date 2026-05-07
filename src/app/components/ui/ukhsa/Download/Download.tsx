@@ -29,11 +29,14 @@ export async function Download({
   }))
 
   // Call the table endpoint to check ahead of time if we have any data to download
-  const tableResponse = await getTables({
-    plots,
-    x_axis,
-    y_axis,
-  })
+  const tableResponse = await getTables(
+    {
+      plots,
+      x_axis,
+      y_axis,
+    },
+    isPublic
+  )
 
   if (tableResponse.success) {
     return (
