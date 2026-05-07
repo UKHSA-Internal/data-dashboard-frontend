@@ -63,15 +63,14 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
         ))}
         <ContentsLink href={`#${kebabCase(healthTopicsSectionTitle)}`}>{healthTopicsSectionTitle}</ContentsLink>
       </Contents>
-      {landingBody.map(renderSection.bind(null, processedSectionParams))}
+      {landingBody.map((bodySection) => renderSection(processedSectionParams, bodySection, true))}
       {/* Health topics section */}
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible my-8"></hr>
       <h2 className="govuk-heading-l" id={kebabCase(healthTopicsSectionTitle)}>
         {healthTopicsSectionTitle}
       </h2>
       {/* TODO: Need to include the dropdown filter here, once dropdown PR merged */}
-      {HealthTopicsBody.map(renderSection.bind(null, processedSectionParams))}{' '}
-      {/* TODO: Once the enableShowMore branch merged in, pass in 'false' here to mimic health topics page */}
+      {HealthTopicsBody.map((bodySection) => renderSection(processedSectionParams, bodySection, false))}
       {showFooterRelatedLinks ? <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks ?? []} /> : null}
     </View>
   )
