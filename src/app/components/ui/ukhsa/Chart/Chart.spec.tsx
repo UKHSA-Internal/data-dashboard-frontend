@@ -111,7 +111,7 @@ test('renders a narrow chart correctly', async () => {
       y_axis_maximum_value: null,
       y_axis_minimum_value: null,
     },
-    true
+    false
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -195,7 +195,7 @@ test('renders the chart by geography and geography type when both are present in
       y_axis_maximum_value: null,
       y_axis_minimum_value: null,
     },
-    true
+    false
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -250,7 +250,8 @@ test('full width charts should also have an acompanying narrow version for mobil
     expect.objectContaining({
       chart_width: 1100,
       chart_height: 260,
-    })
+    }),
+    false
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -309,7 +310,8 @@ test('landing page half width charts should render the largest size (half) with 
     expect.objectContaining({
       chart_width: 650,
       chart_height: 200,
-    })
+    }),
+    false
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(

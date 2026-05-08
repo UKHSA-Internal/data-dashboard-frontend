@@ -198,7 +198,7 @@ describe('ClientDownload', () => {
             },
           ],
         },
-        true
+        undefined
       )
     })
   })
@@ -386,7 +386,8 @@ describe('ClientDownload', () => {
               geography_type: undefined,
             }),
           ]),
-        })
+        }),
+        undefined
       )
     })
   })
