@@ -24,7 +24,7 @@ test('Returns a COVID-19 trend', async () => {
       metric: 'COVID-19_headline_newcases_7daychange',
       percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
     },
-    false
+    undefined
   )
 
   expect(getTrendsMock).toHaveBeenCalledWith('trends/v3', {
