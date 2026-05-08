@@ -91,25 +91,28 @@ test('renders a narrow chart correctly', async () => {
     })) as ReactElement
   )
 
-  expect(getChartsMock).toHaveBeenCalledWith({
-    chart_height: 260,
-    chart_width: 515,
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: '',
-        chart_type: 'simple_line',
-        geography: 'London',
-        geography_type: 'UKHSA Region',
-      },
-    ],
-    x_axis_title: '',
-    y_axis_title: '',
-    x_axis: null,
-    y_axis: null,
-    y_axis_maximum_value: null,
-    y_axis_minimum_value: null,
-  })
+  expect(getChartsMock).toHaveBeenCalledWith(
+    {
+      chart_height: 260,
+      chart_width: 515,
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: '',
+          chart_type: 'simple_line',
+          geography: 'London',
+          geography_type: 'UKHSA Region',
+        },
+      ],
+      x_axis_title: '',
+      y_axis_title: '',
+      x_axis: null,
+      y_axis: null,
+      y_axis_maximum_value: null,
+      y_axis_minimum_value: null,
+    },
+    true
+  )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
@@ -172,25 +175,28 @@ test('renders the chart by geography and geography type when both are present in
     })) as ReactElement
   )
 
-  expect(getChartsMock).toHaveBeenCalledWith({
-    chart_height: 260,
-    chart_width: 515,
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: '',
-        chart_type: 'simple_line',
-        geography: 'North East',
-        geography_type: 'UKHSA Region',
-      },
-    ],
-    x_axis: null,
-    y_axis: null,
-    x_axis_title: '',
-    y_axis_title: '',
-    y_axis_maximum_value: null,
-    y_axis_minimum_value: null,
-  })
+  expect(getChartsMock).toHaveBeenCalledWith(
+    {
+      chart_height: 260,
+      chart_width: 515,
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: '',
+          chart_type: 'simple_line',
+          geography: 'North East',
+          geography_type: 'UKHSA Region',
+        },
+      ],
+      x_axis: null,
+      y_axis: null,
+      x_axis_title: '',
+      y_axis_title: '',
+      y_axis_maximum_value: null,
+      y_axis_minimum_value: null,
+    },
+    true
+  )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
