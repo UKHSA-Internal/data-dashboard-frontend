@@ -12,6 +12,8 @@ import { processSectionParams } from '@/app/utils/show-more.utils'
 import { Contents, ContentsLink } from '../../ui/ukhsa/Contents/Contents'
 import { RelatedLinksWrapper } from '../../ui/ukhsa/RelatedLinks/RelatedLinksWrapper'
 import { Description } from '../../ui/ukhsa/View/Description/Description'
+import { TopicsListFilterContainer } from '../TopicsListFilterContainer/TopicsListFilterContainer'
+import { getFilterItemsFromBody } from './TopicsList'
 
 export default async function LandingPage({ searchParams: { section } }: PageComponentBaseProps<{ section?: string }>) {
   const processedSectionParams = processSectionParams(section)
@@ -23,10 +25,11 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
     related_links: relatedLinks,
     related_links_layout: relatedLinksLayout,
     active_announcements: activeAnnouncements,
+    health_topic,
   } = await getLandingPage()
 
-  const healthTopicsPageId = 'health-topics' // TODO: This should be a field within 'getLandingPage'
-  const healthTopicsSectionTitle = 'All data dashboard health themes' // TODO: Again, should come from 'getLandingPage'
+  const healthTopicsPageId = health_topic[0].value.page
+  const healthTopicsSectionTitle = health_topic[0].value.heading
 
   const { body: HealthTopicsBody } = await getPageBySlug<PageType.TopicsList>(healthTopicsPageId, {
     type: PageType.TopicsList,
@@ -35,6 +38,8 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
   const hasRelatedLinks = Boolean(relatedLinks?.length)
   const showSidebarRelatedLinks = hasRelatedLinks && relatedLinksLayout === 'Sidebar'
   const showFooterRelatedLinks = hasRelatedLinks && relatedLinksLayout === 'Footer'
+
+  const filterItems = getFilterItemsFromBody(HealthTopicsBody)
 
   return (
     <View>
@@ -64,13 +69,17 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
         <ContentsLink href={`#${kebabCase(healthTopicsSectionTitle)}`}>{healthTopicsSectionTitle}</ContentsLink>
       </Contents>
       {landingBody.map((bodySection) => renderSection(processedSectionParams, bodySection, true))}
+
+      {/* -------------------------------- */}
       {/* Health topics section */}
       <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible my-8"></hr>
       <h2 className="govuk-heading-l" id={kebabCase(healthTopicsSectionTitle)}>
         {healthTopicsSectionTitle}
       </h2>
-      {/* TODO: Need to include the dropdown filter here, once dropdown PR merged */}
+      <TopicsListFilterContainer items={filterItems} />
       {HealthTopicsBody.map((bodySection) => renderSection(processedSectionParams, bodySection, false))}
+      {/* -------------------------------- */}
+
       {showFooterRelatedLinks ? <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks ?? []} /> : null}
     </View>
   )

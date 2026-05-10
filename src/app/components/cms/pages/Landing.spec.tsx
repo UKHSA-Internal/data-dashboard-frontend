@@ -1,8 +1,13 @@
+import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getLandingPage } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 import { render, screen } from '@/config/test-utils'
 
 import LandingPage from './Landing'
+
+jest.mock('@/api/requests/getPageBySlug', () => ({
+  getPageBySlug: jest.fn(),
+}))
 
 jest.mock('@/app/utils/cms', () => ({
   getLandingPage: jest.fn(),
@@ -38,7 +43,16 @@ jest.mock('@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper', () => ({
 }))
 
 const mockedGetLandingPage = jest.mocked(getLandingPage)
+const mockedGetPageBySlug = jest.mocked(getPageBySlug)
 const mockedRenderSection = jest.mocked(renderSection)
+
+const defaultHealthTopic = [
+  {
+    type: 'health_topic' as const,
+    id: 'health-topic-block',
+    value: { heading: 'Health topics', page: 'health-topics' },
+  },
+]
 type RenderSectionArgs = Parameters<typeof renderSection>
 
 const landingBody = [
@@ -65,6 +79,8 @@ const landingBody = [
 beforeEach(() => {
   jest.clearAllMocks()
 
+  mockedGetPageBySlug.mockResolvedValue({ body: [] } as never)
+
   mockedRenderSection.mockImplementation(((_: RenderSectionArgs[0], section: RenderSectionArgs[1]) => (
     <section key={section.id}>{section.value.heading}</section>
   )) as unknown as typeof renderSection)
@@ -80,6 +96,7 @@ describe('LandingPage', () => {
       related_links: [],
       last_published_at: '2026-03-05T15:36:08.726625Z',
       active_announcements: [],
+      health_topic: defaultHealthTopic,
     } as never)
 
     render(await LandingPage({ slug: [], searchParams: {} }))
@@ -97,6 +114,7 @@ describe('LandingPage', () => {
       related_links: [{ id: 1, title: 'Link 1', url: 'https://example.com', meta: { type: 'x' }, body: '<p>x</p>' }],
       last_published_at: '2026-03-05T15:36:08.726625Z',
       active_announcements: [],
+      health_topic: defaultHealthTopic,
     } as never)
 
     render(await LandingPage({ slug: [], searchParams: {} }))
@@ -114,6 +132,7 @@ describe('LandingPage', () => {
       related_links: [{ id: 1, title: 'Link 1', url: 'https://example.com', meta: { type: 'x' }, body: '<p>x</p>' }],
       last_published_at: '2026-03-05T15:36:08.726625Z',
       active_announcements: [],
+      health_topic: defaultHealthTopic,
     } as never)
 
     render(await LandingPage({ slug: [], searchParams: {} }))
@@ -131,6 +150,7 @@ describe('LandingPage', () => {
       related_links: [],
       last_published_at: '2026-03-05T15:36:08.726625Z',
       active_announcements: [],
+      health_topic: defaultHealthTopic,
     } as never)
 
     render(await LandingPage({ slug: [], searchParams: {} }))
@@ -148,6 +168,7 @@ describe('LandingPage', () => {
       related_links: [],
       last_published_at: '2026-03-05T15:36:08.726625Z',
       active_announcements: [],
+      health_topic: defaultHealthTopic,
     } as never)
 
     render(
@@ -158,7 +179,7 @@ describe('LandingPage', () => {
     )
 
     expect(mockedRenderSection).toHaveBeenCalledTimes(landingBody.length)
-    expect(mockedRenderSection).toHaveBeenNthCalledWith(1, ['current-outbreaks'], landingBody[0])
-    expect(mockedRenderSection).toHaveBeenNthCalledWith(2, ['current-outbreaks'], landingBody[1])
+    expect(mockedRenderSection).toHaveBeenNthCalledWith(1, ['current-outbreaks'], landingBody[0], true)
+    expect(mockedRenderSection).toHaveBeenNthCalledWith(2, ['current-outbreaks'], landingBody[1], true)
   })
 })

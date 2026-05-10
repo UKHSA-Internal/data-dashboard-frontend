@@ -47,6 +47,16 @@ const WithLandingData = SharedPageData.extend({
   related_links: RelatedLinks.nullable().optional(),
   related_links_layout: RelatedLinksLayout.or(fallback<RelatedLinksLayout>('Sidebar')).nullable().optional(),
   body: Body,
+  health_topic: z.array(
+    z.object({
+      type: z.literal('health_topic'),
+      value: z.object({
+        heading: z.string(),
+        page: z.string(),
+      }),
+      id: z.string(),
+    })
+  ),
   meta: Meta.extend({
     type: z.literal('home.LandingPage'),
   }),
