@@ -267,47 +267,50 @@ describe('SubplotClientChart', () => {
     )
 
     await waitFor(() => {
-      expect(getSubplotsMock).toHaveBeenCalledWith({
-        file_format: 'svg',
-        chart_height: 260,
-        chart_width: 515,
-        x_axis_title: 'Vaccination type',
-        y_axis_title: 'Coverage %',
-        y_axis_minimum_value: null,
-        y_axis_maximum_value: null,
-        target_threshold: 95,
-        target_threshold_label: 'Target',
-        chart_parameters: {
-          x_axis: 'geography',
-          y_axis: 'metric',
-          theme: 'immunisation',
-          sub_theme: 'childhood_vaccines',
-          date_from: '2023-01-01',
-          date_to: '2023-12-31',
-          age: 'all',
-          sex: 'all',
-          stratum: '24m',
-          metric_value_ranges: [{ start: '90', end: '100' }],
-        },
-        subplots: [
-          {
-            subplot_title: '6-in-1 (12 months)',
-            subplot_parameters: {
-              topic: '6-in-1',
-              metric: '6-in-1_coverage_coverageByYear',
-              stratum: '12m',
-            },
-            plots: [
-              {
-                label: 'England',
-                geography_type: 'Nation',
-                geography: 'England',
-                line_colour: 'COLOUR_1_DARK_BLUE',
-              },
-            ],
+      expect(getSubplotsMock).toHaveBeenCalledWith(
+        {
+          file_format: 'svg',
+          chart_height: 260,
+          chart_width: 515,
+          x_axis_title: 'Vaccination type',
+          y_axis_title: 'Coverage %',
+          y_axis_minimum_value: null,
+          y_axis_maximum_value: null,
+          target_threshold: 95,
+          target_threshold_label: 'Target',
+          chart_parameters: {
+            x_axis: 'geography',
+            y_axis: 'metric',
+            theme: 'immunisation',
+            sub_theme: 'childhood_vaccines',
+            date_from: '2023-01-01',
+            date_to: '2023-12-31',
+            age: 'all',
+            sex: 'all',
+            stratum: '24m',
+            metric_value_ranges: [{ start: '90', end: '100' }],
           },
-        ],
-      })
+          subplots: [
+            {
+              subplot_title: '6-in-1 (12 months)',
+              subplot_parameters: {
+                topic: '6-in-1',
+                metric: '6-in-1_coverage_coverageByYear',
+                stratum: '12m',
+              },
+              plots: [
+                {
+                  label: 'England',
+                  geography_type: 'Nation',
+                  geography: 'England',
+                  line_colour: 'COLOUR_1_DARK_BLUE',
+                },
+              ],
+            },
+          ],
+        },
+        undefined
+      )
     })
   })
 
@@ -488,7 +491,8 @@ describe('SubplotClientChart', () => {
             date_from: '2024-01-01',
             date_to: '2024-12-31',
           }),
-        })
+        }),
+        undefined
       )
     })
   })
@@ -591,7 +595,8 @@ describe('SubplotClientChart', () => {
           chart_parameters: expect.objectContaining({
             metric_value_ranges: [],
           }),
-        })
+        }),
+        undefined
       )
     })
   })
@@ -687,7 +692,8 @@ describe('SubplotClientChart', () => {
           chart_parameters: expect.objectContaining({
             metric_value_ranges: [],
           }),
-        })
+        }),
+        undefined
       )
     })
   })
