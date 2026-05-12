@@ -24,7 +24,7 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
       <div className="flex h-full flex-col gap-6">
         {value.left_column.map((item: PopularTopicsCardData['left_column'][number]) => {
           if (item.type === 'chart_card_with_description') {
-            return <ChartWithDescriptionCard key={item.id} value={item.value} cardsCount={2} />
+            return <ChartWithDescriptionCard key={item.id} value={item.value} />
           }
           return (
             <WeatherHealthAlertCard
