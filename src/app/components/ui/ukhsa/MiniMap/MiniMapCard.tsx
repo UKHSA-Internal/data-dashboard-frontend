@@ -18,13 +18,15 @@ export function MiniMapCard({ title, subTitle, alertType }: MiniMapCardProps) {
     <Card
       asChild
       aria-labelledby={`chart-row-card-heading-x4`}
-      className="govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card relative flex flex-col bg-[var(--colour-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-chart-background-hover)] focus:bg-[var(--colour-chart-background-hover)]"
+      className="govuk-link--no-visited-state govuk-!-padding-5 ukhsa-chart-card relative flex flex-col border border-grey-2 bg-[var(--colour-home-chart-background)] no-underline transition-colors duration-200 ukhsa-focus hover:bg-[var(--colour-home-chart-background-hover)] focus:border-grey-2 focus:bg-[var(--colour-home-chart-background-hover)]"
     >
       <Link href={`/weather-health-alerts/${alertType}`}>
-        <h3 id="chart-row-card-heading-x4" className="govuk-heading-m mb-1">
-          {title}
-        </h3>
-        <p className="govuk-body-s text-grey-1">{subTitle}</p>
+        <div className="min-[560px]:max-w-[60%]">
+          <h3 id="chart-row-card-heading-x4" className="govuk-heading-m mb-1 text-blue">
+            {title}
+          </h3>
+          <p className="govuk-body-s text-grey-1">{subTitle}</p>
+        </div>
         <MiniMap alertType={alertType} />
       </Link>
     </Card>
