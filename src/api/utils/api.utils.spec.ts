@@ -1,4 +1,5 @@
 jest.unmock('@/api/utils/api.utils')
+import { client, clientHandleSwitchboardBranch } from '@/api/utils/api.utils'
 
 const mockFetchFn = jest.fn()
 
@@ -6,6 +7,52 @@ Object.defineProperty(globalThis, 'fetch', {
   configurable: true,
   writable: true,
   value: mockFetchFn,
+})
+
+describe('clientHandleSwitchboardBranch', () => {
+  const originalIsWellKnownEnvironment = isWellKnownEnvironment as jest.Mock
+  const mockCookies = cookies as jest.Mock
+
+  beforeEach(() => {
+    jest.clearAllMocks()
+    mockCookies.mockReset()
+  })
+
+  it('returns headers unchanged in well-known environment', async () => {
+    originalIsWellKnownEnvironment.mockReturnValue(true)
+    jest.requireMock('@/app/utils/app.utils').isSSR = true
+    const headers = { foo: 'bar' }
+    const result = await clientHandleSwitchboardBranch({ ...headers })
+    expect(result).toEqual(headers)
+  })
+
+  it('returns headers unchanged if not SSR', async () => {
+    originalIsWellKnownEnvironment.mockReturnValue(false)
+    jest.requireMock('@/app/utils/app.utils').isSSR = false
+    const headers = { foo: 'bar' }
+    const result = await clientHandleSwitchboardBranch({ ...headers })
+    expect(result).toEqual(headers)
+  })
+
+  it('adds cookie if not well-known, SSR, and cookie exists', async () => {
+    originalIsWellKnownEnvironment.mockReturnValue(false)
+    jest.requireMock('@/app/utils/app.utils').isSSR = true
+    mockCookies.mockResolvedValue({ get: jest.fn().mockReturnValue({ value: 'cookie-value' }) })
+    const headers = { foo: 'bar' }
+    const result = await clientHandleSwitchboardBranch({ ...headers })
+    expect(result.cookie).toBe('cookie-value')
+    expect(result.foo).toBe('bar')
+  })
+
+  it('does not add cookie if not well-known, SSR, but cookie missing', async () => {
+    originalIsWellKnownEnvironment.mockReturnValue(false)
+    jest.requireMock('@/app/utils/app.utils').isSSR = true
+    mockCookies.mockResolvedValue({ get: jest.fn().mockReturnValue(undefined) })
+    const headers = { foo: 'bar' }
+    const result = await clientHandleSwitchboardBranch({ ...headers })
+    expect(result.cookie).toBeUndefined()
+    expect(result.foo).toBe('bar')
+  })
 })
 
 // --- Mocks ---
@@ -43,7 +90,6 @@ jest.mock('@/auth', () => ({
 
 import { cookies } from 'next/headers'
 
-import { client } from '@/api/utils/api.utils'
 import { isWellKnownEnvironment } from '@/app/utils/app.utils'
 import { auth } from '@/auth'
 
@@ -250,6 +296,45 @@ describe('client()', () => {
   })
 
   // --- Auth token ---
+
+  // --- Page Previews ---
+  describe('Page Previews', () => {
+    let cookieSpy: jest.SpyInstance
+    afterEach(() => {
+      if (cookieSpy) cookieSpy.mockRestore()
+    })
+
+    it('rewrites pages endpoint to drafts, sets x-cms-auth header and Cache-Control header on /preview* route', async () => {
+      cookieSpy = jest
+        .spyOn(document, 'cookie', 'get')
+        .mockReturnValue(['path=/preview/my-draft-page', 'cmsAuthToken=draft-token'].join('; '))
+      await client('pages/123') // get page by id
+      const [url, options] = mockFetchFn.mock.calls[0]
+      expect(url).toContain('https://fake-backend.gov.uk/drafts/123')
+      expect(options.headers['x-cms-auth']).toBe('Bearer draft-token')
+      expect(options.headers['Cache-Control']).toBe('no-store, no-cache, must-revalidate')
+      expect(options.cache).toBe('no-store')
+      expect(options.next).toEqual({ revalidate: 0, tags: [] })
+    })
+
+    it('sets response headers for no-cache in /nocache* route', async () => {
+      cookieSpy = jest.spyOn(document, 'cookie', 'get').mockReturnValue(['path=/nocache/my-published-page'].join('; '))
+      await client('pages/123')
+      const [url, options] = mockFetchFn.mock.calls[0]
+      expect(url).toContain('https://fake-backend.gov.uk/pages/123')
+      expect(options.headers['Cache-Control']).toBe('no-store, no-cache, must-revalidate')
+      expect(options.cache).toBe('no-store')
+      expect(options.next).toEqual({ revalidate: 0, tags: [] })
+    })
+
+    it('does not rewrite endpoint or set x-cms-auth if not preview', async () => {
+      cookieSpy = jest.spyOn(document, 'cookie', 'get').mockReturnValue('isPreview=false')
+      await client('pages/456')
+      const [url, options] = mockFetchFn.mock.calls[0]
+      expect(url).toContain('pages/456')
+      expect(options.headers['x-cms-auth']).toBeUndefined()
+    })
+  })
 
   describe('auth token (non-public requests)', () => {
     it('does not fetch auth token for public requests', async () => {
