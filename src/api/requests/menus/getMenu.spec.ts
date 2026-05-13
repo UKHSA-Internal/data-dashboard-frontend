@@ -2,33 +2,33 @@ import { ZodError } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
-import { sideMenu } from '@/mock-server/handlers/menus/v1/fixtures/side-menu'
+import { menu } from '@/mock-server/handlers/menus/v2/fixtures/menu'
 
 import { getMenu } from './getMenu'
 
-describe('GET menus/v1', () => {
+describe('GET menus/v2', () => {
   beforeEach(() => {
     jest.clearAllMocks()
   })
 
   test('successful response', async () => {
     jest.mocked(client).mockResolvedValueOnce({
-      data: sideMenu,
+      data: menu,
       status: 200,
     })
 
     expect(await getMenu()).toEqual({
       success: true,
-      data: sideMenu,
+      data: menu,
     })
   })
 
   test('failure response', async () => {
     jest.mocked(client).mockRejectedValueOnce({ data: null, status: 400 })
-
-    expect(await getMenu()).toEqual({
-      success: false,
-      error: new ZodError([
+    const { success, error } = await getMenu()
+    expect(success).toEqual(false)
+    expect(error).toEqual(
+      new ZodError([
         {
           code: 'invalid_type',
           expected: 'array',
@@ -36,8 +36,8 @@ describe('GET menus/v1', () => {
           path: ['active_menu'],
           message: 'Required',
         },
-      ]),
-    })
+      ])
+    )
   })
 
   test('logs and returns a parse error when the schema is invalid', async () => {

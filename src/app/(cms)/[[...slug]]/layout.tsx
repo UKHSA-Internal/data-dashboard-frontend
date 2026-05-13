@@ -4,7 +4,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement, BackToTop } from '@/app/components/ui/ukhsa'
 import { GovukHeader } from '@/app/components/ui/ukhsa/GovukHeader/GovukHeader'
-import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
+import { Menu } from '@/app/components/ui/ukhsa/Menu/Menu'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
 import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
@@ -28,9 +28,8 @@ export default async function Layout({ children }: LayoutProps) {
   return (
     <>
       <GovukHeader serviceTitle={t('serviceTitle')} />
-
       <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
-        <MegaMenu />
+        <Menu />
       </TopNav>
 
       <div className="govuk-width-container bg-blue" />
