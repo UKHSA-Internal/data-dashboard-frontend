@@ -73,11 +73,11 @@ jest.mock('@/app/i18n', () => ({
 
 describe('Displaying a section from the cms home page', () => {
   test('renders a heading that links to the topic page', async () => {
-    render(await renderSection([], mockSectionWithLink))
+    render(renderSection([], mockSectionWithLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'COVID-19' })).toHaveAttribute('href', '/topics/covid-19')
 
-    render(await renderSection([], mockSectionWithLongHeading))
+    render(renderSection([], mockSectionWithLongHeading))
     expect(screen.getByRole('heading', { level: 2, name: 'Other respiratory viruses' })).toBeInTheDocument()
     expect(screen.getByRole('link', { name: 'Other respiratory viruses' })).toHaveAttribute(
       'href',
@@ -86,12 +86,12 @@ describe('Displaying a section from the cms home page', () => {
   })
 
   test('renders a heading with no link', async () => {
-    render(await renderSection([], mockSectionNoLink))
+    render(renderSection([], mockSectionNoLink))
     expect(screen.getByRole('heading', { level: 2, name: 'COVID-19' })).toBeInTheDocument()
   })
 
   test('renders a card', async () => {
-    render(await renderSection([], mockSectionWithCard))
+    render(renderSection([], mockSectionWithCard))
     expect(screen.getByText('This is some cms content')).toBeInTheDocument()
   })
 })
