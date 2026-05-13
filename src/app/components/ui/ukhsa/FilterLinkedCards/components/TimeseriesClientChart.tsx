@@ -3,11 +3,13 @@
 import { useEffect, useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ChartInteractiveWrapper from '@/app/components/cms/ChartInteractive/ChartInteractiveWrapper'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
+import { getWatermarkFlags } from '@/app/utils/data-classification.utils'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
 
@@ -17,6 +19,8 @@ interface ClientChartProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   handleLatestDate: (date: string | null) => void
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const TimeseriesClientChart = ({
@@ -25,6 +29,8 @@ const TimeseriesClientChart = ({
   timePeriods,
   cardData,
   handleLatestDate,
+  isNonPublic,
+  dataClassification,
 }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -68,6 +74,7 @@ const TimeseriesClientChart = ({
               use_markers: true,
             }
           }),
+          ...getWatermarkFlags(isNonPublic, dataClassification),
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)

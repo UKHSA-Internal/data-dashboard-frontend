@@ -16,8 +16,7 @@ interface SubplotClientDownloadProps {
   selectedThresholds: ThresholdFilter[]
   timePeriods: TimePeriod[]
   currentTimePeriodIndex: number
-  isPublic?: boolean
-  authEnabled?: boolean
+  isNonPublic?: boolean
 }
 
 export function SubplotClientDownload({
@@ -27,8 +26,7 @@ export function SubplotClientDownload({
   timePeriods,
   currentTimePeriodIndex,
   selectedThresholds,
-  isPublic,
-  authEnabled,
+  isNonPublic,
 }: SubplotClientDownloadProps) {
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState<boolean>(true)
@@ -71,11 +69,12 @@ export function SubplotClientDownload({
                 stratum: filter.value.parameters.stratum.value,
               },
               plots: geographyRelations.map((geography) => {
+                const geographyType = geography.geography_type ?? ''
                 return {
                   label: geography.name,
-                  geography_type: geography.geography_type,
+                  geography_type: geographyType,
                   geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                  line_colour: getGeographyColourSelection(geographyType, geographyFilters),
                 }
               }),
             }
@@ -95,7 +94,15 @@ export function SubplotClientDownload({
     }
 
     fetchTables()
-  }, [geography, dataFilters, selectedThresholds])
+  }, [
+    geography,
+    dataFilters,
+    selectedThresholds,
+    currentTimePeriodIndex,
+    geographyFilters,
+    geographyRelations,
+    timePeriods,
+  ])
 
   if (tableLoading) {
     return (
@@ -142,25 +149,18 @@ export function SubplotClientDownload({
             stratum: filter.value.parameters.stratum.value,
           },
           plots: geographyRelations.map((geography) => {
+            const geographyType = geography.geography_type ?? ''
             return {
               label: geography.name,
-              geography_type: geography.geography_type,
+              geography_type: geographyType,
               geography: geography.name,
-              line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+              line_colour: getGeographyColourSelection(geographyType, geographyFilters),
             }
           }),
         }
       }),
     }
 
-    return (
-      <SubplotDownloadForm
-        chart={chart}
-        xAxis={x_axis}
-        tagManagerEventId={null}
-        isPublic={isPublic}
-        authEnabled={authEnabled}
-      />
-    )
+    return <SubplotDownloadForm chart={chart} xAxis={x_axis} tagManagerEventId={null} isNonPublic={isNonPublic} />
   }
 }

@@ -117,6 +117,67 @@ test('renders a narrow chart correctly', async () => {
   )
 })
 
+test('sends is_public=false and data_classification for non-public chart requests', async () => {
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart-narrow',
+      alt_text: 'alt text for chart',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
+  })
+
+  const data: ComponentProps<typeof Chart>['data'] = {
+    x_axis: null,
+    y_axis: null,
+    x_axis_title: '',
+    y_axis_title: '',
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
+    show_timeseries_filter: false,
+    chart: [
+      {
+        id: '',
+        type: 'plot',
+        value: {
+          topic: 'COVID-19',
+          metric: '',
+          chart_type: 'simple_line',
+          geography: 'London',
+          geography_type: 'UKHSA Region',
+        },
+      },
+    ],
+    body: 'COVID-19 chart description.',
+    tag_manager_event_id: '',
+    date_prefix: 'Up to',
+    title: '',
+    headline_number_columns: [],
+    about: '',
+  }
+
+  render(
+    (await Chart({
+      data,
+      sizes: [
+        {
+          default: true,
+          size: 'narrow',
+        },
+      ],
+      isNonPublic: true,
+    })) as ReactElement
+  )
+
+  expect(getChartsMock).toHaveBeenCalledWith(
+    expect.objectContaining({
+      is_public: false,
+      data_classification: 'official_sensitive',
+    })
+  )
+})
+
 test('renders the chart by geography and geography type when both are present in the url search params', async () => {
   jest
     .mocked(getSearchParams)

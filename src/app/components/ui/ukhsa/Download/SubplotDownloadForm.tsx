@@ -8,20 +8,13 @@ import { useTranslation } from 'react-i18next'
 import { downloadFile } from '@/app/utils/download.utils'
 import { subplotChartExportApiRoutePath } from '@/config/constants'
 interface SubplotDownloadFormProps {
-  chart: Record<string, unknown>
-  xAxis: string
-  tagManagerEventId: string | null
-  isPublic?: boolean
-  authEnabled?: boolean
+  readonly chart: Record<string, unknown>
+  readonly xAxis: string
+  readonly tagManagerEventId: string | null
+  readonly isNonPublic?: boolean
 }
 
-export function SubplotDownloadForm({
-  chart,
-  xAxis,
-  tagManagerEventId,
-  isPublic = true,
-  authEnabled,
-}: SubplotDownloadFormProps) {
+export function SubplotDownloadForm({ chart, xAxis, tagManagerEventId, isNonPublic }: SubplotDownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownloadBanner, setShowDownloadBanner] = useState(false)
   const router = useRouter()
@@ -32,7 +25,7 @@ export function SubplotDownloadForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (authEnabled && isPublic === false && showDownloadBanner === false) {
+    if (isNonPublic && !showDownloadBanner) {
       setShowDownloadBanner(true)
       return
     }
@@ -48,7 +41,7 @@ export function SubplotDownloadForm({
         body: formData,
       })
 
-      if (res.redirected !== true) {
+      if (!res.redirected) {
         const data = await res.text()
         if (data) downloadFile(`ukhsa-chart-download.${formData.get('file_format')}`, new Blob([data]))
       }
@@ -118,10 +111,10 @@ export function SubplotDownloadForm({
             <div
               className="download-acknowledgement-banner"
               role="region"
-              aria-label="Download official sensitive data warning"
+              aria-label="Download official-sensitive data warning"
             >
               <p className="download-acknowledgement-banner-body govuk-!-margin-bottom-2">
-                You are about to download data that contains <b>official sensitive data.</b>
+                You are about to download data that contains <b>official-sensitive data.</b>
               </p>
               <p className="download-acknowledgement-banner-body">
                 Select <b>“continue and download”</b> to proceed or <b>“back”</b> to cancel.

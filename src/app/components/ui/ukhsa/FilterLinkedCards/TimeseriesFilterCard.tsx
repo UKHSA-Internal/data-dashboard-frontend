@@ -11,9 +11,9 @@ import { ClientDownload } from '@/app/components/ui/ukhsa/Download/ClientDownloa
 import TimeseriesClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/components/TimeseriesClientChart'
 import { ClientTable } from '@/app/components/ui/ukhsa/Table/ClientTable'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
+import { getDataClassificationForHeader } from '@/app/utils/data-classification.utils'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { getDataClassification } from '@/app/utils/table.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
 import { Card } from '../Card/Card'
@@ -25,9 +25,8 @@ interface TimeseriesFilterCardProps {
   dataFilters: DataFilter[]
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
-  isPublic?: boolean
-  level?: DataClassification
-  authEnabled?: boolean
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const TimeseriesFilterCard = ({
@@ -35,9 +34,8 @@ const TimeseriesFilterCard = ({
   timePeriods,
   dataFilters,
   cardData,
-  isPublic,
-  level,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
 
@@ -45,10 +43,10 @@ const TimeseriesFilterCard = ({
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent ? geographyParent.name : ''}, ${geography.name})`
+  const dataClassificationForHeading = getDataClassificationForHeader(isNonPublic, dataClassification)
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassification = getDataClassification(isPublic, level ?? 'official_sensitive', authEnabled)
 
   return (
     <div key={id} className="mb-4">
@@ -56,7 +54,8 @@ const TimeseriesFilterCard = ({
         <article>
           <header>
             <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
-              {title} {dataClassification}
+              {title}
+              {dataClassificationForHeading ? ` (${dataClassificationForHeading})` : ''}
             </h3>
             <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
           </header>
@@ -110,7 +109,7 @@ const TimeseriesFilterCard = ({
               className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
               tabGroupTitle={`${kebabCase(title)}`}
               defaultValue={`${kebabCase(title)}-chart`}
-              showAbout={about ? true : false}
+              showAbout={!!about}
             />
             <TabsContent
               value={`${kebabCase(title)}-chart`}
@@ -124,6 +123,8 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 handleLatestDate={setDate}
                 cardData={cardData}
+                isNonPublic={isNonPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -138,9 +139,8 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 size={'wide'}
                 cardData={cardData}
-                isPublic={isPublic}
-                level={level}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -156,9 +156,7 @@ const TimeseriesFilterCard = ({
                 geography={geography}
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
-                cardData={cardData}
-                isPublic={isPublic}
-                authEnabled={authEnabled}
+                isNonPublic={isNonPublic}
               />
             </TabsContent>
             {about && (

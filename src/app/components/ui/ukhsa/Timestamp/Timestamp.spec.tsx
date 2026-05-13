@@ -66,3 +66,35 @@ test('renders null when the timestamp request fails', async () => {
 
   expect(container.firstChild).toBeNull()
 })
+
+test('maps chart values into plots when requesting timestamp chart data', async () => {
+  getChartsMock.mockResolvedValueOnce({
+    success: true,
+    data: {
+      chart: 'mock-chart',
+      alt_text: '',
+      last_updated: '2023-05-10T15:18:06.939535+01:00',
+      figure: { data: [], layout: {} },
+    },
+  })
+
+  const data: ComponentProps<typeof Timestamp>['data'] = {
+    x_axis: null,
+    y_axis: null,
+    chart: [{ value: 'plot-a' }, { value: 'plot-b' }] as any,
+    tag_manager_event_id: '',
+    date_prefix: 'Up to and including',
+    body: '',
+    title: '',
+    headline_number_columns: [],
+    about: '',
+  }
+
+  await Timestamp({ data, size: 'narrow' })
+
+  expect(getChartsMock).toHaveBeenCalledWith(
+    expect.objectContaining({
+      plots: ['plot-a', 'plot-b'],
+    })
+  )
+})

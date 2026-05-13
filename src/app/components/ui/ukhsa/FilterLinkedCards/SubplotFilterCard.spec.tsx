@@ -216,4 +216,56 @@ describe('SubplotFilterCard', () => {
 
     expect(screen.queryByRole('tab', { name: /About/i })).not.toBeInTheDocument()
   })
+
+  test('renders data classification in heading when non-public', async () => {
+    render(
+      <SubplotFilterCard
+        geography={mockGeography}
+        selectedVaccinations={mockSelectedVaccinations}
+        selectedThresholds={mockSelectedThresholds}
+        geographyFilters={mockGeographyFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+        timePeriodTitle="Year selection"
+        isNonPublic={true}
+        dataClassification="official"
+      />
+    )
+
+    expect(screen.getByRole('heading', { level: 3, name: /\(OFFICIAL\)$/ })).toBeInTheDocument()
+  })
+
+  test('render default data classification in heading when non-public and classification is omitted', async () => {
+    render(
+      <SubplotFilterCard
+        geography={mockGeography}
+        selectedVaccinations={mockSelectedVaccinations}
+        selectedThresholds={mockSelectedThresholds}
+        geographyFilters={mockGeographyFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+        timePeriodTitle="Year selection"
+        isNonPublic={true}
+      />
+    )
+
+    expect(screen.getByRole('heading', { level: 3, name: /\(OFFICIAL-SENSITIVE\)$/ })).toBeInTheDocument()
+  })
+
+  test('does not render data classification in heading when public', () => {
+    render(
+      <SubplotFilterCard
+        geography={mockGeography}
+        selectedVaccinations={mockSelectedVaccinations}
+        selectedThresholds={mockSelectedThresholds}
+        geographyFilters={mockGeographyFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+        timePeriodTitle="Year selection"
+        isNonPublic={false}
+      />
+    )
+
+    expect(screen.getByRole('heading', { level: 3 }).textContent).not.toContain('OFFICIAL')
+  })
 })

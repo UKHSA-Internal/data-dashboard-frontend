@@ -1,3 +1,4 @@
+import { DEFAULT_DATA_CLASSIFICATION } from '@/api/models/DataClassification'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
@@ -5,13 +6,14 @@ import { Announcements, PageSection, PageSectionWithContents, View } from '@/app
 import MetricsSummary from '@/app/components/ui/ukhsa/MetricsSummary/MetricsSummary'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
+import { getIsNonPublic } from '@/app/utils/auth.utils'
 import { extractRootSlug } from '@/app/utils/cms/slug'
-import { authEnabled } from '@/config/constants'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { BackLink } from '../../ui/ukhsa/View/BackLink/Backlink'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
+
 export default async function MetricsChildPage({
   slug,
   searchParams: { returnUrl },
@@ -30,11 +32,14 @@ export default async function MetricsChildPage({
     page_classification: pageClassification,
   } = await getPageBySlug<PageType.MetricsChild>(slug, { type: PageType.MetricsChild })
 
+  const isNonPublic = getIsNonPublic(isPublic)
+  const dataClassification = pageClassification ?? DEFAULT_DATA_CLASSIFICATION
+
   const backLink = returnUrl || extractRootSlug(slug)
 
   return (
     <View>
-      {authEnabled && isPublic === false && <ClassificationBanner size="large" level={pageClassification} />}
+      {isNonPublic && <ClassificationBanner size="large" level={dataClassification} />}
       <BackLink backlink={backLink} />
       <Heading heading={title} />
       <LastUpdated lastUpdated={lastUpdated} />

@@ -20,17 +20,16 @@ import {
 } from '@/app/components/ui/ukhsa'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { renderBlock } from '@/app/utils/cms.utils'
-import { authEnabled } from '@/config/constants'
 
 import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/ClassificationBanner'
 
 type ChartRowCardContentProps = {
-  value: any
-  isPublic?: boolean
-  pageClassification?: DataClassification
+  readonly value: any
+  readonly isNonPublic?: boolean
+  readonly dataClassification?: DataClassification
 }
 
-export function ChartRowCardContent({ value, isPublic, pageClassification }: ChartRowCardContentProps) {
+export function ChartRowCardContent({ value, isNonPublic, dataClassification }: ChartRowCardContentProps) {
   return (
     <>
       {value.columns.map((column: any) => {
@@ -46,7 +45,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
+            {isNonPublic && <ClassificationBanner size="medium" level={dataClassification} />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}
@@ -57,11 +56,15 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                   id={column.id}
                   title={column.value.title}
                   description={column.value.body}
-                  isPublic={isPublic}
-                  pageClassification={pageClassification}
-                  authEnabled={authEnabled}
+                  isNonPublic={isNonPublic}
+                  dataClassification={dataClassification}
                 >
-                  <Timestamp data={column.value} size={size} />
+                  <Timestamp
+                    data={column.value}
+                    size={size}
+                    isNonPublic={isNonPublic}
+                    dataClassification={dataClassification}
+                  />
                 </ChartRowCardHeader>
                 <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
                   <TabsList className="hidden no-js:block sm:block">
@@ -112,7 +115,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     className="govuk-select relative mb-[-1px] block min-w-[7em] rounded-none border border-b-0 border-mid-grey py-0 pl-2 no-js:hidden sm:hidden"
                     tabGroupTitle={column.value.title}
                     defaultValue={`${kebabCase(column.value.title)}-chart`}
-                    showAbout={showAbout || !noRelatedLinks ? true : false}
+                    showAbout={!!(showAbout || !noRelatedLinks)}
                   />
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-chart`}
@@ -141,15 +144,11 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                       <Chart
                         data={column.value}
                         sizes={[
-                          {
-                            minWidth: 768,
-                            size,
-                          },
-                          {
-                            default: true,
-                            size: 'narrow',
-                          },
+                          { minWidth: 768, size },
+                          { default: true, size: 'narrow' },
                         ]}
+                        isNonPublic={isNonPublic}
+                        dataClassification={dataClassification}
                       />
                     </AreaSelectorLoader>
                   </TabsContent>
@@ -167,9 +166,8 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     <Table
                       data={column.value}
                       size={size}
-                      isPublic={isPublic}
-                      level={pageClassification}
-                      authEnabled={authEnabled}
+                      isNonPublic={isNonPublic}
+                      dataClassification={dataClassification}
                     />
                   </TabsContent>
                   <TabsContent
@@ -183,7 +181,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Download
                     </span>
-                    <Download data={column.value} isPublic={isPublic} />
+                    <Download data={column.value} isNonPublic={isNonPublic} />
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent

@@ -9,7 +9,6 @@ import {
   SummaryListValue,
 } from '@/app/components/ui/ukhsa/SummaryList/SummaryList'
 import { getServerTranslation } from '@/app/i18n'
-import { authEnabled } from '@/config/constants'
 
 import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 
@@ -20,8 +19,8 @@ interface MetricsCardProps {
   group: string
   topic: string
   metric: string
-  is_public?: boolean
-  page_classification?: DataClassification
+  isNonPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 export async function MetricsCard({
@@ -31,14 +30,14 @@ export async function MetricsCard({
   group,
   topic,
   metric,
-  is_public,
-  page_classification,
+  isNonPublic,
+  dataClassification,
 }: MetricsCardProps) {
   const { t } = await getServerTranslation('metrics')
   return (
     <>
       <li className="govuk-summary-card">
-        {authEnabled && is_public === false && <ClassificationBanner size="medium" level={page_classification} />}
+        {isNonPublic && <ClassificationBanner size="medium" level={dataClassification} />}
         <div className="govuk-summary-card__title-wrapper">
           <h2 className="govuk-summary-card__title">
             <Trans

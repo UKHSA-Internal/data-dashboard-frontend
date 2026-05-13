@@ -2,6 +2,7 @@
 import { Metadata } from 'next'
 import { redirect } from 'next/navigation'
 
+import { DEFAULT_DATA_CLASSIFICATION } from '@/api/models/DataClassification'
 import { getMetricsPages, PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { RichText } from '@/app/components/cms'
@@ -19,6 +20,7 @@ import NoResults from '@/app/components/ui/ukhsa/NoResults/NoResults'
 import { getReturnPathWithParams } from '@/app/hooks/getReturnPathWithParams'
 import { getServerTranslation } from '@/app/i18n'
 import { PageComponentBaseProps } from '@/app/types'
+import { getIsNonPublic } from '@/app/utils/auth.utils'
 import { logger } from '@/lib/logger'
 
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
@@ -127,6 +129,9 @@ export default async function MetricsParentPage({
                 is_public,
                 page_classification,
               }: any) => {
+                const isNonPublic = getIsNonPublic(is_public)
+                const dataClassification = page_classification ?? DEFAULT_DATA_CLASSIFICATION
+
                 return (
                   <MetricsCard
                     key={id}
@@ -136,8 +141,8 @@ export default async function MetricsParentPage({
                     group={group}
                     topic={topic}
                     metric={metric}
-                    is_public={is_public}
-                    page_classification={page_classification}
+                    isNonPublic={isNonPublic}
+                    dataClassification={dataClassification}
                   />
                 )
               }

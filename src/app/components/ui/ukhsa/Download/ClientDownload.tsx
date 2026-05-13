@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
@@ -10,19 +10,16 @@ import { getMinMaxFullDate } from '@/app/utils/time-period.utils'
 import { DownloadForm } from './DownloadForm'
 
 interface ClientDownloadProps {
-  geography: GeographiesSchemaObject
-  dataFilters: DataFilter[]
-  timePeriods: TimePeriod[]
-  cardData: FilterLinkedTimeSeriesData
-  isPublic?: boolean
-  authEnabled?: boolean
+  readonly geography: GeographiesSchemaObject
+  readonly dataFilters: DataFilter[]
+  readonly timePeriods: TimePeriod[]
+  readonly isNonPublic?: boolean
 }
 
-export function ClientDownload({ geography, dataFilters, timePeriods, isPublic, authEnabled }: ClientDownloadProps) {
+export function ClientDownload({ geography, dataFilters, timePeriods, isNonPublic }: ClientDownloadProps) {
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState(true)
   const [tableError, setTableError] = useState<string | null>(null)
-
   const chartDateRange = getMinMaxFullDate(timePeriods)
 
   // hardcoded for timeseries charts but want to be parameters depending on the use case.
@@ -124,15 +121,7 @@ export function ClientDownload({ geography, dataFilters, timePeriods, isPublic, 
       })
     )
 
-    return (
-      <DownloadForm
-        chart={chart}
-        xAxis={x_axis}
-        tagManagerEventId={null}
-        isPublic={isPublic}
-        authEnabled={authEnabled}
-      />
-    )
+    return <DownloadForm chart={chart} xAxis={x_axis} tagManagerEventId={null} isNonPublic={isNonPublic} />
   }
 
   return (

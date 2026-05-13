@@ -10,7 +10,6 @@ import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { getPath } from '@/app/utils/cms/slug'
 import { getShowLessURL } from '@/app/utils/show-more.utils'
-import { authEnabled } from '@/config/constants'
 
 import {
   ButtonExternal,
@@ -33,84 +32,52 @@ import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedC
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
 // TODO: Move this file into cms folder
-export const renderSection = async (
+export const renderSection = (
   showMoreSections: string[],
-  { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number],
+  { id, value: { heading, content, page_link: pageLink } }: z.infer<typeof Body>[number],
   enableShowMore = true
-) => {
-  const sectionFilterKey = String(id ?? heading ?? '')
+) => (
+  <div
+    id={kebabCase(heading)}
+    key={id}
+    className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
+    data-testid={`section-${kebabCase(heading)}`}
+    role="region"
+    aria-label={heading}
+  >
+    <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
+      {pageLink ? (
+        <Link
+          href={getPath(pageLink)}
+          className="govuk-link--no-visited-state govuk-link ukhsa-section-chevron ukhsa-section-link inline-block no-underline hover:underline"
+        >
+          {heading}
+        </Link>
+      ) : (
+        heading
+      )}
+    </h2>
 
-  return (
-    <div
-      id={kebabCase(heading)}
-      key={id}
-      className="govuk-!-margin-bottom-9 govuk-!-margin-top-4"
-      data-testid={`section-${kebabCase(heading)}`}
-      data-topics-list-section-key={sectionFilterKey || undefined}
-      role="region"
-      aria-label={heading}
-    >
-      <h2 className="govuk-heading-l govuk-!-margin-bottom-4">
-        {pageLink ? (
-          <Link
-            href={getPath(pageLink)}
-            className="govuk-link--no-visited-state govuk-link ukhsa-section-chevron ukhsa-section-link inline-block no-underline hover:underline"
-          >
-            {heading}
-          </Link>
-        ) : (
-          heading
-        )}
-      </h2>
-
-      {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore))}
-
-      {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
-        <div className="mt-3">
-          <Link
-            className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
-            href={await getShowLessURL(showMoreSections, kebabCase(heading))}
-            prefetch
-          >
-            <span className="pl-4">Show Less</span>
-          </Link>
-        </div>
-      ) : null}
-
-      {footer &&
-        footer.map(({ value }) => {
-          const href = value.link.external_url
-            ? value.link.external_url
-            : value.link.page
-              ? getPath(value.link.page)
-              : null
-
-          return (
-            <div className="mt-3 flex items-center gap-2" key={value.badge_label}>
-              <div className="govuk-tag govuk-tag--blue">{value.badge_label}</div>
-              <span className="govuk-body mb-0">{value.text}</span>
-
-              {href ? (
-                <Link href={href} prefetch className="govuk-link govuk-link--no-visited-state">
-                  {value.link.link_display_text}
-                </Link>
-              ) : (
-                <span className="govuk-body">{value.link.link_display_text}</span>
-              )}
-            </div>
-          )
-        })}
-    </div>
-  )
-}
+    {content.map((item) => renderCard(heading, showMoreSections, item, undefined, undefined, enableShowMore))}
+    {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
+      <Link
+        className="govuk-link--no-visited-state bg-fill_arrow_up_blue bg-no-repeat"
+        href={getShowLessURL(showMoreSections, kebabCase(heading))}
+        prefetch
+      >
+        <span className="pl-4">Show Less</span>
+      </Link>
+    ) : null}
+  </div>
+)
 
 export const renderCard = (
   heading: string,
   showMoreSections: string[],
   { type, value, id }: z.infer<typeof CardTypes>,
-  enableShowMore = true,
-  isPublic?: boolean,
-  pageClassification?: DataClassification
+  isNonPublic?: boolean,
+  dataClassification?: DataClassification,
+  enableShowMore = true
 ) => {
   return (
     <div key={id}>
@@ -122,26 +89,18 @@ export const renderCard = (
 
       {type === 'chart_row_card' && (
         <ChartRowCard>
-          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
+          <ChartRowCardContent value={value} isNonPublic={isNonPublic} dataClassification={dataClassification} />
         </ChartRowCard>
       )}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
       {type === 'filter_linked_sub_plot_chart_template' && (
-        <SubplotFilterCardContainer
-          isPublic={isPublic}
-          pageClassification={pageClassification}
-          authEnabled={authEnabled}
-        />
+        <SubplotFilterCardContainer isNonPublic={isNonPublic} dataClassification={dataClassification} />
       )}
 
       {type === 'filter_linked_time_series_chart_template' && (
-        <TimeSeriesFilterCardsContainer
-          isPublic={isPublic}
-          pageClassification={pageClassification}
-          authEnabled={authEnabled}
-        />
+        <TimeSeriesFilterCardsContainer isNonPublic={isNonPublic} dataClassification={dataClassification} />
       )}
 
       {type === 'chart_card_section' && (

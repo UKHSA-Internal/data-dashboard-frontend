@@ -12,6 +12,7 @@ import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
 import { parseChartTableData } from '@/app/utils/chart-table.utils'
+import { getWatermarkFlags } from '@/app/utils/data-classification.utils'
 import { getColumnHeader } from '@/app/utils/table.utils'
 import { chartSizes, chartTableMaxColumns } from '@/config/constants'
 
@@ -27,10 +28,11 @@ interface TableProps {
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
 
-  isPublic?: boolean
+  /** True when auth is enabled and the page is non-public. Controls watermark display. */
+  isNonPublic?: boolean
 
-  level?: DataClassification
-  authEnabled?: boolean
+  /** Classification level for the watermark. Defaults to 'official_sensitive'. */
+  dataClassification?: DataClassification
 }
 
 /**
@@ -96,9 +98,8 @@ export async function Table({
     confidence_intervals_description,
   },
   size,
-  isPublic = false,
-  level,
-  authEnabled,
+  isNonPublic,
+  dataClassification,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
 
@@ -129,6 +130,7 @@ export async function Table({
     y_axis_maximum_value,
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
+    ...getWatermarkFlags(isNonPublic, dataClassification),
   }
 
   const chartResponse = await getCharts(chartRequestBody)
@@ -193,7 +195,7 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
+                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isNonPublic, dataClassification)}
                       </th>
                     )
                   })}

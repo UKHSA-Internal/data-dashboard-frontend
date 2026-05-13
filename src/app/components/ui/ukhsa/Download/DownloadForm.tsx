@@ -14,8 +14,7 @@ interface DownloadFormProps {
   xAxis?: string | null
   tagManagerEventId: string | null
   confidenceIntervals?: boolean
-  isPublic?: boolean
-  authEnabled?: boolean
+  isNonPublic?: boolean
 }
 
 export function DownloadForm({
@@ -23,8 +22,7 @@ export function DownloadForm({
   xAxis,
   tagManagerEventId,
   confidenceIntervals = false,
-  isPublic = true,
-  authEnabled,
+  isNonPublic,
 }: DownloadFormProps) {
   const [downloading, setDownloading] = useState(false)
   const [showDownloadBanner, setShowDownloadBanner] = useState(false)
@@ -41,7 +39,7 @@ export function DownloadForm({
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
 
-    if (authEnabled && isPublic === false && showDownloadBanner === false) {
+    if (isNonPublic && !showDownloadBanner) {
       setShowDownloadBanner(true)
       return
     }
@@ -128,10 +126,10 @@ export function DownloadForm({
             <div
               className="download-acknowledgement-banner"
               role="region"
-              aria-label="Download official sensitive data warning"
+              aria-label="Download official-sensitive data warning"
             >
               <p className="download-acknowledgement-banner-body govuk-!-margin-bottom-2">
-                You are about to download data that contains <b>official sensitive data.</b>
+                You are about to download data that contains <b>official-sensitive data.</b>
               </p>
               <p className="download-acknowledgement-banner-body">
                 Select <b>“continue and download”</b> to proceed or <b>“back”</b> to cancel.

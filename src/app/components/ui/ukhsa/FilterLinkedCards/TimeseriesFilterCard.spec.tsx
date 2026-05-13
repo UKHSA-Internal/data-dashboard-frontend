@@ -200,4 +200,47 @@ describe('TimeseriesFilterCard', () => {
 
     expect(screen.queryByRole('tab', { name: /About/i })).not.toBeInTheDocument()
   })
+
+  test('renders data classification in heading when non-public', async () => {
+    render(
+      <TimeseriesFilterCard
+        geography={mockGeography}
+        timePeriods={mockTimePeriods}
+        dataFilters={mockDataFilters}
+        cardData={mockCardData}
+        isNonPublic={true}
+        dataClassification="official"
+      />
+    )
+
+    expect(screen.getByRole('heading', { level: 3, name: /\(OFFICIAL\)$/ })).toBeInTheDocument()
+  })
+
+  test('renders default data classification in heading when non-public and classification is omitted', async () => {
+    render(
+      <TimeseriesFilterCard
+        geography={mockGeography}
+        timePeriods={mockTimePeriods}
+        dataFilters={mockDataFilters}
+        cardData={mockCardData}
+        isNonPublic={true}
+      />
+    )
+
+    expect(screen.getByRole('heading', { level: 3, name: /\(OFFICIAL-SENSITIVE\)$/ })).toBeInTheDocument()
+  })
+
+  test('does not render data classification in heading when public', () => {
+    render(
+      <TimeseriesFilterCard
+        geography={mockGeography}
+        timePeriods={mockTimePeriods}
+        dataFilters={mockDataFilters}
+        cardData={mockCardData}
+        isNonPublic={false}
+      />
+    )
+
+    expect(screen.getByRole('heading', { level: 3 }).textContent).not.toContain('OFFICIAL')
+  })
 })
