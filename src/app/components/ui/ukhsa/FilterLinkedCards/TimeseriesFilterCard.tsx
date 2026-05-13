@@ -156,7 +156,6 @@ const TimeseriesFilterCard = ({
                 geography={geography}
                 dataFilters={dataFilters}
                 timePeriods={timePeriods}
-                cardData={cardData}
                 isNonPublic={isNonPublic}
               />
             </TabsContent>

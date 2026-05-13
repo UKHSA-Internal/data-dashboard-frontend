@@ -79,14 +79,7 @@ describe('ClientDownload', () => {
   test('renders loading state initially', async () => {
     getTablesMock.mockImplementation(() => new Promise(() => {}))
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('client-info-card-loading')).toBeInTheDocument()
@@ -101,14 +94,7 @@ describe('ClientDownload', () => {
       error: expect.any(Object),
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
@@ -120,14 +106,7 @@ describe('ClientDownload', () => {
   test('renders error state when exception occurs', async () => {
     getTablesMock.mockRejectedValueOnce(new Error('Network error'))
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
@@ -142,14 +121,7 @@ describe('ClientDownload', () => {
       data: mockTableResponse.data,
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('download-form')).toBeInTheDocument()
@@ -164,14 +136,7 @@ describe('ClientDownload', () => {
       data: mockTableResponse.data,
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(getTablesMock).toHaveBeenCalledWith({
@@ -206,14 +171,7 @@ describe('ClientDownload', () => {
       error: expect.any(Object),
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
@@ -228,14 +186,7 @@ describe('ClientDownload', () => {
       data: mockTableResponse.data,
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       const downloadForm = screen.getByTestId('download-form')
@@ -272,14 +223,7 @@ describe('ClientDownload', () => {
       data: mockTableResponse.data,
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={multipleFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={multipleFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('download-form')).toBeInTheDocument()
@@ -294,12 +238,7 @@ describe('ClientDownload', () => {
     })
 
     const { rerender } = render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
+      <ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />
     )
 
     await waitFor(() => {
@@ -318,14 +257,7 @@ describe('ClientDownload', () => {
       },
     ]
 
-    rerender(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={newTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    rerender(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={newTimePeriods} />)
 
     await waitFor(() => {
       expect(getTablesMock).toHaveBeenCalledTimes(2)
@@ -338,14 +270,7 @@ describe('ClientDownload', () => {
       error: expect.any(Object),
     })
 
-    render(
-      <ClientDownload
-        geography={mockGeography}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
-    )
+    render(<ClientDownload geography={mockGeography} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />)
 
     await waitFor(() => {
       expect(screen.getByTestId('client-info-card-error')).toBeInTheDocument()
@@ -366,12 +291,7 @@ describe('ClientDownload', () => {
     })
 
     render(
-      <ClientDownload
-        geography={geographyWithoutType}
-        dataFilters={mockDataFilters}
-        timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
-      />
+      <ClientDownload geography={geographyWithoutType} dataFilters={mockDataFilters} timePeriods={mockTimePeriods} />
     )
 
     await waitFor(() => {

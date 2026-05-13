@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from 'react'
 
-import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import { getTables, Response } from '@/api/requests/tables/getTables'
 import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCard/ClientInformationCard'
@@ -13,18 +13,14 @@ interface ClientDownloadProps {
   readonly geography: GeographiesSchemaObject
   readonly dataFilters: DataFilter[]
   readonly timePeriods: TimePeriod[]
-  readonly cardData: FilterLinkedTimeSeriesData
   readonly isNonPublic?: boolean
 }
 
-export function ClientDownload({ geography, dataFilters, timePeriods, cardData, isNonPublic }: ClientDownloadProps) {
+export function ClientDownload({ geography, dataFilters, timePeriods, isNonPublic }: ClientDownloadProps) {
   const [tableResponse, setTableResponse] = useState<{ success: boolean; data: Response } | null>(null)
   const [tableLoading, setTableLoading] = useState(true)
   const [tableError, setTableError] = useState<string | null>(null)
   const chartDateRange = getMinMaxFullDate(timePeriods)
-
-  // WORKAROUND: Otherwise linter complaints, cos variable never used (needed?)
-  console.log(cardData)
 
   // hardcoded for timeseries charts but want to be parameters depending on the use case.
   const x_axis = 'date'
