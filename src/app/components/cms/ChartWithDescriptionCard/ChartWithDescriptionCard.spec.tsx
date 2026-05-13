@@ -33,26 +33,21 @@ describe('ChartWithDescriptionCard', () => {
   }
 
   test('renders title and sub_title', () => {
-    render(<ChartWithDescriptionCard value={defaultValue} cardsCount={2} />)
+    render(<ChartWithDescriptionCard value={defaultValue} />)
 
     expect(screen.getByRole('heading', { name: 'COVID-19 Cases', level: 3 })).toBeInTheDocument()
     expect(screen.getByText('Weekly reported cases')).toBeInTheDocument()
   })
 
   test('renders link with resolved path from topic_page', () => {
-    render(<ChartWithDescriptionCard value={defaultValue} cardsCount={2} />)
+    render(<ChartWithDescriptionCard value={defaultValue} />)
 
     const link = screen.getByRole('link', { name: /COVID-19 Cases/i })
     expect(link).toHaveAttribute('href', expect.stringContaining('resolved-'))
   })
 
   test('renders description and "Visit ... to find out more" when description is provided', () => {
-    render(
-      <ChartWithDescriptionCard
-        value={{ ...defaultValue, description: 'This chart shows weekly trends.' }}
-        cardsCount={2}
-      />
-    )
+    render(<ChartWithDescriptionCard value={{ ...defaultValue, description: 'This chart shows weekly trends.' }} />)
 
     expect(screen.getByTestId('chart')).toBeInTheDocument()
     expect(screen.getByTestId('chart-description')).toHaveTextContent('This chart shows weekly trends.')
@@ -60,7 +55,7 @@ describe('ChartWithDescriptionCard', () => {
   })
 
   test('does not render description block when description is absent', () => {
-    render(<ChartWithDescriptionCard value={defaultValue} cardsCount={2} />)
+    render(<ChartWithDescriptionCard value={defaultValue} />)
 
     expect(screen.queryByTestId('chart-description')).not.toBeInTheDocument()
   })
@@ -75,7 +70,6 @@ describe('ChartWithDescriptionCard', () => {
             link_display_text: 'ONS',
           },
         }}
-        cardsCount={2}
       />
     )
 
@@ -85,7 +79,7 @@ describe('ChartWithDescriptionCard', () => {
   })
 
   test('does not render source section when no source given', () => {
-    render(<ChartWithDescriptionCard value={defaultValue} cardsCount={2} />)
+    render(<ChartWithDescriptionCard value={defaultValue} />)
 
     expect(screen.queryByTestId('chart-source')).not.toBeInTheDocument()
   })
@@ -97,7 +91,6 @@ describe('ChartWithDescriptionCard', () => {
           ...defaultValue,
           source: { link_display_text: 'ONS' },
         }}
-        cardsCount={2}
       />
     )
 
