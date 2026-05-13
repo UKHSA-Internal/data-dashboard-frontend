@@ -59,18 +59,12 @@ export async function getAuthToken(): Promise<string | undefined> {
 
 export async function client<T>(
   endpoint: string,
-  {
-    body,
-    // Defaulting all requests to public (non-authenticated) for now.
-    // This may change to an opt-in approach as we build out the authenticated dashboard.
-    searchParams,
-    baseUrl = getApiBaseUrl(),
-    ...customConfig
-  }: Options = {},
+  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {},
+  // Defaulting all requests to public (non-authenticated) for now.
   isPublic: boolean = true
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
-  console.log('Client request:', { isPublic, endpoint })
+
   // read access token only if request is not public
   const accessToken = isPublic ? undefined : await getAuthToken()
   // Send the local mock overrides with all requests

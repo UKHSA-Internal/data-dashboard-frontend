@@ -120,7 +120,7 @@ export default async function TopicPage({
                     ) : (
                       <PageSection key={id} heading={value.heading}>
                         {value.content.map((item) =>
-                          renderCard(value.heading, [], item, isPublic, true, pageClassification)
+                          renderCard(value.heading, [], item, true, isPublic, pageClassification)
                         )}
                       </PageSection>
                     )
