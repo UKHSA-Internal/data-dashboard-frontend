@@ -40,6 +40,7 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  */
 export async function getAuthToken(): Promise<string | undefined> {
   if (typeof window === 'undefined') {
+    // Server side
     try {
       const { auth } = await import('@/auth')
       const session = await auth()
@@ -48,6 +49,11 @@ export async function getAuthToken(): Promise<string | undefined> {
       console.error('Failed to get auth token:', error)
       return undefined
     }
+  } else {
+    // Client side
+    const { getSession } = await import('next-auth/react')
+    const session = await getSession()
+    return session?.accessToken
   }
 }
 
@@ -59,15 +65,9 @@ export async function getAuthToken(): Promise<string | undefined> {
 
 export async function client<T>(
   endpoint: string,
-  {
-    body,
-    // Defaulting all requests to public (non-authenticated) for now.
-    // This may change to an opt-in approach as we build out the authenticated dashboard.
-    isPublic = true,
-    searchParams,
-    baseUrl = getApiBaseUrl(),
-    ...customConfig
-  }: Options = {}
+  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {},
+  // Defaulting all requests to public (non-authenticated) for now.
+  isPublic: boolean = true
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 

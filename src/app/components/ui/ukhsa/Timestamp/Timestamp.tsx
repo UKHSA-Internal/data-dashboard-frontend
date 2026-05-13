@@ -16,9 +16,12 @@ interface TimestampProps {
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
+
+  /* Indicates whether the chart is being rendered in a public context, which may affect data fetching and display logic (e.g., authentication, data sensitivity) */
+  isPublic?: boolean
 }
 
-export async function Timestamp({ data, size }: TimestampProps) {
+export async function Timestamp({ data, size, isPublic }: TimestampProps) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -46,7 +49,7 @@ export async function Timestamp({ data, size }: TimestampProps) {
     chart_height: chartSizes[size].height,
   }
 
-  const res = await getCharts(requestBody)
+  const res = await getCharts(requestBody, isPublic)
 
   if (res.success) {
     const {

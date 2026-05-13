@@ -74,10 +74,10 @@ export const responseSchema = z.array(
 export type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
-export const getSubplotTables = async (body: RequestParams) => {
+export const getSubplotTables = async (body: RequestParams, isPublic?: boolean) => {
   try {
     const path = isSSR ? `tables/subplot/v1` : `proxy/tables/subplot/v1`
-    const { data } = await client<Response>(path, { body })
+    const { data } = await client<Response>(path, { body }, isPublic)
     const result = responseSchema.safeParse(data)
     if (result.success) {
       return result

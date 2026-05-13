@@ -8,12 +8,13 @@ interface HeadlineProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof HeadlineNumber>['value']
   datePrefix: string
+  isPublic?: boolean
 }
 
-export async function Headline({ data: { body: heading, ...requestParams }, datePrefix }: HeadlineProps) {
+export async function Headline({ data: { body: heading, ...requestParams }, datePrefix, isPublic }: HeadlineProps) {
   const { t } = await getServerTranslation('common')
 
-  const headline = await getHeadlines(requestParams)
+  const headline = await getHeadlines(requestParams, isPublic)
 
   if (headline.success) {
     const {

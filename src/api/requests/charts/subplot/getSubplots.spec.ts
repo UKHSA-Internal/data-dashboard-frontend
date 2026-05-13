@@ -94,9 +94,13 @@ describe('getSubplots', () => {
 
       const result = await getSubplots(mockValidRequestParams)
 
-      expect(mockClient).toHaveBeenCalledWith('proxy/charts/subplot/v1', {
-        body: mockValidRequestParams,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/charts/subplot/v1',
+        {
+          body: mockValidRequestParams,
+        },
+        undefined
+      )
       expect(result.success).toBe(true)
       if (result.success) {
         expect(result.data).toEqual(mockValidResponse)
@@ -116,9 +120,13 @@ describe('getSubplots', () => {
 
       await getSubplotsSSR(mockValidRequestParams)
 
-      expect(mockClient).toHaveBeenCalledWith('proxy/charts/subplot/v1', {
-        body: mockValidRequestParams,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/charts/subplot/v1',
+        {
+          body: mockValidRequestParams,
+        },
+        undefined
+      )
     })
 
     it('should handle optional parameters correctly', async () => {
@@ -136,9 +144,13 @@ describe('getSubplots', () => {
       const result = await getSubplots(requestWithOptionalParams)
 
       expect(result.success).toBe(true)
-      expect(mockClient).toHaveBeenCalledWith('proxy/charts/subplot/v1', {
-        body: requestWithOptionalParams,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/charts/subplot/v1',
+        {
+          body: requestWithOptionalParams,
+        },
+        undefined
+      )
     })
 
     it('should handle multiple subplots correctly', async () => {
@@ -170,9 +182,13 @@ describe('getSubplots', () => {
       const result = await getSubplots(requestWithMultipleSubplots)
 
       expect(result.success).toBe(true)
-      expect(mockClient).toHaveBeenCalledWith('proxy/charts/subplot/v1', {
-        body: requestWithMultipleSubplots,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/charts/subplot/v1',
+        {
+          body: requestWithMultipleSubplots,
+        },
+        undefined
+      )
     })
   })
 
@@ -284,9 +300,13 @@ describe('getSubplots', () => {
         subplots: mockValidRequestParams.subplots,
       }
 
-      expect(mockClient).toHaveBeenCalledWith('proxy/charts/subplot/v1', {
-        body: expectedBody,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/charts/subplot/v1',
+        {
+          body: expectedBody,
+        },
+        undefined
+      )
     })
 
     it('should preserve subplot structure in request body', async () => {

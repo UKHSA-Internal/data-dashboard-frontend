@@ -218,22 +218,25 @@ test('table by geography and geography type when both are present in the url sea
 
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 
-  expect(getTableMock).toHaveBeenCalledWith({
-    plots: [
-      {
-        topic: 'COVID-19',
-        metric: 'new_cases_daily',
-        chart_type: 'line_with_shaded_section',
-        date_from: null,
-        date_to: null,
-        geography: 'North East',
-        geography_type: 'UKHSA Region',
-        stratum: '',
-      },
-    ],
-    x_axis: 'x-axis',
-    y_axis: 'y-axis',
-  })
+  expect(getTableMock).toHaveBeenCalledWith(
+    {
+      plots: [
+        {
+          topic: 'COVID-19',
+          metric: 'new_cases_daily',
+          chart_type: 'line_with_shaded_section',
+          date_from: null,
+          date_to: null,
+          geography: 'North East',
+          geography_type: 'UKHSA Region',
+          stratum: '',
+        },
+      ],
+      x_axis: 'x-axis',
+      y_axis: 'y-axis',
+    },
+    false
+  )
 
   expect(
     getByRole('table', { name: 'Table Title ABC/XYZ data for table Body Up to and including 10 May 2023' })

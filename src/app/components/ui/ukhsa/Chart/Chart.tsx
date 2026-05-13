@@ -47,6 +47,13 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
+
+  /**
+   * Indicates whether the chart is being rendered in a public context, which may
+   * affect data fetching and display logic (e.g., authentication, data sensitivity).
+   * Defaults to false.
+   */
+  readonly isPublic?: boolean
 }
 
 const createStaticChart = async ({
@@ -73,7 +80,7 @@ const createStaticChart = async ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, isPublic = false }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
   const chartData = data
@@ -124,11 +131,14 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
   const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
 
   // Make single chart request with selected size
-  const chartResponse = await getCharts({
-    ...chartRequestBody,
-    chart_width: chartSizes[selectedSize.size].width,
-    chart_height: chartSizes[selectedSize.size].height,
-  })
+  const chartResponse = await getCharts(
+    {
+      ...chartRequestBody,
+      chart_width: chartSizes[selectedSize.size].width,
+      chart_height: chartSizes[selectedSize.size].height,
+    },
+    isPublic
+  )
 
   if (!chartResponse.success || !chartResponse.data) {
     return <ChartEmpty resetHref={pathname} />

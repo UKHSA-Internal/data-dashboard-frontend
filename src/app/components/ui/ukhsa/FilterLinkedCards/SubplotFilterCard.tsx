@@ -142,6 +142,7 @@ const SubplotFilterCard = ({
                 cardData={cardData}
                 handleLatestDate={setDate}
                 timePeriodTitle={timePeriodTitle}
+                isPublic={isPublic}
               />
             </TabsContent>
             <TabsContent

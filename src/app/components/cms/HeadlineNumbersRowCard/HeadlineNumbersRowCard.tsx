@@ -8,9 +8,10 @@ import { renderBlock } from '@/app/utils/cms.utils'
 
 type HeadlineNumbersRowCardProps = {
   value: z.infer<typeof WithHeadlineNumbersRowCard>
+  isPublic?: boolean
 }
 
-export function HeadlineNumbersRowCard({ value }: HeadlineNumbersRowCardProps) {
+export function HeadlineNumbersRowCard({ value, isPublic }: HeadlineNumbersRowCardProps) {
   return (
     <Card className="ukhsa-headline-numbers-row-card govuk-!-margin-bottom-6" data-testid="headline-row">
       <div
@@ -22,7 +23,7 @@ export function HeadlineNumbersRowCard({ value }: HeadlineNumbersRowCardProps) {
           <div key={column.id} data-testid={`headline-column-${kebabCase(column.value.title)}`}>
             <h3 className="govuk-body-m mb-2 text-dark-grey md:mb-3">{column.value.title}</h3>
             <div className="flex flex-col gap-y-2 md:gap-y-4">
-              {column.value.rows.map((row) => renderBlock({ ...row, date_prefix: column.value.date_prefix }))}
+              {column.value.rows.map((row) => renderBlock({ ...row, date_prefix: column.value.date_prefix }, isPublic))}
             </div>
           </div>
         ))}

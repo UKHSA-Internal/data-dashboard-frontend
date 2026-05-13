@@ -39,7 +39,8 @@ export type GeographyParams = {
   geography_type?: GeographyType
 }
 
-export const getGeographies = async (params: GeographyParams) => {
+export const getGeographies = async (params: GeographyParams, isPublic?: boolean) => {
+  console.log('getGeographies called with params:', params, 'isPublic:', isPublic)
   try {
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
@@ -47,7 +48,7 @@ export const getGeographies = async (params: GeographyParams) => {
     }
     if (params.topic) {
       try {
-        const { data } = await client<z.infer<typeof responseSchema>>(`${path}?topic=${params.topic}`)
+        const { data } = await client<z.infer<typeof responseSchema>>(`${path}?topic=${params.topic}`, {}, isPublic)
 
         const result = responseSchema.safeParse(data)
         if (result.success) {
@@ -63,7 +64,11 @@ export const getGeographies = async (params: GeographyParams) => {
     }
     if (params.geography_type) {
       try {
-        const { data } = await client<z.infer<typeof responseSchema>>(`${path}?geography_type=${params.geography_type}`)
+        const { data } = await client<z.infer<typeof responseSchema>>(
+          `${path}?geography_type=${params.geography_type}`,
+          {},
+          isPublic
+        )
 
         const result = responseSchema.safeParse(data)
         if (result.success) {

@@ -44,6 +44,7 @@ export interface FilterOption {
 export interface GlobalFilterProviderProps {
   children: ReactNode
   filters: InitialGlobalFilterState
+  isPublic?: boolean
 }
 
 export interface GlobalFilterState extends InitialGlobalFilterState {
@@ -86,7 +87,7 @@ export interface GlobalFilterContextValue {
 export const GlobalFilterContext = createContext<GlobalFilterContextValue | null>(null)
 
 //global filter Provider
-export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProviderProps) => {
+export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilterProviderProps) => {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<TimePeriod | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([])
   const [geographyAreas, setGeographyAreas] = useState<Map<string, GeographiesSchema>>(new Map())
@@ -107,9 +108,12 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
       setGeographyAreasLoading(true)
       const responses = await Promise.all(
         geographyTypes.map((geographyTypes) =>
-          getGeographies({
-            geography_type: geographyTypes,
-          })
+          getGeographies(
+            {
+              geography_type: geographyTypes,
+            },
+            isPublic
+          )
         )
       )
       const newGeographyAreas = new Map(geographyAreas)
