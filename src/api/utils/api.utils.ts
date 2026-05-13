@@ -40,6 +40,7 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  */
 export async function getAuthToken(): Promise<string | undefined> {
   if (typeof window === 'undefined') {
+    // Server side
     try {
       const { auth } = await import('@/auth')
       const session = await auth()
@@ -48,6 +49,11 @@ export async function getAuthToken(): Promise<string | undefined> {
       console.error('Failed to get auth token:', error)
       return undefined
     }
+  } else {
+    // Client side
+    const { getSession } = await import('next-auth/react')
+    const session = await getSession()
+    return session?.accessToken
   }
 }
 
