@@ -35,7 +35,6 @@ export const getDownloads = async (
   confidence_intervals: RequestParams['confidence_intervals'] = false
 ) => {
   try {
-    logger.info(isPublic)
     if (!isPublic) {
       const session = await auth()
       if (session) {
