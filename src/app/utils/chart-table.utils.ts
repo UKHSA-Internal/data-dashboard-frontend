@@ -37,10 +37,12 @@ const createTable = (sourceData: Response) => {
 
       // Store confidence intervals if available
       if (plot.lower_confidence !== undefined || plot.upper_confidence !== undefined) {
-        row.confidenceIntervals![`col-${columnIndex}`] = {
+        const intervals = row.confidenceIntervals ?? {}
+        intervals[`col-${columnIndex}`] = {
           lower: plot.lower_confidence ?? null,
           upper: plot.upper_confidence ?? null,
         }
+        row.confidenceIntervals = intervals
       }
 
       // Does at least one item in the row have a reporting delay period

@@ -31,7 +31,7 @@ export const getParentGeography = (geography: GeographiesSchemaObject): Flattene
     }
   }
 
-  const expectedParentType = getExpectedParentType(geography.geography_type!)
+  const expectedParentType = getExpectedParentType(geography.geography_type ?? '')
 
   if (!expectedParentType || !geography.relationships) {
     return null
@@ -48,9 +48,9 @@ export const getParentGeography = (geography: GeographiesSchemaObject): Flattene
   }
 
   return {
-    name: parentGeography.name!,
-    geography_code: parentGeography.geography_code!,
-    geography_type: parentGeography.geography_type!,
+    name: parentGeography.name ?? '',
+    geography_code: parentGeography.geography_code ?? '',
+    geography_type: parentGeography.geography_type ?? '',
   }
 }
 

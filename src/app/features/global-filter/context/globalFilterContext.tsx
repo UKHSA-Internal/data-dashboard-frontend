@@ -215,7 +215,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
         const filterType = getFilterType(filter.id)
         if (filterType == 'data_filter') {
           const dataFilterId = filter.id.split('.')[1]
-          const newVaccinationFilter = filters.dataFilters!.data_filters.find(
+          const newVaccinationFilter = filters.dataFilters?.data_filters.find(
             (data_filter) => data_filter.id === dataFilterId
           )
 

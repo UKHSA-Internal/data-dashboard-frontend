@@ -146,7 +146,7 @@ export function getGroupedVaccinationOptions(vaccinationFilters: DataFilters): G
     }
 
     // Add the item to the appropriate group
-    groupedData.get(primaryGroupKey)!.push({
+    groupedData.get(primaryGroupKey)?.push({
       label: label,
       id: `${dataFilter.type}.${dataFilter.id}`,
     })
