@@ -1,9 +1,11 @@
 import type { Body } from '@/api/models/cms/Page/Body'
+import type { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getServerTranslation } from '@/app/i18n'
 import { renderSection } from '@/app/utils/cms.utils'
 import { fireEvent, render, screen, waitFor } from '@/config/test-utils'
+import { healthTopicsPageMock } from '@/mock-server/handlers/cms/pages/fixtures/page/health-topics'
 
 import TopicsListPage, { getFilterItemsFromBody } from './TopicsList'
 
@@ -77,20 +79,32 @@ const topicsListBody = [
   },
 ] as unknown as Body
 
+type ServerTranslation = Awaited<ReturnType<typeof getServerTranslation>>
+
+const mockServerTranslation: ServerTranslation = {
+  t: jest.fn((key: string, opts?: { title?: string }) =>
+    key === 'pageTitle' && opts?.title ? opts.title : key
+  ) as unknown as ServerTranslation['t'],
+  i18n: {} as ServerTranslation['i18n'],
+}
+
+const baseTopicsListPageMock: PageResponse<PageType.TopicsList> = {
+  ...healthTopicsPageMock,
+  body: topicsListBody,
+  page_description: '<p>Index</p>',
+  last_updated_at: '2026-03-04T20:45:22.913156Z',
+  active_announcements: [],
+}
+
 beforeEach(() => {
   jest.clearAllMocks()
 
-  mockedGetServerTranslation.mockResolvedValue({
-    t: jest.fn((key: string, opts?: { title?: string }) => (key === 'pageTitle' && opts?.title ? opts.title : key)),
-  } as never)
+  mockedGetServerTranslation.mockResolvedValue(mockServerTranslation)
 
   mockedGetPageBySlug.mockResolvedValue({
+    ...baseTopicsListPageMock,
     title: 'Health topics',
-    body: topicsListBody,
-    page_description: '<p>Index</p>',
-    last_updated_at: '2026-03-04T20:45:22.913156Z',
-    active_announcements: [],
-  } as never)
+  })
 
   mockedRenderSection.mockImplementation(((_: RenderSectionArgs[0], section: RenderSectionArgs[1]) => {
     type MockCard = { id?: string; type: string; value?: { title?: string } }
@@ -178,11 +192,11 @@ describe('TopicsListPage', () => {
 
   test('omits description when not provided', async () => {
     mockedGetPageBySlug.mockResolvedValue({
+      ...baseTopicsListPageMock,
       title: 'Topics',
-      body: topicsListBody,
+      page_description: null,
       last_updated_at: '2026-01-01T00:00:00.000000Z',
-      active_announcements: [],
-    } as never)
+    })
 
     render(await TopicsListPage({ slug: ['topics'], searchParams: {} }))
 
