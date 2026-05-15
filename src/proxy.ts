@@ -89,6 +89,24 @@ export async function processNoCacheRoute(request: NextRequest, response: NextRe
 
   response = setNoCacheHeaders(response)
 
+  const token = request.nextUrl.searchParams.get('t')
+
+  if (!token) {
+    return {
+      response: NextResponse.json({ message: 'Missing required preview param: t' }, { status: 400 }),
+      action: 'done',
+    }
+  }
+
+  response.cookies.set({
+    name: 'cmsAuthToken',
+    value: token,
+    path: '/',
+    httpOnly: true,
+    sameSite: 'strict',
+    maxAge: process.env.PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL ? Number(process.env.PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL) : 30,
+  })
+
   return {
     response: response,
     action: 'continue',
@@ -144,6 +162,7 @@ export async function processPreviewRoute(request: NextRequest, response: NextRe
     path: '/',
     httpOnly: true,
     sameSite: 'strict',
+    maxAge: process.env.PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL ? Number(process.env.PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL) : 30,
   })
 
   response = setNoCacheHeaders(response)
@@ -245,6 +264,19 @@ export async function processDefaultRoutes(request: NextRequest, response: NextR
     path: '/',
     httpOnly: true,
     sameSite: 'strict',
+  })
+
+  // could delete the cookie but this creates
+  // the possibility of timing issues (as we soon set it again)
+  // and could surface bugs
+  // safest is to just set it to 'unset'
+  response.cookies.set({
+    name: 'cmsAuthToken',
+    value: 'unset',
+    path: '/',
+    httpOnly: true,
+    sameSite: 'strict',
+    maxAge: process.env.PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL ? Number(process.env.PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL) : 30,
   })
 
   response.headers.set('x-url', request.url)
