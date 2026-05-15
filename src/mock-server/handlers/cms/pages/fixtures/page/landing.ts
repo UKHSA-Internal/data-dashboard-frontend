@@ -859,5 +859,15 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
       },
     },
   ],
+  health_topic: [
+    {
+      type: 'health_topic',
+      value: {
+        heading: 'Covid 19 Health topic',
+        page: 83,
+      },
+      id: 'b9009ada-929e-495d-b848-f5e04933b529',
+    },
+  ],
   last_published_at: '2024-09-30T11:41:36.884029+01:00',
 }

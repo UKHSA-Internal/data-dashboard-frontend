@@ -12,7 +12,7 @@ import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 import { TopicsListFilterContainer } from '../TopicsListFilterContainer/TopicsListFilterContainer'
 
-const getFilterItemsFromBody = (body: Body): ExpandableFilterItem[] => {
+export const getFilterItemsFromBody = (body: Body): ExpandableFilterItem[] => {
   return body
     .filter((section) => section.value.heading && Array.isArray(section.value.content))
     .map((section) => {

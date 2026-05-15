@@ -1,11 +1,17 @@
-import { getLandingPage } from '@/app/utils/cms'
+import type { Body } from '@/api/models/cms/Page/Body'
+import type { PageResponse } from '@/api/requests/cms/getPage'
+import { PageType } from '@/api/requests/cms/getPages'
+import { getLandingPage, getPageById } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 import { render, screen } from '@/config/test-utils'
+import { healthTopicsPageMock } from '@/mock-server/handlers/cms/pages/fixtures/page/health-topics'
+import { landingPageMock } from '@/mock-server/handlers/cms/pages/fixtures/page/landing'
 
 import LandingPage from './Landing'
 
 jest.mock('@/app/utils/cms', () => ({
   getLandingPage: jest.fn(),
+  getPageById: jest.fn(),
 }))
 
 jest.mock('@/app/utils/cms.utils', () => ({
@@ -38,7 +44,16 @@ jest.mock('@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper', () => ({
 }))
 
 const mockedGetLandingPage = jest.mocked(getLandingPage)
+const mockedGetPageById = jest.mocked(getPageById)
 const mockedRenderSection = jest.mocked(renderSection)
+
+const defaultHealthTopic = [
+  {
+    type: 'health_topic' as const,
+    id: 'health-topic-block',
+    value: { heading: 'Health topics', page: 83 },
+  },
+]
 type RenderSectionArgs = Parameters<typeof renderSection>
 
 const landingBody = [
@@ -60,10 +75,21 @@ const landingBody = [
       content: [],
     },
   },
-]
+] as unknown as Body
+
+const baseLandingPageMock: PageResponse<PageType.Landing> = {
+  ...landingPageMock,
+  body: landingBody,
+  related_links_layout: 'Sidebar',
+  related_links: [],
+  active_announcements: [],
+  health_topic: defaultHealthTopic,
+}
 
 beforeEach(() => {
   jest.clearAllMocks()
+
+  mockedGetPageById.mockResolvedValue({ ...healthTopicsPageMock, body: [] })
 
   mockedRenderSection.mockImplementation(((_: RenderSectionArgs[0], section: RenderSectionArgs[1]) => (
     <section key={section.id}>{section.value.heading}</section>
@@ -73,14 +99,10 @@ beforeEach(() => {
 describe('LandingPage', () => {
   test('renders heading intro content from landing CMS fields', async () => {
     mockedGetLandingPage.mockResolvedValue({
+      ...baseLandingPageMock,
       title: 'About the UKHSA data dashboard',
-      body: landingBody,
       page_description: '<p>this is another page description</p>',
-      related_links_layout: 'Sidebar',
-      related_links: [],
-      last_published_at: '2026-03-05T15:36:08.726625Z',
-      active_announcements: [],
-    } as never)
+    })
 
     render(await LandingPage({ slug: [], searchParams: {} }))
 
@@ -90,14 +112,11 @@ describe('LandingPage', () => {
 
   test('shows related links beside heading for Sidebar layout', async () => {
     mockedGetLandingPage.mockResolvedValue({
+      ...baseLandingPageMock,
       title: 'Landing page',
-      body: landingBody,
       page_description: '<p>Description</p>',
-      related_links_layout: 'Sidebar',
       related_links: [{ id: 1, title: 'Link 1', url: 'https://example.com', meta: { type: 'x' }, body: '<p>x</p>' }],
-      last_published_at: '2026-03-05T15:36:08.726625Z',
-      active_announcements: [],
-    } as never)
+    })
 
     render(await LandingPage({ slug: [], searchParams: {} }))
 
@@ -107,14 +126,12 @@ describe('LandingPage', () => {
 
   test('shows related links in footer for Footer layout', async () => {
     mockedGetLandingPage.mockResolvedValue({
+      ...baseLandingPageMock,
       title: 'Landing page',
-      body: landingBody,
       page_description: '<p>Description</p>',
       related_links_layout: 'Footer',
       related_links: [{ id: 1, title: 'Link 1', url: 'https://example.com', meta: { type: 'x' }, body: '<p>x</p>' }],
-      last_published_at: '2026-03-05T15:36:08.726625Z',
-      active_announcements: [],
-    } as never)
+    })
 
     render(await LandingPage({ slug: [], searchParams: {} }))
 
@@ -124,14 +141,10 @@ describe('LandingPage', () => {
 
   test('renders contents links for landing sections', async () => {
     mockedGetLandingPage.mockResolvedValue({
+      ...baseLandingPageMock,
       title: 'Landing page',
-      body: landingBody,
       page_description: '<p>Description</p>',
-      related_links_layout: 'Sidebar',
-      related_links: [],
-      last_published_at: '2026-03-05T15:36:08.726625Z',
-      active_announcements: [],
-    } as never)
+    })
 
     render(await LandingPage({ slug: [], searchParams: {} }))
 
@@ -141,14 +154,10 @@ describe('LandingPage', () => {
 
   test('passes section query params to renderSection in lowercase', async () => {
     mockedGetLandingPage.mockResolvedValue({
+      ...baseLandingPageMock,
       title: 'Landing page',
-      body: landingBody,
       page_description: '<p>Description</p>',
-      related_links_layout: 'Sidebar',
-      related_links: [],
-      last_published_at: '2026-03-05T15:36:08.726625Z',
-      active_announcements: [],
-    } as never)
+    })
 
     render(
       await LandingPage({
@@ -158,7 +167,7 @@ describe('LandingPage', () => {
     )
 
     expect(mockedRenderSection).toHaveBeenCalledTimes(landingBody.length)
-    expect(mockedRenderSection).toHaveBeenNthCalledWith(1, ['current-outbreaks'], landingBody[0])
-    expect(mockedRenderSection).toHaveBeenNthCalledWith(2, ['current-outbreaks'], landingBody[1])
+    expect(mockedRenderSection).toHaveBeenNthCalledWith(1, ['current-outbreaks'], landingBody[0], true)
+    expect(mockedRenderSection).toHaveBeenNthCalledWith(2, ['current-outbreaks'], landingBody[1], true)
   })
 })

@@ -276,5 +276,15 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
       id: '4c03dd17-a62b-4102-a938-557c60d38d9a',
     },
   ],
+  health_topic: [
+    {
+      type: 'health_topic',
+      id: 'dashboard-health-topic',
+      value: {
+        heading: 'Health topics',
+        page: 83,
+      },
+    },
+  ],
   last_published_at: '2023-05-10T15:18:06.939535+01:00',
 }
