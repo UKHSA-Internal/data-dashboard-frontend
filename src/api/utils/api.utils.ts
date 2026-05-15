@@ -125,7 +125,7 @@ export async function clientHandleSwitchboardBranch(headers: Record<string, stri
 export async function clientHandleAuthToken(headers: Record<string, string>): Promise<Record<string, string>> {
   const cmsAuthToken = await getCookieValue('cmsAuthToken')
 
-  if (cmsAuthToken) {
+  if (typeof cmsAuthToken === 'string' && cmsAuthToken !== 'unset' && cmsAuthToken !== '') {
     headers['x-cms-auth'] = `Bearer ${cmsAuthToken}`
   }
 
