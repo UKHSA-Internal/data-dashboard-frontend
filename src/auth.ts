@@ -4,6 +4,8 @@ import NextAuth from 'next-auth'
 import type { Provider } from 'next-auth/providers'
 import Cognito from 'next-auth/providers/cognito'
 
+import { auditLog } from './lib/logger'
+
 const providers: Provider[] = [
   Cognito({
     clientId: process.env.AUTH_CLIENT_ID,
@@ -38,14 +40,18 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     signIn: '/start',
   },
   callbacks: {
-    async jwt({ token, account }) {
+    async jwt({ token, account, profile }) {
       if (account) {
+        // TODO: Check behaviour if key doesn't exist
+        const userId = profile ? (profile['custom:entraObjectId'] as string) : ''
+        auditLog(userId, 'LOG_IN', undefined)
         // First-time login, save the `access_token`, its expiry and the `refresh_token`
         return {
           ...token,
           access_token: account.access_token,
           expires_at: account.expires_at,
           refresh_token: account.refresh_token,
+          user_id: userId,
         }
       }
       // This is where we'd usually check for expired tokens but to next-auth incompatibility with app router read only cookies, we cannot modify the JWT with the refreshed token.
@@ -57,6 +63,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       session.error = token.error
       session.accessToken = token.access_token
       session.refreshToken = token.refresh_token
+      session.userId = token.user_id ?? ''
       return session
     },
   },
@@ -68,6 +75,7 @@ declare module 'next-auth' {
     refreshToken?: string
     error?: string
     expires?: Date
+    userId?: string
   }
 }
 
@@ -79,5 +87,6 @@ declare module 'next-auth/jwt' {
     expires_at?: number
     refresh_token?: string
     error?: 'RefreshTokenError'
+    user_id?: string
   }
 }

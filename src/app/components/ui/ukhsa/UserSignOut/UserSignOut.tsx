@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import { getServerTranslation } from '@/app/i18n'
 import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
 import { auth, signOut } from '@/auth'
-import { logger } from '@/lib/logger'
+import { auditLog, logger } from '@/lib/logger'
 
 export default async function UserSignOut() {
   let session
@@ -24,6 +24,7 @@ export default async function UserSignOut() {
       action={async () => {
         'use server'
         try {
+          auditLog(session.userId ?? '', 'LOG_OUT', undefined)
           await signOut({ redirect: false })
         } catch {
           logger.error('issue calling authJS signout.')

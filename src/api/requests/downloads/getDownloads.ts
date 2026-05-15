@@ -2,9 +2,11 @@ import { z } from 'zod'
 
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
+import { auth } from '@/auth'
+import { auditLog, logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
+  isPublic: z.boolean().default(true),
   file_format: z.enum(['json', 'csv']),
   x_axis: z.enum(['age', 'geography', 'sex', 'stratum', 'date', 'metric']).optional().nullable(),
   confidence_intervals: z.boolean().default(false),
@@ -26,13 +28,23 @@ export const requestSchema = z.object({
 export type RequestParams = z.infer<typeof requestSchema>
 
 export const getDownloads = async (
+  isPublic: RequestParams['isPublic'],
   plots: RequestParams['plots'],
   format: RequestParams['file_format'] = 'csv',
   x_axis: RequestParams['x_axis'] = null,
   confidence_intervals: RequestParams['confidence_intervals'] = false
 ) => {
   try {
+    logger.info(isPublic)
+    if (!isPublic) {
+      const session = await auth()
+      if (session) {
+        auditLog(session.userId ?? '', 'FILE_DOWNLOAD', `${format} - ${JSON.stringify(plots)}`)
+      }
+    }
+
     const body: RequestParams = {
+      isPublic,
       plots,
       x_axis,
       file_format: format,

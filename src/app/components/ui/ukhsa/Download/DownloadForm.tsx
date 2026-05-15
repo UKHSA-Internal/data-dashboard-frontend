@@ -51,6 +51,7 @@ export function DownloadForm({
 
     try {
       const formData = new FormData(event.currentTarget)
+      formData.append('isPublic', isPublic.toString())
 
       const res = await fetch(chartExportApiRoutePath, {
         method: 'post',
