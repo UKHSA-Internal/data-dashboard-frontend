@@ -282,7 +282,7 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
       id: 'dashboard-health-topic',
       value: {
         heading: 'Health topics',
-        page: 'health-topics',
+        page: 83,
       },
     },
   ],

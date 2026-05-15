@@ -1,11 +1,10 @@
 import { kebabCase } from 'lodash'
 
 import { PageType } from '@/api/requests/cms/getPages'
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
 import { PageComponentBaseProps } from '@/app/types'
-import { getLandingPage } from '@/app/utils/cms'
+import { getLandingPage, getPageById } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 import { processSectionParams } from '@/app/utils/show-more.utils'
 
@@ -31,9 +30,7 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
   const healthTopicsPageId = health_topic[0].value.page
   const healthTopicsSectionTitle = health_topic[0].value.heading
 
-  const { body: HealthTopicsBody } = await getPageBySlug<PageType.TopicsList>(healthTopicsPageId, {
-    type: PageType.TopicsList,
-  }) // TODO: This should be getByID from the updated response object
+  const { body: HealthTopicsBody } = await getPageById<PageType.TopicsList>(healthTopicsPageId)
 
   const hasRelatedLinks = Boolean(relatedLinks?.length)
   const showSidebarRelatedLinks = hasRelatedLinks && relatedLinksLayout === 'Sidebar'

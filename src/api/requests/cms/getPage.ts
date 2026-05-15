@@ -52,7 +52,7 @@ const WithLandingData = SharedPageData.extend({
       type: z.literal('health_topic'),
       value: z.object({
         heading: z.string(),
-        page: z.string(),
+        page: z.number(),
       }),
       id: z.string(),
     })

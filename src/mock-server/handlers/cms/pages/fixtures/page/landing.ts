@@ -864,7 +864,7 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
       type: 'health_topic',
       value: {
         heading: 'Covid 19 Health topic',
-        page: 'health-topics',
+        page: 83,
       },
       id: 'b9009ada-929e-495d-b848-f5e04933b529',
     },
