@@ -1,16 +1,12 @@
-import { getPageBySlug } from '@/api/requests/getPageBySlug'
-import { getLandingPage } from '@/app/utils/cms'
+import { getLandingPage, getPageById } from '@/app/utils/cms'
 import { renderSection } from '@/app/utils/cms.utils'
 import { render, screen } from '@/config/test-utils'
 
 import LandingPage from './Landing'
 
-jest.mock('@/api/requests/getPageBySlug', () => ({
-  getPageBySlug: jest.fn(),
-}))
-
 jest.mock('@/app/utils/cms', () => ({
   getLandingPage: jest.fn(),
+  getPageById: jest.fn(),
 }))
 
 jest.mock('@/app/utils/cms.utils', () => ({
@@ -43,14 +39,14 @@ jest.mock('@/app/components/ui/ukhsa/RelatedLinks/RelatedLinksWrapper', () => ({
 }))
 
 const mockedGetLandingPage = jest.mocked(getLandingPage)
-const mockedGetPageBySlug = jest.mocked(getPageBySlug)
+const mockedGetPageById = jest.mocked(getPageById)
 const mockedRenderSection = jest.mocked(renderSection)
 
 const defaultHealthTopic = [
   {
     type: 'health_topic' as const,
     id: 'health-topic-block',
-    value: { heading: 'Health topics', page: 'health-topics' },
+    value: { heading: 'Health topics', page: 83 },
   },
 ]
 type RenderSectionArgs = Parameters<typeof renderSection>
@@ -61,7 +57,7 @@ const landingBody = [
     type: 'section' as const,
     value: {
       heading: 'Popular topics',
-      page_link: null,
+      page_link: 0,
       content: [],
     },
   },
@@ -70,7 +66,7 @@ const landingBody = [
     type: 'section' as const,
     value: {
       heading: 'Current outbreaks',
-      page_link: null,
+      page_link: 0,
       content: [],
     },
   },
@@ -79,7 +75,7 @@ const landingBody = [
 beforeEach(() => {
   jest.clearAllMocks()
 
-  mockedGetPageBySlug.mockResolvedValue({ body: [] } as never)
+  mockedGetPageById.mockResolvedValue({ body: [] } as never)
 
   mockedRenderSection.mockImplementation(((_: RenderSectionArgs[0], section: RenderSectionArgs[1]) => (
     <section key={section.id}>{section.value.heading}</section>
