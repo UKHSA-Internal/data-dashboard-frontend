@@ -9,8 +9,8 @@ interface ChartRowCardHeaderProps {
   title: string
   description?: string
   id: string
-  isPublic?: boolean
-  pageClassification?: DataClassification
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }
 
@@ -20,7 +20,7 @@ export async function ChartRowCardHeader({
   title,
   description,
   isPublic,
-  pageClassification = 'official_sensitive',
+  dataClassification = undefined,
   authEnabled,
 }: Readonly<ChartRowCardHeaderProps>) {
   const [, areaName] = await getAreaSelector()
@@ -29,7 +29,7 @@ export async function ChartRowCardHeader({
     <header>
       <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
         {title} {areaName && `(${areaName})`}{' '}
-        {getDataClassification(isPublic, pageClassification as DataClassification, authEnabled)}
+        {getDataClassification(isPublic, authEnabled, dataClassification)}
       </h3>
       {description ? (
         <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>

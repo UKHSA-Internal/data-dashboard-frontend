@@ -4,6 +4,7 @@ import Link from 'next/link'
 import type { z } from 'zod'
 
 import { PopularTopicsCardValue as popularTopicsCardSchema } from '@/api/models/cms/Page/Body'
+import { DataClassification } from '@/api/models/DataClassification'
 import { Card, Chart } from '@/app/components/ui/ukhsa'
 import { renderBlock } from '@/app/utils/cms.utils'
 import { getPath } from '@/app/utils/cms/slug'
@@ -16,15 +17,17 @@ type PopularTopicsCardData = z.infer<typeof popularTopicsCardSchema>
 
 type PopularTopicsCardProps = {
   readonly value: PopularTopicsCardData
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
 }
 
-export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
+export function PopularTopicsCard({ value, isPublic = true, dataClassification = undefined}: PopularTopicsCardProps) {
   return (
     <div className="govuk-!-margin-bottom-6 grid items-stretch gap-6 lg:grid-cols-2" data-testid="popular-topics-card">
       <div className="flex h-full flex-col gap-6">
         {value.left_column.map((item: PopularTopicsCardData['left_column'][number]) => {
           if (item.type === 'chart_card_with_description') {
-            return <ChartWithDescriptionCard key={item.id} value={item.value} />
+            return <ChartWithDescriptionCard key={item.id} value={item.value} isPublic={isPublic} dataClassification={dataClassification} />
           }
           return (
             <WeatherHealthAlertCard
@@ -70,6 +73,8 @@ export function PopularTopicsCard({ value }: PopularTopicsCardProps) {
                           { minWidth: 1200, size: 'third' },
                           { size: 'third', default: true },
                         ]}
+                        isPublic={isPublic}
+                        dataClassification={dataClassification}
                       />
                     </div>
                   </Link>

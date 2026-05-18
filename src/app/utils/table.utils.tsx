@@ -21,12 +21,12 @@ export const getColumnHeader = (
   axisTitle: string,
   fallback: string,
   isPublic?: boolean,
-  level: DataClassification = 'official_sensitive',
+  level?: DataClassification,
   authEnabled?: boolean
 ) => {
   const label = chartLabel || axisTitle || fallback
 
-  const sensitiveLabel = authEnabled && isPublic === false && (
+  const sensitiveLabel = authEnabled && isPublic === false && level && (
     <span className="inline-block w-full whitespace-normal break-words text-[#CECECE] sm:w-auto">
       &nbsp;{levelContent[level]}
     </span>
@@ -41,11 +41,11 @@ export const getColumnHeader = (
 
 export const getDataClassification = (
   isPublic: boolean | undefined,
-  pageClassification: DataClassification = 'official_sensitive',
-  authEnabled: boolean | undefined
-): string => {
+  authEnabled: boolean | undefined,
+  dataClassification: DataClassification = 'official_sensitive'
+): string | undefined => {
   if (authEnabled && isPublic === false) {
-    return `(${levelContentCaps[pageClassification]})`
+    return `(${levelContentCaps[dataClassification]})`
   }
-  return ''
+  return undefined
 }

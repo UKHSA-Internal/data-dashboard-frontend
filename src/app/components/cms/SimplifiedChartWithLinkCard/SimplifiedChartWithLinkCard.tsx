@@ -2,15 +2,18 @@
 import { snakeCase } from 'lodash'
 import Link from 'next/link'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { Card, Chart } from '@/app/components/ui/ukhsa'
 import { getPath } from '@/app/utils/cms/slug'
 
 type SimplifiedChartWithLinkCardProps = {
   value: any
   cardsCount: number
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
 }
 
-export function SimplifiedChartWithLinkCard({ value, cardsCount }: SimplifiedChartWithLinkCardProps) {
+export function SimplifiedChartWithLinkCard({ value, cardsCount, isPublic = true, dataClassification = undefined}: SimplifiedChartWithLinkCardProps) {
   const topicPagePath = getPath(value.topic_page)
 
   return (
@@ -39,6 +42,8 @@ export function SimplifiedChartWithLinkCard({ value, cardsCount }: SimplifiedCha
                 default: true,
               },
             ]}
+            isPublic={isPublic}
+            dataClassification={dataClassification}
           />
         </div>
       </Link>

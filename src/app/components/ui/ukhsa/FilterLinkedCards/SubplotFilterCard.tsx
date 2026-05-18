@@ -31,8 +31,8 @@ interface SubplotFilterCardProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
-  isPublic?: boolean
-  level?: DataClassification
+  isPublic: boolean
+  level?: DataClassification | undefined
   authEnabled?: boolean
 }
 
@@ -60,7 +60,7 @@ const SubplotFilterCard = ({
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassification = getDataClassification(isPublic, level ?? 'official_sensitive', authEnabled)
+  const dataClassification = getDataClassification(isPublic, authEnabled, level)
 
   return (
     <div key={id} className="mb-4">
@@ -161,7 +161,7 @@ const SubplotFilterCard = ({
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 cardData={cardData}
                 isPublic={isPublic}
-                level={level}
+                dataClassification={level}
                 authEnabled={authEnabled}
               />
             </TabsContent>

@@ -13,7 +13,6 @@ import { ClientTable } from '@/app/components/ui/ukhsa/Table/ClientTable'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { getDataClassification } from '@/app/utils/table.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
 import { Card } from '../Card/Card'
@@ -25,8 +24,8 @@ interface TimeseriesFilterCardProps {
   dataFilters: DataFilter[]
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
-  isPublic?: boolean
-  level?: DataClassification
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }
 
@@ -35,8 +34,8 @@ const TimeseriesFilterCard = ({
   timePeriods,
   dataFilters,
   cardData,
-  isPublic,
-  level,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
@@ -48,7 +47,6 @@ const TimeseriesFilterCard = ({
   const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassification = getDataClassification(isPublic, level ?? 'official_sensitive', authEnabled)
 
   return (
     <div key={id} className="mb-4">
@@ -124,6 +122,8 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 handleLatestDate={setDate}
                 cardData={cardData}
+                isPublic={isPublic}
+                dataClassification={dataClassification}
               />
             </TabsContent>
             <TabsContent
@@ -139,7 +139,7 @@ const TimeseriesFilterCard = ({
                 size={'wide'}
                 cardData={cardData}
                 isPublic={isPublic}
-                level={level}
+                dataClassification={dataClassification}
                 authEnabled={authEnabled}
               />
             </TabsContent>

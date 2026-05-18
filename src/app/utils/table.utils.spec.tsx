@@ -93,38 +93,38 @@ describe('getColumnHeader', () => {
 
 describe('getDataClassification', () => {
   test('returns empty string when authEnabled is false', () => {
-    expect(getDataClassification(false, 'official_sensitive', false)).toBe('')
+    expect(getDataClassification(false, false, 'official_sensitive')).toBe('')
   })
 
   test('returns classification when authEnabled is true', () => {
-    expect(getDataClassification(false, 'official_sensitive', true)).toBe('(OFFICIAL SENSITIVE)')
+    expect(getDataClassification(false, true, 'official_sensitive')).toBe('(OFFICIAL SENSITIVE)')
   })
 
   test('returns empty string when isPublic is true', () => {
-    expect(getDataClassification(true, 'official_sensitive', true)).toBe('')
+    expect(getDataClassification(true, true, 'official_sensitive')).toBe('')
   })
 
   test('returns empty string when isPublic is undefined', () => {
-    expect(getDataClassification(undefined, 'official_sensitive', true)).toBe('')
+    expect(getDataClassification(undefined, true, 'official_sensitive')).toBe('')
   })
 
   test('returns uppercase classification wrapped in parentheses for official_sensitive', () => {
-    expect(getDataClassification(false, 'official_sensitive', true)).toBe('(OFFICIAL SENSITIVE)')
+    expect(getDataClassification(false, true, 'official_sensitive')).toBe('(OFFICIAL SENSITIVE)')
   })
 
   test('returns uppercase classification wrapped in parentheses for official', () => {
-    expect(getDataClassification(false, 'official', true)).toBe('(OFFICIAL)')
+    expect(getDataClassification(false, true, 'official')).toBe('(OFFICIAL)')
   })
 
   test('returns uppercase classification wrapped in parentheses for secret', () => {
-    expect(getDataClassification(false, 'secret', true)).toBe('(SECRET)')
+    expect(getDataClassification(false, true, 'secret')).toBe('(SECRET)')
   })
 
   test('returns uppercase classification wrapped in parentheses for top_secret', () => {
-    expect(getDataClassification(false, 'top_secret', true)).toBe('(TOP SECRET)')
+    expect(getDataClassification(false, true, 'top_secret')).toBe('(TOP SECRET)')
   })
 
   test('returns uppercase classification wrapped in parentheses for protective_marking_not_set', () => {
-    expect(getDataClassification(false, 'protective_marking_not_set', true)).toBe('(PROTECTIVE MARKING NOT SET)')
+    expect(getDataClassification(false, true, 'protective_marking_not_set')).toBe('(PROTECTIVE MARKING NOT SET)')
   })
 })

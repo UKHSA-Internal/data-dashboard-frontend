@@ -3,15 +3,18 @@ import clsx from 'clsx'
 import { snakeCase } from 'lodash'
 import Link from 'next/link'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { hasSource, SourceFooter } from '@/app/components/cms/SourceFooter/SourceFooter'
 import { Card, Chart } from '@/app/components/ui/ukhsa'
 import { getPath } from '@/app/utils/cms/slug'
 
 type ChartWithDescriptionCardProps = {
   readonly value: any
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
 }
 
-export function ChartWithDescriptionCard({ value }: ChartWithDescriptionCardProps) {
+export function ChartWithDescriptionCard({ value, isPublic = true, dataClassification = undefined}: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
   const showSource = hasSource(value.source)
 
@@ -43,6 +46,8 @@ export function ChartWithDescriptionCard({ value }: ChartWithDescriptionCardProp
                 default: true,
               },
             ]}
+            isPublic={isPublic}
+            dataClassification={dataClassification}
           />
 
           {value.description && (
