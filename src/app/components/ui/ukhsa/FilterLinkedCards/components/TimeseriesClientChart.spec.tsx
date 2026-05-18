@@ -126,7 +126,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+       handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -150,7 +150,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -172,7 +172,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -193,7 +193,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -216,7 +216,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -269,7 +269,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -291,7 +291,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -307,7 +307,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={[]}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -329,7 +329,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -351,7 +351,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -376,7 +376,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -414,7 +414,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={newDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -436,7 +436,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -459,7 +459,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -496,7 +496,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
@@ -535,7 +535,7 @@ describe('TimeseriesClientChart', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
-         handleLatestDate={mockHandleLatestDate}
+        handleLatestDate={mockHandleLatestDate}
         isPublic={true}
       />
     )
