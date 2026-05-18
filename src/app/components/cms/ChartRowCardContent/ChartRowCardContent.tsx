@@ -136,13 +136,15 @@ export function ChartRowCardContent({
                       Chart
                     </span>
                     {column.type === 'chart_with_headline_and_trend_card' && (
-                      <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
-                        <div className="flex items-start gap-2">
-                          {column.value.headline_number_columns?.map((headline_number_columns: any) =>
-                            renderBlock({ ...headline_number_columns, date_prefix: column.value.date_prefix })
-                          )}
+                      <>
+                        <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
+                          <div className="flex items-start gap-2">
+                            {column.value.headline_number_columns?.map((headline_number_columns: any) =>
+                              renderBlock({ ...headline_number_columns, date_prefix: column.value.date_prefix })
+                            )}
+                          </div>
                         </div>
-                      </div>
+                      </>
                     )}
                     <AreaSelectorLoader>
                       <Chart
