@@ -8,10 +8,14 @@ import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import SubplotFilterCard from './SubplotFilterCard'
 type SubplotFilterCardContainerProps = {
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
-const SubplotFilterCardContainer = ({ isPublic = true, dataClassification = undefined, authEnabled }: SubplotFilterCardContainerProps) => {
+const SubplotFilterCardContainer = ({
+  isPublic = true,
+  dataClassification = undefined,
+  authEnabled,
+}: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,

@@ -15,12 +15,19 @@ type ChartCardSectionProps = {
   readonly showMoreSections: string[]
   readonly enableShowMore?: boolean
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
 const SHOW_MORE_SECTION_COLUMNS = 2
 
-export function ChartCardSection({ value, heading, showMoreSections, enableShowMore = true, isPublic = true, dataClassification = undefined}: ChartCardSectionProps) {
+export function ChartCardSection({
+  value,
+  heading,
+  showMoreSections,
+  enableShowMore = true,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartCardSectionProps) {
   return (
     <div
       className={clsx('grid gap-4 md:grid-cols-[1fr_1fr]', {
@@ -56,7 +63,11 @@ export function ChartCardSection({ value, heading, showMoreSections, enableShowM
               data-testid="card-wrapper"
               data-topic-filter-id={card.id}
             >
-              <ChartWithDescriptionCard value={card.value} isPublic={isPublic} dataClassification={dataClassification} />
+              <ChartWithDescriptionCard
+                value={card.value}
+                isPublic={isPublic}
+                dataClassification={dataClassification}
+              />
             </div>
           )
         }
@@ -69,7 +80,12 @@ export function ChartCardSection({ value, heading, showMoreSections, enableShowM
               data-testid="card-wrapper"
               data-topic-filter-id={card.id}
             >
-              <SimplifiedChartWithLinkCard value={card.value} cardsCount={value.cards.length} isPublic={isPublic} dataClassification={dataClassification}/>
+              <SimplifiedChartWithLinkCard
+                value={card.value}
+                cardsCount={value.cards.length}
+                isPublic={isPublic}
+                dataClassification={dataClassification}
+              />
             </div>
           )
         }

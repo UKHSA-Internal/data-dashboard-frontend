@@ -29,7 +29,7 @@ interface TableProps {
 
   isPublic?: boolean
 
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
 
@@ -130,7 +130,7 @@ export async function Table({
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
     is_public: isPublic,
-    data_classification: dataClassification
+    data_classification: dataClassification,
   }
 
   const chartResponse = await getCharts(chartRequestBody)
@@ -195,7 +195,14 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, dataClassification, authEnabled)}
+                        {getColumnHeader(
+                          chartLabel,
+                          axisTitle,
+                          columnHeader,
+                          isPublic,
+                          dataClassification,
+                          authEnabled
+                        )}
                       </th>
                     )
                   })}

@@ -25,7 +25,7 @@ interface ChartWithFilterProps {
   chart: Chart
   chartData: z.infer<typeof ChartCardSchemas>['value']
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
 const LoadingSpinnerContainer = () => {
@@ -36,7 +36,15 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated, isPublic = true, dataClassification = undefined}: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({
+  figure,
+  title,
+  chart,
+  chartData,
+  lastUpdated,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -94,7 +102,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated, 
           chart_width: chartSizes['narrow'].width,
           chart_height: chartSizes['narrow'].height,
           is_public: isPublic,
-          data_classification: dataClassification
+          data_classification: dataClassification,
         })
 
         if (!chartResponse.success || !chartResponse.data) {

@@ -18,16 +18,23 @@ type PopularTopicsCardData = z.infer<typeof popularTopicsCardSchema>
 type PopularTopicsCardProps = {
   readonly value: PopularTopicsCardData
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
-export function PopularTopicsCard({ value, isPublic = true, dataClassification = undefined}: PopularTopicsCardProps) {
+export function PopularTopicsCard({ value, isPublic = true, dataClassification = undefined }: PopularTopicsCardProps) {
   return (
     <div className="govuk-!-margin-bottom-6 grid items-stretch gap-6 lg:grid-cols-2" data-testid="popular-topics-card">
       <div className="flex h-full flex-col gap-6">
         {value.left_column.map((item: PopularTopicsCardData['left_column'][number]) => {
           if (item.type === 'chart_card_with_description') {
-            return <ChartWithDescriptionCard key={item.id} value={item.value} isPublic={isPublic} dataClassification={dataClassification} />
+            return (
+              <ChartWithDescriptionCard
+                key={item.id}
+                value={item.value}
+                isPublic={isPublic}
+                dataClassification={dataClassification}
+              />
+            )
           }
           return (
             <WeatherHealthAlertCard

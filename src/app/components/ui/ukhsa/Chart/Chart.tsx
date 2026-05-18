@@ -56,7 +56,7 @@ interface ChartProps {
   /**
    * Data classification, eg "OFFICIAL SENSITIVE"
    * */
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
 const createStaticChart = async ({
@@ -83,7 +83,13 @@ const createStaticChart = async ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true, isPublic = true, dataClassification = undefined}: ChartProps) {
+export async function Chart({
+  data,
+  sizes,
+  enableInteractive = true,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartProps) {
   const { t } = await getServerTranslation('common')
 
   const chartData = data
@@ -129,7 +135,7 @@ export async function Chart({ data, sizes, enableInteractive = true, isPublic = 
     y_axis_maximum_value: yAxisMaximum,
     y_axis_minimum_value: yAxisMinimum,
     is_public: isPublic,
-    data_classification: dataClassification
+    data_classification: dataClassification,
   }
 
   // Select the default size (mobile-first approach)

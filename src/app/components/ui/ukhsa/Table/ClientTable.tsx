@@ -29,7 +29,7 @@ interface TableProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   isPublic: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
 //FIXME: Somewhere we are not passing in a value for dataclassification when we should, which means the default is being used for the watermark everywhere!
@@ -97,7 +97,7 @@ export function ClientTable({
             }
           }),
           is_public: isPublic,
-          data_classification: dataClassification
+          data_classification: dataClassification,
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse)
@@ -242,7 +242,14 @@ export function ClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, dataClassification, authEnabled)}
+                        {getColumnHeader(
+                          chartLabel,
+                          axisTitle,
+                          columnHeader,
+                          isPublic,
+                          dataClassification,
+                          authEnabled
+                        )}
                       </th>
                     )
                   })}

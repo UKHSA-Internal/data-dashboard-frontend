@@ -11,10 +11,14 @@ import { getPath } from '@/app/utils/cms/slug'
 type ChartWithDescriptionCardProps = {
   readonly value: any
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
-export function ChartWithDescriptionCard({ value, isPublic = true, dataClassification = undefined}: ChartWithDescriptionCardProps) {
+export function ChartWithDescriptionCard({
+  value,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartWithDescriptionCardProps) {
   const topicPagePath = getPath(value.topic_page)
   const showSource = hasSource(value.source)
 

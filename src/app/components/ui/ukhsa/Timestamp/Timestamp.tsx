@@ -18,7 +18,7 @@ interface TimestampProps {
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
 export async function Timestamp({ data, size, isPublic = true, dataClassification = undefined }: TimestampProps) {
@@ -48,7 +48,7 @@ export async function Timestamp({ data, size, isPublic = true, dataClassificatio
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
     is_public: isPublic,
-    data_classification: dataClassification
+    data_classification: dataClassification,
   }
 
   const res = await getCharts(requestBody)

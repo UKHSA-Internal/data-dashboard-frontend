@@ -10,10 +10,15 @@ type SimplifiedChartWithLinkCardProps = {
   value: any
   cardsCount: number
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
-export function SimplifiedChartWithLinkCard({ value, cardsCount, isPublic = true, dataClassification = undefined}: SimplifiedChartWithLinkCardProps) {
+export function SimplifiedChartWithLinkCard({
+  value,
+  cardsCount,
+  isPublic = true,
+  dataClassification = undefined,
+}: SimplifiedChartWithLinkCardProps) {
   const topicPagePath = getPath(value.topic_page)
 
   return (

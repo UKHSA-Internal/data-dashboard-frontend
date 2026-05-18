@@ -27,7 +27,7 @@ import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/Classifica
 type ChartRowCardContentProps = {
   value: any
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
 }
 
 export function ChartRowCardContent({

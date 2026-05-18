@@ -12,7 +12,7 @@ const TimeSeriesFilterCardsContainer = ({
   authEnabled,
 }: {
   isPublic?: boolean
-  dataClassification?: DataClassification | undefined
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }) => {
   const { state } = useGlobalFilters()
