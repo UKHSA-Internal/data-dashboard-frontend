@@ -207,6 +207,7 @@ jobs:
   ##############################################################################
   # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
   ##############################################################################
+  
   e2e-tests-non-public:
     name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
     needs: [build]
@@ -240,7 +241,7 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
-      - name: Start Next.js app
+      - name: Start Dev Server
         id: start-dev-server
         run: |
           npm run start &
@@ -248,14 +249,14 @@ jobs:
         env:
           NODE_ENV: test
 
-      - name: Wait for Next.js app
+      - name: Wait for Dev Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
-          baseURL: http://localhost:3000  # ← added
+          baseURL: http://localhost:3000
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
@@ -264,7 +265,7 @@ jobs:
           path: playwright-report/
           retention-days: 10
 
-      - name: Cleanup servers       # ← added
+      - name: Cleanup servers
         if: always()
         run: |
           kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
