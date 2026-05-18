@@ -174,7 +174,6 @@ test('renders the chart by geography and geography type when both are present in
           size: 'narrow',
         },
       ],
-      isPublic: true,
     })) as ReactElement
   )
 
@@ -245,7 +244,6 @@ test('full width charts should also have an acompanying narrow version for mobil
           size: 'narrow',
         },
       ],
-      isPublic: true,
     })) as ReactElement
   )
 
@@ -305,7 +303,6 @@ test('landing page half width charts should render the largest size (half) with 
           size: 'third',
         },
       ],
-      isPublic: true,
     })) as ReactElement
   )
 
@@ -368,7 +365,6 @@ test('renders a fallback message when the chart requests fail', async () => {
           size: 'narrow',
         },
       ],
-      isPublic: true,
     })) as ReactElement
   )
 
@@ -420,7 +416,6 @@ test('Fallback message with escaped characters', async () => {
           size: 'narrow',
         },
       ],
-      isPublic: true,
     })) as ReactElement
   )
 
