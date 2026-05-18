@@ -47,5 +47,5 @@ export const getDataClassification = (
   if (authEnabled && isPublic === false) {
     return `(${levelContentCaps[dataClassification]})`
   }
-  return undefined
+  return ""
 }

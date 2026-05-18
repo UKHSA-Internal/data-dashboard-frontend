@@ -89,6 +89,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -105,6 +106,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -124,6 +126,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -149,6 +152,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -173,6 +177,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -194,6 +199,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={cardDataWithAbout}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -211,6 +217,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 

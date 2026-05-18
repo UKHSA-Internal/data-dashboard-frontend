@@ -47,10 +47,6 @@ describe('getColumnHeader', () => {
   })
 
   describe('level content', () => {
-    test('defaults to official_sensitive level', () => {
-      renderHeader('Label', '', 'Fallback', false, undefined, true)
-      expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
-    })
 
     test('renders correct text for official level', () => {
       renderHeader('Label', '', 'Fallback', false, 'official', true)

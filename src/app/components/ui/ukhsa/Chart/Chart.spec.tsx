@@ -88,6 +88,7 @@ test('renders a narrow chart correctly', async () => {
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
@@ -109,6 +110,10 @@ test('renders a narrow chart correctly', async () => {
     y_axis: null,
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    confidence_colour: undefined,
+    confidence_intervals: undefined,
+    data_classification: undefined,
+    is_public: true,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -169,6 +174,7 @@ test('renders the chart by geography and geography type when both are present in
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
@@ -190,6 +196,10 @@ test('renders the chart by geography and geography type when both are present in
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    confidence_colour: undefined,
+    confidence_intervals: undefined,
+    data_classification: undefined,
+    is_public: true,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -235,6 +245,7 @@ test('full width charts should also have an acompanying narrow version for mobil
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
@@ -294,6 +305,7 @@ test('landing page half width charts should render the largest size (half) with 
           size: 'third',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
@@ -356,6 +368,7 @@ test('renders a fallback message when the chart requests fail', async () => {
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
@@ -407,6 +420,7 @@ test('Fallback message with escaped characters', async () => {
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 

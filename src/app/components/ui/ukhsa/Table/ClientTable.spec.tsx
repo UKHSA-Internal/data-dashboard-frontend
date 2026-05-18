@@ -193,6 +193,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -220,6 +221,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -247,6 +249,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -270,6 +273,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -295,6 +299,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -322,6 +327,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -353,6 +359,8 @@ describe('ClientTable', () => {
             use_markers: true,
           },
         ],
+        is_public: true,
+        data_classification: undefined
       })
     })
   })
@@ -374,6 +382,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -421,6 +430,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -449,6 +459,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -497,6 +508,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -529,6 +541,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -563,6 +576,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -601,6 +615,7 @@ describe('ClientTable', () => {
         dataFilters={newDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -627,6 +642,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -649,6 +665,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -675,6 +692,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -702,6 +720,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -749,6 +768,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -800,6 +820,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardDataWithAxisTitle}
+        isPublic={true}
       />
     )
 
@@ -851,6 +872,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardDataNoLabels}
+        isPublic={true}
       />
     )
 
@@ -870,6 +892,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -888,6 +911,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -933,6 +957,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -980,6 +1005,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1005,6 +1031,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1030,6 +1057,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1090,6 +1118,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1143,6 +1172,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1195,6 +1225,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
