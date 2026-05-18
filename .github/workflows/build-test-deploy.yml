@@ -236,6 +236,12 @@ jobs:
           echo "AUTH_ENABLED=true" >> .env.local
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
+      - name: Start Next.js app
+        run: npm run start &
+
+      - name: Wait for Next.js app
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
