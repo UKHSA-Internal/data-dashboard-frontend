@@ -9,7 +9,7 @@ interface ChartRowCardHeaderProps {
   title: string
   description?: string
   id: string
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }
@@ -19,7 +19,7 @@ export async function ChartRowCardHeader({
   id,
   title,
   description,
-  isPublic,
+  isPublic = true,
   dataClassification = undefined,
   authEnabled,
 }: Readonly<ChartRowCardHeaderProps>) {

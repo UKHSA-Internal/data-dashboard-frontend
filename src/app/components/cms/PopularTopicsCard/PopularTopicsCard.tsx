@@ -17,7 +17,7 @@ type PopularTopicsCardData = z.infer<typeof popularTopicsCardSchema>
 
 type PopularTopicsCardProps = {
   readonly value: PopularTopicsCardData
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
 }
 

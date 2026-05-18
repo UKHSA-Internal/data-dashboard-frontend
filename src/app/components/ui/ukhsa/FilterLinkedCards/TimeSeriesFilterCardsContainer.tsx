@@ -11,7 +11,7 @@ const TimeSeriesFilterCardsContainer = ({
   dataClassification = undefined,
   authEnabled,
 }: {
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }) => {

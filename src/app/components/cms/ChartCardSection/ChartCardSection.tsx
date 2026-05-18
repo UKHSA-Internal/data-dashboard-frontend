@@ -14,7 +14,7 @@ type ChartCardSectionProps = {
   readonly heading: string
   readonly showMoreSections: string[]
   readonly enableShowMore?: boolean
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
 }
 

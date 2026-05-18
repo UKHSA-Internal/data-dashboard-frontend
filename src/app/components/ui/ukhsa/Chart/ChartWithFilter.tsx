@@ -24,7 +24,7 @@ interface ChartWithFilterProps {
   title: string
   chart: Chart
   chartData: z.infer<typeof ChartCardSchemas>['value']
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
 }
 

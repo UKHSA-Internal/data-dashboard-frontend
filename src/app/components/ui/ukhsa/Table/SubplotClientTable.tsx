@@ -36,7 +36,7 @@ interface TableProps {
   timePeriods: TimePeriod[]
   currentTimePeriodIndex: number
   cardData: FilterLinkedSubplotData
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }

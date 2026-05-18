@@ -10,7 +10,7 @@ import { getPath } from '@/app/utils/cms/slug'
 
 type ChartWithDescriptionCardProps = {
   readonly value: any
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
 }
 

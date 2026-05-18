@@ -39,7 +39,7 @@ export const renderSection = async (
   showMoreSections: string[],
   { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number],
   enableShowMore = true,
-  isPublic: boolean,
+  isPublic: boolean = true,
   dataClassification: DataClassification | undefined = undefined
 ) => {
   const sectionFilterKey = String(id ?? heading ?? '')

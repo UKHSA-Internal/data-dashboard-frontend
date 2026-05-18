@@ -27,7 +27,7 @@ interface TableProps {
   /* Size of table based on whether the table is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
 
-  isPublic: boolean
+  isPublic?: boolean
 
   dataClassification?: DataClassification | undefined
   authEnabled?: boolean

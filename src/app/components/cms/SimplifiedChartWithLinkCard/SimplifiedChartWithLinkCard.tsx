@@ -9,7 +9,7 @@ import { getPath } from '@/app/utils/cms/slug'
 type SimplifiedChartWithLinkCardProps = {
   value: any
   cardsCount: number
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
 }
 

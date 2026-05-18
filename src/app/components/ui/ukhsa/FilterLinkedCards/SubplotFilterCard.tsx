@@ -31,7 +31,7 @@ interface SubplotFilterCardProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
-  isPublic: boolean
+  isPublic?: boolean
   level?: DataClassification | undefined
   authEnabled?: boolean
 }
@@ -44,7 +44,7 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
-  isPublic,
+  isPublic = true,
   level,
   authEnabled,
 }: SubplotFilterCardProps) => {

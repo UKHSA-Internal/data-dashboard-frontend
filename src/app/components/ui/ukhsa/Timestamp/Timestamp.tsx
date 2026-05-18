@@ -17,7 +17,7 @@ interface TimestampProps {
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
 }
 

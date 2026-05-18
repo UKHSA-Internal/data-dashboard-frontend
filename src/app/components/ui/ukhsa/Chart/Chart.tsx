@@ -51,7 +51,7 @@ interface ChartProps {
   /**
    * True when chart contains public data
    * */
-  isPublic: boolean
+  isPublic?: boolean
 
   /**
    * Data classification, eg "OFFICIAL SENSITIVE"

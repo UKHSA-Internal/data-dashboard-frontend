@@ -7,7 +7,7 @@ import { useGlobalFilters } from '@/app/features/global-filter/context/globalFil
 import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import SubplotFilterCard from './SubplotFilterCard'
 type SubplotFilterCardContainerProps = {
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }

@@ -24,7 +24,7 @@ interface TimeseriesFilterCardProps {
   dataFilters: DataFilter[]
   cardData: FilterLinkedTimeSeriesData
   chartId?: string
-  isPublic: boolean
+  isPublic?: boolean
   dataClassification?: DataClassification | undefined
   authEnabled?: boolean
 }
