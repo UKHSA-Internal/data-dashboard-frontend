@@ -152,6 +152,21 @@ describe('LandingPage', () => {
     expect(screen.getByRole('link', { name: 'Current outbreaks' })).toHaveAttribute('href', '#current-outbreaks')
   })
 
+  test('does not render health topics section when health_topic is absent', async () => {
+    mockedGetLandingPage.mockResolvedValue({
+      ...baseLandingPageMock,
+      title: 'Landing page',
+      page_description: '<p>Description</p>',
+      health_topic: [],
+    })
+
+    render(await LandingPage({ slug: [], searchParams: {} }))
+
+    expect(mockedGetPageById).not.toHaveBeenCalled()
+    expect(screen.queryByRole('heading', { level: 2, name: 'Health topics' })).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Health topics' })).not.toBeInTheDocument()
+  })
+
   test('passes section query params to renderSection in lowercase', async () => {
     mockedGetLandingPage.mockResolvedValue({
       ...baseLandingPageMock,

@@ -1,5 +1,6 @@
 import { kebabCase } from 'lodash'
 
+import type { Body } from '@/api/models/cms/Page/Body'
 import { PageType } from '@/api/requests/cms/getPages'
 import { Announcements, View } from '@/app/components/ui/ukhsa'
 import { Heading } from '@/app/components/ui/ukhsa/View/Heading/Heading'
@@ -27,16 +28,22 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
     health_topic,
   } = await getLandingPage()
 
-  const healthTopicsPageId = health_topic[0].value.page
-  const healthTopicsSectionTitle = health_topic[0].value.heading
+  const healthTopicsPageId = health_topic[0]?.value.page
+  const healthTopicsSectionTitle = health_topic[0]?.value.heading ?? ''
+  const hasHealthTopicsSection = healthTopicsPageId != null && healthTopicsPageId > 0
 
-  const { body: HealthTopicsBody } = await getPageById<PageType.TopicsList>(healthTopicsPageId)
+  let healthTopicsBody: Body = []
+
+  if (hasHealthTopicsSection) {
+    const { body } = await getPageById<PageType.TopicsList>(healthTopicsPageId)
+    healthTopicsBody = body
+  }
 
   const hasRelatedLinks = Boolean(relatedLinks?.length)
   const showSidebarRelatedLinks = hasRelatedLinks && relatedLinksLayout === 'Sidebar'
   const showFooterRelatedLinks = hasRelatedLinks && relatedLinksLayout === 'Footer'
 
-  const filterItems = getFilterItemsFromBody(HealthTopicsBody)
+  const filterItems = hasHealthTopicsSection ? getFilterItemsFromBody(healthTopicsBody) : []
 
   return (
     <View>
@@ -63,18 +70,24 @@ export default async function LandingPage({ searchParams: { section } }: PageCom
             {value.heading}
           </ContentsLink>
         ))}
-        <ContentsLink href={`#${kebabCase(healthTopicsSectionTitle)}`}>{healthTopicsSectionTitle}</ContentsLink>
+        {hasHealthTopicsSection ? (
+          <ContentsLink href={`#${kebabCase(healthTopicsSectionTitle)}`}>{healthTopicsSectionTitle}</ContentsLink>
+        ) : null}
       </Contents>
       {landingBody.map((bodySection) => renderSection(processedSectionParams, bodySection, true))}
 
       {/* -------------------------------- */}
       {/* Health topics section */}
-      <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible my-8"></hr>
-      <h2 className="govuk-heading-l" id={kebabCase(healthTopicsSectionTitle)}>
-        {healthTopicsSectionTitle}
-      </h2>
-      <TopicsListFilterContainer items={filterItems} />
-      {HealthTopicsBody.map((bodySection) => renderSection(processedSectionParams, bodySection, false))}
+      {hasHealthTopicsSection ? (
+        <>
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible my-8"></hr>
+          <h2 className="govuk-heading-l" id={kebabCase(healthTopicsSectionTitle)}>
+            {healthTopicsSectionTitle}
+          </h2>
+          <TopicsListFilterContainer items={filterItems} />
+          {healthTopicsBody.map((bodySection) => renderSection(processedSectionParams, bodySection, false))}
+        </>
+      ) : null}
       {/* -------------------------------- */}
 
       {showFooterRelatedLinks ? <RelatedLinksWrapper layout={relatedLinksLayout} links={relatedLinks ?? []} /> : null}
