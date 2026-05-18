@@ -241,7 +241,7 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
-      - name: Start Dev Server
+      - name: Start Next.js app
         id: start-dev-server
         run: |
           npm run start &
@@ -249,7 +249,7 @@ jobs:
         env:
           NODE_ENV: test
 
-      - name: Wait for Dev Server
+      - name: Wait for Next.js app
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
