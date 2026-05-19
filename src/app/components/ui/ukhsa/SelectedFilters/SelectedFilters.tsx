@@ -29,7 +29,7 @@ const FilterContent = ({ isMobile }: { isMobile: boolean }) => {
         </span>
       </button>
       <div data-testid="selected-filters-list">
-        {selectedFilters!.map((filter) => (
+        {(selectedFilters ?? []).map((filter) => (
           <button
             key={filter.id}
             onClick={() => removeFilter(filter.id)}
@@ -55,7 +55,7 @@ export default function SelectedFilters() {
     <div className="govuk-!-padding-top-3 govuk-!-padding-left-4 govuk-!-padding-right-4 govuk-!-padding-bottom-3 relative flex flex-wrap bg-grey-4">
       <details className="govuk-details govuk-!-margin-bottom-0 w-full md:hidden" data-testid="selected-filters-mobile">
         <summary className="govuk-details__summary">
-          <span className="govuk-details__summary-text">Show selected filters ({selectedFilters!.length})</span>
+          <span className="govuk-details__summary-text">Show selected filters ({(selectedFilters ?? []).length})</span>
         </summary>
         <div className="govuk-details__text py-2">
           <FilterContent isMobile={false} />
@@ -64,7 +64,7 @@ export default function SelectedFilters() {
 
       <div className="hidden md:block">
         <h2 className="govuk-heading-s govuk-!-margin-bottom-0 hidden w-full md:block">
-          {`${t('globalFilter.globalFilterTitle')} (${selectedFilters!.length})`}
+          {`${t('globalFilter.globalFilterTitle')} (${(selectedFilters ?? []).length})`}
         </h2>
         <FilterContent isMobile={true} />
       </div>

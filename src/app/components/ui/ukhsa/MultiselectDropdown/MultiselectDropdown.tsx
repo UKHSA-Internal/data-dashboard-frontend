@@ -56,7 +56,7 @@ export function MultiselectDropdown({
 
   const isFilterSelected = (optionValue: FlatOption) => {
     const filterId = optionValue.id
-    const isSelected = selectedFilters!.some((filter) => filter.id === filterId)
+    const isSelected = (selectedFilters ?? []).some((filter) => filter.id === filterId)
     return isSelected
   }
 
@@ -66,7 +66,7 @@ export function MultiselectDropdown({
     //get the first part of the selected option id
     const optionType = optionValue.id.split('.')[0]
 
-    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(optionType)).length
+    const currentSelectionCount = (selectedFilters ?? []).filter((filter) => filter.id.startsWith(optionType)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
@@ -238,7 +238,7 @@ export function MultiselectDropdown({
 
     if (allSelected) {
       // Deselect all children in this group
-      const updatedFilters = selectedFilters!.filter((filter) => {
+      const updatedFilters = (selectedFilters ?? []).filter((filter) => {
         const groupChildIds = group.children.map((child) => `${child.id}`)
         group.children.map((child) => removeFilter(child.id))
         return !groupChildIds.includes(filter.id)
@@ -247,7 +247,7 @@ export function MultiselectDropdown({
     } else {
       // Select all children in this group (including those already selected)
       const groupFilters = group.children.map((child) => createFilterOption(child))
-      const nonGroupFilters = selectedFilters!.filter((filter) => {
+      const nonGroupFilters = (selectedFilters ?? []).filter((filter) => {
         const groupChildIds = group.children.map((child) => `${child.id}`)
         return !groupChildIds.includes(filter.id)
       })

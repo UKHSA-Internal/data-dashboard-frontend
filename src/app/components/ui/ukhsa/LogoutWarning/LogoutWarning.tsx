@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable tailwindcss/no-custom-classname */
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 
@@ -45,7 +46,7 @@ export default function LogoutWarning({
     countdownInterval.current = setInterval(() => {
       setSecondsLeft((s) => {
         if (s <= 1) {
-          clearInterval(countdownInterval.current!)
+          if (countdownInterval.current) clearInterval(countdownInterval.current)
           countdownInterval.current = null
           triggerLogout()
           return 0

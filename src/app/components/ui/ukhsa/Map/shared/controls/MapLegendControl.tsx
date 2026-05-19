@@ -1,5 +1,5 @@
 'use client'
-/* eslint-disable @typescript-eslint/no-unused-vars */
+/* eslint-disable @typescript-eslint/no-unused-vars, tailwindcss/no-custom-classname */
 import clsx from 'clsx'
 import { ControlPosition } from 'leaflet'
 import { KeyboardEvent, useState } from 'react'

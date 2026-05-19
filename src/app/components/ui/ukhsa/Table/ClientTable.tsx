@@ -58,7 +58,7 @@ export function ClientTable({
 
   // hardcoded for timeseries charts but want to be parameters depending on the use case.
   const title = `${cardData.title_prefix}`
-  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
+  const geographyDetails = `(${geographyParent?.name ?? ''}, ${geography.name})`
   const x_axis_title = 'year'
   const y_axis_title = `Vaccine Coverage %`
   const x_axis = 'date'

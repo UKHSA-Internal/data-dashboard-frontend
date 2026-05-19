@@ -13,18 +13,18 @@ export default function FilterBanners() {
   let showErrorBanner: boolean = false
 
   // Group filters
-  const filterGroups = selectedFilters!.reduce(
+  const filterGroups = (selectedFilters ?? []).reduce(
     (groups, filter) => {
       const prefix = filter.id.split('.')[0]
       if (!groups[prefix]) {
         groups[prefix] = []
       }
-      groups[prefix]!.push(filter)
+      groups[prefix].push(filter)
       return groups
     },
     {} as Record<string, typeof selectedFilters>
   )
-  if (chartRequestErrors!.length > 0) {
+  if ((chartRequestErrors ?? []).length > 0) {
     showErrorBanner = true
   }
 
@@ -33,7 +33,7 @@ export default function FilterBanners() {
     showGeographyLimitBanner = selectedGeographyFilters.length > 3
   }
 
-  const labels = Object.values(filterGroups).flatMap((group) => group!.map((filter) => filter.label))
+  const labels = Object.values(filterGroups).flatMap((group) => group?.map((filter) => filter.label) ?? [])
   const countryList = ['Northern Ireland', 'Scotland', 'Wales']
   const unavailableCountries = countryList.filter((country) => labels.includes(country))
 
@@ -43,7 +43,7 @@ export default function FilterBanners() {
     message += '<li>You can only select <b>four locations</b> to display at a time.</li>'
   }
   if (showErrorBanner) {
-    chartRequestErrors!.map((error: { id: string; error: string }) => {
+    ;(chartRequestErrors ?? []).map((error: { id: string; error: string }) => {
       message += `<li>${error.error}.</li>`
     })
   }

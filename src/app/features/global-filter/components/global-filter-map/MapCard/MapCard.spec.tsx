@@ -194,6 +194,7 @@ describe('MapCard', () => {
   })
 
   test('merges custom className with default classes', () => {
+    // eslint-disable-next-line tailwindcss/no-custom-classname
     render(<MapCard className="custom-class" />)
 
     const mapContainer = screen.getByTestId('map-container')

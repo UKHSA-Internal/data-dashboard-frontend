@@ -45,7 +45,7 @@ const TimeseriesFilterCard = ({
 
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
+  const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent?.name ?? ''}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
   const dataClassification = getDataClassification(isPublic, level ?? 'official_sensitive', authEnabled)

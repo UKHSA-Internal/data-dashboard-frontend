@@ -253,7 +253,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
             break
           case 'data_filter':
             const dataFilterId = filter.id.split('.')[1]
-            const newVaccinationFilter = filters.dataFilters!.data_filters.find(
+            const newVaccinationFilter = (filters.dataFilters?.data_filters ?? []).find(
               (data_filter) => data_filter.id === dataFilterId
             )
 
@@ -267,7 +267,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
 
           case 'threshold':
             const thresholdFilterId = filter.id.split('.')[1]
-            const newThresholdFilter = filters.thresholdFilters!.thresholds.find(
+            const newThresholdFilter = (filters.thresholdFilters?.thresholds ?? []).find(
               (threshold) => threshold.id === thresholdFilterId
             )
 

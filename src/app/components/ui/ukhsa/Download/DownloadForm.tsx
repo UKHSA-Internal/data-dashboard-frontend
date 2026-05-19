@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable tailwindcss/no-custom-classname */
 import clsx from 'clsx'
 import fetch from 'cross-fetch'
 import { useRouter, useSearchParams } from 'next/navigation'

@@ -99,7 +99,7 @@ const SubplotClientChart = ({
                   label: geography.name,
                   geography_type: geography.geography_type,
                   geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                  line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
                 }
               }),
             }

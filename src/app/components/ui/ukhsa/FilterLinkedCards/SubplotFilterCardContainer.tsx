@@ -24,24 +24,24 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
   } = state
 
   const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
+    return (selectedGeographyFilters ?? []).length > 0 && (selectedVaccinationFilters ?? []).length > 0
   }
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
       {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
+      {isChartDataAvailable() && coverageTemplateData ? (
+        (selectedGeographyFilters ?? []).map((geography) => {
           return (
             <SubplotFilterCard
               key={`${geography.geography_code}-subplot`}
               geography={geography}
-              selectedThresholds={selectedThresholdFilters!}
-              selectedVaccinations={selectedVaccinationFilters!}
+              selectedThresholds={selectedThresholdFilters ?? []}
+              selectedVaccinations={selectedVaccinationFilters ?? []}
               geographyFilters={geographyFilters!}
-              cardData={coverageTemplateData!}
-              timePeriods={timePeriods!}
-              timePeriodTitle={timePeriodTitle!}
+              cardData={coverageTemplateData}
+              timePeriods={timePeriods ?? []}
+              timePeriodTitle={timePeriodTitle ?? ''}
               isPublic={isPublic}
               level={pageClassification}
               authEnabled={authEnabled}

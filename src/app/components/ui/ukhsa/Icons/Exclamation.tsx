@@ -8,6 +8,7 @@ export const ExclamationIcon = () => {
       width="45"
       height="45"
       fill="#929292FF"
+      // eslint-disable-next-line tailwindcss/no-custom-classname
       className="bi bi-exclamation-circle"
       viewBox="0 0 16 16"
     >

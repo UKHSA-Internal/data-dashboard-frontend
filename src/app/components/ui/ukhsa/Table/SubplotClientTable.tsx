@@ -65,7 +65,7 @@ export function SubplotClientTable({
   const geographyRelations = flattenGeographyObject(geography)
 
   const title = `${cardData.title_prefix}`
-  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
+  const geographyDetails = `(${geographyParent?.name ?? ''}, ${geography.name})`
   const x_axis_title = 'year'
   const y_axis_title = 'Vaccine coverage %'
   const x_axis = 'geography'
@@ -107,7 +107,7 @@ export function SubplotClientTable({
                   label: geography.name,
                   geography_type: geography.geography_type,
                   geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                  line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
                 }
               }),
             }
