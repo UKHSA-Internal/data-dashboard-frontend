@@ -232,6 +232,7 @@ jobs:
           echo "MOCK_SESSION_USERNAME=Test User" >> .env.local
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
+          cp .env.local .next/standalone/.env.local
 
       - name: Start mock server
         id: start-mock-server
@@ -250,6 +251,8 @@ jobs:
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
           NODE_ENV: test
+          PORT: 3000
+          HOSTNAME: 0.0.0.0
 
       - name: Wait for Next.js app
         shell: sh

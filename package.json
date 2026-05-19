@@ -7,7 +7,7 @@
     "dev:next": "next dev",
     "dev:mock-server": "nodemon ./src/mock-server/index.ts",
     "build": "next build",
-    "start": "next start",
+    "start": "node .next/standalone/server.js",
     "lint": "eslint .",
     "export": "next export",
     "upgrade": "next upgrade",
