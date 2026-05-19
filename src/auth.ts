@@ -23,12 +23,7 @@ const providers: Provider[] = [
 
 const tenMinutes = 60 * 10
 
-const {
-  handlers,
-  signIn,
-  signOut,
-  auth: realAuth,
-} = NextAuth({
+export const { handlers, signIn, signOut, auth } = NextAuth({
   secret: process.env.AUTH_SECRET,
   session: {
     strategy: 'jwt',
@@ -45,6 +40,7 @@ const {
   callbacks: {
     async jwt({ token, account }) {
       if (account) {
+        // First-time login, save the `access_token`, its expiry and the `refresh_token`
         return {
           ...token,
           access_token: account.access_token,
@@ -52,8 +48,11 @@ const {
           refresh_token: account.refresh_token,
         }
       }
+      // This is where we'd usually check for expired tokens but to next-auth incompatibility with app router read only cookies, we cannot modify the JWT with the refreshed token.
+      // A workaround is implemented in middleware.ts
       return token
     },
+
     async session({ session, token }) {
       session.error = token.error
       session.accessToken = token.access_token
@@ -62,24 +61,6 @@ const {
     },
   },
 })
-
-// Mock auth in e2e/test environment
-const auth =
-  process.env.MOCK_SESSION === 'true'
-    ? async () => ({
-        user: {
-          id: 'mock-user-123',
-          name: process.env.MOCK_SESSION_USERNAME ?? 'Test User',
-          email: 'test@ukhsa.gov.uk',
-          image: null,
-        },
-        accessToken: 'mock-access-token',
-        refreshToken: 'mock-refresh-token',
-        expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-      })
-    : realAuth
-
-export { auth, handlers, signIn, signOut }
 
 declare module 'next-auth' {
   interface Session {
