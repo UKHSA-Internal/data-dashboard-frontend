@@ -1,130 +1,127 @@
-import { test as base } from '@playwright/test'
-
-// 1. Define SessionShape type
-export type SessionShape = 'admin' | 'standard' | 'restricted'
-
-// 2. Define mock sessions as a Record keyed by SessionShape
-const mockSessions: Record<
-  SessionShape,
-  { user: { sub: string; email: string; name: string; permissions: string[] }; accessToken: string; expires: string }
-> = {
-  standard: {
-    user: {
-      sub: 'mock-user-123',
-      email: 'test@ukhsa.gov.uk',
-      name: process.env.PLAYWRIGHT_AUTH_USER_USERNAME ?? 'Test User',
-      permissions: ['view:dashboard', 'view:reports'],
-    },
-    accessToken: 'mock-access-token',
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-  },
-  admin: {
-    user: {
-      sub: 'admin-user-123',
-      email: 'admin@ukhsa.gov.uk',
-      name: 'Admin User',
-      permissions: ['view:dashboard', 'view:reports', 'manage:users', 'manage:settings'],
-    },
-    accessToken: 'mock-admin-access-token',
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-  },
-  restricted: {
-    user: {
-      sub: 'restricted-user-123',
-      email: 'restricted@ukhsa.gov.uk',
-      name: 'Restricted User',
-      permissions: [],
-    },
-    accessToken: 'mock-restricted-access-token',
-    expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
-  },
-}
+import { Cookie, Page, test as base } from '@playwright/test'
+import fs from 'fs'
 
 type AuthSetupFixtures = {
   authEnabled: boolean
   authUserName: string
   setupAuth: void
   startLoggedOut: boolean
-  sessionShape: SessionShape
+}
+
+const MICROSOFT_LOGIN_HOST = 'login.microsoftonline.com'
+
+const getHost = (urlString: string) => {
+  try {
+    return new URL(urlString).host
+  } catch {
+    return ''
+  }
+}
+
+const isAllowedAuthHost = (urlString: string, hosts: string[]) => {
+  const host = getHost(urlString)
+  return hosts.some((allowedHost) => host === allowedHost || host.endsWith(`.${allowedHost}`))
+}
+
+async function signInViaMicrosoft(page: Page, username: string, password: string) {
+  await page.getByRole('textbox', { name: /email|phone|skype/i }).fill(username)
+
+  const nextButton = page.getByRole('button', { name: /^next$/i })
+  if (await nextButton.isVisible().catch(() => false)) {
+    await nextButton.click()
+  } else {
+    await page.locator('#idSIButton9').click()
+  }
+
+  await page.locator('input[name="passwd"]').fill(password)
+  await page.locator('#idSIButton9').click()
+
+  // "Stay signed in?" prompt is optional.
+  const staySignedInNo = page.locator('#idBtn_Back')
+  if (await staySignedInNo.isVisible().catch(() => false)) {
+    await staySignedInNo.click()
+  }
 }
 
 export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
-  // 3. Default session shape
-  sessionShape: async ({}, use) => {
-    await use('standard')
-  },
-
   authEnabled: async ({}, use) => {
-    await use(process.env.AUTH_ENABLED === 'true')
+    const isAuthEnabled = process.env.AUTH_ENABLED === 'true'
+    await use(isAuthEnabled)
   },
 
-  // 4. Use sessionShape to get the correct name
-  authUserName: async ({ sessionShape }, use) => {
-    await use(mockSessions[sessionShape].user.name)
+  authUserName: async ({}, use) => {
+    await use(process.env.PLAYWRIGHT_AUTH_USER_USERNAME)
   },
 
   startLoggedOut: async ({}, use) => {
-    await use(false)
+    await use(false) // Default to logged in state
   },
 
   setupAuth: [
-    // 5. Destructure sessionShape in params
-    async ({ page, authEnabled, startLoggedOut, sessionShape }, use) => {
+    async ({ page, authEnabled, startLoggedOut }, use) => {
+      const storagePath = 'e2e/storage/auth.json'
+
+      // For tests that should start logged out or when auth is disabled
       if (!authEnabled || startLoggedOut) {
         await page.context().clearCookies()
         return await use()
       }
 
-      // 6. Now correctly indexes mockSessions
-      const mockSession = mockSessions[sessionShape]
+      // Try to restore auth state from storage
+      if (fs.existsSync(storagePath)) {
+        try {
+          const storageState = JSON.parse(fs.readFileSync(storagePath, 'utf-8'))
+          const cookies = (storageState.cookies as Cookie[]) || []
 
-      await page.context().route('**/api/auth/session', async (route) => {
-        console.log('Auth route hit:', route.request().url())
-        console.log('✅ Session intercepted')
-        await route.fulfill({
-          status: 200,
-          contentType: 'application/json',
-          body: JSON.stringify(mockSession),
-        })
-      })
+          if (cookies.length > 0) {
+            await page.context().addCookies(cookies)
+            return use()
+          }
+        } catch (error) {
+          console.log('❌ Error reading storage state:', error)
+        }
+      }
 
-      await page.context().route('**/oauth2/token', async (route) => {
-        console.log('Auth route hit:', route.request().url())
-        await route.fulfill({
-          status: 200,
-          contentType: 'application/json',
-          body: JSON.stringify({
-            access_token: mockSession.accessToken, // use mockSession not mockSessions
-            token_type: 'Bearer',
-            expires_in: 3600,
-          }),
-        })
-      })
+      // Perform login if needed
+      const username = process.env.PLAYWRIGHT_AUTH_USER_USERNAME || ''
+      const password = process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || ''
+      const authDomainHost = getHost(process.env.AUTH_DOMAIN || '')
+      const allowedAuthHosts = [authDomainHost, MICROSOFT_LOGIN_HOST].filter(Boolean)
 
-      await page.context().route('**/.well-known/openid-configuration', async (route) => {
-        console.log('Auth route hit:', route.request().url())
-        await route.fulfill({
-          status: 200,
-          contentType: 'application/json',
-          body: JSON.stringify({
-            issuer: process.env.AUTH_DOMAIN,
-            token_endpoint: `${process.env.AUTH_DOMAIN}/oauth2/token`,
-            authorization_endpoint: `${process.env.AUTH_DOMAIN}/oauth2/authorize`,
-          }),
-        })
-      })
+      if (!username || !password) {
+        throw new Error('Missing PLAYWRIGHT_AUTH_USER_USERNAME or PLAYWRIGHT_AUTH_USER_PASSWORD for auth-enabled tests')
+      }
 
-      await page.context().addCookies([
-        {
-          name: 'next-auth.session-token',
-          value: 'mock-session-token',
-          domain: 'localhost',
-          path: '/',
-          httpOnly: true,
-          secure: false,
-          sameSite: 'Lax',
-        },
+      if (allowedAuthHosts.length === 0) {
+        throw new Error('AUTH_DOMAIN must be set to a valid URL for auth-enabled tests')
+      }
+
+      await page.goto('/start')
+      await Promise.all([
+        page.waitForURL((url) => isAllowedAuthHost(url.toString(), allowedAuthHosts), { timeout: 30000 }),
+        page.getByRole('button', { name: 'Sign in' }).click(),
       ])
+
+      const currentUrl = page.url()
+
+      if (currentUrl.includes(MICROSOFT_LOGIN_HOST)) {
+        await signInViaMicrosoft(page, username, password)
+      } else {
+        await page.keyboard.press('Tab')
+        await page.keyboard.type(username)
+        await page.keyboard.press('Tab')
+        await page.keyboard.type(password)
+        await page.keyboard.press('Tab')
+        await page.keyboard.press('Tab')
+        await page.keyboard.press('Enter')
+      }
+
+      // Wait until we return to the app domain after external auth redirects.
+      await page.waitForURL((url) => url.host === getHost(process.env.baseURL || ''), { timeout: 30000 })
+
+      // eslint-disable-next-line playwright/no-networkidle
+      await page.waitForLoadState('networkidle')
+      await page.context().storageState({ path: storagePath })
 
       await use()
     },
