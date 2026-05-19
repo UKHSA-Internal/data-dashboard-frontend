@@ -232,7 +232,6 @@ jobs:
           echo "MOCK_SESSION_USERNAME=Test User" >> .env.local
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
-          cp .env.local .next/standalone/.env.local
 
       - name: Start mock server
         id: start-mock-server
@@ -244,19 +243,18 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
-      - name: Start Next.js app
+      - name: Start Dev Server
         id: start-dev-server
         run: |
           npm run start &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
           NODE_ENV: test
-          PORT: 3000
-          HOSTNAME: 0.0.0.0
 
-      - name: Wait for Next.js app
+      - name: Wait for Dev Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
