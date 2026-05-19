@@ -262,6 +262,8 @@ jobs:
           AUTH_ENABLED: true
           AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
           NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
+          MOCK_SESSION: true
+          MOCK_SESSION_USERNAME: Test User
 
       - uses: actions/upload-artifact@v4
         if: ${{ !cancelled() }}
