@@ -268,11 +268,10 @@ jobs:
           AUTH_ENABLED: true
 
       - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
+        if: failure()
         with:
-          name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
-          path: playwright-report/
-          retention-days: 10
+          name: debug-screenshots-${{ matrix.shard }}
+          path: debug-*.png
 
       - name: Cleanup servers
         if: always()
