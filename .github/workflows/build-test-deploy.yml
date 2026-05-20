@@ -246,18 +246,22 @@ jobs:
           cp -r .next/static .next/standalone/.next/static
           cp -r public .next/standalone/public
 
+      - name: Check standalone build
+        run: |
+          ls -la .next/standalone/
+          ls -la .next/standalone/server.js || echo "❌ server.js not found!"
+          cat .next/standalone/.env.local || echo "❌ .env.local not found!"
+      
       - name: Start Dev Server
         id: start-dev-server
         run: |
-          node .next/standalone/server.js &
+          node .next/standalone/server.js > /tmp/nextjs.log 2>&1 &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
+          sleep 5  # ← wait a moment for it to start or crash
+          cat /tmp/nextjs.log  # ← print immediately to see startup errors
         env:
           PORT: 3000
           HOSTNAME: 0.0.0.0
-
-      - name: Print Next.js logs
-        if: always()
-        run: cat /tmp/nextjs.log
 
       - name: Wait for Dev Server
         shell: sh
