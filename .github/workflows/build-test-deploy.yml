@@ -259,6 +259,7 @@ jobs:
       - name: Wait for Dev Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+        timeout-minutes: 3
 
       - name: Run Playwright tests
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
