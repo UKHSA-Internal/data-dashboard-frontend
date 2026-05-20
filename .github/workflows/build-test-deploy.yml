@@ -246,27 +246,14 @@ jobs:
           echo "AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}" >> .env.local
           echo "AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}" >> .env.local
           cp .env.local .next/standalone/.env.local
-
-      - name: Check standalone build exists
-        run: |
-          echo "=== Checking standalone files ==="
-          ls -la .next/standalone/ || echo "❌ standalone folder missing"
-          ls -la .next/standalone/server.js || echo "❌ server.js missing"
-          ls -la .next/standalone/.env.local || echo "❌ .env.local missing"
-          echo "=== .env.local contents ==="
-          cat .next/standalone/.env.local || echo "❌ cannot read .env.local"
-          echo "=== Static files ==="
-          ls -la .next/standalone/.next/static || echo "❌ static files missing"
-          ls -la .next/standalone/public || echo "❌ public folder missing"
+          cp -r .next/static .next/standalone/.next/static  # ← add this
+          cp -r public .next/standalone/public               # ← add this
 
       - name: Start Dev Server
         id: start-dev-server
         run: |
           node .next/standalone/server.js > /tmp/nextjs.log 2>&1 &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
-          sleep 10
-          echo "=== Server startup logs ==="
-          cat /tmp/nextjs.log
         env:
           PORT: 3000
           HOSTNAME: 0.0.0.0
