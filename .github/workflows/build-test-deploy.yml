@@ -250,10 +250,11 @@ jobs:
       - name: Start Dev Server
         id: start-dev-server
         run: |
-          npm run start &
+          node .next/standalone/server.js &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
-          NODE_ENV: test
+          PORT: 3000
+          HOSTNAME: 0.0.0.0
 
       - name: Wait for Dev Server
         shell: sh
