@@ -107,7 +107,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
         previousFilterRef.current = filter
       }
     },
-    [chartData]
+    [chartData, lastUpdated]
   )
 
   useEffect(() => {
@@ -151,7 +151,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
       ) : isLoading ? (
         <LoadingSpinnerContainer />
       ) : (
-        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={filteredFigure} />
+        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={{ frames: [], ...filteredFigure }} />
       )}
       <ChartNoScript title={kebabCase(title)} />
     </>

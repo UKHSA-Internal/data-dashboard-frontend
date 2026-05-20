@@ -90,7 +90,15 @@ const TimeseriesClientChart = ({
     }
 
     fetchCharts()
-  }, [dataFilters, geography])
+  }, [
+    cardData.legend_title,
+    chartDateRange.date_from,
+    chartDateRange.date_to,
+    dataFilters,
+    geography,
+    removeChartRequestError,
+    setChartRequestErrors,
+  ])
 
   useEffect(() => {
     if (chartResponse?.last_updated) {
@@ -99,7 +107,7 @@ const TimeseriesClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
-  }, [chartResponse])
+  }, [chartResponse, handleLatestDate])
 
   if (loading) {
     return (

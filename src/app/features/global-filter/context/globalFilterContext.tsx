@@ -175,11 +175,13 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
   useEffect(() => {
     if (!filters.geographyFilters) return
     fetchGeographyData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-fetch when geography filters change
   }, [filters.geographyFilters])
 
   useEffect(() => {
     if (!selectedVaccination || !selectedTimePeriod) return
     fetchMapData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-fetch when vaccination or time period changes
   }, [selectedVaccination, selectedTimePeriod])
 
   const state: GlobalFilterState = {

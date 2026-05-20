@@ -110,7 +110,7 @@ export function ClientTable({
     }
 
     fetchCharts()
-  }, [dataFilters, geography])
+  }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -153,7 +153,7 @@ export function ClientTable({
     }
 
     fetchTables()
-  }, [dataFilters, geography])
+  }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   if (tableLoading || chartLoading) {
     return (

@@ -78,6 +78,9 @@ interface CustomLeafletEvent extends LeafletMouseEvent {
   }
 }
 
+const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
+const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
+
 interface LayerWithFeature extends Path {
   feature: LocalAuthoritiesFeature & RegionFeature & CountriesFeature
 }
@@ -209,9 +212,6 @@ const CoverLayer = <T extends LayerWithFeature>({
       setGeoJsonData(countriesFeatureCollection)
     }
   }, [])
-
-  const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
-  const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
 
   useEffect(() => {
     if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {

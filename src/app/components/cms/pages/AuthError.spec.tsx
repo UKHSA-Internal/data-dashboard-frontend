@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getServerTranslation } from '@/app/i18n'
 import { render, screen } from '@/config/test-utils'
@@ -67,7 +66,7 @@ describe('AuthError', () => {
   })
 
   test('renders the error page with correct title and error line', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     const { container } = render(component)
 
     expect(screen.getByTestId('heading')).toHaveTextContent('Authentication Error')
@@ -75,13 +74,13 @@ describe('AuthError', () => {
   })
 
   test('fetches page data using the correct slug', async () => {
-    await AuthError({ slug: 'custom-error-slug' })
+    await AuthError({ slug: ['custom-error-slug'], searchParams: {} })
 
     expect(getPageBySlug).toHaveBeenCalledWith('custom-error-slug')
   })
 
   test('renders error text content in RichText component', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     const richTextElements = screen.getAllByTestId('rich-text')
@@ -89,7 +88,7 @@ describe('AuthError', () => {
   })
 
   test('renders sub text content in RichText component with correct styling', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     const richTextElements = screen.getAllByTestId('rich-text')
@@ -99,7 +98,7 @@ describe('AuthError', () => {
   })
 
   test('renders back button with translated text', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     const { container } = render(component)
 
     const backLink = container.querySelector('a[href="/start"]')
@@ -108,20 +107,20 @@ describe('AuthError', () => {
   })
 
   test('loads translations with correct namespace', async () => {
-    await AuthError({ slug: 'auth-error' })
+    await AuthError({ slug: ['auth-error'], searchParams: {} })
 
     expect(getServerTranslation).toHaveBeenCalledWith('auth')
   })
 
   test('renders announcements component with active announcements', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.getByTestId('announcements')).toHaveTextContent('1 announcements')
   })
 
   test('renders related links in sidebar when layout is Sidebar', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.getByTestId('related-links-sidebar')).toBeInTheDocument()
@@ -135,7 +134,7 @@ describe('AuthError', () => {
       related_links_layout: 'Footer',
     })
 
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.getByTestId('related-links-footer')).toBeInTheDocument()
@@ -148,7 +147,7 @@ describe('AuthError', () => {
       related_links_layout: 'None',
     })
 
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.queryByTestId('related-links-sidebar')).not.toBeInTheDocument()
@@ -156,7 +155,7 @@ describe('AuthError', () => {
   })
 
   test('renders error border styling correctly', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     const { container } = render(component)
 
     const errorBorder = container.querySelector('.border-l-\\[9px\\].border-l-red.pl-9')
@@ -164,7 +163,7 @@ describe('AuthError', () => {
   })
 
   test('renders back button with correct SVG icon', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     const { container } = render(component)
 
     const svg = container.querySelector('svg')
@@ -174,7 +173,7 @@ describe('AuthError', () => {
   })
 
   test('wraps content in View component', async () => {
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.getByTestId('view')).toBeInTheDocument()
@@ -186,7 +185,7 @@ describe('AuthError', () => {
       active_announcements: [],
     })
 
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.getByTestId('announcements')).toHaveTextContent('0 announcements')
@@ -199,7 +198,7 @@ describe('AuthError', () => {
       related_links_layout: 'Sidebar',
     })
 
-    const component = await AuthError({ slug: 'auth-error' })
+    const component = await AuthError({ slug: ['auth-error'], searchParams: {} })
     render(component)
 
     expect(screen.getByTestId('related-links-sidebar')).toHaveTextContent('0 related links')

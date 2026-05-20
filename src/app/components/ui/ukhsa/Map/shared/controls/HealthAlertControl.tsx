@@ -127,6 +127,7 @@ const AlertDialogContent = () => {
             <>
               <h3 className="govuk-heading-s govuk-!-margin-bottom-2">{t('map.alertDialog.riskMatrixKey')}</h3>
               <div className="pb-3">
+                {/* eslint-disable-next-line @next/next/no-img-element -- static risk matrix asset */}
                 <img
                   src={'/assets/images/risk-matrix.png'}
                   height={'350'}

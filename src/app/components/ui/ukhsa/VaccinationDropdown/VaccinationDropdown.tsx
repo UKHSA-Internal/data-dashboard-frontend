@@ -32,7 +32,7 @@ export const VaccinationDropdown = ({
     }
     // Otherwise return only matches
     return selectedVaccinationList
-  }, [vaccinationList, selectedFilters])
+  }, [vaccinationList, selectedVaccinationList])
 
   const [newVaccinationList, setNewVaccinationList] = useState(matchingVaccinations)
 

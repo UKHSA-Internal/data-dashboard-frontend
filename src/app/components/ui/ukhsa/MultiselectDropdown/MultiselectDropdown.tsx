@@ -1,10 +1,9 @@
 'use client'
 
 import clsx from 'clsx'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
-/* eslint-disable @typescript-eslint/no-explicit-any*/
 
 export type FlatOption = { id: string; label: string }
 export type GroupedOption = { title: string; children: FlatOption[] }
@@ -28,24 +27,26 @@ export function MultiselectDropdown({
   const dropdownContainerRef = useRef<HTMLDivElement>(null)
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  let options = [] as Options
-
-  if (data) {
-    if (nestedMultiselect) {
-      options = data.map((group: any) => {
-        return {
-          title: group.title,
-          children: group.children.map((item: FlatOption) => {
-            return { id: `${item.id}`, label: item.label }
-          }),
-        }
-      })
-    } else {
-      options = data.map((item: any) => {
-        return { id: `${item.id}`, label: item.label }
-      })
+  const options = useMemo(() => {
+    if (!data) {
+      return [] as Options
     }
-  }
+
+    if (nestedMultiselect) {
+      return (data as GroupedOption[]).map((group) => ({
+        title: group.title,
+        children: group.children.map((item) => ({
+          id: `${item.id}`,
+          label: item.label,
+        })),
+      }))
+    }
+
+    return (data as FlatOption[]).map((item) => ({
+      id: `${item.id}`,
+      label: item.label,
+    }))
+  }, [data, nestedMultiselect])
 
   const createFilterOption = (optionValue: FlatOption) => {
     return {

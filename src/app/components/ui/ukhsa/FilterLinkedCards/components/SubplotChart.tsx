@@ -127,6 +127,7 @@ const SubplotClientChart = ({
     }
 
     fetchCharts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVaccinations, selectedThresholds, geographyFilters, currentTimePeriodIndex])
 
   useEffect(() => {
@@ -136,7 +137,7 @@ const SubplotClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
-  }, [chartResponse])
+  }, [chartResponse, handleLatestDate])
 
   if (loading) {
     return (

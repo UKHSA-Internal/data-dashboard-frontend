@@ -126,7 +126,15 @@ export function SubplotClientTable({
     }
 
     fetchTables()
-  }, [geography, dataFilters, dataFilters, selectedThresholds])
+  }, [
+    currentTimePeriodIndex,
+    dataFilters,
+    geography,
+    geographyFilters,
+    geographyRelations,
+    selectedThresholds,
+    timePeriods,
+  ])
 
   if (tableLoading) {
     return <ClientInformationCard variant="loading" />

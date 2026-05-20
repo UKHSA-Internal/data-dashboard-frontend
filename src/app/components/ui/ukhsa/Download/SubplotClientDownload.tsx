@@ -95,7 +95,15 @@ export function SubplotClientDownload({
     }
 
     fetchTables()
-  }, [geography, dataFilters, selectedThresholds])
+  }, [
+    geography,
+    dataFilters,
+    selectedThresholds,
+    currentTimePeriodIndex,
+    geographyFilters,
+    geographyRelations,
+    timePeriods,
+  ])
 
   if (tableLoading) {
     return (
