@@ -241,10 +241,11 @@ jobs:
           echo "MOCK_SESSION_USERNAME=Test User" >> .env.local
           echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
+          echo "AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}" >> .env.local
+          echo "AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" >> .env.local
+          echo "AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}" >> .env.local
+          echo "AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}" >> .env.local
           cp .env.local .next/standalone/.env.local
-          # ✅ Copy static files needed by standalone
-          cp -r .next/static .next/standalone/.next/static
-          cp -r public .next/standalone/public
 
       - name: Check standalone build exists
         run: |
@@ -261,12 +262,9 @@ jobs:
       - name: Start Dev Server
         id: start-dev-server
         run: |
-          # Copy static assets required by standalone
-          cp -r .next/static .next/standalone/.next/static || echo "❌ failed to copy static"
-          cp -r public .next/standalone/public || echo "❌ failed to copy public"
           node .next/standalone/server.js > /tmp/nextjs.log 2>&1 &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
-          sleep 5
+          sleep 10
           echo "=== Server startup logs ==="
           cat /tmp/nextjs.log
         env:
