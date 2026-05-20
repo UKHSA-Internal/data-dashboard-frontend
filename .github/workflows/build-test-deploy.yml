@@ -247,16 +247,15 @@ jobs:
           echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
           cp .env.local .next/standalone/.env.local
 
-      - name: Start Next.js app
+      - name: Start Dev Server
         id: start-dev-server
         run: |
-          node .next/standalone/server.js &
+          npm run start &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
-          PORT: 3000
-          HOSTNAME: 0.0.0.0
+          NODE_ENV: test
 
-      - name: Wait for Next.js app
+      - name: Wait for Dev Server
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
