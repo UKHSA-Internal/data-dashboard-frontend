@@ -9,6 +9,9 @@ export class AccessOurDataPage {
 
   async goto(page?: string) {
     await this.page.goto(page || '/access-our-data')
+    await this.page.screenshot({ path: `debug-goto-${Date.now()}.png` })
+    console.log('URL after goto:', this.page.url())
+    console.log('Page content:', await this.page.content())
   }
 
   async hasMetadata(expectedTitle?: string) {
