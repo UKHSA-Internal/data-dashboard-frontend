@@ -246,19 +246,29 @@ jobs:
           cp -r .next/static .next/standalone/.next/static
           cp -r public .next/standalone/public
 
-      - name: Check standalone build
+      - name: Check standalone build exists
         run: |
-          ls -la .next/standalone/
-          ls -la .next/standalone/server.js || echo "❌ server.js not found!"
-          cat .next/standalone/.env.local || echo "❌ .env.local not found!"
-      
+          echo "=== Checking standalone files ==="
+          ls -la .next/standalone/ || echo "❌ standalone folder missing"
+          ls -la .next/standalone/server.js || echo "❌ server.js missing"
+          ls -la .next/standalone/.env.local || echo "❌ .env.local missing"
+          echo "=== .env.local contents ==="
+          cat .next/standalone/.env.local || echo "❌ cannot read .env.local"
+          echo "=== Static files ==="
+          ls -la .next/standalone/.next/static || echo "❌ static files missing"
+          ls -la .next/standalone/public || echo "❌ public folder missing"
+
       - name: Start Dev Server
         id: start-dev-server
         run: |
+          # Copy static assets required by standalone
+          cp -r .next/static .next/standalone/.next/static || echo "❌ failed to copy static"
+          cp -r public .next/standalone/public || echo "❌ failed to copy public"
           node .next/standalone/server.js > /tmp/nextjs.log 2>&1 &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
-          sleep 5  # ← wait a moment for it to start or crash
-          cat /tmp/nextjs.log  # ← print immediately to see startup errors
+          sleep 5
+          echo "=== Server startup logs ==="
+          cat /tmp/nextjs.log
         env:
           PORT: 3000
           HOSTNAME: 0.0.0.0
