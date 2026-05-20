@@ -76,7 +76,7 @@ describe('AuthError', () => {
   test('fetches page data using the correct slug', async () => {
     await AuthError({ slug: ['custom-error-slug'], searchParams: {} })
 
-    expect(getPageBySlug).toHaveBeenCalledWith('custom-error-slug')
+    expect(getPageBySlug).toHaveBeenCalledWith(['custom-error-slug'])
   })
 
   test('renders error text content in RichText component', async () => {
