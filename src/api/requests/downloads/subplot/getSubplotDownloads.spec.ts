@@ -37,6 +37,25 @@ const mockSubplots = [
   },
 ]
 
+test('Uses default file_format and threshold params when omitted', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsSubplotCsvFixture,
+    status: 200,
+  })
+
+  await getSubplotDownloads(undefined, undefined, undefined, mockChartParameters, mockSubplots)
+
+  expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
+    body: {
+      file_format: 'csv',
+      target_threshold: null,
+      target_threshold_label: null,
+      chart_parameters: mockChartParameters,
+      subplots: mockSubplots,
+    },
+  })
+})
+
 test('Returns chart data in CSV format', async () => {
   jest.mocked(client).mockResolvedValueOnce({
     data: downloadsSubplotCsvFixture,

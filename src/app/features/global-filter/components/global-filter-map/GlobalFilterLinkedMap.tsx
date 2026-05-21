@@ -9,7 +9,7 @@ import { MapCardTabWrapper } from './MapCard/MapCardTabWrapper'
 export function GlobalFilterLinkedMap({ type, value, id }: z.infer<typeof CardTypes>) {
   if (type === 'filter_linked_map') {
     return (
-      <ChartRowCard>
+      <ChartRowCard testId="map-row-cards">
         <div key={id} className={clsx('mb-3 sm:mb-6 lg:mb-0', 'lg:w-full')}>
           <article className={'ukhsa-map-card'}>
             <ChartRowCardHeader id={`map-row-heading-${id}`} title={value.title_prefix ? value.title_prefix : ''} />
