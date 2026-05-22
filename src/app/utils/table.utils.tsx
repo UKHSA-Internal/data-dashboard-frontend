@@ -42,9 +42,9 @@ export const getColumnHeader = (
 export const getDataClassification = (
   isPublic: boolean | undefined,
   authEnabled: boolean | undefined,
-  dataClassification: DataClassification = 'official_sensitive'
+  dataClassification: DataClassification | undefined,
 ): string | undefined => {
-  if (authEnabled && isPublic === false) {
+  if (authEnabled && isPublic === false && dataClassification) {
     return `(${levelContentCaps[dataClassification]})`
   }
   return ""

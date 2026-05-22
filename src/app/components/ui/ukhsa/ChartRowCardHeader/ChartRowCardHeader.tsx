@@ -24,11 +24,12 @@ export async function ChartRowCardHeader({
   authEnabled,
 }: Readonly<ChartRowCardHeaderProps>) {
   const [, areaName] = await getAreaSelector()
+  const dataClassificationLabel = getDataClassification(isPublic, authEnabled, dataClassification)  
 
   return (
     <header>
       <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
-        {title} {areaName && `(${areaName})`} {getDataClassification(isPublic, authEnabled, dataClassification)}
+        {title} {areaName && `(${areaName})`} {dataClassificationLabel}
       </h3>
       {description ? (
         <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>

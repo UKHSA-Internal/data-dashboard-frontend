@@ -60,7 +60,7 @@ const SubplotFilterCard = ({
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassification = getDataClassification(isPublic, authEnabled, level)
+  const dataClassificationLabel = getDataClassification(isPublic, authEnabled, level)
 
   return (
     <div key={id} className="mb-4">
@@ -68,7 +68,7 @@ const SubplotFilterCard = ({
         <article>
           <header>
             <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
-              {title} {dataClassification}
+              {title} {dataClassificationLabel}
             </h3>
             <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
           </header>
