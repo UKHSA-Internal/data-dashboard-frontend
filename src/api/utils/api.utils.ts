@@ -7,7 +7,7 @@ import {
   nonPublicCacheRevalidationInterval,
   publicCacheRevalidationInterval,
 } from '@/config/constants'
-import { getServerSession } from '@/lib/auth/auth-session'
+import { getClientSession, getServerSession } from '@/lib/auth/auth-session'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -54,8 +54,7 @@ export async function getAuthToken(): Promise<string | undefined> {
     }
   } else {
     // Client side
-    const { getSession } = await import('next-auth/react')
-    const session = await getSession()
+    const session = await getClientSession()
     return session?.accessToken
   }
 }
