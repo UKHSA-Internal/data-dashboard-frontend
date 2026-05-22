@@ -13,11 +13,11 @@ import { ClientTable } from '@/app/components/ui/ukhsa/Table/ClientTable'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
+import { getDataClassification } from '@/app/utils/table.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
 import { Card } from '../Card/Card'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '../Tabs/Tabs'
-import { getDataClassification } from '@/app/utils/table.utils'
 
 interface TimeseriesFilterCardProps {
   geography: GeographiesSchemaObject
