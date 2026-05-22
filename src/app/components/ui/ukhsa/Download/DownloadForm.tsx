@@ -5,6 +5,7 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
 
 import type { Chart } from '@/api/models/cms/Page'
+import { getAuthToken } from '@/api/utils/api.utils'
 import { useTranslation } from '@/app/i18n/client'
 import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath } from '@/config/constants'
@@ -52,6 +53,16 @@ export function DownloadForm({
     try {
       const formData = new FormData(event.currentTarget)
 
+      if (isPublic === false) {
+        const accessToken = isPublic ? undefined : await getAuthToken()
+
+        formData.append(
+          'headers',
+          JSON.stringify({
+            ...(accessToken ? { 'X-UHD-AUTH': `Bearer ${accessToken}` } : {}),
+          })
+        )
+      }
       const res = await fetch(chartExportApiRoutePath, {
         method: 'post',
         body: formData,
