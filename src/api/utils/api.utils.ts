@@ -7,6 +7,7 @@ import {
   nonPublicCacheRevalidationInterval,
   publicCacheRevalidationInterval,
 } from '@/config/constants'
+import { getServerSession } from '@/lib/auth/auth-session'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -37,13 +38,15 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  * Fetch the authentication token
  * @returns The authentication token or undefined
  * Only import auth at runtime, not at build time
+ * This is because the auth module imports next-auth which imports next which imports a lot of node built-in modules that are not available in the edge runtime, causing the build to fail when trying to import this module in the edge runtime.
+ * By importing auth at runtime, we can avoid importing next-auth and next in the edge runtime, allowing this module to be used in both the edge and node runtimes.
  */
+
 export async function getAuthToken(): Promise<string | undefined> {
   if (typeof window === 'undefined') {
-    // Server side
+    // Server side - cached per request
     try {
-      const { auth } = await import('@/auth')
-      const session = await auth()
+      const session = await getServerSession()
       return session?.accessToken
     } catch (error) {
       console.error('Failed to get auth token:', error)
