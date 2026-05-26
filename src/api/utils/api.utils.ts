@@ -135,9 +135,9 @@ export async function client<T>(
         msg: `API request failed`,
         status,
         statusText: response.statusText,
-        url: response.url, // ← which endpoint
-        requestBody: body, // ← what params were sent
-        isPublic, // ← auth state
+        url: response.url,
+        requestBody: body,
+        isPublic,
       })
       const error = new Error(response.statusText)
       error.code = status
