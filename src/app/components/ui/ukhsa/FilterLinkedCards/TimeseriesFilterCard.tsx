@@ -13,7 +13,7 @@ import { ClientTable } from '@/app/components/ui/ukhsa/Table/ClientTable'
 import DropdownTab from '@/app/components/ui/ukhsa/Tabs/DropdownTab'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { getDataClassification } from '@/app/utils/table.utils'
+import { getDataClassificationLabel } from '@/app/utils/table.utils'
 import { getMinMaxYears, MinMaxYear } from '@/app/utils/time-period.utils'
 
 import { Card } from '../Card/Card'
@@ -48,7 +48,7 @@ const TimeseriesFilterCard = ({
   const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent!.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassificationLabel = getDataClassification(isPublic, authEnabled, dataClassification)
+  const dataClassificationLabel = getDataClassificationLabel(isPublic, authEnabled, dataClassification)
 
   return (
     <div key={id} className="mb-4">

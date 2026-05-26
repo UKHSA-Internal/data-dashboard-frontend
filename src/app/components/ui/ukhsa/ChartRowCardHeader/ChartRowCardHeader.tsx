@@ -2,7 +2,7 @@ import { ReactNode } from 'react'
 
 import { DataClassification } from '@/api/models/DataClassification'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
-import { getDataClassification } from '@/app/utils/table.utils'
+import { getDataClassificationLabel } from '@/app/utils/table.utils'
 
 interface ChartRowCardHeaderProps {
   children?: ReactNode
@@ -24,7 +24,7 @@ export async function ChartRowCardHeader({
   authEnabled,
 }: Readonly<ChartRowCardHeaderProps>) {
   const [, areaName] = await getAreaSelector()
-  const dataClassificationLabel = getDataClassification(isPublic, authEnabled, dataClassification)  
+  const dataClassificationLabel = getDataClassificationLabel(isPublic, authEnabled, dataClassification)
 
   return (
     <header>

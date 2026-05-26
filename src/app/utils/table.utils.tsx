@@ -39,13 +39,13 @@ export const getColumnHeader = (
   )
 }
 
-export const getDataClassification = (
+export const getDataClassificationLabel = (
   isPublic: boolean | undefined,
   authEnabled: boolean | undefined,
-  dataClassification: DataClassification | undefined,
+  dataClassification: DataClassification | undefined
 ): string | undefined => {
   if (authEnabled && isPublic === false && dataClassification) {
     return `(${levelContentCaps[dataClassification]})`
   }
-  return ""
+  return ''
 }

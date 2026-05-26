@@ -18,7 +18,7 @@ import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/comp
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { getDataClassification } from '@/app/utils/table.utils'
+import { getDataClassificationLabel } from '@/app/utils/table.utils'
 
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
@@ -60,7 +60,7 @@ const SubplotFilterCard = ({
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassificationLabel = getDataClassification(isPublic, authEnabled, level)
+  const dataClassificationLabel = getDataClassificationLabel(isPublic, authEnabled, level)
 
   return (
     <div key={id} className="mb-4">
