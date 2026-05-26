@@ -303,8 +303,7 @@ test('landing page half width charts should render the largest size (half) with 
     expect.objectContaining({
       chart_width: 650,
       chart_height: 200,
-    }),
-    false
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
