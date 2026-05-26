@@ -1,6 +1,6 @@
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
@@ -121,9 +121,17 @@ export const renderCard = (
       {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
 
       {type === 'chart_row_card' && (
-        <ChartRowCard>
-          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
-        </ChartRowCard>
+        <Suspense
+          fallback={
+            <div className="govuk-body govuk-!-margin-bottom-6" aria-busy="true">
+              Loading chart...
+            </div>
+          }
+        >
+          <ChartRowCard>
+            <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
+          </ChartRowCard>
+        </Suspense>
       )}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
