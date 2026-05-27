@@ -186,7 +186,7 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
     {
       type: 'section',
       value: {
-        heading: 'Outbreaks and HCAI',
+        heading: 'HCAI',
         page_link: 'http://localhost/outbreaks/',
         content: [
           {
