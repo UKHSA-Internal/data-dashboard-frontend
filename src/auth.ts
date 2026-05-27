@@ -42,7 +42,6 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   callbacks: {
     async jwt({ token, account, profile }) {
       if (account) {
-        // TODO: Check behaviour if key doesn't exist
         const userId = profile ? (profile['custom:entraObjectId'] as string) : ''
         auditLog(userId, 'LOG_IN', undefined)
         // First-time login, save the `access_token`, its expiry and the `refresh_token`

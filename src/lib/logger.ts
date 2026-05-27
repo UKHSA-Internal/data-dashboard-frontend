@@ -9,8 +9,7 @@ const setupLogger = () => {
   return pino()
 }
 
-// TODO: Check how the environment gets set
-const ENV = process.env.APP_ENV ?? process.env.NODE_ENV ?? 'development'
+const ENV = process.env.NODE_ENV ?? 'development'
 const auditLogger = pino({ level: 'info' })
 
 export function auditLog(user: string, action: string, target?: string) {
