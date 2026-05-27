@@ -267,7 +267,7 @@ describe('client()', () => {
       const [, options] = mockFetchFn.mock.calls[0]
       // getAuthToken() checks `typeof window === 'undefined'`
       // jsdom defines window, so auth is never called — falls back to API_KEY
-      expect(options.headers.Authorization).toBe('test-api-key')
+      expect(options.headers['X-UHD-AUTH']).toBe('Bearer user-access-token')
     })
 
     it('does not send Bearer header when auth returns no token', async () => {
@@ -276,7 +276,7 @@ describe('client()', () => {
       await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
-      expect(options.headers.Authorization).toBe('test-api-key')
+      expect(options.headers['X-UHD-AUTH']).toBeUndefined()
     })
   })
 })
