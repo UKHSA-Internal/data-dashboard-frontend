@@ -188,7 +188,7 @@ describe('ChartRowCard', () => {
       () => {
         const header1 = screen.getByTestId('header-0') as HTMLElement
         if (mockDebouncedWidth >= 1024) {
-          const height = parseInt(header1.style.height || '0')
+          const height = Number.parseInt(header1.style.height || '0')
           expect(height).toBe(100)
         }
       },
@@ -221,8 +221,8 @@ describe('ChartRowCard', () => {
         const header1 = screen.getByTestId('header-1') as HTMLElement
 
         if (mockDebouncedWidth >= 1024) {
-          const height0 = parseInt(header0.style.height || '0')
-          const height1 = parseInt(header1.style.height || '0')
+          const height0 = Number.parseInt(header0.style.height || '0')
+          const height1 = Number.parseInt(header1.style.height || '0')
           expect(height0).toBe(80)
           expect(height1).toBe(90)
         }
@@ -252,8 +252,8 @@ describe('ChartRowCard', () => {
         const header1 = screen.getByTestId('header-1') as HTMLElement
 
         if (mockDebouncedWidth >= 1024) {
-          expect(parseInt(header0.style.height || '0')).toBe(100)
-          expect(parseInt(header1.style.height || '0')).toBe(150)
+          expect(Number.parseInt(header0.style.height || '0')).toBe(100)
+          expect(Number.parseInt(header1.style.height || '0')).toBe(150)
         }
       },
       { timeout: 2000 }
@@ -284,8 +284,8 @@ describe('ChartRowCard', () => {
         const header2 = screen.getByTestId('header-1') as HTMLElement
 
         if (mockDebouncedWidth >= 1024) {
-          expect(parseInt(header1.style.height || '0')).toBe(150)
-          expect(parseInt(header2.style.height || '0')).toBe(100)
+          expect(Number.parseInt(header1.style.height || '0')).toBe(150)
+          expect(Number.parseInt(header2.style.height || '0')).toBe(100)
         }
       },
       { timeout: 2000 }
