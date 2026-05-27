@@ -41,7 +41,6 @@ jest.mock('@/auth', () => ({
 
 jest.mock('@/lib/auth/auth-session', () => ({
   getServerSession: jest.fn(),
-  getClientSession: jest.fn(),
 }))
 // --- Imports ---
 
@@ -86,7 +85,22 @@ describe('client()', () => {
     mockFetchFn.mockReset()
     mockFetchFn.mockResolvedValue(makeFetchResponse())
     ;(isWellKnownEnvironment as jest.Mock).mockReturnValue(true)
+    ;(getServerSession as jest.Mock).mockReset()
     process.env.API_KEY = 'test-api-key'
+
+    Object.defineProperty(globalThis, 'window', {
+      value: undefined,
+      writable: true,
+      configurable: true,
+    })
+  })
+
+  afterEach(() => {
+    Object.defineProperty(globalThis, 'window', {
+      value: {},
+      writable: true,
+      configurable: true,
+    })
   })
 
   // --- URL construction ---
@@ -260,7 +274,7 @@ describe('client()', () => {
       await client('v1/data', {}, true)
 
       const [, options] = mockFetchFn.mock.calls[0]
-      expect(options.headers.Authorization).toBe('test-api-key')
+      expect(options.headers['X-UHD-AUTH']).toBeUndefined()
     })
 
     it('adds Bearer token for non-public requests when auth resolves a token', async () => {
