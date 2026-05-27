@@ -401,8 +401,9 @@ export class App {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
-      await card.waitFor({ state: 'visible', timeout: 30000 })
+      await card.waitFor({ state: 'attached', timeout: 30000 })
       await card.scrollIntoViewIfNeeded()
+      await card.waitFor({ state: 'visible', timeout: 30000 })
 
       if (device === 'mobile') {
         await card
