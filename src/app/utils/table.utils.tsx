@@ -10,7 +10,7 @@ const levelContent: Record<DataClassification, string> = {
 
 const levelContentCaps: Record<DataClassification, string> = {
   official: 'OFFICIAL',
-  official_sensitive: 'OFFICIAL SENSITIVE',
+  official_sensitive: 'OFFICIAL-SENSITIVE',
   protective_marking_not_set: 'PROTECTIVE MARKING NOT SET',
   secret: 'SECRET',
   top_secret: 'TOP SECRET',
