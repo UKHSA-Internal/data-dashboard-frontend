@@ -35,10 +35,6 @@ jest.mock('next/headers', () => ({
   cookies: jest.fn(),
 }))
 
-jest.mock('@/auth', () => ({
-  auth: jest.fn(),
-}))
-
 jest.mock('@/lib/auth/auth-session', () => ({
   getServerSession: jest.fn(),
 }))
