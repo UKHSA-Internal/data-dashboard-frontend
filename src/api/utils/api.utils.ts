@@ -8,7 +8,6 @@ import {
   publicCacheRevalidationInterval,
 } from '@/config/constants'
 import { getClientSession, getServerSession } from '@/lib/auth/auth-session'
-import { logger } from '@/lib/logger'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -16,7 +15,6 @@ import { getApiBaseUrl } from '../requests/helpers'
 interface Options {
   body?: unknown
   searchParams?: URLSearchParams
-  isPublic?: boolean
   baseUrl?: string
   headers?: Record<string, string>
   cache?: RequestInit['cache']
@@ -131,14 +129,6 @@ export async function client<T>(
         return Promise.reject(JSON.stringify(response))
       }
     } else {
-      logger.error({
-        msg: `API request failed`,
-        status,
-        statusText: response.statusText,
-        url: response.url,
-        requestBody: body,
-        isPublic,
-      })
       const error = new Error(response.statusText)
       error.code = status
       return Promise.reject(error)

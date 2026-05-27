@@ -218,7 +218,7 @@ describe('client()', () => {
 
   describe('caching (next.revalidate)', () => {
     it('sets revalidate to 0 when ISRCachingEnabled is false and authEnabled is false', async () => {
-      await client('v1/data', { isPublic: true })
+      await client('v1/data', {}, true)
 
       const [, options] = mockFetchFn.mock.calls[0]
       expect(options.next.revalidate).toBe(0)
@@ -253,7 +253,7 @@ describe('client()', () => {
 
   describe('auth token (non-public requests)', () => {
     it('does not fetch auth token for public requests', async () => {
-      await client('v1/data', { isPublic: true })
+      await client('v1/data', {}, true)
 
       const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.Authorization).toBe('test-api-key')
@@ -262,7 +262,7 @@ describe('client()', () => {
     it('adds Bearer token for non-public requests when auth resolves a token', async () => {
       ;(auth as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
 
-      await client('v1/data', { isPublic: false })
+      await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
       // getAuthToken() checks `typeof window === 'undefined'`
@@ -273,7 +273,7 @@ describe('client()', () => {
     it('does not send Bearer header when auth returns no token', async () => {
       ;(auth as jest.Mock).mockResolvedValue(null)
 
-      await client('v1/data', { isPublic: false })
+      await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
       expect(options.headers.Authorization).toBe('test-api-key')
