@@ -56,7 +56,7 @@ const setChartCardHeaderSize = (row: HTMLDivElement | null, width: number) => {
  *      Calculate and set the height of the tab panels based on the dynamic height of the chart svg
  *
  */
-export function ChartRowCard({ children, testId = 'chart-row-cards' }: ChartRowCardProps) {
+export function ChartRowCard({ children, testId = 'chart-row-cards' }: Readonly<ChartRowCardProps>) {
   const ref = useRef<HTMLDivElement>(null)
   const { width } = useWindowSize()
   const searchParams = useSearchParams()
