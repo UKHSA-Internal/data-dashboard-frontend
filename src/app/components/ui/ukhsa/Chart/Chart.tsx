@@ -176,6 +176,7 @@ export async function Chart({ data, sizes, enableInteractive = true, isPublic = 
             title={data.title}
             chart={data.chart}
             chartData={chartData}
+            isPublic={isPublic}
           />
         </div>
       </>

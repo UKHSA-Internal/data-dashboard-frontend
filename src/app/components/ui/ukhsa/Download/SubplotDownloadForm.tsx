@@ -43,21 +43,19 @@ export function SubplotDownloadForm({
 
     try {
       const formData = new FormData(event.currentTarget)
+      const headers = new Headers()
 
+      if (isPublic === false) {
+        const accessToken = await getAuthToken()
+        if (accessToken) {
+          headers.set('X-UHD-AUTH', `Bearer ${accessToken}`)
+        }
+      }
       const res = await fetch(subplotChartExportApiRoutePath as string, {
         method: 'POST',
         body: formData,
+        headers,
       })
-      if (isPublic === false) {
-        const accessToken = isPublic ? undefined : await getAuthToken()
-
-        formData.append(
-          'headers',
-          JSON.stringify({
-            ...(accessToken ? { 'X-UHD-AUTH': `Bearer ${accessToken}` } : {}),
-          })
-        )
-      }
 
       if (res.redirected !== true) {
         const data = await res.text()

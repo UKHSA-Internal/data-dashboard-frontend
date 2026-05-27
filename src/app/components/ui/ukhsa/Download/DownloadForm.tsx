@@ -53,19 +53,18 @@ export function DownloadForm({
     try {
       const formData = new FormData(event.currentTarget)
 
-      if (isPublic === false) {
-        const accessToken = isPublic ? undefined : await getAuthToken()
+      const headers = new Headers()
 
-        formData.append(
-          'headers',
-          JSON.stringify({
-            ...(accessToken ? { 'X-UHD-AUTH': `Bearer ${accessToken}` } : {}),
-          })
-        )
+      if (isPublic === false) {
+        const accessToken = await getAuthToken()
+        if (accessToken) {
+          headers.set('X-UHD-AUTH', `Bearer ${accessToken}`)
+        }
       }
       const res = await fetch(chartExportApiRoutePath, {
         method: 'post',
         body: formData,
+        headers,
       })
 
       const data = await res.text()
