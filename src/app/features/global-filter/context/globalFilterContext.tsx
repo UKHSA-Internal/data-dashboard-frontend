@@ -253,7 +253,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
               addFilterToSelectedGeographyFilters(prevFilters, newGeographyFilter)
             )
             break
-          case 'data_filter':
+          case 'data_filter': {
             const dataFilterId = filter.id.split('.')[1]
             const newVaccinationFilter = (filters.dataFilters?.data_filters ?? []).find(
               (data_filter) => data_filter.id === dataFilterId
@@ -266,8 +266,8 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
               addFilterToSelectedVaccinationFilters(prevFilters, newVaccinationFilter)
             )
             break
-
-          case 'threshold':
+          }
+          case 'threshold': {
             const thresholdFilterId = filter.id.split('.')[1]
             const newThresholdFilter = (filters.thresholdFilters?.thresholds ?? []).find(
               (threshold) => threshold.id === thresholdFilterId
@@ -280,6 +280,7 @@ export const GlobalFilterProvider = ({ children, filters }: GlobalFilterProvider
               addFilterToSelectedThresholdFilters(prevFilters, newThresholdFilter)
             )
             break
+          }
         }
       }
     },
