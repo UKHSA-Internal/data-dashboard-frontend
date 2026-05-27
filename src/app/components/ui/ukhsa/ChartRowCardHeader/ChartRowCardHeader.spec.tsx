@@ -27,6 +27,22 @@ describe('ChartRowCardHeader', () => {
     expect(screen.getByText('Sample Description')).toBeInTheDocument()
   })
 
+   test('renders data classification in heading when non-public', async () => {
+    getAreaSelectorMock.mockResolvedValue([])
+    render(
+      await ChartRowCardHeader({
+        id: '1',
+        title: 'Sample Title',
+        description: 'Sample Description',
+        isPublic: false,
+        dataClassification: 'official_sensitive',
+        authEnabled: true,
+      })
+    )
+
+    expect(screen.getByText(/OFFICIAL-SENSITIVE/)).toBeInTheDocument()
+  })
+
   test('displays a location when set', async () => {
     getAreaSelectorMock.mockResolvedValue([null, 'Test Area'])
     render(
