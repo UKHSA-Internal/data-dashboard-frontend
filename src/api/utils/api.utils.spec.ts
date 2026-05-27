@@ -39,13 +39,17 @@ jest.mock('@/auth', () => ({
   auth: jest.fn(),
 }))
 
+jest.mock('@/lib/auth/auth-session', () => ({
+  getServerSession: jest.fn(),
+  getClientSession: jest.fn(),
+}))
 // --- Imports ---
 
 import { cookies } from 'next/headers'
 
 import { client } from '@/api/utils/api.utils'
 import { isWellKnownEnvironment } from '@/app/utils/app.utils'
-import { auth } from '@/auth'
+import { getServerSession } from '@/lib/auth/auth-session'
 
 // --- Helpers ---
 
@@ -260,7 +264,7 @@ describe('client()', () => {
     })
 
     it('adds Bearer token for non-public requests when auth resolves a token', async () => {
-      ;(auth as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
+      ;(getServerSession as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
 
       await client('v1/data', {}, false)
 
@@ -271,7 +275,7 @@ describe('client()', () => {
     })
 
     it('does not send Bearer header when auth returns no token', async () => {
-      ;(auth as jest.Mock).mockResolvedValue(null)
+      ;(getServerSession as jest.Mock).mockResolvedValue(null)
 
       await client('v1/data', {}, false)
 
