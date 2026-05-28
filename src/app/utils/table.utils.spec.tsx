@@ -92,7 +92,7 @@ describe('getDataClassificationLabel', () => {
   })
 
   test('returns classification when authEnabled is true', () => {
-    expect(getDataClassificationLabel(false, true, 'official_sensitive')).toBe('(OFFICIAL SENSITIVE)')
+    expect(getDataClassificationLabel(false, true, 'official_sensitive')).toBe('(OFFICIAL-SENSITIVE)')
   })
 
   test('returns empty string when isPublic is true', () => {
@@ -104,7 +104,7 @@ describe('getDataClassificationLabel', () => {
   })
 
   test('returns uppercase classification wrapped in parentheses for official_sensitive', () => {
-    expect(getDataClassificationLabel(false, true, 'official_sensitive')).toBe('(OFFICIAL SENSITIVE)')
+    expect(getDataClassificationLabel(false, true, 'official_sensitive')).toBe('(OFFICIAL-SENSITIVE)')
   })
 
   test('returns uppercase classification wrapped in parentheses for official', () => {
