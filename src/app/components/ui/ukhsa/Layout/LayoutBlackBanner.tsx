@@ -4,12 +4,9 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 
 import { Announcement } from '@/app/components/ui/ukhsa'
 import { GovukHeader } from '@/app/components/ui/ukhsa/GovukHeader/GovukHeader'
-import { MegaMenu } from '@/app/components/ui/ukhsa/MegaMenu/MegaMenu'
-import { TopNav } from '@/app/components/ui/ukhsa/TopNav/TopNav'
-import UserAvatar from '@/app/components/ui/ukhsa/UserAvatar/UserAvatar'
+import { MenuBar } from '@/app/components/ui/ukhsa/Menu/MenuBar'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { authEnabled } from '@/config/constants'
 
 export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   const { t } = await getServerTranslation('common')
@@ -19,12 +16,9 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
   return (
     <>
       <GovukHeader serviceTitle={t('serviceTitle')} />
+      <MenuBar />
 
-      <TopNav avatar={authEnabled ? <UserAvatar /> : null}>
-        <MegaMenu />
-      </TopNav>
-
-      <div className="govuk-width-container bg-blue" />
+      {/* <TopNav avatar={authEnabled ? <UserAvatar /> : null} children={''} /> */}
 
       <div className="govuk-width-container print:hidden">
         <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">

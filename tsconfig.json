@@ -1,7 +1,11 @@
 {
   "compilerOptions": {
     "target": "es2015",
-    "lib": ["dom", "dom.iterable", "esnext"],
+    "lib": [
+      "dom",
+      "dom.iterable",
+      "esnext"
+    ],
     "allowJs": true,
     "skipLibCheck": true,
     "strict": true,
@@ -12,20 +16,39 @@
     "moduleResolution": "bundler",
     "resolveJsonModule": true,
     "isolatedModules": true,
-    "jsx": "preserve",
+    "jsx": "react-jsx",
     "incremental": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["./src/*"],
-      "#/*": ["./public/*"]
+      "@/*": [
+        "./src/*"
+      ],
+      "#/*": [
+        "./public/*"
+      ]
     },
-    "types": ["jest", "node", "@testing-library/jest-dom", "@types/gtag.js"],
+    "types": [
+      "jest",
+      "node",
+      "@testing-library/jest-dom",
+      "@types/gtag.js"
+    ],
     "plugins": [
       {
         "name": "next"
       }
     ]
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/proxy.ts", ".next/dev/types/**/*.ts"],
-  "exclude": ["node_modules", "__mocks__/*.tsx"]
+  "include": [
+    "next-env.d.ts",
+    "**/*.ts",
+    "**/*.tsx",
+    ".next/types/**/*.ts",
+    "src/proxy.ts",
+    ".next/dev/types/**/*.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "__mocks__/*.tsx"
+  ]
 }

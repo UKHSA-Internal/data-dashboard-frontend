@@ -258,6 +258,25 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   }
 }
 
+.ukhsa-chevron-right {
+  &:after {
+    content: '';
+    height: 10px;
+    width: 10px;
+    transform: rotate(-45deg);
+    border-bottom: 2px solid #fff;
+    border-right: 2px solid #fff;
+    display: inline-block;
+    margin: 0 2px 3px 8px;
+  }
+
+  &:focus {
+    &:after {
+      border-color: var(--colour-black) !important;
+    }
+  }
+}
+
 .ukhsa-section-link {
   &:link,
   &:visited {
@@ -289,17 +308,17 @@ input#search {
   display: grid;
   grid-column-gap: 10px;
   grid-template-columns: 1fr;
-  grid-template-rows: 50px 34px 50px 50px;
+  grid-template-rows: 50px 34px 50px;
 
   // 450 - 1200px
   @media (min-width: 450px) {
-    grid-template-columns: 164px 1fr 100px;
     grid-template-rows: 1fr 50px;
+    grid-template-columns: 164px 1fr;
   }
 
   // 1200px +
-  @media (min-width: 1200px) {
-    grid-template-columns: 164px 1fr 550px 100px;
+  @media (min-width: 1050px) {
+    grid-template-columns: 164px 1fr 550px;
     grid-template-rows: 1fr;
   }
 }
@@ -344,7 +363,7 @@ input#search {
   }
 
   // 1200px +
-  @media (min-width: 1200px) {
+  @media (min-width: 1050px) {
     margin-top: 10px;
     margin-bottom: 0;
     grid-column-gap: 0;
