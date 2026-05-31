@@ -31,10 +31,6 @@ export default async function Layout({ children }: LayoutProps) {
       <GovukHeader serviceTitle={t('serviceTitle')} />
       <MenuBar />
 
-      {/* <TopNav avatar={authEnabled ? <UserAvatar /> : null}> */}
-        
-      {/* </TopN//av> */}
-
       <div className="govuk-width-container bg-blue" />
       <div className="govuk-width-container print:hidden">
         <PhaseBanner tag={t('feedbackBannerPhase')}>

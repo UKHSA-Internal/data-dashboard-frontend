@@ -3,7 +3,7 @@ export const menu = {
     {
       type: 'link',
       value: {
-        title: "Home",
+        title: 'Home',
         page: 1,
         html_url: '/',
       },
@@ -12,7 +12,7 @@ export const menu = {
     {
       type: 'link',
       value: {
-        title: "Health topics",
+        title: 'Health topics',
         page: 1,
         html_url: '/health-topics/',
       },
@@ -21,16 +21,7 @@ export const menu = {
     {
       type: 'link',
       value: {
-        title: "Metrics documentation",
-        page: 1,
-        html_url: '/metrics-documentation/',
-      },
-      id: '123e4567-e89b-12d3-a456-426614174000',
-    },
-    {
-      type: 'link',
-      value: {
-        title: "API",
+        title: 'API',
         page: 1,
         html_url: '/api/',
       },
@@ -39,16 +30,16 @@ export const menu = {
     {
       type: 'link',
       value: {
-        title: "Data documentation",
-        page: 3,
-        html_url: '/data-documentation/',
+        title: 'Metrics documentation',
+        page: 1,
+        html_url: '/metrics-documentation/',
       },
-      id: 'd8e270c7-f3d7-41cf-8d7c-c2bbe62ed71d',
+      id: '123e4567-e89b-12d3-a456-426614174000',
     },
     {
       type: 'link',
       value: {
-        title: "About",
+        title: 'About',
         page: 14,
         html_url: '/about/',
       },

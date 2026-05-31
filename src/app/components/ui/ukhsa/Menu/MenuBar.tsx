@@ -1,17 +1,16 @@
 import { getMenu } from '@/api/requests/menus/getMenu'
+import { auth } from '@/auth'
 
 import MenuBarContent from './MenuBarContent'
 
-const isSignedIn = true
-
 export async function MenuBar() {
-  const menu = await getMenu()
+  const [menu, session] = await Promise.all([getMenu(), auth()])
   const items = menu?.data?.active_menu ?? []
+  const isSignedIn = Boolean(session?.user?.name || session?.user?.email)
 
   if (items.length === 0) {
     return null
   }
-
 
   return (
     <div className="-mt-2 bg-blue" data-testid="ukhsa-menu-bar">
@@ -20,7 +19,6 @@ export async function MenuBar() {
       </nav>
     </div>
   )
-  // return <MenuBarContent items={items} />
 }
 
 export default MenuBar
