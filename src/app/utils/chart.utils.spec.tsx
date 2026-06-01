@@ -105,7 +105,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockToday.getFullYear().toString())
+    const timespan = getChartTimespan(plots, mockToday.toString())
     // Should calculate from two years ago to today (approximately 2 years)
     expect(timespan.years).toBeGreaterThanOrEqual(1)
     expect(timespan.years).toBeLessThanOrEqual(3)
