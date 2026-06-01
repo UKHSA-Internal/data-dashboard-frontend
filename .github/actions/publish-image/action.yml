@@ -29,7 +29,7 @@ runs:
       uses: docker/setup-buildx-action@d7f5e7f509e45cec5c76c4d5afdd7de93d0b3df5
 
     - name: Configure AWS credentials
-      uses: aws-actions/configure-aws-credentials@v4
+      uses: aws-actions/configure-aws-credentials@99214aa6889fcddfa57764031d71add364327e59
       with:
         role-to-assume: ${{ inputs.role-to-assume }}
         aws-region: ${{ env.AWS_REGION }}
