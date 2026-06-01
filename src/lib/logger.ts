@@ -9,14 +9,13 @@ const setupLogger = () => {
   return pino()
 }
 
-const ENV = process.env.NODE_ENV ?? 'development'
 const auditLogger = pino({ level: 'info' })
 
 export function auditLog(user: string, action: string, target?: string) {
   const timestamp = new Date().toISOString()
 
   // Match against the Python logging format to keep audit events consistent
-  const message = `[AUDIT_EVENT] ${timestamp} [ENVIRONMENT:${ENV}] [${user} - ${action} - ${target}]`
+  const message = `[AUDIT_EVENT] ${timestamp} [User:${user} - Action:${action} - Target:${target}]`
 
   auditLogger.info(message)
 }

@@ -88,7 +88,7 @@ test('Sends confidence_intervals as true in request body', async () => {
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
-      isPublic: true,
+      is_public: true,
       plots: [
         {
           topic: 'COVID-19',
@@ -125,7 +125,7 @@ test('Sends confidence_intervals as false in request body', async () => {
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
-      isPublic: true,
+      is_public: true,
       plots: [
         {
           topic: 'COVID-19',
@@ -156,7 +156,7 @@ test('Defaults confidence_intervals to false when not provided', async () => {
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
-      isPublic: true,
+      is_public: true,
       plots: [
         {
           topic: 'COVID-19',
