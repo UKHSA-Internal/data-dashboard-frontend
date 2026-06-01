@@ -273,6 +273,13 @@ describe('client()', () => {
       expect(options.headers['X-UHD-AUTH']).toBeUndefined()
     })
 
+    it('does not pass auth token for public requests even when a token is available', async () => {
+      await client('v1/data', {}, true)
+
+      const [, options] = mockFetchFn.mock.calls[0]
+      expect(options.headers['X-UHD-AUTH']).toBeUndefined()
+    })
+
     it('adds Bearer token for non-public requests when auth resolves a token', async () => {
       ;(getServerSession as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
 

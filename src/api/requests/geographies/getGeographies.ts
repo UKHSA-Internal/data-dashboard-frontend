@@ -40,7 +40,6 @@ export type GeographyParams = {
 }
 
 export const getGeographies = async (params: GeographyParams, isPublic?: boolean) => {
-  console.log('getGeographies called with params:', params, 'isPublic:', isPublic)
   try {
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
