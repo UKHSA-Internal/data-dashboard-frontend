@@ -89,7 +89,7 @@ jobs:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: 'Report Success'
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
         if: ${{ needs.lighthouse.result == 'success' }}
         with:
           status: success
@@ -100,7 +100,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: 'Report Failure'
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
         if: ${{ needs.lighthouse.result == 'failure' }}
         with:
           status: failure
