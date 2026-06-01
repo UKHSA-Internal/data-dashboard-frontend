@@ -83,7 +83,7 @@ jobs:
         run: NODE_ENV=test npm run start &
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
           name: unlighthouse-report
@@ -191,7 +191,7 @@ jobs:
         env:
           baseURL: http://localhost:3000
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
@@ -247,7 +247,7 @@ jobs:
   #     - name: Run Playwright tests
   #       run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
 
-  #     - uses: actions/upload-artifact@v4
+  #     - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
   #       if: ${{ !cancelled() }}
   #       with:
   #         name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
