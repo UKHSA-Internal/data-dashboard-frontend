@@ -120,19 +120,28 @@ export const renderCard = (
 
       {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
 
-      {type === 'chart_row_card' && (
-        <Suspense
-          fallback={
-            <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true">
-              Loading chart
-            </div>
-          }
-        >
-          <ChartRowCard>
-            <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
-          </ChartRowCard>
-        </Suspense>
-      )}
+      {type === 'chart_row_card' &&
+        (() => {
+          const content = (
+            <ChartRowCard>
+              <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
+            </ChartRowCard>
+          )
+
+          return authEnabled && isPublic === false ? (
+            <Suspense
+              fallback={
+                <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true">
+                  Loading chart
+                </div>
+              }
+            >
+              {content}
+            </Suspense>
+          ) : (
+            content
+          )
+        })()}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
