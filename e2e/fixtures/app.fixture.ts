@@ -402,10 +402,12 @@ export class App {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
 
       if (device === 'mobile') {
+        await card.locator('.chartLoader').waitFor({ state: 'detached' })
         await card
           .getByRole('combobox', { name: `Choose display option for '${lowerCase(name)}' data` })
           .selectOption('Download')
       } else {
+        await card.locator('.chartLoader').waitFor({ state: 'detached' })
         await card.getByRole('tab', { name: 'Download' }).click()
       }
 
