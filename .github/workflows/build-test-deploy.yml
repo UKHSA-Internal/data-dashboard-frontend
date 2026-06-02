@@ -338,7 +338,7 @@ jobs:
         id: generate-deployment-token
         uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
-          app-id: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_APP_ID }}
+          client-id: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_APP_ID }}
           private-key: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_PRIVATE_KEY }}
           skip-token-revoke: false
           # Although this is the default, this is explicitly set so that
