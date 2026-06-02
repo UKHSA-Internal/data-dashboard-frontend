@@ -123,8 +123,8 @@ export const renderCard = (
       {type === 'chart_row_card' && (
         <Suspense
           fallback={
-            <div className="govuk-body govuk-!-margin-bottom-6" aria-busy="true">
-              Loading chart...
+            <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true">
+              Loading chart
             </div>
           }
         >
