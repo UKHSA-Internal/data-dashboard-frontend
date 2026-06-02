@@ -131,7 +131,7 @@ export const renderCard = (
           return authEnabled && isPublic === false ? (
             <Suspense
               fallback={
-                <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true">
+                <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true" role="status">
                   Loading chart
                 </div>
               }
