@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   const confidenceIntervals = confidenceIntervalsValue === 'true'
 
   const params = requestSchema.safeParse({
-    is_public: body.get('is_public') === 'true' ? true : false,
+    is_public: body.get('is_public') === 'true',
     file_format: body.get('format'),
     x_axis: body.get('x_axis'),
     confidence_intervals: confidenceIntervals,

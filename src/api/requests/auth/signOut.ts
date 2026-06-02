@@ -20,7 +20,7 @@ import { getAuthApiBaseUrl } from '../helpers'
 
 export async function signOut(options?: { redirectRoute?: string; redirect?: true }) {
   const session = await auth()
-  auditLog(session?.userId ?? '', 'LOG_OUT', undefined)
+  auditLog(session?.userId ?? '', 'LOG_OUT')
 
   if (!session?.refreshToken) {
     logger.warn('No refresh token available during sign out')

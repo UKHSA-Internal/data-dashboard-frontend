@@ -24,7 +24,7 @@ export default async function UserSignOut() {
       action={async () => {
         'use server'
         try {
-          auditLog(session.userId ?? '', 'LOG_OUT', undefined)
+          auditLog(session.userId ?? '', 'LOG_OUT')
           await signOut({ redirect: false })
         } catch {
           logger.error('issue calling authJS signout.')

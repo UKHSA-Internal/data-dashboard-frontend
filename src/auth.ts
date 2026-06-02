@@ -43,7 +43,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async jwt({ token, account, profile }) {
       if (account) {
         const userId = profile ? (profile['custom:entraObjectId'] as string) : ''
-        auditLog(userId, 'LOG_IN', undefined)
+        auditLog(userId, 'LOG_IN')
         // First-time login, save the `access_token`, its expiry and the `refresh_token`
         return {
           ...token,
