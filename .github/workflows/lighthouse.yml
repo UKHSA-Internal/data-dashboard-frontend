@@ -33,7 +33,7 @@ jobs:
     name: Install
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - name: Install
@@ -44,7 +44,7 @@ jobs:
     needs: [install]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Set environment URL
         id: set-url
@@ -73,7 +73,7 @@ jobs:
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site ${{ env.TARGET_URL }} --budget=80
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
           name: unlighthouse-report
@@ -86,10 +86,10 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: 'Report Success'
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
         if: ${{ needs.lighthouse.result == 'success' }}
         with:
           status: success
@@ -100,7 +100,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: 'Report Failure'
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
         if: ${{ needs.lighthouse.result == 'failure' }}
         with:
           status: failure
