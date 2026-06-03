@@ -24,7 +24,7 @@ jobs:
     runs-on: ubuntu-22.04-arm
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           fetch-depth: 0
 
@@ -44,7 +44,7 @@ jobs:
     needs: [secret-scan]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - name: Install
@@ -55,7 +55,7 @@ jobs:
     needs: [install]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Build
@@ -71,7 +71,7 @@ jobs:
     runs-on: ubuntu-latest
     if: false # Temporarily disabled due to config overriding CLI params and running against production
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Start mock server
@@ -83,7 +83,7 @@ jobs:
         run: NODE_ENV=test npm run start &
       - name: Unlighthouse assertions and client
         run: npx unlighthouse-ci --build-static --site http://localhost:3000/ --budget=80
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
           name: unlighthouse-report
@@ -100,7 +100,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Quality check
@@ -115,7 +115,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: TypeScript Compilation
@@ -131,7 +131,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
       - name: Unit tests
@@ -157,7 +157,7 @@ jobs:
       matrix:
         shard: [1, 2, 3]
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
 
@@ -191,7 +191,7 @@ jobs:
         env:
           baseURL: http://localhost:3000
 
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
@@ -292,7 +292,7 @@ jobs:
     needs: [build]
     runs-on: ubuntu-22.04-arm
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Build Docker image
         run: docker build -t fe-test .
@@ -340,7 +340,7 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - name: Build and publish docker image
         uses: ./.github/actions/publish-image
         with:
@@ -361,13 +361,13 @@ jobs:
 
     steps:
       - name: Check out code
-        uses: actions/checkout@v4
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: Generate ephemeral deployment token
         id: generate-deployment-token
-        uses: actions/create-github-app-token@v2
+        uses: actions/create-github-app-token@bcd2ba49218906704ab6c1aa796996da409d3eb1
         with:
-          app-id: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_APP_ID }}
+          client-id: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_APP_ID }}
           private-key: ${{ secrets.DEPLOYMENT_TOKEN_FACTORY_PRIVATE_KEY }}
           skip-token-revoke: false
           # Although this is the default, this is explicitly set so that
