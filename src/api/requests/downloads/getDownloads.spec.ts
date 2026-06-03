@@ -163,3 +163,46 @@ test('Defaults confidence_intervals to false when not provided', async () => {
     },
   })
 })
+test('Forwards auth token to client when present', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsCsvFixture,
+    status: 200,
+  })
+
+  await getDownloads(
+    [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
+    'csv',
+    null,
+    false,
+    'Bearer test-token'
+  )
+
+  expect(client).toHaveBeenCalledWith('downloads/v2', {
+    body: {
+      plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
+      file_format: 'csv',
+      x_axis: null,
+      confidence_intervals: false,
+    },
+    headers: { 'X-UHD-AUTH': 'Bearer test-token' },
+  })
+})
+
+test('Does not forward auth header when no token present', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsCsvFixture,
+    status: 200,
+  })
+
+  await getDownloads([{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }], 'csv', null, false)
+
+  expect(client).toHaveBeenCalledWith('downloads/v2', {
+    body: {
+      plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
+      file_format: 'csv',
+      x_axis: null,
+      confidence_intervals: false,
+    },
+    headers: undefined,
+  })
+})

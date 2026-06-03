@@ -32,21 +32,22 @@ describe('POST /api/download/chart', () => {
     jest.resetAllMocks()
   })
 
-  test('Downloads the requested chart in csv format', async () => {
-    const formData = new FormData()
-    formData.set('format', 'csv')
-    formData.set('plots', JSON.stringify(mockPlot))
-
-    const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
+  const mockRequest = (formData: FormData, authToken?: string) =>
+    Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
         get: (header: string) => {
           if (header === 'origin') return 'http://localhost:3000'
-          if (header === 'X-UHD-AUTH') return 'Bearer test-token'
+          if (header === 'X-UHD-AUTH') return authToken ?? null
           return null
         },
       },
       formData: () => formData,
     })
+  test('Downloads the requested chart in csv format', async () => {
+    const formData = new FormData()
+    formData.set('format', 'csv')
+    formData.set('plots', JSON.stringify(mockPlot))
+    const req = mockRequest(formData)
 
     jest.mocked(client).mockResolvedValueOnce({
       data: downloadsCsvFixture,
@@ -62,6 +63,7 @@ describe('POST /api/download/chart', () => {
         confidence_intervals: false,
         plots: [mockPlot],
       },
+      headers: undefined,
     })
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
@@ -76,12 +78,7 @@ describe('POST /api/download/chart', () => {
     formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-1' }))
     formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-2' }))
 
-    const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
-      headers: {
-        get: () => 'http://localhost:3000',
-      },
-      formData: () => formData,
-    })
+    const req = mockRequest(formData)
 
     jest.mocked(client).mockResolvedValueOnce({
       data: downloadsCsvFixture,
@@ -107,6 +104,7 @@ describe('POST /api/download/chart', () => {
           },
         ],
       },
+      headers: undefined,
     })
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
@@ -208,12 +206,7 @@ describe('POST /api/download/chart', () => {
     formData.set('plots', JSON.stringify(mockPlot))
     formData.set('confidence_intervals', 'true')
 
-    const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
-      headers: {
-        get: () => 'http://localhost:3000',
-      },
-      formData: () => formData,
-    })
+    const req = mockRequest(formData)
 
     jest.mocked(client).mockResolvedValueOnce({
       data: downloadsCsvFixture,
@@ -242,12 +235,7 @@ describe('POST /api/download/chart', () => {
     formData.set('plots', JSON.stringify(mockPlot))
     formData.set('confidence_intervals', 'false')
 
-    const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
-      headers: {
-        get: () => 'http://localhost:3000',
-      },
-      formData: () => formData,
-    })
+    const req = mockRequest(formData)
 
     jest.mocked(client).mockResolvedValueOnce({
       data: downloadsCsvFixture,
