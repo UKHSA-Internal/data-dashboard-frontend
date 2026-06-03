@@ -75,11 +75,7 @@ describe('Get timespan between dates for chart', () => {
     expect(timespan).toEqual({ years: 2, months: 1 })
   })
 
-  test('when all plots have missing date_to, uses today as date_to', () => {
-    const today = new Date()
-    const twoYearsAgo = new Date(today)
-    twoYearsAgo.setFullYear(today.getFullYear() - 2)
-
+  test('when all plots have missing date_to, uses lastUpdated as date_to', () => {
     const plots = [
       {
         type: 'plot' as const,
@@ -88,7 +84,7 @@ describe('Get timespan between dates for chart', () => {
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
-          date_from: twoYearsAgo.toISOString().split('T')[0],
+          date_from: '2023-05-21',
           date_to: null,
         },
       },
@@ -99,16 +95,15 @@ describe('Get timespan between dates for chart', () => {
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
-          date_from: twoYearsAgo.toISOString().split('T')[0],
+          date_from: '2023-05-21',
           date_to: null,
         },
       },
     ]
 
     const timespan = getChartTimespan(plots, mockLastUpdated)
-    // Should calculate from two years ago to today (approximately 2 years)
-    expect(timespan.years).toBeGreaterThanOrEqual(1)
-    expect(timespan.years).toBeLessThanOrEqual(3)
+    // Should calculate from two years before to lastUpdated
+    expect(timespan).toEqual({ years: 2, months: 0 })
   })
 
   test('when some plots have date_to and some dont, includes open-ended plots capped at lastUpdated', () => {
