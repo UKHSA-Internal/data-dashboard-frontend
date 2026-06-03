@@ -7,6 +7,8 @@ export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
 
+  const authToken = req.headers.get('X-UHD-AUTH')
+
   const body = await req.formData()
 
   const plots = []
@@ -32,7 +34,7 @@ export async function POST(req: NextRequest) {
   if (params.success) {
     const { plots, file_format: fileFormat, x_axis, confidence_intervals } = params.data
 
-    const response = await getDownloads(plots, fileFormat, x_axis, confidence_intervals)
+    const response = await getDownloads(plots, fileFormat, x_axis, confidence_intervals, authToken)
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')

@@ -39,7 +39,11 @@ describe('POST /api/download/chart', () => {
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
-        get: () => 'http://localhost:3000',
+        get: (header: string) => {
+          if (header === 'origin') return 'http://localhost:3000'
+          if (header === 'X-UHD-AUTH') return 'Bearer test-token'
+          return null
+        },
       },
       formData: () => formData,
     })

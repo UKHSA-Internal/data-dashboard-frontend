@@ -45,7 +45,7 @@ export function SubplotDownloadForm({
       const formData = new FormData(event.currentTarget)
       const headers = new Headers()
 
-      if (isPublic === false) {
+      if (authEnabled && isPublic === false) {
         const accessToken = await getAuthToken()
         if (accessToken) {
           headers.set('X-UHD-AUTH', `Bearer ${accessToken}`)

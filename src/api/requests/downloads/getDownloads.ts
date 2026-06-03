@@ -29,7 +29,8 @@ export const getDownloads = async (
   plots: RequestParams['plots'],
   format: RequestParams['file_format'] = 'csv',
   x_axis: RequestParams['x_axis'] = null,
-  confidence_intervals: RequestParams['confidence_intervals'] = false
+  confidence_intervals: RequestParams['confidence_intervals'] = false,
+  authToken?: string | null
 ) => {
   try {
     const body: RequestParams = {
@@ -38,7 +39,9 @@ export const getDownloads = async (
       file_format: format,
       confidence_intervals,
     }
-    const { data } = await client<string>(`downloads/v2`, { body })
+    const headers = authToken ? { 'X-UHD-AUTH': authToken } : undefined
+
+    const { data } = await client<string>(`downloads/v2`, { body, headers })
 
     return data
   } catch (error) {
