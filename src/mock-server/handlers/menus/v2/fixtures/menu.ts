@@ -7,7 +7,7 @@ export const menu = {
         page: 1,
         html_url: '/',
       },
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: 'a6ad2add-32b5-4dd3-b3c0-87ad2fc0a86d',
     },
     {
       type: 'link',
@@ -16,7 +16,7 @@ export const menu = {
         page: 1,
         html_url: '/health-topics/',
       },
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '62561429-8ebb-418d-99e4-6f8ec62719a5',
     },
     {
       type: 'link',
@@ -25,7 +25,7 @@ export const menu = {
         page: 1,
         html_url: '/api/',
       },
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: '977b4690-aa5a-48b3-8673-138d3397f76a',
     },
     {
       type: 'link',
@@ -34,7 +34,7 @@ export const menu = {
         page: 1,
         html_url: '/metrics-documentation/',
       },
-      id: '123e4567-e89b-12d3-a456-426614174000',
+      id: 'a2a068a4-b228-472a-bd22-d1e09e85c502',
     },
     {
       type: 'link',
@@ -43,7 +43,7 @@ export const menu = {
         page: 14,
         html_url: '/about/',
       },
-      id: '021352b9-d606-48ee-b942-1739ccec9e03',
+      id: '804dde2a-d5ff-4b05-ad45-2ab8481e1251',
     },
   ],
 }

@@ -18,8 +18,6 @@ export async function LayoutBlackBanner({ children }: { children: ReactNode }) {
       <GovukHeader serviceTitle={t('serviceTitle')} />
       <MenuBar />
 
-      {/* <TopNav avatar={authEnabled ? <UserAvatar /> : null} children={''} /> */}
-
       <div className="govuk-width-container print:hidden">
         <div className="govuk-phase-banner" data-testid="ukhsa-phase-banner">
           <p className="govuk-phase-banner__content">

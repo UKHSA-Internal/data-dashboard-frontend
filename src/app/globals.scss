@@ -202,9 +202,9 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   &:after {
     content: '';
     height: 3px;
-    left: 0px;
+    left: 0;
     position: absolute;
-    right: 0px;
+    right: 0;
     bottom: 0;
     top: auto;
   }

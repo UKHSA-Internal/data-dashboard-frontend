@@ -36,7 +36,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
       <nav aria-label="Menu" className="govuk-width-container hidden md:block">
         <ul className="govuk-list govuk-!-margin-0 flex list-none flex-wrap items-center gap-4 py-3">
           {items.map(({ id, value: { html_url, title } }) => (
-            <li key={`menu-bar-desktop-${id}-${html_url}`} className="govuk-!-margin-0">
+            <li key={`menu-bar-desktop-${id}`} className="govuk-!-margin-0">
               <Link
                 href={html_url}
                 className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 inline-block p-0 text-white no-underline hover:underline focus:text-black"
@@ -90,7 +90,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
         <ul className="govuk-list govuk-width-container govuk-!-font-size-16 mt-0 list-none border-t border-mid-grey px-3">
           {items.map(({ id, value: { html_url, title } }) => (
             <li
-              key={`menu-bar-mobile-${id}-${html_url}`}
+              key={`menu-bar-mobile-${id}`}
               className="govuk-!-margin-0 border-b border-mid-grey py-[2px] last:border-b-0"
             >
               <Link

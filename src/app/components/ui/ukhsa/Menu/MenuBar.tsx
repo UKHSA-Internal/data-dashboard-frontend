@@ -14,7 +14,7 @@ export async function MenuBar() {
 
   return (
     <div className="-mt-2 bg-blue" data-testid="ukhsa-menu-bar">
-      <nav aria-label="Menu" className="">
+      <nav aria-label="Menu">
         <MenuBarContent items={items} isSignedIn={isSignedIn} />
       </nav>
     </div>
