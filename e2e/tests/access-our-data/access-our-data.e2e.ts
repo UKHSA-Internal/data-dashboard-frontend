@@ -153,7 +153,7 @@ test.describe('Access our data - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ accessOurDataPage, app }) => {
     await accessOurDataPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -162,7 +162,7 @@ test.describe('Access our data - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ accessOurDataPage, app }) => {
     await accessOurDataPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -171,7 +171,7 @@ test.describe('Access our data - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ accessOurDataPage, app }) => {
     await accessOurDataPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 

@@ -188,7 +188,7 @@ test.describe('Cover - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ coverPage, app }) => {
     await coverPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
   test('map functionality on mobile', async ({ coverPage }) => {
     await test.step('loads the page', async () => {
@@ -231,7 +231,7 @@ test.describe('Cover - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ coverPage, app }) => {
     await coverPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 
   test('map functionality on tablet', async ({ coverPage }) => {

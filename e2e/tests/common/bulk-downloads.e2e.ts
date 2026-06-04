@@ -73,7 +73,7 @@ test.describe('Bulk downloads - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -82,7 +82,7 @@ test.describe('Bulk downloads - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -91,6 +91,6 @@ test.describe('Bulk downloads - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })

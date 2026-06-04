@@ -38,6 +38,9 @@ import {
   WhatsNewParentPage,
 } from './index'
 
+// The static desktop menu bar items
+const navMenuItems = ['Home', 'Health topics', 'API', 'Metrics documentation', 'About']
+
 type Fixtures = {
   app: App
   authStartPage: AuthStartPage
@@ -83,8 +86,8 @@ export class App {
   readonly areaSelector: Locator
   readonly authEnabled: boolean
   readonly authUserName: string
-  readonly menuLinkClosed: Locator
-  readonly menuLinkOpen: Locator
+  readonly mobileMenuButtonClosed: Locator
+  readonly mobileMenuButtonOpen: Locator
 
   constructor(page: Page, authEnabled: boolean, authUserName: string) {
     this.page = page
@@ -100,13 +103,14 @@ export class App {
     this.areaSelector = this.page.getByRole('form', { name: 'Area selector' })
     this.authEnabled = authEnabled
     this.authUserName = authUserName
-    this.menuLinkClosed = this.page.getByRole('link', {
-      name: this.authEnabled ? `Show navigation menu – Logged in as ${this.authUserName}` : 'Show navigation menu',
+    // The mobile menu bar uses a button toggle to show/hide the navigation
+    this.mobileMenuButtonClosed = this.page.getByRole('button', {
+      name: 'Show navigation menu',
       exact: true,
       expanded: false,
     })
-    this.menuLinkOpen = this.page.getByRole('link', {
-      name: this.authEnabled ? `Hide navigation menu – Logged in as ${this.authUserName}` : 'Hide navigation menu',
+    this.mobileMenuButtonOpen = this.page.getByRole('button', {
+      name: 'Hide navigation menu',
       exact: true,
       expanded: true,
     })
@@ -216,65 +220,35 @@ export class App {
     await expect(this.page.locator('input#search')).not.toBeVisible()
   }
 
-  // TODO: Rename once above test removed in CDD-2154
-  async hasNav() {
+  async hasMobileNav() {
     await this.waitForPageLoaded()
 
-    await expect(this.menuLinkClosed).toBeVisible()
+    await expect(this.mobileMenuButtonClosed).toBeVisible()
 
     // Open menu
-    await this.menuLinkClosed.click()
+    await this.mobileMenuButtonClosed.click()
 
-    await expect(this.menuLinkOpen).toBeVisible()
+    await expect(this.mobileMenuButtonOpen).toBeVisible()
 
-    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toMatchAriaSnapshot(`
-      - navigation "Menu":
-        ${this.authEnabled ? '- button "Sign out"' : ''}
-        - heading "Respiratory viruses" [level=3]
-        - list:
-          - listitem:
-            - link "COVID-19"
-            - paragraph: COVID-19 respiratory infection statistics
-          - listitem:
-            - link "Influenza"
-            - paragraph: Flu ICU and HDU admissions and other statistics
-          - listitem:
-            - link "Other respiratory viruses"
-            - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
-        - heading "Services and information" [level=3]
-        - list:
-          - listitem:
-            - link "Homepage"
-            - paragraph: The UKHSA data dashboard
-          - listitem:
-            - link "About"
-            - paragraph: About the dashboard
-          - listitem:
-            - link "Metrics documentation"
-            - paragraph: See all available metrics
-          - listitem:
-            - link "Weather health alerts"
-            - paragraph: Weather health alerting system provided by UKHSA
-          - listitem:
-            - link "Access our data"
-            - paragraph: API developer's guide
-        - list:
-          - listitem:
-            - link "What's new"
-          - listitem:
-            - link "What's coming"
-          - listitem:
-            - link "Switchboard"
-            - paragraph: Front-end environment settings
-  `)
-
-    // Close menu
-    await this.menuLinkOpen.click()
-
-    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toBeHidden()
+    const mobileNav = this.page.locator('#ukhsa-menu-bar-nav')
+    for (const name of navMenuItems) {
+      await expect(mobileNav.getByRole('link', { name, exact: true })).toBeVisible()
+    }
   }
 
-  async hasNotNav() {
+  async hasDesktopNav() {
+    await this.waitForPageLoaded()
+
+    // No toggle button on desktop, the menu is permanently visible
+    await expect(this.mobileMenuButtonClosed).toBeHidden()
+
+    const menuBar = this.page.getByTestId('ukhsa-menu-bar').first()
+    for (const name of navMenuItems) {
+      await expect(menuBar.getByRole('link', { name, exact: true }).filter({ visible: true })).toBeVisible()
+    }
+  }
+
+  async hasNotMobileNav() {
     await expect(this.sideNav).toBeHidden()
   }
 
