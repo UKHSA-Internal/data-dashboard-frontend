@@ -106,7 +106,7 @@ export async function client<T>(
   }
 
   const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
-
+  console.debug(`Making request to ${url} with options:`, fetchOptions)
   return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok, headers } = response
 
