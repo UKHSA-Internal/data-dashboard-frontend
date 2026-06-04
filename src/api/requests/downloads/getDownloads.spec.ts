@@ -177,6 +177,7 @@ test('Forwards auth token to client when present', async () => {
   })
 
   await getDownloads(
+    true,
     [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
     'csv',
     null,
@@ -185,6 +186,7 @@ test('Forwards auth token to client when present', async () => {
   )
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
+    is_public: true,
     body: {
       plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
       file_format: 'csv',
@@ -201,9 +203,10 @@ test('Does not forward auth header when no token present', async () => {
     status: 200,
   })
 
-  await getDownloads([{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }], 'csv', null, false)
+  await getDownloads(true,[{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }], 'csv', null, false)
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
+    is_public: true,
     body: {
       plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
       file_format: 'csv',
