@@ -35,7 +35,7 @@ export async function POST(req: NextRequest) {
   if (params.success) {
     const { is_public, plots, file_format: fileFormat, x_axis, confidence_intervals } = params.data
     
-    const response = await getDownloads(plots, is_public, plots, fileFormat, x_axis, confidence_intervals, authToken)
+    const response = await getDownloads(is_public, plots, fileFormat, x_axis, confidence_intervals, authToken)
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')
