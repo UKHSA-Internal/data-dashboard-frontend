@@ -25,6 +25,7 @@ export async function POST(req: NextRequest) {
   const confidenceIntervals = confidenceIntervalsValue === 'true'
 
   const params = requestSchema.safeParse({
+    is_public: body.get('is_public') === 'true',
     file_format: body.get('format'),
     x_axis: body.get('x_axis'),
     confidence_intervals: confidenceIntervals,
@@ -32,9 +33,9 @@ export async function POST(req: NextRequest) {
   })
 
   if (params.success) {
-    const { plots, file_format: fileFormat, x_axis, confidence_intervals } = params.data
-
-    const response = await getDownloads(plots, fileFormat, x_axis, confidence_intervals, authToken)
+    const { is_public, plots, file_format: fileFormat, x_axis, confidence_intervals } = params.data
+    
+    const response = await getDownloads(plots, is_public, plots, fileFormat, x_axis, confidence_intervals, authToken)
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')

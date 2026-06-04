@@ -52,6 +52,7 @@ export function DownloadForm({
 
     try {
       const formData = new FormData(event.currentTarget)
+      formData.append('is_public', isPublic.toString())
 
       const headers = new Headers()
 

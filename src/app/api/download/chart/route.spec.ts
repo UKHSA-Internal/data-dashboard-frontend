@@ -45,6 +45,7 @@ describe('POST /api/download/chart', () => {
     })
   test('Downloads the requested chart in csv format', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     const req = mockRequest(formData)
@@ -58,6 +59,7 @@ describe('POST /api/download/chart', () => {
 
     expect(client).toHaveBeenCalledWith('downloads/v2', {
       body: {
+        is_public: true,
         file_format: 'csv',
         x_axis: null,
         confidence_intervals: false,
@@ -73,6 +75,7 @@ describe('POST /api/download/chart', () => {
 
   test('Downloads the requested chart with multiple plots', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-1' }))
@@ -89,6 +92,7 @@ describe('POST /api/download/chart', () => {
 
     expect(client).toHaveBeenCalledWith('downloads/v2', {
       body: {
+        is_public: true,
         file_format: 'csv',
         x_axis: null,
         confidence_intervals: false,
@@ -114,6 +118,7 @@ describe('POST /api/download/chart', () => {
 
   test('Downloads the requested chart in json format', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('format', 'json')
     formData.set('plots', JSON.stringify(mockPlot))
 
@@ -202,6 +207,7 @@ describe('POST /api/download/chart', () => {
 
   test('Downloads the requested chart with confidence_intervals set to true', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     formData.set('confidence_intervals', 'true')
@@ -217,6 +223,7 @@ describe('POST /api/download/chart', () => {
 
     expect(client).toHaveBeenCalledWith('downloads/v2', {
       body: {
+        is_public: true,
         file_format: 'csv',
         x_axis: null,
         confidence_intervals: true,
@@ -231,6 +238,7 @@ describe('POST /api/download/chart', () => {
 
   test('Downloads the requested chart with confidence_intervals set to false', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     formData.set('confidence_intervals', 'false')
@@ -246,6 +254,7 @@ describe('POST /api/download/chart', () => {
 
     expect(client).toHaveBeenCalledWith('downloads/v2', {
       body: {
+        is_public: true,
         file_format: 'csv',
         x_axis: null,
         confidence_intervals: false,
