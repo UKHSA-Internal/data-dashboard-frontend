@@ -19,6 +19,7 @@ addAliases({
   '@/config': `${process.cwd()}/src/config`,
   '@/lib': `${process.cwd()}/src/lib`,
   '@/api': `${process.cwd()}/src/api`,
+  '@/auth': `${process.cwd()}/src/mock-server/auth/auth-shim.js`,
 })
 
 import express from 'express'
