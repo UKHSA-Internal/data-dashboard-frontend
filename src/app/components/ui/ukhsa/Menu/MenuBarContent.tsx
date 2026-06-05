@@ -50,7 +50,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
               <button
                 type="button"
                 onClick={() => serverSignOut()}
-                className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 ukhsa-chevron-right inline-flex cursor-pointer items-center border-none bg-transparent p-0 text-white no-underline shadow-none hover:underline focus:text-black"
+                className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 ukhsa-chevron-right inline-flex cursor-pointer items-center border-none p-0 text-white no-underline hover:underline focus:text-black"
               >
                 Sign out
               </button>
@@ -68,7 +68,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
           aria-expanded={menuOpen}
           aria-controls={'ukhsa-menu-bar-nav'}
           className={clsx(
-            'govuk-!-font-size-16 govuk-body-s ukhsa-chevron group relative mb-0 flex items-center border-none bg-transparent px-0 py-3 pr-1 text-left font-normal text-white shadow-none focus:text-black',
+            'govuk-!-font-size-16 govuk-body-s ukhsa-chevron group relative mb-0 flex items-center border-none px-0 py-3 pr-1 text-left font-normal text-white focus:text-black',
             { open: menuOpen }
           )}
         >
@@ -79,7 +79,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
           <button
             type="button"
             onClick={() => serverSignOut()}
-            className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 ukhsa-chevron-right inline-flex cursor-pointer items-center border-none bg-transparent p-0 text-white no-underline shadow-none hover:underline focus:text-black"
+            className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 ukhsa-chevron-right inline-flex cursor-pointer items-center border-none p-0 text-white no-underline shadow-none hover:underline focus:text-black"
           >
             Sign out
           </button>
