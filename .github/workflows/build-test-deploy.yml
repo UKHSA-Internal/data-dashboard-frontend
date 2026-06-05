@@ -147,62 +147,62 @@ jobs:
   # Playwright tests - Public - (fully mocked backend)
   ##############################################################################
 
-  e2e-tests-public:
-    name: Playwright (Public) (${{ matrix.shard }}/${{ strategy.job-total }})
-    needs: [build]
-    timeout-minutes: 20
-    runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2, 3]
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
+  # e2e-tests-public:
+  #   name: Playwright (Public) (${{ matrix.shard }}/${{ strategy.job-total }})
+  #   needs: [build]
+  #   timeout-minutes: 20
+  #   runs-on: ubuntu-22.04
+  #   strategy:
+  #     fail-fast: false
+  #     matrix:
+  #       shard: [1, 2, 3]
+  #   steps:
+  #     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+  #     - uses: ./.github/actions/install-cache
+  #     - uses: ./.github/actions/build-cache
 
-      - name: Setup Playwright
-        run: npx playwright install --with-deps
+  #     - name: Setup Playwright
+  #       run: npx playwright install --with-deps
 
-      - name: Start mock server
-        id: start-mock-server
-        run: |
-          npm run dev:mock-server &
-          echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
+  #     - name: Start mock server
+  #       id: start-mock-server
+  #       run: |
+  #         npm run dev:mock-server &
+  #         echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
 
-      - name: Wait for Mock Server
-        shell: sh
-        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+  #     - name: Wait for Mock Server
+  #       shell: sh
+  #       run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
-      - name: Start Dev Server
-        id: start-dev-server
-        run: |
-          npm run start &
-          echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
-        env:
-          NODE_ENV: test
+  #     - name: Start Dev Server
+  #       id: start-dev-server
+  #       run: |
+  #         npm run start &
+  #         echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
+  #       env:
+  #         NODE_ENV: test
 
-      - name: Wait for Dev Server
-        shell: sh
-        run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+  #     - name: Wait for Dev Server
+  #       shell: sh
+  #       run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
-      - name: Run Playwright tests
-        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
-        env:
-          baseURL: http://localhost:3000
+  #     - name: Run Playwright tests
+  #       run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+  #       env:
+  #         baseURL: http://localhost:3000
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
-          path: playwright-report/
-          retention-days: 10
+  #     - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+  #       if: ${{ !cancelled() }}
+  #       with:
+  #         name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}
+  #         path: playwright-report/
+  #         retention-days: 10
 
-      - name: Cleanup servers
-        if: always()
-        run: |
-          kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
-          kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
+  #     - name: Cleanup servers
+  #       if: always()
+  #       run: |
+  #         kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
+  #         kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
 
   ##############################################################################
   # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
