@@ -16,7 +16,7 @@ const baseURL = process.env.baseURL || 'http://localhost:3000'
  */
 export default defineConfig({
   testDir: './e2e',
-  testMatch: '*.e2e.ts',
+  testMatch: '**/*.e2e.ts',
   testIgnore: ['**/src/**'],
 
   /* Run tests in files in parallel */

@@ -148,81 +148,124 @@ jobs:
   # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
   ##############################################################################
 
-  e2e-tests-non-public:
-    name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
-    needs: [build]
-    timeout-minutes: 20
-    runs-on: ubuntu-22.04
-    strategy:
-      fail-fast: false
-      matrix:
-        shard: [1, 2, 3]
-    steps:
-      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-      - uses: ./.github/actions/install-cache
-      - uses: ./.github/actions/build-cache
+ e2e-tests-non-public:
+  name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
+  needs: [build]
+  timeout-minutes: 30
+  runs-on: ubuntu-22.04
+  strategy:
+    fail-fast: false
+    matrix:
+      shard: [1, 2, 3]
 
-      - name: Setup Playwright
-        run: npx playwright install --with-deps
+  steps:
+    - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
-      - name: Start mock server
-        id: start-mock-server
-        run: |
-          npm run dev:mock-server &
-          echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
+    - uses: ./.github/actions/install-cache
 
-      - name: Wait for Mock Server
-        shell: sh
-        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+    - uses: ./.github/actions/build-cache
 
-      - name: Create .env.local
-        run: |
-          echo "AUTH_ENABLED=true" >> .env.local
-          echo "MOCK_SESSION=true" >> .env.local
-          echo "MOCK_SESSION_USERNAME=Test User" >> .env.local
-          echo "API_URL=http://localhost:3005" >> .env.local
-          echo "AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}" >> .env.local
-          echo "AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" >> .env.local
-          echo "AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}" >> .env.local
-          echo "AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}" >> .env.local
-          echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
-          echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
-          cp .env.local .next/standalone/.env.local
-          cp -r .next/static .next/standalone/.next/static
-          cp -r public .next/standalone/public
+    # ── Guard: confirm the build cache actually restored what we need ──────────
+    - name: Verify build artifacts
+      run: |
+        echo "Checking required build artifacts..."
+        test -d .next/standalone || (echo "❌ .next/standalone is missing — build cache may not have restored correctly" && exit 1)
+        test -d .next/static     || (echo "❌ .next/static is missing" && exit 1)
+        test -d public           || (echo "❌ public directory is missing" && exit 1)
+        echo "✅ Build artifacts verified"
 
-      - name: Start Dev Server
-        id: start-dev-server
-        run: |
-          node .next/standalone/server.js &
-          echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
-        env:
-          PORT: 3000
-          HOSTNAME: 0.0.0.0
-          NODE_ENV: test
+    # ── Guard: confirm all required secrets are present ───────────────────────
+    - name: Verify required secrets
+      run: |
+        echo "Checking required secrets..."
+        missing=0
+        [ -n "${{ secrets.AUTH_DOMAIN }}"        ] || { echo "❌ AUTH_DOMAIN is empty";        missing=1; }
+        [ -n "${{ secrets.AUTH_CLIENT_ID }}"     ] || { echo "❌ AUTH_CLIENT_ID is empty";     missing=1; }
+        [ -n "${{ secrets.AUTH_CLIENT_SECRET }}" ] || { echo "❌ AUTH_CLIENT_SECRET is empty"; missing=1; }
+        [ -n "${{ secrets.AUTH_CLIENT_URL }}"    ] || { echo "❌ AUTH_CLIENT_URL is empty";    missing=1; }
+        [ -n "${{ secrets.AUTH_SECRET }}"        ] || { echo "❌ AUTH_SECRET is empty";        missing=1; }
+        [ -n "${{ secrets.NEXTAUTH_URL }}"       ] || { echo "❌ NEXTAUTH_URL is empty";       missing=1; }
+        [ "$missing" -eq 0 ] || (echo "One or more required secrets are missing. Aborting." && exit 1)
+        echo "✅ All secrets present"
 
-      - name: Wait for Dev Server
-        shell: sh
-        run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+    - name: Setup Playwright
+      run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
-        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
-        env:
-          baseURL: http://localhost:3000
-          AUTH_ENABLED: true
+    # ── Mock server ───────────────────────────────────────────────────────────
+    - name: Start mock server
+      id: start-mock-server
+      run: |
+        npm run dev:mock-server &
+        echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
 
-      - uses: actions/upload-artifact@v4
-        if: ${{ !cancelled() }}
-        with:
-          name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
-          path: playwright-report/
-          retention-days: 10
+    - name: Wait for mock server
+      shell: sh
+      run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      timeout-minutes: 5
 
-      - name: Cleanup servers
-        if: always()
-        run: |
-          kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
-          kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
+    # ── Environment ───────────────────────────────────────────────────────────
+    - name: Create .env.local
+      run: |
+        cat > .env.local <<EOF
+        AUTH_ENABLED=true
+        MOCK_SESSION=true
+        MOCK_SESSION_USERNAME=Test User
+        API_URL=http://localhost:3005
+        AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}
+        AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}
+        AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}
+        AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}
+        AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+        NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+        EOF
+
+        cp .env.local .next/standalone/.env.local
+        cp -r .next/static .next/standalone/.next/static
+        cp -r public .next/standalone/public
+        echo "✅ .env.local created and assets copied"
+
+    # ── Dev server ────────────────────────────────────────────────────────────
+    - name: Start dev server
+      id: start-dev-server
+      run: |
+        node .next/standalone/server.js &
+        echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
+      env:
+        PORT: 3000
+        HOSTNAME: 0.0.0.0
+        NODE_ENV: test
+
+    - name: Wait for dev server
+      shell: sh
+      run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+      timeout-minutes: 5
+
+    # ── Tests ─────────────────────────────────────────────────────────────────
+    - name: Run Playwright tests
+      run: |
+        npx playwright test \
+          --grep-invert @smoke \
+          --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      env:
+        baseURL: http://localhost:3000
+        AUTH_ENABLED: true
+
+    # ── Artifacts ─────────────────────────────────────────────────────────────
+    - name: Upload Playwright report
+      uses: actions/upload-artifact@v4
+      if: ${{ !cancelled() }}
+      with:
+        name: playwright-report-non-public-${{ matrix.shard }}_${{ strategy.job-total }}
+        path: playwright-report/
+        retention-days: 10
+
+    # ── Cleanup ───────────────────────────────────────────────────────────────
+    - name: Cleanup servers
+      if: always()
+      run: |
+        kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
+        kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
+        echo "✅ Servers stopped"
   ##############################################################################
   # Playwright tests - Public - (fully mocked backend)
   ##############################################################################
