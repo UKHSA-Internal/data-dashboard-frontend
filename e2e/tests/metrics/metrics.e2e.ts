@@ -213,7 +213,7 @@ test.describe('Metrics parent page - tablet', () => {
 
   test('displays the navigation on tablet', async ({ metricsParentPage, app }) => {
     await metricsParentPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -308,7 +308,7 @@ test.describe('Metrics child page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ metricsChildPage, app }) => {
     await metricsChildPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 
