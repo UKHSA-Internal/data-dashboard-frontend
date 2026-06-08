@@ -12,13 +12,7 @@ export async function MenuBar() {
     return null
   }
 
-  return (
-    <div className="border-t border-light-blue bg-blue" data-testid="ukhsa-menu-bar">
-      <nav aria-label="Menu">
-        <MenuBarContent items={items} isSignedIn={isSignedIn} />
-      </nav>
-    </div>
-  )
+  return <MenuBarContent items={items} isSignedIn={isSignedIn} />
 }
 
 export default MenuBar

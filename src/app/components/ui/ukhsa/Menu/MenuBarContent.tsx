@@ -31,9 +31,9 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
   useNavigationEvent(() => setMenuOpen(false))
 
   return (
-    <div ref={containerRef} className="bg-blue print:hidden" data-testid="ukhsa-menu-bar">
+    <div ref={containerRef} className="border-t border-light-blue bg-blue print:hidden" data-testid="ukhsa-menu-bar">
       {/* Desktop menu */}
-      <nav aria-label="Menu" className="govuk-width-container hidden md:block">
+      <nav aria-label="Main navigation" className="govuk-width-container hidden md:block">
         <ul className="govuk-list govuk-!-margin-0 flex list-none flex-wrap items-center gap-4 py-3 leading-[18px]">
           {items.map(({ id, value: { html_url, title } }) => (
             <li key={`menu-bar-desktop-${id}`} className="govuk-!-margin-0">
@@ -86,7 +86,12 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
         )}
       </div>
 
-      <nav id={'ukhsa-menu-bar-nav'} aria-label="Menu" hidden={!menuOpen} className="w-full bg-blue md:hidden">
+      <nav
+        id={'ukhsa-menu-bar-nav'}
+        aria-label="Mobile navigation"
+        hidden={!menuOpen}
+        className="w-full bg-blue md:hidden"
+      >
         <ul className="govuk-list govuk-width-container govuk-!-font-size-16 mt-0 list-none border-t border-light-blue px-3">
           {items.map(({ id, value: { html_url, title } }) => (
             <li

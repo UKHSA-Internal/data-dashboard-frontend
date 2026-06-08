@@ -7,11 +7,10 @@ export const metadata: Metadata = {
 }
 
 export default async function Browse() {
-  
   return (
     <>
       <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">Browse</h1>
-      <nav aria-label="Menu" className="govuk-!-margin-bottom-6">
+      <nav aria-label="Browse all pages" className="govuk-!-margin-bottom-6">
         <Menu />
       </nav>
     </>
