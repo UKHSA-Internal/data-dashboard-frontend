@@ -34,7 +34,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
     <div ref={containerRef} className="bg-blue print:hidden" data-testid="ukhsa-menu-bar">
       {/* Desktop menu */}
       <nav aria-label="Menu" className="govuk-width-container hidden md:block">
-        <ul className="govuk-list govuk-!-margin-0 flex list-none flex-wrap items-center gap-4 py-3">
+        <ul className="govuk-list govuk-!-margin-0 flex list-none flex-wrap items-center gap-4 py-3 leading-[18px]">
           {items.map(({ id, value: { html_url, title } }) => (
             <li key={`menu-bar-desktop-${id}`} className="govuk-!-margin-0">
               <Link
@@ -87,11 +87,11 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
       </div>
 
       <nav id={'ukhsa-menu-bar-nav'} aria-label="Menu" hidden={!menuOpen} className="w-full bg-blue md:hidden">
-        <ul className="govuk-list govuk-width-container govuk-!-font-size-16 mt-0 list-none border-t border-mid-grey px-3">
+        <ul className="govuk-list govuk-width-container govuk-!-font-size-16 mt-0 list-none border-t border-light-blue px-3">
           {items.map(({ id, value: { html_url, title } }) => (
             <li
               key={`menu-bar-mobile-${id}`}
-              className="govuk-!-margin-0 border-b border-mid-grey py-[2px] last:border-b-0"
+              className="govuk-!-margin-0 border-b border-light-blue py-[2px] last:border-b-0"
             >
               <Link
                 href={html_url}
