@@ -223,7 +223,7 @@ export function clientBuildApiUrl({
   return url
 }
 
-export async function handleApiResponse(response: Response, url: string, fetchOptions: RequestInit) {
+async function handleApiResponse(response: Response) {
   const { status, ok, headers } = response
 
   if (ok) {
@@ -245,7 +245,6 @@ export async function handleApiResponse(response: Response, url: string, fetchOp
       return Promise.reject(JSON.stringify(response))
     }
   } else {
-    console.debug('API Request:', { url, options: fetchOptions })
     const error = new Error(response.statusText)
     // @ts-ignore
     error.code = status
@@ -300,5 +299,5 @@ export async function client<T>(
 
   const url = clientBuildApiUrl({ baseUrl, endpoint, searchParams })
 
-  return fetch(url, fetchOptions).then((response) => handleApiResponse(response, url, fetchOptions))
+  return fetch(url, fetchOptions).then((response) => handleApiResponse(response))
 }
