@@ -10,6 +10,7 @@ export async function POST(req: NextRequest) {
   const body = await req.formData()
 
   const params = requestSchema.safeParse({
+    is_public: body.get('is_public') === 'true',
     file_format: body.get('file_format') || 'csv',
     target_threshold: body.get('target_threshold'),
     target_threshold_label: body.get('target_threshold_label'),
@@ -19,10 +20,11 @@ export async function POST(req: NextRequest) {
 
   if (params.success) {
     const {
-      data: { file_format, target_threshold, target_threshold_label, chart_parameters, subplots },
+      data: { is_public, file_format, target_threshold, target_threshold_label, chart_parameters, subplots },
     } = params
 
     const response = await getSubplotDownloads(
+      is_public,
       file_format,
       target_threshold,
       target_threshold_label,

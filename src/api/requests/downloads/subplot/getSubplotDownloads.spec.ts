@@ -43,7 +43,7 @@ test('Returns chart data in CSV format', async () => {
     status: 200,
   })
 
-  const result = await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots)
+  const result = await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots)
 
   expect(result).toEqual(downloadsSubplotCsvFixture)
 })
@@ -54,7 +54,7 @@ test('Returns chart data in JSON format', async () => {
     status: 200,
   })
 
-  const result = await getSubplotDownloads('json', null, null, mockChartParameters, mockSubplots)
+  const result = await getSubplotDownloads(true, 'json', null, null, mockChartParameters, mockSubplots)
 
   expect(result).toEqual(downloadsSubplotJsonFixture)
 })
@@ -65,7 +65,7 @@ test('Handles generic http errors', async () => {
     status: 400,
   })
 
-  const result = await getSubplotDownloads('json', null, null, mockChartParameters, mockSubplots)
+  const result = await getSubplotDownloads(true, 'json', null, null, mockChartParameters, mockSubplots)
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 
