@@ -60,7 +60,7 @@ test.describe('About page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ aboutPage, app }) => {
     await aboutPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 

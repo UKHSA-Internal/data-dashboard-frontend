@@ -102,7 +102,7 @@ test.describe('Feedback page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ feedbackPage, app }) => {
     await feedbackPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 

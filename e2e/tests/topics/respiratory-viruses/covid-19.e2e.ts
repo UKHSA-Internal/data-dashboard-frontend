@@ -290,7 +290,7 @@ test.describe('COVID-19 page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ covid19Page, app }) => {
     await covid19Page.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 
   test('Downloads a csv version of each chart', async ({ covid19Page, app }) => {

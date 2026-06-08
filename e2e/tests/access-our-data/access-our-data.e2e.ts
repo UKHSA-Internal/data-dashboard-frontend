@@ -162,7 +162,7 @@ test.describe('Access our data - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ accessOurDataPage, app }) => {
     await accessOurDataPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 

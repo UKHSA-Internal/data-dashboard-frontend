@@ -24,7 +24,7 @@ test.describe('Menu', () => {
 
     test('displays the collapsible menu on tablet', async ({ landingPage, app }) => {
       await landingPage.goto()
-      await app.hasMobileNav()
+      await app.hasDesktopNav()
     })
   })
 })

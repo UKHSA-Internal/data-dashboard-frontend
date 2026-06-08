@@ -22,10 +22,12 @@ export class BrowsePage {
   }
 
   async hasPageContent() {
-    await expect(this.page.getByRole('link', { name: 'Home', exact: true })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'Health topics', exact: true })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'API', exact: true })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'Metrics documentation', exact: true })).toBeVisible()
-    await expect(this.page.getByRole('link', { name: 'About', exact: true })).toBeVisible()
+    await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'Home' })).toBeVisible()
+    await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'Health topics' })).toBeVisible()
+    await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'API' })).toBeVisible()
+    await expect(
+      this.page.getByLabel('Browse all pages').getByRole('link', { name: 'Metrics documentation' })
+    ).toBeVisible()
+    await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'About' })).toBeVisible()
   }
 }

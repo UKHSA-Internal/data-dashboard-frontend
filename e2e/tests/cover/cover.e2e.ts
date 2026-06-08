@@ -231,7 +231,7 @@ test.describe('Cover - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ coverPage, app }) => {
     await coverPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 
   test('map functionality on tablet', async ({ coverPage }) => {

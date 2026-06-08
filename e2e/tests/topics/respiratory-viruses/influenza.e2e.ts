@@ -227,7 +227,7 @@ test.describe('Influenza page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 
   test('downloads a json version of each chart', async ({ influenzaPage, app }) => {

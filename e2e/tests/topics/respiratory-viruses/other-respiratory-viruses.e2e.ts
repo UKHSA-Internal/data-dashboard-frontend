@@ -148,7 +148,7 @@ test.describe('Other respiratory viruses page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 
   test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {

@@ -82,7 +82,7 @@ test.describe('Bulk downloads - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ bulkDownloadsPage, app }) => {
     await bulkDownloadsPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 

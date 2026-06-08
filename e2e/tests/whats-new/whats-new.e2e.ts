@@ -153,7 +153,7 @@ test.describe("What's new parent page - tablet", () => {
 
   test('displays the navigation on tablet', async ({ whatsNewParentPage, app }) => {
     await whatsNewParentPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -251,7 +251,7 @@ test.describe("What's new child page - tablet", () => {
 
   test('displays the navigation on tablet', async ({ whatsNewChildPage, app }) => {
     await whatsNewChildPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 

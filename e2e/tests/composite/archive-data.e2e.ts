@@ -64,7 +64,7 @@ test.describe('Archive data download - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ archiveDataPage, app }) => {
     await archiveDataPage.goto()
-    await app.hasMobileNav()
+    await app.hasDesktopNav()
   })
 })
 
