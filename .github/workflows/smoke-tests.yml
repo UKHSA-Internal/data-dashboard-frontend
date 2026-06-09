@@ -19,7 +19,7 @@ jobs:
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - uses: ./.github/actions/setup-node
       - uses: ./.github/actions/install-cache
       - name: Install packages
@@ -30,7 +30,7 @@ jobs:
         run:  npx playwright test --grep @smoke
         env:
           baseURL: https://ukhsa-dashboard.data.gov.uk
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
           name: playwright-report-smoke
@@ -43,10 +43,10 @@ jobs:
     runs-on: ubuntu-latest
     if: always()
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
       - name: 'Report Success'
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
         if: ${{ needs.smoke-tests.result == 'success' }}
         with:
           status: success
@@ -57,7 +57,7 @@ jobs:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
 
       - name: 'Report Failure'
-        uses: ravsamhq/notify-slack-action@v1
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
         if: ${{ needs.smoke-tests.result == 'failure' }}
         with:
           status: failure

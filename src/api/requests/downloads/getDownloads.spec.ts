@@ -11,7 +11,7 @@ test('Returns chart data in CSV format', async () => {
     status: 200,
   })
 
-  const result = await getDownloads([
+  const result = await getDownloads(true, [
     {
       topic: 'COVID-19',
       metric: 'new_cases_7days_sum',
@@ -29,6 +29,7 @@ test('Returns chart data in json format', async () => {
   })
 
   const result = await getDownloads(
+    true,
     [
       {
         topic: 'COVID-19',
@@ -49,6 +50,7 @@ test('Handles generic http errors', async () => {
   })
 
   const result = await getDownloads(
+    true,
     [
       {
         topic: 'COVID-19',
@@ -71,6 +73,7 @@ test('Sends confidence_intervals as true in request body', async () => {
   })
 
   await getDownloads(
+    true,
     [
       {
         topic: 'COVID-19',
@@ -85,6 +88,7 @@ test('Sends confidence_intervals as true in request body', async () => {
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
+      is_public: true,
       plots: [
         {
           topic: 'COVID-19',
@@ -106,6 +110,7 @@ test('Sends confidence_intervals as false in request body', async () => {
   })
 
   await getDownloads(
+    true,
     [
       {
         topic: 'COVID-19',
@@ -120,6 +125,7 @@ test('Sends confidence_intervals as false in request body', async () => {
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
+      is_public: true,
       plots: [
         {
           topic: 'COVID-19',
@@ -140,7 +146,7 @@ test('Defaults confidence_intervals to false when not provided', async () => {
     status: 200,
   })
 
-  await getDownloads([
+  await getDownloads(true, [
     {
       topic: 'COVID-19',
       metric: 'new_cases_7days_sum',
@@ -150,6 +156,7 @@ test('Defaults confidence_intervals to false when not provided', async () => {
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
+      is_public: true,
       plots: [
         {
           topic: 'COVID-19',
