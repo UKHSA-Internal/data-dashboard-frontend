@@ -40,7 +40,6 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         return await use()
       }
 
-      // Intercept next-auth session endpoint
       await page.route('**/api/auth/session', async (route) => {
         await route.fulfill({
           status: 200,
@@ -49,7 +48,6 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         })
       })
 
-      // Intercept Cognito token endpoint
       await page.route('**/oauth2/token', async (route) => {
         await route.fulfill({
           status: 200,
@@ -75,9 +73,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         },
       ])
 
-      // Hits the server with the cookie already set, so subsequent navigations
-      // are treated as authenticated from the start
-      await page.goto('/')
+      await page.goto('/start')
       await page.waitForLoadState('networkidle')
 
       await use()
