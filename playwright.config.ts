@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
 import dotenv from 'dotenv'
-import fs from 'fs'
 import path from 'path'
 
 dotenv.config({ path: path.resolve(__dirname, '.env.local') })
