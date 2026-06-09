@@ -39,7 +39,7 @@ export const CodeBlock = ({ snippets, className, heading }: CodeBlockProps) => {
       {heading && <h4 className="govuk-heading-m">{heading}</h4>}
 
       {snippets.length > 1 && (
-        <div className="govuk-form-group govuk-!-margin-bottom-0">
+        <div className="govuk-form-group govuk-!-margin-bottom-0 hidden js:block">
           <label className="govuk-visually-hidden" htmlFor={selectId}>
             Select language
           </label>
