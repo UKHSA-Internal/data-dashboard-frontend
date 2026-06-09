@@ -35,13 +35,12 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
 
   setupAuth: [
     async ({ page, authEnabled, startLoggedOut }, use) => {
-      // For tests that should start logged out or when auth is disabled
       if (!authEnabled || startLoggedOut) {
         await page.context().clearCookies()
         return await use()
       }
 
-      // Intercept next-auth session endpoint with mocked session
+      // Intercept next-auth session endpoint
       await page.route('**/api/auth/session', async (route) => {
         await route.fulfill({
           status: 200,
@@ -50,7 +49,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         })
       })
 
-      // Intercept Cognito token endpoint - no real calls needed
+      // Intercept Cognito token endpoint
       await page.route('**/oauth2/token', async (route) => {
         await route.fulfill({
           status: 200,
@@ -63,7 +62,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         })
       })
 
-      // Inject session cookie so next-auth treats user as authenticated
+      // Inject session cookie
       await page.context().addCookies([
         {
           name: 'next-auth.session-token',
@@ -75,6 +74,11 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
           sameSite: 'Lax',
         },
       ])
+
+      // Hits the server with the cookie already set, so subsequent navigations
+      // are treated as authenticated from the start
+      await page.goto('/')
+      await page.waitForLoadState('networkidle')
 
       await use()
     },
