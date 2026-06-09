@@ -207,7 +207,7 @@ jobs:
       - name: Create .env.local
         run: |
           cat > .env.local <<EOF
-          AUTH_ENABLED=true
+          AUTH_ENABLED=false
           MOCK_SESSION=true
           MOCK_SESSION_USERNAME=Test User
           API_URL=http://localhost:3005
@@ -234,6 +234,7 @@ jobs:
           PORT: 3000
           HOSTNAME: 0.0.0.0
           NODE_ENV: test
+          AUTH_ENABLED: true
 
       - name: Wait for dev server
         shell: sh
