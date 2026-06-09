@@ -207,7 +207,7 @@ jobs:
       - name: Create .env.local
         run: |
           cat > .env.local <<EOF
-          AUTH_ENABLED=false
+          AUTH_ENABLED=true
           MOCK_SESSION=true
           MOCK_SESSION_USERNAME=Test User
           API_URL=http://localhost:3005
@@ -314,6 +314,7 @@ jobs:
         run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000
+          AUTH_ENABLED: false
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ !cancelled() }}
