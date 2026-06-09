@@ -27,11 +27,11 @@ require('prismjs/components/prism-r')
 
 export const CodeBlock = ({ snippets, className, heading }: CodeBlockProps) => {
   const selectId = useId()
-  const [selectedId, setSelectedId] = useState<string>(snippets[0]?.id ?? '')
+  const [selectedIndex, setSelectedIndex] = useState(0)
 
   if (snippets.length === 0) return null
 
-  const activeSnippet = snippets.find((snippet) => snippet.id === selectedId) ?? snippets[0]
+  const activeSnippet = snippets[selectedIndex] ?? snippets[0]
   const lang = activeSnippet.language.toLowerCase()
 
   return (
@@ -47,11 +47,11 @@ export const CodeBlock = ({ snippets, className, heading }: CodeBlockProps) => {
             id={selectId}
             className="govuk-select border-none bg-grey-3 pl-3"
             data-testid="code-block-language-select"
-            value={activeSnippet.id}
-            onChange={(event) => setSelectedId(event.target.value)}
+            value={selectedIndex}
+            onChange={(event) => setSelectedIndex(Number(event.target.value))}
           >
-            {snippets.map((snippet) => (
-              <option key={snippet.id} value={snippet.id}>
+            {snippets.map((snippet, index) => (
+              <option key={index} value={index}>
                 {upperFirst(snippet.language)}
               </option>
             ))}

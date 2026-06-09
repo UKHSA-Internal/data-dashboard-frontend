@@ -59,7 +59,7 @@ describe('multiple snippets', () => {
     const user = userEvent.setup()
     const { container } = render(<CodeBlock snippets={[jsSnippet, pythonSnippet]} />)
 
-    await user.selectOptions(screen.getByTestId('code-block-language-select'), pythonSnippet.id)
+    await user.selectOptions(screen.getByTestId('code-block-language-select'), 'Python')
 
     expect(container.querySelector('pre')).toHaveClass('language-python')
   })
