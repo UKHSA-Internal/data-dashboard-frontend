@@ -107,7 +107,8 @@ const TimeseriesClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
-  }, [chartResponse, handleLatestDate])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartResponse])
 
   if (loading) {
     return (

@@ -49,32 +49,6 @@ export function MapLegendControl({ position, thresholdData }: LegendControlProps
     </button>
   )
 
-  // TODO: Remove? Need to check not used
-  // const renderKey = (legendItems: ThresholdItemProps[]) => {
-  //   return (
-  //     <div className="m-2 bg-white p-2" data-testid="map-key">
-  //       <div className="flex items-center justify-between">
-  //         <p className="govuk-heading-m m-0 mb-1">Key</p>
-  //         {renderCloseButton()}
-  //       </div>
-  //       <div className="m-0 mb-1 grid grid-cols-none gap-2">
-  //         {legendItems.map((legendItem, index) => {
-  //           return (
-  //             <div key={`${legendItem.label}-` + index} className="flex">
-  //               <div className={clsx('size-14 flex-none bg-black px-2', getCssVariableFromColour(legendItem.colour))}>
-  //                 &nbsp;
-  //               </div>
-  //               <div key={index} className={clsx(`flex-auto px-5`, 'bg-white')}>
-  //                 <p className={'govuk-body m-0 text-center capitalize text-black'}>{legendItem.label}</p>
-  //               </div>
-  //             </div>
-  //           )
-  //         })}
-  //       </div>
-  //     </div>
-  //   )
-  // }
-
   const renderParallelKey = (legendItems: ThresholdItemProps[]) => {
     const reversedLegendItems = [...legendItems].reverse()
     return (

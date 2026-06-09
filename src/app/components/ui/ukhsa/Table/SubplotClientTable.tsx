@@ -1,7 +1,7 @@
 'use client'
 import clsx from 'clsx'
 import { kebabCase } from 'lodash'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 
 import {
   DataFilter,
@@ -62,7 +62,7 @@ export function SubplotClientTable({
   const [tableError, setTableError] = useState<string | null>(null)
 
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const geographyRelations = flattenGeographyObject(geography)
+  const geographyRelations = useMemo(() => flattenGeographyObject(geography), [geography])
 
   const title = `${cardData.title_prefix}`
   const geographyDetails = `(${geographyParent?.name ?? ''}, ${geography.name})`
@@ -126,15 +126,8 @@ export function SubplotClientTable({
     }
 
     fetchTables()
-  }, [
-    currentTimePeriodIndex,
-    dataFilters,
-    geography,
-    geographyFilters,
-    geographyRelations,
-    selectedThresholds,
-    timePeriods,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [geography, dataFilters, dataFilters, selectedThresholds])
 
   if (tableLoading) {
     return <ClientInformationCard variant="loading" />
