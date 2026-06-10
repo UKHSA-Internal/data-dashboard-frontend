@@ -43,6 +43,7 @@ export async function getAuthToken(): Promise<string | undefined> {
     try {
       const { auth } = await import('@/auth')
       const session = await auth()
+      console.log("🦄 SESSION", session?.accessToken)
       return session?.accessToken
     } catch (error) {
       console.error('Failed to get auth token:', error)
@@ -63,7 +64,7 @@ export async function client<T>(
     body,
     // Defaulting all requests to public (non-authenticated) for now.
     // This may change to an opt-in approach as we build out the authenticated dashboard.
-    isPublic = true,
+    isPublic = false,
     searchParams,
     baseUrl = getApiBaseUrl(),
     ...customConfig
