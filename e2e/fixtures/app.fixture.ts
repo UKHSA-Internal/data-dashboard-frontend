@@ -400,6 +400,7 @@ export class App {
   async canDownloadChart(cards: string[], format: 'csv' | 'json', device: 'desktop' | 'mobile' | 'tablet') {
     for (const name of cards) {
       const card = this.page.getByTestId(`chart-row-card-${name}`)
+
       if (device === 'mobile') {
         await card
           .getByRole('combobox', { name: `Choose display option for '${lowerCase(name)}' data` })
