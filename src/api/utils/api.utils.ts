@@ -73,7 +73,9 @@ export async function client<T>(
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   // read access token only if request is not public
-  const accessToken = isPublic ? undefined : await getAuthToken()
+  // or if it's a pages endpoint, which currently also requires authentication
+  const isPagesEndpoint = endpoint.includes('pages')
+  const accessToken = isPagesEndpoint || isPublic === false ? await getAuthToken() : undefined
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
     // Import cookies dynamically only in node environment to not trigger nextjs warnings
@@ -106,7 +108,6 @@ export async function client<T>(
   }
 
   const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
-  console.debug(`Making request to ${url} with options:`, fetchOptions)
   return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok, headers } = response
 

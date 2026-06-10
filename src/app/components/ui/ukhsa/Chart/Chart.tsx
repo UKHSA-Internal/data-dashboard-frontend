@@ -80,7 +80,7 @@ const createStaticChart = async ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true, isPublic = false }: ChartProps) {
+export async function Chart({ data, sizes, enableInteractive = true, isPublic = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
   const chartData = data
