@@ -207,6 +207,8 @@ jobs:
       - name: Create .env.local
         run: |
           cat > .env.local <<EOF
+          AUTH_ENABLED=true
+          MOCK_SESSION=true
           MOCK_SESSION_USERNAME=Test User
           API_URL=http://localhost:3005
           AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}
@@ -222,6 +224,19 @@ jobs:
           cp -r public .next/standalone/public
           echo "✅ .env.local created and assets copied"
 
+      - name: Verify required secrets
+        run: |
+          echo "Checking required secrets..."
+          missing=0
+          [ -n "${{ secrets.AUTH_DOMAIN }}"        ] || { echo "❌ AUTH_DOMAIN is empty";        missing=1; }
+          [ -n "${{ secrets.AUTH_CLIENT_ID }}"     ] || { echo "❌ AUTH_CLIENT_ID is empty";     missing=1; }
+          [ -n "${{ secrets.AUTH_CLIENT_SECRET }}" ] || { echo "❌ AUTH_CLIENT_SECRET is empty"; missing=1; }
+          [ -n "${{ secrets.AUTH_CLIENT_URL }}"    ] || { echo "❌ AUTH_CLIENT_URL is empty";    missing=1; }
+          [ -n "${{ secrets.AUTH_SECRET }}"        ] || { echo "❌ AUTH_SECRET is empty";        missing=1; }
+          [ -n "${{ secrets.NEXTAUTH_URL }}"       ] || { echo "❌ NEXTAUTH_URL is empty";       missing=1; }
+          [ "$missing" -eq 0 ] || (echo "One or more required secrets are missing. Aborting." && exit 1)
+          echo "✅ All secrets present"
+       
       # ── Dev server ────────────────────────────────────────────────────────────
       - name: Start dev server
         id: start-dev-server
@@ -232,6 +247,7 @@ jobs:
           PORT: 3000
           HOSTNAME: 0.0.0.0
           NODE_ENV: test
+          AUTH_ENABLED: true
 
       - name: Wait for dev server
         shell: sh
