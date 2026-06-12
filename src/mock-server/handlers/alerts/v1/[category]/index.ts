@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 
 import { fixtures } from '../fixtures/list'
@@ -19,7 +20,7 @@ export default async function handler(req: Request, res: Response) {
           list: { status },
         },
       },
-    } = getSwitchBoardState(req.headers.cookie)
+    } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     // Validate query parameter
     if (!req.params['category']) {

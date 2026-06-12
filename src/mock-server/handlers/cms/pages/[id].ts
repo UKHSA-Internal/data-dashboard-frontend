@@ -3,6 +3,7 @@ import { Request, Response } from 'express'
 import { PageResponse } from '@/api/requests/cms/getPage'
 import { PageType } from '@/api/requests/cms/getPages'
 import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 
 import {
@@ -88,7 +89,7 @@ export default async function handler(req: Request, res: Response) {
           detail: { status },
         },
       },
-    } = getSwitchBoardState(req.headers.cookie)
+    } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     const pageId = Number(req.params.id)
 

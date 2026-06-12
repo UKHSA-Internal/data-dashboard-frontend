@@ -61,7 +61,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                   pageClassification={pageClassification}
                   authEnabled={authEnabled}
                 >
-                  <Timestamp data={column.value} size={size} />
+                  {column.type !== 'dual_category_chart_card' && <Timestamp data={column.value} size={size} />}
                 </ChartRowCardHeader>
                 <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
                   <TabsList className="hidden no-js:block sm:block">
@@ -137,21 +137,23 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                         </div>
                       </>
                     )}
-                    <AreaSelectorLoader>
-                      <Chart
-                        data={column.value}
-                        sizes={[
-                          {
-                            minWidth: 768,
-                            size,
-                          },
-                          {
-                            default: true,
-                            size: 'narrow',
-                          },
-                        ]}
-                      />
-                    </AreaSelectorLoader>
+                    {column.type !== 'dual_category_chart_card' && (
+                      <AreaSelectorLoader>
+                        <Chart
+                          data={column.value}
+                          sizes={[
+                            {
+                              minWidth: 768,
+                              size,
+                            },
+                            {
+                              default: true,
+                              size: 'narrow',
+                            },
+                          ]}
+                        />
+                      </AreaSelectorLoader>
+                    )}
                   </TabsContent>
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-table`}
@@ -164,13 +166,15 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Tabular data
                     </span>
-                    <Table
-                      data={column.value}
-                      size={size}
-                      isPublic={isPublic}
-                      level={pageClassification}
-                      authEnabled={authEnabled}
-                    />
+                    {column.type !== 'dual_category_chart_card' && (
+                      <Table
+                        data={column.value}
+                        size={size}
+                        isPublic={isPublic}
+                        level={pageClassification}
+                        authEnabled={authEnabled}
+                      />
+                    )}
                   </TabsContent>
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-download`}
@@ -183,7 +187,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Download
                     </span>
-                    <Download data={column.value} isPublic={isPublic} />
+                    {column.type !== 'dual_category_chart_card' && <Download data={column.value} isPublic={isPublic} />}
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent

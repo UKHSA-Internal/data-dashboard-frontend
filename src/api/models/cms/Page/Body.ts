@@ -173,6 +173,54 @@ export const PopularTopicsCardValue = z.object({
   right_column_bottom_row: z.array(PopularTopicsRightColumnBottomItem).length(2),
 })
 
+/** Dual category chart card (e.g. `stacked_bar`). */
+const DualCategoryStaticFields = z.object({
+  topic: z.string(),
+  metric: z.string(),
+  geography: z.string().optional(),
+  geography_type: z.string().optional(),
+  sex: z.string().nullable().optional(),
+  age: z.string().nullable().optional(),
+  stratum: z.string().optional(),
+  date_from: z.string().nullable().optional(),
+  date_to: z.string().nullable().optional(),
+})
+
+const DualCategorySegment = z.object({
+  type: z.literal('segment'),
+  id: z.string(),
+  value: z.object({
+    secondary_field_value: z.string(),
+    colour: ChartLineColours,
+    label: z.string().nullable().optional(),
+  }),
+})
+
+export const WithDualCategoryChartCard = z.object({
+  id: z.string(),
+  type: z.literal('dual_category_chart_card'),
+  value: z.object({
+    title: z.string(),
+    body: z.string(),
+    about: z.string(),
+    related_links: ChartRelatedLinks.optional(),
+    tag_manager_event_id: z.string().nullable(),
+    x_axis: z.string().nullable(),
+    x_axis_title: z.string().optional(),
+    primary_field_values: z.array(z.string()),
+    y_axis: z.string().nullable(),
+    y_axis_title: z.string().optional(),
+    y_axis_minimum_value: z.number().nullable().optional(),
+    y_axis_maximum_value: z.number().nullable().optional(),
+    chart_type: z.string(),
+    static_fields: DualCategoryStaticFields,
+    secondary_category: z.string(),
+    segments: z.array(DualCategorySegment),
+  }),
+})
+
+export type WithDualCategoryChartCard = z.infer<typeof WithDualCategoryChartCard>
+
 export const ChartCardSchemas = z.discriminatedUnion('type', [
   WithChartHeadlineAndTrendCard,
   WithChartCard,
@@ -194,7 +242,7 @@ export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('chart_row_card'),
     value: z.object({
-      columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard])),
+      columns: z.array(z.union([WithChartHeadlineAndTrendCard, WithChartCard, WithDualCategoryChartCard])),
     }),
     id: z.string(),
   }),

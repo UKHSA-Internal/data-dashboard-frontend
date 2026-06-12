@@ -7,7 +7,15 @@ export const ChartLineTypes = z.string()
 export type ChartLineTypes = z.infer<typeof ChartLineTypes>
 
 export const ChartTypes = z
-  .enum(['simple_line', 'waffle', 'line_with_shaded_section', 'bar', 'line_multi_coloured', 'line_single_simplified'])
+  .enum([
+    'simple_line',
+    'waffle',
+    'line_with_shaded_section',
+    'bar',
+    'line_multi_coloured',
+    'line_single_simplified',
+    'stacked_bar_chart',
+  ])
   .or(z.string())
 export type ChartTypes = z.infer<typeof ChartTypes>
 
