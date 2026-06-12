@@ -164,7 +164,7 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
 
     try {
       setMapDataLoading(true)
-      const response = await postMapData(request)
+      const response = await postMapData(request, isPublic)
 
       setMapData(response.data ?? null)
     } catch (error) {

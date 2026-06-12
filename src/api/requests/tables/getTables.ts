@@ -44,8 +44,9 @@ export type Response = z.infer<typeof responseSchema>
 
 export const getTables = async (body: RequestParams, isPublic?: boolean) => {
   try {
-    const path = isSSR ? `tables/v4` : `proxy/tables/v4`
-    const { data } = await client<Response>(path, { body }, isPublic)
+    const publicParam = isPublic === false ? '?isPublic=false' : ''
+    const path = isSSR ? `tables/v4` : `proxy/tables/v4${publicParam}`
+    const { data } = await client<Response>(`${path}`, { body }, isPublic)
     const result = responseSchema.safeParse(data)
     if (result.success) {
       return result

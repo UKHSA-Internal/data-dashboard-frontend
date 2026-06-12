@@ -83,7 +83,8 @@ export const getCharts = async (chart: RequestParams, isPublic?: boolean) => {
 
   try {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
-    const { data } = await client<z.infer<typeof responseSchema>>(path, { body }, isPublic)
+    const publicParam = !isSSR && isPublic === false ? '?isPublic=false' : ''
+    const { data } = await client<z.infer<typeof responseSchema>>(`${path}${publicParam}`, { body }, isPublic)
 
     const result = responseSchema.safeParse(data)
     if (result.success) {
