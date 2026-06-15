@@ -4,7 +4,7 @@ import { getCharts, RequestParams } from '@/api/requests/charts/getCharts'
 
 export async function POST(req: NextRequest) {
   const body: RequestParams = await req.json()
-  const isPublic = Boolean(req.nextUrl.searchParams.get('public'))
+  const isPublic = req.nextUrl.searchParams.get('isPublic') !== 'false'
   if (!body) {
     return new NextResponse('Missing category', {
       status: 500,
