@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
+import { Chart, ChartCardSchemas, ChartComponentData, DualCategoryChartCardValue } from '@/api/models/cms/Page'
 
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
@@ -112,3 +112,25 @@ export const getFilteredData = (
     }
   })
 }
+
+export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
+  'segments' in data && 'static_fields' in data
+
+export const dualCategoryChartToDownloadChart = (data: DualCategoryChartCardValue): Chart => [
+  {
+    id: 'dual-category',
+    type: 'plot',
+    value: {
+      topic: data.static_fields.topic,
+      metric: data.static_fields.metric,
+      chart_type: data.chart_type,
+      stratum: data.static_fields.stratum,
+      geography: data.static_fields.geography,
+      geography_type: data.static_fields.geography_type,
+      sex: data.static_fields.sex,
+      age: data.static_fields.age,
+      date_from: data.static_fields.date_from,
+      date_to: data.static_fields.date_to,
+    },
+  },
+]

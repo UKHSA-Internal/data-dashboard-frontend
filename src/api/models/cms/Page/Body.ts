@@ -228,6 +228,10 @@ export const ChartCardSchemas = z.discriminatedUnion('type', [
   WithChartCardWithDescription,
 ])
 
+export type DualCategoryChartCardValue = WithDualCategoryChartCard['value']
+export type ChartCardValue = z.infer<typeof ChartCardSchemas>['value']
+export type ChartComponentData = ChartCardValue | DualCategoryChartCardValue
+
 export const CardTypes = z.discriminatedUnion('type', [
   z.object({
     type: z.literal('text_card'),

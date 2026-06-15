@@ -1,26 +1,25 @@
-import { z } from 'zod'
-
-import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { ChartComponentData } from '@/api/models/cms/Page'
 import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
+import { dualCategoryChartToDownloadChart, isDualCategoryChartCardValue } from '@/app/utils/chart.utils'
 import { authEnabled } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
 
 interface DownloadProps {
-  /* Request metadata from the CMS required to fetch from the tables api */
-  data: z.infer<typeof WithChartHeadlineAndTrendCard>['value'] | z.infer<typeof WithChartCard>['value']
+  data: ChartComponentData
   isPublic?: boolean
 }
 
-export async function Download({
-  data: { chart, y_axis, x_axis, tag_manager_event_id, confidence_intervals },
-  isPublic,
-}: DownloadProps) {
+export async function Download({ data, isPublic }: DownloadProps) {
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
+
+  const chart = isDualCategoryChartCardValue(data) ? dualCategoryChartToDownloadChart(data) : data.chart
+  const { y_axis, x_axis, tag_manager_event_id } = data
+  const confidence_intervals = isDualCategoryChartCardValue(data) ? false : (data.confidence_intervals ?? false)
 
   const plots = chart.map((plot) => ({
     ...plot.value,
@@ -48,7 +47,7 @@ export async function Download({
         }))}
         xAxis={x_axis}
         tagManagerEventId={tag_manager_event_id}
-        confidenceIntervals={confidence_intervals ?? false}
+        confidenceIntervals={confidence_intervals}
         isPublic={isPublic}
         authEnabled={authEnabled}
       />

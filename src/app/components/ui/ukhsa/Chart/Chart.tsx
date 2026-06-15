@@ -1,13 +1,13 @@
 /* eslint-disable @next/next/no-img-element */
 import { Suspense } from 'react'
-import { z } from 'zod'
 
-import { ChartCardSchemas } from '@/api/models/cms/Page'
+import { ChartComponentData } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
+import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartSvg } from '@/app/utils/chart.utils'
+import { getChartSvg, isDualCategoryChartCardValue } from '@/app/utils/chart.utils'
 import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
@@ -25,15 +25,13 @@ interface ChartProps {
    * Chart configuration data containing metadata required to fetch chart visuals
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
-  /* Request metadata from the CMS required to fetch from the headlines api */
-  readonly data: z.infer<typeof ChartCardSchemas>['value']
+  readonly data: ChartComponentData
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
    * `default` chart if no minWidth breakpoint is met.
    * Each entry either specifies `minWidth` for a responsive breakpoint or `default`
    * for the default chart display. `size` controls the width format for each entry.
-   *
    */
   readonly sizes: Array<
     | {
@@ -75,6 +73,46 @@ const createStaticChart = async ({
 
 export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
+  const pathname = await getPathname()
+  const [areaType, areaName] = await getAreaSelector()
+
+  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
+
+  if (isDualCategoryChartCardValue(data)) {
+    const chartResponse = await getDualCategoryCharts({
+      chart_type: data.chart_type,
+      static_fields: {
+        ...data.static_fields,
+        geography_type: areaType ?? data.static_fields.geography_type,
+        geography: areaName ?? data.static_fields.geography,
+      },
+      primary_field_values: data.primary_field_values,
+      secondary_category: data.secondary_category,
+      segments: data.segments.map(({ value }) => value),
+      x_axis: data.x_axis,
+      y_axis: data.y_axis,
+      x_axis_title: data.x_axis_title,
+      y_axis_title: data.y_axis_title,
+      y_axis_minimum_value: data.y_axis_minimum_value,
+      y_axis_maximum_value: data.y_axis_maximum_value,
+      chart_width: chartSizes[selectedSize.size].width,
+      chart_height: chartSizes[selectedSize.size].height,
+    })
+
+    if (!chartResponse.success || !chartResponse.data) {
+      return <ChartEmpty resetHref={pathname} />
+    }
+
+    const { alt_text: alt } = chartResponse.data
+
+    return createStaticChart({
+      chart: chartResponse,
+      areaName,
+      altText: t('cms.blocks.chart.alt', {
+        body: alt,
+      }),
+    })
+  }
 
   const chartData = data
 
@@ -98,9 +136,6 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
 
   const { chart, x_axis, y_axis, confidence_intervals, confidence_colour } = chartData
 
-  const pathname = await getPathname()
-  const [areaType, areaName] = await getAreaSelector()
-
   const plots = chart.map((plot) => ({
     ...plot?.value,
 
@@ -120,10 +155,6 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     y_axis_minimum_value: yAxisMinimum,
   }
 
-  // Select the default size (mobile-first approach)
-  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
-
-  // Make single chart request with selected size
   const chartResponse = await getCharts({
     ...chartRequestBody,
     chart_width: chartSizes[selectedSize.size].width,

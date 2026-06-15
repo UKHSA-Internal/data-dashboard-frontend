@@ -29,6 +29,7 @@ import alertDetail from './handlers/alerts/v1/[category]/[region]'
 import bulkDownloads from './handlers/bulkdownloads/v1'
 import subplotCharts from './handlers/charts/subplot/v1'
 import charts from './handlers/charts/v3'
+import dualCategoryCharts from './handlers/charts/v4'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
 import subplotDownloads from './handlers/downloads/subplot/v1'
@@ -68,6 +69,7 @@ app.get('/api/menus/v1', menus)
 
 // POST endpoints
 app.post('/api/charts/v3', charts)
+app.post('/api/charts/v4', dualCategoryCharts)
 app.post('/api/charts/subplot/v1', subplotCharts)
 app.post('/api/tables/v4', tables)
 app.post('/api/tables/subplot/v1', subplotTables)

@@ -137,23 +137,21 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                         </div>
                       </>
                     )}
-                    {column.type !== 'dual_category_chart_card' && (
-                      <AreaSelectorLoader>
-                        <Chart
-                          data={column.value}
-                          sizes={[
-                            {
-                              minWidth: 768,
-                              size,
-                            },
-                            {
-                              default: true,
-                              size: 'narrow',
-                            },
-                          ]}
-                        />
-                      </AreaSelectorLoader>
-                    )}
+                    <AreaSelectorLoader>
+                      <Chart
+                        data={column.value}
+                        sizes={[
+                          {
+                            minWidth: 768,
+                            size,
+                          },
+                          {
+                            default: true,
+                            size: 'narrow',
+                          },
+                        ]}
+                      />
+                    </AreaSelectorLoader>
                   </TabsContent>
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-table`}
@@ -187,7 +185,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Download
                     </span>
-                    {column.type !== 'dual_category_chart_card' && <Download data={column.value} isPublic={isPublic} />}
+                    <Download data={column.value} isPublic={isPublic} />
                   </TabsContent>
                   {!showAbout && noRelatedLinks ? null : (
                     <TabsContent
