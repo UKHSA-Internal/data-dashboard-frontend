@@ -38,7 +38,7 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  * @returns The authentication token or undefined
  * Only import auth at runtime, not at build time
  */
-async function getAuthToken(): Promise<string | undefined> {
+export async function getAuthToken(): Promise<string | undefined> {
   if (typeof window === 'undefined') {
     try {
       const { auth } = await import('@/auth')

@@ -119,7 +119,9 @@ export default async function TopicPage({
                       <FilterBannerWrapper key={id} />
                     ) : (
                       <PageSection key={id} heading={value.heading}>
-                        {value.content.map((item) => renderCard(value.heading, [], item, isPublic, pageClassification))}
+                        {value.content.map((item) =>
+                          renderCard(value.heading, [], item, isPublic, true, pageClassification)
+                        )}
                       </PageSection>
                     )
                   )}

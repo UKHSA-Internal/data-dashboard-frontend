@@ -3,9 +3,9 @@
 import { DataClassification } from '@/api/models/DataClassification'
 import { useGlobalFilters } from '@/app/features/global-filter/context/globalFilterContext'
 
+import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
-
 const TimeSeriesFilterCardsContainer = ({
   isPublic,
   pageClassification,
@@ -24,6 +24,7 @@ const TimeSeriesFilterCardsContainer = ({
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
+      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
       {isChartDataAvailable() ? (
         selectedGeographyFilters!.map((geography) => {
           return (

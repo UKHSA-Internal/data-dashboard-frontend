@@ -14,12 +14,13 @@
  */
 
 import { auth, signOut as nextAuthSignOut } from '@/auth'
-import { logger } from '@/lib/logger'
+import { auditLog, logger } from '@/lib/logger'
 
 import { getAuthApiBaseUrl } from '../helpers'
 
-export async function signOut(options?: { redirectTo?: string; redirect?: true }) {
+export async function signOut(options?: { redirectRoute?: string; redirect?: true }) {
   const session = await auth()
+  auditLog(session?.userId ?? '', 'LOG_OUT')
 
   if (!session?.refreshToken) {
     logger.warn('No refresh token available during sign out')
@@ -56,7 +57,7 @@ export async function signOut(options?: { redirectTo?: string; redirect?: true }
 
   // Redirect to /start after sign out
   if (options?.redirect) {
-    return { redirect: { destination: '/start', permanent: false } }
+    return { redirect: { destination: options?.redirectRoute ? options.redirectRoute : 'start', permanent: false } }
   }
 
   return result

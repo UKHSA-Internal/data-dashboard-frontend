@@ -43,9 +43,11 @@ export async function GovukHeader({ serviceTitle }: GovukHeaderProps) {
           </Link>
         </div>
 
-        <Link href="/" className="ukhsa-service-name govuk-header__link govuk-header__service-name">
-          {serviceTitle}
-        </Link>
+        <div className="ukhsa-service-name">
+          <Link href="/" className="govuk-header__link govuk-header__service-name mt-0">
+            {serviceTitle}
+          </Link>
+        </div>
 
         <div className="ukhsa-search">
           <Search placeholder={t('search.searchTitle')} label={t('search.searchLabel')} />

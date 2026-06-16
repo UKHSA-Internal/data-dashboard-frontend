@@ -93,3 +93,13 @@ export const defaultAuthProvider = 'cognito'
  * Redirect path after successful sign out
  */
 export const authSignOutRedirectionPath = '/start?logout=success'
+
+/**
+ * The maximum timeout for keeping the user signed in, in minutes.
+ */
+export const logoutThresholdMinutes = 4
+
+/**
+ * This is used to determine when to show the logout warning modal.
+ */
+export const logoutWarningThresholdMinutes = 2

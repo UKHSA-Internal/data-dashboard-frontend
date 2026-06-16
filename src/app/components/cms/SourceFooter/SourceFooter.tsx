@@ -16,7 +16,7 @@ export type SourceFooterProps = {
 }
 
 export function hasSource(source?: CmsSource | null): boolean {
-  return Boolean(source && (source.external_url || source.page))
+  return Boolean(source && (source.external_url || source.page) && source?.link_display_text)
 }
 
 export function SourceFooter({

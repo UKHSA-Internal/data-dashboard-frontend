@@ -171,6 +171,35 @@ describe('ChartCardSection', () => {
     expect(screen.getByText('Show More')).toBeInTheDocument()
   })
 
+  test('does not show "Show More" and renders third card when enableShowMore is false', async () => {
+    const mockValue = {
+      cards: [
+        createMockCard('test-card-1', 'Test Chart 1', 'Test Description 1'),
+        createMockCard('test-card-2', 'Test Chart 2', 'Test Description 2'),
+        createMockCard('test-card-3', 'Test Chart 3', 'Test Description 3'),
+      ],
+    }
+
+    const mockProps = {
+      value: mockValue,
+      heading: 'Test Section',
+      showMoreSections: [],
+      enableShowMore: false,
+    }
+
+    render(
+      <Suspense fallback={<div>Loading...</div>}>
+        <ChartCardSection {...mockProps} />
+      </Suspense>
+    )
+
+    await screen.findByRole('heading', { name: 'Test Chart 1', level: 3 })
+
+    expect(screen.getAllByTestId('card-wrapper')).toHaveLength(3)
+    expect(screen.getByRole('heading', { name: 'Test Chart 3', level: 3 })).toBeInTheDocument()
+    expect(screen.queryByText('Show More')).not.toBeInTheDocument()
+  })
+
   test('renders chart card section with chart_with_description_card type', async () => {
     const mockValue = {
       cards: [

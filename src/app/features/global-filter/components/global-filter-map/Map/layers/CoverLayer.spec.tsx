@@ -134,10 +134,6 @@ const mockMap = {
   setView: jest.fn(),
 }
 
-/* eslint-disable jsx-a11y/click-events-have-key-events*/
-/* eslint-disable jsx-a11y/mouse-events-have-key-events*/
-/* eslint-disable jsx-a11y/no-static-element-interactions*/
-
 jest.mock('react-leaflet', () => ({
   ...jest.requireActual('react-leaflet'),
   useMap: () => mockMap,

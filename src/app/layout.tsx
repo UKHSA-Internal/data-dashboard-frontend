@@ -9,11 +9,13 @@ import { NuqsAdapter } from 'nuqs/adapters/next/app'
 import { Suspense } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
 
+import { getAuthToken } from '@/api/utils/api.utils'
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner } from './components/ui/ukhsa'
+import LogoutWarning from './components/ui/ukhsa/LogoutWarning/LogoutWarning'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
 import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager/GoogleTagManager'
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
@@ -24,9 +26,9 @@ export const dynamic = 'auto'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
+  const accessToken = await getAuthToken()
 
   const cookieStore = await cookies()
-
   return (
     <html lang="en" className={`govuk-template ${font.variable} govuk-template--rebranded font-sans`}>
       <body className="govuk-template__body">
@@ -45,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               body={<Trans i18nKey="cookieBanner.body" t={t} components={[<p key={0} />, <p key={1} />]} />}
             />
           </Suspense>
-
+          {accessToken && <LogoutWarning />}
           <Providers>
             {children}
             <HealthAlertsMapWrapper />
