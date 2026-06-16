@@ -13,7 +13,7 @@ import { getServerTranslation } from '@/app/i18n'
 import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
-  children: ReactNode
+  readonly children: ReactNode
 }
 
 export function generateMetadata() {
@@ -34,6 +34,7 @@ export default async function Layout({ children }: LayoutProps) {
       </TopNav>
 
       <div className="govuk-width-container bg-blue" />
+
       <div className="govuk-width-container print:hidden">
         <PhaseBanner tag={t('feedbackBannerPhase')}>
           <Trans i18nKey="feedbackBanner" t={t}>
@@ -46,21 +47,25 @@ export default async function Layout({ children }: LayoutProps) {
 
       {!globalBanners || globalBanners.length <= 0
         ? null
-        : globalBanners.map(({ title: heading, banner_type: variant, body }, index) => (
-            <div key={index} className="govuk-width-container">
-              <div className="govuk-grid-row">
-                <div className="govuk-grid-column-three-quarters">
-                  <Announcement
-                    heading={heading}
-                    variant={variant}
-                    className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
-                  >
-                    {body}
-                  </Announcement>
+        : globalBanners.map(({ title: heading, banner_type: variant, body }) => {
+            const key = `${heading}-${variant}-${body}`
+            return (
+              <div key={key} className="govuk-width-container">
+                <div className="govuk-grid-row">
+                  <div className="govuk-grid-column-three-quarters">
+                    <Announcement
+                      heading={heading}
+                      variant={variant}
+                      className="govuk-!-margin-top-4 govuk-!-margin-bottom-1"
+                    >
+                      {body}
+                    </Announcement>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))}
+            )
+          })}
+
       <div className="govuk-width-container">
         <div className="govuk-!-padding-top-4 flex flex-col gap-0 xl:gap-7">
           <main className="govuk-main-wrapper govuk-!-padding-top-0" id="main-content">
