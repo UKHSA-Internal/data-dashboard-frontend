@@ -23,7 +23,7 @@ export const menu = {
       value: {
         title: 'API',
         page: 1,
-        html_url: '/api/',
+        html_url: '/access-our-data/',
       },
       id: '977b4690-aa5a-48b3-8673-138d3397f76a',
     },
