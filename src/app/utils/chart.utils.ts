@@ -1,6 +1,8 @@
 import { z } from 'zod'
 
 import { Chart, ChartCardSchemas, ChartComponentData, DualCategoryChartCardValue } from '@/api/models/cms/Page'
+import type { Response as DualCategoryTableResponse } from '@/api/requests/tables/getDualCategoryTables'
+import type { Column, Data } from '@/app/utils/chart-table.utils'
 
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
@@ -115,6 +117,45 @@ export const getFilteredData = (
 
 export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
   'segments' in data && 'static_fields' in data
+
+export type DualCategoryTableGroup = {
+  columns: Array<Column>
+  data: Array<Data>
+}
+
+export const parseDualCategoryTableData = (response: DualCategoryTableResponse | null): DualCategoryTableGroup[] => {
+  if (!response || !response.length) return []
+
+  const labels: string[] = []
+  response.forEach((item) => {
+    item.values.forEach((value) => {
+      if (!labels.includes(value.label)) {
+        labels.push(value.label)
+      }
+    })
+  })
+
+  return labels.map((label) => {
+    const columns: Array<Column> = [
+      { header: 'Reference', accessorKey: 'col-0' },
+      { header: label, accessorKey: 'col-1' },
+    ]
+
+    const data: Array<Data> = response.map((item) => {
+      const match = item.values.find((value) => value.label === label)
+
+      return {
+        record: {
+          'col-0': item.reference,
+          'col-1': match?.value ?? null,
+        },
+        inReportingDelay: match?.in_reporting_delay_period ?? false,
+      }
+    })
+
+    return { columns, data }
+  })
+}
 
 export const dualCategoryChartToDownloadChart = (data: DualCategoryChartCardValue): Chart => [
   {

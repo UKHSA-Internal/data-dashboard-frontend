@@ -11,6 +11,7 @@ import {
   Chart,
   ChartRowCardHeader,
   Download,
+  DualCategoryTable,
   Table,
   Tabs,
   TabsContent,
@@ -164,7 +165,14 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                     >
                       Tabular data
                     </span>
-                    {column.type !== 'dual_category_chart_card' && (
+                    {column.type === 'dual_category_chart_card' ? (
+                      <DualCategoryTable
+                        data={column.value}
+                        isPublic={isPublic}
+                        level={pageClassification}
+                        authEnabled={authEnabled}
+                      />
+                    ) : (
                       <Table
                         data={column.value}
                         size={size}

@@ -42,6 +42,7 @@ import headlines from './handlers/headlines/v3'
 import maps from './handlers/maps/v1/v1'
 import menus from './handlers/menus/v1'
 import suggestions from './handlers/suggestions/v2'
+import dualCategoryTables from './handlers/tables/dual-category/v1'
 import subplotTables from './handlers/tables/subplot/v1'
 import tables from './handlers/tables/v4'
 import trends from './handlers/trends/v3'
@@ -72,6 +73,7 @@ app.post('/api/charts/v3', charts)
 app.post('/api/charts/v4', dualCategoryCharts)
 app.post('/api/charts/subplot/v1', subplotCharts)
 app.post('/api/tables/v4', tables)
+app.post('/api/tables/dual-category/v1', dualCategoryTables)
 app.post('/api/tables/subplot/v1', subplotTables)
 app.post('/api/downloads/v2', downloads)
 app.post('/api/downloads/subplot/v1', subplotDownloads)
