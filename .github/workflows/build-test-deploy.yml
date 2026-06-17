@@ -224,19 +224,7 @@ jobs:
           cp -r public .next/standalone/public
           echo "✅ .env.local created and assets copied"
 
-      - name: Verify required secrets
-        run: |
-          echo "Checking required secrets..."
-          missing=0
-          [ -n "${{ secrets.AUTH_DOMAIN }}"        ] || { echo "❌ AUTH_DOMAIN is empty";        missing=1; }
-          [ -n "${{ secrets.AUTH_CLIENT_ID }}"     ] || { echo "❌ AUTH_CLIENT_ID is empty";     missing=1; }
-          [ -n "${{ secrets.AUTH_CLIENT_SECRET }}" ] || { echo "❌ AUTH_CLIENT_SECRET is empty"; missing=1; }
-          [ -n "${{ secrets.AUTH_CLIENT_URL }}"    ] || { echo "❌ AUTH_CLIENT_URL is empty";    missing=1; }
-          [ -n "${{ secrets.AUTH_SECRET }}"        ] || { echo "❌ AUTH_SECRET is empty";        missing=1; }
-          [ -n "${{ secrets.NEXTAUTH_URL }}"       ] || { echo "❌ NEXTAUTH_URL is empty";       missing=1; }
-          [ "$missing" -eq 0 ] || (echo "One or more required secrets are missing. Aborting." && exit 1)
-          echo "✅ All secrets present"
-       
+      # Secrets already verified above
       # ── Dev server ────────────────────────────────────────────────────────────
       - name: Start dev server
         id: start-dev-server
