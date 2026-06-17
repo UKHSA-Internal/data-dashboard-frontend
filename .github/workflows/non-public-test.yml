@@ -1,9 +1,9 @@
-name: Smoke Tests
+name: non public Tests
 
 on:
   workflow_dispatch:
   repository_dispatch:
-    types: [trigger_smoke_tests]
+    types: [trigger_non_public_tests]
 
 env:
   AWS_REGION: 'eu-west-2'
@@ -13,9 +13,9 @@ permissions:
   contents: read # This is required for the actions/checkout
 
 jobs:
-  smoke-tests:
+  non-public-tests:
     if: ${{ github.ref == 'refs/heads/main' }}
-    name: Playwright smoke tests
+    name: Playwright non-public tests
     timeout-minutes: 60
     runs-on: ubuntu-latest
     steps:
@@ -27,19 +27,19 @@ jobs:
       - name: Setup Playwright
         run: npx playwright install --with-deps
       - name: Run Playwright tests
-        run:  npx playwright test --grep @smoke
+        run:  npx playwright test --grep @non-public
         env:
           baseURL: https://ukhsa-dashboard.data.gov.uk
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: always()
         with:
-          name: playwright-report-smoke
+          name: playwright-report-non-public
           path: playwright-report/
           retention-days: 10
 
   slack-notify:
     name: Slack Notify
-    needs: [smoke-tests]
+    needs: [non-public-tests]
     runs-on: ubuntu-latest
     if: always()
     steps:
@@ -47,7 +47,7 @@ jobs:
 
       - name: 'Report Success'
         uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
-        if: ${{ needs.smoke-tests.result == 'success' }}
+        if: ${{ needs.non-public-tests.result == 'success' }}
         with:
           status: success
           notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
@@ -58,7 +58,7 @@ jobs:
 
       - name: 'Report Failure'
         uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
-        if: ${{ needs.smoke-tests.result == 'failure' }}
+        if: ${{ needs.non-public-tests.result == 'failure' }}
         with:
           status: failure
           notification_title: ':rotating_light: {workflow} workflow has {status_message} :rotating_light:'

@@ -222,8 +222,7 @@ jobs:
       # ── Tests ─────────────────────────────────────────────────────────────────
       - name: Run Playwright tests
         run: |
-          npx playwright test \
-            --grep @smoke \
+          npx playwright test --grep @non-public \
             --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000
