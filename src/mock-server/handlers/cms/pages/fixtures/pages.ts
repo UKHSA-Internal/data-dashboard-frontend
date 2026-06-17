@@ -14,6 +14,7 @@ import {
   healthTopicsPageMock,
   influenzaPageMock,
   landingPageMock,
+  leadPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
@@ -386,7 +387,7 @@ export const pagesWithTopicsListTypeMock: PagesResponse = {
 
 export const pagesWithTopicTypeMock: PagesResponse = {
   meta: {
-    total_count: 4,
+    total_count: 5,
   },
   items: [
     {
@@ -448,6 +449,21 @@ export const pagesWithTopicTypeMock: PagesResponse = {
       seo_change_frequency: vaccinationCoverageMock.seo_change_frequency,
       seo_priority: vaccinationCoverageMock.seo_priority,
       title: vaccinationCoverageMock.title,
+    },
+    {
+      id: leadPageMock.id,
+      meta: {
+        type: leadPageMock.meta.type,
+        detail_url: leadPageMock.meta.detail_url,
+        html_url: leadPageMock.meta.html_url,
+        slug: leadPageMock.meta.slug,
+        search_description: leadPageMock.meta.search_description,
+        show_in_menus: leadPageMock.meta.show_in_menus,
+        first_published_at: leadPageMock.meta.first_published_at,
+      },
+      seo_change_frequency: leadPageMock.seo_change_frequency,
+      seo_priority: leadPageMock.seo_priority,
+      title: leadPageMock.title,
     },
   ],
 }
