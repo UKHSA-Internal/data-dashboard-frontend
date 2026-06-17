@@ -1,0 +1,70 @@
+name: Smoke Tests
+
+on:
+  workflow_dispatch:
+  repository_dispatch:
+    types: [trigger_smoke_tests]
+
+env:
+  AWS_REGION: 'eu-west-2'
+
+permissions:
+  id-token: write # This is required for requesting the JWT
+  contents: read # This is required for the actions/checkout
+
+jobs:
+  smoke-tests:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    name: Playwright smoke tests
+    timeout-minutes: 60
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+      - uses: ./.github/actions/setup-node
+      - uses: ./.github/actions/install-cache
+      - name: Install packages
+        run: npm ci --no-audit --no-fund
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
+      - name: Run Playwright tests
+        run:  npx playwright test --grep @smoke
+        env:
+          baseURL: https://ukhsa-dashboard.data.gov.uk
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+        if: always()
+        with:
+          name: playwright-report-smoke
+          path: playwright-report/
+          retention-days: 10
+
+  slack-notify:
+    name: Slack Notify
+    needs: [smoke-tests]
+    runs-on: ubuntu-latest
+    if: always()
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
+
+      - name: 'Report Success'
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
+        if: ${{ needs.smoke-tests.result == 'success' }}
+        with:
+          status: success
+          notification_title: ':white_check_mark: {workflow} workflow has {status_message} :white_check_mark:'
+          message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
+          footer: '<{run_url}|View Run>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+
+      - name: 'Report Failure'
+        uses: ravsamhq/notify-slack-action@be814b201e233b2dc673608aa46e5447c8ab13f2
+        if: ${{ needs.smoke-tests.result == 'failure' }}
+        with:
+          status: failure
+          notification_title: ':rotating_light: {workflow} workflow has {status_message} :rotating_light:'
+          message_format: '*{workflow}* {status_message} in <{repo_url}|{repo}@{branch}> on <{commit_url}|{commit_sha}>'
+          mention_groups: ${{ vars.SLACK_MENTION_USERS }}
+          mention_groups_when: 'failure,warnings'
+          footer: '<{run_url}|View Run>'
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}

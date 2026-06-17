@@ -164,7 +164,6 @@ jobs:
       - uses: ./.github/actions/install-cache
 
       - uses: ./.github/actions/build-cache
-          echo "✅ All secrets present"
 
       - name: Setup Playwright
         run: npx playwright install --with-deps
@@ -224,7 +223,7 @@ jobs:
       - name: Run Playwright tests
         run: |
           npx playwright test \
-            --grep-invert @non-public \
+            --grep @non-public \
             --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000
