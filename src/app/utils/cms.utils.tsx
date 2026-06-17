@@ -163,11 +163,12 @@ export const renderBlock = ({
   type,
   value,
   date_prefix,
-}: z.infer<typeof Blocks>[number] & { date_prefix: string }) => (
+  headingClassName,
+}: z.infer<typeof Blocks>[number] & { date_prefix: string; headingClassName?: string }) => (
   <div key={id}>
     {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} />}
     {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} />}
-    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} />}
+    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} headingClassName={headingClassName} />}
   </div>
 )
 
