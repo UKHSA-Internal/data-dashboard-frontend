@@ -7,7 +7,7 @@ export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
 
-  const authToken = req.headers.get('X-UHD-AUTH') ?? undefined
+  const authToken = req.headers.get('X-UHD-AUTH')
 
   const is_public = !authToken
 
