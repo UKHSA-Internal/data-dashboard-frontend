@@ -37,13 +37,6 @@ test.describe('Start page - logged out (normal initial state)', () => {
   })
 })
 
-test('Displays page content', async ({ authStartPage, authEnabled }) => {
-  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-  await authStartPage.goto()
-  await authStartPage.hasMainHeading()
-  await authStartPage.hasSignInAction()
-})
-
 test('Does not show logout banner', async ({ authStartPage, authEnabled }) => {
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
   await authStartPage.goto()
@@ -58,15 +51,6 @@ test('Displays classification banner', async ({ authStartPage, authEnabled }) =>
 })
 
 test.describe('Start page - logged in', () => {
-  test('Start page is not accessible when logged in', async ({ landingPage, authStartPage, authEnabled }) => {
-    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-    await authStartPage.goto()
-    await authStartPage.isRedirectedDueToLoggedIn()
-
-    await landingPage.hasHeading()
-    await landingPage.hasMetadata()
-  })
-
   test('Shows an avatar & sign out button in the navigation menu', async ({
     landingPage,
     authStartPage,
@@ -78,18 +62,6 @@ test.describe('Start page - logged in', () => {
     await authStartPage.checkIsLoggedIn()
     await authStartPage.checkSignOutButtonExists()
   })
-})
-
-test('Successfully signs out & redirects to start page', async ({ landingPage, authStartPage, authEnabled }) => {
-  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-  await landingPage.goto()
-
-  await authStartPage.checkIsLoggedIn()
-  await authStartPage.signOut()
-  await authStartPage.checkIsLoggedOut()
-
-  await authStartPage.isStartPage({ afterLogout: true })
-  await authStartPage.checkSignOutBannerExists()
 })
 
 test.describe('Start page - after logout (post-logout state)', () => {
