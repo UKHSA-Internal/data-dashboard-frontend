@@ -222,7 +222,7 @@ jobs:
       # ── Tests ─────────────────────────────────────────────────────────────────
       - name: Run Playwright tests
         run: |
-          npx playwright test --grep "@auth-ui" \
+          npx playwright test --grep "auth" \
             --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000
