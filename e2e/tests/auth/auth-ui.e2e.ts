@@ -104,9 +104,13 @@ test.describe('Start page - after logout (post-logout state)', () => {
   })
 })
 
-test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {
-  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-  await authStartPage.page.goto('/start?logout=success')
-  await authStartPage.hasClassificationBanner()
-  await authStartPage.checkClassificationBannerContent()
+test.describe('Start page - after logout (post-logout state) - classification banner', () => {
+  test.use({ startLoggedOut: true })
+
+  test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await authStartPage.page.goto('/start?logout=success')
+    await authStartPage.hasClassificationBanner()
+    await authStartPage.checkClassificationBannerContent()
+  })
 })

@@ -67,15 +67,45 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         })
       })
 
-      // Inject session cookie
+      // Inject an Auth.js session cookie so server components using `auth()` see a logged-in session.
+      const secureCookie = process.env.NEXTAUTH_URL?.startsWith('https://') ?? false
+      const sessionCookieName = secureCookie ? '__Secure-authjs.session-token' : 'authjs.session-token'
+
+      const { encode } = await import('next-auth/jwt')
+      const timeInSeconds = Math.floor(Date.now() / 1000)
+      const expiresAt = timeInSeconds + 60 * 60 // 1 hour
+
+      const sessionToken = await encode({
+        secret: process.env.AUTH_SECRET!,
+        salt: sessionCookieName,
+        token: {
+          name: mockSession.user.name,
+          email: mockSession.user.email,
+          sub: mockSession.user.sub,
+          access_token: mockSession.accessToken,
+          refresh_token: 'mock-refresh-token',
+          expires_at: expiresAt,
+          user_id: mockSession.user.sub,
+          exp: expiresAt,
+        },
+      })
+
+      const domain = (() => {
+        try {
+          return new URL(process.env.baseURL || 'http://localhost:3000').hostname
+        } catch {
+          return 'localhost'
+        }
+      })()
+
       await page.context().addCookies([
         {
-          name: 'next-auth.session-token',
-          value: 'mock-session-token',
-          domain: 'localhost',
+          name: sessionCookieName,
+          value: sessionToken,
+          domain,
           path: '/',
           httpOnly: true,
-          secure: false,
+          secure: secureCookie,
           sameSite: 'Lax',
         },
       ])

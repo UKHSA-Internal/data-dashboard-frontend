@@ -7,9 +7,6 @@ dotenv.config({ path: path.resolve(__dirname, '.env.local') })
 // URL test to, this must be up and available before the tests are run
 const baseURL = process.env.baseURL || 'http://localhost:3000'
 
-// const authStorage =
-//   process.env.AUTH_ENABLED === 'true' && fs.existsSync('e2e/storage/auth.json') ? 'e2e/storage/auth.json' : undefined
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */

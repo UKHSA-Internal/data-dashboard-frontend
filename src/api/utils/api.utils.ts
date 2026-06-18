@@ -7,6 +7,7 @@ import {
   nonPublicCacheRevalidationInterval,
   publicCacheRevalidationInterval,
 } from '@/config/constants'
+import { getClientSession, getServerSession } from '@/lib/auth/auth-session'
 
 import { getApiBaseUrl } from '../requests/helpers'
 
@@ -14,7 +15,6 @@ import { getApiBaseUrl } from '../requests/helpers'
 interface Options {
   body?: unknown
   searchParams?: URLSearchParams
-  isPublic?: boolean
   baseUrl?: string
   headers?: Record<string, string>
   cache?: RequestInit['cache']
@@ -37,17 +37,24 @@ function getRevalidateInterval(isPublic: boolean, customConfig: Pick<Options, 'n
  * Fetch the authentication token
  * @returns The authentication token or undefined
  * Only import auth at runtime, not at build time
+ * The auth module depends on `next-auth`, which pulls in `next` and Node.js built-in modules that are unavailable in the Edge Runtime, causing build failures.
+ * Loading `auth` at runtime avoids these imports, allowing the module to work in both Edge and Node runtimes.
  */
+
 export async function getAuthToken(): Promise<string | undefined> {
-  if (typeof window === 'undefined') {
+  if (isSSR) {
+    // Server side - cached per request
     try {
-      const { auth } = await import('@/auth')
-      const session = await auth()
+      const session = await getServerSession()
       return session?.accessToken
     } catch (error) {
       console.error('Failed to get auth token:', error)
       return undefined
     }
+  } else {
+    // Client side
+    const session = await getClientSession()
+    return session?.accessToken
   }
 }
 
@@ -59,20 +66,16 @@ export async function getAuthToken(): Promise<string | undefined> {
 
 export async function client<T>(
   endpoint: string,
-  {
-    body,
-    // Defaulting all requests to public (non-authenticated) for now.
-    // This may change to an opt-in approach as we build out the authenticated dashboard.
-    isPublic = true,
-    searchParams,
-    baseUrl = getApiBaseUrl(),
-    ...customConfig
-  }: Options = {}
+  { body, searchParams, baseUrl = getApiBaseUrl(), ...customConfig }: Options = {},
+  // Defaulting all requests to public (non-authenticated) for now.
+  isPublic: boolean = true
 ): Promise<{ data: T | null; status: number; error?: Error; headers?: Headers }> {
   const headers: HeadersInit = { Authorization: process.env.API_KEY ?? '', 'content-type': 'application/json' }
 
   // read access token only if request is not public
-  const accessToken = isPublic ? undefined : await getAuthToken()
+  // or if it's a pages endpoint, which currently also requires authentication
+  const isPagesEndpoint = endpoint.includes('pages')
+  const accessToken = isPagesEndpoint || isPublic === false ? await getAuthToken() : undefined
   // Send the local mock overrides with all requests
   if (!isWellKnownEnvironment() && isSSR) {
     // Import cookies dynamically only in node environment to not trigger nextjs warnings
@@ -105,7 +108,6 @@ export async function client<T>(
   }
 
   const url = `${baseUrl}${baseUrl && '/'}${endpoint}${searchParams ? `?${searchParams.toString()}` : ''}`
-
   return fetch(url, fetchOptions).then(async (response) => {
     const { status, ok, headers } = response
 
