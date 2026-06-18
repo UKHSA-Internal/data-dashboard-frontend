@@ -2,14 +2,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture.non.public'
 
-const pagesShownInNavMenu = [
-  'Respiratory viruses',
-  'About',
-  'Metrics documentation',
-  "What's new",
-  "What's coming",
-  'Access our data',
-]
+const pagesShownInNavMenu = ['start']
 
 test.describe('Non-public tests - desktop @non-public', () => {
   test.use({ viewport: viewports.desktop })
