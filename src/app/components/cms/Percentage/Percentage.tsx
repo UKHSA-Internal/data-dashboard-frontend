@@ -8,12 +8,13 @@ interface PercentageProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
   data: z.infer<typeof HeadlineNumber>['value']
   datePrefix: string
+  isPublic?: boolean
 }
 
-export async function Percentage({ data: { body: heading, ...requestParams }, datePrefix }: PercentageProps) {
+export async function Percentage({ data: { body: heading, ...requestParams }, datePrefix, isPublic }: PercentageProps) {
   const { t } = await getServerTranslation('common')
 
-  const headline = await getHeadlines(requestParams)
+  const headline = await getHeadlines(requestParams, isPublic)
 
   if (headline.success) {
     const {

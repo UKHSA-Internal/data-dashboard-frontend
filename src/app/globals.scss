@@ -388,3 +388,16 @@ input#search {
 .logoutWarningContainer{
   background: rgba(0, 0, 0, 0.7);
 } 
+
+.chartLoader:after {
+  content: "\2026";
+  display: inline-block;
+  vertical-align: bottom;
+  overflow: hidden;
+  width: 0;
+  animation: ellipsis steps(6, end) 900ms infinite;
+}
+
+@keyframes ellipsis {
+  to { width: 40px; }
+}

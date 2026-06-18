@@ -4,6 +4,7 @@ import { getTables, RequestParams } from '@/api/requests/tables/getTables'
 
 export async function POST(req: NextRequest) {
   const body: RequestParams = await req.json()
+  const isPublic = req.nextUrl.searchParams.get('isPublic') !== 'false'
 
   if (!body) {
     return new NextResponse('Missing category', {
@@ -11,7 +12,7 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  const proxiedResponse = await getTables(body)
+  const proxiedResponse = await getTables(body, isPublic)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)

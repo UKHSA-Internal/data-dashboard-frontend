@@ -112,11 +112,14 @@ export async function Table({
   }))
 
   // Call the table endpoint to get the data in table format
-  const tableResponse = await getTables({
-    plots,
-    x_axis,
-    y_axis,
-  })
+  const tableResponse = await getTables(
+    {
+      plots,
+      x_axis,
+      y_axis,
+    },
+    isPublic
+  )
 
   // Call the charts endpoint as this gives us the data timestamp
   const chartRequestBody = {
@@ -131,7 +134,7 @@ export async function Table({
     chart_height: chartSizes[size].height,
   }
 
-  const chartResponse = await getCharts(chartRequestBody)
+  const chartResponse = await getCharts(chartRequestBody, isPublic)
 
   if (tableResponse.success) {
     const groups = parseChartTableData(tableResponse.data, {
