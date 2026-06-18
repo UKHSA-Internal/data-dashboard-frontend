@@ -1,0 +1,536 @@
+import AxeBuilder from '@axe-core/playwright'
+import { expect, Locator, Page } from '@playwright/test'
+import * as fs from 'fs'
+import { kebabCase, lowerCase } from 'lodash'
+
+import { relatedLinksMock } from '@/mock-server/handlers/cms/pages/fixtures/elements'
+import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
+import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-json'
+
+import { AuthSetupFixtures } from './auth/auth-setup.fixture'
+import { AuthStartPage, LandingPage, SitemapPage } from './index'
+
+type Fixtures = {
+  sitemapPage: SitemapPage
+  app: App
+  authStartPage: AuthStartPage
+  landingPage: LandingPage
+}
+
+export class App {
+  readonly page: Page
+  readonly header: Locator
+  readonly phaseBanner: Locator
+  readonly heroBanner: Locator
+  readonly nav: Locator
+  readonly sideNav: Locator
+  readonly tableOfContents: Locator
+  readonly backToTop: Locator
+  readonly footer: Locator
+  readonly cookieBanner: Locator
+  readonly areaSelector: Locator
+  readonly authEnabled: boolean
+  readonly authUserName: string
+  readonly menuLinkClosed: Locator
+  readonly menuLinkOpen: Locator
+
+  constructor(page: Page, authEnabled: boolean, authUserName: string) {
+    this.page = page
+    this.header = this.page.getByRole('banner')
+    this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
+    this.heroBanner = this.page.getByTestId('ukhsa-hero-banner')
+    this.nav = this.page.getByRole('navigation', { name: 'Menu' })
+    this.sideNav = this.page.getByRole('navigation', { name: 'Side navigation' })
+    this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
+    this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
+    this.footer = this.page.getByRole('contentinfo')
+    this.cookieBanner = this.page.getByRole('region', { name: 'Cookies on the UKHSA data dashboard' })
+    this.areaSelector = this.page.getByRole('form', { name: 'Area selector' })
+    this.authEnabled = authEnabled
+    this.authUserName = authUserName
+    this.menuLinkClosed = this.page.getByRole('link', {
+      name: this.authEnabled ? `Show navigation menu – Logged in as ${this.authUserName}` : 'Show navigation menu',
+      exact: true,
+      expanded: false,
+    })
+    this.menuLinkOpen = this.page.getByRole('link', {
+      name: this.authEnabled ? `Hide navigation menu – Logged in as ${this.authUserName}` : 'Hide navigation menu',
+      exact: true,
+      expanded: true,
+    })
+  }
+
+  async goto(path: string) {
+    await this.page.goto(path)
+  }
+
+  async reload() {
+    await this.page.reload()
+  }
+
+  async waitForPageLoaded() {
+    // Wait for our JS bundle to be fully loaded as sometimes the tests will try to interact with the UI before the JS is loaded
+    await this.page.waitForFunction(() => document.body.className.includes('js-enabled'), undefined, { timeout: 5000 })
+  }
+
+  async waitForUrl(url: string) {
+    await this.page.waitForURL(url, { timeout: 10000 })
+  }
+
+  async hasMetadata({ title, description }: { title: string; description: string }) {
+    const pageTitle = await this.page.title()
+    await expect(pageTitle).toBe(title)
+    await expect(this.page.locator('meta[name="description"]')).toHaveAttribute('content', description)
+  }
+
+  async hasDocumentTitle(title: string) {
+    await expect(await this.page.title()).toBe(title)
+  }
+
+  async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
+    const accessibilityScanResults = await new AxeBuilder({ page: this.page })
+      .disableRules(['region', ...additionalDisabledRules])
+      .analyze()
+
+    const filteredViolations = accessibilityScanResults.violations.filter((violation) => {
+      if (violation.id === 'color-contrast') {
+        violation.nodes = violation.nodes.filter((node) => node.html.includes('.govuk-tag'))
+        return violation.nodes.length > 0
+      }
+      return true
+    })
+
+    expect(filteredViolations).toEqual([])
+  }
+
+  async hasLayout() {
+    // Header
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'UKHSA data dashboard' })).toBeVisible()
+
+    // Phase Banner
+    await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
+    await expect(
+      this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
+    ).toBeVisible()
+
+    // Footer
+    await expect(this.footer.getByText(/All content is available under the/)).toBeVisible()
+    await expect(this.footer.getByText(/Open Government Licence v3.0/)).toBeVisible()
+    await expect(this.footer.getByText(/, except where otherwise stated/)).toBeVisible()
+    await expect(this.footer.getByText(/© Crown copyright/)).toHaveAttribute(
+      'href',
+      'https://www.nationalarchives.gov.uk/information-management/re-using-public-sector-information/uk-government-licensing-framework/crown-copyright/'
+    )
+    await expect(this.footer.getByRole('link', { name: 'Cookies' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Accessibility statement' })).toBeVisible()
+    await expect(this.footer.getByRole('link', { name: 'Compliance' })).toBeVisible()
+  }
+
+  async hasAnnouncement(type: 'Information' | 'Warning', title: string, body: string) {
+    const infoBanner = this.page.getByRole(type === 'Information' ? 'status' : 'alert')
+    await expect(
+      infoBanner.getByText(type === 'Information' ? 'Information' : 'Warning', { exact: true })
+    ).toBeVisible()
+    await expect(infoBanner.getByText(title)).toBeVisible()
+    await expect(infoBanner.getByText(body)).toBeVisible()
+  }
+
+  async hasHeroBannerLayout() {
+    await expect(this.page.getByRole('banner').getByRole('link', { name: 'GOV.UK' })).toBeVisible()
+
+    // Phase Banner
+    await expect(this.phaseBanner.getByText(/Beta/)).toBeVisible()
+    await expect(
+      this.phaseBanner.getByText(/This is a new service - your feedback will help us to improve it./)
+    ).toBeVisible()
+
+    // Announcement
+    const infoBanner = this.page.getByRole('status')
+    await expect(infoBanner.getByText('Information', { exact: true })).toBeVisible()
+    await expect(infoBanner.getByText('This is an information level site wide banner. Puppies are cute')).toBeVisible()
+    await expect(
+      infoBanner.getByText(
+        'Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis.'
+      )
+    ).toBeVisible()
+  }
+
+  async hasSearch() {
+    await expect(this.page.locator('input#search')).toBeVisible()
+  }
+
+  async doesNotHaveSearch() {
+    await expect(this.page.locator('input#search')).not.toBeVisible()
+  }
+
+  // TODO: Rename once above test removed in CDD-2154
+  async hasNav() {
+    await this.waitForPageLoaded()
+
+    await expect(this.menuLinkClosed).toBeVisible()
+
+    // Open menu
+    await this.menuLinkClosed.click()
+
+    await expect(this.menuLinkOpen).toBeVisible()
+
+    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toMatchAriaSnapshot(`
+      - navigation "Menu":
+        ${this.authEnabled ? '- button "Sign out"' : ''}
+        - heading "Respiratory viruses" [level=3]
+        - list:
+          - listitem:
+            - link "COVID-19"
+            - paragraph: COVID-19 respiratory infection statistics
+          - listitem:
+            - link "Influenza"
+            - paragraph: Flu ICU and HDU admissions and other statistics
+          - listitem:
+            - link "Other respiratory viruses"
+            - paragraph: Other common respiratory viruses including adenovirus, hMPV & parainfluenza
+        - heading "Services and information" [level=3]
+        - list:
+          - listitem:
+            - link "Homepage"
+            - paragraph: The UKHSA data dashboard
+          - listitem:
+            - link "About"
+            - paragraph: About the dashboard
+          - listitem:
+            - link "Metrics documentation"
+            - paragraph: See all available metrics
+          - listitem:
+            - link "Weather health alerts"
+            - paragraph: Weather health alerting system provided by UKHSA
+          - listitem:
+            - link "Access our data"
+            - paragraph: API developer's guide
+        - list:
+          - listitem:
+            - link "What's new"
+          - listitem:
+            - link "What's coming"
+  `)
+
+    // Close menu
+    await this.menuLinkOpen.click()
+
+    await expect(this.page.getByRole('navigation', { name: 'Menu' })).toBeHidden()
+  }
+
+  async hasNotNav() {
+    await expect(this.sideNav).toBeHidden()
+  }
+
+  async clickNav(name: string) {
+    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    const nav = this.page.getByRole('navigation', { name: 'Menu' })
+
+    await expect(nav).toBeVisible()
+
+    await nav.getByRole('link', { name }).click()
+  }
+
+  async clickBrowseNav(name: string) {
+    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
+    await expect(this.page.getByRole('heading', { name: 'Browse', level: 1 })).toBeVisible()
+
+    await this.page.getByRole('link', { name }).click()
+  }
+
+  async hasHeading(name: string) {
+    await expect(this.page.getByRole('heading', { name, level: 1 })).toBeVisible()
+  }
+
+  async hasTableOfContents(links: string[]) {
+    await expect(this.tableOfContents).toBeVisible()
+
+    for (const name of links) {
+      const link = this.tableOfContents.getByRole('link', { name })
+      await expect(link).toBeVisible()
+      await expect(link).toHaveAttribute('href', `#${kebabCase(name)}`)
+    }
+  }
+
+  async hasSectionHeadings(headings: string[], level = 2) {
+    for (const name of headings) {
+      this.page.getByRole('heading', { name, level })
+    }
+  }
+
+  async hasTopicCard({ name, description }: { name: string; description: string }) {
+    const card = this.page.getByRole('article', { name, exact: true })
+    await expect(card.getByRole('paragraph')).toContainText(description)
+    await expect(card.getByAltText(`Mocked alt text - Refer to tabular data.`)).toBeVisible()
+  }
+
+  async hasRelatedLinks() {
+    await expect(this.page.getByRole('heading', { name: 'Related content', level: 2 })).toBeVisible()
+
+    for (const link of relatedLinksMock) {
+      await expect(this.page.getByRole('link', { name: link.title })).toHaveAttribute('href', link.url)
+      await expect(this.page.getByText(link.body.replace('<p>', '').replace('</p>', ''))).toBeVisible()
+    }
+  }
+
+  async hasNotRelatedLinks() {
+    await expect(this.page.getByRole('heading', { name: 'Related content', level: 2 })).toBeHidden()
+  }
+
+  async hasBackToTop() {
+    await this.page.evaluate(() => window.scrollTo(0, 0))
+    await expect(this.backToTop).not.toBeInViewport()
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await expect(this.backToTop).toBeInViewport()
+    await expect(this.backToTop).toHaveAttribute('href', '#main-content')
+    await expect(this.header).not.toBeInViewport()
+    await this.backToTop.click()
+    await expect(this.header).toBeInViewport()
+    await expect(this.backToTop).not.toBeInViewport()
+  }
+
+  async hasNotBackToTop() {
+    await this.page.evaluate(() => window.scrollTo(0, 0))
+    await expect(this.backToTop).not.toBeInViewport()
+    await this.page.evaluate(() => window.scrollTo(0, document.body.scrollHeight))
+    await expect(this.backToTop).not.toBeInViewport()
+  }
+
+  // Cookie Banner
+
+  async gotoCookieBanner() {
+    await this.page.goto('/?change-settings=1')
+  }
+
+  async hasCookieBanner() {
+    const banner = this.cookieBanner
+    await expect(banner).toBeVisible()
+    await expect(banner.getByRole('heading', { name: 'Cookies on UKHSA data dashboard', level: 2 })).toBeVisible()
+    await expect(banner.getByText(/We use some essential cookies to make this service work./)).toBeVisible()
+    await expect(
+      banner.getByText(
+        /We'd like to set additional cookies so we can remember your settings, understand how people use the service and make improvements./
+      )
+    ).toBeVisible()
+    await expect(banner.getByRole('button', { name: 'Accept additional cookies' })).toBeVisible()
+    await expect(banner.getByRole('button', { name: 'Reject additional cookies' })).toBeVisible()
+    await expect(banner.getByRole('link', { name: 'View cookies' })).toHaveAttribute('href', '/cookies')
+  }
+
+  async hasNotCookieBanner() {
+    await expect(this.cookieBanner).toBeHidden()
+  }
+
+  async hasCookieBannerConfirmation() {
+    await expect(
+      this.cookieBanner.getByText(
+        /You’ve accepted additional cookies. You can view the cookie policy or change your cookie settings at any time./
+      )
+    ).toBeVisible()
+    await expect(this.cookieBanner.getByRole('button', { name: 'Hide cookie message' })).toBeVisible()
+  }
+
+  async acceptCookies() {
+    await this.cookieBanner.getByRole('button', { name: 'Accept additional cookies' }).click()
+  }
+
+  async hideCookies() {
+    await this.cookieBanner.getByRole('button', { name: 'Hide cookie message' }).click()
+  }
+
+  // Chart downloads
+
+  async canDownloadChart(cards: string[], format: 'csv' | 'json', device: 'desktop' | 'mobile' | 'tablet') {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
+
+      if (device === 'mobile') {
+        await card
+          .getByRole('combobox', { name: `Choose display option for '${lowerCase(name)}' data` })
+          .selectOption('Download')
+      } else {
+        await card.getByRole('tab', { name: 'Download' }).click()
+      }
+
+      await card.getByLabel(format.toUpperCase()).click()
+
+      const downloadPromise = this.page.waitForEvent('download')
+
+      await card.getByRole('button', { name: 'Download' }).click()
+
+      const download = await downloadPromise
+
+      const fileName = download.suggestedFilename()
+      expect(fileName).toBe(`ukhsa-chart-download.${format}`)
+
+      const path = await download.path()
+
+      if (path) {
+        const file = fs.readFileSync(path)
+
+        if (format === 'csv') {
+          expect(file.toString()).toEqual(downloadsCsvFixture)
+        }
+
+        if (format === 'json') {
+          expect(file.toString()).toEqual(JSON.stringify(downloadsJsonFixture))
+        }
+      }
+    }
+  }
+
+  async navigateChartTabsByKeyboardAndSelectWithEnterKey(cards: string[]) {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
+
+      // Wait for the card to be visible first
+      await card.waitFor({ state: 'visible', timeout: 10000 })
+
+      // Scroll the card into view (important for lazy-loaded content)
+      await card.scrollIntoViewIfNeeded()
+
+      // Wait a bit for any animations or loading to complete
+      await this.page.waitForTimeout(500)
+
+      const chartTab = card.getByRole('tab', { name: 'Chart' })
+
+      // Wait for the Chart tab to be visible and enabled
+      await chartTab.waitFor({ state: 'visible', timeout: 10000 })
+      await chartTab.click()
+
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Enter')
+
+      await expect(card.getByText(/Download data/)).toBeVisible()
+    }
+  }
+
+  async navigateChartTabsByKeyboardAndSelectWithSpaceKey(cards: string[]) {
+    for (const name of cards) {
+      const card = this.page.getByTestId(`chart-row-card-${name}`)
+
+      await card.getByRole('tab', { name: 'Chart' }).click()
+
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Tab')
+      await this.page.keyboard.press('Space')
+
+      await expect(card.getByText(/Download data/)).toBeVisible()
+    }
+  }
+
+  // Pagination
+
+  async hasPagination() {
+    await expect(this.page.getByRole('navigation', { name: 'Pagination' })).toBeVisible()
+  }
+
+  async checkPaginationLinkIsActive(activeLink: number) {
+    await expect(
+      this.page.getByRole('navigation', { name: 'Pagination' }).getByRole('link', { name: `Page ${activeLink}` })
+    ).toHaveAttribute('aria-current', 'page')
+  }
+
+  async clickPaginationNumberLink(number: number) {
+    await this.page
+      .getByRole('navigation', { name: 'Pagination' })
+      .getByRole('link', { name: `Page ${number}` })
+      .click()
+  }
+
+  async clickPaginationNextLink() {
+    await this.page
+      .getByRole('navigation', { name: 'Pagination' })
+      .getByRole('link', { name: 'Next page', exact: true })
+      .click()
+  }
+
+  async clickPaginationPreviousLink() {
+    await this.page
+      .getByRole('navigation', { name: 'Pagination' })
+      .getByRole('link', { name: 'Previous page', exact: true })
+      .click()
+  }
+
+  // Area Selector
+  async hasAreaSelector() {
+    await expect(this.page.getByText('Filter results by location')).toBeVisible()
+  }
+
+  async hasNotAreaSelector() {
+    await expect(this.page.getByText('Filter results by location')).toBeHidden()
+  }
+
+  async clickAreaSelectorToggle() {
+    await this.page.getByText('Filter results by location').click()
+  }
+
+  async checkAreaSelectorFormIsActive(isActive = true) {
+    if (isActive) {
+      await expect(this.page.getByTestId('Area selector')).toBeVisible({ timeout: 10000 })
+    } else {
+      await expect(this.page.getByTestId('Area selector')).toBeHidden({ timeout: 10000 })
+    }
+  }
+
+  async checkAreaSelectorInputMatchesValue(label: 'Area type' | 'Area name', expectedValue: string) {
+    await expect(this.page.getByTestId('Area selector').getByLabel(label)).toHaveValue(expectedValue)
+  }
+
+  async checkAreaSelectorDropdownOptions(label: 'Area type' | 'Area name', expectedOptions: Array<string>) {
+    const input = this.page.getByTestId('Area selector').getByLabel(label)
+
+    // Placeholder option
+    await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('disabled')
+    await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('selected')
+    await expect(input.getByRole('option', { name: `Select ${label}` })).toHaveAttribute('value', '')
+
+    // Selectable options
+    for (const name of expectedOptions) {
+      await expect(input.getByRole('option', { name })).toHaveAttribute('value', name)
+    }
+  }
+
+  async checkAreaSelectorAreaNameIsDisabled() {
+    await expect(this.page.getByTestId('Area selector').getByLabel('Area name')).toBeDisabled()
+  }
+
+  async selectAreaSelectorDropdownOption(label: 'Area type' | 'Area name', selectedOption: string) {
+    await this.page.getByTestId('Area selector').getByLabel(label).selectOption(selectedOption)
+  }
+
+  async checkAreaSelectorChartsRefreshedForLocation(location: string) {
+    for (const img of await this.page.getByTestId('chart').all()) {
+      if (!location) {
+        await expect(img).not.toHaveAttribute('data-location')
+      } else {
+        await expect(img).toHaveAttribute('data-location', location)
+      }
+    }
+  }
+
+  async clickAreaSelectorResetLink() {
+    await this.page.getByTestId('Area selector').getByRole('link', { name: 'Reset' }).click()
+  }
+
+  async submitAreaSelectorForm() {
+    await this.page.getByTestId('Area selector').getByRole('button', { name: 'Update' }).click()
+  }
+}
+
+export const test = AuthSetupFixtures.extend<Fixtures>({
+  app: async ({ page, authEnabled, authUserName }, use) => {
+    await use(new App(page, authEnabled, authUserName))
+  },
+  authStartPage: async ({ page, authEnabled, authUserName }, use) => {
+    await use(new AuthStartPage(page, authEnabled, authUserName))
+  },
+  landingPage: async ({ page }, use) => {
+    await use(new LandingPage(page))
+  },
+})
+
+export { expect } from '@playwright/test'

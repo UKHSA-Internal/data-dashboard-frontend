@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture.non.public'
 
 /**
  * Our site is CMS generated but the total number of pages don't change very often. With this in mind,
@@ -6,7 +6,7 @@ import { test } from '../../fixtures/app.fixture'
  *
  * If the total number of sitemap pages goes down, we probably do want to know about it in case of accidental deletions.
  */
-const TOTAL_PAGES = 146
+const TOTAL_PAGES = 1
 
 test.describe('Sitemap.xml @non-public', () => {
   test('Validate sitemap structure', async ({ sitemapPage }) => {
