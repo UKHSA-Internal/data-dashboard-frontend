@@ -35,17 +35,16 @@ jest.mock('next/headers', () => ({
   cookies: jest.fn(),
 }))
 
-jest.mock('@/auth', () => ({
-  auth: jest.fn(),
+jest.mock('@/lib/auth/auth-session', () => ({
+  getServerSession: jest.fn(),
 }))
-
 // --- Imports ---
 
 import { cookies } from 'next/headers'
 
 import { client } from '@/api/utils/api.utils'
 import { isWellKnownEnvironment } from '@/app/utils/app.utils'
-import { auth } from '@/auth'
+import { getServerSession } from '@/lib/auth/auth-session'
 
 // --- Helpers ---
 
@@ -82,7 +81,22 @@ describe('client()', () => {
     mockFetchFn.mockReset()
     mockFetchFn.mockResolvedValue(makeFetchResponse())
     ;(isWellKnownEnvironment as jest.Mock).mockReturnValue(true)
+    ;(getServerSession as jest.Mock).mockReset()
     process.env.API_KEY = 'test-api-key'
+
+    Object.defineProperty(globalThis, 'window', {
+      value: undefined,
+      writable: true,
+      configurable: true,
+    })
+  })
+
+  afterEach(() => {
+    Object.defineProperty(globalThis, 'window', {
+      value: {},
+      writable: true,
+      configurable: true,
+    })
   })
 
   // --- URL construction ---
@@ -218,7 +232,7 @@ describe('client()', () => {
 
   describe('caching (next.revalidate)', () => {
     it('sets revalidate to 0 when ISRCachingEnabled is false and authEnabled is false', async () => {
-      await client('v1/data', { isPublic: true })
+      await client('v1/data', {}, true)
 
       const [, options] = mockFetchFn.mock.calls[0]
       expect(options.next.revalidate).toBe(0)
@@ -253,30 +267,37 @@ describe('client()', () => {
 
   describe('auth token (non-public requests)', () => {
     it('does not fetch auth token for public requests', async () => {
-      await client('v1/data', { isPublic: true })
+      await client('v1/data', {}, true)
 
       const [, options] = mockFetchFn.mock.calls[0]
-      expect(options.headers.Authorization).toBe('test-api-key')
+      expect(options.headers['X-UHD-AUTH']).toBeUndefined()
+    })
+
+    it('does not pass auth token for public requests even when a token is available', async () => {
+      await client('v1/data', {}, true)
+
+      const [, options] = mockFetchFn.mock.calls[0]
+      expect(options.headers['X-UHD-AUTH']).toBeUndefined()
     })
 
     it('adds Bearer token for non-public requests when auth resolves a token', async () => {
-      ;(auth as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
+      ;(getServerSession as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
 
-      await client('v1/data', { isPublic: false })
+      await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
       // getAuthToken() checks `typeof window === 'undefined'`
       // jsdom defines window, so auth is never called — falls back to API_KEY
-      expect(options.headers.Authorization).toBe('test-api-key')
+      expect(options.headers['X-UHD-AUTH']).toBe('Bearer user-access-token')
     })
 
     it('does not send Bearer header when auth returns no token', async () => {
-      ;(auth as jest.Mock).mockResolvedValue(null)
+      ;(getServerSession as jest.Mock).mockResolvedValue(null)
 
-      await client('v1/data', { isPublic: false })
+      await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
-      expect(options.headers.Authorization).toBe('test-api-key')
+      expect(options.headers['X-UHD-AUTH']).toBeUndefined()
     })
   })
 })
