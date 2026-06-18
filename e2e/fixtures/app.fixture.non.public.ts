@@ -528,8 +528,8 @@ export const test = AuthSetupFixtures.extend<Fixtures>({
   authStartPage: async ({ page, authEnabled, authUserName }, use) => {
     await use(new AuthStartPage(page, authEnabled, authUserName))
   },
-  landingPage: async ({ page }, use) => {
-    await use(new LandingPage(page))
+  sitemapPage: async ({ page }, use) => {
+    await use(new SitemapPage(page))
   },
 })
 
