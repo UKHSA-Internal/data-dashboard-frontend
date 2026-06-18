@@ -1,6 +1,6 @@
 import { viewports } from 'e2e/constants/viewports.constants'
 
-import { test } from '../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture.non.public'
 
 const pagesShownInNavMenu = [
   'Respiratory viruses',
