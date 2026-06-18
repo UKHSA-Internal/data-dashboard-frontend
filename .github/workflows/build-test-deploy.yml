@@ -241,7 +241,7 @@ jobs:
       - name: Start dev server
         id: start-dev-server
         run: |
-          node .next/standalone/server.js &
+          node .next/standalone/server.js > next-server.log 2>&1 &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
           PORT: 3000
@@ -263,6 +263,13 @@ jobs:
         env:
           baseURL: http://localhost:3000
           AUTH_ENABLED: true
+
+      # ── Dev server log dump ───────────────────────────────────────────────────
+      - name: Dump next server logs
+        if: always()
+        run: |
+          echo "==== next-server.log ===="
+          cat next-server.log || true
 
       # ── Artifacts ─────────────────────────────────────────────────────────────
       - name: Upload Playwright report
