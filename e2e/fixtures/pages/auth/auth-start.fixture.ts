@@ -72,8 +72,19 @@ export class AuthStartPage {
     await expect(this.page.getByRole('alert')).toHaveCount(1)
   }
 
+  // async hasNoLogoutBanner() {
+  //   await expect(this.page.getByRole('alert')).toHaveCount(0)
+  // }
+
   async hasNoLogoutBanner() {
-    await expect(this.page.getByRole('alert')).toHaveCount(0)
+    const alerts = this.page.getByRole('alert');
+    const count = await alerts.count();
+
+    if (count > 0) {
+      console.log('Alert on page: ', this.page.url());
+    }
+
+    await expect(alerts).toHaveCount(0)
   }
 
   async hasMainHeading() {
