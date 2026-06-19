@@ -82,6 +82,13 @@ export class AuthStartPage {
 
     if (count > 0) {
       console.log('Alert on page: ', this.page.url());
+
+      for (let i = 0; i < count; i++) {
+        const alert = alerts.nth(i);
+        console.log('Alert info: ', {
+          text: await alert.innerText().catch(() => 'no inner text'),
+        })
+      }
     }
 
     await expect(alerts).toHaveCount(0)
