@@ -142,11 +142,14 @@ export async function Chart({
   const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
 
   // Make single chart request with selected size
-  const chartResponse = await getCharts({
-    ...chartRequestBody,
-    chart_width: chartSizes[selectedSize.size].width,
-    chart_height: chartSizes[selectedSize.size].height,
-  })
+  const chartResponse = await getCharts(
+    {
+      ...chartRequestBody,
+      chart_width: chartSizes[selectedSize.size].width,
+      chart_height: chartSizes[selectedSize.size].height,
+    },
+    isPublic
+  )
 
   if (!chartResponse.success || !chartResponse.data) {
     return <ChartEmpty resetHref={pathname} />

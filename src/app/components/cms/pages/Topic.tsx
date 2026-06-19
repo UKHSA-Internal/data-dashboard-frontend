@@ -107,12 +107,12 @@ export default async function TopicPage({
                     label={t('areaSelector.detailsLabel')}
                     className="govuk-!-margin-top-6 govuk-!-margin-bottom-6"
                   >
-                    <AreaSelector areaType={areaType} selectedTopics={selectedTopics} />
+                    <AreaSelector areaType={areaType} selectedTopics={selectedTopics} isPublic={isPublic} />
                   </Details>
                 </>
               )}
 
-              <GlobalFilterProvider filters={extractedGlobalFilterContent}>
+              <GlobalFilterProvider filters={extractedGlobalFilterContent} isPublic={isPublic}>
                 <PageSectionWithContents>
                   {body.map(({ id, value }) =>
                     value.content.some((content) => content.type === 'global_filter_card') ? (

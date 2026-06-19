@@ -360,7 +360,7 @@ describe('ClientTable', () => {
           },
         ],
         is_public: true,
-        data_classification: undefined
+        data_classification: undefined,
       })
     })
   })
@@ -387,29 +387,32 @@ describe('ClientTable', () => {
     )
 
     await waitFor(() => {
-      expect(getTablesMock).toHaveBeenCalledWith({
-        x_axis: 'date',
-        y_axis: 'metric',
-        plots: [
-          {
-            topic: 'COVID-19',
-            metric: 'new_cases_7days_sum',
-            stratum: 'default',
-            sex: 'all',
-            age: 'all',
-            line_colour: '#FF0000',
-            label: 'COVID-19 Cases',
-            geography: 'England',
-            geography_type: 'Nation',
-            chart_type: 'line_multi_coloured',
-            line_type: 'SOLID',
-            date_from: '2023-01-01',
-            date_to: '2024-12-31',
-            use_smooth_lines: false,
-            use_markers: true,
-          },
-        ],
-      })
+      expect(getTablesMock).toHaveBeenCalledWith(
+        {
+          x_axis: 'date',
+          y_axis: 'metric',
+          plots: [
+            {
+              topic: 'COVID-19',
+              metric: 'new_cases_7days_sum',
+              stratum: 'default',
+              sex: 'all',
+              age: 'all',
+              line_colour: '#FF0000',
+              label: 'COVID-19 Cases',
+              geography: 'England',
+              geography_type: 'Nation',
+              chart_type: 'line_multi_coloured',
+              line_type: 'SOLID',
+              date_from: '2023-01-01',
+              date_to: '2024-12-31',
+              use_smooth_lines: false,
+              use_markers: true,
+            },
+          ],
+        },
+        undefined
+      )
     })
   })
 
@@ -554,7 +557,8 @@ describe('ClientTable', () => {
               geography_type: undefined,
             }),
           ]),
-        })
+        }),
+        undefined
       )
     })
   })

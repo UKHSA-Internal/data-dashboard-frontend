@@ -1,6 +1,6 @@
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
@@ -120,15 +120,34 @@ export const renderCard = (
     <div key={id}>
       {type === 'text_card' && <TextCard value={value} />}
 
-      {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} />}
+      {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} isPublic={isPublic} />}
 
-      {type === 'popular_topics_card' && <PopularTopicsCard value={value} isPublic={isPublic} dataClassification={pageClassification}/>}
-
-      {type === 'chart_row_card' && (
-        <ChartRowCard>
-          <ChartRowCardContent value={value} isPublic={isPublic} dataClassification={pageClassification} />
-        </ChartRowCard>
+      {type === 'popular_topics_card' && (
+        <PopularTopicsCard value={value} isPublic={isPublic} dataClassification={pageClassification} />
       )}
+
+      {type === 'chart_row_card' &&
+        (() => {
+          const content = (
+            <ChartRowCard>
+              <ChartRowCardContent value={value} isPublic={isPublic} dataClassification={pageClassification} />
+            </ChartRowCard>
+          )
+
+          return authEnabled && isPublic === false ? (
+            <Suspense
+              fallback={
+                <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true" role="status">
+                  Loading chart
+                </div>
+              }
+            >
+              {content}
+            </Suspense>
+          ) : (
+            content
+          )
+        })()}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
@@ -164,16 +183,14 @@ export const renderCard = (
   )
 }
 
-export const renderBlock = ({
-  id,
-  type,
-  value,
-  date_prefix,
-}: z.infer<typeof Blocks>[number] & { date_prefix: string }) => (
+export const renderBlock = (
+  { id, type, value, date_prefix }: z.infer<typeof Blocks>[number] & { date_prefix: string },
+  isPublic?: boolean
+) => (
   <div key={id}>
-    {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} />}
-    {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} />}
-    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} />}
+    {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} isPublic={isPublic} />}
+    {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} isPublic={isPublic} />}
+    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} isPublic={isPublic} />}
   </div>
 )
 

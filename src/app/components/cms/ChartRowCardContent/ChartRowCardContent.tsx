@@ -140,7 +140,10 @@ export function ChartRowCardContent({
                         <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
                           <div className="flex items-start gap-2">
                             {column.value.headline_number_columns?.map((headline_number_columns: any) =>
-                              renderBlock({ ...headline_number_columns, date_prefix: column.value.date_prefix })
+                              renderBlock(
+                                { ...headline_number_columns, date_prefix: column.value.date_prefix },
+                                isPublic
+                              )
                             )}
                           </div>
                         </div>

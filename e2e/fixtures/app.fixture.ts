@@ -263,9 +263,6 @@ export class App {
             - link "What's new"
           - listitem:
             - link "What's coming"
-          - listitem:
-            - link "Switchboard"
-            - paragraph: Front-end environment settings
   `)
 
     // Close menu
