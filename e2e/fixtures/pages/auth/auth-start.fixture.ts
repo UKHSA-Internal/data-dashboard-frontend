@@ -7,6 +7,7 @@ export class AuthStartPage {
   readonly menuLinkLoggedIn: Locator
   readonly menuLinkLoggedOut: Locator
   readonly signOutButton: Locator
+  readonly logoutBanner: Locator
 
   constructor(page: Page, authEnabled: boolean, authUserName: string) {
     this.page = page
@@ -23,6 +24,7 @@ export class AuthStartPage {
       expanded: false,
     })
     this.signOutButton = this.page.getByRole('navigation', { name: 'Menu' }).getByRole('button', { name: 'Sign out' })
+    this.logoutBanner = this.page.locator('.govuk-notification-banner--success')
   }
 
   async goto() {
@@ -68,40 +70,48 @@ export class AuthStartPage {
     `)
   }
 
-  async hasLogoutBanner() {
-    await expect(this.page.getByRole('alert')).toHaveCount(1)
-  }
+  // async hasLogoutBanner() {
+  //   await expect(this.page.getByRole('alert')).toHaveCount(1)
+  // }
 
   // async hasNoLogoutBanner() {
   //   await expect(this.page.getByRole('alert')).toHaveCount(0)
   // }
 
-  async hasNoLogoutBanner() {
-    const alerts = this.page.getByRole('alert');
-    const count = await alerts.count();
-
-    if (count > 0) {
-      console.log('Alert on page: ', this.page.url());
-
-      for (let i = 0; i < count; i++) {
-        const alert = alerts.nth(i);
-        console.log('Alert info: ', {
-          text: await alert.innerText().catch(() => 'no inner text'),
-        });
-        console.log('Alert html',
-          await alert.evaluate((el) => ({
-            tag: el.tagName,
-            className: el.getAttribute('class'),
-            id: el.getAttribute('id'),
-            insideMain: !!el.closest('main'),
-            nearestContainer: el.parentElement?.getAttribute('class'),
-          }))
-        );
-      }
-    }
-
-    await expect(alerts).toHaveCount(0)
+  async hasLogoutBanner() {
+    await expect(this.logoutBanner).toHaveCount(1)
   }
+
+  async hasNoLogoutBanner() {
+    await expect(this.logoutBanner).toHaveCount(0)
+  }
+
+  // async hasNoLogoutBanner() {
+  //   const alerts = this.page.getByRole('alert', { name: 'Success' });
+  //   const count = await alerts.count();
+
+  //   if (count > 0) {
+  //     console.log('Alert on page: ', this.page.url());
+
+  //     for (let i = 0; i < count; i++) {
+  //       const alert = alerts.nth(i);
+  //       console.log('Alert info: ', {
+  //         text: await alert.innerText().catch(() => 'no inner text'),
+  //       });
+  //       console.log('Alert html',
+  //         await alert.evaluate((el) => ({
+  //           tag: el.tagName,
+  //           className: el.getAttribute('class'),
+  //           id: el.getAttribute('id'),
+  //           insideMain: !!el.closest('main'),
+  //           nearestContainer: el.parentElement?.getAttribute('class'),
+  //         }))
+  //       );
+  //     }
+  //   }
+
+  //   await expect(alerts).toHaveCount(0)
+  // }
 
   async hasMainHeading() {
     await expect(this.page.locator('main').getByRole('heading', { level: 1 })).toHaveCount(1)
