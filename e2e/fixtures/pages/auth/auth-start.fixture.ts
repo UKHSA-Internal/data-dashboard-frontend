@@ -87,7 +87,14 @@ export class AuthStartPage {
         const alert = alerts.nth(i);
         console.log('Alert info: ', {
           text: await alert.innerText().catch(() => 'no inner text'),
-        })
+        }),
+        await alert.evaluate((el) => ({
+          tag: el.tagName,
+          className: el.getAttribute('class'),
+          id: el.getAttribute('id'),
+          insideMain: !!el.closest('main'),
+          nearestContainer: el.parentElement?.getAttribute('class'),
+        }))
       }
     }
 
