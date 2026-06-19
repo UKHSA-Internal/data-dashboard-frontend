@@ -136,7 +136,7 @@ export async function Table({
     data_classification: dataClassification,
   }
 
-  const chartResponse = await getCharts(chartRequestBody, isPublic)
+  const chartResponse = await getCharts(chartRequestBody)
 
   if (tableResponse.success) {
     const groups = parseChartTableData(tableResponse.data, {

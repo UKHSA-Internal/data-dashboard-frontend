@@ -51,7 +51,7 @@ export async function Timestamp({ data, size, isPublic = true, dataClassificatio
     data_classification: dataClassification,
   }
 
-  const res = await getCharts(requestBody, isPublic)
+  const res = await getCharts(requestBody)
 
   if (res.success) {
     const {
