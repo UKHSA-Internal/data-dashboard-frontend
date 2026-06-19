@@ -411,7 +411,7 @@ describe('ClientTable', () => {
             },
           ],
         },
-        undefined
+        true
       )
     })
   })
@@ -557,8 +557,7 @@ describe('ClientTable', () => {
               geography_type: undefined,
             }),
           ]),
-        }),
-        undefined
+        })
       )
     })
   })

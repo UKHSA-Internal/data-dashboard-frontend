@@ -474,8 +474,7 @@ describe('TimeseriesClientChart', () => {
               geography: 'Wales',
             }),
           ]),
-        }),
-        undefined
+        })
       )
     })
   })
@@ -512,8 +511,7 @@ describe('TimeseriesClientChart', () => {
               date_to: '2025-12-31',
             }),
           ]),
-        }),
-        undefined
+        })
       )
     })
   })
@@ -551,8 +549,7 @@ describe('TimeseriesClientChart', () => {
               geography_type: undefined,
             }),
           ]),
-        }),
-        undefined
+        })
       )
     })
   })
