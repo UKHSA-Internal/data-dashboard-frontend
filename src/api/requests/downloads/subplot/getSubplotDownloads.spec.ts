@@ -78,10 +78,11 @@ test('Forwards auth token to client when present', async () => {
     status: 200,
   })
 
-  await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots, 'Bearer test-token')
+  await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots, 'Bearer test-token')
 
   expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
     body: {
+      is_public: true,
       file_format: 'csv',
       target_threshold: null,
       target_threshold_label: null,
@@ -98,10 +99,11 @@ test('Does not forward auth header when no token present', async () => {
     status: 200,
   })
 
-  await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots)
+  await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots)
 
   expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
     body: {
+      is_public: true,
       file_format: 'csv',
       target_threshold: null,
       target_threshold_label: null,

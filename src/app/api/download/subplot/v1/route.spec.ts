@@ -160,6 +160,7 @@ describe('download/subplot/v1', () => {
 
   test('Forwards auth token when present', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('file_format', 'csv')
     formData.set('target_threshold', '1')
     formData.set('target_threshold_label', '')
