@@ -253,8 +253,7 @@ test('full width charts should also have an acompanying narrow version for mobil
     expect.objectContaining({
       chart_width: 1100,
       chart_height: 260,
-    }),
-    true
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -313,8 +312,7 @@ test('landing page half width charts should render the largest size (half) with 
     expect.objectContaining({
       chart_width: 650,
       chart_height: 200,
-    }),
-    true
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
