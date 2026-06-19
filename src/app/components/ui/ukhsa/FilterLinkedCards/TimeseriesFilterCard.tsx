@@ -124,6 +124,7 @@ const TimeseriesFilterCard = ({
                 timePeriods={timePeriods}
                 handleLatestDate={setDate}
                 cardData={cardData}
+                isPublic={isPublic}
               />
             </TabsContent>
             <TabsContent

@@ -9,6 +9,8 @@ export async function POST(req: NextRequest) {
 
   const body = await req.formData()
 
+  const authToken = req.headers.get('X-UHD-AUTH')
+
   const params = requestSchema.safeParse({
     is_public: body.get('is_public') === 'true',
     file_format: body.get('file_format') || 'csv',
@@ -29,7 +31,8 @@ export async function POST(req: NextRequest) {
       target_threshold,
       target_threshold_label,
       chart_parameters,
-      subplots
+      subplots,
+      authToken
     )
 
     if (!response) {

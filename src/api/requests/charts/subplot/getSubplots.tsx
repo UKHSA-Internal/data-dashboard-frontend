@@ -77,7 +77,7 @@ export const responseSchema = z.object({
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getSubplots = async (chart: RequestParams) => {
+export const getSubplots = async (chart: RequestParams, isPublic?: boolean) => {
   const {
     file_format,
     chart_height,
@@ -108,7 +108,7 @@ export const getSubplots = async (chart: RequestParams) => {
 
   try {
     const path = isSSR ? `charts/subplot/v1` : `proxy/charts/subplot/v1`
-    const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
+    const { data } = await client<z.infer<typeof responseSchema>>(path, { body }, isPublic)
 
     const result = responseSchema.safeParse(data)
     if (result.success) {

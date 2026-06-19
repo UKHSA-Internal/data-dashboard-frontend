@@ -5,7 +5,7 @@ import { GeographyParams, getGeographies } from '@/api/requests/geographies/getG
 export async function GET(req: NextRequest) {
   const { searchParams } = new URL(req.url)
   const geography_type = searchParams.get('geography_type')
-
+  const isPublic = req.nextUrl.searchParams.get('isPublic') !== 'false'
   if (!geography_type) {
     return new NextResponse('Missing geography_type', {
       status: 500,
@@ -20,7 +20,7 @@ export async function GET(req: NextRequest) {
     })
   }
 
-  const proxiedResponse = await getGeographies(body)
+  const proxiedResponse = await getGeographies(body, isPublic)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)

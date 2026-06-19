@@ -24,7 +24,11 @@ describe('download/subplot/v1', () => {
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
       headers: {
-        get: () => 'http://localhost:3000',
+        get: (header: string) => {
+          if (header === 'origin') return 'http://localhost:3000'
+          if (header === 'X-UHD-AUTH') return null // no token in public tests
+          return null
+        },
       },
       formData: () => formData,
     })
@@ -45,6 +49,7 @@ describe('download/subplot/v1', () => {
         chart_parameters: mockChartParameters,
         subplots: mockSubplot,
       },
+      headers: undefined,
     })
 
     expect(logger.error).not.toHaveBeenCalled()
@@ -151,5 +156,37 @@ describe('download/subplot/v1', () => {
     expect(res.headers.get('content-type')).toEqual(null)
     expect(logger.error).toHaveBeenCalledWith('Error while downloading subplot download response: null')
     expect(res.status).toBe(301)
+  })
+
+  test('Forwards auth token when present', async () => {
+    const formData = new FormData()
+    formData.set('file_format', 'csv')
+    formData.set('target_threshold', '1')
+    formData.set('target_threshold_label', '')
+    formData.set('chart_parameters', JSON.stringify(mockChartParameters))
+    formData.set('subplots', JSON.stringify(mockSubplot))
+
+    const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
+      headers: {
+        get: (header: string) => {
+          if (header === 'origin') return 'http://localhost:3000'
+          if (header === 'X-UHD-AUTH') return 'Bearer test-token'
+          return null
+        },
+      },
+      formData: () => formData,
+    })
+
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+
+    await POST(req)
+
+    expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
+      body: expect.any(Object),
+      headers: { 'X-UHD-AUTH': 'Bearer test-token' },
+    })
   })
 })

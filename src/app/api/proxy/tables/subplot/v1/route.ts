@@ -4,14 +4,14 @@ import { getSubplotTables, RequestParams } from '@/api/requests/tables/subplot/g
 
 export async function POST(req: NextRequest) {
   const body: RequestParams = await req.json()
-
+  const isPublic = req.nextUrl.searchParams.get('isPublic') !== 'false'
   if (!body) {
     return new NextResponse('Missing category', {
       status: 500,
     })
   }
 
-  const proxiedResponse = await getSubplotTables(body)
+  const proxiedResponse = await getSubplotTables(body, isPublic)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)
