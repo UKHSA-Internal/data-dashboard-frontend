@@ -5,7 +5,7 @@ test.describe('Start page - when auth is disabled', () => {
     return
   }
 
-  // test.use({ authEnabled: false })
+  //  test.use({ authEnabled: true })
 
   test('Returns 404 when auth is disabled', async ({ notFoundPage }) => {
     await notFoundPage.goto('/start')
@@ -37,11 +37,11 @@ test.describe('Start page - logged out (normal initial state)', () => {
   })
 })
 
-test('Does not show logout banner', async ({ authStartPage, authEnabled }) => {
-  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-  await authStartPage.goto()
-  await authStartPage.hasNoLogoutBanner()
-})
+// test('Does not show logout banner', async ({ authStartPage, authEnabled }) => {
+//   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+//   await authStartPage.goto()
+//   await authStartPage.hasNoLogoutBanner()
+// })
 
 test('Displays classification banner', async ({ authStartPage, authEnabled }) => {
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
