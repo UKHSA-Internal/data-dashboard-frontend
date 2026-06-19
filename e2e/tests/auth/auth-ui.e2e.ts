@@ -35,12 +35,12 @@ test.describe('Start page - logged out (normal initial state)', () => {
     await app.hasNoAccessibilityDefects()
     await app.hasBackToTop()
   })
-})
 
-test('Does not show logout banner', async ({ authStartPage, authEnabled }) => {
-  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-  await authStartPage.goto()
-  await authStartPage.hasNoLogoutBanner()
+  test('Does not show logout banner', async ({ authStartPage, authEnabled }) => {
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await authStartPage.goto()
+    await authStartPage.hasNoLogoutBanner()
+  })
 })
 
 test('Displays classification banner', async ({ authStartPage, authEnabled }) => {
