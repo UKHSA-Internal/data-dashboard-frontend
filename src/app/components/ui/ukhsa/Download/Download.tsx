@@ -13,12 +13,32 @@ interface DownloadProps {
   isPublic?: boolean
 }
 
+// const getDualCategoryChartDownloadData = () => {
+// }
+
+// const getSingleCategoryChartDownloadData = () => {
+// }
+
+// const getDownloadResponseData = (data: any) => {
+//   let downloadsResponse = null
+
+//   if ('segments' in data && 'static_feilds' in data) {
+//     downloadsResponse = getDualCategoryChartDownloadData(data)
+//   } else {
+//     downloadsResponse = getSingleCategoryChartDownloadData(data)
+//   }
+// }
+
 export async function Download({ data, isPublic }: DownloadProps) {
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
+  // getDownloadResponseData(data)
+
   const chart = isDualCategoryChartCardValue(data) ? dualCategoryChartToDownloadChart(data) : data.chart
+
   const { y_axis, x_axis, tag_manager_event_id } = data
+
   const confidence_intervals = isDualCategoryChartCardValue(data) ? false : (data.confidence_intervals ?? false)
 
   const plots = chart.map((plot) => ({

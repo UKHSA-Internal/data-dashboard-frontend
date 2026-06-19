@@ -2,7 +2,7 @@ import React from 'react'
 import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
-import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
+import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
 import { act, render, screen, waitFor } from '@/config/test-utils'
@@ -115,7 +115,7 @@ describe('ChartWithFilter', () => {
     },
   ]
 
-  const mockChartData: z.infer<typeof ChartCardSchemas>['value'] = {
+  const mockChartData: SingleCategoryChartCardValue = {
     title: 'Test Chart',
     tag_manager_event_id: 'test-event',
     x_axis: 'Date',
@@ -523,7 +523,7 @@ describe('ChartWithFilter', () => {
     })
 
     it('calls getCharts with correct parameters including axis titles and limits', async () => {
-      const chartDataWithAxis: z.infer<typeof ChartCardSchemas>['value'] = {
+      const chartDataWithAxis: SingleCategoryChartCardValue = {
         ...mockChartData,
         x_axis_title: 'Date Axis',
         y_axis_title: 'Value Axis',

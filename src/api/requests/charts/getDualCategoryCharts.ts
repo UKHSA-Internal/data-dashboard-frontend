@@ -59,7 +59,7 @@ export const getDualCategoryCharts = async (chart: RequestParams) => {
   }
 
   try {
-    const path = isSSR ? `charts/v4` : `proxy/charts/v4`
+    const path = isSSR ? `charts/dual-category/v1` : `proxy/charts/dual-category/v1`
     const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
 
     const result = responseSchema.safeParse(data)
@@ -72,7 +72,7 @@ export const getDualCategoryCharts = async (chart: RequestParams) => {
   } catch (error) {
     if (error instanceof Error) {
       if (error.code === 400) {
-        logger.info('POST failed (no data) charts/v4 %s', chart.static_fields.metric)
+        logger.info('POST failed (no data) charts/dual-category/v1 %s', chart.static_fields.metric)
       } else {
         logger.error(`getDualCategoryCharts error: ${error.message}`)
       }

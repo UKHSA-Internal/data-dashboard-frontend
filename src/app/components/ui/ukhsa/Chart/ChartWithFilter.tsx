@@ -2,10 +2,9 @@
 
 import kebabCase from 'lodash/kebabCase'
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
-import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
+import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
@@ -22,7 +21,7 @@ interface ChartWithFilterProps {
   figure: ChartFigure
   title: string
   chart: Chart
-  chartData: z.infer<typeof ChartCardSchemas>['value']
+  chartData: SingleCategoryChartCardValue
 }
 
 const LoadingSpinnerContainer = () => {

@@ -1,18 +1,29 @@
 /* eslint-disable @next/next/no-img-element */
 import { Suspense } from 'react'
 
-import { ChartComponentData } from '@/api/models/cms/Page'
+import { SingleCategoryChartCardValue } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
-import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartSvg, isDualCategoryChartCardValue } from '@/app/utils/chart.utils'
-import { chartSizes } from '@/config/constants'
+import { getChartResponseData, getChartSvg } from '@/app/utils/chart.utils'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import ChartInteractive from './ChartInteractive'
 import ChartWithFilter from './ChartWithFilter'
+
+export type ChartSizes = Array<
+  | {
+      default?: never
+      minWidth: number
+      size: 'narrow' | 'wide' | 'half' | 'third'
+    }
+  | {
+      default: true
+      minWidth?: never
+      size: 'narrow' | 'wide' | 'half' | 'third'
+    }
+>
 
 interface ChartProps {
   /**
@@ -25,26 +36,17 @@ interface ChartProps {
    * Chart configuration data containing metadata required to fetch chart visuals
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
-  readonly data: ChartComponentData
+  /* Request metadata from the CMS required to fetch from the headlines api */
+  readonly data: SingleCategoryChartCardValue
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
    * `default` chart if no minWidth breakpoint is met.
    * Each entry either specifies `minWidth` for a responsive breakpoint or `default`
    * for the default chart display. `size` controls the width format for each entry.
+   *
    */
-  readonly sizes: Array<
-    | {
-        default?: never
-        minWidth: number
-        size: 'narrow' | 'wide' | 'half' | 'third'
-      }
-    | {
-        default: true
-        minWidth?: never
-        size: 'narrow' | 'wide' | 'half' | 'third'
-      }
-  >
+  readonly sizes: ChartSizes
 }
 
 const createStaticChart = async ({
@@ -73,95 +75,13 @@ const createStaticChart = async ({
 
 export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
   const { t } = await getServerTranslation('common')
+
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
-  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
+  const chartResponse = await getChartResponseData(data, areaType, areaName, sizes)
 
-  if (isDualCategoryChartCardValue(data)) {
-    const chartResponse = await getDualCategoryCharts({
-      chart_type: data.chart_type,
-      static_fields: {
-        ...data.static_fields,
-        geography_type: areaType ?? data.static_fields.geography_type,
-        geography: areaName ?? data.static_fields.geography,
-      },
-      primary_field_values: data.primary_field_values,
-      secondary_category: data.secondary_category,
-      segments: data.segments.map(({ value }) => value),
-      x_axis: data.x_axis,
-      y_axis: data.y_axis,
-      x_axis_title: data.x_axis_title,
-      y_axis_title: data.y_axis_title,
-      y_axis_minimum_value: data.y_axis_minimum_value,
-      y_axis_maximum_value: data.y_axis_maximum_value,
-      chart_width: chartSizes[selectedSize.size].width,
-      chart_height: chartSizes[selectedSize.size].height,
-    })
-
-    if (!chartResponse.success || !chartResponse.data) {
-      return <ChartEmpty resetHref={pathname} />
-    }
-
-    const { alt_text: alt } = chartResponse.data
-
-    return createStaticChart({
-      chart: chartResponse,
-      areaName,
-      altText: t('cms.blocks.chart.alt', {
-        body: alt,
-      }),
-    })
-  }
-
-  const chartData = data
-
-  let yAxisMinimum = null
-  let yAxisMaximum = null
-  let xAxisTitle = ''
-  let yAxisTitle = ''
-
-  if ('y_axis_minimum_value' in chartData) {
-    yAxisMinimum = chartData.y_axis_minimum_value
-  }
-  if ('y_axis_maximum_value' in chartData) {
-    yAxisMaximum = chartData.y_axis_maximum_value
-  }
-  if ('x_axis_title' in chartData) {
-    xAxisTitle = chartData.x_axis_title || ''
-  }
-  if ('y_axis_title' in chartData) {
-    yAxisTitle = chartData.y_axis_title || ''
-  }
-
-  const { chart, x_axis, y_axis, confidence_intervals, confidence_colour } = chartData
-
-  const plots = chart.map((plot) => ({
-    ...plot?.value,
-
-    geography_type: areaType ?? plot?.value.geography_type,
-    geography: areaName ?? plot?.value.geography,
-  }))
-
-  const chartRequestBody = {
-    plots,
-    x_axis,
-    y_axis,
-    confidence_intervals,
-    confidence_colour,
-    x_axis_title: xAxisTitle,
-    y_axis_title: yAxisTitle,
-    y_axis_maximum_value: yAxisMaximum,
-    y_axis_minimum_value: yAxisMinimum,
-  }
-
-  const chartResponse = await getCharts({
-    ...chartRequestBody,
-    chart_width: chartSizes[selectedSize.size].width,
-    chart_height: chartSizes[selectedSize.size].height,
-  })
-
-  if (!chartResponse.success || !chartResponse.data) {
+  if (!chartResponse?.success || !chartResponse?.data) {
     return <ChartEmpty resetHref={pathname} />
   }
 
@@ -196,7 +116,7 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
             figure={{ frames: [], ...figure }}
             title={data.title}
             chart={data.chart}
-            chartData={chartData}
+            chartData={data}
           />
         </div>
       </>

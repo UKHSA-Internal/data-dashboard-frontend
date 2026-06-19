@@ -1,8 +1,16 @@
-import { z } from 'zod'
-
-import { Chart, ChartCardSchemas, ChartComponentData, DualCategoryChartCardValue } from '@/api/models/cms/Page'
+import {
+  Chart,
+  ChartComponentData,
+  DualCategoryChartCardValue,
+  SingleCategoryChartCardValue,
+} from '@/api/models/cms/Page'
+import { getCharts } from '@/api/requests/charts/getCharts'
+import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
 import type { Response as DualCategoryTableResponse } from '@/api/requests/tables/getDualCategoryTables'
 import type { Column, Data } from '@/app/utils/chart-table.utils'
+import { chartSizes } from '@/config/constants'
+
+import { ChartSizes } from '../components/ui/ukhsa'
 
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
@@ -70,7 +78,7 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
 }
 
 export const getFilteredData = (
-  data: z.infer<typeof ChartCardSchemas>['value'],
+  data: SingleCategoryChartCardValue,
   filterValue: string,
   lastUpdated: string
 ): Chart | undefined => {
@@ -113,6 +121,86 @@ export const getFilteredData = (
       },
     }
   })
+}
+
+const getDualCategoryChartsResponseData = async (
+  data: DualCategoryChartCardValue,
+  selectedSize: ChartSizes[number],
+  areaType: string | null,
+  areaName: string | null
+) => {
+  return await getDualCategoryCharts({
+    chart_type: data.chart_type,
+    static_fields: {
+      ...data.static_fields,
+      geography_type: areaType ?? data.static_fields.geography_type,
+      geography: areaName ?? data.static_fields.geography,
+    },
+    primary_field_values: data.primary_field_values,
+    secondary_category: data.secondary_category,
+    segments: data.segments.map(({ value }) => value),
+    x_axis: data.x_axis,
+    y_axis: data.y_axis,
+    x_axis_title: data.x_axis_title,
+    y_axis_title: data.y_axis_title,
+    y_axis_minimum_value: data.y_axis_minimum_value,
+    y_axis_maximum_value: data.y_axis_maximum_value,
+    chart_width: chartSizes[selectedSize.size].width,
+    chart_height: chartSizes[selectedSize.size].height,
+  })
+}
+
+// TODO: Sort out types
+const getSingleCategoryChartsResponseData = async (
+  plots: Array<any>,
+  data: SingleCategoryChartCardValue,
+  selectedSize: ChartSizes[number]
+) => {
+  const chartRequestBody = {
+    plots,
+    x_axis: data.x_axis,
+    y_axis: data.y_axis,
+    confidence_intervals: data.confidence_intervals,
+    confidence_colour: data.confidence_colour,
+    x_axis_title: data?.x_axis_title || '',
+    y_axis_title: data?.y_axis_title || '',
+    y_axis_maximum_value: data?.y_axis_maximum_value || null,
+    y_axis_minimum_value: data?.y_axis_minimum_value || null,
+  }
+
+  // Make single chart request with selected size
+  const chartResponse = await getCharts({
+    ...chartRequestBody,
+    chart_width: chartSizes[selectedSize.size].width,
+    chart_height: chartSizes[selectedSize.size].height,
+  })
+
+  return chartResponse
+}
+
+// Choses the correct function to get the data based on the chart type
+export const getChartResponseData = async (
+  data: ChartComponentData,
+  areaType: string | null,
+  areaName: string | null,
+  sizes: ChartSizes
+) => {
+  // Select the default size (mobile-first approach)
+  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
+
+  // If the chart is a dual category chart, get the data and return early
+  if (isDualCategoryChartCardValue(data)) {
+    return await getDualCategoryChartsResponseData(data, selectedSize, areaType, areaName)
+  }
+
+  // Otherwise, get plots and return single category chart data
+  const plots = data.chart.map((plot) => ({
+    ...plot?.value,
+    geography_type: areaType ?? plot?.value.geography_type,
+    geography: areaName ?? plot?.value.geography,
+  }))
+
+  return await getSingleCategoryChartsResponseData(plots, data, selectedSize)
 }
 
 export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
