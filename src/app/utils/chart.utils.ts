@@ -123,7 +123,7 @@ export const getFilteredData = (
   })
 }
 
-const getDualCategoryChartsResponseData = async (
+export const getDualCategoryChartsResponseData = async (
   data: DualCategoryChartCardValue,
   selectedSize: ChartSizes[number],
   areaType: string | null,
@@ -151,7 +151,7 @@ const getDualCategoryChartsResponseData = async (
 }
 
 // TODO: Sort out types
-const getSingleCategoryChartsResponseData = async (
+export const getSingleCategoryChartsResponseData = async (
   plots: Array<any>,
   data: SingleCategoryChartCardValue,
   selectedSize: ChartSizes[number]

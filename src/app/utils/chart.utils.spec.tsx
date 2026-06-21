@@ -1,4 +1,32 @@
-import { getChartSvg, getChartTimespan, getFilteredData } from './chart.utils'
+import { DualCategoryChartCardValue, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
+import { getCharts } from '@/api/requests/charts/getCharts'
+import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
+
+import { ChartSizes } from '../components/ui/ukhsa/Chart/Chart'
+import {
+  getChartResponseData,
+  getChartSvg,
+  getChartTimespan,
+  getDualCategoryChartsResponseData,
+  getFilteredData,
+  getSingleCategoryChartsResponseData,
+} from './chart.utils'
+
+jest.mock('@/api/requests/charts/getCharts')
+jest.mock('@/api/requests/charts/getDualCategoryCharts')
+
+const getChartsMock = jest.mocked(getCharts)
+const getDualCategoryChartsMock = jest.mocked(getDualCategoryCharts)
+
+const mockChartResponse = {
+  success: true,
+  data: {
+    chart: 'mock-chart',
+    alt_text: '',
+    last_updated: '2025-05-21',
+    figure: { data: [], layout: {} },
+  },
+} as Awaited<ReturnType<typeof getCharts>>
 
 describe('Get timespan between dates for chart', () => {
   const mockLastUpdated = '2025-05-21'
@@ -370,5 +398,130 @@ describe('getFilteredData', () => {
     // 6 months before 2024-01-01 is 2023-07-01
     expect(result?.[0].value.date_from).toBe('2023-07-01')
     expect(result?.[0].value.date_to).toBe('2024-01-01')
+  })
+})
+
+describe('getDualCategoryChartsResponseData', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    getDualCategoryChartsMock.mockResolvedValue(mockChartResponse)
+  })
+
+  const mockData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+    },
+    primary_field_values: ['a', 'b'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+    x_axis_title: 'Date',
+    y_axis_title: 'Cases',
+    y_axis_minimum_value: 0,
+    y_axis_maximum_value: 100,
+  } as DualCategoryChartCardValue
+
+  const selectedSize = { default: true, size: 'wide' } as const
+
+  test('requests dual category chart with the selected size', async () => {
+    await getDualCategoryChartsResponseData(mockData, selectedSize, 'Region', 'London')
+
+    expect(getDualCategoryChartsMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        chart_type: 'stacked_bar',
+        static_fields: expect.objectContaining({
+          geography_type: 'Region',
+          geography: 'London',
+          topic: 'COVID-19',
+          metric: 'COVID-19_cases_casesByDay',
+        }),
+        segments: [{ secondary_field_value: '0-4' }],
+        chart_width: 1100,
+        chart_height: 260,
+      })
+    )
+  })
+})
+
+describe('getSingleCategoryChartsResponseData', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    getChartsMock.mockResolvedValue(mockChartResponse)
+  })
+
+  const mockData = {
+    x_axis: 'date',
+    y_axis: 'metric',
+    confidence_intervals: false,
+    confidence_colour: null,
+  } as SingleCategoryChartCardValue
+
+  const selectedSize = { default: true, size: 'narrow' } as const
+
+  test('requests single category chart with the provided plots and selected size', async () => {
+    const plots = [{ topic: 'COVID-19', metric: 'COVID-19_cases_casesByDay' }]
+
+    await getSingleCategoryChartsResponseData(plots, mockData, selectedSize)
+
+    expect(getChartsMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plots,
+        x_axis: 'date',
+        y_axis: 'metric',
+        chart_width: 515,
+        chart_height: 260,
+      })
+    )
+  })
+})
+
+describe('getChartResponseData', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    getChartsMock.mockResolvedValue(mockChartResponse)
+    getDualCategoryChartsMock.mockResolvedValue(mockChartResponse)
+  })
+
+  const sizes = [{ default: true, size: 'wide' }] as ChartSizes
+
+  test('uses single category request for single category data', async () => {
+    const data = {
+      x_axis: 'date',
+      y_axis: 'metric',
+      chart: [{ id: 'chart1', type: 'plot', value: { topic: 'COVID-19', geography: 'England' } }],
+    } as SingleCategoryChartCardValue
+
+    await getChartResponseData(data, 'Region', 'London', sizes)
+
+    expect(getChartsMock).toHaveBeenCalledTimes(1)
+    expect(getDualCategoryChartsMock).not.toHaveBeenCalled()
+    // Area overrides should be applied to the plots
+    expect(getChartsMock).toHaveBeenCalledWith(
+      expect.objectContaining({
+        plots: [expect.objectContaining({ geography_type: 'Region', geography: 'London' })],
+      })
+    )
+  })
+
+  test('uses dual category request for dual category data', async () => {
+    const data = {
+      chart_type: 'bar',
+      static_fields: { topic: 'COVID-19', metric: 'm', geography_type: 'Nation', geography: 'England' },
+      primary_field_values: ['a'],
+      secondary_category: 'age',
+      segments: [{ value: { secondary_field_value: '0-4' } }],
+      x_axis: 'date',
+      y_axis: 'metric',
+    } as DualCategoryChartCardValue
+
+    await getChartResponseData(data, null, null, sizes)
+
+    expect(getDualCategoryChartsMock).toHaveBeenCalledTimes(1)
+    expect(getChartsMock).not.toHaveBeenCalled()
   })
 })

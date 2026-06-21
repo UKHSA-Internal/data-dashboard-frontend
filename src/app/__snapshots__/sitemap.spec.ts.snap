@@ -80,6 +80,7 @@ exports[`test sitemap function that builds a list of URLs for search engines 1`]
   "/respiratory-viruses/childhood-vaccinations/",
   "/respiratory-viruses/covid-19/",
   "/respiratory-viruses/influenza/",
+  "/respiratory-viruses/lead/",
   "/respiratory-viruses/other-respiratory-viruses/",
   "/start/",
   "/weather-health-alerts",

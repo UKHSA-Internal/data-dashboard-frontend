@@ -14,7 +14,7 @@ export const ChartTypes = z
     'bar',
     'line_multi_coloured',
     'line_single_simplified',
-    'stacked_bar_chart',
+    'stacked_bar',
   ])
   .or(z.string())
 export type ChartTypes = z.infer<typeof ChartTypes>
