@@ -213,6 +213,7 @@ export const WithDualCategoryChartCard = z.object({
     y_axis_minimum_value: z.number().nullable().optional(),
     y_axis_maximum_value: z.number().nullable().optional(),
     chart_type: z.string(),
+    show_timeseries_filter: z.boolean().nullable().optional(),
     static_fields: DualCategoryStaticFields,
     secondary_category: z.string(),
     segments: z.array(DualCategorySegment),

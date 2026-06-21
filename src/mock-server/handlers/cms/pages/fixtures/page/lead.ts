@@ -37,6 +37,58 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                 {
                   type: 'dual_category_chart_card',
                   value: {
+                    title: 'Meningococcal diseases timeseries',
+                    body: '',
+                    about: '',
+                    related_links: [],
+                    tag_manager_event_id: '',
+                    x_axis: 'date',
+                    x_axis_title: '',
+                    primary_field_values: [],
+                    y_axis: 'metric',
+                    y_axis_title: '',
+                    y_axis_minimum_value: 0.0,
+                    y_axis_maximum_value: null,
+                    chart_type: 'stacked_bar',
+                    show_timeseries_filter: true,
+                    static_fields: {
+                      topic: 'Meningococcal-disease',
+                      metric: 'meningococcal-disease_cases_casesByWeek',
+                      geography: 'England',
+                      geography_type: 'Nation',
+                      sex: 'all',
+                      age: 'all',
+                      stratum: 'default',
+                      date_from: '2025-01-01',
+                      date_to: '2026-03-12',
+                    },
+                    secondary_category: 'stratum',
+                    segments: [
+                      {
+                        type: 'segment',
+                        value: {
+                          secondary_field_value: 'Confirmed',
+                          colour: 'COLOUR_4_ORANGE',
+                          label: 'Confirmed',
+                        },
+                        id: 'bb6d1963-0495-4811-b6fe-f2c3fc80f935',
+                      },
+                      {
+                        type: 'segment',
+                        value: {
+                          secondary_field_value: 'Probable',
+                          colour: 'COLOUR_2_TURQUOISE',
+                          label: 'Probable',
+                        },
+                        id: '5011dc59-f143-4133-ba5d-e85caae998ce',
+                      },
+                    ],
+                  },
+                  id: 'a2a33d6a-2042-47b0-9a78-54b580ecd1bd',
+                },
+                {
+                  type: 'dual_category_chart_card',
+                  value: {
                     title: 'Lead headline rates by age and sex',
                     body: 'Headline lead exposure rates broken down by age group and sex in England',
                     about:
@@ -51,6 +103,7 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     y_axis_minimum_value: 0.0,
                     y_axis_maximum_value: null,
                     chart_type: 'stacked_bar',
+                    show_timeseries_filter: false,
                     static_fields: {
                       topic: 'Lead',
                       metric: 'lead_headline_ratesByAgeSex',
