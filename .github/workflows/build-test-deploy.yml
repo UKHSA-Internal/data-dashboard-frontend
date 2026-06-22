@@ -187,7 +187,7 @@ jobs:
         run: ./.github/scripts/wait-for-service.sh http://localhost:3000
 
       - name: Run Playwright tests
-        run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        run: npx playwright test --grep-invert "@smoke|@non-public|@auth-ui" --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000
 
@@ -208,51 +208,102 @@ jobs:
   # Playwright tests - Non-Public - (fully mocked backend w/ real e2e authentication)
   ##############################################################################
 
-  # e2e-tests-non-public:
-  #   name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
-  #   needs: [build]
-  #   timeout-minutes: 20
-  #   runs-on: ubuntu-22.04
-  #   strategy:
-  #     fail-fast: false
-  #     matrix:
-  #       shard: [1, 2, 3]
-  #   steps:
-  #     - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-  #     - uses: ./.github/actions/install-cache
-  #     - uses: ./.github/actions/build-cache
+  e2e-tests-non-public:
+    name: Playwright (Non-Public) (${{ matrix.shard }}/${{ strategy.job-total }})
+    needs: [build]
+    timeout-minutes: 30
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: [1]
 
-  #     - name: Setup Playwright
-  #       run: npx playwright install --with-deps
+    steps:
+      - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
 
-  #     - name: Start mock server
-  #       run: npm run dev:mock-server &
+      - uses: ./.github/actions/install-cache
 
-  #     - name: Wait for Mock Server
-  #       shell: sh
-  #       run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+      - uses: ./.github/actions/build-cache
 
-  #     - name: Create .env.local
-  #       run: |
-  #         echo "AUTH_ENABLED=true" >> .env.local
-  #         echo "AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}" >> .env.local
-  #         echo "AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}" >> .env.local
-  #         echo "AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}" >> .env.local
-  #         echo "AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}" >> .env.local
-  #         echo "AUTH_SECRET=${{ secrets.AUTH_SECRET }}" >> .env.local
-  #         echo "NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}" >> .env.local
-  #         echo "PLAYWRIGHT_AUTH_USER_PASSWORD=${{ secrets.PLAYWRIGHT_AUTH_USER_PASSWORD }}" >> .env.local
-  #         echo "PLAYWRIGHT_AUTH_USER_USERNAME=${{ secrets.PLAYWRIGHT_AUTH_USER_USERNAME }}" >> .env.local
+      - name: Setup Playwright
+        run: npx playwright install --with-deps
 
-  #     - name: Run Playwright tests
-  #       run: npx playwright test --grep-invert @smoke --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+      # ── Mock server ───────────────────────────────────────────────────────────
+      - name: Start mock server
+        id: start-mock-server
+        run: |
+          npm run dev:mock-server &
+          echo "mockServerPID=$!" >> "$GITHUB_OUTPUT"
 
-  #     - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
-  #       if: ${{ !cancelled() }}
-  #       with:
-  #         name: playwright-report-non-public${{ matrix.shard }}_${{ strategy.job-total }}
-  #         path: playwright-report/
-  #         retention-days: 10
+      - name: Wait for mock server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3005
+        timeout-minutes: 5
+
+      # ── Environment ───────────────────────────────────────────────────────────
+      - name: Create .env.local
+        run: |
+          cat > .env.local <<EOF
+          AUTH_ENABLED=true
+          MOCK_SESSION=true
+          MOCK_SESSION_USERNAME=Test User
+          API_URL=http://localhost:3005
+          AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}
+          AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}
+          AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}
+          AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}
+          AUTH_SECRET=${{ secrets.AUTH_SECRET }}
+          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+          EOF
+
+          cp .env.local .next/standalone/.env.local
+          cp -r .next/static .next/standalone/.next/static
+          cp -r public .next/standalone/public
+          echo "✅ .env.local created and assets copied"
+
+      # Secrets already verified above
+      # ── Dev server ────────────────────────────────────────────────────────────
+      - name: Start dev server
+        id: start-dev-server
+        run: |
+          node .next/standalone/server.js &
+          echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
+        env:
+          PORT: 3000
+          HOSTNAME: 0.0.0.0
+          NODE_ENV: test
+          AUTH_ENABLED: true
+
+      - name: Wait for dev server
+        shell: sh
+        run: ./.github/scripts/wait-for-service.sh http://localhost:3000
+        timeout-minutes: 5
+
+      # ── Tests ─────────────────────────────────────────────────────────────────
+      - name: Run Playwright tests
+        run: |
+          npx playwright test --grep "auth" \
+            --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        env:
+          baseURL: http://localhost:3000
+          AUTH_ENABLED: true
+
+      # ── Artifacts ─────────────────────────────────────────────────────────────
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@v4
+        if: ${{ !cancelled() }}
+        with:
+          name: playwright-report-non-public-${{ matrix.shard }}_${{ strategy.job-total }}
+          path: playwright-report/
+          retention-days: 10
+
+      # ── Cleanup ───────────────────────────────────────────────────────────────
+      - name: Cleanup servers
+        if: always()
+        run: |
+          kill -9 ${{ steps.start-mock-server.outputs.mockServerPID }} || true
+          kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
+          echo "✅ Servers stopped"
 
   ###############################################################################
   # Docker build check (PR validation)
