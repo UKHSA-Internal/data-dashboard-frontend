@@ -579,6 +579,11 @@ export class App {
   async hasNoClassificationBanner() {
     await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'})).toHaveCount(0)
   }
+
+  async checkClassificationBannerContent() {
+    const banner = this.page.locator('div.govuk-classification-banner')
+    await expect(banner).toContainText('Official-Sensitive')
+  }
 }
 
 export const test = AuthSetupFixtures.extend<Fixtures>({
