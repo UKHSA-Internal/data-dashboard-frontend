@@ -33,6 +33,7 @@ export const switchBoardSchema = z.object({
       }),
     }),
     'global-banners': baseProps(bannerTypes.or(z.literal('Multiple')).or(z.literal(''))),
+    menus: baseProps(z.enum(['Inactive', 'MegaMenu'])),
   }),
   flags: z.object({
     'example-flag': z.enum(['enabled', 'disabled']),
