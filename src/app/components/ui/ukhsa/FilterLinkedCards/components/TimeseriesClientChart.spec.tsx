@@ -217,36 +217,39 @@ describe('TimeseriesClientChart', () => {
     )
 
     await waitFor(() => {
-      expect(getChartsMock).toHaveBeenCalledWith({
-        file_format: 'svg',
-        chart_height: 260,
-        chart_width: 515,
-        x_axis: 'date',
-        y_axis: 'metric',
-        x_axis_title: 'Year',
-        y_axis_title: 'Number of cases',
-        y_axis_minimum_value: null,
-        y_axis_maximum_value: null,
-        plots: [
-          {
-            topic: 'COVID-19',
-            metric: 'new_cases_7days_sum',
-            stratum: 'default',
-            sex: 'all',
-            age: 'all',
-            line_colour: '#FF0000',
-            label: 'COVID-19 Cases',
-            geography: 'England',
-            geography_type: 'Nation',
-            chart_type: 'line_multi_coloured',
-            line_type: 'SOLID',
-            date_from: '2023-01-01',
-            date_to: '2024-12-31',
-            use_smooth_lines: false,
-            use_markers: true,
-          },
-        ],
-      })
+      expect(getChartsMock).toHaveBeenCalledWith(
+        {
+          file_format: 'svg',
+          chart_height: 260,
+          chart_width: 515,
+          x_axis: 'date',
+          y_axis: 'metric',
+          x_axis_title: 'Year',
+          y_axis_title: 'Number of cases',
+          y_axis_minimum_value: null,
+          y_axis_maximum_value: null,
+          plots: [
+            {
+              topic: 'COVID-19',
+              metric: 'new_cases_7days_sum',
+              stratum: 'default',
+              sex: 'all',
+              age: 'all',
+              line_colour: '#FF0000',
+              label: 'COVID-19 Cases',
+              geography: 'England',
+              geography_type: 'Nation',
+              chart_type: 'line_multi_coloured',
+              line_type: 'SOLID',
+              date_from: '2023-01-01',
+              date_to: '2024-12-31',
+              use_smooth_lines: false,
+              use_markers: true,
+            },
+          ],
+        },
+        undefined
+      )
     })
   })
 
@@ -458,7 +461,8 @@ describe('TimeseriesClientChart', () => {
               geography: 'Wales',
             }),
           ]),
-        })
+        }),
+        undefined
       )
     })
   })
@@ -494,7 +498,8 @@ describe('TimeseriesClientChart', () => {
               date_to: '2025-12-31',
             }),
           ]),
-        })
+        }),
+        undefined
       )
     })
   })
@@ -531,7 +536,8 @@ describe('TimeseriesClientChart', () => {
               geography_type: undefined,
             }),
           ]),
-        })
+        }),
+        undefined
       )
     })
   })

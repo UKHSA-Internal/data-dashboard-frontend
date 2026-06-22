@@ -533,8 +533,8 @@ describe('GlobalFilterContext', () => {
 
       await waitFor(() => {
         expect(mockExtractGeographyId).toHaveBeenCalledWith(mockGeographyFilters)
-        expect(mockGetGeographies).toHaveBeenCalledWith({ geography_type: 'nation' })
-        expect(mockGetGeographies).toHaveBeenCalledWith({ geography_type: 'region' })
+        expect(mockGetGeographies).toHaveBeenCalledWith({ geography_type: 'nation' }, undefined)
+        expect(mockGetGeographies).toHaveBeenCalledWith({ geography_type: 'region' }, undefined)
       })
     })
 

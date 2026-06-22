@@ -23,6 +23,7 @@ interface ChartWithFilterProps {
   title: string
   chart: Chart
   chartData: z.infer<typeof ChartCardSchemas>['value']
+  isPublic?: boolean
 }
 
 const LoadingSpinnerContainer = () => {
@@ -33,7 +34,7 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated, isPublic }: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -80,17 +81,20 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
           ...plot?.value,
         }))
 
-        const chartResponse = await getCharts({
-          plots,
-          x_axis,
-          y_axis,
-          x_axis_title: xAxisTitle,
-          y_axis_title: yAxisTitle,
-          y_axis_maximum_value: yAxisMaximum,
-          y_axis_minimum_value: yAxisMinimum,
-          chart_width: chartSizes['narrow'].width,
-          chart_height: chartSizes['narrow'].height,
-        })
+        const chartResponse = await getCharts(
+          {
+            plots,
+            x_axis,
+            y_axis,
+            x_axis_title: xAxisTitle,
+            y_axis_title: yAxisTitle,
+            y_axis_maximum_value: yAxisMaximum,
+            y_axis_minimum_value: yAxisMinimum,
+            chart_width: chartSizes['narrow'].width,
+            chart_height: chartSizes['narrow'].height,
+          },
+          isPublic
+        )
 
         if (!chartResponse.success || !chartResponse.data) {
           setHasError(true)
