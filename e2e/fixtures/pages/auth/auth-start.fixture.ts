@@ -94,12 +94,12 @@ export class AuthStartPage {
     await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(0)
   }
 
-  // async hasClassificationBanner() {
-  //   await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
-  // }
+  async hasClassificationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
+  }
 
-  // async checkClassificationBannerContent() {
-  //   const banner = this.page.locator('div.govuk-classification-banner')
-  //   await expect(banner).toContainText('Official-Sensitive')
-  // }
+  async checkClassificationBannerContent() {
+    const banner = this.page.locator('div.govuk-classification-banner')
+    await expect(banner).toContainText('Official-Sensitive')
+  }
 }
