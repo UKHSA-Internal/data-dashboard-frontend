@@ -28,7 +28,7 @@ test.describe('COVID-19 page', () => {
       await covid19Page.hasDescription()
     })
     await test.step('does not display a classification banner for the public variant', async () => {
-      await covid19Page.hasNoClassificationBanner()
+      await app.hasNoClassificationBanner()
     })
     await test.step('displays area selector', async () => {
       await app.hasAreaSelector()

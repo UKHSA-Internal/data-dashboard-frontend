@@ -70,14 +70,6 @@ export class AuthStartPage {
     `)
   }
 
-  // async hasLogoutBanner() {
-  //   await expect(this.page.getByRole('alert')).toHaveCount(1)
-  // }
-
-  // async hasNoLogoutBanner() {
-  //   await expect(this.page.getByRole('alert')).toHaveCount(0)
-  // }
-
   async hasLogoutBanner() {
     await expect(this.logoutBanner).toHaveCount(1)
   }
@@ -85,33 +77,6 @@ export class AuthStartPage {
   async hasNoLogoutBanner() {
     await expect(this.logoutBanner).toHaveCount(0)
   }
-
-  // async hasNoLogoutBanner() {
-  //   const alerts = this.page.getByRole('alert', { name: 'Success' });
-  //   const count = await alerts.count();
-
-  //   if (count > 0) {
-  //     console.log('Alert on page: ', this.page.url());
-
-  //     for (let i = 0; i < count; i++) {
-  //       const alert = alerts.nth(i);
-  //       console.log('Alert info: ', {
-  //         text: await alert.innerText().catch(() => 'no inner text'),
-  //       });
-  //       console.log('Alert html',
-  //         await alert.evaluate((el) => ({
-  //           tag: el.tagName,
-  //           className: el.getAttribute('class'),
-  //           id: el.getAttribute('id'),
-  //           insideMain: !!el.closest('main'),
-  //           nearestContainer: el.parentElement?.getAttribute('class'),
-  //         }))
-  //       );
-  //     }
-  //   }
-
-  //   await expect(alerts).toHaveCount(0)
-  // }
 
   async hasMainHeading() {
     await expect(this.page.locator('main').getByRole('heading', { level: 1 })).toHaveCount(1)
@@ -130,11 +95,11 @@ export class AuthStartPage {
   }
 
   // async hasClassificationBanner() {
-  //   await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' })).toBeVisible()
+  //   await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
   // }
 
-  async checkClassificationBannerContent() {
-    const banner = this.page.locator('div.govuk-classification-banner')
-    await expect(banner).toContainText('Official-Sensitive')
-  }
+  // async checkClassificationBannerContent() {
+  //   const banner = this.page.locator('div.govuk-classification-banner')
+  //   await expect(banner).toContainText('Official-Sensitive')
+  // }
 }

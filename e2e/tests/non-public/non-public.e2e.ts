@@ -1,54 +1,38 @@
-// import { viewports } from 'e2e/constants/viewports.constants'
+import { viewports } from 'e2e/constants/viewports.constants'
 
-// import { test } from '../../fixtures/app.fixture.non.public'
+import { test } from '../../fixtures/app.fixture.non.public'
 
-// All these tests are navigation to the start page from the nav menu
-// Start page should not appear on menu so commented out
-// File kept incase we need to introduce any other non-public tests
-// test.describe('Non-public tests - desktop @non-public', () => {
-//   test.use({ viewport: viewports.desktop })
+const respiritoryTopicPages = [
+  {
+    name: 'COVID-19',
+    path: '/respiritory-viruses/covid-19',
+    heading: 'COVID-19',
+  },
+  {
+    name: 'Influenza',
+    path: '/respiritory-viruses/influenza',
+    heading: 'Influenza',
+  },
+  {
+    name: 'Other respiritory viruses',
+    path: '/respiritory-viruses/other-respiritory-viruses',
+    heading: 'Other respiritory viruses',
+  },
+]
 
-//   test('Navigates to start page from the navigation menu', async ({ app, authStartPage }) => {
-//     await test.step('loads the start page', async () => {
-//       await authStartPage.goto()
-//       await authStartPage.hasMainHeading()
-//     })
+test.describe('Respiritory topic pages - non-public @non-public', () => {
+  test.use({ viewport: viewports.desktop })
 
-//     await test.step('loads the "start" page', async () => {
-//       await app.clickNav('start')
-//       await app.hasHeading('start')
-//     })
-//   })
-// })
+  for (const topicPage of respiritoryTopicPages) {
+    test(`${topicPage.name} shows the classification banner`, async ({ app, authEnabled, page, switchboardPage }) => {
+      test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
 
-// test.describe('Non-public tests - mobile @non-public', () => {
-//   test.use({ viewport: viewports.mobile })
+      await switchboardPage.setTopicPageIsPublic(false)
+      await page.goto(topicPage.path)
 
-//   test('Navigates to start page from the dropdown mobile navigation menu', async ({ app, authStartPage }) => {
-//     await test.step('loads the start page', async () => {
-//       await authStartPage.goto()
-//       await authStartPage.hasMainHeading()
-//     })
-
-//     await test.step('loads the "start" page', async () => {
-//       await app.clickNav('start')
-//       await app.hasHeading('start')
-//     })
-//   })
-// })
-
-// test.describe('Non-public tests - no JavaScript @non-public', () => {
-//   test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
-
-//   test('Navigates to start page from the side navigation menu', async ({ app, authStartPage }) => {
-//     await test.step('loads the start page', async () => {
-//       await authStartPage.goto()
-//       await authStartPage.hasMainHeading()
-//     })
-
-//     await test.step('loads the "start" page', async () => {
-//       await app.clickBrowseNav('start')
-//       await app.hasHeading('start')
-//     })
-//   })
-// })
+      await app.hasHeading(topicPage.heading)
+      await app.hasClassificationBanner()
+      await app.checkClassificationBannerContent()
+    })
+  }
+})

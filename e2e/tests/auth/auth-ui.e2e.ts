@@ -44,11 +44,11 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   })
 })
 
-test('Displays classification banner @auth-ui', async ({ authStartPage, authEnabled }) => {
+test('Displays classification banner @auth-ui', async ({ authStartPage, app, authEnabled }) => {
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
   await authStartPage.goto()
-  // await authStartPage.hasClassificationBanner()
-  await authStartPage.checkClassificationBannerContent()
+  await app.hasClassificationBanner()
+  await app.checkClassificationBannerContent()
 })
 
 test.describe('Start page - logged in @auth-ui', () => {
@@ -80,10 +80,10 @@ test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
 test.describe('Start page - after logout (post-logout state) - classification banner @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
-  test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {
+  test('Displays classification banner after logout', async ({ authStartPage, app, authEnabled }) => {
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.page.goto('/start?logout=success')
-    // await authStartPage.hasClassificationBanner()
-    await authStartPage.checkClassificationBannerContent()
+    await app.hasClassificationBanner()
+    await app.checkClassificationBannerContent()
   })
 })
