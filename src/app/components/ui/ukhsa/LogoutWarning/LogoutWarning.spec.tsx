@@ -213,4 +213,61 @@ describe('LogoutWarning', () => {
       expect(screen.getByText('You will be signed out')).toBeInTheDocument()
     })
   })
+
+  describe('logout countdown recovery when tab is asleep', () => {
+    // Simulates the user switching away from the tab, then coming back:
+    // jest.setSystemTime moves Date.now() forward WITHOUT firing any timers,
+    // just like a real browser suspending JavaScript in a hidden tab.
+    // The visibilitychange then simulates the user returning.
+    const switchAwayFromTabThenReturn = (awayInMicroSeconds: number) => {
+      Object.defineProperty(document, 'hidden', { value: true, configurable: true })
+      jest.setSystemTime(Date.now() + awayInMicroSeconds)
+      Object.defineProperty(document, 'hidden', { value: false, configurable: true })
+      window.dispatchEvent(new Event('visibilitychange'))
+    }
+
+    test('snaps countdown back to real remaining time in the warning modal when returning to the tab', () => {
+      render(<LogoutWarning timeoutMinutes={logoutThresholdMinutes} warningMinutes={logoutWarningThresholdMinutes} />)
+
+      act(() => {
+        jest.advanceTimersByTime(IDLE_BEFORE_WARNING)
+      })
+
+      expect(screen.getByText(/01:00 Minutes/)).toBeInTheDocument()
+
+      act(() => {
+        switchAwayFromTabThenReturn(50 * 1000)
+      })
+
+      // 60s countdown minus 50s away = 10s remaining
+      expect(screen.getByText(/00:10 Minutes/)).toBeInTheDocument()
+    })
+
+    test('shows warning immediately if idle threshold passed whilst the tab was hidden but logout threshold is not reached yet', () => {
+      render(<LogoutWarning timeoutMinutes={logoutThresholdMinutes} warningMinutes={logoutWarningThresholdMinutes} />)
+
+      // User switches away before the idle-before-warning period has
+      // elapsed, but stays away long enough for it to have passed.
+      act(() => {
+        switchAwayFromTabThenReturn(IDLE_BEFORE_WARNING + WARNING_COUNTDOWN / 2)
+      })
+
+      expect(screen.getByText('You will be signed out')).toBeInTheDocument()
+    })
+
+    test('triggers logout immediately if logout threshold has been reached whilst the tab was hidden', () => {
+      render(<LogoutWarning timeoutMinutes={logoutThresholdMinutes} warningMinutes={logoutWarningThresholdMinutes} />)
+
+      // Only stay on the page for an initial 5s
+      act(() => {
+        jest.advanceTimersByTime(5 * 1000)
+      })
+
+      act(() => {
+        switchAwayFromTabThenReturn(IDLE_BEFORE_WARNING + WARNING_COUNTDOWN)
+      })
+
+      expect(mockServerSignOut).toHaveBeenCalledTimes(1)
+    })
+  })
 })
