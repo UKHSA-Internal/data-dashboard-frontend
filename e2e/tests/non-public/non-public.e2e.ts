@@ -1,6 +1,6 @@
-import { viewports } from 'e2e/constants/viewports.constants'
+// import { viewports } from 'e2e/constants/viewports.constants'
 
-import { test } from '../../fixtures/app.fixture.non.public'
+// import { test } from '../../fixtures/app.fixture.non.public'
 
 // All these tests are navigation to the start page from the nav menu
 // Start page should not appear on menu so commented out
