@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 
+import { getAuthToken } from '@/api/utils/api.utils'
 import { downloadFile } from '@/app/utils/download.utils'
 import { subplotChartExportApiRoutePath } from '@/config/constants'
 interface SubplotDownloadFormProps {
@@ -42,10 +43,18 @@ export function SubplotDownloadForm({
 
     try {
       const formData = new FormData(event.currentTarget)
+      const headers = new Headers()
 
+      if (authEnabled && isPublic === false) {
+        const accessToken = await getAuthToken()
+        if (accessToken) {
+          headers.set('X-UHD-AUTH', `Bearer ${accessToken}`)
+        }
+      }
       const res = await fetch(subplotChartExportApiRoutePath as string, {
         method: 'POST',
         body: formData,
+        headers,
       })
 
       if (res.redirected !== true) {
