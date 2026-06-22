@@ -15,10 +15,7 @@ export class WeatherHealthAlertsRegionPage {
     const breadbrumbs = await this.page.getByRole('list', { name: 'breadcrumbs' }).getByRole('listitem').all()
     expect(breadbrumbs).toHaveLength(3)
 
-    await expect(this.page.getByLabel('breadcrumbs').getByRole('link', { name: 'Home', exact: true })).toHaveAttribute(
-      'href',
-      '/'
-    )
+    await expect(this.page.getByRole('link', { name: 'Home', exact: true })).toHaveAttribute('href', '/')
     await expect(
       this.page.getByLabel('breadcrumbs').getByRole('link', { name: 'Weather health alerts', exact: true })
     ).toHaveAttribute('href', '/weather-health-alerts')
