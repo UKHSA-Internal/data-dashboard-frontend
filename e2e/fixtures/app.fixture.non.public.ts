@@ -1,13 +1,15 @@
 import { expect, Locator, Page } from '@playwright/test'
 
 import { AuthSetupFixtures } from './auth/auth-setup.fixture'
-import { AuthStartPage, LandingPage, SitemapPage } from './index'
+import { AuthStartPage, Covid19Page, LandingPage, SitemapPage, SwitchboardPage } from './index'
 
 type Fixtures = {
   app: App
   authStartPage: AuthStartPage
   sitemapPage: SitemapPage
+  switchboardPage: SwitchboardPage
   landingPage: LandingPage
+  covid19Page: Covid19Page
 }
 
 export class App {
@@ -69,11 +71,17 @@ export const test = AuthSetupFixtures.extend<Fixtures>({
   authStartPage: async ({ page, authEnabled, authUserName }, use) => {
     await use(new AuthStartPage(page, authEnabled, authUserName))
   },
+  switchboardPage: async ({ page }, use) => {
+    await use(new SwitchboardPage(page))
+  },
   sitemapPage: async ({ page }, use) => {
     await use(new SitemapPage(page))
   },
   landingPage: async ({ page }, use) => {
     await use(new LandingPage(page))
+  },
+  covid19Page: async ({ page }, use) => {
+    await use(new Covid19Page(page))
   },
 })
 
