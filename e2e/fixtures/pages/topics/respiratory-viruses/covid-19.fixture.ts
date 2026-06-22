@@ -35,4 +35,12 @@ export class Covid19Page {
   async hasLastUpdated() {
     await expect(this.page.getByText(/Last updated on Tuesday, 2 July 2024 at 12:44pm/)).toBeVisible()
   }
+
+  async hasClassicationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
+  }
+
+  async hasNoClassicationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'})).toHaveCount(0)
+  }
 }
