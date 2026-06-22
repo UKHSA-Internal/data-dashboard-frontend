@@ -10,6 +10,7 @@ import {
   getDualCategoryChartsResponseData,
   getFilteredData,
   getSingleCategoryChartsResponseData,
+  parseDualCategoryTableData,
 } from './chart.utils'
 
 jest.mock('@/api/requests/charts/getCharts')
@@ -343,6 +344,61 @@ describe('getFilteredData', () => {
     expect(result1Month?.[0].value.date_from).not.toBe(result3Months?.[0].value.date_from)
   })
 
+  test('applies year filter and updates date_from', () => {
+    const result = getFilteredData(mockData, '1-year', mockLastUpdated)
+
+    expect(result?.[0].value.date_from).toBe('2023-01-01')
+    expect(result?.[0].value.date_to).toBe('2024-01-01')
+  })
+
+  test('when date_to is missing, uses lastUpdated for filtering', () => {
+    const dataWithoutDateTo = {
+      ...mockData,
+      chart: [
+        {
+          id: 'chart1',
+          type: 'plot' as const,
+          value: {
+            topic: 'test',
+            metric: 'test',
+            chart_type: 'test',
+            date_from: '2020-01-01',
+            date_to: null,
+          },
+        },
+      ],
+    }
+
+    const result = getFilteredData(dataWithoutDateTo, '6-months', mockLastUpdated)
+
+    expect(result?.[0].value.date_from).toBe('2024-11-21')
+    expect(result?.[0].value.date_to).toBe('2025-05-21')
+  })
+
+  test('when date_to is missing and filter is all, uses lastUpdated as date_to', () => {
+    const dataWithoutDateTo = {
+      ...mockData,
+      chart: [
+        {
+          id: 'chart1',
+          type: 'plot' as const,
+          value: {
+            topic: 'test',
+            metric: 'test',
+            chart_type: 'test',
+            date_from: '2020-01-01',
+            date_to: null,
+          },
+        },
+      ],
+    }
+
+    const result = getFilteredData(dataWithoutDateTo, 'all', mockLastUpdated)
+
+    expect(result?.[0].value.date_from).toBe('2020-01-01')
+    expect(result?.[0].value.date_to).toBe('2025-05-21')
+  })
+
   test('throws when filter unit is unsupported', () => {
     expect(() => getFilteredData(mockData, '1-week', mockLastUpdated)).toThrow('Unsupported subtraction unit')
   })
@@ -523,5 +579,89 @@ describe('getChartResponseData', () => {
 
     expect(getDualCategoryChartsMock).toHaveBeenCalledTimes(1)
     expect(getChartsMock).not.toHaveBeenCalled()
+  })
+})
+
+describe('parseDualCategoryTableData', () => {
+  test('returns empty array when response is null', () => {
+    expect(parseDualCategoryTableData(null)).toEqual([])
+  })
+
+  test('returns empty array when response is empty', () => {
+    expect(parseDualCategoryTableData([])).toEqual([])
+  })
+
+  test('groups table data by label with columns and rows', () => {
+    const response = [
+      {
+        reference: '2024-01-01',
+        values: [
+          { label: '0-4', value: 10, in_reporting_delay_period: false },
+          { label: '5-9', value: 20, in_reporting_delay_period: true },
+        ],
+      },
+      {
+        reference: '2024-01-02',
+        values: [
+          { label: '0-4', value: 15, in_reporting_delay_period: false },
+          { label: '5-9', value: null, in_reporting_delay_period: false },
+        ],
+      },
+    ]
+
+    const groups = parseDualCategoryTableData(response)
+
+    expect(groups).toHaveLength(2)
+
+    expect(groups[0]).toEqual({
+      columns: [
+        { header: 'Reference', accessorKey: 'col-0' },
+        { header: '0-4', accessorKey: 'col-1' },
+      ],
+      data: [
+        {
+          record: { 'col-0': '2024-01-01', 'col-1': 10 },
+          inReportingDelay: false,
+        },
+        {
+          record: { 'col-0': '2024-01-02', 'col-1': 15 },
+          inReportingDelay: false,
+        },
+      ],
+    })
+
+    expect(groups[1]).toEqual({
+      columns: [
+        { header: 'Reference', accessorKey: 'col-0' },
+        { header: '5-9', accessorKey: 'col-1' },
+      ],
+      data: [
+        {
+          record: { 'col-0': '2024-01-01', 'col-1': 20 },
+          inReportingDelay: true,
+        },
+        {
+          record: { 'col-0': '2024-01-02', 'col-1': null },
+          inReportingDelay: false,
+        },
+      ],
+    })
+  })
+
+  test('deduplicates labels across response items', () => {
+    const response = [
+      {
+        reference: '2024-01-01',
+        values: [
+          { label: '0-4', value: 10, in_reporting_delay_period: false },
+          { label: '0-4', value: 11, in_reporting_delay_period: false },
+        ],
+      },
+    ]
+
+    const groups = parseDualCategoryTableData(response)
+
+    expect(groups).toHaveLength(1)
+    expect(groups[0].columns[1].header).toBe('0-4')
   })
 })
