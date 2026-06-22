@@ -220,9 +220,10 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'code_block' && (
-      <CodeBlock heading={value.heading} language={value.content[0].value.language}>
-        {value.content[0].value.code}
-      </CodeBlock>
+      <CodeBlock
+        heading={value.heading}
+        snippets={value.content.map(({ id, value: { language, code } }) => ({ id, language, code }))}
+      />
     )}
 
     {type === 'internal_page_links' && value && value.length > 0 && (
