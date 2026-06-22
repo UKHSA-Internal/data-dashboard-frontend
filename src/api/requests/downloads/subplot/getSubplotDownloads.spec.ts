@@ -1,5 +1,6 @@
 import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
+import { auth } from '@/auth'
+import { auditLog, logger } from '@/lib/logger'
 import { downloadsSubplotCsvFixture } from '@/mock-server/handlers/downloads/subplot/fixtures/downloads-csv'
 import { downloadsSubplotJsonFixture } from '@/mock-server/handlers/downloads/subplot/fixtures/downloads-json'
 
@@ -36,6 +37,13 @@ const mockSubplots = [
     ],
   },
 ]
+
+jest.mock('@/auth', () => ({
+  auth: jest.fn(),
+}))
+
+const mockAuth = auth as unknown as jest.MockedFunction<() => Promise<{ userId: string | null } | null>>
+const mockAuditLog = auditLog as jest.MockedFunction<typeof auditLog>
 
 test('Returns chart data in CSV format', async () => {
   jest.mocked(client).mockResolvedValueOnce({
@@ -111,5 +119,59 @@ test('Does not forward auth header when no token present', async () => {
       subplots: mockSubplots,
     },
     headers: undefined,
+  })
+})
+
+describe('auditLog', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('Calls auditLog when is_public is false and session exists', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    mockAuth.mockResolvedValue({ userId: 'user-123' })
+
+    await getSubplotDownloads(false, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuditLog).toHaveBeenCalledTimes(1)
+    expect(mockAuditLog).toHaveBeenCalledWith('user-123', 'FILE_DOWNLOAD', `csv - ${JSON.stringify(mockSubplots)}`)
+  })
+
+  test('falls back to empty string when userId is nullish', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    mockAuth.mockResolvedValue({ userId: null })
+
+    await getSubplotDownloads(false, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuditLog).toHaveBeenCalledWith('', 'FILE_DOWNLOAD', `csv - ${JSON.stringify(mockSubplots)}`)
+  })
+
+  test('does not call auditLog when is_public is false but there is no session', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    mockAuth.mockResolvedValue(null)
+
+    await getSubplotDownloads(false, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuditLog).not.toHaveBeenCalled()
+  })
+
+  test('does not call auditLog when is_public is true', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuth).not.toHaveBeenCalled()
+    expect(mockAuditLog).not.toHaveBeenCalled()
   })
 })
