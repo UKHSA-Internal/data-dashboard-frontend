@@ -69,7 +69,7 @@ test('Handles generic http errors', async () => {
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 
-  expect(result).toEqual(undefined)
+  expect(result).toBeUndefined()
 })
 
 test('Forwards auth token to client when present', async () => {

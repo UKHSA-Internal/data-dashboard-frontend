@@ -110,7 +110,7 @@ describe('download/subplot/v1', () => {
 
     const res = await POST(req)
 
-    expect(res.headers.get('content-type')).toBe(null)
+    expect(res.headers.get('content-type')).toBeNull()
     expect(logger.error).toHaveBeenCalledWith(
       `Download Chart Schema parse error: [
   {
@@ -153,7 +153,7 @@ describe('download/subplot/v1', () => {
 
     const res = await POST(req)
 
-    expect(res.headers.get('content-type')).toEqual(null)
+    expect(res.headers.get('content-type')).toBeNull()
     expect(logger.error).toHaveBeenCalledWith('Error while downloading subplot download response: null')
     expect(res.status).toBe(301)
   })
