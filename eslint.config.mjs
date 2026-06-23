@@ -128,7 +128,7 @@ export default [...nextTypescript, {
     'id-length': 'off', // Allow short variable names in tests
   },
 }, {
-  files: ['**/*.spec.ts', 'e2e/**/*.ts', 'tests/**/*.ts', 'e2e/fixtures/**/*.ts'],
+  files: ['**/*.spec.ts', 'e2e/**/*.ts', 'tests/**/*.ts', 'e2e/**/*.e2e.ts'],
   plugins: {
     playwright,
   },
