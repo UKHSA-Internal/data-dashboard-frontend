@@ -25,7 +25,7 @@ export default async function SwitchBoard() {
         action={async (form) => {
           'use server'
 
-          syncState({
+          await syncState({
             pages: {
               list: {
                 status: Number(form.get('pages.list.status')),
