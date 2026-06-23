@@ -34,6 +34,7 @@ export default async function SwitchBoard() {
                 status: Number(form.get('pages.detail.status')),
                 scenario: {
                   relatedLinksLayout: form.get('pages.detail.scenario.relatedLinksLayout'),
+                  topicPageIsPublic: form.get('pages.detail.scenario.topicPageIsPublic'),
                 },
               },
             },
@@ -87,6 +88,44 @@ export default async function SwitchBoard() {
                   htmlFor="pages.detail.scenario.relatedLinksLayout.Footer"
                 >
                   Footer
+                </label>
+              </div>
+            </div>
+          </Details>
+
+          <Details label="Topic page visibility" className="govuk-!-margin-top-5">
+            <div className="govuk-radios govuk-radios--small" data-module="govuk-radios">
+              <div className="govuk-radios__item">
+                <input
+                  defaultChecked={pages.detail.scenario.topicPageIsPublic === true}
+                  className="govuk-radios__input"
+                  id="pages.detail.scenario.topicPageIsPublic.true"
+                  name="pages.detail.scenario.topicPageIsPublic"
+                  type="radio"
+                  value="true"
+                />
+                <label
+                  className="govuk-label govuk-radios__label"
+                  htmlFor="pages.detail.scenario.topicPageIsPublic.true"
+                >
+                  Public
+                </label>
+              </div>
+
+              <div className="govuk-radios__item">
+                <input
+                  defaultChecked={pages.detail.scenario.topicPageIsPublic  === false}
+                  className="govuk-radios__input"
+                  id="pages.detail.scenario.topicPageIsPublic.false"
+                  name="pages.detail.scenario.topicPageIsPublic"
+                  type="radio"
+                  value="false"
+                />
+                <label
+                  className="govuk-label govuk-radios__label"
+                  htmlFor="pages.detail.scenario.topicPageIsPublic.false"
+                >
+                  Non-public
                 </label>
               </div>
             </div>
