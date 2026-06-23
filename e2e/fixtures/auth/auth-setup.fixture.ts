@@ -34,7 +34,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
   },
 
   setupAuth: [
-    async ({ page, authEnabled, startLoggedOut }, use, testInfo) => {
+    async ({ page, authEnabled, startLoggedOut }, use ) => {
 
       if (!authEnabled || startLoggedOut) {
         await page.context().clearCookies()
