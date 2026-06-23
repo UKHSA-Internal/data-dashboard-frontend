@@ -17,9 +17,7 @@ import { auth } from '@/auth'
  * The non-public dashboard signup page
  */
 export default async function StartPage({ searchParams: { logout } }: PageComponentBaseProps<{ logout?: 'success' }>) {
-  console.log('[debug-log] StartPage: before auth');
   const session = await auth()
-  console.log('[debug-log] StartPage: after auth', session);
 
   if (session) redirect('/acknowledgement')
 

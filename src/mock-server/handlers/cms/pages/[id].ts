@@ -110,12 +110,6 @@ export default async function handler(req: Request, res: Response) {
       })
     }
 
-    // if (mockedPageMap[pageId]) {
-    //   return res.status(status).json({
-    //     ...mockedPageMap[pageId],
-    //   })
-    // }
-
     return res.status(404).json({ message: 'page not found' })
   } catch (error) {
     logger.error(error)

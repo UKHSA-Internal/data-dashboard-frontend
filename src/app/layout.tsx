@@ -26,9 +26,7 @@ export const dynamic = 'auto'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
   const { t } = await getServerTranslation('common')
-  console.log('[debug-log] RootLayout: before getAuthToken');
   const accessToken = await getAuthToken()
-  console.log('[debug-log] RootLayout: after getAuthToken');
 
   const cookieStore = await cookies()
   return (

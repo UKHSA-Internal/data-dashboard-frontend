@@ -30,8 +30,6 @@ export const proxy: NextProxy = async (request: NextRequest) => {
   if (process.env.AUTH_ENABLED === 'true') {
     const unauthenticatedPaths = ['/api/health', '/robots.txt']
 
-    console.log('[debug-log] proxy: auth enabled block');
-
     if (unauthenticatedPaths.some((path) => request.nextUrl.pathname.startsWith(path))) {
       return response
     }
@@ -46,9 +44,7 @@ export const proxy: NextProxy = async (request: NextRequest) => {
       //   return NextResponse.redirect(new URL('/start', request.url))
       // }
       response = await validateAndRenewSession(request, response)
-      console.log('[debug-log] proxy: after validateAndRenewSession', response.status);
     } catch (error) {
-      console.log('[debug-log] proxy: error', error);
       logger.error('Auth middleware error:', error)
       return NextResponse.redirect(new URL('/start', request.url))
     }
