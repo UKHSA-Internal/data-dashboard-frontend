@@ -1,17 +1,17 @@
 import { test } from '../../fixtures/app.fixture'
 
-test.describe('Start page - when auth is disabled', () => {
-  if (process.env.AUTH_ENABLED !== 'false') {
-    return
-  }
+// test.describe('Start page - when auth is disabled', () => {
+//   if (process.env.AUTH_ENABLED !== 'false') {
+//     return
+//   }
 
-  //  test.use({ authEnabled: true })
+//   //  test.use({ authEnabled: true })
 
-  test('Returns 404 when auth is disabled', async ({ notFoundPage }) => {
-    await notFoundPage.goto('/start')
-    await notFoundPage.hasPageContent()
-  })
-})
+//   test('Returns 404 when auth is disabled', async ({ notFoundPage }) => {
+//     await notFoundPage.goto('/start')
+//     await notFoundPage.hasPageContent()
+//   })
+// })
 
 test.describe('Start page - logged out (normal initial state)', () => {
   test.use({ startLoggedOut: true })

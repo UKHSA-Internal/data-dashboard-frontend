@@ -128,14 +128,14 @@ export default [...nextTypescript, {
     'id-length': 'off', // Allow short variable names in tests
   },
 }, {
-  files: ['**/*.spec.ts', 'e2e/**/*.ts', 'tests/**/*.ts', 'e2e/**/*.e2e.ts'],
+  files: ['**/*.spec.ts', 'e2e/**/*.ts', 'tests/**/*.ts'],
   plugins: {
     playwright,
   },
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'react-hooks/rules-of-hooks': 'off', // Playwright's 'use' conflicts with React hooks
-    'playwright/no-skipped-test': 'off',
+    'playwright/no-skipped-test': 'warn',
     'playwright/no-networkidle': 'warn',
     'playwright/no-eval': 'error',
     'playwright/no-conditional-in-test': 'warn',
