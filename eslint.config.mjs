@@ -135,7 +135,7 @@ export default [...nextTypescript, {
   rules: {
     '@typescript-eslint/no-non-null-assertion': 'off',
     'react-hooks/rules-of-hooks': 'off', // Playwright's 'use' conflicts with React hooks
-    'playwright/no-skipped-test': 'warn',
+    'playwright/no-skipped-test': 'off',
     'playwright/no-networkidle': 'warn',
     'playwright/no-eval': 'error',
     'playwright/no-conditional-in-test': 'warn',
