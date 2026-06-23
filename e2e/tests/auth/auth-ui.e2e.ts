@@ -41,7 +41,6 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
     await authStartPage.goto()
     await authStartPage.isStartPage()
     await authStartPage.hasNoLogoutBanner()
-    expect(true).toBe(true)
   })
 })
 
@@ -51,7 +50,6 @@ test('Displays classification banner @auth-ui', async ({ authStartPage, app, aut
   await authStartPage.goto()
   await app.hasClassificationBanner()
   await app.checkClassificationBannerContent()
-  expect(true).toBe(true)
 })
 
 test.describe('Start page - logged in @auth-ui', () => {
@@ -88,6 +86,5 @@ test.describe('Start page - after logout (post-logout state) - classification ba
     await authStartPage.page.goto('/start?logout=success')
     await app.hasClassificationBanner()
     await app.checkClassificationBannerContent()
-    expect(true).toBe(true)
   })
 })

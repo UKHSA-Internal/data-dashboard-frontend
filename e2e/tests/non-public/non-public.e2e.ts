@@ -34,7 +34,6 @@ test.describe('Respiratory topic pages - non-public @non-public', () => {
       await app.hasHeading(topicPage.heading)
       await app.hasClassificationBanner()
       await app.checkClassificationBannerContent()
-      // expect(true).toBe(true)
     })
   }
 })
