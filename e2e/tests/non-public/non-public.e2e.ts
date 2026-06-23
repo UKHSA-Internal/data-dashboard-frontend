@@ -25,8 +25,8 @@ test.describe('Respiratory topic pages - non-public @non-public', () => {
 
   for (const topicPage of respiritoryTopicPages) {
     test(`${topicPage.name} shows the classification banner`, async ({ app, authEnabled, page, switchboardPage }) => {
-      // test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-      if (!authEnabled) return
+      test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+      // if (!authEnabled) return
 
       await switchboardPage.setTopicPageIsPublic(false)
       await page.goto(topicPage.path)
@@ -34,7 +34,7 @@ test.describe('Respiratory topic pages - non-public @non-public', () => {
       await app.hasHeading(topicPage.heading)
       await app.hasClassificationBanner()
       await app.checkClassificationBannerContent()
-      expect(true).toBe(true)
+      // expect(true).toBe(true)
     })
   }
 })
