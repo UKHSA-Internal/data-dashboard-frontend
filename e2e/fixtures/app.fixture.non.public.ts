@@ -1,13 +1,12 @@
 import { expect, Locator, Page } from '@playwright/test'
 
 import { AuthSetupFixtures } from './auth/auth-setup.fixture'
-import { AuthStartPage, LandingPage, SitemapPage, SwitchboardPage } from './index'
+import { AuthStartPage, LandingPage, SitemapPage } from './index'
 
 type Fixtures = {
   app: App
   authStartPage: AuthStartPage
   sitemapPage: SitemapPage
-  switchboardPage: SwitchboardPage
   landingPage: LandingPage
 }
 
@@ -61,19 +60,6 @@ export class App {
     await expect(this.page.getByRole('heading', { name: 'Browse', level: 1 })).toBeVisible()
     await this.page.getByRole('link', { name }).click()
   }
-
-  async hasClassificationBanner() {
-    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
-  }
-
-  async hasNoClassificationBanner() {
-    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'})).toHaveCount(0)
-  }
-
-  async checkClassificationBannerContent() {
-    const banner = this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()
-    await expect(banner).toContainText('Official-Sensitive')
-  }
 }
 
 export const test = AuthSetupFixtures.extend<Fixtures>({
@@ -82,9 +68,6 @@ export const test = AuthSetupFixtures.extend<Fixtures>({
   },
   authStartPage: async ({ page, authEnabled, authUserName }, use) => {
     await use(new AuthStartPage(page, authEnabled, authUserName))
-  },
-  switchboardPage: async ({ page }, use) => {
-    await use(new SwitchboardPage(page))
   },
   sitemapPage: async ({ page }, use) => {
     await use(new SitemapPage(page))

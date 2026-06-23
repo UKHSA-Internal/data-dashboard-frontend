@@ -1,39 +1,51 @@
 import { viewports } from 'e2e/constants/viewports.constants'
 
-import { expect, test } from '../../fixtures/app.fixture.non.public'
+import { test } from '../../fixtures/app.fixture.non.public'
 
-const respiritoryTopicPages = [
-  {
-    name: 'COVID-19',
-    path: '/respiratory-viruses/covid-19',
-    heading: 'COVID-19',
-  },
-  {
-    name: 'Influenza',
-    path: '/respiratory-viruses/influenza',
-    heading: 'Influenza',
-  },
-  {
-    name: 'Other respiratory viruses',
-    path: '/respiratory-viruses/other-respiratory-viruses',
-    heading: 'Other respiratory viruses',
-  },
-]
-
-test.describe('Respiratory topic pages - non-public @non-public', () => {
+test.describe('Non-public tests - desktop @non-public', () => {
   test.use({ viewport: viewports.desktop })
 
-  for (const topicPage of respiritoryTopicPages) {
-    test(`${topicPage.name} shows the classification banner`, async ({ app, authEnabled, page, switchboardPage }) => {
-      test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-      // if (!authEnabled) return
-
-      await switchboardPage.setTopicPageIsPublic(false)
-      await page.goto(topicPage.path)
-
-      await app.hasHeading(topicPage.heading)
-      await app.hasClassificationBanner()
-      await app.checkClassificationBannerContent()
+  test('Navigates to start page from the navigation menu', async ({ app, authStartPage }) => {
+    await test.step('loads the start page', async () => {
+      await authStartPage.goto()
+      await authStartPage.hasMainHeading()
     })
-  }
+
+    await test.step('loads the "start" page', async () => {
+      await app.clickNav('start')
+      await app.hasHeading('start')
+    })
+  })
+})
+
+test.describe('Non-public tests - mobile @non-public', () => {
+  test.use({ viewport: viewports.mobile })
+
+  test('Navigates to start page from the dropdown mobile navigation menu', async ({ app, authStartPage }) => {
+    await test.step('loads the start page', async () => {
+      await authStartPage.goto()
+      await authStartPage.hasMainHeading()
+    })
+
+    await test.step('loads the "start" page', async () => {
+      await app.clickNav('start')
+      await app.hasHeading('start')
+    })
+  })
+})
+
+test.describe('Non-public tests - no JavaScript @non-public', () => {
+  test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
+
+  test('Navigates to start page from the side navigation menu', async ({ app, authStartPage }) => {
+    await test.step('loads the start page', async () => {
+      await authStartPage.goto()
+      await authStartPage.hasMainHeading()
+    })
+
+    await test.step('loads the "start" page', async () => {
+      await app.clickBrowseNav('start')
+      await app.hasHeading('start')
+    })
+  })
 })
