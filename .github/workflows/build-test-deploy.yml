@@ -182,6 +182,13 @@ jobs:
 
       # ── Environment ───────────────────────────────────────────────────────────
       - name: Create .env.local
+        env:
+          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          AUTH_CLIENT_SECRET: ${{ secrets.AUTH_CLIENT_SECRET }}
+          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
         run: |
           cat > .env.local <<EOF
           AUTH_ENABLED=true
@@ -189,12 +196,12 @@ jobs:
           MOCK_SESSION_USERNAME=Test User
           BASE_URL=http://localhost:3000
           API_URL=http://localhost:3005
-          AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}
-          AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}
-          AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}
-          AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}
-          AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+          AUTH_DOMAIN=$AUTH_DOMAIN
+          AUTH_CLIENT_ID=$AUTH_CLIENT_ID
+          AUTH_CLIENT_SECRET=$AUTH_CLIENT_SECRET
+          AUTH_CLIENT_URL=$AUTH_CLIENT_URL
+          AUTH_SECRET=$AUTH_SECRET
+          NEXTAUTH_URL=$NEXTAUTH_URL
           EOF
 
           cp .env.local .next/standalone/.env.local
