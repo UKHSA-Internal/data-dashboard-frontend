@@ -17,6 +17,7 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Shows logged-out state when not logged in', async ({ landingPage, aboutPage, authStartPage, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await landingPage.goto()
     await authStartPage.checkIsLoggedOut()
@@ -29,6 +30,7 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   })
 
   test('Page layout', async ({ authStartPage, app, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.goto()
     await app.hasLayout()
@@ -44,6 +46,7 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
 // })
 
 test('Displays classification banner', async ({ authStartPage, authEnabled }) => {
+  // Reason: All tests here are only relevant when auth has been enabled
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
   await authStartPage.goto()
   // await authStartPage.hasClassificationBanner()
@@ -56,6 +59,7 @@ test.describe('Start page - logged in', () => {
     authStartPage,
     authEnabled,
   }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await landingPage.goto()
 
