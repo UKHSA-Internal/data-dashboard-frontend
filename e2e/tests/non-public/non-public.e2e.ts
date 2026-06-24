@@ -2,28 +2,28 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture.non.public'
 
-const respiritoryTopicPages = [
+const respiratoryTopicPages = [
   {
     name: 'COVID-19',
-    path: '/respiritory-viruses/covid-19',
+    path: '/respiratory-viruses/covid-19',
     heading: 'COVID-19',
   },
   {
     name: 'Influenza',
-    path: '/respiritory-viruses/influenza',
+    path: '/respiratory-viruses/influenza',
     heading: 'Influenza',
   },
   {
-    name: 'Other respiritory viruses',
-    path: '/respiritory-viruses/other-respiritory-viruses',
-    heading: 'Other respiritory viruses',
+    name: 'Other respiratory viruses',
+    path: '/respiratory-viruses/other-respiratory-viruses',
+    heading: 'Other respiratory viruses',
   },
 ]
 
-test.describe('Respiritory topic pages - non-public @non-public', () => {
+test.describe('Respiratory topic pages - non-public @non-public', () => {
   test.use({ viewport: viewports.desktop })
 
-  for (const topicPage of respiritoryTopicPages) {
+  for (const topicPage of respiratoryTopicPages) {
     test(`${topicPage.name} shows the classification banner`, async ({ app, authEnabled, page, switchboardPage }) => {
       test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
 
