@@ -6,10 +6,10 @@ import { ChartSizes } from '../components/ui/ukhsa/Chart/Chart'
 import {
   getChartResponseData,
   getChartSvg,
-  getChartTimespan,
   getDualCategoryChartsResponseData,
-  getFilteredData,
+  getFilteredSingleCategoryData,
   getSingleCategoryChartsResponseData,
+  getSingleCategoryChartTimespan,
   parseDualCategoryTableData,
 } from './chart.utils'
 
@@ -32,7 +32,7 @@ const mockChartResponse = {
 describe('Get timespan between dates for chart', () => {
   const mockLastUpdated = '2025-05-21'
   test('return 0 when no plots provided', () => {
-    const timespan = getChartTimespan([], mockLastUpdated)
+    const timespan = getSingleCategoryChartTimespan([], mockLastUpdated)
     expect(timespan).toEqual({ years: 0, months: 0 })
   })
 
@@ -51,7 +51,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockLastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 0, months: 0 })
   })
 
@@ -70,7 +70,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockLastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 1, months: 1 })
   })
 
@@ -100,7 +100,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockLastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, mockLastUpdated)
     expect(timespan).toEqual({ years: 2, months: 1 })
   })
 
@@ -134,7 +134,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockToday.toString())
+    const timespan = getSingleCategoryChartTimespan(plots, mockToday.toString())
     // Should calculate from two years ago to today (approximately 2 years)
     expect(timespan.years).toBeGreaterThanOrEqual(1)
     expect(timespan.years).toBeLessThanOrEqual(3)
@@ -177,7 +177,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockLastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, mockLastUpdated)
     // Open-ended plot (test2) should be included and capped at lastUpdated
     // Longest span is from 2022-01-01 to 2025-05-21 = 3 years, 4 months
     expect(timespan).toEqual({ years: 3, months: 4 })
@@ -209,7 +209,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, mockLastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, mockLastUpdated)
     // Open-ended plot (test2) should be included and capped at lastUpdated (3 years, 4 months)
     expect(timespan).toEqual({ years: 3, months: 4 })
   })
@@ -230,7 +230,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, lastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, lastUpdated)
     // Should calculate from Oct 2022 to April 2023 (6 months), not from Oct 2022 to Jan 2026
     expect(timespan).toEqual({ years: 0, months: 6 })
   })
@@ -251,7 +251,7 @@ describe('Get timespan between dates for chart', () => {
       },
     ]
 
-    const timespan = getChartTimespan(plots, lastUpdated)
+    const timespan = getSingleCategoryChartTimespan(plots, lastUpdated)
     // Should use date_to (2024-01-01) since it's earlier than lastUpdated
     expect(timespan).toEqual({ years: 1, months: 0 })
   })
@@ -271,7 +271,7 @@ describe('getChartSvg', () => {
   })
 })
 
-describe('getFilteredData', () => {
+describe('getFilteredSingleCategoryData', () => {
   const mockLastUpdated = '2025-05-21'
   const mockData = {
     title: 'Test Chart',
@@ -308,14 +308,14 @@ describe('getFilteredData', () => {
   }
 
   test('returns original data when no filter provided (empty string)', () => {
-    const result = getFilteredData(mockData, '', mockLastUpdated)
+    const result = getFilteredSingleCategoryData(mockData, '', mockLastUpdated)
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
     expect(result?.[0].value.date_to).toBe('2024-01-01')
   })
 
   test('applies filter and updates date_from for all plots', () => {
-    const result = getFilteredData(mockData, '6-months', mockLastUpdated)
+    const result = getFilteredSingleCategoryData(mockData, '6-months', mockLastUpdated)
     expect(result).toHaveLength(2)
     // date_from should be updated to 6 months before date_to
     expect(result?.[0].value.date_from).not.toBe('2023-01-01')
@@ -325,7 +325,7 @@ describe('getFilteredData', () => {
   })
 
   test('handles "all" filter value and restores original dates', () => {
-    const result = getFilteredData(mockData, 'all', mockLastUpdated)
+    const result = getFilteredSingleCategoryData(mockData, 'all', mockLastUpdated)
     expect(result).toHaveLength(2)
     expect(result?.[0].value.date_from).toBe('2023-01-01')
     expect(result?.[0].value.date_to).toBe('2024-01-01')
@@ -334,8 +334,8 @@ describe('getFilteredData', () => {
   })
 
   test('applies different filter values correctly', () => {
-    const result1Month = getFilteredData(mockData, '1-month', mockLastUpdated)
-    const result3Months = getFilteredData(mockData, '3-months', mockLastUpdated)
+    const result1Month = getFilteredSingleCategoryData(mockData, '1-month', mockLastUpdated)
+    const result3Months = getFilteredSingleCategoryData(mockData, '3-months', mockLastUpdated)
 
     expect(result1Month).toHaveLength(2)
     expect(result3Months).toHaveLength(2)
@@ -345,7 +345,7 @@ describe('getFilteredData', () => {
   })
 
   test('applies year filter and updates date_from', () => {
-    const result = getFilteredData(mockData, '1-year', mockLastUpdated)
+    const result = getFilteredSingleCategoryData(mockData, '1-year', mockLastUpdated)
 
     expect(result?.[0].value.date_from).toBe('2023-01-01')
     expect(result?.[0].value.date_to).toBe('2024-01-01')
@@ -369,7 +369,7 @@ describe('getFilteredData', () => {
       ],
     }
 
-    const result = getFilteredData(dataWithoutDateTo, '6-months', mockLastUpdated)
+    const result = getFilteredSingleCategoryData(dataWithoutDateTo, '6-months', mockLastUpdated)
 
     expect(result?.[0].value.date_from).toBe('2024-11-21')
     expect(result?.[0].value.date_to).toBe('2025-05-21')
@@ -393,14 +393,16 @@ describe('getFilteredData', () => {
       ],
     }
 
-    const result = getFilteredData(dataWithoutDateTo, 'all', mockLastUpdated)
+    const result = getFilteredSingleCategoryData(dataWithoutDateTo, 'all', mockLastUpdated)
 
     expect(result?.[0].value.date_from).toBe('2020-01-01')
     expect(result?.[0].value.date_to).toBe('2025-05-21')
   })
 
   test('throws when filter unit is unsupported', () => {
-    expect(() => getFilteredData(mockData, '1-week', mockLastUpdated)).toThrow('Unsupported subtraction unit')
+    expect(() => getFilteredSingleCategoryData(mockData, '1-week', mockLastUpdated)).toThrow(
+      'Unsupported subtraction unit'
+    )
   })
 
   test('when date_to is later than lastUpdated, uses lastUpdated for filtering', () => {
@@ -422,7 +424,7 @@ describe('getFilteredData', () => {
       ],
     }
 
-    const result = getFilteredData(dataWithFutureDate, '6-months', lastUpdated)
+    const result = getFilteredSingleCategoryData(dataWithFutureDate, '6-months', lastUpdated)
     // Should calculate 6 months from lastUpdated (2023-04-30), not from 2026-01-01
     // 6 months before 2023-04-30 is 2022-10-30
     expect(result?.[0].value.date_from).toBe('2022-10-30')
@@ -449,7 +451,7 @@ describe('getFilteredData', () => {
       ],
     }
 
-    const result = getFilteredData(dataWithPastDate, '6-months', lastUpdated)
+    const result = getFilteredSingleCategoryData(dataWithPastDate, '6-months', lastUpdated)
     // Should calculate 6 months from date_to (2024-01-01), not from lastUpdated
     // 6 months before 2024-01-01 is 2023-07-01
     expect(result?.[0].value.date_from).toBe('2023-07-01')

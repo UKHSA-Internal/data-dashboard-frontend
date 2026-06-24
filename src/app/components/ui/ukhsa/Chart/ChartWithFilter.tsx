@@ -4,11 +4,9 @@ import kebabCase from 'lodash/kebabCase'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { ChartFigure } from '@/api/models/Chart'
-import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
-import { getCharts } from '@/api/requests/charts/getCharts'
+import { ChartComponentData } from '@/api/models/cms/Page'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
-import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
-import { chartSizes } from '@/config/constants'
+import { getFilteredChartResponseData, getTimespanFromChartData } from '@/app/utils/chart.utils'
 
 import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
@@ -20,8 +18,7 @@ interface ChartWithFilterProps {
   lastUpdated: string
   figure: ChartFigure
   title: string
-  chart: Chart
-  chartData: SingleCategoryChartCardValue
+  chartData: ChartComponentData
 }
 
 const LoadingSpinnerContainer = () => {
@@ -32,7 +29,7 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({ figure, title, chartData, lastUpdated }: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -47,51 +44,9 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
       setIsLoading(true)
 
       try {
-        const filteredChart = getFilteredData(chartData, filter, lastUpdated)
+        const chartResponse = await getFilteredChartResponseData(chartData, filter, lastUpdated)
 
-        if (!filteredChart) {
-          setHasError(true)
-          setIsLoading(false)
-          return
-        }
-
-        let yAxisMinimum = null
-        let yAxisMaximum = null
-        let xAxisTitle = ''
-        let yAxisTitle = ''
-
-        if ('y_axis_minimum_value' in chartData) {
-          yAxisMinimum = chartData.y_axis_minimum_value
-        }
-        if ('y_axis_maximum_value' in chartData) {
-          yAxisMaximum = chartData.y_axis_maximum_value
-        }
-        if ('x_axis_title' in chartData) {
-          xAxisTitle = chartData.x_axis_title || ''
-        }
-        if ('y_axis_title' in chartData) {
-          yAxisTitle = chartData.y_axis_title || ''
-        }
-
-        const { x_axis, y_axis } = chartData
-
-        const plots = filteredChart.map((plot) => ({
-          ...plot?.value,
-        }))
-
-        const chartResponse = await getCharts({
-          plots,
-          x_axis,
-          y_axis,
-          x_axis_title: xAxisTitle,
-          y_axis_title: yAxisTitle,
-          y_axis_maximum_value: yAxisMaximum,
-          y_axis_minimum_value: yAxisMinimum,
-          chart_width: chartSizes['narrow'].width,
-          chart_height: chartSizes['narrow'].height,
-        })
-
-        if (!chartResponse.success || !chartResponse.data) {
+        if (!chartResponse?.success || !chartResponse?.data) {
           setHasError(true)
           return
         }
@@ -106,7 +61,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
         previousFilterRef.current = filter
       }
     },
-    [chartData]
+    [chartData, lastUpdated]
   )
 
   useEffect(() => {
@@ -139,7 +94,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
   return (
     <>
       <div className="hidden js:block">
-        <ChartSelect timespan={getChartTimespan(chart, lastUpdated)} />
+        <ChartSelect timespan={getTimespanFromChartData(chartData, lastUpdated)} />
       </div>
       {hasError ? (
         <ClientInformationCard

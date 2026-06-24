@@ -15,7 +15,10 @@ import { ChartSizes } from '../components/ui/ukhsa'
 export const getChartSvg = (encodedSvg: string) =>
   encodeURIComponent(decodeURIComponent(encodedSvg.replace(/\+/g, ' ')))
 
-export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: number; months: number } => {
+export const getSingleCategoryChartTimespan = (
+  plots: Chart,
+  lastUpdated: string
+): { years: number; months: number } => {
   if (!plots?.length) return { years: 0, months: 0 }
 
   let maxMonths = 0
@@ -52,6 +55,30 @@ export const getChartTimespan = (plots: Chart, lastUpdated: string): { years: nu
   return returnItem
 }
 
+export const getDualCategoryChartTimespan = (
+  data: DualCategoryChartCardValue,
+  lastUpdated: string
+): { years: number; months: number } => {
+  const { date_from, date_to } = data.static_fields
+
+  if (!date_from) return { years: 0, months: 0 }
+
+  const dateTo = (() => {
+    if (!date_to) return new Date(lastUpdated)
+    const staticDateTo = new Date(date_to)
+    const lastUpdatedDate = new Date(lastUpdated)
+    return staticDateTo < lastUpdatedDate ? staticDateTo : lastUpdatedDate
+  })()
+
+  const dateFrom = new Date(date_from)
+  const maxMonths = (dateTo.getFullYear() - dateFrom.getFullYear()) * 12 + (dateTo.getMonth() - dateFrom.getMonth())
+
+  return {
+    years: Math.floor(maxMonths / 12),
+    months: maxMonths % 12,
+  }
+}
+
 const subtractFromDate = (toSubtract: string, date: Date = new Date()): string => {
   const [amount, unit] = toSubtract.split('-')
 
@@ -77,7 +104,7 @@ const subtractFromDate = (toSubtract: string, date: Date = new Date()): string =
   return `${year}-${month}-${day}`
 }
 
-export const getFilteredData = (
+export const getFilteredSingleCategoryData = (
   data: SingleCategoryChartCardValue,
   filterValue: string,
   lastUpdated: string
@@ -122,6 +149,50 @@ export const getFilteredData = (
     }
   })
 }
+
+export const getFilteredDualCategoryData = (
+  data: DualCategoryChartCardValue,
+  filterValue: string,
+  lastUpdated: string
+): DualCategoryChartCardValue => {
+  const { date_from, date_to } = data.static_fields
+
+  let dateTo: Date
+  if (date_to) {
+    const staticDateTo = new Date(date_to)
+    const lastUpdatedDate = new Date(lastUpdated)
+    dateTo = staticDateTo < lastUpdatedDate ? staticDateTo : lastUpdatedDate
+  } else {
+    dateTo = new Date(lastUpdated)
+  }
+
+  const dateToString = date_to || new Date(dateTo).toISOString().split('T')[0]
+
+  if (!filterValue || filterValue === 'all') {
+    return {
+      ...data,
+      static_fields: {
+        ...data.static_fields,
+        date_from,
+        date_to: dateToString,
+      },
+    }
+  }
+
+  const newDateFrom = subtractFromDate(filterValue, dateTo)
+
+  return {
+    ...data,
+    static_fields: {
+      ...data.static_fields,
+      date_from: newDateFrom,
+      date_to: dateToString,
+    },
+  }
+}
+
+export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
+  'segments' in data && 'static_fields' in data
 
 export const getDualCategoryChartsResponseData = async (
   data: DualCategoryChartCardValue,
@@ -178,7 +249,22 @@ export const getSingleCategoryChartsResponseData = async (
   return chartResponse
 }
 
-// Choses the correct function to get the data based on the chart type
+const filterNarrowSize = { default: true as const, size: 'narrow' as const }
+
+export const getFilteredChartResponseData = async (data: ChartComponentData, filter: string, lastUpdated: string) => {
+  if (isDualCategoryChartCardValue(data)) {
+    const filteredData = getFilteredDualCategoryData(data, filter, lastUpdated)
+    return getDualCategoryChartsResponseData(filteredData, filterNarrowSize, null, null)
+  }
+
+  const filteredChart = getFilteredSingleCategoryData(data, filter, lastUpdated)
+  if (!filteredChart) return null
+
+  const plots = filteredChart.map((plot) => ({ ...plot.value }))
+  return getSingleCategoryChartsResponseData(plots, data, filterNarrowSize)
+}
+
+// Chooses the correct function to get the data based on the chart type
 export const getChartResponseData = async (
   data: ChartComponentData,
   areaType: string | null,
@@ -203,8 +289,15 @@ export const getChartResponseData = async (
   return await getSingleCategoryChartsResponseData(plots, data, selectedSize)
 }
 
-export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
-  'segments' in data && 'static_fields' in data
+export const getTimespanFromChartData = (
+  data: ChartComponentData,
+  lastUpdated: string
+): { years: number; months: number } => {
+  if (isDualCategoryChartCardValue(data)) {
+    return getDualCategoryChartTimespan(data, lastUpdated)
+  }
+  return getSingleCategoryChartTimespan(data.chart, lastUpdated)
+}
 
 export type DualCategoryTableGroup = {
   columns: Array<Column>

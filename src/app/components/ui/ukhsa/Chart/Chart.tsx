@@ -1,7 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import { Suspense } from 'react'
 
-import { SingleCategoryChartCardValue } from '@/api/models/cms/Page'
+import { ChartComponentData } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -37,7 +37,7 @@ interface ChartProps {
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
   /* Request metadata from the CMS required to fetch from the headlines api */
-  readonly data: SingleCategoryChartCardValue
+  readonly data: ChartComponentData
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
@@ -115,7 +115,6 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
             lastUpdated={last_updated}
             figure={{ frames: [], ...figure }}
             title={data.title}
-            chart={data.chart}
             chartData={data}
           />
         </div>

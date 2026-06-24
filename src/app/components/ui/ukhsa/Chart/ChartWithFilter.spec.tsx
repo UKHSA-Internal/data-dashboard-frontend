@@ -3,13 +3,11 @@ import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
 import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
-import { getCharts } from '@/api/requests/charts/getCharts'
-import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
+import { getFilteredChartResponseData, getTimespanFromChartData } from '@/app/utils/chart.utils'
 import { act, render, screen, waitFor } from '@/config/test-utils'
 
 import ChartWithFilter from './ChartWithFilter'
 
-jest.mock('@/api/requests/charts/getCharts')
 jest.mock('@/app/utils/chart.utils')
 
 let setFilterRef: ((value: string) => void) | null = null
@@ -91,9 +89,10 @@ jest.mock('../Icons/LoadingSpinner', () => ({
   LoadingSpinner: () => <div aria-label="Loading spinner" data-testid="loading-spinner" />,
 }))
 
-const mockGetCharts = getCharts as jest.MockedFunction<typeof getCharts>
-const mockGetFilteredData = getFilteredData as jest.MockedFunction<typeof getFilteredData>
-const mockGetChartTimespan = getChartTimespan as jest.MockedFunction<typeof getChartTimespan>
+const mockGetTimespanFromChartData = getTimespanFromChartData as jest.MockedFunction<typeof getTimespanFromChartData>
+const mockGetFilteredChartResponseData = getFilteredChartResponseData as jest.MockedFunction<
+  typeof getFilteredChartResponseData
+>
 
 describe('ChartWithFilter', () => {
   const mockFigure: ChartFigure = {
@@ -137,20 +136,8 @@ describe('ChartWithFilter', () => {
     setTimeseriesInitialFilterForTests('all')
 
     // Default mocks
-    mockGetChartTimespan.mockReturnValue({ years: 1, months: 0 })
-    mockGetFilteredData.mockImplementation((data, filter) => {
-      if (filter === 'all' || !filter) {
-        return data.chart
-      }
-      return data.chart.map((plot) => ({
-        ...plot,
-        value: {
-          ...plot.value,
-          date_from: '2023-07-01',
-        },
-      }))
-    })
-    mockGetCharts.mockResolvedValue({
+    mockGetTimespanFromChartData.mockReturnValue({ years: 1, months: 0 })
+    mockGetFilteredChartResponseData.mockResolvedValue({
       success: true,
       data: {
         chart: 'mock-chart-svg',
@@ -164,20 +151,14 @@ describe('ChartWithFilter', () => {
   describe('Initial Render', () => {
     it('renders with initial figure and does not fetch on first render', async () => {
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       expect(screen.getByTestId('chart-select')).toBeInTheDocument()
 
       expect(screen.getByTestId('chart-interactive')).toBeInTheDocument()
 
-      expect(mockGetCharts).not.toHaveBeenCalled()
+      expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
     })
 
     it('renders ChartNoScript with kebabCase title', () => {
@@ -185,7 +166,6 @@ describe('ChartWithFilter', () => {
         <ChartWithFilter
           figure={mockFigure}
           title="Test Chart Title"
-          chart={mockChart}
           chartData={mockChartData}
           lastUpdated="2025-05-21"
         />
@@ -198,13 +178,7 @@ describe('ChartWithFilter', () => {
   describe('Filter Change Handling', () => {
     it('skips fetch when filter changes to the same value', async () => {
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -212,27 +186,21 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledTimes(1)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledTimes(1)
       })
 
-      mockGetCharts.mockClear()
+      mockGetFilteredChartResponseData.mockClear()
 
       await act(async () => {
         setTimeseriesFilterForTests('6-months')
       })
 
-      expect(mockGetCharts).not.toHaveBeenCalled()
+      expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
     })
 
     it('fetches filtered chart when filter changes from "all" to a specific filter', async () => {
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -240,30 +208,13 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '6-months', '2025-05-21')
-        expect(mockGetCharts).toHaveBeenCalledTimes(1)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(mockChartData, '6-months', '2025-05-21')
       })
-
-      expect(mockGetCharts).toHaveBeenCalledWith(
-        expect.objectContaining({
-          plots: expect.arrayContaining([
-            expect.objectContaining({
-              date_from: '2023-07-01', // Filtered date
-            }),
-          ]),
-        })
-      )
     })
 
     it('fetches filtered chart when filter changes between different filters', async () => {
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -271,10 +222,10 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledTimes(1)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledTimes(1)
       })
 
-      mockGetCharts.mockClear()
+      mockGetFilteredChartResponseData.mockClear()
 
       // Change to different filter
       await act(async () => {
@@ -282,20 +233,13 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
-        expect(mockGetCharts).toHaveBeenCalledTimes(1)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
       })
     })
 
     it('does not fetch when filter is "all" on initial mount', async () => {
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       // Wait a bit to ensure no fetch happens
@@ -303,20 +247,14 @@ describe('ChartWithFilter', () => {
         await new Promise((resolve) => setTimeout(resolve, 100))
       })
 
-      expect(mockGetCharts).not.toHaveBeenCalled()
+      expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
     })
 
     it('fetches filtered chart when filter is not "all" on initial mount', async () => {
       setTimeseriesInitialFilterForTests('6-months')
 
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       // No fetch until filter actually changes
@@ -325,8 +263,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
-        expect(mockGetCharts).toHaveBeenCalledTimes(1)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
       })
     })
   })
@@ -339,7 +276,7 @@ describe('ChartWithFilter', () => {
         resolvePromise = resolve
       })
 
-      mockGetCharts.mockReturnValueOnce(
+      mockGetFilteredChartResponseData.mockReturnValueOnce(
         delayedPromise.then(() => ({
           success: true,
           data: {
@@ -352,13 +289,7 @@ describe('ChartWithFilter', () => {
       )
 
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       // Wait a bit then change filter
@@ -396,17 +327,11 @@ describe('ChartWithFilter', () => {
   })
 
   describe('Error Handling', () => {
-    it('shows error message when getFilteredData returns null', async () => {
-      mockGetFilteredData.mockReturnValueOnce(undefined)
+    it('shows error message when getFilteredChartResponseData returns null', async () => {
+      mockGetFilteredChartResponseData.mockResolvedValueOnce(null)
 
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -417,12 +342,10 @@ describe('ChartWithFilter', () => {
         expect(screen.getByText('No data available')).toBeInTheDocument()
         expect(screen.getByText('Please adjust or reset the filter to try again.')).toBeInTheDocument()
       })
-
-      expect(mockGetCharts).not.toHaveBeenCalled()
     })
 
     it('shows error message when getCharts returns unsuccessful response', async () => {
-      mockGetCharts.mockResolvedValueOnce({
+      mockGetFilteredChartResponseData.mockResolvedValueOnce({
         success: false,
         error: new z.ZodError([
           { code: 'invalid_type', expected: 'string', received: 'undefined', path: ['chart'], message: 'Required' },
@@ -430,13 +353,7 @@ describe('ChartWithFilter', () => {
       })
 
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -453,16 +370,10 @@ describe('ChartWithFilter', () => {
     })
 
     it('shows error message when getCharts throws an error', async () => {
-      mockGetCharts.mockRejectedValueOnce(new Error('Network error'))
+      mockGetFilteredChartResponseData.mockRejectedValueOnce(new Error('Network error'))
 
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -486,7 +397,7 @@ describe('ChartWithFilter', () => {
         layout: { title: 'Updated Chart' },
       }
 
-      mockGetCharts.mockResolvedValueOnce({
+      mockGetFilteredChartResponseData.mockResolvedValueOnce({
         success: true,
         data: {
           chart: 'mock-chart-svg',
@@ -497,13 +408,7 @@ describe('ChartWithFilter', () => {
       })
 
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -512,7 +417,7 @@ describe('ChartWithFilter', () => {
 
       await waitFor(
         () => {
-          expect(mockGetCharts).toHaveBeenCalledTimes(1)
+          expect(mockGetFilteredChartResponseData).toHaveBeenCalledTimes(1)
         },
         { timeout: 3000 }
       )
@@ -522,7 +427,7 @@ describe('ChartWithFilter', () => {
       expect(chartInteractive).toBeInTheDocument()
     })
 
-    it('calls getCharts with correct parameters including axis titles and limits', async () => {
+    it('passes chart data including axis titles and limits to getFilteredChartResponseData', async () => {
       const chartDataWithAxis: SingleCategoryChartCardValue = {
         ...mockChartData,
         x_axis_title: 'Date Axis',
@@ -535,7 +440,6 @@ describe('ChartWithFilter', () => {
         <ChartWithFilter
           figure={mockFigure}
           title="Test Chart"
-          chart={mockChart}
           chartData={chartDataWithAxis}
           lastUpdated="2025-05-21"
         />
@@ -547,18 +451,17 @@ describe('ChartWithFilter', () => {
 
       await waitFor(
         () => {
-          expect(mockGetCharts).toHaveBeenCalledWith(
+          expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
             expect.objectContaining({
               x_axis_title: 'Date Axis',
               y_axis_title: 'Value Axis',
               y_axis_minimum_value: 0,
               y_axis_maximum_value: 100,
-              plots: expect.any(Array),
               x_axis: 'Date',
               y_axis: 'Value',
-              chart_width: expect.any(Number),
-              chart_height: expect.any(Number),
-            })
+            }),
+            '6-months',
+            '2025-05-21'
           )
         },
         { timeout: 3000 }
@@ -572,13 +475,7 @@ describe('ChartWithFilter', () => {
       // The component should skip on first render, then fetch on subsequent effect runs
       setTimeseriesInitialFilterForTests('6-months')
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       // First render skipped; trigger a change to ensure fetch occurs
@@ -587,19 +484,13 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalled()
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalled()
       })
     })
 
     it('handles multiple rapid filter changes correctly', async () => {
       render(
-        <ChartWithFilter
-          figure={mockFigure}
-          title="Test Chart"
-          chart={mockChart}
-          chartData={mockChartData}
-          lastUpdated="2025-05-21"
-        />
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
       )
 
       await act(async () => {
@@ -607,7 +498,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledTimes(1)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledTimes(1)
       })
 
       // Rapidly change filters
@@ -616,7 +507,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledTimes(2)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledTimes(2)
       })
 
       await act(async () => {
@@ -624,7 +515,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledTimes(3)
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledTimes(3)
       })
     })
   })
