@@ -68,6 +68,7 @@ test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Does not show regular page content when logout banner is present', async ({ authStartPage, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.page.goto('/start?logout=success')
     await authStartPage.hasLogoutBanner()
@@ -80,9 +81,10 @@ test.describe('Start page - after logout (post-logout state) - classification ba
   test.use({ startLoggedOut: true })
 
   test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.page.goto('/start?logout=success')
-    // await authStartPage.hasClassificationBanner()
+    await authStartPage.hasClassificationBanner()
     await authStartPage.checkClassificationBannerContent()
   })
 })
