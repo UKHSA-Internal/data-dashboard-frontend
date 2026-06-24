@@ -226,18 +226,37 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
       />
     )}
 
-    {type === 'internal_page_links' && value && value.length > 0 && (
-      <List>
-        <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-        {value.map(({ id, value }) => (
-          <ListItem key={id} spacing="m">
-            <ListItemArrow>
-              <ListItemArrowLink href={getPath(value.page)}>{value.title}</ListItemArrowLink>
-              <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
-            </ListItemArrow>
-          </ListItem>
-        ))}
-      </List>
-    )}
+    {type === 'internal_page_links' && (() => {
+      const authorisedLinks =
+        value?.filter(
+          (link): link is NonNullable<typeof link> =>
+            Boolean(
+              link &&
+              link.value &&
+              link.value.title?.trim() !== "" &&
+              link.value.page
+            )
+        ) ?? [];
+
+      if (authorisedLinks.length === 0) return null;
+
+      return (
+        <List>
+          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+          {authorisedLinks.map(({ id, value }) => (
+            <ListItem key={id} spacing="m">
+              <ListItemArrow>
+                <ListItemArrowLink href={getPath(value.page)}>
+                  {value.title}
+                </ListItemArrowLink>
+                <ListItemArrowParagraph>
+                  {value.sub_title}
+                </ListItemArrowParagraph>
+              </ListItemArrow>
+            </ListItem>
+          ))}
+        </List>
+      );
+    })()}
   </Fragment>
 )

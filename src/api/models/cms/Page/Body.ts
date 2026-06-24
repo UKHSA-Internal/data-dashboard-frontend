@@ -336,7 +336,7 @@ export const CompositeBody = z.array(
             page: z.string(),
           }),
           id: z.string(),
-        })
+        }).nullable()
       ),
       id: z.string(),
     }),
