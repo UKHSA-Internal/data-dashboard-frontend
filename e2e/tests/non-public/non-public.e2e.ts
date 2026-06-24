@@ -25,6 +25,7 @@ test.describe('Respiratory topic pages - non-public @non-public', () => {
 
   for (const topicPage of respiratoryTopicPages) {
     test(`${topicPage.name} shows the classification banner`, async ({ app, authEnabled, page, switchboardPage }) => {
+      // Reason: All tests here are only relevant when auth has been enabled
       test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
 
       await switchboardPage.setTopicPageIsPublic(false)
