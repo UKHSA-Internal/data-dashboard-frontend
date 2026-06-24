@@ -230,12 +230,7 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
       const authorisedLinks =
         value?.filter(
           (link): link is NonNullable<typeof link> =>
-            Boolean(
-              link &&
-              link.value &&
-              link.value.title?.trim() !== "" &&
-              link.value.page
-            )
+            !!link?.value?.is_authorised
         ) ?? [];
 
       if (authorisedLinks.length === 0) return null;

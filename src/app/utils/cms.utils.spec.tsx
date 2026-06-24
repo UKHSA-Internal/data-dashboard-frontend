@@ -162,6 +162,7 @@ describe('renderCompositeBlock function', () => {
               title: 'COVID-19',
               sub_title: 'COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.',
               page: 'http://localhost:3000/topics/covid-19/',
+              is_authorised: true,
             },
             id: 'c36d19c1-3a5e-4fcf-b696-91468c609369',
           },

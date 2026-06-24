@@ -334,6 +334,7 @@ export const CompositeBody = z.array(
             title: z.string(),
             sub_title: z.string(),
             page: z.string(),
+            is_authorised: z.boolean().optional(),
           }),
           id: z.string(),
         }).nullable()
