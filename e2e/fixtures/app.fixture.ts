@@ -571,6 +571,19 @@ export class App {
   async submitAreaSelectorForm() {
     await this.page.getByTestId('Area selector').getByRole('button', { name: 'Update' }).click()
   }
+
+  async hasClassificationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
+  }
+
+  async hasNoClassificationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'})).toHaveCount(0)
+  }
+
+  async checkClassificationBannerContent() {
+    const banner = this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()
+    await expect(banner).toContainText('Official-Sensitive')
+  }
 }
 
 export const test = AuthSetupFixtures.extend<Fixtures>({

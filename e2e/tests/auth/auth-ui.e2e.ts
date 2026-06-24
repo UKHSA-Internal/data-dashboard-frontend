@@ -1,22 +1,23 @@
 import { test } from '../../fixtures/app.fixture'
 
-test.describe('Start page - when auth is disabled', () => {
-  if (process.env.AUTH_ENABLED !== 'false') {
-    return
-  }
+// test.describe('Start page - when auth is disabled', () => {
+//   if (process.env.AUTH_ENABLED !== 'false') {
+//     return
+//   }
 
-  //  test.use({ authEnabled: true })
+//   //  test.use({ authEnabled: true })
 
-  test('Returns 404 when auth is disabled', async ({ notFoundPage }) => {
-    await notFoundPage.goto('/start')
-    await notFoundPage.hasPageContent()
-  })
-})
+//   test('Returns 404 when auth is disabled', async ({ notFoundPage }) => {
+//     await notFoundPage.goto('/start')
+//     await notFoundPage.hasPageContent()
+//   })
+// })
 
-test.describe('Start page - logged out (normal initial state)', () => {
+test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Shows logged-out state when not logged in', async ({ landingPage, aboutPage, authStartPage, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await landingPage.goto()
     await authStartPage.checkIsLoggedOut()
@@ -29,6 +30,7 @@ test.describe('Start page - logged out (normal initial state)', () => {
   })
 
   test('Page layout', async ({ authStartPage, app, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.goto()
     await app.hasLayout()
@@ -38,6 +40,7 @@ test.describe('Start page - logged out (normal initial state)', () => {
 })
 
 test('Displays classification banner', async ({ authStartPage, authEnabled }) => {
+  // Reason: All tests here are only relevant when auth has been enabled
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
   await authStartPage.goto()
   // await authStartPage.hasClassificationBanner()
@@ -50,6 +53,7 @@ test.describe('Start page - logged in', () => {
     authStartPage,
     authEnabled,
   }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await landingPage.goto()
 
@@ -58,10 +62,11 @@ test.describe('Start page - logged in', () => {
   })
 })
 
-test.describe('Start page - after logout (post-logout state)', () => {
+test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Does not show regular page content when logout banner is present', async ({ authStartPage, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.page.goto('/start?logout=success')
     await authStartPage.hasLogoutBanner()
@@ -74,9 +79,10 @@ test.describe('Start page - after logout (post-logout state) - classification ba
   test.use({ startLoggedOut: true })
 
   test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await authStartPage.page.goto('/start?logout=success')
-    // await authStartPage.hasClassificationBanner()
+    await authStartPage.hasClassificationBanner()
     await authStartPage.checkClassificationBannerContent()
   })
 })

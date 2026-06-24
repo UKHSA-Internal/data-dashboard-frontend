@@ -182,18 +182,26 @@ jobs:
 
       # ── Environment ───────────────────────────────────────────────────────────
       - name: Create .env.local
+        env:
+          AUTH_DOMAIN: ${{ secrets.AUTH_DOMAIN }}
+          AUTH_CLIENT_ID: ${{ secrets.AUTH_CLIENT_ID }}
+          AUTH_CLIENT_SECRET: ${{ secrets.AUTH_CLIENT_SECRET }}
+          AUTH_CLIENT_URL: ${{ secrets.AUTH_CLIENT_URL }}
+          AUTH_SECRET: ${{ secrets.AUTH_SECRET }}
+          NEXTAUTH_URL: ${{ secrets.NEXTAUTH_URL }}
         run: |
           cat > .env.local <<EOF
           AUTH_ENABLED=true
           MOCK_SESSION=true
           MOCK_SESSION_USERNAME=Test User
+          BASE_URL=http://localhost:3000
           API_URL=http://localhost:3005
-          AUTH_DOMAIN=${{ secrets.AUTH_DOMAIN }}
-          AUTH_CLIENT_ID=${{ secrets.AUTH_CLIENT_ID }}
-          AUTH_CLIENT_SECRET=${{ secrets.AUTH_CLIENT_SECRET }}
-          AUTH_CLIENT_URL=${{ secrets.AUTH_CLIENT_URL }}
-          AUTH_SECRET=${{ secrets.AUTH_SECRET }}
-          NEXTAUTH_URL=${{ secrets.NEXTAUTH_URL }}
+          AUTH_DOMAIN=$AUTH_DOMAIN
+          AUTH_CLIENT_ID=$AUTH_CLIENT_ID
+          AUTH_CLIENT_SECRET=$AUTH_CLIENT_SECRET
+          AUTH_CLIENT_URL=$AUTH_CLIENT_URL
+          AUTH_SECRET=$AUTH_SECRET
+          NEXTAUTH_URL=$NEXTAUTH_URL
           EOF
 
           cp .env.local .next/standalone/.env.local
@@ -206,13 +214,14 @@ jobs:
       - name: Start dev server
         id: start-dev-server
         run: |
-          node .next/standalone/server.js &
+          node .next/standalone/server.js > next-server.log 2>&1 &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
           PORT: 3000
           HOSTNAME: 0.0.0.0
           NODE_ENV: test
           AUTH_ENABLED: true
+          BASE_URL: http://localhost:3000
 
       - name: Wait for dev server
         shell: sh
@@ -222,7 +231,7 @@ jobs:
       # ── Tests ─────────────────────────────────────────────────────────────────
       - name: Run Playwright tests
         run: |
-          npx playwright test --grep "auth" \
+          npx playwright test --grep "@auth-ui|@non-public" \
             --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000

@@ -85,16 +85,28 @@ export default async function handler(req: Request, res: Response) {
     const {
       api: {
         pages: {
-          detail: { status },
+          detail: { 
+            status,
+            scenario: { topicPageIsPublic }, 
+          },
         },
       },
     } = getSwitchBoardState(req.headers.cookie)
 
     const pageId = Number(req.params.id)
 
-    if (mockedPageMap[pageId]) {
+    const pageMock = mockedPageMap[pageId]
+
+    if (pageMock) {
+      if (pageMock.meta.type === PageType.Topic) {
+        return res.status(status).json({
+          ...pageMock,
+          is_public: topicPageIsPublic,
+        })
+      }
+
       return res.status(status).json({
-        ...mockedPageMap[pageId],
+        ...pageMock,
       })
     }
 

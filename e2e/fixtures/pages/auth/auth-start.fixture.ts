@@ -7,6 +7,7 @@ export class AuthStartPage {
   readonly menuLinkLoggedIn: Locator
   readonly menuLinkLoggedOut: Locator
   readonly signOutButton: Locator
+  readonly logoutBanner: Locator
 
   constructor(page: Page, authEnabled: boolean, authUserName: string) {
     this.page = page
@@ -23,6 +24,7 @@ export class AuthStartPage {
       expanded: false,
     })
     this.signOutButton = this.page.getByRole('navigation', { name: 'Menu' }).getByRole('button', { name: 'Sign out' })
+    this.logoutBanner = this.page.locator('.govuk-notification-banner--success')
   }
 
   async goto() {
@@ -69,11 +71,11 @@ export class AuthStartPage {
   }
 
   async hasLogoutBanner() {
-    await expect(this.page.getByRole('alert')).toHaveCount(1)
+    await expect(this.logoutBanner).toHaveCount(1)
   }
 
   async hasNoLogoutBanner() {
-    await expect(this.page.getByRole('alert')).toHaveCount(0)
+    await expect(this.logoutBanner).toHaveCount(0)
   }
 
   async hasMainHeading() {
@@ -92,12 +94,12 @@ export class AuthStartPage {
     await expect(this.page.locator('main').locator('button[type="submit"]')).toHaveCount(0)
   }
 
-  // async hasClassificationBanner() {
-  //   await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' })).toBeVisible()
-  // }
+  async hasClassificationBanner() {
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
+  }
 
   async checkClassificationBannerContent() {
-    const banner = this.page.locator('div.govuk-classification-banner')
+    const banner = this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()
     await expect(banner).toContainText('Official-Sensitive')
   }
 }
