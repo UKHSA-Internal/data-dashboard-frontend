@@ -13,7 +13,7 @@ import { test } from '../../fixtures/app.fixture'
 //   })
 // })
 
-test.describe('Start page - logged out (normal initial state)', () => {
+test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Shows logged-out state when not logged in', async ({ landingPage, aboutPage, authStartPage, authEnabled }) => {
@@ -64,7 +64,7 @@ test.describe('Start page - logged in', () => {
   })
 })
 
-test.describe('Start page - after logout (post-logout state)', () => {
+test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Does not show regular page content when logout banner is present', async ({ authStartPage, authEnabled }) => {
