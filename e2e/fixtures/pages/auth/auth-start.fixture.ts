@@ -99,7 +99,7 @@ export class AuthStartPage {
   }
 
   async checkClassificationBannerContent() {
-    const banner = this.page.locator('div.govuk-classification-banner')
+    const banner = this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()
     await expect(banner).toContainText('Official-Sensitive')
   }
 }
