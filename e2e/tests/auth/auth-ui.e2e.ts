@@ -1,4 +1,4 @@
-import { expect, test } from '../../fixtures/app.fixture'
+import { test } from '../../fixtures/app.fixture'
 
 // test.describe('Start page - when auth is disabled', () => {
 //   if (process.env.AUTH_ENABLED !== 'false') {
