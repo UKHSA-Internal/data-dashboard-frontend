@@ -3,7 +3,7 @@ import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
 import { Chart, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
-import { getFilteredChartResponseData, getTimespanFromChartData } from '@/app/utils/chart.utils'
+import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
 import { act, render, screen, waitFor } from '@/config/test-utils'
 
 import ChartWithFilter from './ChartWithFilter'
@@ -93,6 +93,7 @@ const mockGetTimespanFromChartData = getTimespanFromChartData as jest.MockedFunc
 const mockGetFilteredChartResponseData = getFilteredChartResponseData as jest.MockedFunction<
   typeof getFilteredChartResponseData
 >
+const mockIsTimeseriesChartData = isTimeseriesChartData as jest.MockedFunction<typeof isTimeseriesChartData>
 
 describe('ChartWithFilter', () => {
   const mockFigure: ChartFigure = {
@@ -136,6 +137,7 @@ describe('ChartWithFilter', () => {
     setTimeseriesInitialFilterForTests('all')
 
     // Default mocks
+    mockIsTimeseriesChartData.mockReturnValue(true)
     mockGetTimespanFromChartData.mockReturnValue({ years: 1, months: 0 })
     mockGetFilteredChartResponseData.mockResolvedValue({
       success: true,
