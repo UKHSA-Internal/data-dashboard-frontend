@@ -10,7 +10,7 @@ jest.mock('@/config/constants', () => ({
 
 const { logoutThresholdMinutes, logoutWarningThresholdMinutes } = jest.requireMock('@/config/constants')
 
-//  Same as above, but in micro seconds
+//  Same as above, but in milliseconds
 const WARNING_COUNTDOWN = logoutWarningThresholdMinutes * 60 * 1000
 const IDLE_BEFORE_WARNING = (logoutThresholdMinutes - logoutWarningThresholdMinutes) * 60 * 1000
 const HALF_IDLE_BEFORE_WARNING = IDLE_BEFORE_WARNING / 2
@@ -219,11 +219,11 @@ describe('LogoutWarning', () => {
     // jest.setSystemTime moves Date.now() forward WITHOUT firing any timers,
     // just like a real browser suspending JavaScript in a hidden tab.
     // The visibilitychange then simulates the user returning.
-    const switchAwayFromTabThenReturn = (awayInMicroSeconds: number) => {
+    const switchAwayFromTabThenReturn = (awayInMilliseconds: number) => {
       Object.defineProperty(document, 'hidden', { value: true, configurable: true })
-      jest.setSystemTime(Date.now() + awayInMicroSeconds)
+      jest.setSystemTime(Date.now() + awayInMilliseconds)
       Object.defineProperty(document, 'hidden', { value: false, configurable: true })
-      window.dispatchEvent(new Event('visibilitychange'))
+      document.dispatchEvent(new Event('visibilitychange'))
     }
 
     test('snaps countdown back to real remaining time in the warning modal when returning to the tab', () => {

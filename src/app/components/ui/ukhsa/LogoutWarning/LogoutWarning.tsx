@@ -36,20 +36,28 @@ export default function LogoutWarning({
     serverSignOut('/logged-out')
   }, [clearTimers])
 
-  const startCountdown = useCallback(() => {
-    if (countdownInterval.current) clearInterval(countdownInterval.current)
+  /**
+   * Show logout warning modal with countdown minutes.
+   *
+   * @param logoutAt (optional): Allows to pass a backdated
+   * deadline, so the countdown reflects real remaining time.
+   */
+  const startCountdown = useCallback(
+    (logoutAt = Date.now() + warningMinutes * 60 * 1000) => {
+      if (countdownInterval.current) clearInterval(countdownInterval.current)
 
-    logoutAtRef.current = Date.now() + warningMinutes * 60 * 1000
+      logoutAtRef.current = logoutAt
+      setSecondsLeft(Math.ceil((logoutAt - Date.now()) / 1000))
+      setVisible(true)
+      visibleRef.current = true
 
-    setSecondsLeft(warningMinutes * 60)
-    setVisible(true)
-    visibleRef.current = true
-
-    countdownInterval.current = setInterval(() => {
-      const remaining = Math.max(0, Math.ceil((logoutAtRef.current - Date.now()) / 1000))
-      remaining === 0 ? triggerLogout() : setSecondsLeft(remaining)
-    }, 1000)
-  }, [warningMinutes, triggerLogout])
+      countdownInterval.current = setInterval(() => {
+        const remaining = Math.max(0, Math.ceil((logoutAtRef.current - Date.now()) / 1000))
+        remaining === 0 ? triggerLogout() : setSecondsLeft(remaining)
+      }, 1000)
+    },
+    [warningMinutes, triggerLogout]
+  )
 
   const scheduleWarning = useCallback(() => {
     if (inactivityTimer.current) clearTimeout(inactivityTimer.current)
@@ -89,16 +97,17 @@ export default function LogoutWarning({
           triggerLogout()
         } else if (idleSeconds >= (timeoutMinutes - warningMinutes) * 60) {
           // Idle past the warning threshold but not the full logout threshold, then show modal.
-          startCountdown()
+          // Pass the backdated deadline so the countdown reflects the real remaining time.
+          startCountdown(lastActivity + timeoutMinutes * 60 * 1000)
         }
       }
     }
 
-    window.addEventListener('visibilitychange', onVisibilityChange)
+    document.addEventListener('visibilitychange', onVisibilityChange)
 
     return () => {
       events.forEach((e) => window.removeEventListener(e, resetInactivityTimer))
-      window.removeEventListener('visibilitychange', onVisibilityChange)
+      document.removeEventListener('visibilitychange', onVisibilityChange)
       clearTimers()
     }
   }, [
