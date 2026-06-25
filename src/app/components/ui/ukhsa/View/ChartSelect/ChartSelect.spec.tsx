@@ -35,14 +35,54 @@ describe('ChartSelect Component', () => {
       expect(result).toEqual(['1 Month', '3 Months', '6 Months', 'All'])
     })
 
+    test('3 years responds with 3-4y response', () => {
+      const result = getSelectOptions({ years: 3, months: 0 })
+      expect(result).toEqual(['3 Months', '6 Months', '1 Year', '2 Years', 'All'])
+    })
+
+    test('4 years responds with 4-5y response', () => {
+      const result = getSelectOptions({ years: 4, months: 0 })
+      expect(result).toEqual(['6 Months', '1 Year', '2 Years', '3 Years', 'All'])
+    })
+
+    test('5 years responds with 5-6y response', () => {
+      const result = getSelectOptions({ years: 5, months: 0 })
+      expect(result).toEqual(['6 Months', '1 Year', '2 Years', '3 Years', '4 Years', 'All'])
+    })
+
     test('8 years responds with 6-10y response', () => {
       const result = getSelectOptions({ years: 8, months: 0 })
       expect(result).toEqual(['1 Year', '2 Years', '3 Years', '4 Years', '5 Years', 'All'])
     })
 
+    test('12 years responds with 10-15y response', () => {
+      const result = getSelectOptions({ years: 12, months: 0 })
+      expect(result).toEqual(['1 Year', '2 Years', '3 Years', '5 Years', '7 Years', 'All'])
+    })
+
+    test('16 years responds with 15-20y response', () => {
+      const result = getSelectOptions({ years: 16, months: 0 })
+      expect(result).toEqual(['1 Year', '2 Years', '5 Years', '10 Years', 'All'])
+    })
+
     test('22 years responds with 20-25y response', () => {
       const result = getSelectOptions({ years: 22, months: 0 })
       expect(result).toEqual(['1 Year', '2 Years', '5 Years', '10 Years', '15 Years', 'All'])
+    })
+
+    test('27 years responds with 25-30y response', () => {
+      const result = getSelectOptions({ years: 27, months: 0 })
+      expect(result).toEqual(['1 Year', '2 Years', '10 Years', '15 Years', '20 Years', 'All'])
+    })
+
+    test('32 years responds with 30-35y response', () => {
+      const result = getSelectOptions({ years: 32, months: 0 })
+      expect(result).toEqual(['1 Year', '2 Years', '10 Years', '15 Years', '20 Years', 'All'])
+    })
+
+    test('40 years or more falls back to ["All"]', () => {
+      const result = getSelectOptions({ years: 40, months: 0 })
+      expect(result).toEqual(['All'])
     })
   })
 
@@ -94,11 +134,18 @@ describe('ChartSelect Component', () => {
   })
 
   describe('Initial State', () => {
-    test('initializes with "all" selected by default', () => {
+    test('initializes with "all" selected when timespan is 1 year or less', () => {
       renderWithProvider(<ChartSelect timespan={{ years: 1, months: 0 }} />)
 
       const select = screen.getByRole('combobox') as HTMLSelectElement
       expect(select.value).toBe('all')
+    })
+
+    test('initializes with "1-year" selected when timespan is more than 1 year', () => {
+      renderWithProvider(<ChartSelect timespan={{ years: 2, months: 0 }} />)
+
+      const select = screen.getByRole('combobox') as HTMLSelectElement
+      expect(select.value).toBe('1-year')
     })
 
     test('displays correct option values based on timespan', () => {

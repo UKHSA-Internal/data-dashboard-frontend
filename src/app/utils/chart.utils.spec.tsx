@@ -4,12 +4,17 @@ import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryChar
 
 import { ChartSizes } from '../components/ui/ukhsa/Chart/Chart'
 import {
+  dualCategoryChartToDownloadChart,
   getChartResponseData,
   getChartSvg,
   getDualCategoryChartsResponseData,
+  getDualCategoryChartTimespan,
+  getFilteredChartResponseData,
+  getFilteredDualCategoryData,
   getFilteredSingleCategoryData,
   getSingleCategoryChartsResponseData,
   getSingleCategoryChartTimespan,
+  getTimespanFromChartData,
   isTimeseriesChartData,
   parseDualCategoryTableData,
 } from './chart.utils'
@@ -669,6 +674,230 @@ describe('parseDualCategoryTableData', () => {
   })
 })
 
+describe('getDualCategoryChartTimespan', () => {
+  const mockLastUpdated = '2025-05-21'
+
+  const baseDualCategoryData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+      date_from: '2023-01-01',
+      date_to: '2025-01-01',
+    },
+    primary_field_values: ['a'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+  } as DualCategoryChartCardValue
+
+  test('returns zero when date_from is missing', () => {
+    const data = { ...baseDualCategoryData, static_fields: { ...baseDualCategoryData.static_fields, date_from: null } }
+    expect(getDualCategoryChartTimespan(data, mockLastUpdated)).toEqual({ years: 0, months: 0 })
+  })
+
+  test('calculates timespan using date_to when it is before lastUpdated', () => {
+    const result = getDualCategoryChartTimespan(baseDualCategoryData, mockLastUpdated)
+    expect(result).toEqual({ years: 2, months: 0 })
+  })
+
+  test('uses lastUpdated when date_to is after lastUpdated', () => {
+    const data = {
+      ...baseDualCategoryData,
+      static_fields: { ...baseDualCategoryData.static_fields, date_to: '2030-01-01' },
+    }
+    const result = getDualCategoryChartTimespan(data, mockLastUpdated)
+    expect(result).toEqual({ years: 2, months: 4 })
+  })
+
+  test('uses lastUpdated when date_to is null', () => {
+    const data = {
+      ...baseDualCategoryData,
+      static_fields: { ...baseDualCategoryData.static_fields, date_to: null },
+    }
+    const result = getDualCategoryChartTimespan(data, mockLastUpdated)
+    expect(result).toEqual({ years: 2, months: 4 })
+  })
+})
+
+describe('getFilteredDualCategoryData', () => {
+  const mockLastUpdated = '2025-05-21'
+
+  const baseData = {
+    chart_type: 'stacked_bar',
+    title: 'Test',
+    body: '',
+    about: '',
+    tag_manager_event_id: null,
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+      date_from: '2023-01-01',
+      date_to: '2025-01-01',
+    },
+    primary_field_values: ['a'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+  } as DualCategoryChartCardValue
+
+  test('restores original dates when filter is "all"', () => {
+    const result = getFilteredDualCategoryData(baseData, 'all', mockLastUpdated)
+    expect(result.static_fields.date_from).toBe('2023-01-01')
+    expect(result.static_fields.date_to).toBe('2025-01-01')
+  })
+
+  test('restores original dates when filter is empty string', () => {
+    const result = getFilteredDualCategoryData(baseData, '', mockLastUpdated)
+    expect(result.static_fields.date_from).toBe('2023-01-01')
+    expect(result.static_fields.date_to).toBe('2025-01-01')
+  })
+
+  test('applies filter by updating date_from', () => {
+    const result = getFilteredDualCategoryData(baseData, '6-months', mockLastUpdated)
+    expect(result.static_fields.date_from).toBe('2024-07-01')
+    expect(result.static_fields.date_to).toBe('2025-01-01')
+  })
+
+  test('uses lastUpdated as date_to when static_fields.date_to is null', () => {
+    const data = { ...baseData, static_fields: { ...baseData.static_fields, date_to: null } }
+    const result = getFilteredDualCategoryData(data, 'all', mockLastUpdated)
+    expect(result.static_fields.date_to).toBe('2025-05-21')
+  })
+
+  test('uses lastUpdated when date_to is after lastUpdated', () => {
+    const data = { ...baseData, static_fields: { ...baseData.static_fields, date_to: '2030-01-01' } }
+    const result = getFilteredDualCategoryData(data, '6-months', mockLastUpdated)
+    expect(result.static_fields.date_from).toBe('2024-11-21')
+    expect(result.static_fields.date_to).toBe('2030-01-01')
+  })
+
+  test('preserves all other data fields unchanged', () => {
+    const result = getFilteredDualCategoryData(baseData, '3-months', mockLastUpdated)
+    expect(result.chart_type).toBe(baseData.chart_type)
+    expect(result.primary_field_values).toEqual(baseData.primary_field_values)
+    expect(result.segments).toEqual(baseData.segments)
+  })
+})
+
+describe('getFilteredChartResponseData', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+    getChartsMock.mockResolvedValue(mockChartResponse)
+    getDualCategoryChartsMock.mockResolvedValue(mockChartResponse)
+  })
+
+  const singleCategoryData = {
+    title: 'Test',
+    tag_manager_event_id: null,
+    x_axis: 'date',
+    y_axis: 'metric',
+    chart: [
+      {
+        id: 'chart1',
+        type: 'plot' as const,
+        value: {
+          topic: 'COVID-19',
+          metric: 'cases',
+          chart_type: 'line',
+          date_from: '2023-01-01',
+          date_to: '2024-01-01',
+        },
+      },
+    ],
+  } as SingleCategoryChartCardValue
+
+  const dualCategoryData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+      date_from: '2023-01-01',
+      date_to: '2025-01-01',
+    },
+    primary_field_values: ['a'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+  } as DualCategoryChartCardValue
+
+  test('calls getDualCategoryCharts for dual category data', async () => {
+    await getFilteredChartResponseData(dualCategoryData, '6-months', '2025-05-21')
+    expect(getDualCategoryChartsMock).toHaveBeenCalledTimes(1)
+    expect(getChartsMock).not.toHaveBeenCalled()
+  })
+
+  test('calls getCharts for single category data', async () => {
+    await getFilteredChartResponseData(singleCategoryData, '6-months', '2025-05-21')
+    expect(getChartsMock).toHaveBeenCalledTimes(1)
+    expect(getDualCategoryChartsMock).not.toHaveBeenCalled()
+  })
+
+  test('uses single category charts for single category data with applied filter', async () => {
+    await getFilteredChartResponseData(singleCategoryData, '6-months', '2025-05-21')
+    expect(getChartsMock).toHaveBeenCalledTimes(1)
+    expect(getChartsMock).toHaveBeenCalledWith(expect.objectContaining({ plots: expect.any(Array) }))
+  })
+})
+
+describe('getTimespanFromChartData', () => {
+  const mockLastUpdated = '2025-05-21'
+
+  const dualCategoryData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      date_from: '2023-01-01',
+      date_to: '2025-01-01',
+    },
+    primary_field_values: ['a'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+  } as DualCategoryChartCardValue
+
+  const singleCategoryData = {
+    title: 'Test',
+    tag_manager_event_id: null,
+    x_axis: 'date',
+    y_axis: 'metric',
+    chart: [
+      {
+        id: 'chart1',
+        type: 'plot' as const,
+        value: {
+          topic: 'COVID-19',
+          metric: 'cases',
+          chart_type: 'line',
+          date_from: '2023-01-01',
+          date_to: '2025-01-01',
+        },
+      },
+    ],
+  } as SingleCategoryChartCardValue
+
+  test('delegates to getDualCategoryChartTimespan for dual category data', () => {
+    const result = getTimespanFromChartData(dualCategoryData, mockLastUpdated)
+    expect(result).toEqual({ years: 2, months: 0 })
+  })
+
+  test('delegates to getSingleCategoryChartTimespan for single category data', () => {
+    const result = getTimespanFromChartData(singleCategoryData, mockLastUpdated)
+    expect(result).toEqual({ years: 2, months: 0 })
+  })
+})
+
 describe('isTimeseriesChartData', () => {
   const baseDualCategoryData = {
     chart_type: 'stacked_bar',
@@ -720,5 +949,42 @@ describe('isTimeseriesChartData', () => {
       const data = { ...baseSingleCategoryData, x_axis: 'stratum' } as SingleCategoryChartCardValue
       expect(isTimeseriesChartData(data)).toBe(true)
     })
+  })
+})
+
+describe('dualCategoryChartToDownloadChart', () => {
+  const mockData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+      stratum: 'default',
+      sex: null,
+      age: 'all',
+      date_from: '2023-01-01',
+      date_to: '2025-01-01',
+    },
+    primary_field_values: ['a'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    x_axis: 'date',
+    y_axis: 'metric',
+  } as DualCategoryChartCardValue
+
+  test('converts dual category data to a single-plot chart array', () => {
+    const result = dualCategoryChartToDownloadChart(mockData)
+
+    expect(result).toHaveLength(1)
+    expect(result[0].id).toBe('dual-category')
+    expect(result[0].type).toBe('plot')
+    expect(result[0].value.topic).toBe('COVID-19')
+    expect(result[0].value.metric).toBe('COVID-19_cases_casesByDay')
+    expect(result[0].value.chart_type).toBe('stacked_bar')
+    expect(result[0].value.geography).toBe('England')
+    expect(result[0].value.geography_type).toBe('Nation')
+    expect(result[0].value.date_from).toBe('2023-01-01')
+    expect(result[0].value.date_to).toBe('2025-01-01')
   })
 })

@@ -1,6 +1,8 @@
 import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 import { ComponentProps, ReactElement } from 'react'
 
+import { DualCategoryChartCardValue } from '@/api/models/cms/Page'
+import { getDualCategoryTables } from '@/api/requests/tables/getDualCategoryTables'
 import { getTables } from '@/api/requests/tables/getTables'
 import { getSearchParams } from '@/app/hooks/getSearchParams'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
@@ -11,6 +13,12 @@ import { Download } from './Download'
 // Mock table api
 jest.mock('@/api/requests/tables/getTables')
 const getTableMock = jest.mocked(getTables)
+
+jest.mock('@/api/requests/tables/getDualCategoryTables')
+jest.mock('@/app/components/ui/ukhsa/Download/DualCategoryDownloadForm', () => ({
+  DualCategoryDownloadForm: () => <div data-testid="dual-category-download-form">Dual Category Download</div>,
+}))
+jest.mock('@/app/hooks/getAreaSelector', () => ({ getAreaSelector: jest.fn(() => Promise.resolve([null, null])) }))
 
 // Mock the url utils
 const defaultUrl = new URL('http://localhost')
@@ -123,4 +131,52 @@ test('Fallback message with escaped characters', async () => {
   const { getByText } = render((await Download(props)) as ReactElement)
 
   expect(getByText("No data available in Birmingham Women's and Children's NHS Foundation Trust")).toBeInTheDocument()
+})
+
+describe('Dual category download', () => {
+  const getDualCategoryTablesMock = jest.mocked(getDualCategoryTables)
+
+  const dualCategoryProps: ComponentProps<typeof Download> = {
+    data: {
+      title: 'Dual Category Chart',
+      body: 'Chart body',
+      about: '',
+      tag_manager_event_id: null,
+      x_axis: 'date',
+      y_axis: 'metric',
+      chart_type: 'stacked_bar',
+      static_fields: {
+        topic: 'COVID-19',
+        metric: 'COVID-19_cases_casesByDay',
+        geography_type: 'Nation',
+        geography: 'England',
+      },
+      primary_field_values: ['2024-01-01'],
+      secondary_category: 'age',
+      segments: [
+        { type: 'segment', id: 'seg-1', value: { secondary_field_value: '0-4', colour: 'COLOUR_1_DARK_BLUE' } },
+      ],
+    } as DualCategoryChartCardValue,
+    isPublic: false,
+  }
+
+  test('renders DualCategoryDownloadForm for dual category data', async () => {
+    getDualCategoryTablesMock.mockResolvedValueOnce({
+      success: true,
+      data: [{ reference: '2024-01-01', values: [{ label: '0-4', value: 10, in_reporting_delay_period: false }] }],
+    })
+
+    const { getByTestId } = render((await Download(dualCategoryProps)) as ReactElement)
+
+    expect(getByTestId('dual-category-download-form')).toBeInTheDocument()
+  })
+
+  test('renders fallback when dual category table request fails', async () => {
+    getDualCategoryTablesMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
+
+    const { queryByTestId, getByRole } = render((await Download(dualCategoryProps)) as ReactElement)
+
+    expect(queryByTestId('dual-category-download-form')).not.toBeInTheDocument()
+    expect(getByRole('link', { name: 'Reset' })).toBeInTheDocument()
+  })
 })
