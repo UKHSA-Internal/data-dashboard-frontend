@@ -10,6 +10,7 @@ Welcome to the UKHSA Data Dashboard Frontend. This project is built with [Next.j
   - [Getting Started](#getting-started)
     - [Initial Setup](#initial-setup)
     - [Local Development](#local-development)
+    - [Playwright Tests](playwright-tests)
   - [Deployment](#deployment)
   - [Styling](#styling)
   - [Environments](#environments)
@@ -69,16 +70,26 @@ This should install the necessary packages on your system and will inform you if
 
 #### Running the Playwright Tests
 
-There are two sets of Playwright tests each of which targets a specific task and server.
-There are general tests which you should run against a dev instance of the frontend using either the mock server or a
-dev backend instance, and then there are smoke tests which should be run against WKEs like production.
+There are several sets of the Playwright tests, each of which tragets a specific task and server.
+General tests should be run against a development instance of the frontend using either the mock server or a dev backend
+instance. Smoke tests should be run against WKEs like production. Auth UI and non-public tests should be run against an
+auth-enabled local or deploted environment.
 
 Which server to target is specified using the `baseURL` environment variable.
 You can specify this in your `.env.local` file which is read in the [Playwright config file](playwright.config.ts), or
 you can specify it directly as an environment variable before you run Playwright (e.g. `export baseURL=http://a.b.c`).
 The Playwright configuration will default this `baseURL` to `http://localhost:3000` if not specified.
 
-Which tests are run is easiest controlled using the `--grep` argument passed to `playwright`, this is shown below.
+when running against a local frontend, start the app first:
+
+```bash
+npm run dev
+```
+
+The default Playwright config runs tests against Chromium desktop and Mobile chrome. The desktop project excludes
+`@mobileOnly` and `@tabletOnly` tests, while the Mobile Chrome project excludes `@desktopOnly` tests.
+
+Which tests are run is easiest controlled using the `--grep` or `--grep-invert` argument passed to `playwright`
 
 ##### Running the general tests
 
@@ -90,6 +101,8 @@ npx playwright test --grep-invert @smoke
 npm run test:e2e
 ```
 
+`npm run test:e2e` opens Playwright UI mode. Use `npm run tests:e2e:ci` to run the same non-smoke tests headlessly.
+
 ##### Running the smoke tests
 
 Target `baseURL` at a WKE's URL and then run:
@@ -99,6 +112,45 @@ npx playwright test --grep @smoke
 # or
 npm run test:e2e:smoke
 ```
+
+Use `npm run test:e2e:smoke:ui` to run smoke tests in Playwright UI mode.
+
+### Running auth and non-public tests
+
+Tests tagged `@auth-ui` and `@non-public` only run meaningful assertions when `AUTH_ENABLED=true`. These tests use a
+mocked auth session, so they so not require real Platwright user credentials, but they so require auth environment
+variables needed to create the session cookie:
+
+```bash
+AUTH_ENABLED=true
+AUTH_SECRET=<random-secret>
+NEXTAUTH_URL=http://localhost:3000
+PLAYWRIGHT_AUTH_USER_USERNAME="Test User"
+```
+
+`PLAYWRIGHT_AUTH_USER_USERNAE` is optional and defaults to `Test User`.
+
+To run only the auth UI tests:
+
+```bash
+npx playwright test --grep @auth-ui
+```
+
+To run only the non-public tests:
+
+```bash
+npx playwright test --grep @non-public
+```
+
+#### Test tags
+
+- `@smoke`: post-deployment smoke tests, usually run against a WKE such as production.
+- `@auth-ui`: auth start, logged in, logged-out and classification banner in UI tests.
+- `@non-public`: non-public page and sitemap tests. requires `AUTH_ENABLED=true`.
+- `@desktopOnly`: excluded from the Mobile Chrome project.
+- `@mobileOnly`: excluded from the desktop Chromium project.
+- `@tabletOnly`: excluded from the desktop Chromium project. These tests use tablet viewport settings inside the test
+suite and surrently run under the Mobile Chrome project.
 
 ## Deployment
 
