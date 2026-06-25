@@ -32,6 +32,7 @@ import subplotCharts from './handlers/charts/subplot/v1'
 import charts from './handlers/charts/v3'
 import pages from './handlers/cms/pages'
 import page from './handlers/cms/pages/[id]'
+import dualCategoryDownloads from './handlers/downloads/dual-category/v1'
 import subplotDownloads from './handlers/downloads/subplot/v1'
 import downloads from './handlers/downloads/v2'
 import flags from './handlers/flags/client/features'
@@ -76,6 +77,7 @@ app.post('/api/tables/v4', tables)
 app.post('/api/tables/dual-category/v1', dualCategoryTables)
 app.post('/api/tables/subplot/v1', subplotTables)
 app.post('/api/downloads/v2', downloads)
+app.post('/api/downloads/dual-category/v1', dualCategoryDownloads)
 app.post('/api/downloads/subplot/v1', subplotDownloads)
 app.post('/api/maps/v1', maps)
 

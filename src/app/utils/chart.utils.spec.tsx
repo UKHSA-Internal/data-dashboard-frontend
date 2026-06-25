@@ -1,4 +1,4 @@
-import { DualCategoryChartCardValue, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
+import { ChartComponentData, DualCategoryChartCardValue, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
 
@@ -10,6 +10,7 @@ import {
   getFilteredSingleCategoryData,
   getSingleCategoryChartsResponseData,
   getSingleCategoryChartTimespan,
+  isTimeseriesChartData,
   parseDualCategoryTableData,
 } from './chart.utils'
 
@@ -665,5 +666,59 @@ describe('parseDualCategoryTableData', () => {
 
     expect(groups).toHaveLength(1)
     expect(groups[0].columns[1].header).toBe('0-4')
+  })
+})
+
+describe('isTimeseriesChartData', () => {
+  const baseDualCategoryData = {
+    chart_type: 'stacked_bar',
+    static_fields: {
+      topic: 'COVID-19',
+      metric: 'COVID-19_cases_casesByDay',
+      geography_type: 'Nation',
+      geography: 'England',
+    },
+    primary_field_values: ['a', 'b'],
+    secondary_category: 'age',
+    segments: [{ value: { secondary_field_value: '0-4' } }],
+    y_axis: 'metric',
+    x_axis: 'date',
+  } as DualCategoryChartCardValue
+
+  const baseSingleCategoryData = {
+    title: 'Test',
+    tag_manager_event_id: null,
+    x_axis: 'date',
+    y_axis: 'metric',
+    show_timeseries_filter: true,
+    chart: [],
+  } as unknown as ChartComponentData
+
+  describe('dual category charts', () => {
+    test('returns true when x_axis is "date"', () => {
+      const data = { ...baseDualCategoryData, x_axis: 'date' } as DualCategoryChartCardValue
+      expect(isTimeseriesChartData(data)).toBe(true)
+    })
+
+    test('returns true when x_axis is null', () => {
+      const data = { ...baseDualCategoryData, x_axis: null } as DualCategoryChartCardValue
+      expect(isTimeseriesChartData(data)).toBe(true)
+    })
+
+    test('returns false when x_axis is a non-date field such as "age"', () => {
+      const data = { ...baseDualCategoryData, x_axis: 'age' } as DualCategoryChartCardValue
+      expect(isTimeseriesChartData(data)).toBe(false)
+    })
+  })
+
+  describe('single category charts', () => {
+    test('always returns true regardless of x_axis value', () => {
+      expect(isTimeseriesChartData(baseSingleCategoryData)).toBe(true)
+    })
+
+    test('returns true even when x_axis is a non-date value', () => {
+      const data = { ...baseSingleCategoryData, x_axis: 'stratum' } as SingleCategoryChartCardValue
+      expect(isTimeseriesChartData(data)).toBe(true)
+    })
   })
 })

@@ -194,6 +194,13 @@ export const getFilteredDualCategoryData = (
 export const isDualCategoryChartCardValue = (data: ChartComponentData): data is DualCategoryChartCardValue =>
   'segments' in data && 'static_fields' in data
 
+export const isTimeseriesChartData = (data: ChartComponentData): boolean => {
+  if (isDualCategoryChartCardValue(data)) {
+    return data.x_axis === 'date' || data.x_axis === null
+  }
+  return true
+}
+
 export const getDualCategoryChartsResponseData = async (
   data: DualCategoryChartCardValue,
   selectedSize: ChartSizes[number],

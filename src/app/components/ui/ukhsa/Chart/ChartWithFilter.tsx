@@ -6,7 +6,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 import { ChartFigure } from '@/api/models/Chart'
 import { ChartComponentData } from '@/api/models/cms/Page'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
-import { getFilteredChartResponseData, getTimespanFromChartData } from '@/app/utils/chart.utils'
+import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
 
 import { ChartNoScript } from '../ChartNoScript/ChartNoScript'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
@@ -93,9 +93,11 @@ const ChartWithFilterContent = ({ figure, title, chartData, lastUpdated }: Chart
 
   return (
     <>
-      <div className="hidden js:block">
-        <ChartSelect timespan={getTimespanFromChartData(chartData, lastUpdated)} />
-      </div>
+      {isTimeseriesChartData(chartData) && (
+        <div className="hidden js:block">
+          <ChartSelect timespan={getTimespanFromChartData(chartData, lastUpdated)} />
+        </div>
+      )}
       {hasError ? (
         <ClientInformationCard
           variant="error"
