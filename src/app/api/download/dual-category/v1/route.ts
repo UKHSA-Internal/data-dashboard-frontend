@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { getDualCategoryDownloads, requestSchema } from '@/api/requests/downloads/getDualCategoryDownloads'
+import { dualCategoryRequestSchema, getDownloads } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 
 export async function POST(req: NextRequest) {
@@ -9,7 +9,7 @@ export async function POST(req: NextRequest) {
 
   const body = await req.formData()
 
-  const params = requestSchema.safeParse({
+  const params = dualCategoryRequestSchema.safeParse({
     is_public: body.get('is_public') === 'true',
     file_format: body.get('file_format'),
     ...JSON.parse((body.get('dual_category_data') as string) || '{}'),
@@ -20,7 +20,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
-  const response = await getDualCategoryDownloads(params.data)
+  const response = await getDownloads(params.data)
 
   if (!response) {
     logger.error(`Error while downloading dual category download response: ${response}`)

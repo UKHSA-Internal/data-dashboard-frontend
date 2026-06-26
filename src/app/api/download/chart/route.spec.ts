@@ -4,7 +4,7 @@
 import { NextRequest } from 'next/server'
 import { Mock } from 'ts-mockery'
 
-import { RequestParams } from '@/api/requests/downloads/getDownloads'
+import { SingleCategoryRequestParams } from '@/api/requests/downloads/getDownloads'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 import { downloadsCsvFixture } from '@/mock-server/handlers/downloads/fixtures/downloads-csv'
@@ -13,8 +13,8 @@ import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/
 import { POST } from './route'
 
 interface RequestBody {
-  plots: RequestParams['plots']
-  format: string
+  plots: SingleCategoryRequestParams['plots']
+  file_format: string
 }
 
 const mockPlot: RequestBody['plots'][number] = {
@@ -35,7 +35,7 @@ describe('POST /api/download/chart', () => {
   test('Downloads the requested chart in csv format', async () => {
     const formData = new FormData()
     formData.set('is_public', 'true')
-    formData.set('format', 'csv')
+    formData.set('file_format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
@@ -70,7 +70,7 @@ describe('POST /api/download/chart', () => {
   test('Downloads the requested chart with multiple plots', async () => {
     const formData = new FormData()
     formData.set('is_public', 'true')
-    formData.set('format', 'csv')
+    formData.set('file_format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-1' }))
     formData.append('plots', JSON.stringify({ ...mockPlot, stratum: 'mock-2' }))
@@ -117,7 +117,7 @@ describe('POST /api/download/chart', () => {
   test('Downloads the requested chart in json format', async () => {
     const formData = new FormData()
     formData.set('is_public', 'true')
-    formData.set('format', 'json')
+    formData.set('file_format', 'json')
     formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
@@ -142,7 +142,7 @@ describe('POST /api/download/chart', () => {
 
   test('Returns status 301 when wrong form body is sent', async () => {
     const formData = new FormData()
-    formData.set('format', 'not_valid')
+    formData.set('file_format', 'not_valid')
     formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
@@ -181,7 +181,7 @@ describe('POST /api/download/chart', () => {
 
   test('Returns status 301 when the proxied request fails', async () => {
     const formData = new FormData()
-    formData.set('format', 'csv')
+    formData.set('file_format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
 
     const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({
@@ -206,7 +206,7 @@ describe('POST /api/download/chart', () => {
   test('Downloads the requested chart with confidence_intervals set to true', async () => {
     const formData = new FormData()
     formData.set('is_public', 'true')
-    formData.set('format', 'csv')
+    formData.set('file_format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     formData.set('confidence_intervals', 'true')
 
@@ -242,7 +242,7 @@ describe('POST /api/download/chart', () => {
   test('Downloads the requested chart with confidence_intervals set to false', async () => {
     const formData = new FormData()
     formData.set('is_public', 'true')
-    formData.set('format', 'csv')
+    formData.set('file_format', 'csv')
     formData.set('plots', JSON.stringify(mockPlot))
     formData.set('confidence_intervals', 'false')
 
@@ -280,7 +280,7 @@ test('returns status 301 when the formData is not a string', async () => {
   const fileExample = new Blob()
 
   const formData = new FormData()
-  formData.set('format', 'csv')
+  formData.set('file_format', 'csv')
   formData.set('plots', fileExample)
 
   const req = Mock.of<NextRequest & { url: string; formData: () => FormData }>({

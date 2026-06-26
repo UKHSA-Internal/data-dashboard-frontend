@@ -24,16 +24,14 @@ export async function POST(req: NextRequest) {
 
   const params = requestSchema.safeParse({
     is_public: body.get('is_public') === 'true',
-    file_format: body.get('format'),
+    file_format: body.get('file_format'),
     x_axis: body.get('x_axis'),
     confidence_intervals: confidenceIntervals,
     plots,
   })
 
   if (params.success) {
-    const { is_public, plots, file_format: fileFormat, x_axis, confidence_intervals } = params.data
-
-    const response = await getDownloads(is_public, plots, fileFormat, x_axis, confidence_intervals)
+    const response = await getDownloads(params.data)
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')

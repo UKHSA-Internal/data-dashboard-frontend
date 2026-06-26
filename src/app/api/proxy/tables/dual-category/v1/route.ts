@@ -1,9 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server'
 
-import { getDualCategoryTables, RequestParams } from '@/api/requests/tables/getDualCategoryTables'
+import { DualCategoryRequestParams, getTables } from '@/api/requests/tables/getTables'
 
 export async function POST(req: NextRequest) {
-  const body: RequestParams = await req.json()
+  const body: DualCategoryRequestParams = await req.json()
 
   if (!body) {
     return new NextResponse('Missing request body', {
@@ -11,7 +11,7 @@ export async function POST(req: NextRequest) {
     })
   }
 
-  const proxiedResponse = await getDualCategoryTables(body)
+  const proxiedResponse = await getTables(body)
 
   if (proxiedResponse.data) {
     return NextResponse.json(proxiedResponse.data)

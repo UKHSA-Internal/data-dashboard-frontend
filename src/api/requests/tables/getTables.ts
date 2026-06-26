@@ -1,12 +1,24 @@
 import { z } from 'zod'
 
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
-import { ChartTypes } from '@/api/models/Chart'
+import { ChartLineColours, ChartTypes } from '@/api/models/Chart'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
 
-export const requestSchema = z.object({
+const dualCategoryStaticFieldsSchema = z.object({
+  topic: Topics,
+  metric: Metrics,
+  geography: Geography.optional(),
+  geography_type: GeographyType.optional(),
+  sex: z.string().nullable().optional(),
+  age: z.string().nullable().optional(),
+  stratum: z.string().optional(),
+  date_from: z.string().nullable().optional(),
+  date_to: z.string().nullable().optional(),
+})
+
+export const singleCategoryRequestSchema = z.object({
   x_axis: z.string().nullable().optional(),
   y_axis: z.string().nullable().optional(),
   plots: z.array(
@@ -24,6 +36,24 @@ export const requestSchema = z.object({
   ),
 })
 
+export const dualCategoryRequestSchema = z.object({
+  x_axis: z.string().nullable().optional(),
+  y_axis: z.string().nullable().optional(),
+  chart_type: ChartTypes,
+  static_fields: dualCategoryStaticFieldsSchema,
+  primary_field_values: z.array(z.string()),
+  secondary_category: z.string(),
+  segments: z.array(
+    z.object({
+      secondary_field_value: z.string(),
+      colour: ChartLineColours,
+      label: z.string().nullable().optional(),
+    })
+  ),
+})
+
+export const requestSchema = singleCategoryRequestSchema
+
 export const responseSchema = z.array(
   z.object({
     reference: z.string(),
@@ -39,12 +69,22 @@ export const responseSchema = z.array(
   })
 )
 
-export type RequestParams = z.infer<typeof requestSchema>
+export type SingleCategoryRequestParams = z.infer<typeof singleCategoryRequestSchema>
+export type DualCategoryRequestParams = z.infer<typeof dualCategoryRequestSchema>
+export type RequestParams = SingleCategoryRequestParams | DualCategoryRequestParams
 export type Response = z.infer<typeof responseSchema>
 
 export const getTables = async (body: RequestParams) => {
   try {
-    const path = isSSR ? `tables/v4` : `proxy/tables/v4`
+    const isDual = 'static_fields' in body
+    const path = isDual
+      ? isSSR
+        ? `tables/dual-category/v1`
+        : `proxy/tables/dual-category/v1`
+      : isSSR
+        ? `tables/v4`
+        : `proxy/tables/v4`
+
     const { data } = await client<Response>(path, { body })
     const result = responseSchema.safeParse(data)
     if (result.success) {

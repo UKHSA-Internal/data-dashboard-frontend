@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { requestSchema } from '@/api/requests/tables/getDualCategoryTables'
+import { dualCategoryRequestSchema } from '@/api/requests/tables/getTables'
 import { logger } from '@/lib/logger'
 
 import { dualCategoryTableValues } from '../fixtures/dual-category'
@@ -13,7 +13,7 @@ export default async function handler(req: Request, res: Response) {
     }
 
     // Validate request body
-    const parsedRequestBody = requestSchema.safeParse(req.body)
+    const parsedRequestBody = dualCategoryRequestSchema.safeParse(req.body)
 
     // Return a 500 if the request body provided aren't valid
     if (!parsedRequestBody.success) {

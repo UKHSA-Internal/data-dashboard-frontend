@@ -2,7 +2,6 @@ import { ReadonlyURLSearchParams, useSearchParams } from 'next/navigation'
 import { ComponentProps, ReactElement } from 'react'
 
 import { DualCategoryChartCardValue } from '@/api/models/cms/Page'
-import { getDualCategoryTables } from '@/api/requests/tables/getDualCategoryTables'
 import { getTables } from '@/api/requests/tables/getTables'
 import { getSearchParams } from '@/app/hooks/getSearchParams'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
@@ -14,10 +13,6 @@ import { Download } from './Download'
 jest.mock('@/api/requests/tables/getTables')
 const getTableMock = jest.mocked(getTables)
 
-jest.mock('@/api/requests/tables/getDualCategoryTables')
-jest.mock('@/app/components/ui/ukhsa/Download/DualCategoryDownloadForm', () => ({
-  DualCategoryDownloadForm: () => <div data-testid="dual-category-download-form">Dual Category Download</div>,
-}))
 jest.mock('@/app/hooks/getAreaSelector', () => ({ getAreaSelector: jest.fn(() => Promise.resolve([null, null])) }))
 
 // Mock the url utils
@@ -134,8 +129,6 @@ test('Fallback message with escaped characters', async () => {
 })
 
 describe('Dual category download', () => {
-  const getDualCategoryTablesMock = jest.mocked(getDualCategoryTables)
-
   const dualCategoryProps: ComponentProps<typeof Download> = {
     data: {
       title: 'Dual Category Chart',
@@ -160,23 +153,23 @@ describe('Dual category download', () => {
     isPublic: false,
   }
 
-  test('renders DualCategoryDownloadForm for dual category data', async () => {
-    getDualCategoryTablesMock.mockResolvedValueOnce({
+  test('renders DownloadForm for dual category data', async () => {
+    getTableMock.mockResolvedValueOnce({
       success: true,
       data: [{ reference: '2024-01-01', values: [{ label: '0-4', value: 10, in_reporting_delay_period: false }] }],
     })
 
     const { getByTestId } = render((await Download(dualCategoryProps)) as ReactElement)
 
-    expect(getByTestId('dual-category-download-form')).toBeInTheDocument()
+    expect(getByTestId('download-form')).toBeInTheDocument()
   })
 
   test('renders fallback when dual category table request fails', async () => {
-    getDualCategoryTablesMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
+    getTableMock.mockResolvedValueOnce({ success: false, error: expect.any(Object) })
 
     const { queryByTestId, getByRole } = render((await Download(dualCategoryProps)) as ReactElement)
 
-    expect(queryByTestId('dual-category-download-form')).not.toBeInTheDocument()
+    expect(queryByTestId('download-form')).not.toBeInTheDocument()
     expect(getByRole('link', { name: 'Reset' })).toBeInTheDocument()
   })
 })

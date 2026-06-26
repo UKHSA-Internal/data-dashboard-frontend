@@ -5,15 +5,27 @@ import { useRouter, useSearchParams } from 'next/navigation'
 import { FormEvent, useId, useState } from 'react'
 
 import type { Chart } from '@/api/models/cms/Page'
+import { DualCategoryChartCardValue } from '@/api/models/cms/Page'
 import { useTranslation } from '@/app/i18n/client'
 import { downloadFile } from '@/app/utils/download.utils'
-import { chartExportApiRoutePath } from '@/config/constants'
+import { chartExportApiRoutePath, dualCategoryChartExportApiRoutePath } from '@/config/constants'
 
-interface DownloadFormProps {
+interface SingleCategoryProps {
   chart: Chart
   xAxis?: string | null
-  tagManagerEventId: string | null
   confidenceIntervals?: boolean
+  dualCategoryData?: never
+}
+
+interface DualCategoryProps {
+  chart?: never
+  xAxis?: never
+  confidenceIntervals?: never
+  dualCategoryData: DualCategoryChartCardValue
+}
+
+type DownloadFormProps = (SingleCategoryProps | DualCategoryProps) & {
+  tagManagerEventId: string | null
   isPublic?: boolean
   authEnabled?: boolean
 }
@@ -21,8 +33,9 @@ interface DownloadFormProps {
 export function DownloadForm({
   chart,
   xAxis,
-  tagManagerEventId,
+  dualCategoryData,
   confidenceIntervals = false,
+  tagManagerEventId,
   isPublic = true,
   authEnabled,
 }: DownloadFormProps) {
@@ -37,6 +50,8 @@ export function DownloadForm({
   const hasSelectedArea = areaType && areaName
 
   const formatInputId = useId()
+  const isDual = dualCategoryData !== undefined
+  const formAction = isDual ? dualCategoryChartExportApiRoutePath : chartExportApiRoutePath
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault()
@@ -53,14 +68,14 @@ export function DownloadForm({
       const formData = new FormData(event.currentTarget)
       formData.append('is_public', isPublic.toString())
 
-      const res = await fetch(chartExportApiRoutePath, {
+      const res = await fetch(formAction, {
         method: 'post',
         body: formData,
       })
 
       const data = await res.text()
 
-      if (data) downloadFile(`ukhsa-chart-download.${formData.get('format')}`, new Blob([data]))
+      if (data) downloadFile(`ukhsa-chart-download.${formData.get('file_format')}`, new Blob([data]))
 
       setDownloading(false)
     } catch (_error) {
@@ -73,9 +88,29 @@ export function DownloadForm({
     setShowDownloadBanner(false)
   }
 
+  const dualCategorySerializedData = isDual
+    ? JSON.stringify({
+        x_axis: dualCategoryData.x_axis,
+        y_axis: dualCategoryData.y_axis,
+        x_axis_title: dualCategoryData.x_axis_title,
+        y_axis_title: dualCategoryData.y_axis_title,
+        y_axis_minimum_value: dualCategoryData.y_axis_minimum_value,
+        y_axis_maximum_value: dualCategoryData.y_axis_maximum_value,
+        chart_type: dualCategoryData.chart_type,
+        static_fields: {
+          ...dualCategoryData.static_fields,
+          geography_type: hasSelectedArea ? areaType : dualCategoryData.static_fields.geography_type,
+          geography: hasSelectedArea ? areaName : dualCategoryData.static_fields.geography,
+        },
+        primary_field_values: dualCategoryData.primary_field_values,
+        secondary_category: dualCategoryData.secondary_category,
+        segments: dualCategoryData.segments.map(({ value }) => value),
+      })
+    : null
+
   return (
     <form
-      action={chartExportApiRoutePath}
+      action={formAction}
       method="POST"
       data-testid="download-form"
       onSubmit={handleSubmit}
@@ -96,7 +131,7 @@ export function DownloadForm({
               <input
                 className={clsx('govuk-radios__input', showDownloadBanner && 'hidden')}
                 id={`format-${formatInputId}`}
-                name="format"
+                name="file_format"
                 type="radio"
                 value="csv"
                 defaultChecked
@@ -112,7 +147,7 @@ export function DownloadForm({
               <input
                 className={clsx('govuk-radios__input', showDownloadBanner && 'hidden')}
                 id={`format-${formatInputId}-2`}
-                name="format"
+                name="file_format"
                 type="radio"
                 value="json"
               />
@@ -126,47 +161,53 @@ export function DownloadForm({
           </div>
 
           {showDownloadBanner && (
-            <div
-              className="download-acknowledgement-banner"
-              role="region"
-              aria-label="Download official sensitive data warning"
-            >
-              <p className="download-acknowledgement-banner-body govuk-!-margin-bottom-2">
+            <div role="region" aria-label="Download official sensitive data warning">
+              <p className="govuk-!-margin-bottom-2">
                 You are about to download data that contains <b>official sensitive data.</b>
               </p>
-              <p className="download-acknowledgement-banner-body">
-                Select <b>“continue and download”</b> to proceed or <b>“back”</b> to cancel.
+              <p>
+                Select <b>&quot;continue and download&quot;</b> to proceed or <b>&quot;back&quot;</b> to cancel.
               </p>
             </div>
           )}
-          {xAxis && <input type="hidden" name="x_axis" value={xAxis} data-testid="download-x-axis" />}
 
-          <input
-            type="hidden"
-            name="confidence_intervals"
-            value={confidenceIntervals ? 'true' : 'false'}
-            data-testid="download-confidence-intervals"
-          />
-
-          {chart.map(({ id, value }) => (
+          {isDual ? (
             <input
-              key={id}
               type="hidden"
-              name="plots"
-              value={JSON.stringify({
-                topic: value.topic,
-                metric: value.metric,
-                stratum: value.stratum,
-                geography_type: hasSelectedArea ? areaType : value.geography_type,
-                geography: hasSelectedArea ? areaName : value.geography,
-                date_from: value.date_from,
-                date_to: value.date_to,
-                age: value.age,
-                sex: value.sex,
-              })}
-              data-testid="download-form-plots"
+              name="dual_category_data"
+              value={dualCategorySerializedData ?? ''}
+              data-testid="download-form-dual-category-data"
             />
-          ))}
+          ) : (
+            <>
+              {xAxis && <input type="hidden" name="x_axis" value={xAxis} data-testid="download-x-axis" />}
+              <input
+                type="hidden"
+                name="confidence_intervals"
+                value={confidenceIntervals ? 'true' : 'false'}
+                data-testid="download-confidence-intervals"
+              />
+              {chart?.map(({ id, value }) => (
+                <input
+                  key={id}
+                  type="hidden"
+                  name="plots"
+                  value={JSON.stringify({
+                    topic: value.topic,
+                    metric: value.metric,
+                    stratum: value.stratum,
+                    geography_type: hasSelectedArea ? areaType : value.geography_type,
+                    geography: hasSelectedArea ? areaName : value.geography,
+                    date_from: value.date_from,
+                    date_to: value.date_to,
+                    age: value.age,
+                    sex: value.sex,
+                  })}
+                  data-testid="download-form-plots"
+                />
+              ))}
+            </>
+          )}
         </fieldset>
         <div className="flex gap-2">
           <button

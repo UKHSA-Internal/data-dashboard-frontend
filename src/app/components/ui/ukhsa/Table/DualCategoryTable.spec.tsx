@@ -1,7 +1,7 @@
 import { ReactElement } from 'react'
 
 import { DualCategoryChartCardValue } from '@/api/models/cms/Page'
-import { getDualCategoryTables } from '@/api/requests/tables/getDualCategoryTables'
+import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { render, screen } from '@/config/test-utils'
 
@@ -9,7 +9,7 @@ import { DualCategoryTable } from './DualCategoryTable'
 
 const defaultUrl = new URL('http://localhost')
 
-jest.mock('@/api/requests/tables/getDualCategoryTables')
+jest.mock('@/api/requests/tables/getTables')
 jest.mock('@/app/hooks/getAreaSelector', () => ({ getAreaSelector: jest.fn() }))
 jest.mock('@/app/hooks/getPathname', () => ({ getPathname: jest.fn(() => '/') }))
 jest.mock('next/navigation', () => ({
@@ -17,7 +17,7 @@ jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(() => defaultUrl.searchParams),
 }))
 
-const getDualCategoryTablesMock = jest.mocked(getDualCategoryTables)
+const getDualCategoryTablesMock = jest.mocked(getTables)
 const getAreaSelectorMock = jest.mocked(getAreaSelector)
 
 const mockData: DualCategoryChartCardValue = {

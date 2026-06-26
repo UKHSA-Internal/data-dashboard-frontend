@@ -1,5 +1,4 @@
 import { ChartComponentData, DualCategoryChartCardValue, SingleCategoryChartCardValue } from '@/api/models/cms/Page'
-import { getDualCategoryTables } from '@/api/requests/tables/getDualCategoryTables'
 import { getTables } from '@/api/requests/tables/getTables'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -8,7 +7,6 @@ import { authEnabled } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
-import { DualCategoryDownloadForm } from './DualCategoryDownloadForm'
 
 interface DownloadProps {
   data: ChartComponentData
@@ -20,7 +18,7 @@ const getDualCategoryDownloadData = (
   areaType: string | null,
   areaName: string | null
 ) => {
-  return getDualCategoryTables({
+  return getTables({
     chart_type: data.chart_type,
     static_fields: {
       ...data.static_fields,
@@ -68,8 +66,8 @@ export async function Download({ data, isPublic }: DownloadProps) {
 
   if (isDualCategory) {
     return (
-      <DualCategoryDownloadForm
-        chartData={data}
+      <DownloadForm
+        dualCategoryData={data}
         tagManagerEventId={data.tag_manager_event_id}
         isPublic={isPublic}
         authEnabled={authEnabled}

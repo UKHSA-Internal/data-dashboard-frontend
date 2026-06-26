@@ -1,6 +1,6 @@
 import { Request, Response } from 'express'
 
-import { requestSchema } from '@/api/requests/downloads/getDualCategoryDownloads'
+import { dualCategoryRequestSchema } from '@/api/requests/downloads/getDownloads'
 import { logger } from '@/lib/logger'
 
 import { downloadsCsvFixture } from '../fixtures/downloads-csv'
@@ -13,7 +13,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    const parsedRequestBody = requestSchema.safeParse(req.body)
+    const parsedRequestBody = dualCategoryRequestSchema.safeParse(req.body)
 
     if (!parsedRequestBody.success) {
       logger.error(`Dual Category Downloads Handler Schema parse error: ${parsedRequestBody.error}`)

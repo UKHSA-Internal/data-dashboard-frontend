@@ -6,7 +6,7 @@ import {
 } from '@/api/models/cms/Page'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
-import type { Response as DualCategoryTableResponse } from '@/api/requests/tables/getDualCategoryTables'
+import type { Response as DualCategoryTableResponse } from '@/api/requests/tables/getTables'
 import type { Column, Data } from '@/app/utils/chart-table.utils'
 import { chartSizes } from '@/config/constants'
 

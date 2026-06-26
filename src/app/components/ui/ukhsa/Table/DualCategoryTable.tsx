@@ -4,7 +4,7 @@ import React, { Fragment } from 'react'
 
 import { DualCategoryChartCardValue } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
-import { getDualCategoryTables } from '@/api/requests/tables/getDualCategoryTables'
+import { getTables } from '@/api/requests/tables/getTables'
 import { RichText } from '@/app/components/cms'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -30,7 +30,7 @@ export async function DualCategoryTable({ data, isPublic = false, level, authEna
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
-  const tableResponse = await getDualCategoryTables({
+  const tableResponse = await getTables({
     chart_type: data.chart_type,
     static_fields: {
       ...data.static_fields,
