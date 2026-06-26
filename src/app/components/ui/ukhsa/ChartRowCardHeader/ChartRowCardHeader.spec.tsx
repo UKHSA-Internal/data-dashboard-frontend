@@ -19,12 +19,28 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Sample Title',
         description: 'Sample Description',
-        pageClassification: 'official',
+        dataClassification: 'official',
         authEnabled: false,
       })
     )
     expect(screen.getByRole('heading', { level: 3, name: 'Sample Title' })).toBeInTheDocument()
     expect(screen.getByText('Sample Description')).toBeInTheDocument()
+  })
+
+   test('renders data classification in heading when non-public', async () => {
+    getAreaSelectorMock.mockResolvedValue([])
+    render(
+      await ChartRowCardHeader({
+        id: '1',
+        title: 'Sample Title',
+        description: 'Sample Description',
+        isPublic: false,
+        dataClassification: 'official_sensitive',
+        authEnabled: true,
+      })
+    )
+
+    expect(screen.getByText(/OFFICIAL-SENSITIVE/)).toBeInTheDocument()
   })
 
   test('displays a location when set', async () => {
@@ -34,7 +50,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
-        pageClassification: 'official',
+        dataClassification: 'official',
         authEnabled: false,
       })
     )
@@ -47,7 +63,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
-        pageClassification: 'official',
+        dataClassification: 'official',
         authEnabled: false,
         children: <div>Child Element</div>,
       })
@@ -61,7 +77,7 @@ describe('ChartRowCardHeader', () => {
         id: '1',
         title: 'Title',
         description: 'Description',
-        pageClassification: 'official',
+        dataClassification: 'official',
         authEnabled: false,
       })
     )

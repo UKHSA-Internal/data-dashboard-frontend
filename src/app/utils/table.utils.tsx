@@ -10,7 +10,7 @@ const levelContent: Record<DataClassification, string> = {
 
 const levelContentCaps: Record<DataClassification, string> = {
   official: 'OFFICIAL',
-  official_sensitive: 'OFFICIAL SENSITIVE',
+  official_sensitive: 'OFFICIAL-SENSITIVE',
   protective_marking_not_set: 'PROTECTIVE MARKING NOT SET',
   secret: 'SECRET',
   top_secret: 'TOP SECRET',
@@ -21,12 +21,12 @@ export const getColumnHeader = (
   axisTitle: string,
   fallback: string,
   isPublic?: boolean,
-  level: DataClassification = 'official_sensitive',
+  level?: DataClassification,
   authEnabled?: boolean
 ) => {
   const label = chartLabel || axisTitle || fallback
 
-  const sensitiveLabel = authEnabled && isPublic === false && (
+  const sensitiveLabel = authEnabled && isPublic === false && level && (
     <span className="inline-block w-full whitespace-normal break-words text-[#CECECE] sm:w-auto">
       &nbsp;{levelContent[level]}
     </span>
@@ -39,13 +39,13 @@ export const getColumnHeader = (
   )
 }
 
-export const getDataClassification = (
+export const getDataClassificationLabel = (
   isPublic: boolean | undefined,
-  pageClassification: DataClassification = 'official_sensitive',
-  authEnabled: boolean | undefined
-): string => {
-  if (authEnabled && isPublic === false) {
-    return `(${levelContentCaps[pageClassification]})`
+  authEnabled: boolean | undefined,
+  dataClassification: DataClassification | undefined
+): string | undefined => {
+  if (authEnabled && isPublic === false && dataClassification) {
+    return `(${levelContentCaps[dataClassification]})`
   }
   return ''
 }

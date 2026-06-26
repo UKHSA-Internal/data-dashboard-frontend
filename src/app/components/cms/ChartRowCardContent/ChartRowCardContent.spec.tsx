@@ -191,9 +191,9 @@ describe('ChartRowCardContent', () => {
       ],
     }
     const isPublic = false
-    const mockPageClassification = 'official_sensitive'
+    const mockdataClassification = 'official_sensitive'
 
-    render(<ChartRowCardContent value={mockValue} isPublic={isPublic} pageClassification={mockPageClassification} />)
+    render(<ChartRowCardContent value={mockValue} isPublic={isPublic} dataClassification={mockdataClassification} />)
 
     expect(screen.getAllByRole('article')).toHaveLength(1)
 
