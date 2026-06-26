@@ -253,20 +253,33 @@ export class App {
   }
 
   async clickNav(name: string) {
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    const nav = this.page.getByRole('navigation', { name: 'Menu' })
+    const menuBar = this.page.getByTestId('ukhsa-menu-bar')
+    const desktopNav = menuBar.getByRole('navigation', { name: 'Main navigation' })
 
-    await expect(nav).toBeVisible()
+    // On desktop/tablet the static menu is permanently visible, so click the link directly
+    if (await desktopNav.isVisible()) {
+      await desktopNav.getByRole('link', { name, exact: true }).click()
+      return
+    }
 
-    await nav.getByRole('link', { name }).click()
+    // On mobile the menu is collapsed behind a toggle button, so expand it first
+    if (await this.mobileMenuButtonClosed.isVisible()) {
+      await this.mobileMenuButtonClosed.click()
+      await expect(this.mobileMenuButtonOpen).toBeVisible()
+    }
+
+    await menuBar
+      .getByRole('navigation', { name: 'Mobile navigation' })
+      .getByRole('link', { name, exact: true })
+      .click()
   }
 
   async clickBrowseNav(name: string) {
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    await expect(this.page.getByRole('heading', { name: 'Browse', level: 1 })).toBeVisible()
-
-    await this.page.getByRole('link', { name }).click()
+    await this.page
+      .getByTestId('ukhsa-menu-bar')
+      .getByRole('navigation', { name: 'Main navigation' })
+      .getByRole('link', { name, exact: true })
+      .click()
   }
 
   async hasHeading(name: string) {
