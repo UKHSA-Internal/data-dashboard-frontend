@@ -55,7 +55,7 @@ test.describe('Archive data download - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ archiveDataPage, app }) => {
     await archiveDataPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -64,7 +64,7 @@ test.describe('Archive data download - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ archiveDataPage, app }) => {
     await archiveDataPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -73,7 +73,7 @@ test.describe('Archive data download - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ archiveDataPage, app }) => {
     await archiveDataPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 
