@@ -201,7 +201,7 @@ test.describe('Influenza page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
   test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
     await test.step('loads the page', async () => {
@@ -227,7 +227,7 @@ test.describe('Influenza page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 
   test('downloads a json version of each chart', async ({ influenzaPage, app }) => {
@@ -254,7 +254,7 @@ test.describe('Influenza page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ influenzaPage, app }) => {
     await influenzaPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 
   test('downloads a json version of each chart', async ({ influenzaPage, app }) => {

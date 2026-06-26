@@ -6,6 +6,7 @@ import { z } from 'zod'
 
 import { ChartFigure } from '@/api/models/Chart'
 import { Chart, ChartCardSchemas } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { getChartTimespan, getFilteredData } from '@/app/utils/chart.utils'
@@ -23,6 +24,8 @@ interface ChartWithFilterProps {
   title: string
   chart: Chart
   chartData: z.infer<typeof ChartCardSchemas>['value']
+  isPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const LoadingSpinnerContainer = () => {
@@ -33,7 +36,15 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({
+  figure,
+  title,
+  chart,
+  chartData,
+  lastUpdated,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -90,6 +101,8 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
           y_axis_minimum_value: yAxisMinimum,
           chart_width: chartSizes['narrow'].width,
           chart_height: chartSizes['narrow'].height,
+          is_public: isPublic,
+          data_classification: dataClassification,
         })
 
         if (!chartResponse.success || !chartResponse.data) {
@@ -107,7 +120,7 @@ const ChartWithFilterContent = ({ figure, title, chart, chartData, lastUpdated }
         previousFilterRef.current = filter
       }
     },
-    [chartData]
+    [chartData, dataClassification, isPublic, lastUpdated]
   )
 
   useEffect(() => {

@@ -27,10 +27,14 @@ import ClassificationBanner from '../../ui/ukhsa/ClassificationBanner/Classifica
 type ChartRowCardContentProps = {
   value: any
   isPublic?: boolean
-  pageClassification?: DataClassification
+  dataClassification?: DataClassification
 }
 
-export function ChartRowCardContent({ value, isPublic, pageClassification }: ChartRowCardContentProps) {
+export function ChartRowCardContent({
+  value,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartRowCardContentProps) {
   return (
     <>
       {value.columns.map((column: any) => {
@@ -46,7 +50,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
             })}
             data-testid={`chart-row-card-${kebabCase(column.value.title)}`}
           >
-            {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
+            {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={dataClassification} />}
             <Card
               asChild
               aria-labelledby={`chart-row-card-heading-${column.id}`}
@@ -58,10 +62,15 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                   title={column.value.title}
                   description={column.value.body}
                   isPublic={isPublic}
-                  pageClassification={pageClassification}
+                  dataClassification={dataClassification}
                   authEnabled={authEnabled}
                 >
-                  <Timestamp data={column.value} size={size} />
+                  <Timestamp
+                    data={column.value}
+                    size={size}
+                    isPublic={isPublic}
+                    dataClassification={dataClassification}
+                  />
                 </ChartRowCardHeader>
                 <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
                   <TabsList className="hidden no-js:block sm:block">
@@ -131,7 +140,10 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                         <div className="ukhsa-headline govuk-!-margin-bottom-4 md:min-h-[79px]">
                           <div className="flex items-start gap-2">
                             {column.value.headline_number_columns?.map((headline_number_columns: any) =>
-                              renderBlock({ ...headline_number_columns, date_prefix: column.value.date_prefix })
+                              renderBlock(
+                                { ...headline_number_columns, date_prefix: column.value.date_prefix },
+                                isPublic
+                              )
                             )}
                           </div>
                         </div>
@@ -150,6 +162,8 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                             size: 'narrow',
                           },
                         ]}
+                        isPublic={isPublic}
+                        dataClassification={dataClassification}
                       />
                     </AreaSelectorLoader>
                   </TabsContent>
@@ -168,7 +182,7 @@ export function ChartRowCardContent({ value, isPublic, pageClassification }: Cha
                       data={column.value}
                       size={size}
                       isPublic={isPublic}
-                      level={pageClassification}
+                      dataClassification={dataClassification}
                       authEnabled={authEnabled}
                     />
                   </TabsContent>

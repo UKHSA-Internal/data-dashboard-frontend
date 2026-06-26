@@ -1,6 +1,6 @@
 import kebabCase from 'lodash/kebabCase'
 import Link from 'next/link'
-import { Fragment } from 'react'
+import { Fragment, Suspense } from 'react'
 import { z } from 'zod'
 
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
@@ -32,11 +32,15 @@ import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards
 import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
+
 // TODO: Move this file into cms folder
+
 export const renderSection = async (
   showMoreSections: string[],
   { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number],
-  enableShowMore = true
+  enableShowMore = true,
+  isPublic: boolean = true,
+  dataClassification: DataClassification | undefined = undefined
 ) => {
   const sectionFilterKey = String(id ?? heading ?? '')
 
@@ -63,7 +67,7 @@ export const renderSection = async (
         )}
       </h2>
 
-      {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore))}
+      {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore, isPublic, dataClassification))}
 
       {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
         <div className="mt-3">
@@ -109,29 +113,48 @@ export const renderCard = (
   showMoreSections: string[],
   { type, value, id }: z.infer<typeof CardTypes>,
   enableShowMore = true,
-  isPublic?: boolean,
-  pageClassification?: DataClassification
+  isPublic: boolean,
+  pageClassification: DataClassification | undefined
 ) => {
   return (
     <div key={id}>
       {type === 'text_card' && <TextCard value={value} />}
 
-      {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} />}
+      {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} isPublic={isPublic} />}
 
-      {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
-
-      {type === 'chart_row_card' && (
-        <ChartRowCard>
-          <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
-        </ChartRowCard>
+      {type === 'popular_topics_card' && (
+        <PopularTopicsCard value={value} isPublic={isPublic} dataClassification={pageClassification} />
       )}
+
+      {type === 'chart_row_card' &&
+        (() => {
+          const content = (
+            <ChartRowCard>
+              <ChartRowCardContent value={value} isPublic={isPublic} dataClassification={pageClassification} />
+            </ChartRowCard>
+          )
+
+          return authEnabled && isPublic === false ? (
+            <Suspense
+              fallback={
+                <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true" role="status">
+                  Loading chart
+                </div>
+              }
+            >
+              {content}
+            </Suspense>
+          ) : (
+            content
+          )
+        })()}
 
       {type === 'filter_linked_map' && <GlobalFilterLinkedMap type={type} value={value} id={id} />}
 
       {type === 'filter_linked_sub_plot_chart_template' && (
         <SubplotFilterCardContainer
           isPublic={isPublic}
-          pageClassification={pageClassification}
+          dataClassification={pageClassification}
           authEnabled={authEnabled}
         />
       )}
@@ -139,7 +162,7 @@ export const renderCard = (
       {type === 'filter_linked_time_series_chart_template' && (
         <TimeSeriesFilterCardsContainer
           isPublic={isPublic}
-          pageClassification={pageClassification}
+          dataClassification={pageClassification}
           authEnabled={authEnabled}
         />
       )}
@@ -150,6 +173,8 @@ export const renderCard = (
           heading={heading}
           showMoreSections={showMoreSections}
           enableShowMore={enableShowMore}
+          isPublic={isPublic}
+          dataClassification={pageClassification}
         />
       )}
 
@@ -158,16 +183,14 @@ export const renderCard = (
   )
 }
 
-export const renderBlock = ({
-  id,
-  type,
-  value,
-  date_prefix,
-}: z.infer<typeof Blocks>[number] & { date_prefix: string }) => (
+export const renderBlock = (
+  { id, type, value, date_prefix }: z.infer<typeof Blocks>[number] & { date_prefix: string },
+  isPublic?: boolean
+) => (
   <div key={id}>
-    {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} />}
-    {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} />}
-    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} />}
+    {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} isPublic={isPublic} />}
+    {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} isPublic={isPublic} />}
+    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} isPublic={isPublic} />}
   </div>
 )
 
@@ -197,9 +220,10 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
     )}
 
     {type === 'code_block' && (
-      <CodeBlock heading={value.heading} language={value.content[0].value.language}>
-        {value.content[0].value.code}
-      </CodeBlock>
+      <CodeBlock
+        heading={value.heading}
+        snippets={value.content.map(({ id, value: { language, code } }) => ({ id, language, code }))}
+      />
     )}
 
     {type === 'internal_page_links' && value && value.length > 0 && (

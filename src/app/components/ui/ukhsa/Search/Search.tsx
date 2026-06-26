@@ -124,7 +124,7 @@ export function Search({ label, placeholder }: SearchProps) {
         <div className="relative">
           <input
             ref={searchInputRef}
-            className="govuk-input govuk-!-font-size-16 govuk-!-width-full"
+            className="govuk-input govuk-!-font-size-16 govuk-!-width-full pr-[2.5rem]"
             id="search"
             name="search"
             type="text"

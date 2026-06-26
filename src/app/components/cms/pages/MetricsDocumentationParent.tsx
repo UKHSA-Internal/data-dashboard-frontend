@@ -137,7 +137,7 @@ export default async function MetricsParentPage({
                     topic={topic}
                     metric={metric}
                     is_public={is_public}
-                    page_classification={page_classification}
+                    data_classification={page_classification}
                   />
                 )
               }

@@ -31,6 +31,7 @@ interface SubplotClientChartProps {
   cardData: FilterLinkedSubplotData
   handleLatestDate: (date: string | null) => void
   timePeriodTitle: string
+  isPublic?: boolean
 }
 
 const SubplotClientChart = ({
@@ -44,6 +45,7 @@ const SubplotClientChart = ({
   cardData,
   handleLatestDate,
   timePeriodTitle,
+  isPublic,
 }: SubplotClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -64,47 +66,50 @@ const SubplotClientChart = ({
         setError(null)
         removeChartRequestError(`subplot-${geography.geography_code}`)
 
-        const chartResponse = await getSubplots({
-          file_format: 'svg',
-          chart_height: 260,
-          chart_width: 515,
-          x_axis_title: 'Vaccination type',
-          y_axis_title: cardData.legend_title,
-          y_axis_minimum_value: null,
-          y_axis_maximum_value: null,
-          target_threshold: cardData.target_threshold,
-          target_threshold_label: cardData.target_threshold_label,
-          chart_parameters: {
-            x_axis: 'geography',
-            y_axis: 'metric',
-            theme: 'immunisation',
-            sub_theme: 'childhood_vaccines',
-            date_from: timePeriods[currentTimePeriodIndex].value.date_from,
-            date_to: timePeriods[currentTimePeriodIndex].value.date_to,
-            age: 'all',
-            sex: 'all',
-            stratum: '24m',
-            metric_value_ranges: metricValueRanges,
+        const chartResponse = await getSubplots(
+          {
+            file_format: 'svg',
+            chart_height: 260,
+            chart_width: 515,
+            x_axis_title: 'Vaccination type',
+            y_axis_title: cardData.legend_title,
+            y_axis_minimum_value: null,
+            y_axis_maximum_value: null,
+            target_threshold: cardData.target_threshold,
+            target_threshold_label: cardData.target_threshold_label,
+            chart_parameters: {
+              x_axis: 'geography',
+              y_axis: 'metric',
+              theme: 'immunisation',
+              sub_theme: 'childhood_vaccines',
+              date_from: timePeriods[currentTimePeriodIndex].value.date_from,
+              date_to: timePeriods[currentTimePeriodIndex].value.date_to,
+              age: 'all',
+              sex: 'all',
+              stratum: '24m',
+              metric_value_ranges: metricValueRanges,
+            },
+            subplots: selectedVaccinations.map((filter: DataFilter) => {
+              return {
+                subplot_title: filter.value.label,
+                subplot_parameters: {
+                  topic: filter.value.parameters.topic.value,
+                  metric: filter.value.parameters.metric.value,
+                  stratum: filter.value.parameters.stratum.value,
+                },
+                plots: geographyRelations.map((geography) => {
+                  return {
+                    label: geography.name,
+                    geography_type: geography.geography_type,
+                    geography: geography.name,
+                    line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                  }
+                }),
+              }
+            }),
           },
-          subplots: selectedVaccinations.map((filter: DataFilter) => {
-            return {
-              subplot_title: filter.value.label,
-              subplot_parameters: {
-                topic: filter.value.parameters.topic.value,
-                metric: filter.value.parameters.metric.value,
-                stratum: filter.value.parameters.stratum.value,
-              },
-              plots: geographyRelations.map((geography) => {
-                return {
-                  label: geography.name,
-                  geography_type: geography.geography_type,
-                  geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
-                }
-              }),
-            }
-          }),
-        })
+          isPublic
+        )
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)
         } else {
