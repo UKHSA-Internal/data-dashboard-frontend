@@ -7,7 +7,7 @@ test.describe('Landing page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ landingPage, app }) => {
     await landingPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -46,7 +46,7 @@ test.describe('Landing page - desktop @desktopOnly', () => {
   })
 
   test('displays the navigation on desktop', async ({ app }) => {
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 
   test('displays the landing page contents', async ({ landingPage, app }) => {

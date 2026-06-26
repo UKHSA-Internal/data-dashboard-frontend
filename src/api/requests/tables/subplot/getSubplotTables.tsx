@@ -74,10 +74,13 @@ export const responseSchema = z.array(
 export type RequestParams = z.infer<typeof requestSchema>
 export type Response = z.infer<typeof responseSchema>
 
-export const getSubplotTables = async (body: RequestParams) => {
+export const getSubplotTables = async (body: RequestParams, isPublic?: boolean) => {
+  // Only append isPublic param when explicitly false (non-public pages)
+  // undefined or true = public page, no need to pass JWT
+  const publicParam = isPublic === false ? '?isPublic=false' : ''
   try {
-    const path = isSSR ? `tables/subplot/v1` : `proxy/tables/subplot/v1`
-    const { data } = await client<Response>(path, { body })
+    const path = isSSR ? `tables/subplot/v1` : `proxy/tables/subplot/v1${publicParam}`
+    const { data } = await client<Response>(`${path}`, { body }, isPublic)
     const result = responseSchema.safeParse(data)
     if (result.success) {
       return result

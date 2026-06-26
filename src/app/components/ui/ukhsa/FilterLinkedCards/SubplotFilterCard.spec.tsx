@@ -89,10 +89,29 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
     expect(screen.getByText(/2024/)).toBeInTheDocument()
+  })
+
+   test('renders data classification in heading when non-public', () => {
+    render(
+      <SubplotFilterCard
+        geography={mockGeography}
+        selectedVaccinations={mockSelectedVaccinations}
+        selectedThresholds={mockSelectedThresholds}
+        geographyFilters={mockGeographyFilters}
+        timePeriods={mockTimePeriods}
+        cardData={mockCardData}
+        timePeriodTitle="Year selection"
+        isPublic={false}
+        level={"official_sensitive"}
+        authEnabled={true}
+      />
+    )
+    expect(screen.getByText(/OFFICIAL-SENSITIVE/)).toBeInTheDocument()
   })
 
   test('initializes with null date state', () => {
@@ -105,6 +124,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -124,6 +144,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -149,6 +170,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -173,6 +195,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -194,6 +217,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={cardDataWithAbout}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 
@@ -211,6 +235,7 @@ describe('SubplotFilterCard', () => {
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
         timePeriodTitle="Year selection"
+        isPublic={true}
       />
     )
 

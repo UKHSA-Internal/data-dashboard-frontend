@@ -51,7 +51,7 @@ test.describe('About page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ aboutPage, app }) => {
     await aboutPage.goto()
-    await app.hasMobileNav()
+    await app.hasNav()
   })
 })
 
@@ -60,7 +60,7 @@ test.describe('About page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ aboutPage, app }) => {
     await aboutPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
 
@@ -69,6 +69,6 @@ test.describe('About page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ aboutPage, app }) => {
     await aboutPage.goto()
-    await app.hasDesktopNav()
+    await app.hasNav()
   })
 })
