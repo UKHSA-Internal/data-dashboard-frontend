@@ -233,10 +233,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledWith(
-          expect.any(Object),
-          false // isPublic passed through correctly
-        )
+        expect(mockGetCharts).toHaveBeenCalledWith(expect.objectContaining({ is_public: false }))
       })
     })
 
@@ -257,7 +254,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledWith(expect.any(Object), true)
+        expect(mockGetCharts).toHaveBeenCalledWith(expect.objectContaining({ is_public: true }))
       })
     })
 
@@ -278,10 +275,7 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetCharts).toHaveBeenCalledWith(
-          expect.any(Object),
-          undefined // undefined is NOT treated as false — no auth added
-        )
+        expect(mockGetCharts).toHaveBeenCalledWith(expect.objectContaining({ is_public: true }))
       })
     })
   })
@@ -343,8 +337,8 @@ describe('ChartWithFilter', () => {
               date_from: '2023-07-01', // Filtered date
             }),
           ]),
-        }),
-        false
+          is_public: false,
+        })
       )
     })
 
@@ -651,8 +645,7 @@ describe('ChartWithFilter', () => {
               y_axis: 'Value',
               chart_width: expect.any(Number),
               chart_height: expect.any(Number),
-            }),
-            undefined
+            })
           )
         },
         { timeout: 3000 }

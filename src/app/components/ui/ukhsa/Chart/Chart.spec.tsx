@@ -88,31 +88,33 @@ test('renders a narrow chart correctly', async () => {
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
-  expect(getChartsMock).toHaveBeenCalledWith(
-    {
-      chart_height: 260,
-      chart_width: 515,
-      plots: [
-        {
-          topic: 'COVID-19',
-          metric: '',
-          chart_type: 'simple_line',
-          geography: 'London',
-          geography_type: 'UKHSA Region',
-        },
-      ],
-      x_axis_title: '',
-      y_axis_title: '',
-      x_axis: null,
-      y_axis: null,
-      y_axis_maximum_value: null,
-      y_axis_minimum_value: null,
-    },
-    true
-  )
+  expect(getChartsMock).toHaveBeenCalledWith({
+    chart_height: 260,
+    chart_width: 515,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: '',
+        chart_type: 'simple_line',
+        geography: 'London',
+        geography_type: 'UKHSA Region',
+      },
+    ],
+    x_axis_title: '',
+    y_axis_title: '',
+    x_axis: null,
+    y_axis: null,
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
+    confidence_colour: undefined,
+    confidence_intervals: undefined,
+    data_classification: undefined,
+    is_public: true,
+  })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
@@ -175,28 +177,29 @@ test('renders the chart by geography and geography type when both are present in
     })) as ReactElement
   )
 
-  expect(getChartsMock).toHaveBeenCalledWith(
-    {
-      chart_height: 260,
-      chart_width: 515,
-      plots: [
-        {
-          topic: 'COVID-19',
-          metric: '',
-          chart_type: 'simple_line',
-          geography: 'North East',
-          geography_type: 'UKHSA Region',
-        },
-      ],
-      x_axis: null,
-      y_axis: null,
-      x_axis_title: '',
-      y_axis_title: '',
-      y_axis_maximum_value: null,
-      y_axis_minimum_value: null,
-    },
-    true
-  )
+  expect(getChartsMock).toHaveBeenCalledWith({
+    chart_height: 260,
+    chart_width: 515,
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: '',
+        chart_type: 'simple_line',
+        geography: 'North East',
+        geography_type: 'UKHSA Region',
+      },
+    ],
+    x_axis: null,
+    y_axis: null,
+    x_axis_title: '',
+    y_axis_title: '',
+    y_axis_maximum_value: null,
+    y_axis_minimum_value: null,
+    confidence_colour: undefined,
+    confidence_intervals: undefined,
+    data_classification: undefined,
+    is_public: true,
+  })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
     'src',
@@ -250,8 +253,7 @@ test('full width charts should also have an acompanying narrow version for mobil
     expect.objectContaining({
       chart_width: 1100,
       chart_height: 260,
-    }),
-    true
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -310,8 +312,7 @@ test('landing page half width charts should render the largest size (half) with 
     expect.objectContaining({
       chart_width: 650,
       chart_height: 200,
-    }),
-    true
+    })
   )
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(

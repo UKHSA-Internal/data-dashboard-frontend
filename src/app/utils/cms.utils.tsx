@@ -32,11 +32,15 @@ import SubplotFilterCardContainer from '../components/ui/ukhsa/FilterLinkedCards
 import TimeSeriesFilterCardsContainer from '../components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer'
 import { ListItem } from '../components/ui/ukhsa/List/ListItem'
 import { GlobalFilterLinkedMap } from '../features/global-filter'
+
 // TODO: Move this file into cms folder
+
 export const renderSection = async (
   showMoreSections: string[],
   { id, value: { heading, content, footer, page_link: pageLink } }: z.infer<typeof Body>[number],
-  enableShowMore = true
+  enableShowMore = true,
+  isPublic: boolean = true,
+  dataClassification: DataClassification | undefined = undefined
 ) => {
   const sectionFilterKey = String(id ?? heading ?? '')
 
@@ -63,7 +67,7 @@ export const renderSection = async (
         )}
       </h2>
 
-      {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore))}
+      {content.map((item) => renderCard(heading, showMoreSections, item, enableShowMore, isPublic, dataClassification))}
 
       {enableShowMore && showMoreSections.includes(kebabCase(heading)) ? (
         <div className="mt-3">
@@ -109,8 +113,8 @@ export const renderCard = (
   showMoreSections: string[],
   { type, value, id }: z.infer<typeof CardTypes>,
   enableShowMore = true,
-  isPublic?: boolean,
-  pageClassification?: DataClassification
+  isPublic: boolean,
+  pageClassification: DataClassification | undefined
 ) => {
   return (
     <div key={id}>
@@ -118,13 +122,15 @@ export const renderCard = (
 
       {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} isPublic={isPublic} />}
 
-      {type === 'popular_topics_card' && <PopularTopicsCard value={value} />}
+      {type === 'popular_topics_card' && (
+        <PopularTopicsCard value={value} isPublic={isPublic} dataClassification={pageClassification} />
+      )}
 
       {type === 'chart_row_card' &&
         (() => {
           const content = (
             <ChartRowCard>
-              <ChartRowCardContent value={value} isPublic={isPublic} pageClassification={pageClassification} />
+              <ChartRowCardContent value={value} isPublic={isPublic} dataClassification={pageClassification} />
             </ChartRowCard>
           )
 
@@ -148,7 +154,7 @@ export const renderCard = (
       {type === 'filter_linked_sub_plot_chart_template' && (
         <SubplotFilterCardContainer
           isPublic={isPublic}
-          pageClassification={pageClassification}
+          dataClassification={pageClassification}
           authEnabled={authEnabled}
         />
       )}
@@ -156,7 +162,7 @@ export const renderCard = (
       {type === 'filter_linked_time_series_chart_template' && (
         <TimeSeriesFilterCardsContainer
           isPublic={isPublic}
-          pageClassification={pageClassification}
+          dataClassification={pageClassification}
           authEnabled={authEnabled}
         />
       )}
@@ -167,6 +173,8 @@ export const renderCard = (
           heading={heading}
           showMoreSections={showMoreSections}
           enableShowMore={enableShowMore}
+          isPublic={isPublic}
+          dataClassification={pageClassification}
         />
       )}
 
