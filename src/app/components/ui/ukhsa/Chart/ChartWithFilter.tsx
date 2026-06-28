@@ -5,6 +5,7 @@ import { useCallback, useEffect, useRef, useState } from 'react'
 
 import { ChartFigure } from '@/api/models/Chart'
 import { ChartComponentData } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
 import { getFilteredChartResponseData, getTimespanFromChartData, isTimeseriesChartData } from '@/app/utils/chart.utils'
 
@@ -19,6 +20,8 @@ interface ChartWithFilterProps {
   figure: ChartFigure
   title: string
   chartData: ChartComponentData
+  isPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const LoadingSpinnerContainer = () => {
@@ -29,7 +32,14 @@ const LoadingSpinnerContainer = () => {
   )
 }
 
-const ChartWithFilterContent = ({ figure, title, chartData, lastUpdated }: ChartWithFilterProps) => {
+const ChartWithFilterContent = ({
+  figure,
+  title,
+  chartData,
+  lastUpdated,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
   const [isLoading, setIsLoading] = useState(false)
@@ -44,7 +54,13 @@ const ChartWithFilterContent = ({ figure, title, chartData, lastUpdated }: Chart
       setIsLoading(true)
 
       try {
-        const chartResponse = await getFilteredChartResponseData(chartData, filter, lastUpdated)
+        const chartResponse = await getFilteredChartResponseData(
+          chartData,
+          filter,
+          lastUpdated,
+          isPublic,
+          dataClassification
+        )
 
         if (!chartResponse?.success || !chartResponse?.data) {
           setHasError(true)
@@ -61,7 +77,7 @@ const ChartWithFilterContent = ({ figure, title, chartData, lastUpdated }: Chart
         previousFilterRef.current = filter
       }
     },
-    [chartData, lastUpdated]
+    [chartData, dataClassification, isPublic, lastUpdated]
   )
 
   useEffect(() => {

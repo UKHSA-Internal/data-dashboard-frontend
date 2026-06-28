@@ -32,7 +32,7 @@ test('renders the timestamp correctly when successful', async () => {
     about: '',
   }
 
-  const { getByText } = render((await Timestamp({ data, size: 'narrow' })) as ReactElement)
+  const { getByText } = render((await Timestamp({ data, size: 'narrow', isPublic: true })) as ReactElement)
   expect(getByText('Up to and including 10 May 2023')).toBeInTheDocument()
 })
 
@@ -62,7 +62,7 @@ test('renders null when the timestamp request fails', async () => {
     about: '',
   }
 
-  const { container } = render((await Timestamp({ data, size: 'narrow' })) as ReactElement)
+  const { container } = render((await Timestamp({ data, size: 'narrow', isPublic: true })) as ReactElement)
 
   expect(container.firstChild).toBeNull()
 })

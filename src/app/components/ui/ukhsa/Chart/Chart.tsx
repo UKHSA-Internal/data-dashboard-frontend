@@ -2,6 +2,7 @@
 import { Suspense } from 'react'
 
 import { ChartComponentData } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -47,6 +48,16 @@ interface ChartProps {
    *
    */
   readonly sizes: ChartSizes
+
+  /**
+   * True when chart contains public data
+   * */
+  isPublic?: boolean
+
+  /**
+   * Data classification, eg "OFFICIAL SENSITIVE"
+   * */
+  dataClassification?: DataClassification
 }
 
 const createStaticChart = async ({
@@ -73,13 +84,19 @@ const createStaticChart = async ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({
+  data,
+  sizes,
+  enableInteractive = true,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartProps) {
   const { t } = await getServerTranslation('common')
 
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
-  const chartResponse = await getChartResponseData(data, areaType, areaName, sizes)
+  const chartResponse = await getChartResponseData(data, areaType, areaName, sizes, isPublic, dataClassification)
 
   if (!chartResponse?.success || !chartResponse?.data) {
     return <ChartEmpty resetHref={pathname} />
@@ -116,6 +133,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
             figure={{ frames: [], ...figure }}
             title={data.title}
             chartData={data}
+            isPublic={isPublic}
+            dataClassification={dataClassification}
           />
         </div>
       </>

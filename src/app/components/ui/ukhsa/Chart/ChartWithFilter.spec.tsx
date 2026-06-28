@@ -170,13 +170,99 @@ describe('ChartWithFilter', () => {
           title="Test Chart Title"
           chartData={mockChartData}
           lastUpdated="2025-05-21"
+          isPublic={false}
         />
       )
 
       expect(screen.getByTestId('chart-no-script')).toHaveTextContent('NoScript - test-chart-title')
     })
+
+    it('does not fetch on first render when isPublic is undefined', async () => {
+      render(
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+      )
+
+      await act(async () => {
+        await new Promise((resolve) => setTimeout(resolve, 100))
+      })
+
+      expect(mockGetFilteredChartResponseData).not.toHaveBeenCalled()
+    })
   })
 
+  describe('isPublic Auth Behaviour', () => {
+    it('forwards isPublic=false to getFilteredChartResponseData', async () => {
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          isPublic={false}
+        />
+      )
+
+      await act(async () => {
+        setTimeseriesFilterForTests('6-months')
+      })
+
+      await waitFor(() => {
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
+          mockChartData,
+          '6-months',
+          '2025-05-21',
+          false,
+          undefined
+        )
+      })
+    })
+
+    it('forwards isPublic=true to getFilteredChartResponseData', async () => {
+      render(
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          isPublic={true}
+        />
+      )
+
+      await act(async () => {
+        setTimeseriesFilterForTests('6-months')
+      })
+
+      await waitFor(() => {
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
+          mockChartData,
+          '6-months',
+          '2025-05-21',
+          true,
+          undefined
+        )
+      })
+    })
+
+    it('passes isPublic=undefined to getCharts, treated as public (no auth)', async () => {
+      render(
+        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+      )
+
+      await act(async () => {
+        setTimeseriesFilterForTests('6-months')
+      })
+
+      await waitFor(() => {
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
+          mockChartData,
+          '6-months',
+          '2025-05-21',
+          true,
+          undefined
+        )
+      })
+    })
+  })
   describe('Filter Change Handling', () => {
     it('skips fetch when filter changes to the same value', async () => {
       render(
@@ -202,7 +288,13 @@ describe('ChartWithFilter', () => {
 
     it('fetches filtered chart when filter changes from "all" to a specific filter', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          isPublic={false}
+        />
       )
 
       await act(async () => {
@@ -210,7 +302,13 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(mockChartData, '6-months', '2025-05-21')
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
+          mockChartData,
+          '6-months',
+          '2025-05-21',
+          false,
+          undefined
+        )
       })
     })
 
@@ -235,7 +333,13 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
+          mockChartData,
+          '3-months',
+          '2025-05-21',
+          true,
+          undefined
+        )
       })
     })
 
@@ -265,7 +369,13 @@ describe('ChartWithFilter', () => {
       })
 
       await waitFor(() => {
-        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(mockChartData, '3-months', '2025-05-21')
+        expect(mockGetFilteredChartResponseData).toHaveBeenCalledWith(
+          mockChartData,
+          '3-months',
+          '2025-05-21',
+          true,
+          undefined
+        )
       })
     })
   })
@@ -463,7 +573,9 @@ describe('ChartWithFilter', () => {
               y_axis: 'Value',
             }),
             '6-months',
-            '2025-05-21'
+            '2025-05-21',
+            true,
+            undefined
           )
         },
         { timeout: 3000 }

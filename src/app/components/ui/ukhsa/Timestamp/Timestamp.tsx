@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { WithChartCard, WithChartHeadlineAndTrendCard } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getServerTranslation } from '@/app/i18n'
 import { chartSizes } from '@/config/constants'
@@ -16,9 +17,11 @@ interface TimestampProps {
 
   /* Size of chart based on whether the chart is displayed in a 1 or 2 column layout */
   size: 'narrow' | 'wide'
+  isPublic?: boolean
+  dataClassification?: DataClassification
 }
 
-export async function Timestamp({ data, size }: TimestampProps) {
+export async function Timestamp({ data, size, isPublic = true, dataClassification = undefined }: TimestampProps) {
   const { t } = await getServerTranslation('common')
 
   const {
@@ -44,6 +47,8 @@ export async function Timestamp({ data, size }: TimestampProps) {
     y_axis_maximum_value,
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
+    is_public: isPublic,
+    data_classification: dataClassification,
   }
 
   const res = await getCharts(requestBody)

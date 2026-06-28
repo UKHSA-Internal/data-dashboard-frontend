@@ -4,6 +4,7 @@ import {
   DualCategoryChartCardValue,
   SingleCategoryChartCardValue,
 } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
 import type { Response as DualCategoryTableResponse } from '@/api/requests/tables/getTables'
@@ -232,7 +233,9 @@ export const getDualCategoryChartsResponseData = async (
 export const getSingleCategoryChartsResponseData = async (
   plots: Array<any>,
   data: SingleCategoryChartCardValue,
-  selectedSize: ChartSizes[number]
+  selectedSize: ChartSizes[number],
+  isPublic: boolean = true,
+  dataClassification?: DataClassification
 ) => {
   const chartRequestBody = {
     plots,
@@ -244,6 +247,8 @@ export const getSingleCategoryChartsResponseData = async (
     y_axis_title: data?.y_axis_title || '',
     y_axis_maximum_value: data?.y_axis_maximum_value || null,
     y_axis_minimum_value: data?.y_axis_minimum_value || null,
+    is_public: isPublic,
+    data_classification: dataClassification,
   }
 
   // Make single chart request with selected size
@@ -258,7 +263,13 @@ export const getSingleCategoryChartsResponseData = async (
 
 const filterNarrowSize = { default: true as const, size: 'narrow' as const }
 
-export const getFilteredChartResponseData = async (data: ChartComponentData, filter: string, lastUpdated: string) => {
+export const getFilteredChartResponseData = async (
+  data: ChartComponentData,
+  filter: string,
+  lastUpdated: string,
+  isPublic: boolean = true,
+  dataClassification?: DataClassification
+) => {
   if (isDualCategoryChartCardValue(data)) {
     const filteredData = getFilteredDualCategoryData(data, filter, lastUpdated)
     return getDualCategoryChartsResponseData(filteredData, filterNarrowSize, null, null)
@@ -268,7 +279,7 @@ export const getFilteredChartResponseData = async (data: ChartComponentData, fil
   if (!filteredChart) return null
 
   const plots = filteredChart.map((plot) => ({ ...plot.value }))
-  return getSingleCategoryChartsResponseData(plots, data, filterNarrowSize)
+  return getSingleCategoryChartsResponseData(plots, data, filterNarrowSize, isPublic, dataClassification)
 }
 
 // Chooses the correct function to get the data based on the chart type
@@ -276,7 +287,9 @@ export const getChartResponseData = async (
   data: ChartComponentData,
   areaType: string | null,
   areaName: string | null,
-  sizes: ChartSizes
+  sizes: ChartSizes,
+  isPublic: boolean = true,
+  dataClassification?: DataClassification
 ) => {
   // Select the default size (mobile-first approach)
   const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
@@ -293,7 +306,7 @@ export const getChartResponseData = async (
     geography: areaName ?? plot?.value.geography,
   }))
 
-  return await getSingleCategoryChartsResponseData(plots, data, selectedSize)
+  return await getSingleCategoryChartsResponseData(plots, data, selectedSize, isPublic, dataClassification)
 }
 
 export const getTimespanFromChartData = (

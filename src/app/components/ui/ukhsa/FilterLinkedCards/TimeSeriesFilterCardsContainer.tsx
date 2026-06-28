@@ -7,12 +7,12 @@ import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 const TimeSeriesFilterCardsContainer = ({
-  isPublic,
-  pageClassification,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: {
   isPublic?: boolean
-  pageClassification?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }) => {
   const { state } = useGlobalFilters()
@@ -24,7 +24,7 @@ const TimeSeriesFilterCardsContainer = ({
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
+      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={dataClassification} />}
       {isChartDataAvailable() ? (
         selectedGeographyFilters!.map((geography) => {
           return (
@@ -35,7 +35,7 @@ const TimeSeriesFilterCardsContainer = ({
               dataFilters={selectedVaccinationFilters!}
               cardData={timeseriesTemplateData!}
               isPublic={isPublic}
-              level={pageClassification}
+              dataClassification={dataClassification}
               authEnabled={authEnabled}
             />
           )

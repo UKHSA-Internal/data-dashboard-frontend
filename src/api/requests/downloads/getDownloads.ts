@@ -65,7 +65,7 @@ export type SingleCategoryRequestParams = z.infer<typeof singleCategoryRequestSc
 export type DualCategoryRequestParams = z.infer<typeof dualCategoryRequestSchema>
 export type RequestParams = SingleCategoryRequestParams | DualCategoryRequestParams
 
-export const getDownloads = async (body: RequestParams) => {
+export const getDownloads = async (body: RequestParams, authToken?: string | null) => {
   try {
     if (!body.is_public) {
       const session = await auth()
@@ -77,7 +77,9 @@ export const getDownloads = async (body: RequestParams) => {
 
     const isDualCategory = 'static_fields' in body
     const endpoint = isDualCategory ? `downloads/dual-category/v1` : `downloads/v2`
-    const { data } = await client<string>(endpoint, { body })
+    const headers = authToken ? { 'X-UHD-AUTH': authToken } : undefined
+
+    const { data } = await client<string>(endpoint, { body, headers })
 
     return data
   } catch (error) {

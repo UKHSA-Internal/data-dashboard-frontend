@@ -28,19 +28,19 @@ interface TableProps {
   dataFilters: DataFilter[]
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
-  isPublic?: boolean
-  level?: DataClassification
+  isPublic: boolean
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
-//
+//FIXME: Somewhere we are not passing in a value for dataclassification when we should, which means the default is being used for the watermark everywhere!
 export function ClientTable({
   size,
   geography,
   dataFilters,
   timePeriods,
   cardData,
-  isPublic,
-  level,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: TableProps) {
   const { t } = useTranslation('common')
@@ -96,6 +96,8 @@ export function ClientTable({
               use_markers: true,
             }
           }),
+          is_public: isPublic,
+          data_classification: dataClassification,
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse)
@@ -117,29 +119,32 @@ export function ClientTable({
       try {
         setTableLoading(true)
 
-        const tableResponse = await getTables({
-          x_axis: x_axis,
-          y_axis: y_axis,
-          plots: dataFilters.map((filter: DataFilter) => {
-            return {
-              topic: filter.value.parameters.topic.value,
-              metric: filter.value.parameters.metric.value,
-              stratum: filter.value.parameters.stratum.value,
-              sex: filter.value.parameters.sex.value,
-              age: filter.value.parameters.age.value,
-              line_colour: filter.value.colour,
-              label: filter.value.label,
-              geography: geography.name,
-              geography_type: geography.geography_type || undefined,
-              chart_type: 'line_multi_coloured',
-              line_type: 'SOLID',
-              date_from: chartDateRange.date_from,
-              date_to: chartDateRange.date_to,
-              use_smooth_lines: false,
-              use_markers: true,
-            }
-          }),
-        })
+        const tableResponse = await getTables(
+          {
+            x_axis: x_axis,
+            y_axis: y_axis,
+            plots: dataFilters.map((filter: DataFilter) => {
+              return {
+                topic: filter.value.parameters.topic.value,
+                metric: filter.value.parameters.metric.value,
+                stratum: filter.value.parameters.stratum.value,
+                sex: filter.value.parameters.sex.value,
+                age: filter.value.parameters.age.value,
+                line_colour: filter.value.colour,
+                label: filter.value.label,
+                geography: geography.name,
+                geography_type: geography.geography_type || undefined,
+                chart_type: 'line_multi_coloured',
+                line_type: 'SOLID',
+                date_from: chartDateRange.date_from,
+                date_to: chartDateRange.date_to,
+                use_smooth_lines: false,
+                use_markers: true,
+              }
+            }),
+          },
+          isPublic
+        )
         if (tableResponse.success) {
           setTableResponse(tableResponse)
         } else {
@@ -240,7 +245,14 @@ export function ClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
+                        {getColumnHeader(
+                          chartLabel,
+                          axisTitle,
+                          columnHeader,
+                          isPublic,
+                          dataClassification,
+                          authEnabled
+                        )}
                       </th>
                     )
                   })}

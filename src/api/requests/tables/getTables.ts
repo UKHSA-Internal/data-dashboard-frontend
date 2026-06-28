@@ -74,18 +74,19 @@ export type DualCategoryRequestParams = z.infer<typeof dualCategoryRequestSchema
 export type RequestParams = SingleCategoryRequestParams | DualCategoryRequestParams
 export type Response = z.infer<typeof responseSchema>
 
-export const getTables = async (body: RequestParams) => {
+export const getTables = async (body: RequestParams, isPublic?: boolean) => {
   try {
+    const publicParam = isPublic === false ? '?isPublic=false' : ''
     const isDual = 'static_fields' in body
     const path = isDual
       ? isSSR
         ? `tables/dual-category/v1`
-        : `proxy/tables/dual-category/v1`
+        : `proxy/tables/dual-category/v1${publicParam}`
       : isSSR
         ? `tables/v4`
-        : `proxy/tables/v4`
+        : `proxy/tables/v4${publicParam}`
 
-    const { data } = await client<Response>(path, { body })
+    const { data } = await client<Response>(path, { body }, isPublic)
     const result = responseSchema.safeParse(data)
     if (result.success) {
       return result

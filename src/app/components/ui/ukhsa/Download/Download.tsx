@@ -16,27 +16,32 @@ interface DownloadProps {
 const getDualCategoryDownloadData = (
   data: DualCategoryChartCardValue,
   areaType: string | null,
-  areaName: string | null
+  areaName: string | null,
+  isPublic?: boolean
 ) => {
-  return getTables({
-    chart_type: data.chart_type,
-    static_fields: {
-      ...data.static_fields,
-      geography_type: areaType ?? data.static_fields.geography_type,
-      geography: areaName ?? data.static_fields.geography,
+  return getTables(
+    {
+      chart_type: data.chart_type,
+      static_fields: {
+        ...data.static_fields,
+        geography_type: areaType ?? data.static_fields.geography_type,
+        geography: areaName ?? data.static_fields.geography,
+      },
+      primary_field_values: data.primary_field_values,
+      secondary_category: data.secondary_category,
+      segments: data.segments.map(({ value }) => value),
+      x_axis: data.x_axis,
+      y_axis: data.y_axis,
     },
-    primary_field_values: data.primary_field_values,
-    secondary_category: data.secondary_category,
-    segments: data.segments.map(({ value }) => value),
-    x_axis: data.x_axis,
-    y_axis: data.y_axis,
-  })
+    isPublic
+  )
 }
 
 const getSingleCategoryDownloadData = (
   data: SingleCategoryChartCardValue,
   areaType: string | null,
-  areaName: string | null
+  areaName: string | null,
+  isPublic?: boolean
 ) => {
   const plots = data.chart.map((plot) => ({
     ...plot.value,
@@ -44,11 +49,14 @@ const getSingleCategoryDownloadData = (
     geography: areaName ?? plot.value.geography,
   }))
 
-  return getTables({
-    plots,
-    x_axis: data.x_axis,
-    y_axis: data.y_axis,
-  })
+  return getTables(
+    {
+      plots,
+      x_axis: data.x_axis,
+      y_axis: data.y_axis,
+    },
+    isPublic
+  )
 }
 
 export async function Download({ data, isPublic }: DownloadProps) {
@@ -57,8 +65,8 @@ export async function Download({ data, isPublic }: DownloadProps) {
   const isDualCategory = isDualCategoryChartCardValue(data)
 
   const tableResponse = isDualCategory
-    ? await getDualCategoryDownloadData(data, areaType, areaName)
-    : await getSingleCategoryDownloadData(data, areaType, areaName)
+    ? await getDualCategoryDownloadData(data, areaType, areaName, isPublic)
+    : await getSingleCategoryDownloadData(data, areaType, areaName, isPublic)
 
   if (!tableResponse.success) {
     return <ChartEmpty resetHref={pathname} />

@@ -7,10 +7,11 @@ import { AreaSelectorForm } from './AreaSelectorForm'
 interface AreaSelectorProps {
   areaType: string | undefined
   selectedTopics: Topics[]
+  isPublic?: boolean
 }
 
-export async function AreaSelector({ areaType, selectedTopics }: AreaSelectorProps) {
-  const geographiesResponse = await getGeographies({ topic: selectedTopics[0] })
+export async function AreaSelector({ areaType, selectedTopics, isPublic }: AreaSelectorProps) {
+  const geographiesResponse = await getGeographies({ topic: selectedTopics[0] }, isPublic)
 
   // Don't show the area selector if we fail to get the geography types
   if (!geographiesResponse.success) {

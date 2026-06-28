@@ -37,7 +37,7 @@ interface TableProps {
   currentTimePeriodIndex: number
   cardData: FilterLinkedSubplotData
   isPublic?: boolean
-  level?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
 
@@ -51,8 +51,8 @@ export function SubplotClientTable({
   timePeriods,
   currentTimePeriodIndex,
   cardData,
-  isPublic,
-  level,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: TableProps) {
   const { t } = useTranslation('common')
@@ -84,35 +84,38 @@ export function SubplotClientTable({
       try {
         setTableLoading(true)
 
-        const tableResponse = await getSubplotTables({
-          chart_parameters: {
-            x_axis: x_axis,
-            y_axis: y_axis,
-            theme: theme,
-            sub_theme: sub_theme,
-            date_from: timePeriods[currentTimePeriodIndex].value.date_from,
-            date_to: timePeriods[currentTimePeriodIndex].value.date_to,
-            metric_value_ranges: metricValueRanges,
+        const tableResponse = await getSubplotTables(
+          {
+            chart_parameters: {
+              x_axis: x_axis,
+              y_axis: y_axis,
+              theme: theme,
+              sub_theme: sub_theme,
+              date_from: timePeriods[currentTimePeriodIndex].value.date_from,
+              date_to: timePeriods[currentTimePeriodIndex].value.date_to,
+              metric_value_ranges: metricValueRanges,
+            },
+            subplots: dataFilters.map((filter: DataFilter) => {
+              return {
+                subplot_title: filter.value.label,
+                subplot_parameters: {
+                  topic: filter.value.parameters.topic.value,
+                  metric: filter.value.parameters.metric.value,
+                  stratum: filter.value.parameters.stratum.value,
+                },
+                plots: geographyRelations.map((geography) => {
+                  return {
+                    label: geography.name,
+                    geography_type: geography.geography_type,
+                    geography: geography.name,
+                    line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                  }
+                }),
+              }
+            }),
           },
-          subplots: dataFilters.map((filter: DataFilter) => {
-            return {
-              subplot_title: filter.value.label,
-              subplot_parameters: {
-                topic: filter.value.parameters.topic.value,
-                metric: filter.value.parameters.metric.value,
-                stratum: filter.value.parameters.stratum.value,
-              },
-              plots: geographyRelations.map((geography) => {
-                return {
-                  label: geography.name,
-                  geography_type: geography.geography_type,
-                  geography: geography.name,
-                  line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
-                }
-              }),
-            }
-          }),
-        })
+          isPublic
+        )
 
         if (tableResponse.success) {
           setTableResponse(tableResponse)
@@ -174,7 +177,14 @@ export function SubplotClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
+                        {getColumnHeader(
+                          chartLabel,
+                          axisTitle,
+                          columnHeader,
+                          isPublic,
+                          dataClassification,
+                          authEnabled
+                        )}
                       </th>
                     )
                   })}

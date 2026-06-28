@@ -41,18 +41,27 @@ describe('postMapData', () => {
 
   beforeEach(() => {
     jest.clearAllMocks()
-
     mockSafeParse.mockReturnValue({ success: true as const, data: mockSuccessResponse })
   })
 
-  test('passes the request object as body to client', async () => {
+  test('passes the request object as body to client (public — no isPublic param)', async () => {
     mockClient.mockResolvedValue({ data: mockSuccessResponse, status: 200 })
     const { postMapData } = await import('./postMaps')
-    await postMapData(mockRequest)
+    await postMapData(mockRequest) // isPublic undefined → public page
 
-    expect(mockClient).toHaveBeenCalledWith(expect.any(String), {
-      body: mockRequest,
-    })
+    expect(mockClient).toHaveBeenCalledWith(
+      expect.not.stringContaining('isPublic=false'), // no isPublic param on public pages
+      { body: mockRequest },
+      undefined
+    )
+  })
+
+  test('passes the request object as body to client (non-public — isPublic=false param appended)', async () => {
+    mockClient.mockResolvedValue({ data: mockSuccessResponse, status: 200 })
+    const { postMapData } = await import('./postMaps')
+    await postMapData(mockRequest, false) // isPublic false → non-public page
+
+    expect(mockClient).toHaveBeenCalledWith(expect.stringContaining('isPublic=false'), { body: mockRequest }, false)
   })
 
   test('calls MapDataResponse.safeParse with client response data on success', async () => {
@@ -164,9 +173,13 @@ describe('postMapData', () => {
 
     await postMapData(complexRequest)
 
-    expect(mockClient).toHaveBeenCalledWith('proxy/maps/v1', {
-      body: complexRequest,
-    })
+    expect(mockClient).toHaveBeenCalledWith(
+      'proxy/maps/v1',
+      {
+        body: complexRequest,
+      },
+      undefined
+    )
   })
 
   test('preserves the exact client response data structure when parsing', async () => {
@@ -222,7 +235,6 @@ describe('postMapData', () => {
 
     beforeEach(() => {
       jest.resetModules()
-      // Re-setup the mocks that resetModules cleared
       jest.mock('@/api/utils/api.utils')
       jest.mock('@/lib/logger')
       jest.mock('@/api/models/Maps', () => ({
@@ -245,12 +257,16 @@ describe('postMapData', () => {
 
       await postMapData(mockRequest)
 
-      expect(mockClient).toHaveBeenCalledWith('maps/v1', {
-        body: mockRequest,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'maps/v1',
+        {
+          body: mockRequest,
+        },
+        undefined
+      )
     })
 
-    test('calls client with proxy path when isSSR is false', async () => {
+    test('calls client with proxy path when isSSR is false and isPublic is undefined (public page)', async () => {
       jest.doMock('@/app/utils/app.utils', () => ({
         isSSR: false,
       }))
@@ -261,11 +277,59 @@ describe('postMapData', () => {
 
       mockClient.mockResolvedValue({ data: mockSuccessResponse, status: 200 })
 
-      await postMapData(mockRequest)
+      await postMapData(mockRequest) // no isPublic → public page → no ?isPublic=false
 
-      expect(mockClient).toHaveBeenCalledWith('proxy/maps/v1', {
-        body: mockRequest,
-      })
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/maps/v1',
+        {
+          body: mockRequest,
+        },
+        undefined
+      )
+    })
+
+    test('calls client with proxy path and isPublic=false param when isSSR is false and isPublic is false (non-public page)', async () => {
+      jest.doMock('@/app/utils/app.utils', () => ({
+        isSSR: false,
+      }))
+
+      const { postMapData } = await import('./postMaps')
+      const { client } = await import('@/api/utils/api.utils')
+      const mockClient = client as jest.MockedFunction<typeof client>
+
+      mockClient.mockResolvedValue({ data: mockSuccessResponse, status: 200 })
+
+      await postMapData(mockRequest, false) // isPublic false → non-public → ?isPublic=false appended
+
+      expect(mockClient).toHaveBeenCalledWith(
+        'proxy/maps/v1?isPublic=false',
+        {
+          body: mockRequest,
+        },
+        false
+      )
+    })
+
+    test('calls client with SSR path and no isPublic param when isSSR is true and isPublic is false', async () => {
+      jest.doMock('@/app/utils/app.utils', () => ({
+        isSSR: true,
+      }))
+
+      const { postMapData } = await import('./postMaps')
+      const { client } = await import('@/api/utils/api.utils')
+      const mockClient = client as jest.MockedFunction<typeof client>
+
+      mockClient.mockResolvedValue({ data: mockSuccessResponse, status: 200 })
+
+      await postMapData(mockRequest, false) // SSR path never uses publicParam
+
+      expect(mockClient).toHaveBeenCalledWith(
+        'maps/v1',
+        {
+          body: mockRequest,
+        },
+        false
+      )
     })
   })
 })
