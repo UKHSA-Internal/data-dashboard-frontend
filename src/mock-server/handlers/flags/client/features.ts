@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 
 import { featureFlags } from './fixtures/feature-flags'
@@ -12,7 +13,7 @@ export default async function handler(req: Request, res: Response) {
       return res.status(405)
     }
 
-    const { flags } = getSwitchBoardState(req.headers.cookie)
+    const { flags } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     return res.json({
       ...featureFlags,

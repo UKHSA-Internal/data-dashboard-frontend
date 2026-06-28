@@ -45,6 +45,11 @@ export const chartExportApiRoutePath = '/api/download/chart'
 export const subplotChartExportApiRoutePath = '/api/download/subplot/v1'
 
 /**
+ * The NextJS API Route path for dual category chart download
+ */
+export const dualCategoryChartExportApiRoutePath = '/api/download/dual-category/v1'
+
+/**
  * The NextJS Api Route path for bulk download
  */
 export const downloadApiRoutePath = '/api/download'

@@ -1,19 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
 import { Suspense } from 'react'
-import { z } from 'zod'
 
-import { ChartCardSchemas } from '@/api/models/cms/Page'
+import { ChartComponentData } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartSvg } from '@/app/utils/chart.utils'
-import { chartSizes } from '@/config/constants'
+import { getChartResponseData, getChartSvg } from '@/app/utils/chart.utils'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import ChartInteractive from './ChartInteractive'
 import ChartWithFilter from './ChartWithFilter'
+
+export type ChartSizes = Array<
+  | {
+      default?: never
+      minWidth: number
+      size: 'narrow' | 'wide' | 'half' | 'third'
+    }
+  | {
+      default: true
+      minWidth?: never
+      size: 'narrow' | 'wide' | 'half' | 'third'
+    }
+>
 
 interface ChartProps {
   /**
@@ -27,7 +38,7 @@ interface ChartProps {
    * from the API. This data must conform to the CMS models for the specific chart types.
    */
   /* Request metadata from the CMS required to fetch from the headlines api */
-  readonly data: z.infer<typeof ChartCardSchemas>['value']
+  readonly data: ChartComponentData
 
   /**
    * Defines the responsive display sizes for the chart, allowing fallback to a
@@ -36,18 +47,8 @@ interface ChartProps {
    * for the default chart display. `size` controls the width format for each entry.
    *
    */
-  readonly sizes: Array<
-    | {
-        default?: never
-        minWidth: number
-        size: 'narrow' | 'wide' | 'half' | 'third'
-      }
-    | {
-        default: true
-        minWidth?: never
-        size: 'narrow' | 'wide' | 'half' | 'third'
-      }
-  >
+  readonly sizes: ChartSizes
+
   /**
    * True when chart contains public data
    * */
@@ -92,63 +93,12 @@ export async function Chart({
 }: ChartProps) {
   const { t } = await getServerTranslation('common')
 
-  const chartData = data
-
-  let yAxisMinimum = null
-  let yAxisMaximum = null
-  let xAxisTitle = ''
-  let yAxisTitle = ''
-
-  if ('y_axis_minimum_value' in chartData) {
-    yAxisMinimum = chartData.y_axis_minimum_value
-  }
-  if ('y_axis_maximum_value' in chartData) {
-    yAxisMaximum = chartData.y_axis_maximum_value
-  }
-  if ('x_axis_title' in chartData) {
-    xAxisTitle = chartData.x_axis_title || ''
-  }
-  if ('y_axis_title' in chartData) {
-    yAxisTitle = chartData.y_axis_title || ''
-  }
-
-  const { chart, x_axis, y_axis, confidence_intervals, confidence_colour } = chartData
-
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
-  const plots = chart.map((plot) => ({
-    ...plot?.value,
+  const chartResponse = await getChartResponseData(data, areaType, areaName, sizes, isPublic, dataClassification)
 
-    geography_type: areaType ?? plot?.value.geography_type,
-    geography: areaName ?? plot?.value.geography,
-  }))
-
-  const chartRequestBody = {
-    plots,
-    x_axis,
-    y_axis,
-    confidence_intervals,
-    confidence_colour,
-    x_axis_title: xAxisTitle,
-    y_axis_title: yAxisTitle,
-    y_axis_maximum_value: yAxisMaximum,
-    y_axis_minimum_value: yAxisMinimum,
-    is_public: isPublic,
-    data_classification: dataClassification,
-  }
-
-  // Select the default size (mobile-first approach)
-  const selectedSize = sizes.slice().sort((a, b) => chartSizes[b.size].width - chartSizes[a.size].width)[0]
-
-  // Make single chart request with selected size
-  const chartResponse = await getCharts({
-    ...chartRequestBody,
-    chart_width: chartSizes[selectedSize.size].width,
-    chart_height: chartSizes[selectedSize.size].height,
-  })
-
-  if (!chartResponse.success || !chartResponse.data) {
+  if (!chartResponse?.success || !chartResponse?.data) {
     return <ChartEmpty resetHref={pathname} />
   }
 
@@ -182,8 +132,7 @@ export async function Chart({
             lastUpdated={last_updated}
             figure={{ frames: [], ...figure }}
             title={data.title}
-            chart={data.chart}
-            chartData={chartData}
+            chartData={data}
             isPublic={isPublic}
             dataClassification={dataClassification}
           />

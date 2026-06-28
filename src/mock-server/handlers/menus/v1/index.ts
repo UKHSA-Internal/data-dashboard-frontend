@@ -2,6 +2,7 @@ import { Request, Response } from 'express'
 
 import { type Response as Menu } from '@/api/requests/menus/getMenu'
 import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 
 import { megaMenu } from './fixtures/mega-menu'
@@ -15,7 +16,7 @@ export default async function handler(req: Request, res: Response) {
 
     const {
       api: { menus },
-    } = getSwitchBoardState(req.headers.cookie)
+    } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     const { status, scenario } = menus
 
