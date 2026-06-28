@@ -16,12 +16,12 @@ import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 
 interface DualCategoryTableProps {
   /* Request metadata from the CMS required to fetch the dual category tabular data */
-  data: DualCategoryChartCardValue
+  readonly data: DualCategoryChartCardValue
 
-  isPublic?: boolean
+  readonly isPublic?: boolean
 
-  level?: DataClassification
-  authEnabled?: boolean
+  readonly level?: DataClassification
+  readonly authEnabled?: boolean
 }
 
 export async function DualCategoryTable({ data, isPublic = false, level, authEnabled }: DualCategoryTableProps) {

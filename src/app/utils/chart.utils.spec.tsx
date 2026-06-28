@@ -528,7 +528,7 @@ describe('getSingleCategoryChartsResponseData', () => {
   const selectedSize = { default: true, size: 'narrow' } as const
 
   test('requests single category chart with the provided plots and selected size', async () => {
-    const plots = [{ topic: 'COVID-19', metric: 'COVID-19_cases_casesByDay' }]
+    const plots = [{ topic: 'COVID-19', metric: 'COVID-19_cases_casesByDay', chart_type: 'bar' }]
 
     await getSingleCategoryChartsResponseData(plots, mockData, selectedSize)
 

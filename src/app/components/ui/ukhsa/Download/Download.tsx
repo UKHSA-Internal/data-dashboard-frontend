@@ -9,8 +9,8 @@ import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import { DownloadForm } from './DownloadForm'
 
 interface DownloadProps {
-  data: ChartComponentData
-  isPublic?: boolean
+  readonly data: ChartComponentData
+  readonly isPublic?: boolean
 }
 
 const getDualCategoryDownloadData = (

@@ -66,14 +66,12 @@ export function ChartRowCardContent({
                   dataClassification={dataClassification}
                   authEnabled={authEnabled}
                 >
-                  {column.type !== 'dual_category_chart_card' && (
-                    <Timestamp
-                      data={column.value}
-                      size={size}
-                      isPublic={isPublic}
-                      dataClassification={dataClassification}
-                    />
-                  )}
+                  <Timestamp
+                    data={column.value}
+                    size={size}
+                    isPublic={isPublic}
+                    dataClassification={dataClassification}
+                  />
                 </ChartRowCardHeader>
                 <Tabs defaultValue={`${kebabCase(column.value.title)}-chart`} className="govuk-!-margin-bottom-0">
                   <TabsList className="hidden no-js:block sm:block">

@@ -1,6 +1,7 @@
+import * as fs from 'node:fs'
+import * as path from 'node:path'
+
 import { Request, Response } from 'express'
-import * as fs from 'fs'
-import * as path from 'path'
 
 import { requestSchema } from '@/api/requests/charts/getDualCategoryCharts'
 import { chartSizes } from '@/config/constants'

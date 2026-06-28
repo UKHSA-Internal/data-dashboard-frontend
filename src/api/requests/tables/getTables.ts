@@ -78,13 +78,15 @@ export const getTables = async (body: RequestParams, isPublic?: boolean) => {
   try {
     const publicParam = isPublic === false ? '?isPublic=false' : ''
     const isDual = 'static_fields' in body
-    const path = isDual
-      ? isSSR
-        ? `tables/dual-category/v1`
-        : `proxy/tables/dual-category/v1${publicParam}`
-      : isSSR
-        ? `tables/v4`
-        : `proxy/tables/v4${publicParam}`
+
+    const getPath = () => {
+      if (isDual) {
+        return isSSR ? `tables/dual-category/v1` : `proxy/tables/dual-category/v1${publicParam}`
+      }
+      return isSSR ? `tables/v4` : `proxy/tables/v4${publicParam}`
+    }
+
+    const path = getPath()
 
     const { data } = await client<Response>(path, { body }, isPublic)
     const result = responseSchema.safeParse(data)

@@ -5,7 +5,7 @@ import {
   SingleCategoryChartCardValue,
 } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
-import { getCharts } from '@/api/requests/charts/getCharts'
+import { getCharts, type RequestParams as GetChartsRequestParams } from '@/api/requests/charts/getCharts'
 import { getDualCategoryCharts } from '@/api/requests/charts/getDualCategoryCharts'
 import type { Response as DualCategoryTableResponse } from '@/api/requests/tables/getTables'
 import type { Column, Data } from '@/app/utils/chart-table.utils'
@@ -229,9 +229,8 @@ export const getDualCategoryChartsResponseData = async (
   })
 }
 
-// TODO: Sort out types
 export const getSingleCategoryChartsResponseData = async (
-  plots: Array<any>,
+  plots: GetChartsRequestParams['plots'],
   data: SingleCategoryChartCardValue,
   selectedSize: ChartSizes[number],
   isPublic: boolean = true,
