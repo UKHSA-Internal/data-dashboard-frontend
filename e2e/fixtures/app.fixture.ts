@@ -39,7 +39,7 @@ import {
 } from './index'
 
 // The static desktop menu bar items
-const navMenuItems = ['Home', 'Health topics', 'API', 'Metrics documentation', 'About']
+const navMenuItems = ['Home', 'Health topics', 'API', 'Data documentation', 'About']
 
 type Fixtures = {
   app: App
@@ -77,7 +77,6 @@ export class App {
   readonly header: Locator
   readonly phaseBanner: Locator
   readonly heroBanner: Locator
-  readonly nav: Locator
   readonly sideNav: Locator
   readonly tableOfContents: Locator
   readonly backToTop: Locator
@@ -94,7 +93,6 @@ export class App {
     this.header = this.page.getByRole('banner')
     this.phaseBanner = this.page.getByTestId('ukhsa-phase-banner')
     this.heroBanner = this.page.getByTestId('ukhsa-hero-banner')
-    this.nav = this.page.getByRole('navigation', { name: 'Menu' })
     this.sideNav = this.page.getByRole('navigation', { name: 'Side navigation' })
     this.tableOfContents = this.page.getByRole('navigation', { name: 'Contents' })
     this.backToTop = this.page.getByRole('link', { name: 'Back to top' })
@@ -253,20 +251,28 @@ export class App {
   }
 
   async clickNav(name: string) {
-    await expect(this.page.getByRole('link', { name: 'Menu', expanded: false })).toBeVisible()
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    const nav = this.page.getByRole('navigation', { name: 'Menu' })
+    await this.waitForPageLoaded()
 
-    await expect(nav).toBeVisible()
+    // On mobile the menu is hidden behind a toggle button; on desktop it is permanently visible
+    if (await this.mobileMenuButtonClosed.isVisible()) {
+      await this.mobileMenuButtonClosed.click()
+      await this.page.locator('#ukhsa-menu-bar-nav').getByRole('link', { name, exact: true }).click()
+      return
+    }
 
-    await nav.getByRole('link', { name }).click()
+    await this.page
+      .getByTestId('ukhsa-menu-bar')
+      .getByRole('navigation', { name: 'Main navigation' })
+      .getByRole('link', { name, exact: true })
+      .click()
   }
 
   async clickBrowseNav(name: string) {
-    await this.page.getByRole('link', { name: 'Show navigation menu', expanded: false }).click()
-    await expect(this.page.getByRole('heading', { name: 'Browse', level: 1 })).toBeVisible()
-
-    await this.page.getByRole('link', { name }).click()
+    await this.page
+      .getByTestId('ukhsa-menu-bar')
+      .getByRole('navigation', { name: 'Main navigation' })
+      .getByRole('link', { name, exact: true })
+      .click()
   }
 
   async hasHeading(name: string) {

@@ -26,7 +26,7 @@ export class BrowsePage {
     await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'Health topics' })).toBeVisible()
     await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'API' })).toBeVisible()
     await expect(
-      this.page.getByLabel('Browse all pages').getByRole('link', { name: 'Metrics documentation' })
+      this.page.getByLabel('Browse all pages').getByRole('link', { name: 'Data documentation' })
     ).toBeVisible()
     await expect(this.page.getByLabel('Browse all pages').getByRole('link', { name: 'About' })).toBeVisible()
   }

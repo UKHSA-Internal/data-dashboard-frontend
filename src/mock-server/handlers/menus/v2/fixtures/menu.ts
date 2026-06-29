@@ -30,7 +30,7 @@ export const menu = {
     {
       type: 'link',
       value: {
-        title: 'Metrics documentation',
+        title: 'Data documentation',
         page: 1,
         html_url: '/metrics-documentation/',
       },
