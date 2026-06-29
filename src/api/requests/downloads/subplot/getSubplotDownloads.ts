@@ -91,7 +91,8 @@ export const getSubplotDownloads = async (
   target_threshold: RequestParams['target_threshold'] = null,
   target_threshold_label: RequestParams['target_threshold_label'] = null,
   chart_parameters: RequestParams['chart_parameters'],
-  subplots: RequestParams['subplots']
+  subplots: RequestParams['subplots'],
+  authToken?: string | null
 ) => {
   try {
     const body: RequestParams = {
@@ -101,7 +102,10 @@ export const getSubplotDownloads = async (
       chart_parameters,
       subplots,
     }
-    const { data } = await client<string>(`downloads/subplot/v1`, { body })
+    const { data } = await client<string>(`downloads/subplot/v1`, {
+      body,
+      headers: authToken ? { 'X-UHD-AUTH': authToken } : undefined,
+    })
 
     return data
   } catch (error) {

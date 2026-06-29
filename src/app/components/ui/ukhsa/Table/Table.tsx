@@ -29,7 +29,7 @@ interface TableProps {
 
   isPublic?: boolean
 
-  level?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
 
@@ -96,8 +96,8 @@ export async function Table({
     confidence_intervals_description,
   },
   size,
-  isPublic = false,
-  level,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: TableProps) {
   const { t } = await getServerTranslation('common')
@@ -112,11 +112,14 @@ export async function Table({
   }))
 
   // Call the table endpoint to get the data in table format
-  const tableResponse = await getTables({
-    plots,
-    x_axis,
-    y_axis,
-  })
+  const tableResponse = await getTables(
+    {
+      plots,
+      x_axis,
+      y_axis,
+    },
+    isPublic
+  )
 
   // Call the charts endpoint as this gives us the data timestamp
   const chartRequestBody = {
@@ -129,6 +132,8 @@ export async function Table({
     y_axis_maximum_value,
     chart_width: chartSizes[size].width,
     chart_height: chartSizes[size].height,
+    is_public: isPublic,
+    data_classification: dataClassification,
   }
 
   const chartResponse = await getCharts(chartRequestBody)
@@ -193,7 +198,14 @@ export async function Table({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
+                        {getColumnHeader(
+                          chartLabel,
+                          axisTitle,
+                          columnHeader,
+                          isPublic,
+                          dataClassification,
+                          authEnabled
+                        )}
                       </th>
                     )
                   })}

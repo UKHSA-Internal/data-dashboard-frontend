@@ -90,3 +90,43 @@ test('Handles generic http errors', async () => {
 
   expect(result).toEqual(undefined)
 })
+
+test('Forwards auth token to client when present', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsSubplotCsvFixture,
+    status: 200,
+  })
+
+  await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots, 'Bearer test-token')
+
+  expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
+    body: {
+      file_format: 'csv',
+      target_threshold: null,
+      target_threshold_label: null,
+      chart_parameters: mockChartParameters,
+      subplots: mockSubplots,
+    },
+    headers: { 'X-UHD-AUTH': 'Bearer test-token' },
+  })
+})
+
+test('Does not forward auth header when no token present', async () => {
+  jest.mocked(client).mockResolvedValueOnce({
+    data: downloadsSubplotCsvFixture,
+    status: 200,
+  })
+
+  await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots)
+
+  expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
+    body: {
+      file_format: 'csv',
+      target_threshold: null,
+      target_threshold_label: null,
+      chart_parameters: mockChartParameters,
+      subplots: mockSubplots,
+    },
+    headers: undefined,
+  })
+})

@@ -3,6 +3,7 @@ import { Suspense } from 'react'
 import { z } from 'zod'
 
 import { ChartCardSchemas } from '@/api/models/cms/Page'
+import { DataClassification } from '@/api/models/DataClassification'
 import { getCharts } from '@/api/requests/charts/getCharts'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
@@ -47,6 +48,15 @@ interface ChartProps {
         size: 'narrow' | 'wide' | 'half' | 'third'
       }
   >
+  /**
+   * True when chart contains public data
+   * */
+  isPublic?: boolean
+
+  /**
+   * Data classification, eg "OFFICIAL SENSITIVE"
+   * */
+  dataClassification?: DataClassification
 }
 
 const createStaticChart = async ({
@@ -73,7 +83,13 @@ const createStaticChart = async ({
   )
 }
 
-export async function Chart({ data, sizes, enableInteractive = true }: ChartProps) {
+export async function Chart({
+  data,
+  sizes,
+  enableInteractive = true,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartProps) {
   const { t } = await getServerTranslation('common')
 
   const chartData = data
@@ -118,6 +134,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
     y_axis_title: yAxisTitle,
     y_axis_maximum_value: yAxisMaximum,
     y_axis_minimum_value: yAxisMinimum,
+    is_public: isPublic,
+    data_classification: dataClassification,
   }
 
   // Select the default size (mobile-first approach)
@@ -166,6 +184,8 @@ export async function Chart({ data, sizes, enableInteractive = true }: ChartProp
             title={data.title}
             chart={data.chart}
             chartData={chartData}
+            isPublic={isPublic}
+            dataClassification={dataClassification}
           />
         </div>
       </>
