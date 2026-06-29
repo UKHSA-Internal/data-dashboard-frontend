@@ -169,6 +169,22 @@ describe('TimeseriesFilterCard', () => {
     expect(screen.getByText(/Cases between 2022 - 2023 \(United Kingdom, England\)/)).toBeInTheDocument()
   })
 
+  test('renders data classification in heading when non-public', async () => {
+    render(
+      <TimeseriesFilterCard
+        geography={mockGeography}
+        timePeriods={mockTimePeriods}
+        dataFilters={mockDataFilters}
+        cardData={mockCardData}
+        isPublic={false}
+        dataClassification={'official_sensitive'}
+        authEnabled={true}
+      />
+    )
+
+    expect(screen.getByText(/OFFICIAL-SENSITIVE/)).toBeInTheDocument()
+  })
+
   test('renders about tab when about is provided', () => {
     const cardDataWithAbout: FilterLinkedTimeSeriesData = {
       ...mockCardData,
