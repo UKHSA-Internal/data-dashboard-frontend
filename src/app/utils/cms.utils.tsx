@@ -137,6 +137,7 @@ export const renderCard = (
           return authEnabled && isPublic === false ? (
             <Suspense
               fallback={
+                // eslint-disable-next-line tailwindcss/no-custom-classname
                 <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true" role="status">
                   Loading chart
                 </div>

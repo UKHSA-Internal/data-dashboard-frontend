@@ -112,6 +112,7 @@ export function ClientTable({
     }
 
     fetchCharts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
@@ -158,6 +159,7 @@ export function ClientTable({
     }
 
     fetchTables()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   if (tableLoading || chartLoading) {

@@ -97,15 +97,8 @@ const TimeseriesClientChart = ({
     }
 
     fetchCharts()
-  }, [
-    cardData.legend_title,
-    chartDateRange.date_from,
-    chartDateRange.date_to,
-    dataFilters,
-    geography,
-    removeChartRequestError,
-    setChartRequestErrors,
-  ])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardData.legend_title, chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
     if (chartResponse?.last_updated) {
