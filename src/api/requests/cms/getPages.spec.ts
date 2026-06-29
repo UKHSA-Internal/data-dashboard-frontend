@@ -24,10 +24,19 @@ type ErrorResponse = z.SafeParseError<z.infer<typeof responseSchema>>
 type WhatsNewSuccessResponse = z.SafeParseSuccess<z.infer<typeof whatsNewResponseSchema>>
 type WhatsNewErrorResponse = z.SafeParseError<z.infer<typeof whatsNewResponseSchema>>
 
+let mockIsSSR = false
+jest.mock('@/app/utils/app.utils', () => ({
+  ...jest.requireActual('@/app/utils/app.utils'),
+  get isSSR() {
+    return mockIsSSR
+  },
+}))
+
 const getPagesResponse = jest.mocked(client)
 
 beforeEach(() => {
   jest.clearAllMocks()
+  mockIsSSR = false
 })
 
 describe('Successfully getting all pages from the cms api ', () => {
@@ -167,6 +176,32 @@ describe('getPages', () => {
     expect(data.items).toHaveLength(totalItems)
     expect(data.meta.total_count).toBe(totalItems)
     expect(getPagesResponse).toHaveBeenCalledTimes(3)
+  })
+
+  test('requests the proxy path when not server-side rendered', async () => {
+    mockIsSSR = false
+
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: allPagesMock,
+    })
+
+    await getPages()
+
+    expect(getPagesResponse).toHaveBeenCalledWith('proxy/pages', expect.anything())
+  })
+
+  test('requests the pages path when server-side rendered', async () => {
+    mockIsSSR = true
+
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: allPagesMock,
+    })
+
+    await getPages()
+
+    expect(getPagesResponse).toHaveBeenCalledWith('pages', expect.anything())
   })
 
   test('includes additional params in initial request', async () => {
@@ -346,6 +381,19 @@ describe("Failing to get all What's new child pages from the cms api", () => {
     const searchParams = callArgs[1]?.searchParams as URLSearchParams
     expect(searchParams.get('limit')).toBe('20')
   })
+
+  test('defaults to the first page when page is undefined', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithWhatsNewChildTypeMock,
+    })
+
+    await getWhatsNewPages({ page: undefined })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('offset')).toBe('0')
+  })
 })
 
 // Metrics documentation tests
@@ -428,6 +476,19 @@ describe('Successfully getting all Metrics Documentation child pages from the cm
     const callArgs = getPagesResponse.mock.calls[0]
     const searchParams = callArgs[1]?.searchParams as URLSearchParams
     expect(searchParams.get('limit')).toBe('25')
+  })
+
+  test('defaults to the first page when page is undefined', async () => {
+    getPagesResponse.mockResolvedValueOnce({
+      status: 200,
+      data: pagesWithMetricsChildTypeMock,
+    })
+
+    await getMetricsPages({ search: undefined, page: undefined as unknown as number })
+
+    const callArgs = getPagesResponse.mock.calls[0]
+    const searchParams = callArgs[1]?.searchParams as URLSearchParams
+    expect(searchParams.get('offset')).toBe('0')
   })
 })
 
