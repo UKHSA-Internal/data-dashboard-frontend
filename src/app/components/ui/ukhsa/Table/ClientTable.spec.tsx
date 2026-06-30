@@ -193,6 +193,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -220,6 +221,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -247,6 +249,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -270,6 +273,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -295,6 +299,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -322,43 +327,43 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
     await waitFor(() => {
-      expect(getChartsMock).toHaveBeenCalledWith(
-        {
-          chart_height: 260,
-          chart_width: 515,
-          x_axis: 'date',
-          y_axis: 'metric',
-          y_axis_title: 'Year',
-          y_axis_minimum_value: null,
-          y_axis_maximum_value: null,
-          plots: [
-            {
-              theme: 'infectious_disease',
-              sub_theme: 'respiratory',
-              topic: 'COVID-19',
-              metric: 'new_cases_7days_sum',
-              stratum: 'default',
-              sex: 'all',
-              age: 'all',
-              line_colour: '#FF0000',
-              label: 'COVID-19 Cases',
-              geography: 'England',
-              geography_type: 'Nation',
-              chart_type: 'line_multi_coloured',
-              line_type: 'SOLID',
-              date_from: '2023-01-01',
-              date_to: '2024-12-31',
-              use_smooth_lines: false,
-              use_markers: true,
-            },
-          ],
-        },
-        undefined
-      )
+      expect(getChartsMock).toHaveBeenCalledWith({
+        chart_height: 260,
+        chart_width: 515,
+        x_axis: 'date',
+        y_axis: 'metric',
+        y_axis_title: 'Year',
+        y_axis_minimum_value: null,
+        y_axis_maximum_value: null,
+        plots: [
+          {
+            theme: 'infectious_disease',
+            sub_theme: 'respiratory',
+            topic: 'COVID-19',
+            metric: 'new_cases_7days_sum',
+            stratum: 'default',
+            sex: 'all',
+            age: 'all',
+            line_colour: '#FF0000',
+            label: 'COVID-19 Cases',
+            geography: 'England',
+            geography_type: 'Nation',
+            chart_type: 'line_multi_coloured',
+            line_type: 'SOLID',
+            date_from: '2023-01-01',
+            date_to: '2024-12-31',
+            use_smooth_lines: false,
+            use_markers: true,
+          },
+        ],
+        is_public: true,
+        data_classification: undefined,
+      })
     })
   })
 
@@ -379,6 +384,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -409,7 +415,7 @@ describe('ClientTable', () => {
             },
           ],
         },
-        undefined
+        true
       )
     })
   })
@@ -431,6 +437,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -459,6 +466,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -507,6 +515,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -539,6 +548,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -551,8 +561,7 @@ describe('ClientTable', () => {
               geography_type: undefined,
             }),
           ]),
-        }),
-        undefined
+        })
       )
     })
   })
@@ -574,6 +583,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -612,6 +622,7 @@ describe('ClientTable', () => {
         dataFilters={newDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -638,6 +649,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -660,6 +672,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -686,6 +699,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -713,6 +727,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -760,6 +775,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -811,6 +827,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardDataWithAxisTitle}
+        isPublic={true}
       />
     )
 
@@ -862,6 +879,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardDataNoLabels}
+        isPublic={true}
       />
     )
 
@@ -881,6 +899,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -899,6 +918,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -944,6 +964,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -991,6 +1012,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1016,6 +1038,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1041,6 +1064,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1101,6 +1125,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1154,6 +1179,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 
@@ -1206,6 +1232,7 @@ describe('ClientTable', () => {
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
         cardData={mockCardData}
+        isPublic={true}
       />
     )
 

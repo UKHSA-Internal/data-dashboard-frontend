@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ChartInteractiveWrapper from '@/app/components/cms/ChartInteractive/ChartInteractiveWrapper'
@@ -17,7 +18,8 @@ interface ClientChartProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   handleLatestDate: (date: string | null) => void
-  isPublic?: boolean
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
 }
 
 const TimeseriesClientChart = ({
@@ -26,7 +28,8 @@ const TimeseriesClientChart = ({
   timePeriods,
   cardData,
   handleLatestDate,
-  isPublic,
+  isPublic = true,
+  dataClassification = undefined,
 }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -41,41 +44,40 @@ const TimeseriesClientChart = ({
         setLoading(true)
         setError(null)
         removeChartRequestError(`subplot-${geography.geography_code}`)
-        const chartResponse = await getCharts(
-          {
-            file_format: 'svg',
-            chart_height: 260,
-            chart_width: 515,
-            x_axis: 'date',
-            y_axis: 'metric',
-            x_axis_title: 'Year',
-            y_axis_title: cardData.legend_title,
-            y_axis_minimum_value: null,
-            y_axis_maximum_value: null,
-            plots: dataFilters.map((filter: DataFilter) => {
-              return {
-                theme: filter.value.parameters.theme.value,
-                sub_theme: filter.value.parameters.sub_theme.value,
-                topic: filter.value.parameters.topic.value,
-                metric: filter.value.parameters.metric.value,
-                stratum: filter.value.parameters.stratum.value,
-                sex: filter.value.parameters.sex.value,
-                age: filter.value.parameters.age.value,
-                line_colour: filter.value.colour,
-                label: filter.value.label,
-                geography: geography.name,
-                geography_type: geography.geography_type || undefined,
-                chart_type: 'line_multi_coloured',
-                line_type: 'SOLID',
-                date_from: chartDateRange.date_from,
-                date_to: chartDateRange.date_to,
-                use_smooth_lines: false,
-                use_markers: true,
-              }
-            }),
-          },
-          isPublic
-        )
+        const chartResponse = await getCharts({
+          file_format: 'svg',
+          chart_height: 260,
+          chart_width: 515,
+          x_axis: 'date',
+          y_axis: 'metric',
+          x_axis_title: 'Year',
+          y_axis_title: cardData.legend_title,
+          y_axis_minimum_value: null,
+          y_axis_maximum_value: null,
+          plots: dataFilters.map((filter: DataFilter) => {
+            return {
+              theme: filter.value.parameters.theme.value,
+              sub_theme: filter.value.parameters.sub_theme.value,
+              topic: filter.value.parameters.topic.value,
+              metric: filter.value.parameters.metric.value,
+              stratum: filter.value.parameters.stratum.value,
+              sex: filter.value.parameters.sex.value,
+              age: filter.value.parameters.age.value,
+              line_colour: filter.value.colour,
+              label: filter.value.label,
+              geography: geography.name,
+              geography_type: geography.geography_type || undefined,
+              chart_type: 'line_multi_coloured',
+              line_type: 'SOLID',
+              date_from: chartDateRange.date_from,
+              date_to: chartDateRange.date_to,
+              use_smooth_lines: false,
+              use_markers: true,
+            }
+          }),
+          is_public: isPublic,
+          data_classification: dataClassification,
+        })
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)
         } else {

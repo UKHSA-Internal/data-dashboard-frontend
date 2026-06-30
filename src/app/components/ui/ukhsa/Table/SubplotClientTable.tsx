@@ -37,7 +37,7 @@ interface TableProps {
   currentTimePeriodIndex: number
   cardData: FilterLinkedSubplotData
   isPublic?: boolean
-  level?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
 
@@ -51,8 +51,8 @@ export function SubplotClientTable({
   timePeriods,
   currentTimePeriodIndex,
   cardData,
-  isPublic,
-  level,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: TableProps) {
   const { t } = useTranslation('common')
@@ -177,7 +177,14 @@ export function SubplotClientTable({
                         headers="blank"
                         className="govuk-table__header js:bg-white"
                       >
-                        {getColumnHeader(chartLabel, axisTitle, columnHeader, isPublic, level, authEnabled)}
+                        {getColumnHeader(
+                          chartLabel,
+                          axisTitle,
+                          columnHeader,
+                          isPublic,
+                          dataClassification,
+                          authEnabled
+                        )}
                       </th>
                     )
                   })}

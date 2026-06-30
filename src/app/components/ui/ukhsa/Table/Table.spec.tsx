@@ -239,7 +239,7 @@ test('table by geography and geography type when both are present in the url sea
       x_axis: 'x-axis',
       y_axis: 'y-axis',
     },
-    false
+    true
   )
 
   expect(

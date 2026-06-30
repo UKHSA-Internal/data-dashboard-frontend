@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { FileFormats, Geography, GeographyType, Metrics, SubTheme, Theme, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
+import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { chartFormat } from '@/config/constants'
@@ -19,6 +20,12 @@ export const requestSchema = z.object({
   y_axis_maximum_value: z.number().nullable().optional(),
   confidence_intervals: z.boolean().optional(),
   confidence_colour: ChartLineColours.nullable().optional(),
+  /** When false the charts API will return a watermarked chart image. */
+  is_public: z.boolean(),
+  /**
+   * The data classification level used in the chart watermark (if non public)
+   */
+  data_classification: DataClassification.optional(),
   plots: z.array(
     z.object({
       theme: Theme,
@@ -53,7 +60,7 @@ export type ChartResponse = z.infer<typeof responseSchema>
 
 export type RequestParams = z.infer<typeof requestSchema>
 
-export const getCharts = async (chart: RequestParams, isPublic?: boolean) => {
+export const getCharts = async (chart: RequestParams) => {
   const {
     plots,
     x_axis,
@@ -66,6 +73,8 @@ export const getCharts = async (chart: RequestParams, isPublic?: boolean) => {
     y_axis_minimum_value,
     confidence_intervals,
     confidence_colour,
+    is_public,
+    data_classification,
   } = chart
 
   const body: RequestParams = {
@@ -81,12 +90,14 @@ export const getCharts = async (chart: RequestParams, isPublic?: boolean) => {
     y_axis_title,
     y_axis_minimum_value,
     y_axis_maximum_value,
+    is_public,
+    data_classification,
   }
 
   try {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
-    const publicParam = !isSSR && isPublic === false ? '?isPublic=false' : ''
-    const { data } = await client<z.infer<typeof responseSchema>>(`${path}${publicParam}`, { body }, isPublic)
+    // const publicParam = !isSSR && is_public === false ? '?isPublic=false' : ''
+    const { data } = await client<z.infer<typeof responseSchema>>(`${path}`, { body }, is_public)
 
     const result = responseSchema.safeParse(data)
     if (result.success) {
