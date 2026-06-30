@@ -337,6 +337,8 @@ describe('ClientTable', () => {
           y_axis_maximum_value: null,
           plots: [
             {
+              theme: 'infectious_disease',
+              sub_theme: 'respiratory',
               topic: 'COVID-19',
               metric: 'new_cases_7days_sum',
               stratum: 'default',
@@ -387,6 +389,8 @@ describe('ClientTable', () => {
           y_axis: 'metric',
           plots: [
             {
+              theme: 'infectious_disease',
+              sub_theme: 'respiratory',
               topic: 'COVID-19',
               metric: 'new_cases_7days_sum',
               stratum: 'default',

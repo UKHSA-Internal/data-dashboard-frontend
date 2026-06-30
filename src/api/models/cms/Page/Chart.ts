@@ -4,6 +4,8 @@ import { ChartLineColours, ChartLineTypes, ChartTypes } from '../../Chart'
 import { Geography } from '../../Geography'
 import { GeographyType } from '../../GeographyType'
 import { Metrics } from '../../Metrics'
+import { SubTheme } from '../../SubTheme'
+import { Theme } from '../../Theme'
 import { Topics } from '../../Topics'
 
 /**
@@ -14,6 +16,8 @@ const Plot = z.object({
   type: z.literal('plot'),
   id: z.string(),
   value: z.object({
+    theme: Theme,
+    sub_theme: SubTheme,
     topic: Topics,
     metric: Metrics,
     chart_type: ChartTypes,

@@ -106,6 +106,8 @@ describe('ChartWithFilter', () => {
       id: 'plot-1',
       type: 'plot',
       value: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'cases',
         chart_type: 'simple_line',

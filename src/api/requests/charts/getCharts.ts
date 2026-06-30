@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { FileFormats, Geography, GeographyType, Metrics, SubTheme, Theme, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
@@ -21,6 +21,8 @@ export const requestSchema = z.object({
   confidence_colour: ChartLineColours.nullable().optional(),
   plots: z.array(
     z.object({
+      theme: Theme,
+      sub_theme: SubTheme,
       topic: Topics,
       metric: Metrics,
       chart_type: ChartTypes,

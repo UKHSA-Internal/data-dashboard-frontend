@@ -17,6 +17,8 @@ const props: ComponentProps<typeof DownloadForm> = {
     {
       type: 'plot',
       value: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_daily',
         chart_type: 'line_with_shaded_section',

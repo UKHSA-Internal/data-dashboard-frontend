@@ -101,13 +101,15 @@ export function ClientDownload({ geography, dataFilters, timePeriods, isPublic, 
     const chart = dataFilters.map(
       ({
         value: {
-          parameters: { topic, metric, stratum, sex, age },
+          parameters: { theme, sub_theme, topic, metric, stratum, sex, age },
         },
         value: { label, colour },
       }) => ({
         id: metric.value,
         type: 'plot' as const,
         value: {
+          theme: theme.value,
+          sub_theme: sub_theme.value,
           topic: topic.value,
           metric: metric.value,
           stratum: stratum.value,

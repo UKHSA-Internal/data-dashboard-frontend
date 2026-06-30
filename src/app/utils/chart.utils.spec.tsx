@@ -13,6 +13,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -32,6 +34,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -51,6 +55,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -62,6 +68,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -85,6 +93,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -96,6 +106,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -117,6 +129,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -128,6 +142,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -139,6 +155,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test3',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -160,6 +178,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -171,6 +191,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -192,6 +214,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -213,6 +237,8 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -257,6 +283,8 @@ describe('getFilteredData', () => {
         id: 'chart1',
         type: 'plot' as const,
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -268,6 +296,8 @@ describe('getFilteredData', () => {
         id: 'chart2',
         type: 'plot' as const,
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
           chart_type: 'test',
@@ -328,6 +358,8 @@ describe('getFilteredData', () => {
           id: 'chart1',
           type: 'plot' as const,
           value: {
+            theme: 'test',
+            sub_theme: 'test',
             topic: 'test',
             metric: 'test',
             chart_type: 'test',
@@ -355,6 +387,8 @@ describe('getFilteredData', () => {
           id: 'chart1',
           type: 'plot' as const,
           value: {
+            theme: 'test',
+            sub_theme: 'test',
             topic: 'test',
             metric: 'test',
             chart_type: 'test',

@@ -39,6 +39,8 @@ test('Returns a chart svg and last updated date', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',
@@ -65,6 +67,8 @@ test('Handles API errors when data is missing (400 status code)', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',
@@ -119,6 +123,8 @@ test('Handles API errors for non-400 error responses', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',
@@ -173,6 +179,8 @@ test('Handles non-Error instances in catch block', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',
@@ -194,6 +202,8 @@ test('Handles error when error.code is undefined', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',
@@ -223,6 +233,8 @@ test('Handles Zod validation error when response data is invalid', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',
@@ -246,6 +258,8 @@ test('Handles error when error.code is 400', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         chart_type: 'line_with_shaded_section',

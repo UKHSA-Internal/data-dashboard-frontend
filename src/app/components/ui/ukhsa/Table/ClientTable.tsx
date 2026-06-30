@@ -80,6 +80,8 @@ export function ClientTable({
             y_axis_maximum_value: null,
             plots: dataFilters.map((filter: DataFilter) => {
               return {
+                theme: filter.value.parameters.theme.value,
+                sub_theme: filter.value.parameters.sub_theme.value,
                 topic: filter.value.parameters.topic.value,
                 metric: filter.value.parameters.metric.value,
                 stratum: filter.value.parameters.stratum.value,
@@ -126,6 +128,8 @@ export function ClientTable({
             y_axis: y_axis,
             plots: dataFilters.map((filter: DataFilter) => {
               return {
+                theme: filter.value.parameters.theme.value,
+                sub_theme: filter.value.parameters.sub_theme.value,
                 topic: filter.value.parameters.topic.value,
                 metric: filter.value.parameters.metric.value,
                 stratum: filter.value.parameters.stratum.value,
