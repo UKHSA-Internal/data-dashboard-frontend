@@ -164,6 +164,8 @@ export function DownloadForm({
               type="hidden"
               name="plots"
               value={JSON.stringify({
+                theme: value.theme,
+                sub_theme: value.sub_theme,
                 topic: value.topic,
                 metric: value.metric,
                 stratum: value.stratum,

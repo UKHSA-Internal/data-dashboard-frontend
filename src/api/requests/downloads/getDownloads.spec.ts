@@ -13,6 +13,8 @@ test('Returns chart data in CSV format', async () => {
 
   const result = await getDownloads(true, [
     {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'new_cases_7days_sum',
       stratum: '',
@@ -32,6 +34,8 @@ test('Returns chart data in json format', async () => {
     true,
     [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         stratum: '',
@@ -53,6 +57,8 @@ test('Handles generic http errors', async () => {
     true,
     [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         stratum: '',
@@ -76,6 +82,8 @@ test('Sends confidence_intervals as true in request body', async () => {
     true,
     [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         stratum: '',
@@ -91,6 +99,8 @@ test('Sends confidence_intervals as true in request body', async () => {
       is_public: true,
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_7days_sum',
           stratum: '',
@@ -113,6 +123,8 @@ test('Sends confidence_intervals as false in request body', async () => {
     true,
     [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
         stratum: '',
@@ -128,6 +140,8 @@ test('Sends confidence_intervals as false in request body', async () => {
       is_public: true,
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_7days_sum',
           stratum: '',
@@ -148,6 +162,8 @@ test('Defaults confidence_intervals to false when not provided', async () => {
 
   await getDownloads(true, [
     {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'new_cases_7days_sum',
       stratum: '',
@@ -159,6 +175,8 @@ test('Defaults confidence_intervals to false when not provided', async () => {
       is_public: true,
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_7days_sum',
           stratum: '',
@@ -178,7 +196,15 @@ test('Forwards auth token to client when present', async () => {
 
   await getDownloads(
     true,
-    [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
+    [
+      {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        stratum: '',
+      },
+    ],
     'csv',
     null,
     false,
@@ -188,7 +214,15 @@ test('Forwards auth token to client when present', async () => {
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
       is_public: true,
-      plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
+      plots: [
+        {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          stratum: '',
+        },
+      ],
       file_format: 'csv',
       x_axis: null,
       confidence_intervals: false,
@@ -203,12 +237,34 @@ test('Does not forward auth header when no token present', async () => {
     status: 200,
   })
 
-  await getDownloads(true,[{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }], 'csv', null, false)
+  await getDownloads(
+    true,
+    [
+      {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        stratum: '',
+      },
+    ],
+    'csv',
+    null,
+    false
+  )
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {
       is_public: true,
-      plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }],
+      plots: [
+        {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
+          topic: 'COVID-19',
+          metric: 'new_cases_7days_sum',
+          stratum: '',
+        },
+      ],
       file_format: 'csv',
       x_axis: null,
       confidence_intervals: false,

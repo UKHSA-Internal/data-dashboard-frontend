@@ -20,6 +20,8 @@ test('Returns a COVID-19 trend', async () => {
 
   const result = await getTrends(
     {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'COVID-19_headline_newcases_7daychange',
       percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
@@ -31,6 +33,8 @@ test('Returns a COVID-19 trend', async () => {
     'trends/v3',
     {
       searchParams: new URLSearchParams({
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'COVID-19_headline_newcases_7daychange',
         percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
@@ -61,6 +65,8 @@ test('Returns an Influenza headline value', async () => {
   })
 
   const result = await getTrends({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'Influenza',
     metric: 'influenza_headline_ICUHDUadmissionRateChange',
     percentage_metric: 'influenza_headline_ICUHDUadmissionRatePercentChange',
@@ -97,6 +103,8 @@ test('Handles invalid json received from the api', async () => {
   })
 
   const result = await getTrends({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'new_cases_7days_sum',
     percentage_metric: 'new_cases_7days_change_percentage',
@@ -113,6 +121,8 @@ test('Handles generic http errors', async () => {
   })
 
   const result = await getTrends({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'new_cases_7days_sum',
     percentage_metric: 'new_cases_7days_change_percentage',

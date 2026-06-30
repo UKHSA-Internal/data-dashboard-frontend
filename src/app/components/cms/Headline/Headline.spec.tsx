@@ -13,6 +13,8 @@ describe('Data request is successful', () => {
   getHeadlinesMock.mockResolvedValue({ success: true, data: { value: 24000, period_end: '2023-11-03' } })
 
   const data: ComponentProps<typeof Headline>['data'] = {
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'test-metric',
     body: 'Test Heading',
@@ -52,6 +54,8 @@ describe('Data request is unsuccessful', () => {
     })
 
     const data: ComponentProps<typeof Headline>['data'] = {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'test-metric',
       body: 'Test Heading',

@@ -1,10 +1,23 @@
 import { z } from 'zod'
 
-import { Age, Geography, GeographyType, Metrics, PercentageMetrics, Sex, Stratum, Topics } from '@/api/models'
+import {
+  Age,
+  Geography,
+  GeographyType,
+  Metrics,
+  PercentageMetrics,
+  Sex,
+  Stratum,
+  SubTheme,
+  Theme,
+  Topics,
+} from '@/api/models'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
 export const requestSchema = z.object({
+  theme: Theme,
+  sub_theme: SubTheme,
   topic: Topics,
   metric: Metrics,
   percentage_metric: PercentageMetrics,

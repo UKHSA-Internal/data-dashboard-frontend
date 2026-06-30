@@ -36,8 +36,8 @@ const mockDataFilters: DataFilter[] = [
       label: 'Test Metric 1',
       colour: '#FF0000',
       parameters: {
-        theme: { label: 'Theme', value: 'theme-value' },
-        sub_theme: { label: 'Sub Theme', value: 'sub-theme-value' },
+        theme: { label: 'Theme', value: 'infectious_disease' },
+        sub_theme: { label: 'Sub Theme', value: 'respiratory' },
         topic: { label: 'COVID-19', value: 'COVID-19' },
         metric: { label: 'Cases', value: 'new_cases_7days_sum' },
         stratum: { label: 'All', value: 'default' },
@@ -180,6 +180,8 @@ describe('ClientDownload', () => {
           y_axis: 'metric',
           plots: [
             {
+              theme: 'infectious_disease',
+              sub_theme: 'respiratory',
               topic: 'COVID-19',
               metric: 'new_cases_7days_sum',
               stratum: 'default',
@@ -257,8 +259,8 @@ describe('ClientDownload', () => {
           label: 'Test Metric 2',
           colour: '#00FF00',
           parameters: {
-            theme: { label: 'Theme', value: 'theme-value' },
-            sub_theme: { label: 'Sub Theme', value: 'sub-theme-value' },
+            theme: { label: 'Theme', value: 'infectious_disease' },
+            sub_theme: { label: 'Sub Theme', value: 'respiratory' },
             topic: { label: 'Influenza', value: 'Influenza' },
             metric: { label: 'Cases', value: 'influenza_cases' },
             stratum: { label: 'All', value: 'default' },

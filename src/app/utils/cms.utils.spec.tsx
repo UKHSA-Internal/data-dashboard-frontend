@@ -125,6 +125,8 @@ describe('renderBlock function', () => {
       renderBlock({
         type: 'percentage_number',
         value: {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'COVID-19_headline_positivity_latest',
           body: 'Virus tests positivity',

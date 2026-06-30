@@ -10,6 +10,8 @@ jest.mock('@/api/requests/trends/getTrends')
 const getTrendsMock = jest.mocked(getTrends)
 
 const mockRequestData: ComponentProps<typeof Trend>['data'] = {
+  theme: 'infectious_disease',
+  sub_theme: 'respiratory',
   topic: 'COVID-19',
   metric: 'test-metric',
   percentage_metric: 'test-percentage-metric',

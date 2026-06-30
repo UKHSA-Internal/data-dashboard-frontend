@@ -37,6 +37,8 @@ describe('getTables', () => {
     const result = await getTables({
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_daily',
         },
@@ -51,7 +53,9 @@ describe('getTables', () => {
     async (topic, metric, data) => {
       jest.mocked(client).mockResolvedValueOnce({ data, status: 200 })
 
-      const result = await getTables({ plots: [{ topic, metric }] })
+      const result = await getTables({
+        plots: [{ theme: 'infectious_disease', sub_theme: 'respiratory', topic, metric }],
+      })
 
       expect(result).toEqual<SuccessResponse>({ success: true, data })
     }
@@ -66,6 +70,8 @@ describe('getTables', () => {
     const result = await getTables({
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_daily',
         },
@@ -96,6 +102,8 @@ describe('getTables', () => {
     const result = await getTables({
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_daily',
         },
