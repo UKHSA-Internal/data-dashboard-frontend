@@ -66,6 +66,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_cases_casesByDay',
                           chart_type: 'line_with_shaded_section',
@@ -87,6 +89,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'headline_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_newcases_7daychange',
                           body: 'Last 7 days',
@@ -96,6 +100,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'trend_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_newcases_7daychange',
                           body: '',
@@ -121,6 +127,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_deaths_ONSRollingMean',
                           chart_type: 'line_with_shaded_section',
@@ -142,6 +150,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'headline_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_ONSdeaths_7daytotals',
                           body: 'Last 7 days',
@@ -151,6 +161,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'trend_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_ONSdeaths_7daychange',
                           body: '',
@@ -201,6 +213,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_healthcare_ICUHDUadmissionrateByWeek',
                           chart_type: 'bar',
@@ -222,6 +236,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'headline_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_headline_positivityLatest',
                           body: 'Last 7 days',
@@ -246,6 +262,8 @@ export const dashboardMock: PageResponse<PageType.Landing> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_testing_positivityByWeek',
                           chart_type: 'bar',
