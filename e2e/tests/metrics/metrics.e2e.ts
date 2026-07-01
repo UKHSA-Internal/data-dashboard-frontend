@@ -204,7 +204,7 @@ test.describe('Metrics parent page - mobile', () => {
 
   test('displays the navigation on mobile', async ({ metricsParentPage, app }) => {
     await metricsParentPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -213,7 +213,7 @@ test.describe('Metrics parent page - tablet', () => {
 
   test('displays the navigation on tablet', async ({ metricsParentPage, app }) => {
     await metricsParentPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -222,7 +222,7 @@ test.describe('Metrics parent page - desktop', () => {
 
   test('displays the navigation on desktop', async ({ metricsParentPage, app }) => {
     await metricsParentPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -299,7 +299,7 @@ test.describe('Metrics child page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ metricsChildPage, app }) => {
     await metricsChildPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -308,7 +308,7 @@ test.describe('Metrics child page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ metricsChildPage, app }) => {
     await metricsChildPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -317,6 +317,6 @@ test.describe('Metrics child page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ metricsChildPage, app }) => {
     await metricsChildPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })

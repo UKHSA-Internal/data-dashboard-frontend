@@ -30,10 +30,6 @@ export const initialState: switchBoardSchemaType = {
       scenario: 'Information',
       status: StatusCodes.OK,
     },
-    menus: {
-      scenario: 'MegaMenu',
-      status: StatusCodes.OK,
-    },
   },
   flags: {
     'example-flag': 'disabled',

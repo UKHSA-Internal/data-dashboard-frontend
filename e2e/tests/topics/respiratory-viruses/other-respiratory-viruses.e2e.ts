@@ -128,7 +128,7 @@ test.describe('Other respiratory viruses page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 
   test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
@@ -151,7 +151,7 @@ test.describe('Other respiratory viruses page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 
   test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
@@ -174,7 +174,7 @@ test.describe('Other respiratory viruses page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ otherRespiratoryVirusesPage, app }) => {
     await otherRespiratoryVirusesPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 
   test('Downloads a csv version of each chart', async ({ otherRespiratoryVirusesPage, app }) => {
