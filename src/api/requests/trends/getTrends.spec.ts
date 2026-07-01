@@ -25,6 +25,8 @@ test('Returns a COVID-19 trend', async () => {
       topic: 'COVID-19',
       metric: 'COVID-19_headline_newcases_7daychange',
       percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
+      geography: 'England',
+      geography_type: 'Nation',
     },
     undefined
   )
@@ -38,6 +40,8 @@ test('Returns a COVID-19 trend', async () => {
         topic: 'COVID-19',
         metric: 'COVID-19_headline_newcases_7daychange',
         percentage_metric: 'COVID-19_headline_newcases_7daypercentchange',
+        geography: 'England',
+        geography_type: 'Nation',
       }),
     },
     undefined
@@ -70,6 +74,8 @@ test('Returns an Influenza headline value', async () => {
     topic: 'Influenza',
     metric: 'influenza_headline_ICUHDUadmissionRateChange',
     percentage_metric: 'influenza_headline_ICUHDUadmissionRatePercentChange',
+    geography: 'England',
+    geography_type: 'Nation',
   })
 
   expect(result).toEqual<SuccessResponse>({
@@ -108,6 +114,8 @@ test('Handles invalid json received from the api', async () => {
     topic: 'COVID-19',
     metric: 'new_cases_7days_sum',
     percentage_metric: 'new_cases_7days_change_percentage',
+    geography: 'England',
+    geography_type: 'Nation',
   })
 
   expect(result.success).toBe(false)
@@ -126,6 +134,8 @@ test('Handles generic http errors', async () => {
     topic: 'COVID-19',
     metric: 'new_cases_7days_sum',
     percentage_metric: 'new_cases_7days_change_percentage',
+    geography: 'England',
+    geography_type: 'Nation',
   })
 
   expect(logger.error).toHaveBeenCalledTimes(1)

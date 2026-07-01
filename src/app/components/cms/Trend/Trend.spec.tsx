@@ -14,6 +14,8 @@ const mockRequestData: ComponentProps<typeof Trend>['data'] = {
   sub_theme: 'respiratory',
   topic: 'COVID-19',
   metric: 'test-metric',
+  geography: 'England',
+  geography_type: 'Nation',
   percentage_metric: 'test-percentage-metric',
   body: 'Test Heading',
 }

@@ -129,6 +129,8 @@ describe('renderBlock function', () => {
           sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'COVID-19_headline_positivity_latest',
+          geography: 'England',
+          geography_type: 'Nation',
           body: 'Virus tests positivity',
         },
         id: '36746bcd-1dce-4e5e-81f8-60c8b9994540',

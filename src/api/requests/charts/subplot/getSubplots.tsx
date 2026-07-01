@@ -48,8 +48,8 @@ export const requestSchema = z.object({
       plots: z.array(
         z.object({
           label: z.string().nullable().optional(),
-          geography: z.string().nullable().optional(),
-          geography_type: z.string().nullable().optional(),
+          geography: z.string(),
+          geography_type: z.string(),
           line_colour: z.string().nullable().optional(),
           age: z.string().nullable().optional(),
           sex: z.string().nullable().optional(),

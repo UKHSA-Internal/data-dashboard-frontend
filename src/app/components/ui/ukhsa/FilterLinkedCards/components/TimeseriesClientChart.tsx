@@ -66,7 +66,7 @@ const TimeseriesClientChart = ({
               line_colour: filter.value.colour,
               label: filter.value.label,
               geography: geography.name,
-              geography_type: geography.geography_type || undefined,
+              geography_type: geography.geography_type!,
               chart_type: 'line_multi_coloured',
               line_type: 'SOLID',
               date_from: chartDateRange.date_from,

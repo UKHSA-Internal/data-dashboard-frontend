@@ -16,6 +16,8 @@ describe('Data request is successful', () => {
     sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'test-metric',
+    geography: 'England',
+    geography_type: 'Nation',
     body: 'Test Heading',
   }
 
@@ -72,6 +74,8 @@ describe('Data request is unsuccessful', () => {
       sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'test-metric',
+      geography: 'England',
+      geography_type: 'Nation',
       body: 'Test Heading',
     }
 
