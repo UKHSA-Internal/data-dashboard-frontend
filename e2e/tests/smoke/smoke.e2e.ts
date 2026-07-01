@@ -2,13 +2,13 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-// Static links shown in nav menu. TODO: This will need updating once we know the content from production
+// Static links shown in nav menu
 const pagesShownInNavMenu: ReadonlyArray<{ link: string; heading: string }> = [
   { link: 'Home', heading: 'UKHSA data dashboard' },
   { link: 'About', heading: 'About' },
   { link: 'Health topics', heading: 'Health topics' },
   { link: 'API', heading: 'Access our data' },
-  { link: 'Data documentation', heading: 'Data documentation' },
+  { link: 'Metrics documentation', heading: 'Metrics documentation' },
 ]
 
 test.describe('Smoke tests - desktop @smoke', () => {
