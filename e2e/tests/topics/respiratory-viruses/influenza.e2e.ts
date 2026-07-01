@@ -34,6 +34,9 @@ test.describe('Influenza page', () => {
       await influenzaPage.hasHeading()
       await influenzaPage.hasDescription()
     })
+    await test.step('does not display a classification banner for the public variant', async () => {
+      await app.hasNoClassificationBanner()
+    })
     await test.step('displays area selector', async () => {
       await app.hasAreaSelector()
     })
