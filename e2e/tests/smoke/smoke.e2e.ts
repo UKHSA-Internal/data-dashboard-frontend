@@ -2,13 +2,9 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { test } from '../../fixtures/app.fixture'
 
-const pagesShownInNavMenu = [
-  'Respiratory viruses',
-  'About',
-  'Metrics documentation',
-  "What's new",
-  "What's coming",
-  'Access our data',
+// Static links shown in nav menu. TODO: This will need updating once we know the content from production
+const pagesShownInNavMenu: ReadonlyArray<{ link: string; heading: string }> = [
+  { link: 'Home', heading: 'Landing page' },
 ]
 
 test.describe('Smoke tests - desktop @smoke', () => {
@@ -20,10 +16,10 @@ test.describe('Smoke tests - desktop @smoke', () => {
       await landingPage.hasHeading()
     })
 
-    for (const page of pagesShownInNavMenu) {
-      await test.step(`loads the "${page}" page`, async () => {
-        await app.clickNav(decodeURI(page))
-        await app.hasHeading(decodeURI(page))
+    for (const { link, heading } of pagesShownInNavMenu) {
+      await test.step(`loads the "${link}" page`, async () => {
+        await app.clickNav(link)
+        await app.hasHeading(heading)
       })
     }
   })
@@ -38,10 +34,10 @@ test.describe('Smoke tests - mobile @smoke', () => {
       await landingPage.hasHeading()
     })
 
-    for (const page of pagesShownInNavMenu) {
-      await test.step(`loads the "${page}" page`, async () => {
-        await app.clickNav(decodeURI(page))
-        await app.hasHeading(decodeURI(page))
+    for (const { link, heading } of pagesShownInNavMenu) {
+      await test.step(`loads the "${link}" page`, async () => {
+        await app.clickNav(link)
+        await app.hasHeading(heading)
       })
     }
   })
@@ -50,16 +46,16 @@ test.describe('Smoke tests - mobile @smoke', () => {
 test.describe('Smoke tests - no JavaScript @smoke', () => {
   test.use({ javaScriptEnabled: false, viewport: viewports.desktop })
 
-  test('Navigates to each page from the side navigation menu', async ({ app, landingPage }) => {
+  test('Navigates to each page from the static navigation menu', async ({ app, landingPage }) => {
     await test.step('loads the landing page', async () => {
       await landingPage.goto()
       await landingPage.hasHeading()
     })
 
-    for (const page of pagesShownInNavMenu) {
-      await test.step(`loads the "${page}" page`, async () => {
-        await app.clickBrowseNav(decodeURI(page))
-        await app.hasHeading(decodeURI(page))
+    for (const { link, heading } of pagesShownInNavMenu) {
+      await test.step(`loads the "${link}" page`, async () => {
+        await app.clickBrowseNav(link)
+        await app.hasHeading(heading)
       })
     }
   })
