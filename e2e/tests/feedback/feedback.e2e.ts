@@ -93,7 +93,7 @@ test.describe('Feedback page - mobile @mobileOnly', () => {
 
   test('displays the navigation on mobile', async ({ feedbackPage, app }) => {
     await feedbackPage.goto()
-    await app.hasNav()
+    await app.hasMobileNav()
   })
 })
 
@@ -102,7 +102,7 @@ test.describe('Feedback page - tablet @tabletOnly', () => {
 
   test('displays the navigation on tablet', async ({ feedbackPage, app }) => {
     await feedbackPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
 
@@ -111,6 +111,6 @@ test.describe('Feedback page - desktop @desktopOnly', () => {
 
   test('displays the navigation on desktop', async ({ feedbackPage, app }) => {
     await feedbackPage.goto()
-    await app.hasNav()
+    await app.hasDesktopNav()
   })
 })
