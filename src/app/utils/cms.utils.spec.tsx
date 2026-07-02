@@ -162,6 +162,7 @@ describe('renderCompositeBlock function', () => {
               title: 'COVID-19',
               sub_title: 'COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.',
               page: 'http://localhost:3000/topics/covid-19/',
+              is_authorised: true,
             },
             id: 'c36d19c1-3a5e-4fcf-b696-91468c609369',
           },
@@ -171,5 +172,29 @@ describe('renderCompositeBlock function', () => {
     )
     expect(screen.getByRole('link', { name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByText('COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.')).toBeInTheDocument()
+  })
+  test('does not render unauthorised internal page links', () => {
+    render(
+      renderCompositeBlock({
+        type: 'internal_page_links',
+        value: [
+          {
+            type: 'page_link',
+            value: {
+              title: 'Hidden Page',
+              sub_title: 'Should not show',
+              page: 'http://localhost:3000/hidden/',
+              is_authorised: false,
+            },
+            id: '123',
+          },
+        ],
+        id: 'block-1',
+      })
+    )
+
+    expect(
+      screen.queryByRole('link', { name: 'Hidden Page' })
+    ).not.toBeInTheDocument()
   })
 })
