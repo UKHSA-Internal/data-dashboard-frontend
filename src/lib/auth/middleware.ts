@@ -1,8 +1,12 @@
+import hkdf from '@panva/hkdf'
+import { compactDecrypt } from 'jose'
+import { RequestCookie } from 'next/dist/compiled/@edge-runtime/cookies'
 import { NextRequest, NextResponse } from 'next/server'
 import { getToken, type JWT } from 'next-auth/jwt'
 import { encode } from 'next-auth/jwt'
 
 import { refreshAccessToken } from '@/api/requests/auth/refreshAccessToken'
+import { auditLog, logger } from '@/lib/logger'
 
 const AUTH_SECRET = process.env.AUTH_SECRET ?? ''
 const SECURE_COOKIE = process.env.NEXTAUTH_URL?.startsWith('https://')
@@ -15,6 +19,41 @@ function shouldUpdateToken(token: JWT) {
   return isExpiring
 }
 
+// Checks for an expired session, and if found will create an audit log
+async function auditExpiredSession(requestCookies: RequestCookie[]) {
+  const hasSessionCookie = requestCookies.some((cookie) => cookie.name.startsWith(SESSION_COOKIE))
+
+  if (hasSessionCookie) {
+    let userId = 'UNKNOWN'
+    try {
+      const relevantCookies = requestCookies
+        .filter((c) => c.name.includes('session-token'))
+        .sort((a, b) => a.name.localeCompare(b.name))
+
+      const rawTokenString = relevantCookies.map((c) => c.value).join('')
+
+      // Decryypt the token without verifying so we can retrieve the user_id for logging
+      const encryptionKey = await hkdf(
+        'sha256',
+        AUTH_SECRET,
+        SESSION_COOKIE,
+        `Auth.js Generated Encryption Key (${SESSION_COOKIE})`,
+        64
+      )
+
+      const { plaintext } = await compactDecrypt(rawTokenString, encryptionKey)
+      const payload = JSON.parse(new TextDecoder().decode(plaintext))
+      if (payload?.user_id) {
+        userId = payload.user_id
+      }
+    } catch (decodeError) {
+      logger.info(decodeError)
+    }
+
+    auditLog(userId, 'EXPIRED_SESSION')
+  }
+}
+
 // https://github.com/nextauthjs/next-auth/issues/8254#issuecomment-1690474377
 export async function validateAndRenewSession(req: NextRequest, res: NextResponse) {
   const token = await getToken({
@@ -25,6 +64,8 @@ export async function validateAndRenewSession(req: NextRequest, res: NextRespons
   })
 
   if (!token) {
+    await auditExpiredSession(req.cookies.getAll())
+
     // await signOut()
     return res
   }

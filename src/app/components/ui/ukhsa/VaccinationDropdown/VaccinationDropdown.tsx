@@ -32,7 +32,8 @@ export const VaccinationDropdown = ({
     }
     // Otherwise return only matches
     return selectedVaccinationList
-  }, [vaccinationList, selectedVaccinationList])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [vaccinationList, selectedFilters])
 
   const [newVaccinationList, setNewVaccinationList] = useState(matchingVaccinations)
 

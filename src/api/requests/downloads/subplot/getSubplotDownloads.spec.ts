@@ -1,9 +1,14 @@
 import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
+import { auth } from '@/auth'
+import { auditLog, logger } from '@/lib/logger'
 import { downloadsSubplotCsvFixture } from '@/mock-server/handlers/downloads/subplot/fixtures/downloads-csv'
 import { downloadsSubplotJsonFixture } from '@/mock-server/handlers/downloads/subplot/fixtures/downloads-json'
 
 import { getSubplotDownloads } from './getSubplotDownloads'
+
+jest.mock('@/auth', () => ({
+  auth: jest.fn(),
+}))
 
 const mockChartParameters = {
   theme: 'immunisation',
@@ -37,22 +42,27 @@ const mockSubplots = [
   },
 ]
 
+const mockAuth = auth as unknown as jest.MockedFunction<() => Promise<{ userId: string | null } | null>>
+const mockAuditLog = auditLog as jest.MockedFunction<typeof auditLog>
+
 test('Uses default file_format and threshold params when omitted', async () => {
   jest.mocked(client).mockResolvedValueOnce({
     data: downloadsSubplotCsvFixture,
     status: 200,
   })
 
-  await getSubplotDownloads(undefined, undefined, undefined, mockChartParameters, mockSubplots)
+  await getSubplotDownloads(true, undefined, undefined, undefined, mockChartParameters, mockSubplots)
 
   expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
     body: {
+      is_public: true,
       file_format: 'csv',
       target_threshold: null,
       target_threshold_label: null,
       chart_parameters: mockChartParameters,
       subplots: mockSubplots,
     },
+    headers: undefined,
   })
 })
 
@@ -62,7 +72,7 @@ test('Returns chart data in CSV format', async () => {
     status: 200,
   })
 
-  const result = await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots)
+  const result = await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots)
 
   expect(result).toEqual(downloadsSubplotCsvFixture)
 })
@@ -73,7 +83,7 @@ test('Returns chart data in JSON format', async () => {
     status: 200,
   })
 
-  const result = await getSubplotDownloads('json', null, null, mockChartParameters, mockSubplots)
+  const result = await getSubplotDownloads(true, 'json', null, null, mockChartParameters, mockSubplots)
 
   expect(result).toEqual(downloadsSubplotJsonFixture)
 })
@@ -84,11 +94,11 @@ test('Handles generic http errors', async () => {
     status: 400,
   })
 
-  const result = await getSubplotDownloads('json', null, null, mockChartParameters, mockSubplots)
+  const result = await getSubplotDownloads(true, 'json', null, null, mockChartParameters, mockSubplots)
 
   expect(logger.error).toHaveBeenCalledTimes(1)
 
-  expect(result).toEqual(undefined)
+  expect(result).toBeUndefined()
 })
 
 test('Forwards auth token to client when present', async () => {
@@ -97,10 +107,11 @@ test('Forwards auth token to client when present', async () => {
     status: 200,
   })
 
-  await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots, 'Bearer test-token')
+  await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots, 'Bearer test-token')
 
   expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
     body: {
+      is_public: true,
       file_format: 'csv',
       target_threshold: null,
       target_threshold_label: null,
@@ -117,10 +128,11 @@ test('Does not forward auth header when no token present', async () => {
     status: 200,
   })
 
-  await getSubplotDownloads('csv', null, null, mockChartParameters, mockSubplots)
+  await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots)
 
   expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
     body: {
+      is_public: true,
       file_format: 'csv',
       target_threshold: null,
       target_threshold_label: null,
@@ -128,5 +140,59 @@ test('Does not forward auth header when no token present', async () => {
       subplots: mockSubplots,
     },
     headers: undefined,
+  })
+})
+
+describe('auditLog', () => {
+  beforeEach(() => {
+    jest.clearAllMocks()
+  })
+
+  test('Calls auditLog when is_public is false and session exists', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    mockAuth.mockResolvedValue({ userId: 'user-123' })
+
+    await getSubplotDownloads(false, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuditLog).toHaveBeenCalledTimes(1)
+    expect(mockAuditLog).toHaveBeenCalledWith('user-123', 'FILE_DOWNLOAD', `csv - ${JSON.stringify(mockSubplots)}`)
+  })
+
+  test('falls back to empty string when userId is nullish', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    mockAuth.mockResolvedValue({ userId: null })
+
+    await getSubplotDownloads(false, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuditLog).toHaveBeenCalledWith('', 'FILE_DOWNLOAD', `csv - ${JSON.stringify(mockSubplots)}`)
+  })
+
+  test('does not call auditLog when is_public is false but there is no session', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    mockAuth.mockResolvedValue(null)
+
+    await getSubplotDownloads(false, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuditLog).not.toHaveBeenCalled()
+  })
+
+  test('does not call auditLog when is_public is true', async () => {
+    jest.mocked(client).mockResolvedValueOnce({
+      data: downloadsSubplotCsvFixture,
+      status: 200,
+    })
+    await getSubplotDownloads(true, 'csv', null, null, mockChartParameters, mockSubplots)
+
+    expect(mockAuth).not.toHaveBeenCalled()
+    expect(mockAuditLog).not.toHaveBeenCalled()
   })
 })
