@@ -113,11 +113,22 @@ beforeEach(() => {
     const cards = ((section.value.content ?? []) as MockBlock[])
       .filter((b) => b.type === 'chart_card_section')
       .flatMap((b) => b.value?.cards?.filter((c) => c.type === 'chart_with_description_card') ?? [])
+    const weatherAlertCards = ((section.value.content ?? []) as MockCard[]).filter(
+      (b) => b.type === 'weather_health_alert_card'
+    )
 
     return (
       <div key={section.id} data-topics-list-section-key={sectionKey} role="region" aria-label={section.value.heading}>
         <h2>{section.value.heading}</h2>
         {cards.map((card) => {
+          const filterId = card.id ?? card.value?.title ?? ''
+          return (
+            <div key={filterId} data-topic-filter-id={filterId}>
+              {card.value?.title}
+            </div>
+          )
+        })}
+        {weatherAlertCards.map((card) => {
           const filterId = card.id ?? card.value?.title ?? ''
           return (
             <div key={filterId} data-topic-filter-id={filterId}>
@@ -157,6 +168,31 @@ describe('getFilterItemsFromBody', () => {
     ] as unknown as Body
     expect(getFilterItemsFromBody(noIdsBody)).toEqual([
       { id: 'No id section', label: 'No id section', children: [{ id: 'Leaf', label: 'Leaf' }] },
+    ])
+
+    const weatherAlertBody = [
+      {
+        id: 'section-weather',
+        type: 'section' as const,
+        value: {
+          heading: 'Weather and climate risks',
+          page_link: null,
+          content: [
+            {
+              type: 'weather_health_alert_card' as const,
+              id: 'alert-cold',
+              value: { title: 'Cold health alerts', sub_title: 'Alerts in England', alert_type: 'cold' },
+            },
+          ],
+        },
+      },
+    ] as unknown as Body
+    expect(getFilterItemsFromBody(weatherAlertBody)).toEqual([
+      {
+        id: 'section-weather',
+        label: 'Weather and climate risks',
+        children: [{ id: 'alert-cold', label: 'Cold health alerts' }],
+      },
     ])
   })
 })
