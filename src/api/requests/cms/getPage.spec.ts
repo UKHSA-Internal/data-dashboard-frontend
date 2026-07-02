@@ -30,10 +30,7 @@ test('Handles invalid json received from the api', async () => {
   const result = await getPage(dashboardMock.id)
 
   expect(result.success).toBe(false)
-  if (result.success) {
-    throw new Error('Expected error result')
-  }
-  expect(result.error).toBeDefined()
+  expect((result as ErrorResponse).error).toBeDefined()
 })
 
 test('Handles generic http errors', async () => {

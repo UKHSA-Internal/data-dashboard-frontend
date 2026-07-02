@@ -38,3 +38,23 @@ test('Displays a heading and content for each contents item', () => {
   expect(within(sections[1]).getByText('flu stuff'))
   expect(within(sections[2]).getByText('influenza stuff'))
 })
+
+test('Skips children that are not valid React elements when building the contents and sections', () => {
+  const { getByRole, queryAllByRole, queryByText } = render(
+    <PageSectionWithContents>
+      {'some plain text child'}
+      <PageSection heading="Covid">covid stuff</PageSection>
+      {42}
+    </PageSectionWithContents>
+  )
+
+  const nav = getByRole('navigation')
+  const listitems = within(nav).getAllByRole('listitem')
+
+  expect(listitems).toHaveLength(1)
+  expect(within(listitems[0]).getByText('Covid')).toHaveAttribute('href', '#covid')
+
+  expect(queryAllByRole('region')).toHaveLength(1)
+  expect(queryByText('some plain text child')).not.toBeInTheDocument()
+  expect(queryByText('42')).not.toBeInTheDocument()
+})

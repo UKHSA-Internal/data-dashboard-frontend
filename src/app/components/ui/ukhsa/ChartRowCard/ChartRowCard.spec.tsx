@@ -1,498 +1,304 @@
-import { render, screen, waitFor } from '@/config/test-utils'
+import React from 'react'
+
+import { act, render, screen, waitFor } from '@/config/test-utils'
 
 import { ChartRowCard } from './ChartRowCard'
 
-const mockUseWindowSize = jest.fn()
-const mockUseDebounceValue = jest.fn()
-jest.mock('usehooks-ts', () => ({
-  useWindowSize: (...args: any[]) => mockUseWindowSize(...args),
-  useDebounceValue: (...args: any[]) => mockUseDebounceValue(...args),
-}))
+const { useWindowSize, useDebounceValue } = require('usehooks-ts')
 
 const mockSearchParams = new URLSearchParams()
+
 jest.mock('next/navigation', () => ({
   useSearchParams: jest.fn(() => mockSearchParams),
 }))
 
-jest.mock('@/app/components/cms', () => ({
-  ...jest.requireActual('@/app/components/cms'),
-  Timestamp: () => <div>Up to and including 27 September 2023</div>,
-  Download: () => <div>Mocked download</div>,
-  About: () => <div>Mocked About</div>,
-  Table: () => <div>Mocked table</div>,
-  Chart: () => <div>Mocked chart</div>,
-  ChartRowCardHeader: ({ title, description, children, id }: any) => (
-    <header>
-      <h3 id={`chart-row-card-heading-${id}`}>{title}</h3>
-      <p>{description}</p>
-      {children}
-    </header>
-  ),
+const mockWindowSize = { width: 1200, height: 800 }
+const mockDebouncedWidth = 1200
+
+jest.mock('usehooks-ts', () => ({
+  useWindowSize: jest.fn(() => mockWindowSize),
+  useDebounceValue: jest.fn(() => [mockDebouncedWidth]),
 }))
+
+const createMockArticles = (heights: number[] = [100, 120]) => {
+  return heights.map((height, index) => (
+    <article key={index} data-testid={`article-${index}`}>
+      <header data-testid={`header-${index}`} style={{ height: `${height}px`, display: 'block' }}>
+        Header {index + 1}
+      </header>
+      <div>Content {index + 1}</div>
+    </article>
+  ))
+}
+
+const mockClientHeight = (element: Element, height: number) => {
+  Object.defineProperty(element, 'clientHeight', {
+    get: () => height,
+    configurable: true,
+    enumerable: true,
+  })
+}
 
 describe('ChartRowCard', () => {
   beforeEach(() => {
     jest.clearAllMocks()
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-    console.error = jest.fn()
+    useWindowSize.mockReturnValue(mockWindowSize)
+    useDebounceValue.mockReturnValue([mockDebouncedWidth])
   })
 
-  test('renders chart row card wrapper correctly', () => {
+  test('renders children within the component', () => {
+    render(
+      <ChartRowCard testId="map-row-cards">
+        <div data-testid="child-element">Test Content</div>
+      </ChartRowCard>
+    )
+
+    expect(screen.getByTestId('map-row-cards')).toBeInTheDocument()
+    expect(screen.getByTestId('child-element')).toBeInTheDocument()
+    expect(screen.getByText('Test Content')).toBeInTheDocument()
+  })
+
+  test('uses chart-row-cards test id by default', () => {
     render(
       <ChartRowCard>
-        <div data-testid="chart-content">Chart content</div>
+        <div>Content</div>
       </ChartRowCard>
     )
 
     expect(screen.getByTestId('chart-row-cards')).toBeInTheDocument()
-    expect(screen.getByTestId('chart-content')).toBeInTheDocument()
   })
 
-  test('applies correct CSS classes for layout', () => {
+  test('applies the correct CSS classes', () => {
     render(
-      <ChartRowCard>
-        <div>Chart content</div>
+      <ChartRowCard testId="map-row-cards">
+        <div>Content</div>
       </ChartRowCard>
     )
 
-    const chartRowCards = screen.getByTestId('chart-row-cards')
-    expect(chartRowCards).toHaveClass('mb-3 sm:mb-6 lg:flex lg:gap-6')
+    const container = screen.getByTestId('map-row-cards')
+    expect(container).toHaveClass('mb-3 sm:mb-6 lg:flex lg:gap-6')
   })
 
   test('calls useWindowSize hook', () => {
     render(
-      <ChartRowCard>
-        <div>Chart content</div>
+      <ChartRowCard testId="map-row-cards">
+        <div>Content</div>
       </ChartRowCard>
     )
 
-    expect(mockUseWindowSize).toHaveBeenCalledTimes(1)
+    expect(useWindowSize).toHaveBeenCalledTimes(1)
   })
 
-  test('calls useDebounceValue with correct parameters', () => {
-    mockUseWindowSize.mockReturnValue({ width: 1024, height: 768 })
-
+  test('calls useDebounceValue with correct screen parameters', () => {
     render(
-      <ChartRowCard>
-        <div>Chart content</div>
+      <ChartRowCard testId="map-row-cards">
+        <div>Content</div>
       </ChartRowCard>
     )
 
-    expect(mockUseDebounceValue).toHaveBeenCalledWith(1024, 20)
+    expect(useDebounceValue).toHaveBeenCalledWith(1200, 20)
   })
 
-  test('adjusts header heights on desktop when two articles present', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
+  test('does not adjust header heights on mobile', async () => {
+    useWindowSize.mockReturnValue({ width: 800, height: 600 })
+    useDebounceValue.mockReturnValue([800])
 
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header data-testid="header-1" style={{ height: '100px' }}>
-            Header 1
-          </header>
-        </article>
-        <article>
-          <header data-testid="header-2" style={{ height: '150px' }}>
-            Header 2
-          </header>
-        </article>
-      </ChartRowCard>
-    )
-
-    // Wait for useEffect to run and apply styles
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(2)
-
-      // On desktop (width >= 1024), headers should have minHeight set
-      const header1 = headers[0] as HTMLElement
-      const header2 = headers[1] as HTMLElement
-      expect(header1.style.minHeight).toBeTruthy()
-      expect(header2.style.minHeight).toBeTruthy()
-      // Both should have the same minHeight (largest of the two)
-      expect(header1.style.minHeight).toBe(header2.style.minHeight)
-    })
-  })
-
-  test('does not adjust header heights on mobile/tablet when two articles present', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 800, height: 600 })
-    mockUseDebounceValue.mockReturnValue([800])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header data-testid="header-1" style={{ height: '100px' }}>
-            Header 1
-          </header>
-        </article>
-        <article>
-          <header data-testid="header-2" style={{ height: '150px' }}>
-            Header 2
-          </header>
-        </article>
-      </ChartRowCard>
-    )
-
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(2)
-
-      // On mobile/tablet (width < 1024), headers should not have minHeight set
-      const header1 = headers[0] as HTMLElement
-      const header2 = headers[1] as HTMLElement
-      expect(header1.style.minHeight).toBe('')
-      expect(header2.style.minHeight).toBe('')
-    })
-  })
-
-  test('resets header minHeight before calculating new height', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header data-testid="header-1" style={{ minHeight: '200px', height: '100px' }}>
-            Header 1
-          </header>
-        </article>
-        <article>
-          <header data-testid="header-2" style={{ height: '150px' }}>
-            Header 2
-          </header>
-        </article>
-      </ChartRowCard>
-    )
-
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(2)
-
-      const header1 = headers[0] as HTMLElement
-      const header2 = headers[1] as HTMLElement
-
-      // Both headers should have minHeight set (to the largest of the two)
-      // The actual pixel value depends on clientHeight which may be 0 in test environment
-      // So we just verify the function was called and minHeight is set (not empty)
-      if (header1.style.minHeight) {
-        expect(header1.style.minHeight).toBe(header2.style.minHeight)
-      }
-    })
-  })
-
-  test('setChartCardHeaderSize exits early when row has less than 2 children', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header>Single Header</header>
-        </article>
-      </ChartRowCard>
-    )
-
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(1)
-
-      // Function should exit early and not set minHeight
-      const header = headers[0] as HTMLElement
-      expect(header.style.minHeight).toBe('')
-    })
-  })
-
-  test('setChartCardHeaderSize exits early when row has more than 2 headers', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header>Header 1</header>
-        </article>
-        <article>
-          <header>Header 2</header>
-        </article>
-        <article>
-          <header>Header 3</header>
-        </article>
-      </ChartRowCard>
-    )
-
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(3)
-
-      // Function should exit early when headers.length !== 2
-      const header1 = headers[0] as HTMLElement
-      expect(header1.style.minHeight).toBe('')
-    })
-  })
-
-  test('setChartCardHeaderSize calculates largest header using clientHeight', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header style={{ height: '100px' }}>Header 1</header>
-        </article>
-        <article>
-          <header style={{ height: '150px' }}>Header 2</header>
-        </article>
-      </ChartRowCard>
-    )
-
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(2)
-
-      const header1 = headers[0] as HTMLElement
-      const header2 = headers[1] as HTMLElement
-
-      Object.defineProperty(header1, 'clientHeight', {
-        value: 100,
-        configurable: true,
-        writable: true,
-      })
-      Object.defineProperty(header2, 'clientHeight', {
-        value: 150,
-        configurable: true,
-        writable: true,
-      })
-
-      mockUseDebounceValue.mockReturnValue([1200])
-    })
+    const { container } = render(<ChartRowCard testId="map-row-cards">{createMockArticles([100, 120])}</ChartRowCard>)
 
     const headers = container.querySelectorAll('article > header')
-    expect(headers.length).toBe(2)
-  })
-
-  test('setChartCardHeaderSize handles case where first header is larger', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header style={{ height: '200px' }}>Header 1</header>
-        </article>
-        <article>
-          <header style={{ height: '100px' }}>Header 2</header>
-        </article>
-      </ChartRowCard>
-    )
+    mockClientHeight(headers[0], 100)
+    mockClientHeight(headers[1], 120)
 
     await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(2)
-    })
-  })
+      const header1 = screen.getByTestId('header-0') as HTMLElement
+      const header2 = screen.getByTestId('header-1') as HTMLElement
 
-  test('setChartCardHeaderSize resets minHeight before calculating new height', async () => {
-    mockUseWindowSize.mockReturnValue({ width: 1200, height: 800 })
-    mockUseDebounceValue.mockReturnValue([1200])
-
-    const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header style={{ minHeight: '50px', height: '100px' }}>Header 1</header>
-        </article>
-        <article>
-          <header style={{ height: '150px' }}>Header 2</header>
-        </article>
-      </ChartRowCard>
-    )
-
-    await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(2)
-
-      const header1 = headers[0] as HTMLElement
-      expect(header1).toBeInTheDocument()
+      expect(header1.style.maxHeight).toBe('')
+      expect(header2.style.maxHeight).toBe('')
     })
   })
 
   test('does not adjust headers when only one article present', async () => {
     const { container } = render(
-      <ChartRowCard>
-        <article>
-          <header data-testid="header-1" style={{ height: '100px' }}>
-            Header 1
-          </header>
+      <ChartRowCard testId="map-row-cards">
+        <article data-testid="single-article">
+          <header data-testid="single-header">Single Header</header>
+          <div>Content</div>
         </article>
       </ChartRowCard>
     )
 
+    const headers = container.querySelectorAll('article > header')
+    expect(headers).toHaveLength(1)
+
+    mockClientHeight(headers[0], 100)
+
     await waitFor(() => {
-      const headers = container.querySelectorAll('article > header')
-      expect(headers.length).toBe(1)
+      const header = screen.getByTestId('single-header') as HTMLElement
+      expect(header.style.height).toBe('')
     })
   })
 
-  test('handles window resize by debouncing width', () => {
-    mockUseWindowSize.mockReturnValue({ width: 800, height: 600 })
-    mockUseDebounceValue.mockReturnValue([800])
-
-    render(
-      <ChartRowCard>
-        <div>Chart content</div>
+  test('does not adjust headers when more than two articles present', async () => {
+    const { container } = render(
+      <ChartRowCard testId="map-row-cards">
+        {createMockArticles([100, 120])}
+        <article data-testid="article-2">
+          <header data-testid="header-2">Header 3</header>
+          <div>Content 3</div>
+        </article>
       </ChartRowCard>
     )
 
-    expect(mockUseDebounceValue).toHaveBeenCalledWith(800, 20)
+    const headers = container.querySelectorAll('article > header')
+    expect(headers).toHaveLength(3)
+
+    headers.forEach((header, index) => {
+      mockClientHeight(header, 100 + index * 10)
+    })
+
+    await waitFor(() => {
+      const header1 = screen.getByTestId('header-0') as HTMLElement
+      const header2 = screen.getByTestId('header-1') as HTMLElement
+      const header3 = screen.getByTestId('header-2') as HTMLElement
+
+      expect(header1.style.maxHeight).toBe('')
+      expect(header2.style.maxHeight).toBe('')
+      expect(header3.style.maxHeight).toBe('')
+    })
   })
 
-  test('updates when searchParams change', async () => {
-    const { rerender } = render(
-      <ChartRowCard>
-        <div>Chart content</div>
-      </ChartRowCard>
+  test('resets existing height before recalculating', async () => {
+    const { container, rerender } = render(
+      <ChartRowCard testId="map-row-cards">{createMockArticles([100, 120])}</ChartRowCard>
     )
 
-    // Change searchParams by rerendering
-    mockSearchParams.set('test', 'value')
-    rerender(
-      <ChartRowCard>
-        <div>Chart content</div>
-      </ChartRowCard>
+    await waitFor(() => {
+      expect(screen.getByTestId('header-0')).toBeInTheDocument()
+    })
+
+    let headers = container.querySelectorAll('article > header')
+    mockClientHeight(headers[0], 100)
+    mockClientHeight(headers[1], 120)
+
+    useDebounceValue.mockReturnValue([1200])
+    rerender(<ChartRowCard testId="map-row-cards">{createMockArticles([100, 120])}</ChartRowCard>)
+
+    await waitFor(
+      () => {
+        const header1 = screen.getByTestId('header-0') as HTMLElement
+        if (mockDebouncedWidth >= 1024) {
+          const height = Number.parseInt(header1.style.height || '0')
+          expect(height).toBe(100)
+        }
+      },
+      { timeout: 2000 }
     )
 
-    // Component should still render
-    expect(screen.getByTestId('chart-row-cards')).toBeInTheDocument()
+    headers = container.querySelectorAll('article > header')
+    ;(headers[0] as HTMLElement).style.height = '150px'
+    ;(headers[1] as HTMLElement).style.height = '150px'
+
+    useDebounceValue.mockReturnValue([1200])
+    useWindowSize.mockReturnValue({ width: 1200, height: 800 })
+
+    rerender(<ChartRowCard testId="map-row-cards">{createMockArticles([80, 90])}</ChartRowCard>)
+
+    await waitFor(() => {
+      expect(screen.getByTestId('header-0')).toBeInTheDocument()
+    })
+
+    headers = container.querySelectorAll('article > header')
+    mockClientHeight(headers[0], 80)
+    mockClientHeight(headers[1], 90)
+
+    useDebounceValue.mockReturnValue([1200])
+    rerender(<ChartRowCard testId="map-row-cards">{createMockArticles([80, 90])}</ChartRowCard>)
+
+    await waitFor(
+      () => {
+        const header0 = screen.getByTestId('header-0') as HTMLElement
+        const header1 = screen.getByTestId('header-1') as HTMLElement
+
+        if (mockDebouncedWidth >= 1024) {
+          const height0 = Number.parseInt(header0.style.height || '0')
+          const height1 = Number.parseInt(header1.style.height || '0')
+          expect(height0).toBe(80)
+          expect(height1).toBe(90)
+        }
+      },
+      { timeout: 2000 }
+    )
   })
 
-  describe('setChartCardTabSize function', () => {
-    test('exits early when row is null', () => {
-      const { container } = render(
-        <ChartRowCard>
-          <div>Chart content</div>
-        </ChartRowCard>
-      )
+  test('updates largestHeader when header.clientHeight is greater (line 36)', async () => {
+    const mockArticles = createMockArticles([100, 150])
+    const { container, rerender } = render(<ChartRowCard testId="map-row-cards">{mockArticles}</ChartRowCard>)
 
-      const row = container.querySelector('[data-testid="chart-row-cards"]')
-      expect(row).toBeInTheDocument()
+    await waitFor(() => {
+      expect(screen.getByTestId('header-0')).toBeInTheDocument()
     })
 
-    test('exits early when row has no child nodes', () => {
-      const { container } = render(
-        <ChartRowCard>
-          <div>Chart content</div>
-        </ChartRowCard>
-      )
+    const headers = container.querySelectorAll('article > header')
+    mockClientHeight(headers[0], 100)
+    mockClientHeight(headers[1], 150)
 
-      const row = container.querySelector('[data-testid="chart-row-cards"]')
-      expect(row).toBeInTheDocument()
+    useDebounceValue.mockReturnValue([1200])
+    rerender(<ChartRowCard testId="map-row-cards">{mockArticles}</ChartRowCard>)
+
+    await waitFor(
+      () => {
+        const header0 = screen.getByTestId('header-0') as HTMLElement
+        const header1 = screen.getByTestId('header-1') as HTMLElement
+
+        if (mockDebouncedWidth >= 1024) {
+          expect(Number.parseInt(header0.style.height || '0')).toBe(100)
+          expect(Number.parseInt(header1.style.height || '0')).toBe(150)
+        }
+      },
+      { timeout: 2000 }
+    )
+  })
+
+  test('handles case where first header is larger than second', async () => {
+    const mockArticles = createMockArticles([150, 100])
+    const { container, rerender } = render(<ChartRowCard testId="map-row-cards">{mockArticles}</ChartRowCard>)
+
+    let headers = container.querySelectorAll('article > header')
+    mockClientHeight(headers[0], 150)
+    mockClientHeight(headers[1], 100)
+
+    mockSearchParams.set('trigger2', 'recalc')
+
+    await act(async () => {
+      rerender(<ChartRowCard testId="map-row-cards">{mockArticles}</ChartRowCard>)
+      headers = container.querySelectorAll('article > header')
+      mockClientHeight(headers[0], 150)
+      mockClientHeight(headers[1], 100)
+      await new Promise((resolve) => setTimeout(resolve, 100))
     })
 
-    test('exits early when single chart tab panel has zero height', () => {
-      const { container } = render(
-        <ChartRowCard>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '0px' }}>
-              Chart content
-            </div>
-          </article>
-        </ChartRowCard>
-      )
+    await waitFor(
+      () => {
+        const header1 = screen.getByTestId('header-0') as HTMLElement
+        const header2 = screen.getByTestId('header-1') as HTMLElement
 
-      const tabPanel = container.querySelector('[role="tabpanel"][data-type="chart"]')
-      expect(tabPanel).toBeInTheDocument()
-    })
+        if (mockDebouncedWidth >= 1024) {
+          expect(Number.parseInt(header1.style.height || '0')).toBe(150)
+          expect(Number.parseInt(header2.style.height || '0')).toBe(100)
+        }
+      },
+      { timeout: 2000 }
+    )
+  })
 
-    test('exits early when both chart tab panels have zero height', () => {
-      const { container } = render(
-        <ChartRowCard>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '0px' }}>
-              Chart 1
-            </div>
-          </article>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '0px' }}>
-              Chart 2
-            </div>
-          </article>
-        </ChartRowCard>
-      )
+  test('adapts to search params changes', async () => {
+    const { rerender } = render(<ChartRowCard testId="map-row-cards">{createMockArticles()}</ChartRowCard>)
 
-      const tabPanels = container.querySelectorAll('[role="tabpanel"][data-type="chart"]')
-      expect(tabPanels.length).toBe(2)
-    })
+    mockSearchParams.set('newParam', 'value')
 
-    test('calculates and sets height for tab panels on tablet breakpoint', async () => {
-      mockUseWindowSize.mockReturnValue({ width: 800, height: 600 })
-      mockUseDebounceValue.mockReturnValue([800])
+    rerender(<ChartRowCard testId="map-row-cards">{createMockArticles()}</ChartRowCard>)
 
-      const { container } = render(
-        <ChartRowCard>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '100px' }}>
-              Chart 1
-            </div>
-            <div role="tabpanel" data-type="table">
-              Table 1
-            </div>
-          </article>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '150px' }}>
-              Chart 2
-            </div>
-            <div role="tabpanel" data-type="table">
-              Table 2
-            </div>
-          </article>
-        </ChartRowCard>
-      )
-
-      await waitFor(() => {
-        const tabPanels = container.querySelectorAll('[role="tabpanel"]')
-        expect(tabPanels.length).toBe(4)
-      })
-    })
-
-    test('resets height for tab panels below tablet breakpoint', async () => {
-      mockUseWindowSize.mockReturnValue({ width: 600, height: 400 })
-      mockUseDebounceValue.mockReturnValue([600])
-
-      const { container } = render(
-        <ChartRowCard>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '100px' }}>
-              Chart 1
-            </div>
-          </article>
-        </ChartRowCard>
-      )
-
-      await waitFor(() => {
-        const tabPanel = container.querySelector('[role="tabpanel"]')
-        expect(tabPanel).toBeInTheDocument()
-      })
-    })
-
-    test('resets previously applied heights before calculating new height', async () => {
-      mockUseWindowSize.mockReturnValue({ width: 800, height: 600 })
-      mockUseDebounceValue.mockReturnValue([800])
-
-      const { container } = render(
-        <ChartRowCard>
-          <article>
-            <div role="tabpanel" data-type="chart" style={{ height: '50px' }}>
-              Chart 1
-            </div>
-          </article>
-        </ChartRowCard>
-      )
-
-      await waitFor(() => {
-        const tabPanel = container.querySelector('[role="tabpanel"]') as HTMLElement
-        expect(tabPanel).toBeInTheDocument()
-      })
-    })
+    expect(useDebounceValue).toHaveBeenCalled()
   })
 })

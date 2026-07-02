@@ -1,10 +1,9 @@
 'use client'
 
 import clsx from 'clsx'
-import React, { useEffect, useRef, useState } from 'react'
+import React, { useEffect, useMemo, useRef, useState } from 'react'
 
 import { useSelectedFilters } from '@/app/hooks/globalFilterHooks'
-/* eslint-disable @typescript-eslint/no-explicit-any*/
 
 export type FlatOption = { id: string; label: string }
 export type GroupedOption = { title: string; children: FlatOption[] }
@@ -28,24 +27,26 @@ export function MultiselectDropdown({
   const dropdownContainerRef = useRef<HTMLDivElement>(null)
   const { selectedFilters, addFilter, removeFilter, updateFilters } = useSelectedFilters()
 
-  let options = [] as Options
-
-  if (data) {
-    if (nestedMultiselect) {
-      options = data.map((group: any) => {
-        return {
-          title: group.title,
-          children: group.children.map((item: FlatOption) => {
-            return { id: `${item.id}`, label: item.label }
-          }),
-        }
-      })
-    } else {
-      options = data.map((item: any) => {
-        return { id: `${item.id}`, label: item.label }
-      })
+  const options = useMemo(() => {
+    if (!data) {
+      return [] as Options
     }
-  }
+
+    if (nestedMultiselect) {
+      return (data as GroupedOption[]).map((group) => ({
+        title: group.title,
+        children: group.children.map((item) => ({
+          id: `${item.id}`,
+          label: item.label,
+        })),
+      }))
+    }
+
+    return (data as FlatOption[]).map((item) => ({
+      id: `${item.id}`,
+      label: item.label,
+    }))
+  }, [data, nestedMultiselect])
 
   const createFilterOption = (optionValue: FlatOption) => {
     return {
@@ -56,7 +57,7 @@ export function MultiselectDropdown({
 
   const isFilterSelected = (optionValue: FlatOption) => {
     const filterId = optionValue.id
-    const isSelected = selectedFilters!.some((filter) => filter.id === filterId)
+    const isSelected = (selectedFilters ?? []).some((filter) => filter.id === filterId)
     return isSelected
   }
 
@@ -66,7 +67,7 @@ export function MultiselectDropdown({
     //get the first part of the selected option id
     const optionType = optionValue.id.split('.')[0]
 
-    const currentSelectionCount = selectedFilters!.filter((filter) => filter.id.startsWith(optionType)).length
+    const currentSelectionCount = (selectedFilters ?? []).filter((filter) => filter.id.startsWith(optionType)).length
 
     // Disable if we've reached the limit
     return currentSelectionCount >= selectionLimit
@@ -238,7 +239,7 @@ export function MultiselectDropdown({
 
     if (allSelected) {
       // Deselect all children in this group
-      const updatedFilters = selectedFilters!.filter((filter) => {
+      const updatedFilters = (selectedFilters ?? []).filter((filter) => {
         const groupChildIds = group.children.map((child) => `${child.id}`)
         group.children.map((child) => removeFilter(child.id))
         return !groupChildIds.includes(filter.id)
@@ -247,7 +248,7 @@ export function MultiselectDropdown({
     } else {
       // Select all children in this group (including those already selected)
       const groupFilters = group.children.map((child) => createFilterOption(child))
-      const nonGroupFilters = selectedFilters!.filter((filter) => {
+      const nonGroupFilters = (selectedFilters ?? []).filter((filter) => {
         const groupChildIds = group.children.map((child) => `${child.id}`)
         return !groupChildIds.includes(filter.id)
       })

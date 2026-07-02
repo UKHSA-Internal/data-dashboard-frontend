@@ -58,7 +58,7 @@ export function ClientTable({
 
   // hardcoded for timeseries charts but want to be parameters depending on the use case.
   const title = `${cardData.title_prefix}`
-  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
+  const geographyDetails = `(${geographyParent?.name ?? ''}, ${geography.name})`
   const x_axis_title = 'year'
   const y_axis_title = `Vaccine Coverage %`
   const x_axis = 'date'
@@ -112,7 +112,8 @@ export function ClientTable({
     }
 
     fetchCharts()
-  }, [dataFilters, geography])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
     const fetchTables = async () => {
@@ -158,7 +159,8 @@ export function ClientTable({
     }
 
     fetchTables()
-  }, [dataFilters, geography])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   if (tableLoading || chartLoading) {
     return (

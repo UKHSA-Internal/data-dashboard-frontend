@@ -164,7 +164,7 @@ const ChartWithFilterContent = ({
       ) : isLoading ? (
         <LoadingSpinnerContainer />
       ) : (
-        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={filteredFigure} />
+        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={{ frames: [], ...filteredFigure }} />
       )}
       <ChartNoScript title={kebabCase(title)} />
     </>

@@ -22,8 +22,8 @@ export const VaccinationDropdown = ({
   const { selectedFilters } = useSelectedFilters()
 
   //to find the matching vaccinations from the selected filters
-  const selectedLabels = new Set(selectedFilters!.map((item) => item.label))
-  const selectedVaccinationList = vaccinationList!.filter((item) => selectedLabels.has(item.value.label))
+  const selectedLabels = new Set((selectedFilters ?? []).map((item) => item.label))
+  const selectedVaccinationList = (vaccinationList ?? []).filter((item) => selectedLabels.has(item.value.label))
   const matchingVaccinations = useMemo(() => {
     if (!vaccinationList) return []
     // If nothing is selected, return full list
@@ -32,6 +32,7 @@ export const VaccinationDropdown = ({
     }
     // Otherwise return only matches
     return selectedVaccinationList
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [vaccinationList, selectedFilters])
 
   const [newVaccinationList, setNewVaccinationList] = useState(matchingVaccinations)
@@ -49,7 +50,9 @@ export const VaccinationDropdown = ({
       return
     }
 
-    const selectedVaccinationValue = vaccinationList!.find((vaccine: DataFilter) => vaccine.id === selectedVaccineId)
+    const selectedVaccinationValue = (vaccinationList ?? []).find(
+      (vaccine: DataFilter) => vaccine.id === selectedVaccineId
+    )
 
     if (selectedVaccinationValue) {
       setSelectedVaccination(selectedVaccinationValue)
@@ -62,6 +65,7 @@ export const VaccinationDropdown = ({
 
   return (
     <div className={clsx('govuk-form-group', className)}>
+      {/* eslint-disable-next-line tailwindcss/no-custom-classname */}
       <label className="govuk-label govuk-label--s map-label-style" htmlFor="vaccination-select">
         Vaccine Selection
       </label>
@@ -74,7 +78,7 @@ export const VaccinationDropdown = ({
         data-testid="vaccination-select-control"
       >
         <option value="">{placeholder}</option>
-        {newVaccinationList!.map((vaccine: DataFilter) => (
+        {(newVaccinationList ?? []).map((vaccine: DataFilter) => (
           <option key={vaccine.id} value={vaccine.id}>
             {vaccine.value.label}
           </option>

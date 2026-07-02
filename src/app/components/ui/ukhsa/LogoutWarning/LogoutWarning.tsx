@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable tailwindcss/no-custom-classname */
 
 import { useCallback, useEffect, useRef, useState } from 'react'
 

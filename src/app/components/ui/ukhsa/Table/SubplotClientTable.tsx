@@ -1,7 +1,7 @@
 'use client'
 import clsx from 'clsx'
 import { kebabCase } from 'lodash'
-import { Fragment, useEffect, useState } from 'react'
+import { Fragment, useEffect, useMemo, useState } from 'react'
 
 import {
   DataFilter,
@@ -62,10 +62,10 @@ export function SubplotClientTable({
   const [tableError, setTableError] = useState<string | null>(null)
 
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
-  const geographyRelations = flattenGeographyObject(geography)
+  const geographyRelations = useMemo(() => flattenGeographyObject(geography), [geography])
 
   const title = `${cardData.title_prefix}`
-  const geographyDetails = `(${geographyParent!.name}, ${geography.name})`
+  const geographyDetails = `(${geographyParent?.name ?? ''}, ${geography.name})`
   const x_axis_title = 'year'
   const y_axis_title = 'Vaccine coverage %'
   const x_axis = 'geography'
@@ -108,7 +108,7 @@ export function SubplotClientTable({
                     label: geography.name,
                     geography_type: geography.geography_type,
                     geography: geography.name,
-                    line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                    line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
                   }
                 }),
               }
@@ -129,6 +129,7 @@ export function SubplotClientTable({
     }
 
     fetchTables()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geography, dataFilters, dataFilters, selectedThresholds])
 
   if (tableLoading) {

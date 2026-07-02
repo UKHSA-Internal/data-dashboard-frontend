@@ -78,6 +78,9 @@ interface CustomLeafletEvent extends LeafletMouseEvent {
   }
 }
 
+const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
+const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
+
 interface LayerWithFeature extends Path {
   feature: LocalAuthoritiesFeature & RegionFeature & CountriesFeature
 }
@@ -146,7 +149,7 @@ const CoverLayer = <T extends LayerWithFeature>({
       return defaultResponse
     }
 
-    const vaccination = selectedVaccination!.value.label ?? 'Data Unavailable'
+    const vaccination = selectedVaccination?.value.label ?? 'Data Unavailable'
 
     const geographyDataArray = geographyAreas.get('Upper Tier Local Authority')
 
@@ -210,9 +213,6 @@ const CoverLayer = <T extends LayerWithFeature>({
     }
   }, [])
 
-  const geoJsonFeatureId = 'CTYUA24CD' satisfies keyof LocalAuthoritiesFeature['properties']
-  const regionGeoJsonFeatureId = 'RGN23CD' satisfies keyof RegionFeature['properties']
-
   useEffect(() => {
     if (selectedGeographyFilters && selectedGeographyFilters.length > 0) {
       // Get most recently selected geography
@@ -233,7 +233,7 @@ const CoverLayer = <T extends LayerWithFeature>({
         const latlng = Leaflet.latLng(matchingFeature.properties.LAT, matchingFeature.properties.LONG)
 
         // Set the selected feature first
-        setFilterSelectedFeatureId(latestGeography.geography_code!)
+        setFilterSelectedFeatureId(latestGeography.geography_code ?? '')
 
         // Then update the map view
         if (map.getZoom() < 8) {
@@ -304,7 +304,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               label: `${featureData?.geography}`,
             }
             // pass in an optional param to remove the previously clicked one from the geographyFilters.
-            addFilterFromMap(selectedFeature, clickedFeatureIdRef!.current!)
+            addFilterFromMap(selectedFeature, clickedFeatureIdRef?.current ?? '')
           }
           // Store the clicked ref
           if (layer.feature.id) {

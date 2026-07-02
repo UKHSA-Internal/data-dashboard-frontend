@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 
 import { DataFilter, GeographyFilters, ThresholdFilter, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
@@ -34,7 +34,7 @@ export function SubplotClientDownload({
   const [tableLoading, setTableLoading] = useState<boolean>(true)
   const [tableError, setTableError] = useState<string | null>(null)
 
-  const geographyRelations = flattenGeographyObject(geography)
+  const geographyRelations = useMemo(() => flattenGeographyObject(geography), [geography])
 
   const x_axis = 'geography'
   const y_axis = 'metric'
@@ -76,7 +76,7 @@ export function SubplotClientDownload({
                     label: geography.name,
                     geography_type: geography.geography_type,
                     geography: geography.name,
-                    line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                    line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
                   }
                 }),
               }
@@ -98,6 +98,7 @@ export function SubplotClientDownload({
     }
 
     fetchTables()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [geography, dataFilters, selectedThresholds])
 
   if (tableLoading) {
@@ -149,7 +150,7 @@ export function SubplotClientDownload({
               label: geography.name,
               geography_type: geography.geography_type,
               geography: geography.name,
-              line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+              line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
             }
           }),
         }

@@ -19,7 +19,7 @@ interface ClientChartProps {
   cardData: FilterLinkedTimeSeriesData
   handleLatestDate: (date: string | null) => void
   isPublic: boolean
-  dataClassification? : DataClassification | undefined
+  dataClassification?: DataClassification | undefined
 }
 
 const TimeseriesClientChart = ({
@@ -29,7 +29,7 @@ const TimeseriesClientChart = ({
   cardData,
   handleLatestDate,
   isPublic = true,
-  dataClassification = undefined
+  dataClassification = undefined,
 }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -74,7 +74,7 @@ const TimeseriesClientChart = ({
             }
           }),
           is_public: isPublic,
-          data_classification: dataClassification
+          data_classification: dataClassification,
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)
@@ -97,7 +97,8 @@ const TimeseriesClientChart = ({
     }
 
     fetchCharts()
-  }, [dataFilters, geography])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cardData.legend_title, chartDateRange.date_from, chartDateRange.date_to, dataFilters, geography])
 
   useEffect(() => {
     if (chartResponse?.last_updated) {
@@ -106,6 +107,7 @@ const TimeseriesClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [chartResponse])
 
   if (loading) {
