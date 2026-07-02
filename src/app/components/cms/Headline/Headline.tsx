@@ -1,3 +1,4 @@
+import clsx from 'clsx'
 import { z } from 'zod'
 
 import { HeadlineNumber } from '@/api/models/cms/Page/Blocks'
@@ -6,12 +7,20 @@ import { getServerTranslation } from '@/app/i18n'
 
 interface HeadlineProps {
   /* Request metadata from the CMS required to fetch from the headlines api */
-  data: z.infer<typeof HeadlineNumber>['value']
-  datePrefix: string
-  isPublic?: boolean
+  readonly data: z.infer<typeof HeadlineNumber>['value']
+  readonly datePrefix: string
+  readonly headingClassName?: string
+  readonly valueClassName?: string
+  readonly isPublic?: boolean
 }
 
-export async function Headline({ data: { body: heading, ...requestParams }, datePrefix, isPublic }: HeadlineProps) {
+export async function Headline({
+  data: { body: heading, ...requestParams },
+  datePrefix,
+  headingClassName,
+  valueClassName,
+  isPublic,
+}: HeadlineProps) {
   const { t } = await getServerTranslation('common')
 
   const headline = await getHeadlines(requestParams, isPublic)
@@ -22,13 +31,15 @@ export async function Headline({ data: { body: heading, ...requestParams }, date
     } = headline
 
     return (
-      <div>
-        <div>{t('cms.blocks.headline.heading', { heading })}</div>
+      <>
+        <div className={headingClassName}>{t('cms.blocks.headline.heading', { heading })}</div>
         <div className="govuk-body-xs govuk-!-margin-bottom-1 text-dark-grey [.ukhsa-chart-card_&]:hidden">
           {t('cms.blocks.timestamp.value', { prefix: datePrefix, value: date })}
         </div>
-        <div className="govuk-body-l govuk-!-margin-bottom-0">{t('cms.blocks.headline.value', { value })}</div>
-      </div>
+        <div className={clsx(valueClassName ?? 'govuk-body-l', 'govuk-!-margin-bottom-0')}>
+          {t('cms.blocks.headline.value', { value })}
+        </div>
+      </>
     )
   }
 
