@@ -6,6 +6,18 @@ import { logger } from '@/lib/logger'
 
 import { getCharts, responseSchema } from './getCharts'
 
+let mockIsSSR = false
+jest.mock('@/app/utils/app.utils', () => ({
+  ...jest.requireActual('@/app/utils/app.utils'),
+  get isSSR() {
+    return mockIsSSR
+  },
+}))
+
+beforeEach(() => {
+  mockIsSSR = false
+})
+
 test('Returns a chart svg and last updated date', async () => {
   const mockResponseData: z.infer<typeof responseSchema> = {
     chart: 'mocked-chart-svg',
@@ -262,4 +274,54 @@ test('Handles error when error.code is 400', async () => {
 
   expect(logger.info).toHaveBeenCalledWith('POST failed (no data) charts/v3 %s', 'new_cases_7days_sum')
   expect(result.success).toBe(false)
+})
+
+test('requests the proxy path when not server-side rendered', async () => {
+  mockIsSSR = false
+
+  jest.mocked(client).mockResolvedValueOnce({
+    data: {
+      chart: 'mocked-chart-svg',
+      alt_text: 'alt text',
+      last_updated: '123',
+      figure: { data: [], layout: { xaxis: {}, yaxis: {} } },
+    },
+    status: 200,
+  })
+
+  await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', chart_type: 'line_with_shaded_section' }],
+    is_public: true,
+  })
+
+  expect(client).toHaveBeenCalledWith('proxy/charts/v3', expect.anything(), true)
+})
+
+test('requests the charts path when server-side rendered', async () => {
+  mockIsSSR = true
+
+  jest.mocked(client).mockResolvedValueOnce({
+    data: {
+      chart: 'mocked-chart-svg',
+      alt_text: 'alt text',
+      last_updated: '123',
+      figure: { data: [], layout: { xaxis: {}, yaxis: {} } },
+    },
+    status: 200,
+  })
+
+  await getCharts({
+    x_axis: null,
+    y_axis: null,
+    chart_height: chartSizes.narrow.height,
+    chart_width: chartSizes.narrow.width,
+    plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', chart_type: 'line_with_shaded_section' }],
+    is_public: true,
+  })
+
+  expect(client).toHaveBeenCalledWith('charts/v3', expect.anything(), true)
 })

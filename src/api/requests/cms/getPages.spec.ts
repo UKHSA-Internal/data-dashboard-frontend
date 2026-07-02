@@ -596,6 +596,6 @@ describe('Failing to get all Metrics Documentation pages from the cms api', () =
 
     expect(result.success).toBe(true)
     // Should only include items from valid responses
-    expect((result as SuccessResponse).data.items.length).toBe(50)
+    expect((result as SuccessResponse).data.items).toHaveLength(50)
   })
 })
