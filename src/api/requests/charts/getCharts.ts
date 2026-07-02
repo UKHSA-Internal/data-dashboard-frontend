@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { FileFormats, Geography, GeographyType, Metrics, SubTheme, Theme, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
 import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
@@ -28,12 +28,14 @@ export const requestSchema = z.object({
   data_classification: DataClassification.optional(),
   plots: z.array(
     z.object({
+      theme: Theme,
+      sub_theme: SubTheme,
       topic: Topics,
       metric: Metrics,
       chart_type: ChartTypes,
+      geography: Geography,
+      geography_type: GeographyType,
       stratum: z.string().optional(),
-      geography: Geography.optional(),
-      geography_type: GeographyType.optional(),
       sex: z.string().nullable().optional(),
       age: z.string().nullable().optional(),
       date_from: z.string().nullable().optional(),

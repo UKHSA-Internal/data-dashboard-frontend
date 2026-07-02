@@ -63,6 +63,8 @@ test('renders a narrow chart correctly', async () => {
         id: '',
         type: 'plot',
         value: {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: '',
           chart_type: 'simple_line',
@@ -97,6 +99,8 @@ test('renders a narrow chart correctly', async () => {
     chart_width: 515,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: '',
         chart_type: 'simple_line',
@@ -149,6 +153,8 @@ test('renders the chart by geography and geography type when both are present in
         id: '',
         type: 'plot',
         value: {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: '',
           chart_type: 'simple_line',
@@ -182,6 +188,8 @@ test('renders the chart by geography and geography type when both are present in
     chart_width: 515,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: '',
         chart_type: 'simple_line',

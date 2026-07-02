@@ -39,12 +39,16 @@ test('Returns a chart svg and last updated date', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(result).toEqual({
@@ -66,12 +70,16 @@ test('Handles API errors when data is missing (400 status code)', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(result).toEqual({
@@ -121,12 +129,16 @@ test('Handles API errors for non-400 error responses', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.error).toHaveBeenNthCalledWith(1, 'getCharts error: Failed')
@@ -176,12 +188,16 @@ test('Handles non-Error instances in catch block', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(result.success).toBe(false)
@@ -198,12 +214,16 @@ test('Handles error when error.code is undefined', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.error).toHaveBeenCalledWith('getCharts error: Failed')
@@ -228,12 +248,16 @@ test('Handles Zod validation error when response data is invalid', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.error).toHaveBeenCalledWith(expect.stringContaining('Zod Validation error:'))
@@ -252,12 +276,16 @@ test('Handles error when error.code is 400', async () => {
     chart_width: chartSizes.narrow.width,
     plots: [
       {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_7days_sum',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'line_with_shaded_section',
       },
     ],
-    is_public: true
+    is_public: true,
   })
 
   expect(logger.info).toHaveBeenCalledWith('POST failed (no data) charts/v3 %s', 'new_cases_7days_sum')

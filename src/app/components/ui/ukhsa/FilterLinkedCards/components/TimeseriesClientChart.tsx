@@ -19,7 +19,7 @@ interface ClientChartProps {
   cardData: FilterLinkedTimeSeriesData
   handleLatestDate: (date: string | null) => void
   isPublic: boolean
-  dataClassification? : DataClassification | undefined
+  dataClassification?: DataClassification | undefined
 }
 
 const TimeseriesClientChart = ({
@@ -29,7 +29,7 @@ const TimeseriesClientChart = ({
   cardData,
   handleLatestDate,
   isPublic = true,
-  dataClassification = undefined
+  dataClassification = undefined,
 }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -56,6 +56,8 @@ const TimeseriesClientChart = ({
           y_axis_maximum_value: null,
           plots: dataFilters.map((filter: DataFilter) => {
             return {
+              theme: filter.value.parameters.theme.value,
+              sub_theme: filter.value.parameters.sub_theme.value,
               topic: filter.value.parameters.topic.value,
               metric: filter.value.parameters.metric.value,
               stratum: filter.value.parameters.stratum.value,
@@ -64,7 +66,7 @@ const TimeseriesClientChart = ({
               line_colour: filter.value.colour,
               label: filter.value.label,
               geography: geography.name,
-              geography_type: geography.geography_type || undefined,
+              geography_type: geography.geography_type!,
               chart_type: 'line_multi_coloured',
               line_type: 'SOLID',
               date_from: chartDateRange.date_from,
@@ -74,7 +76,7 @@ const TimeseriesClientChart = ({
             }
           }),
           is_public: isPublic,
-          data_classification: dataClassification
+          data_classification: dataClassification,
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)

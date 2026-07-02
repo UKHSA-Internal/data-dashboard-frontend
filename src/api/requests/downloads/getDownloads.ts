@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { Geography, GeographyType, Metrics, SubTheme, Theme, Topics } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
 import { auth } from '@/auth'
 import { auditLog, logger } from '@/lib/logger'
@@ -12,13 +12,15 @@ export const requestSchema = z.object({
   confidence_intervals: z.boolean().default(false),
   plots: z.array(
     z.object({
+      theme: Theme,
+      sub_theme: SubTheme,
       topic: Topics,
       metric: Metrics,
-      stratum: z.optional(z.string()),
-      geography: z.optional(Geography),
-      geography_type: z.optional(GeographyType),
+      geography: Geography,
+      geography_type: GeographyType,
       date_from: z.string().nullable().optional(),
       date_to: z.string().nullable().optional(),
+      stratum: z.optional(z.string()),
       age: z.string().nullable().optional(),
       sex: z.string().nullable().optional(),
     })

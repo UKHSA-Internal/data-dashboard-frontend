@@ -96,7 +96,7 @@ describe('SubplotFilterCard', () => {
     expect(screen.getByText(/2024/)).toBeInTheDocument()
   })
 
-   test('renders data classification in heading when non-public', () => {
+  test('renders data classification in heading when non-public', () => {
     render(
       <SubplotFilterCard
         geography={mockGeography}
@@ -107,7 +107,7 @@ describe('SubplotFilterCard', () => {
         cardData={mockCardData}
         timePeriodTitle="Year selection"
         isPublic={false}
-        level={"official_sensitive"}
+        level={'official_sensitive'}
         authEnabled={true}
       />
     )

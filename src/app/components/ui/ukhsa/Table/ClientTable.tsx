@@ -79,6 +79,8 @@ export function ClientTable({
           y_axis_maximum_value: null,
           plots: dataFilters.map((filter: DataFilter) => {
             return {
+              theme: filter.value.parameters.theme.value,
+              sub_theme: filter.value.parameters.sub_theme.value,
               topic: filter.value.parameters.topic.value,
               metric: filter.value.parameters.metric.value,
               stratum: filter.value.parameters.stratum.value,
@@ -87,7 +89,7 @@ export function ClientTable({
               line_colour: filter.value.colour,
               label: filter.value.label,
               geography: geography.name,
-              geography_type: geography.geography_type || undefined,
+              geography_type: geography.geography_type!,
               chart_type: 'line_multi_coloured',
               line_type: 'SOLID',
               date_from: chartDateRange.date_from,
@@ -125,6 +127,8 @@ export function ClientTable({
             y_axis: y_axis,
             plots: dataFilters.map((filter: DataFilter) => {
               return {
+                theme: filter.value.parameters.theme.value,
+                sub_theme: filter.value.parameters.sub_theme.value,
                 topic: filter.value.parameters.topic.value,
                 metric: filter.value.parameters.metric.value,
                 stratum: filter.value.parameters.stratum.value,
@@ -133,7 +137,7 @@ export function ClientTable({
                 line_colour: filter.value.colour,
                 label: filter.value.label,
                 geography: geography.name,
-                geography_type: geography.geography_type || undefined,
+                geography_type: geography.geography_type!,
                 chart_type: 'line_multi_coloured',
                 line_type: 'SOLID',
                 date_from: chartDateRange.date_from,
