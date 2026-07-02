@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react'
 
 import { DataFilter, FilterLinkedTimeSeriesData, TimePeriod } from '@/api/models/cms/Page/GlobalFilter'
+import { DataClassification } from '@/api/models/DataClassification'
 import { ChartResponse, getCharts } from '@/api/requests/charts/getCharts'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 import ChartInteractiveWrapper from '@/app/components/cms/ChartInteractive/ChartInteractiveWrapper'
@@ -17,6 +18,8 @@ interface ClientChartProps {
   timePeriods: TimePeriod[]
   cardData: FilterLinkedTimeSeriesData
   handleLatestDate: (date: string | null) => void
+  isPublic: boolean
+  dataClassification?: DataClassification | undefined
 }
 
 const TimeseriesClientChart = ({
@@ -25,6 +28,8 @@ const TimeseriesClientChart = ({
   timePeriods,
   cardData,
   handleLatestDate,
+  isPublic = true,
+  dataClassification = undefined,
 }: ClientChartProps) => {
   const [chartResponse, setChartResponse] = useState<ChartResponse | null>(null)
   const [loading, setLoading] = useState(true)
@@ -68,6 +73,8 @@ const TimeseriesClientChart = ({
               use_markers: true,
             }
           }),
+          is_public: isPublic,
+          data_classification: dataClassification,
         })
         if (chartResponse.success) {
           setChartResponse(chartResponse.data)

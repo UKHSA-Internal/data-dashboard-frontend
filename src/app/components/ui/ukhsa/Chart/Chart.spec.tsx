@@ -88,6 +88,7 @@ test('renders a narrow chart correctly', async () => {
           size: 'narrow',
         },
       ],
+      isPublic: true,
     })) as ReactElement
   )
 
@@ -109,6 +110,10 @@ test('renders a narrow chart correctly', async () => {
     y_axis: null,
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    confidence_colour: undefined,
+    confidence_intervals: undefined,
+    data_classification: undefined,
+    is_public: true,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(
@@ -190,6 +195,10 @@ test('renders the chart by geography and geography type when both are present in
     y_axis_title: '',
     y_axis_maximum_value: null,
     y_axis_minimum_value: null,
+    confidence_colour: undefined,
+    confidence_intervals: undefined,
+    data_classification: undefined,
+    is_public: true,
   })
 
   expect(getByAltText('alt text for chart - Refer to tabular data.')).toHaveAttribute(

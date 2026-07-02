@@ -4,7 +4,6 @@ import { getCharts, RequestParams } from '@/api/requests/charts/getCharts'
 
 export async function POST(req: NextRequest) {
   const body: RequestParams = await req.json()
-
   if (!body) {
     return new NextResponse('Missing category', {
       status: 500,

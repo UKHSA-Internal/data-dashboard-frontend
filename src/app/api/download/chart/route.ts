@@ -7,6 +7,10 @@ export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
 
+  const authToken = req.headers.get('X-UHD-AUTH')
+
+  const is_public = !authToken
+
   const body = await req.formData()
 
   const plots = []
@@ -23,7 +27,7 @@ export async function POST(req: NextRequest) {
   const confidenceIntervals = confidenceIntervalsValue === 'true'
 
   const params = requestSchema.safeParse({
-    is_public: body.get('is_public') === 'true',
+    is_public,
     file_format: body.get('format'),
     x_axis: body.get('x_axis'),
     confidence_intervals: confidenceIntervals,
@@ -33,7 +37,7 @@ export async function POST(req: NextRequest) {
   if (params.success) {
     const { is_public, plots, file_format: fileFormat, x_axis, confidence_intervals } = params.data
 
-    const response = await getDownloads(is_public, plots, fileFormat, x_axis, confidence_intervals)
+    const response = await getDownloads(is_public, plots, fileFormat, x_axis, confidence_intervals, authToken)
 
     if (!response) {
       logger.error('Proxied request to /api/downloads/v2 failed')

@@ -14,11 +14,12 @@
     "lighthouse": "npx unlighthouse",
     "tsc": "npx tsc --noEmit",
     "test": "jest --watch",
+    "test:coverage": "jest --coverage",
     "test:ci": "jest --ci --coverage",
     "test:e2e": "npx playwright test --ui --grep-invert @smoke",
     "test:e2e:ci": "npx playwright test --grep-invert @smoke",
     "test:e2e:smoke": "baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --grep @smoke",
-    "test:e2e:smoke:ui": "npx playwright test --ui --grep @smoke",
+    "test:e2e:smoke:ui": "baseURL=https://ukhsa-dashboard.data.gov.uk npx playwright test --ui --grep @smoke",
     "prepare": "husky install"
   },
   "dependencies": {

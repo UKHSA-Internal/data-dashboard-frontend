@@ -199,6 +199,14 @@ export const accessOurDataChildMocks: PageResponse<PageType.Composite>[] = [
               },
               id: 'eed43b5e-4217-49b0-88d1-773c6aec9b07',
             },
+            {
+              type: 'code_snippet',
+              value: {
+                language: 'r',
+                code: 'i <- 0\r\nwhile (i < 6) {\r\n  i <- i + 1\r\n  if (i == 3) {\r\n    next\r\n  }\r\n  print(i)\r\n}',
+              },
+              id: '8cdfb2a9-768a-4d7a-b9c1-523c9287a1d5',
+            },
           ],
         },
         id: 'dfdc74cb-c780-4f99-a2a1-45e1eb31baab',

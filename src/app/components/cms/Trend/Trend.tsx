@@ -10,12 +10,18 @@ interface TrendProps {
   readonly data: z.infer<typeof TrendNumber>['value']
   readonly datePrefix: string
   readonly headingClassName?: string
+  readonly isPublic?: boolean
 }
 
-export async function Trend({ data: { body: heading, ...requestParams }, datePrefix, headingClassName }: TrendProps) {
+export async function Trend({
+  data: { body: heading, ...requestParams },
+  datePrefix,
+  headingClassName,
+  isPublic,
+}: TrendProps) {
   const { t } = await getServerTranslation('common')
 
-  const trend = await getTrends(requestParams)
+  const trend = await getTrends(requestParams, isPublic)
 
   if (trend.success) {
     const {

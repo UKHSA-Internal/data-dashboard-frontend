@@ -3,6 +3,7 @@ import clsx from 'clsx'
 import { kebabCase } from 'lodash'
 import Link from 'next/link'
 
+import { DataClassification } from '@/api/models/DataClassification'
 import { getShowMoreURL } from '@/app/utils/show-more.utils'
 
 import { ChartWithDescriptionCard } from '../ChartWithDescriptionCard/ChartWithDescriptionCard'
@@ -13,11 +14,20 @@ type ChartCardSectionProps = {
   readonly heading: string
   readonly showMoreSections: string[]
   readonly enableShowMore?: boolean
+  isPublic?: boolean
+  dataClassification?: DataClassification
 }
 
 const SHOW_MORE_SECTION_COLUMNS = 2
 
-export function ChartCardSection({ value, heading, showMoreSections, enableShowMore = true }: ChartCardSectionProps) {
+export function ChartCardSection({
+  value,
+  heading,
+  showMoreSections,
+  enableShowMore = true,
+  isPublic = true,
+  dataClassification = undefined,
+}: ChartCardSectionProps) {
   return (
     <div
       className={clsx('grid gap-4 md:grid-cols-[1fr_1fr]', {
@@ -53,7 +63,11 @@ export function ChartCardSection({ value, heading, showMoreSections, enableShowM
               data-testid="card-wrapper"
               data-topic-filter-id={card.id}
             >
-              <ChartWithDescriptionCard value={card.value} />
+              <ChartWithDescriptionCard
+                value={card.value}
+                isPublic={isPublic}
+                dataClassification={dataClassification}
+              />
             </div>
           )
         }
@@ -66,7 +80,12 @@ export function ChartCardSection({ value, heading, showMoreSections, enableShowM
               data-testid="card-wrapper"
               data-topic-filter-id={card.id}
             >
-              <SimplifiedChartWithLinkCard value={card.value} cardsCount={value.cards.length} />
+              <SimplifiedChartWithLinkCard
+                value={card.value}
+                cardsCount={value.cards.length}
+                isPublic={isPublic}
+                dataClassification={dataClassification}
+              />
             </div>
           )
         }

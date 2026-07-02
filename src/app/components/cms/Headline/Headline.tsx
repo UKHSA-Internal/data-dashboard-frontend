@@ -11,6 +11,7 @@ interface HeadlineProps {
   readonly datePrefix: string
   readonly headingClassName?: string
   readonly valueClassName?: string
+  readonly isPublic?: boolean
 }
 
 export async function Headline({
@@ -18,10 +19,11 @@ export async function Headline({
   datePrefix,
   headingClassName,
   valueClassName,
+  isPublic,
 }: HeadlineProps) {
   const { t } = await getServerTranslation('common')
 
-  const headline = await getHeadlines(requestParams)
+  const headline = await getHeadlines(requestParams, isPublic)
 
   if (headline.success) {
     const {

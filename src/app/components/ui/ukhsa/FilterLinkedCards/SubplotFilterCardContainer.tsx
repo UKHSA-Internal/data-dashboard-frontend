@@ -8,10 +8,14 @@ import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import SubplotFilterCard from './SubplotFilterCard'
 type SubplotFilterCardContainerProps = {
   isPublic?: boolean
-  pageClassification?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
-const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled }: SubplotFilterCardContainerProps) => {
+const SubplotFilterCardContainer = ({
+  isPublic = true,
+  dataClassification = undefined,
+  authEnabled,
+}: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -29,7 +33,7 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
+      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={dataClassification} />}
       {isChartDataAvailable() ? (
         selectedGeographyFilters!.map((geography) => {
           return (
@@ -43,7 +47,7 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
               timePeriods={timePeriods!}
               timePeriodTitle={timePeriodTitle!}
               isPublic={isPublic}
-              level={pageClassification}
+              level={dataClassification}
               authEnabled={authEnabled}
             />
           )

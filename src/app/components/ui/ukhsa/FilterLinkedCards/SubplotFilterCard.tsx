@@ -18,7 +18,7 @@ import SubplotClientChart from '@/app/components/ui/ukhsa/FilterLinkedCards/comp
 import { SubplotClientTable } from '@/app/components/ui/ukhsa/Table/SubplotClientTable'
 import { formatDate } from '@/app/utils/date.utils'
 import { FlattenedGeography, getParentGeography } from '@/app/utils/geography.utils'
-import { getDataClassification } from '@/app/utils/table.utils'
+import { getDataClassificationLabel } from '@/app/utils/table.utils'
 
 import { Card } from '../Card/Card'
 import DropdownTab from '../Tabs/DropdownTab'
@@ -32,7 +32,7 @@ interface SubplotFilterCardProps {
   cardData: FilterLinkedSubplotData
   timePeriodTitle: string
   isPublic?: boolean
-  level?: DataClassification
+  level?: DataClassification | undefined
   authEnabled?: boolean
 }
 
@@ -44,7 +44,7 @@ const SubplotFilterCard = ({
   timePeriods,
   cardData,
   timePeriodTitle,
-  isPublic,
+  isPublic = true,
   level,
   authEnabled,
 }: SubplotFilterCardProps) => {
@@ -60,7 +60,7 @@ const SubplotFilterCard = ({
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title
   const about = cardData.about ? cardData.about : ''
-  const dataClassification = getDataClassification(isPublic, level ?? 'official_sensitive', authEnabled)
+  const dataClassificationLabel = getDataClassificationLabel(isPublic, authEnabled, level)
 
   return (
     <div key={id} className="mb-4">
@@ -68,7 +68,7 @@ const SubplotFilterCard = ({
         <article>
           <header>
             <h3 id={`chart-row-card-heading-${id}`} className="govuk-heading-m mb-2 font-bold">
-              {title} {dataClassification}
+              {title} {dataClassificationLabel}
             </h3>
             <p className="govuk-body-s govuk-!-margin-bottom-2 pt-0 italic text-dark-grey">{description}</p>
           </header>
@@ -142,6 +142,7 @@ const SubplotFilterCard = ({
                 cardData={cardData}
                 handleLatestDate={setDate}
                 timePeriodTitle={timePeriodTitle}
+                isPublic={isPublic}
               />
             </TabsContent>
             <TabsContent
@@ -161,7 +162,7 @@ const SubplotFilterCard = ({
                 currentTimePeriodIndex={currentTimePeriodIndex}
                 cardData={cardData}
                 isPublic={isPublic}
-                level={level}
+                dataClassification={level}
                 authEnabled={authEnabled}
               />
             </TabsContent>
