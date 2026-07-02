@@ -116,10 +116,8 @@ export const renderCard = (
   isPublic: boolean,
   pageClassification: DataClassification | undefined
 ) => {
-  const topicFilterId = type === 'weather_health_alert_card' ? id : undefined
-
   return (
-    <div key={id} data-topic-filter-id={topicFilterId}>
+    <div key={id}>
       {type === 'text_card' && <TextCard value={value} />}
 
       {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} isPublic={isPublic} />}
@@ -139,6 +137,7 @@ export const renderCard = (
           return authEnabled && isPublic === false ? (
             <Suspense
               fallback={
+                // eslint-disable-next-line tailwindcss/no-custom-classname
                 <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true" role="status">
                   Loading chart
                 </div>
@@ -180,7 +179,7 @@ export const renderCard = (
         />
       )}
 
-      {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}
+      {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} topicFilterId={id} />}
     </div>
   )
 }

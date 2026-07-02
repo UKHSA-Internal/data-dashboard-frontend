@@ -43,4 +43,19 @@ describe('WeatherHealthAlertCard', () => {
 
     expect(screen.getByText('Cold health alerts')).toBeInTheDocument()
   })
+
+  test('sets data-topic-filter-id when topicFilterId is provided', () => {
+    const mockValue = {
+      title: 'Cold health alerts',
+      sub_title: 'Across England',
+      alert_type: 'cold',
+    }
+
+    render(<WeatherHealthAlertCard value={mockValue} topicFilterId="alert-cold" />)
+
+    expect(screen.getByText('Cold health alerts').closest('[data-topic-filter-id]')).toHaveAttribute(
+      'data-topic-filter-id',
+      'alert-cold'
+    )
+  })
 })
