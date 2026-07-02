@@ -116,8 +116,10 @@ export const renderCard = (
   isPublic: boolean,
   pageClassification: DataClassification | undefined
 ) => {
+  const topicFilterId = type === 'weather_health_alert_card' ? id : undefined
+
   return (
-    <div key={id}>
+    <div key={id} data-topic-filter-id={topicFilterId}>
       {type === 'text_card' && <TextCard value={value} />}
 
       {type === 'headline_numbers_row_card' && <HeadlineNumbersRowCard value={value} isPublic={isPublic} />}

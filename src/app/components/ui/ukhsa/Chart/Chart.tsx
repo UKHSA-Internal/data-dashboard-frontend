@@ -63,14 +63,16 @@ const createStaticChart = async ({
   chart,
   areaName,
   altText,
+  showResetLink,
 }: {
   chart: Awaited<ReturnType<typeof getCharts>>
   areaName: string | null
   altText: string
+  showResetLink: boolean
 }) => {
   const chartSvg = chart.data?.chart
 
-  if (!chartSvg) return <ChartEmpty resetHref={await getPathname()} />
+  if (!chartSvg) return <ChartEmpty resetHref={await getPathname()} showResetLink={showResetLink} />
 
   return (
     <img
@@ -149,7 +151,7 @@ export async function Chart({
   })
 
   if (!chartResponse.success || !chartResponse.data) {
-    return <ChartEmpty resetHref={pathname} />
+    return <ChartEmpty resetHref={pathname} showResetLink={enableInteractive} />
   }
 
   const { alt_text: alt, figure, last_updated } = chartResponse.data
@@ -160,6 +162,7 @@ export async function Chart({
     altText: t('cms.blocks.chart.alt', {
       body: alt,
     }),
+    showResetLink: enableInteractive,
   })
 
   // Return static charts locally as our mocks don't currently provide the plotly layout & data json.
