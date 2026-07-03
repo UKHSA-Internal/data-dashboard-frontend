@@ -8,12 +8,21 @@ import { render, screen } from '@/config/test-utils'
 import { ChartRowCardHeader } from '../components/ui/ukhsa'
 import {
   mockChartCardSectionWithSixCards,
+  mockChartRowCardWithSingleChartCard,
   mockSectionNoLink,
   mockSectionWithCard,
   mockSectionWithLink,
   mockSectionWithLongHeading,
 } from './__mocks__/cms'
 import { renderBlock, renderCard, renderCompositeBlock, renderSection } from './cms.utils'
+
+let mockAuthEnabled = false
+jest.mock('@/config/constants', () => ({
+  ...jest.requireActual('@/config/constants'),
+  get authEnabled() {
+    return mockAuthEnabled
+  },
+}))
 
 jest.mock('@/app/components/ui/ukhsa/FilterLinkedCards/TimeSeriesFilterCardsContainer', () => ({
   TimeSeriesFilterCardsContainer: () => <div>Mocked time series filter cards container</div>,
@@ -94,6 +103,72 @@ describe('Displaying a section from the cms home page', () => {
     render(await renderSection([], mockSectionWithCard, true, true, undefined))
     expect(screen.getByText('This is some cms content')).toBeInTheDocument()
   })
+
+  test('renders footer links with external url, page link, and plain text', async () => {
+    const sectionWithFooter = {
+      id: 'footer-section',
+      type: 'section' as const,
+      value: {
+        heading: 'Footer section',
+        content: [],
+        footer: [
+          {
+            type: 'section_link' as const,
+            value: {
+              badge_label: 'External',
+              text: 'External link text',
+              link: {
+                link_display_text: 'Visit external site',
+                external_url: 'https://example.com',
+              },
+            },
+          },
+          {
+            type: 'section_link' as const,
+            value: {
+              badge_label: 'Internal',
+              text: 'Internal link text',
+              link: {
+                link_display_text: 'View topic',
+                page: 'http://localhost:3000/topics/covid-19/',
+              },
+            },
+          },
+          {
+            type: 'section_link' as const,
+            value: {
+              badge_label: 'Plain',
+              text: 'Plain text only',
+              link: {
+                link_display_text: 'No link available',
+              },
+            },
+          },
+        ],
+      },
+    }
+
+    render(await renderSection([], sectionWithFooter, true, true))
+
+    expect(screen.getByRole('link', { name: 'Visit external site' })).toHaveAttribute('href', 'https://example.com')
+    expect(screen.getByRole('link', { name: 'View topic' })).toHaveAttribute('href', '/topics/covid-19')
+    expect(screen.getByText('No link available')).toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'No link available' })).not.toBeInTheDocument()
+  })
+})
+
+describe('ChartRowCard', () => {
+  beforeEach(() => {
+    mockAuthEnabled = false
+  })
+
+  test('wraps chart row cards in suspense when auth is enabled and page is not public', () => {
+    mockAuthEnabled = true
+
+    render(renderCard('Test heading', [], mockChartRowCardWithSingleChartCard, true, false, undefined))
+
+    expect(screen.getByRole('status')).toHaveTextContent('Loading chart')
+  })
 })
 
 describe('renderCard function', () => {
@@ -171,5 +246,29 @@ describe('renderCompositeBlock function', () => {
     )
     expect(screen.getByRole('link', { name: 'COVID-19' })).toBeInTheDocument()
     expect(screen.getByText('COVID-19 is a respiratory infection caused by the SARS-CoV-2-virus.')).toBeInTheDocument()
+  })
+
+  test('renders code block correctly', () => {
+    render(
+      renderCompositeBlock({
+        type: 'code_block',
+        value: {
+          heading: 'Example code',
+          content: [
+            {
+              type: 'code_snippet',
+              value: {
+                language: 'typescript',
+                code: 'const example = true',
+              },
+              id: 'snippet-id',
+            },
+          ],
+        },
+        id: 'code-block-id',
+      })
+    )
+
+    expect(screen.getByText('Mocked code block')).toBeInTheDocument()
   })
 })
