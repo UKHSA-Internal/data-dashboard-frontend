@@ -96,10 +96,14 @@ export const authSignOutRedirectionPath = '/start?logout=success'
 
 /**
  * The maximum timeout for keeping the user signed in, in minutes.
+ * This time span includes the time the modal is shown (the
+ * logoutWarningThresholdMinutes below).
  */
 export const logoutThresholdMinutes = 4
 
 /**
- * This is used to determine when to show the logout warning modal.
+ * This is used to determine when to start showing the logout warning modal.
+ * After logoutWarningThresholdMinutes have finished, the modal
+ * starts showing (up to the point of logoutThresholdMinutes).
  */
 export const logoutWarningThresholdMinutes = 2
