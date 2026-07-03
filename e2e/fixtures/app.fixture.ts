@@ -253,10 +253,20 @@ export class App {
   async clickNav(name: string) {
     await this.waitForPageLoaded()
 
+    const mobileNavLink = this.page.locator('#ukhsa-menu-bar-nav').getByRole('link', { name, exact: true })
+
     // On mobile the menu is hidden behind a toggle button; on desktop it is permanently visible
     if (await this.mobileMenuButtonClosed.isVisible()) {
       await this.mobileMenuButtonClosed.click()
-      await this.page.locator('#ukhsa-menu-bar-nav').getByRole('link', { name, exact: true }).click()
+      await expect(mobileNavLink).toBeVisible()
+      await mobileNavLink.click()
+      return
+    }
+
+    // Menu may already be open (e.g. after clicking Home while already on the home page)
+    if (await this.mobileMenuButtonOpen.isVisible()) {
+      await expect(mobileNavLink).toBeVisible()
+      await mobileNavLink.click()
       return
     }
 

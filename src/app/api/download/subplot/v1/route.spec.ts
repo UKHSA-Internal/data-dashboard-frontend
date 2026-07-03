@@ -15,6 +15,7 @@ import { POST } from './route'
 describe('download/subplot/v1', () => {
   test('Downloads the requested chart in csv format', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('file_format', 'csv')
     formData.set('target_threshold', '1')
     formData.set('target_threshold_label', '')
@@ -41,6 +42,7 @@ describe('download/subplot/v1', () => {
 
     expect(client).toHaveBeenCalledWith('downloads/subplot/v1', {
       body: {
+        is_public: true,
         file_format: 'csv',
         target_threshold: '1',
         target_threshold_label: '',
@@ -58,6 +60,7 @@ describe('download/subplot/v1', () => {
 
   test('Downloads the requested chart in json format', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('file_format', 'json')
     formData.set('target_threshold', '1')
     formData.set('target_threshold_label', '')
@@ -86,6 +89,7 @@ describe('download/subplot/v1', () => {
 
   test('Returns status 301 when wrong form body is sent', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('file_format', 'invalid_file_format')
     formData.set('target_threshold', '1')
     formData.set('target_threshold_label', '')
@@ -106,7 +110,7 @@ describe('download/subplot/v1', () => {
 
     const res = await POST(req)
 
-    expect(res.headers.get('content-type')).toBe(null)
+    expect(res.headers.get('content-type')).toBeNull()
     expect(logger.error).toHaveBeenCalledWith(
       `Download Chart Schema parse error: [
   {
@@ -128,6 +132,7 @@ describe('download/subplot/v1', () => {
 
   test('Returns status 301 when the proxied request fails', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('file_format', 'csv')
     formData.set('target_threshold', '1')
     formData.set('target_threshold_label', '')
@@ -148,13 +153,14 @@ describe('download/subplot/v1', () => {
 
     const res = await POST(req)
 
-    expect(res.headers.get('content-type')).toEqual(null)
+    expect(res.headers.get('content-type')).toBeNull()
     expect(logger.error).toHaveBeenCalledWith('Error while downloading subplot download response: null')
     expect(res.status).toBe(301)
   })
 
   test('Forwards auth token when present', async () => {
     const formData = new FormData()
+    formData.set('is_public', 'true')
     formData.set('file_format', 'csv')
     formData.set('target_threshold', '1')
     formData.set('target_threshold_label', '')

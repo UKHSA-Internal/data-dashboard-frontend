@@ -11,6 +11,7 @@ import {
   SheetFooter,
   SheetHeader,
   SheetOverlay,
+  SheetPortal,
   SheetTitle,
   SheetTrigger,
 } from './Sheet'
@@ -110,6 +111,29 @@ describe('Sheet', () => {
     )
 
     expect(screen.getByRole('dialog', { name: 'Sheet title' })).toHaveClass(expectedClasses.right)
+  })
+
+  test('Sheet position - defaults to right when no side prop is provided', async () => {
+    render(
+      <Sheet defaultOpen>
+        {/* @ts-expect-error - intentionally omitting required `side` to cover the default value */}
+        <SheetContent>{sheetHeader}</SheetContent>
+      </Sheet>
+    )
+
+    expect(screen.getByRole('dialog', { name: 'Sheet title' })).toHaveClass(expectedClasses.right)
+  })
+
+  test('Renders content inside a SheetPortal', () => {
+    render(
+      <Sheet defaultOpen>
+        <SheetPortal>
+          <div data-testid="portal-content">Portal content</div>
+        </SheetPortal>
+      </Sheet>
+    )
+
+    expect(screen.getByTestId('portal-content')).toBeInTheDocument()
   })
 
   test('Closing a sheet', async () => {

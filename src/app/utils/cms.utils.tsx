@@ -137,6 +137,7 @@ export const renderCard = (
           return authEnabled && isPublic === false ? (
             <Suspense
               fallback={
+                // eslint-disable-next-line tailwindcss/no-custom-classname
                 <div className="govuk-body govuk-!-margin-bottom-6 chartLoader" aria-busy="true" role="status">
                   Loading chart
                 </div>
@@ -184,13 +185,21 @@ export const renderCard = (
 }
 
 export const renderBlock = (
-  { id, type, value, date_prefix }: z.infer<typeof Blocks>[number] & { date_prefix: string },
+  {
+    id,
+    type,
+    value,
+    date_prefix,
+    headingClassName,
+  }: z.infer<typeof Blocks>[number] & { date_prefix: string; headingClassName?: string },
   isPublic?: boolean
 ) => (
   <div key={id}>
     {type === 'percentage_number' && <Percentage data={value} datePrefix={date_prefix} isPublic={isPublic} />}
     {type === 'headline_number' && <Headline data={value} datePrefix={date_prefix} isPublic={isPublic} />}
-    {type === 'trend_number' && <Trend data={value} datePrefix={date_prefix} isPublic={isPublic} />}
+    {type === 'trend_number' && (
+      <Trend data={value} datePrefix={date_prefix} isPublic={isPublic} headingClassName={headingClassName} />
+    )}
   </div>
 )
 

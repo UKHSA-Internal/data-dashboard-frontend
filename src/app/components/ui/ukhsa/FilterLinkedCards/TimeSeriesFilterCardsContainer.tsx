@@ -19,21 +19,21 @@ const TimeSeriesFilterCardsContainer = ({
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
   const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
+    return (selectedGeographyFilters ?? []).length > 0 && (selectedVaccinationFilters ?? []).length > 0
   }
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
       {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={dataClassification} />}
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
+      {isChartDataAvailable() && timeseriesTemplateData ? (
+        (selectedGeographyFilters ?? []).map((geography) => {
           return (
             <TimeseriesFilterCard
               key={geography.name}
               geography={geography}
-              timePeriods={timePeriods!}
-              dataFilters={selectedVaccinationFilters!}
-              cardData={timeseriesTemplateData!}
+              timePeriods={timePeriods ?? []}
+              dataFilters={selectedVaccinationFilters ?? []}
+              cardData={timeseriesTemplateData}
               isPublic={isPublic}
               dataClassification={dataClassification}
               authEnabled={authEnabled}
