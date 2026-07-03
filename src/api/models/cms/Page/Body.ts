@@ -135,6 +135,7 @@ export const ChartCardWithDescriptionValue = popularTopicsChartCardValue.extend(
 const HeadlineMetricCardValue = z.object({
   title: z.string(),
   date_prefix: z.string(),
+  topic_page: z.string(),
   headline_metrics: z.array(z.discriminatedUnion('type', [HeadlineNumber, TrendNumber])).length(2),
 })
 
