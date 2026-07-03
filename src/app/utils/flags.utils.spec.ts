@@ -83,7 +83,6 @@ describe('flags.utils', () => {
   })
 
   test('returns error response when UNLEASH_SERVER_API_URL is missing', async () => {
-    const originalUrl = process.env.UNLEASH_SERVER_API_URL
     delete (process.env as any).UNLEASH_SERVER_API_URL
 
     const result = await getFeatureFlag(flags.exampleFlag)
@@ -92,12 +91,9 @@ describe('flags.utils', () => {
     expect(result.variant).toEqual({})
     expect(result.error).toBeTruthy()
     expect(logger.error).toHaveBeenCalled()
-
-    if (originalUrl) process.env.UNLEASH_SERVER_API_URL = originalUrl
   })
 
   test('returns error response when UNLEASH_SERVER_API_TOKEN is missing', async () => {
-    const originalToken = process.env.UNLEASH_SERVER_API_TOKEN
     delete (process.env as any).UNLEASH_SERVER_API_TOKEN
 
     const result = await getFeatureFlag(flags.exampleFlag)
@@ -106,12 +102,9 @@ describe('flags.utils', () => {
     expect(result.variant).toEqual({})
     expect(result.error).toBeTruthy()
     expect(logger.error).toHaveBeenCalled()
-
-    if (originalToken) process.env.UNLEASH_SERVER_API_TOKEN = originalToken
   })
 
   test('returns error response when FEATURE_FLAGS_AUTH_KEY is missing', async () => {
-    const originalKey = process.env.FEATURE_FLAGS_AUTH_KEY
     delete (process.env as any).FEATURE_FLAGS_AUTH_KEY
 
     const result = await getFeatureFlag(flags.exampleFlag)
@@ -120,8 +113,6 @@ describe('flags.utils', () => {
     expect(result.variant).toEqual({})
     expect(result.error).toBeTruthy()
     expect(logger.error).toHaveBeenCalled()
-
-    if (originalKey) process.env.FEATURE_FLAGS_AUTH_KEY = originalKey
   })
 
   test('includes switchboard cookie in headers when in SSR and not well-known environment', async () => {

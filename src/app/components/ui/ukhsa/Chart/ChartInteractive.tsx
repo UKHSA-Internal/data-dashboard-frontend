@@ -1,9 +1,10 @@
 'use client'
 import dynamic from 'next/dynamic'
+import { Figure } from 'react-plotly.js'
 
 interface ChartInteractiveProps {
   staticChart: React.ReactElement
-  figure: any
+  figure: Figure
 }
 
 const ChartInteractive = ({ staticChart, figure }: ChartInteractiveProps) => {
