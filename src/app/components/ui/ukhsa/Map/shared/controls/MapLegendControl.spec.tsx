@@ -6,13 +6,6 @@ import { fireEvent, render, screen } from '@/config/test-utils'
 
 import { MapLegendControl } from './MapLegendControl'
 
-// Mock the translation hook
-const mockT = jest.fn((key: string) => key)
-
-jest.mock('@/app/i18n/client', () => ({
-  useTranslation: jest.fn(() => ({ t: mockT })),
-}))
-
 // Mock react-dom createPortal
 jest.mock('react-dom', () => ({
   ...jest.requireActual('react-dom'),
@@ -246,16 +239,6 @@ describe('MapLegendControl', () => {
 
         unmount()
       })
-    })
-  })
-
-  describe('translation integration', () => {
-    test('calls useTranslation with correct namespace', () => {
-      const { useTranslation } = require('@/app/i18n/client')
-
-      render(<MapLegendControl position="bottomright" thresholdData={mockLegendItems} />)
-
-      expect(useTranslation).toHaveBeenCalledWith('map')
     })
   })
 
