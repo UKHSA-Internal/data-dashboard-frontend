@@ -73,7 +73,7 @@ This should install the necessary packages on your system and will inform you if
 There are several sets of the Playwright tests, each of which tragets a specific task and server.
 General tests should be run against a development instance of the frontend using either the mock server or a dev backend
 instance. Smoke tests should be run against WKEs like production. Auth UI and non-public tests should be run against an
-auth-enabled local or deploted environment.
+auth-enabled local or deployed environment.
 
 Which server to target is specified using the `baseURL` environment variable.
 You can specify this in your `.env.local` file which is read in the [Playwright config file](playwright.config.ts), or
@@ -118,15 +118,31 @@ Use `npm run test:e2e:smoke:ui` to run smoke tests in Playwright UI mode.
 ### Running auth and non-public tests
 
 Tests tagged `@auth-ui` and `@non-public` only run meaningful assertions when `AUTH_ENABLED=true`. These tests use a
-mocked auth session, so they so not require real Platwright user credentials, but they so require auth environment
+mocked auth session, so they so not require real Playwright user credentials, but they so require auth environment
 variables needed to create the session cookie:
 
-```bash
-AUTH_ENABLED=true
-AUTH_SECRET=<random-secret>
+# Copy the auth test env file
+
+cp .env.auth-test .env.local
+
+# Required by Next.js app to start
+
+API_URL=http://localhost:3005
 NEXTAUTH_URL=http://localhost:3000
+
+# Required for auth session handling
+
+AUTH_ENABLED=true
+AUTH_SECRET=<any-random-string>
+
+# Required for mock session (bypasses real auth provider)
+
+MOCK_SESSION=true
+MOCK_SESSION_USERNAME=Test User
+
+# Required by the auth-setup fixture
+
 PLAYWRIGHT_AUTH_USER_USERNAME="Test User"
-```
 
 `PLAYWRIGHT_AUTH_USER_USERNAE` is optional and defaults to `Test User`.
 
@@ -150,7 +166,7 @@ npx playwright test --grep @non-public
 - `@desktopOnly`: excluded from the Mobile Chrome project.
 - `@mobileOnly`: excluded from the desktop Chromium project.
 - `@tabletOnly`: excluded from the desktop Chromium project. These tests use tablet viewport settings inside the test
-suite and surrently run under the Mobile Chrome project.
+  suite and surrently run under the Mobile Chrome project.
 
 ## Deployment
 
