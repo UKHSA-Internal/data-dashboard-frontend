@@ -275,12 +275,22 @@ jobs:
         shell: sh
         run: ./.github/scripts/wait-for-service.sh http://localhost:3005
 
+      - name: Create .env.local
+        run: |
+          cp .env.auth-test .env.local
+          cp .env.local .next/standalone/.env.local
+          cp -r .next/static .next/standalone/.next/static
+          cp -r public .next/standalone/public
+          echo "✅ .env.local created"
+      
       - name: Start Dev Server
         id: start-dev-server
         run: |
-          npm run start &
+          node .next/standalone/server.js &
           echo "devServerPID=$!" >> "$GITHUB_OUTPUT"
         env:
+          PORT: 3000
+          HOSTNAME: 0.0.0.0
           NODE_ENV: test
 
       - name: Wait for Dev Server
@@ -307,7 +317,6 @@ jobs:
           kill -9 ${{ steps.start-dev-server.outputs.devServerPID }} || true
 
   
-
   ###############################################################################
   # Docker build check (PR validation)
   ###############################################################################
