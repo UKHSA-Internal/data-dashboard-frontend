@@ -179,7 +179,7 @@ export const renderCard = (
         />
       )}
 
-      {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} />}
+      {type === 'weather_health_alert_card' && <WeatherHealthAlertCard value={value} topicFilterId={id} />}
     </div>
   )
 }
