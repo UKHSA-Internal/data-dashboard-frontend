@@ -322,7 +322,17 @@ test('requests the proxy path when not server-side rendered', async () => {
     y_axis: null,
     chart_height: chartSizes.narrow.height,
     chart_width: chartSizes.narrow.width,
-    plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', chart_type: 'line_with_shaded_section' }],
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+        theme: '',
+        sub_theme: '',
+        geography: '',
+        geography_type: '',
+      },
+    ],
     is_public: true,
   })
 
@@ -347,7 +357,17 @@ test('requests the charts path when server-side rendered', async () => {
     y_axis: null,
     chart_height: chartSizes.narrow.height,
     chart_width: chartSizes.narrow.width,
-    plots: [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', chart_type: 'line_with_shaded_section' }],
+    plots: [
+      {
+        topic: 'COVID-19',
+        metric: 'new_cases_7days_sum',
+        chart_type: 'line_with_shaded_section',
+        theme: '',
+        sub_theme: '',
+        geography: '',
+        geography_type: '',
+      },
+    ],
     is_public: true,
   })
 
