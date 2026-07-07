@@ -301,7 +301,6 @@ jobs:
         run: npx playwright test --grep-invert "@smoke|@non-public|@auth-ui" --shard=${{ matrix.shard }}/${{ strategy.job-total }}
         env:
           baseURL: http://localhost:3000
-          AUTH_ENABLED: false
 
       - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ !cancelled() }}
