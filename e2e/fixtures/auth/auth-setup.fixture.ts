@@ -13,8 +13,8 @@ const mockSession = {
   user: {
     sub: 'mock-user-123',
     email: 'test@ukhsa.gov.uk',
-    name: process.env.PLAYWRIGHT_AUTH_USER_USERNAME ?? 'Test User',
-    permissions: ['view:dashboard', 'view:reports'],
+    name: process.env.MOCK_SESSION_USERNAME ?? 'Test User',
+    permissions: [],
   },
   accessToken: 'mock-access-token',
   expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
