@@ -44,6 +44,7 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
       aria-label={`${levelContent[level]} classification`}
     >
       <p
+        // eslint-disable-next-line tailwindcss/no-custom-classname
         className={clsx('font-open-sans font-bold uppercase text-white', {
           'govuk-width-container text-[27px] py-2 ml-4': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',

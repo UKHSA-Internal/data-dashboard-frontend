@@ -1,4 +1,3 @@
-// @ts-nocheck
 import { headers } from 'next/headers'
 
 /**
@@ -21,7 +20,7 @@ import { headers } from 'next/headers'
  */
 
 export const getPathname = async (): Promise<string> => {
-  const headersList = (await headers()) as unknown as UnsafeUnwrappedHeaders
+  const headersList = await headers()
   const headersUrl = headersList.get('x-url') || ''
 
   const pathname = headersUrl ? new URL(headersUrl).pathname : ''

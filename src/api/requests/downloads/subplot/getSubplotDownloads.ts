@@ -1,7 +1,8 @@
 import { z } from 'zod'
 
 import { client } from '@/api/utils/api.utils'
-import { logger } from '@/lib/logger'
+import { auth } from '@/auth'
+import { auditLog, logger } from '@/lib/logger'
 
 export const chartParameters = z.object({
   x_axis: z.string().nullable().optional(),
@@ -27,6 +28,7 @@ export const chartParameters = z.object({
 })
 
 export const requestSchema = z.object({
+  is_public: z.boolean().default(true),
   file_format: z.enum(['json', 'csv']),
   target_threshold: z.string().nullable().optional(),
   target_threshold_label: z.string().nullable().optional(),
@@ -87,6 +89,7 @@ export type RequestParams = z.infer<typeof requestSchema>
 export type charParams = z.infer<typeof chartParameters>
 
 export const getSubplotDownloads = async (
+  is_public: RequestParams['is_public'],
   file_format: RequestParams['file_format'] = 'csv',
   target_threshold: RequestParams['target_threshold'] = null,
   target_threshold_label: RequestParams['target_threshold_label'] = null,
@@ -95,7 +98,15 @@ export const getSubplotDownloads = async (
   authToken?: string | null
 ) => {
   try {
+    if (!is_public) {
+      const session = await auth()
+      if (session) {
+        auditLog(session.userId ?? '', 'FILE_DOWNLOAD', `${file_format} - ${JSON.stringify(subplots)}`)
+      }
+    }
+
     const body: RequestParams = {
+      is_public,
       file_format,
       target_threshold,
       target_threshold_label,

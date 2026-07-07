@@ -41,7 +41,7 @@ import geographiesv3 from './handlers/geographies/v3/[topic]'
 import globalBanners from './handlers/global-banners/v2'
 import headlines from './handlers/headlines/v3'
 import maps from './handlers/maps/v1/v1'
-import menus from './handlers/menus/v1'
+import menus from './handlers/menus/v2'
 import suggestions from './handlers/suggestions/v2'
 import dualCategoryTables from './handlers/tables/dual-category/v1'
 import subplotTables from './handlers/tables/subplot/v1'
@@ -67,7 +67,7 @@ app.get('/api/geographies/v3', geographiesv3)
 app.get('/api/global-banners/v2', globalBanners)
 app.get('/api/alerts/v1/:category', alertList)
 app.get('/api/alerts/v1/:category/:region', alertDetail)
-app.get('/api/menus/v1', menus)
+app.get('/api/menus/v2', menus)
 
 // POST endpoints
 app.post('/api/charts/v3', charts)

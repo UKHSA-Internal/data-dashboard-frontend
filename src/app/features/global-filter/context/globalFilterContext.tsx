@@ -179,11 +179,13 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
   useEffect(() => {
     if (!filters.geographyFilters) return
     fetchGeographyData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-fetch when geography filters change
   }, [filters.geographyFilters])
 
   useEffect(() => {
     if (!selectedVaccination || !selectedTimePeriod) return
     fetchMapData()
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- only re-fetch when vaccination or time period changes
   }, [selectedVaccination, selectedTimePeriod])
 
   const state: GlobalFilterState = {
@@ -219,7 +221,7 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
         const filterType = getFilterType(filter.id)
         if (filterType == 'data_filter') {
           const dataFilterId = filter.id.split('.')[1]
-          const newVaccinationFilter = filters.dataFilters!.data_filters.find(
+          const newVaccinationFilter = filters.dataFilters?.data_filters.find(
             (data_filter) => data_filter.id === dataFilterId
           )
 
@@ -255,9 +257,9 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
               addFilterToSelectedGeographyFilters(prevFilters, newGeographyFilter)
             )
             break
-          case 'data_filter':
+          case 'data_filter': {
             const dataFilterId = filter.id.split('.')[1]
-            const newVaccinationFilter = filters.dataFilters!.data_filters.find(
+            const newVaccinationFilter = (filters.dataFilters?.data_filters ?? []).find(
               (data_filter) => data_filter.id === dataFilterId
             )
 
@@ -268,10 +270,10 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
               addFilterToSelectedVaccinationFilters(prevFilters, newVaccinationFilter)
             )
             break
-
-          case 'threshold':
+          }
+          case 'threshold': {
             const thresholdFilterId = filter.id.split('.')[1]
-            const newThresholdFilter = filters.thresholdFilters!.thresholds.find(
+            const newThresholdFilter = (filters.thresholdFilters?.thresholds ?? []).find(
               (threshold) => threshold.id === thresholdFilterId
             )
 
@@ -282,6 +284,7 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
               addFilterToSelectedThresholdFilters(prevFilters, newThresholdFilter)
             )
             break
+          }
         }
       }
     },

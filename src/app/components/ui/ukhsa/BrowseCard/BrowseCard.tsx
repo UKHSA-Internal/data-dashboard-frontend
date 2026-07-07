@@ -6,7 +6,7 @@ import Link from 'next/link'
 export interface BrowseCardProps {
   href: string
   name: string
-  description: string
+  description?: string
 }
 
 export const BrowseCard = ({ href, name, description }: BrowseCardProps) => {
@@ -16,7 +16,7 @@ export const BrowseCard = ({ href, name, description }: BrowseCardProps) => {
       <Link href={href} className="govuk-link--no-visited-state govuk-heading-s govuk-!-margin-bottom-2">
         {name}
       </Link>
-      <p className="govuk-body">{description}</p>
+      {description ? <p className="govuk-body">{description}</p> : null}
     </div>
   )
 }

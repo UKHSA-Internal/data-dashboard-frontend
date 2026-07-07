@@ -15,6 +15,6 @@ describe('BrowseCard Component', () => {
     render(<BrowseCard {...defaultProps} />)
 
     expect(screen.getByRole('link', { name: defaultProps.name })).toHaveAttribute('href', defaultProps.href)
-    expect(screen.getByText(defaultProps.description)).toBeInTheDocument()
+    expect(screen.getByText(defaultProps.description ?? '')).toBeInTheDocument()
   })
 })
