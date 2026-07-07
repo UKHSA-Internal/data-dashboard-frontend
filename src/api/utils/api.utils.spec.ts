@@ -313,15 +313,12 @@ describe('client()', () => {
 
   // --- Page Previews ---
   describe('Page Previews', () => {
-    let cookieSpy: jest.SpyInstance
-    afterEach(() => {
-      if (cookieSpy) cookieSpy.mockRestore()
-    })
-
     it('rewrites pages endpoint to drafts, sets x-cms-auth header and Cache-Control header on /preview* route', async () => {
-      cookieSpy = jest
-        .spyOn(document, 'cookie', 'get')
-        .mockReturnValue(['path=/preview/my-draft-page', 'cmsAuthToken=draft-token'].join('; '))
+      const mockCookieStore = new Map()
+      mockCookieStore.set('path', { value: '/preview/my-draft-page' })
+      mockCookieStore.set('cmsAuthToken', { value: 'draft-token' })
+      ;(cookies as jest.Mock).mockResolvedValue(mockCookieStore)
+
       await client('pages/123') // get page by id
       const [url, options] = mockFetchFn.mock.calls[0]
       expect(url).toContain('https://fake-backend.gov.uk/drafts/123')
@@ -332,7 +329,10 @@ describe('client()', () => {
     })
 
     it('sets response headers for no-cache in /nocache* route', async () => {
-      cookieSpy = jest.spyOn(document, 'cookie', 'get').mockReturnValue(['path=/nocache/my-published-page'].join('; '))
+      const mockCookieStore = new Map()
+      mockCookieStore.set('path', { value: '/nocache/my-published-page' })
+      ;(cookies as jest.Mock).mockResolvedValue(mockCookieStore)
+
       await client('pages/123')
       const [url, options] = mockFetchFn.mock.calls[0]
       expect(url).toContain('https://fake-backend.gov.uk/pages/123')
@@ -342,7 +342,9 @@ describe('client()', () => {
     })
 
     it('does not rewrite endpoint or set x-cms-auth if not preview', async () => {
-      cookieSpy = jest.spyOn(document, 'cookie', 'get').mockReturnValue('isPreview=false')
+      const mockCookieStore = new Map()
+      mockCookieStore.set('isPreview', { value: false })
+      ;(cookies as jest.Mock).mockResolvedValue(mockCookieStore)
       await client('pages/456')
       const [url, options] = mockFetchFn.mock.calls[0]
       expect(url).toContain('pages/456')
