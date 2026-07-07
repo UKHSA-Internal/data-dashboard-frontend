@@ -21,7 +21,7 @@ interface MetricsCardProps {
   topic: string
   metric: string
   is_public?: boolean
-  page_classification?: DataClassification
+  data_classification?: DataClassification
 }
 
 export async function MetricsCard({
@@ -32,13 +32,13 @@ export async function MetricsCard({
   topic,
   metric,
   is_public,
-  page_classification,
+  data_classification,
 }: MetricsCardProps) {
   const { t } = await getServerTranslation('metrics')
   return (
     <>
       <li className="govuk-summary-card">
-        {authEnabled && is_public === false && <ClassificationBanner size="medium" level={page_classification} />}
+        {authEnabled && is_public === false && <ClassificationBanner size="medium" level={data_classification} />}
         <div className="govuk-summary-card__title-wrapper">
           <h2 className="govuk-summary-card__title">
             <Trans

@@ -7,35 +7,35 @@ import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import ClientInformationCard from '../ClientInformationCard/ClientInformationCard'
 import TimeseriesFilterCard from './TimeseriesFilterCard'
 const TimeSeriesFilterCardsContainer = ({
-  isPublic,
-  pageClassification,
+  isPublic = true,
+  dataClassification = undefined,
   authEnabled,
 }: {
   isPublic?: boolean
-  pageClassification?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }) => {
   const { state } = useGlobalFilters()
   const { selectedVaccinationFilters, selectedGeographyFilters, timePeriods, timeseriesTemplateData } = state
 
   const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
+    return (selectedGeographyFilters ?? []).length > 0 && (selectedVaccinationFilters ?? []).length > 0
   }
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
+      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={dataClassification} />}
+      {isChartDataAvailable() && timeseriesTemplateData ? (
+        (selectedGeographyFilters ?? []).map((geography) => {
           return (
             <TimeseriesFilterCard
               key={geography.name}
               geography={geography}
-              timePeriods={timePeriods!}
-              dataFilters={selectedVaccinationFilters!}
-              cardData={timeseriesTemplateData!}
+              timePeriods={timePeriods ?? []}
+              dataFilters={selectedVaccinationFilters ?? []}
+              cardData={timeseriesTemplateData}
               isPublic={isPublic}
-              level={pageClassification}
+              dataClassification={dataClassification}
               authEnabled={authEnabled}
             />
           )

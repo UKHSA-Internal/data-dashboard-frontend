@@ -17,7 +17,7 @@ export class MetricsChildPage {
   }
 
   async hasSummarySection(topic: string, category: string, apiName: string) {
-    await expect(this.page.getByText('Topic')).toBeVisible()
+    await expect(this.page.getByText('Topic', { exact: true })).toBeVisible()
     await expect(this.page.getByLabel('Summary').getByText(topic)).toBeVisible()
 
     await expect(this.page.getByText('Category')).toBeVisible()

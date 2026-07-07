@@ -203,7 +203,7 @@ test('Does not forward auth header when no token present', async () => {
     status: 200,
   })
 
-  await getDownloads(true,[{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }], 'csv', null, false)
+  await getDownloads(true, [{ topic: 'COVID-19', metric: 'new_cases_7days_sum', stratum: '' }], 'csv', null, false)
 
   expect(client).toHaveBeenCalledWith('downloads/v2', {
     body: {

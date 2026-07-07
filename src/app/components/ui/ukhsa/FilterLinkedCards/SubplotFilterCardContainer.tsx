@@ -8,10 +8,14 @@ import ClassificationBanner from '../ClassificationBanner/ClassificationBanner'
 import SubplotFilterCard from './SubplotFilterCard'
 type SubplotFilterCardContainerProps = {
   isPublic?: boolean
-  pageClassification?: DataClassification
+  dataClassification?: DataClassification
   authEnabled?: boolean
 }
-const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled }: SubplotFilterCardContainerProps) => {
+const SubplotFilterCardContainer = ({
+  isPublic = true,
+  dataClassification = undefined,
+  authEnabled,
+}: SubplotFilterCardContainerProps) => {
   const { state } = useGlobalFilters()
   const {
     selectedVaccinationFilters,
@@ -24,26 +28,26 @@ const SubplotFilterCardContainer = ({ isPublic, pageClassification, authEnabled 
   } = state
 
   const isChartDataAvailable = () => {
-    return selectedGeographyFilters!.length > 0 && selectedVaccinationFilters!.length > 0
+    return (selectedGeographyFilters ?? []).length > 0 && (selectedVaccinationFilters ?? []).length > 0
   }
 
   return (
     <div className="mb-3 sm:mb-6 lg:mb-0 lg:w-full">
-      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={pageClassification} />}
-      {isChartDataAvailable() ? (
-        selectedGeographyFilters!.map((geography) => {
+      {authEnabled && isPublic === false && <ClassificationBanner size="medium" level={dataClassification} />}
+      {isChartDataAvailable() && coverageTemplateData && geographyFilters ? (
+        (selectedGeographyFilters ?? []).map((geography) => {
           return (
             <SubplotFilterCard
               key={`${geography.geography_code}-subplot`}
               geography={geography}
-              selectedThresholds={selectedThresholdFilters!}
-              selectedVaccinations={selectedVaccinationFilters!}
-              geographyFilters={geographyFilters!}
-              cardData={coverageTemplateData!}
-              timePeriods={timePeriods!}
-              timePeriodTitle={timePeriodTitle!}
+              selectedThresholds={selectedThresholdFilters ?? []}
+              selectedVaccinations={selectedVaccinationFilters ?? []}
+              geographyFilters={geographyFilters}
+              cardData={coverageTemplateData}
+              timePeriods={timePeriods ?? []}
+              timePeriodTitle={timePeriodTitle ?? ''}
               isPublic={isPublic}
-              level={pageClassification}
+              level={dataClassification}
               authEnabled={authEnabled}
             />
           )

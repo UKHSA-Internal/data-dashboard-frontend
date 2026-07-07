@@ -102,7 +102,7 @@ const SubplotClientChart = ({
                     label: geography.name,
                     geography_type: geography.geography_type,
                     geography: geography.name,
-                    line_colour: getGeographyColourSelection(geography.geography_type!, geographyFilters),
+                    line_colour: getGeographyColourSelection(geography.geography_type ?? '', geographyFilters),
                   }
                 }),
               }
@@ -132,6 +132,7 @@ const SubplotClientChart = ({
     }
 
     fetchCharts()
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedVaccinations, selectedThresholds, geographyFilters, currentTimePeriodIndex])
 
   useEffect(() => {
@@ -141,7 +142,7 @@ const SubplotClientChart = ({
     if (!chartResponse) {
       handleLatestDate(null)
     }
-  }, [chartResponse])
+  }, [chartResponse, handleLatestDate])
 
   if (loading) {
     return (

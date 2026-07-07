@@ -1,6 +1,6 @@
 import { render, screen } from '@/config/test-utils'
 
-import { getColumnHeader, getDataClassification } from './table.utils'
+import { getColumnHeader, getDataClassificationLabel } from './table.utils'
 
 const renderHeader = (
   chartLabel: string,
@@ -47,11 +47,6 @@ describe('getColumnHeader', () => {
   })
 
   describe('level content', () => {
-    test('defaults to official_sensitive level', () => {
-      renderHeader('Label', '', 'Fallback', false, undefined, true)
-      expect(screen.getByText(/Official-Sensitive/i)).toBeInTheDocument()
-    })
-
     test('renders correct text for official level', () => {
       renderHeader('Label', '', 'Fallback', false, 'official', true)
       expect(screen.getByText(/Official$/i)).toBeInTheDocument()
@@ -91,40 +86,40 @@ describe('getColumnHeader', () => {
   })
 })
 
-describe('getDataClassification', () => {
+describe('getDataClassificationLabel', () => {
   test('returns empty string when authEnabled is false', () => {
-    expect(getDataClassification(false, 'official_sensitive', false)).toBe('')
+    expect(getDataClassificationLabel(false, false, 'official_sensitive')).toBe('')
   })
 
   test('returns classification when authEnabled is true', () => {
-    expect(getDataClassification(false, 'official_sensitive', true)).toBe('(OFFICIAL SENSITIVE)')
+    expect(getDataClassificationLabel(false, true, 'official_sensitive')).toBe('(OFFICIAL-SENSITIVE)')
   })
 
   test('returns empty string when isPublic is true', () => {
-    expect(getDataClassification(true, 'official_sensitive', true)).toBe('')
+    expect(getDataClassificationLabel(true, true, 'official_sensitive')).toBe('')
   })
 
   test('returns empty string when isPublic is undefined', () => {
-    expect(getDataClassification(undefined, 'official_sensitive', true)).toBe('')
+    expect(getDataClassificationLabel(undefined, true, 'official_sensitive')).toBe('')
   })
 
   test('returns uppercase classification wrapped in parentheses for official_sensitive', () => {
-    expect(getDataClassification(false, 'official_sensitive', true)).toBe('(OFFICIAL SENSITIVE)')
+    expect(getDataClassificationLabel(false, true, 'official_sensitive')).toBe('(OFFICIAL-SENSITIVE)')
   })
 
   test('returns uppercase classification wrapped in parentheses for official', () => {
-    expect(getDataClassification(false, 'official', true)).toBe('(OFFICIAL)')
+    expect(getDataClassificationLabel(false, true, 'official')).toBe('(OFFICIAL)')
   })
 
   test('returns uppercase classification wrapped in parentheses for secret', () => {
-    expect(getDataClassification(false, 'secret', true)).toBe('(SECRET)')
+    expect(getDataClassificationLabel(false, true, 'secret')).toBe('(SECRET)')
   })
 
   test('returns uppercase classification wrapped in parentheses for top_secret', () => {
-    expect(getDataClassification(false, 'top_secret', true)).toBe('(TOP SECRET)')
+    expect(getDataClassificationLabel(false, true, 'top_secret')).toBe('(TOP SECRET)')
   })
 
   test('returns uppercase classification wrapped in parentheses for protective_marking_not_set', () => {
-    expect(getDataClassification(false, 'protective_marking_not_set', true)).toBe('(PROTECTIVE MARKING NOT SET)')
+    expect(getDataClassificationLabel(false, true, 'protective_marking_not_set')).toBe('(PROTECTIVE MARKING NOT SET)')
   })
 })

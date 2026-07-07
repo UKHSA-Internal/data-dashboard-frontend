@@ -1,8 +1,6 @@
-import chunk from 'lodash/chunk'
 import { Metadata } from 'next'
 
 import { getMenu } from '@/api/requests/menus/getMenu'
-import { transformMenuSnippetToSideMenu } from '@/api/requests/menus/helpers'
 import { BrowseCard } from '@/app/components/ui/ukhsa'
 
 export const metadata: Metadata = {
@@ -11,33 +9,19 @@ export const metadata: Metadata = {
 
 export default async function Browse() {
   const menu = await getMenu()
-  const transformedMenu = transformMenuSnippetToSideMenu(menu)
-
-  const groupedMenu = chunk(
-    transformedMenu.flatMap((link) => {
-      if (link.children) return [link, ...link.children]
-      return link
-    }),
-    3
-  )
+  const links = menu.success ? menu.data.active_menu : []
 
   return (
     <>
       <h1 className="govuk-heading-xl govuk-!-margin-bottom-4">Browse</h1>
-      <nav aria-label="Menu" className="govuk-!-margin-bottom-6">
-        {groupedMenu.map((group, key) => (
-          <div key={key} className="govuk-grid-row">
-            {group.map((link) => (
-              <div key={link.slug} className="govuk-grid-column-one-third-from-desktop">
-                <BrowseCard
-                  href={link.slug}
-                  name={link.title}
-                  description="" // TODO: No description available yet from API
-                />
-              </div>
-            ))}
-          </div>
-        ))}
+      <nav aria-label="Browse all pages" className="govuk-!-margin-bottom-6">
+        <div className="govuk-grid-row">
+          {links.map(({ id, value: { title, html_url } }) => (
+            <div key={id} className="govuk-grid-column-one-third-from-desktop">
+              <BrowseCard href={html_url} name={title} />
+            </div>
+          ))}
+        </div>
       </nav>
     </>
   )
