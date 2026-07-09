@@ -48,6 +48,7 @@ const ClassificationBanner: FC<ClassificationBannerProps> = ({
         className={clsx('font-open-sans font-bold uppercase text-white', {
           'govuk-width-container text-[27px] py-2 ml-4': size === 'large',
           'py-1 !pl-[12px] text-[18px]': size === 'medium',
+          'py-1 px-2 text-[14px]': size === 'small',
         })}
       >
         {customContent || levelContent[level]}

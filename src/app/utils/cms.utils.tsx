@@ -6,6 +6,7 @@ import { z } from 'zod'
 import { Body, CardTypes, CompositeBody } from '@/api/models/cms/Page'
 import { Blocks } from '@/api/models/cms/Page/Blocks'
 import { DataClassification } from '@/api/models/DataClassification'
+import ClassificationBanner from '@/app/components/ui/ukhsa/ClassificationBanner/ClassificationBanner'
 import { List } from '@/app/components/ui/ukhsa/List/List'
 import { ListItemArrow, ListItemArrowLink, ListItemArrowParagraph } from '@/app/components/ui/ukhsa/List/ListItemArrow'
 import { getPath } from '@/app/utils/cms/slug'
@@ -251,7 +252,15 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
             <ListItem key={id} spacing="m">
               <ListItemArrow>
                 <ListItemArrowLink href={getPath(value.page)}>
-                  {value.title}
+                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                    {value.title}
+                    {value.page_classification && (
+                      <ClassificationBanner
+                        size="small"
+                        level={value.page_classification}
+                      />
+                    )}
+                  </span>
                 </ListItemArrowLink>
                 <ListItemArrowParagraph>
                   {value.sub_title}

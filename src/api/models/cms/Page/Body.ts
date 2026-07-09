@@ -1,6 +1,7 @@
 import { z } from 'zod'
 
 import { ChartLineColours } from '@/api/models/Chart'
+import { DataClassification } from '@/api/models/DataClassification'
 
 import { HealthAlertTypes } from '../../Alerts'
 import { Blocks, HeadlineNumber, TrendNumber } from './Blocks'
@@ -336,6 +337,7 @@ export const CompositeBody = z.array(
             sub_title: z.string(),
             page: z.string(),
             is_authorised: z.boolean().optional(),
+            page_classification: DataClassification.optional(),
           }),
           id: z.string(),
         }).nullable()
