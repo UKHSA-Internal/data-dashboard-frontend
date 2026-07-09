@@ -337,7 +337,7 @@ export const CompositeBody = z.array(
             sub_title: z.string(),
             page: z.string(),
             is_authorised: z.boolean().optional(),
-            page_classification: DataClassification.optional(),
+            page_classification: DataClassification.nullable().optional(),
           }),
           id: z.string(),
         }).nullable()
