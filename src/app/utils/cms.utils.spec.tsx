@@ -261,6 +261,7 @@ describe('renderCompositeBlock function', () => {
               sub_title: 'Should not show',
               page: 'http://localhost:3000/hidden/',
               is_authorised: false,
+              page_classification: 'official_sensitive'
             },
             id: '123',
           },
