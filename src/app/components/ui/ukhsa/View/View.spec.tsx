@@ -4,6 +4,10 @@ import { allPagesMock } from '@/mock-server/handlers/cms/pages/fixtures/pages'
 
 import { View } from './View'
 
+jest.mock('./EmbargoNotice/EmbargoNotice', () => ({
+  EmbargoNotice: () => null,
+}))
+
 jest.mock('react-plotly.js', () => ({
   default: () => <div data-testid="mock-plotly-chart">Mocked Plotly Chart</div>,
 }))
