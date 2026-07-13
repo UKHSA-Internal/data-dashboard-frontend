@@ -10,6 +10,7 @@ import {
 import { getClientSession, getServerSession } from '@/lib/auth/auth-session'
 
 import { getApiBaseUrl } from '../requests/helpers'
+import { logger } from '@/lib/logger'
 
 // TODO: Refactor to extend RequestInit
 interface Options {
@@ -223,8 +224,11 @@ export function clientBuildApiUrl({
   return url
 }
 
-async function handleApiResponse(response: Response) {
+async function handleApiResponse(response: Response, start: DOMHighResTimeStamp) {
   const { status, ok, headers } = response
+
+  const took = (performance.now() - start)
+  logger.error('Response from %s [%s] (took: %s ms)', response.url, status, took)
 
   if (ok) {
     try {
@@ -299,5 +303,7 @@ export async function client<T>(
 
   const url = clientBuildApiUrl({ baseUrl, endpoint, searchParams })
 
-  return fetch(url, fetchOptions).then((response) => handleApiResponse(response))
+  logger.error('Request %s to %s', fetchOptions.method, url);
+  const start = performance.now()
+  return fetch(url, fetchOptions).then((response) => handleApiResponse(response, start))
 }
