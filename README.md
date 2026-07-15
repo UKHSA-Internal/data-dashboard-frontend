@@ -56,12 +56,12 @@ Before you begin, ensure you have the following installed:
 
 The frontend interacts with a Node.js Express-based mock server during development. This server runs on [http://localhost:3005](http://localhost:3005) and uses the `/mock-server/handlers` directory for loading mock data. This setup allows for isolated local development ahead of backend integrations.
 
-### Playwright Tests
+## Playwright Tests
 
 We have some Playwright tests which are used during the CI pipeline on PRs for testing as well as after deployments to
 smoke test (this is [triggered](https://github.com/UKHSA-Internal/data-dashboard-infra/blob/main/.github/workflows/production.yml#L138) from the infrastructure repository after a deployment is completed).
 
-#### Installing Playwright
+### Installing Playwright
 
 To setup to run the playwright tests locally, you must install playwright's dependencies:
 
@@ -71,7 +71,7 @@ npx playwright install --with-deps
 
 This should install the necessary packages on your system and will inform you if anything can't be installed.
 
-#### Running the Playwright Tests
+### Running the Playwright Tests
 
 There are several sets of the Playwright tests, each of which tragets a specific task and server.
 General tests should be run against a development instance of the frontend using either the mock server or a dev backend
@@ -94,7 +94,7 @@ The default Playwright config runs tests against Chromium desktop and Mobile chr
 
 Which tests are run is easiest controlled using the `--grep` or `--grep-invert` argument passed to `playwright`
 
-##### Running the general tests
+### Running the general tests
 
 Target `baseURL` at local development server, make sure your dev server is running, and then run:
 
@@ -104,9 +104,9 @@ npx playwright test --grep-invert @smoke
 npm run test:e2e
 ```
 
-`npm run test:e2e` opens Playwright UI mode. Use `npm run tests:e2e:ci` to run the same non-smoke tests headlessly.
+`npm run test:e2e` opens Playwright UI mode. Use `npm run test:e2e:ci` to run the same non-smoke tests headlessly.
 
-##### Running the smoke tests
+### Running the smoke tests
 
 Target `baseURL` at a WKE's URL and then run:
 
@@ -120,32 +120,39 @@ Use `npm run test:e2e:smoke:ui` to run smoke tests in Playwright UI mode.
 
 ### Running auth and non-public tests
 
-Tests tagged `@auth-ui` and `@non-public` only run meaningful assertions when `AUTH_ENABLED=true`. These tests use a
-mocked auth session, so they so not require real Playwright user credentials, but they so require auth environment
-variables needed to create the session cookie:
+Tests tagged `@auth-ui` and `@non-public` only run meaningful assertions when `AUTH_ENABLED=true`. 
+These tests use a mocked auth session, so they do not require real Playwright user credentials, but they do require auth environment variables to create the session cookie:
 
-# Copy the auth test env file
+#### Copy the auth test env file
 
-cp .env.auth-test .env.local
+`cp .env.auth-test .env.local`
 
-# Required by Next.js app to start
+#### Required by Next.js app to start
 
+```
 API_URL=http://localhost:3005
 NEXTAUTH_URL=http://localhost:3000
+```
 
-# Required for auth session handling
+#### Required for auth session handling
 
+```
 AUTH_ENABLED=true
 AUTH_SECRET=<any-random-string>
+```
 
-# Required for mock session (bypasses real auth provider)
+#### Required for mock session (bypasses real auth provider)
 
+```
 MOCK_SESSION=true
-MOCK_SESSION_USERNAME=Test User
+PLAYWRIGHT_AUTH_USER_USERNAME=Test User
+```
 
-# Required by the auth-setup fixture
+#### Required by the auth-setup fixture
 
+```
 PLAYWRIGHT_AUTH_USER_USERNAME="Test User"
+```
 
 `PLAYWRIGHT_AUTH_USER_USERNAE` is optional and defaults to `Test User`.
 
@@ -161,7 +168,7 @@ To run only the non-public tests:
 npx playwright test --grep @non-public
 ```
 
-#### Test tags
+### Test tags
 
 - `@smoke`: post-deployment smoke tests, usually run against a WKE such as production.
 - `@auth-ui`: auth start, logged in, logged-out and classification banner in UI tests.
@@ -187,7 +194,7 @@ For a detailed list of our deployment environments and their configurations, ref
 
 Instructions on setting up your the non-public version of the dashboard can be found here: [Enabling Non Public](./docs/auth/enabling-non-public.md)
 
-### Pre-commit Hooks
+## Pre-commit Hooks
 
 This repository uses **pre-commit** to automatically scan for hardcoded secrets before allowing commits.
 
@@ -195,7 +202,7 @@ We recommend using **prek**, a faster drop-in replacement for pre-commit. It wor
 
 ---
 
-#### Setup (one-time)
+### Setup (one-time)
 
 1. Install `uv` (if not already installed)
 
