@@ -12,6 +12,9 @@ export const getPageBySlug = async <T extends PageType>(slugParam: string | Slug
     // TODO: Once all pages are migrated to dynamic catch all route, remove non-array slug type
     const slug = Array.isArray(slugParam) ? slugParam[slugParam.length - 1] : slugParam
 
+    // add the slug to the filters passed to getPages
+    additionalParams = { ...additionalParams, slug }
+
     // Fetch all of pages by type from the CMS
     const pages = await getPages(additionalParams)
 
