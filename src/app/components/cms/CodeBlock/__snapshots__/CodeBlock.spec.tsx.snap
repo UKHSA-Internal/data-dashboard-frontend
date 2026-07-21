@@ -4,37 +4,45 @@ exports[`Displays the code block for a single snippet without a language dropdow
 <div>
   <pre
     class="language-html govuk-!-padding-4 govuk-!-margin-bottom-6 print:text-shadow-none overflow-auto whitespace-pre-wrap break-all font-[var(--ukhsa-font-code)] text-[var(--colour-code-text)] text-shadow-[0_1px_white]"
+    style="background-color: var(--colour-code-background); color: var(--colour-code-text);"
   >
     <div
       class="token-line"
+      style="color: var(--colour-code-text);"
     >
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &lt;
       </span>
       <span
         class="token tag"
+        style="color: var(--colour-code-dark-red);"
       >
         body
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &gt;
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &lt;
       </span>
       <span
         class="token tag"
+        style="color: var(--colour-code-dark-red);"
       >
         h1
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &gt;
       </span>
@@ -45,31 +53,37 @@ exports[`Displays the code block for a single snippet without a language dropdow
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &lt;/
       </span>
       <span
         class="token tag"
+        style="color: var(--colour-code-dark-red);"
       >
         h1
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &gt;
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &lt;/
       </span>
       <span
         class="token tag"
+        style="color: var(--colour-code-dark-red);"
       >
         body
       </span>
       <span
         class="token tag punctuation"
+        style="color: var(--colour-code-grey);"
       >
         &gt;
       </span>
