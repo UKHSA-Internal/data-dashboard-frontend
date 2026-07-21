@@ -72,7 +72,7 @@ export function ChartCardSection({
           )
         }
 
-        if (card.type === 'simplified_chart_with_link') {
+        if (card.type === 'simplified_chart_with_link' || card.type === 'headline_chart_with_description_card') {
           return (
             <div
               key={card.id}
