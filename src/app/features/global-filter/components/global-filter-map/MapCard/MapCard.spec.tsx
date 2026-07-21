@@ -139,7 +139,7 @@ describe('MapCard', () => {
         {
           id: '1',
           value: {
-            colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+            colour: 'MAP_COLOUR_1_LIGHT_GREEN',
             boundary_minimum_value: 0,
             boundary_maximum_value: 10,
             label: 'Low',
@@ -149,7 +149,7 @@ describe('MapCard', () => {
         {
           id: '2',
           value: {
-            colour: 'MAP_COLOUR_2_LIGHT_GREEN',
+            colour: 'MAP_COLOUR_2_TURQUOISE',
             boundary_minimum_value: 11,
             boundary_maximum_value: 20,
             label: 'Medium',
@@ -159,7 +159,7 @@ describe('MapCard', () => {
         {
           id: '3',
           value: {
-            colour: 'MAP_COLOUR_3_TURQUOISE',
+            colour: 'MAP_COLOUR_3_BLUE',
             boundary_minimum_value: 21,
             boundary_maximum_value: 100,
             label: 'High',

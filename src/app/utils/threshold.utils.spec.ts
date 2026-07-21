@@ -9,7 +9,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: 'Under 80%',
-          colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+          colour: 'MAP_COLOUR_1_LIGHT_GREEN',
           boundary_minimum_value: 0,
           boundary_maximum_value: 80,
         },
@@ -29,7 +29,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: 'Under 80%',
-          colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+          colour: 'MAP_COLOUR_1_LIGHT_GREEN',
           boundary_minimum_value: 0,
           boundary_maximum_value: 80.99,
         },
@@ -39,7 +39,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: '85-90%',
-          colour: 'MAP_COLOUR_3_TURQUOISE',
+          colour: 'MAP_COLOUR_3_BLUE',
           boundary_minimum_value: 86,
           boundary_maximum_value: 90.99,
         },
@@ -62,7 +62,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: 'Mid range',
-          colour: 'MAP_COLOUR_2_GREEN',
+          colour: 'MAP_COLOUR_2_TURQUOISE',
           boundary_minimum_value: 25.5,
           boundary_maximum_value: 75.75,
         },
@@ -82,7 +82,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: 'Zero range',
-          colour: 'MAP_COLOUR_4_RED',
+          colour: 'MAP_COLOUR_4_DARK_BLUE',
           boundary_minimum_value: 0,
           boundary_maximum_value: 0,
         },
@@ -102,7 +102,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: 'Negative range',
-          colour: 'MAP_COLOUR_5_BLUE',
+          colour: 'MAP_COLOUR_3_BLUE',
           boundary_minimum_value: -10.5,
           boundary_maximum_value: -5.25,
         },
@@ -131,7 +131,7 @@ describe('threshold-utils', () => {
         type: 'threshold',
         value: {
           label: 'Large numbers',
-          colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+          colour: 'MAP_COLOUR_1_LIGHT_GREEN',
           boundary_minimum_value: 1000000,
           boundary_maximum_value: 9999999.99,
         },

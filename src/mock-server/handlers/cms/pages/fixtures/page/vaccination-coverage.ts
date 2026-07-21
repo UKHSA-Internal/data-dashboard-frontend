@@ -355,7 +355,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: 'Under 80%',
-                                colour: 'MAP_COLOUR_1_LIGHT_YELLOW',
+                                colour: 'MAP_COLOUR_1_LIGHT_GREEN',
                                 boundary_minimum_value: 0,
                                 boundary_maximum_value: 0.8,
                               },
@@ -365,7 +365,7 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                               type: 'threshold',
                               value: {
                                 label: '80-85%',
-                                colour: 'MAP_COLOUR_2_LIGHT_GREEN',
+                                colour: 'MAP_COLOUR_2_TURQUOISE',
                                 boundary_minimum_value: 0.81,
                                 boundary_maximum_value: 0.85,
                               },
@@ -374,28 +374,18 @@ export const vaccinationCoverageMock: PageResponse<PageType.Topic> = {
                             {
                               type: 'threshold',
                               value: {
-                                label: '85-90%',
-                                colour: 'MAP_COLOUR_3_TURQUOISE',
+                                label: '85-95%',
+                                colour: 'MAP_COLOUR_3_BLUE',
                                 boundary_minimum_value: 0.86,
-                                boundary_maximum_value: 0.9,
+                                boundary_maximum_value: 0.95,
                               },
                               id: '38cd3f76-46ed-41d9-a7a2-9a41510c0b2d',
                             },
                             {
                               type: 'threshold',
                               value: {
-                                label: '90-95%',
-                                colour: 'MAP_COLOUR_4_BLUE',
-                                boundary_minimum_value: 0.91,
-                                boundary_maximum_value: 0.95,
-                              },
-                              id: '3584882d-ce37-4d57-abcb-ac0d71133dc5',
-                            },
-                            {
-                              type: 'threshold',
-                              value: {
                                 label: 'Over 95%',
-                                colour: 'MAP_COLOUR_5_DARK_BLUE',
+                                colour: 'MAP_COLOUR_4_DARK_BLUE',
                                 boundary_minimum_value: 0.96,
                                 boundary_maximum_value: 1,
                               },
