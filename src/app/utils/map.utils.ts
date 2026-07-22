@@ -45,10 +45,10 @@ export enum ColourBackgroundMap {
   Amber = 'bg-orange',
   Yellow = 'bg-custard',
   Red = 'bg-red',
-  MAP_COLOUR_1_LIGHT_GREEN = 'bg-colour-2-light-green',
-  MAP_COLOUR_2_TURQUOISE = 'bg-colour-3-turquoise',
-  MAP_COLOUR_3_BLUE = 'bg-colour-4-blue',
-  MAP_COLOUR_4_DARK_BLUE = 'bg-colour-5-dark-blue',
+  MAP_COLOUR_1_LIGHT_GREEN = 'bg-colour-1-light-green',
+  MAP_COLOUR_2_TURQUOISE = 'bg-colour-2-turquoise',
+  MAP_COLOUR_3_BLUE = 'bg-colour-3-blue',
+  MAP_COLOUR_4_DARK_BLUE = 'bg-colour-4-dark-blue',
 }
 
 export enum HoverColourVariableMap {

@@ -70,7 +70,7 @@ export class CoverPage {
 
     await expect(mapKey.getByRole('heading', { name: /Key/i, level: 3 })).toBeVisible()
 
-    const expectedThresholds = ['Under 80%', '80-85%', '85-90%', '90-95%', 'Over 95%']
+    const expectedThresholds = ['Under 80%', '80-85%', '85-95%', 'Over 95%']
 
     for (const threshold of expectedThresholds) {
       await expect(mapKey.getByText(threshold)).toBeVisible()

@@ -42,7 +42,7 @@ test.describe('Childhood vaccinations page', () => {
     })
     await test.step('displays map legend with correct thresholds', async () => {
       await coverPage.hasMapLegend()
-      await coverPage.hasMapLegendWithThresholds(['Under 80%', '80-85%', '85-90%', '90-95%', 'Over 95%'])
+      await coverPage.hasMapLegendWithThresholds(['Under 80%', '80-85%', '85-95%', 'Over 95%'])
     })
   })
 
