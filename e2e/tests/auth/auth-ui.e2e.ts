@@ -45,7 +45,7 @@ test('Displays classification banner @auth-ui', async ({ authStartPage, authEnab
   await authStartPage.checkClassificationBannerContent()
 })
 
-test.describe('Start page - logged in', () => {
+test.describe('Start page - logged in @auth-ui', () => {
   test('Shows an avatar & sign out button in the navigation menu', async ({
     landingPage,
     authStartPage,
@@ -73,7 +73,7 @@ test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
   })
 })
 
-test.describe('Start page - after logout (post-logout state) - classification banner', () => {
+test.describe('Start page - after logout (post-logout state) - classification banner @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('Displays classification banner after logout', async ({ authStartPage, authEnabled }) => {

@@ -76,7 +76,7 @@ This should install the necessary packages on your system and will inform you if
 There are several sets of the Playwright tests, each of which tragets a specific task and server.
 General tests should be run against a development instance of the frontend using either the mock server or a dev backend
 instance. Smoke tests should be run against WKEs like production. Auth UI and non-public tests should be run against an
-auth-enabled local or deployed environment.
+auth-enabled environment with the mock server running when executing locally.
 
 Which server to target is specified using the `baseURL` environment variable.
 You can specify this in your `.env.local` file which is read in the [Playwright config file](playwright.config.ts), or
@@ -145,16 +145,35 @@ AUTH_SECRET=<any-random-string>
 
 ```
 MOCK_SESSION=true
-PLAYWRIGHT_AUTH_USER_USERNAME=Test User
+MOCK_SESSION_USERNAME=Test User
 ```
 
 #### Required by the auth-setup fixture
 
 ```
-PLAYWRIGHT_AUTH_USER_USERNAME="Test User"
+MOCK_SESSION_USERNAME=Test User
 ```
 
-`PLAYWRIGHT_AUTH_USER_USERNAE` is optional and defaults to `Test User`.
+`MOCK_SESSION_USERNAME` is optional and defaults to `Test User`.
+
+#### Local setup for auth and non-public tests
+Start the mock API server:
+
+```bash
+npm run dev:mock-server
+```
+
+In a second terminal start the frontend:
+
+```bash
+npm run dev
+```
+
+Then run the playwrite tests:
+
+```bash
+npx playwright test --grep "@auth-ui|@non-public" --workers=1
+```
 
 To run only the auth UI tests:
 
@@ -167,6 +186,9 @@ To run only the non-public tests:
 ```bash
 npx playwright test --grep @non-public
 ```
+
+**Note:** When running Playwright locally for the first time, use `--workers=1`. The Next.js development server compiles pages on first access and parallel workers can cause avoidable timeouts during local execution.
+
 
 ### Test tags
 

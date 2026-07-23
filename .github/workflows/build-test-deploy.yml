@@ -227,6 +227,9 @@ jobs:
         run: |
           npx playwright test --grep "@auth-ui|@non-public" \
             --shard=${{ matrix.shard }}/${{ strategy.job-total }}
+        env:
+          baseURL: http://localhost:3000
+          AUTH_ENABLED: true
 
       # ── Artifacts ─────────────────────────────────────────────────────────────
       - name: Upload Playwright report
@@ -292,6 +295,8 @@ jobs:
           PORT: 3000
           HOSTNAME: 0.0.0.0
           NODE_ENV: test
+          AUTH_ENABLED: false
+          BASE_URL: http://localhost:3000
 
       - name: Wait for Dev Server
         shell: sh
