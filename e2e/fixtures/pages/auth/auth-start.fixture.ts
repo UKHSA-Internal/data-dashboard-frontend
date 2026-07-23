@@ -22,7 +22,7 @@ export class AuthStartPage {
   }
 
   async checkIsLoggedIn() {
-    await expect(this.signOutButton).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeVisible()
   }
 
   async checkIsLoggedOut() {
@@ -42,11 +42,11 @@ export class AuthStartPage {
   }
 
   async checkSignOutButtonExists() {
-    await expect(this.signOutButton).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeVisible()
   }
 
   async signOut() {
-    await this.signOutButton.click()
+    await this.page.getByRole('button', { name: 'Sign out' }).click()
   }
 
   async checkSignOutBannerExists() {
