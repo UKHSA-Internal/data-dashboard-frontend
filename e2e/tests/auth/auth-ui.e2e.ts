@@ -41,7 +41,7 @@ test('Displays classification banner @auth-ui', async ({ authStartPage, authEnab
   // Reason: All tests here are only relevant when auth has been enabled
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
   await authStartPage.goto()
-  // await authStartPage.hasClassificationBanner()
+  await authStartPage.hasClassificationBanner()
   await authStartPage.checkClassificationBannerContent()
 })
 
