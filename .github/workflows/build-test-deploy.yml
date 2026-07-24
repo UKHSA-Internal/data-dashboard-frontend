@@ -160,9 +160,7 @@ jobs:
 
     steps:
       - uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
-
       - uses: ./.github/actions/install-cache
-
       - uses: ./.github/actions/build-cache
 
       - name: Setup Playwright
@@ -310,7 +308,8 @@ jobs:
         env:
           AUTH_ENABLED: false
 
-      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
+      - name: Upload Playwright report
+        uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a
         if: ${{ !cancelled() }}
         with:
           name: playwright-report-${{ matrix.shard }}_${{ strategy.job-total }}

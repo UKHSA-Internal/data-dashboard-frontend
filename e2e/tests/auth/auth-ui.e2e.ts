@@ -70,6 +70,23 @@ test.describe('Start page - logged in @auth-ui', () => {
     await authStartPage.checkIsLoggedIn()
     await authStartPage.checkSignOutButtonExists()
   })
+
+  test('Successfully signs out & redirects to start page @auth-ui', async ({
+    landingPage,
+    authStartPage,
+    authEnabled,
+  }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await landingPage.goto()
+
+    await authStartPage.checkIsLoggedIn()
+    await authStartPage.signOut()
+    await authStartPage.checkIsLoggedOut()
+
+    await authStartPage.isStartPage({ afterLogout: true })
+    await authStartPage.checkSignOutBannerExists()
+  })  
 })
 
 test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
