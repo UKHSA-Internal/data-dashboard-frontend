@@ -3,8 +3,8 @@
 import { redirect } from 'next/navigation'
 
 import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
-import { signOut } from '@/auth'
-import { logger } from '@/lib/logger'
+import { auth, signOut } from '@/auth'
+import { auditLog, logger } from '@/lib/logger'
 
 type FormState = {
   error?: string
@@ -13,8 +13,13 @@ type FormState = {
 
 export async function handleFormSubmit(_prevState: FormState, formData: FormData): Promise<FormState> {
   const action = formData.get('action')
+  const session = await auth()
 
   if (action === 'disagreed') {
+    if (session) {
+      auditLog(session.userId ?? '', 'TERMS_OF_SERVICE_REFUSED')
+    }
+
     try {
       await signOut({ redirect: false })
     } catch {
@@ -31,6 +36,10 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
       return {
         error: formData.get('termsOfServiceError') as string,
       }
+    }
+
+    if (session) {
+      auditLog(session.userId ?? '', 'TERMS_OF_SERVICE_ACCEPTED')
     }
 
     redirect('/')
