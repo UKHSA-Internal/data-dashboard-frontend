@@ -54,6 +54,15 @@ export const respiratoryVirusesMock: PageResponse<PageType.Composite> = {
           },
           id: 'd7104a96-3066-4139-80b4-9a4dfb2ed2f9',
         },
+        {
+          type: 'page_link',
+          value: {
+            title: 'Lead exposure',
+            sub_title: 'Headline lead exposure rates broken down by age group and sex in England.',
+            page: 'http://localhost/respiratory-viruses/lead-headline-rates-by-age-and-sex/',
+          },
+          id: 'a1b2c3d4-e5f6-7890-abcd-ef1234567890',
+        },
       ],
       id: '99c01f1d-0280-4cf4-bd96-39543a6c1ac9',
     },
