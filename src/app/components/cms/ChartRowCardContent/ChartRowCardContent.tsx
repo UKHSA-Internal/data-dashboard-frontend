@@ -11,6 +11,7 @@ import {
   Chart,
   ChartRowCardHeader,
   Download,
+  DualCategoryTable,
   Table,
   Tabs,
   TabsContent,
@@ -178,13 +179,22 @@ export function ChartRowCardContent({
                     >
                       Tabular data
                     </span>
-                    <Table
-                      data={column.value}
-                      size={size}
-                      isPublic={isPublic}
-                      dataClassification={dataClassification}
-                      authEnabled={authEnabled}
-                    />
+                    {column.type === 'dual_category_chart_card' ? (
+                      <DualCategoryTable
+                        data={column.value}
+                        isPublic={isPublic}
+                        level={dataClassification}
+                        authEnabled={authEnabled}
+                      />
+                    ) : (
+                      <Table
+                        data={column.value}
+                        size={size}
+                        isPublic={isPublic}
+                        dataClassification={dataClassification}
+                        authEnabled={authEnabled}
+                      />
+                    )}
                   </TabsContent>
                   <TabsContent
                     value={`${kebabCase(column.value.title)}-download`}
