@@ -38,7 +38,7 @@ export class AuthStartPage {
   }
 
   async isRedirectedDueToLoggedIn() {
-    await expect(this.page).toHaveURL(/\/$/)
+    await expect(this.page).toHaveURL(/\/acknowledgement\/?$/)
   }
 
   async checkSignOutButtonExists() {
