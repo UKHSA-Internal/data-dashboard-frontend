@@ -63,7 +63,7 @@
     "redis": "^5.8.2",
     "rehype-raw": "^6.1.1",
     "rehype-slug": "^5.1.0",
-    "sharp": "^0.34.1",
+    "sharp": "^0.35.0",
     "tailwind-merge": "^2.5.2",
     "usehooks-ts": "^3.1.0",
     "zod": "^3.22.4"
