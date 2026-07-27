@@ -1,8 +1,10 @@
 import UserSignOut from '@/app/components/ui/ukhsa/UserSignOut/UserSignOut'
+import { ClearAcknowledgementOnMount } from '@/app/features/Acknowledgement/ClearAcknowledgementOnMount'
 
 export default async function Page() {
   return (
     <>
+      <ClearAcknowledgementOnMount />
       <h1 className="govuk-heading-xl govuk-!-margin-top-2 govuk-!-margin-bottom-4">
         Sign out of the UKHSA data dashboard
       </h1>

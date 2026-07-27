@@ -2,6 +2,17 @@ import { fireEvent, render, screen, within } from '@/config/test-utils'
 
 import Form, { FormProps, renderErrorSummary } from './Form'
 
+const mockSearchParams = new URLSearchParams()
+
+jest.mock('next/navigation', () => ({
+  useSearchParams: jest.fn(() => mockSearchParams),
+}))
+
+jest.mock('@/app/utils/acknowledgement.utils', () => ({
+  clearAcknowledgementMarker: jest.fn(),
+  setAcknowledgementMarker: jest.fn(),
+}))
+
 // mock useActionState to avoid the real hook behaviour
 let mockActionState = [{}, jest.fn()]
 jest.mock('react', () => {
@@ -25,6 +36,8 @@ describe('Form', () => {
 
   beforeEach(() => {
     mockActionState = [{}, jest.fn()]
+    mockSearchParams.delete('returnTo')
+    jest.clearAllMocks()
   })
 
   describe('Rendering', () => {
@@ -133,6 +146,37 @@ describe('Form', () => {
 
       // Should not show error for disagree button
       expect(screen.queryByRole('alert')).not.toBeInTheDocument()
+    })
+
+    it('sets the acknowledgement marker when agree is clicked with checkbox checked', () => {
+      const { setAcknowledgementMarker } = jest.requireMock('@/app/utils/acknowledgement.utils')
+
+      render(<Form {...defaultProps} />)
+
+      fireEvent.click(screen.getByRole('checkbox'))
+      fireEvent.click(screen.getByRole('button', { name: /yes/i }))
+
+      expect(setAcknowledgementMarker).toHaveBeenCalledTimes(1)
+    })
+
+    it('does not set the acknowledgement marker when agree is clicked unchecked', () => {
+      const { setAcknowledgementMarker } = jest.requireMock('@/app/utils/acknowledgement.utils')
+
+      render(<Form {...defaultProps} />)
+
+      fireEvent.click(screen.getByRole('button', { name: /yes/i }))
+
+      expect(setAcknowledgementMarker).not.toHaveBeenCalled()
+    })
+
+    it('clears the acknowledgement marker when diagree is clicked', () => {
+      const { setAcknowledgementMarker } = jest.requireMock('@/app/utils/acknowledgement.utils')
+
+      render(<Form {...defaultProps} />)
+
+      fireEvent.click(screen.getByRole('button', { name: 'No' }))
+
+      expect(setAcknowledgementMarker).toHaveBeenCalledTimes(1)
     })
   })
 

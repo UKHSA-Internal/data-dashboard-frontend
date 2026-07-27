@@ -34,6 +34,20 @@ jest.mock('next-auth/react', () => ({
   ),
 }))
 
+jest.mock('@/app/features/Acknowledgement/AcknowledgementRouteGuard', () => ({
+  AcknowledgementRouteGuard: ({
+    children,
+    isAuthenticated,
+  }: {
+    children: React.ReactNode
+    isAuthenticated: boolean
+  }) => (
+    <div data-authenticated={String(isAuthenticated)} data-testid="acknowledgement-route-guard">
+      {children}
+    </div>
+  ),
+}))
+
 const mockAuthEnabled = { authEnabled: false }
 jest.mock('@/config/constants', () => mockAuthEnabled)
 
@@ -88,9 +102,17 @@ describe('Providers', () => {
     it('renders SessionProvider wrapping StreamedHydration', async () => {
       await renderProviders()
       const sessionProvider = screen.getByTestId('session-provider')
+      const acknowledgementRouteGuard = screen.getByTestId('acknowledgement-route-guard')
       const streamedHydration = screen.getByTestId('streamed-hydration')
       expect(sessionProvider).toBeInTheDocument()
+      expect(sessionProvider).toContainElement(acknowledgementRouteGuard)
       expect(sessionProvider).toContainElement(streamedHydration)
+    })
+
+    it('passes auth state into AcknowledgementRouteGuard', async () => {
+      await renderProviders()
+
+      expect(screen.getByTestId('acknowledgement-route-guard')).toHaveAttribute('data-authenticated', 'false')
     })
 
     it('renders children inside SessionProvider', async () => {
