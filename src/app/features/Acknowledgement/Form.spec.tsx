@@ -170,13 +170,13 @@ describe('Form', () => {
     })
 
     it('clears the acknowledgement marker when diagree is clicked', () => {
-      const { setAcknowledgementMarker } = jest.requireMock('@/app/utils/acknowledgement.utils')
+      const { clearAcknowledgementMarker } = jest.requireMock('@/app/utils/acknowledgement.utils')
 
       render(<Form {...defaultProps} />)
 
       fireEvent.click(screen.getByRole('button', { name: 'No' }))
 
-      expect(setAcknowledgementMarker).toHaveBeenCalledTimes(1)
+      expect(clearAcknowledgementMarker).toHaveBeenCalledTimes(1)
     })
   })
 

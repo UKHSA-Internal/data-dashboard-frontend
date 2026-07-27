@@ -7,6 +7,7 @@ import { useClickAway } from 'react-use'
 
 import { serverSignOut } from '@/app/api/auth/auth.actions'
 import { useNavigationEvent } from '@/app/hooks/useNavigationEvent'
+import { clearAcknowledgementMarker } from '@/app/utils/acknowledgement.utils'
 
 interface MenuBarItem {
   type: 'link'
@@ -30,6 +31,11 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
   useClickAway(containerRef, () => setMenuOpen(false))
   useNavigationEvent(() => setMenuOpen(false))
 
+  const handleSignOut = () => {
+    clearAcknowledgementMarker()
+    serverSignOut()
+  }
+
   return (
     <div ref={containerRef} className="border-t border-light-blue bg-blue print:hidden" data-testid="ukhsa-menu-bar">
       {/* Desktop menu */}
@@ -49,7 +55,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
             <li className="govuk-!-margin-0 ml-auto">
               <button
                 type="button"
-                onClick={() => serverSignOut()}
+                onClick={handleSignOut}
                 className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 ukhsa-chevron-right inline-flex cursor-pointer items-center border-none p-0 text-white no-underline hover:underline focus:text-black"
               >
                 Sign out
@@ -78,7 +84,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
         {isSignedIn && (
           <button
             type="button"
-            onClick={() => serverSignOut()}
+            onClick={handleSignOut}
             className="govuk-link govuk-link--inverse govuk-link--no-visited-state govuk-!-font-size-16 ukhsa-chevron-right inline-flex cursor-pointer items-center border-none p-0 text-white no-underline shadow-none hover:underline focus:text-black"
           >
             Sign out
