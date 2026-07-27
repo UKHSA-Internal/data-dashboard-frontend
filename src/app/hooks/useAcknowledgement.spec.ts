@@ -170,6 +170,24 @@ describe('handleFormSubmit', () => {
       expect(redirect).toHaveBeenCalledWith('/')
     })
 
+    it('should redirect to a safe returnTo path when acknowledgement is accepted', async () => {
+      mockFormData.set('acknowledgement', 'agreed')
+      mockFormData.set('returnTo', '/private/path?foo=bar')
+
+      await expect(handleFormSubmit({}, mockFormData)).rejects.toThrow('NEXT_REDIRECT: /private/path?foo=bar')
+
+      expect(redirect).toHaveBeenCalledWith('/private/path?foo=bar')
+    })
+
+    it('should redirect to home page when returnTo is external', async () => {
+      mockFormData.set('acknowledgement', 'agreed')
+      mockFormData.set('returnTo', 'https://example.com/private')
+
+      await expect(handleFormSubmit({}, mockFormData)).rejects.toThrow('NEXT_REDIRECT: /')
+
+      expect(redirect).toHaveBeenCalledWith('/')
+    })
+
     it('should accept any truthy acknowledgement value', async () => {
       mockFormData.set('acknowledgement', 'yes')
 

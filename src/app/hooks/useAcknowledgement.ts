@@ -2,6 +2,7 @@
 
 import { redirect } from 'next/navigation'
 
+import { getSafeReturnPath } from '@/app/utils/acknowledgement.utils'
 import { getCognitoSignoutURL } from '@/app/utils/auth.utils'
 import { signOut } from '@/auth'
 import { logger } from '@/lib/logger'
@@ -26,6 +27,7 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
 
   if (action === 'agree') {
     const agreedToTerms = formData.get('acknowledgement')
+    const returnTo = formData.get('returnTo')
 
     if (!agreedToTerms) {
       return {
@@ -33,7 +35,7 @@ export async function handleFormSubmit(_prevState: FormState, formData: FormData
       }
     }
 
-    redirect('/')
+    redirect(getSafeReturnPath(typeof returnTo === 'string' ? returnTo : null))
   }
 
   return { error: 'Invalid action' }

@@ -48,7 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             />
           </Suspense>
           {accessToken && <LogoutWarning />}
-          <Providers>
+          <Providers isAuthenticated={Boolean(accessToken)}>
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
