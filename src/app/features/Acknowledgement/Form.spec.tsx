@@ -106,6 +106,18 @@ describe('Form', () => {
       expect(screen.queryByText(/You must accept the terms/)).not.toBeInTheDocument()
     })
 
+    it('shows the fallback error when terms of service error text is missing', () => {
+      render(<Form {...defaultProps} termsOfServiceError={undefined} />)
+
+      fireEvent.click(screen.getByRole('button', { name: /yes/i }))
+
+      expect(screen.getByRole('alert')).toBeInTheDocument()
+      expect(screen.getByRole('link', { name: 'You must accept the terms' })).toHaveAttribute(
+        'href',
+        '#acknowledgement'
+      )
+    })
+
     it('prevents form submission when agree clicked without checkbox checked', () => {
       render(<Form {...defaultProps} />)
 
