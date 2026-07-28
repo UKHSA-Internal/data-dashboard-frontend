@@ -37,7 +37,10 @@ Before you begin, ensure you have the following installed:
    API_URL=http://localhost:3005
    FEEDBACK_API_URL=http://localhost:3005
    GOOGLE_TAG_MANAGER_ID=GTM-W39KF5J2
+   PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL=30
    ```
+
+   `PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL`: sets the cookie expire time for page previews to 30 seconds.
 
 3. **Development Server:**  
    Start the Next.js development server by running the following command in your terminal:

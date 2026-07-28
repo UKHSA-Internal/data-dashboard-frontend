@@ -219,6 +219,74 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
             },
             id: '000e07aa-6799-4f50-bb0c-db2218829395',
           },
+          {
+            type: 'chart_row_card',
+            value: {
+              columns: [
+                {
+                  type: 'dual_category_chart_card',
+                  value: {
+                    title: 'Dual category chart',
+                    body: 'England, 21 May 2020 to 21 May 2026',
+                    about: 'This chart shows a dual category chart.',
+                    related_links: [
+                      {
+                        type: 'related_link',
+                        id: '0470c74b-082c-497d-bc97-307ea5d2a3b3',
+                        value: {
+                          link_display_text: 'UKHSA Lead surveillance report',
+                          link: 'https://www.gov.uk/government/statistics/lead-exposure',
+                        },
+                      },
+                    ],
+                    tag_manager_event_id: 'lead_cases_by_age_and_sex',
+                    x_axis: 'age',
+                    x_axis_title: 'Age',
+                    primary_field_values: ['00-01', '01-04', '05-09', '05-11', '05-14', '10-14'],
+                    y_axis: 'metric',
+                    y_axis_title: 'Metric',
+                    y_axis_minimum_value: 0,
+                    y_axis_maximum_value: null,
+                    chart_type: 'stacked_bar',
+                    static_fields: {
+                      topic: 'Lead',
+                      metric: 'lead_headline_ratesByAgeSex',
+                      geography: 'England',
+                      geography_type: 'Nation',
+                      sex: 'all',
+                      age: 'all',
+                      stratum: 'default',
+                      date_from: '2020-05-21',
+                      date_to: null,
+                    },
+                    secondary_category: 'sex',
+                    segments: [
+                      {
+                        type: 'segment',
+                        id: '08da157b-b5b8-41ea-acef-b13963cf4ad2',
+                        value: {
+                          secondary_field_value: 'm',
+                          colour: 'COLOUR_1_DARK_BLUE',
+                          label: 'Males',
+                        },
+                      },
+                      {
+                        type: 'segment',
+                        id: '8613ae9c-479d-408e-9039-6cccd50189e3',
+                        value: {
+                          secondary_field_value: 'f',
+                          colour: 'COLOUR_3_DARK_PINK',
+                          label: 'Females',
+                        },
+                      },
+                    ],
+                  },
+                  id: '7647604e-79e5-45fd-a063-00c1f279e8a6',
+                },
+              ],
+            },
+            id: '838f81d9-d15c-4741-bbf4-e108cdd15530',
+          },
         ],
       },
       id: '3873a214-6c74-433b-b33b-d0998cab3b5d',

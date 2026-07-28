@@ -18,6 +18,14 @@ export const getFilterItemsFromBody = (body: Body): ExpandableFilterItem[] => {
     .map((section) => {
       const children =
         section.value.content?.flatMap((content: CardTypes) => {
+          if (content.type === 'weather_health_alert_card') {
+            const title = content.value.title
+            if (!title) return []
+
+            const id = content.id ?? title
+            return [{ id, label: title }]
+          }
+
           if (content.type !== 'chart_card_section') return []
 
           return content.value.cards

@@ -1,6 +1,7 @@
 import { Request, Response } from 'express'
 
 import { getSwitchBoardState } from '@/app/(pages)/switchboard/shared/state'
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { logger } from '@/lib/logger'
 
 import { globalBannerInactive } from './fixtures/global-banner-inactive'
@@ -17,7 +18,7 @@ export default async function handler(req: Request, res: Response) {
 
     const {
       api: { 'global-banners': globalBanner },
-    } = getSwitchBoardState(req.headers.cookie)
+    } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     const { status, scenario } = globalBanner
 

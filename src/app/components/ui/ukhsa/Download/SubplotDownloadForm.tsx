@@ -1,4 +1,5 @@
 'use client'
+/* eslint-disable tailwindcss/no-custom-classname */
 import clsx from 'clsx'
 import fetch from 'cross-fetch'
 import { useRouter } from 'next/navigation'
@@ -124,15 +125,11 @@ export function SubplotDownloadForm({
             </div>
           </div>
           {showDownloadBanner && (
-            <div
-              className="download-acknowledgement-banner"
-              role="region"
-              aria-label="Download official sensitive data warning"
-            >
-              <p className="download-acknowledgement-banner-body govuk-!-margin-bottom-2">
+            <div role="region" aria-label="Download official sensitive data warning">
+              <p className="govuk-!-margin-bottom-2">
                 You are about to download data that contains <b>official sensitive data.</b>
               </p>
-              <p className="download-acknowledgement-banner-body">
+              <p>
                 Select <b>“continue and download”</b> to proceed or <b>“back”</b> to cancel.
               </p>
             </div>

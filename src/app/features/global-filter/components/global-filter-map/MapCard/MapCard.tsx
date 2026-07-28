@@ -59,7 +59,7 @@ export default function MapCard({
 
   const thresholdFilters = useThresholdFilters()
 
-  const thresholdData: ThresholdItemProps[] = thresholdFilters!.thresholds.map((threshold) => {
+  const thresholdData: ThresholdItemProps[] = (thresholdFilters?.thresholds ?? []).map((threshold) => {
     return {
       colour: threshold.value.colour as MapFeatureColour,
       boundary_minimum_value: threshold.value.boundary_minimum_value,
