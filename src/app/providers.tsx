@@ -6,8 +6,6 @@ import { ReactQueryStreamedHydration } from '@tanstack/react-query-next-experime
 import { SessionProvider } from 'next-auth/react'
 import * as React from 'react'
 
-import { authEnabled } from '@/config/constants'
-
 import { AcknowledgementRouteGuard } from './features/Acknowledgement/AcknowledgementRouteGuard'
 function makeQueryClient() {
   return new QueryClient({
@@ -30,12 +28,12 @@ function getQueryClient() {
   }
 }
 
-export function Providers(props: { children: React.ReactNode; isAuthenticated?: boolean }) {
+export function Providers(props: { children: React.ReactNode; authEnabled?: boolean; isAuthenticated?: boolean }) {
   const queryClient = getQueryClient()
 
   return (
     <QueryClientProvider client={queryClient}>
-      {authEnabled ? (
+      {props.authEnabled ? (
         <SessionProvider>
           <AcknowledgementRouteGuard isAuthenticated={props.isAuthenticated ?? false}>
             <ReactQueryStreamedHydration>{props.children}</ReactQueryStreamedHydration>

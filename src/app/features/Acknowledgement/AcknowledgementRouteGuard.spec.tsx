@@ -90,15 +90,14 @@ describe('AcknowledgementRouteGuard', () => {
     expect(mockReplace).not.toHaveBeenCalled()
   })
 
-  it('redirects authenticated users with a marker away from acknowledgement to a safe return path', async () => {
+  it('redirects authenticated users with a marker away from acknowledgement to private home', async () => {
     setAcceptedAcknowledgementMarker()
     mockPathname = '/acknowledgement'
-    mockSearchParams = new URLSearchParams({ returnTo: '/respiratory-viruses/covid-19' })
 
     renderGuard(true)
 
     expect(screen.queryByText('Guarded content')).not.toBeInTheDocument()
-    await waitFor(() => expect(mockReplace).toHaveBeenCalledWith('/respiratory-viruses/covid-19'))
+    await waitFor(() => expect(mockReplace).toHaveBeenCalledWith('/'))
   })
 
   it('redirects authenticated users with a marker away from start to private home', async () => {

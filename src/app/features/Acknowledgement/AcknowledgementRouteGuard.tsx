@@ -6,13 +6,12 @@ import { ReactNode, useEffect, useMemo } from 'react'
 import {
   ACKNOWLEDGEMENT_PATH,
   getAcknowlegementRedirectPath,
-  getSafeReturnPath,
   hasAcknowledgementMarker,
   PRIVATE_HOME_PATH,
   START_PATH,
 } from '@/app/utils/acknowledgement.utils'
 
-const PUBLIC_AUTH_PATHS = ['/start', '/auth/sigin', '/auth/signout', '/auth/error', '/authentication-error']
+const PUBLIC_AUTH_PATHS = ['/start', '/auth/signin', '/auth/signout', '/auth/error', '/authentication-error']
 
 function isPublicAuthPath(pathname: string) {
   return PUBLIC_AUTH_PATHS.some((path) => pathname === path || pathname.startsWith(`${path}/`))
@@ -49,7 +48,7 @@ export function AcknowledgementRouteGuard({
 
     if (isAcknowledgementPath) {
       if (hasAcceptedAcknowledgement) {
-        router.replace(getSafeReturnPath(searchParams.get('returnTo')))
+        router.replace(PRIVATE_HOME_PATH)
       }
 
       return
