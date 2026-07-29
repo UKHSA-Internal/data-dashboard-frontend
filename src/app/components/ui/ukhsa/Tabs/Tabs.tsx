@@ -95,8 +95,8 @@ TabsTrigger.displayName = TabsPrimitive.Trigger.displayName
 
 const TabsContent = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Content>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content>
->(({ className, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Content> & { noPadding?: boolean }
+>(({ className, noPadding, ...props }, ref) => {
   const context = React.useContext(TabsContext)
   if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
 
@@ -108,8 +108,11 @@ const TabsContent = React.forwardRef<
       tabIndex={-1}
       data-state={props.value === selectedTab ? 'active' : 'inactive'}
       className={clsx(
-        'clear-both mb-0 js:border js:border-mid-grey js:bg-white js:p-3 js:lg:px-4 js:lg:py-6',
+        'clear-both mb-0 js:border js:border-mid-grey js:bg-white',
         'js:data-[state=active]:js:block data-[state=inactive]:js:hidden',
+        {
+          'js:p-3 js:lg:px-4 js:lg:py-6': !noPadding,
+        },
         className
       )}
       {...props}

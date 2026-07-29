@@ -46,9 +46,10 @@ export function MapCardTabWrapper({ id, about }: { id: string; about: string | n
         />
         <TabsContent
           value={`${kebabCase(title)}-map`}
-          className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
+          className="min-h-[var(--ukhsa-chart-card-tab-min-height)] p-0 no-js:mb-7"
           data-type="chart"
           id={`map-${kebabCase(title)}`}
+          noPadding
         >
           <Suspense fallback={null}>
             <MapCard />
