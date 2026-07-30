@@ -17,11 +17,11 @@ import { Footer } from './components/ui/govuk'
 import { CookieBanner } from './components/ui/ukhsa'
 import LogoutWarning from './components/ui/ukhsa/LogoutWarning/LogoutWarning'
 import { HealthAlertsMapWrapper } from './components/ui/ukhsa/Map/health-alerts/HealthAlertsMapWrapper'
+import { BFCacheReloadHandler } from './components/ui/ukhsa/Scripts/BFCacheReloadHandler/BFCacheReloadHandler'
 import { GoogleTagManager } from './components/ui/ukhsa/Scripts/GoogleTagManager/GoogleTagManager'
 import { GovUK } from './components/ui/ukhsa/Scripts/GovUK/GovUK'
 import { UKHSA_GDPR_COOKIE_NAME } from './constants/cookies.constants'
 import { Providers } from './providers'
-
 export const dynamic = 'auto'
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
@@ -48,6 +48,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             />
           </Suspense>
           {accessToken && <LogoutWarning />}
+          <BFCacheReloadHandler />
           <Providers>
             {children}
             <HealthAlertsMapWrapper />
