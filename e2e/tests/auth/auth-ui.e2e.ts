@@ -58,6 +58,7 @@ test('Displays classification banner @auth-ui', async ({ authStartPage, authEnab
 })
 
 test.describe('Start page - logged in @auth-ui', () => {
+  test.use({ startLoggedOut: false })
   test('Shows an avatar & sign out button in the navigation menu', async ({
     landingPage,
     authStartPage,
@@ -83,7 +84,7 @@ test.describe('Start page - logged in @auth-ui', () => {
     await authStartPage.checkIsLoggedIn()
     await authStartPage.signOut()
     await authStartPage.checkIsLoggedOut()
-
+    
     await authStartPage.isStartPage({ afterLogout: true })
     await authStartPage.checkSignOutBannerExists()
   })  

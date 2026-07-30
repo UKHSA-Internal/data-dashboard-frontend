@@ -35,12 +35,54 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
 
   setupAuth: [
     async ({ page, authEnabled, startLoggedOut }, use) => {
+      // let isLoggedIn = true
+      console.log("🐞made it")
+      page.on('request', request => {
+      console.log('➡️ REQUEST', request.method(), request.url())
+      })
+
+      page.on('response', response => {
+        console.log('⬅️ RESPONSE', response.status(), response.url())
+      })
+
+      page.on('framenavigated', frame => {
+        console.log('🌍 NAVIGATED', frame.url())
+      })
+
+      page.on('response', async response => {
+        if (response.status() >= 500) {
+          console.log('💥 FAILING URL', response.url())
+        }
+      })
+
       if (!authEnabled || startLoggedOut) {
         await page.context().clearCookies()
         return await use()
       }
 
+      await page.route('**/*', async (route) => {
+        
+        const requestUrl = route.request().url()
+        // console.log("💥requestUrl", requestUrl)
+        if (requestUrl.includes("/logout"))
+          {
+            console.log("⭐️")
+            await route.fulfill({
+            status: 302,
+            headers: {
+              location: '/start?logout=success',
+            },
+          })
+          console.log("🦄🦄🦄", page.url())
+          console.log("🦄🦄🦄", route.request().url())
+        }
+
+        await route.fallback()
+
+      })
+
       await page.route('**/api/auth/session', async (route) => {
+        console.log('🔥 returning authenticated session')
         await route.fulfill({
           status: 200,
           contentType: 'application/json',
@@ -59,6 +101,37 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
           }),
         })
       })
+
+      await page.route('**/revoke', async route => {
+        console.log('🔓 mocked revoke');
+
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({}),
+        });
+      });
+
+      await page.route('**/oauth2/revoke', async route => {
+        console.log('🔓 mocked oauth2 revoke');
+
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({}),
+        });
+      });
+
+      await page.route('**/*revoke*', async route => {
+        console.log('🔓 revoke call:', route.request().url());
+
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: '{}',
+        });
+      });
+
 
       // Inject an Auth.js session cookie so server components using `auth()` see a logged-in session.
       const secureCookie = process.env.NEXTAUTH_URL?.startsWith('https://') ?? false
@@ -103,10 +176,13 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         },
       ])
 
+      console.log("🐞made it to start")
       await page.goto('/start')
       await page.waitForLoadState('networkidle')
-
+      
+      console.log("🐞made it to use")
       await use()
+      console.log("🐞made it past use")
     },
     { auto: true },
   ],
