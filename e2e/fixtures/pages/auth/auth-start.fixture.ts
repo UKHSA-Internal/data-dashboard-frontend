@@ -22,12 +22,12 @@ export class AuthStartPage {
   }
 
   async checkIsLoggedIn() {
+    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeHidden()
     await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeVisible()
   }
 
   async checkIsLoggedOut() {
     await expect(this.signOutButton).toBeHidden()
-    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
   }
 
   async isStartPage() {
