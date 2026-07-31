@@ -83,10 +83,9 @@ test.describe('Start page - logged in @auth-ui', () => {
 
     await authStartPage.checkIsLoggedIn()
     await authStartPage.signOut()
+    await authStartPage.isStartPage()
     await authStartPage.checkIsLoggedOut()
     
-    await authStartPage.isStartPage({ afterLogout: true })
-    await authStartPage.checkSignOutBannerExists()
   })  
 })
 

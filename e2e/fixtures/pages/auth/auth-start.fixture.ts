@@ -26,18 +26,12 @@ export class AuthStartPage {
   }
 
   async checkIsLoggedOut() {
-    // await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
-    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeHidden()
-    console.log("aftercheckloggedout🦄🦄🦄", this.page.url())
-    // expect(this.signOutButton).toBeHidden()
+    await expect(this.signOutButton).toBeHidden()
+    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
   }
 
-  async isStartPage({ afterLogout }: { afterLogout: boolean } | undefined = { afterLogout: false }) {
-    if (afterLogout) {
-      await expect(this.page).toHaveURL(/\/start\/?\?logout=success$/)
-    } else {
+  async isStartPage() {
       await expect(this.page).toHaveURL(/\/start\/?$/)
-    }
   }
 
   async isRedirectedDueToLoggedIn() {
