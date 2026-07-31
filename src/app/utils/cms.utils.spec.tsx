@@ -303,7 +303,7 @@ describe('renderCompositeBlock function', () => {
     )
 
     expect(screen.getByRole('link', { name: 'Authorised Page' })).toBeInTheDocument()
-    expect(screen.getByRole('link', { name: 'Legacy Page' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Composite page' })).toBeInTheDocument()
   })
 
   test('renders code block correctly', () => {
