@@ -17,7 +17,12 @@ export function MapCardTabWrapper({ id, about }: { id: string; about: string | n
     return (
       <Tabs defaultValue={`${kebabCase(title)}-map`} className="govuk-!-margin-bottom-0">
         <TabsList className="hidden no-js:block sm:block">
-          <TabsTrigger asChild value={`${kebabCase(title)}-map`} aria-controls={`${kebabCase(title)}-content`}>
+          <TabsTrigger
+            asChild
+            value={`${kebabCase(title)}-map`}
+            aria-controls={`${kebabCase(title)}-content`}
+            backgroundWhite
+          >
             <Link href={`#map-${kebabCase(title)}`}>
               <span>Map</span>
             </Link>
@@ -27,6 +32,7 @@ export function MapCardTabWrapper({ id, about }: { id: string; about: string | n
               asChild
               value={`${kebabCase(title)}-about`}
               aria-controls={`about-${kebabCase(title)}-content`}
+              backgroundWhite
             >
               <Link href={`#about-${kebabCase(title)}`}>
                 <span>About</span>
