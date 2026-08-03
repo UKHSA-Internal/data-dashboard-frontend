@@ -27,7 +27,8 @@ export class AuthStartPage {
   }
 
   async checkIsLoggedOut() {
-    await expect(this.signOutButton).toBeHidden()
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeHidden()
+    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
   }
 
   async isStartPage() {
@@ -43,15 +44,8 @@ export class AuthStartPage {
   }
 
   async signOut() {
-    const signOutButton = this.page.getByRole('button', {name: 'sign out'})
-    await expect(signOutButton).toBeVisible()
-    console.log('Enabled:', await signOutButton.isEnabled())
-
-    console.log("signout🦄🦄🦄", this.page.url())
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeVisible()
     await this.page.getByRole('button', { name: 'Sign out' }).click()
-    await this.page.waitForLoadState('networkidle');
-    // await this.page.goto('/fakeclick')
-    console.log("signoutafter🦄🦄🦄", this.page.url())
   }
 
   async checkSignOutBannerExists() {

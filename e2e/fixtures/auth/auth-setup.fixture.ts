@@ -118,13 +118,10 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         },
       ])
 
-      console.log("🐞made it to start")
       await page.goto('/start')
       await page.waitForLoadState('networkidle')
       
-      console.log("🐞made it to use")
       await use()
-      console.log("🐞made it past use")
     },
     { auto: true },
   ],

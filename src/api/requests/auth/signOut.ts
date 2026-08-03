@@ -19,7 +19,6 @@ import { auditLog, logger } from '@/lib/logger'
 import { getAuthApiBaseUrl } from '../helpers'
 
 export async function signOut(options?: { redirectRoute?: string; redirect?: true }) {
-  console.log("signout function 🍗")
   const session = await auth()
   auditLog(session?.userId ?? '', 'LOG_OUT')
 
