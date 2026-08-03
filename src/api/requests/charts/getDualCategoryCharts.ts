@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartTypes } from '@/api/models/Chart'
+import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { chartFormat } from '@/config/constants'
@@ -29,6 +30,8 @@ export const requestSchema = z.object({
   y_axis_title: z.string().optional(),
   y_axis_minimum_value: z.number().nullable().optional(),
   y_axis_maximum_value: z.number().nullable().optional(),
+  is_public: z.boolean(),
+  data_classification: DataClassification.optional(),
   chart_type: ChartTypes,
   static_fields: staticFieldsSchema,
   primary_field_values: z.array(z.string()),
@@ -60,7 +63,7 @@ export const getDualCategoryCharts = async (chart: RequestParams) => {
 
   try {
     const path = isSSR ? `charts/dual-category/v1` : `proxy/charts/dual-category/v1`
-    const { data } = await client<z.infer<typeof responseSchema>>(path, { body })
+    const { data } = await client<z.infer<typeof responseSchema>>(path, { body }, chart.is_public)
 
     const result = responseSchema.safeParse(data)
     if (result.success) {
