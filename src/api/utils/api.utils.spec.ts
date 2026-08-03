@@ -40,7 +40,7 @@ describe('clientHandleSwitchboardBranch', () => {
     mockCookies.mockResolvedValue({ get: jest.fn().mockReturnValue({ value: 'cookie-value' }) })
     const headers = { foo: 'bar' }
     const result = await clientHandleSwitchboardBranch({ ...headers })
-    expect(result.cookie).toBe('cookie-value')
+    expect(result.cookie).toBe(`${UKHSA_SWITCHBOARD_COOKIE_NAME}=cookie-value`)
     expect(result.foo).toBe('bar')
   })
 
