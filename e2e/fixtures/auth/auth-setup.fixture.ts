@@ -62,16 +62,19 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
       })
       
       await page.route('**/logout?**', async (route) => {
-        const requestUrl = route.request().url()
-        if (requestUrl.includes("/logout"))
-          {
-            await route.fulfill({
-            status: 302,
-            headers: {
-              location: '/start',
-            },
-          })
-        }
+        await route.fulfill({
+          status: 302,
+          headers: {
+            location: '/start',
+          },
+        })
+      })
+
+      await page.route('**/oauth2/revoke', async (route) => {
+        await route.fulfill({
+          status: 200,
+          body: '',
+        })
       })
 
 

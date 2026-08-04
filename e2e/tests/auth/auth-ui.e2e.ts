@@ -25,6 +25,8 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
 
     await authStartPage.goto()
     await authStartPage.isStartPage()
+    await authStartPage.checkIsLoggedOut()
+    await authStartPage.checkSignInButtonExists()
   })
 
   test('Page layout', async ({ authStartPage, app, authEnabled }) => {
@@ -82,9 +84,11 @@ test.describe('Start page - logged in @auth-ui', () => {
     await landingPage.goto()
 
     await authStartPage.checkIsLoggedIn()
+    await authStartPage.checkSignOutButtonExists()
     await authStartPage.signOut()
     await authStartPage.isStartPage()
     await authStartPage.checkIsLoggedOut()
+    await authStartPage.checkSignInButtonExists()
     
   })  
 })
