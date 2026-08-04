@@ -43,12 +43,10 @@ test('Start page is not accessible when logged in @auth-ui', async ({
   authStartPage,
   authEnabled,
 }) => {
+  // Reason: All tests here are only relevant when auth has been enabled
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
-
   await authStartPage.goto()
-
   await authStartPage.isRedirectedDueToLoggedIn()
-  // Need an acknowledgement page fixture?
 })
 
 test('Displays classification banner @auth-ui', async ({ authStartPage, authEnabled }) => {
@@ -82,9 +80,9 @@ test.describe('Start page - logged in @auth-ui', () => {
     // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await landingPage.goto()
-
     await authStartPage.checkIsLoggedIn()
     await authStartPage.checkSignOutButtonExists()
+
     await authStartPage.signOut()
     await authStartPage.isStartPage()
     await authStartPage.checkIsLoggedOut()
