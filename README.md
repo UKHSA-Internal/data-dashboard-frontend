@@ -144,7 +144,6 @@ AUTH_SECRET=<any-random-string>
 #### Required for mock session (bypasses real auth provider)
 
 ```
-MOCK_SESSION=true
 MOCK_SESSION_USERNAME=Test User
 ```
 
