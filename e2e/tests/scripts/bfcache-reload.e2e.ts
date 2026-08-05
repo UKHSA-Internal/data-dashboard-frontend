@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { expect, test } from '@playwright/test'
 
 test.describe('BFCacheReloadHandler', () => {
   test('reloads the page when a persisted pageshow event fires', async ({ page }) => {
@@ -62,7 +62,7 @@ test.describe('BFCacheReloadHandler', () => {
     })
 
     await page.goto('/')
-    await page.goto('/some-route-without-handler')
+    await page.goto('/respiratory-viruses/covid-19')
 
     await page.evaluate(() => {
       const event = new Event('pageshow') as PageTransitionEvent & { persisted: boolean }
