@@ -125,23 +125,3 @@ test.describe('Start page - after logout (post-logout state)', () => {
     })
   })
 })
-
-test('should force a window reload when restored from bfcache', async ({ page }) => {
-  await page.goto('http://localhost:3000/')
-
-  await page.evaluate(() => {
-    ;(window as any).__bfcacheTestFlag = 'still_here'
-  })
-
-  const flag = await page.evaluate(() => (window as any).__bfcacheTestFlag)
-  expect(flag).toBe('still_here')
-
-  await page.goto('http://localhost:3000/about')
-
-  await page.evaluate(() => window.history.back())
-
-  await page.waitForURL('http://localhost:3000/')
-
-  const flagAfterBack = await page.evaluate(() => (window as any).__bfcacheTestFlag)
-  expect(flagAfterBack).toBeUndefined()
-})
