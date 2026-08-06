@@ -128,6 +128,36 @@ test('renders inactive tab with white background when enabled', () => {
   expect(triggerElement).not.toHaveClass('js:bg-light-grey')
 })
 
+test('renders standard width tab by default', () => {
+  render(
+    <Tabs>
+      <TabsList>
+        <TabsTrigger value="tab-1">Test trigger</TabsTrigger>
+      </TabsList>
+    </Tabs>
+  )
+
+  const triggerElement = screen.getByRole('tab', { name: /test trigger/i })
+  expect(triggerElement).toHaveClass('js:lg:data-[state=active]:px-[19px]')
+  expect(triggerElement).not.toHaveClass('js:lg:data-[state=active]:px-7')
+})
+
+test('renders wider tab when class applied', () => {
+  render(
+    <Tabs>
+      <TabsList>
+        <TabsTrigger value="tab-1" wideTab>
+          Test trigger
+        </TabsTrigger>
+      </TabsList>
+    </Tabs>
+  )
+
+  const triggerElement = screen.getByRole('tab', { name: /test trigger/i })
+  expect(triggerElement).toHaveClass('js:lg:data-[state=active]:px-7')
+  expect(triggerElement).not.toHaveClass('js:lg:data-[state=active]:px-[19px]')
+})
+
 describe('Opening a new tab', () => {
   test('using a mouse', async () => {
     const mockSetSelectedTab = jest.fn()
