@@ -45,8 +45,8 @@ TabsList.displayName = TabsPrimitive.List.displayName
 
 const TabsTrigger = React.forwardRef<
   React.ElementRef<typeof TabsPrimitive.Trigger>,
-  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & { backgroundWhite?: boolean; wideTab?: boolean }
->(({ className, children, backgroundWhite, wideTab, ...props }, ref) => {
+  React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger> & { wideTab?: boolean }
+>(({ className, children, wideTab, ...props }, ref) => {
   const context = React.useContext(TabsContext)
   if (!context) throw new Error('TabsTrigger must be used within the <Tabs/> component')
 
@@ -82,8 +82,6 @@ const TabsTrigger = React.forwardRef<
         'no-js:govuk-dash js:[&:focus>span]:govuk-focus govuk-link govuk-link--no-visited-state govuk-body js:text-black js:shadow-none js:hover:text-black [&:last-child]:mr-0',
         'relative float-left ml-0 text-center js:mb-0 js:mr-1 no-js:clear-both no-js:mb-2 js:sm:py-2',
         {
-          'js:bg-white': backgroundWhite,
-          'js:bg-light-grey': !backgroundWhite,
           'js:px-[8px] js:sm:px-6 js:lg:px-7 js:data-[state=active]:px-[7px] js:sm:data-[state=active]:px-6 js:lg:data-[state=active]:px-7':
             wideTab,
           'js:px-[8px] js:sm:px-3 js:lg:px-2 js:data-[state=active]:px-[7px] js:sm:data-[state=active]:px-[14px] js:lg:data-[state=active]:px-[19px]':

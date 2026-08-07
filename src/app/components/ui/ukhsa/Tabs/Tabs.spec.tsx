@@ -98,36 +98,6 @@ describe('Tabs', () => {
   })
 })
 
-test('renders inactive tab with grey background by default', () => {
-  render(
-    <Tabs>
-      <TabsList>
-        <TabsTrigger value="tab-1">Test trigger</TabsTrigger>
-      </TabsList>
-    </Tabs>
-  )
-
-  const triggerElement = screen.getByRole('tab', { name: /test trigger/i })
-  expect(triggerElement).toHaveClass('js:bg-light-grey')
-  expect(triggerElement).not.toHaveClass('js:bg-white')
-})
-
-test('renders inactive tab with white background when enabled', () => {
-  render(
-    <Tabs>
-      <TabsList>
-        <TabsTrigger value="tab-1" backgroundWhite>
-          Test trigger
-        </TabsTrigger>
-      </TabsList>
-    </Tabs>
-  )
-
-  const triggerElement = screen.getByRole('tab', { name: /test trigger/i })
-  expect(triggerElement).toHaveClass('js:bg-white')
-  expect(triggerElement).not.toHaveClass('js:bg-light-grey')
-})
-
 test('renders standard width tab by default', () => {
   render(
     <Tabs>
