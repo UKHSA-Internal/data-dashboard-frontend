@@ -261,7 +261,7 @@ describe('renderCompositeBlock function', () => {
               sub_title: 'Should not show',
               page: 'http://localhost:3000/hidden/',
               is_authorised: false,
-              page_classification: 'official_sensitive'
+              page_classification: 'official_sensitive',
             },
             id: '123',
           },
@@ -270,9 +270,40 @@ describe('renderCompositeBlock function', () => {
       })
     )
 
-    expect(
-      screen.queryByRole('link', { name: 'Hidden Page' })
-    ).not.toBeInTheDocument()
+    expect(screen.queryByRole('link', { name: 'Hidden Page' })).not.toBeInTheDocument()
+  })
+
+  test('renders internal page link when is_authorised is not present', () => {
+    render(
+      renderCompositeBlock({
+        type: 'internal_page_links',
+        value: [
+          {
+            type: 'page_link',
+            value: {
+              title: 'Authorised Page',
+              sub_title: 'Explicitly authorised',
+              page: 'http://localhost:3000/authorised/',
+              is_authorised: true,
+            },
+            id: 'authorised-link',
+          },
+          {
+            type: 'page_link',
+            value: {
+              title: 'Composite page',
+              sub_title: 'Missing is_authorised',
+              page: 'http://localhost:3000/legacy/',
+            },
+            id: 'composite-link',
+          },
+        ],
+        id: 'missing-authorised',
+      })
+    )
+
+    expect(screen.getByRole('link', { name: 'Authorised Page' })).toBeInTheDocument()
+    expect(screen.getByRole('link', { name: 'Composite page' })).toBeInTheDocument()
   })
 
   test('renders code block correctly', () => {

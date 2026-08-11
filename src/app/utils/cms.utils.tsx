@@ -236,40 +236,36 @@ export const renderCompositeBlock = ({ id, type, value }: CompositeBody[number])
       />
     )}
 
-    {type === 'internal_page_links' && (() => {
-      const authorisedLinks =
-        value?.filter(
-          (link): link is NonNullable<typeof link> =>
-            !!link?.value?.is_authorised
-        ) ?? [];
+    {type === 'internal_page_links' &&
+      (() => {
+        const authorisedLinks =
+          value?.filter((link): link is NonNullable<typeof link> => {
+            if (!link?.value) return false
+            return !('is_authorised' in link.value) || link.value.is_authorised === true
+          }) ?? []
 
-      if (authorisedLinks.length === 0) return null;
+        if (authorisedLinks.length === 0) return null
 
-      return (
-        <List>
-          <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
-          {authorisedLinks.map(({ id, value }) => (
-            <ListItem key={id} spacing="m">
-              <ListItemArrow>
-                <ListItemArrowLink href={getPath(value.page)}>
-                <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
-                    {value.title}
-                    {value.page_classification && (
-                      <ClassificationBanner
-                        size="small"
-                        level={value.page_classification}
-                      />
-                    )}
-                  </span>
-                </ListItemArrowLink>
-                <ListItemArrowParagraph>
-                  {value.sub_title}
-                </ListItemArrowParagraph>
-              </ListItemArrow>
-            </ListItem>
-          ))}
-        </List>
-      );
-    })()}
+        return (
+          <List>
+            <hr className="govuk-section-break govuk-section-break--m govuk-section-break--visible" />
+            {authorisedLinks.map(({ id, value }) => (
+              <ListItem key={id} spacing="m">
+                <ListItemArrow>
+                  <ListItemArrowLink href={getPath(value.page)}>
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem' }}>
+                      {value.title}
+                      {value.page_classification && (
+                        <ClassificationBanner size="small" level={value.page_classification} />
+                      )}
+                    </span>
+                  </ListItemArrowLink>
+                  <ListItemArrowParagraph>{value.sub_title}</ListItemArrowParagraph>
+                </ListItemArrow>
+              </ListItem>
+            ))}
+          </List>
+        )
+      })()}
   </Fragment>
 )
