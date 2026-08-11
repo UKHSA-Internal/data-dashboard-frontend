@@ -44,7 +44,7 @@
     "i18next": "^23.11.1",
     "leaflet": "^1.9.4",
     "lodash": "^4.18.1",
-    "next": "16.2.7",
+    "next": "16.3.0",
     "next-auth": "^5.0.0-beta.30",
     "nuqs": "^2.6.0",
     "pino": "^8.20.0",
@@ -63,7 +63,7 @@
     "redis": "^5.8.2",
     "rehype-raw": "^6.1.1",
     "rehype-slug": "^5.1.0",
-    "sharp": "^0.34.1",
+    "sharp": "^0.35.3",
     "tailwind-merge": "^2.5.2",
     "usehooks-ts": "^3.1.0",
     "zod": "^3.22.4"
