@@ -48,6 +48,23 @@ jest.mock('@/app/features/Acknowledgement/AcknowledgementRouteGuard', () => ({
   ),
 }))
 
+const mockAuthEnabled = { authEnabled: false }
+jest.mock('@/config/constants', () => mockAuthEnabled)
+
+jest.mock('@/app/features/Acknowledgement/AcknowledgementRouteGuard', () => ({
+  AcknowledgementRouteGuard: ({
+    children,
+    isAuthenticated,
+  }: {
+    children: React.ReactNode
+    isAuthenticated: boolean
+  }) => (
+    <div data-authenticated={String(isAuthenticated)} data-testid="acknowledgement-route-guard">
+      {children}
+    </div>
+  ),
+}))
+
 // --- Helpers ---
 
 async function renderProviders({
