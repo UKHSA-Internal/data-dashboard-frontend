@@ -55,7 +55,7 @@ export function ChartCardSection({
 
         if (index > SHOW_MORE_SECTION_COLUMNS && shouldShowMoreForSection) return null
 
-        if (card.type === 'chart_with_description_card') {
+        if (card.type === 'chart_with_description_card' || card.type === 'headline_chart_with_description_card') {
           return (
             <div
               key={card.id}
