@@ -1,6 +1,6 @@
 import { test } from '../../fixtures/app.fixture'
 
-test.describe(' Start page - when auth is disabled @auth-ui', () => {
+test.describe(' Start page - when auth is disabled', () => {
   if (process.env.AUTH_ENABLED !== 'false') {
     return
   }
@@ -39,10 +39,7 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   })
 })
 
-test('Start page is not accessible when logged in @auth-ui', async ({
-  authStartPage,
-  authEnabled,
-}) => {
+test('Start page is not accessible when logged in @auth-ui', async ({ authStartPage, authEnabled }) => {
   // Reason: All tests here are only relevant when auth has been enabled
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
   await authStartPage.goto()
@@ -87,8 +84,7 @@ test.describe('Start page - logged in @auth-ui', () => {
     await authStartPage.isStartPage()
     await authStartPage.checkIsLoggedOut()
     await authStartPage.checkSignInButtonExists()
-    
-  })  
+  })
 })
 
 test.describe('Start page - after logout (post-logout state) @auth-ui', () => {
