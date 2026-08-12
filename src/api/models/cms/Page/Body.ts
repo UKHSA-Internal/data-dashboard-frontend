@@ -105,7 +105,7 @@ const WithSimplifiedChartCardAndLink = z.object({
 
 const WithChartCardWithDescription = z.object({
   id: z.string(),
-  type: z.enum(['chart_with_description_card']),
+  type: z.enum(['chart_with_description_card', 'headline_chart_with_description_card']),
   value: chartCardValues
     .extend({
       sub_title: z.string().optional(),
