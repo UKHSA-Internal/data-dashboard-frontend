@@ -321,6 +321,8 @@ describe('getDualCategoryCharts', () => {
     primary_field_values: ['2024-01-01'],
     secondary_category: 'age',
     segments: [{ secondary_field_value: '0-4', colour: 'COLOUR_1_DARK_BLUE' }],
+    is_public: false,
+    data_classification: 'official_sensitive',
   }
 
   const mockResponseData = {
@@ -341,6 +343,16 @@ describe('getDualCategoryCharts', () => {
 
     expect(result.success).toBe(true)
     expect(result.data?.chart).toBe('mock-chart-svg')
+    expect(client).toHaveBeenCalledWith(
+      'proxy/charts/dual-category/v1',
+      {
+        body: expect.objectContaining({
+          is_public: false,
+          data_classification: 'official_sensitive',
+        }),
+      },
+      false
+    )
   })
 
   test('logs validation error and returns failed parse when response data is invalid', async () => {
