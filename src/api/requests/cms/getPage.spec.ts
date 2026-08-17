@@ -45,3 +45,24 @@ test('Handles generic http errors', async () => {
     error: expect.any(Object),
   })
 })
+
+test('Non-public capable pages handle invalid page_classification values', async () => {
+  const pageTypes = ['topic.TopicPage', 'metrics_documentation.MetricsDocumentationChildEntry']
+
+  pageTypes.forEach((pageType) => {
+    const schema = responseSchema.options.find((schema) => schema.shape.meta.shape.type.value === pageType)
+    // check we got what we were looking for
+    expect(schema).not.toBeUndefined()
+    const pageClassificationSchema = (schema?.shape as any).page_classification
+    // check we got what we were looking for
+    expect(pageClassificationSchema).not.toBeUndefined()
+
+    // run through some invalid values and check that they are handled correctly
+    const invalidValues = ['', 'invalid', null, undefined]
+    invalidValues.forEach((value) => {
+      const result = pageClassificationSchema.safeParse(value)
+      expect(result.success).toBe(true)
+      expect(result.value).toBe(undefined)
+    })
+  })
+})
