@@ -206,7 +206,9 @@ export const getDualCategoryChartsResponseData = async (
   data: DualCategoryChartCardValue,
   selectedSize: ChartSizes[number],
   areaType: string | null,
-  areaName: string | null
+  areaName: string | null,
+  isPublic: boolean = true,
+  dataClassification?: DataClassification
 ) => {
   return await getDualCategoryCharts({
     chart_type: data.chart_type,
@@ -226,6 +228,8 @@ export const getDualCategoryChartsResponseData = async (
     y_axis_maximum_value: data.y_axis_maximum_value,
     chart_width: chartSizes[selectedSize.size].width,
     chart_height: chartSizes[selectedSize.size].height,
+    is_public: isPublic,
+    data_classification: dataClassification,
   })
 }
 
@@ -271,7 +275,7 @@ export const getFilteredChartResponseData = async (
 ) => {
   if (isDualCategoryChartCardValue(data)) {
     const filteredData = getFilteredDualCategoryData(data, filter, lastUpdated)
-    return getDualCategoryChartsResponseData(filteredData, filterNarrowSize, null, null)
+    return getDualCategoryChartsResponseData(filteredData, filterNarrowSize, null, null, isPublic, dataClassification)
   }
 
   const filteredChart = getFilteredSingleCategoryData(data, filter, lastUpdated)
@@ -295,7 +299,7 @@ export const getChartResponseData = async (
 
   // If the chart is a dual category chart, get the data and return early
   if (isDualCategoryChartCardValue(data)) {
-    return await getDualCategoryChartsResponseData(data, selectedSize, areaType, areaName)
+    return await getDualCategoryChartsResponseData(data, selectedSize, areaType, areaName, isPublic, dataClassification)
   }
 
   // Otherwise, get plots and return single category chart data
