@@ -50,8 +50,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </Suspense>
           {accessToken && <LogoutWarning />}
           <Providers authEnabled={authEnabled} isAuthenticated={Boolean(accessToken)}>
-          {accessToken && <BFCacheReloadHandler />}
-          <Providers>
+            {accessToken && <BFCacheReloadHandler />}
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
