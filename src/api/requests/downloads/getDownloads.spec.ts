@@ -6,8 +6,12 @@ import { downloadsJsonFixture } from '@/mock-server/handlers/downloads/fixtures/
 import { getDownloads, SingleCategoryRequestParams } from './getDownloads'
 
 const basePlot: SingleCategoryRequestParams['plots'][number] = {
+  theme: 'infectious_disease',
+  sub_theme: 'respiratory',
   topic: 'COVID-19',
   metric: 'new_cases_7days_sum',
+  geography: 'England',
+  geography_type: 'Nation',
   stratum: '',
 }
 
