@@ -15,9 +15,9 @@ export function MapCardTabWrapper({ id, about }: { id: string; about: string | n
 
   if (about) {
     return (
-      <Tabs defaultValue={`${kebabCase(title)}-map`} className="govuk-!-margin-bottom-0">
+      <Tabs defaultValue={`${kebabCase(title)}-map`} className="govuk-!-margin-bottom-0 govuk-!-margin-top-4">
         <TabsList className="hidden no-js:block sm:block">
-          <TabsTrigger asChild value={`${kebabCase(title)}-map`} aria-controls={`${kebabCase(title)}-content`}>
+          <TabsTrigger asChild value={`${kebabCase(title)}-map`} aria-controls={`${kebabCase(title)}-content`} wideTab>
             <Link href={`#map-${kebabCase(title)}`}>
               <span>Map</span>
             </Link>
@@ -27,6 +27,7 @@ export function MapCardTabWrapper({ id, about }: { id: string; about: string | n
               asChild
               value={`${kebabCase(title)}-about`}
               aria-controls={`about-${kebabCase(title)}-content`}
+              wideTab
             >
               <Link href={`#about-${kebabCase(title)}`}>
                 <span>About</span>
@@ -46,9 +47,10 @@ export function MapCardTabWrapper({ id, about }: { id: string; about: string | n
         />
         <TabsContent
           value={`${kebabCase(title)}-map`}
-          className="min-h-[var(--ukhsa-chart-card-tab-min-height)] no-js:mb-7"
+          className="min-h-[var(--ukhsa-chart-card-tab-min-height)] p-0 no-js:mb-7"
           data-type="chart"
           id={`map-${kebabCase(title)}`}
+          noPadding
         >
           <Suspense fallback={null}>
             <MapCard />
