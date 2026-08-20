@@ -18,6 +18,8 @@ const props: ComponentProps<typeof DownloadForm> = {
     {
       type: 'plot',
       value: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_daily',
         chart_type: 'line_with_shaded_section',
@@ -55,6 +57,8 @@ describe('DownloadForm', () => {
     // Hidden inputs
     expect(screen.getByTestId('download-form-plots')).toHaveValue(
       JSON.stringify({
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_daily',
         stratum: '',
@@ -115,6 +119,8 @@ describe('DownloadForm', () => {
     // Hidden inputs
     expect(screen.getByTestId('download-form-plots')).toHaveValue(
       JSON.stringify({
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_daily',
         stratum: '',
@@ -336,6 +342,8 @@ describe('DownloadForm (dual category)', () => {
     y_axis_title: 'Value',
     chart_type: 'stacked_bar',
     static_fields: {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'COVID-19_cases_casesByDay',
       geography_type: 'Nation',

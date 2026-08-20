@@ -52,6 +52,8 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     chart_type: 'stacked_bar',
                     show_timeseries_filter: true,
                     static_fields: {
+                      theme: 'infectious_disease',
+                      sub_theme: 'invasive_bacterial_infections',
                       topic: 'Meningococcal-disease',
                       metric: 'meningococcal-disease_cases_casesByWeek',
                       geography: 'England',
@@ -105,6 +107,8 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     chart_type: 'stacked_bar',
                     show_timeseries_filter: false,
                     static_fields: {
+                      theme: 'climate_and_environment',
+                      sub_theme: 'chemical_exposure',
                       topic: 'Lead',
                       metric: 'lead_headline_ratesByAgeSex',
                       geography: 'England',
