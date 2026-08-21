@@ -12,6 +12,7 @@ import { Trans } from 'react-i18next/TransWithoutContext'
 import { getAuthToken } from '@/api/utils/api.utils'
 import { AWSRum } from '@/app/components/ui/ukhsa/Scripts/AWSRum/AWSRum'
 import { getServerTranslation } from '@/app/i18n'
+import { authEnabled } from '@/config/constants'
 
 import { Footer } from './components/ui/govuk'
 import { CookieBanner } from './components/ui/ukhsa'
@@ -48,8 +49,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             />
           </Suspense>
           {accessToken && <LogoutWarning />}
-          {accessToken && <BFCacheReloadHandler />}
-          <Providers>
+          <Providers authEnabled={authEnabled} isAuthenticated={Boolean(accessToken)}>
+            {accessToken && <BFCacheReloadHandler />}
             {children}
             <HealthAlertsMapWrapper />
           </Providers>
