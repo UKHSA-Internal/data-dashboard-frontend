@@ -1,5 +1,6 @@
 jest.unmock('@/api/utils/api.utils')
 import { client, clientHandleSwitchboardBranch } from '@/api/utils/api.utils'
+import { publicCacheRevalidationInterval } from '@/config/constants'
 
 const mockFetchFn = jest.fn()
 
@@ -277,11 +278,20 @@ describe('client()', () => {
   // --- Caching ---
 
   describe('caching (next.revalidate)', () => {
-    it('sets revalidate to 0 when ISRCachingEnabled is false and authEnabled is false', async () => {
-      await client('v1/data', {}, true)
+    it('sets revalidate to 0 when authenticated', async () => {
+      ;(getServerSession as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
+
+      await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
       expect(options.next.revalidate).toBe(0)
+    })
+
+    it('sets revalidate to the public interval when not authenticated', async () => {
+      await client('v1/data', {}, true)
+
+      const [, options] = mockFetchFn.mock.calls[0]
+      expect(options.next.revalidate).toBe(publicCacheRevalidationInterval)
     })
   })
 
@@ -325,13 +335,14 @@ describe('client()', () => {
       expect(options.headers['x-cms-auth']).toBe('Bearer draft-token')
       expect(options.headers['Cache-Control']).toBe('no-store, no-cache, must-revalidate')
       expect(options.cache).toBe('no-store')
-      expect(options.next).toEqual({ revalidate: 0, tags: [] })
+      expect(options.next).toEqual({ revalidate: publicCacheRevalidationInterval, tags: [] })
     })
 
     it('sets response headers for no-cache in /nocache* route', async () => {
       const mockCookieStore = new Map()
       mockCookieStore.set('path', { value: '/nocache/my-published-page' })
       ;(cookies as jest.Mock).mockResolvedValue(mockCookieStore)
+      ;(getServerSession as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
 
       await client('pages/123')
       const [url, options] = mockFetchFn.mock.calls[0]
