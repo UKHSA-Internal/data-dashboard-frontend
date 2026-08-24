@@ -16,7 +16,7 @@ interface Options {
 }
 
 function getRevalidateInterval(accessToken?: string) {
-  // If this is an authenticated request, bypass the cache
+  // If this is an authenticated request we want to bypass the cache
   const hasToken = !!accessToken
   if (hasToken) {
     return 0
