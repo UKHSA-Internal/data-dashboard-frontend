@@ -37,8 +37,6 @@ const SharedPageData = z.object({
   seo_change_frequency: z.number(),
   seo_priority: z.coerce.number(),
   active_announcements: Announcements.or(fallback([])).optional(),
-  is_public: z.boolean().optional(),
-  page_classification: DataClassification.or(fallback(undefined)),
 })
 
 const WithLandingData = SharedPageData.extend({
@@ -80,8 +78,9 @@ const withFeedbackData = SharedPageData.extend({
 const WithTopicData = SharedPageData.extend({
   body: Body,
   page_description: z.string(),
+  // topic pages can be public or non-public
   is_public: z.boolean(),
-  page_classification: DataClassification.or(fallback(undefined)),
+  page_classification: DataClassification.or(fallback(undefined)).optional(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -174,8 +173,9 @@ const WithMetricsChildData = SharedPageData.extend({
       }),
     })
   ),
+  // metrics child pages can be public or non-public
   is_public: z.boolean(),
-  page_classification: DataClassification.or(fallback(undefined)),
+  page_classification: DataClassification.or(fallback(undefined)).optional(),
 })
 
 const WithAcknowledgementData = SharedPageData.omit({
