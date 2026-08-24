@@ -5,7 +5,9 @@
 
 'use client'
 
-import { TileLayer, type TileLayerProps } from 'react-leaflet'
+import { Rectangle, TileLayer, type TileLayerProps } from 'react-leaflet'
+
+import { franceMaskBounds, mapSeaColour } from '@/app/constants/map.constants'
 
 interface BaseLayerProps extends Partial<TileLayerProps> {}
 
@@ -14,7 +16,23 @@ const BaseLayer = ({
   attribution = `Contains OS data &copy; Crown copyright and database right ${new Date().getFullYear()}`,
   ...rest
 }: BaseLayerProps) => {
-  return <TileLayer {...rest} attribution={attribution} url={url} />
+  return (
+    <>
+      <TileLayer {...rest} attribution={attribution} url={url} />
+      {franceMaskBounds.map((bounds) => (
+        <Rectangle
+          key={bounds.toString()}
+          bounds={bounds}
+          interactive={false}
+          pathOptions={{
+            fillColor: mapSeaColour,
+            fillOpacity: 1,
+            stroke: false,
+          }}
+        />
+      ))}
+    </>
+  )
 }
 
 export default BaseLayer
