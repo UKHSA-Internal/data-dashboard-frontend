@@ -1,4 +1,4 @@
-import { LatLngExpression } from 'leaflet'
+import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
 
 import { Feature } from '../components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions'
 
@@ -31,13 +31,22 @@ export const mapTitle = 'Interactive adverse weather map viewer'
 export const zoom = 7
 
 // Minimum zoom level allowed for the map
-export const minZoom = 6
+export const minZoom = 7
 
 // Maximum zoom level allowed for the map
 export const maxZoom = 10
 
 // Default center coordinates of the map
 export const center: LatLngExpression = [52.7957, -1.5479]
+
+// Leaflet pan limit covering the UK
+export const maxBounds: LatLngBoundsExpression = [
+  [49.8, -8.6],
+  [60.9, 1.9],
+]
+
+// 1 prevents the map from being dragged outside maxBounds
+export const maxBoundsViscosity = 1
 
 /**
  * Object mapping query parameter keys to their respective constants.
