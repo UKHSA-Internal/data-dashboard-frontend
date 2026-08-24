@@ -45,6 +45,19 @@ export const maxBounds: LatLngBoundsExpression = [
   [60.9, 1.9],
 ]
 
+export const mapSeaColour = '#d7e0e5'
+
+export const franceMaskBounds: LatLngBoundsExpression[] = [
+  [
+    [49.6, 1.5],
+    [51.1, 2.05],
+  ],
+  [
+    [49.8, -2],
+    [50.2, 2],
+  ],
+]
+
 // 1 prevents the map from being dragged outside maxBounds
 export const maxBoundsViscosity = 1
 
