@@ -38,6 +38,8 @@ interface MockMapContainerProps {
   zoom?: number
   center?: [number, number]
   zoomControl?: boolean
+  maxBounds?: unknown
+  maxBoundsViscosity?: number
   [key: string]: unknown
 }
 
@@ -53,6 +55,8 @@ jest.mock('react-leaflet', () => ({
     zoom,
     center,
     zoomControl,
+    maxBoundsViscosity,
+    maxBounds: _maxBounds,
     ...props
   }: MockMapContainerProps) => (
     <div
@@ -65,6 +69,7 @@ jest.mock('react-leaflet', () => ({
       data-zoom={zoom}
       data-center={Array.isArray(center) ? center.join(',') : center}
       data-zoom-control={zoomControl}
+      data-max-bounds-viscosity={maxBoundsViscosity}
       {...props}
     >
       {children}
@@ -116,8 +121,13 @@ jest.mock('@/app/constants/map.constants', () => ({
   center: [52.7957, -1.5479],
   mapId: 'viewport',
   maxZoom: 10,
-  minZoom: 6,
+  minZoom: 7,
   zoom: 7,
+  maxBounds: [
+    [49.7, -8.6],
+    [60.9, 1.9],
+  ],
+  maxBoundsViscosity: 1,
 }))
 
 // Mock leaflet CSS import
@@ -283,13 +293,20 @@ describe('MapCard', () => {
     expect(mapContainer).toContainElement(screen.getByTestId('base-layer'))
   })
 
+  test('applies UK pan limits from constants', () => {
+    render(<MapCard />)
+
+    const mapContainer = screen.getByTestId('map-container')
+    expect(mapContainer).toHaveAttribute('data-max-bounds-viscosity', '1')
+  })
+
   test('applies correct zoom constraints from constants', () => {
     render(<MapCard />)
 
     const mapContainer = screen.getByTestId('map-container')
-    expect(mapContainer).toHaveAttribute('data-min-zoom', '6')
+    expect(mapContainer).toHaveAttribute('data-min-zoom', '7')
     expect(mapContainer).toHaveAttribute('data-max-zoom', '10')
-    expect(mapContainer).toHaveAttribute('data-zoom', '7') // Note: component hardcodes zoom to 6
+    expect(mapContainer).toHaveAttribute('data-zoom', '7')
   })
 
   test('centers the MapContainer on the provided Coordinates', () => {

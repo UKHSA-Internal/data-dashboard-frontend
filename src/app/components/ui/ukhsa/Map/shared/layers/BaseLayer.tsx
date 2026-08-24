@@ -1,5 +1,5 @@
 /**
- * A reusable base tile layer component that supports OpenStreetMaps by default
+ * A reusable base tile layer component that renders the OS Maps API
  * Ensure to import this component dynamically in Next.js to optimise loading.
  */
 
@@ -10,8 +10,8 @@ import { TileLayer, type TileLayerProps } from 'react-leaflet'
 interface BaseLayerProps extends Partial<TileLayerProps> {}
 
 const BaseLayer = ({
-  url = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
-  attribution = '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors.',
+  url = '/api/proxy/os-maps/{z}/{x}/{y}',
+  attribution = `Contains OS data &copy; Crown copyright and database right ${new Date().getFullYear()}`,
   ...rest
 }: BaseLayerProps) => {
   return <TileLayer {...rest} attribution={attribution} url={url} />

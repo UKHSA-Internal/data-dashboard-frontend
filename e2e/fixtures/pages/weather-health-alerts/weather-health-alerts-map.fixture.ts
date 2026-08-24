@@ -66,12 +66,12 @@ export class WeatherHealthAlertsMapPage {
 
   async hasCopyrightModal() {
     await expect(this.page.getByRole('button', { name: 'Close' })).toBeVisible()
-    await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeVisible()
+    await expect(this.page.getByLabel('© Copyright').getByText(/Contains OS data/)).toBeVisible()
   }
 
   async notHaveCopyrightModal() {
     await expect(this.page.getByRole('button', { name: 'Close' })).toBeHidden()
-    await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | © OpenStreetMap')).toBeHidden()
+    await expect(this.page.getByLabel('© Copyright').getByText(/Contains OS data/)).toBeHidden()
   }
 
   async exitMap() {
