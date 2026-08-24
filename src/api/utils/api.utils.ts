@@ -1,6 +1,6 @@
 import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isSSR, isWellKnownEnvironment } from '@/app/utils/app.utils'
-import { authEnabled, cacheFetchTags, publicCacheRevalidationInterval } from '@/config/constants'
+import { authEnabled, cacheFetchTags, ISRCachingEnabled, publicCacheRevalidationInterval } from '@/config/constants'
 import { getClientSession, getServerSession } from '@/lib/auth/auth-session'
 
 import { getApiBaseUrl } from '../requests/helpers'
@@ -21,7 +21,10 @@ function getRevalidateInterval(accessToken?: string) {
   if (hasToken) {
     return 0
   } else {
-    return publicCacheRevalidationInterval
+    if (ISRCachingEnabled) {
+      return publicCacheRevalidationInterval
+    }
+    return 0
   }
 }
 
