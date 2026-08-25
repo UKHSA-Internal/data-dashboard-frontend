@@ -53,9 +53,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {accessToken && <BFCacheReloadHandler />}
             {children}
             <HealthAlertsMapWrapper />
+            <Footer />
           </Providers>
-
-          <Footer />
         </NuqsAdapter>
       </body>
     </html>
