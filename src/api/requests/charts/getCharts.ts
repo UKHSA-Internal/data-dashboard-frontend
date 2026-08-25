@@ -4,6 +4,7 @@ import { FileFormats, Geography, GeographyType, Metrics, Topics } from '@/api/mo
 import { ChartFigure, ChartLineColours, ChartLineTypes, ChartTypes } from '@/api/models/Chart'
 import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
+import { fallback } from '@/api/utils/zod.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { chartFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
@@ -25,7 +26,7 @@ export const requestSchema = z.object({
   /**
    * The data classification level used in the chart watermark (if non public)
    */
-  data_classification: DataClassification.optional(),
+  data_classification: DataClassification.or(fallback(undefined)).optional(),
   plots: z.array(
     z.object({
       topic: Topics,
