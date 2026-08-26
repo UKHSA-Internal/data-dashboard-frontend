@@ -138,6 +138,15 @@ test('table with caption and headers', async () => {
   expect(headers[1]).toHaveTextContent('Amount')
 })
 
+test('table renders date_prefix when provided', async () => {
+  const validDatePrefix = 'valid date prefix'
+  const updatedMockData = { ...mockData, date_prefix: validDatePrefix }
+
+  const { getByTestId } = render((await Table({ data: updatedMockData, size: mockSize })) as ReactElement)
+  const datePrefixElement = getByTestId('table-date-prefix')
+  expect(datePrefixElement).toHaveTextContent(validDatePrefix)
+})
+
 test('table with row data', async () => {
   const { getByRole, getAllByRole } = render((await Table({ data: mockData, size: mockSize })) as ReactElement)
 

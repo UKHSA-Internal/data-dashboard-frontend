@@ -2,6 +2,7 @@ import { z } from 'zod'
 
 import { ChartLineColours } from '@/api/models/Chart'
 import { DataClassification } from '@/api/models/DataClassification'
+import { fallback } from '@/api/utils/zod.utils'
 
 import { HealthAlertTypes } from '../../Alerts'
 import { Blocks, HeadlineNumber, TrendNumber } from './Blocks'
@@ -105,7 +106,7 @@ const WithSimplifiedChartCardAndLink = z.object({
 
 const WithChartCardWithDescription = z.object({
   id: z.string(),
-  type: z.enum(['chart_with_description_card']),
+  type: z.enum(['chart_with_description_card', 'headline_chart_with_description_card']),
   value: chartCardValues
     .extend({
       sub_title: z.string().optional(),
@@ -383,17 +384,19 @@ export const CompositeBody = z.array(
     z.object({
       type: z.literal('internal_page_links'),
       value: z.array(
-        z.object({
-          type: z.literal('page_link'),
-          value: z.object({
-            title: z.string(),
-            sub_title: z.string(),
-            page: z.string(),
-            is_authorised: z.boolean().optional(),
-            page_classification: DataClassification.nullable().optional(),
-          }),
-          id: z.string(),
-        }).nullable()
+        z
+          .object({
+            type: z.literal('page_link'),
+            value: z.object({
+              title: z.string(),
+              sub_title: z.string(),
+              page: z.string(),
+              is_authorised: z.boolean().optional(),
+              page_classification: DataClassification.or(fallback(undefined)).optional(),
+            }),
+            id: z.string(),
+          })
+          .nullable()
       ),
       id: z.string(),
     }),

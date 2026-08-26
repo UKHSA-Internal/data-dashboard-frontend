@@ -77,7 +77,9 @@
         "row_sex": "{{value}}",
         "row_stratum": "{{value}}",
         "caption": "{{title}} data for {{body, lowerCaseFirstLetter}}",
-        "timestamp": "Up to and including {{timestamp, dateShort}}",
+        "timestamp": {
+          "value": "{{prefix}} {{value, dateShortest}}"
+        },
         "timeseries_title": "{{title}} by vaccine type - {{geographyDetails}}",
         "min_year_to_max_year": "{{minYear}} to {{maxYear}}"
       },
