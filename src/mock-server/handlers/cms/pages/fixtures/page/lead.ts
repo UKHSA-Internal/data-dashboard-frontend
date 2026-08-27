@@ -51,6 +51,7 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     y_axis_maximum_value: null,
                     chart_type: 'stacked_bar',
                     show_timeseries_filter: true,
+                    date_prefix: 'Up to and including',
                     static_fields: {
                       topic: 'Meningococcal-disease',
                       metric: 'meningococcal-disease_cases_casesByWeek',
@@ -104,6 +105,7 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     y_axis_maximum_value: null,
                     chart_type: 'stacked_bar',
                     show_timeseries_filter: false,
+                    date_prefix: 'Up to and including',
                     static_fields: {
                       topic: 'Lead',
                       metric: 'lead_headline_ratesByAgeSex',

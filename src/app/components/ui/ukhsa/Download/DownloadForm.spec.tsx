@@ -335,6 +335,7 @@ describe('DownloadForm (dual category)', () => {
     y_axis: 'metric',
     y_axis_title: 'Value',
     chart_type: 'stacked_bar',
+    date_prefix: 'Up to and including',
     static_fields: {
       topic: 'COVID-19',
       metric: 'COVID-19_cases_casesByDay',

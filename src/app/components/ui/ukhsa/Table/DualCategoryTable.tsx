@@ -9,7 +9,7 @@ import { RichText } from '@/app/components/cms'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { parseDualCategoryTableData } from '@/app/utils/chart.utils'
+import { getDualCategoryChartsResponseData, parseDualCategoryTableData } from '@/app/utils/chart.utils'
 import { getColumnHeader } from '@/app/utils/table.utils'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
@@ -54,12 +54,28 @@ export async function DualCategoryTable({ data, isPublic = false, level, authEna
     return <ChartEmpty resetHref={pathname} />
   }
 
+  const date_prefix = data.date_prefix
+  const selectedSize = { default: true as const, size: 'narrow' as const }
+  const chartResponse = await getDualCategoryChartsResponseData(data, selectedSize, areaType, areaName, isPublic, level)
+  let last_updated = null
+  if (chartResponse?.success) {
+    last_updated = chartResponse.data?.last_updated
+  }
+
   return (
     <table className="govuk-table govuk-!-margin-bottom-0 table-fixed border-separate border-spacing-0">
       <caption className="govuk-table__caption govuk-table__caption--s govuk-!-margin-bottom-2 font-normal">
         <RichText className="govuk-!-margin-bottom-2">
           {t('cms.blocks.table.caption', { title: data.title, body: data.body })}
         </RichText>
+        {last_updated && (
+          <p className="govuk-!-margin-0" data-testid="table-date-prefix">
+            {t('cms.blocks.table.timestamp.value', {
+              prefix: date_prefix,
+              value: last_updated,
+            })}
+          </p>
+        )}
       </caption>
 
       <tbody className="govuk-table__body">
