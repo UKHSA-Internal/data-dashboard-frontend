@@ -66,12 +66,12 @@ export class WeatherHealthAlertsMapPage {
 
   async hasCopyrightModal() {
     await expect(this.page.getByRole('button', { name: 'Close' })).toBeVisible()
-    await expect(this.page.getByLabel('© Copyright').getByText(/Contains OS data/)).toBeVisible()
+    await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | Contains OS data ©')).toBeVisible()
   }
 
   async notHaveCopyrightModal() {
     await expect(this.page.getByRole('button', { name: 'Close' })).toBeHidden()
-    await expect(this.page.getByLabel('© Copyright').getByText(/Contains OS data/)).toBeHidden()
+    await expect(this.page.getByLabel('© Copyright').getByText('Leaflet | Contains OS data ©')).toBeHidden()
   }
 
   async exitMap() {
@@ -134,9 +134,9 @@ export class WeatherHealthAlertsMapPage {
 
   // Playwright mouse movement classes: https://playwright.dev/docs/next/api/class-mouse
   async panWeatherHealthAlertsMap() {
-    await this.page.mouse.move(800, 500)
+    await this.page.mouse.move(800, 0)
     await this.page.mouse.down()
-    await this.page.mouse.move(150, 500)
+    await this.page.mouse.move(800, 600)
     await this.page.mouse.up()
   }
 
