@@ -17,20 +17,14 @@ interface Options {
 
 /**
  * Returns the cache revalidation interval for the HTTP Cache, in seconds
- * If this is an authenticated request, we bypass the cache
  *
- * @param isAuthenticatedRequest boolean for whether this is an authenticated request
  * @returns revalidation interval in seconds
  */
-function getRevalidateInterval(isAuthenticatedRequest: boolean) {
-  if (isAuthenticatedRequest) {
-    return 0
-  } else {
-    if (ISRCachingEnabled) {
-      return publicCacheRevalidationInterval
-    }
-    return 0
+function getRevalidateInterval() {
+  if (ISRCachingEnabled) {
+    return publicCacheRevalidationInterval
   }
+  return 0
 }
 
 /**
@@ -76,7 +70,9 @@ function clientBuildFetchOptions({
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     next: {
-      revalidate: getRevalidateInterval(!!accessToken),
+      // Bypass caching if this is an authenticated request, otherwise get the
+      // revalidate interval
+      revalidate: !!accessToken ? 0 : getRevalidateInterval(),
       tags: authEnabled && isPublic ? [cacheFetchTags.public] : [],
     },
     headers: {
