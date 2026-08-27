@@ -277,8 +277,10 @@ describe('client()', () => {
   // --- Caching ---
 
   describe('caching (next.revalidate)', () => {
-    it('sets revalidate to 0 when ISRCachingEnabled is false and authEnabled is false', async () => {
-      await client('v1/data', {}, true)
+    it('sets revalidate to 0 when authenticated', async () => {
+      ;(getServerSession as jest.Mock).mockResolvedValue({ accessToken: 'user-access-token' })
+
+      await client('v1/data', {}, false)
 
       const [, options] = mockFetchFn.mock.calls[0]
       expect(options.next.revalidate).toBe(0)
