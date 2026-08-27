@@ -15,10 +15,15 @@ interface Options {
   next?: { revalidate: number }
 }
 
-function getRevalidateInterval(accessToken?: string) {
-  // If this is an authenticated request we want to bypass the cache
-  const hasToken = !!accessToken
-  if (hasToken) {
+/**
+ * Returns the cache revalidation interval for the HTTP Cache, in seconds
+ * If this is an authenticated request, we bypass the cache
+ *
+ * @param isAuthenticatedRequest boolean for whether this is an authenticated request
+ * @returns revalidation interval in seconds
+ */
+function getRevalidateInterval(isAuthenticatedRequest: boolean) {
+  if (isAuthenticatedRequest) {
     return 0
   } else {
     if (ISRCachingEnabled) {
@@ -71,9 +76,7 @@ function clientBuildFetchOptions({
     body: body ? JSON.stringify(body) : undefined,
     ...customConfig,
     next: {
-      // The public dashboard is behind a CDN so doesn't rely on any Next.js caching
-      // However, the auth instance is not, so we rely on Next.js caching for unauthenticated requests
-      revalidate: getRevalidateInterval(accessToken),
+      revalidate: getRevalidateInterval(!!accessToken),
       tags: authEnabled && isPublic ? [cacheFetchTags.public] : [],
     },
     headers: {
