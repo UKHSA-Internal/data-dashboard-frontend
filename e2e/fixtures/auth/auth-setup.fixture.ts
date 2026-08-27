@@ -35,12 +35,11 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
 
   setupAuth: [
     async ({ page, authEnabled, startLoggedOut }, use) => {
-
       if (!authEnabled || startLoggedOut) {
         await page.context().clearCookies()
         return await use()
       }
-      
+
       await page.route('**/api/auth/session', async (route) => {
         await route.fulfill({
           status: 200,
@@ -48,7 +47,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
           body: JSON.stringify(mockSession),
         })
       })
-      
+
       await page.route('**/oauth2/token', async (route) => {
         await route.fulfill({
           status: 200,
@@ -60,12 +59,22 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
           }),
         })
       })
-      
+
       await page.route('**/logout?**', async (route) => {
+        const logoutUrl = new URL(route.request().url())
+        const logoutUri = logoutUrl.searchParams.get('logout_uri')
+
+        if (!logoutUri) {
+          return route.fulfill({
+            status: 400,
+            body: 'Missing lougout_uri',
+          })
+        }
+
         await route.fulfill({
           status: 302,
           headers: {
-            location: '/start',
+            location: logoutUri,
           },
         })
       })
@@ -76,7 +85,6 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
           body: '',
         })
       })
-
 
       // Inject an Auth.js session cookie so server components using `auth()` see a logged-in session.
       const secureCookie = process.env.NEXTAUTH_URL?.startsWith('https://') ?? false
@@ -123,7 +131,7 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
 
       await page.goto('/start')
       await page.waitForLoadState('networkidle')
-      
+
       await use()
     },
     { auto: true },

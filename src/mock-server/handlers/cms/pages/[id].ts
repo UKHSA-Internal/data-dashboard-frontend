@@ -24,6 +24,7 @@ import {
   influenzaPageMock,
   landingPageMock,
   leadPageMock,
+  loggedOutPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
@@ -65,6 +66,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [feedbackMock.id]: feedbackMock,
   [vaccinationCoverageMock.id]: vaccinationCoverageMock,
   [leadPageMock.id]: leadPageMock,
+  [loggedOutPageMock.id]: loggedOutPageMock,
   [startPageMock.id]: startPageMock,
   [authErrorMock.id]: authErrorMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
@@ -88,9 +90,9 @@ export default async function handler(req: Request, res: Response) {
     const {
       api: {
         pages: {
-          detail: { 
+          detail: {
             status,
-            scenario: { topicPageIsPublic }, 
+            scenario: { topicPageIsPublic },
           },
         },
       },

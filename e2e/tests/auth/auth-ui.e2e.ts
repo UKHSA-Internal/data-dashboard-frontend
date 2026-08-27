@@ -1,4 +1,4 @@
-import { test } from '../../fixtures/app.fixture'
+import { expect, test } from '../../fixtures/app.fixture'
 
 test.describe(' Start page - when auth is disabled', () => {
   if (process.env.AUTH_ENABLED !== 'false') {
@@ -84,6 +84,40 @@ test.describe('Start page - logged in @auth-ui', () => {
     await authStartPage.isStartPage()
     await authStartPage.checkIsLoggedOut()
     await authStartPage.checkSignInButtonExists()
+  })
+
+  test('Successfully signs out from sign-out page and redirects to site route @auth-ui', async ({
+    page,
+    authStartPage,
+    authEnabled,
+    baseURL,
+  }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await page.goto('/auth/signout')
+
+    await page.locator('main').getByRole('button', { name: 'Sign out' }).click()
+
+    await expect(page).toHaveURL(new URL('/', baseURL).toString())
+    await authStartPage.checkIsLoggedOut()
+  })
+
+  test('Successfully signs out after inactivity and redirects to logged-out page @auth-ui', async ({
+    page,
+    landingPage,
+    authEnabled,
+  }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await page.clock.install()
+    await landingPage.goto()
+    await page.waitForFunction(() => localStorage.getItem('lastActivity') !== null)
+
+    await page.clock.runFor(4 * 60 * 1000 + 15 * 1000)
+
+    await expect(page).toHaveURL(/\/logged-out\/?$/, { timeout: 15000 })
+    await expect(page.getByRole('heading', { name: 'Logged out' })).toBeVisible()
+    await expect(page.getByText('You have been automatically signed out')).toBeVisible()
   })
 })
 
