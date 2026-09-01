@@ -60,25 +60,6 @@ export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
         })
       })
 
-      // await page.route('**/logout?**', async (route) => {
-      //   const logoutUrl = new URL(route.request().url())
-      //   const logoutUri = logoutUrl.searchParams.get('logout_uri')
-
-      //   if (!logoutUri) {
-      //     return route.fulfill({
-      //       status: 400,
-      //       body: 'Missing lougout_uri',
-      //     })
-      //   }
-
-      //   await route.fulfill({
-      //     status: 302,
-      //     headers: {
-      //       location: logoutUri,
-      //     },
-      //   })
-      // })
-
       await page.context().route(
         (url) => url.pathname === '/logout',
         async (route) => {
