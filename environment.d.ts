@@ -24,8 +24,8 @@ declare namespace NodeJS {
     RUM_IDENTITY_POOL_ID: string
     UNLEASH_SERVER_API_URL: string
     UNLEASH_SERVER_API_TOKEN: string
-    PROJECT_API_KEY: string
-    PROJECT_API_SECRET: string
+    OS_GDN_PROJECT_API_KEY: string
+    OS_GDN_PROJECT_API_SECRET: string
   }
 }
 

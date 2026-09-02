@@ -1,5 +1,6 @@
 import React from 'react'
 
+import { mapId, maxBounds, maxBoundsViscosity, maxZoom, minZoom } from '@/app/constants/map.constants'
 import { useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { render, screen } from '@/config/test-utils'
 
@@ -119,15 +120,12 @@ jest.mock('@/app/features/global-filter/components/global-filter-map/Map/layers/
 // Mock constants
 jest.mock('@/app/constants/map.constants', () => ({
   center: [52.7957, -1.5479],
-  mapId: 'viewport',
-  maxZoom: 10,
-  minZoom: 7,
+  mapId: mapId,
+  maxZoom: maxZoom,
+  minZoom: minZoom,
   zoom: 7,
-  maxBounds: [
-    [49.7, -8.6],
-    [60.9, 1.9],
-  ],
-  maxBoundsViscosity: 1,
+  maxBounds: maxBounds,
+  maxBoundsViscosity: maxBoundsViscosity,
 }))
 
 // Mock leaflet CSS import
