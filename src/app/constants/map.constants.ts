@@ -95,3 +95,6 @@ export const geoJsonFeatureId = 'RGN23CD' satisfies keyof Feature['properties']
 
 // The Name property of the GeoJson feature properties object
 export const geoJsonFeatureName = 'RGN23NM' satisfies keyof Feature['properties']
+
+// The time to live value for ordinance survey maps access token cache
+export const OsMapTTL = 15_000

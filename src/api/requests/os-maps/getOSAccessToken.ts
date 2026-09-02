@@ -1,3 +1,4 @@
+import { OsMapTTL } from '@/app/constants/map.constants'
 import { logger } from '@/lib/logger'
 
 interface CachedToken {
@@ -12,15 +13,15 @@ export const resetOsAccessTokenCache = () => {
 }
 
 export const getOSAccessToken = async (): Promise<string> => {
-  if (cachedToken && cachedToken.expiresAt > Date.now() + 15_000) {
+  if (cachedToken && cachedToken.expiresAt > Date.now() + OsMapTTL) {
     return cachedToken.accessToken
   }
 
-  const projectApiKey = process.env.PROJECT_API_KEY
-  const projectApiSecret = process.env.PROJECT_API_SECRET
+  const projectApiKey = process.env.OS_GDN_PROJECT_API_KEY
+  const projectApiSecret = process.env.OS_GDN_PROJECT_API_SECRET
 
   if (!projectApiKey || !projectApiSecret) {
-    throw new Error('Missing PROJECT_API_KEY or PROJECT_API_SECRET')
+    throw new Error('Missing OS_GDN_PROJECT_API_KEY or OS_GDN_PROJECT_API_SECRET')
   }
 
   const response = await fetch('https://api.os.uk/oauth2/token/v1', {
