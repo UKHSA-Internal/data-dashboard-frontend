@@ -4,12 +4,8 @@ import { test } from '../../fixtures/app.fixture'
 
 test.describe('Access our data', () => {
   test('Parent page', async ({ accessOurDataPage }) => {
-    await test.step('go to root page', async () => {
-      await accessOurDataPage.goto()
-    })
-    await test.step('it shows content of the first child page', async () => {
-      await accessOurDataPage.hasChildHeading('Overview')
-    })
+    await accessOurDataPage.goto() // goes to /access-our-data root
+    await accessOurDataPage.hasChildHeading('Overview') // immediately asserts h2 visible
   })
 
   test('Overview page (first page)', async ({ accessOurDataPage, app }) => {

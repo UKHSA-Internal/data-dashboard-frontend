@@ -17,7 +17,7 @@ const HALF_IDLE_BEFORE_WARNING = IDLE_BEFORE_WARNING / 2
 
 const mockServerSignOut = jest.fn()
 jest.mock('@/app/api/auth/auth.actions', () => ({
-  serverSignOut: () => mockServerSignOut(),
+  serverSignOut: (...args: unknown[]) => mockServerSignOut(...args),
 }))
 
 describe('LogoutWarning', () => {
@@ -112,6 +112,7 @@ describe('LogoutWarning', () => {
       })
 
       expect(mockServerSignOut).toHaveBeenCalledTimes(1)
+      expect(mockServerSignOut).toHaveBeenCalledWith('/logged-out')
     })
 
     test('does not call serverSignOut when Stay signed in is clicked', () => {
