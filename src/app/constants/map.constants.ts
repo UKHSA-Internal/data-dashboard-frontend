@@ -45,6 +45,9 @@ export const maxBounds: LatLngBoundsExpression = [
   [60.9, 1.9],
 ]
 
+// 1 prevents the map from being dragged outside maxBounds
+export const maxBoundsViscosity = 1
+
 export const mapSeaColour = '#d7e0e5'
 
 export const franceMaskBounds: LatLngBoundsExpression[] = [
@@ -57,9 +60,6 @@ export const franceMaskBounds: LatLngBoundsExpression[] = [
     [50.2, 2],
   ],
 ]
-
-// 1 prevents the map from being dragged outside maxBounds
-export const maxBoundsViscosity = 1
 
 /**
  * Object mapping query parameter keys to their respective constants.
