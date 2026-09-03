@@ -20,6 +20,7 @@ exports[`test sitemap function that builds a list of URLs for search engines 1`]
   "/feedback/",
   "/health-topics/",
   "/landing-page",
+  "/logged-out/",
   "/metrics-documentation/",
   "/metrics-documentation/covid-occupied-beds-latest",
   "/metrics-documentation/metrics-child-mock-1",
