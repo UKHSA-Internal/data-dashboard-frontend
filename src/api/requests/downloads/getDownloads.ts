@@ -7,6 +7,8 @@ import { auth } from '@/auth'
 import { auditLog, logger } from '@/lib/logger'
 
 const dualCategoryStaticFieldsSchema = z.object({
+  theme: Theme,
+  sub_theme: SubTheme,
   topic: Topics,
   metric: Metrics,
   geography: Geography.optional(),
