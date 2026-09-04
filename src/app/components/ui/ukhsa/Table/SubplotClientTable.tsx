@@ -70,8 +70,8 @@ export function SubplotClientTable({
   const y_axis_title = 'Vaccine coverage %'
   const x_axis = 'geography'
   const y_axis = 'metric'
-  const theme = 'immunisations'
-  const sub_theme = 'childhood_vaccines'
+  const theme = dataFilters[0]?.value.parameters.theme.value ?? ''
+  const sub_theme = dataFilters[0]?.value.parameters.sub_theme.value ?? ''
 
   useEffect(() => {
     let metricValueRanges: MetricValueRange[] | [] = []

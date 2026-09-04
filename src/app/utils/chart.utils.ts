@@ -366,6 +366,8 @@ export const dualCategoryChartToDownloadChart = (data: DualCategoryChartCardValu
     id: 'dual-category',
     type: 'plot',
     value: {
+      theme: data.static_fields.theme,
+      sub_theme: data.static_fields.sub_theme,
       topic: data.static_fields.topic,
       metric: data.static_fields.metric,
       chart_type: data.chart_type,
