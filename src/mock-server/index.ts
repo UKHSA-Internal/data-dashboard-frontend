@@ -85,6 +85,11 @@ app.post('/api/maps/v1', maps)
 app.post('/api/suggestions/v2', suggestions)
 app.get('/flags/client/features', flags)
 
+// Auth endpoints for E2E tests
+app.post('/oauth2/revoke', (_req, res) => {
+  res.status(200).json({})
+})
+
 app.listen(3005, () => {
   console.log('Mock server started on port 3005!')
 })

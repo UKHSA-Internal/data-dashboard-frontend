@@ -1,5 +1,4 @@
-import { Cookie, Page, test as base } from '@playwright/test'
-import fs from 'fs'
+import { test as base } from '@playwright/test'
 
 type AuthSetupFixtures = {
   authEnabled: boolean
@@ -8,120 +7,133 @@ type AuthSetupFixtures = {
   startLoggedOut: boolean
 }
 
-const MICROSOFT_LOGIN_HOST = 'login.microsoftonline.com'
-
-const getHost = (urlString: string) => {
-  try {
-    return new URL(urlString).host
-  } catch {
-    return ''
-  }
-}
-
-const isAllowedAuthHost = (urlString: string, hosts: string[]) => {
-  const host = getHost(urlString)
-  return hosts.some((allowedHost) => host === allowedHost || host.endsWith(`.${allowedHost}`))
-}
-
-async function signInViaMicrosoft(page: Page, username: string, password: string) {
-  await page.getByRole('textbox', { name: /email|phone|skype/i }).fill(username)
-
-  const nextButton = page.getByRole('button', { name: /^next$/i })
-  if (await nextButton.isVisible().catch(() => false)) {
-    await nextButton.click()
-  } else {
-    await page.locator('#idSIButton9').click()
-  }
-
-  await page.locator('input[name="passwd"]').fill(password)
-  await page.locator('#idSIButton9').click()
-
-  // "Stay signed in?" prompt is optional.
-  const staySignedInNo = page.locator('#idBtn_Back')
-  if (await staySignedInNo.isVisible().catch(() => false)) {
-    await staySignedInNo.click()
-  }
+// Mock session representing an authenticated user
+// Shape matches what the FE expects from the session
+const mockSession = {
+  user: {
+    sub: 'mock-user-123',
+    email: 'test@ukhsa.gov.uk',
+    name: process.env.MOCK_SESSION_USERNAME ?? 'Test User',
+    permissions: [],
+  },
+  accessToken: 'mock-access-token',
+  expires: new Date(Date.now() + 24 * 60 * 60 * 1000).toISOString(),
 }
 
 export const AuthSetupFixtures = base.extend<AuthSetupFixtures>({
   authEnabled: async ({}, use) => {
-    const isAuthEnabled = process.env.AUTH_ENABLED === 'true'
-    await use(isAuthEnabled)
+    await use(process.env.AUTH_ENABLED === 'true')
   },
 
   authUserName: async ({}, use) => {
-    await use(process.env.PLAYWRIGHT_AUTH_USER_USERNAME)
+    await use(mockSession.user.name)
   },
 
   startLoggedOut: async ({}, use) => {
-    await use(false) // Default to logged in state
+    await use(false)
   },
 
   setupAuth: [
     async ({ page, authEnabled, startLoggedOut }, use) => {
-      const storagePath = 'e2e/storage/auth.json'
-
-      // For tests that should start logged out or when auth is disabled
       if (!authEnabled || startLoggedOut) {
         await page.context().clearCookies()
         return await use()
       }
 
-      // Try to restore auth state from storage
-      if (fs.existsSync(storagePath)) {
-        try {
-          const storageState = JSON.parse(fs.readFileSync(storagePath, 'utf-8'))
-          const cookies = (storageState.cookies as Cookie[]) || []
+      await page.route('**/api/auth/session', async (route) => {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify(mockSession),
+        })
+      })
 
-          if (cookies.length > 0) {
-            await page.context().addCookies(cookies)
-            return use()
+      await page.route('**/oauth2/token', async (route) => {
+        await route.fulfill({
+          status: 200,
+          contentType: 'application/json',
+          body: JSON.stringify({
+            access_token: mockSession.accessToken,
+            token_type: 'Bearer',
+            expires_in: 3600,
+          }),
+        })
+      })
+
+      await page.context().route(
+        (url) => url.pathname === '/logout',
+        async (route) => {
+          const logoutUrl = new URL(route.request().url())
+          const logoutUri = logoutUrl.searchParams.get('logout_uri')
+
+          if (!logoutUri) {
+            return route.fulfill({
+              status: 400,
+              body: 'Missing lougout_uri',
+            })
           }
-        } catch (error) {
-          console.log('❌ Error reading storage state:', error)
+
+          await route.fulfill({
+            status: 302,
+            headers: {
+              location: logoutUri,
+            },
+          })
         }
-      }
+      )
 
-      // Perform login if needed
-      const username = process.env.PLAYWRIGHT_AUTH_USER_USERNAME || ''
-      const password = process.env.PLAYWRIGHT_AUTH_USER_PASSWORD || ''
-      const authDomainHost = getHost(process.env.AUTH_DOMAIN || '')
-      const allowedAuthHosts = [authDomainHost, MICROSOFT_LOGIN_HOST].filter(Boolean)
+      await page.route('**/oauth2/revoke', async (route) => {
+        await route.fulfill({
+          status: 200,
+          body: '',
+        })
+      })
 
-      if (!username || !password) {
-        throw new Error('Missing PLAYWRIGHT_AUTH_USER_USERNAME or PLAYWRIGHT_AUTH_USER_PASSWORD for auth-enabled tests')
-      }
+      // Inject an Auth.js session cookie so server components using `auth()` see a logged-in session.
+      const secureCookie = process.env.NEXTAUTH_URL?.startsWith('https://') ?? false
+      const sessionCookieName = secureCookie ? '__Secure-authjs.session-token' : 'authjs.session-token'
 
-      if (allowedAuthHosts.length === 0) {
-        throw new Error('AUTH_DOMAIN must be set to a valid URL for auth-enabled tests')
-      }
+      const { encode } = await import('next-auth/jwt')
+      const timeInSeconds = Math.floor(Date.now() / 1000)
+      const expiresAt = timeInSeconds + 60 * 60 // 1 hour
 
-      await page.goto('/start')
-      await Promise.all([
-        page.waitForURL((url) => isAllowedAuthHost(url.toString(), allowedAuthHosts), { timeout: 30000 }),
-        page.getByRole('button', { name: 'Sign in' }).click(),
+      const sessionToken = await encode({
+        secret: process.env.AUTH_SECRET!,
+        salt: sessionCookieName,
+        token: {
+          name: mockSession.user.name,
+          email: mockSession.user.email,
+          sub: mockSession.user.sub,
+          access_token: mockSession.accessToken,
+          refresh_token: 'mock-refresh-token',
+          expires_at: expiresAt,
+          user_id: mockSession.user.sub,
+          exp: expiresAt,
+        },
+      })
+
+      const domain = (() => {
+        try {
+          return new URL(process.env.baseURL || 'http://localhost:3000').hostname
+        } catch {
+          return 'localhost'
+        }
+      })()
+
+      await page.context().addCookies([
+        {
+          name: sessionCookieName,
+          value: sessionToken,
+          domain,
+          path: '/',
+          httpOnly: true,
+          secure: secureCookie,
+          sameSite: 'Lax',
+        },
       ])
 
-      const currentUrl = page.url()
-
-      if (currentUrl.includes(MICROSOFT_LOGIN_HOST)) {
-        await signInViaMicrosoft(page, username, password)
-      } else {
-        await page.keyboard.press('Tab')
-        await page.keyboard.type(username)
-        await page.keyboard.press('Tab')
-        await page.keyboard.type(password)
-        await page.keyboard.press('Tab')
-        await page.keyboard.press('Tab')
-        await page.keyboard.press('Enter')
-      }
-
-      // Wait until we return to the app domain after external auth redirects.
-      await page.waitForURL((url) => url.host === getHost(process.env.baseURL || ''), { timeout: 30000 })
-
-      // eslint-disable-next-line playwright/no-networkidle
+      await page.goto('/start')
       await page.waitForLoadState('networkidle')
-      await page.context().storageState({ path: storagePath })
 
       await use()
     },

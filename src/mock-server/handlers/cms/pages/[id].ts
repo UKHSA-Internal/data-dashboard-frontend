@@ -24,6 +24,7 @@ import {
   influenzaPageMock,
   landingPageMock,
   leadPageMock,
+  loggedOutPageMock,
   metricsChildMocks,
   metricsParentMock,
   otherRespiratoryVirusesPageMock,
@@ -65,6 +66,7 @@ export const mockedPageMap: Record<number, PageResponse<PageType>> = {
   [feedbackMock.id]: feedbackMock,
   [vaccinationCoverageMock.id]: vaccinationCoverageMock,
   [leadPageMock.id]: leadPageMock,
+  [loggedOutPageMock.id]: loggedOutPageMock,
   [startPageMock.id]: startPageMock,
   [authErrorMock.id]: authErrorMock,
   ...Object.fromEntries(whatsNewChildMocks.map((mock) => [mock.id, mock])),
@@ -88,16 +90,28 @@ export default async function handler(req: Request, res: Response) {
     const {
       api: {
         pages: {
-          detail: { status },
+          detail: {
+            status,
+            scenario: { topicPageIsPublic },
+          },
         },
       },
     } = getSwitchBoardState(req.cookies[UKHSA_SWITCHBOARD_COOKIE_NAME])
 
     const pageId = Number(req.params.id)
 
-    if (mockedPageMap[pageId]) {
+    const pageMock = mockedPageMap[pageId]
+
+    if (pageMock) {
+      if (pageMock.meta.type === PageType.Topic) {
+        return res.status(status).json({
+          ...pageMock,
+          is_public: topicPageIsPublic,
+        })
+      }
+
       return res.status(status).json({
-        ...mockedPageMap[pageId],
+        ...pageMock,
       })
     }
 

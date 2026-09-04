@@ -39,6 +39,9 @@ test.describe('Other respiratory viruses page', () => {
       await otherRespiratoryVirusesPage.hasHeading()
       await otherRespiratoryVirusesPage.hasDescription()
     })
+    await test.step('does not display a classification banner for the public variant', async () => {
+      await app.hasNoClassificationBanner()
+    })
     await test.step('does not display the area selector', async () => {
       await app.hasNotAreaSelector()
     })
