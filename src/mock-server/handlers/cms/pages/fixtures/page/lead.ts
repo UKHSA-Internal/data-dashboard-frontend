@@ -51,6 +51,7 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     y_axis_maximum_value: null,
                     chart_type: 'stacked_bar',
                     show_timeseries_filter: true,
+                    date_prefix: 'Up to and including',
                     static_fields: {
                       theme: 'infectious_disease',
                       sub_theme: 'invasive_bacterial_infections',
@@ -106,6 +107,7 @@ export const leadPageMock: PageResponse<PageType.Topic> = {
                     y_axis_maximum_value: null,
                     chart_type: 'stacked_bar',
                     show_timeseries_filter: false,
+                    date_prefix: 'Up to and including',
                     static_fields: {
                       theme: 'climate_and_environment',
                       sub_theme: 'chemical_exposure',

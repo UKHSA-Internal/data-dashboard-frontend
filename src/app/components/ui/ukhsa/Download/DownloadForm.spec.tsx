@@ -341,6 +341,7 @@ describe('DownloadForm (dual category)', () => {
     y_axis: 'metric',
     y_axis_title: 'Value',
     chart_type: 'stacked_bar',
+    date_prefix: 'Up to and including',
     static_fields: {
       theme: 'infectious_disease',
       sub_theme: 'respiratory',

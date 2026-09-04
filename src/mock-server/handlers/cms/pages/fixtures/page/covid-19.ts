@@ -277,6 +277,7 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       date_from: '2020-05-21',
                       date_to: null,
                     },
+                    date_prefix: 'Up to and including',
                     secondary_category: 'sex',
                     segments: [
                       {

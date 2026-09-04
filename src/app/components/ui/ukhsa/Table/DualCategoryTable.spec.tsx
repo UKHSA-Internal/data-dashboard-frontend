@@ -38,6 +38,7 @@ const mockData: DualCategoryChartCardValue = {
     geography_type: 'Nation',
     geography: 'England',
   },
+  date_prefix: 'Up to and including',
   primary_field_values: ['2024-01-01', '2024-01-08'],
   secondary_category: 'age',
   segments: [{ type: 'segment', id: 'seg-1', value: { secondary_field_value: '0-4', colour: 'COLOUR_1_DARK_BLUE' } }],
