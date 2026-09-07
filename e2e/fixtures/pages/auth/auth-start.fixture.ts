@@ -4,25 +4,17 @@ export class AuthStartPage {
   readonly page: Page
   readonly authEnabled: boolean
   readonly authUserName: string
-  readonly menuLinkLoggedIn: Locator
-  readonly menuLinkLoggedOut: Locator
   readonly signOutButton: Locator
+  readonly logoutBanner: Locator
 
   constructor(page: Page, authEnabled: boolean, authUserName: string) {
     this.page = page
     this.authEnabled = authEnabled
     this.authUserName = authUserName
-    this.menuLinkLoggedIn = this.page.getByRole('link', {
-      name: `Show navigation menu – Logged in as ${this.authUserName}`,
-      exact: true,
-      expanded: false,
-    })
-    this.menuLinkLoggedOut = this.page.getByRole('link', {
-      name: `Show navigation menu`,
-      exact: true,
-      expanded: false,
-    })
-    this.signOutButton = this.page.getByRole('navigation', { name: 'Menu' }).getByRole('button', { name: 'Sign out' })
+    this.signOutButton = this.page
+      .getByRole('navigation', { name: 'Main navigation' })
+      .getByRole('button', { name: 'Sign out' })
+    this.logoutBanner = this.page.locator('.govuk-notification-banner--success')
   }
 
   async goto() {
@@ -30,33 +22,32 @@ export class AuthStartPage {
   }
 
   async checkIsLoggedIn() {
-    await expect(this.menuLinkLoggedIn).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeHidden()
   }
 
   async checkIsLoggedOut() {
-    await expect(this.menuLinkLoggedOut).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeHidden()
   }
 
-  async isStartPage({ afterLogout }: { afterLogout: boolean } | undefined = { afterLogout: false }) {
-    if (afterLogout) {
-      await expect(this.page).toHaveURL(/\/start\/?\?logout=success$/)
-    } else {
+  async isStartPage() {
       await expect(this.page).toHaveURL(/\/start\/?$/)
-    }
   }
 
   async isRedirectedDueToLoggedIn() {
-    await expect(this.page).toHaveURL(/\/$/)
+    await expect(this.page).toHaveURL(/\/acknowledgement\/?$/)
   }
 
   async checkSignOutButtonExists() {
-    await this.menuLinkLoggedIn.click()
-    await expect(this.signOutButton).toBeVisible()
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeVisible()
+  }
+
+  async checkSignInButtonExists() {
+    await expect(this.page.getByRole('button', { name: 'Sign in' })).toBeVisible()
   }
 
   async signOut() {
-    await this.menuLinkLoggedIn.click()
-    await this.signOutButton.click()
+    await expect(this.page.getByRole('button', { name: 'Sign out' })).toBeVisible()
+    await this.page.getByRole('button', { name: 'Sign out' }).click()
   }
 
   async checkSignOutBannerExists() {
@@ -69,11 +60,11 @@ export class AuthStartPage {
   }
 
   async hasLogoutBanner() {
-    await expect(this.page.getByRole('alert')).toHaveCount(1)
+    await expect(this.logoutBanner).toHaveCount(1)
   }
 
   async hasNoLogoutBanner() {
-    await expect(this.page.getByRole('alert')).toHaveCount(0)
+    await expect(this.logoutBanner).toHaveCount(0)
   }
 
   async hasMainHeading() {
@@ -93,11 +84,11 @@ export class AuthStartPage {
   }
 
   async hasClassificationBanner() {
-    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' })).toBeVisible()
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()).toBeVisible()
   }
 
   async checkClassificationBannerContent() {
-    const banner = this.page.locator('div.govuk-classification-banner')
+    const banner = this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()
     await expect(banner).toContainText('Official-Sensitive')
   }
 }
