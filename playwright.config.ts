@@ -1,6 +1,5 @@
 import { defineConfig, devices } from '@playwright/test'
 import dotenv from 'dotenv'
-import fs from 'fs'
 import path from 'path'
 
 dotenv.config({ path: path.resolve(__dirname, '.env.local') })
@@ -8,15 +7,12 @@ dotenv.config({ path: path.resolve(__dirname, '.env.local') })
 // URL test to, this must be up and available before the tests are run
 const baseURL = process.env.baseURL || 'http://localhost:3000'
 
-const authStorage =
-  process.env.AUTH_ENABLED === 'true' && fs.existsSync('e2e/storage/auth.json') ? 'e2e/storage/auth.json' : undefined
-
 /**
  * See https://playwright.dev/docs/test-configuration.
  */
 export default defineConfig({
   testDir: './e2e',
-  testMatch: '*.e2e.ts',
+  testMatch: '**/*.e2e.ts',
   testIgnore: ['**/src/**'],
 
   /* Run tests in files in parallel */
@@ -35,9 +31,6 @@ export default defineConfig({
   use: {
     /* Base URL to use in actions like `await page.goto('/')`. */
     baseURL,
-
-    /* Ensure auth session is loaded if it exists */
-    storageState: authStorage,
 
     /* Collect trace when retrying the failed test. See https://playwright.dev/docs/trace-viewer */
     trace: 'on-first-retry',

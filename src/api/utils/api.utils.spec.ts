@@ -40,7 +40,7 @@ describe('clientHandleSwitchboardBranch', () => {
     mockCookies.mockResolvedValue({ get: jest.fn().mockReturnValue({ value: 'cookie-value' }) })
     const headers = { foo: 'bar' }
     const result = await clientHandleSwitchboardBranch({ ...headers })
-    expect(result.cookie).toBe('cookie-value')
+    expect(result.cookie).toBe(`${UKHSA_SWITCHBOARD_COOKIE_NAME}=cookie-value`)
     expect(result.foo).toBe('bar')
   })
 
@@ -89,6 +89,7 @@ jest.mock('@/lib/auth/auth-session', () => ({
 
 import { cookies } from 'next/headers'
 
+import { UKHSA_SWITCHBOARD_COOKIE_NAME } from '@/app/constants/app.constants'
 import { isWellKnownEnvironment } from '@/app/utils/app.utils'
 import { getServerSession } from '@/lib/auth/auth-session'
 
@@ -296,7 +297,7 @@ describe('client()', () => {
       await client('v1/data')
 
       const [, options] = mockFetchFn.mock.calls[0]
-      expect(options.headers.cookie).toBe('mock-cookie-value')
+      expect(options.headers.cookie).toBe(`${UKHSA_SWITCHBOARD_COOKIE_NAME}=mock-cookie-value`)
     })
 
     it('does not attach cookie header when environment is well-known', async () => {

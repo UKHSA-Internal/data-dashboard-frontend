@@ -123,7 +123,7 @@ export async function clientHandleSwitchboardBranch(headers: Record<string, stri
     const cookieStore = await cookies()
     const switchBoardCookie = cookieStore.get(UKHSA_SWITCHBOARD_COOKIE_NAME)
     if (switchBoardCookie) {
-      headers.cookie = switchBoardCookie.value
+      headers.cookie = `${UKHSA_SWITCHBOARD_COOKIE_NAME}=${switchBoardCookie.value}`
     }
   }
   return headers
