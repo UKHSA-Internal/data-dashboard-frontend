@@ -1,9 +1,11 @@
 'use client'
 import Link from 'next/link'
+import { useSearchParams } from 'next/navigation'
 import React, { useActionState, useState } from 'react'
 
 import { RichText } from '@/app/components/cms/RichText/RichText'
 import { handleFormSubmit } from '@/app/hooks/useAcknowledgement'
+import { clearAcknowledgementMarker, setAcknowledgementMarker } from '@/app/utils/acknowledgement.utils'
 
 export type FormProps = {
   iAgreeCheckboxLabel?: string
@@ -46,6 +48,8 @@ export default function Form({
   const [state, formAction] = useActionState(handleFormSubmit, {})
   const [isChecked, setIsChecked] = useState(false)
   const [clientError, setClientError] = useState<string | null>(null)
+  const searchParams = useSearchParams()
+  const returnTo = searchParams.get('returnTo')
   const showError = (state.error || clientError) && !isChecked
   const errorMessage = state.error || clientError
   const handleCheckboxChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,6 +62,7 @@ export default function Form({
     <form action={formAction}>
       {showError && errorMessage && renderErrorSummary(errorMessage)}
       <input type="hidden" name="termsOfServiceError" value={termsOfServiceError} />
+      <input type="hidden" name="returnTo" value={returnTo ?? ''} />
       <div className="govuk-!-margin-bottom-6">
         <RichText data-testId="text-body">{body}</RichText>
         <Link data-testId="terms-link" href={terms_of_service_link} className="govuk-link">
@@ -86,6 +91,7 @@ export default function Form({
           value="disagreed"
           className="govuk-button govuk-button--start govuk-!-margin-right-3 bg-black text-white"
           type="submit"
+          onClick={() => clearAcknowledgementMarker()}
         >
           {disagreeButtonText}
         </button>
@@ -98,7 +104,10 @@ export default function Form({
             if (!isChecked) {
               e.preventDefault()
               setClientError(termsOfServiceError ?? 'You must accept the terms')
+              return
             }
+
+            setAcknowledgementMarker()
           }}
         >
           {agreeButtonText}
