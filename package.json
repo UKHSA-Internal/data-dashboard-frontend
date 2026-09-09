@@ -94,7 +94,7 @@
     "@typescript-eslint/eslint-plugin": "^8.0.0",
     "@typescript-eslint/parser": "^8.0.0",
     "@unlighthouse/cli": "0.14.0",
-    "adm-zip": "^0.5.16",
+    "adm-zip": "^0.6.0",
     "archiver": "^7.0.1",
     "autoprefixer": "^10.4.19",
     "cookie-parser": "^1.4.6",
