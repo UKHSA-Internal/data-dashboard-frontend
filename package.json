@@ -45,7 +45,7 @@
     "leaflet": "^1.9.4",
     "lodash": "^4.18.1",
     "next": "16.2.7",
-    "next-auth": "^5.0.0-beta.30",
+    "next-auth": "^5.0.0-beta.32",
     "nuqs": "^2.6.0",
     "pino": "^8.20.0",
     "plotly.js": "^2.35.3",
