@@ -67,6 +67,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '31f64273-14d8-42e0-b428-cc360c93047c',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_cases_casesByDay',
                           geography: 'England',
@@ -108,6 +110,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '0995444b-ec78-4ba0-9ee9-8a79b6e215ba',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_cases_casesByDay',
                           geography: 'England',
@@ -138,6 +142,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'headline_number',
                         id: 'e93c4734-4522-4526-97b5-087e22329602',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayAdmissions',
                           geography: 'England',
@@ -152,6 +158,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'trend_number',
                         id: '2823ccb0-fb33-4be7-aafc-85a21cbfe9f0',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayAdmissionsChange',
                           geography: 'England',
@@ -178,6 +186,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'headline_number',
                         id: '1b4e31b4-4b6e-4d53-9733-210e5a9ea022',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_ONSdeaths_7DayTotals',
                           geography: 'England',
@@ -192,6 +202,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'trend_number',
                         id: 'c2acdc2b-829d-4956-9ed4-b75e50e1e96f',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayOccupiedBedsChange',
                           geography: 'England',
@@ -238,6 +250,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: 'a4a7da74-37ef-4ca4-a579-d4a70806f266',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Measles',
                           metric: 'measles_cases_casesByOnsetWeekExcludingReportingLag',
                           chart_type: 'line_single_simplified',
@@ -269,6 +283,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: 'a4a7da74-37ef-4ca4-a579-d4a70806f266',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Measles',
                           metric: 'measles_cases_casesByOnsetWeekExcludingReportingLag',
                           chart_type: 'line_single_simplified',
@@ -318,6 +334,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '22e7a544-8ae7-4033-be4e-5aeaf4ebf754',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_testing_positivityByWeek',
                           chart_type: 'line_single_simplified',
@@ -350,6 +368,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: 'a37b7ff5-c0e9-48ec-8cd4-f03b384f7577',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'RSV_testing_positivityByWeek',
                           chart_type: 'line_single_simplified',
@@ -381,6 +401,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '745f044b-054a-4b25-b7f5-a76ba8408eaf',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_testing_positivity7DayRolling',
                           chart_type: 'line_single_simplified',
@@ -412,6 +434,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '22e7a544-8ae7-4033-be4e-5aeaf4ebf754',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_testing_positivityByWeek',
                           chart_type: 'line_single_simplified',
@@ -444,6 +468,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: 'a37b7ff5-c0e9-48ec-8cd4-f03b384f7577',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'RSV_testing_positivityByWeek',
                           chart_type: 'line_single_simplified',
@@ -475,6 +501,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '745f044b-054a-4b25-b7f5-a76ba8408eaf',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_testing_positivity7DayRolling',
                           chart_type: 'line_single_simplified',
@@ -525,6 +553,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: 'bf18b95a-0eea-48a1-bcf3-13f6e1d24bcb',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'E-coli',
                           metric: 'e-coli_cases_countsByOnsetType',
                           chart_type: 'line_single_simplified',
@@ -557,6 +587,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '58c0dea2-9b3e-43b9-8a18-c8016953b620',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'C-difficile',
                           metric: 'c-difficile_cases_countsByOnsetType',
                           chart_type: 'line_single_simplified',
@@ -589,6 +621,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '13b4076b-f2c3-4f1b-8fed-d786a81c5f15',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'MSSA',
                           metric: 'MSSA_cases_countsByOnsetType',
                           chart_type: 'line_single_simplified',
@@ -621,6 +655,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: 'bf18b95a-0eea-48a1-bcf3-13f6e1d24bcb',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'E-coli',
                           metric: 'e-coli_cases_countsByOnsetType',
                           chart_type: 'line_single_simplified',
@@ -653,6 +689,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '58c0dea2-9b3e-43b9-8a18-c8016953b620',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'C-difficile',
                           metric: 'c-difficile_cases_countsByOnsetType',
                           chart_type: 'line_single_simplified',
@@ -685,6 +723,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '13b4076b-f2c3-4f1b-8fed-d786a81c5f15',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'MSSA',
                           metric: 'MSSA_cases_countsByOnsetType',
                           chart_type: 'line_single_simplified',
@@ -756,6 +796,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'plot',
                         id: '0995444b-ec78-4ba0-9ee9-8a79b6e215ba',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_cases_casesByDay',
                           geography: 'England',
@@ -786,6 +828,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'headline_number',
                         id: 'e93c4734-4522-4526-97b5-087e22329602',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayAdmissions',
                           geography: 'England',
@@ -800,6 +844,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'trend_number',
                         id: '2823ccb0-fb33-4be7-aafc-85a21cbfe9f0',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayAdmissionsChange',
                           geography: 'England',
@@ -826,6 +872,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'headline_number',
                         id: 'e93c4734-4522-4526-97b5-087e22329602',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_headline_ICUHDUadmissionrateLatest',
                           geography: 'England',
@@ -840,6 +888,8 @@ export const landingPageMock: PageResponse<PageType.Landing> = {
                         type: 'trend_number',
                         id: '2823ccb0-fb33-4be7-aafc-85a21cbfe9f0',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_headline_ICUHDUadmissionRateChange',
                           geography: 'England',
