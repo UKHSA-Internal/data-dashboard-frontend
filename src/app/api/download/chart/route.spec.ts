@@ -18,6 +18,8 @@ interface RequestBody {
 }
 
 const mockPlot: RequestBody['plots'][number] = {
+  theme: 'infectious_disease',
+  sub_theme: 'respiratory',
   topic: 'COVID-19',
   metric: 'new_cases_daily',
   date_from: null,
