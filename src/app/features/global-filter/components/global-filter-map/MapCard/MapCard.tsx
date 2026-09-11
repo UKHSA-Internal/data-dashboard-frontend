@@ -15,7 +15,7 @@ import { MapLegendControl, ThresholdItemProps } from '@/app/components/ui/ukhsa/
 import { ZoomControl } from '@/app/components/ui/ukhsa/Map/shared/controls/ZoomControl'
 import { useMapRef } from '@/app/components/ui/ukhsa/Map/shared/hooks/useMapRef'
 import { UKHSALogoLayer } from '@/app/components/ui/ukhsa/Map/shared/layers/UKHSALogoLayer'
-import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { center, mapId, maxBounds, maxBoundsViscosity, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 import { CoverControl } from '@/app/features/global-filter/components/global-filter-map/Map/controls/CoverControl'
 import { useMapData, useSelectedFilters, useThresholdFilters } from '@/app/hooks/globalFilterHooks'
 import { MapFeatureColour } from '@/app/utils/map.utils'
@@ -91,6 +91,8 @@ export default function MapCard({
         id={mapId}
         minZoom={minZoom}
         maxZoom={maxZoom}
+        maxBounds={maxBounds}
+        maxBoundsViscosity={maxBoundsViscosity}
         zoom={7}
         ref={ref}
         className={clsx('relative h-[70vh] overflow-hidden ukhsa-focus', className)}

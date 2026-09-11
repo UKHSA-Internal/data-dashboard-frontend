@@ -148,6 +148,7 @@ $govuk-font-family: var(--font-primary), arial, sans-serif;
   --colour-red-opaque: #f5cfc9;
 
   --colour-offwhite: #c1d7eb;
+  --colour-map-sea: #d7e0e5;
 
   // UKHSA delay period colours
   --colour-delay-blue: #0090c6;
@@ -382,6 +383,7 @@ input#search {
     dynamically updating the content of our custom copyright dialog based on changes
     to the tile layer attributions.
   */
+  background-color: var(--colour-map-sea)!important;
 
   .leaflet-control-attribution {
     display: none !important;
