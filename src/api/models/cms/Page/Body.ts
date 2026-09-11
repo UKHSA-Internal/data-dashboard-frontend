@@ -178,10 +178,12 @@ export const PopularTopicsCardValue = z.object({
 
 /** Dual category chart card (e.g. `stacked_bar`). */
 const DualCategoryStaticFields = z.object({
+  theme: z.string(),
+  sub_theme: z.string(),
   topic: z.string(),
   metric: z.string(),
-  geography: z.string().optional(),
-  geography_type: z.string().optional(),
+  geography: z.string(),
+  geography_type: z.string(),
   sex: z.string().nullable().optional(),
   age: z.string().nullable().optional(),
   stratum: z.string().optional(),

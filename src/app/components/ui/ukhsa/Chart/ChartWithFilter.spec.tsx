@@ -106,8 +106,12 @@ describe('ChartWithFilter', () => {
       id: 'plot-1',
       type: 'plot',
       value: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'cases',
+        geography: 'England',
+        geography_type: 'Nation',
         chart_type: 'simple_line',
         date_from: '2023-01-01',
         date_to: '2024-01-01',

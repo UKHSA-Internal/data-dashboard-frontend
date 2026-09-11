@@ -80,8 +80,8 @@ const SubplotClientChart = ({
             chart_parameters: {
               x_axis: 'geography',
               y_axis: 'metric',
-              theme: 'immunisation',
-              sub_theme: 'childhood_vaccines',
+              theme: selectedVaccinations[0]?.value.parameters.theme.value ?? '',
+              sub_theme: selectedVaccinations[0]?.value.parameters.sub_theme.value ?? '',
               date_from: timePeriods[currentTimePeriodIndex].value.date_from,
               date_to: timePeriods[currentTimePeriodIndex].value.date_to,
               age: 'all',

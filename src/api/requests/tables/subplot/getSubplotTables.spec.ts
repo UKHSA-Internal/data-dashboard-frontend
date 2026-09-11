@@ -20,7 +20,7 @@ const validPayload = {
   subplots: [
     {
       subplot_title: 'mocked subplot title',
-      subplot_parameters: {},
+      subplot_parameters: { topic: '6-in-1', metric: '6-in-1_coverage_coverageByYear' },
       plots: [],
     },
   ],

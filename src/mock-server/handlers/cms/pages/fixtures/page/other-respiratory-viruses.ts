@@ -57,6 +57,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_overall_hospital_admissions_rate',
                           chart_type: 'line_multi_coloured',
@@ -99,6 +101,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_hospital_admissions',
                           chart_type: 'bar',
@@ -133,6 +137,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_icuhdu_admissions',
                           chart_type: 'bar',
@@ -184,6 +190,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Adenovirus',
                           metric: 'weekly_positivity',
                           chart_type: 'line_with_shaded_section',
@@ -218,6 +226,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Adenovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -237,6 +247,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Adenovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -256,6 +268,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Adenovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -275,6 +289,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Adenovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -294,6 +310,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Adenovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -336,6 +354,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'hMPV',
                           metric: 'weekly_positivity',
                           chart_type: 'line_with_shaded_section',
@@ -370,6 +390,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'hMPV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -389,6 +411,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'hMPV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -408,6 +432,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'hMPV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -427,6 +453,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'hMPV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -446,6 +474,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'hMPV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -488,6 +518,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Parainfluenza',
                           metric: 'weekly_positivity',
                           chart_type: 'line_with_shaded_section',
@@ -522,6 +554,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Parainfluenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -541,6 +575,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Parainfluenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -560,6 +596,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Parainfluenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -579,6 +617,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Parainfluenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -598,6 +638,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Parainfluenza',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -640,6 +682,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Rhinovirus',
                           metric: 'weekly_positivity',
                           chart_type: 'line_with_shaded_section',
@@ -674,6 +718,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Rhinovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -693,6 +739,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Rhinovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -712,6 +760,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Rhinovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -731,6 +781,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Rhinovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -750,6 +802,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Rhinovirus',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -792,6 +846,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_positivity',
                           chart_type: 'line_with_shaded_section',
@@ -826,6 +882,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -845,6 +903,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -864,6 +924,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -883,6 +945,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
@@ -902,6 +966,8 @@ export const otherRespiratoryVirusesPageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'weekly_positivity_by_age',
                           chart_type: 'line_multi_coloured',
