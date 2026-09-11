@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Topics } from '@/api/models'
+import { SubTheme, Theme, Topics } from '@/api/models'
 import { Body, CompositeBody, Meta, RelatedLinks, RelatedLinksLayout } from '@/api/models/cms/Page'
 import { Announcements } from '@/api/models/cms/Page/Announcements'
 import { FormFields } from '@/api/models/cms/Page/FormFields'
@@ -81,6 +81,8 @@ const WithTopicData = SharedPageData.extend({
   // topic pages can be public or non-public
   is_public: z.boolean(),
   page_classification: DataClassification.or(fallback(undefined)).optional(),
+  theme_name: Theme.or(fallback(undefined)).optional(),
+  sub_theme_name: SubTheme.or(fallback(undefined)).optional(),
   meta: Meta.extend({
     type: z.literal('topic.TopicPage'),
   }),
@@ -176,6 +178,8 @@ const WithMetricsChildData = SharedPageData.extend({
   // metrics child pages can be public or non-public
   is_public: z.boolean(),
   page_classification: DataClassification.or(fallback(undefined)).optional(),
+  theme: Theme.or(fallback(undefined)).optional(),
+  sub_theme: SubTheme.or(fallback(undefined)).optional(),
 })
 
 const WithAcknowledgementData = SharedPageData.omit({
@@ -246,7 +250,6 @@ export const getPage = async <T extends PageType>(id: number) => {
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
 
     const result = responseSchema.safeParse(data)
-
     if (!result.success) {
       logger.error(`WhatsNewResponseSchema Zod Validation error: ${result.error}`)
     }

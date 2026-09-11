@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { DataClassification } from '@/api/models/DataClassification'
+import { DataClassification, SubTheme, Theme } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
 import { fallback } from '@/api/utils/zod.utils'
 import { calculatePageOffset } from '@/app/utils/api.utils'
@@ -110,6 +110,8 @@ export const metricsChildResponseSchema = responseSchema.extend({
       // metrics child pages can be public or non-public
       is_public: z.boolean(),
       page_classification: DataClassification.or(fallback(undefined)).optional(),
+      theme: Theme.or(fallback(undefined)).optional(),
+      sub_theme: SubTheme.or(fallback(undefined)).optional(),
     })
   ),
 })

@@ -39,10 +39,17 @@ export type GeographyParams = {
   geography_type?: GeographyType
 }
 
-export const getGeographies = async (params: GeographyParams, isPublic?: boolean) => {
+export const getGeographies = async (
+  params: GeographyParams,
+  isPublic?: boolean,
+  theme?: string,
+  subTheme?: string
+) => {
   try {
     // Only append isPublic param when explicitly false (non-public pages)
     // undefined or true = public page, no need to pass JWT
+    console.log('hererererer', theme, subTheme)
+    console.log('getGeographies params:', params, 'isPublic:', isPublic)
     const publicParam = !isSSR && isPublic === false ? '&isPublic=false' : ''
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
