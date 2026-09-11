@@ -36,7 +36,6 @@ export async function Timestamp({ data, size, isPublic = true, dataClassificatio
       data: { last_updated: lastUpdated },
     } = res
 
-    // Dual category chart cards do not carry a `date_prefix` field.
     const datePrefix = 'date_prefix' in data ? data.date_prefix : 'Up to and including'
 
     return (
