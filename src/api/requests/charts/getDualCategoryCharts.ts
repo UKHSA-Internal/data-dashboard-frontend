@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
+import { Geography, GeographyType, Metrics, SubTheme, Theme, Topics } from '@/api/models'
 import { ChartFigure, ChartLineColours, ChartTypes } from '@/api/models/Chart'
 import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
@@ -9,6 +9,8 @@ import { chartFormat } from '@/config/constants'
 import { logger } from '@/lib/logger'
 
 const staticFieldsSchema = z.object({
+  theme: Theme,
+  sub_theme: SubTheme,
   topic: Topics,
   metric: Metrics,
   geography: Geography.optional(),

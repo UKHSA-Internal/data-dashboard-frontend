@@ -7,6 +7,8 @@ import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
 
 const dualCategoryStaticFieldsSchema = z.object({
+  theme: Theme,
+  sub_theme: SubTheme,
   topic: Topics,
   metric: Metrics,
   geography: Geography.optional(),
