@@ -287,6 +287,7 @@ export const CardTypes = z.discriminatedUnion('type', [
     type: z.literal('filter_linked_sub_plot_chart_template'),
     value: z.object({
       title_prefix: z.string(),
+      date_prefix: z.string(),
       legend_title: z.string(),
       target_threshold: z.number(),
       target_threshold_label: z.string().optional(),
@@ -298,6 +299,7 @@ export const CardTypes = z.discriminatedUnion('type', [
     type: z.literal('filter_linked_time_series_chart_template'),
     value: z.object({
       title_prefix: z.string(),
+      date_prefix: z.string(),
       legend_title: z.string(),
       about: z.string().optional(),
     }),
