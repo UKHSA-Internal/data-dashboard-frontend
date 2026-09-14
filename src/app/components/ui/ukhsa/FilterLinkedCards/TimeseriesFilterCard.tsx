@@ -41,8 +41,7 @@ const TimeseriesFilterCard = ({
 }: TimeseriesFilterCardProps) => {
   const [date, setDate] = useState<string | null>(null)
 
-  const description = date ? `Last Updated ${formatDate(date)}` : ''
-
+  const description = date ? `${cardData.date_prefix} ${formatDate(date)}` : ''
   const minMaxDateRange: MinMaxYear = getMinMaxYears(timePeriods)
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${minMaxDateRange.minDate} - ${minMaxDateRange.maxDate} (${geographyParent?.name ?? ''}, ${geography.name})`

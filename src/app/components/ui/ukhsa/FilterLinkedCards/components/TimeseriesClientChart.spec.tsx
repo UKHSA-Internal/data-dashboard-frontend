@@ -72,6 +72,7 @@ const mockDataFilters: DataFilter[] = [
 
 const mockCardData: FilterLinkedTimeSeriesData = {
   title_prefix: 'Cases',
+  date_prefix: 'Last updated',
   legend_title: 'Number of cases',
   about: 'About cases data',
 }

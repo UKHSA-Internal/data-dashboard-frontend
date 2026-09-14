@@ -132,6 +132,7 @@ export const GlobalFilterRow = z.array(
 
 const FilterLinkedSubplotData = z.object({
   title_prefix: z.string(),
+  date_prefix: z.string(),
   legend_title: z.string(),
   target_threshold: z.number(),
   target_threshold_label: z.string().optional(),
@@ -140,6 +141,7 @@ const FilterLinkedSubplotData = z.object({
 
 const FilterLinkedTimeSeriesData = z.object({
   title_prefix: z.string(),
+  date_prefix: z.string(),
   legend_title: z.string(),
   about: z.string().optional(),
 })
