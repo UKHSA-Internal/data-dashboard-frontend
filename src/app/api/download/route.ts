@@ -4,6 +4,9 @@ import { NextRequest, NextResponse } from 'next/server'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
+
+// Allow-list to prevent this route being used as a generic API proxy.
+// Currently only bulk downloads are supported. Add new endpoints explicitly.
 const ALLOWED_ENDPOINTS = ['bulkdownloads/v1']
 
 function isAllowedEndpoint(endpoint: string): boolean {
