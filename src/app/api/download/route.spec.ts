@@ -116,6 +116,24 @@ describe('GET api/download', () => {
     expect(logger.error).toHaveBeenCalledWith(new Error('Failed!'))
     expect(redirect).toHaveBeenCalledWith('/error')
   })
+
+  test('Blocks endpoints not in allow list', async () => {
+  const url = new URL('http://localhost/mock-page')
+
+  url.searchParams.set(
+    'endpoint',
+    'user/123/permissions/hierarchy',
+  )
+
+  const req = Mock.of<NextRequest>({
+    url: url.toString(),
+  })
+
+  const res = await GET(req)
+
+  expect(client).not.toHaveBeenCalled()
+  expect(res.status).toBe(403)
+})
 })
 
 describe('POST api/download', () => {
@@ -233,4 +251,22 @@ describe('POST api/download', () => {
     expect(logger.error).toHaveBeenCalledWith(new Error('Failed!'))
     expect(redirect).toHaveBeenCalledWith('/error')
   })
+
+  test('Blocks endpoints not in allow list', async () => {
+  const url = new URL('http://localhost/mock-page')
+
+  url.searchParams.set(
+    'endpoint',
+    'user/123/permissions/hierarchy',
+  )
+
+  const req = Mock.of<NextRequest>({
+    url: url.toString(),
+  })
+
+  const res = await GET(req)
+
+  expect(client).not.toHaveBeenCalled()
+  expect(res.status).toBe(403)
+})
 })

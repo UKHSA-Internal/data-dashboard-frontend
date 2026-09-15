@@ -4,6 +4,12 @@ import { NextRequest, NextResponse } from 'next/server'
 import { client } from '@/api/utils/api.utils'
 import { logger } from '@/lib/logger'
 
+const ALLOWED_ENDPOINTS = ['bulkdownloads/v1']
+
+function isAllowedEndpoint(endpoint: string): boolean {
+  return ALLOWED_ENDPOINTS.includes(endpoint)
+}
+
 export async function GET(req: NextRequest) {
   try {
     const searchParams = new URL(req.url).searchParams
@@ -13,6 +19,18 @@ export async function GET(req: NextRequest) {
     }
 
     const endpoint = searchParams.get('endpoint') as string
+
+    if (!isAllowedEndpoint(endpoint)) {
+      logger.warn(
+        'Blocked download endpoint: %s',
+        endpoint,
+      )
+
+      return NextResponse.json(
+        { error: 'Endpoint not allowed' },
+        { status: 403 },
+      )
+    }
 
     logger.info('Triggering download to %s', endpoint)
 
@@ -42,6 +60,18 @@ export async function POST(req: NextRequest) {
     }
 
     const endpoint = body.get('endpoint') as string
+
+    if (!isAllowedEndpoint(endpoint)) {
+      logger.warn(
+        'Blocked download endpoint: %s',
+        endpoint,
+      )
+
+      return NextResponse.json(
+        { error: 'Endpoint not allowed' },
+        { status: 403 },
+      )
+    }
 
     logger.info('Triggering download to %s', endpoint)
 
