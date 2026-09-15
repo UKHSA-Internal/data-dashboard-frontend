@@ -7,10 +7,10 @@ import { logger } from '@/lib/logger'
 
 // Allow-list to prevent this route being used as a generic API proxy.
 // Currently only bulk downloads are supported. Add new endpoints explicitly.
-const ALLOWED_ENDPOINTS = ['bulkdownloads/v1']
+const ALLOWED_ENDPOINTS = new Set(['bulkdownloads/v1'])
 
 function isAllowedEndpoint(endpoint: string): boolean {
-  return ALLOWED_ENDPOINTS.includes(endpoint)
+  return ALLOWED_ENDPOINTS.has(endpoint)
 }
 
 export async function GET(req: NextRequest) {
