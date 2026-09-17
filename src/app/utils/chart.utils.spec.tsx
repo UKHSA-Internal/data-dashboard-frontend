@@ -48,8 +48,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: null,
           date_to: null,
@@ -67,8 +71,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2024-02-01',
           date_to: '2025-03-01',
@@ -86,8 +94,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2024-02-01',
           date_to: '2025-03-01',
@@ -97,8 +109,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2023-02-01',
           date_to: '2025-03-01',
@@ -120,8 +136,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: mockLastUpdated,
           date_to: null,
@@ -131,8 +151,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: mockLastUpdated,
           date_to: null,
@@ -152,8 +176,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2023-01-01',
           date_to: '2024-01-01', // 1 year span
@@ -163,8 +191,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2022-01-01',
           date_to: null, // Missing date_to - should be skipped
@@ -174,8 +206,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test3',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2022-06-01',
           date_to: '2025-06-01', // 3 year span - largest
@@ -195,8 +231,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2020-01-01',
           date_to: '2021-01-01', // 1 year span
@@ -206,8 +246,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test2',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2022-01-01',
           date_to: null, // Missing date_to - should be skipped
@@ -227,8 +271,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2022-10-01', // October 2022
           date_to: '2026-01-01', // Future date (2026) - should be ignored
@@ -248,8 +296,12 @@ describe('Get timespan between dates for chart', () => {
         type: 'plot' as const,
         id: 'test',
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2023-01-01',
           date_to: '2024-01-01', // Earlier than lastUpdated
@@ -292,8 +344,12 @@ describe('getFilteredSingleCategoryData', () => {
         id: 'chart1',
         type: 'plot' as const,
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2023-01-01',
           date_to: '2024-01-01',
@@ -303,8 +359,12 @@ describe('getFilteredSingleCategoryData', () => {
         id: 'chart2',
         type: 'plot' as const,
         value: {
+          theme: 'test',
+          sub_theme: 'test',
           topic: 'test',
           metric: 'test',
+          geography: 'test',
+          geography_type: 'test',
           chart_type: 'test',
           date_from: '2023-01-01',
           date_to: '2024-01-01',
@@ -365,8 +425,12 @@ describe('getFilteredSingleCategoryData', () => {
           id: 'chart1',
           type: 'plot' as const,
           value: {
+            theme: 'test',
+            sub_theme: 'test',
             topic: 'test',
             metric: 'test',
+            geography: 'test',
+            geography_type: 'test',
             chart_type: 'test',
             date_from: '2020-01-01',
             date_to: null,
@@ -389,8 +453,12 @@ describe('getFilteredSingleCategoryData', () => {
           id: 'chart1',
           type: 'plot' as const,
           value: {
+            theme: 'test',
+            sub_theme: 'test',
             topic: 'test',
             metric: 'test',
+            geography: 'test',
+            geography_type: 'test',
             chart_type: 'test',
             date_from: '2020-01-01',
             date_to: null,
@@ -420,8 +488,12 @@ describe('getFilteredSingleCategoryData', () => {
           id: 'chart1',
           type: 'plot' as const,
           value: {
+            theme: 'test',
+            sub_theme: 'test',
             topic: 'test',
             metric: 'test',
+            geography: 'test',
+            geography_type: 'test',
             chart_type: 'test',
             date_from: '2020-01-01', // Original date_from is much earlier
             date_to: '2026-01-01', // Future date - should be ignored, use lastUpdated instead
@@ -447,8 +519,12 @@ describe('getFilteredSingleCategoryData', () => {
           id: 'chart1',
           type: 'plot' as const,
           value: {
+            theme: 'test',
+            sub_theme: 'test',
             topic: 'test',
             metric: 'test',
+            geography: 'test',
+            geography_type: 'test',
             chart_type: 'test',
             date_from: '2023-01-01',
             date_to: '2024-01-01', // Earlier than lastUpdated
@@ -528,7 +604,17 @@ describe('getSingleCategoryChartsResponseData', () => {
   const selectedSize = { default: true, size: 'narrow' } as const
 
   test('requests single category chart with the provided plots and selected size', async () => {
-    const plots = [{ topic: 'COVID-19', metric: 'COVID-19_cases_casesByDay', chart_type: 'bar' }]
+    const plots = [
+      {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
+        topic: 'COVID-19',
+        metric: 'COVID-19_cases_casesByDay',
+        geography: 'England',
+        geography_type: 'Nation',
+        chart_type: 'bar',
+      },
+    ]
 
     await getSingleCategoryChartsResponseData(plots, mockData, selectedSize)
 
