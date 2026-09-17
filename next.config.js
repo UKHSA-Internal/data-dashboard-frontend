@@ -16,9 +16,6 @@ const nextConfig = {
       fullUrl: true,
     },
   },
-  experimental: {
-    optimisticRouting: false,
-  },
 }
 
 module.exports = nextConfig
