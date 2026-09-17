@@ -264,7 +264,7 @@ describe('POST api/download', () => {
     url: url.toString(),
   })
 
-  const res = await GET(req)
+  const res = await POST(req)
 
   expect(client).not.toHaveBeenCalled()
   expect(res.status).toBe(403)
