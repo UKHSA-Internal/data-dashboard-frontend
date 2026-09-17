@@ -118,22 +118,22 @@ describe('GET api/download', () => {
   })
 
   test('Blocks endpoints not in allow list', async () => {
-  const url = new URL('http://localhost/mock-page')
+    const url = new URL('http://localhost/mock-page')
 
-  url.searchParams.set(
-    'endpoint',
-    'user/123/permissions/hierarchy',
-  )
+    url.searchParams.set(
+      'endpoint',
+      'user/123/permissions/hierarchy',
+    )
 
-  const req = Mock.of<NextRequest>({
-    url: url.toString(),
+    const req = Mock.of<NextRequest>({
+      url: url.toString(),
+    })
+
+    const res = await GET(req)
+
+    expect(client).not.toHaveBeenCalled()
+    expect(res.status).toBe(403)
   })
-
-  const res = await GET(req)
-
-  expect(client).not.toHaveBeenCalled()
-  expect(res.status).toBe(403)
-})
 })
 
 describe('POST api/download', () => {
@@ -253,20 +253,19 @@ describe('POST api/download', () => {
   })
 
   test('Blocks endpoints not in allow list', async () => {
-  const url = new URL('http://localhost/mock-page')
+    const formData = new FormData()
+    formData.set(
+      'endpoint',
+      'user/123/permissions/hierarchy',
+    )
 
-  url.searchParams.set(
-    'endpoint',
-    'user/123/permissions/hierarchy',
-  )
+    const req = Mock.of<NextRequest & { formData: () => FormData }>({
+      formData: () => formData,
+    })
 
-  const req = Mock.of<NextRequest>({
-    url: url.toString(),
+    const res = await POST(req)
+
+    expect(client).not.toHaveBeenCalled()
+    expect(res.status).toBe(403)
   })
-
-  const res = await POST(req)
-
-  expect(client).not.toHaveBeenCalled()
-  expect(res.status).toBe(403)
-})
 })
