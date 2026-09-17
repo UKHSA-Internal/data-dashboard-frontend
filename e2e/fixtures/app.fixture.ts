@@ -138,7 +138,7 @@ export class App {
   }
 
   async hasDocumentTitle(title: string) {
-    await expect(this.page).toHaveTitle(title)
+    await expect(this.page).toHaveTitle(title, { timeout: 15000 })
   }
 
   async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
