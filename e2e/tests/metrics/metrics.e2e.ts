@@ -51,6 +51,7 @@ test.describe('Metrics parent page', () => {
     })
     await test.step('shows page 3', async () => {
       await app.checkPaginationLinkIsActive(3)
+      await app.page.reload()
       await expect(app.page).toHaveURL(/\/metrics-documentation\?page=3$/)
       await app.hasDocumentTitle('Metrics documentation (page 3 of 6) | UKHSA data dashboard')
     })
