@@ -55,7 +55,7 @@ export async function generateMetadata(props: {
 
   const title = seo_title.replace(
     '|',
-    t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, pageNumber, totalPages })
+    t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page: pageNumber, totalPages })
   )
 
   return {
