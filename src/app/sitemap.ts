@@ -73,18 +73,36 @@ async function getWeatherHealthAlertRegionPages() {
 
   if (weatherHealthAlertHeatPages.success && weatherHealthAlertColdPages.success) {
     for (const page of weatherHealthAlertHeatPages.data) {
+      const date = dayjs(page.refresh_date)
+
+      if (!date.isValid()) {
+        logger.error(
+          `Skipping sitemap entry for ${page.geography_name}: invalid refresh_date`
+        )
+        continue
+      }
+
       sitemap.push({
         url: `${rootUrl}/weather-health-alerts/heat/${toSlug(page.geography_name)}`,
-        lastModified: dayjs(page.refresh_date).toDate(),
+        lastModified: date.toDate(),
         changeFrequency: 'monthly',
         priority: 0.8,
       })
     }
 
-    for (const page of weatherHealthAlertHeatPages.data) {
+    for (const page of weatherHealthAlertColdPages.data) {
+      const date = dayjs(page.refresh_date)
+
+      if (!date.isValid()) {
+        logger.error(
+          `Skipping sitemap entry for ${page.geography_name}: invalid refresh_date`
+        )
+        continue
+      }
+
       sitemap.push({
         url: `${rootUrl}/weather-health-alerts/cold/${toSlug(page.geography_name)}`,
-        lastModified: dayjs(page.refresh_date).toDate(),
+        lastModified: date.toDate(),
         changeFrequency: 'monthly',
         priority: 0.8,
       })
@@ -131,7 +149,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap: MetadataRoute.Sitemap = []
 
   // CMS Pages
-  sitemap.push(...(await getAllCmsPages()))
+  // Intentionally exclude /start page from entries
+  const cmsPages = (await getAllCmsPages()).filter(
+    page => !page.url.endsWith('/start/')
+  )
+
+  sitemap.push(...cmsPages)
 
   // Non-CMS Pages. TODO: Migrate these to be CMS delivered
   sitemap.push(...getNonCmsPages())
