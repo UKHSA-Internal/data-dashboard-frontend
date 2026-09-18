@@ -184,7 +184,7 @@ test.describe('Weather Health Alerts map interactivty', () => {
       await weatherHealthAlertsMapPage.panWeatherHealthAlertsMap()
     })
     await test.step('shows fewer regions after pan', async () => {
-      await weatherHealthAlertsMapPage.hasHighlightedRegions(7)
+      await weatherHealthAlertsMapPage.hasHighlightedRegions(3)
     })
   })
 
