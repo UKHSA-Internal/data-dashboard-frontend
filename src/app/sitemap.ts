@@ -149,11 +149,16 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap: MetadataRoute.Sitemap = []
 
   // CMS Pages
-  sitemap.push(...(await getAllCmsPages()))
+  // Intentionally exclude /start page from entries
+  const cmsPages = (await getAllCmsPages()).filter(
+    page => !page.url.endsWith('/start/')
+  )
+
+  sitemap.push(...cmsPages)
 
   // Non-CMS Pages. TODO: Migrate these to be CMS delivered
   sitemap.push(...getNonCmsPages())
   sitemap.push(...(await getWeatherHealthAlertRegionPages()))
 
-  return sitemap.filter(page => !page.url.endsWith('/start/'))
+  return sitemap
 }
