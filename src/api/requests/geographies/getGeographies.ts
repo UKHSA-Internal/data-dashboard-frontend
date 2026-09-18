@@ -1,6 +1,6 @@
 import { z } from 'zod'
 
-import { GeographyType, Topics } from '@/api/models'
+import { GeographyType, SubTheme, Theme, Topics } from '@/api/models'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
 import { logger } from '@/lib/logger'
@@ -42,15 +42,17 @@ export type GeographyParams = {
 export const getGeographies = async (
   params: GeographyParams,
   isPublic?: boolean,
-  theme?: string,
-  subTheme?: string
+  theme?: Theme,
+  sub_theme?: SubTheme
 ) => {
   try {
     // Only append isPublic param when explicitly false (non-public pages)
     // undefined or true = public page, no need to pass JWT
-    console.log('hererererer', theme, subTheme)
-    console.log('getGeographies params:', params, 'isPublic:', isPublic)
-    const publicParam = !isSSR && isPublic === false ? '&isPublic=false' : ''
+    let publicParam = !isSSR && isPublic === false ? '&isPublic=false' : ''
+    if (isPublic === false && theme && sub_theme) {
+      publicParam += `&theme=${theme}&sub_theme=${sub_theme}`
+    }
+    console.log('getGeographies publicParam:', params)
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
       throw new Error('Only one of topic or geography_type can be provided')

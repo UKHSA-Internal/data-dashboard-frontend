@@ -285,6 +285,7 @@ export async function processDefaultRoutes(request: NextRequest, response: NextR
 }
 
 export const proxy: NextProxy = async (request: NextRequest) => {
+  console.log('Proxying request to:', request.url)
   connection()
 
   let response = NextResponse.next()

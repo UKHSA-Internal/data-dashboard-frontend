@@ -2,6 +2,7 @@
 
 import { createContext, ReactNode, useContext, useEffect, useState } from 'react'
 
+import { SubTheme, Theme } from '@/api/models'
 import {
   DataFilter,
   DataFilters,
@@ -45,6 +46,8 @@ export interface GlobalFilterProviderProps {
   children: ReactNode
   filters: InitialGlobalFilterState
   isPublic?: boolean
+  theme?: Theme
+  sub_theme?: SubTheme
 }
 
 export interface GlobalFilterState extends InitialGlobalFilterState {
@@ -87,7 +90,7 @@ export interface GlobalFilterContextValue {
 export const GlobalFilterContext = createContext<GlobalFilterContextValue | null>(null)
 
 //global filter Provider
-export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilterProviderProps) => {
+export const GlobalFilterProvider = ({ children, filters, isPublic, theme, sub_theme }: GlobalFilterProviderProps) => {
   const [selectedTimePeriod, setSelectedTimePeriod] = useState<TimePeriod | null>(null)
   const [selectedFilters, setSelectedFilters] = useState<FilterOption[]>([])
   const [geographyAreas, setGeographyAreas] = useState<Map<string, GeographiesSchema>>(new Map())
@@ -106,13 +109,16 @@ export const GlobalFilterProvider = ({ children, filters, isPublic }: GlobalFilt
     try {
       const geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
       setGeographyAreasLoading(true)
+      console.log('Fetching geography data for types:', geographyTypes)
       const responses = await Promise.all(
         geographyTypes.map((geographyTypes) =>
           getGeographies(
             {
               geography_type: geographyTypes,
             },
-            isPublic
+            isPublic,
+            theme,
+            sub_theme
           )
         )
       )

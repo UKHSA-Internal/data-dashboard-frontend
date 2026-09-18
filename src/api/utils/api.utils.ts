@@ -298,6 +298,6 @@ export async function client<T>(
   })
 
   const url = clientBuildApiUrl({ baseUrl, endpoint, searchParams })
-
+  console.log('client fetch url:', url, 'fetchOptions:', fetchOptions)
   return fetch(url, fetchOptions).then((response) => handleApiResponse(response))
 }

@@ -178,8 +178,8 @@ const WithMetricsChildData = SharedPageData.extend({
   // metrics child pages can be public or non-public
   is_public: z.boolean(),
   page_classification: DataClassification.or(fallback(undefined)).optional(),
-  theme: Theme.or(fallback(undefined)).optional(),
-  sub_theme: SubTheme.or(fallback(undefined)).optional(),
+  theme_name: Theme.or(fallback(undefined)).optional(),
+  sub_theme_name: SubTheme.or(fallback(undefined)).optional(),
 })
 
 const WithAcknowledgementData = SharedPageData.omit({
@@ -250,6 +250,7 @@ export const getPage = async <T extends PageType>(id: number) => {
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
 
     const result = responseSchema.safeParse(data)
+    console.log('getPage result:', result)
     if (!result.success) {
       logger.error(`WhatsNewResponseSchema Zod Validation error: ${result.error}`)
     }
