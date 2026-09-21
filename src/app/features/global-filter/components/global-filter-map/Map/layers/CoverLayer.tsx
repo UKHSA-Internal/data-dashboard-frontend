@@ -350,7 +350,7 @@ const CoverLayer = <T extends LayerWithFeature>({
                   <b>Region name</b>: ${regionName}</br>
                   <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
                   <hr style="margin: 8px 0; border: none; border-top: 1px solid #ccc;" />
-                  <b>Vaccination</b>: ${vaccination}</br>
+                  <b>Vaccination</b>: ${vaccination}</> </br>
                   <b>Level of Coverage</b>: ${mainMetricValue}</>
                   ${
                     featureData?.accompanying_points
