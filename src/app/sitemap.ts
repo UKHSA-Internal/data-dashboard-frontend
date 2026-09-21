@@ -77,7 +77,7 @@ async function getWeatherHealthAlertRegionPages() {
 
       if (!date.isValid()) {
         logger.error(
-          `Skipping sitemap entry for ${page.geography_name}: invalid refresh_date`
+          `Skipping sitemap entry for /weather-health-alerts/heat/${toSlug(page.geography_name)}: invalid refresh_date`
         )
         continue
       }
@@ -95,7 +95,7 @@ async function getWeatherHealthAlertRegionPages() {
 
       if (!date.isValid()) {
         logger.error(
-          `Skipping sitemap entry for ${page.geography_name}: invalid refresh_date`
+          `Skipping sitemap entry for /weather-health-alerts/cold/${toSlug(page.geography_name)}: invalid refresh_date`
         )
         continue
       }
