@@ -345,12 +345,12 @@ const CoverLayer = <T extends LayerWithFeature>({
               const { regionName, nationName, vaccination } = renderTooltip(currentFeatureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
-                  `
+                  DOMPurify.sanitize(`
                   <b>Country</b>: ${nationName}</br>
                   <b>Region name</b>: ${regionName}</br>
                   <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
                   <hr style="margin: 8px 0; border: none; border-top: 1px solid #ccc;" />
-                  <b>Vaccination</b>: ${DOMPurify.sanitize(vaccination)}</br>
+                  <b>Vaccination</b>: ${vaccination}</br>
                   <b>Level of Coverage</b>: ${mainMetricValue}</>
                   ${
                     featureData?.accompanying_points
@@ -365,7 +365,7 @@ const CoverLayer = <T extends LayerWithFeature>({
                       <b>Region level of coverage</b>: No Data Available</br>
                       `
                   }
-                  `,
+                  `),
                   {
                     permanent: true, // This keeps it open while moving cursor
                     opacity: 1,
