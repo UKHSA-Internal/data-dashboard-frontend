@@ -24,16 +24,12 @@ import { logger } from '@/lib/logger'
 import { Heading } from '../../ui/ukhsa/View/Heading/Heading'
 import { LastUpdated } from '../../ui/ukhsa/View/LastUpdated/LastUpdated'
 
-interface MetricsParentPageProps {
-  searchParams: {
-    page?: number
-    search?: string
-  }
-}
-
-export async function generateMetadata({
-  searchParams: { search = '', page = 1 },
-}: MetricsParentPageProps): Promise<Metadata> {
+export async function generateMetadata(props: {
+  searchParams: Promise<{ page?: string; search?: string }>
+}): Promise<Metadata> {
+  const { search = '', page = '1' } = await props.searchParams
+  // convert the page to a number and default to 1 if it's not a valid number
+  const pageNumber = Number(page) || 1
   const { t } = await getServerTranslation('metrics')
 
   const {
@@ -42,7 +38,7 @@ export async function generateMetadata({
     show_pagination: showPagination,
   } = await getPageBySlug<PageType.MetricsParent>(['metrics-documentation'], { type: PageType.MetricsParent })
 
-  const metricsEntries = await getMetricsPages({ search, page, showPagination, paginationSize })
+  const metricsEntries = await getMetricsPages({ search, page: pageNumber, showPagination, paginationSize })
 
   if (!metricsEntries.success) {
     logger.info(metricsEntries?.error?.message || 'Failed to fetch metrics pages')
@@ -59,7 +55,7 @@ export async function generateMetadata({
 
   const title = seo_title.replace(
     '|',
-    t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page, totalPages })
+    t('documentTitlePagination', { context: Boolean(search) ? 'withSearch' : '', search, page: pageNumber, totalPages })
   )
 
   return {
