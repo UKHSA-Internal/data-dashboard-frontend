@@ -25,7 +25,7 @@ describe('PaginationLink', () => {
     expect(screen.getByRole('link', { name: 'Page 2' })).toHaveAttribute('data-next-link', 'true')
   })
 
-  test('use a native anchor when a full document reloas is requested', () => {
+  test('use a native anchor when a full document reload is requested', () => {
     render(
       <PaginationLink reloadDocument href={{ pathname: '/pathname', query: { search: '', page: 2 } }}>
         Page 2

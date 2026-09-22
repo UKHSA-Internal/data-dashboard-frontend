@@ -198,7 +198,7 @@ export default async function WhatsNewParentPage({
 
           {pages.length > 0 && showPagination && (
             <Pagination variant="list-item" className="govuk-!-margin-top-8">
-              {/* Next 16.3 does not update this page's dymanmic title (possibly other metadata) after a soft pagniation navigation */}
+              {/* Next 16.3 does not update this page's dynamic title (possibly other metadata) after a soft pagination navigation */}
               {previousPageHref && <PaginationPrevious reloadDocument variant="list-item" href={previousPageHref} />}
 
               <PaginationListItems>
