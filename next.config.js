@@ -9,7 +9,7 @@ const nextConfig = {
   cacheHandler: sharedCache ? require.resolve('./cache-handler.mjs') : undefined,
   cacheMaxMemorySize: 10000000, // set default max memory size to 10Mb
   output: 'standalone',
-  staticPageGenerationTimeout: 1000,
+  staticPageGenerationTimeout: 30,
   reactStrictMode: true,
   logging: {
     fetches: {
