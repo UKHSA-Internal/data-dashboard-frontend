@@ -26,3 +26,15 @@ export const ChartFigure = z
   })
   .passthrough()
 export type ChartFigure = z.infer<typeof ChartFigure>
+
+export const AlternativeAxisConfig = z.object({
+  x_axis: z.string().nullable().optional(),
+  y_axis: z.string().nullable().optional(),
+  x_axis_title: z.string().optional(),
+  y_axis_title: z.string().optional(),
+  x_axis_minimum_value: z.number().nullable().optional(),
+  x_axis_maximum_value: z.number().nullable().optional(),
+  y_axis_minimum_value: z.number().nullable().optional(),
+  y_axis_maximum_value: z.number().nullable().optional(),
+})
+export type AlternativeAxisConfig = z.infer<typeof AlternativeAxisConfig>

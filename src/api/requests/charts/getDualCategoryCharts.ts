@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
 import { Geography, GeographyType, Metrics, Topics } from '@/api/models'
-import { ChartFigure, ChartLineColours, ChartTypes } from '@/api/models/Chart'
+import { AlternativeAxisConfig, ChartFigure, ChartLineColours, ChartTypes } from '@/api/models/Chart'
 import { DataClassification } from '@/api/models/DataClassification'
 import { client } from '@/api/utils/api.utils'
 import { isSSR } from '@/app/utils/app.utils'
@@ -50,6 +50,7 @@ export const responseSchema = z.object({
   last_updated: z.string(),
   alt_text: z.string(),
   figure: ChartFigure,
+  alternative_axis_config: AlternativeAxisConfig.optional(),
 })
 
 export type ChartResponse = z.infer<typeof responseSchema>
