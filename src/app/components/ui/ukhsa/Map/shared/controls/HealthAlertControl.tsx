@@ -1,5 +1,6 @@
 'use client'
 
+import DOMPurify from 'dompurify'
 import Link from 'next/link'
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs'
 import { Suspense } from 'react'
@@ -60,6 +61,7 @@ const AlertDialogContent = () => {
 
   const { regionName, status, text, riskScore, impact, likelihood, lastUpdated, firstPublished, expiryDate } =
     alert.data
+  const cleanText = DOMPurify.sanitize(text)
 
   return (
     <>
@@ -119,7 +121,7 @@ const AlertDialogContent = () => {
             <h3 className="govuk-heading-s">{t('map.alertDialog.textKey')}</h3>
             <div
               className="govuk-body [&_li]:mb-2 [&_li]:ml-4 [&_li]:list-disc [&_li]:text-left [&_ul]:py-0"
-              dangerouslySetInnerHTML={{ __html: text }}
+              dangerouslySetInnerHTML={{ __html: cleanText }}
             />
           </div>
 
