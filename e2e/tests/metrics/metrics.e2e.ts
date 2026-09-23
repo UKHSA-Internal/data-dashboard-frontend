@@ -93,6 +93,9 @@ test.describe('Metrics parent page', () => {
     await test.step('count items after search', async () => {
       await metricsParentPage.countMetricsItems(2)
     })
+    await test.step('updates the document title', async () => {
+      await app.hasDocumentTitle('Metrics documentation - "New cases 7 days" (page 1 of 1) | UKHSA data dashboard')
+    })
     await test.step('check entries match expected', async () => {
       await metricsParentPage.hasMatchedEntries(['New cases 7 days sum', 'New cases 7 days percent'])
     })
