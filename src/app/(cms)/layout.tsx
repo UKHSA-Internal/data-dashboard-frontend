@@ -8,17 +8,17 @@ import MenuBar from '@/app/components/ui/ukhsa/Menu/MenuBar'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { authEnabled } from '@/config/constants'
+// import { authEnabled } from '@/config/constants'
 
 interface LayoutProps {
   readonly children: ReactNode
 }
 
-export function generateMetadata() {
-  return {
-    robots: authEnabled ? 'noindex, nofollow' : undefined,
-  }
-}
+// export function generateMetadata() {
+//   return {
+//     robots: authEnabled ? 'noindex, nofollow' : undefined,
+//   }
+// }
 
 export default async function Layout({ children }: LayoutProps) {
   const [{ t }, globalBanners] = await Promise.all([getServerTranslation('common'), getGlobalBanner()])

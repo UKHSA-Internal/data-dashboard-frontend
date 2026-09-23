@@ -6,6 +6,7 @@ import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, toSlug } from './utils/app.utils'
+import { isPageIndexable } from './utils/seo.utils'
 
 export const dynamic = 'auto'
 
@@ -36,6 +37,8 @@ async function getAllCmsPages() {
     if (pageByType.success) {
       for (const page of pageByType.data.items) {
         const url = page.meta.html_url ?? ''
+
+        if (!isPageIndexable({ url, isPublic: page.is_public })) continue
 
         const { seo_change_frequency: changeFrequency, seo_priority: priority } = page
 
@@ -73,18 +76,36 @@ async function getWeatherHealthAlertRegionPages() {
 
   if (weatherHealthAlertHeatPages.success && weatherHealthAlertColdPages.success) {
     for (const page of weatherHealthAlertHeatPages.data) {
+      const date = dayjs(page.refresh_date)
+
+      if (!date.isValid()) {
+        logger.error(
+          `Skipping sitemap entry for /weather-health-alerts/heat/${toSlug(page.geography_name)}: invalid refresh_date`
+        )
+        continue
+      }
+
       sitemap.push({
         url: `${rootUrl}/weather-health-alerts/heat/${toSlug(page.geography_name)}`,
-        lastModified: dayjs(page.refresh_date).toDate(),
+        lastModified: date.toDate(),
         changeFrequency: 'monthly',
         priority: 0.8,
       })
     }
 
-    for (const page of weatherHealthAlertHeatPages.data) {
+    for (const page of weatherHealthAlertColdPages.data) {
+      const date = dayjs(page.refresh_date)
+
+      if (!date.isValid()) {
+        logger.error(
+          `Skipping sitemap entry for /weather-health-alerts/cold/${toSlug(page.geography_name)}: invalid refresh_date`
+        )
+        continue
+      }
+
       sitemap.push({
         url: `${rootUrl}/weather-health-alerts/cold/${toSlug(page.geography_name)}`,
-        lastModified: dayjs(page.refresh_date).toDate(),
+        lastModified: date.toDate(),
         changeFrequency: 'monthly',
         priority: 0.8,
       })
