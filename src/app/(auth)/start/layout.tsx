@@ -3,11 +3,12 @@ import { ReactNode } from 'react'
 
 import { BackToTop } from '@/app/components/ui/ukhsa'
 import LayoutBlackBanner from '@/app/components/ui/ukhsa/Layout/LayoutBlackBanner'
+import { NO_INDEX_ROBOTS } from '@/app/utils/seo.utils'
 import { authEnabled } from '@/config/constants'
 
 export function generateMetadata() {
   return {
-    robots: authEnabled ? 'noindex, nofollow' : undefined,
+    robots: NO_INDEX_ROBOTS,
   }
 }
 

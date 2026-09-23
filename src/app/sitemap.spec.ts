@@ -26,9 +26,16 @@ test('test sitemap function that builds a list of URLs for search engines', asyn
   }
 })
 
-test('start page is not included in sitemap', async () => {
+test('excludes authentication-only and non-public CMS pages', async () => {
+  const mockClient = jest.mocked(client)
+  mockClient.mockResolvedValue({ status: 200, data: allPagesMock })
+
   const result = await sitemap()
   const urls = result.map((entry) => new URL(entry.url).pathname)
 
-  expect(urls).not.toContain('/start/')
+  expect(urls).toContain('/about/')
+  for (const authenticationOnlyPaths of ['/start', '/acknowledgement/', '/authentication-error/', '/logged-out/']) {
+    expect(urls).not.toContain(authenticationOnlyPaths)
+  }
+  expect(urls).not.toContain('/metrics-documentation/new-cases-7days-sum')
 })
