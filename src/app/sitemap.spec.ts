@@ -25,3 +25,10 @@ test('test sitemap function that builds a list of URLs for search engines', asyn
     expect(entry.priority).toBeLessThanOrEqual(1)
   }
 })
+
+test('start page is not included in sitemap', async () => {
+  const result = await sitemap()
+  const urls = result.map((entry) => new URL(entry.url).pathname)
+
+  expect(urls).not.toContain('/start/')
+})
