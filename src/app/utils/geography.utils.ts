@@ -2,9 +2,9 @@ import { GeographyFilters } from '@/api/models/cms/Page/GlobalFilter'
 import { GeographiesSchemaObject } from '@/api/requests/geographies/getGeographies'
 
 export type FlattenedGeography = {
-  name: string | undefined | null
-  geography_code: string | undefined | null
-  geography_type: string | undefined | null
+  name: string
+  geography_code: string
+  geography_type: string
 }
 export type GeographyColour = string
 
@@ -59,9 +59,9 @@ export const flattenGeographyObject = (geographyObject: GeographiesSchemaObject)
 
   // Add the main geography object
   const mainGeography: FlattenedGeography = {
-    name: geographyObject.name,
-    geography_code: geographyObject.geography_code,
-    geography_type: geographyObject.geography_type,
+    name: geographyObject.name!,
+    geography_code: geographyObject.geography_code!,
+    geography_type: geographyObject.geography_type!,
   }
 
   flattenedGeographies.push(mainGeography)
@@ -69,9 +69,9 @@ export const flattenGeographyObject = (geographyObject: GeographiesSchemaObject)
   // Add each relationship as a separate object
   if (geographyObject.relationships && geographyObject.relationships.length > 0) {
     const relationshipGeographies = geographyObject.relationships.map((relationship) => ({
-      name: relationship?.name,
-      geography_code: relationship?.geography_code,
-      geography_type: relationship?.geography_type,
+      name: relationship!.name!,
+      geography_code: relationship!.geography_code!,
+      geography_type: relationship!.geography_type!,
     }))
 
     flattenedGeographies.push(...relationshipGeographies)

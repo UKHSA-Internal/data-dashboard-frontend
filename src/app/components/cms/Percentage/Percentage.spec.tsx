@@ -12,8 +12,12 @@ const getHeadlinesMock = jest.mocked(getHeadlines)
 
 describe('Data request is successful', () => {
   const data: ComponentProps<typeof Percentage>['data'] = {
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'test-metric',
+    geography: 'England',
+    geography_type: 'Nation',
     body: 'Test Heading',
   }
 
@@ -66,8 +70,12 @@ describe('Data request is unsuccessful', () => {
     })
 
     const data: ComponentProps<typeof Percentage>['data'] = {
+      theme: 'infectious_disease',
+      sub_theme: 'respiratory',
       topic: 'COVID-19',
       metric: 'test-metric',
+      geography: 'England',
+      geography_type: 'Nation',
       body: 'Test Heading',
     }
 

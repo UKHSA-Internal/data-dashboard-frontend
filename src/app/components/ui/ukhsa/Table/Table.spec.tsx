@@ -102,6 +102,8 @@ const mockData: ComponentProps<typeof Table>['data'] = {
     {
       type: 'plot',
       value: {
+        theme: 'infectious_disease',
+        sub_theme: 'respiratory',
         topic: 'COVID-19',
         metric: 'new_cases_daily',
         chart_type: 'line_with_shaded_section',
@@ -231,6 +233,8 @@ test('table by geography and geography type when both are present in the url sea
     {
       plots: [
         {
+          theme: 'infectious_disease',
+          sub_theme: 'respiratory',
           topic: 'COVID-19',
           metric: 'new_cases_daily',
           chart_type: 'line_with_shaded_section',
