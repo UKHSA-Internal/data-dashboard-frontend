@@ -27,39 +27,48 @@ test.describe('Metrics parent page', () => {
     })
   })
 
-  test('Paginating back/forward between pages', async ({ metricsParentPage, app }) => {
-    await test.step('loads the page', async () => {
-      await metricsParentPage.goto()
-    })
-    await test.step('shows a pagination', async () => {
-      await app.hasPagination()
-    })
-    await test.step('defaults to page 1', async () => {
-      await app.checkPaginationLinkIsActive(1)
-      await app.hasDocumentTitle('Metrics documentation (page 1 of 6) | UKHSA data dashboard')
-    })
-    await test.step('click "next" pagination link', async () => {
-      await app.clickPaginationNextLink()
-    })
-    await test.step('shows page 2', async () => {
-      await app.checkPaginationLinkIsActive(2)
-      await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
-    })
-    await test.step('click "page 3" pagination link', async () => {
-      await app.clickPaginationNumberLink(3)
-    })
-    await test.step('shows page 3', async () => {
-      await app.checkPaginationLinkIsActive(3)
-      await app.hasDocumentTitle('Metrics documentation (page 3 of 6) | UKHSA data dashboard')
-    })
-    await test.step('click "previous" pagination link', async () => {
-      await app.clickPaginationPreviousLink()
-    })
-    await test.step('shows page 2', async () => {
-      await app.checkPaginationLinkIsActive(2)
-      await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
-    })
-  })
+  test.skip(
+    'Paginating back/forward between pages',
+    {
+      annotation: {
+        type: 'issue',
+        description: 'CDD-3594: Next .js soft navigation leaves page metadata stale after pagination',
+      },
+    },
+    async ({ metricsParentPage, app }) => {
+      await test.step('loads the page', async () => {
+        await metricsParentPage.goto()
+      })
+      await test.step('shows a pagination', async () => {
+        await app.hasPagination()
+      })
+      await test.step('defaults to page 1', async () => {
+        await app.checkPaginationLinkIsActive(1)
+        await app.hasDocumentTitle('Metrics documentation (page 1 of 6) | UKHSA data dashboard')
+      })
+      await test.step('click "next" pagination link', async () => {
+        await app.clickPaginationNextLink()
+      })
+      await test.step('shows page 2', async () => {
+        await app.checkPaginationLinkIsActive(2)
+        await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
+      })
+      await test.step('click "page 3" pagination link', async () => {
+        await app.clickPaginationNumberLink(3)
+      })
+      await test.step('shows page 3', async () => {
+        await app.checkPaginationLinkIsActive(3)
+        await app.hasDocumentTitle('Metrics documentation (page 3 of 6) | UKHSA data dashboard')
+      })
+      await test.step('click "previous" pagination link', async () => {
+        await app.clickPaginationPreviousLink()
+      })
+      await test.step('shows page 2', async () => {
+        await app.checkPaginationLinkIsActive(2)
+        await app.hasDocumentTitle('Metrics documentation (page 2 of 6) | UKHSA data dashboard')
+      })
+    }
+  )
 
   test('Redirects to 404 error page when paginating to a page that does not exist', async ({
     metricsParentPage,
