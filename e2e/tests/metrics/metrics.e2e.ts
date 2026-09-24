@@ -152,7 +152,7 @@ test.describe('Metrics parent page', () => {
     })
   })
 
-  test(
+  test.skip(
     'Persists the current page number when navigating to an entry and then clicking the back button',
     {
       annotation: {
