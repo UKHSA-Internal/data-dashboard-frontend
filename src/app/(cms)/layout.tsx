@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -14,10 +15,8 @@ interface LayoutProps {
   readonly children: ReactNode
 }
 
-export function generateMetadata() {
-  return {
-    robots: NO_INDEX_ROBOTS,
-  }
+export const metadata: Metadata = {
+  robots: NO_INDEX_ROBOTS,
 }
 
 export default async function Layout({ children }: LayoutProps) {

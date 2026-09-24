@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { ReactNode } from 'react'
 
@@ -6,10 +7,8 @@ import LayoutBlackBanner from '@/app/components/ui/ukhsa/Layout/LayoutBlackBanne
 import { NO_INDEX_ROBOTS } from '@/app/utils/seo.utils'
 import { authEnabled } from '@/config/constants'
 
-export function generateMetadata() {
-  return {
-    robots: NO_INDEX_ROBOTS,
-  }
+export const metadata: Metadata = {
+  robots: NO_INDEX_ROBOTS,
 }
 
 export default async function Layout({ children }: { children: ReactNode }) {
