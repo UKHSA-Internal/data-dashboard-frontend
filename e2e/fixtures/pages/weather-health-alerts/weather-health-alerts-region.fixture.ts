@@ -12,8 +12,8 @@ export class WeatherHealthAlertsRegionPage {
   }
 
   async hasBreadcrumbs(weather: HealthAlertTypes) {
-    const breadbrumbs = await this.page.getByRole('list', { name: 'breadcrumbs' }).getByRole('listitem').all()
-    expect(breadbrumbs).toHaveLength(3)
+    const breadbrumbs = this.page.getByRole('list', { name: 'breadcrumbs' }).getByRole('listitem')
+    await expect(breadbrumbs).toHaveCount(3)
 
     await expect(this.page.getByLabel('breadcrumbs').getByRole('link', { name: 'Home', exact: true })).toHaveAttribute(
       'href',

@@ -6,6 +6,7 @@ import { getHealthAlerts } from '@/api/requests/health-alerts/getHealthAlerts'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, toSlug } from './utils/app.utils'
+import { isPageIndexable } from './utils/seo.utils'
 
 export const dynamic = 'auto'
 
@@ -36,6 +37,8 @@ async function getAllCmsPages() {
     if (pageByType.success) {
       for (const page of pageByType.data.items) {
         const url = page.meta.html_url ?? ''
+
+        if (!isPageIndexable({ url, isPublic: page.is_public })) continue
 
         const { seo_change_frequency: changeFrequency, seo_priority: priority } = page
 
@@ -149,12 +152,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const sitemap: MetadataRoute.Sitemap = []
 
   // CMS Pages
-  // Intentionally exclude /start page from entries
-  const cmsPages = (await getAllCmsPages()).filter(
-    page => !page.url.endsWith('/start/')
-  )
-
-  sitemap.push(...cmsPages)
+  sitemap.push(...(await getAllCmsPages()))
 
   // Non-CMS Pages. TODO: Migrate these to be CMS delivered
   sitemap.push(...getNonCmsPages())

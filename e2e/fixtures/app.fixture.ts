@@ -137,8 +137,18 @@ export class App {
     await expect(this.page.locator('meta[name="description"]')).toHaveAttribute('content', description)
   }
 
+  async hasRobotsMetadata(content: string) {
+    const robotsMetadata = this.page.locator('meta[name="robots"]')
+    await expect(robotsMetadata).toHaveCount(1)
+    await expect(robotsMetadata).toHaveAttribute('content', content)
+  }
+
+  async hasNoRobotsMetadata() {
+    await expect(this.page.locator('meta[name="robots"]')).toHaveCount(0)
+  }
+
   async hasDocumentTitle(title: string) {
-    await expect(await this.page.title()).toBe(title)
+    await expect(this.page).toHaveTitle(title)
   }
 
   async hasNoAccessibilityDefects(additionalDisabledRules: string[] = []) {
@@ -566,11 +576,11 @@ export class App {
   }
 
   async hasClassificationBanner() {
-    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'}).first()).toBeVisible()
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' }).first()).toBeVisible()
   }
 
   async hasNoClassificationBanner() {
-    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification'})).toHaveCount(0)
+    await expect(this.page.getByRole('note', { name: 'Official-Sensitive classification' })).toHaveCount(0)
   }
 
   async checkClassificationBannerContent() {

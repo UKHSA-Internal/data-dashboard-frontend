@@ -48,6 +48,7 @@ const page = z.object({
   id: z.number(),
   title: z.string(),
   sub_title: z.string().optional().nullable(),
+  is_public: z.boolean().optional(),
   // Not every request to the `/pages` endpoint has a `?type=PageType` parameter which is needed to expose the two below fields.
   // We default these with a fallback as to not break the schema.
   seo_change_frequency: z.number().or(fallback(5)),

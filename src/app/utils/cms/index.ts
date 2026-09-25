@@ -6,6 +6,7 @@ import { getMetricsPages, getPages, getWhatsNewPages, PagesResponse, PageType } 
 import { getPageBySlug } from '@/api/requests/getPageBySlug'
 import { getServerTranslation } from '@/app/i18n'
 import { SearchParams, Slug } from '@/app/types'
+import { isPageIndexable, NO_INDEX_ROBOTS } from '@/app/utils/seo.utils'
 import { logger } from '@/lib/logger'
 
 import { getSiteUrl, slug2String, trimTrailingSlash } from '../app.utils'
@@ -54,6 +55,7 @@ export async function getPageMetadata(
     const siteUrl = getSiteUrl()
     const pagePath = isLandingPage ? '' : `/${slug2String(urlSlug)}`
     const fullUrl = siteUrl + pagePath
+    const isPublic = 'is_public' in pageData ? pageData.is_public : undefined
 
     const {
       title: pageTitle,
@@ -144,6 +146,7 @@ export async function getPageMetadata(
       alternates: {
         canonical: trimTrailingSlash(fullUrl),
       },
+      robots: isPageIndexable({ url: pagePath || '/', isPublic }) ? undefined : NO_INDEX_ROBOTS,
     }
   } catch (error) {
     logger.error(error)

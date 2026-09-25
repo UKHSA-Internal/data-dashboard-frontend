@@ -1,3 +1,4 @@
+import { Metadata } from 'next'
 import Link from 'next/link'
 import { ReactNode } from 'react'
 import { Trans } from 'react-i18next/TransWithoutContext'
@@ -8,16 +9,14 @@ import MenuBar from '@/app/components/ui/ukhsa/Menu/MenuBar'
 import { PhaseBanner } from '@/app/components/ui/ukhsa/PhaseBanner/PhaseBanner'
 import { getGlobalBanner } from '@/app/hooks/getGlobalBanner'
 import { getServerTranslation } from '@/app/i18n'
-import { authEnabled } from '@/config/constants'
+import { NO_INDEX_ROBOTS } from '@/app/utils/seo.utils'
 
 interface LayoutProps {
   readonly children: ReactNode
 }
 
-export function generateMetadata() {
-  return {
-    robots: authEnabled ? 'noindex, nofollow' : undefined,
-  }
+export const metadata: Metadata = {
+  robots: NO_INDEX_ROBOTS,
 }
 
 export default async function Layout({ children }: LayoutProps) {
