@@ -3,7 +3,7 @@
 import kebabCase from 'lodash/kebabCase'
 import { useCallback, useEffect, useRef, useState } from 'react'
 
-import { AlternativeAxisConfig, ChartFigure } from '@/api/models/Chart'
+import { ChartFigure } from '@/api/models/Chart'
 import { ChartComponentData } from '@/api/models/cms/Page'
 import { DataClassification } from '@/api/models/DataClassification'
 import { TimeseriesFilterProvider, useTimeseriesFilter } from '@/app/hooks/useTimeseriesFilter'
@@ -18,7 +18,6 @@ import ChartInteractive from './ChartInteractive'
 interface ChartWithFilterProps {
   lastUpdated: string
   figure: ChartFigure
-  alternativeAxisConfig?: AlternativeAxisConfig
   title: string
   chartData: ChartComponentData
   isPublic?: boolean
@@ -35,7 +34,6 @@ const LoadingSpinnerContainer = () => {
 
 const ChartWithFilterContent = ({
   figure,
-  alternativeAxisConfig,
   title,
   chartData,
   lastUpdated,
@@ -44,7 +42,6 @@ const ChartWithFilterContent = ({
 }: ChartWithFilterProps) => {
   const { currentFilter } = useTimeseriesFilter()
   const [filteredFigure, setFilteredFigure] = useState<ChartFigure>(figure)
-  const [filteredAlternativeAxisConfig, setFilteredAlternativeAxisConfig] = useState(alternativeAxisConfig)
   const [isLoading, setIsLoading] = useState(false)
   const [hasError, setHasError] = useState(false)
   const previousFilterRef = useRef<string>(currentFilter)
@@ -71,7 +68,6 @@ const ChartWithFilterContent = ({
         }
 
         setFilteredFigure({ frames: [], ...chartResponse.data.figure })
-        setFilteredAlternativeAxisConfig(chartResponse.data.alternative_axis_config)
         setHasError(false)
       } catch (error) {
         console.error('Error fetching filtered chart:', error)
@@ -127,11 +123,7 @@ const ChartWithFilterContent = ({
       ) : isLoading ? (
         <LoadingSpinnerContainer />
       ) : (
-        <ChartInteractive
-          staticChart={<LoadingSpinnerContainer />}
-          figure={{ frames: [], ...filteredFigure }}
-          alternativeAxisConfig={filteredAlternativeAxisConfig}
-        />
+        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={{ frames: [], ...filteredFigure }} />
       )}
       <ChartNoScript title={kebabCase(title)} />
     </>

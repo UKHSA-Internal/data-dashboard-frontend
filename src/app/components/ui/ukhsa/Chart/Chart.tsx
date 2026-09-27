@@ -103,7 +103,7 @@ export async function Chart({
     return <ChartEmpty resetHref={pathname} showResetLink={enableInteractive} />
   }
 
-  const { alt_text: alt, figure, last_updated, alternative_axis_config } = chartResponse.data
+  const { alt_text: alt, figure, last_updated } = chartResponse.data
 
   const staticChart = await createStaticChart({
     chart: chartResponse,
@@ -133,7 +133,6 @@ export async function Chart({
           <ChartWithFilter
             lastUpdated={last_updated}
             figure={{ frames: [], ...figure }}
-            alternativeAxisConfig={alternative_axis_config}
             title={data.title}
             chartData={data}
             isPublic={isPublic}
@@ -146,11 +145,7 @@ export async function Chart({
 
   return (
     <Suspense fallback={staticChart}>
-      <ChartInteractive
-        staticChart={staticChart}
-        figure={{ frames: [], ...figure }}
-        alternativeAxisConfig={alternative_axis_config}
-      />
+      <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
     </Suspense>
   )
 }
