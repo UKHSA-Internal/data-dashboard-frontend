@@ -59,6 +59,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'headline_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_newcases_7daytotals',
                           geography: 'England',
@@ -73,6 +75,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'trend_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_cases_7DayChange',
                           geography: 'England',
@@ -98,6 +102,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'headline_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_ONSdeaths_7DayTotals',
                           geography: 'England',
@@ -112,6 +118,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'trend_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_ONSdeaths_7DayChange',
                           geography: 'England',
@@ -137,6 +145,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'headline_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayAdmissions',
                           geography: 'England',
@@ -151,6 +161,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'trend_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_7DayAdmissionsChange',
                           geography: 'England',
@@ -176,6 +188,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'percentage_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_vaccines_autumn23Uptake',
                           geography: 'England',
@@ -200,6 +214,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'percentage_number',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_headline_positivity_latest',
                           geography: 'England',
@@ -249,6 +265,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                     y_axis_maximum_value: null,
                     chart_type: 'stacked_bar',
                     static_fields: {
+                      theme: 'climate_and_environment',
+                      sub_theme: 'chemical_exposure',
                       topic: 'Lead',
                       metric: 'lead_headline_ratesByAgeSex',
                       geography: 'England',
@@ -344,6 +362,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_cases_daily',
                           chart_type: 'bar',
@@ -388,6 +408,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_cases_rolling_rate',
                           chart_type: 'line_multi_coloured',
@@ -449,6 +471,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'cases_rate_age_sex',
                           chart_type: 'bar',
@@ -502,6 +526,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_deaths_daily',
                           chart_type: 'line_multi_coloured',
@@ -521,6 +547,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_deaths_7day_avg',
                           chart_type: 'line_multi_coloured',
@@ -574,6 +602,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_admissions_daily',
                           chart_type: 'bar',
@@ -610,6 +640,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'covid_occupied_beds',
                           chart_type: 'bar',
@@ -654,6 +686,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'admissions_rate_age',
                           chart_type: 'bar',
@@ -690,6 +724,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'covid_occupied_MV_beds',
                           chart_type: 'bar',
@@ -743,6 +779,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_pcr_tests_daily',
                           chart_type: 'bar',
@@ -779,6 +817,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'positivity_PCR_rolling_sum',
                           chart_type: 'line_multi_coloured',
@@ -832,6 +872,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_vaccinations_autumn22',
                           chart_type: 'bar',
@@ -868,6 +910,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -887,6 +931,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -906,6 +952,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -925,6 +973,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -944,6 +994,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -963,6 +1015,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -982,6 +1036,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -1001,6 +1057,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -1020,6 +1078,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_autumn22',
                           chart_type: 'line_multi_coloured',
@@ -1064,6 +1124,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'new_vaccinations_spring22',
                           chart_type: 'bar',
@@ -1100,6 +1162,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_spring22',
                           chart_type: 'line_multi_coloured',
@@ -1119,6 +1183,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_spring22',
                           chart_type: 'line_multi_coloured',
@@ -1138,6 +1204,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_spring22',
                           chart_type: 'line_multi_coloured',
@@ -1157,6 +1225,8 @@ export const covid19PageMock: PageResponse<PageType.Topic> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'vaccinations_percentage_uptake_spring22',
                           chart_type: 'line_multi_coloured',

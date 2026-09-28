@@ -20,6 +20,8 @@ test('Returns a COVID-19 headline value', async () => {
   })
 
   const result = await getHeadlines({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     geography: 'England',
     geography_type: 'Nation',
@@ -42,6 +44,8 @@ test('Returns an Influenza headline value', async () => {
   })
 
   const result = await getHeadlines({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'Influenza',
     geography: 'England',
     geography_type: 'Nation',
@@ -64,6 +68,8 @@ test('Handles invalid json received from the api', async () => {
   })
 
   const result = await getHeadlines({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     geography: 'England',
     geography_type: 'Nation',
@@ -98,6 +104,8 @@ test('Handles generic http errors', async () => {
   })
 
   const result = await getHeadlines({
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     geography: 'England',
     geography_type: 'Nation',
