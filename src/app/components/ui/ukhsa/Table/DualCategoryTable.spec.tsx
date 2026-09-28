@@ -31,6 +31,8 @@ const mockData: DualCategoryChartCardValue = {
   y_axis_title: 'Value',
   chart_type: 'stacked_bar',
   static_fields: {
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'COVID-19_cases_casesByDay',
     geography_type: 'Nation',

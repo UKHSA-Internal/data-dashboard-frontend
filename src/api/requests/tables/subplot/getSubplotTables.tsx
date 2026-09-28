@@ -14,8 +14,6 @@ export const requestSchema = z.object({
     date_to: z.string().nullable().optional(),
     age: z.string().nullable().optional(),
     sex: z.string().nullable().optional(),
-    topic: z.string().nullable().optional(),
-    metric: z.string().nullable().optional(),
     stratum: z.string().nullable().optional(),
     metric_value_ranges: z.array(
       z
@@ -33,25 +31,19 @@ export const requestSchema = z.object({
       subplot_parameters: z.object({
         age: z.string().nullable().optional(),
         sex: z.string().nullable().optional(),
-        topic: z.string().nullable().optional(),
-        metric: z.string().nullable().optional(),
+        topic: z.string(),
+        metric: z.string(),
         stratum: z.string().nullable().optional(),
-        theme: z.string().nullable().optional(),
-        sub_theme: z.string().nullable().optional(),
       }),
       plots: z.array(
         z.object({
           label: z.string().nullable().optional(),
-          geography: z.string().nullable().optional(),
-          geography_type: z.string().nullable().optional(),
+          geography: z.string(),
+          geography_type: z.string(),
           line_colour: z.string().nullable().optional(),
           age: z.string().nullable().optional(),
           sex: z.string().nullable().optional(),
-          topic: z.string().nullable().optional(),
-          metric: z.string().nullable().optional(),
           stratum: z.string().nullable().optional(),
-          theme: z.string().nullable().optional(),
-          sub_theme: z.string().nullable().optional(),
         })
       ),
     })
