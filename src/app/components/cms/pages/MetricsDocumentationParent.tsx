@@ -147,16 +147,16 @@ export default async function MetricsParentPage({
 
           {pages.length > 0 && showPagination && (
             <Pagination variant="list-item" className="govuk-!-margin-top-8">
-              {previousPageHref && <PaginationPrevious variant="list-item" href={previousPageHref} />}
+              {previousPageHref && <PaginationPrevious reloadDocument variant="list-item" href={previousPageHref} />}
               <PaginationListItems>
                 {pages.map(({ page, href }) => (
-                  <PaginationListItem key={page} href={href} current={currentPage === page}>
+                  <PaginationListItem reloadDocument key={page} href={href} current={currentPage === page}>
                     {page}
                   </PaginationListItem>
                 ))}
               </PaginationListItems>
 
-              {nextPageHref && <PaginationNext variant="list-item" href={nextPageHref} />}
+              {nextPageHref && <PaginationNext reloadDocument variant="list-item" href={nextPageHref} />}
             </Pagination>
           )}
         </div>
