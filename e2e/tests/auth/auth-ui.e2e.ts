@@ -39,6 +39,75 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
   })
 })
 
+test.describe('Authentication-only page metadata @auth-ui', () => {
+  test.use({ startLoggedOut: true })
+
+  const authenticationOnlyPages = [
+    { path: '/start', heading: 'Sign in to the UKHSA data dashboard' },
+    { path: '/acknowledgement', heading: 'Acknowledgement' },
+    { path: '/authentication-error', heading: 'Failed to sign in' },
+    { path: '/logged-out', heading: 'Logged out' },
+  ]
+
+  for (const { path, heading } of authenticationOnlyPages) {
+    test(`${path} has noindex, nofollow metadata`, async ({ app, authEnabled }) => {
+      // Reason: All tests here are only relevant when auth has been enabled
+      test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+
+      await app.goto(path)
+      await app.hasHeading(heading)
+
+      await app.hasRobotsMetadata('noindex, nofollow')
+    })
+  }
+})
+
+test.describe('Public and non-public page metadata @auth-ui', () => {
+  test('Public-only pages do not have robots metadata', async ({ app, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+
+    const publicPages = [
+      { path: '/', title: 'UKHSA data dashboard' },
+      { path: '/about', title: 'About | UKHSA data dashboard' },
+      {
+        path: '/metrics-documentation',
+        title: 'Metrics documentation (page 1 of 6) | UKHSA data dashboard',
+      },
+    ]
+
+    for (const { path, title } of publicPages) {
+      await test.step(path, async () => {
+        await app.goto(path)
+        await app.hasDocumentTitle(title)
+        await app.hasNoRobotsMetadata()
+      })
+    }
+  })
+
+  test('A public topic page does not have robots metadata', async ({ app, authEnabled, switchboardPage }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+
+    await switchboardPage.setTopicPageIsPublic(true)
+    await app.goto('/respiratory-viruses/covid-19')
+    await app.hasDocumentTitle('COVID-19 | UKHSA data dashboard')
+
+    await app.hasNoRobotsMetadata()
+  })
+
+  test('A non-public topic page has noindex, nofollow metadata', async ({ app, authEnabled, switchboardPage }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
+    test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+
+    await switchboardPage.setTopicPageIsPublic(false)
+    await app.goto('/respiratory-viruses/covid-19')
+    await app.hasDocumentTitle('COVID-19 | UKHSA data dashboard')
+
+    await app.hasRobotsMetadata('noindex, nofollow')
+  })
+})
+
 test('Start page is not accessible when logged in @auth-ui', async ({ authStartPage, authEnabled }) => {
   // Reason: All tests here are only relevant when auth has been enabled
   test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')

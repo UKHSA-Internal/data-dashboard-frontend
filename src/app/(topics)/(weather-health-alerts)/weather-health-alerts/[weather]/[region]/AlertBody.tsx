@@ -1,7 +1,7 @@
 'use client'
 
 import clsx from 'clsx'
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { ReactNode, Suspense } from 'react'
