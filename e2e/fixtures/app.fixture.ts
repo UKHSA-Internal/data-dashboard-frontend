@@ -115,7 +115,7 @@ export class App {
   }
 
   async goto(path: string) {
-    await this.page.goto(path)
+    return this.page.goto(path)
   }
 
   async reload() {
