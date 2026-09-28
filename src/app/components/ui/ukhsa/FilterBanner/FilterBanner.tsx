@@ -1,9 +1,12 @@
+import DOMPurify from 'dompurify'
+
 interface FilterBannerProps {
   message: string
   showIcon?: boolean
 }
 
 export function FilterBanner({ message, showIcon }: FilterBannerProps) {
+  const clean = DOMPurify.sanitize(message)
   return (
     <div className="govuk-!-padding-3 flex bg-blue text-white">
       {showIcon && (
@@ -17,7 +20,7 @@ export function FilterBanner({ message, showIcon }: FilterBannerProps) {
           />
         </svg>
       )}
-      <div dangerouslySetInnerHTML={{ __html: message }}></div>
+      <div dangerouslySetInnerHTML={{ __html: clean }}></div>
     </div>
   )
 }

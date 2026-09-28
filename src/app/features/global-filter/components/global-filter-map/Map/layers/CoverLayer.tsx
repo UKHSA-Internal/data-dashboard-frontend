@@ -5,6 +5,7 @@
 
 'use client'
 
+import DOMPurify from 'dompurify'
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
 import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'
@@ -344,7 +345,7 @@ const CoverLayer = <T extends LayerWithFeature>({
               const { regionName, nationName, vaccination } = renderTooltip(currentFeatureId)
               activeTooltipLayerRef.current = layer
                 .bindTooltip(
-                  `
+                  DOMPurify.sanitize(`
                   <b>Country</b>: ${nationName}</br>
                   <b>Region name</b>: ${regionName}</br>
                   <b>Local Authority</b>: ${feature.properties['CTYUA24NM']}<br />
@@ -364,7 +365,7 @@ const CoverLayer = <T extends LayerWithFeature>({
                       <b>Region level of coverage</b>: No Data Available</br>
                       `
                   }
-                  `,
+                  `),
                   {
                     permanent: true, // This keeps it open while moving cursor
                     opacity: 1,

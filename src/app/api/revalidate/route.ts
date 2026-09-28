@@ -3,8 +3,7 @@ import { NextRequest, NextResponse } from 'next/server'
 
 export async function POST(req: NextRequest) {
   try {
-    const { searchParams } = new URL(req.url)
-    const secret = searchParams.get('secret')
+    const secret = req.headers.get('X-Revalidate-Secret')
 
     // Verify the secret for secure access
     if (secret !== process.env.REVALIDATE_SECRET) {
