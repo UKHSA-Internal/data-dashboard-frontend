@@ -3,7 +3,7 @@ import { viewports } from 'e2e/constants/viewports.constants'
 
 import { HealthAlertStatus, HealthAlertTypes } from '@/api/models/Alerts'
 
-import { test } from '../../fixtures/app.fixture'
+import { expect, test } from '../../fixtures/app.fixture'
 
 const cases: Array<{ weather: HealthAlertTypes; region: string; status: HealthAlertStatus; fid: string }> = [
   {
@@ -122,7 +122,8 @@ test.describe('Weather health alerts region pages', () => {
 
     test(`${weather} alert - ${region} - ${status}`, async ({ app, weatherHealthAlertsRegionPage }) => {
       await test.step('loads the page', async () => {
-        await app.goto(`/weather-health-alerts/${weather}/${regionDashCase}`)
+        const response = await app.goto(`/weather-health-alerts/${weather}/${regionDashCase}`)
+        expect(response?.status()).toBe(200)
       })
       await test.step('metadata is correct', async () => {
         await app.hasMetadata({
