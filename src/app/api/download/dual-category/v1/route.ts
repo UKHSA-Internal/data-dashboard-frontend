@@ -7,6 +7,8 @@ export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
   url.pathname = '/error'
 
+  const authToken = req.headers.get('X-UHD-AUTH')
+
   const body = await req.formData()
 
   const params = dualCategoryRequestSchema.safeParse({
@@ -20,7 +22,7 @@ export async function POST(req: NextRequest) {
     return NextResponse.redirect(url, 301)
   }
 
-  const response = await getDownloads(params.data)
+  const response = await getDownloads(params.data, authToken)
 
   if (!response) {
     logger.error(`Error while downloading dual category download response: ${response}`)

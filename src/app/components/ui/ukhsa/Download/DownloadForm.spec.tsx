@@ -188,6 +188,8 @@ describe('DownloadForm', () => {
     test('proceeds with download on second submit after banner is shown', async () => {
       jest.mocked(fetch).mockReturnValueOnce(
         Promise.resolve({
+          ok: true,
+          redirected: false,
           text: async () => Promise.resolve('mock-download'),
         } as Response)
       )
@@ -224,6 +226,8 @@ describe('DownloadForm', () => {
     test('does not show acknowledgement banner when isPublic is true', async () => {
       jest.mocked(fetch).mockReturnValueOnce(
         Promise.resolve({
+          ok: true,
+          redirected: false,
           text: async () => Promise.resolve('mock-download'),
         } as Response)
       )
@@ -242,6 +246,8 @@ describe('DownloadForm', () => {
     test('does not show acknowledgement banner when authEnabled is false', async () => {
       jest.mocked(fetch).mockReturnValueOnce(
         Promise.resolve({
+          ok: true,
+          redirected: false,
           text: async () => Promise.resolve('mock-download'),
         } as Response)
       )
@@ -261,6 +267,8 @@ describe('DownloadForm', () => {
   test('Downloading a csv file for users with JavaScript', async () => {
     jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
+        ok: true,
+        redirected: false,
         text: async () => Promise.resolve('mock-download'),
       } as Response)
     )
@@ -280,6 +288,8 @@ describe('DownloadForm', () => {
   test('Downloading a json file for users with JavaScript', async () => {
     jest.mocked(fetch).mockReturnValueOnce(
       Promise.resolve({
+        ok: true,
+        redirected: false,
         text: async () => Promise.resolve('mock-download'),
       } as Response)
     )
@@ -412,7 +422,11 @@ describe('DownloadForm (dual category)', () => {
       resolveDownload = resolve
     })
 
-    jest.mocked(fetch).mockReturnValueOnce(pendingPromise.then(() => ({ text: async () => 'csv-data' }) as Response))
+    jest
+      .mocked(fetch)
+      .mockReturnValueOnce(
+        pendingPromise.then(() => ({ ok: true, redirected: false, text: async () => 'csv-data' }) as Response)
+      )
 
     render(<DownloadForm {...dualCategoryProps} />)
 
@@ -424,7 +438,7 @@ describe('DownloadForm (dual category)', () => {
   })
 
   test('triggers file download on successful submit', async () => {
-    jest.mocked(fetch).mockResolvedValueOnce({ text: async () => 'csv-data' } as Response)
+    jest.mocked(fetch).mockResolvedValueOnce({ ok: true, redirected: false, text: async () => 'csv-data' } as Response)
 
     render(<DownloadForm {...dualCategoryProps} />)
 
@@ -433,6 +447,21 @@ describe('DownloadForm (dual category)', () => {
     await waitFor(() => {
       expect(downloadFile).toHaveBeenCalledWith('ukhsa-chart-download.csv', expect.any(Blob))
     })
+  })
+
+  test('redirects to the error page instead of downloading a redirected HTML response', async () => {
+    const text = jest.fn().mockResolvedValue('<html>Error page</html>')
+    jest.mocked(fetch).mockResolvedValueOnce({ ok: true, redirected: true, text } as unknown as Response)
+
+    render(<DownloadForm {...dualCategoryProps} />)
+
+    await userEvent.click(screen.getByRole('button', { name: /download/i }))
+
+    await waitFor(() => {
+      expect(mockRouter.pathname).toBe('/error')
+    })
+    expect(text).not.toHaveBeenCalled()
+    expect(downloadFile).not.toHaveBeenCalled()
   })
 
   test('redirects to error page when fetch throws', async () => {
