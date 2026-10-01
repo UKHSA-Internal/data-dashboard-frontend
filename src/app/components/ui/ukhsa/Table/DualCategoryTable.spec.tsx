@@ -139,8 +139,15 @@ describe('DualCategoryTable', () => {
           geography_type: 'UKHSA Region',
           geography: 'North East',
         }),
-      })
+      }),
+      false
     )
+  })
+
+  test('passes isPublic flag with getTables request', async () => {
+    const isPublic = true
+    render((await DualCategoryTable({ data: mockData, isPublic })) as ReactElement)
+    expect(getDualCategoryTablesMock).toHaveBeenCalledWith(expect.anything(), isPublic)
   })
 
   test('renders multiple groups when response has multiple labels', async () => {
