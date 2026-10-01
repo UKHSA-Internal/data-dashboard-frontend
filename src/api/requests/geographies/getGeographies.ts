@@ -52,7 +52,6 @@ export const getGeographies = async (
     if (isPublic === false && theme && sub_theme) {
       publicParam += `&theme=${theme}&sub_theme=${sub_theme}`
     }
-    console.log('getGeographies publicParam:', params)
     const path = isSSR ? `geographies/v3` : `proxy/geographies/v3`
     if (params.topic && params.geography_type) {
       throw new Error('Only one of topic or geography_type can be provided')

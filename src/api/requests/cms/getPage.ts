@@ -250,7 +250,6 @@ export const getPage = async <T extends PageType>(id: number) => {
     const { data } = await client<PageResponse<T>>(`pages/${id}`, { searchParams })
 
     const result = responseSchema.safeParse(data)
-    console.log('getPage result:', result)
     if (!result.success) {
       logger.error(`WhatsNewResponseSchema Zod Validation error: ${result.error}`)
     }

@@ -21,16 +21,6 @@ export async function GET(req: NextRequest) {
       status: 500,
     })
   }
-  console.log(
-    'Proxying request to getGeographies with params:',
-    body,
-    'isPublic:',
-    isPublic,
-    'theme:',
-    theme,
-    'sub_theme:',
-    sub_theme
-  )
   const proxiedResponse = await getGeographies(body, isPublic, theme, sub_theme)
 
   if (proxiedResponse.data) {
