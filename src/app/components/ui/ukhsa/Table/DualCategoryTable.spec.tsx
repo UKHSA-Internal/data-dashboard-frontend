@@ -31,6 +31,8 @@ const mockData: DualCategoryChartCardValue = {
   y_axis_title: 'Value',
   chart_type: 'stacked_bar',
   static_fields: {
+    theme: 'infectious_disease',
+    sub_theme: 'respiratory',
     topic: 'COVID-19',
     metric: 'COVID-19_cases_casesByDay',
     geography_type: 'Nation',
@@ -137,8 +139,15 @@ describe('DualCategoryTable', () => {
           geography_type: 'UKHSA Region',
           geography: 'North East',
         }),
-      })
+      }),
+      false
     )
+  })
+
+  test('passes isPublic flag with getTables request', async () => {
+    const isPublic = true
+    render((await DualCategoryTable({ data: mockData, isPublic })) as ReactElement)
+    expect(getDualCategoryTablesMock).toHaveBeenCalledWith(expect.anything(), isPublic)
   })
 
   test('renders multiple groups when response has multiple labels', async () => {

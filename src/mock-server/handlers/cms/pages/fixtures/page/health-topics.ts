@@ -60,6 +60,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'COVID-19',
                           metric: 'COVID-19_cases_countRollingMean',
                           geography: 'England',
@@ -107,6 +109,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Influenza',
                           metric: 'influenza_healthcare_ICUHDUadmissionRateByWeek',
                           geography: 'England',
@@ -153,6 +157,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'RSV',
                           metric: 'RSV_testing_positivityByWeek',
                           geography: 'England',
@@ -218,6 +224,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'Measles',
                           metric: 'measles_cases_casesByOnsetWeekExcludingReportingLag',
                           geography: 'England',
@@ -265,6 +273,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'E-coli',
                           metric: 'e-coli_cases_countsByOnsetType',
                           geography: 'England',
@@ -312,6 +322,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'C-difficile',
                           metric: 'c-difficile_cases_countsByOnsetType',
                           geography: 'England',
@@ -359,6 +371,8 @@ export const healthTopicsPageMock: PageResponse<PageType.TopicsList> = {
                       {
                         type: 'plot',
                         value: {
+                          theme: 'infectious_disease',
+                          sub_theme: 'respiratory',
                           topic: 'MSSA',
                           metric: 'MSSA_cases_countsByOnsetType',
                           geography: 'England',

@@ -30,19 +30,22 @@ export async function DualCategoryTable({ data, isPublic = false, level, authEna
   const pathname = await getPathname()
   const [areaType, areaName] = await getAreaSelector()
 
-  const tableResponse = await getTables({
-    chart_type: data.chart_type,
-    static_fields: {
-      ...data.static_fields,
-      geography_type: areaType ?? data.static_fields.geography_type,
-      geography: areaName ?? data.static_fields.geography,
+  const tableResponse = await getTables(
+    {
+      chart_type: data.chart_type,
+      static_fields: {
+        ...data.static_fields,
+        geography_type: areaType ?? data.static_fields.geography_type,
+        geography: areaName ?? data.static_fields.geography,
+      },
+      primary_field_values: data.primary_field_values,
+      secondary_category: data.secondary_category,
+      segments: data.segments.map(({ value }) => value),
+      x_axis: data.x_axis,
+      y_axis: data.y_axis,
     },
-    primary_field_values: data.primary_field_values,
-    secondary_category: data.secondary_category,
-    segments: data.segments.map(({ value }) => value),
-    x_axis: data.x_axis,
-    y_axis: data.y_axis,
-  })
+    isPublic
+  )
 
   if (!tableResponse.success) {
     return <ChartEmpty resetHref={pathname} />
