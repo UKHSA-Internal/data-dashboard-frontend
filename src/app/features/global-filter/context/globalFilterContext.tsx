@@ -109,7 +109,6 @@ export const GlobalFilterProvider = ({ children, filters, isPublic, theme, sub_t
     try {
       const geographyTypes = extractGeographyIdFromGeographyFilter(filters.geographyFilters)
       setGeographyAreasLoading(true)
-      console.log('Fetching geography data for types:', geographyTypes)
       const responses = await Promise.all(
         geographyTypes.map((geographyTypes) =>
           getGeographies(

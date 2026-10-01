@@ -56,7 +56,6 @@ export default async function TopicPage({
   let extractedGlobalFilterContent = {} as ExtractedFilters
   let extractedSubplotData = {} as FilterLinkedSubplotData
   let extractedTimeSeriesData = {} as FilterLinkedTimeSeriesData
-  console.log('theme and sub_theme', theme, sub_theme)
   body.map(({ value }) => {
     if (value.content) {
       value.content.map((content) => {
