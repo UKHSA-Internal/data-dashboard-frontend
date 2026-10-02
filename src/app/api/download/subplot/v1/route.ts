@@ -1,9 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { getSubplotDownloads, requestSchema } from '@/api/requests/downloads/subplot/getSubplotDownloads'
+import { serializeJsonDownload } from '@/app/utils/download.utils'
 import { logger } from '@/lib/logger'
-
-import { serializeJsonDownload } from '../../utils'
 
 export async function POST(req: NextRequest) {
   const url = new URL(req.headers.get('origin') || '')
