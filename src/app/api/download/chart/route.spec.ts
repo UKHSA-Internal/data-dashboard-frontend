@@ -126,8 +126,9 @@ describe('POST /api/download/chart', () => {
 
     const req = mockRequest(formData)
 
+    const serializedJson = JSON.stringify(downloadsJsonFixture)
     jest.mocked(client).mockResolvedValueOnce({
-      data: downloadsJsonFixture,
+      data: serializedJson,
       status: 200,
     })
 
@@ -136,7 +137,9 @@ describe('POST /api/download/chart', () => {
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toEqual('text/json')
-    expect(await res.json()).toEqual(downloadsJsonFixture)
+    const responseBody = await res.text()
+    expect(responseBody).toBe(serializedJson)
+    expect(JSON.parse(responseBody)).toEqual(downloadsJsonFixture)
   })
 
   test('Returns status 301 when wrong form body is sent', async () => {
