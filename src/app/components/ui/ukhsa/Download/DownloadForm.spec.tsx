@@ -3,6 +3,7 @@ import fetch from 'cross-fetch'
 import React, { ComponentProps } from 'react'
 
 import { DualCategoryChartCardValue } from '@/api/models/cms/Page'
+import { getAuthToken } from '@/api/utils/api.utils'
 import { mockRouter } from '@/app/utils/__mocks__/next-router'
 import { downloadFile } from '@/app/utils/download.utils'
 import { chartExportApiRoutePath, dualCategoryChartExportApiRoutePath } from '@/config/constants'
@@ -447,6 +448,26 @@ describe('DownloadForm (dual category)', () => {
     await waitFor(() => {
       expect(downloadFile).toHaveBeenCalledWith('ukhsa-chart-download.csv', expect.any(Blob))
     })
+  })
+
+  test('sends the sign-in token when downloading non-public dual category data', async () => {
+    jest.mocked(getAuthToken).mockResolvedValueOnce('test-token')
+    jest.mocked(fetch).mockResolvedValueOnce({
+      ok: true,
+      redirected: false,
+      text: async () => 'csv-data',
+    } as Response)
+
+    render(<DownloadForm {...dualCategoryProps} authEnabled isPublic={false} />)
+
+    await userEvent.click(screen.getByRole('button', { name: /download/i }))
+    await userEvent.click(screen.getByRole('button', { name: /continue and download/i }))
+
+    await waitFor(() => expect(fetch).toHaveBeenCalledTimes(1))
+
+    const [, request] = jest.mocked(fetch).mock.calls[0]
+    expect(new Headers(request?.headers).get('X-UHD-AUTH')).toBe('Bearer test-token')
+    expect((request?.body as FormData).get('is_public')).toBe('false')
   })
 
   test('redirects to the error page instead of downloading a redirected HTML response', async () => {
