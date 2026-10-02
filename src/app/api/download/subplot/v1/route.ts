@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 
 import { getSubplotDownloads, requestSchema } from '@/api/requests/downloads/subplot/getSubplotDownloads'
+import { serializeJsonDownload } from '@/app/utils/download.utils'
 import { logger } from '@/lib/logger'
 
 export async function POST(req: NextRequest) {
@@ -49,7 +50,7 @@ export async function POST(req: NextRequest) {
 
     if (params.data.file_format === 'json') {
       logger.info('successful json download')
-      return new NextResponse(JSON.stringify(response), {
+      return new NextResponse(serializeJsonDownload(response), {
         headers: {
           'content-type': 'text/json',
           'content-disposition': 'attachment; filename=ukhsa-chart.download.json',
