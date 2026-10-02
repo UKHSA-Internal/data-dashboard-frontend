@@ -57,6 +57,15 @@ describe('AcknowledgementRouteGuard', () => {
     expect(mockReplace).not.toHaveBeenCalled()
   })
 
+  it('clears a stale acknowledgement marker when the user is logged out', async () => {
+    setAcceptedAcknowledgementMarker()
+    mockPathname = '/start'
+
+    renderGuard(false)
+
+    await waitFor(() => expect(localStorage.getItem(ACKNOWLEDGEMENT_STORAGE_KEY)).toBeNull())
+  })
+
   it('redirects authenticated users without a marker from private routes to acknowledgement with returnTo', async () => {
     mockPathname = '/respiratory-viruses/covid-19'
     mockSearchParams = new URLSearchParams({ areaType: 'Nation' })

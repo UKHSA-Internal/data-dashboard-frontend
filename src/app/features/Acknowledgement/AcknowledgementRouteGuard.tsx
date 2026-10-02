@@ -1,10 +1,11 @@
 'use client'
 
 import { usePathname, useRouter, useSearchParams } from 'next/navigation'
-import { ReactNode, useEffect, useMemo } from 'react'
+import { ReactNode, useEffect, useMemo, useSyncExternalStore } from 'react'
 
 import {
   ACKNOWLEDGEMENT_PATH,
+  clearAcknowledgementMarker,
   getAcknowlegementRedirectPath,
   hasAcknowledgementMarker,
   PRIVATE_HOME_PATH,
@@ -22,6 +23,11 @@ function buildCurrentPath(pathname: string, searchParams: URLSearchParams) {
   return queryString ? `${pathname}?${queryString}` : pathname
 }
 
+function subscribeToStorageChange(onStoreChange: () => void) {
+  window.addEventListener('storage', onStoreChange)
+  return () => window.removeEventListener('storage', onStoreChange)
+}
+
 export function AcknowledgementRouteGuard({
   children,
   isAuthenticated,
@@ -35,10 +41,18 @@ export function AcknowledgementRouteGuard({
 
   const currentPath = useMemo(() => buildCurrentPath(pathname, searchParams), [pathname, searchParams])
   const isAcknowledgementPath = pathname === ACKNOWLEDGEMENT_PATH
-  const hasAcceptedAcknowledgement = isAuthenticated ? hasAcknowledgementMarker() : false
+  const hasAcceptedAcknowledgement = useSyncExternalStore(
+    subscribeToStorageChange,
+    () => (isAuthenticated ? hasAcknowledgementMarker() : false),
+    () => (isAuthenticated ? null : false)
+  )
 
   useEffect(() => {
+    if (hasAcknowledgementMarker === null) return
+
     if (!isAuthenticated) {
+      clearAcknowledgementMarker()
+
       if (isAcknowledgementPath) {
         router.replace(START_PATH)
       }
@@ -71,6 +85,8 @@ export function AcknowledgementRouteGuard({
       router.replace(getAcknowlegementRedirectPath(currentPath))
     }
   }, [currentPath, hasAcceptedAcknowledgement, isAcknowledgementPath, isAuthenticated, pathname, router, searchParams])
+
+  if (hasAcceptedAcknowledgement === null) return null
 
   if (!isAuthenticated) {
     return isAcknowledgementPath ? null : children
