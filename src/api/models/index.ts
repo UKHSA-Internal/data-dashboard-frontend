@@ -1,4 +1,5 @@
 export * from './Age'
+export * from './DataClassification'
 export * from './FileFormats'
 export * from './Geography'
 export * from './GeographyType'

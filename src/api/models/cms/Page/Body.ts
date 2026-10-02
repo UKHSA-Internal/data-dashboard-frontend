@@ -1,7 +1,7 @@
 import { z } from 'zod'
 
+import { DataClassification, SubTheme, Theme } from '@/api/models'
 import { ChartLineColours } from '@/api/models/Chart'
-import { DataClassification } from '@/api/models/DataClassification'
 import { fallback } from '@/api/utils/zod.utils'
 
 import { HealthAlertTypes } from '../../Alerts'
@@ -396,6 +396,8 @@ export const CompositeBody = z.array(
               page: z.string(),
               is_authorised: z.boolean().optional(),
               page_classification: DataClassification.or(fallback(undefined)).optional(),
+              theme_name: Theme.or(fallback(undefined)).optional(),
+              sub_theme_name: SubTheme.or(fallback(undefined)).optional(),
             }),
             id: z.string(),
           })
