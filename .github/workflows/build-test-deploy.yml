@@ -165,7 +165,7 @@ jobs:
 
       - name: Pull LocalStack image
         id: use-image
-        uses: ukhsa-internal/localstack-tools/.github/actions/use-image@v1
+        uses: UKHSA-Internal/localstack-tools/.github/actions/use-image@v1
         with:
           version: "4.10.0-20251112"
 
