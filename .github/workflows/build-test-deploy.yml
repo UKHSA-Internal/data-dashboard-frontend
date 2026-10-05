@@ -166,11 +166,11 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
 
-      # - name: Pull LocalStack image
-      #   id: use-image
-      #   uses: UKHSA-Internal/localstack-tools/.github/actions/use-image@v1
-      #   with:
-      #     version: "4.10.0-20251112"
+      - name: Pull LocalStack image
+        id: use-image
+        uses: UKHSA-Internal/localstack-tools/.github/actions/use-image@v1
+        with:
+          version: "4.10.0-20251112"
 
       # - name: Start LocalStack
       #   run: |
