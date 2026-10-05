@@ -9,6 +9,7 @@ test.describe('Acknowledgement gate @auth-ui', () => {
     page,
     authEnabled,
   }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await page.evaluate((key) => window.localStorage.removeItem(key), ACKNOWLEDGEMENT_STORAGE_KEY)
 
@@ -33,6 +34,7 @@ test.describe('Acknowledgement gate @auth-ui', () => {
     page,
     authEnabled,
   }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await page.evaluate(({ key, value }) => window.localStorage.setItem(key, value), {
       key: ACKNOWLEDGEMENT_STORAGE_KEY,
@@ -52,6 +54,7 @@ test.describe('Acknowledgement gate while logged out @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
   test('redirects the acknowledgement URL to the start flow', async ({ page, authEnabled }) => {
+    // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
 
     await page.goto('/acknowledgement')
