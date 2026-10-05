@@ -163,8 +163,33 @@ jobs:
       - uses: ./.github/actions/install-cache
       - uses: ./.github/actions/build-cache
 
+      - name: Pull LocalStack image
+        id: use-image
+        uses: ukhsa-internal/localstack-tools/.github/actions/use-image@v1
+        with:
+          version: "4.10.0-20251112"
+
+      - name: Start LocalStack
+        run: |
+          docker run -d --name localstack \
+            -p 4566:4566 \
+            -e SERVICES=cognito-idp \
+            ${{ steps.use-image.outputs.tagged_name }}
+
       - name: Setup Playwright
         run: npx playwright install --with-deps
+
+      - name: Wait for Cognito to be ready
+        run: |
+          for i in $(seq 1 30); do
+            status=$(curl -s http://localhost:4566/_localstack/health | jq -r '.services["cognito-idp"] // "unknown"')
+            echo "cognito-idp: $status"
+            if [ "$status" = "available" ] || [ "$status" = "running" ]; then exit 0; fi
+            sleep 2
+          done
+          echo "LocalStack did not become ready"
+          docker logs localstack
+          exit 1
 
       # ── Mock server ───────────────────────────────────────────────────────────
       - name: Start mock server
