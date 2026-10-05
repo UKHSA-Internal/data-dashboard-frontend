@@ -1,3 +1,5 @@
+import { ACKNOWLEDGEMENT_STORAGE_KEY } from '@/app/utils/acknowledgement.utils'
+
 import { expect, test } from '../../fixtures/app.fixture'
 
 test.describe(' Start page - when auth is disabled', () => {
@@ -179,6 +181,10 @@ test.describe('Start page - logged in @auth-ui', () => {
     // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
     await page.clock.install()
+    await page.evaluate(({ key, value }) => window.localStorage.setItem(key, value), {
+      key: ACKNOWLEDGEMENT_STORAGE_KEY,
+      value: JSON.stringify({ accepted: true, acceptedAt: new Date().toISOString() }),
+    })
     await landingPage.goto()
     await page.waitForFunction(() => localStorage.getItem('lastActivity') !== null)
 
@@ -187,6 +193,9 @@ test.describe('Start page - logged in @auth-ui', () => {
     await expect(page).toHaveURL(/\/logged-out\/?$/, { timeout: 15000 })
     await expect(page.getByRole('heading', { name: 'Logged out' })).toBeVisible()
     await expect(page.getByText('You have been automatically signed out')).toBeVisible()
+    await expect
+      .poll(() => page.evaluate((key) => window.localStorage.getItem(key), ACKNOWLEDGEMENT_STORAGE_KEY))
+      .toBeNull()
   })
 })
 
