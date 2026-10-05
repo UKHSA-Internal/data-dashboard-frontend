@@ -176,10 +176,12 @@ jobs:
       #       -e SERVICES=cognito-idp \
       #       ${{ steps.use-image.outputs.tagged_name }}
 
-      - name: Login to GHCR
-        shell: bash
-        run: |
-          echo "${{ github.token }}" | docker login ghcr.io -u "${{ github.actor }}" --password-stdin
+      - name: Log in to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull image from GHCR
         id: pull-image
