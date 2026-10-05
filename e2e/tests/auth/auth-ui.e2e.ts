@@ -44,14 +44,13 @@ test.describe('Start page - logged out (normal initial state) @auth-ui', () => {
 test.describe('Authentication-only page metadata @auth-ui', () => {
   test.use({ startLoggedOut: true })
 
-  const authenticationOnlyPages = [
+  const loggedOutAuthenticationOnlyPages = [
     { path: '/start', heading: 'Sign in to the UKHSA data dashboard' },
-    { path: '/acknowledgement', heading: 'Acknowledgement' },
     { path: '/authentication-error', heading: 'Failed to sign in' },
     { path: '/logged-out', heading: 'Logged out' },
   ]
 
-  for (const { path, heading } of authenticationOnlyPages) {
+  for (const { path, heading } of loggedOutAuthenticationOnlyPages) {
     test(`${path} has noindex, nofollow metadata`, async ({ app, authEnabled }) => {
       // Reason: All tests here are only relevant when auth has been enabled
       test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
@@ -64,10 +63,25 @@ test.describe('Authentication-only page metadata @auth-ui', () => {
   }
 })
 
+test('Acknowledgement page has noindex, nofollow metadata @auth-ui', async ({ app, page, authEnabled }) => {
+  // Reason: The acknowledgement page is only available to authenticated users who have not yet accepted
+  test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+  await page.evaluate((key) => window.localStorage.removeItem(key), ACKNOWLEDGEMENT_STORAGE_KEY)
+
+  await app.goto('/acknowledgement')
+  await app.hasHeading('Acknowledgement')
+
+  await app.hasRobotsMetadata('noindex, nofollow')
+})
+
 test.describe('Public and non-public page metadata @auth-ui', () => {
-  test('Public-only pages do not have robots metadata', async ({ app, authEnabled }) => {
+  test('Public-only pages do not have robots metadata', async ({ app, page, authEnabled }) => {
     // Reason: All tests here are only relevant when auth has been enabled
     test.skip(!authEnabled, 'Skipped: AUTH_ENABLED is false')
+    await page.evaluate(({ key, value }) => window.localStorage.setItem(key, value), {
+      key: ACKNOWLEDGEMENT_STORAGE_KEY,
+      value: JSON.stringify({ accepted: true, acceptedAt: new Date().toISOString() }),
+    })
 
     const publicPages = [
       { path: '/', title: 'UKHSA data dashboard' },
