@@ -188,8 +188,7 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
-
-          IMAGE_NAME="ghcr.io/ukhsa-internal/localstack-enterprise:4.10.0-20251112"
+          IMAGE_NAME="ghcr.io/ukhsa-internal/localstack-enterprise:latest"
 
           docker pull "$IMAGE_NAME"
 
