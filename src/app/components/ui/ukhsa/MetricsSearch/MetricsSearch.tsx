@@ -1,7 +1,6 @@
 'use client'
 
 import Link from 'next/link'
-import { useRouter } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { useDebounceValue } from 'usehooks-ts'
 
@@ -14,8 +13,6 @@ interface MetricsSearchProps {
 }
 
 export function MetricsSearch({ value }: MetricsSearchProps) {
-  const router = useRouter()
-
   const { t } = useTranslation('metrics')
 
   const [searchInputValue, setSearchInputValue] = useState(value)
@@ -23,9 +20,13 @@ export function MetricsSearch({ value }: MetricsSearchProps) {
 
   useEffect(() => {
     const url = new URL(window.location.href)
+
+    if ((url.searchParams.get('search') ?? '') === debouncedSearchValue) {
+      return
+    }
+
     url.searchParams.set('search', debouncedSearchValue)
-    router.replace(url.toString())
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- router is omitted as it causes infinite redirects
+    window.location.replace(url.toString())
   }, [debouncedSearchValue])
 
   return (
