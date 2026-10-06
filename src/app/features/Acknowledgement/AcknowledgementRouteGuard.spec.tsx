@@ -48,10 +48,36 @@ describe('AcknowledgementRouteGuard', () => {
     await waitFor(() => expect(mockReplace).toHaveBeenCalledWith('/start'))
   })
 
-  it('keeps existing logged-out behaviour for non-acknowledgement routes', () => {
-    mockPathname = '/respiratory-viruses/covid-19'
+  it.each([
+    {
+      description: 'keeps existing logged-out behaviour for non-acknowledgement routes',
+      isAuthenticated: false,
+      pathname: '/respiroatory-viruses/covid-19',
+      hasAcknowledgementMarker: false,
+    },
+    {
+      description: 'renders private routes for authenticated users with a marker',
+      isAuthenticated: true,
+      pathname: '/respiroatory-viruses/covid-19',
+      hasAcknowledgementMarker: true,
+    },
+    {
+      description: 'renders the acknowledgement page for authenticated users without a marker',
+      isAuthenticated: true,
+      pathname: '/acknowledgement',
+      hasAcknowledgementMarker: false,
+    },
+    {
+      description: 'allows authenticated users to access non-start auth routes without requiring acknowledgement',
+      isAuthenticated: true,
+      pathname: '/auth/signout',
+      hasAcknowledgementMarker: false,
+    },
+  ])('$description', ({ isAuthenticated, pathname, hasAcknowledgementMarker }) => {
+    if (hasAcknowledgementMarker) setAcceptedAcknowledgementMarker()
+    mockPathname = pathname
 
-    renderGuard(false)
+    renderGuard(isAuthenticated)
 
     expect(screen.getByText('Guarded content')).toBeInTheDocument()
     expect(mockReplace).not.toHaveBeenCalled()

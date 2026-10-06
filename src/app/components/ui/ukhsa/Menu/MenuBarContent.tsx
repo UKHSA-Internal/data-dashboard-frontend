@@ -33,7 +33,7 @@ export function MenuBarContent({ items, isSignedIn }: MenuBarContentProps) {
 
   const handleSignOut = () => {
     clearAcknowledgementMarker()
-    serverSignOut()
+    void serverSignOut()
   }
 
   return (
