@@ -74,8 +74,9 @@ describe('download/subplot/v1', () => {
       formData: () => formData,
     })
 
+    const serializedJson = JSON.stringify(downloadsSubplotJsonFixture)
     jest.mocked(client).mockResolvedValueOnce({
-      data: downloadsSubplotJsonFixture,
+      data: serializedJson,
       status: 200,
     })
 
@@ -84,7 +85,9 @@ describe('download/subplot/v1', () => {
     expect(logger.error).not.toHaveBeenCalled()
     expect(res.status).toBe(200)
     expect(res.headers.get('content-type')).toBe('text/json')
-    expect(await res.json()).toEqual(downloadsSubplotJsonFixture)
+    const responseBody = await res.text()
+    expect(responseBody).toBe(serializedJson)
+    expect(JSON.parse(responseBody)).toEqual(downloadsSubplotJsonFixture)
   })
 
   test('Returns status 301 when wrong form body is sent', async () => {
