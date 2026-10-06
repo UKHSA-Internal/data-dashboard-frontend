@@ -8,7 +8,7 @@ import {
 } from '@aws-sdk/client-cognito-identity-provider'
 import { viewports } from 'e2e/constants/viewports.constants'
 
-import { test } from '../../fixtures/app.fixture.non.public'
+import { expect, test } from '../../fixtures/app.fixture.non.public'
 
 const cognito = new CognitoIdentityProviderClient({
   region: 'eu-west-2',
