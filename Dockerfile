@@ -28,7 +28,7 @@ RUN mkdir -p .next/cache/fetch-cache/
 
 # Only copy what is required to run the built app.
 # Runtime stage (distroless, root pinned by digest)
-FROM gcr.io/distroless/nodejs22@sha256:bde4c459719d1101d0ed962bb1eec9cbf58bbbaca3560ac143c8ca02ab02e099 AS runner
+FROM gcr.io/distroless/nodejs22@sha256:55e7cd155c86d8956af63fec0a9d0790dd6d0ba98c7d38e63c0866557ee7aff8 AS runner
 
 WORKDIR /app
 
