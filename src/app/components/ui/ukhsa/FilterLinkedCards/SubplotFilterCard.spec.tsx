@@ -63,6 +63,7 @@ const mockGeography: GeographiesSchemaObject = {
 
 const mockCardData: FilterLinkedSubplotData = {
   title_prefix: 'Coverage',
+  date_prefix: 'CoverageDatePrefix',
   legend_title: 'Coverage %',
   target_threshold: 95,
   target_threshold_label: 'Target',
@@ -180,7 +181,7 @@ describe('SubplotFilterCard', () => {
     await user.click(setDateButton)
 
     await waitFor(() => {
-      expect(screen.getByText(/Last Updated/)).toBeInTheDocument()
+      expect(screen.getByText(/CoverageDatePrefix/)).toBeInTheDocument()
       expect(screen.getByText(/Formatted: 2023-12-31/)).toBeInTheDocument()
     })
   })
