@@ -5,7 +5,7 @@
 
 'use client'
 
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import Leaflet, { GeoJSONOptions, LeafletMouseEvent, Path, PathOptions } from 'leaflet'
 import { ComponentProps, useCallback, useEffect, useRef, useState } from 'react'
 import { GeoJSON, useMap, useMapEvents } from 'react-leaflet'

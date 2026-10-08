@@ -1,6 +1,6 @@
 'use client'
 
-import DOMPurify from 'dompurify'
+import DOMPurify from 'isomorphic-dompurify'
 import Link from 'next/link'
 import { parseAsString, parseAsStringLiteral, useQueryState } from 'nuqs'
 import { Suspense } from 'react'
