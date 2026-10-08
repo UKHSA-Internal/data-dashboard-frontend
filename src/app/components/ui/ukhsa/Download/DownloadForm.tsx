@@ -84,6 +84,10 @@ export function DownloadForm({
         headers,
       })
 
+      if (!res.ok || res.redirected) {
+        throw new Error('Download request failed')
+      }
+
       const data = await res.text()
 
       if (data) downloadFile(`ukhsa-chart-download.${formData.get('file_format')}`, new Blob([data]))
@@ -204,6 +208,8 @@ export function DownloadForm({
                   type="hidden"
                   name="plots"
                   value={JSON.stringify({
+                    theme: value.theme,
+                    sub_theme: value.sub_theme,
                     topic: value.topic,
                     metric: value.metric,
                     stratum: value.stratum,
