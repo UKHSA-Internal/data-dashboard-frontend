@@ -12,7 +12,7 @@ import { ControlPosition } from 'leaflet'
 import { ComponentProps, ReactNode } from 'react'
 import { MapContainer } from 'react-leaflet'
 
-import { center, mapId, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
+import { center, mapId, maxBounds, maxBoundsViscosity, maxZoom, minZoom, zoom } from '@/app/constants/map.constants'
 
 import { AttributionControl } from './shared/controls/AttributionControl'
 import { KeyControl } from './shared/controls/KeyControl'
@@ -52,6 +52,8 @@ const Map = ({
       id={mapId}
       minZoom={minZoom}
       maxZoom={maxZoom}
+      maxBounds={maxBounds}
+      maxBoundsViscosity={maxBoundsViscosity}
       ref={ref}
       className={clsx('relative h-screen overflow-hidden ukhsa-focus', className)}
       zoomControl={false}

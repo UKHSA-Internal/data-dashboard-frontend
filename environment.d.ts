@@ -10,10 +10,6 @@ declare namespace NodeJS {
     AUTH_SECRET: string
     BASE_URL: string
     PAGE_PREVIEWS_CMS_AUTH_TOKEN_TTL: string
-    ESRI_API_KEY: string
-    ESRI_CLIENT_ID: string
-    ESRI_CLIENT_SECRET: string
-    ESRI_CLIENT_URL: string
     FEATURE_FLAGS_AUTH_KEY: string
     FEEDBACK_API_URL: string
     GOOGLE_TAG_MANAGER_ID: string
@@ -28,6 +24,8 @@ declare namespace NodeJS {
     RUM_IDENTITY_POOL_ID: string
     UNLEASH_SERVER_API_URL: string
     UNLEASH_SERVER_API_TOKEN: string
+    OS_GDN_PROJECT_API_KEY: string
+    OS_GDN_PROJECT_API_SECRET: string
   }
 }
 
