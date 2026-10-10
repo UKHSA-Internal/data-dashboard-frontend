@@ -34,15 +34,55 @@ jest.mock('next-auth/react', () => ({
   ),
 }))
 
+jest.mock('@/app/features/Acknowledgement/AcknowledgementRouteGuard', () => ({
+  AcknowledgementRouteGuard: ({
+    children,
+    isAuthenticated,
+  }: {
+    children: React.ReactNode
+    isAuthenticated: boolean
+  }) => (
+    <div data-authenticated={String(isAuthenticated)} data-testid="acknowledgement-route-guard">
+      {children}
+    </div>
+  ),
+}))
+
 const mockAuthEnabled = { authEnabled: false }
 jest.mock('@/config/constants', () => mockAuthEnabled)
 
+jest.mock('@/app/features/Acknowledgement/AcknowledgementRouteGuard', () => ({
+  AcknowledgementRouteGuard: ({
+    children,
+    isAuthenticated,
+  }: {
+    children: React.ReactNode
+    isAuthenticated: boolean
+  }) => (
+    <div data-authenticated={String(isAuthenticated)} data-testid="acknowledgement-route-guard">
+      {children}
+    </div>
+  ),
+}))
+
 // --- Helpers ---
 
-async function renderProviders(children = <div data-testid="child">hello</div>) {
+async function renderProviders({
+  authEnabled = false,
+  children = <div data-testid="child">hello</div>,
+  isAuthenticated = false,
+}: {
+  authEnabled?: boolean
+  children?: React.ReactNode
+  isAuthenticated?: boolean
+} = {}) {
   // Re-import after mock mutations
   const { Providers } = await import('./providers')
-  return render(<Providers>{children}</Providers>)
+  return render(
+    <Providers authEnabled={authEnabled} isAuthenticated={isAuthenticated}>
+      {children}
+    </Providers>
+  )
 }
 
 // --- Tests ---
@@ -50,7 +90,6 @@ async function renderProviders(children = <div data-testid="child">hello</div>) 
 describe('Providers', () => {
   beforeEach(() => {
     jest.resetModules()
-    mockAuthEnabled.authEnabled = false
   })
 
   describe('when authEnabled is false', () => {
@@ -82,25 +121,39 @@ describe('Providers', () => {
 
   describe('when authEnabled is true', () => {
     beforeEach(() => {
-      mockAuthEnabled.authEnabled = true
+      jest.resetModules()
     })
 
     it('renders SessionProvider wrapping StreamedHydration', async () => {
-      await renderProviders()
+      await renderProviders({ authEnabled: true })
       const sessionProvider = screen.getByTestId('session-provider')
+      const acknowledgementRouteGuard = screen.getByTestId('acknowledgement-route-guard')
       const streamedHydration = screen.getByTestId('streamed-hydration')
       expect(sessionProvider).toBeInTheDocument()
+      expect(sessionProvider).toContainElement(acknowledgementRouteGuard)
       expect(sessionProvider).toContainElement(streamedHydration)
     })
 
+    it('passes auth state into AcknowledgementRouteGuard', async () => {
+      await renderProviders({ authEnabled: true })
+
+      expect(screen.getByTestId('acknowledgement-route-guard')).toHaveAttribute('data-authenticated', 'false')
+    })
+
+    it('passes authenticated auth state into AcknowledgementRouteGuard', async () => {
+      await renderProviders({ authEnabled: true, isAuthenticated: true })
+
+      expect(screen.getByTestId('acknowledgement-route-guard')).toHaveAttribute('data-authenticated', 'true')
+    })
+
     it('renders children inside SessionProvider', async () => {
-      await renderProviders()
+      await renderProviders({ authEnabled: true })
       const sessionProvider = screen.getByTestId('session-provider')
       expect(sessionProvider).toContainElement(screen.getByTestId('child'))
     })
 
     it('renders ReactQueryDevtools', async () => {
-      await renderProviders()
+      await renderProviders({ authEnabled: true })
       expect(screen.getByTestId('react-query-devtools')).toBeInTheDocument()
     })
   })
