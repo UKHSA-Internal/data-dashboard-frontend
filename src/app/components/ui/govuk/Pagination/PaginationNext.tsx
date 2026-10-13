@@ -1,24 +1,25 @@
 import { UrlObject } from 'node:url'
 
-import Link from 'next/link'
 import React from 'react'
 
 import { PaginationVariant } from './Pagination'
+import { PaginationLink } from './PaginationLink'
 
 interface PaginationNextProps {
   href: string | UrlObject
   variant: PaginationVariant
   children?: string
+  reloadDocument?: boolean
 }
 
-export const PaginationNext = ({ href, children, variant }: PaginationNextProps) => {
+export const PaginationNext = ({ href, children, variant, reloadDocument }: PaginationNextProps) => {
   return (
     <div className="govuk-pagination__next">
-      <Link
+      <PaginationLink
+        reloadDocument={reloadDocument}
         className="govuk-link govuk-pagination__link govuk-link--no-visited-state"
         href={href}
         rel="next"
-        prefetch={false}
       >
         {variant === 'list-item' && (
           <span className="govuk-pagination__link-title">
@@ -47,7 +48,7 @@ export const PaginationNext = ({ href, children, variant }: PaginationNextProps)
             <span className="govuk-pagination__link-label">{children}</span>
           </>
         )}
-      </Link>
+      </PaginationLink>
     </div>
   )
 }
