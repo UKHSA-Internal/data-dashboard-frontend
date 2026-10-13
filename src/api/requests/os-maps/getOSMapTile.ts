@@ -25,7 +25,7 @@ export const getOSMapTile = async (zoom: string, x: string, y: string): Promise<
   })
 
   if (!response.ok) {
-    logger.error('OS Maps tile request failed', { status: response.status })
+    logger.error({ status: response.status }, 'OS Maps tile request failed')
   }
 
   return response

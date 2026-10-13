@@ -22,7 +22,7 @@ export async function GET(_req: Request, context: { params: Promise<{ z: string;
       },
     })
   } catch (error) {
-    logger.error('OS Maps tile proxy failed', error instanceof Error ? error.message : error)
+    logger.error(error instanceof Error ? { err: error } : { error }, 'OS Maps tile proxy failed')
 
     return new NextResponse('Downstream service request failed', {
       status: 502,
