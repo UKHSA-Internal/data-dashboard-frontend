@@ -50,16 +50,47 @@ export const requestSchema = z.object({
   ),
 })
 
+// export const AxisConfig = z.record(z.string(), z.union([z.number().int(), z.string(), z.object({}).passthrough()]))
+
+// export const responseSchema = z.object({
+//   chart: z.string(),
+//   last_updated: z.string(),
+//   alt_text: z.string(),
+//   figure: ChartFigure,
+//   figure_config: z.object({
+//     xaxis_full: AxisConfig.optional(),
+//     xaxis_compact: AxisConfig.optional(),
+//   }).optional()
+// })
+
+// type AxisConfigValue = string | number | Record<string, unknown>
+// export type AxisConfig = Record<string, AxisConfigValue>
+
+// export interface FigureConfig {
+//   xaxis_full: AxisConfig
+//   xaxis_compact: AxisConfig
+// }
+
+export type ChartResponse = z.infer<typeof responseSchema>
+
+export type RequestParams = z.infer<typeof requestSchema>
+
+const AxisConfigSchema = z.record(z.string(), z.union([z.number().int(), z.string(), z.object({}).passthrough()]))
+
+export const FigureConfigSchema = z.object({
+  xaxis_full: AxisConfigSchema.optional(),
+  xaxis_compact: AxisConfigSchema.optional(),
+})
+
 export const responseSchema = z.object({
   chart: z.string(),
   last_updated: z.string(),
   alt_text: z.string(),
   figure: ChartFigure,
+  figure_config: FigureConfigSchema.optional(),
 })
 
-export type ChartResponse = z.infer<typeof responseSchema>
-
-export type RequestParams = z.infer<typeof requestSchema>
+export type FigureConfig = z.infer<typeof FigureConfigSchema>
 
 export const getCharts = async (chart: RequestParams) => {
   const {

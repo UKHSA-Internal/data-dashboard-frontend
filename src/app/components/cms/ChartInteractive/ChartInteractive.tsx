@@ -1,16 +1,57 @@
 'use client'
 
-import { ReactElement, useState } from 'react'
+import { Layout } from 'plotly.js'
+import { ReactElement, useEffect, useMemo, useState } from 'react'
 import Plot, { Figure } from 'react-plotly.js'
 import { useIntersectionObserver } from 'usehooks-ts'
+
+import { FigureConfig } from '@/api/requests/charts/getCharts'
+
+const NARROW_SCREEN_QUERY = '(max-width: 800px)'
 
 interface ChartInteractiveProps {
   fallbackUntilLoaded: ReactElement
   figure: Figure
+  figure_config?: FigureConfig
 }
 
-export default function ChartInteractive({ fallbackUntilLoaded, figure: { data, layout } }: ChartInteractiveProps) {
+function getIsNarrowScreen() {
+  if (typeof window === 'undefined') return false
+  return window.matchMedia(NARROW_SCREEN_QUERY).matches
+}
+
+export default function ChartInteractive({
+  fallbackUntilLoaded,
+  figure: { data, layout },
+  figure_config,
+}: ChartInteractiveProps) {
   const [loaded, setLoaded] = useState(false)
+  const [isNarrowScreen, setIsNarrowScreen] = useState(getIsNarrowScreen)
+
+  useEffect(() => {
+    const mediaWatcher = window.matchMedia(NARROW_SCREEN_QUERY)
+    function updateIsNarrowScreen(event: MediaQueryListEvent) {
+      setIsNarrowScreen(event.matches)
+    }
+    mediaWatcher.addEventListener('change', updateIsNarrowScreen)
+    return function cleanup() {
+      mediaWatcher.removeEventListener('change', updateIsNarrowScreen)
+    }
+  }, [])
+
+  const dynamicLayout = useMemo<Partial<Layout>>(() => {
+    const xaxisOverrides = isNarrowScreen ? figure_config?.xaxis_compact : figure_config?.xaxis_full
+
+    if (!xaxisOverrides || Object.keys(xaxisOverrides).length === 0) return layout
+
+    return {
+      ...layout,
+      xaxis: {
+        ...layout?.xaxis,
+        ...xaxisOverrides,
+      },
+    }
+  }, [layout, figure_config, isNarrowScreen])
 
   const { isIntersecting, ref } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -23,7 +64,7 @@ export default function ChartInteractive({ fallbackUntilLoaded, figure: { data, 
         <Plot
           onInitialized={() => setLoaded(true)}
           data={data}
-          layout={layout}
+          layout={dynamicLayout}
           style={{ width: '100%', height: '100%' }}
           config={{
             displayModeBar: false,

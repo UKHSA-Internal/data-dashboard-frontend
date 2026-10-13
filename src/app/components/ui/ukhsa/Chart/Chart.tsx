@@ -103,7 +103,7 @@ export async function Chart({
     return <ChartEmpty resetHref={pathname} showResetLink={enableInteractive} />
   }
 
-  const { alt_text: alt, figure, last_updated } = chartResponse.data
+  const { alt_text: alt, figure, figure_config, last_updated } = chartResponse.data
 
   const staticChart = await createStaticChart({
     chart: chartResponse,
@@ -145,7 +145,7 @@ export async function Chart({
 
   return (
     <Suspense fallback={staticChart}>
-      <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} />
+      <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} figure_config={figure_config} />
     </Suspense>
   )
 }

@@ -135,7 +135,13 @@ const TimeseriesClientChart = ({
   if (chartResponse) {
     const { figure } = chartResponse
 
-    return <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+    return (
+      <ChartInteractiveWrapper
+        fallbackUntilLoaded={<h2>loading</h2>}
+        figure={{ frames: [], ...figure }}
+        figure_config={{ xaxis_full: {}, xaxis_compact: {} }}
+      />
+    ) // TODO: Pass through figure config
   }
 }
 
