@@ -54,8 +54,8 @@ const SubplotFilterCard = ({
   const handleTimePeriodChange = (index: number) => {
     setCurrentTimePeriodIndex(index)
   }
-  // we need to retrieve date somehow
-  const description = date ? `Last Updated ${formatDate(date)}` : ''
+
+  const description = date ? `${cardData.date_prefix} ${formatDate(date)}` : ''
   const geographyParent: FlattenedGeography | null = getParentGeography(geography)
   const title = `${cardData.title_prefix} between ${timePeriods[currentTimePeriodIndex].value.label} (${geographyParent?.name}, ${geography.name})`
   const id = title

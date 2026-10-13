@@ -75,12 +75,14 @@ const mockDataFilters: DataFilters = {
 
 const mockTimeseriesTemplateData: FilterLinkedTimeSeriesData = {
   title_prefix: 'Cases',
+  date_prefix: 'Last updated',
   legend_title: 'Number of cases',
   about: 'About cases data',
 }
 
 const mockCoverageTemplateData: FilterLinkedSubplotData = {
   title_prefix: 'Coverage',
+  date_prefix: 'Last updated',
   legend_title: 'Coverage %',
   target_threshold: 95,
   target_threshold_label: 'Target',
