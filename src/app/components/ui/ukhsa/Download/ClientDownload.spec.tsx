@@ -84,7 +84,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -106,7 +106,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -125,7 +125,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -147,7 +147,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -169,7 +169,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -216,7 +216,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -238,7 +238,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -282,7 +282,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={multipleFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -303,7 +303,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -328,7 +328,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={newTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -348,7 +348,7 @@ describe('ClientDownload', () => {
         geography={mockGeography}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
@@ -375,7 +375,7 @@ describe('ClientDownload', () => {
         geography={geographyWithoutType}
         dataFilters={mockDataFilters}
         timePeriods={mockTimePeriods}
-        cardData={{ title_prefix: 'Test', legend_title: 'Legend' }}
+        cardData={{ title_prefix: 'Test', date_prefix: 'Last updated', legend_title: 'Legend' }}
       />
     )
 
