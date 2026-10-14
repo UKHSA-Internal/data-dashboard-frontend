@@ -40,16 +40,13 @@ export default function ChartInteractive({
   }, [])
 
   const dynamicLayout = useMemo<Partial<Layout>>(() => {
-    const xaxisOverrides = isNarrowScreen ? figure_config?.xaxis_compact : figure_config?.xaxis_full
+    const layoutOverrides = isNarrowScreen ? figure_config?.xaxis_compact : figure_config?.xaxis_full
 
-    if (!xaxisOverrides || Object.keys(xaxisOverrides).length === 0) return layout
+    if (!layoutOverrides || Object.keys(layoutOverrides).length === 0) return layout
 
     return {
       ...layout,
-      xaxis: {
-        ...layout?.xaxis,
-        ...xaxisOverrides,
-      },
+      ...layoutOverrides,
     }
   }, [layout, figure_config, isNarrowScreen])
 
