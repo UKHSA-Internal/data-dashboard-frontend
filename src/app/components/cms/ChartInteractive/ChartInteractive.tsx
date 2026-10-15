@@ -46,7 +46,9 @@ export default function ChartInteractive({
 
     return {
       ...layout,
-      ...layoutOverrides,
+      xaxis: {
+        ...layoutOverrides,
+      },
     }
   }, [layout, figure_config, isNarrowScreen])
 
@@ -68,7 +70,6 @@ export default function ChartInteractive({
             scrollZoom: false,
             responsive: true,
           }}
-          useResizeHandler
         />
       ) : null}
     </div>
