@@ -73,14 +73,14 @@ describe('ChartInteractive', () => {
   test('renders only the fallback when the chart is not in view', () => {
     mockUseIntersectionObserver.mockReturnValue({ isIntersecting: false, ref: jest.fn() })
 
-    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} />)
+    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} chartHeight={260} />)
 
     expect(screen.getByTestId('fallback')).toBeInTheDocument()
     expect(screen.queryByTestId('mock-plotly-chart')).not.toBeInTheDocument()
   })
 
   test('renders the plot when in view and hides the fallback once initialised', () => {
-    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} />)
+    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} chartHeight={260} />)
 
     expect(screen.getByTestId('mock-plotly-chart')).toBeInTheDocument()
     expect(screen.getByTestId('fallback')).toBeInTheDocument()
@@ -91,9 +91,17 @@ describe('ChartInteractive', () => {
   })
 
   test('passes the original layout to Plot when there is no figure_config', () => {
-    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} />)
+    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} chartHeight={260} />)
 
     expect(mockPlot).toHaveBeenLastCalledWith(expect.objectContaining({ data: figure.data, layout: figure.layout }))
+  })
+
+  test.each([200, 260])('uses the supplied chart height of %ipx', (chartHeight) => {
+    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} chartHeight={chartHeight} />)
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({ style: { width: '100%', height: `${chartHeight}px` } })
+    )
   })
 
   test.each([
@@ -102,32 +110,36 @@ describe('ChartInteractive', () => {
   ])('merges the correct xaxis layout overrides on a $screen screen', ({ width, expected }) => {
     window.innerWidth = width
 
-    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figure_config={figure_config} />)
+    render(
+      <ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figureConfig={figure_config} chartHeight={260} />
+    )
 
-    expect(mockPlot).toHaveBeenLastCalledWith(expect.objectContaining({ layout: { ...figure.layout, ...expected } }))
+    expect(mockPlot).toHaveBeenLastCalledWith(expect.objectContaining({ layout: expect.objectContaining(expected) }))
   })
 
   test('updates the xaxis layout when the window is resized after load', () => {
-    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figure_config={figure_config} />)
+    render(
+      <ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figureConfig={figure_config} chartHeight={260} />
+    )
 
     expect(window.matchMedia).toHaveBeenCalledWith(NARROW_SCREEN_QUERY)
 
     // Initial load on a wide screen
     fireEvent.click(screen.getByText('init'))
     expect(mockPlot).toHaveBeenLastCalledWith(
-      expect.objectContaining({ layout: { ...figure.layout, xaxis: { nticks: 10 } } })
+      expect.objectContaining({ layout: expect.objectContaining({ ...figure.layout, xaxis: { nticks: 10 } }) })
     )
 
     // Window shrinks below the breakpoint
     resizeWindow(COMPACT_WIDTH)
     expect(mockPlot).toHaveBeenLastCalledWith(
-      expect.objectContaining({ layout: { ...figure.layout, xaxis: { nticks: 4 } } })
+      expect.objectContaining({ layout: expect.objectContaining({ ...figure.layout, xaxis: { nticks: 4 } }) })
     )
 
     // And back to wide
     resizeWindow(FULL_WIDTH)
     expect(mockPlot).toHaveBeenLastCalledWith(
-      expect.objectContaining({ layout: { ...figure.layout, xaxis: { nticks: 10 } } })
+      expect.objectContaining({ layout: expect.objectContaining({ ...figure.layout, xaxis: { nticks: 10 } }) })
     )
   })
 })

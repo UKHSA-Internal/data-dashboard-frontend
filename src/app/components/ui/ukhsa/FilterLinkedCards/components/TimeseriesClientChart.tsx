@@ -11,6 +11,7 @@ import ClientInformationCard from '@/app/components/ui/ukhsa/ClientInformationCa
 import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { getMinMaxFullDate, MinMaxFullDate } from '@/app/utils/time-period.utils'
+import { chartSizes } from '@/config/constants'
 
 interface ClientChartProps {
   geography: GeographiesSchemaObject
@@ -139,7 +140,8 @@ const TimeseriesClientChart = ({
       <ChartInteractiveWrapper
         fallbackUntilLoaded={<h2>loading</h2>}
         figure={{ frames: [], ...figure }}
-        figure_config={figure_config}
+        chartHeight={chartSizes.narrow.height}
+        figureConfig={figure_config}
       />
     )
   }

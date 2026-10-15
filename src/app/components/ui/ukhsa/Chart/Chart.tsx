@@ -6,7 +6,8 @@ import { DataClassification } from '@/api/models/DataClassification'
 import { getAreaSelector } from '@/app/hooks/getAreaSelector'
 import { getPathname } from '@/app/hooks/getPathname'
 import { getServerTranslation } from '@/app/i18n'
-import { getChartResponseData, getChartSvg } from '@/app/utils/chart.utils'
+import { getChartResponseData, getChartSvg, getSelectedChartSize } from '@/app/utils/chart.utils'
+import { chartSizes } from '@/config/constants'
 
 import { ChartEmpty } from '../ChartEmpty/ChartEmpty'
 import ChartInteractive from './ChartInteractive'
@@ -104,6 +105,7 @@ export async function Chart({
   }
 
   const { alt_text: alt, figure, figure_config, last_updated } = chartResponse.data
+  const chartHeight = chartSizes[getSelectedChartSize(sizes).size].height
 
   const staticChart = await createStaticChart({
     chart: chartResponse,
@@ -137,6 +139,7 @@ export async function Chart({
             chartData={data}
             isPublic={isPublic}
             dataClassification={dataClassification}
+            chartHeight={chartHeight}
           />
         </div>
       </>
@@ -145,7 +148,12 @@ export async function Chart({
 
   return (
     <Suspense fallback={staticChart}>
-      <ChartInteractive staticChart={staticChart} figure={{ frames: [], ...figure }} figure_config={figure_config} />
+      <ChartInteractive
+        staticChart={staticChart}
+        figure={{ frames: [], ...figure }}
+        chartHeight={chartHeight}
+        figureConfig={figure_config}
+      />
     </Suspense>
   )
 }

@@ -19,6 +19,7 @@ import { useErrorData } from '@/app/hooks/globalFilterHooks'
 import createChartErrorMessage from '@/app/utils/error-utils'
 import { flattenGeographyObject, getGeographyColourSelection } from '@/app/utils/geography.utils'
 import { mapThresholdsToMetricValueRanges, MetricValueRange } from '@/app/utils/threshold.utils'
+import { chartSizes } from '@/config/constants'
 
 interface SubplotClientChartProps {
   selectedVaccinations: DataFilter[]
@@ -177,7 +178,11 @@ const SubplotClientChart = ({
 
     return (
       <>
-        <ChartInteractiveWrapper fallbackUntilLoaded={<h2>loading</h2>} figure={{ frames: [], ...figure }} />
+        <ChartInteractiveWrapper
+          fallbackUntilLoaded={<h2>loading</h2>}
+          figure={{ frames: [], ...figure }}
+          chartHeight={chartSizes.narrow.height}
+        />
         <TimePeriodSelector
           timePeriods={timePeriods}
           currentTimePeriodIndex={currentTimePeriodIndex}

@@ -12,7 +12,8 @@ export const NARROW_SCREEN_QUERY = '(max-width: 1100px)'
 interface ChartInteractiveProps {
   fallbackUntilLoaded: ReactElement
   figure: Figure
-  figure_config?: FigureConfig
+  chartHeight: number
+  figureConfig?: FigureConfig
 }
 
 function getIsNarrowScreen() {
@@ -23,7 +24,8 @@ function getIsNarrowScreen() {
 export default function ChartInteractive({
   fallbackUntilLoaded,
   figure: { data, layout },
-  figure_config,
+  chartHeight,
+  figureConfig,
 }: ChartInteractiveProps) {
   const [loaded, setLoaded] = useState(false)
   const [isNarrowScreen, setIsNarrowScreen] = useState(getIsNarrowScreen)
@@ -40,7 +42,7 @@ export default function ChartInteractive({
   }, [])
 
   const dynamicLayout = useMemo<Partial<Layout>>(() => {
-    const layoutOverrides = isNarrowScreen ? figure_config?.xaxis_compact : figure_config?.xaxis_full
+    const layoutOverrides = isNarrowScreen ? figureConfig?.xaxis_compact : figureConfig?.xaxis_full
 
     if (!layoutOverrides || Object.keys(layoutOverrides).length === 0) return layout
 
@@ -49,8 +51,9 @@ export default function ChartInteractive({
       xaxis: {
         ...layoutOverrides,
       },
+      autosize: true,
     }
-  }, [layout, figure_config, isNarrowScreen])
+  }, [layout, figureConfig, isNarrowScreen])
 
   const { isIntersecting, ref } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -64,12 +67,13 @@ export default function ChartInteractive({
           onInitialized={() => setLoaded(true)}
           data={data}
           layout={dynamicLayout}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: `${chartHeight}px` }}
           config={{
             displayModeBar: false,
             scrollZoom: false,
             responsive: true,
           }}
+          useResizeHandler
         />
       ) : null}
     </div>

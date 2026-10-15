@@ -7,16 +7,24 @@ import { FigureConfig } from '@/api/requests/charts/getCharts'
 interface ChartInteractiveProps {
   staticChart: React.ReactElement
   figure: Figure
-  figure_config?: FigureConfig
+  chartHeight: number
+  figureConfig?: FigureConfig
 }
 
-const ChartInteractive = ({ staticChart, figure, figure_config }: ChartInteractiveProps) => {
+const ChartInteractive = ({ staticChart, figure, chartHeight, figureConfig }: ChartInteractiveProps) => {
   const DynamicChart = dynamic(() => import('../../../cms/ChartInteractive/ChartInteractive'), {
     ssr: false,
     loading: () => <>{staticChart}</>,
   })
 
-  return <DynamicChart fallbackUntilLoaded={staticChart} figure={figure} figure_config={figure_config} />
+  return (
+    <DynamicChart
+      fallbackUntilLoaded={staticChart}
+      figure={figure}
+      chartHeight={chartHeight}
+      figureConfig={figureConfig}
+    />
+  )
 }
 
 export default ChartInteractive
