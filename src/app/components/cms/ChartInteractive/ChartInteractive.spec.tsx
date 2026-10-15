@@ -1,8 +1,8 @@
 import { useIntersectionObserver } from 'usehooks-ts'
 
-import { fireEvent, render, screen } from '@/config/test-utils'
+import { act, fireEvent, render, screen } from '@/config/test-utils'
 
-import ChartInteractive from './ChartInteractive'
+import ChartInteractive, { NARROW_SCREEN_QUERY } from './ChartInteractive'
 
 const mockPlot = jest.fn()
 
@@ -24,11 +24,29 @@ jest.mock('usehooks-ts', () => ({
 
 const mockUseIntersectionObserver = useIntersectionObserver as jest.Mock
 
-function mockMatchMedia(matches: boolean) {
-  window.matchMedia = jest.fn().mockReturnValue({
-    matches,
-    addEventListener: jest.fn(),
-    removeEventListener: jest.fn(),
+const COMPACT_WIDTH = 800
+const FULL_WIDTH = 1400
+
+function mockMatchMedia() {
+  const isNarrow = () => window.innerWidth <= 1100
+  let onResize: () => void
+
+  window.matchMedia = jest.fn().mockImplementation(() => ({
+    get matches() {
+      return isNarrow()
+    },
+    addEventListener: (_event: string, listener: (event: { matches: boolean }) => void) => {
+      onResize = () => listener({ matches: isNarrow() })
+      window.addEventListener('resize', onResize)
+    },
+    removeEventListener: () => window.removeEventListener('resize', onResize),
+  }))
+}
+
+function resizeWindow(width: number) {
+  act(() => {
+    window.innerWidth = width
+    window.dispatchEvent(new Event('resize'))
   })
 }
 
@@ -38,11 +56,17 @@ describe('ChartInteractive', () => {
     layout: { title: 'Base layout' },
   } as any
 
+  const figure_config = {
+    xaxis_full: { xaxis: { nticks: 10 } },
+    xaxis_compact: { xaxis: { nticks: 4 } },
+  } as any
+
   const fallback = <div data-testid="fallback">Loading chart...</div>
 
   beforeEach(() => {
     jest.clearAllMocks()
-    mockMatchMedia(false)
+    window.innerWidth = FULL_WIDTH
+    mockMatchMedia()
     mockUseIntersectionObserver.mockReturnValue({ isIntersecting: true, ref: jest.fn() })
   })
 
@@ -73,18 +97,37 @@ describe('ChartInteractive', () => {
   })
 
   test.each([
-    { screen: 'full', isCompact: false, expected: { xaxis: { nticks: 10 } } },
-    { screen: 'compact', isCompact: true, expected: { xaxis: { nticks: 4 } } },
-  ])('merges the correct xaxis layout overrides on a $screen screen', ({ isCompact, expected }) => {
-    mockMatchMedia(isCompact)
-
-    const figure_config = {
-      xaxis_full: { xaxis: { nticks: 10 } },
-      xaxis_compact: { xaxis: { nticks: 4 } },
-    } as any
+    { screen: 'full', width: FULL_WIDTH, expected: { xaxis: { nticks: 10 } } },
+    { screen: 'compact', width: COMPACT_WIDTH, expected: { xaxis: { nticks: 4 } } },
+  ])('merges the correct xaxis layout overrides on a $screen screen', ({ width, expected }) => {
+    window.innerWidth = width
 
     render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figure_config={figure_config} />)
 
     expect(mockPlot).toHaveBeenLastCalledWith(expect.objectContaining({ layout: { ...figure.layout, ...expected } }))
+  })
+
+  test('updates the xaxis layout when the window is resized after load', () => {
+    render(<ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figure_config={figure_config} />)
+
+    expect(window.matchMedia).toHaveBeenCalledWith(NARROW_SCREEN_QUERY)
+
+    // Initial load on a wide screen
+    fireEvent.click(screen.getByText('init'))
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({ layout: { ...figure.layout, xaxis: { nticks: 10 } } })
+    )
+
+    // Window shrinks below the breakpoint
+    resizeWindow(COMPACT_WIDTH)
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({ layout: { ...figure.layout, xaxis: { nticks: 4 } } })
+    )
+
+    // And back to wide
+    resizeWindow(FULL_WIDTH)
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({ layout: { ...figure.layout, xaxis: { nticks: 10 } } })
+    )
   })
 })

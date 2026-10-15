@@ -7,7 +7,7 @@ import { useIntersectionObserver } from 'usehooks-ts'
 
 import { FigureConfig } from '@/api/requests/charts/getCharts'
 
-const NARROW_SCREEN_QUERY = '(max-width: 1100px)'
+export const NARROW_SCREEN_QUERY = '(max-width: 1100px)'
 
 interface ChartInteractiveProps {
   fallbackUntilLoaded: ReactElement
