@@ -56,9 +56,26 @@ describe('ChartInteractive', () => {
     layout: { title: 'Base layout' },
   } as any
 
-  const figure_config = {
-    xaxis_full: { nticks: 10 },
-    xaxis_compact: { nticks: 4 },
+  const defaultFigureConfig = {
+    full: { layout: { xaxis: { nticks: 10 } } },
+    compact: { layout: { xaxis: { nticks: 4 } } },
+  } as any
+
+  const dataFigureConfig = {
+    full: {
+      data: {
+        x: [10, 20],
+        y: [30, 40],
+        hovertemplate: 'Full screen: %{x} (%{y|%d %b %Y})',
+      },
+    },
+    compact: {
+      data: {
+        x: [30, 40],
+        y: [10, 20],
+        hovertemplate: 'Compact screen: %{y} (%{x|%d %b %Y})',
+      },
+    },
   } as any
 
   const fallback = <div data-testid="fallback">Loading chart...</div>
@@ -111,7 +128,12 @@ describe('ChartInteractive', () => {
     window.innerWidth = width
 
     render(
-      <ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figureConfig={figure_config} chartHeight={260} />
+      <ChartInteractive
+        fallbackUntilLoaded={fallback}
+        figure={figure}
+        figureConfig={defaultFigureConfig}
+        chartHeight={260}
+      />
     )
 
     expect(mockPlot).toHaveBeenLastCalledWith(expect.objectContaining({ layout: expect.objectContaining(expected) }))
@@ -119,7 +141,12 @@ describe('ChartInteractive', () => {
 
   test('updates the xaxis layout when the window is resized after load', () => {
     render(
-      <ChartInteractive fallbackUntilLoaded={fallback} figure={figure} figureConfig={figure_config} chartHeight={260} />
+      <ChartInteractive
+        fallbackUntilLoaded={fallback}
+        figure={figure}
+        figureConfig={defaultFigureConfig}
+        chartHeight={260}
+      />
     )
 
     expect(window.matchMedia).toHaveBeenCalledWith(NARROW_SCREEN_QUERY)
@@ -140,6 +167,132 @@ describe('ChartInteractive', () => {
     resizeWindow(FULL_WIDTH)
     expect(mockPlot).toHaveBeenLastCalledWith(
       expect.objectContaining({ layout: expect.objectContaining({ ...figure.layout, xaxis: { nticks: 10 } }) })
+    )
+  })
+
+  test.each([
+    {
+      screen: 'full',
+      width: FULL_WIDTH,
+      expectedX: [10, 20],
+      expectedY: [30, 40],
+      hovertemplate: 'Full screen: %{x} (%{y|%d %b %Y})',
+    },
+    {
+      screen: 'compact',
+      width: COMPACT_WIDTH,
+      expectedX: [30, 40],
+      expectedY: [10, 20],
+      hovertemplate: 'Compact screen: %{y} (%{x|%d %b %Y})',
+    },
+  ])('applies data overrides to every trace on a $screen screen', ({ width, expectedX, expectedY, hovertemplate }) => {
+    window.innerWidth = width
+    const traces = [
+      { x: [1, 2], y: [3, 4], type: 'scatter', name: 'First trace' },
+      { x: [5, 6], y: [7, 8], type: 'scatter', name: 'Second trace' },
+    ]
+
+    render(
+      <ChartInteractive
+        fallbackUntilLoaded={fallback}
+        figure={{ ...figure, data: traces }}
+        figureConfig={dataFigureConfig}
+        chartHeight={260}
+      />
+    )
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        data: traces.map((trace) => ({ ...trace, x: expectedX, y: expectedY, hovertemplate })),
+      })
+    )
+  })
+
+  test('passes both layout and data figure_config overrides to Plotly', () => {
+    const combinedFigureConfig = {
+      full: {
+        layout: { xaxis: { nticks: 13 } },
+        data: { x: [10, 20], y: [30, 40], hovertemplate: 'Full %{y:,} (%{x|%d %b %Y})' },
+      },
+      compact: {
+        layout: { xaxis: { nticks: 5 } },
+        data: { x: [30, 40], y: [10, 20], hovertemplate: 'Compact %{x:,} (%{y|%d %b %Y})' },
+      },
+    } as any
+    const traces = [
+      { x: [1, 2], y: [3, 4], type: 'scatter', name: 'First trace' },
+      { x: [5, 6], y: [7, 8], type: 'scatter', name: 'Second trace' },
+    ]
+
+    render(
+      <ChartInteractive
+        fallbackUntilLoaded={fallback}
+        figure={{ ...figure, data: traces }}
+        figureConfig={combinedFigureConfig}
+        chartHeight={260}
+      />
+    )
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        data: traces.map((trace) => ({
+          ...trace,
+          x: [10, 20],
+          y: [30, 40],
+          hovertemplate: 'Full %{y:,} (%{x|%d %b %Y})',
+        })),
+        layout: expect.objectContaining({
+          ...figure.layout,
+          xaxis: { nticks: 13 },
+          autosize: true,
+        }),
+      })
+    )
+  })
+
+  test('passes the rotated compact shape from figure_config to Plotly', () => {
+    window.innerWidth = COMPACT_WIDTH
+    const originalShape = {
+      type: 'rect',
+      x0: 10,
+      x1: 20,
+      y0: 30,
+      y1: 40,
+      xref: 'x',
+      yref: 'y',
+    }
+
+    const rotatedShape = {
+      type: 'rect',
+      x0: 30,
+      x1: 40,
+      y0: 10,
+      y1: 20,
+      xref: 'y',
+      yref: 'x',
+    }
+    const shapeFigureConfig = {
+      full: { layout: { shapes: [originalShape] } },
+      compact: { layout: { shapes: [rotatedShape] } },
+    } as any
+
+    render(
+      <ChartInteractive
+        fallbackUntilLoaded={fallback}
+        figure={figure}
+        figureConfig={shapeFigureConfig}
+        chartHeight={260}
+      />
+    )
+
+    expect(mockPlot).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        layout: expect.objectContaining({
+          ...figure.layout,
+          shapes: [rotatedShape],
+          autosize: true,
+        }),
+      })
     )
   })
 })
