@@ -8,20 +8,27 @@ import { FigureConfig } from '@/api/requests/charts/getCharts'
 interface ChartInteractiveProps {
   fallbackUntilLoaded: ReactElement
   figure: Figure
-  figure_config?: FigureConfig
+  chartHeight: number
+  figureConfig?: FigureConfig
 }
 
 const ChartInteractiveDynamic = dynamic(() => import('./ChartInteractive'), {
   ssr: false,
 })
 
-export default function ChartInteractiveWrapper({ fallbackUntilLoaded, figure, figure_config }: ChartInteractiveProps) {
+export default function ChartInteractiveWrapper({
+  fallbackUntilLoaded,
+  figure,
+  chartHeight,
+  figureConfig,
+}: ChartInteractiveProps) {
   return (
     <Suspense fallback={fallbackUntilLoaded}>
       <ChartInteractiveDynamic
         fallbackUntilLoaded={fallbackUntilLoaded}
         figure={figure}
-        figure_config={figure_config}
+        chartHeight={chartHeight}
+        figureConfig={figureConfig}
       />
     </Suspense>
   )

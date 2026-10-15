@@ -18,6 +18,7 @@ import ChartInteractive from './ChartInteractive'
 interface ChartWithFilterProps {
   lastUpdated: string
   figure: ChartFigure
+  chartHeight: number
   title: string
   chartData: ChartComponentData
   isPublic?: boolean
@@ -34,6 +35,7 @@ const LoadingSpinnerContainer = () => {
 
 const ChartWithFilterContent = ({
   figure,
+  chartHeight,
   title,
   chartData,
   lastUpdated,
@@ -123,7 +125,11 @@ const ChartWithFilterContent = ({
       ) : isLoading ? (
         <LoadingSpinnerContainer />
       ) : (
-        <ChartInteractive staticChart={<LoadingSpinnerContainer />} figure={{ frames: [], ...filteredFigure }} />
+        <ChartInteractive
+          staticChart={<LoadingSpinnerContainer />}
+          figure={{ frames: [], ...filteredFigure }}
+          chartHeight={chartHeight}
+        />
       )}
       <ChartNoScript title={kebabCase(title)} />
     </>

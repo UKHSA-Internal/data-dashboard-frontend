@@ -12,7 +12,8 @@ export const NARROW_SCREEN_QUERY = '(max-width: 1100px)'
 interface ChartInteractiveProps {
   fallbackUntilLoaded: ReactElement
   figure: Figure
-  figure_config?: FigureConfig
+  chartHeight: number
+  figureConfig?: FigureConfig
 }
 
 function getIsNarrowScreen() {
@@ -23,7 +24,8 @@ function getIsNarrowScreen() {
 export default function ChartInteractive({
   fallbackUntilLoaded,
   figure: { data, layout },
-  figure_config,
+  chartHeight,
+  figureConfig,
 }: ChartInteractiveProps) {
   const [loaded, setLoaded] = useState(false)
   const [isNarrowScreen, setIsNarrowScreen] = useState(getIsNarrowScreen)
@@ -39,7 +41,7 @@ export default function ChartInteractive({
     }
   }, [])
 
-  const activeConfig = isNarrowScreen ? figure_config?.compact : figure_config?.full
+  const activeConfig = isNarrowScreen ? figureConfig?.compact : figureConfig?.full
 
   const dynamicData = useMemo<Data[]>(() => {
     const dataOverrides = activeConfig?.data
@@ -57,6 +59,7 @@ export default function ChartInteractive({
     return {
       ...layout,
       ...layoutOverrides,
+      autosize: true,
     }
   }, [layout, activeConfig])
 
@@ -72,12 +75,13 @@ export default function ChartInteractive({
           onInitialized={() => setLoaded(true)}
           data={dynamicData}
           layout={dynamicLayout}
-          style={{ width: '100%', height: '100%' }}
+          style={{ width: '100%', height: `${chartHeight}px` }}
           config={{
             displayModeBar: false,
             scrollZoom: false,
             responsive: true,
           }}
+          useResizeHandler
         />
       ) : null}
     </div>
