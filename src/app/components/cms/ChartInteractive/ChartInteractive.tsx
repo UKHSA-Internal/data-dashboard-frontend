@@ -1,6 +1,6 @@
 'use client'
 
-import { Layout } from 'plotly.js'
+import { Data, Layout } from 'plotly.js'
 import { ReactElement, useEffect, useMemo, useState } from 'react'
 import Plot, { Figure } from 'react-plotly.js'
 import { useIntersectionObserver } from 'usehooks-ts'
@@ -39,18 +39,26 @@ export default function ChartInteractive({
     }
   }, [])
 
+  const activeConfig = isNarrowScreen ? figure_config?.compact : figure_config?.full
+
+  const dynamicData = useMemo<Data[]>(() => {
+    const dataOverrides = activeConfig?.data
+
+    if (!dataOverrides || Object.keys(dataOverrides).length === 0) return data
+
+    return data.map((trace) => ({ ...trace, ...dataOverrides }) as Data)
+  }, [data, activeConfig])
+
   const dynamicLayout = useMemo<Partial<Layout>>(() => {
-    const layoutOverrides = isNarrowScreen ? figure_config?.xaxis_compact : figure_config?.xaxis_full
+    const layoutOverrides = activeConfig?.layout
 
     if (!layoutOverrides || Object.keys(layoutOverrides).length === 0) return layout
 
     return {
       ...layout,
-      xaxis: {
-        ...layoutOverrides,
-      },
+      ...layoutOverrides,
     }
-  }, [layout, figure_config, isNarrowScreen])
+  }, [layout, activeConfig])
 
   const { isIntersecting, ref } = useIntersectionObserver({
     freezeOnceVisible: true,
@@ -62,7 +70,7 @@ export default function ChartInteractive({
       {isIntersecting ? (
         <Plot
           onInitialized={() => setLoaded(true)}
-          data={data}
+          data={dynamicData}
           layout={dynamicLayout}
           style={{ width: '100%', height: '100%' }}
           config={{
