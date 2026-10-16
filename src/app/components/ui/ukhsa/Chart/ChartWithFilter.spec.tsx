@@ -157,7 +157,13 @@ describe('ChartWithFilter', () => {
   describe('Initial Render', () => {
     it('renders with initial figure and does not fetch on first render', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       expect(screen.getByTestId('chart-select')).toBeInTheDocument()
@@ -175,6 +181,7 @@ describe('ChartWithFilter', () => {
           chartData={mockChartData}
           lastUpdated="2025-05-21"
           isPublic={false}
+          chartHeight={260}
         />
       )
 
@@ -183,7 +190,13 @@ describe('ChartWithFilter', () => {
 
     it('does not fetch on first render when isPublic is undefined', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -203,6 +216,7 @@ describe('ChartWithFilter', () => {
           chartData={mockChartData}
           lastUpdated="2025-05-21"
           isPublic={false}
+          chartHeight={260}
         />
       )
 
@@ -229,6 +243,7 @@ describe('ChartWithFilter', () => {
           chartData={mockChartData}
           lastUpdated="2025-05-21"
           isPublic={true}
+          chartHeight={260}
         />
       )
 
@@ -249,7 +264,13 @@ describe('ChartWithFilter', () => {
 
     it('passes isPublic=undefined to getCharts, treated as public (no auth)', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -270,7 +291,13 @@ describe('ChartWithFilter', () => {
   describe('Filter Change Handling', () => {
     it('skips fetch when filter changes to the same value', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -298,6 +325,7 @@ describe('ChartWithFilter', () => {
           chartData={mockChartData}
           lastUpdated="2025-05-21"
           isPublic={false}
+          chartHeight={260}
         />
       )
 
@@ -318,7 +346,13 @@ describe('ChartWithFilter', () => {
 
     it('fetches filtered chart when filter changes between different filters', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -349,7 +383,13 @@ describe('ChartWithFilter', () => {
 
     it('does not fetch when filter is "all" on initial mount', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       // Wait a bit to ensure no fetch happens
@@ -364,7 +404,13 @@ describe('ChartWithFilter', () => {
       setTimeseriesInitialFilterForTests('6-months')
 
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       // No fetch until filter actually changes
@@ -405,7 +451,13 @@ describe('ChartWithFilter', () => {
       )
 
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       // Wait a bit then change filter
@@ -447,7 +499,13 @@ describe('ChartWithFilter', () => {
       mockGetFilteredChartResponseData.mockResolvedValueOnce(null)
 
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -469,7 +527,13 @@ describe('ChartWithFilter', () => {
       })
 
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -489,7 +553,13 @@ describe('ChartWithFilter', () => {
       mockGetFilteredChartResponseData.mockRejectedValueOnce(new Error('Network error'))
 
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -524,7 +594,13 @@ describe('ChartWithFilter', () => {
       })
 
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
@@ -558,6 +634,7 @@ describe('ChartWithFilter', () => {
           title="Test Chart"
           chartData={chartDataWithAxis}
           lastUpdated="2025-05-21"
+          chartHeight={260}
         />
       )
 
@@ -593,7 +670,13 @@ describe('ChartWithFilter', () => {
       // The component should skip on first render, then fetch on subsequent effect runs
       setTimeseriesInitialFilterForTests('6-months')
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       // First render skipped; trigger a change to ensure fetch occurs
@@ -608,7 +691,13 @@ describe('ChartWithFilter', () => {
 
     it('handles multiple rapid filter changes correctly', async () => {
       render(
-        <ChartWithFilter figure={mockFigure} title="Test Chart" chartData={mockChartData} lastUpdated="2025-05-21" />
+        <ChartWithFilter
+          figure={mockFigure}
+          title="Test Chart"
+          chartData={mockChartData}
+          lastUpdated="2025-05-21"
+          chartHeight={260}
+        />
       )
 
       await act(async () => {
