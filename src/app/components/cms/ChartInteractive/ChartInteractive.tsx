@@ -49,6 +49,7 @@ export default function ChartInteractive({
     return {
       ...layout,
       xaxis: {
+        ...layout.xaxis,
         ...layoutOverrides,
       },
       autosize: true,
