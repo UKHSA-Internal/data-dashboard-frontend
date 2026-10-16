@@ -58,11 +58,12 @@ const AxisConfigSchema = z.record(z.string(), z.union([z.number().int(), z.strin
 
 export const FigureConfigSchema = z.object({
   full: z.object({
-    data: AxisConfigSchema.optional(),
+    // TODO: Type will need updating. Data to be array.
+    data: z.array(z.object({}).passthrough()).optional(),
     layout: AxisConfigSchema.optional(),
   }),
   compact: z.object({
-    data: AxisConfigSchema.optional(),
+    data: z.array(z.object({}).passthrough()).optional(),
     layout: AxisConfigSchema.optional(),
   }),
 })
@@ -115,7 +116,12 @@ export const getCharts = async (chart: RequestParams) => {
     const path = isSSR ? `charts/v3` : `proxy/charts/v3`
     const { data } = await client<z.infer<typeof responseSchema>>(`${path}`, { body }, is_public)
 
+    console.log('getCharts response', data)
+
     const result = responseSchema.safeParse(data)
+
+    console.log('Getcharts parsed to schema result', result)
+
     if (result.success) {
       return result
     } else {

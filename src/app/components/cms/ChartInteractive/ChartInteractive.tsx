@@ -43,11 +43,15 @@ export default function ChartInteractive({
 
   const activeConfig = isNarrowScreen ? figureConfig?.compact : figureConfig?.full
 
+  // TODO: Currently overriding all data traces with the same overrides
   const dynamicData = useMemo<Data[]>(() => {
+    // Overrides need to be specific per plot, as below. Might need to loop through data, relate item to specific trace
+    // dataOverrides = fuigure_config.full.data[i]
     const dataOverrides = activeConfig?.data
 
     if (!dataOverrides || Object.keys(dataOverrides).length === 0) return data
 
+    // Change this from blanket override, to just override specific trace
     return data.map((trace) => ({ ...trace, ...dataOverrides }) as Data)
   }, [data, activeConfig])
 
