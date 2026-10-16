@@ -1,4 +1,4 @@
-import { LatLngExpression } from 'leaflet'
+import { LatLngBoundsExpression, LatLngExpression } from 'leaflet'
 
 import { Feature } from '../components/ui/ukhsa/Map/shared/data/geojson/ukhsa-regions'
 
@@ -31,13 +31,35 @@ export const mapTitle = 'Interactive adverse weather map viewer'
 export const zoom = 7
 
 // Minimum zoom level allowed for the map
-export const minZoom = 6
+export const minZoom = 7
 
 // Maximum zoom level allowed for the map
 export const maxZoom = 10
 
 // Default center coordinates of the map
 export const center: LatLngExpression = [52.7957, -1.5479]
+
+// Leaflet pan limit covering the UK
+export const maxBounds: LatLngBoundsExpression = [
+  [49.8, -8.6],
+  [60.9, 1.9],
+]
+
+// 1 prevents the map from being dragged outside maxBounds
+export const maxBoundsViscosity = 1
+
+export const mapSeaColour = '#d7e0e5'
+
+export const franceMaskBounds: LatLngBoundsExpression[] = [
+  [
+    [49.6, 1.5],
+    [51.1, 2.05],
+  ],
+  [
+    [49.8, -2],
+    [50.2, 2],
+  ],
+]
 
 /**
  * Object mapping query parameter keys to their respective constants.
@@ -73,3 +95,6 @@ export const geoJsonFeatureId = 'RGN23CD' satisfies keyof Feature['properties']
 
 // The Name property of the GeoJson feature properties object
 export const geoJsonFeatureName = 'RGN23NM' satisfies keyof Feature['properties']
+
+// The time to live value for ordinance survey maps access token cache
+export const OsMapTTL = 15_000
